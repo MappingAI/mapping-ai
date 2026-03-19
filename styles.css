@@ -1,0 +1,300 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+::selection {
+  background: #FDFF6E;
+  color: #000;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.65;
+  color: #1a1a1a;
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: #2563eb;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+a:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+/* Sidebar with sticky logo */
+.sidebar {
+  position: fixed;
+  top: 40px;
+  left: 40px;
+  z-index: 100;
+}
+
+.logo-card img {
+  width: 180px;
+  height: auto;
+  display: block;
+}
+
+/* Main content */
+main {
+  max-width: 640px;
+  margin: 0 auto;
+  margin-left: 300px;
+  padding: 40px 40px 80px;
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    position: relative;
+    top: 0;
+    left: 0;
+    padding: 20px;
+  }
+
+  main {
+    margin-left: 0;
+    padding: 20px 20px 60px;
+  }
+}
+
+/* Hero */
+.hero {
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+/* Content blocks */
+.block {
+  margin-bottom: 40px;
+}
+
+.block h2 {
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.block p {
+  margin-bottom: 16px;
+  color: #1a1a1a;
+}
+
+.block p:last-child {
+  margin-bottom: 0;
+}
+
+/* Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: #d4c4a8;
+  border: 1px solid #d4c4a8;
+}
+
+.grid-item {
+  background: #f5f0e6;
+  padding: 20px;
+  font-size: 14px;
+  color: #555;
+}
+
+.grid-item span {
+  display: block;
+  font-weight: 500;
+  color: #1a1a1a;
+  margin-bottom: 6px;
+}
+
+/* Form toggle */
+.form-toggle {
+  display: flex;
+  gap: 8px;
+  margin: 24px 0;
+}
+
+.toggle {
+  padding: 8px 16px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  color: #666;
+  background: transparent;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.toggle:hover {
+  border-color: #999;
+}
+
+.toggle.active {
+  color: #111;
+  background: #fff;
+  border-color: #111;
+}
+
+/* Forms */
+.form {
+  display: none;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  padding: 24px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+.form.active {
+  display: grid;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field.full {
+  grid-column: 1 / -1;
+}
+
+.field label {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #999;
+}
+
+.field input,
+.field select,
+.field textarea {
+  padding: 10px 12px;
+  font-family: inherit;
+  font-size: 14px;
+  color: #111;
+  background: #fafafa;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  transition: border-color 0.15s;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: #111;
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.submit {
+  grid-column: 1 / -1;
+  padding: 12px 24px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  color: #fff;
+  background: #111;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.submit:hover {
+  background: #333;
+}
+
+.submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Success message */
+.success {
+  padding: 24px;
+  font-size: 14px;
+  color: #111;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+.success.hidden {
+  display: none;
+}
+
+/* Contact */
+.contact {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Footer */
+footer {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  font-size: 12px;
+  color: #999;
+  border-top: 1px solid #eee;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  main {
+    padding: 100px 16px 60px;
+  }
+
+  .hero h1 {
+    font-size: 22px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+
+  .logo-fixed {
+    top: 16px;
+    right: 16px;
+  }
+
+  .logo-fixed img {
+    height: 24px;
+  }
+}
