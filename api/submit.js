@@ -13,10 +13,35 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   try {
-    const { type, timestamp, data } = req.body;
+    if (!req.body || typeof req.body !== 'object') {
+      return res.status(400).json({ error: 'Invalid request body' });
+    }
+
+    const { type, timestamp, data, _hp } = req.body;
+
+    // Honeypot: humans leave this blank; bots fill it in
+    if (_hp) {
+      return res.status(200).json({ success: true, message: 'Submission received' });
+    }
 
     if (!type || !data || !data.name) {
       return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    // Validate type
+    if (!['person', 'organization'].includes(type)) {
+      return res.status(400).json({ error: 'Invalid submission type' });
+    }
+
+    // Field length limits
+    const SHORT_LIMIT = 200;
+    const LONG_LIMIT = 1000;
+    for (const [key, value] of Object.entries(data)) {
+      if (typeof value !== 'string') continue;
+      const limit = key === 'notes' ? LONG_LIMIT : SHORT_LIMIT;
+      if (value.length > limit) {
+        return res.status(400).json({ error: `Field "${key}" exceeds maximum length` });
+      }
     }
 
     // Environment variables (set these in Vercel dashboard)

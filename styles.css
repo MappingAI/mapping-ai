@@ -254,6 +254,14 @@ main {
   display: none;
 }
 
+/* Honeypot — must remain invisible and inaccessible */
+.honeypot {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+  pointer-events: none;
+}
+
 /* Contact */
 .contact {
   font-size: 14px;

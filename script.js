@@ -34,10 +34,12 @@ forms.forEach(form => {
     const data = {
       type: form.dataset.type,
       timestamp: new Date().toISOString(),
+      _hp: formData.get('_hp') || '',
       data: {}
     };
 
     formData.forEach((value, key) => {
+      if (key === '_hp') return;
       if (value.trim()) {
         data.data[key] = value.trim();
       }
