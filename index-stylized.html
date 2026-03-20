@@ -20,7 +20,7 @@
 body { background: #fff; }
 .doc {
   max-width: 680px; margin: 0 auto;
-  padding: 3rem 1.5rem 4rem;
+  padding: calc(3rem + 48px) 1.5rem 4rem;
   font-family: var(--serif);
   color: var(--text-primary);
   font-size: 17px; line-height: 1.75;
@@ -141,25 +141,66 @@ a:hover { text-decoration: underline; }
   .field.full { grid-column: span 1; }
   .submit { grid-column: span 1; }
 }
+/* Site navigation */
+.site-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  height: 48px;
+  background: #fff;
+  border-bottom: 0.5px solid var(--border);
+  z-index: 100;
+}
+.nav-brand {
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-primary); text-decoration: none;
+}
+.nav-links { display: flex; gap: 2rem; }
+.nav-links a {
+  font-family: var(--mono); font-size: 10.5px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-tertiary); text-decoration: none;
+  transition: color 0.15s;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--text-primary); }
+@media (max-width: 600px) {
+  .site-nav { padding: 0 1rem; }
+  .nav-links { gap: 1rem; }
+  .nav-links a { font-size: 9px; }
+}
 </style>
 </head>
 <body>
+
+<nav class="site-nav">
+  <a class="nav-brand" href="/index-stylized.html">Mapping AI</a>
+  <div class="nav-links">
+    <a href="/index-stylized.html">Map</a>
+    <a href="/theoryofchange.html">Theory of Change</a>
+    <a href="/contribute.html">Contribute</a>
+    <a href="/about.html">About</a>
+  </div>
+</nav>
 
 <div class="doc">
   <div class="eyebrow">Mapping AI</div>
   <h1>Mapping the U.S. AI Policy Landscape</h1>
 
   <div class="section-label">What</div>
-  <p>We are building a comprehensive map of the organizations, individuals, and coalitions currently shaping or with the potential to influence AI policy in the United States leading up to 2028. The goal is to produce a structured, shareable, and dynamic resource that identifies who is working on what, where the gaps are, and where coalitions might form across ideological lines.</p>
+  <p>We are building a comprehensive map of the individuals and groups with the potential to shape AI policy in the United States. The goal is to produce a structured, shareable, and dynamic resource that identifies who is working on what, where the gaps are, and which coalitions might form across ideological and organizational lines.</p>
 
 
   <div class="section-label">Why Now</div>
-  <p>AI policy in the U.S. is being shaped rapidly, but the landscape is fragmented. Safety researchers, frontier labs, think tanks, state legislators, labor organizers, academics, and civil society all have stakes in AI governance, yet there is no shared, public map (that we know of) of who is doing what. The 2026 midterms and 2028 presidential cycle will produce technology policy platforms on both sides, and the intellectual groundwork is being laid now. A clear map of the landscape, worldviews, and competing theories of change is a prerequisite for any serious effort to contribute.</p>
+  <p>The landscape of AI policy in the U.S. is fragmented. Safety researchers, frontier labs, legislators, civil society, and investors all have a stake in AI governance, yet there is no public resource showing where these actors stand on critical issues, such as the technology's capabilities and the role of public policy. The 2026 midterms and 2028 presidential elections are rapidly approaching, and these groups have already laid the intellectual groundwork for candidates' technology platforms. A clear layout of the competing worldviews and theories of change is a necessary step to political coordination. This work is long overdue, but it's critical to setting the political agenda. As OpenAI's Joshua Achiam put it: when there is a major problem that will be top of mind for everyone in a decade, whoever engages first sets the terms of discussion.</p>
 
 
   <div class="section-label">The Gap</div>
-  <p>Two recent pieces illustrate what exists and what is missing. Michel Justen's <a href="https://substack.com/home/post/p-185759007">"A Guide to the AI Tribes"</a> (Jan 2026) provides a useful taxonomy of the ideological camps shaping AI discourse. Dan Kagan-Kans' <a href="https://www.transformernews.ai/p/the-left-is-missing-out-on-ai-sanders-doctorow-bender-bores">"The Left is Missing Out on AI"</a> (Feb 2026) makes a compelling case that left and progressive institutions have largely refused to engage seriously with AI.</p>
-  <p>Yet we have not seen anything that maps the <em>full</em> potential of the policy landscape: the frontier labs and safety orgs, but also the investors, think tanks, state legislators, labor organizers, academics, creative guilds, and political operatives whose work will determine what AI policy actually looks like. We aim to fill that gap.</p>
+  <p>Two recent pieces illustrate what exists and what is missing. Michel Justen's <a href="https://substack.com/home/post/p-185759007">"A Guide to the AI Tribes"</a> (Jan 2026) provides a useful taxonomy of the ideological camps shaping AI discourse. Dan Kagan-Kans' <a href="https://www.transformernews.ai/p/the-left-is-missing-out-on-ai-sanders-doctorow-bender-bores">"The Left is Missing Out on AI"</a> (Feb 2026) makes a compelling case that progressive institutions have largely refused to engage seriously with AI.</p>
+  <p>Yet we have not seen anything that maps the full potential of the policy landscape: the frontier labs and safety orgs, but also the investors, think tanks, state legislators, labor organizers, academics, creative guilds, and political operatives whose work will determine what AI policy actually looks like. We aim to fill that gap.</p>
 
 
   <div class="section-label">Who We're Mapping</div>
@@ -173,12 +214,12 @@ a:hover { text-decoration: underline; }
     <div class="grid-item"><span>Labor & civil society</span>Unions, creative guilds, advocacy orgs</div>
     <div class="grid-item"><span>Ethics, bias & rights</span>AI Now, FAccT community, EFF</div>
     <div class="grid-item"><span>Media & public discourse</span>Journalists, Substacks, podcasts</div>
+    <div class="grid-item"><span>Philanthropies</span>Chan Zuckerberg Initiative, Schmidt Futures, Arnold Ventures</div>
   </div>
 
 
   <div class="section-label">Vision</div>
-  <p>If this mapping effort is successful, we hope it can build toward a coalition around creating a <a href="/theoryofchange.html">technology policy platform for 2028</a> that is transformative in the way Vannevar Bush's <em>Endless Frontier</em> was for the postwar era: not just regulating emerging technology, but building the institutions and explicating the science-society compact to ensure its benefits are broadly shared and its risks are pragmatically mitigated.</p>
-
+  <p>A successful mapping effort is one that identifies and fuses a new coalition around AI governance. Ultimately, we hope this coalition creates a <a href="/theoryofchange.html">technology policy platform for 2028</a> that is as transformative for the AI era as Vannevar Bush's <em>Endless Frontier</em> was for the postwar period: not just regulating emerging technology, but articulating the science-society compact and building the institutions to realize that ideal. Only then can we ensure the benefits of new technology are broadly shared, and the risks pragmatically mitigated.</p>
 
   <div class="section-label">Contribute</div>
   <p>We're compiling an initial list of organizations, individuals, and influential resources. If you work in or adjacent to any of the categories above, we welcome your input on who and what should be included. <a href="/contribute.html">Add a person, organization, or resource →</a></p>
@@ -188,5 +229,11 @@ a:hover { text-decoration: underline; }
   </div>
 </div>
 
+<script>
+  const path = window.location.pathname;
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    if (a.getAttribute('href') === path) a.classList.add('active');
+  });
+</script>
 </body>
 </html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Mapping AI</title>
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@400;500&display=swap');
+:root {
+  --serif: 'EB Garamond', Georgia, serif;
+  --mono: 'DM Mono', monospace;
+  --text-primary: #1a1a1a;
+  --text-secondary: #555;
+  --text-tertiary: #888;
+  --border: #ddd;
+  --bg-secondary: #f8f7f5;
+  --accent: #2563eb;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #fff; }
+.doc {
+  max-width: 680px; margin: 0 auto;
+  padding: calc(3rem + 48px) 1.5rem 4rem;
+  font-family: var(--serif);
+  color: var(--text-primary);
+  font-size: 17px; line-height: 1.75;
+}
+.eyebrow {
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--text-secondary); margin-bottom: 0.75rem;
+}
+h1 {
+  font-family: var(--serif); font-size: 32px;
+  font-weight: 400; font-style: italic;
+  line-height: 1.25; margin-bottom: 2rem;
+}
+.rule { border: none; border-top: 0.5px solid var(--border); margin: 2.5rem 0; }
+.section-label {
+  font-family: var(--mono); font-size: 10.5px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-tertiary); margin-bottom: 0.75rem;
+}
+p { margin-bottom: 1.1rem; font-size: 16.5px; }
+p:last-child { margin-bottom: 0; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.team-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem; margin: 1.25rem 0;
+}
+.team-item {
+  background: var(--bg-secondary);
+  border-radius: 6px;
+  padding: 0.9rem 1rem;
+}
+.team-name {
+  font-family: var(--serif); font-size: 16px;
+  font-weight: 500; color: var(--text-primary);
+  margin-bottom: 0.2rem;
+}
+.team-role {
+  font-family: var(--mono); font-size: 11px;
+  color: var(--text-tertiary); letter-spacing: 0.04em;
+}
+.footer-row {
+  display: flex; justify-content: center;
+  margin-top: 3rem; padding-top: 1.5rem;
+  border-top: 0.5px solid var(--border);
+}
+.footer-label {
+  font-family: var(--mono); font-size: 10.5px;
+  color: var(--text-tertiary); letter-spacing: 0.06em;
+}
+/* Site navigation */
+.site-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  height: 48px;
+  background: #fff;
+  border-bottom: 0.5px solid var(--border);
+  z-index: 100;
+}
+.nav-brand {
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-primary); text-decoration: none;
+}
+.nav-links { display: flex; gap: 2rem; }
+.nav-links a {
+  font-family: var(--mono); font-size: 10.5px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-tertiary); text-decoration: none;
+  transition: color 0.15s;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--text-primary); }
+@media (max-width: 600px) {
+  .site-nav { padding: 0 1rem; }
+  .nav-links { gap: 1rem; }
+  .nav-links a { font-size: 9px; }
+  .team-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a class="nav-brand" href="/index-stylized.html">Mapping AI</a>
+  <div class="nav-links">
+    <a href="/index-stylized.html">Map</a>
+    <a href="/theoryofchange.html">Theory of Change</a>
+    <a href="/contribute.html">Contribute</a>
+    <a href="/about.html">About</a>
+  </div>
+</nav>
+
+<div class="doc">
+  <div class="eyebrow">Mapping AI</div>
+  <h1>About this project</h1>
+
+  <div class="section-label">Who we are</div>
+  <p>We are a working group of researchers, advocates, and practitioners building a comprehensive map of the U.S. AI policy landscape. Our goal is to identify who is shaping AI governance, where the coalitions are forming, and where the gaps are — and to use that map as the foundation for a coordinated progressive policy agenda ahead of 2028.</p>
+
+  <hr class="rule">
+
+  <div class="section-label">What we believe</div>
+  <p>We take x-risk seriously and believe the work of frontier labs and technical safety researchers is critically important. But if we can avoid realizing existential outcomes, governance is going to really matter too. Technical safety work is the prerequisite; governance is what shapes outcomes in the world where that work succeeds.</p>
+  <p>Our organizing principle is distribution — not as an afterthought, and not as redistribution after the fact, but as the design criterion for how AI's benefits flow. The question that unifies labor, safety, national security, and institutional design is the same: who captures value from American innovation, and on what terms?</p>
+
+  <hr class="rule">
+
+  <div class="section-label">The team</div>
+  <div class="team-grid">
+    <div class="team-item">
+      <div class="team-name">Sophia Wang</div>
+      <div class="team-role">Working Group</div>
+    </div>
+    <div class="team-item">
+      <div class="team-name">Pratyush Seshadri</div>
+      <div class="team-role">Working Group</div>
+    </div>
+    <div class="team-item">
+      <div class="team-name">Liv Sally</div>
+      <div class="team-role">Working Group</div>
+    </div>
+    <div class="team-item">
+      <div class="team-name">Anushree Chaudhuri</div>
+      <div class="team-role">Working Group</div>
+    </div>
+    <div class="team-item">
+      <div class="team-name">Raunak Chowdhuri</div>
+      <div class="team-role">Working Group</div>
+    </div>
+    <div class="team-item">
+      <div class="team-name">Robby Hill</div>
+      <div class="team-role">Working Group</div>
+    </div>
+  </div>
+
+  <hr class="rule">
+
+  <div class="section-label">Get involved</div>
+  <p>If you work in or adjacent to AI policy, governance, safety, labor, or civil society, we welcome your contributions to the map. <a href="/contribute.html">Add a person, organization, or resource →</a></p>
+
+  <div class="footer-row">
+    <span class="footer-label">Mapping AI Working Group · 2026</span>
+  </div>
+</div>
+
+<script>
+  const path = window.location.pathname;
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    if (a.getAttribute('href') === path) a.classList.add('active');
+  });
+</script>
+</body>
+</html>

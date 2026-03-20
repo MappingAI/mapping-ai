@@ -1,19 +1,34 @@
-
-<style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Theory of Change — Mapping AI</title>
+  <style>
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@400;500&display=swap');
-:root { --serif: 'EB Garamond', Georgia, serif; --mono: 'DM Mono', monospace; }
+:root {
+  --serif: 'EB Garamond', Georgia, serif;
+  --mono: 'DM Mono', monospace;
+  --text-primary: #1a1a1a;
+  --text-secondary: #555;
+  --text-tertiary: #888;
+  --border: #ddd;
+  --bg-secondary: #f8f7f5;
+  --accent: #2563eb;
+}
 * { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #fff; }
 .doc {
   max-width: 680px; margin: 0 auto;
-  padding: 2.5rem 1rem 3rem;
+  padding: calc(2.5rem + 48px) 1rem 3rem;
   font-family: var(--serif);
-  color: var(--color-text-primary);
+  color: var(--text-primary);
   font-size: 17px; line-height: 1.75;
 }
 .eyebrow {
   font-family: var(--mono); font-size: 11px;
   letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--color-text-secondary); margin-bottom: 0.75rem;
+  color: var(--text-secondary); margin-bottom: 0.75rem;
 }
 h1 {
   font-family: var(--serif); font-size: 28px;
@@ -22,84 +37,83 @@ h1 {
 }
 .subtitle {
   font-family: var(--mono); font-size: 12px;
-  color: var(--color-text-secondary); margin-bottom: 2.25rem; letter-spacing: 0.04em;
+  color: var(--text-secondary); margin-bottom: 2.25rem; letter-spacing: 0.04em;
 }
-.rule { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 2rem 0; }
+.rule { border: none; border-top: 0.5px solid var(--border); margin: 2rem 0; }
 .section-label {
   font-family: var(--mono); font-size: 10.5px;
   letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--color-text-tertiary); margin-bottom: 0.75rem;
+  color: var(--text-tertiary); margin-bottom: 0.75rem;
 }
 p { margin-bottom: 1.1rem; font-size: 16.5px; }
 p:last-child { margin-bottom: 0; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
 .pull {
-  border-left: 2px solid var(--color-border-secondary);
+  border-left: 2px solid var(--border);
   padding-left: 1.25rem; margin: 1.5rem 0;
   font-style: italic; font-size: 18px;
-  color: var(--color-text-primary); line-height: 1.6;
+  color: var(--text-primary); line-height: 1.6;
 }
 .two-col {
   display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.75rem; margin: 1.25rem 0;
 }
 .box {
-  background: var(--color-background-secondary);
-  border-radius: var(--border-radius-md);
+  background: var(--bg-secondary);
+  border-radius: 6px;
   padding: 0.9rem 1rem;
 }
 .box-label {
   font-family: var(--mono); font-size: 10px;
-  color: var(--color-text-tertiary); letter-spacing: 0.1em;
+  color: var(--text-tertiary); letter-spacing: 0.1em;
   text-transform: uppercase; margin-bottom: 0.35rem;
 }
 .box-title {
   font-family: var(--serif); font-size: 15.5px;
   font-weight: 500; margin-bottom: 0.4rem;
-  line-height: 1.3; color: var(--color-text-primary);
+  line-height: 1.3; color: var(--text-primary);
 }
 .box-body {
   font-family: var(--mono); font-size: 11.5px;
-  color: var(--color-text-secondary); line-height: 1.6;
+  color: var(--text-secondary); line-height: 1.6;
   margin-bottom: 0.6rem;
 }
-.box-links {
-  display: flex; flex-direction: column; gap: 0.25rem;
-}
+.box-links { display: flex; flex-direction: column; gap: 0.25rem; }
 .box-link {
   font-family: var(--mono); font-size: 10.5px;
-  color: var(--color-text-info); line-height: 1.4;
-  text-decoration: none;
+  color: var(--accent); line-height: 1.4; text-decoration: none;
 }
 .box-link:hover { text-decoration: underline; }
 .approach-block {
-  border-left: 1.5px solid var(--color-border-secondary);
+  border-left: 1.5px solid var(--border);
   padding-left: 1rem; margin-bottom: 1.4rem;
 }
 .approach-title {
   font-family: var(--serif); font-size: 16px;
   font-weight: 500; margin-bottom: 0.3rem;
-  color: var(--color-text-primary);
+  color: var(--text-primary);
 }
 .approach-body {
   font-family: var(--serif); font-size: 15.5px;
-  color: var(--color-text-secondary); line-height: 1.6;
+  color: var(--text-secondary); line-height: 1.6;
 }
 .steps { margin: 1.25rem 0; display: flex; flex-direction: column; }
 .step { display: grid; grid-template-columns: 36px 1fr; gap: 0 0.75rem; }
 .step-line { display: flex; flex-direction: column; align-items: center; }
 .step-dot {
   width: 9px; height: 9px; border-radius: 50%;
-  background: var(--color-text-secondary); flex-shrink: 0; margin-top: 6px;
+  background: var(--text-secondary); flex-shrink: 0; margin-top: 6px;
 }
 .step-connector {
-  width: 1px; flex: 1; background: var(--color-border-secondary);
+  width: 1px; flex: 1; background: var(--border);
   margin-top: 4px; min-height: 20px;
 }
 .step:last-child .step-connector { display: none; }
 .step-content { padding-bottom: 1.15rem; }
 .step-time {
   font-family: var(--mono); font-size: 10px;
-  color: var(--color-text-tertiary); letter-spacing: 0.1em;
+  color: var(--text-tertiary); letter-spacing: 0.1em;
   text-transform: uppercase; margin-bottom: 0.2rem;
 }
 .step-text { font-family: var(--serif); font-size: 15.5px; line-height: 1.55; }
@@ -108,15 +122,60 @@ p:last-child { margin-bottom: 0; }
   gap: 0.6rem; margin-top: 1.1rem;
 }
 .diff-item { display: flex; gap: 0.6rem; align-items: flex-start; }
-.diff-tick { font-family: var(--mono); font-size: 12px; color: var(--color-text-tertiary); margin-top: 2px; flex-shrink: 0; }
-.diff-text { font-family: var(--mono); font-size: 12px; color: var(--color-text-secondary); line-height: 1.55; }
+.diff-tick { font-family: var(--mono); font-size: 12px; color: var(--text-tertiary); margin-top: 2px; flex-shrink: 0; }
+.diff-text { font-family: var(--mono); font-size: 12px; color: var(--text-secondary); line-height: 1.55; }
 .footer-row {
   display: flex; justify-content: space-between; align-items: center;
   margin-top: 2.5rem; padding-top: 1.5rem;
-  border-top: 0.5px solid var(--color-border-tertiary);
+  border-top: 0.5px solid var(--border);
 }
-.footer-label { font-family: var(--mono); font-size: 10.5px; color: var(--color-text-tertiary); letter-spacing: 0.06em; }
+.footer-label { font-family: var(--mono); font-size: 10.5px; color: var(--text-tertiary); letter-spacing: 0.06em; }
+/* Site navigation */
+.site-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  height: 48px;
+  background: #fff;
+  border-bottom: 0.5px solid var(--border);
+  z-index: 100;
+}
+.nav-brand {
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-primary); text-decoration: none;
+}
+.nav-links { display: flex; gap: 2rem; }
+.nav-links a {
+  font-family: var(--mono); font-size: 10.5px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-tertiary); text-decoration: none;
+  transition: color 0.15s;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--text-primary); }
+@media (max-width: 600px) {
+  .site-nav { padding: 0 1rem; }
+  .nav-links { gap: 1rem; }
+  .nav-links a { font-size: 9px; }
+  .two-col { grid-template-columns: 1fr; }
+  .diff-grid { grid-template-columns: 1fr; }
+}
 </style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a class="nav-brand" href="/index-stylized.html">Mapping AI</a>
+  <div class="nav-links">
+    <a href="/index-stylized.html">Map</a>
+    <a href="/theoryofchange.html">Theory of Change</a>
+    <a href="/contribute.html">Contribute</a>
+    <a href="/about.html">About</a>
+  </div>
+</nav>
 
 <div class="doc">
   <div class="eyebrow">Project 2029 — Theory of Change</div>
@@ -133,7 +192,7 @@ p:last-child { margin-bottom: 0; }
   <hr class="rule">
 
   <div class="section-label">The existing landscape</div>
-  <p style="font-size:15px; color: var(--color-text-secondary); margin-bottom: 1.25rem;">Each camp has a diagnosis. None has a compact. This is the vacuum we are filling.</p>
+  <p style="font-size:15px; color: var(--text-secondary); margin-bottom: 1.25rem;">Each camp has a diagnosis. None has a compact. This is the vacuum we are filling.</p>
 
   <div class="two-col">
     <div class="box">
@@ -213,7 +272,7 @@ p:last-child { margin-bottom: 0; }
       <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
       <div class="step-content">
         <div class="step-time">Now — Apr 2026</div>
-        <div class="step-text"><a href="/index-stylized.html">Stakeholder map</a>, working draft, core team assembly. Begin outreach to first-ring contacts. This is where we are.</div>
+        <div class="step-text">Stakeholder map, working draft, core team assembly. Begin outreach to first-ring contacts. This is where we are.</div>
       </div>
     </div>
     <div class="step">
@@ -270,3 +329,12 @@ p:last-child { margin-bottom: 0; }
     <span class="footer-label">For internal circulation · March 2026</span>
   </div>
 </div>
+
+<script>
+  const path = window.location.pathname;
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    if (a.getAttribute('href') === path) a.classList.add('active');
+  });
+</script>
+</body>
+</html>
