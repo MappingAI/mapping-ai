@@ -270,9 +270,10 @@ a:hover { text-decoration: underline; }
     document.querySelector('.nav-links').classList.toggle('open');
   });
 
-  document.querySelectorAll('.team-toggle').forEach(btn => {
-    btn.addEventListener('click', () => {
-      btn.closest('.team-item').classList.toggle('open');
+  document.querySelectorAll('.team-item').forEach(item => {
+    item.addEventListener('click', (e) => {
+      if (e.target.closest('a')) return;
+      item.classList.toggle('open');
     });
   });
 </script>
