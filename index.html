@@ -352,7 +352,9 @@ a:hover { text-decoration: underline; }
 
   const tocLinks = Array.from(document.querySelectorAll('.toc-link'));
   const tocSections = tocLinks.map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+  let scrollAnimId = null;
   function smoothScrollTo(targetY, duration) {
+    if (scrollAnimId) cancelAnimationFrame(scrollAnimId);
     const startY = window.scrollY;
     const diff = targetY - startY;
     let start = null;
@@ -361,9 +363,9 @@ a:hover { text-decoration: underline; }
       const p = Math.min((ts - start) / duration, 1);
       const ease = p < 0.5 ? 2 * p * p : -1 + (4 - 2 * p) * p;
       window.scrollTo(0, startY + diff * ease);
-      if (p < 1) requestAnimationFrame(step);
+      scrollAnimId = p < 1 ? requestAnimationFrame(step) : null;
     }
-    requestAnimationFrame(step);
+    scrollAnimId = requestAnimationFrame(step);
   }
   tocLinks.forEach(link => {
     link.addEventListener('click', e => {
