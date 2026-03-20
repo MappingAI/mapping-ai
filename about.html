@@ -53,16 +53,36 @@ a:hover { text-decoration: underline; }
   background: var(--bg-secondary);
   border-radius: 6px;
   padding: 0.9rem 1rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+  border: 1px solid transparent;
 }
+.team-item:hover { border-color: var(--border); }
 .team-name {
   font-family: var(--serif); font-size: 16px;
   font-weight: 500; color: var(--text-primary);
   margin-bottom: 0.2rem;
+  display: flex; justify-content: space-between; align-items: baseline;
 }
+.team-toggle {
+  font-family: var(--mono); font-size: 14px;
+  color: var(--text-tertiary); transition: transform 0.2s ease;
+  flex-shrink: 0; margin-left: 0.5rem;
+}
+.team-item.open .team-toggle { transform: rotate(45deg); }
 .team-role {
   font-family: var(--mono); font-size: 11px;
   color: var(--text-tertiary); letter-spacing: 0.04em;
 }
+.team-bio {
+  font-family: var(--serif); font-size: 14.5px;
+  color: var(--text-secondary); line-height: 1.6;
+  margin-top: 0.6rem;
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+}
+.team-item.open .team-bio { max-height: 100px; opacity: 1; }
 .footer-row {
   display: flex; justify-content: center;
   margin-top: 3rem; padding-top: 1.5rem;
@@ -178,28 +198,34 @@ a:hover { text-decoration: underline; }
   <div class="section-label">The team</div>
   <div class="team-grid">
     <div class="team-item">
-      <div class="team-name"><a href="https://www.linkedin.com/in/sophia-j-wang/" target="_blank">Sophia Wang</a></div>
+      <div class="team-name"><a href="https://www.linkedin.com/in/sophia-j-wang/" target="_blank">Sophia Wang</a><span class="team-toggle">+</span></div>
       <div class="team-role">Working Group</div>
+      <div class="team-bio">Bio coming soon.</div>
     </div>
     <div class="team-item">
-      <div class="team-name"><a href="https://www.linkedin.com/in/pratyushseshadri/" target="_blank">Pratyush Seshadri</a></div>
+      <div class="team-name"><a href="https://www.linkedin.com/in/pratyushseshadri/" target="_blank">Pratyush Seshadri</a><span class="team-toggle">+</span></div>
       <div class="team-role">Working Group</div>
+      <div class="team-bio">Bio coming soon.</div>
     </div>
     <div class="team-item">
-      <div class="team-name"><a href="https://www.linkedin.com/in/oliviasally/" target="_blank">Liv Sally</a></div>
+      <div class="team-name"><a href="https://www.linkedin.com/in/oliviasally/" target="_blank">Liv Sally</a><span class="team-toggle">+</span></div>
       <div class="team-role">Working Group</div>
+      <div class="team-bio">Bio coming soon.</div>
     </div>
     <div class="team-item">
-      <div class="team-name"><a href="https://www.linkedin.com/in/anushree-chaudhuri/" target="_blank">Anushree Chaudhuri</a></div>
+      <div class="team-name"><a href="https://www.linkedin.com/in/anushree-chaudhuri/" target="_blank">Anushree Chaudhuri</a><span class="team-toggle">+</span></div>
       <div class="team-role">Working Group</div>
+      <div class="team-bio">Bio coming soon.</div>
     </div>
     <div class="team-item">
-      <div class="team-name"><a href="https://www.linkedin.com/in/sauhaarda/" target="_blank">Raunak Chowdhuri</a></div>
+      <div class="team-name"><a href="https://www.linkedin.com/in/sauhaarda/" target="_blank">Raunak Chowdhuri</a><span class="team-toggle">+</span></div>
       <div class="team-role">Working Group</div>
+      <div class="team-bio">Bio coming soon.</div>
     </div>
     <div class="team-item">
-      <div class="team-name"><a href="https://www.linkedin.com/in/robert-a-hill/" target="_blank">Robby Hill</a></div>
+      <div class="team-name"><a href="https://www.linkedin.com/in/robert-a-hill/" target="_blank">Robby Hill</a><span class="team-toggle">+</span></div>
       <div class="team-role">Working Group</div>
+      <div class="team-bio">Bio coming soon.</div>
     </div>
   </div>
 
@@ -220,6 +246,13 @@ a:hover { text-decoration: underline; }
   });
   document.querySelector('.nav-hamburger').addEventListener('click', () => {
     document.querySelector('.nav-links').classList.toggle('open');
+  });
+
+  document.querySelectorAll('.team-item').forEach(item => {
+    item.addEventListener('click', (e) => {
+      if (e.target.closest('a')) return;
+      item.classList.toggle('open');
+    });
   });
 </script>
 </body>
