@@ -74,6 +74,15 @@ a:hover { text-decoration: underline; }
   border-radius: 4px;
   background: #fff; color: var(--text-primary);
 }
+.field select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='none' stroke='%23888' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' d='M2 4l4 4 4-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  padding-right: 2.25rem;
+  cursor: pointer;
+}
 .field input:focus, .field select:focus, .field textarea:focus {
   outline: none; border-color: var(--text-secondary);
 }

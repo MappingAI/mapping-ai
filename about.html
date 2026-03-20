@@ -96,6 +96,15 @@ a:hover { text-decoration: underline; }
   font-family: var(--mono); font-size: 10.5px;
   color: var(--text-tertiary); letter-spacing: 0.06em;
 }
+.fade-in {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 /* Site navigation */
 .site-nav {
   position: fixed;
@@ -188,19 +197,19 @@ a:hover { text-decoration: underline; }
   <div class="eyebrow">Mapping AI</div>
   <h1>About this project</h1>
 
-  <div class="section-label">Who we are</div>
-  <p>We are a working group of researchers, policy experts, and practitioners building a comprehensive map of the U.S. AI policy landscape. Our goal is to identify who is shaping AI governance, where the coalitions are forming, and where the gaps are — and to use that map as the foundation for a coordinated progressive policy agenda ahead of 2028.</p>
+  <div class="section-label fade-in">Who we are</div>
+  <p class="fade-in">We are a working group of researchers, policy experts, and practitioners building a comprehensive map of the U.S. AI policy landscape. Our goal is to identify who is shaping AI governance, where the coalitions are forming, and where the gaps are — and to use that map as the foundation for a coordinated progressive policy agenda ahead of 2028.</p>
 
   <hr class="rule">
 
-  <div class="section-label">What we believe</div>
-  <p>We take existential risks seriously and believe the work of frontier labs and technical safety researchers is vitally important. But if we can avoid realizing existential outcomes, good governance will be critical to ensure human flourishing. Technical safety work is the prerequisite; governance is what shapes outcomes in the world where that work succeeds.</p>
-  <p>Our organizing principle is distribution — not as an afterthought, and not as redistribution after the fact, but as the design criterion for how AI's benefits flow. The question that unifies labor, safety, national security, and institutional design is the same: who captures value from American innovation, and on what terms?</p>
+  <div class="section-label fade-in">What we believe</div>
+  <p class="fade-in">We take existential risks seriously and believe the work of frontier labs and technical safety researchers is vitally important. But if we can avoid realizing existential outcomes, good governance will be critical to ensure human flourishing. Technical safety work is the prerequisite; governance is what shapes outcomes in the world where that work succeeds.</p>
+  <p class="fade-in">Our organizing principle is distribution — not as an afterthought, and not as redistribution after the fact, but as the design criterion for how AI's benefits flow. The question that unifies labor, safety, national security, and institutional design is the same: who captures value from American innovation, and on what terms?</p>
 
   <hr class="rule">
 
-  <div class="section-label">The team</div>
-  <div class="team-grid">
+  <div class="section-label fade-in">The team</div>
+  <div class="team-grid fade-in">
     <div class="team-item">
       <div class="team-header">
         <div class="team-name"><a href="https://www.linkedin.com/in/sophia-j-wang/" target="_blank">Sophia Wang</a></div>
@@ -253,8 +262,8 @@ a:hover { text-decoration: underline; }
 
   <hr class="rule">
 
-  <div class="section-label">Get involved</div>
-  <p>If you work in or adjacent to AI policy, governance, safety, labor, or civil society, we welcome your contributions to the map. <a href="/contribute.html">Add a person, organization, or resource →</a></p>
+  <div class="section-label fade-in">Get involved</div>
+  <p class="fade-in">If you work in or adjacent to AI policy, governance, safety, labor, or civil society, we welcome your contributions to the map. <a href="/contribute.html">Add a person, organization, or resource →</a></p>
 
   <div class="footer-row">
     <span class="footer-label">Mapping AI Working Group · 2026</span>
@@ -276,6 +285,11 @@ a:hover { text-decoration: underline; }
       item.classList.toggle('open');
     });
   });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
