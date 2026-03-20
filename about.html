@@ -62,12 +62,16 @@ a:hover { text-decoration: underline; }
   font-family: var(--serif); font-size: 16px;
   font-weight: 500; color: var(--text-primary);
   margin-bottom: 0.2rem;
-  display: flex; justify-content: space-between; align-items: baseline;
+}
+.team-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 0.2rem;
 }
 .team-toggle {
-  font-family: var(--mono); font-size: 14px;
+  font-family: var(--mono); font-size: 14px; line-height: 1;
   color: var(--text-tertiary); transition: transform 0.2s ease;
-  flex-shrink: 0; margin-left: 0.5rem;
+  background: none; border: none; cursor: pointer; padding: 0 2px;
+  flex-shrink: 0;
 }
 .team-item.open .team-toggle { transform: rotate(45deg); }
 .team-role {
@@ -198,32 +202,50 @@ a:hover { text-decoration: underline; }
   <div class="section-label">The team</div>
   <div class="team-grid">
     <div class="team-item">
-      <div class="team-name"><a href="https://www.linkedin.com/in/sophia-j-wang/" target="_blank">Sophia Wang</a><span class="team-toggle">+</span></div>
+      <div class="team-header">
+        <div class="team-name"><a href="https://www.linkedin.com/in/sophia-j-wang/" target="_blank">Sophia Wang</a></div>
+        <button class="team-toggle" aria-label="Expand">+</button>
+      </div>
       <div class="team-role">Working Group</div>
       <div class="team-bio">Bio coming soon.</div>
     </div>
     <div class="team-item">
-      <div class="team-name"><a href="https://www.linkedin.com/in/pratyushseshadri/" target="_blank">Pratyush Seshadri</a><span class="team-toggle">+</span></div>
+      <div class="team-header">
+        <div class="team-name"><a href="https://www.linkedin.com/in/pratyushseshadri/" target="_blank">Pratyush Seshadri</a></div>
+        <button class="team-toggle" aria-label="Expand">+</button>
+      </div>
       <div class="team-role">Working Group</div>
       <div class="team-bio">Bio coming soon.</div>
     </div>
     <div class="team-item">
-      <div class="team-name"><a href="https://www.linkedin.com/in/oliviasally/" target="_blank">Liv Sally</a><span class="team-toggle">+</span></div>
+      <div class="team-header">
+        <div class="team-name"><a href="https://www.linkedin.com/in/oliviasally/" target="_blank">Liv Sally</a></div>
+        <button class="team-toggle" aria-label="Expand">+</button>
+      </div>
       <div class="team-role">Working Group</div>
       <div class="team-bio">Bio coming soon.</div>
     </div>
     <div class="team-item">
-      <div class="team-name"><a href="https://www.linkedin.com/in/anushree-chaudhuri/" target="_blank">Anushree Chaudhuri</a><span class="team-toggle">+</span></div>
+      <div class="team-header">
+        <div class="team-name"><a href="https://www.linkedin.com/in/anushree-chaudhuri/" target="_blank">Anushree Chaudhuri</a></div>
+        <button class="team-toggle" aria-label="Expand">+</button>
+      </div>
       <div class="team-role">Working Group</div>
       <div class="team-bio">Bio coming soon.</div>
     </div>
     <div class="team-item">
-      <div class="team-name"><a href="https://www.linkedin.com/in/sauhaarda/" target="_blank">Raunak Chowdhuri</a><span class="team-toggle">+</span></div>
+      <div class="team-header">
+        <div class="team-name"><a href="https://www.linkedin.com/in/sauhaarda/" target="_blank">Raunak Chowdhuri</a></div>
+        <button class="team-toggle" aria-label="Expand">+</button>
+      </div>
       <div class="team-role">Working Group</div>
       <div class="team-bio">Bio coming soon.</div>
     </div>
     <div class="team-item">
-      <div class="team-name"><a href="https://www.linkedin.com/in/robert-a-hill/" target="_blank">Robby Hill</a><span class="team-toggle">+</span></div>
+      <div class="team-header">
+        <div class="team-name"><a href="https://www.linkedin.com/in/robert-a-hill/" target="_blank">Robby Hill</a></div>
+        <button class="team-toggle" aria-label="Expand">+</button>
+      </div>
       <div class="team-role">Working Group</div>
       <div class="team-bio">Bio coming soon.</div>
     </div>
@@ -248,10 +270,9 @@ a:hover { text-decoration: underline; }
     document.querySelector('.nav-links').classList.toggle('open');
   });
 
-  document.querySelectorAll('.team-item').forEach(item => {
-    item.addEventListener('click', (e) => {
-      if (e.target.closest('a')) return;
-      item.classList.toggle('open');
+  document.querySelectorAll('.team-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      btn.closest('.team-item').classList.toggle('open');
     });
   });
 </script>
