@@ -124,13 +124,22 @@ a:hover { text-decoration: underline; }
   margin-top: 4px; min-height: 20px;
 }
 .step:last-child .step-connector { display: none; }
-.step-content { padding-bottom: 1.15rem; }
+.step-content { padding-bottom: 1.15rem; transition: transform 0.2s ease; }
+.step:hover .step-content { transform: translateX(4px); }
 .step-time {
   font-family: var(--mono); font-size: 10px;
   color: var(--text-tertiary); letter-spacing: 0.1em;
   text-transform: uppercase; margin-bottom: 0.2rem;
+  transition: color 0.2s ease;
 }
-.step-text { font-family: var(--serif); font-size: 15.5px; line-height: 1.55; }
+.step:hover .step-time { color: var(--accent); }
+.step-text {
+  font-family: var(--serif); font-size: 15.5px; line-height: 1.55;
+  transition: color 0.2s ease;
+}
+.step:hover .step-text { color: var(--text-primary); }
+.step-dot { transition: background 0.2s ease, transform 0.2s ease; }
+.step:hover .step-dot { background: var(--accent); transform: scale(1.3); }
 .diff-grid {
   display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.6rem; margin-top: 1.1rem;
