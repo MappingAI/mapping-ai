@@ -441,23 +441,37 @@ a:hover { text-decoration: underline; }
 
   const tocLinks = Array.from(document.querySelectorAll('.toc-link'));
   const tocSections = tocLinks.map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
-  let lastClickedIdx = null;
-  tocLinks.forEach((link, i) => link.addEventListener('click', () => { lastClickedIdx = i; }));
-  function updateToc() {
-    const fromTop = window.scrollY + 72;
-    let scrollIdx = 0;
-    tocSections.forEach((s, i) => {
-      if (s.getBoundingClientRect().top + window.scrollY <= fromTop) scrollIdx = i;
-    });
-    const atBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 8;
-    let activeIdx;
-    if (atBottom) {
-      activeIdx = lastClickedIdx !== null ? Math.max(scrollIdx, lastClickedIdx) : tocLinks.length - 1;
-    } else {
-      activeIdx = scrollIdx;
-      lastClickedIdx = null;
+  function smoothScrollTo(targetY, duration) {
+    const startY = window.scrollY;
+    const diff = targetY - startY;
+    let start = null;
+    function step(ts) {
+      if (!start) start = ts;
+      const p = Math.min((ts - start) / duration, 1);
+      const ease = p < 0.5 ? 2 * p * p : -1 + (4 - 2 * p) * p;
+      window.scrollTo(0, startY + diff * ease);
+      if (p < 1) requestAnimationFrame(step);
     }
+    requestAnimationFrame(step);
+  }
+  tocLinks.forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) smoothScrollTo(target.getBoundingClientRect().top + window.scrollY - 64, 750);
+    });
+  });
+  function updateToc() {
     tocLinks.forEach(l => l.classList.remove('active'));
+    if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 8) {
+      tocLinks[tocLinks.length - 1].classList.add('active');
+      return;
+    }
+    const fromTop = window.scrollY + 72;
+    let activeIdx = 0;
+    tocSections.forEach((s, i) => {
+      if (s.getBoundingClientRect().top + window.scrollY <= fromTop) activeIdx = i;
+    });
     tocLinks[activeIdx].classList.add('active');
   }
   window.addEventListener('scroll', updateToc, { passive: true });
