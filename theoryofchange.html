@@ -444,6 +444,8 @@ a:hover { text-decoration: underline; }
   let scrollAnimId = null;
   function smoothScrollTo(targetY, duration) {
     if (scrollAnimId) cancelAnimationFrame(scrollAnimId);
+    const html = document.documentElement;
+    html.style.scrollBehavior = 'auto';
     const startY = window.scrollY;
     const diff = targetY - startY;
     let start = null;
@@ -452,7 +454,12 @@ a:hover { text-decoration: underline; }
       const p = Math.min((ts - start) / duration, 1);
       const ease = p < 0.5 ? 2 * p * p : -1 + (4 - 2 * p) * p;
       window.scrollTo(0, startY + diff * ease);
-      scrollAnimId = p < 1 ? requestAnimationFrame(step) : null;
+      if (p < 1) {
+        scrollAnimId = requestAnimationFrame(step);
+      } else {
+        scrollAnimId = null;
+        html.style.scrollBehavior = 'smooth';
+      }
     }
     scrollAnimId = requestAnimationFrame(step);
   }
