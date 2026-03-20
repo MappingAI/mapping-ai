@@ -15,7 +15,7 @@ function readCSV(filename) {
 
 async function seed() {
   // --- People ---
-  const people = readCSV('People-Grid view.csv');
+  const people = readCSV('data/People-Grid view.csv');
   console.log(`Seeding ${people.length} people...`);
 
   // Deduplicate by name (CSV has some duplicates like Brian Schatz, Marsha Blackburn, David Sacks)
@@ -43,7 +43,7 @@ async function seed() {
   console.log(`  ✓ ${seenPeople.size} unique people seeded`);
 
   // --- Organizations ---
-  const orgs = readCSV('Organizations-Grid view.csv');
+  const orgs = readCSV('data/Organizations-Grid view.csv');
   console.log(`Seeding ${orgs.length} organizations...`);
 
   for (const row of orgs) {

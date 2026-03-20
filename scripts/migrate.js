@@ -47,9 +47,29 @@ async function migrate() {
   `;
   console.log('  ✓ organizations');
 
+  await sql`
+    CREATE TABLE IF NOT EXISTS resources (
+      id SERIAL PRIMARY KEY,
+      title VARCHAR(300) NOT NULL,
+      author VARCHAR(200),
+      resource_type VARCHAR(100),
+      url VARCHAR(500),
+      year VARCHAR(10),
+      category VARCHAR(200),
+      key_argument TEXT,
+      notes TEXT,
+      submitter_email VARCHAR(200),
+      submitted_at TIMESTAMPTZ DEFAULT NOW(),
+      status VARCHAR(20) DEFAULT 'pending',
+      created_at TIMESTAMPTZ DEFAULT NOW()
+    )
+  `;
+  console.log('  ✓ resources');
+
   // Index on status for filtered queries
   await sql`CREATE INDEX IF NOT EXISTS idx_people_status ON people(status)`;
   await sql`CREATE INDEX IF NOT EXISTS idx_organizations_status ON organizations(status)`;
+  await sql`CREATE INDEX IF NOT EXISTS idx_resources_status ON resources(status)`;
 
   console.log('Migration complete.');
 }

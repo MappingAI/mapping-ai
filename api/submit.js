@@ -29,12 +29,20 @@ export default async function handler(req, res) {
       return res.status(200).json({ success: true, message: 'Submission received' });
     }
 
-    if (!type || !data || !data.name) {
+    if (!type || !data) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    if (!['person', 'organization'].includes(type)) {
+    if (!['person', 'organization', 'resource'].includes(type)) {
       return res.status(400).json({ error: 'Invalid submission type' });
+    }
+
+    // Validate required field based on type
+    if ((type === 'person' || type === 'organization') && !data.name) {
+      return res.status(400).json({ error: 'Missing required field: name' });
+    }
+    if (type === 'resource' && !data.title) {
+      return res.status(400).json({ error: 'Missing required field: title' });
     }
 
     // Field length limits
@@ -71,7 +79,7 @@ export default async function handler(req, res) {
           'pending'
         )
       `;
-    } else {
+    } else if (type === 'organization') {
       await sql`
         INSERT INTO organizations (
           name, category, website, location, funding_model,
@@ -87,6 +95,25 @@ export default async function handler(req, res) {
           ${data.capabilityBelief || null},
           ${data.influenceType || null},
           ${data.twitter || null},
+          ${data.notes || null},
+          ${data.submitterEmail || null},
+          ${timestamp || new Date().toISOString()},
+          'pending'
+        )
+      `;
+    } else if (type === 'resource') {
+      await sql`
+        INSERT INTO resources (
+          title, author, resource_type, url, year, category,
+          key_argument, notes, submitter_email, submitted_at, status
+        ) VALUES (
+          ${data.title},
+          ${data.author || null},
+          ${data.resourceType || null},
+          ${data.url || null},
+          ${data.year || null},
+          ${data.category || null},
+          ${data.keyArgument || null},
           ${data.notes || null},
           ${data.submitterEmail || null},
           ${timestamp || new Date().toISOString()},
