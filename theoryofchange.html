@@ -155,10 +155,37 @@ a:hover { text-decoration: underline; }
   transition: color 0.15s;
 }
 .nav-links a:hover, .nav-links a.active { color: var(--text-primary); }
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+.nav-hamburger span {
+  display: block;
+  width: 20px;
+  height: 1.5px;
+  background: var(--text-primary);
+}
 @media (max-width: 600px) {
   .site-nav { padding: 0 1rem; }
-  .nav-links { gap: 1rem; }
-  .nav-links a { font-size: 9px; }
+  .nav-hamburger { display: flex; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 48px;
+    left: 0; right: 0;
+    background: #fff;
+    border-bottom: 0.5px solid var(--border);
+    flex-direction: column;
+    padding: 1rem 1.5rem;
+    gap: 1rem;
+  }
+  .nav-links.open { display: flex; }
   .two-col { grid-template-columns: 1fr; }
   .diff-grid { grid-template-columns: 1fr; }
 }
@@ -168,6 +195,9 @@ a:hover { text-decoration: underline; }
 
 <nav class="site-nav">
   <a class="nav-brand" href="/index.html">Mapping AI</a>
+  <button class="nav-hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
   <div class="nav-links">
     <a href="/index.html">Map</a>
     <a href="/theoryofchange.html">Theory of Change</a>
@@ -312,6 +342,9 @@ a:hover { text-decoration: underline; }
   const path = window.location.pathname;
   document.querySelectorAll('.nav-links a').forEach(a => {
     if (a.getAttribute('href') === path) a.classList.add('active');
+  });
+  document.querySelector('.nav-hamburger').addEventListener('click', () => {
+    document.querySelector('.nav-links').classList.toggle('open');
   });
 </script>
 </body>
