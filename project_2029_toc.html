@@ -1,0 +1,272 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@400;500&display=swap');
+:root { --serif: 'EB Garamond', Georgia, serif; --mono: 'DM Mono', monospace; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+.doc {
+  max-width: 680px; margin: 0 auto;
+  padding: 2.5rem 1rem 3rem;
+  font-family: var(--serif);
+  color: var(--color-text-primary);
+  font-size: 17px; line-height: 1.75;
+}
+.eyebrow {
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--color-text-secondary); margin-bottom: 0.75rem;
+}
+h1 {
+  font-family: var(--serif); font-size: 28px;
+  font-weight: 400; font-style: italic;
+  line-height: 1.25; margin-bottom: 0.25rem;
+}
+.subtitle {
+  font-family: var(--mono); font-size: 12px;
+  color: var(--color-text-secondary); margin-bottom: 2.25rem; letter-spacing: 0.04em;
+}
+.rule { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 2rem 0; }
+.section-label {
+  font-family: var(--mono); font-size: 10.5px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--color-text-tertiary); margin-bottom: 0.75rem;
+}
+p { margin-bottom: 1.1rem; font-size: 16.5px; }
+p:last-child { margin-bottom: 0; }
+.pull {
+  border-left: 2px solid var(--color-border-secondary);
+  padding-left: 1.25rem; margin: 1.5rem 0;
+  font-style: italic; font-size: 18px;
+  color: var(--color-text-primary); line-height: 1.6;
+}
+.two-col {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem; margin: 1.25rem 0;
+}
+.box {
+  background: var(--color-background-secondary);
+  border-radius: var(--border-radius-md);
+  padding: 0.9rem 1rem;
+}
+.box-label {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--color-text-tertiary); letter-spacing: 0.1em;
+  text-transform: uppercase; margin-bottom: 0.35rem;
+}
+.box-title {
+  font-family: var(--serif); font-size: 15.5px;
+  font-weight: 500; margin-bottom: 0.4rem;
+  line-height: 1.3; color: var(--color-text-primary);
+}
+.box-body {
+  font-family: var(--mono); font-size: 11.5px;
+  color: var(--color-text-secondary); line-height: 1.6;
+  margin-bottom: 0.6rem;
+}
+.box-links {
+  display: flex; flex-direction: column; gap: 0.25rem;
+}
+.box-link {
+  font-family: var(--mono); font-size: 10.5px;
+  color: var(--color-text-info); line-height: 1.4;
+  text-decoration: none;
+}
+.box-link:hover { text-decoration: underline; }
+.approach-block {
+  border-left: 1.5px solid var(--color-border-secondary);
+  padding-left: 1rem; margin-bottom: 1.4rem;
+}
+.approach-title {
+  font-family: var(--serif); font-size: 16px;
+  font-weight: 500; margin-bottom: 0.3rem;
+  color: var(--color-text-primary);
+}
+.approach-body {
+  font-family: var(--serif); font-size: 15.5px;
+  color: var(--color-text-secondary); line-height: 1.6;
+}
+.steps { margin: 1.25rem 0; display: flex; flex-direction: column; }
+.step { display: grid; grid-template-columns: 36px 1fr; gap: 0 0.75rem; }
+.step-line { display: flex; flex-direction: column; align-items: center; }
+.step-dot {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--color-text-secondary); flex-shrink: 0; margin-top: 6px;
+}
+.step-connector {
+  width: 1px; flex: 1; background: var(--color-border-secondary);
+  margin-top: 4px; min-height: 20px;
+}
+.step:last-child .step-connector { display: none; }
+.step-content { padding-bottom: 1.15rem; }
+.step-time {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--color-text-tertiary); letter-spacing: 0.1em;
+  text-transform: uppercase; margin-bottom: 0.2rem;
+}
+.step-text { font-family: var(--serif); font-size: 15.5px; line-height: 1.55; }
+.diff-grid {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem; margin-top: 1.1rem;
+}
+.diff-item { display: flex; gap: 0.6rem; align-items: flex-start; }
+.diff-tick { font-family: var(--mono); font-size: 12px; color: var(--color-text-tertiary); margin-top: 2px; flex-shrink: 0; }
+.diff-text { font-family: var(--mono); font-size: 12px; color: var(--color-text-secondary); line-height: 1.55; }
+.footer-row {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 2.5rem; padding-top: 1.5rem;
+  border-top: 0.5px solid var(--color-border-tertiary);
+}
+.footer-label { font-family: var(--mono); font-size: 10.5px; color: var(--color-text-tertiary); letter-spacing: 0.06em; }
+</style>
+
+<div class="doc">
+  <div class="eyebrow">Project 2029 — Theory of Change</div>
+  <h1>The Endless Frontier, Revisited</h1>
+  <div class="subtitle">Working Draft · March 2026</div>
+
+  <div class="section-label">The problem</div>
+  <p>AI is a step-function change that demands a fundamental renegotiation between government, industry, and the public – in short, a new technology-society compact. Neither party currently has a coherent position on what that renegotiation should look like. The conversation is stuck in old paradigms — the US-China race, accelerationism vs. safety, regulate vs. accelerate — none of which answer the foundational question: who captures the value from American technological innovation, and on what terms?</p>
+
+  <p>The historical record offers a clear model: when a step-function technology arrives, societies that build new institutions to match the moment distribute its benefits broadly. Electrification is the proof of concept. By 1935, 90% of urban homes had power and 10% of rural ones did — forty years after the technology existed. FDR didn't wait for markets or subsidize private utilities; he built new institutional forms, the Rural Electrification Administration and cooperative financing structures that communities owned themselves. By 1950, the gap had closed. AI has arrived faster than electricity ever did. The question isn't whether our institutions will be tested — it's whether we build the ones that are equal to the moment.</p>
+
+  <p>AI's concentration is unlike prior technologies. A handful of firms now control not just a market or an infrastructure, but the frontier of knowledge production itself — built on decades of publicly funded research, open-source infrastructure, and the accumulated output of human knowledge and creativity — and currently returns nothing to that shared national foundation by structure. There is no compact governing this. The public investment is real. The public return is not.</p>
+
+  <hr class="rule">
+
+  <div class="section-label">The existing landscape</div>
+  <p style="font-size:15px; color: var(--color-text-secondary); margin-bottom: 1.25rem;">Each camp has a diagnosis. None has a compact. This is the vacuum we are filling.</p>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-label">The right</div>
+      <div class="box-title">Win the race</div>
+      <div class="box-body">Deregulate, accelerate, dominate. The US-China frame defines everything. Distribution is an afterthought; workforce training is the concession to labor. Preempting state regulation is the active political agenda right now.</div>
+      <div class="box-links">
+        <a class="box-link" href="https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf" target="_blank">↗ America's AI Action Plan</a>
+        <a class="box-link" href="https://www.hyperdimensional.co/p/how-i-approach-ai-policy" target="_blank">↗ Dean Ball, "How I Approach AI Policy"</a>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-label">Democratic establishment</div>
+      <div class="box-title">Guardrails and grievance</div>
+      <div class="box-body">Safety, privacy, job protections, civil rights. Defensive framing with no animating theory. The Sanders/Khanna energy is real but proposals stop at labor protections and worker bargaining — good but not structural. The left has largely treated AI as something to mock or fear rather than govern.</div>
+      <div class="box-links">
+        <a class="box-link" href="https://www.foxnews.com/opinion/rep-ro-khanna-we-need-new-tech-social-contract-reclaim-ai-from-billionaires" target="_blank">↗ Khanna, "A New Tech Social Contract"</a>
+        <a class="box-link" href="https://www.alexbores.nyc/files/Bores_AI_Framework.pdf" target="_blank">↗ Alex Bores, AI Framework for Congress</a>
+        <a class="box-link" href="https://www.transformernews.ai/p/the-left-is-missing-out-on-ai-sanders-doctorow-bender-bores" target="_blank">↗ Kagan-Kans, "The Left is Missing Out on AI"</a>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-label">Safety / alignment — short timelines camp</div>
+      <div class="box-title">Race to safety through speed</div>
+      <div class="box-body">AGI is imminent; the priority is ensuring the right actors win. Concentrated control in "responsible" Western labs is preferable to fragmentation. Distribution and labor are not primary concerns — and some in this camp are structurally allied with the "win the race" right even if their threat models differ. These texts have shaped DC discourse more than any others.</div>
+      <div class="box-links">
+        <a class="box-link" href="https://situational-awareness.ai/" target="_blank">↗ Aschenbrenner, "Situational Awareness"</a>
+        <a class="box-link" href="https://ai-2027.com/" target="_blank">↗ AI 2027 (Kokotajlo et al.)</a>
+        <a class="box-link" href="https://darioamodei.com/essay/machines-of-loving-grace" target="_blank">↗ Dario Amodei, "Machines of Loving Grace"</a>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-label">Safety / governance — institutional camp</div>
+      <div class="box-title">Govern the technology, not the race</div>
+      <div class="box-body">Focused on near-term harms, accountability, auditing, and institutional design. Closer to our frame — Anthropic's Responsible Scaling Policy is the most operationalized safety-governance bridge — but still largely defensive and decoupled from distribution and labor. The "normal technology" counter argues AI will diffuse slowly, giving institutions time to respond. The subset working on power concentration is a natural coalition partner.</div>
+      <div class="box-links">
+        <a class="box-link" href="https://www-cdn.anthropic.com/e670587677525f28df69b59e5fb4c22cc5461a17.pdf" target="_blank">↗ Anthropic Responsible Scaling Policy</a>
+        <a class="box-link" href="https://knightcolumbia.org/content/ai-as-normal-technology" target="_blank">↗ Narayanan & Kapoor, "AI as Normal Technology"</a>
+      </div>
+    </div>
+  </div>
+
+  <hr class="rule">
+
+  <div class="section-label">Our organizing principle</div>
+  <p>Distribution — not as an afterthought, and not as redistribution after the fact, but as the design criterion. Built into how innovation is financed. Built into how infrastructure is constructed. Built into how knowledge is maintained and how benefits flow. The question that unifies labor, safety, national security, and institutional design is the same: who captures value from American innovation, and on what terms? That is the question no camp is currently answering. It is the question this project is built around.</p>
+
+  <hr class="rule">
+
+  <div class="section-label">The approach</div>
+
+  <div class="approach-block">
+    <div class="approach-title">New institutions, not just new rules</div>
+    <div class="approach-body">The New Deal didn't just regulate — it built. The REA financed rural electric cooperatives; the TVA built and operated infrastructure directly. A new technology-society compact for AI requires the same ambition: an AI Accounting Office that measures how broadly benefits are distributed, a Digital REA that builds public AI infrastructure alongside private offerings, new financing instruments that make broad distribution the structural default, and a regulatory body with an affirmative mandate to build, not just constrain.</div>
+  </div>
+
+  <div class="approach-block">
+    <div class="approach-title">Adaptive governance</div>
+    <div class="approach-body">The 1930s programs governed a technology that changed slowly. AI requires all of that institutional ambition plus something the New Deal never had: governance that can update itself at the speed of the thing it's governing. Built-in review mechanisms, mandatory reassessment periods, and — critically — using AI tools themselves to model policy outcomes and stress-test proposals in something closer to real time.</div>
+  </div>
+
+  <div class="approach-block">
+    <div class="approach-title">Coalition across silos</div>
+    <div class="approach-body">Safety researchers, governance scholars, labor advocates, national security strategists, civil rights organizations, and industry leaders are working on adjacent problems with different threat models and vocabularies. No one is building the architecture across them. Distribution is the frame broad enough to hold all of them — because labor, safety, national security, and institutional design are all, at root, the same question. We will work with anyone who agrees that AI's capabilities should be leveraged to enhance human flourishing, regardless of where they start on the political spectrum.</div>
+  </div>
+
+  <div class="approach-block">
+    <div class="approach-title">Operational seriousness</div>
+    <div class="approach-body">Modeled on Project 2025 in capacity and coordination — specific proposals, named institutions, staffed with implementers, ready on day one — but oriented toward building public capacity rather than dismantling it. Every proposal is capacity-tested: who builds it, with what resources, on what timeline. The goal is not a white paper. It is a governing agenda.</div>
+  </div>
+
+  <hr class="rule">
+
+  <div class="section-label">Causal pathway</div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+      <div class="step-content">
+        <div class="step-time">Now — Apr 2026</div>
+        <div class="step-text">Stakeholder map, working draft, core team assembly. Begin outreach to first-ring contacts. This is where we are.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+      <div class="step-content">
+        <div class="step-time">May – Aug 2026</div>
+        <div class="step-text">Expert review workshops validate the framework and convert reviewers into endorsers. Domain experts co-author or formally consult on each section. Industry participants see a positive-sum case for engagement, not a compliance burden.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+      <div class="step-content">
+        <div class="step-time">Late 2026 — Midterms</div>
+        <div class="step-text">Launch endorsed framework with co-signatories spanning academia, former officials, industry, labor, and civil society. Set the intellectual terms of the debate before the incumbent frames harden into the default.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+      <div class="step-content">
+        <div class="step-time">Early 2027</div>
+        <div class="step-text">Congressional champion introduces legislation in the 120th Congress, making the framework a live vehicle that 2028 candidates must engage with.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+      <div class="step-content">
+        <div class="step-time">2028 Primary</div>
+        <div class="step-text">Presidential candidates adopt elements of the framework. AI governance becomes a defining issue on kitchen-table terms — who benefits from American innovation — not elite policy discourse.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
+      <div class="step-content">
+        <div class="step-time">2029 — Day one</div>
+        <div class="step-text">A new administration has a specific, staffed technology-society compact ready to implement. New institutions are not drafted — they are ready to build.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="rule">
+
+  <div class="section-label">What makes this different</div>
+  <div class="diff-grid">
+    <div class="diff-item"><span class="diff-tick">—</span><span class="diff-text">Distribution as the organizing principle — the one frame that unifies labor, safety, national security, and institutional design</span></div>
+    <div class="diff-item"><span class="diff-tick">—</span><span class="diff-text">Explicitly cross-partisan — we work with anyone who agrees that AI's capabilities should serve human flourishing</span></div>
+    <div class="diff-item"><span class="diff-tick">—</span><span class="diff-text">Coalition architecture across groups that currently work in silos</span></div>
+    <div class="diff-item"><span class="diff-tick">—</span><span class="diff-text">Adaptive governance — institutions designed to update their own priors at the speed of the technology</span></div>
+    <div class="diff-item"><span class="diff-tick">—</span><span class="diff-text">A constructive vision, not just a critique — building public capacity rather than constraining private behavior</span></div>
+    <div class="diff-item"><span class="diff-tick">—</span><span class="diff-text">Operational seriousness: specific, staffed, capacity-tested, ready on day one</span></div>
+  </div>
+
+  <div class="footer-row">
+    <span class="footer-label">Project 2029</span>
+    <span class="footer-label">For internal circulation · March 2026</span>
+  </div>
+</div>
