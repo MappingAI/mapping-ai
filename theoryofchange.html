@@ -442,12 +442,16 @@ a:hover { text-decoration: underline; }
   const tocLinks = Array.from(document.querySelectorAll('.toc-link'));
   const tocSections = tocLinks.map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
   function updateToc() {
+    tocLinks.forEach(l => l.classList.remove('active'));
+    if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 8) {
+      tocLinks[tocLinks.length - 1].classList.add('active');
+      return;
+    }
     const fromTop = window.scrollY + 72;
     let activeIdx = 0;
     tocSections.forEach((s, i) => {
       if (s.getBoundingClientRect().top + window.scrollY <= fromTop) activeIdx = i;
     });
-    tocLinks.forEach(l => l.classList.remove('active'));
     tocLinks[activeIdx].classList.add('active');
   }
   window.addEventListener('scroll', updateToc, { passive: true });
