@@ -135,6 +135,17 @@ a:hover { text-decoration: underline; }
   font-family: var(--mono); font-size: 10.5px;
   color: var(--text-tertiary); letter-spacing: 0.06em;
 }
+.cta-btn {
+  display: inline-block;
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 0.7rem 1.5rem;
+  background: var(--text-primary); color: #fff;
+  border-radius: 4px; text-decoration: none;
+  transition: opacity 0.15s;
+  margin-bottom: 2.5rem;
+}
+.cta-btn:hover { opacity: 0.85; text-decoration: none; }
 @media (max-width: 600px) {
   .grid { grid-template-columns: 1fr; }
   .form.active { grid-template-columns: 1fr; }
@@ -148,6 +159,7 @@ a:hover { text-decoration: underline; }
 <div class="doc">
   <div class="eyebrow">Mapping AI</div>
   <h1>Mapping the U.S. AI Policy Landscape</h1>
+  <a href="/contribute.html" class="cta-btn">Contribute to the Map</a>
 
   <div class="section-label">What</div>
   <p>We are building a comprehensive map of the organizations, individuals, and coalitions currently shaping or with the potential to influence AI policy in the United States leading up to 2028. The goal is to produce a structured, shareable, and dynamic resource that identifies who is working on what, where the gaps are, and where coalitions might form across ideological lines.</p>
@@ -179,9 +191,6 @@ a:hover { text-decoration: underline; }
   <div class="section-label">Vision</div>
   <p>If this mapping effort is successful, we hope it can build toward a coalition around creating a <a href="/theoryofchange.html">technology policy platform for 2028</a> that is transformative in the way Vannevar Bush's <em>Endless Frontier</em> was for the postwar era: not just regulating emerging technology, but building the institutions and explicating the science-society compact to ensure its benefits are broadly shared and its risks are pragmatically mitigated.</p>
 
-
-  <div class="section-label">Contribute</div>
-  <p>We're compiling an initial list of organizations, individuals, and influential resources. If you work in or adjacent to any of the categories above, we welcome your input on who and what should be included. <a href="/contribute.html">Add a person, organization, or resource →</a></p>
 
   <div class="footer-row">
     <span class="footer-label">Mapping AI Working Group · 2026</span>
