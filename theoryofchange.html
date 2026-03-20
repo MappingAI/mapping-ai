@@ -246,7 +246,7 @@ a:hover { text-decoration: underline; }
   position: fixed;
   top: 50%;
   transform: translateY(-50%);
-  left: calc(50% - 340px - 1.5rem - 130px);
+  left: calc(50% - 340px - 3rem - 130px);
   width: 130px;
 }
 @media (min-width: 1200px) {
@@ -257,7 +257,7 @@ a:hover { text-decoration: underline; }
   font-family: var(--mono); font-size: 10px;
   letter-spacing: 0.07em; text-transform: uppercase;
   color: var(--text-tertiary); text-decoration: none;
-  padding: 0.28rem 0 0.28rem 0.65rem;
+  padding: 0.45rem 0 0.45rem 0.65rem;
   border-left: 1px solid transparent;
   transition: color 0.15s ease, border-color 0.15s ease;
   line-height: 1.4;
@@ -267,6 +267,7 @@ a:hover { text-decoration: underline; }
   color: var(--text-primary);
   border-left-color: var(--text-primary);
 }
+.section-label[id] { scroll-margin-top: 64px; }
 </style>
 </head>
 <body>
@@ -439,18 +440,23 @@ a:hover { text-decoration: underline; }
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
   const tocLinks = document.querySelectorAll('.toc-link');
-  const tocObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        tocLinks.forEach(l => l.classList.remove('active'));
-        const link = document.querySelector(`.toc-link[href="#${entry.target.id}"]`);
-        if (link) link.classList.add('active');
-      }
-    });
-  }, { rootMargin: '-48px 0px -75% 0px', threshold: 0 });
-  document.querySelectorAll('[id]').forEach(el => {
-    if (document.querySelector(`.toc-link[href="#${el.id}"]`)) tocObserver.observe(el);
-  });
+  const tocSections = [...document.querySelectorAll('[id]')].filter(el =>
+    document.querySelector(`.toc-link[href="#${el.id}"]`)
+  );
+  function updateToc() {
+    const scrollY = window.scrollY + 72;
+    let active = tocSections[0];
+    for (const s of tocSections) {
+      if (s.getBoundingClientRect().top + window.scrollY <= scrollY) active = s;
+    }
+    tocLinks.forEach(l => l.classList.remove('active'));
+    if (active) {
+      const link = document.querySelector(`.toc-link[href="#${active.id}"]`);
+      if (link) link.classList.add('active');
+    }
+  }
+  window.addEventListener('scroll', updateToc, { passive: true });
+  updateToc();
 </script>
 </body>
 </html>
