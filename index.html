@@ -168,6 +168,33 @@ a:hover { text-decoration: underline; }
   .field.full { grid-column: span 1; }
   .submit { grid-column: span 1; }
 }
+/* Table of contents */
+.toc {
+  display: none;
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  left: calc(50% - 340px - 1.5rem - 130px);
+  width: 130px;
+}
+@media (min-width: 1200px) {
+  .toc { display: block; }
+}
+.toc-link {
+  display: block;
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.07em; text-transform: uppercase;
+  color: var(--text-tertiary); text-decoration: none;
+  padding: 0.28rem 0 0.28rem 0.65rem;
+  border-left: 1px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+  line-height: 1.4;
+}
+.toc-link:hover { color: var(--text-secondary); text-decoration: none; }
+.toc-link.active {
+  color: var(--text-primary);
+  border-left-color: var(--text-primary);
+}
 /* Site navigation */
 .site-nav {
   position: fixed;
@@ -255,24 +282,33 @@ a:hover { text-decoration: underline; }
   </div>
 </nav>
 
+<nav class="toc">
+  <a class="toc-link" href="#what">What</a>
+  <a class="toc-link" href="#why-now">Why Now</a>
+  <a class="toc-link" href="#the-gap">The Gap</a>
+  <a class="toc-link" href="#who">Who We're Mapping</a>
+  <a class="toc-link" href="#vision">Vision</a>
+  <a class="toc-link" href="#take-part">Take Part</a>
+</nav>
+
 <div class="doc">
   <div class="eyebrow">Mapping AI</div>
   <h1>Mapping the U.S. AI Policy Landscape</h1>
   <a href="/contribute.html" class="cta-btn">Contribute to the Map</a>
 
-  <div class="section-label fade-in">What</div>
+  <div id="what" class="section-label fade-in">What</div>
   <p class="fade-in">We are building a comprehensive map of the individuals and groups with the potential to shape AI policy in the United States. The goal is to produce a structured, shareable, and dynamic resource that identifies <span class="emph">who is working on what, where the gaps are, and which partnerships might form</span> across ideological and organizational lines.</p>
 
 
-  <div class="section-label fade-in">Why Now</div>
+  <div id="why-now" class="section-label fade-in">Why Now</div>
   <p class="fade-in"><span class="emph">The landscape of AI policy in the U.S. is fragmented.</span> Safety researchers, frontier labs, legislators, civil society, and investors all have a stake in AI governance, yet there is no public resource showing where these actors stand on critical issues in AI. The 2026 midterms and 2028 presidential elections are rapidly approaching, and these groups have already laid the intellectual groundwork for candidates' technology platforms. A clear layout of the competing worldviews and theories of change is a necessary step to political coordination. <span class="emph">This work is long overdue—those who engage first will set the terms of discussion.</span></p>
 
 
-  <div class="section-label fade-in">The Gap</div>
+  <div id="the-gap" class="section-label fade-in">The Gap</div>
   <p class="fade-in">Michel Justen's <a href="https://substack.com/home/post/p-185759007" target="_blank" rel="noopener noreferrer">"A Guide to the AI Tribes"</a> provides a useful taxonomy of the ideological camps shaping AI discourse, while <a href="https://www.aisafety.com/map" target="_blank" rel="noopener noreferrer">aisafety.com</a> visualizes the safety ecosystem. <span class="emph">But we've yet to see anything that maps the full potential of the policy landscape</span>—civil society, industry, government—and where these actors stand on crucial governance questions, such as the technology's capabilities and the role of public policy. We aim to fill that gap.</p>
 
 
-  <div class="section-label fade-in">Who We're Mapping</div>
+  <div id="who" class="section-label fade-in">Who We're Mapping</div>
   <div class="grid fade-in">
     <div class="grid-item"><span>Frontier labs</span>OpenAI, Anthropic, DeepMind, Meta AI, xAI</div>
     <div class="grid-item"><span>AI safety & alignment</span>MIRI, CAIS, ARC, Redwood, Apollo</div>
@@ -287,10 +323,10 @@ a:hover { text-decoration: underline; }
   </div>
 
 
-  <div class="section-label fade-in">Vision</div>
+  <div id="vision" class="section-label fade-in">Vision</div>
   <p class="fade-in">By mapping key actors, we hope to identify and fuse a new partnership for AI governance. We intend this alliance to be as transformative for <a href="/theoryofchange.html">technology policy</a> as the NSF, NIH, and DARPA were in the postwar period. <span class="emph">The goal is not just to regulate emerging technology, but to articulate a new social contract between the technological frontier and the public—and to build the institutions necessary to realize that vision.</span></p>
 
-  <div class="section-label fade-in">Take Part</div>
+  <div id="take-part" class="section-label fade-in">Take Part</div>
   <p class="fade-in">We're compiling an initial list of organizations, individuals, and influential resources. If you work in or adjacent to any of the categories above, we welcome your input on who and what should be included. <a href="/contribute.html"><span class="emph">Add a person, organization, or resource →</span></a></p>
 
 
@@ -312,6 +348,20 @@ a:hover { text-decoration: underline; }
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
   }, { threshold: 0.1 });
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  const tocLinks = document.querySelectorAll('.toc-link');
+  const tocObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        tocLinks.forEach(l => l.classList.remove('active'));
+        const link = document.querySelector(`.toc-link[href="#${entry.target.id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-48px 0px -75% 0px', threshold: 0 });
+  document.querySelectorAll('[id]').forEach(el => {
+    if (document.querySelector(`.toc-link[href="#${el.id}"]`)) tocObserver.observe(el);
+  });
 </script>
 </body>
 </html>

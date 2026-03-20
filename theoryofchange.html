@@ -240,6 +240,33 @@ a:hover { text-decoration: underline; }
   .two-col { grid-template-columns: 1fr; }
   .diff-grid { grid-template-columns: 1fr; }
 }
+/* Table of contents */
+.toc {
+  display: none;
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  left: calc(50% - 340px - 1.5rem - 130px);
+  width: 130px;
+}
+@media (min-width: 1200px) {
+  .toc { display: block; }
+}
+.toc-link {
+  display: block;
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.07em; text-transform: uppercase;
+  color: var(--text-tertiary); text-decoration: none;
+  padding: 0.28rem 0 0.28rem 0.65rem;
+  border-left: 1px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+  line-height: 1.4;
+}
+.toc-link:hover { color: var(--text-secondary); text-decoration: none; }
+.toc-link.active {
+  color: var(--text-primary);
+  border-left-color: var(--text-primary);
+}
 </style>
 </head>
 <body>
@@ -257,16 +284,24 @@ a:hover { text-decoration: underline; }
   </div>
 </nav>
 
+<nav class="toc">
+  <a class="toc-link" href="#the-problem">The Problem</a>
+  <a class="toc-link" href="#the-landscape">The Landscape</a>
+  <a class="toc-link" href="#our-principle">Our Principle</a>
+  <a class="toc-link" href="#the-approach">The Approach</a>
+  <a class="toc-link" href="#causal-pathway">Causal Pathway</a>
+  <a class="toc-link" href="#whats-different">What's Different</a>
+</nav>
 
 <div class="doc">
   <div class="eyebrow">Project 2029 — Theory of Change</div>
   <h1>The Endless Frontier, Revisited</h1>
   <div class="subtitle">Working Draft · March 2026</div>
-  <div class="section-label fade-in">The problem</div>
+  <div id="the-problem" class="section-label fade-in">The problem</div>
   <p class="fade-in">AI is a step-function change that demands a fundamental renegotiation between government, industry, and the public – in short, a new technology-society compact. Neither party currently has a coherent position on what that renegotiation should look like. The conversation is stuck in old paradigms — the US-China race, accelerationism vs. safety, regulate vs. accelerate — none of which answer the foundational question: who captures the value from American technological innovation, and on what terms?</p>
   <p class="fade-in">The historical record offers a clear model: when a step-function technology arrives, societies that build new institutions to match the moment distribute its benefits broadly. Electrification is the proof of concept. By 1935, 90% of urban homes had power and 10% of rural ones did — forty years after the technology existed. FDR didn't wait for markets or subsidize private utilities; he built new institutional forms, the Rural Electrification Administration and cooperative financing structures that communities owned themselves. By 1950, the gap had closed. AI has arrived faster than electricity ever did. The question isn't whether our institutions will be tested — it's whether we build the ones that are equal to the moment.</p>
   <p class="fade-in">AI's concentration is unlike prior technologies. A handful of firms now control not just a market or an infrastructure, but the frontier of knowledge production itself — built on decades of publicly funded research, open-source infrastructure, and the accumulated output of human knowledge and creativity — and currently returns nothing to that shared national foundation by structure. There is no compact governing this. The public investment is real. The public return is not.</p>
-  <div class="section-label fade-in">The existing landscape</div>
+  <div id="the-landscape" class="section-label fade-in">The existing landscape</div>
   <p class="fade-in" style="font-size:15px; color: var(--text-secondary); margin-bottom: 1.25rem;">Each camp has a diagnosis. None has a compact. This is the vacuum we are filling.</p>
 
 
@@ -310,9 +345,9 @@ a:hover { text-decoration: underline; }
       </div>
     </div>
   </div>
-  <div class="section-label fade-in">Our organizing principle</div>
+  <div id="our-principle" class="section-label fade-in">Our organizing principle</div>
   <p class="fade-in">Distribution — not as an afterthought, and not as redistribution after the fact, but as the design criterion. Built into how innovation is financed. Built into how infrastructure is constructed. Built into how knowledge is maintained and how benefits flow. The question that unifies labor, safety, national security, and institutional design is the same: who captures value from American innovation, and on what terms? That is the question no camp is currently answering. It is the question this project is built around.</p>
-  <div class="section-label fade-in">The approach</div>
+  <div id="the-approach" class="section-label fade-in">The approach</div>
   <div class="approach-block fade-in">
     <div class="approach-title">New institutions, not just new rules</div>
     <div class="approach-body">The New Deal didn't just regulate — it built. The REA financed rural electric cooperatives; the TVA built and operated infrastructure directly. A new technology-society compact for AI requires the same ambition: an AI Accounting Office that measures how broadly benefits are distributed, a Digital REA that builds public AI infrastructure alongside private offerings, new financing instruments that make broad distribution the structural default, and a regulatory body with an affirmative mandate to build, not just constrain.</div>
@@ -329,7 +364,7 @@ a:hover { text-decoration: underline; }
     <div class="approach-title">Operational seriousness</div>
     <div class="approach-body">Modeled on Project 2025 in capacity and coordination — specific proposals, named institutions, staffed with implementers, ready on day one — but oriented toward building public capacity rather than dismantling it. Every proposal is capacity-tested: who builds it, with what resources, on what timeline. The goal is not a white paper. It is a governing agenda.</div>
   </div>
-  <div class="section-label fade-in">Causal pathway</div>
+  <div id="causal-pathway" class="section-label fade-in">Causal pathway</div>
   <div class="steps fade-in">
     <div class="step">
       <div class="step-line"><div class="step-dot"></div><div class="step-connector"></div></div>
@@ -374,7 +409,7 @@ a:hover { text-decoration: underline; }
       </div>
     </div>
   </div>
-  <div class="section-label fade-in">What makes this different</div>
+  <div id="whats-different" class="section-label fade-in">What makes this different</div>
   <div class="diff-grid fade-in">
     <div class="diff-item"><span class="diff-title">Distribution</span><span class="diff-text">Our organizing principle — the one frame that unifies labor, safety, national security, and institutional design</span></div>
     <div class="diff-item"><span class="diff-title">Explicitly cross-partisan</span><span class="diff-text">We work with anyone who agrees that AI's capabilities should serve human flourishing</span></div>
@@ -402,6 +437,20 @@ a:hover { text-decoration: underline; }
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
   }, { threshold: 0.1 });
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  const tocLinks = document.querySelectorAll('.toc-link');
+  const tocObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        tocLinks.forEach(l => l.classList.remove('active'));
+        const link = document.querySelector(`.toc-link[href="#${entry.target.id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-48px 0px -75% 0px', threshold: 0 });
+  document.querySelectorAll('[id]').forEach(el => {
+    if (document.querySelector(`.toc-link[href="#${el.id}"]`)) tocObserver.observe(el);
+  });
 </script>
 </body>
 </html>
