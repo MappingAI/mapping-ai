@@ -10,8 +10,8 @@ Single-page website that collects crowdsourced data about people and organizatio
 
 - **Frontend**: Static HTML/CSS/JS (no framework)
 - **Styling**: Space Grotesk font, Antikythera-inspired design
-- **Backend**: Vercel serverless function (`api/submit.js`)
-- **Data Storage**: JSON files committed to GitHub via API
+- **Backend**: Vercel serverless functions (`api/submit.js`, `api/submissions.js`)
+- **Database**: Vercel Postgres (Neon) — `people` and `organizations` tables
 - **Hosting**: Vercel
 
 ## Project Structure
@@ -22,10 +22,11 @@ mapping-ai/
 ├── styles.css              # All styling
 ├── script.js               # Form toggle + submission logic
 ├── api/
-│   └── submit.js           # Vercel serverless function
-├── submissions/
-│   ├── people/             # Person submissions (JSON)
-│   └── organizations/      # Organization submissions (JSON)
+│   ├── submit.js           # POST endpoint — insert submissions
+│   └── submissions.js      # GET endpoint — query submissions
+├── scripts/
+│   ├── migrate.js          # Create database tables
+│   └── seed.js             # Import CSV data into database
 ├── vercel.json             # Vercel build configuration
 └── *.csv                   # Source data exports from Airtable
 ```
@@ -37,7 +38,8 @@ mapping-ai/
 | `index.html:69-130` | Person submission form |
 | `index.html:132-189` | Organization submission form |
 | `script.js:24-66` | Form submission handler |
-| `api/submit.js:4-90` | GitHub API integration |
+| `api/submit.js` | Postgres INSERT (person or organization) |
+| `api/submissions.js` | Postgres SELECT with status/type filters |
 | `styles.css:37-49` | Sticky sidebar layout |
 | `styles.css:109-130` | Stakeholder grid (tan background) |
 
@@ -54,9 +56,9 @@ npx serve .
 
 | Variable | Description |
 |----------|-------------|
-| `GITHUB_TOKEN` | Fine-grained PAT with Contents read/write |
-| `GITHUB_REPO` | Repository path (e.g., `sophiajwang/mapping-ai`) |
-| `GITHUB_BRANCH` | Target branch (default: `main`) |
+| `POSTGRES_URL` | Auto-set when Vercel Postgres is linked |
+
+(Connection string env vars are auto-populated by Vercel when a Postgres database is attached to the project.)
 
 ## Data Schema
 
