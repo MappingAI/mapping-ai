@@ -4,203 +4,198 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mapping AI</title>
-  <link rel="stylesheet" href="assets/css/styles.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@400;500&display=swap');
+:root {
+  --serif: 'EB Garamond', Georgia, serif;
+  --mono: 'DM Mono', monospace;
+  --text-primary: #1a1a1a;
+  --text-secondary: #555;
+  --text-tertiary: #888;
+  --border: #ddd;
+  --bg-secondary: #f8f7f5;
+  --accent: #2563eb;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #fff; }
+.doc {
+  max-width: 680px; margin: 0 auto;
+  padding: 3rem 1.5rem 4rem;
+  font-family: var(--serif);
+  color: var(--text-primary);
+  font-size: 17px; line-height: 1.75;
+}
+.eyebrow {
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--text-secondary); margin-bottom: 0.75rem;
+}
+h1 {
+  font-family: var(--serif); font-size: 32px;
+  font-weight: 400; font-style: italic;
+  line-height: 1.25; margin-bottom: 2rem;
+}
+.rule { border: none; border-top: 0.5px solid var(--border); margin: 2.5rem 0; }
+.section-label {
+  font-family: var(--mono); font-size: 10.5px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-tertiary); margin-bottom: 0.75rem;
+}
+p { margin-bottom: 1.1rem; font-size: 16.5px; }
+p:last-child { margin-bottom: 0; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.pull {
+  border-left: 2px solid var(--border);
+  padding-left: 1.25rem; margin: 1.5rem 0;
+  font-style: italic; font-size: 18px;
+  color: var(--text-primary); line-height: 1.6;
+}
+.grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem; margin: 1.25rem 0;
+}
+.grid-item {
+  background: var(--bg-secondary);
+  border-radius: 6px;
+  padding: 0.9rem 1rem;
+  font-family: var(--mono); font-size: 12px;
+  color: var(--text-secondary); line-height: 1.5;
+}
+.grid-item span {
+  display: block;
+  font-family: var(--serif); font-size: 15px;
+  font-weight: 500; color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+.form-toggle {
+  display: flex; gap: 0.5rem; margin: 1.5rem 0 1rem;
+}
+.toggle {
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border);
+  background: #fff; color: var(--text-secondary);
+  border-radius: 4px; cursor: pointer;
+  transition: all 0.15s;
+}
+.toggle:hover { border-color: var(--text-secondary); }
+.toggle.active {
+  background: var(--text-primary); color: #fff;
+  border-color: var(--text-primary);
+}
+.form { display: none; }
+.form.active { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.field { display: flex; flex-direction: column; }
+.field.full { grid-column: span 2; }
+.field label {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-tertiary); margin-bottom: 0.35rem;
+}
+.field input, .field select, .field textarea {
+  font-family: var(--serif); font-size: 15px;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: #fff; color: var(--text-primary);
+}
+.field input:focus, .field select:focus, .field textarea:focus {
+  outline: none; border-color: var(--text-secondary);
+}
+.field textarea { resize: vertical; min-height: 80px; }
+.honeypot { position: absolute; left: -9999px; }
+.submit {
+  grid-column: span 2;
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 0.75rem 1.5rem;
+  background: var(--text-primary); color: #fff;
+  border: none; border-radius: 4px;
+  cursor: pointer; transition: opacity 0.15s;
+  margin-top: 0.5rem;
+}
+.submit:hover { opacity: 0.85; }
+.success {
+  font-family: var(--mono); font-size: 13px;
+  color: var(--text-secondary);
+  padding: 1rem;
+  background: var(--bg-secondary);
+  border-radius: 4px;
+  margin-top: 1rem;
+}
+.hidden { display: none; }
+.footer-row {
+  display: flex; justify-content: center;
+  margin-top: 3rem; padding-top: 1.5rem;
+  border-top: 0.5px solid var(--border);
+}
+.footer-label {
+  font-family: var(--mono); font-size: 10.5px;
+  color: var(--text-tertiary); letter-spacing: 0.06em;
+}
+.cta-btn {
+  display: inline-block;
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 0.7rem 1.5rem;
+  background: var(--text-primary); color: #fff;
+  border-radius: 4px; text-decoration: none;
+  transition: opacity 0.15s;
+  margin-bottom: 2.5rem;
+}
+.cta-btn:hover { opacity: 0.85; text-decoration: none; }
+@media (max-width: 600px) {
+  .grid { grid-template-columns: 1fr; }
+  .form.active { grid-template-columns: 1fr; }
+  .field.full { grid-column: span 1; }
+  .submit { grid-column: span 1; }
+}
+</style>
 </head>
 <body>
-  <div class="sidebar">
-    <div class="logo-card">
-      <img src="assets/images/mapping-ai-cropped.jpeg" alt="Mapping AI">
-    </div>
+
+<div class="doc">
+  <div class="eyebrow">Mapping AI</div>
+  <h1>Mapping the U.S. AI Policy Landscape</h1>
+  <a href="/contribute.html" class="cta-btn">Contribute to the Map</a>
+
+  <div class="section-label">What</div>
+  <p>We are building a comprehensive map of the organizations, individuals, and coalitions currently shaping or with the potential to influence AI policy in the United States leading up to 2028. The goal is to produce a structured, shareable, and dynamic resource that identifies who is working on what, where the gaps are, and where coalitions might form across ideological lines.</p>
+
+
+  <div class="section-label">Why Now</div>
+  <p>AI policy in the U.S. is being shaped rapidly, but the landscape is fragmented. Safety researchers, frontier labs, think tanks, state legislators, labor organizers, academics, and civil society all have stakes in AI governance, yet there is no shared, public map (that we know of) of who is doing what. The 2026 midterms and 2028 presidential cycle will produce technology policy platforms on both sides, and the intellectual groundwork is being laid now. A clear map of the landscape, worldviews, and competing theories of change is a prerequisite for any serious effort to contribute.</p>
+
+
+  <div class="section-label">The Gap</div>
+  <p>Two recent pieces illustrate what exists and what is missing. Michel Justen's <a href="https://substack.com/home/post/p-185759007">"A Guide to the AI Tribes"</a> (Jan 2026) provides a useful taxonomy of the ideological camps shaping AI discourse. Dan Kagan-Kans' <a href="https://www.transformernews.ai/p/the-left-is-missing-out-on-ai-sanders-doctorow-bender-bores">"The Left is Missing Out on AI"</a> (Feb 2026) makes a compelling case that left and progressive institutions have largely refused to engage seriously with AI.</p>
+  <p>Yet we have not seen anything that maps the <em>full</em> potential of the policy landscape: the frontier labs and safety orgs, but also the investors, think tanks, state legislators, labor organizers, academics, creative guilds, and political operatives whose work will determine what AI policy actually looks like. We aim to fill that gap.</p>
+
+
+  <div class="section-label">Who We're Mapping</div>
+  <div class="grid">
+    <div class="grid-item"><span>Frontier labs</span>OpenAI, Anthropic, DeepMind, Meta AI, xAI</div>
+    <div class="grid-item"><span>AI safety & alignment</span>MIRI, CAIS, ARC, Redwood, Apollo</div>
+    <div class="grid-item"><span>Think tanks & policy orgs</span>Secure AI, IAPS, GovAI, New Consensus</div>
+    <div class="grid-item"><span>Government</span>Congressional offices, state legislatures, agencies</div>
+    <div class="grid-item"><span>Academic researchers</span>CS, econ, law, STS, political science</div>
+    <div class="grid-item"><span>VC & capital</span>a16z, Sequoia, YC, philanthropic funders</div>
+    <div class="grid-item"><span>Labor & civil society</span>Unions, creative guilds, advocacy orgs</div>
+    <div class="grid-item"><span>Ethics, bias & rights</span>AI Now, FAccT community, EFF</div>
+    <div class="grid-item"><span>Media & public discourse</span>Journalists, Substacks, podcasts</div>
   </div>
 
-  <main>
-    <section class="hero">
-      <h1>Mapping the U.S. AI Policy Landscape</h1>
-    </section>
 
-    <section class="block">
-      <h2>What</h2>
-      <p>We are building a comprehensive map of the organizations, individuals, and coalitions currently shaping or with the potential to influence AI policy in the United States leading up to 2028. The goal is to produce a structured, shareable, and dynamic resource that identifies who is working on what, where the gaps are, and where coalitions might form across ideological lines.</p>
-    </section>
+  <div class="section-label">Vision</div>
+  <p>If this mapping effort is successful, we hope it can build toward a coalition around creating a <a href="/theoryofchange.html">technology policy platform for 2028</a> that is transformative in the way Vannevar Bush's <em>Endless Frontier</em> was for the postwar era: not just regulating emerging technology, but building the institutions and explicating the science-society compact to ensure its benefits are broadly shared and its risks are pragmatically mitigated.</p>
 
-    <section class="block">
-      <h2>Why Now</h2>
-      <p>AI policy in the U.S. is being shaped rapidly, but the landscape is fragmented. Safety researchers, frontier labs, think tanks, state legislators, labor organizers, academics, and civil society all have stakes in AI governance, yet there is no shared, public map (that we know of) of who is doing what. The 2026 midterms and 2028 presidential cycle will produce technology policy platforms on both sides, and the intellectual groundwork is being laid now. A clear map of the landscape, worldviews, and competing theories of change is a prerequisite for any serious effort to contribute.</p>
-    </section>
 
-    <section class="block">
-      <h2>The Gap</h2>
-      <p>Two recent pieces illustrate what exists and what is missing. Michel Justen's <a href="https://substack.com/home/post/p-185759007">"A Guide to the AI Tribes"</a> (Jan 2026) provides a useful taxonomy of the ideological camps shaping AI discourse. Dan Kagan-Kans' <a href="https://www.transformernews.ai/p/the-left-is-missing-out-on-ai-sanders-doctorow-bender-bores">"The Left is Missing Out on AI"</a> (Feb 2026) makes a compelling case that left and progressive institutions have largely refused to engage seriously with AI.</p>
-      <p>Yet we have not seen anything that maps the <em>full</em> potential of the policy landscape: the frontier labs and safety orgs, but also the investors, think tanks, state legislators, labor organizers, academics, creative guilds, and political operatives whose work will determine what AI policy actually looks like. We aim to fill that gap.</p>
-    </section>
+  <div class="footer-row">
+    <span class="footer-label">Mapping AI Working Group · 2026</span>
+  </div>
+</div>
 
-    <section class="block">
-      <h2>Who We're Mapping</h2>
-      <div class="grid">
-        <div class="grid-item"><span>Frontier labs</span> OpenAI, Anthropic, DeepMind, Meta AI, xAI</div>
-        <div class="grid-item"><span>AI safety & alignment</span> MIRI, CAIS, ARC, Redwood, Apollo</div>
-        <div class="grid-item"><span>Think tanks & policy orgs</span> Secure AI, IAPS, GovAI, New Consensus</div>
-        <div class="grid-item"><span>Government</span> Congressional offices, state legislatures, agencies</div>
-        <div class="grid-item"><span>Academic researchers</span> CS, econ, law, STS, political science</div>
-        <div class="grid-item"><span>VC & capital</span> a16z, Sequoia, YC, philanthropic funders</div>
-        <div class="grid-item"><span>Labor & civil society</span> Unions, creative guilds, advocacy orgs</div>
-        <div class="grid-item"><span>Ethics, bias & rights</span> AI Now, FAccT community, EFF</div>
-        <div class="grid-item"><span>Media & public discourse</span> Journalists, Substacks, podcasts</div>
-      </div>
-    </section>
-
-    <section class="block">
-      <h2>Vision</h2>
-      <p>If this mapping effort is successful, we hope it can build toward a coalition around creating a technology policy platform for 2028 that is transformative in the way Vannevar Bush's <em>Endless Frontier</em> was for the postwar era: not just regulating emerging technology, but building the institutions and explicating the science-society compact to ensure its benefits are broadly shared and its risks are pragmatically mitigated.</p>
-    </section>
-
-    <section class="block">
-      <h2>Contribute</h2>
-      <p>We're compiling an initial list of organizations and individuals. If you work in or adjacent to any of the categories above, we welcome your input on who should be included.</p>
-
-      <div class="form-toggle">
-        <button class="toggle active" data-form="person">Add a Person</button>
-        <button class="toggle" data-form="organization">Add an Organization</button>
-      </div>
-
-      <form id="person-form" class="form active" data-type="person">
-        <input type="text" name="_hp" class="honeypot" tabindex="-1" autocomplete="off">
-        <div class="field">
-          <label>Name *</label>
-          <input type="text" name="name" required>
-        </div>
-        <div class="field">
-          <label>Category</label>
-          <select name="category">
-            <option value=""></option>
-            <option value="Frontier Lab">Frontier Lab</option>
-            <option value="AI Safety/Alignment">AI Safety/Alignment</option>
-            <option value="Think Tank/Policy Org">Think Tank/Policy Org</option>
-            <option value="Government/Agency">Government/Agency</option>
-            <option value="Academic">Academic</option>
-            <option value="VC/Capital/Philanthropy">VC/Capital/Philanthropy</option>
-            <option value="Labor/Civil Society">Labor/Civil Society</option>
-            <option value="Media/Journalism">Media/Journalism</option>
-            <option value="Political Campaign/PAC">Political Campaign/PAC</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Title</label>
-          <input type="text" name="title">
-        </div>
-        <div class="field">
-          <label>Primary org</label>
-          <input type="text" name="primaryOrg">
-        </div>
-        <div class="field">
-          <label>Other orgs</label>
-          <input type="text" name="otherOrgs">
-        </div>
-        <div class="field">
-          <label>Location</label>
-          <input type="text" name="location">
-        </div>
-        <div class="field">
-          <label>Regulatory stance</label>
-          <input type="text" name="regulatoryStance">
-        </div>
-        <div class="field">
-          <label>Capability belief</label>
-          <input type="text" name="capabilityBelief">
-        </div>
-        <div class="field">
-          <label>Influence type</label>
-          <input type="text" name="influenceType">
-        </div>
-        <div class="field">
-          <label>Twitter/X</label>
-          <input type="text" name="twitter">
-        </div>
-        <div class="field full">
-          <label>Notes</label>
-          <textarea name="notes" rows="3"></textarea>
-        </div>
-        <div class="field full">
-          <label>Your email (optional)</label>
-          <input type="email" name="submitterEmail">
-        </div>
-        <button type="submit" class="submit">Submit</button>
-      </form>
-
-      <form id="organization-form" class="form" data-type="organization">
-        <input type="text" name="_hp" class="honeypot" tabindex="-1" autocomplete="off">
-        <div class="field">
-          <label>Name *</label>
-          <input type="text" name="name" required>
-        </div>
-        <div class="field">
-          <label>Category</label>
-          <select name="category">
-            <option value=""></option>
-            <option value="Frontier Lab">Frontier Lab</option>
-            <option value="AI Safety/Alignment">AI Safety/Alignment</option>
-            <option value="Think Tank/Policy Org">Think Tank/Policy Org</option>
-            <option value="Government/Agency">Government/Agency</option>
-            <option value="Academic">Academic</option>
-            <option value="VC/Capital/Philanthropy">VC/Capital/Philanthropy</option>
-            <option value="Labor/Civil Society">Labor/Civil Society</option>
-            <option value="Media/Journalism">Media/Journalism</option>
-            <option value="Political Campaign/PAC">Political Campaign/PAC</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Website</label>
-          <input type="url" name="website">
-        </div>
-        <div class="field">
-          <label>Location</label>
-          <input type="text" name="location">
-        </div>
-        <div class="field">
-          <label>Funding model</label>
-          <input type="text" name="fundingModel">
-        </div>
-        <div class="field">
-          <label>Regulatory stance</label>
-          <input type="text" name="regulatoryStance">
-        </div>
-        <div class="field">
-          <label>Capability belief</label>
-          <input type="text" name="capabilityBelief">
-        </div>
-        <div class="field">
-          <label>Influence type</label>
-          <input type="text" name="influenceType">
-        </div>
-        <div class="field">
-          <label>Twitter/X</label>
-          <input type="text" name="twitter">
-        </div>
-        <div class="field full">
-          <label>Notes</label>
-          <textarea name="notes" rows="3"></textarea>
-        </div>
-        <div class="field full">
-          <label>Your email (optional)</label>
-          <input type="email" name="submitterEmail">
-        </div>
-        <button type="submit" class="submit">Submit</button>
-      </form>
-
-      <div id="success" class="success hidden">
-        Thank you. We'll review your submission.
-      </div>
-    </section>
-
-  </main>
-
-  <footer>
-    Mapping AI Working Group · 2026
-  </footer>
-
-  <script src="assets/js/script.js"></script>
 </body>
 </html>
