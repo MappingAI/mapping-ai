@@ -350,21 +350,16 @@ a:hover { text-decoration: underline; }
   }, { threshold: 0.1 });
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-  const tocLinks = document.querySelectorAll('.toc-link');
-  const tocSections = [...document.querySelectorAll('[id]')].filter(el =>
-    document.querySelector(`.toc-link[href="#${el.id}"]`)
-  );
+  const tocLinks = Array.from(document.querySelectorAll('.toc-link'));
+  const tocSections = tocLinks.map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
   function updateToc() {
-    const scrollY = window.scrollY + 72;
-    let active = tocSections[0];
-    for (const s of tocSections) {
-      if (s.getBoundingClientRect().top + window.scrollY <= scrollY) active = s;
-    }
+    const fromTop = window.scrollY + 72;
+    let activeIdx = 0;
+    tocSections.forEach((s, i) => {
+      if (s.getBoundingClientRect().top + window.scrollY <= fromTop) activeIdx = i;
+    });
     tocLinks.forEach(l => l.classList.remove('active'));
-    if (active) {
-      const link = document.querySelector(`.toc-link[href="#${active.id}"]`);
-      if (link) link.classList.add('active');
-    }
+    tocLinks[activeIdx].classList.add('active');
   }
   window.addEventListener('scroll', updateToc, { passive: true });
   updateToc();
