@@ -48,7 +48,6 @@ a:hover { text-decoration: underline; }
 .team-grid {
   display: grid; grid-template-columns: repeat(2, 1fr);
   gap: 0.75rem; margin: 1.25rem 0;
-  align-items: start;
 }
 .team-item {
   background: var(--bg-secondary);
@@ -84,7 +83,7 @@ a:hover { text-decoration: underline; }
   color: var(--text-secondary); line-height: 1.6;
   margin-top: 0.6rem;
   max-height: 0; overflow: hidden;
-  transition: max-height 0.3s ease, opacity 0.3s ease;
+  transition: max-height 0.6s ease, opacity 0.6s ease;
   opacity: 0;
 }
 .team-item.open .team-bio { max-height: 100px; opacity: 1; }
