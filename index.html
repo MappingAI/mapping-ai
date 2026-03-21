@@ -356,6 +356,7 @@ a:hover { text-decoration: underline; }
   function smoothScrollTo(targetY, duration) {
     if (scrollAnimId) cancelAnimationFrame(scrollAnimId);
     const html = document.documentElement;
+    targetY = Math.min(targetY, Math.max(0, html.scrollHeight - window.innerHeight));
     html.style.scrollBehavior = 'auto';
     const startY = window.scrollY;
     const diff = targetY - startY;
