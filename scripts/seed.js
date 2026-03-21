@@ -9,7 +9,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, '..');
 
 function readCSV(filename) {
-  const content = readFileSync(resolve(root, filename), 'utf-8');
+  const content = readFileSync(resolve(root, filename), 'utf-8').replace(/^\uFEFF/, '');
   return parse(content, { columns: true, skip_empty_lines: true, trim: true });
 }
 
