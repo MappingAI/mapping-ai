@@ -112,6 +112,17 @@ a:hover { text-decoration: underline; }
   font-family: var(--serif); font-size: 15.5px;
   color: var(--text-secondary); line-height: 1.6;
 }
+.approach-items {
+  margin-top: 0.6rem;
+  display: flex; flex-direction: column; gap: 0.25rem;
+}
+.approach-item {
+  font-family: var(--serif); font-size: 15px;
+  color: var(--text-secondary); line-height: 1.5;
+}
+.approach-item strong {
+  color: var(--text-primary); font-weight: 500;
+}
 .steps { margin: 1.25rem 0; display: flex; flex-direction: column; }
 .step { display: grid; grid-template-columns: 36px 1fr; gap: 0 0.75rem; }
 .step-line { display: flex; flex-direction: column; align-items: center; }
@@ -297,28 +308,31 @@ a:hover { text-decoration: underline; }
   <div class="eyebrow">Mapping AI — Theory of Change</div>
   <h1>The Endless Frontier, Revisited</h1>
   <div class="subtitle">Working Draft · March 2026</div>
+
   <div id="the-problem" class="section-label fade-in">The problem</div>
-  <p class="fade-in">AI is a step-function change that demands a fundamental renegotiation between government, industry, and the public. In short, a new technology-society compact. Neither party currently has a coherent position on what that renegotiation should look like. The conversation is stuck in old paradigms – the US-China race, accelerationism vs. safety, regulate vs. accelerate – none of which answer the foundational question: on what terms is the value of American technological innovation delivered?</p>
-  <p class="fade-in">The historical record offers a clear model: when a step-function technology arrives, societies that build new institutions to match the moment distribute its benefits broadly. Electrification is the proof of concept. By 1935, 90% of urban homes had power and 10% of rural ones did, forty years after the technology existed. FDR didn't wait for markets or subsidize private utilities; he built new institutional forms, the Rural Electrification Administration and cooperative financing structures that communities owned themselves. By 1950, the gap had closed. AI has arrived faster than electricity ever did, and unlike electricity it carries risks that demand governance not just distribution. History suggests we have a narrow window to build the right institutions before private capture becomes the structural default. That window is now.</p>
-  <p class="fade-in">AI's progression is unlike that of prior technologies. A handful of firms now control not just a market or an infrastructure, but the frontier of knowledge production itself, built atop decades of publicly funded research, open-source infrastructure, human-generated data, and combined human ingenuity. Yet these firms currently have no obligation to return value to the public. There is no compact governing this relationship, and the shared inheritance has suffered as a result.</p>
+  <p class="fade-in">AI represents a step change that demands a renegotiation between government, industry, and the public. In short, a new social contract. But the conversation today is stuck in old paradigms: the US vs. China, accelerationism vs. safety, regulation vs. laissez faire. None of these address the fundamental question: on what terms is the value of American technological innovation captured?</p>
+  <p class="fade-in">The historical record offers a clear model: when a revolutionary technology arrives, societies that build new institutions to meet the moment are able to distribute that technology's benefits broadly. Consider American electrification. By 1935, forty years after the construction of the first power plants, 90% of urban homes had power, but only 10% of rural ones did. Rather than subsidize private utilities or wait for the markets to adapt, FDR and the New Deal coalition created the Rural Electrification Administration, Tennessee Valley Authority, and community-owned financing structures. By 1950, the rural/urban electricity gap had closed.</p>
+  <p class="fade-in">Our existing institutions were not designed to handle the AI transition. The question is: can we build the new institutions we desperately need?</p>
+  <p class="fade-in">Crucially, AI is different from electricity. Its adoption is faster than any other technology in history. Its risks are existential. And it's owned by a handful of firms, controlling not just a market or an infrastructure, but the frontier of knowledge production itself. These companies built their products upon decades of publicly funded research, open-source infrastructure, human-generated data, and combined ingenuity, yet have no obligation to return value to the public—and face no real consequences if something goes terribly wrong. There is no compact governing this relationship. Our shared inheritance depends on forging a new one.</p>
+
   <div id="the-landscape" class="section-label fade-in">The existing landscape</div>
   <p class="fade-in" style="font-size:15px; color: var(--text-secondary); margin-bottom: 1.25rem;">Each camp has a diagnosis. None has a compact. This is the vacuum we are filling.</p>
-
 
   <div class="two-col fade-in">
     <div class="box">
       <div class="box-label">The right</div>
       <div class="box-title">Win the race</div>
-      <div class="box-body">Deregulate, accelerate, dominate. The US-China frame defines everything. Distribution is an afterthought; workforce training is the concession to labor. Preempting state regulation is the active political agenda right now.</div>
+      <div class="box-body">Deregulate, accelerate, and dominate. The US-China frame is a prominent motivator. Distribution is an afterthought; workforce training is the concession to labor. Preempting state regulation is the active political agenda right now.</div>
       <div class="box-links">
         <a class="box-link" href="https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf" target="_blank" rel="noopener noreferrer">↗ America's AI Action Plan</a>
         <a class="box-link" href="https://www.hyperdimensional.co/p/how-i-approach-ai-policy" target="_blank" rel="noopener noreferrer">↗ Dean Ball, "How I Approach AI Policy"</a>
+        <span class="box-link">↗ White House, "A National Policy Framework for Artificial Intelligence"</span>
       </div>
     </div>
     <div class="box">
       <div class="box-label">Democratic establishment</div>
       <div class="box-title">Safety and transition</div>
-      <div class="box-body">Privacy, civil rights, job protections, responsible deployment. Senator Kelly's AI Horizon Fund would tax AI gains to fund workforce retraining. Sanders and Khanna have centered labor's voice in how AI is deployed. Proposals have not yet cohered into a structural compact.</div>
+      <div class="box-body">Privacy, civil rights, job protections, and responsible deployment. Proposes taxing AI gains to fund workforce retraining, and generally frames labor issues in terms of AI deployment. Proposals have not yet cohered into a structural compact.</div>
       <div class="box-links">
         <a class="box-link" href="https://www.kelly.senate.gov/wp-content/uploads/2025/09/KELLY-AI-FOR-AMERICA.pdf" target="_blank" rel="noopener noreferrer">↗ Kelly, AI for America</a>
         <a class="box-link" href="https://www.foxnews.com/opinion/rep-ro-khanna-we-need-new-tech-social-contract-reclaim-ai-from-billionaires" target="_blank" rel="noopener noreferrer">↗ Khanna, "A New Tech Social Contract"</a>
@@ -329,7 +343,7 @@ a:hover { text-decoration: underline; }
     <div class="box">
       <div class="box-label">Safety / alignment — short timelines camp</div>
       <div class="box-title">Race to safety through speed</div>
-      <div class="box-body">AGI is imminent; the priority is ensuring the right actors win. Concentrated control in "responsible" Western labs is preferable to fragmentation. A smaller but vocal camp, Yudkowsky and Soares being prominent voices, argues that alignment is unsolved and building superintelligence before it is solved risks catastrophic, potentially irreversible outcomes.</div>
+      <div class="box-body">AGI is imminent; the priority is ensuring the right actors win. Concentrated control in "responsible" Western labs is preferable to fragmentation. A subset argues that alignment is unsolved and building superintelligence before it is solved risks catastrophic, potentially irreversible outcomes.</div>
       <div class="box-links">
         <a class="box-link" href="https://situational-awareness.ai/" target="_blank" rel="noopener noreferrer">↗ Aschenbrenner, "Situational Awareness"</a>
         <a class="box-link" href="https://ai-2027.com/" target="_blank" rel="noopener noreferrer">↗ AI 2027 (Kokotajlo et al.)</a>
@@ -340,36 +354,72 @@ a:hover { text-decoration: underline; }
     <div class="box">
       <div class="box-label">Safety / governance — institutional camp</div>
       <div class="box-title">Govern the technology, not the race</div>
-      <div class="box-body">Focused on near-term harms, accountability, auditing, and institutional design. Closer to our frame — Anthropic's Responsible Scaling Policy is the most operationalized safety-governance bridge — but still largely defensive and decoupled from distribution and labor. The "normal technology" counter argues AI will diffuse slowly, giving institutions time to respond. The subset working on power concentration is a natural coalition partner.</div>
+      <div class="box-body">Focused on near-term harms, accountability, auditing, and institutional design, but still largely defensive and decoupled from distribution and labor. Internal factions argue that AI will diffuse slowly, giving institutions time to respond. Power concentration is a key point of focus.</div>
       <div class="box-links">
-        <a class="box-link" href="https://www-cdn.anthropic.com/e670587677525f28df69b59e5fb4c22cc5461a17.pdf" target="_blank" rel="noopener noreferrer">↗ Anthropic Responsible Scaling Policy</a>
         <a class="box-link" href="https://knightcolumbia.org/content/ai-as-normal-technology" target="_blank" rel="noopener noreferrer">↗ Narayanan & Kapoor, "AI as Normal Technology"</a>
+        <a class="box-link" href="https://shapingwork.mit.edu/power-and-progress/" target="_blank" rel="noopener noreferrer">↗ Acemoglu & Johnson, Power and Progress</a>
       </div>
     </div>
   </div>
+
   <div id="our-principle" class="section-label fade-in">Our operating principle</div>
-  <p class="fade-in">Commonwealth: AI built for the public. Systemic by design rather than redistributive downstream, built into how innovation is financed, the infrastructure we construct, the knowledge we maintain and the benefits we distribute. This framing unifies labor, safety, national security, and institutional design under the one question no camp is currently answering: who captures value from American innovation, and on what terms? That is the question no camp is currently answering and this project is built around.</p>
+  <p class="fade-in">Commonwealth: AI for the public, building from how innovation is financed, how infrastructure is constructed, and how knowledge is maintained. The emphasis is on distributing gains to the public by design, rather than downstream redistribution alone. Bringing together labor, safety, national security, and institutional design, our aim is to proactively ensure that the American public captures the value of American innovation. The overarching mandate is to secure public return.</p>
+
   <div id="the-mechanisms" class="section-label fade-in">The mechanisms</div>
   <div class="approach-block fade-in">
     <div class="approach-title">01 — Institutional construction</div>
-    <div class="approach-body">Government should be a maker, not only a regulator or a customer. The REA not only regulated private utilities into serving rural America, it built a new institutional form that private utilities never would. A new compact for AI requires the same constructive ambition: an AI Accounting Office that continuously measures how capabilities are developing and how broadly benefits are flowing; a Digital REA that builds public compute and open AI infrastructure alongside private offerings; and a regulatory body with an affirmative mandate to build, not just constrain.</div>
+    <div class="approach-body">Government must create, not just regulate or subsidize. The New Deal's REA both regulated private utilities to serve rural America and built new institutional forms that private utilities never would. A new compact for AI requires the same constructive ambition, to three new ends:
+      <div class="approach-items">
+        <div class="approach-item"><strong>Measurement:</strong> continuous assessment of how capabilities develop and how broadly benefits flow.</div>
+        <div class="approach-item"><strong>Access:</strong> development of public compute and AI infrastructure alongside private offerings.</div>
+        <div class="approach-item"><strong>Steering:</strong> regulation with an affirmative mandate to build, not just bind.</div>
+      </div>
+    </div>
   </div>
   <div class="approach-block fade-in">
     <div class="approach-title">02 — Return architecture</div>
-    <div class="approach-body">Public investment should generate public return by structure, not by taxation after concentration has already occurred. The problem with redistribution as a governance strategy is that it operates on outcomes while leaving intact the architecture of who captures value in the first place. A new compact intervenes at the source. That means cooperative ownership structures where the people receiving a service own the infrastructure, shared resources treated as public property from the start, financing instruments that don't require monopolistic scale to be worthwhile. These are early directions in a design space still being built out. The principle is fixed even where the instruments are not: return by design.</div>
+    <div class="approach-body">Public investment should generate public return by structure, not by taxation after concentration has already occurred. The problem with redistribution as a governance strategy is that it operates on outcomes while leaving intact the architecture of who captures value in the first place. A new compact intervenes at the source, meaning:
+      <div class="approach-items">
+        <div class="approach-item"><strong>Ownership:</strong> cooperative ownership structures where the users own the infrastructure.</div>
+        <div class="approach-item"><strong>Commons:</strong> shared resources are treated as public property from the start.</div>
+        <div class="approach-item"><strong>Financing:</strong> capital instruments that don't require monopolistic scale to be worthwhile.</div>
+      </div>
+      <div style="margin-top: 0.6rem;">These are early directions in a design space still being built out. The principle is fixed even where the instruments are not: public return by design.</div>
+    </div>
   </div>
   <div class="approach-block fade-in">
     <div class="approach-title">03 — Adaptive governance</div>
-    <div class="approach-body">The world is shifting faster than any legislative cycle can track. Sunset clauses and mandatory review periods start to address this, but they are scheduled flexibility rather than genuine adaptability. Adaptive governance operates at three layers. The first is sensing: a continuous, real-time picture of what the technology is doing and who it is affecting, independent of the entities being measured. The second is response: pre-committed mechanisms triggered by observable conditions rather than political calendars. The third is recalibration: a legitimate process for updating the thresholds and mechanisms themselves as understanding evolves, rather than waiting for legislative inertia to catch up. The closest existing models are in deliberative democracy, like Taiwan's Alignment Assemblies. A broader international survey of adaptive governance experiments is part of this project's ongoing research agenda.</div>
+    <div class="approach-body">AI is developing faster than the pace of new legislation. Sunset clauses and mandatory review periods start to address this, but they are scheduled flexibility rather than genuine adaptability. Adaptive governance operates at three layers:
+      <div class="approach-items">
+        <div class="approach-item"><strong>Sensing:</strong> a continuous, real-time picture of what the technology is doing and who it is affecting.</div>
+        <div class="approach-item"><strong>Response:</strong> pre-committed mechanisms triggered by observable conditions rather than political calendars.</div>
+        <div class="approach-item"><strong>Recalibration:</strong> a process for updating the response thresholds and mechanisms themselves as understanding evolves.</div>
+      </div>
+      <div style="margin-top: 0.6rem;">The closest analogs to adaptive governance come from deliberative democratic institutions, like Taiwan's Alignment Assemblies. A broader international survey of adaptive governance experiments is part of this project's ongoing research agenda.</div>
+    </div>
   </div>
   <div class="approach-block fade-in">
     <div class="approach-title">04 — Coalitions</div>
-    <div class="approach-body">Safety researchers, governance scholars, labor advocates, national security strategists, civil rights organizations, and industry leaders are each developing answers to related questions, in different languages, with different threat models. Few are building across them. We work with anyone who agrees that AI's capabilities should serve human flourishing. The goal is a governing agenda, specific, staffed, and deployable on day one. Operationally, we aim for Project 2025 seriousness oriented toward building public capacity rather than dismantling it.</div>
+    <div class="approach-body">Safety researchers, governance scholars, labor advocates, national security strategists, civil rights organizations, and industry leaders are each developing answers to related questions, but in different languages and with different threat models. Few actors are building across divisions. We work with anyone who agrees that AI's capabilities should serve human flourishing and dignity. The governing agenda must be:
+      <div class="approach-items">
+        <div class="approach-item"><strong>Specific:</strong> implementable policies rather than vague goals.</div>
+        <div class="approach-item"><strong>Staffed:</strong> personnel with technical expertise, including from industry.</div>
+        <div class="approach-item"><strong>Deployable:</strong> impact on day one.</div>
+      </div>
+      <div style="margin-top: 0.6rem;">Operationally, we aim for Project 2025-level preparedness, oriented towards building capacity rather than dismantling it.</div>
+    </div>
   </div>
   <div class="approach-block fade-in">
     <div class="approach-title">05 — Pluralism</div>
-    <div class="approach-body">The current trajectory of AI development tends toward convergence: a small number of large general-purpose foundation models, built on overlapping data and shared architectures, concentrated in the same geographies and capital structures. Monocultures lack resilience. When one architecture has a fundamental blind spot, models trained on it tend to share this vulnerability. Diversity of approaches, ownership structures, purposes, and scales is a property of healthy technological ecosystems. Pluralism as a governance mechanism could mean public financing for smaller purpose-specific models serving communities the market won't reach, open-source infrastructure maintained as a public good, institutional diversity in who conducts AI research, hardware speciation that avoids single points of failure, and alignment practices that reflect a range of human values.</div>
+    <div class="approach-body">The current trajectory of AI development tends toward convergence: a small number of general-purpose models, built on overlapping data and shared architectures, concentrated in the same cities and private companies. Monocultures lack resilience. When one architecture has a fundamental blind spot, models trained on it tend to share this vulnerability. A plurality of approaches, ownership structures, purposes, and scales is a property of healthy technological ecosystems. We seek pluralism in the following issue areas:
+      <div class="approach-items">
+        <div class="approach-item"><strong>Financing:</strong> creating markets for smaller, purpose-built models to serve communities that would otherwise be left behind.</div>
+        <div class="approach-item"><strong>Supply chains:</strong> investment in open-source infrastructure that serves the public good, and hardware speciation that avoids single points of failure.</div>
+        <div class="approach-item"><strong>Alignment:</strong> diversity in the teams conducting AI research and in the values they instill.</div>
+      </div>
+    </div>
   </div>
+
   <div id="causal-pathway" class="section-label fade-in">Causal pathway</div>
   <div class="steps fade-in">
     <div class="step">
@@ -415,6 +465,7 @@ a:hover { text-decoration: underline; }
       </div>
     </div>
   </div>
+
   <div class="footer-row">
     <span class="footer-label">Mapping AI</span>
     <span class="footer-label">For internal circulation · March 2026</span>
