@@ -4,15 +4,15 @@ A collaborative stakeholder mapping project for the U.S. AI policy landscape.
 
 ## Project Overview
 
-Single-page website that collects crowdsourced data about people and organizations shaping AI policy in the United States. Form submissions are stored as JSON files in the GitHub repository via a Vercel serverless function.
+Single-page website that collects crowdsourced data about people and organizations shaping AI policy in the United States.
 
 ## Tech Stack
 
-- **Frontend**: Static HTML/CSS/JS (no framework)
-- **Styling**: Space Grotesk font, Antikythera-inspired design
-- **Backend**: Vercel serverless functions (`api/submit.js`, `api/submissions.js`)
-- **Database**: Vercel Postgres (Neon) — `people` and `organizations` tables
-- **Hosting**: Vercel
+- **Frontend**: Static HTML/CSS/JS (no framework) — hosted on GitHub Pages
+- **Backend**: AWS Lambda + API Gateway (`api/submit.js`, `api/submissions.js`)
+- **Database**: Neon Postgres — `people`, `organizations`, and `resources` tables
+- **Hosting**: GitHub Pages (frontend) + AWS (backend)
+- **Infrastructure**: AWS SAM (`template.yaml`)
 
 ## Project Structure
 
@@ -27,7 +27,8 @@ mapping-ai/
 ├── scripts/
 │   ├── migrate.js          # Create database tables
 │   └── seed.js             # Import CSV data into database
-├── vercel.json             # Vercel build configuration
+├── template.yaml           # AWS SAM infrastructure definition
+├── CNAME                   # GitHub Pages custom domain
 └── *.csv                   # Source data exports from Airtable
 ```
 
@@ -50,15 +51,29 @@ mapping-ai/
 npx serve .
 ```
 
-**Deploy:** Push to `main` branch; Vercel auto-deploys.
+**Deploy backend:**
+```bash
+# First time
+sam build && sam deploy --guided --parameter-overrides DatabaseUrl=$DATABASE_URL
 
-## Environment Variables (Vercel)
+# Subsequent deploys
+sam build && sam deploy
+```
 
-| Variable | Description |
-|----------|-------------|
-| `POSTGRES_URL` | Auto-set when Vercel Postgres is linked |
+**Deploy frontend:** Push to `main` branch; GitHub Pages auto-deploys.
 
-(Connection string env vars are auto-populated by Vercel when a Postgres database is attached to the project.)
+## Environment Variables
+
+| Variable | Where | Description |
+|----------|-------|-------------|
+| `DATABASE_URL` | AWS Lambda (set during `sam deploy`) | Neon Postgres connection string |
+
+The `DATABASE_URL` comes from the Neon dashboard at `console.neon.tech` — not from Vercel.
+
+## API Endpoint
+
+After deploying with SAM, the API Gateway URL is printed as `ApiUrl` in the stack outputs.
+Update `API_BASE` in `assets/js/script.js` with this value, then commit and push.
 
 ## Data Schema
 

@@ -1,0 +1,63 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: mapping-ai API — Lambda + API Gateway
+
+Globals:
+  Function:
+    Runtime: nodejs20.x
+    Timeout: 10
+    MemorySize: 256
+    Environment:
+      Variables:
+        DATABASE_URL: !Ref DatabaseUrl
+
+Parameters:
+  DatabaseUrl:
+    Type: String
+    NoEcho: true
+    Description: Postgres connection string (from Neon or RDS)
+
+Resources:
+  MappingAiApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      CorsConfiguration:
+        AllowOrigins:
+          - '*'
+        AllowHeaders:
+          - Content-Type
+        AllowMethods:
+          - GET
+          - POST
+          - OPTIONS
+
+  SubmitFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: mapping-ai-submit
+      Handler: api/submit.handler
+      Events:
+        Submit:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref MappingAiApi
+            Path: /submit
+            Method: POST
+
+  SubmissionsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: mapping-ai-submissions
+      Handler: api/submissions.handler
+      Events:
+        Submissions:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref MappingAiApi
+            Path: /submissions
+            Method: GET
+
+Outputs:
+  ApiUrl:
+    Description: API Gateway base URL — paste this into assets/js/script.js as API_BASE
+    Value: !Sub 'https://${MappingAiApi}.execute-api.${AWS::Region}.amazonaws.com'

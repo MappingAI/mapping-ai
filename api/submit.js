@@ -1,134 +1,161 @@
-import { sql } from '@vercel/postgres';
+import pg from 'pg';
+const { Pool } = pg;
 
-export default async function handler(req, res) {
-  // Handle CORS preflight
-  if (req.method === 'OPTIONS') {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    return res.status(200).end();
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false },
+});
+
+const CORS_HEADERS = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+};
+
+export const handler = async (event) => {
+  const method = event.requestContext.http.method;
+
+  if (method === 'OPTIONS') {
+    return { statusCode: 200, headers: CORS_HEADERS, body: '' };
   }
 
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+  if (method !== 'POST') {
+    return {
+      statusCode: 405,
+      headers: CORS_HEADERS,
+      body: JSON.stringify({ error: 'Method not allowed' }),
+    };
   }
-
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   try {
-    if (!req.body || typeof req.body !== 'object') {
-      return res.status(400).json({ error: 'Invalid request body' });
+    if (!event.body) {
+      return {
+        statusCode: 400,
+        headers: CORS_HEADERS,
+        body: JSON.stringify({ error: 'Invalid request body' }),
+      };
     }
 
-    const { type, timestamp, data, _hp } = req.body;
+    const { type, timestamp, data, _hp } = JSON.parse(event.body);
 
     // Honeypot: humans leave this blank; bots fill it in
     if (_hp) {
-      return res.status(200).json({ success: true, message: 'Submission received' });
+      return {
+        statusCode: 200,
+        headers: CORS_HEADERS,
+        body: JSON.stringify({ success: true, message: 'Submission received' }),
+      };
     }
 
     if (!type || !data) {
-      return res.status(400).json({ error: 'Missing required fields' });
+      return {
+        statusCode: 400,
+        headers: CORS_HEADERS,
+        body: JSON.stringify({ error: 'Missing required fields' }),
+      };
     }
 
     if (!['person', 'organization', 'resource'].includes(type)) {
-      return res.status(400).json({ error: 'Invalid submission type' });
+      return {
+        statusCode: 400,
+        headers: CORS_HEADERS,
+        body: JSON.stringify({ error: 'Invalid submission type' }),
+      };
     }
 
-    // Validate required field based on type
     if ((type === 'person' || type === 'organization') && !data.name) {
-      return res.status(400).json({ error: 'Missing required field: name' });
+      return {
+        statusCode: 400,
+        headers: CORS_HEADERS,
+        body: JSON.stringify({ error: 'Missing required field: name' }),
+      };
     }
     if (type === 'resource' && !data.title) {
-      return res.status(400).json({ error: 'Missing required field: title' });
+      return {
+        statusCode: 400,
+        headers: CORS_HEADERS,
+        body: JSON.stringify({ error: 'Missing required field: title' }),
+      };
     }
 
-    // Field length limits
     const SHORT_LIMIT = 200;
     const LONG_LIMIT = 1000;
     for (const [key, value] of Object.entries(data)) {
       if (typeof value !== 'string') continue;
       const limit = key === 'notes' ? LONG_LIMIT : SHORT_LIMIT;
       if (value.length > limit) {
-        return res.status(400).json({ error: `Field "${key}" exceeds maximum length` });
+        return {
+          statusCode: 400,
+          headers: CORS_HEADERS,
+          body: JSON.stringify({ error: `Field "${key}" exceeds maximum length` }),
+        };
       }
     }
 
-    if (type === 'person') {
-      await sql`
-        INSERT INTO people (
-          name, category, title, primary_org, other_orgs, location,
-          regulatory_stance, capability_belief, influence_type, twitter,
-          notes, submitter_email, submitted_at, status
-        ) VALUES (
-          ${data.name},
-          ${data.category || null},
-          ${data.title || null},
-          ${data.primaryOrg || null},
-          ${data.otherOrgs || null},
-          ${data.location || null},
-          ${data.regulatoryStance || null},
-          ${data.capabilityBelief || null},
-          ${data.influenceType || null},
-          ${data.twitter || null},
-          ${data.notes || null},
-          ${data.submitterEmail || null},
-          ${timestamp || new Date().toISOString()},
-          'pending'
-        )
-      `;
-    } else if (type === 'organization') {
-      await sql`
-        INSERT INTO organizations (
-          name, category, website, location, funding_model,
-          regulatory_stance, capability_belief, influence_type, twitter,
-          notes, submitter_email, submitted_at, status
-        ) VALUES (
-          ${data.name},
-          ${data.category || null},
-          ${data.website || null},
-          ${data.location || null},
-          ${data.fundingModel || null},
-          ${data.regulatoryStance || null},
-          ${data.capabilityBelief || null},
-          ${data.influenceType || null},
-          ${data.twitter || null},
-          ${data.notes || null},
-          ${data.submitterEmail || null},
-          ${timestamp || new Date().toISOString()},
-          'pending'
-        )
-      `;
-    } else if (type === 'resource') {
-      await sql`
-        INSERT INTO resources (
-          title, author, resource_type, url, year, category,
-          key_argument, notes, submitter_email, submitted_at, status
-        ) VALUES (
-          ${data.title},
-          ${data.author || null},
-          ${data.resourceType || null},
-          ${data.url || null},
-          ${data.year || null},
-          ${data.category || null},
-          ${data.keyArgument || null},
-          ${data.notes || null},
-          ${data.submitterEmail || null},
-          ${timestamp || new Date().toISOString()},
-          'pending'
-        )
-      `;
+    const client = await pool.connect();
+    try {
+      const ts = timestamp || new Date().toISOString();
+
+      if (type === 'person') {
+        await client.query(
+          `INSERT INTO people (
+            name, category, title, primary_org, other_orgs, location,
+            regulatory_stance, capability_belief, influence_type, twitter,
+            notes, submitter_email, submitted_at, status
+          ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,'pending')`,
+          [
+            data.name, data.category || null, data.title || null,
+            data.primaryOrg || null, data.otherOrgs || null, data.location || null,
+            data.regulatoryStance || null, data.capabilityBelief || null,
+            data.influenceType || null, data.twitter || null,
+            data.notes || null, data.submitterEmail || null, ts,
+          ]
+        );
+      } else if (type === 'organization') {
+        await client.query(
+          `INSERT INTO organizations (
+            name, category, website, location, funding_model,
+            regulatory_stance, capability_belief, influence_type, twitter,
+            notes, submitter_email, submitted_at, status
+          ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,'pending')`,
+          [
+            data.name, data.category || null, data.website || null,
+            data.location || null, data.fundingModel || null,
+            data.regulatoryStance || null, data.capabilityBelief || null,
+            data.influenceType || null, data.twitter || null,
+            data.notes || null, data.submitterEmail || null, ts,
+          ]
+        );
+      } else if (type === 'resource') {
+        await client.query(
+          `INSERT INTO resources (
+            title, author, resource_type, url, year, category,
+            key_argument, notes, submitter_email, submitted_at, status
+          ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,'pending')`,
+          [
+            data.title, data.author || null, data.resourceType || null,
+            data.url || null, data.year || null, data.category || null,
+            data.keyArgument || null, data.notes || null,
+            data.submitterEmail || null, ts,
+          ]
+        );
+      }
+    } finally {
+      client.release();
     }
 
-    return res.status(200).json({
-      success: true,
-      message: 'Submission received'
-    });
+    return {
+      statusCode: 200,
+      headers: CORS_HEADERS,
+      body: JSON.stringify({ success: true, message: 'Submission received' }),
+    };
 
   } catch (error) {
     console.error('Submission error:', error);
-    return res.status(500).json({ error: 'Internal server error' });
+    return {
+      statusCode: 500,
+      headers: CORS_HEADERS,
+      body: JSON.stringify({ error: 'Internal server error' }),
+    };
   }
-}
+};
