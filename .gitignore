@@ -2,3 +2,6 @@ node_modules/
 .env
 .vercel/
 .vercel
+.aws-sam/
+submissions/
+exports/
