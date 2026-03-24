@@ -1,0 +1,14 @@
+version = 0.1
+
+[default.deploy.parameters]
+stack_name = "mapping-ai"
+resolve_s3 = true
+s3_prefix = "mapping-ai"
+region = "eu-west-2"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+image_repositories = []
+parameter_overrides = "DatabaseUrl=\"postgresql://neondb_owner:npg_aJA7uG1DPIQj@ep-curly-flower-ankscc3q-pooler.c-6.us-east-1.aws.neon.tech/neondb?sslmode=require\""
+
+[default.global.parameters]
+region = "eu-west-2"
