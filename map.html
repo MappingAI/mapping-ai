@@ -251,6 +251,16 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   font-family: var(--mono); font-size: 8px; color: var(--text-3);
   padding: 0.25rem 0.5rem; border-top: 1px solid var(--line);
 }
+.stance-legend-items { display: flex; flex-direction: column; gap: 0.15rem; }
+.stance-legend-item {
+  display: flex; align-items: center; gap: 0.35rem;
+  font-family: var(--mono); font-size: 8px; color: var(--text-2);
+  cursor: pointer; padding: 0.1rem 0; transition: opacity 0.15s;
+}
+.stance-legend-item.inactive { opacity: 0.3; }
+.stance-legend-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+}
 .node.dimmed circle { opacity: 0.12 !important; }
 .node.dimmed text { opacity: 0.12 !important; }
 .node.highlighted circle { opacity: 1 !important; }
@@ -324,6 +334,10 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   <div class="control-group" id="category-filters">
     <h3>Category</h3>
     <div class="filter-chips" id="category-chips"></div>
+  </div>
+  <div class="control-group" id="stance-legend">
+    <h3>Regulatory Stance</h3>
+    <div class="stance-legend-items" id="stance-legend-items"></div>
   </div>
 </div>
 
@@ -521,12 +535,26 @@ let simulation = null;
 let currentZoom = d3.zoomIdentity;
 let zoomBehavior = null;
 
+const STANCE_COLORS = {
+  'Accelerate':    '#ef4444',
+  'Light-touch':   '#f97316',
+  'Targeted':      '#eab308',
+  'Moderate':      '#22c55e',
+  'Restrictive':   '#3b82f6',
+  'Precautionary': '#8b5cf6',
+  'Nationalize':   '#ec4899',
+};
+const STANCE_ORDER = ['Accelerate','Light-touch','Targeted','Moderate','Restrictive','Precautionary','Nationalize'];
+let activeStances = new Set(STANCE_ORDER);
+let stanceFilterActive = false; // true when user has toggled any stance off
+
 fetch('map-data.json')
   .then(r => r.json())
   .then(data => {
     allData = data;
     inferredLinks = inferOrgLinks(data.people, data.organizations);
     buildFilters();
+    buildStanceLegend();
     render();
   });
 
@@ -558,6 +586,40 @@ function buildFilters() {
   });
 }
 
+function buildStanceLegend() {
+  const container = document.getElementById('stance-legend-items');
+  STANCE_ORDER.forEach(stance => {
+    const item = document.createElement('div');
+    item.className = 'stance-legend-item';
+    item.innerHTML = `<span class="stance-legend-dot" style="background:${STANCE_COLORS[stance]};"></span>${stance}`;
+    item.addEventListener('click', () => {
+      if (activeStances.has(stance)) {
+        activeStances.delete(stance);
+        item.classList.add('inactive');
+      } else {
+        activeStances.add(stance);
+        item.classList.remove('inactive');
+      }
+      stanceFilterActive = activeStances.size < STANCE_ORDER.length;
+      render();
+    });
+    container.appendChild(item);
+  });
+  // "No stance" toggle
+  const noStance = document.createElement('div');
+  noStance.className = 'stance-legend-item';
+  noStance.innerHTML = `<span class="stance-legend-dot" style="background:var(--text-3); opacity:0.4;"></span><em>Unknown</em>`;
+  noStance.dataset.active = 'true';
+  noStance.addEventListener('click', () => {
+    const active = noStance.dataset.active === 'true';
+    noStance.dataset.active = active ? 'false' : 'true';
+    noStance.classList.toggle('inactive');
+    stanceFilterActive = true;
+    render();
+  });
+  container.appendChild(noStance);
+}
+
 document.querySelectorAll('.view-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
@@ -567,11 +629,21 @@ document.querySelectorAll('.view-btn').forEach(btn => {
   });
 });
 
+function passesStanceFilter(d) {
+  if (!stanceFilterActive) return true;
+  const unknownActive = document.querySelector('#stance-legend-items .stance-legend-item:last-child')?.dataset.active !== 'false';
+  if (d.regulatory_stance && STANCE_COLORS[d.regulatory_stance]) {
+    return activeStances.has(d.regulatory_stance);
+  }
+  return unknownActive;
+}
+
 function getVisibleNodes() {
   let nodes = [];
   if (currentView === 'orgs' || currentView === 'all') {
     allData.organizations.forEach(d => {
       if (!d.category || !activeCategories.has(d.category)) return;
+      if (!passesStanceFilter(d)) return;
       nodes.push({ ...d, entityType: 'organization', radius: currentView === 'all' ? 14 : 18 });
     });
   }
@@ -580,6 +652,7 @@ function getVisibleNodes() {
       const cat = d.category || 'Unknown';
       if (d.category && !activeCategories.has(d.category)) return;
       if (!d.category) return;
+      if (!passesStanceFilter(d)) return;
       nodes.push({ ...d, category: cat, entityType: 'person', radius: currentView === 'all' ? 7 : 12 });
     });
   }
@@ -641,8 +714,9 @@ function render() {
     d.y = center.y + (Math.random() - 0.5) * 60;
   });
 
-  // Cluster background circles
-  g.selectAll('.cluster-bg')
+  // Cluster background circles (behind everything)
+  const bgLayer = g.append('g').attr('class', 'bg-layer');
+  bgLayer.selectAll('.cluster-bg')
     .data(categories)
     .join('circle')
     .attr('class', 'cluster-bg')
@@ -657,22 +731,6 @@ function render() {
     .attr('stroke', d => getColor(d))
     .attr('stroke-width', 0.5)
     .attr('stroke-opacity', 0.15);
-
-  // Cluster labels
-  g.selectAll('.cluster-label')
-    .data(categories)
-    .join('text')
-    .attr('class', 'cluster-label')
-    .attr('x', d => clusterCenters[d].x)
-    .attr('y', d => {
-      const count = nodes.filter(n => n.category === d).length;
-      return clusterCenters[d].y - Math.max(50, Math.sqrt(count) * 28) - 6;
-    })
-    .attr('text-anchor', 'middle')
-    .attr('font-size', '8px')
-    .attr('fill', d => getColor(d))
-    .attr('opacity', 0.6)
-    .text(d => d);
 
   // Connection lines (in all view)
   let linkElements = null;
@@ -814,6 +872,53 @@ function render() {
       return (d.name || '').slice(0, 2).toUpperCase();
     });
 
+  // Stance indicator (small colored pip at bottom-right of node)
+  nodeGroup.filter(d => d.regulatory_stance && STANCE_COLORS[d.regulatory_stance])
+    .append('circle')
+    .attr('class', 'stance-pip')
+    .attr('cx', d => d.radius * 0.65)
+    .attr('cy', d => d.radius * 0.65)
+    .attr('r', d => Math.max(3, d.radius * 0.22))
+    .attr('fill', d => STANCE_COLORS[d.regulatory_stance])
+    .attr('stroke', 'var(--bg-page)')
+    .attr('stroke-width', 1.5)
+    .attr('pointer-events', 'none');
+
+  // Cluster labels (overlay layer, rendered AFTER nodes so they're on top)
+  const labelLayer = g.append('g').attr('class', 'label-layer');
+  labelLayer.selectAll('.cluster-label-bg')
+    .data(categories)
+    .join('rect')
+    .attr('class', 'cluster-label-bg')
+    .attr('x', d => clusterCenters[d].x - (d.length * 3.2 + 8))
+    .attr('y', d => {
+      const count = nodes.filter(n => n.category === d).length;
+      return clusterCenters[d].y - Math.max(50, Math.sqrt(count) * 28) - 18;
+    })
+    .attr('width', d => d.length * 6.4 + 16)
+    .attr('height', 16)
+    .attr('rx', 3)
+    .attr('fill', 'var(--bg-page)')
+    .attr('opacity', 0.85)
+    .attr('pointer-events', 'none');
+
+  labelLayer.selectAll('.cluster-label')
+    .data(categories)
+    .join('text')
+    .attr('class', 'cluster-label')
+    .attr('x', d => clusterCenters[d].x)
+    .attr('y', d => {
+      const count = nodes.filter(n => n.category === d).length;
+      return clusterCenters[d].y - Math.max(50, Math.sqrt(count) * 28) - 7;
+    })
+    .attr('text-anchor', 'middle')
+    .attr('font-size', '9px')
+    .attr('font-weight', '500')
+    .attr('fill', d => getColor(d))
+    .attr('opacity', 1)
+    .attr('pointer-events', 'none')
+    .text(d => d);
+
   function ticked() {
     nodeGroup.attr('transform', d => `translate(${d.x},${d.y})`);
     if (linkElements) {
@@ -846,7 +951,8 @@ const tooltip = document.getElementById('tooltip');
 function showTooltip(event, d) {
   document.getElementById('tooltip-name').textContent = d.name;
   const sub = d.entityType === 'person' ? (d.title || d.category) : d.category;
-  document.getElementById('tooltip-sub').textContent = sub;
+  const stance = d.regulatory_stance ? ` · ${d.regulatory_stance}` : '';
+  document.getElementById('tooltip-sub').textContent = sub + stance;
   tooltip.classList.add('visible');
   moveTooltip(event);
 }
