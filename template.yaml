@@ -30,6 +30,9 @@ Resources:
           - GET
           - POST
           - OPTIONS
+      DefaultRouteSettings:
+        ThrottlingRateLimit: 10
+        ThrottlingBurstLimit: 20
 
   SubmitFunction:
     Type: AWS::Serverless::Function

@@ -100,6 +100,14 @@ Update `API_BASE` in `assets/js/script.js` with this value, then commit and push
 3. Write commit messages explaining the "why" not just the "what"
 4. Ensure commit messages reflect institutional decision-making, not AI assistance
 
+## Known Technical Debt
+
+### Moderation workflow (no admin UI)
+All submission review is done by manually running SQL against Neon (`UPDATE people SET status='approved' WHERE id=X`). This is sustainable at low volume but will become painful as the map grows. A future task: build a simple password-protected admin page that lists pending submissions and allows approve/reject with a button. This is a self-contained feature suitable for a dedicated agent sprint.
+
+### Inline CSS across pages
+`contribute.html`, `about.html`, and `theoryofchange.html` embed their styles in `<style>` blocks rather than using a shared stylesheet. `index.html` uses `assets/css/styles.css`. This means design changes (color variables, typography, nav) must be made in 4 places. The right fix is consolidating to a single shared stylesheet — a multi-file refactor suitable for a dedicated agent sprint. Do not attempt inline.
+
 ## Additional Documentation
 
 - [Architectural Patterns](.claude/docs/architectural_patterns.md) - Design patterns and conventions used
