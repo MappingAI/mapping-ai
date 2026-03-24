@@ -14,202 +14,203 @@
   --text-secondary: #555;
   --text-tertiary: #888;
   --border: #ddd;
-  --bg: #f0eeeb;
+  --bg: #1a1f2e;
   --bg-secondary: #f8f7f5;
   --accent: #2563eb;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: var(--bg); font-family: var(--serif); color: var(--text-primary); overflow: hidden; height: 100vh; }
+body { background: var(--bg); font-family: var(--serif); color: #fff; overflow: hidden; height: 100vh; }
 
-/* Nav */
 .site-nav {
   position: fixed; top: 0; left: 0; right: 0;
   display: flex; justify-content: space-between; align-items: center;
   padding: 0 2rem; height: 48px;
-  background: #fff; border-bottom: 0.5px solid var(--border);
+  background: #141824; border-bottom: 1px solid #2a2f3e;
   z-index: 100;
 }
 .nav-brand {
   font-family: var(--mono); font-size: 12px;
   letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--text-primary); text-decoration: none;
+  color: #e0ddd8; text-decoration: none;
 }
 .nav-links { display: flex; gap: 2rem; }
 .nav-links a {
   font-family: var(--mono); font-size: 12px;
   letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--text-tertiary); text-decoration: none;
+  color: #6a7080; text-decoration: none;
   transition: color 0.15s; position: relative;
 }
 .nav-links a::after {
   content: ''; position: absolute; bottom: -3px; left: 0;
-  width: 0; height: 1px; background: var(--text-primary);
+  width: 0; height: 1px; background: #e0ddd8;
   transition: width 0.2s ease;
 }
 .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
-.nav-links a:hover, .nav-links a.active { color: var(--text-primary); }
+.nav-links a:hover, .nav-links a.active { color: #e0ddd8; }
 
-/* Main layout */
-.map-container {
-  position: fixed; top: 48px; left: 0; right: 0; bottom: 0;
-}
+.map-container { position: fixed; top: 48px; left: 0; right: 0; bottom: 0; }
 
 /* Controls */
 .controls {
   position: fixed; top: 60px; left: 1rem;
-  display: flex; flex-direction: column; gap: 0.5rem;
-  z-index: 50;
+  display: flex; flex-direction: column; gap: 0.4rem;
+  z-index: 50; max-height: calc(100vh - 80px); overflow-y: auto;
 }
 .control-group {
-  background: #fff; border-radius: 8px;
-  padding: 0.75rem 1rem;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-  border: 1px solid var(--border);
+  background: rgba(20, 24, 36, 0.92); border-radius: 6px;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #2a2f3e;
+  backdrop-filter: blur(8px);
 }
 .control-group h3 {
-  font-family: var(--mono); font-size: 10px;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--text-tertiary); margin-bottom: 0.5rem;
-}
-.view-toggles { display: flex; gap: 0.25rem; }
-.view-btn {
-  font-family: var(--mono); font-size: 10px;
-  letter-spacing: 0.04em; text-transform: uppercase;
-  padding: 0.35rem 0.65rem; border: 1px solid var(--border);
-  background: #fff; color: var(--text-secondary);
-  border-radius: 4px; cursor: pointer; transition: all 0.15s;
-}
-.view-btn:hover { border-color: var(--text-secondary); }
-.view-btn.active { background: var(--text-primary); color: #fff; border-color: var(--text-primary); }
-
-.filter-chips { display: flex; flex-wrap: wrap; gap: 0.25rem; max-width: 200px; }
-.chip {
   font-family: var(--mono); font-size: 9px;
-  letter-spacing: 0.03em;
-  padding: 0.25rem 0.5rem; border-radius: 3px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: #6a7080; margin-bottom: 0.4rem;
+}
+.view-toggles { display: flex; gap: 0.2rem; }
+.view-btn {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  padding: 0.3rem 0.5rem; border: 1px solid #2a2f3e;
+  background: transparent; color: #6a7080;
+  border-radius: 3px; cursor: pointer; transition: all 0.15s;
+}
+.view-btn:hover { border-color: #4a5060; color: #aab0c0; }
+.view-btn.active { background: #e0ddd8; color: #141824; border-color: #e0ddd8; }
+.filter-chips { display: flex; flex-wrap: wrap; gap: 0.2rem; max-width: 180px; }
+.chip {
+  font-family: var(--mono); font-size: 8px;
+  letter-spacing: 0.02em;
+  padding: 0.2rem 0.4rem; border-radius: 3px;
   cursor: pointer; transition: all 0.15s;
   border: 1px solid transparent;
-  opacity: 0.5;
+  opacity: 0.35;
 }
-.chip.active { opacity: 1; border-color: rgba(0,0,0,0.2); }
-.chip:hover { opacity: 0.8; }
+.chip.active { opacity: 1; border-color: rgba(255,255,255,0.15); }
+.chip:hover { opacity: 0.7; }
 
 /* Detail panel */
 .detail-panel {
   position: fixed; top: 48px; right: 0; bottom: 0;
-  width: 340px; background: #fff;
-  border-left: 1px solid var(--border);
+  width: 320px; background: #141824;
+  border-left: 1px solid #2a2f3e;
   z-index: 50; transform: translateX(100%);
   transition: transform 0.25s ease;
-  overflow-y: auto; padding: 1.5rem;
+  overflow-y: auto; padding: 1.25rem;
 }
 .detail-panel.open { transform: translateX(0); }
 .detail-close {
-  position: absolute; top: 1rem; right: 1rem;
+  position: absolute; top: 0.75rem; right: 0.75rem;
   background: none; border: none; cursor: pointer;
-  font-size: 18px; color: var(--text-tertiary);
-  font-family: var(--mono);
+  font-size: 16px; color: #6a7080; font-family: var(--mono);
 }
-.detail-close:hover { color: var(--text-primary); }
+.detail-close:hover { color: #e0ddd8; }
 .detail-name {
-  font-family: var(--serif); font-size: 22px;
-  font-weight: 500; margin-bottom: 0.25rem;
-  padding-right: 2rem;
+  font-family: var(--serif); font-size: 20px;
+  font-weight: 500; margin-bottom: 0.2rem;
+  padding-right: 2rem; color: #e0ddd8;
 }
 .detail-type {
-  font-family: var(--mono); font-size: 10px;
-  letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--text-tertiary); margin-bottom: 1rem;
-}
-.detail-category {
-  display: inline-block; padding: 0.2rem 0.6rem;
-  border-radius: 3px; font-family: var(--mono);
-  font-size: 10px; letter-spacing: 0.04em;
-  margin-bottom: 1rem;
-}
-.detail-fields { display: flex; flex-direction: column; gap: 0.75rem; }
-.detail-field label {
   font-family: var(--mono); font-size: 9px;
   letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--text-tertiary); display: block;
-  margin-bottom: 0.15rem;
+  color: #6a7080; margin-bottom: 0.75rem;
+}
+.detail-category {
+  display: inline-block; padding: 0.15rem 0.5rem;
+  border-radius: 3px; font-family: var(--mono);
+  font-size: 9px; letter-spacing: 0.04em;
+  margin-bottom: 0.75rem;
+}
+.detail-fields { display: flex; flex-direction: column; gap: 0.6rem; }
+.detail-field label {
+  font-family: var(--mono); font-size: 8px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: #6a7080; display: block; margin-bottom: 0.1rem;
 }
 .detail-field span {
-  font-family: var(--serif); font-size: 15px;
-  color: var(--text-primary); line-height: 1.5;
+  font-family: var(--serif); font-size: 14px;
+  color: #c0bdb8; line-height: 1.5;
 }
+.detail-field a { color: #7aa2d4; }
+.detail-affiliated {
+  margin-top: 0.75rem; padding-top: 0.75rem;
+  border-top: 1px solid #2a2f3e;
+}
+.detail-affiliated h4 {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: #6a7080; margin-bottom: 0.4rem;
+}
+.affiliated-item {
+  font-family: var(--mono); font-size: 11px;
+  color: #7aa2d4; cursor: pointer; padding: 0.15rem 0;
+}
+.affiliated-item:hover { color: #a0c0e8; }
 
 /* Zoom controls */
 .zoom-controls {
   position: fixed; bottom: 1.5rem; right: 1.5rem;
-  display: flex; flex-direction: column; gap: 0.25rem;
-  z-index: 50;
+  display: flex; flex-direction: column; gap: 0.2rem; z-index: 50;
 }
 .zoom-btn {
-  width: 36px; height: 36px;
-  background: #fff; border: 1px solid var(--border);
-  border-radius: 6px; cursor: pointer;
-  font-family: var(--mono); font-size: 16px;
-  color: var(--text-secondary);
+  width: 32px; height: 32px;
+  background: rgba(20, 24, 36, 0.92); border: 1px solid #2a2f3e;
+  border-radius: 4px; cursor: pointer;
+  font-family: var(--mono); font-size: 14px; color: #6a7080;
   display: flex; align-items: center; justify-content: center;
-  transition: all 0.15s;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  transition: all 0.15s; backdrop-filter: blur(8px);
 }
-.zoom-btn:hover { border-color: var(--text-secondary); color: var(--text-primary); }
+.zoom-btn:hover { border-color: #4a5060; color: #e0ddd8; }
 
-/* Entity count */
 .entity-count {
   position: fixed; bottom: 1.5rem; left: 1rem;
-  font-family: var(--mono); font-size: 11px;
-  color: var(--text-tertiary); letter-spacing: 0.04em;
-  background: rgba(255,255,255,0.9); padding: 0.4rem 0.75rem;
-  border-radius: 4px; border: 1px solid var(--border);
-  z-index: 50;
+  font-family: var(--mono); font-size: 10px; color: #6a7080;
+  letter-spacing: 0.04em;
+  background: rgba(20, 24, 36, 0.92); padding: 0.3rem 0.6rem;
+  border-radius: 3px; border: 1px solid #2a2f3e;
+  z-index: 50; backdrop-filter: blur(8px);
 }
 
-/* D3 styles */
+/* Tooltip */
+.tooltip {
+  position: fixed; pointer-events: none; z-index: 200;
+  background: rgba(20, 24, 36, 0.95); border: 1px solid #2a2f3e;
+  border-radius: 4px; padding: 0.4rem 0.6rem;
+  backdrop-filter: blur(8px);
+  max-width: 220px;
+  opacity: 0; transition: opacity 0.15s;
+}
+.tooltip.visible { opacity: 1; }
+.tooltip-name {
+  font-family: var(--mono); font-size: 10px;
+  color: #e0ddd8; letter-spacing: 0.02em;
+}
+.tooltip-sub {
+  font-family: var(--mono); font-size: 8px;
+  color: #6a7080; margin-top: 0.1rem;
+}
+
+/* D3 */
 .cluster-label {
-  font-family: var(--mono);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  fill: var(--text-secondary);
-  pointer-events: none;
+  font-family: var(--mono); text-transform: uppercase;
+  letter-spacing: 0.08em; pointer-events: none;
 }
 .node { cursor: pointer; }
-.node:hover .node-circle { filter: brightness(1.1); }
-.node-label {
-  font-family: var(--mono);
-  fill: var(--text-secondary);
-  pointer-events: none;
-}
-.connection-line {
-  stroke: var(--border);
-  stroke-width: 0.5;
-  stroke-dasharray: 2,2;
-  opacity: 0.4;
-}
-.cluster-bg {
-  stroke: none;
-  opacity: 0.06;
-}
 
-/* Hamburger */
 .nav-hamburger {
   display: none; flex-direction: column; justify-content: center;
   gap: 5px; background: none; border: none; cursor: pointer; padding: 4px;
 }
-.nav-hamburger span { display: block; width: 20px; height: 1.5px; background: var(--text-primary); }
+.nav-hamburger span { display: block; width: 20px; height: 1.5px; background: #e0ddd8; }
 @media (max-width: 600px) {
   .site-nav { padding: 0 1rem; }
   .nav-hamburger { display: flex; }
   .nav-links {
     display: none; position: absolute; top: 48px; left: 0; right: 0;
-    background: #fff; border-bottom: 0.5px solid var(--border);
+    background: #141824; border-bottom: 1px solid #2a2f3e;
     flex-direction: column; padding: 1rem 1.5rem; gap: 1rem;
   }
   .nav-links.open { display: flex; }
-  .controls { top: 56px; left: 0.5rem; }
-  .control-group { padding: 0.5rem 0.75rem; }
   .detail-panel { width: 100%; }
 }
 </style>
@@ -234,14 +235,10 @@ body { background: var(--bg); font-family: var(--serif); color: var(--text-prima
   <div class="control-group">
     <h3>View</h3>
     <div class="view-toggles">
-      <button class="view-btn active" data-view="orgs">Organizations</button>
+      <button class="view-btn active" data-view="orgs">Orgs</button>
       <button class="view-btn" data-view="people">People</button>
       <button class="view-btn" data-view="all">All</button>
     </div>
-  </div>
-  <div class="control-group" id="stance-filters">
-    <h3>Regulatory Stance</h3>
-    <div class="filter-chips" id="stance-chips"></div>
   </div>
   <div class="control-group" id="category-filters">
     <h3>Category</h3>
@@ -254,73 +251,127 @@ body { background: var(--bg); font-family: var(--serif); color: var(--text-prima
   <div id="detail-content"></div>
 </div>
 
+<div class="tooltip" id="tooltip">
+  <div class="tooltip-name" id="tooltip-name"></div>
+  <div class="tooltip-sub" id="tooltip-sub"></div>
+</div>
+
 <div class="map-container" id="map-container"></div>
 
 <div class="zoom-controls">
   <button class="zoom-btn" id="zoom-in">+</button>
   <button class="zoom-btn" id="zoom-out">&minus;</button>
-  <button class="zoom-btn" id="zoom-reset" style="font-size:12px;">&#9678;</button>
+  <button class="zoom-btn" id="zoom-reset" style="font-size:11px;">&#9678;</button>
 </div>
 
 <div class="entity-count" id="entity-count"></div>
 
 <script>
-// Category colors (muted, between colorful and minimal)
 const CATEGORY_COLORS = {
-  'Frontier Lab':          '#c45a3c',
-  'AI Safety/Alignment':   '#3c8a6e',
-  'Think Tank/Policy Org': '#5b7fb5',
-  'Government/Agency':     '#7a6aad',
-  'Academic':              '#c4913c',
-  'VC/Capital/Philanthropy':'#4a9a8a',
-  'Labor/Civil Society':   '#c47a5a',
-  'Media/Journalism':      '#8a7a5a',
-  'Political Campaign/PAC':'#9a5a7a',
-  'Ethics/Bias/Rights':    '#5aaa8a',
-  // People categories
-  'Policymaker':           '#7a6aad',
-  'Executive':             '#c45a3c',
-  'Researcher':            '#3c8a6e',
-  'Investor':              '#4a9a8a',
-  'Organizer':             '#c47a5a',
-  'Journalist':            '#8a7a5a',
-  'Cultural figure':       '#9a5a7a',
+  'Frontier Lab':          '#d4644a',
+  'AI Safety/Alignment':   '#4a9e7e',
+  'Think Tank/Policy Org': '#5b82bf',
+  'Government/Agency':     '#8a72bf',
+  'Academic':              '#d4a44a',
+  'VC/Capital/Philanthropy':'#4aafa0',
+  'Labor/Civil Society':   '#d4885a',
+  'Media/Journalism':      '#a09060',
+  'Political Campaign/PAC':'#b06a8a',
+  'Ethics/Bias/Rights':    '#5abf9a',
+  'Policymaker':           '#8a72bf',
+  'Executive':             '#d4644a',
+  'Researcher':            '#4a9e7e',
+  'Investor':              '#4aafa0',
+  'Organizer':             '#d4885a',
+  'Journalist':            '#a09060',
+  'Cultural figure':       '#b06a8a',
+};
+const DEFAULT_COLOR = '#6a7080';
+function getColor(cat) { return CATEGORY_COLORS[cat] || DEFAULT_COLOR; }
+
+// Known org affiliations parsed from titles
+const ORG_KEYWORDS = {
+  'Anthropic': ['Anthropic'],
+  'OpenAI': ['OpenAI'],
+  'Google DeepMind': ['Google DeepMind', 'Google Labs', 'DeepMind'],
+  'Meta AI': ['Meta'],
+  'xAI': ['xAI'],
+  'Apollo Research': ['Apollo Research'],
+  'AI Now Institute': ['AI Now'],
+  'Stanford HAI': ['Stanford HAI', 'Stanford RegLab'],
+  'New Consensus': ['New Consensus'],
+  'a16z (Andreessen Horowitz)': ['a16z'],
+  'Founders Fund': ['Founders Fund'],
+  'Coefficient Giving (fka Open Philanthropy)': ['Open Phil', 'Coefficient'],
+  'Thrive Capital': ['Thrive Capital'],
+  'SAG-AFTRA': ['SAG-AFTRA'],
+  'American Federation of Teachers': ['AFT'],
+  'Fairly Trained': ['Fairly Trained'],
+  "Data Workers' Inquiry": ["Data Workers"],
+  'NIST AI Safety Institute (CAISI)': ['NIST', 'CAISI'],
+  'White House OSTP': ['OSTP', 'White House'],
 };
 
-const DEFAULT_COLOR = '#8a8a8a';
+function inferOrgLinks(people, orgs) {
+  const links = [];
+  const orgNames = orgs.map(o => o.name);
 
-function getColor(category) {
-  return CATEGORY_COLORS[category] || DEFAULT_COLOR;
+  people.forEach(person => {
+    const text = `${person.title || ''} ${person.primary_org || ''} ${person.other_orgs || ''}`;
+    if (!text.trim()) return;
+
+    // Check keyword matches
+    for (const [orgName, keywords] of Object.entries(ORG_KEYWORDS)) {
+      if (!orgNames.includes(orgName)) continue;
+      for (const kw of keywords) {
+        if (text.includes(kw)) {
+          links.push({ personName: person.name, orgName });
+          break;
+        }
+      }
+    }
+
+    // Direct org name matches
+    orgNames.forEach(orgName => {
+      if (orgName.length > 3 && text.includes(orgName)) {
+        if (!links.find(l => l.personName === person.name && l.orgName === orgName)) {
+          links.push({ personName: person.name, orgName });
+        }
+      }
+    });
+  });
+
+  return links;
 }
 
-// State
 let currentView = 'orgs';
 let activeCategories = new Set();
-let activeStances = new Set();
 let allData = { people: [], organizations: [] };
+let inferredLinks = [];
 let simulation = null;
+let currentZoom = d3.zoomIdentity;
+let zoomBehavior = null;
 
-// Load data
 fetch('map-data.json')
   .then(r => r.json())
   .then(data => {
     allData = data;
+    inferredLinks = inferOrgLinks(data.people, data.organizations);
     buildFilters();
     render();
   });
 
 function buildFilters() {
-  // Category chips
-  const orgCats = [...new Set(allData.organizations.map(d => d.category).filter(Boolean))].sort();
-  const peopleCats = [...new Set(allData.people.map(d => d.category).filter(Boolean))].sort();
+  const orgCats = [...new Set(allData.organizations.map(d => d.category).filter(Boolean))];
+  const peopleCats = [...new Set(allData.people.map(d => d.category).filter(Boolean))];
   const allCats = [...new Set([...orgCats, ...peopleCats])].sort();
 
-  const catContainer = document.getElementById('category-chips');
+  const container = document.getElementById('category-chips');
   allCats.forEach(cat => {
     const chip = document.createElement('span');
     chip.className = 'chip active';
     chip.textContent = cat;
-    chip.style.background = getColor(cat) + '22';
+    chip.style.background = getColor(cat) + '33';
     chip.style.color = getColor(cat);
     chip.dataset.category = cat;
     activeCategories.add(cat);
@@ -334,42 +385,10 @@ function buildFilters() {
       }
       render();
     });
-    catContainer.appendChild(chip);
-  });
-
-  // Stance chips (many are null, so just show what exists)
-  const stances = [...new Set([
-    ...allData.organizations.map(d => d.regulatory_stance),
-    ...allData.people.map(d => d.regulatory_stance)
-  ].filter(Boolean))].sort();
-
-  const stanceContainer = document.getElementById('stance-chips');
-  if (stances.length === 0) {
-    document.getElementById('stance-filters').style.display = 'none';
-  }
-  stances.forEach(stance => {
-    const chip = document.createElement('span');
-    chip.className = 'chip active';
-    chip.textContent = stance;
-    chip.style.background = '#e0e0e0';
-    chip.style.color = '#555';
-    chip.dataset.stance = stance;
-    activeStances.add(stance);
-    chip.addEventListener('click', () => {
-      if (activeStances.has(stance)) {
-        activeStances.delete(stance);
-        chip.classList.remove('active');
-      } else {
-        activeStances.add(stance);
-        chip.classList.add('active');
-      }
-      render();
-    });
-    stanceContainer.appendChild(chip);
+    container.appendChild(chip);
   });
 }
 
-// View toggles
 document.querySelectorAll('.view-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
@@ -381,25 +400,20 @@ document.querySelectorAll('.view-btn').forEach(btn => {
 
 function getVisibleNodes() {
   let nodes = [];
-
   if (currentView === 'orgs' || currentView === 'all') {
     allData.organizations.forEach(d => {
       if (!d.category || !activeCategories.has(d.category)) return;
-      if (d.regulatory_stance && activeStances.size > 0 && !activeStances.has(d.regulatory_stance)) return;
-      nodes.push({ ...d, entityType: 'organization', radius: 22 });
+      nodes.push({ ...d, entityType: 'organization', radius: currentView === 'all' ? 14 : 18 });
     });
   }
-
   if (currentView === 'people' || currentView === 'all') {
     allData.people.forEach(d => {
       const cat = d.category || 'Unknown';
       if (d.category && !activeCategories.has(d.category)) return;
-      if (!d.category && activeCategories.size < Object.keys(CATEGORY_COLORS).length) return;
-      if (d.regulatory_stance && activeStances.size > 0 && !activeStances.has(d.regulatory_stance)) return;
-      nodes.push({ ...d, category: cat, entityType: 'person', radius: currentView === 'all' ? 12 : 16 });
+      if (!d.category) return;
+      nodes.push({ ...d, category: cat, entityType: 'person', radius: currentView === 'all' ? 7 : 12 });
     });
   }
-
   return nodes;
 }
 
@@ -408,7 +422,6 @@ function render() {
   const width = container.clientWidth;
   const height = container.clientHeight;
 
-  // Clear
   d3.select('#map-container').selectAll('*').remove();
 
   const svg = d3.select('#map-container')
@@ -416,38 +429,34 @@ function render() {
     .attr('width', width)
     .attr('height', height);
 
-  // Zoom
   const g = svg.append('g');
 
-  const zoom = d3.zoom()
-    .scaleExtent([0.3, 5])
+  // Restore zoom state
+  zoomBehavior = d3.zoom()
+    .scaleExtent([0.2, 8])
     .on('zoom', (event) => {
+      currentZoom = event.transform;
       g.attr('transform', event.transform);
     });
+  svg.call(zoomBehavior);
+  svg.call(zoomBehavior.transform, currentZoom);
 
-  svg.call(zoom);
-
-  // Zoom buttons
-  document.getElementById('zoom-in').onclick = () => svg.transition().duration(300).call(zoom.scaleBy, 1.4);
-  document.getElementById('zoom-out').onclick = () => svg.transition().duration(300).call(zoom.scaleBy, 0.7);
-  document.getElementById('zoom-reset').onclick = () => svg.transition().duration(500).call(zoom.transform, d3.zoomIdentity);
+  document.getElementById('zoom-in').onclick = () => svg.transition().duration(300).call(zoomBehavior.scaleBy, 1.5);
+  document.getElementById('zoom-out').onclick = () => svg.transition().duration(300).call(zoomBehavior.scaleBy, 0.67);
+  document.getElementById('zoom-reset').onclick = () => {
+    currentZoom = d3.zoomIdentity;
+    svg.transition().duration(500).call(zoomBehavior.transform, d3.zoomIdentity);
+  };
 
   const nodes = getVisibleNodes();
-
-  // Update count
-  document.getElementById('entity-count').textContent =
-    `${nodes.length} ${nodes.length === 1 ? 'entity' : 'entities'}`;
-
+  document.getElementById('entity-count').textContent = `${nodes.length} entities`;
   if (nodes.length === 0) return;
 
-  // Group by category for cluster centers
   const categories = [...new Set(nodes.map(d => d.category))].sort();
   const clusterCenters = {};
-
-  // Arrange cluster centers in a circle
   const centerX = width / 2;
   const centerY = height / 2;
-  const orbitRadius = Math.min(width, height) * 0.32;
+  const orbitRadius = Math.min(width, height) * 0.3;
 
   categories.forEach((cat, i) => {
     const angle = (i / categories.length) * 2 * Math.PI - Math.PI / 2;
@@ -457,15 +466,14 @@ function render() {
     };
   });
 
-  // Initialize node positions near cluster centers
   nodes.forEach(d => {
     const center = clusterCenters[d.category] || { x: centerX, y: centerY };
-    d.x = center.x + (Math.random() - 0.5) * 80;
-    d.y = center.y + (Math.random() - 0.5) * 80;
+    d.x = center.x + (Math.random() - 0.5) * 60;
+    d.y = center.y + (Math.random() - 0.5) * 60;
   });
 
-  // Draw cluster background regions
-  const clusterBgs = g.selectAll('.cluster-bg')
+  // Cluster background circles
+  g.selectAll('.cluster-bg')
     .data(categories)
     .join('circle')
     .attr('class', 'cluster-bg')
@@ -473,11 +481,15 @@ function render() {
     .attr('cy', d => clusterCenters[d].y)
     .attr('r', d => {
       const count = nodes.filter(n => n.category === d).length;
-      return Math.max(60, Math.sqrt(count) * 35);
+      return Math.max(50, Math.sqrt(count) * 28);
     })
-    .attr('fill', d => getColor(d));
+    .attr('fill', d => getColor(d))
+    .attr('opacity', 0.06)
+    .attr('stroke', d => getColor(d))
+    .attr('stroke-width', 0.5)
+    .attr('stroke-opacity', 0.15);
 
-  // Draw cluster labels
+  // Cluster labels
   g.selectAll('.cluster-label')
     .data(categories)
     .join('text')
@@ -485,147 +497,144 @@ function render() {
     .attr('x', d => clusterCenters[d].x)
     .attr('y', d => {
       const count = nodes.filter(n => n.category === d).length;
-      return clusterCenters[d].y - Math.max(60, Math.sqrt(count) * 35) - 10;
+      return clusterCenters[d].y - Math.max(50, Math.sqrt(count) * 28) - 6;
     })
     .attr('text-anchor', 'middle')
-    .attr('font-size', '10px')
+    .attr('font-size', '8px')
+    .attr('fill', d => getColor(d))
+    .attr('opacity', 0.6)
     .text(d => d);
 
-  // Draw connections (person → primary_org) in "all" view
+  // Connection lines (in all view)
+  let linkElements = null;
   if (currentView === 'all') {
-    const orgByName = {};
-    nodes.forEach(d => {
-      if (d.entityType === 'organization') orgByName[d.name] = d;
-    });
+    const nodeByName = {};
+    nodes.forEach(d => { nodeByName[d.name] = d; });
 
-    const links = [];
-    nodes.forEach(d => {
-      if (d.entityType === 'person' && d.primary_org) {
-        const target = orgByName[d.primary_org];
-        if (target) links.push({ source: d, target });
-      }
-    });
+    const visibleLinks = inferredLinks
+      .filter(l => nodeByName[l.personName] && nodeByName[l.orgName])
+      .map(l => ({ source: nodeByName[l.personName], target: nodeByName[l.orgName] }));
 
-    g.selectAll('.connection-line')
-      .data(links)
+    linkElements = g.selectAll('.connection-line')
+      .data(visibleLinks)
       .join('line')
-      .attr('class', 'connection-line');
+      .attr('class', 'connection-line')
+      .attr('stroke', '#4a5060')
+      .attr('stroke-width', 0.5)
+      .attr('stroke-opacity', 0.3);
   }
 
   // Simulation
   if (simulation) simulation.stop();
-
   simulation = d3.forceSimulation(nodes)
-    .force('charge', d3.forceManyBody().strength(-8))
-    .force('collision', d3.forceCollide().radius(d => d.radius + 3).strength(0.8))
-    .force('cluster', forceCluster(clusterCenters, 0.15))
-    .force('center', d3.forceCenter(centerX, centerY).strength(0.02))
-    .alpha(0.8)
-    .alphaDecay(0.02)
+    .force('charge', d3.forceManyBody().strength(d => d.entityType === 'organization' ? -5 : -2))
+    .force('collision', d3.forceCollide().radius(d => d.radius + 2).strength(0.9))
+    .force('cluster', forceCluster(clusterCenters, 0.12))
+    .force('center', d3.forceCenter(centerX, centerY).strength(0.01))
+    .alpha(0.7)
+    .alphaDecay(0.025)
     .on('tick', ticked);
 
-  // Create nodes
+  // Node groups
   const nodeGroup = g.selectAll('.node')
     .data(nodes)
     .join('g')
     .attr('class', 'node')
-    .on('click', (event, d) => showDetail(d))
+    .on('click', (event, d) => { event.stopPropagation(); showDetail(d, nodes); })
+    .on('mouseenter', (event, d) => showTooltip(event, d))
+    .on('mousemove', (event) => moveTooltip(event))
+    .on('mouseleave', hideTooltip)
     .call(d3.drag()
-      .on('start', dragstarted)
-      .on('drag', dragged)
-      .on('end', dragended));
+      .on('start', (event, d) => { if (!event.active) simulation.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
+      .on('drag', (event, d) => { d.fx = event.x; d.fy = event.y; })
+      .on('end', (event, d) => { if (!event.active) simulation.alphaTarget(0); d.fx = null; d.fy = null; }));
 
-  nodeGroup.append('circle')
-    .attr('class', 'node-circle')
+  // Org nodes: rounded rect or circle
+  nodeGroup.filter(d => d.entityType === 'organization')
+    .append('circle')
     .attr('r', d => d.radius)
     .attr('fill', d => getColor(d.category))
-    .attr('stroke', '#fff')
-    .attr('stroke-width', d => d.entityType === 'organization' ? 2 : 1)
-    .attr('opacity', 0.85);
+    .attr('stroke', d => d3.color(getColor(d.category)).brighter(0.8))
+    .attr('stroke-width', 1)
+    .attr('opacity', 0.9);
 
-  // Initials or short label inside node
-  nodeGroup.append('text')
+  // People nodes: smaller, slightly transparent
+  nodeGroup.filter(d => d.entityType === 'person')
+    .append('circle')
+    .attr('r', d => d.radius)
+    .attr('fill', d => getColor(d.category))
+    .attr('stroke', 'none')
+    .attr('opacity', 0.7);
+
+  // Initials inside orgs only (or larger people nodes)
+  nodeGroup.filter(d => d.radius >= 12)
+    .append('text')
     .attr('text-anchor', 'middle')
     .attr('dy', '0.35em')
     .attr('font-family', 'var(--mono)')
-    .attr('font-size', d => d.radius > 16 ? '8px' : '6px')
+    .attr('font-size', d => d.radius >= 16 ? '7px' : '5px')
     .attr('fill', '#fff')
+    .attr('opacity', 0.9)
     .attr('pointer-events', 'none')
     .text(d => {
-      const name = d.name || '';
-      const parts = name.split(/[\s]+/);
-      if (parts.length >= 2) return parts[0][0] + parts[1][0];
-      return name.slice(0, 2).toUpperCase();
-    });
-
-  // Label below node (only for larger nodes)
-  nodeGroup.append('text')
-    .attr('class', 'node-label')
-    .attr('text-anchor', 'middle')
-    .attr('dy', d => d.radius + 12)
-    .attr('font-size', d => d.radius > 16 ? '9px' : '7px')
-    .text(d => {
-      if (d.radius < 14) return '';
-      const name = d.name || '';
-      return name.length > 18 ? name.slice(0, 16) + '...' : name;
+      const parts = (d.name || '').split(/[\s]+/);
+      if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
+      return (d.name || '').slice(0, 2).toUpperCase();
     });
 
   function ticked() {
     nodeGroup.attr('transform', d => `translate(${d.x},${d.y})`);
-
-    // Update connection lines
-    g.selectAll('.connection-line')
-      .attr('x1', d => d.source.x)
-      .attr('y1', d => d.source.y)
-      .attr('x2', d => d.target.x)
-      .attr('y2', d => d.target.y);
+    if (linkElements) {
+      linkElements
+        .attr('x1', d => d.source.x).attr('y1', d => d.source.y)
+        .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
+    }
   }
 
-  function dragstarted(event, d) {
-    if (!event.active) simulation.alphaTarget(0.3).restart();
-    d.fx = d.x;
-    d.fy = d.y;
-  }
-
-  function dragged(event, d) {
-    d.fx = event.x;
-    d.fy = event.y;
-  }
-
-  function dragended(event, d) {
-    if (!event.active) simulation.alphaTarget(0);
-    d.fx = null;
-    d.fy = null;
-  }
+  // Click background to close panel
+  svg.on('click', () => document.getElementById('detail-panel').classList.remove('open'));
 }
 
-// Custom cluster force
 function forceCluster(centers, strength) {
   let nodes;
   function force(alpha) {
     nodes.forEach(d => {
-      const center = centers[d.category];
-      if (!center) return;
-      d.vx += (center.x - d.x) * alpha * strength;
-      d.vy += (center.y - d.y) * alpha * strength;
+      const c = centers[d.category];
+      if (!c) return;
+      d.vx += (c.x - d.x) * alpha * strength;
+      d.vy += (c.y - d.y) * alpha * strength;
     });
   }
-  force.initialize = function(_) { nodes = _; };
+  force.initialize = (_) => { nodes = _; };
   return force;
 }
 
+// Tooltip
+const tooltip = document.getElementById('tooltip');
+function showTooltip(event, d) {
+  document.getElementById('tooltip-name').textContent = d.name;
+  const sub = d.entityType === 'person' ? (d.title || d.category) : d.category;
+  document.getElementById('tooltip-sub').textContent = sub;
+  tooltip.classList.add('visible');
+  moveTooltip(event);
+}
+function moveTooltip(event) {
+  const x = event.clientX + 12;
+  const y = event.clientY - 8;
+  tooltip.style.left = x + 'px';
+  tooltip.style.top = y + 'px';
+}
+function hideTooltip() { tooltip.classList.remove('visible'); }
+
 // Detail panel
-function showDetail(d) {
+function showDetail(d, allNodes) {
   const panel = document.getElementById('detail-panel');
   const content = document.getElementById('detail-content');
   const color = getColor(d.category);
 
   let fields = '';
-
   const addField = (label, value) => {
-    if (value) {
-      fields += `<div class="detail-field"><label>${label}</label><span>${value}</span></div>`;
-    }
+    if (value) fields += `<div class="detail-field"><label>${label}</label><span>${value}</span></div>`;
   };
 
   if (d.entityType === 'person') {
@@ -650,15 +659,38 @@ function showDetail(d) {
   }
 
   if (!fields) {
-    fields = '<div class="detail-field"><span style="color:var(--text-tertiary); font-style:italic;">No additional details yet. <a href="/contribute.html">Contribute info</a> about this entity.</span></div>';
+    fields = '<div class="detail-field"><span style="color:#6a7080; font-style:italic;">No additional details yet. <a href="/contribute.html" style="color:#7aa2d4;">Contribute info</a></span></div>';
+  }
+
+  // Affiliated people/orgs
+  let affiliated = '';
+  const links = inferredLinks.filter(l =>
+    l.personName === d.name || l.orgName === d.name
+  );
+  if (links.length > 0) {
+    const items = links.map(l => {
+      const linkedName = l.personName === d.name ? l.orgName : l.personName;
+      return `<div class="affiliated-item" data-name="${linkedName}">${linkedName}</div>`;
+    }).join('');
+    affiliated = `<div class="detail-affiliated"><h4>Affiliated</h4>${items}</div>`;
   }
 
   content.innerHTML = `
     <div class="detail-name">${d.name}</div>
     <div class="detail-type">${d.entityType}</div>
-    <div class="detail-category" style="background:${color}22; color:${color};">${d.category}</div>
+    <div class="detail-category" style="background:${color}33; color:${color};">${d.category}</div>
     <div class="detail-fields">${fields}</div>
+    ${affiliated}
   `;
+
+  // Click affiliated items to navigate
+  content.querySelectorAll('.affiliated-item').forEach(el => {
+    el.addEventListener('click', () => {
+      const name = el.dataset.name;
+      const target = allNodes.find(n => n.name === name);
+      if (target) showDetail(target, allNodes);
+    });
+  });
 
   panel.classList.add('open');
 }
@@ -676,8 +708,9 @@ document.querySelector('.nav-hamburger').addEventListener('click', () => {
   document.querySelector('.nav-links').classList.toggle('open');
 });
 
-// Resize
-window.addEventListener('resize', () => { if (allData.people.length || allData.organizations.length) render(); });
+window.addEventListener('resize', () => {
+  if (allData.people.length || allData.organizations.length) render();
+});
 </script>
 </body>
 </html>
