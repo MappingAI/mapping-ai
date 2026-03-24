@@ -195,7 +195,8 @@ body { background: var(--bg); font-family: var(--serif); color: #fff; overflow: 
   font-family: var(--mono); text-transform: uppercase;
   letter-spacing: 0.08em; pointer-events: none;
 }
-.node { cursor: pointer; }
+.node { cursor: pointer; transition: transform 0.1s; }
+.node:hover { transform: scale(1.15); }
 
 .nav-hamburger {
   display: none; flex-direction: column; justify-content: center;
@@ -288,6 +289,94 @@ const CATEGORY_COLORS = {
 };
 const DEFAULT_COLOR = '#6a7080';
 function getColor(cat) { return CATEGORY_COLORS[cat] || DEFAULT_COLOR; }
+
+// Org domain mapping for logo fetching (Clearbit logo API)
+const ORG_DOMAINS = {
+  'Anthropic': 'anthropic.com',
+  'OpenAI': 'openai.com',
+  'Google DeepMind': 'deepmind.google',
+  'Meta AI': 'meta.com',
+  'xAI': 'x.ai',
+  'Safe Superintelligence Inc.': 'ssi.inc',
+  'Mistral AI': 'mistral.ai',
+  'DeepSeek': 'deepseek.com',
+  'Center for AI Safety (CAIS)': 'safe.ai',
+  'Machine Intelligence Research Institute (MIRI)': 'intelligence.org',
+  'Alignment Research Center (ARC)': 'alignment.org',
+  'Redwood Research': 'redwoodresearch.org',
+  'Apollo Research': 'apolloresearch.ai',
+  'Institute for AI Policy and Strategy (IAPS)': 'iaps.ai',
+  'Centre for the Governance of AI (GovAI)': 'governance.ai',
+  'New Consensus': 'newconsensus.com',
+  'Center for a New American Security (CNAS)': 'cnas.org',
+  'Center for Security and Emerging Technology (CSET)': 'cset.georgetown.edu',
+  'Brookings Institution (AI Governance)': 'brookings.edu',
+  'RAND Corporation': 'rand.org',
+  'AI Now Institute': 'ainowinstitute.org',
+  'Partnership on AI': 'partnershiponai.org',
+  'Future of Life Institute': 'futureoflife.org',
+  'Center for American Progress': 'americanprogress.org',
+  'Berggruen Institute': 'berggruen.org',
+  'Stanford HAI': 'hai.stanford.edu',
+  'MIT FutureTech': 'mit.edu',
+  'a16z (Andreessen Horowitz)': 'a16z.com',
+  'Founders Fund': 'foundersfund.com',
+  'Y Combinator': 'ycombinator.com',
+  'Thrive Capital': 'thrivecap.com',
+  'SAG-AFTRA': 'sagaftra.org',
+  'Fairly Trained': 'fairlytrained.org',
+  'Americans for Responsible Innovation': 'responsibleinnovation.org',
+  'AI Policy Institute': 'theaipi.org',
+  'Foresight Institute': 'foresight.org',
+  'BlueDot Impact': 'bluedot.org',
+  'Secure AI Project': 'secureai.org',
+};
+
+// People image URLs (Wikipedia/Wikimedia thumbnails for well-known figures)
+const PEOPLE_IMAGES = {
+  'Sam Altman': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Sam_Altman_CropEdit.jpg/200px-Sam_Altman_CropEdit.jpg',
+  'Dario Amodei': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Dario_Amodei_at_the_Earthshot_Prize_2024.jpg/200px-Dario_Amodei_at_the_Earthshot_Prize_2024.jpg',
+  'Demis Hassabis': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Demis_Hassabis_Royal_Society.jpg/200px-Demis_Hassabis_Royal_Society.jpg',
+  'Mark Zuckerberg': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Mark_Zuckerberg_F8_2019_Keynote_%2832830578717%29_%28cropped%29.jpg/200px-Mark_Zuckerberg_F8_2019_Keynote_%2832830578717%29_%28cropped%29.jpg',
+  'Elon Musk': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Elon_Musk_Royal_Society_%28crop2%29.jpg/200px-Elon_Musk_Royal_Society_%28crop2%29.jpg',
+  'Daniela Amodei': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Daniela_Amodei_at_TechCrunch_Disrupt_2023.jpg/200px-Daniela_Amodei_at_TechCrunch_Disrupt_2023.jpg',
+  'Yoshua Bengio': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Yoshua_Bengio_-_2017_%28cropped%29.jpg/200px-Yoshua_Bengio_-_2017_%28cropped%29.jpg',
+  'Fei-Fei Li': 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Fei-Fei_Li_at_AI_for_Good_2017.jpg/200px-Fei-Fei_Li_at_AI_for_Good_2017.jpg',
+  'Marc Andreessen': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Marc_Andreessen-9.jpg/200px-Marc_Andreessen-9.jpg',
+  'Peter Thiel': 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Peter_Thiel_by_Gage_Skidmore_%28cropped%29.jpg/200px-Peter_Thiel_by_Gage_Skidmore_%28cropped%29.jpg',
+  'Ro Khanna': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Ro_Khanna_117th_Congress_portrait.jpg/200px-Ro_Khanna_117th_Congress_portrait.jpg',
+  'Bernie Sanders': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Bernie_Sanders.jpg/200px-Bernie_Sanders.jpg',
+  'Alexandria Ocasio-Cortez': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Alexandria_Ocasio-Cortez_Official_Portrait.jpg/200px-Alexandria_Ocasio-Cortez_Official_Portrait.jpg',
+  'Pete Buttigieg': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Secretary_Buttigieg_Official_Portrait_%28cropped%29.jpg/200px-Secretary_Buttigieg_Official_Portrait_%28cropped%29.jpg',
+  'Chuck Schumer': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Sen._Chuck_Schumer_official_photo.jpg/200px-Sen._Chuck_Schumer_official_photo.jpg',
+  'Ted Cruz': 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Ted_Cruz_official_116th_portrait.jpg/200px-Ted_Cruz_official_116th_portrait.jpg',
+  'Ezra Klein': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Ezra_Klein_by_Gage_Skidmore.jpg/200px-Ezra_Klein_by_Gage_Skidmore.jpg',
+  'Gavin Newsom': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Gavin_Newsom_official_photo.jpg/200px-Gavin_Newsom_official_photo.jpg',
+  'Daron Acemoglu': 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Daron_Acemoglu_in_2024.jpg/200px-Daron_Acemoglu_in_2024.jpg',
+  'Lawrence Lessig': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Lawrence_Lessig_May_2017.jpg/200px-Lawrence_Lessig_May_2017.jpg',
+  'Stuart Russell': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Stuart_Russell%2C_2023_%28cropped%29.jpg/200px-Stuart_Russell%2C_2023_%28cropped%29.jpg',
+  'Marsha Blackburn': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Marsha_Blackburn_official_photo.jpg/200px-Marsha_Blackburn_official_photo.jpg',
+  'Cory Booker': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Cory_Booker%2C_official_portrait%2C_114th_Congress.jpg/200px-Cory_Booker%2C_official_portrait%2C_114th_Congress.jpg',
+  'Tim Wu': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Tim_Wu_-_Annual_Meeting_of_the_New_Champions_2011.jpg/200px-Tim_Wu_-_Annual_Meeting_of_the_New_Champions_2011.jpg',
+};
+
+// Track which images loaded successfully
+const imageCache = {};
+
+function getOrgLogoUrl(name) {
+  const domain = ORG_DOMAINS[name];
+  if (!domain) return null;
+  return `https://logo.clearbit.com/${domain}`;
+}
+
+function getPersonImageUrl(name) {
+  return PEOPLE_IMAGES[name] || null;
+}
+
+function getImageUrl(d) {
+  if (d.entityType === 'organization') return getOrgLogoUrl(d.name);
+  return getPersonImageUrl(d.name);
+}
 
 // Known org affiliations parsed from titles
 const ORG_KEYWORDS = {
@@ -549,25 +638,80 @@ function render() {
       .on('drag', (event, d) => { d.fx = event.x; d.fy = event.y; })
       .on('end', (event, d) => { if (!event.active) simulation.alphaTarget(0); d.fx = null; d.fy = null; }));
 
-  // Org nodes: rounded rect or circle
-  nodeGroup.filter(d => d.entityType === 'organization')
-    .append('circle')
+  // Define clip paths and image patterns in defs
+  const defs = svg.append('defs');
+
+  nodes.forEach((d, i) => {
+    const imgUrl = getImageUrl(d);
+    const r = d.radius;
+    const id = `clip-${i}`;
+    const patId = `img-${i}`;
+
+    // Clip path (circle)
+    defs.append('clipPath')
+      .attr('id', id)
+      .append('circle')
+      .attr('r', r);
+
+    // Image pattern
+    if (imgUrl) {
+      d._patternId = patId;
+      d._clipId = id;
+      d._imgUrl = imgUrl;
+      d._imgIndex = i;
+
+      const pat = defs.append('pattern')
+        .attr('id', patId)
+        .attr('width', 1).attr('height', 1)
+        .attr('patternContentUnits', 'objectBoundingBox');
+
+      // White background circle for logos
+      pat.append('rect')
+        .attr('width', 1).attr('height', 1)
+        .attr('fill', d.entityType === 'organization' ? '#fff' : getColor(d.category));
+
+      pat.append('image')
+        .attr('href', imgUrl)
+        .attr('width', 1).attr('height', 1)
+        .attr('preserveAspectRatio', 'xMidYMid slice');
+    }
+  });
+
+  // Background circle (always present, visible as fallback or ring)
+  nodeGroup.append('circle')
+    .attr('class', 'node-bg')
     .attr('r', d => d.radius)
     .attr('fill', d => getColor(d.category))
-    .attr('stroke', d => d3.color(getColor(d.category)).brighter(0.8))
-    .attr('stroke-width', 1)
-    .attr('opacity', 0.9);
+    .attr('stroke', d => d.entityType === 'organization'
+      ? d3.color(getColor(d.category)).brighter(0.8) : 'none')
+    .attr('stroke-width', d => d.entityType === 'organization' ? 1.5 : 0)
+    .attr('opacity', d => d.entityType === 'organization' ? 0.9 : 0.7);
 
-  // People nodes: smaller, slightly transparent
-  nodeGroup.filter(d => d.entityType === 'person')
+  // Image circle (on top, clipped)
+  nodeGroup.filter(d => d._imgUrl)
     .append('circle')
-    .attr('r', d => d.radius)
-    .attr('fill', d => getColor(d.category))
-    .attr('stroke', 'none')
-    .attr('opacity', 0.7);
+    .attr('class', 'node-image')
+    .attr('r', d => d.radius - (d.entityType === 'organization' ? 2 : 1))
+    .attr('fill', d => `url(#${d._patternId})`)
+    .attr('clip-path', d => `url(#${d._clipId})`)
+    .attr('opacity', 1)
+    .on('error', function(event, d) {
+      // On image load failure, hide this circle
+      d3.select(this).attr('opacity', 0);
+    });
 
-  // Initials inside orgs only (or larger people nodes)
-  nodeGroup.filter(d => d.radius >= 12)
+  // Border ring for image nodes
+  nodeGroup.filter(d => d._imgUrl)
+    .append('circle')
+    .attr('class', 'node-ring')
+    .attr('r', d => d.radius)
+    .attr('fill', 'none')
+    .attr('stroke', d => getColor(d.category))
+    .attr('stroke-width', 2)
+    .attr('opacity', 0.8);
+
+  // Initials (only for nodes without images, or small nodes)
+  nodeGroup.filter(d => !d._imgUrl && d.radius >= 10)
     .append('text')
     .attr('text-anchor', 'middle')
     .attr('dy', '0.35em')
@@ -675,7 +819,13 @@ function showDetail(d, allNodes) {
     affiliated = `<div class="detail-affiliated"><h4>Affiliated</h4>${items}</div>`;
   }
 
+  const imgUrl = getImageUrl(d);
+  const imgHtml = imgUrl
+    ? `<img src="${imgUrl}" alt="${d.name}" style="width:56px; height:56px; border-radius:50%; object-fit:cover; border:2px solid ${color}44; margin-bottom:0.75rem; display:block;" onerror="this.style.display='none'">`
+    : '';
+
   content.innerHTML = `
+    ${imgHtml}
     <div class="detail-name">${d.name}</div>
     <div class="detail-type">${d.entityType}</div>
     <div class="detail-category" style="background:${color}33; color:${color};">${d.category}</div>
