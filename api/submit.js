@@ -82,7 +82,7 @@ export const handler = async (event) => {
     const LONG_LIMIT = 1000;
     for (const [key, value] of Object.entries(data)) {
       if (typeof value !== 'string') continue;
-      const limit = key === 'notes' ? LONG_LIMIT : SHORT_LIMIT;
+      const limit = ['notes', 'keyArgument', 'threatModels'].includes(key) ? LONG_LIMIT : SHORT_LIMIT;
       if (value.length > limit) {
         return {
           statusCode: 400,
@@ -100,43 +100,51 @@ export const handler = async (event) => {
         await client.query(
           `INSERT INTO people (
             name, category, title, primary_org, other_orgs, location,
-            regulatory_stance, capability_belief, influence_type, twitter,
-            notes, submitter_email, submitted_at, status
-          ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,'pending')`,
+            regulatory_stance, evidence_source, agi_timeline, ai_risk_level,
+            threat_models, influence_type, twitter, bluesky,
+            notes, submitter_email, submitter_relationship, submitted_at, status
+          ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,'pending')`,
           [
             data.name, data.category || null, data.title || null,
             data.primaryOrg || null, data.otherOrgs || null, data.location || null,
-            data.regulatoryStance || null, data.capabilityBelief || null,
-            data.influenceType || null, data.twitter || null,
-            data.notes || null, data.submitterEmail || null, ts,
+            data.regulatoryStance || null, data.evidenceSource || null,
+            data.agiTimeline || null, data.aiRiskLevel || null,
+            data.threatModels || null, data.influenceType || null,
+            data.twitter || null, data.bluesky || null,
+            data.notes || null, data.submitterEmail || null,
+            data.submitterRelationship || null, ts,
           ]
         );
       } else if (type === 'organization') {
         await client.query(
           `INSERT INTO organizations (
             name, category, website, location, funding_model,
-            regulatory_stance, capability_belief, influence_type, twitter,
-            notes, submitter_email, submitted_at, status
-          ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,'pending')`,
+            regulatory_stance, evidence_source, agi_timeline, ai_risk_level,
+            threat_models, influence_type, twitter, bluesky,
+            notes, submitter_email, submitter_relationship, last_verified, submitted_at, status
+          ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,'pending')`,
           [
             data.name, data.category || null, data.website || null,
             data.location || null, data.fundingModel || null,
-            data.regulatoryStance || null, data.capabilityBelief || null,
-            data.influenceType || null, data.twitter || null,
-            data.notes || null, data.submitterEmail || null, ts,
+            data.regulatoryStance || null, data.evidenceSource || null,
+            data.agiTimeline || null, data.aiRiskLevel || null,
+            data.threatModels || null, data.influenceType || null,
+            data.twitter || null, data.bluesky || null,
+            data.notes || null, data.submitterEmail || null,
+            data.submitterRelationship || null, data.lastVerified || null, ts,
           ]
         );
       } else if (type === 'resource') {
         await client.query(
           `INSERT INTO resources (
             title, author, resource_type, url, year, category,
-            key_argument, notes, submitter_email, submitted_at, status
-          ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,'pending')`,
+            key_argument, notes, submitter_email, submitter_relationship, submitted_at, status
+          ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,'pending')`,
           [
             data.title, data.author || null, data.resourceType || null,
             data.url || null, data.year || null, data.category || null,
             data.keyArgument || null, data.notes || null,
-            data.submitterEmail || null, ts,
+            data.submitterEmail || null, data.submitterRelationship || null, ts,
           ]
         );
       }

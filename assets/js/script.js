@@ -41,11 +41,19 @@ forms.forEach(form => {
       data: {}
     };
 
+    const collected = {};
     formData.forEach((value, key) => {
       if (key === '_hp') return;
-      if (value.trim()) {
-        data.data[key] = value.trim();
+      if (!value.trim()) return;
+      if (key in collected) {
+        if (!Array.isArray(collected[key])) collected[key] = [collected[key]];
+        collected[key].push(value.trim());
+      } else {
+        collected[key] = value.trim();
       }
+    });
+    Object.keys(collected).forEach(key => {
+      data.data[key] = Array.isArray(collected[key]) ? collected[key].join(', ') : collected[key];
     });
 
     try {
