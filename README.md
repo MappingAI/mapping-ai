@@ -30,13 +30,7 @@ Visit [mapping-ai.org/contribute.html](https://mapping-ai.org/contribute.html) t
 
 ## Working Group
 
-| Name | Background |
-|------|-----------|
-| Anushree Chaudhuri | Energy infrastructure, Dept. of Energy, MIT, Cambridge |
-| Olivia Sally | Political strategy, White House, AI startups |
-| Pratyush Seshadri | Economics, finance, climate resilience |
-| Robby Hill | Housing policy, land use data analytics |
-| Sophia Wang | Deep tech investing, research institution design |
+Maintained by a working group of researchers, policy experts, and practitioners. See [mapping-ai.org/about.html](https://mapping-ai.org/about.html) for more.
 
 ---
 
