@@ -190,6 +190,57 @@ body { background: var(--bg); font-family: var(--serif); color: #fff; overflow: 
   color: #6a7080; margin-top: 0.1rem;
 }
 
+/* Search */
+.search-box {
+  position: relative;
+}
+.search-input {
+  width: 100%; padding: 0.35rem 0.5rem 0.35rem 1.6rem;
+  font-family: var(--mono); font-size: 10px;
+  background: #1a1f2e; color: #e0ddd8;
+  border: 1px solid #2a2f3e; border-radius: 4px;
+  outline: none; letter-spacing: 0.02em;
+}
+.search-input::placeholder { color: #4a5060; }
+.search-input:focus { border-color: #4a5060; }
+.search-icon {
+  position: absolute; left: 0.5rem; top: 50%;
+  transform: translateY(-50%);
+  font-size: 10px; color: #4a5060; pointer-events: none;
+}
+.search-results {
+  display: none; position: absolute; top: 100%; left: 0; right: 0;
+  background: rgba(20, 24, 36, 0.98); border: 1px solid #2a2f3e;
+  border-top: none; border-radius: 0 0 4px 4px;
+  max-height: 240px; overflow-y: auto; z-index: 60;
+}
+.search-results.visible { display: block; }
+.search-result {
+  padding: 0.35rem 0.5rem; cursor: pointer;
+  display: flex; align-items: center; gap: 0.4rem;
+  transition: background 0.1s;
+}
+.search-result:hover { background: #2a2f3e; }
+.search-result-dot {
+  width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+}
+.search-result-name {
+  font-family: var(--mono); font-size: 10px; color: #e0ddd8;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.search-result-meta {
+  font-family: var(--mono); font-size: 8px; color: #4a5060;
+  margin-left: auto; flex-shrink: 0;
+}
+.search-match-hint {
+  font-family: var(--mono); font-size: 8px; color: #4a5060;
+  padding: 0.25rem 0.5rem; border-top: 1px solid #2a2f3e;
+}
+.node.dimmed circle { opacity: 0.12 !important; }
+.node.dimmed text { opacity: 0.12 !important; }
+.node.highlighted circle { opacity: 1 !important; }
+.node.highlighted .node-ring { stroke-width: 3 !important; stroke: #fff !important; }
+
 /* D3 */
 .cluster-label {
   font-family: var(--mono); text-transform: uppercase;
@@ -232,6 +283,13 @@ body { background: var(--bg); font-family: var(--serif); color: #fff; overflow: 
 </nav>
 
 <div class="controls">
+  <div class="control-group">
+    <div class="search-box">
+      <span class="search-icon">&#9906;</span>
+      <input class="search-input" id="search-input" type="text" placeholder="Search entities..." autocomplete="off">
+      <div class="search-results" id="search-results"></div>
+    </div>
+  </div>
   <div class="control-group">
     <h3>View</h3>
     <div class="view-toggles">
@@ -868,6 +926,244 @@ document.querySelector('.nav-hamburger').addEventListener('click', () => {
 window.addEventListener('resize', () => {
   if (allData.people.length || allData.organizations.length) render();
 });
+
+// Semantic search: synonym/concept expansion for AI policy domain
+const SEMANTIC_MAP = {
+  // Risk & safety
+  'safety': ['safety', 'alignment', 'risk', 'catastrophic', 'existential', 'safe', 'caisi', 'miri', 'cais'],
+  'risk': ['risk', 'danger', 'threat', 'catastrophic', 'existential', 'harm', 'safety'],
+  'alignment': ['alignment', 'aligned', 'safety', 'interpretability', 'miri', 'arc', 'redwood'],
+  'existential': ['existential', 'x-risk', 'catastrophic', 'extinction', 'superintelligence'],
+
+  // Governance & regulation
+  'regulation': ['regulation', 'regulatory', 'governance', 'policy', 'legislation', 'oversight', 'compliance'],
+  'governance': ['governance', 'regulation', 'policy', 'oversight', 'government', 'agency'],
+  'policy': ['policy', 'governance', 'regulation', 'think tank', 'legislation', 'government', 'congress', 'senator', 'representative'],
+  'government': ['government', 'agency', 'congress', 'senate', 'house', 'federal', 'senator', 'representative', 'policymaker', 'ostp', 'nist', 'ftc'],
+  'congress': ['congress', 'senator', 'representative', 'senate', 'house', 'legislation', 'policymaker'],
+  'law': ['law', 'legal', 'legislation', 'regulatory', 'compliance', 'attorney', 'lawyer'],
+
+  // Industry
+  'lab': ['lab', 'frontier', 'openai', 'anthropic', 'deepmind', 'meta ai', 'xai', 'mistral', 'deepseek'],
+  'frontier': ['frontier', 'lab', 'openai', 'anthropic', 'deepmind', 'meta ai', 'xai'],
+  'startup': ['startup', 'founder', 'ceo', 'venture', 'company', 'inc'],
+  'tech': ['tech', 'technology', 'frontier', 'lab', 'ai', 'silicon valley', 'executive'],
+
+  // Funding
+  'funding': ['funding', 'funder', 'investor', 'venture', 'capital', 'philanthropy', 'philanthropic', 'grant', 'vc'],
+  'money': ['money', 'funding', 'capital', 'investor', 'venture', 'philanthropy', 'vc', 'finance'],
+  'vc': ['vc', 'venture', 'capital', 'investor', 'a16z', 'founders fund', 'thrive'],
+  'philanthropy': ['philanthropy', 'philanthropic', 'foundation', 'donor', 'grant', 'open phil', 'coefficient'],
+
+  // Academia
+  'academic': ['academic', 'professor', 'university', 'research', 'stanford', 'mit', 'harvard', 'princeton', 'berkeley', 'oxford', 'cambridge'],
+  'university': ['university', 'academic', 'professor', 'stanford', 'mit', 'harvard', 'princeton', 'berkeley'],
+  'research': ['research', 'researcher', 'academic', 'paper', 'study', 'professor', 'analyst'],
+
+  // Labor & civil society
+  'labor': ['labor', 'union', 'worker', 'employment', 'sag-aftra', 'aft', 'guild', 'civil society', 'organizer'],
+  'union': ['union', 'labor', 'worker', 'sag-aftra', 'aft', 'guild', 'organize'],
+  'worker': ['worker', 'labor', 'employment', 'job', 'workforce', 'union', 'displacement'],
+  'civil society': ['civil society', 'advocacy', 'nonprofit', 'ngo', 'organizer', 'activist'],
+  'ethics': ['ethics', 'bias', 'fairness', 'rights', 'justice', 'discrimination', 'equity'],
+
+  // Media
+  'media': ['media', 'journalism', 'journalist', 'reporter', 'news', 'press', 'newsletter', 'substack', 'podcast'],
+  'journalist': ['journalist', 'reporter', 'media', 'press', 'writer', 'author', 'news'],
+
+  // Capabilities
+  'agi': ['agi', 'artificial general intelligence', 'superintelligence', 'asi', 'capability', 'frontier'],
+  'capabilities': ['capabilities', 'capability', 'frontier', 'agi', 'scaling', 'benchmark', 'performance'],
+
+  // Power dynamics
+  'power': ['power', 'influence', 'concentration', 'monopoly', 'dominance', 'authority', 'control'],
+  'influence': ['influence', 'power', 'lobbying', 'advocacy', 'agenda', 'decision-maker'],
+};
+
+function expandQuery(query) {
+  const lower = query.toLowerCase().trim();
+  const words = lower.split(/\s+/);
+  const expanded = new Set(words);
+
+  words.forEach(word => {
+    if (SEMANTIC_MAP[word]) {
+      SEMANTIC_MAP[word].forEach(syn => expanded.add(syn));
+    }
+    // Partial key match (e.g., "regulat" matches "regulation")
+    Object.keys(SEMANTIC_MAP).forEach(key => {
+      if (key.startsWith(word) || word.startsWith(key)) {
+        SEMANTIC_MAP[key].forEach(syn => expanded.add(syn));
+      }
+    });
+  });
+
+  return { original: lower, expanded: [...expanded] };
+}
+
+function scoreEntity(d, query) {
+  const { original, expanded } = query;
+  const fields = [
+    d.name, d.category, d.title, d.primary_org, d.other_orgs,
+    d.location, d.regulatory_stance, d.capability_belief,
+    d.influence_type, d.notes, d.website, d.funding_model
+  ].filter(Boolean).map(f => f.toLowerCase());
+
+  const allText = fields.join(' ');
+
+  // Exact name match: highest priority
+  if (d.name && d.name.toLowerCase().includes(original)) return 100;
+
+  // Exact match in any field
+  if (allText.includes(original)) return 80;
+
+  // Expanded/semantic matches
+  let semanticScore = 0;
+  expanded.forEach(term => {
+    if (allText.includes(term)) semanticScore += 5;
+  });
+
+  // Word-by-word fuzzy: check if each original word partially matches
+  const origWords = original.split(/\s+/);
+  origWords.forEach(w => {
+    fields.forEach(f => {
+      if (f.includes(w)) semanticScore += 10;
+    });
+  });
+
+  return semanticScore;
+}
+
+// Search UI
+const searchInput = document.getElementById('search-input');
+const searchResults = document.getElementById('search-results');
+let searchTimeout = null;
+let lastHighlighted = [];
+
+searchInput.addEventListener('input', () => {
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(doSearch, 150);
+});
+
+searchInput.addEventListener('focus', () => {
+  if (searchInput.value.trim()) doSearch();
+});
+
+searchInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    searchInput.blur();
+    clearSearch();
+  }
+});
+
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.search-box')) {
+    searchResults.classList.remove('visible');
+  }
+});
+
+function doSearch() {
+  const val = searchInput.value.trim();
+  if (!val) {
+    clearSearch();
+    return;
+  }
+
+  const query = expandQuery(val);
+  const allEntities = [
+    ...allData.organizations.map(d => ({ ...d, entityType: 'organization' })),
+    ...allData.people.filter(d => d.category).map(d => ({ ...d, entityType: 'person' }))
+  ];
+
+  const scored = allEntities
+    .map(d => ({ ...d, score: scoreEntity(d, query) }))
+    .filter(d => d.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 12);
+
+  searchResults.innerHTML = '';
+
+  if (scored.length === 0) {
+    searchResults.innerHTML = '<div class="search-match-hint">No matches</div>';
+    searchResults.classList.add('visible');
+    highlightNodes([]);
+    return;
+  }
+
+  // Check if semantic expansion contributed
+  const hasSemanticHits = scored.some(d => d.score > 0 && d.score < 80);
+  const directHits = scored.filter(d => d.score >= 80).length;
+
+  scored.forEach(d => {
+    const div = document.createElement('div');
+    div.className = 'search-result';
+    div.innerHTML = `
+      <span class="search-result-dot" style="background:${getColor(d.category)};"></span>
+      <span class="search-result-name">${d.name}</span>
+      <span class="search-result-meta">${d.entityType === 'person' ? 'person' : 'org'}</span>
+    `;
+    div.addEventListener('click', () => {
+      searchResults.classList.remove('visible');
+      // Switch view if needed
+      if (d.entityType === 'organization' && currentView === 'people') {
+        document.querySelector('[data-view="orgs"]').click();
+      } else if (d.entityType === 'person' && currentView === 'orgs') {
+        document.querySelector('[data-view="people"]').click();
+      }
+      // Find and click the node after a short delay for re-render
+      setTimeout(() => {
+        const allNodes = d3.selectAll('.node').data();
+        const target = allNodes.find(n => n.name === d.name);
+        if (target) {
+          showDetail(target, allNodes);
+          // Zoom to node
+          const svg = d3.select('#map-container svg');
+          const mapEl = document.getElementById('map-container');
+          svg.transition().duration(500).call(
+            zoomBehavior.transform,
+            d3.zoomIdentity.translate(
+              mapEl.clientWidth / 2 - target.x,
+              mapEl.clientHeight / 2 - target.y
+            ).scale(1.5)
+          );
+          highlightNodes([d.name]);
+        }
+      }, 100);
+    });
+    searchResults.appendChild(div);
+  });
+
+  if (hasSemanticHits && directHits < scored.length) {
+    const hint = document.createElement('div');
+    hint.className = 'search-match-hint';
+    hint.textContent = `Showing related matches for "${val}"`;
+    searchResults.appendChild(hint);
+  }
+
+  searchResults.classList.add('visible');
+  highlightNodes(scored.map(d => d.name));
+}
+
+function highlightNodes(names) {
+  const nameSet = new Set(names);
+  d3.selectAll('.node').each(function(d) {
+    const el = d3.select(this);
+    if (names.length === 0) {
+      el.classed('dimmed', false).classed('highlighted', false);
+    } else if (nameSet.has(d.name)) {
+      el.classed('dimmed', false).classed('highlighted', true);
+    } else {
+      el.classed('dimmed', true).classed('highlighted', false);
+    }
+  });
+  // Also dim cluster labels and backgrounds
+  d3.selectAll('.cluster-bg, .cluster-label').attr('opacity', names.length > 0 ? 0.03 : null);
+}
+
+function clearSearch() {
+  searchResults.classList.remove('visible');
+  searchResults.innerHTML = '';
+  highlightNodes([]);
+}
 </script>
 </body>
 </html>
