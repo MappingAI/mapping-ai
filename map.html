@@ -195,8 +195,7 @@ body { background: var(--bg); font-family: var(--serif); color: #fff; overflow: 
   font-family: var(--mono); text-transform: uppercase;
   letter-spacing: 0.08em; pointer-events: none;
 }
-.node { cursor: pointer; transition: transform 0.1s; }
-.node:hover { transform: scale(1.15); }
+.node { cursor: pointer; }
 
 .nav-hamburger {
   display: none; flex-direction: column; justify-content: center;
@@ -630,9 +629,17 @@ function render() {
     .join('g')
     .attr('class', 'node')
     .on('click', (event, d) => { event.stopPropagation(); showDetail(d, nodes); })
-    .on('mouseenter', (event, d) => showTooltip(event, d))
+    .on('mouseenter', function(event, d) {
+      d3.select(this).select('.node-bg').attr('opacity', 1);
+      d3.select(this).select('.node-ring').attr('stroke-width', 3);
+      showTooltip(event, d);
+    })
     .on('mousemove', (event) => moveTooltip(event))
-    .on('mouseleave', hideTooltip)
+    .on('mouseleave', function(event, d) {
+      d3.select(this).select('.node-bg').attr('opacity', d.entityType === 'organization' ? 0.9 : 0.7);
+      d3.select(this).select('.node-ring').attr('stroke-width', 2);
+      hideTooltip();
+    })
     .call(d3.drag()
       .on('start', (event, d) => { if (!event.active) simulation.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
       .on('drag', (event, d) => { d.fx = event.x; d.fy = event.y; })
