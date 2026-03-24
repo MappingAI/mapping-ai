@@ -1,5 +1,5 @@
 // API endpoint — update after AWS deployment
-const API_BASE = 'https://REPLACE_WITH_API_GATEWAY_URL';
+const API_BASE = 'https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com';
 
 // Form toggle
 const toggles = document.querySelectorAll('.toggle');
