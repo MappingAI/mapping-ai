@@ -50,7 +50,7 @@ export default async function handler(req, res) {
     const LONG_LIMIT = 1000;
     for (const [key, value] of Object.entries(data)) {
       if (typeof value !== 'string') continue;
-      const limit = key === 'notes' ? LONG_LIMIT : SHORT_LIMIT;
+      const limit = ['notes', 'keyArgument', 'threatModels'].includes(key) ? LONG_LIMIT : SHORT_LIMIT;
       if (value.length > limit) {
         return res.status(400).json({ error: `Field "${key}" exceeds maximum length` });
       }
@@ -60,8 +60,9 @@ export default async function handler(req, res) {
       await sql`
         INSERT INTO people (
           name, category, title, primary_org, other_orgs, location,
-          regulatory_stance, capability_belief, influence_type, twitter,
-          notes, submitter_email, submitted_at, status
+          regulatory_stance, evidence_source, agi_timeline, ai_risk_level,
+          threat_models, influence_type, twitter, bluesky,
+          notes, submitter_email, submitter_relationship, submitted_at, status
         ) VALUES (
           ${data.name},
           ${data.category || null},
@@ -70,11 +71,16 @@ export default async function handler(req, res) {
           ${data.otherOrgs || null},
           ${data.location || null},
           ${data.regulatoryStance || null},
-          ${data.capabilityBelief || null},
+          ${data.evidenceSource || null},
+          ${data.agiTimeline || null},
+          ${data.aiRiskLevel || null},
+          ${data.threatModels || null},
           ${data.influenceType || null},
           ${data.twitter || null},
+          ${data.bluesky || null},
           ${data.notes || null},
           ${data.submitterEmail || null},
+          ${data.submitterRelationship || null},
           ${timestamp || new Date().toISOString()},
           'pending'
         )
@@ -83,8 +89,9 @@ export default async function handler(req, res) {
       await sql`
         INSERT INTO organizations (
           name, category, website, location, funding_model,
-          regulatory_stance, capability_belief, influence_type, twitter,
-          notes, submitter_email, submitted_at, status
+          regulatory_stance, evidence_source, agi_timeline, ai_risk_level,
+          threat_models, influence_type, twitter, bluesky,
+          notes, submitter_email, submitter_relationship, last_verified, submitted_at, status
         ) VALUES (
           ${data.name},
           ${data.category || null},
@@ -92,11 +99,17 @@ export default async function handler(req, res) {
           ${data.location || null},
           ${data.fundingModel || null},
           ${data.regulatoryStance || null},
-          ${data.capabilityBelief || null},
+          ${data.evidenceSource || null},
+          ${data.agiTimeline || null},
+          ${data.aiRiskLevel || null},
+          ${data.threatModels || null},
           ${data.influenceType || null},
           ${data.twitter || null},
+          ${data.bluesky || null},
           ${data.notes || null},
           ${data.submitterEmail || null},
+          ${data.submitterRelationship || null},
+          ${data.lastVerified || null},
           ${timestamp || new Date().toISOString()},
           'pending'
         )
@@ -105,7 +118,7 @@ export default async function handler(req, res) {
       await sql`
         INSERT INTO resources (
           title, author, resource_type, url, year, category,
-          key_argument, notes, submitter_email, submitted_at, status
+          key_argument, notes, submitter_email, submitter_relationship, submitted_at, status
         ) VALUES (
           ${data.title},
           ${data.author || null},
@@ -116,6 +129,7 @@ export default async function handler(req, res) {
           ${data.keyArgument || null},
           ${data.notes || null},
           ${data.submitterEmail || null},
+          ${data.submitterRelationship || null},
           ${timestamp || new Date().toISOString()},
           'pending'
         )

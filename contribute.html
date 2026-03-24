@@ -40,8 +40,17 @@ h1 {
 p { margin-bottom: 1.5rem; font-size: 16.5px; }
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
+.disclaimer {
+  font-family: var(--mono); font-size: 12px;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+  padding: 1rem 1.25rem;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
 .form-toggle {
-  display: flex; gap: 0.5rem; margin: 2rem 0 1.5rem;
+  display: flex; gap: 0.5rem; margin: 0 0 1.5rem;
   flex-wrap: wrap;
 }
 .toggle {
@@ -58,6 +67,30 @@ a:hover { text-decoration: underline; }
   background: var(--text-primary); color: #fff;
   border-color: var(--text-primary);
 }
+/* Collapsible example */
+details {
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+details summary {
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--text-secondary);
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  background: var(--bg-secondary);
+}
+details summary:hover { color: var(--text-primary); }
+details[open] summary { border-bottom: 1px solid var(--border); }
+.example-content {
+  padding: 1rem;
+  font-family: var(--mono); font-size: 11.5px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+.example-content strong { color: var(--text-primary); font-weight: 500; }
 .form { display: none; }
 .form.active { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 .field { display: flex; flex-direction: column; }
@@ -66,6 +99,12 @@ a:hover { text-decoration: underline; }
   font-family: var(--mono); font-size: 10px;
   letter-spacing: 0.1em; text-transform: uppercase;
   color: var(--text-tertiary); margin-bottom: 0.35rem;
+}
+.field .helper {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--text-tertiary);
+  margin-top: 0.25rem;
+  line-height: 1.5;
 }
 .field input, .field select, .field textarea {
   font-family: var(--serif); font-size: 15px;
@@ -87,6 +126,65 @@ a:hover { text-decoration: underline; }
   outline: none; border-color: var(--text-secondary);
 }
 .field textarea { resize: vertical; min-height: 80px; }
+/* Checkbox groups */
+.checkbox-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem 1rem;
+}
+.checkbox-group label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-family: var(--mono); font-size: 11px;
+  color: var(--text-secondary);
+  text-transform: none;
+  letter-spacing: 0;
+  cursor: pointer;
+  line-height: 1.4;
+}
+.checkbox-group input[type="checkbox"] {
+  width: 14px; height: 14px;
+  margin-top: 1px;
+  accent-color: var(--text-primary);
+  cursor: pointer;
+}
+.checkbox-group label:hover { color: var(--text-primary); }
+.checkbox-counter {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--text-tertiary);
+  margin-top: 0.5rem;
+}
+.checkbox-counter.limit-reached { color: var(--accent); }
+/* Radio group (relationship) */
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+.radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--mono); font-size: 11px;
+  color: var(--text-secondary);
+  text-transform: none;
+  letter-spacing: 0;
+  cursor: pointer;
+}
+.radio-group input[type="radio"] {
+  width: 14px; height: 14px;
+  accent-color: var(--text-primary);
+  cursor: pointer;
+}
+.radio-group label:hover { color: var(--text-primary); }
+.clear-link {
+  text-decoration: underline;
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+.clear-link:hover { color: var(--text-primary); }
 .honeypot { position: absolute; left: -9999px; }
 .submit {
   grid-column: span 2;
@@ -122,6 +220,7 @@ a:hover { text-decoration: underline; }
   .form.active { grid-template-columns: 1fr; }
   .field.full { grid-column: span 1; }
   .submit { grid-column: span 1; }
+  .checkbox-group { grid-template-columns: 1fr; }
 }
 /* Site navigation */
 .site-nav {
@@ -147,8 +246,6 @@ a:hover { text-decoration: underline; }
   letter-spacing: 0.1em; text-transform: uppercase;
   color: var(--text-tertiary); text-decoration: none;
   transition: color 0.15s;
-}
-.nav-links a {
   position: relative;
 }
 .nav-links a::after {
@@ -215,11 +312,72 @@ a:hover { text-decoration: underline; }
   <h1>Add to the Map</h1>
   <p>Help us build a comprehensive map of the AI policy landscape. Submit a person, organization, or influential resource that should be included.</p>
 
+  <div class="disclaimer">
+    Anyone with knowledge of the U.S. AI policy landscape can contribute. You don't need to be affiliated with the person or organization you're submitting. All submissions are reviewed before publication.
+  </div>
+
   <div class="form-toggle">
     <button class="toggle active" data-form="person">Add a Person</button>
     <button class="toggle" data-form="organization">Add an Organization</button>
     <button class="toggle" data-form="resource">Add a Resource</button>
   </div>
+
+  <!-- Person Example -->
+  <details id="person-example">
+    <summary>See example submission</summary>
+    <div class="example-content">
+      <strong>Name:</strong> Dario Amodei<br>
+      <strong>Category:</strong> Frontier Lab<br>
+      <strong>Title:</strong> CEO, Anthropic<br>
+      <strong>Primary org:</strong> Anthropic<br>
+      <strong>Location:</strong> San Francisco, CA<br>
+      <strong>Regulatory stance:</strong> Moderate (mandatory safety evals + transparency)<br>
+      <strong>How publicly stated:</strong> Explicitly stated (speeches, testimony, writing)<br>
+      <strong>AGI timeline:</strong> Within 2–3 years<br>
+      <strong>AI risk level:</strong> Potentially catastrophic<br>
+      <strong>Key concerns:</strong> Concentration of power, Weapons proliferation, Loss of human control<br>
+      <strong>Influence type:</strong> Decision-maker, Builder, Narrator<br>
+      <strong>Twitter/X:</strong> @DarioAmodei<br>
+      <strong>Notes:</strong> Co-founded Anthropic after leaving OpenAI over safety disagreements. Published "Machines of Loving Grace" (Oct 2024). Advocates for "responsible scaling" rather than pausing.
+    </div>
+  </details>
+
+  <!-- Organization Example -->
+  <details id="organization-example" class="hidden">
+    <summary>See example submission</summary>
+    <div class="example-content">
+      <strong>Name:</strong> Anthropic<br>
+      <strong>Category:</strong> Frontier Lab<br>
+      <strong>Website:</strong> https://anthropic.com<br>
+      <strong>Location:</strong> San Francisco, CA<br>
+      <strong>Funding model:</strong> Mixed (commercial + philanthropic)<br>
+      <strong>Regulatory stance:</strong> Moderate (mandatory safety evals + transparency)<br>
+      <strong>How publicly stated:</strong> Explicitly stated (speeches, testimony, writing)<br>
+      <strong>AGI timeline:</strong> Within 2–3 years<br>
+      <strong>AI risk level:</strong> Potentially catastrophic<br>
+      <strong>Key concerns:</strong> Weapons proliferation, Loss of human control, Cybersecurity threats<br>
+      <strong>Influence type:</strong> Builder, Researcher/analyst, Advisor/strategist<br>
+      <strong>Twitter/X:</strong> @AnthropicAI<br>
+      <strong>Bluesky:</strong> @anthropic.ai<br>
+      <strong>Last verified:</strong> 2026<br>
+      <strong>Notes:</strong> Public benefit corporation. Pioneered "responsible scaling policy" framework. Revenue from Claude API and consumer products.
+    </div>
+  </details>
+
+  <!-- Resource Example -->
+  <details id="resource-example" class="hidden">
+    <summary>See example submission</summary>
+    <div class="example-content">
+      <strong>Title:</strong> Situational Awareness<br>
+      <strong>Author(s):</strong> Leopold Aschenbrenner<br>
+      <strong>Type:</strong> Essay<br>
+      <strong>URL:</strong> https://situational-awareness.ai<br>
+      <strong>Year:</strong> 2024<br>
+      <strong>Category:</strong> AI Capabilities<br>
+      <strong>Key argument:</strong> AGI is likely by 2027, superintelligence by end of decade. The US needs to treat frontier AI as a national security priority.<br>
+      <strong>Notes:</strong> Widely circulated in Silicon Valley and DC policy circles. Shifted discourse toward framing AI as geopolitical competition.
+    </div>
+  </details>
 
   <!-- Person Form -->
   <form id="person-form" class="form active" data-type="person">
@@ -236,9 +394,11 @@ a:hover { text-decoration: underline; }
         <option value="AI Safety/Alignment">AI Safety/Alignment</option>
         <option value="Think Tank/Policy Org">Think Tank/Policy Org</option>
         <option value="Government/Agency">Government/Agency</option>
+        <option value="Policymaker">Policymaker</option>
         <option value="Academic">Academic</option>
         <option value="VC/Capital/Philanthropy">VC/Capital/Philanthropy</option>
         <option value="Labor/Civil Society">Labor/Civil Society</option>
+        <option value="Ethics/Bias/Rights">Ethics/Bias/Rights</option>
         <option value="Media/Journalism">Media/Journalism</option>
         <option value="Political Campaign/PAC">Political Campaign/PAC</option>
       </select>
@@ -261,19 +421,92 @@ a:hover { text-decoration: underline; }
     </div>
     <div class="field">
       <label>Regulatory stance</label>
-      <input type="text" name="regulatoryStance">
+      <select name="regulatoryStance">
+        <option value=""></option>
+        <option value="Accelerate">Accelerate (minimal/no regulation)</option>
+        <option value="Light-touch">Light-touch (voluntary, self-governance)</option>
+        <option value="Targeted">Targeted (sector-specific rules, not broad R&D restrictions)</option>
+        <option value="Moderate">Moderate (mandatory safety evals + transparency)</option>
+        <option value="Restrictive">Restrictive (external oversight of compute, training runs)</option>
+        <option value="Precautionary">Precautionary (pause/moratorium until governance catches up)</option>
+        <option value="Nationalize">Nationalize/public control</option>
+        <option value="Mixed/unclear">Mixed/unclear</option>
+        <option value="Other">Other (see notes)</option>
+      </select>
     </div>
     <div class="field">
-      <label>Capability belief</label>
-      <input type="text" name="capabilityBelief">
+      <label>How publicly stated?</label>
+      <select name="evidenceSource">
+        <option value=""></option>
+        <option value="Explicitly stated">Explicitly stated (speeches, testimony, writing)</option>
+        <option value="Inferred">Inferred from actions/funding/affiliations</option>
+        <option value="Unknown">Unknown</option>
+      </select>
     </div>
     <div class="field">
-      <label>Influence type</label>
-      <input type="text" name="influenceType">
+      <label>AGI timeline belief</label>
+      <select name="agiTimeline">
+        <option value=""></option>
+        <option value="Already here">Already here/emerging</option>
+        <option value="2-3 years">Within 2–3 years</option>
+        <option value="5-10 years">Within 5–10 years</option>
+        <option value="10-25 years">10–25 years</option>
+        <option value="25+ years or never">25+ years or never</option>
+        <option value="Ill-defined">Considers the concept ill-defined</option>
+        <option value="Unknown">Unknown/not publicly stated</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>AI risk level</label>
+      <select name="aiRiskLevel">
+        <option value=""></option>
+        <option value="Overstated">Overstated (hype will fade)</option>
+        <option value="Manageable">Real but manageable (like previous technologies)</option>
+        <option value="Serious">Serious societal risks (labor, power, democracy)</option>
+        <option value="Catastrophic">Potentially catastrophic (bioweapons, loss of control)</option>
+        <option value="Existential">Existential (threatens humanity's survival)</option>
+        <option value="Mixed/nuanced">Mixed/nuanced (see notes)</option>
+        <option value="Unknown">Unknown/not publicly stated</option>
+      </select>
+    </div>
+    <div class="field full">
+      <label>Key concerns (select your top 3)</label>
+      <div class="checkbox-group" data-max="3">
+        <label><input type="checkbox" name="threatModels" value="Labor displacement"> Labor displacement/unemployment</label>
+        <label><input type="checkbox" name="threatModels" value="Economic inequality"> Economic inequality</label>
+        <label><input type="checkbox" name="threatModels" value="Power concentration"> Concentration of corporate/state power</label>
+        <label><input type="checkbox" name="threatModels" value="Democratic erosion"> Democratic erosion/surveillance</label>
+        <label><input type="checkbox" name="threatModels" value="Cybersecurity"> Cybersecurity threats</label>
+        <label><input type="checkbox" name="threatModels" value="Misinformation"> Misinformation/deepfakes</label>
+        <label><input type="checkbox" name="threatModels" value="Environmental"> Environmental harm (energy/water)</label>
+        <label><input type="checkbox" name="threatModels" value="Weapons"> Weapons proliferation (bio, autonomous)</label>
+        <label><input type="checkbox" name="threatModels" value="Loss of control"> Loss of human control</label>
+        <label><input type="checkbox" name="threatModels" value="Copyright/IP"> Copyright/IP/creative economy</label>
+        <label><input type="checkbox" name="threatModels" value="Existential risk"> Existential/civilizational risk</label>
+      </div>
+      <div class="checkbox-counter">0 of 3 selected</div>
+    </div>
+    <div class="field full">
+      <label>Influence type (select all that apply)</label>
+      <div class="checkbox-group">
+        <label><input type="checkbox" name="influenceType" value="Decision-maker"> Decision-maker (legislator, regulator)</label>
+        <label><input type="checkbox" name="influenceType" value="Advisor/strategist"> Advisor/strategist</label>
+        <label><input type="checkbox" name="influenceType" value="Researcher/analyst"> Researcher/analyst</label>
+        <label><input type="checkbox" name="influenceType" value="Funder/investor"> Funder/investor</label>
+        <label><input type="checkbox" name="influenceType" value="Builder"> Builder (develops AI systems)</label>
+        <label><input type="checkbox" name="influenceType" value="Organizer/advocate"> Organizer/advocate</label>
+        <label><input type="checkbox" name="influenceType" value="Narrator"> Narrator (journalist, author, podcaster)</label>
+        <label><input type="checkbox" name="influenceType" value="Implementer"> Implementer (executes policy/deploys AI)</label>
+        <label><input type="checkbox" name="influenceType" value="Connector/convener"> Connector/convener</label>
+      </div>
     </div>
     <div class="field">
       <label>Twitter/X</label>
-      <input type="text" name="twitter">
+      <input type="text" name="twitter" placeholder="@handle">
+    </div>
+    <div class="field">
+      <label>Bluesky</label>
+      <input type="text" name="bluesky" placeholder="@handle.bsky.social">
     </div>
     <div class="field full">
       <label>Notes</label>
@@ -282,6 +515,14 @@ a:hover { text-decoration: underline; }
     <div class="field full">
       <label>Your email (optional)</label>
       <input type="email" name="submitterEmail">
+      <span class="helper">We'll only use this to follow up if we have questions. It won't be published or shared.</span>
+    </div>
+    <div class="field full">
+      <label>Your relationship (optional) <span class="clear-link" data-target="person-relationship">clear</span></label>
+      <div class="radio-group" id="person-relationship">
+        <label><input type="radio" name="submitterRelationship" value="I am this person"> I am this person</label>
+        <label><input type="radio" name="submitterRelationship" value="I can connect you with this person"> I can connect you with this person</label>
+      </div>
     </div>
     <button type="submit" class="submit">Submit Person</button>
   </form>
@@ -304,6 +545,7 @@ a:hover { text-decoration: underline; }
         <option value="Academic">Academic</option>
         <option value="VC/Capital/Philanthropy">VC/Capital/Philanthropy</option>
         <option value="Labor/Civil Society">Labor/Civil Society</option>
+        <option value="Ethics/Bias/Rights">Ethics/Bias/Rights</option>
         <option value="Media/Journalism">Media/Journalism</option>
         <option value="Political Campaign/PAC">Political Campaign/PAC</option>
       </select>
@@ -318,23 +560,111 @@ a:hover { text-decoration: underline; }
     </div>
     <div class="field">
       <label>Funding model</label>
-      <input type="text" name="fundingModel">
+      <select name="fundingModel">
+        <option value=""></option>
+        <option value="Venture-backed">Venture-backed/for-profit</option>
+        <option value="Revenue-generating">Revenue-generating (SaaS, enterprise)</option>
+        <option value="Government-funded">Government-funded (grants, contracts)</option>
+        <option value="Philanthropic">Philanthropic/foundation-funded</option>
+        <option value="Membership">Membership/dues-based</option>
+        <option value="Mixed">Mixed (commercial + philanthropic)</option>
+        <option value="Public benefit">Public benefit corp/capped-profit</option>
+        <option value="Self-funded">Self-funded/endowed</option>
+        <option value="Other">Other (see notes)</option>
+      </select>
     </div>
     <div class="field">
       <label>Regulatory stance</label>
-      <input type="text" name="regulatoryStance">
+      <select name="regulatoryStance">
+        <option value=""></option>
+        <option value="Accelerate">Accelerate (minimal/no regulation)</option>
+        <option value="Light-touch">Light-touch (voluntary, self-governance)</option>
+        <option value="Targeted">Targeted (sector-specific rules, not broad R&D restrictions)</option>
+        <option value="Moderate">Moderate (mandatory safety evals + transparency)</option>
+        <option value="Restrictive">Restrictive (external oversight of compute, training runs)</option>
+        <option value="Precautionary">Precautionary (pause/moratorium until governance catches up)</option>
+        <option value="Nationalize">Nationalize/public control</option>
+        <option value="Mixed/unclear">Mixed/unclear</option>
+        <option value="Other">Other (see notes)</option>
+      </select>
     </div>
     <div class="field">
-      <label>Capability belief</label>
-      <input type="text" name="capabilityBelief">
+      <label>How publicly stated?</label>
+      <select name="evidenceSource">
+        <option value=""></option>
+        <option value="Explicitly stated">Explicitly stated (speeches, testimony, writing)</option>
+        <option value="Inferred">Inferred from actions/funding/affiliations</option>
+        <option value="Unknown">Unknown</option>
+      </select>
     </div>
     <div class="field">
-      <label>Influence type</label>
-      <input type="text" name="influenceType">
+      <label>AGI timeline belief</label>
+      <select name="agiTimeline">
+        <option value=""></option>
+        <option value="Already here">Already here/emerging</option>
+        <option value="2-3 years">Within 2–3 years</option>
+        <option value="5-10 years">Within 5–10 years</option>
+        <option value="10-25 years">10–25 years</option>
+        <option value="25+ years or never">25+ years or never</option>
+        <option value="Ill-defined">Considers the concept ill-defined</option>
+        <option value="Unknown">Unknown/not publicly stated</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>AI risk level</label>
+      <select name="aiRiskLevel">
+        <option value=""></option>
+        <option value="Overstated">Overstated (hype will fade)</option>
+        <option value="Manageable">Real but manageable (like previous technologies)</option>
+        <option value="Serious">Serious societal risks (labor, power, democracy)</option>
+        <option value="Catastrophic">Potentially catastrophic (bioweapons, loss of control)</option>
+        <option value="Existential">Existential (threatens humanity's survival)</option>
+        <option value="Mixed/nuanced">Mixed/nuanced (see notes)</option>
+        <option value="Unknown">Unknown/not publicly stated</option>
+      </select>
+    </div>
+    <div class="field full">
+      <label>Key concerns (select your top 3)</label>
+      <div class="checkbox-group" data-max="3">
+        <label><input type="checkbox" name="threatModels" value="Labor displacement"> Labor displacement/unemployment</label>
+        <label><input type="checkbox" name="threatModels" value="Economic inequality"> Economic inequality</label>
+        <label><input type="checkbox" name="threatModels" value="Power concentration"> Concentration of corporate/state power</label>
+        <label><input type="checkbox" name="threatModels" value="Democratic erosion"> Democratic erosion/surveillance</label>
+        <label><input type="checkbox" name="threatModels" value="Cybersecurity"> Cybersecurity threats</label>
+        <label><input type="checkbox" name="threatModels" value="Misinformation"> Misinformation/deepfakes</label>
+        <label><input type="checkbox" name="threatModels" value="Environmental"> Environmental harm (energy/water)</label>
+        <label><input type="checkbox" name="threatModels" value="Weapons"> Weapons proliferation (bio, autonomous)</label>
+        <label><input type="checkbox" name="threatModels" value="Loss of control"> Loss of human control</label>
+        <label><input type="checkbox" name="threatModels" value="Copyright/IP"> Copyright/IP/creative economy</label>
+        <label><input type="checkbox" name="threatModels" value="Existential risk"> Existential/civilizational risk</label>
+      </div>
+      <div class="checkbox-counter">0 of 3 selected</div>
+    </div>
+    <div class="field full">
+      <label>Influence type (select all that apply)</label>
+      <div class="checkbox-group">
+        <label><input type="checkbox" name="influenceType" value="Decision-maker"> Decision-maker (legislator, regulator)</label>
+        <label><input type="checkbox" name="influenceType" value="Advisor/strategist"> Advisor/strategist</label>
+        <label><input type="checkbox" name="influenceType" value="Researcher/analyst"> Researcher/analyst</label>
+        <label><input type="checkbox" name="influenceType" value="Funder/investor"> Funder/investor</label>
+        <label><input type="checkbox" name="influenceType" value="Builder"> Builder (develops AI systems)</label>
+        <label><input type="checkbox" name="influenceType" value="Organizer/advocate"> Organizer/advocate</label>
+        <label><input type="checkbox" name="influenceType" value="Narrator"> Narrator (journalist, author, podcaster)</label>
+        <label><input type="checkbox" name="influenceType" value="Implementer"> Implementer (executes policy/deploys AI)</label>
+        <label><input type="checkbox" name="influenceType" value="Connector/convener"> Connector/convener</label>
+      </div>
     </div>
     <div class="field">
       <label>Twitter/X</label>
-      <input type="text" name="twitter">
+      <input type="text" name="twitter" placeholder="@handle">
+    </div>
+    <div class="field">
+      <label>Bluesky</label>
+      <input type="text" name="bluesky" placeholder="@handle.bsky.social">
+    </div>
+    <div class="field">
+      <label>Last verified</label>
+      <input type="text" name="lastVerified" placeholder="e.g. 2026">
     </div>
     <div class="field full">
       <label>Notes</label>
@@ -343,6 +673,14 @@ a:hover { text-decoration: underline; }
     <div class="field full">
       <label>Your email (optional)</label>
       <input type="email" name="submitterEmail">
+      <span class="helper">We'll only use this to follow up if we have questions. It won't be published or shared.</span>
+    </div>
+    <div class="field full">
+      <label>Your relationship (optional) <span class="clear-link" data-target="org-relationship">clear</span></label>
+      <div class="radio-group" id="org-relationship">
+        <label><input type="radio" name="submitterRelationship" value="I represent this organization"> I represent this organization</label>
+        <label><input type="radio" name="submitterRelationship" value="I can connect you with this organization"> I can connect you with this organization</label>
+      </div>
     </div>
     <button type="submit" class="submit">Submit Organization</button>
   </form>
@@ -407,6 +745,13 @@ a:hover { text-decoration: underline; }
     <div class="field full">
       <label>Your email (optional)</label>
       <input type="email" name="submitterEmail">
+      <span class="helper">We'll only use this to follow up if we have questions. It won't be published or shared.</span>
+    </div>
+    <div class="field full">
+      <label>Your relationship (optional) <span class="clear-link" data-target="resource-relationship">clear</span></label>
+      <div class="radio-group" id="resource-relationship">
+        <label><input type="radio" name="submitterRelationship" value="I am the author"> I am the author</label>
+      </div>
     </div>
     <button type="submit" class="submit">Submit Resource</button>
   </form>
@@ -420,15 +765,135 @@ a:hover { text-decoration: underline; }
   </div>
 </div>
 
-<script src="assets/js/script.js"></script>
 <script>
-  const path = window.location.pathname;
-  document.querySelectorAll('.nav-links a').forEach(a => {
-    if (a.getAttribute('href') === path) a.classList.add('active');
+// Form toggle
+const toggles = document.querySelectorAll('.toggle');
+const forms = document.querySelectorAll('.form');
+const examples = {
+  person: document.getElementById('person-example'),
+  organization: document.getElementById('organization-example'),
+  resource: document.getElementById('resource-example')
+};
+
+toggles.forEach(toggle => {
+  toggle.addEventListener('click', () => {
+    const formType = toggle.dataset.form;
+
+    toggles.forEach(t => t.classList.remove('active'));
+    toggle.classList.add('active');
+
+    forms.forEach(f => f.classList.remove('active'));
+    document.getElementById(`${formType}-form`).classList.add('active');
+
+    // Show/hide examples and close them when switching
+    Object.entries(examples).forEach(([type, el]) => {
+      el.removeAttribute('open'); // Close the details element
+      if (type === formType) {
+        el.classList.remove('hidden');
+      } else {
+        el.classList.add('hidden');
+      }
+    });
   });
-  document.querySelector('.nav-hamburger').addEventListener('click', () => {
-    document.querySelector('.nav-links').classList.toggle('open');
+});
+
+// Checkbox limit for threat models (max 3)
+document.querySelectorAll('.checkbox-group[data-max]').forEach(group => {
+  const max = parseInt(group.dataset.max);
+  const checkboxes = group.querySelectorAll('input[type="checkbox"]');
+  const counter = group.parentElement.querySelector('.checkbox-counter');
+
+  checkboxes.forEach(cb => {
+    cb.addEventListener('change', () => {
+      const checked = group.querySelectorAll('input:checked').length;
+
+      if (checked >= max) {
+        checkboxes.forEach(c => {
+          if (!c.checked) c.disabled = true;
+        });
+        counter.classList.add('limit-reached');
+      } else {
+        checkboxes.forEach(c => c.disabled = false);
+        counter.classList.remove('limit-reached');
+      }
+
+      counter.textContent = `${checked} of ${max} selected`;
+    });
   });
+});
+
+// Form submission
+forms.forEach(form => {
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const data = {};
+
+    // Handle checkboxes specially - collect as comma-separated
+    const threatModels = [];
+    const influenceTypes = [];
+
+    formData.forEach((value, key) => {
+      if (key === 'threatModels') {
+        threatModels.push(value);
+      } else if (key === 'influenceType') {
+        influenceTypes.push(value);
+      } else if (key !== '_hp') {
+        data[key] = value;
+      }
+    });
+
+    if (threatModels.length > 0) {
+      data.threatModels = threatModels.join(', ');
+    }
+    if (influenceTypes.length > 0) {
+      data.influenceType = influenceTypes.join(', ');
+    }
+
+    const payload = {
+      type: form.dataset.type,
+      timestamp: new Date().toISOString(),
+      data: data,
+      _hp: formData.get('_hp')
+    };
+
+    try {
+      const res = await fetch('/api/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (res.ok) {
+        form.classList.add('hidden');
+        document.getElementById('success').classList.remove('hidden');
+      } else {
+        alert('Submission failed. Please try again.');
+      }
+    } catch (err) {
+      alert('Submission failed. Please try again.');
+    }
+  });
+});
+
+// Clear links for radio groups
+document.querySelectorAll('.clear-link').forEach(link => {
+  link.addEventListener('click', () => {
+    const targetId = link.dataset.target;
+    const group = document.getElementById(targetId);
+    group.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+  });
+});
+
+// Nav
+const path = window.location.pathname;
+document.querySelectorAll('.nav-links a').forEach(a => {
+  if (a.getAttribute('href') === path) a.classList.add('active');
+});
+document.querySelector('.nav-hamburger').addEventListener('click', () => {
+  document.querySelector('.nav-links').classList.toggle('open');
+});
 </script>
 </body>
 </html>
