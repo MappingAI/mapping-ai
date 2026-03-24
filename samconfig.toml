@@ -8,7 +8,7 @@ region = "eu-west-2"
 confirm_changeset = true
 capabilities = "CAPABILITY_IAM"
 image_repositories = []
-parameter_overrides = "DatabaseUrl=\"postgresql://neondb_owner:npg_aJA7uG1DPIQj@ep-curly-flower-ankscc3q-pooler.c-6.us-east-1.aws.neon.tech/neondb?sslmode=require\""
+# DatabaseUrl is passed at deploy time via --parameter-overrides, never committed
 
 [default.global.parameters]
 region = "eu-west-2"
