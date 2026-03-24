@@ -23,7 +23,11 @@ Resources:
     Properties:
       CorsConfiguration:
         AllowOrigins:
-          - '*'
+          - 'https://mapping-ai.org'
+          - 'https://www.mapping-ai.org'
+          - 'https://aimapping.org'
+          - 'https://www.aimapping.org'
+          - 'https://sophiajwang.github.io'
         AllowHeaders:
           - Content-Type
         AllowMethods:
