@@ -39,8 +39,9 @@ export const handler = async (event) => {
       if (!type || type === 'person') {
         people = await client.query(
           `SELECT id, name, category, title, primary_org, other_orgs, location,
-                  regulatory_stance, capability_belief, influence_type, twitter,
-                  notes, submitted_at, status
+                  regulatory_stance, evidence_source, agi_timeline, ai_risk_level,
+                  threat_models, influence_type, twitter, bluesky,
+                  notes, submitter_relationship, submitted_at, status
            FROM people
            WHERE status = $1
            ORDER BY name ASC`,
@@ -51,8 +52,9 @@ export const handler = async (event) => {
       if (!type || type === 'organization') {
         organizations = await client.query(
           `SELECT id, name, category, website, location, funding_model,
-                  regulatory_stance, capability_belief, influence_type, twitter,
-                  notes, submitted_at, status
+                  regulatory_stance, evidence_source, agi_timeline, ai_risk_level,
+                  threat_models, influence_type, twitter, bluesky,
+                  notes, submitter_relationship, last_verified, submitted_at, status
            FROM organizations
            WHERE status = $1
            ORDER BY name ASC`,
