@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Map — Mapping AI</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@400;500&display=swap');
+:root {
+  --serif: 'EB Garamond', Georgia, serif;
+  --mono: 'DM Mono', monospace;
+  --accent: #2563eb;
+  /* Light mode (default) */
+  --bg-page: #f0eeeb;
+  --bg-panel: #fff;
+  --bg-panel-alpha: rgba(255,255,255,0.92);
+  --text-1: #1a1a1a;
+  --text-2: #555;
+  --text-3: #888;
+  --line: #ddd;
+  --input-bg: #f0eeeb;
+  --node-text: #fff;
+}
+[data-theme="dark"] {
+  --bg-page: #1a1f2e;
+  --bg-panel: #141824;
+  --bg-panel-alpha: rgba(20,24,36,0.92);
+  --text-1: #e0ddd8;
+  --text-2: #aab0c0;
+  --text-3: #6a7080;
+  --line: #2a2f3e;
+  --input-bg: #1a1f2e;
+  --node-text: #fff;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg-page); font-family: var(--serif); color: var(--text-1); overflow: hidden; height: 100vh; transition: background 0.3s, color 0.3s; }
+
+.site-nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0 2rem; height: 48px;
+  background: var(--bg-panel); border-bottom: 1px solid var(--line);
+  z-index: 100; transition: background 0.3s;
+}
+.nav-brand {
+  font-family: var(--mono); font-size: 12px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-1); text-decoration: none;
+}
+.nav-links { display: flex; gap: 2rem; }
+.nav-links a {
+  font-family: var(--mono); font-size: 12px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-3); text-decoration: none;
+  transition: color 0.15s; position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -3px; left: 0;
+  width: 0; height: 1px; background: var(--text-1);
+  transition: width 0.2s ease;
+}
+.nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+.nav-links a:hover, .nav-links a.active { color: var(--text-1); }
+
+.map-container { position: fixed; top: 48px; left: 0; right: 0; bottom: 0; }
+
+/* Controls */
+.controls {
+  position: fixed; top: 60px; left: 1rem;
+  display: flex; flex-direction: column; gap: 0.4rem;
+  z-index: 50; max-height: calc(100vh - 80px); overflow-y: auto;
+}
+.control-group {
+  background: var(--bg-panel-alpha); border-radius: 6px;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--line);
+  backdrop-filter: blur(8px);
+}
+.control-group h3 {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-3); margin-bottom: 0.4rem;
+}
+.view-toggles { display: flex; gap: 0.2rem; }
+.view-btn {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  padding: 0.3rem 0.5rem; border: 1px solid var(--line);
+  background: transparent; color: var(--text-3);
+  border-radius: 3px; cursor: pointer; transition: all 0.15s;
+}
+.view-btn:hover { border-color: var(--text-3); color: var(--text-2); }
+.view-btn.active { background: var(--text-1); color: var(--bg-panel); border-color: var(--text-1); }
+.filter-chips { display: flex; flex-wrap: wrap; gap: 0.2rem; max-width: 180px; }
+.chip {
+  font-family: var(--mono); font-size: 8px;
+  letter-spacing: 0.02em;
+  padding: 0.2rem 0.4rem; border-radius: 3px;
+  cursor: pointer; transition: all 0.15s;
+  border: 1px solid transparent;
+  opacity: 0.35;
+}
+.chip.active { opacity: 1; border-color: rgba(255,255,255,0.15); }
+.chip:hover { opacity: 0.7; }
+
+/* Detail panel */
+.detail-panel {
+  position: fixed; top: 48px; right: 0; bottom: 0;
+  width: 320px; background: var(--bg-panel);
+  border-left: 1px solid var(--line);
+  z-index: 50; transform: translateX(100%);
+  transition: transform 0.25s ease, background 0.3s;
+  overflow-y: auto; padding: 1.25rem;
+}
+.detail-panel.open { transform: translateX(0); }
+.detail-close {
+  position: absolute; top: 0.75rem; right: 0.75rem;
+  background: none; border: none; cursor: pointer;
+  font-size: 16px; color: var(--text-3); font-family: var(--mono);
+}
+.detail-close:hover { color: var(--text-1); }
+.detail-name {
+  font-family: var(--serif); font-size: 20px;
+  font-weight: 500; margin-bottom: 0.2rem;
+  padding-right: 2rem; color: var(--text-1);
+}
+.detail-type {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text-3); margin-bottom: 0.75rem;
+}
+.detail-category {
+  display: inline-block; padding: 0.15rem 0.5rem;
+  border-radius: 3px; font-family: var(--mono);
+  font-size: 9px; letter-spacing: 0.04em;
+  margin-bottom: 0.75rem;
+}
+.detail-fields { display: flex; flex-direction: column; gap: 0.6rem; }
+.detail-field label {
+  font-family: var(--mono); font-size: 8px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text-3); display: block; margin-bottom: 0.1rem;
+}
+.detail-field span {
+  font-family: var(--serif); font-size: 14px;
+  color: var(--text-2); line-height: 1.5;
+}
+.detail-field a { color: var(--accent); }
+.detail-affiliated {
+  margin-top: 0.75rem; padding-top: 0.75rem;
+  border-top: 1px solid var(--line);
+}
+.detail-affiliated h4 {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text-3); margin-bottom: 0.4rem;
+}
+.affiliated-item {
+  font-family: var(--mono); font-size: 11px;
+  color: var(--accent); cursor: pointer; padding: 0.15rem 0;
+}
+.affiliated-item:hover { opacity: 0.7; }
+
+/* Zoom controls */
+.zoom-controls {
+  position: fixed; bottom: 1.5rem; right: 1.5rem;
+  display: flex; flex-direction: column; gap: 0.2rem; z-index: 50;
+}
+.zoom-btn {
+  width: 32px; height: 32px;
+  background: var(--bg-panel-alpha); border: 1px solid var(--line);
+  border-radius: 4px; cursor: pointer;
+  font-family: var(--mono); font-size: 14px; color: var(--text-3);
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s; backdrop-filter: blur(8px);
+}
+.zoom-btn:hover { border-color: var(--text-3); color: var(--text-1); }
+
+.entity-count {
+  position: fixed; bottom: 1.5rem; left: 1rem;
+  font-family: var(--mono); font-size: 10px; color: var(--text-3);
+  letter-spacing: 0.04em;
+  background: var(--bg-panel-alpha); padding: 0.3rem 0.6rem;
+  border-radius: 3px; border: 1px solid var(--line);
+  z-index: 50; backdrop-filter: blur(8px);
+}
+
+/* Tooltip */
+.tooltip {
+  position: fixed; pointer-events: none; z-index: 200;
+  background: var(--bg-panel-alpha); border: 1px solid var(--line);
+  border-radius: 4px; padding: 0.4rem 0.6rem;
+  backdrop-filter: blur(8px);
+  max-width: 220px;
+  opacity: 0; transition: opacity 0.15s;
+}
+.tooltip.visible { opacity: 1; }
+.tooltip-name {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--text-1); letter-spacing: 0.02em;
+}
+.tooltip-sub {
+  font-family: var(--mono); font-size: 8px;
+  color: var(--text-3); margin-top: 0.1rem;
+}
+
+/* Search */
+.search-box {
+  position: relative;
+}
+.search-input {
+  width: 100%; padding: 0.35rem 0.5rem 0.35rem 1.6rem;
+  font-family: var(--mono); font-size: 10px;
+  background: var(--input-bg); color: var(--text-1);
+  border: 1px solid var(--line); border-radius: 4px;
+  outline: none; letter-spacing: 0.02em;
+}
+.search-input::placeholder { color: var(--text-3); }
+.search-input:focus { border-color: var(--text-3); }
+.search-icon {
+  position: absolute; left: 0.5rem; top: 50%;
+  transform: translateY(-50%);
+  font-size: 10px; color: var(--text-3); pointer-events: none;
+}
+.search-results {
+  display: none; position: absolute; top: 100%; left: 0; right: 0;
+  background: var(--bg-panel); border: 1px solid var(--line);
+  border-top: none; border-radius: 0 0 4px 4px;
+  max-height: 240px; overflow-y: auto; z-index: 60;
+}
+.search-results.visible { display: block; }
+.search-result {
+  padding: 0.35rem 0.5rem; cursor: pointer;
+  display: flex; align-items: center; gap: 0.4rem;
+  transition: background 0.1s;
+}
+.search-result:hover { background: var(--input-bg); }
+.search-result-dot {
+  width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+}
+.search-result-name {
+  font-family: var(--mono); font-size: 10px; color: var(--text-1);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.search-result-meta {
+  font-family: var(--mono); font-size: 8px; color: var(--text-3);
+  margin-left: auto; flex-shrink: 0;
+}
+.search-match-hint {
+  font-family: var(--mono); font-size: 8px; color: var(--text-3);
+  padding: 0.25rem 0.5rem; border-top: 1px solid var(--line);
+}
+.stance-legend-items { display: flex; flex-direction: column; gap: 0.15rem; }
+.stance-legend-item {
+  display: flex; align-items: center; gap: 0.35rem;
+  font-family: var(--mono); font-size: 8px; color: var(--text-2);
+  cursor: pointer; padding: 0.1rem 0; transition: opacity 0.15s;
+}
+.stance-legend-item.inactive { opacity: 0.3; }
+.stance-legend-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+}
+.node.dimmed circle { opacity: 0.12 !important; }
+.node.dimmed text { opacity: 0.12 !important; }
+.node.highlighted circle { opacity: 1 !important; }
+.node.highlighted .node-ring { stroke-width: 3 !important; stroke: #fff !important; }
+
+/* D3 */
+.cluster-label {
+  font-family: var(--mono); text-transform: uppercase;
+  letter-spacing: 0.08em; pointer-events: none;
+}
+.node { cursor: pointer; }
+
+.nav-hamburger {
+  display: none; flex-direction: column; justify-content: center;
+  gap: 5px; background: none; border: none; cursor: pointer; padding: 4px;
+}
+.nav-hamburger span { display: block; width: 20px; height: 1.5px; background: var(--text-1); }
+/* Theme toggle */
+.theme-toggle {
+  background: none; border: 1px solid var(--line);
+  border-radius: 4px; cursor: pointer; padding: 0.2rem 0.4rem;
+  font-size: 14px; line-height: 1; transition: border-color 0.15s;
+}
+.theme-toggle:hover { border-color: var(--text-3); }
+@media (max-width: 600px) {
+  .site-nav { padding: 0 1rem; }
+  .nav-hamburger { display: flex; }
+  .nav-links {
+    display: none; position: absolute; top: 48px; left: 0; right: 0;
+    background: var(--bg-panel); border-bottom: 1px solid var(--line);
+    flex-direction: column; padding: 1rem 1.5rem; gap: 1rem;
+  }
+  .nav-links.open { display: flex; }
+  .detail-panel { width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a class="nav-brand" href="/">Mapping AI</a>
+  <button class="nav-hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links">
+    <a href="/">Background</a>
+    <a href="/theoryofchange.html">Theory of Change</a>
+    <a href="/contribute.html">Take Part</a>
+    <a href="/map.html">Map</a>
+    <a href="/about.html">About Us</a>
+  </div>
+  <button class="theme-toggle" id="theme-toggle" title="Toggle dark/light mode">&#9790;</button>
+</nav>
+
+<div class="controls">
+  <div class="control-group">
+    <div class="search-box">
+      <span class="search-icon">&#9906;</span>
+      <input class="search-input" id="search-input" type="text" placeholder="Search entities..." autocomplete="off">
+      <div class="search-results" id="search-results"></div>
+    </div>
+  </div>
+  <div class="control-group">
+    <h3>View</h3>
+    <div class="view-toggles">
+      <button class="view-btn active" data-view="orgs">Orgs</button>
+      <button class="view-btn" data-view="people">People</button>
+      <button class="view-btn" data-view="all">All</button>
+    </div>
+  </div>
+  <div class="control-group" id="category-filters">
+    <h3>Category</h3>
+    <div class="filter-chips" id="category-chips"></div>
+  </div>
+  <div class="control-group" id="stance-legend">
+    <h3>Regulatory Stance</h3>
+    <div class="stance-legend-items" id="stance-legend-items"></div>
+  </div>
+</div>
+
+<div class="detail-panel" id="detail-panel">
+  <button class="detail-close" id="detail-close">&times;</button>
+  <div id="detail-content"></div>
+</div>
+
+<div class="tooltip" id="tooltip">
+  <div class="tooltip-name" id="tooltip-name"></div>
+  <div class="tooltip-sub" id="tooltip-sub"></div>
+</div>
+
+<div class="map-container" id="map-container"></div>
+
+<div class="zoom-controls">
+  <button class="zoom-btn" id="zoom-in">+</button>
+  <button class="zoom-btn" id="zoom-out">&minus;</button>
+  <button class="zoom-btn" id="zoom-reset" style="font-size:11px;">&#9678;</button>
+</div>
+
+<div class="entity-count" id="entity-count"></div>
+
+<script>
+const CATEGORY_COLORS = {
+  'Frontier Lab':          '#d4644a',
+  'AI Safety/Alignment':   '#4a9e7e',
+  'Think Tank/Policy Org': '#5b82bf',
+  'Government/Agency':     '#8a72bf',
+  'Academic':              '#d4a44a',
+  'VC/Capital/Philanthropy':'#4aafa0',
+  'Labor/Civil Society':   '#d4885a',
+  'Media/Journalism':      '#a09060',
+  'Political Campaign/PAC':'#b06a8a',
+  'Ethics/Bias/Rights':    '#5abf9a',
+  'Policymaker':           '#8a72bf',
+  'Executive':             '#d4644a',
+  'Researcher':            '#4a9e7e',
+  'Investor':              '#4aafa0',
+  'Organizer':             '#d4885a',
+  'Journalist':            '#a09060',
+  'Cultural figure':       '#b06a8a',
+};
+const DEFAULT_COLOR = '#6a7080';
+function getColor(cat) { return CATEGORY_COLORS[cat] || DEFAULT_COLOR; }
+
+// Org domain mapping for logo fetching (Clearbit logo API)
+const ORG_DOMAINS = {
+  'Anthropic': 'anthropic.com',
+  'OpenAI': 'openai.com',
+  'Google DeepMind': 'deepmind.google',
+  'Meta AI': 'meta.com',
+  'xAI': 'x.ai',
+  'Safe Superintelligence Inc.': 'ssi.inc',
+  'Mistral AI': 'mistral.ai',
+  'DeepSeek': 'deepseek.com',
+  'Center for AI Safety (CAIS)': 'safe.ai',
+  'Machine Intelligence Research Institute (MIRI)': 'intelligence.org',
+  'Alignment Research Center (ARC)': 'alignment.org',
+  'Redwood Research': 'redwoodresearch.org',
+  'Apollo Research': 'apolloresearch.ai',
+  'Institute for AI Policy and Strategy (IAPS)': 'iaps.ai',
+  'Centre for the Governance of AI (GovAI)': 'governance.ai',
+  'New Consensus': 'newconsensus.com',
+  'Center for a New American Security (CNAS)': 'cnas.org',
+  'Center for Security and Emerging Technology (CSET)': 'cset.georgetown.edu',
+  'Brookings Institution (AI Governance)': 'brookings.edu',
+  'RAND Corporation': 'rand.org',
+  'AI Now Institute': 'ainowinstitute.org',
+  'Partnership on AI': 'partnershiponai.org',
+  'Future of Life Institute': 'futureoflife.org',
+  'Center for American Progress': 'americanprogress.org',
+  'Berggruen Institute': 'berggruen.org',
+  'Stanford HAI': 'hai.stanford.edu',
+  'MIT FutureTech': 'mit.edu',
+  'a16z (Andreessen Horowitz)': 'a16z.com',
+  'Founders Fund': 'foundersfund.com',
+  'Y Combinator': 'ycombinator.com',
+  'Thrive Capital': 'thrivecap.com',
+  'SAG-AFTRA': 'sagaftra.org',
+  'Fairly Trained': 'fairlytrained.org',
+  'Americans for Responsible Innovation': 'responsibleinnovation.org',
+  'AI Policy Institute': 'theaipi.org',
+  'Foresight Institute': 'foresight.org',
+  'BlueDot Impact': 'bluedot.org',
+  'Secure AI Project': 'secureai.org',
+};
+
+// People image URLs (Wikipedia/Wikimedia thumbnails for well-known figures)
+const PEOPLE_IMAGES = {
+  'Sam Altman': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Sam_Altman_CropEdit.jpg/200px-Sam_Altman_CropEdit.jpg',
+  'Dario Amodei': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Dario_Amodei_at_the_Earthshot_Prize_2024.jpg/200px-Dario_Amodei_at_the_Earthshot_Prize_2024.jpg',
+  'Demis Hassabis': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Demis_Hassabis_Royal_Society.jpg/200px-Demis_Hassabis_Royal_Society.jpg',
+  'Mark Zuckerberg': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Mark_Zuckerberg_F8_2019_Keynote_%2832830578717%29_%28cropped%29.jpg/200px-Mark_Zuckerberg_F8_2019_Keynote_%2832830578717%29_%28cropped%29.jpg',
+  'Elon Musk': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Elon_Musk_Royal_Society_%28crop2%29.jpg/200px-Elon_Musk_Royal_Society_%28crop2%29.jpg',
+  'Daniela Amodei': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Daniela_Amodei_at_TechCrunch_Disrupt_2023.jpg/200px-Daniela_Amodei_at_TechCrunch_Disrupt_2023.jpg',
+  'Yoshua Bengio': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Yoshua_Bengio_-_2017_%28cropped%29.jpg/200px-Yoshua_Bengio_-_2017_%28cropped%29.jpg',
+  'Fei-Fei Li': 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Fei-Fei_Li_at_AI_for_Good_2017.jpg/200px-Fei-Fei_Li_at_AI_for_Good_2017.jpg',
+  'Marc Andreessen': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Marc_Andreessen-9.jpg/200px-Marc_Andreessen-9.jpg',
+  'Peter Thiel': 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Peter_Thiel_by_Gage_Skidmore_%28cropped%29.jpg/200px-Peter_Thiel_by_Gage_Skidmore_%28cropped%29.jpg',
+  'Ro Khanna': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Ro_Khanna_117th_Congress_portrait.jpg/200px-Ro_Khanna_117th_Congress_portrait.jpg',
+  'Bernie Sanders': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Bernie_Sanders.jpg/200px-Bernie_Sanders.jpg',
+  'Alexandria Ocasio-Cortez': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Alexandria_Ocasio-Cortez_Official_Portrait.jpg/200px-Alexandria_Ocasio-Cortez_Official_Portrait.jpg',
+  'Pete Buttigieg': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Secretary_Buttigieg_Official_Portrait_%28cropped%29.jpg/200px-Secretary_Buttigieg_Official_Portrait_%28cropped%29.jpg',
+  'Chuck Schumer': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Sen._Chuck_Schumer_official_photo.jpg/200px-Sen._Chuck_Schumer_official_photo.jpg',
+  'Ted Cruz': 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Ted_Cruz_official_116th_portrait.jpg/200px-Ted_Cruz_official_116th_portrait.jpg',
+  'Ezra Klein': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Ezra_Klein_by_Gage_Skidmore.jpg/200px-Ezra_Klein_by_Gage_Skidmore.jpg',
+  'Gavin Newsom': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Gavin_Newsom_official_photo.jpg/200px-Gavin_Newsom_official_photo.jpg',
+  'Daron Acemoglu': 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Daron_Acemoglu_in_2024.jpg/200px-Daron_Acemoglu_in_2024.jpg',
+  'Lawrence Lessig': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Lawrence_Lessig_May_2017.jpg/200px-Lawrence_Lessig_May_2017.jpg',
+  'Stuart Russell': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Stuart_Russell%2C_2023_%28cropped%29.jpg/200px-Stuart_Russell%2C_2023_%28cropped%29.jpg',
+  'Marsha Blackburn': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Marsha_Blackburn_official_photo.jpg/200px-Marsha_Blackburn_official_photo.jpg',
+  'Cory Booker': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Cory_Booker%2C_official_portrait%2C_114th_Congress.jpg/200px-Cory_Booker%2C_official_portrait%2C_114th_Congress.jpg',
+  'Tim Wu': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Tim_Wu_-_Annual_Meeting_of_the_New_Champions_2011.jpg/200px-Tim_Wu_-_Annual_Meeting_of_the_New_Champions_2011.jpg',
+};
+
+// Track which images loaded successfully
+const imageCache = {};
+
+function getOrgLogoUrl(name) {
+  const domain = ORG_DOMAINS[name];
+  if (!domain) return null;
+  return `https://logo.clearbit.com/${domain}`;
+}
+
+function getPersonImageUrl(name) {
+  return PEOPLE_IMAGES[name] || null;
+}
+
+function getImageUrl(d) {
+  if (d.entityType === 'organization') return getOrgLogoUrl(d.name);
+  return getPersonImageUrl(d.name);
+}
+
+// Known org affiliations parsed from titles
+const ORG_KEYWORDS = {
+  'Anthropic': ['Anthropic'],
+  'OpenAI': ['OpenAI'],
+  'Google DeepMind': ['Google DeepMind', 'Google Labs', 'DeepMind'],
+  'Meta AI': ['Meta'],
+  'xAI': ['xAI'],
+  'Apollo Research': ['Apollo Research'],
+  'AI Now Institute': ['AI Now'],
+  'Stanford HAI': ['Stanford HAI', 'Stanford RegLab'],
+  'New Consensus': ['New Consensus'],
+  'a16z (Andreessen Horowitz)': ['a16z'],
+  'Founders Fund': ['Founders Fund'],
+  'Coefficient Giving (fka Open Philanthropy)': ['Open Phil', 'Coefficient'],
+  'Thrive Capital': ['Thrive Capital'],
+  'SAG-AFTRA': ['SAG-AFTRA'],
+  'American Federation of Teachers': ['AFT'],
+  'Fairly Trained': ['Fairly Trained'],
+  "Data Workers' Inquiry": ["Data Workers"],
+  'NIST AI Safety Institute (CAISI)': ['NIST', 'CAISI'],
+  'White House OSTP': ['OSTP', 'White House'],
+};
+
+function inferOrgLinks(people, orgs) {
+  const links = [];
+  const orgNames = orgs.map(o => o.name);
+
+  people.forEach(person => {
+    const text = `${person.title || ''} ${person.primary_org || ''} ${person.other_orgs || ''}`;
+    if (!text.trim()) return;
+
+    // Check keyword matches
+    for (const [orgName, keywords] of Object.entries(ORG_KEYWORDS)) {
+      if (!orgNames.includes(orgName)) continue;
+      for (const kw of keywords) {
+        if (text.includes(kw)) {
+          links.push({ personName: person.name, orgName });
+          break;
+        }
+      }
+    }
+
+    // Direct org name matches
+    orgNames.forEach(orgName => {
+      if (orgName.length > 3 && text.includes(orgName)) {
+        if (!links.find(l => l.personName === person.name && l.orgName === orgName)) {
+          links.push({ personName: person.name, orgName });
+        }
+      }
+    });
+  });
+
+  return links;
+}
+
+let currentView = 'orgs';
+let activeCategories = new Set();
+let allData = { people: [], organizations: [] };
+let inferredLinks = [];
+let simulation = null;
+let currentZoom = d3.zoomIdentity;
+let zoomBehavior = null;
+
+const STANCE_COLORS = {
+  'Accelerate':    '#ef4444',
+  'Light-touch':   '#f97316',
+  'Targeted':      '#eab308',
+  'Moderate':      '#22c55e',
+  'Restrictive':   '#3b82f6',
+  'Precautionary': '#8b5cf6',
+  'Nationalize':   '#ec4899',
+};
+const STANCE_ORDER = ['Accelerate','Light-touch','Targeted','Moderate','Restrictive','Precautionary','Nationalize'];
+let activeStances = new Set(STANCE_ORDER);
+let stanceFilterActive = false; // true when user has toggled any stance off
+
+fetch('map-data.json')
+  .then(r => r.json())
+  .then(data => {
+    allData = data;
+    inferredLinks = inferOrgLinks(data.people, data.organizations);
+    buildFilters();
+    buildStanceLegend();
+    render();
+  });
+
+function buildFilters() {
+  const orgCats = [...new Set(allData.organizations.map(d => d.category).filter(Boolean))];
+  const peopleCats = [...new Set(allData.people.map(d => d.category).filter(Boolean))];
+  const allCats = [...new Set([...orgCats, ...peopleCats])].sort();
+
+  const container = document.getElementById('category-chips');
+  allCats.forEach(cat => {
+    const chip = document.createElement('span');
+    chip.className = 'chip active';
+    chip.textContent = cat;
+    chip.style.background = getColor(cat) + '33';
+    chip.style.color = getColor(cat);
+    chip.dataset.category = cat;
+    activeCategories.add(cat);
+    chip.addEventListener('click', () => {
+      if (activeCategories.has(cat)) {
+        activeCategories.delete(cat);
+        chip.classList.remove('active');
+      } else {
+        activeCategories.add(cat);
+        chip.classList.add('active');
+      }
+      render();
+    });
+    container.appendChild(chip);
+  });
+}
+
+function buildStanceLegend() {
+  const container = document.getElementById('stance-legend-items');
+  STANCE_ORDER.forEach(stance => {
+    const item = document.createElement('div');
+    item.className = 'stance-legend-item';
+    item.innerHTML = `<span class="stance-legend-dot" style="background:${STANCE_COLORS[stance]};"></span>${stance}`;
+    item.addEventListener('click', () => {
+      if (activeStances.has(stance)) {
+        activeStances.delete(stance);
+        item.classList.add('inactive');
+      } else {
+        activeStances.add(stance);
+        item.classList.remove('inactive');
+      }
+      stanceFilterActive = activeStances.size < STANCE_ORDER.length;
+      render();
+    });
+    container.appendChild(item);
+  });
+  // "No stance" toggle
+  const noStance = document.createElement('div');
+  noStance.className = 'stance-legend-item';
+  noStance.innerHTML = `<span class="stance-legend-dot" style="background:var(--text-3); opacity:0.4;"></span><em>Unknown</em>`;
+  noStance.dataset.active = 'true';
+  noStance.addEventListener('click', () => {
+    const active = noStance.dataset.active === 'true';
+    noStance.dataset.active = active ? 'false' : 'true';
+    noStance.classList.toggle('inactive');
+    stanceFilterActive = true;
+    render();
+  });
+  container.appendChild(noStance);
+}
+
+document.querySelectorAll('.view-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentView = btn.dataset.view;
+    render();
+  });
+});
+
+function passesStanceFilter(d) {
+  if (!stanceFilterActive) return true;
+  const unknownActive = document.querySelector('#stance-legend-items .stance-legend-item:last-child')?.dataset.active !== 'false';
+  if (d.regulatory_stance && STANCE_COLORS[d.regulatory_stance]) {
+    return activeStances.has(d.regulatory_stance);
+  }
+  return unknownActive;
+}
+
+function getVisibleNodes() {
+  let nodes = [];
+  if (currentView === 'orgs' || currentView === 'all') {
+    allData.organizations.forEach(d => {
+      if (!d.category || !activeCategories.has(d.category)) return;
+      if (!passesStanceFilter(d)) return;
+      nodes.push({ ...d, entityType: 'organization', radius: currentView === 'all' ? 14 : 18 });
+    });
+  }
+  if (currentView === 'people' || currentView === 'all') {
+    allData.people.forEach(d => {
+      const cat = d.category || 'Unknown';
+      if (d.category && !activeCategories.has(d.category)) return;
+      if (!d.category) return;
+      if (!passesStanceFilter(d)) return;
+      nodes.push({ ...d, category: cat, entityType: 'person', radius: currentView === 'all' ? 7 : 12 });
+    });
+  }
+  return nodes;
+}
+
+function render() {
+  const container = document.getElementById('map-container');
+  const width = container.clientWidth;
+  const height = container.clientHeight;
+
+  d3.select('#map-container').selectAll('*').remove();
+
+  const svg = d3.select('#map-container')
+    .append('svg')
+    .attr('width', width)
+    .attr('height', height);
+
+  const g = svg.append('g');
+
+  // Restore zoom state
+  zoomBehavior = d3.zoom()
+    .scaleExtent([0.2, 8])
+    .on('zoom', (event) => {
+      currentZoom = event.transform;
+      g.attr('transform', event.transform);
+    });
+  svg.call(zoomBehavior);
+  svg.call(zoomBehavior.transform, currentZoom);
+
+  document.getElementById('zoom-in').onclick = () => svg.transition().duration(300).call(zoomBehavior.scaleBy, 1.5);
+  document.getElementById('zoom-out').onclick = () => svg.transition().duration(300).call(zoomBehavior.scaleBy, 0.67);
+  document.getElementById('zoom-reset').onclick = () => {
+    currentZoom = d3.zoomIdentity;
+    svg.transition().duration(500).call(zoomBehavior.transform, d3.zoomIdentity);
+  };
+
+  const nodes = getVisibleNodes();
+  document.getElementById('entity-count').textContent = `${nodes.length} entities`;
+  if (nodes.length === 0) return;
+
+  const categories = [...new Set(nodes.map(d => d.category))].sort();
+  const clusterCenters = {};
+  const centerX = width / 2;
+  const centerY = height / 2;
+  const orbitRadius = Math.min(width, height) * 0.3;
+
+  categories.forEach((cat, i) => {
+    const angle = (i / categories.length) * 2 * Math.PI - Math.PI / 2;
+    clusterCenters[cat] = {
+      x: centerX + orbitRadius * Math.cos(angle),
+      y: centerY + orbitRadius * Math.sin(angle)
+    };
+  });
+
+  nodes.forEach(d => {
+    const center = clusterCenters[d.category] || { x: centerX, y: centerY };
+    d.x = center.x + (Math.random() - 0.5) * 60;
+    d.y = center.y + (Math.random() - 0.5) * 60;
+  });
+
+  // Cluster background circles (behind everything)
+  const bgLayer = g.append('g').attr('class', 'bg-layer');
+  bgLayer.selectAll('.cluster-bg')
+    .data(categories)
+    .join('circle')
+    .attr('class', 'cluster-bg')
+    .attr('cx', d => clusterCenters[d].x)
+    .attr('cy', d => clusterCenters[d].y)
+    .attr('r', d => {
+      const count = nodes.filter(n => n.category === d).length;
+      return Math.max(50, Math.sqrt(count) * 28);
+    })
+    .attr('fill', d => getColor(d))
+    .attr('opacity', 0.06)
+    .attr('stroke', d => getColor(d))
+    .attr('stroke-width', 0.5)
+    .attr('stroke-opacity', 0.15);
+
+  // Connection lines (in all view)
+  let linkElements = null;
+  if (currentView === 'all') {
+    const nodeByName = {};
+    nodes.forEach(d => { nodeByName[d.name] = d; });
+
+    const visibleLinks = inferredLinks
+      .filter(l => nodeByName[l.personName] && nodeByName[l.orgName])
+      .map(l => ({ source: nodeByName[l.personName], target: nodeByName[l.orgName] }));
+
+    linkElements = g.selectAll('.connection-line')
+      .data(visibleLinks)
+      .join('line')
+      .attr('class', 'connection-line')
+      .attr('stroke', 'var(--text-3)')
+      .attr('stroke-width', 0.5)
+      .attr('stroke-opacity', 0.25);
+  }
+
+  // Simulation
+  if (simulation) simulation.stop();
+  simulation = d3.forceSimulation(nodes)
+    .force('charge', d3.forceManyBody().strength(d => d.entityType === 'organization' ? -5 : -2))
+    .force('collision', d3.forceCollide().radius(d => d.radius + 2).strength(0.9))
+    .force('cluster', forceCluster(clusterCenters, 0.12))
+    .force('center', d3.forceCenter(centerX, centerY).strength(0.01))
+    .alpha(0.7)
+    .alphaDecay(0.025)
+    .on('tick', ticked);
+
+  // Node groups
+  const nodeGroup = g.selectAll('.node')
+    .data(nodes)
+    .join('g')
+    .attr('class', 'node')
+    .on('click', (event, d) => { event.stopPropagation(); showDetail(d, nodes); })
+    .on('mouseenter', function(event, d) {
+      d3.select(this).select('.node-bg').attr('opacity', 1);
+      d3.select(this).select('.node-ring').attr('stroke-width', 3);
+      showTooltip(event, d);
+    })
+    .on('mousemove', (event) => moveTooltip(event))
+    .on('mouseleave', function(event, d) {
+      d3.select(this).select('.node-bg').attr('opacity', d.entityType === 'organization' ? 0.9 : 0.7);
+      d3.select(this).select('.node-ring').attr('stroke-width', 2);
+      hideTooltip();
+    })
+    .call(d3.drag()
+      .on('start', (event, d) => { if (!event.active) simulation.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
+      .on('drag', (event, d) => { d.fx = event.x; d.fy = event.y; })
+      .on('end', (event, d) => { if (!event.active) simulation.alphaTarget(0); d.fx = null; d.fy = null; }));
+
+  // Define clip paths and image patterns in defs
+  const defs = svg.append('defs');
+
+  nodes.forEach((d, i) => {
+    const imgUrl = getImageUrl(d);
+    const r = d.radius;
+    const id = `clip-${i}`;
+    const patId = `img-${i}`;
+
+    // Clip path (circle)
+    defs.append('clipPath')
+      .attr('id', id)
+      .append('circle')
+      .attr('r', r);
+
+    // Image pattern
+    if (imgUrl) {
+      d._patternId = patId;
+      d._clipId = id;
+      d._imgUrl = imgUrl;
+      d._imgIndex = i;
+
+      const pat = defs.append('pattern')
+        .attr('id', patId)
+        .attr('width', 1).attr('height', 1)
+        .attr('patternContentUnits', 'objectBoundingBox');
+
+      // White background circle for logos
+      pat.append('rect')
+        .attr('width', 1).attr('height', 1)
+        .attr('fill', d.entityType === 'organization' ? '#fff' : getColor(d.category));
+
+      pat.append('image')
+        .attr('href', imgUrl)
+        .attr('width', 1).attr('height', 1)
+        .attr('preserveAspectRatio', 'xMidYMid slice');
+    }
+  });
+
+  // Background circle (always present, visible as fallback or ring)
+  nodeGroup.append('circle')
+    .attr('class', 'node-bg')
+    .attr('r', d => d.radius)
+    .attr('fill', d => getColor(d.category))
+    .attr('stroke', d => d.entityType === 'organization'
+      ? d3.color(getColor(d.category)).brighter(0.8) : 'none')
+    .attr('stroke-width', d => d.entityType === 'organization' ? 1.5 : 0)
+    .attr('opacity', d => d.entityType === 'organization' ? 0.9 : 0.7);
+
+  // Image circle (on top, clipped)
+  nodeGroup.filter(d => d._imgUrl)
+    .append('circle')
+    .attr('class', 'node-image')
+    .attr('r', d => d.radius - (d.entityType === 'organization' ? 2 : 1))
+    .attr('fill', d => `url(#${d._patternId})`)
+    .attr('clip-path', d => `url(#${d._clipId})`)
+    .attr('opacity', 1)
+    .on('error', function(event, d) {
+      // On image load failure, hide this circle
+      d3.select(this).attr('opacity', 0);
+    });
+
+  // Border ring for image nodes
+  nodeGroup.filter(d => d._imgUrl)
+    .append('circle')
+    .attr('class', 'node-ring')
+    .attr('r', d => d.radius)
+    .attr('fill', 'none')
+    .attr('stroke', d => getColor(d.category))
+    .attr('stroke-width', 2)
+    .attr('opacity', 0.8);
+
+  // Initials (only for nodes without images, or small nodes)
+  nodeGroup.filter(d => !d._imgUrl && d.radius >= 10)
+    .append('text')
+    .attr('text-anchor', 'middle')
+    .attr('dy', '0.35em')
+    .attr('font-family', 'var(--mono)')
+    .attr('font-size', d => d.radius >= 16 ? '7px' : '5px')
+    .attr('fill', '#fff')
+    .attr('opacity', 0.9)
+    .attr('pointer-events', 'none')
+    .text(d => {
+      const parts = (d.name || '').split(/[\s]+/);
+      if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
+      return (d.name || '').slice(0, 2).toUpperCase();
+    });
+
+  // Stance indicator (small colored pip at bottom-right of node)
+  nodeGroup.filter(d => d.regulatory_stance && STANCE_COLORS[d.regulatory_stance])
+    .append('circle')
+    .attr('class', 'stance-pip')
+    .attr('cx', d => d.radius * 0.65)
+    .attr('cy', d => d.radius * 0.65)
+    .attr('r', d => Math.max(3, d.radius * 0.22))
+    .attr('fill', d => STANCE_COLORS[d.regulatory_stance])
+    .attr('stroke', 'var(--bg-page)')
+    .attr('stroke-width', 1.5)
+    .attr('pointer-events', 'none');
+
+  // Cluster labels (overlay layer, rendered AFTER nodes so they're on top)
+  const labelLayer = g.append('g').attr('class', 'label-layer');
+  labelLayer.selectAll('.cluster-label-bg')
+    .data(categories)
+    .join('rect')
+    .attr('class', 'cluster-label-bg')
+    .attr('x', d => clusterCenters[d].x - (d.length * 3.2 + 8))
+    .attr('y', d => {
+      const count = nodes.filter(n => n.category === d).length;
+      return clusterCenters[d].y - Math.max(50, Math.sqrt(count) * 28) - 18;
+    })
+    .attr('width', d => d.length * 6.4 + 16)
+    .attr('height', 16)
+    .attr('rx', 3)
+    .attr('fill', 'var(--bg-page)')
+    .attr('opacity', 0.85)
+    .attr('pointer-events', 'none');
+
+  labelLayer.selectAll('.cluster-label')
+    .data(categories)
+    .join('text')
+    .attr('class', 'cluster-label')
+    .attr('x', d => clusterCenters[d].x)
+    .attr('y', d => {
+      const count = nodes.filter(n => n.category === d).length;
+      return clusterCenters[d].y - Math.max(50, Math.sqrt(count) * 28) - 7;
+    })
+    .attr('text-anchor', 'middle')
+    .attr('font-size', '9px')
+    .attr('font-weight', '500')
+    .attr('fill', d => getColor(d))
+    .attr('opacity', 1)
+    .attr('pointer-events', 'none')
+    .text(d => d);
+
+  function ticked() {
+    nodeGroup.attr('transform', d => `translate(${d.x},${d.y})`);
+    if (linkElements) {
+      linkElements
+        .attr('x1', d => d.source.x).attr('y1', d => d.source.y)
+        .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
+    }
+  }
+
+  // Click background to close panel
+  svg.on('click', () => document.getElementById('detail-panel').classList.remove('open'));
+}
+
+function forceCluster(centers, strength) {
+  let nodes;
+  function force(alpha) {
+    nodes.forEach(d => {
+      const c = centers[d.category];
+      if (!c) return;
+      d.vx += (c.x - d.x) * alpha * strength;
+      d.vy += (c.y - d.y) * alpha * strength;
+    });
+  }
+  force.initialize = (_) => { nodes = _; };
+  return force;
+}
+
+// Tooltip
+const tooltip = document.getElementById('tooltip');
+function showTooltip(event, d) {
+  document.getElementById('tooltip-name').textContent = d.name;
+  const sub = d.entityType === 'person' ? (d.title || d.category) : d.category;
+  const stance = d.regulatory_stance ? ` · ${d.regulatory_stance}` : '';
+  document.getElementById('tooltip-sub').textContent = sub + stance;
+  tooltip.classList.add('visible');
+  moveTooltip(event);
+}
+function moveTooltip(event) {
+  const x = event.clientX + 12;
+  const y = event.clientY - 8;
+  tooltip.style.left = x + 'px';
+  tooltip.style.top = y + 'px';
+}
+function hideTooltip() { tooltip.classList.remove('visible'); }
+
+// Detail panel
+function showDetail(d, allNodes) {
+  const panel = document.getElementById('detail-panel');
+  const content = document.getElementById('detail-content');
+  const color = getColor(d.category);
+
+  let fields = '';
+  const addField = (label, value) => {
+    if (value) fields += `<div class="detail-field"><label>${label}</label><span>${value}</span></div>`;
+  };
+
+  if (d.entityType === 'person') {
+    addField('Title', d.title);
+    addField('Primary Organization', d.primary_org);
+    addField('Other Organizations', d.other_orgs);
+    addField('Location', d.location);
+    addField('Regulatory Stance', d.regulatory_stance);
+    addField('Capability Belief', d.capability_belief);
+    addField('Influence Type', d.influence_type);
+    addField('Twitter/X', d.twitter ? `@${d.twitter.replace('@', '')}` : null);
+    addField('Notes', d.notes);
+  } else {
+    addField('Website', d.website ? `<a href="${d.website}" target="_blank">${d.website}</a>` : null);
+    addField('Location', d.location);
+    addField('Funding Model', d.funding_model);
+    addField('Regulatory Stance', d.regulatory_stance);
+    addField('Capability Belief', d.capability_belief);
+    addField('Influence Type', d.influence_type);
+    addField('Twitter/X', d.twitter ? `@${d.twitter.replace('@', '')}` : null);
+    addField('Notes', d.notes);
+  }
+
+  if (!fields) {
+    fields = '<div class="detail-field"><span style="color:var(--text-3); font-style:italic;">No additional details yet. <a href="/contribute.html" style="color:var(--accent);">Contribute info</a></span></div>';
+  }
+
+  // Affiliated people/orgs
+  let affiliated = '';
+  const links = inferredLinks.filter(l =>
+    l.personName === d.name || l.orgName === d.name
+  );
+  if (links.length > 0) {
+    const items = links.map(l => {
+      const linkedName = l.personName === d.name ? l.orgName : l.personName;
+      return `<div class="affiliated-item" data-name="${linkedName}">${linkedName}</div>`;
+    }).join('');
+    affiliated = `<div class="detail-affiliated"><h4>Affiliated</h4>${items}</div>`;
+  }
+
+  const imgUrl = getImageUrl(d);
+  const imgHtml = imgUrl
+    ? `<img src="${imgUrl}" alt="${d.name}" style="width:56px; height:56px; border-radius:50%; object-fit:cover; border:2px solid ${color}44; margin-bottom:0.75rem; display:block;" onerror="this.style.display='none'">`
+    : '';
+
+  content.innerHTML = `
+    ${imgHtml}
+    <div class="detail-name">${d.name}</div>
+    <div class="detail-type">${d.entityType}</div>
+    <div class="detail-category" style="background:${color}33; color:${color};">${d.category}</div>
+    <div class="detail-fields">${fields}</div>
+    ${affiliated}
+  `;
+
+  // Click affiliated items to navigate
+  content.querySelectorAll('.affiliated-item').forEach(el => {
+    el.addEventListener('click', () => {
+      const name = el.dataset.name;
+      const target = allNodes.find(n => n.name === name);
+      if (target) showDetail(target, allNodes);
+    });
+  });
+
+  panel.classList.add('open');
+}
+
+document.getElementById('detail-close').addEventListener('click', () => {
+  document.getElementById('detail-panel').classList.remove('open');
+});
+
+// Nav
+const path = window.location.pathname;
+document.querySelectorAll('.nav-links a').forEach(a => {
+  if (a.getAttribute('href') === path) a.classList.add('active');
+});
+document.querySelector('.nav-hamburger').addEventListener('click', () => {
+  document.querySelector('.nav-links').classList.toggle('open');
+});
+
+window.addEventListener('resize', () => {
+  if (allData.people.length || allData.organizations.length) render();
+});
+
+// Semantic search: synonym/concept expansion for AI policy domain
+const SEMANTIC_MAP = {
+  // Risk & safety
+  'safety': ['safety', 'alignment', 'risk', 'catastrophic', 'existential', 'safe', 'caisi', 'miri', 'cais'],
+  'risk': ['risk', 'danger', 'threat', 'catastrophic', 'existential', 'harm', 'safety'],
+  'alignment': ['alignment', 'aligned', 'safety', 'interpretability', 'miri', 'arc', 'redwood'],
+  'existential': ['existential', 'x-risk', 'catastrophic', 'extinction', 'superintelligence'],
+
+  // Governance & regulation
+  'regulation': ['regulation', 'regulatory', 'governance', 'policy', 'legislation', 'oversight', 'compliance'],
+  'governance': ['governance', 'regulation', 'policy', 'oversight', 'government', 'agency'],
+  'policy': ['policy', 'governance', 'regulation', 'think tank', 'legislation', 'government', 'congress', 'senator', 'representative'],
+  'government': ['government', 'agency', 'congress', 'senate', 'house', 'federal', 'senator', 'representative', 'policymaker', 'ostp', 'nist', 'ftc'],
+  'congress': ['congress', 'senator', 'representative', 'senate', 'house', 'legislation', 'policymaker'],
+  'law': ['law', 'legal', 'legislation', 'regulatory', 'compliance', 'attorney', 'lawyer'],
+
+  // Industry
+  'lab': ['lab', 'frontier', 'openai', 'anthropic', 'deepmind', 'meta ai', 'xai', 'mistral', 'deepseek'],
+  'frontier': ['frontier', 'lab', 'openai', 'anthropic', 'deepmind', 'meta ai', 'xai'],
+  'startup': ['startup', 'founder', 'ceo', 'venture', 'company', 'inc'],
+  'tech': ['tech', 'technology', 'frontier', 'lab', 'ai', 'silicon valley', 'executive'],
+
+  // Funding
+  'funding': ['funding', 'funder', 'investor', 'venture', 'capital', 'philanthropy', 'philanthropic', 'grant', 'vc'],
+  'money': ['money', 'funding', 'capital', 'investor', 'venture', 'philanthropy', 'vc', 'finance'],
+  'vc': ['vc', 'venture', 'capital', 'investor', 'a16z', 'founders fund', 'thrive'],
+  'philanthropy': ['philanthropy', 'philanthropic', 'foundation', 'donor', 'grant', 'open phil', 'coefficient'],
+
+  // Academia
+  'academic': ['academic', 'professor', 'university', 'research', 'stanford', 'mit', 'harvard', 'princeton', 'berkeley', 'oxford', 'cambridge'],
+  'university': ['university', 'academic', 'professor', 'stanford', 'mit', 'harvard', 'princeton', 'berkeley'],
+  'research': ['research', 'researcher', 'academic', 'paper', 'study', 'professor', 'analyst'],
+
+  // Labor & civil society
+  'labor': ['labor', 'union', 'worker', 'employment', 'sag-aftra', 'aft', 'guild', 'civil society', 'organizer'],
+  'union': ['union', 'labor', 'worker', 'sag-aftra', 'aft', 'guild', 'organize'],
+  'worker': ['worker', 'labor', 'employment', 'job', 'workforce', 'union', 'displacement'],
+  'civil society': ['civil society', 'advocacy', 'nonprofit', 'ngo', 'organizer', 'activist'],
+  'ethics': ['ethics', 'bias', 'fairness', 'rights', 'justice', 'discrimination', 'equity'],
+
+  // Media
+  'media': ['media', 'journalism', 'journalist', 'reporter', 'news', 'press', 'newsletter', 'substack', 'podcast'],
+  'journalist': ['journalist', 'reporter', 'media', 'press', 'writer', 'author', 'news'],
+
+  // Capabilities
+  'agi': ['agi', 'artificial general intelligence', 'superintelligence', 'asi', 'capability', 'frontier'],
+  'capabilities': ['capabilities', 'capability', 'frontier', 'agi', 'scaling', 'benchmark', 'performance'],
+
+  // Power dynamics
+  'power': ['power', 'influence', 'concentration', 'monopoly', 'dominance', 'authority', 'control'],
+  'influence': ['influence', 'power', 'lobbying', 'advocacy', 'agenda', 'decision-maker'],
+};
+
+function expandQuery(query) {
+  const lower = query.toLowerCase().trim();
+  const words = lower.split(/\s+/);
+  const expanded = new Set(words);
+
+  words.forEach(word => {
+    if (SEMANTIC_MAP[word]) {
+      SEMANTIC_MAP[word].forEach(syn => expanded.add(syn));
+    }
+    // Partial key match (e.g., "regulat" matches "regulation")
+    Object.keys(SEMANTIC_MAP).forEach(key => {
+      if (key.startsWith(word) || word.startsWith(key)) {
+        SEMANTIC_MAP[key].forEach(syn => expanded.add(syn));
+      }
+    });
+  });
+
+  return { original: lower, expanded: [...expanded] };
+}
+
+function scoreEntity(d, query) {
+  const { original, expanded } = query;
+  const fields = [
+    d.name, d.category, d.title, d.primary_org, d.other_orgs,
+    d.location, d.regulatory_stance, d.capability_belief,
+    d.influence_type, d.notes, d.website, d.funding_model
+  ].filter(Boolean).map(f => f.toLowerCase());
+
+  const allText = fields.join(' ');
+
+  // Exact name match: highest priority
+  if (d.name && d.name.toLowerCase().includes(original)) return 100;
+
+  // Exact match in any field
+  if (allText.includes(original)) return 80;
+
+  // Expanded/semantic matches
+  let semanticScore = 0;
+  expanded.forEach(term => {
+    if (allText.includes(term)) semanticScore += 5;
+  });
+
+  // Word-by-word fuzzy: check if each original word partially matches
+  const origWords = original.split(/\s+/);
+  origWords.forEach(w => {
+    fields.forEach(f => {
+      if (f.includes(w)) semanticScore += 10;
+    });
+  });
+
+  return semanticScore;
+}
+
+// Search UI
+const searchInput = document.getElementById('search-input');
+const searchResults = document.getElementById('search-results');
+let searchTimeout = null;
+let lastHighlighted = [];
+
+searchInput.addEventListener('input', () => {
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(doSearch, 150);
+});
+
+searchInput.addEventListener('focus', () => {
+  if (searchInput.value.trim()) doSearch();
+});
+
+searchInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    searchInput.blur();
+    clearSearch();
+  }
+});
+
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.search-box')) {
+    searchResults.classList.remove('visible');
+  }
+});
+
+function doSearch() {
+  const val = searchInput.value.trim();
+  if (!val) {
+    clearSearch();
+    return;
+  }
+
+  const query = expandQuery(val);
+  const allEntities = [
+    ...allData.organizations.map(d => ({ ...d, entityType: 'organization' })),
+    ...allData.people.filter(d => d.category).map(d => ({ ...d, entityType: 'person' }))
+  ];
+
+  const scored = allEntities
+    .map(d => ({ ...d, score: scoreEntity(d, query) }))
+    .filter(d => d.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 12);
+
+  searchResults.innerHTML = '';
+
+  if (scored.length === 0) {
+    searchResults.innerHTML = '<div class="search-match-hint">No matches</div>';
+    searchResults.classList.add('visible');
+    highlightNodes([]);
+    return;
+  }
+
+  // Check if semantic expansion contributed
+  const hasSemanticHits = scored.some(d => d.score > 0 && d.score < 80);
+  const directHits = scored.filter(d => d.score >= 80).length;
+
+  scored.forEach(d => {
+    const div = document.createElement('div');
+    div.className = 'search-result';
+    div.innerHTML = `
+      <span class="search-result-dot" style="background:${getColor(d.category)};"></span>
+      <span class="search-result-name">${d.name}</span>
+      <span class="search-result-meta">${d.entityType === 'person' ? 'person' : 'org'}</span>
+    `;
+    div.addEventListener('click', () => {
+      searchResults.classList.remove('visible');
+      // Switch view if needed
+      if (d.entityType === 'organization' && currentView === 'people') {
+        document.querySelector('[data-view="orgs"]').click();
+      } else if (d.entityType === 'person' && currentView === 'orgs') {
+        document.querySelector('[data-view="people"]').click();
+      }
+      // Find and click the node after a short delay for re-render
+      setTimeout(() => {
+        const allNodes = d3.selectAll('.node').data();
+        const target = allNodes.find(n => n.name === d.name);
+        if (target) {
+          showDetail(target, allNodes);
+          // Zoom to node
+          const svg = d3.select('#map-container svg');
+          const mapEl = document.getElementById('map-container');
+          svg.transition().duration(500).call(
+            zoomBehavior.transform,
+            d3.zoomIdentity.translate(
+              mapEl.clientWidth / 2 - target.x,
+              mapEl.clientHeight / 2 - target.y
+            ).scale(1.5)
+          );
+          highlightNodes([d.name]);
+        }
+      }, 100);
+    });
+    searchResults.appendChild(div);
+  });
+
+  if (hasSemanticHits && directHits < scored.length) {
+    const hint = document.createElement('div');
+    hint.className = 'search-match-hint';
+    hint.textContent = `Showing related matches for "${val}"`;
+    searchResults.appendChild(hint);
+  }
+
+  searchResults.classList.add('visible');
+  highlightNodes(scored.map(d => d.name));
+}
+
+function highlightNodes(names) {
+  const nameSet = new Set(names);
+  d3.selectAll('.node').each(function(d) {
+    const el = d3.select(this);
+    if (names.length === 0) {
+      el.classed('dimmed', false).classed('highlighted', false);
+    } else if (nameSet.has(d.name)) {
+      el.classed('dimmed', false).classed('highlighted', true);
+    } else {
+      el.classed('dimmed', true).classed('highlighted', false);
+    }
+  });
+  // Also dim cluster labels and backgrounds
+  d3.selectAll('.cluster-bg, .cluster-label').attr('opacity', names.length > 0 ? 0.03 : null);
+}
+
+function clearSearch() {
+  searchResults.classList.remove('visible');
+  searchResults.innerHTML = '';
+  highlightNodes([]);
+}
+
+// Theme toggle
+const themeBtn = document.getElementById('theme-toggle');
+const savedTheme = localStorage.getItem('map-theme');
+if (savedTheme === 'dark') {
+  document.documentElement.setAttribute('data-theme', 'dark');
+  themeBtn.textContent = '\u2600';
+}
+themeBtn.addEventListener('click', () => {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  if (isDark) {
+    document.documentElement.removeAttribute('data-theme');
+    localStorage.setItem('map-theme', 'light');
+    themeBtn.textContent = '\u263E';
+  } else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    localStorage.setItem('map-theme', 'dark');
+    themeBtn.textContent = '\u2600';
+  }
+});
+</script>
+</body>
+</html>
