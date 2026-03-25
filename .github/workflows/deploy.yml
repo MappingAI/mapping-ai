@@ -30,7 +30,8 @@ jobs:
             --exclude ".github/*" \
             --exclude "*.yaml" \
             --exclude "*.toml" \
-            --exclude "*.json" \
+            --exclude "package.json" \
+            --exclude "package-lock.json" \
             --exclude "*.mjs" \
             --exclude "*.md" \
             --exclude ".aws-sam/*" \
