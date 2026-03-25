@@ -4,76 +4,100 @@ A collaborative stakeholder mapping project for the U.S. AI policy landscape.
 
 ## Project Overview
 
-Single-page website that collects crowdsourced data about people and organizations shaping AI policy in the United States.
+Multi-page website that collects crowdsourced data about people and organizations shaping AI policy in the United States, with an interactive D3.js visualization.
+
+**Live site:** https://mapping-ai.org
 
 ## Tech Stack
 
-- **Frontend**: Static HTML/CSS/JS (no framework) — hosted on GitHub Pages
+- **DNS**: Cloudflare (DNS-only mode, CNAME flattening)
+- **CDN**: AWS CloudFront
+- **Frontend hosting**: AWS S3
+- **Frontend**: Static HTML/CSS/JS (no framework)
+- **Visualization**: D3.js (`map.html`)
 - **Backend**: AWS Lambda + API Gateway (`api/submit.js`, `api/submissions.js`)
 - **Database**: Neon Postgres — `people`, `organizations`, and `resources` tables
-- **Hosting**: GitHub Pages (frontend) + AWS (backend)
 - **Infrastructure**: AWS SAM (`template.yaml`)
+- **CI/CD**: GitHub Actions (auto-deploy to S3 on push to main)
 
 ## Project Structure
 
 ```
 mapping-ai/
-├── index.html              # Single-page site
-├── styles.css              # All styling
-├── script.js               # Form toggle + submission logic
+├── index.html              # Background / home page
+├── theoryofchange.html     # Theory of change
+├── contribute.html         # Submission forms (person, org, resource)
+├── map.html                # Interactive stakeholder map (D3.js)
+├── map-data.json           # Map data export (regenerate with export-map-data.js)
+├── about.html              # Team and project info
+├── assets/
+│   ├── css/styles.css      # Styles for index.html
+│   ├── images/             # Logo and images
+│   └── js/script.js        # Form toggle + submission logic
 ├── api/
-│   ├── submit.js           # POST endpoint — insert submissions
-│   └── submissions.js      # GET endpoint — query submissions
+│   ├── submit.js           # Lambda: POST /submit — insert submissions
+│   └── submissions.js      # Lambda: GET /submissions — query submissions
 ├── scripts/
-│   ├── migrate.js          # Create database tables
-│   └── seed.js             # Import CSV data into database
-├── template.yaml           # AWS SAM infrastructure definition
-├── CNAME                   # GitHub Pages custom domain
-└── *.csv                   # Source data exports from Airtable
+│   ├── migrate.js          # Create/update database schema
+│   ├── seed.js             # Import CSV data into database
+│   ├── export.js           # Export all tables to CSV
+│   └── export-map-data.js  # Generate map-data.json (strips sensitive fields)
+├── template.yaml           # AWS SAM infrastructure (Lambda + API Gateway + S3 + CloudFront)
+└── .github/workflows/
+    └── deploy.yml          # GitHub Actions: auto-deploy to S3 on push
 ```
 
 ## Key Files
 
 | File | Purpose |
 |------|---------|
-| `index.html:69-130` | Person submission form |
-| `index.html:132-189` | Organization submission form |
-| `script.js:24-66` | Form submission handler |
-| `api/submit.js` | Postgres INSERT (person or organization) |
-| `api/submissions.js` | Postgres SELECT with status/type filters |
-| `styles.css:37-49` | Sticky sidebar layout |
-| `styles.css:109-130` | Stakeholder grid (tan background) |
+| `contribute.html` | Person, organization, and resource submission forms |
+| `map.html` | Interactive D3.js stakeholder visualization |
+| `map-data.json` | Static data for map (regenerated from DB) |
+| `assets/js/script.js` | Form submission handler |
+| `api/submit.js` | Lambda: Postgres INSERT |
+| `api/submissions.js` | Lambda: Postgres SELECT with status/type filters |
+| `template.yaml` | AWS SAM infrastructure definition |
+| `.github/workflows/deploy.yml` | GitHub Actions deployment workflow |
 
 ## Commands
 
 **Local preview:**
 ```bash
 npx serve .
+# Open http://localhost:3000
 ```
 
-**Deploy backend:**
+**Regenerate map data:**
 ```bash
-# First time
-sam build && sam deploy --guided --parameter-overrides DatabaseUrl=$DATABASE_URL
-
-# Subsequent deploys
-sam build && sam deploy
+node scripts/export-map-data.js
+# Creates map-data.json from approved DB entries (strips sensitive fields)
 ```
 
-**Deploy frontend:** Push to `main` branch; GitHub Pages auto-deploys.
+**Deploy backend (Lambda + API Gateway):**
+```bash
+sam build && sam deploy --parameter-overrides DatabaseUrl=$DATABASE_URL
+```
+
+**Deploy frontend:** Push to `main` branch — GitHub Actions auto-deploys to S3 and invalidates CloudFront cache.
 
 ## Environment Variables
 
 | Variable | Where | Description |
 |----------|-------|-------------|
-| `DATABASE_URL` | AWS Lambda (set during `sam deploy`) | Neon Postgres connection string |
+| `DATABASE_URL` | Local `.env` + AWS Lambda | Neon Postgres connection string |
+| `AWS_ACCESS_KEY_ID` | GitHub Secrets | AWS credentials for deployment |
+| `AWS_SECRET_ACCESS_KEY` | GitHub Secrets | AWS credentials for deployment |
+| `S3_BUCKET_NAME` | GitHub Secrets | S3 bucket for static files |
+| `CLOUDFRONT_DISTRIBUTION_ID` | GitHub Secrets | For cache invalidation |
 
-The `DATABASE_URL` comes from the Neon dashboard at `console.neon.tech` — not from Vercel.
+The `DATABASE_URL` comes from the Neon dashboard at `console.neon.tech`.
 
 ## API Endpoint
 
-After deploying with SAM, the API Gateway URL is printed as `ApiUrl` in the stack outputs.
-Update `API_BASE` in `assets/js/script.js` with this value, then commit and push.
+**Production API:** `https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com`
+
+This is set as `API_BASE` in `assets/js/script.js`.
 
 ## Data Schema
 
