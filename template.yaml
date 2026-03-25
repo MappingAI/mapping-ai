@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: mapping-ai API — Lambda + API Gateway
+Description: mapping-ai — Static hosting (S3 + CloudFront) + API (Lambda + API Gateway)
 
 Globals:
   Function:
@@ -15,19 +15,19 @@ Parameters:
   DatabaseUrl:
     Type: String
     NoEcho: true
-    Description: Postgres connection string (from Neon or RDS)
+    Description: Postgres connection string (from Neon)
 
 Resources:
+  # ==================== API (Lambda + API Gateway) ====================
   MappingAiApi:
     Type: AWS::Serverless::HttpApi
     Properties:
       CorsConfiguration:
         AllowOrigins:
-          - 'https://mapping-ai.org'
-          - 'https://www.mapping-ai.org'
           - 'https://aimapping.org'
           - 'https://www.aimapping.org'
-          - 'https://sophiajwang.github.io'
+          - !Sub 'https://${WebsiteBucket}.s3.${AWS::Region}.amazonaws.com'
+          - !Sub 'https://${CloudFrontDistribution.DomainName}'
         AllowHeaders:
           - Content-Type
         AllowMethods:
@@ -64,7 +64,93 @@ Resources:
             Path: /submissions
             Method: GET
 
+  # ==================== Static Hosting (S3 + CloudFront) ====================
+  WebsiteBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub 'mapping-ai-website-${AWS::AccountId}'
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      WebsiteConfiguration:
+        IndexDocument: index.html
+        ErrorDocument: index.html
+
+  WebsiteBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref WebsiteBucket
+      PolicyDocument:
+        Statement:
+          - Sid: AllowCloudFrontAccess
+            Effect: Allow
+            Principal:
+              Service: cloudfront.amazonaws.com
+            Action: s3:GetObject
+            Resource: !Sub '${WebsiteBucket.Arn}/*'
+            Condition:
+              StringEquals:
+                AWS:SourceArn: !Sub 'arn:aws:cloudfront::${AWS::AccountId}:distribution/${CloudFrontDistribution}'
+
+  CloudFrontOriginAccessControl:
+    Type: AWS::CloudFront::OriginAccessControl
+    Properties:
+      OriginAccessControlConfig:
+        Name: !Sub 'mapping-ai-oac-${AWS::AccountId}'
+        OriginAccessControlOriginType: s3
+        SigningBehavior: always
+        SigningProtocol: sigv4
+
+  CloudFrontDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Enabled: true
+        Comment: Mapping AI static website
+        DefaultRootObject: index.html
+        HttpVersion: http2
+        PriceClass: PriceClass_100
+        Origins:
+          - Id: S3Origin
+            DomainName: !GetAtt WebsiteBucket.RegionalDomainName
+            OriginAccessControlId: !Ref CloudFrontOriginAccessControl
+            S3OriginConfig:
+              OriginAccessIdentity: ''
+        DefaultCacheBehavior:
+          TargetOriginId: S3Origin
+          ViewerProtocolPolicy: redirect-to-https
+          AllowedMethods:
+            - GET
+            - HEAD
+            - OPTIONS
+          CachedMethods:
+            - GET
+            - HEAD
+          Compress: true
+          CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6  # Managed-CachingOptimized
+        CustomErrorResponses:
+          - ErrorCode: 403
+            ResponseCode: 200
+            ResponsePagePath: /index.html
+          - ErrorCode: 404
+            ResponseCode: 200
+            ResponsePagePath: /index.html
+
 Outputs:
   ApiUrl:
-    Description: API Gateway base URL — paste this into assets/js/script.js as API_BASE
+    Description: API Gateway URL — use this as API_BASE in script.js
     Value: !Sub 'https://${MappingAiApi}.execute-api.${AWS::Region}.amazonaws.com'
+
+  WebsiteBucketName:
+    Description: S3 bucket for static files — use this for deployment
+    Value: !Ref WebsiteBucket
+
+  CloudFrontUrl:
+    Description: CloudFront URL — your site is live here (use for testing)
+    Value: !Sub 'https://${CloudFrontDistribution.DomainName}'
+
+  CloudFrontDistributionId:
+    Description: CloudFront distribution ID — use for cache invalidation
+    Value: !Ref CloudFrontDistribution

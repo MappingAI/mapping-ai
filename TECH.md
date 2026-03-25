@@ -9,25 +9,34 @@ This document covers architecture, local development, deployment, and the API fo
 ```
 ┌─────────────────────────────────────────────────────────┐
 │  Browser                                                │
-│  mapping-ai.org (GitHub Pages)                          │
-│  Static HTML/CSS/JS — no framework                      │
+│  aimapping.org                                          │
 └────────────────────┬────────────────────────────────────┘
-                     │ HTTPS (CORS)
+                     │ HTTPS
                      ▼
 ┌─────────────────────────────────────────────────────────┐
-│  AWS API Gateway (HTTP API)                             │
-│  POST /submit   →  Lambda: api/submit.js                │
-│  GET  /submissions → Lambda: api/submissions.js         │
+│  AWS CloudFront (CDN)                                   │
+│  - Global edge caching                                  │
+│  - SSL/TLS termination                                  │
+│  - Custom domain support                                │
 └────────────────────┬────────────────────────────────────┘
-                     │ pg (node-postgres)
-                     ▼
-┌─────────────────────────────────────────────────────────┐
-│  Neon Postgres                                          │
-│  Tables: people, organizations, resources               │
-└─────────────────────────────────────────────────────────┘
+                     │
+        ┌────────────┴────────────┐
+        ▼                         ▼
+┌───────────────────┐   ┌─────────────────────────────────┐
+│  AWS S3           │   │  AWS API Gateway (HTTP API)     │
+│  Static files:    │   │  POST /submit   → Lambda        │
+│  HTML, CSS, JS    │   │  GET /submissions → Lambda      │
+└───────────────────┘   └────────────────┬────────────────┘
+                                         │ pg (node-postgres)
+                                         ▼
+                        ┌─────────────────────────────────┐
+                        │  Neon Postgres                  │
+                        │  Tables: people, organizations, │
+                        │          resources              │
+                        └─────────────────────────────────┘
 ```
 
-Frontend is fully static — no build step. Backend is serverless via AWS Lambda, deployed with AWS SAM. Database is Neon Postgres (serverless Postgres, independent of any hosting platform).
+Frontend is fully static — no build step. Backend is serverless via AWS Lambda, deployed with AWS SAM. Database is Neon Postgres (serverless Postgres). All infrastructure defined in `template.yaml`.
 
 ---
 
@@ -35,13 +44,14 @@ Frontend is fully static — no build step. Backend is serverless via AWS Lambda
 
 | Layer | Technology |
 |-------|-----------|
-| Frontend hosting | GitHub Pages (custom domain via `CNAME`) |
+| Frontend hosting | AWS S3 + CloudFront (CDN) |
 | Frontend | Static HTML/CSS/JS — no framework, no bundler |
 | Fonts | EB Garamond (serif) + DM Mono (mono) via Google Fonts |
 | Backend | AWS Lambda (Node.js 20) + API Gateway (HTTP API) |
 | Infrastructure-as-code | AWS SAM (`template.yaml`) |
 | Database | Neon Postgres (serverless) |
 | DB client | `pg` (node-postgres v8) |
+| CI/CD | GitHub Actions (auto-deploy on push to main) |
 
 ---
 
@@ -68,15 +78,13 @@ mapping-ai/
 │   ├── seed.js             # Seeds DB from Airtable CSV exports
 │   └── export.js           # Exports all DB tables to CSV
 ├── data/                   # Airtable CSV source exports
-│   ├── People-Grid view.csv
-│   ├── Organizations-Grid view.csv
-│   ├── Policy Efforts-Grid view.csv
-│   └── Readings-Grid view.csv
-├── template.yaml           # AWS SAM infrastructure definition
+├── template.yaml           # AWS SAM infrastructure (Lambda + API Gateway + S3 + CloudFront)
 ├── samconfig.toml          # SAM deployment config (non-sensitive)
 ├── test-handlers.mjs       # Local Lambda validation tests (no DB required)
 ├── package.json            # Node dependencies
-└── CNAME                   # GitHub Pages custom domain (mapping-ai.org)
+└── .github/
+    └── workflows/
+        └── deploy.yml      # GitHub Actions: auto-deploy to S3 on push
 ```
 
 > **Note:** All HTML pages embed their own `<style>` blocks — there is no shared stylesheet across pages. `assets/css/styles.css` applies only to `index.html`.
@@ -228,7 +236,7 @@ node scripts/export.js
 
 ---
 
-## Backend Deployment (AWS Lambda)
+## Deployment
 
 ### Prerequisites
 
@@ -238,7 +246,9 @@ brew install aws-sam-cli
 aws configure   # Enter your IAM access key, region: eu-west-2
 ```
 
-### First-time deploy
+### First-time deploy (infrastructure)
+
+This deploys both the backend (Lambda + API Gateway) AND frontend hosting (S3 + CloudFront):
 
 ```bash
 sam build
@@ -253,9 +263,40 @@ Follow the prompts. Recommended values:
 - Disable rollback: `n`
 - Save config: `y`
 
-SAM prints `ApiUrl` in the outputs. Update `API_BASE` in `assets/js/script.js` with this value and commit.
+SAM outputs:
+- `ApiUrl` — API Gateway endpoint (update `API_BASE` in `assets/js/script.js`)
+- `CloudFrontUrl` — Your site URL (e.g., `https://d1234567890.cloudfront.net`)
+- `WebsiteBucketName` — S3 bucket for static files
 
-### Subsequent deploys
+### Deploy static files to S3
+
+After infrastructure is deployed, upload the static files:
+
+```bash
+# Get bucket name from SAM outputs
+BUCKET_NAME=$(aws cloudformation describe-stacks --stack-name mapping-ai --query "Stacks[0].Outputs[?OutputKey=='WebsiteBucketName'].OutputValue" --output text)
+
+# Sync static files to S3
+aws s3 sync . s3://$BUCKET_NAME \
+  --exclude ".*" \
+  --exclude "node_modules/*" \
+  --exclude "api/*" \
+  --exclude "scripts/*" \
+  --exclude "data/*" \
+  --exclude "exports/*" \
+  --exclude "*.yaml" \
+  --exclude "*.toml" \
+  --exclude "*.json" \
+  --exclude "*.mjs" \
+  --exclude "*.md" \
+  --delete
+
+# Invalidate CloudFront cache (so changes appear immediately)
+DISTRIBUTION_ID=$(aws cloudformation describe-stacks --stack-name mapping-ai --query "Stacks[0].Outputs[?OutputKey=='CloudFrontDistributionId'].OutputValue" --output text)
+aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/*"
+```
+
+### Subsequent backend deploys
 
 ```bash
 sam build && sam deploy --parameter-overrides "DatabaseUrl=<connection_string>"
@@ -263,35 +304,95 @@ sam build && sam deploy --parameter-overrides "DatabaseUrl=<connection_string>"
 
 > **Security:** Never put `DatabaseUrl` in `samconfig.toml` or any tracked file. Always pass it on the command line.
 
-### Infrastructure
+### GitHub Actions (auto-deploy)
 
-Defined in `template.yaml`. Two Lambda functions behind a single HTTP API Gateway:
+Create `.github/workflows/deploy.yml` to auto-deploy static files on push to `main`:
 
-| Route | Function | File |
-|-------|----------|------|
-| `POST /submit` | SubmitFunction | `api/submit.js` |
-| `GET /submissions` | SubmissionsFunction | `api/submissions.js` |
+```yaml
+name: Deploy to S3
 
-CORS is configured at the API Gateway level to allow all origins (`*`).
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-2
+
+      - name: Sync to S3
+        run: |
+          aws s3 sync . s3://${{ secrets.S3_BUCKET_NAME }} \
+            --exclude ".*" \
+            --exclude "node_modules/*" \
+            --exclude "api/*" \
+            --exclude "scripts/*" \
+            --exclude "data/*" \
+            --exclude "exports/*" \
+            --exclude "*.yaml" \
+            --exclude "*.toml" \
+            --exclude "*.json" \
+            --exclude "*.mjs" \
+            --exclude "*.md" \
+            --delete
+
+      - name: Invalidate CloudFront
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --paths "/*"
+```
+
+**GitHub Secrets required** (Settings → Secrets → Actions):
+- `AWS_ACCESS_KEY_ID`
+- `AWS_SECRET_ACCESS_KEY`
+- `S3_BUCKET_NAME`
+- `CLOUDFRONT_DISTRIBUTION_ID`
 
 ---
 
-## Frontend Deployment (GitHub Pages)
+## Custom Domain Setup
 
-The frontend auto-deploys when commits are pushed to `main`. No build step required.
+After CloudFront is deployed, to use a custom domain (e.g., `aimapping.org`):
 
-**Custom domain:** `mapping-ai.org` is configured via:
-1. `CNAME` file in repo root (contains `mapping-ai.org`)
-2. GoDaddy DNS A records pointing to GitHub Pages IPs:
-   ```
-   185.199.108.153
-   185.199.109.153
-   185.199.110.153
-   185.199.111.153
-   ```
-3. GoDaddy CNAME: `www` → `sophiajwang.github.io`
+1. **Request SSL certificate** in AWS Certificate Manager (ACM):
+   - Region must be `us-east-1` (required for CloudFront)
+   - Request a certificate for `aimapping.org` and `www.aimapping.org`
+   - Validate via DNS (add CNAME records to your domain registrar)
 
-GitHub Pages settings: Settings → Pages → Source: Deploy from branch → `main`.
+2. **Update CloudFront distribution** (in AWS Console or template.yaml):
+   - Add alternate domain names: `aimapping.org`, `www.aimapping.org`
+   - Select the ACM certificate
+
+3. **Update DNS** at your domain registrar:
+   - `aimapping.org` → CNAME or ALIAS to CloudFront distribution domain
+   - `www.aimapping.org` → CNAME to CloudFront distribution domain
+
+---
+
+## Infrastructure
+
+Defined in `template.yaml`. Resources:
+
+| Resource | Type | Purpose |
+|----------|------|---------|
+| `MappingAiApi` | HTTP API Gateway | Routes `/submit` and `/submissions` |
+| `SubmitFunction` | Lambda | Handles form submissions |
+| `SubmissionsFunction` | Lambda | Returns approved entries |
+| `WebsiteBucket` | S3 Bucket | Stores static files |
+| `CloudFrontDistribution` | CloudFront | CDN, SSL, caching |
+| `CloudFrontOriginAccessControl` | OAC | Secure S3 access |
+| `WebsiteBucketPolicy` | Bucket Policy | Allow CloudFront to read S3 |
+
+CORS is configured at the API Gateway level to allow requests from the CloudFront domain and custom domains.
 
 ---
 
@@ -375,16 +476,6 @@ GET /submissions?type=person&status=approved
 
 ---
 
-## Branch Strategy
-
-| Branch | Status | Description |
-|--------|--------|-------------|
-| `main` | Live | Auto-deploys to GitHub Pages. Merge target for all changes. |
-| `migration` | Merge-ready | AWS Lambda + GitHub Pages migration. Ready to merge into `main`. |
-| `robby/frontend-experiments` | Parked | UI rewrite (sticky TOC, fade-in scroll). Pending team review. |
-
----
-
 ## Commit Conventions
 
 Use conventional commit prefixes:
@@ -408,3 +499,4 @@ Use conventional commit prefixes:
 - **`submissions/` and `exports/` are gitignored.** Submission data and CSV exports must never be committed to the repo.
 - **`is_self_submission` flag** is tracked in the DB for moderation context but not displayed publicly.
 - **Submitter emails** are stored in the DB for follow-up but are never returned by the public `/submissions` endpoint.
+- **AWS credentials** are stored in `~/.aws/credentials` (outside repo) or GitHub Secrets for CI/CD.
