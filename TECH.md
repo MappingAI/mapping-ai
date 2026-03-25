@@ -9,15 +9,21 @@ This document covers architecture, local development, deployment, and the API fo
 ```
 ┌─────────────────────────────────────────────────────────┐
 │  Browser                                                │
-│  aimapping.org                                          │
+│  mapping-ai.org                                         │
 └────────────────────┬────────────────────────────────────┘
                      │ HTTPS
                      ▼
 ┌─────────────────────────────────────────────────────────┐
+│  Cloudflare (DNS)                                       │
+│  - DNS resolution (CNAME flattening at root)            │
+│  - DDoS protection                                      │
+└────────────────────┬────────────────────────────────────┘
+                     │
+                     ▼
+┌─────────────────────────────────────────────────────────┐
 │  AWS CloudFront (CDN)                                   │
 │  - Global edge caching                                  │
-│  - SSL/TLS termination                                  │
-│  - Custom domain support                                │
+│  - SSL/TLS termination (ACM certificate)                │
 └────────────────────┬────────────────────────────────────┘
                      │
         ┌────────────┴────────────┐
@@ -44,8 +50,11 @@ Frontend is fully static — no build step. Backend is serverless via AWS Lambda
 
 | Layer | Technology |
 |-------|-----------|
-| Frontend hosting | AWS S3 + CloudFront (CDN) |
+| DNS | Cloudflare (DNS-only mode, CNAME flattening) |
+| CDN | AWS CloudFront |
+| Frontend hosting | AWS S3 |
 | Frontend | Static HTML/CSS/JS — no framework, no bundler |
+| Visualization | D3.js (map.html) |
 | Fonts | EB Garamond (serif) + DM Mono (mono) via Google Fonts |
 | Backend | AWS Lambda (Node.js 20) + API Gateway (HTTP API) |
 | Infrastructure-as-code | AWS SAM (`template.yaml`) |
@@ -62,6 +71,8 @@ mapping-ai/
 ├── index.html              # Background / home page
 ├── theoryofchange.html     # Theory of change
 ├── contribute.html         # Submission forms (person, org, resource)
+├── map.html                # Interactive stakeholder map (D3.js)
+├── map-data.json           # Map data export (regenerate with export-map-data.js)
 ├── about.html              # Team and project info
 ├── assets/
 │   ├── css/
@@ -76,7 +87,8 @@ mapping-ai/
 ├── scripts/
 │   ├── migrate.js          # Creates / updates database schema
 │   ├── seed.js             # Seeds DB from Airtable CSV exports
-│   └── export.js           # Exports all DB tables to CSV
+│   ├── export.js           # Exports all DB tables to CSV
+│   └── export-map-data.js  # Generates map-data.json (strips sensitive fields)
 ├── data/                   # Airtable CSV source exports
 ├── template.yaml           # AWS SAM infrastructure (Lambda + API Gateway + S3 + CloudFront)
 ├── samconfig.toml          # SAM deployment config (non-sensitive)
