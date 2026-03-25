@@ -23,9 +23,17 @@ async function exportMapData() {
     );
     console.log(`✓ ${orgs.rows.length} organizations`);
 
+    // Strip sensitive fields before export
+    const sensitiveFields = ['submitter_email', 'submitter_relationship', 'is_self_submission'];
+    const stripSensitive = (rows) => rows.map(row => {
+      const clean = { ...row };
+      sensitiveFields.forEach(f => delete clean[f]);
+      return clean;
+    });
+
     const data = {
-      people: people.rows,
-      organizations: orgs.rows,
+      people: stripSensitive(people.rows),
+      organizations: stripSensitive(orgs.rows),
     };
 
     fs.writeFileSync('map-data.json', JSON.stringify(data, null, 2));

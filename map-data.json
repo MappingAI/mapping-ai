@@ -13,7 +13,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:37.950Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:37.950Z",
@@ -21,9 +20,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 2,
@@ -38,7 +35,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:39.299Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:39.299Z",
@@ -46,9 +42,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 3,
@@ -63,7 +57,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:39.565Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:39.565Z",
@@ -71,9 +64,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 4,
@@ -88,7 +79,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:39.842Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:39.842Z",
@@ -96,9 +86,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 5,
@@ -113,7 +101,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:40.106Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:40.106Z",
@@ -121,9 +108,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 6,
@@ -138,7 +123,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:40.388Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:40.388Z",
@@ -146,9 +130,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 7,
@@ -163,7 +145,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:40.651Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:40.651Z",
@@ -171,9 +152,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 8,
@@ -188,7 +167,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:40.930Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:40.930Z",
@@ -196,9 +174,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 9,
@@ -213,7 +189,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:41.191Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:41.191Z",
@@ -221,9 +196,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 10,
@@ -238,7 +211,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:41.474Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:41.474Z",
@@ -246,9 +218,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 11,
@@ -263,7 +233,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:41.735Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:41.735Z",
@@ -271,9 +240,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 12,
@@ -288,7 +255,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:42.016Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:42.016Z",
@@ -296,9 +262,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 13,
@@ -313,7 +277,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:42.282Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:42.282Z",
@@ -321,9 +284,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 14,
@@ -338,7 +299,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:42.560Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:42.560Z",
@@ -346,9 +306,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 15,
@@ -363,7 +321,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:42.821Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:42.821Z",
@@ -371,9 +328,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 16,
@@ -388,7 +343,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:43.104Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:43.104Z",
@@ -396,9 +350,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 17,
@@ -413,7 +365,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:43.364Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:43.364Z",
@@ -421,9 +372,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 18,
@@ -438,7 +387,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:43.646Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:43.646Z",
@@ -446,9 +394,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 19,
@@ -463,7 +409,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:43.912Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:43.912Z",
@@ -471,9 +416,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 20,
@@ -488,7 +431,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:44.213Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:44.213Z",
@@ -496,9 +438,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 21,
@@ -513,7 +453,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:44.472Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:44.472Z",
@@ -521,9 +460,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 22,
@@ -538,7 +475,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:44.852Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:44.852Z",
@@ -546,9 +482,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 23,
@@ -563,7 +497,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:45.160Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:45.160Z",
@@ -571,9 +504,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 24,
@@ -588,7 +519,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:45.439Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:45.439Z",
@@ -596,9 +526,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 25,
@@ -613,7 +541,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:45.706Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:45.706Z",
@@ -621,9 +548,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 26,
@@ -638,7 +563,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:46.001Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:46.001Z",
@@ -646,9 +570,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 27,
@@ -663,7 +585,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:46.262Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:46.262Z",
@@ -671,9 +592,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 28,
@@ -688,7 +607,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:46.542Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:46.542Z",
@@ -696,9 +614,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 29,
@@ -713,7 +629,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:46.809Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:46.809Z",
@@ -721,9 +636,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 30,
@@ -738,7 +651,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:47.085Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:47.085Z",
@@ -746,9 +658,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 31,
@@ -763,7 +673,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:47.349Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:47.349Z",
@@ -771,9 +680,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 32,
@@ -788,7 +695,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:47.630Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:47.630Z",
@@ -796,9 +702,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 33,
@@ -813,7 +717,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:47.891Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:47.891Z",
@@ -821,9 +724,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 34,
@@ -838,7 +739,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:48.215Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:48.215Z",
@@ -846,9 +746,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 35,
@@ -863,7 +761,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:48.474Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:48.474Z",
@@ -871,9 +768,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 36,
@@ -888,7 +783,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:48.757Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:48.757Z",
@@ -896,9 +790,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 37,
@@ -913,7 +805,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:49.023Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:49.023Z",
@@ -921,9 +812,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 38,
@@ -938,7 +827,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:49.307Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:49.307Z",
@@ -946,9 +834,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 39,
@@ -963,7 +849,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:49.566Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:49.566Z",
@@ -971,9 +856,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 40,
@@ -988,7 +871,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:49.850Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:49.850Z",
@@ -996,9 +878,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 41,
@@ -1013,7 +893,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:50.114Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:50.114Z",
@@ -1021,9 +900,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 42,
@@ -1038,7 +915,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:50.397Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:50.397Z",
@@ -1046,9 +922,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 43,
@@ -1063,7 +937,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:50.660Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:50.660Z",
@@ -1071,9 +944,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 44,
@@ -1088,7 +959,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:50.938Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:50.938Z",
@@ -1096,9 +966,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 45,
@@ -1113,7 +981,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:51.197Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:51.197Z",
@@ -1121,9 +988,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 46,
@@ -1138,7 +1003,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:51.476Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:51.476Z",
@@ -1146,9 +1010,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 47,
@@ -1163,7 +1025,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:51.737Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:51.737Z",
@@ -1171,9 +1032,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 48,
@@ -1188,7 +1047,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:52.019Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:52.019Z",
@@ -1196,9 +1054,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 49,
@@ -1213,7 +1069,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:52.282Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:52.282Z",
@@ -1221,9 +1076,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 50,
@@ -1238,7 +1091,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:52.560Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:52.560Z",
@@ -1246,9 +1098,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 51,
@@ -1263,7 +1113,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:52.833Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:52.833Z",
@@ -1271,9 +1120,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 52,
@@ -1288,7 +1135,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:53.111Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:53.111Z",
@@ -1296,9 +1142,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 53,
@@ -1313,7 +1157,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:53.387Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:53.387Z",
@@ -1321,9 +1164,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 54,
@@ -1338,7 +1179,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:53.664Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:53.664Z",
@@ -1346,9 +1186,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 55,
@@ -1363,7 +1201,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:53.924Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:53.924Z",
@@ -1371,9 +1208,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 56,
@@ -1388,7 +1223,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:54.203Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:54.203Z",
@@ -1396,9 +1230,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 57,
@@ -1413,7 +1245,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:54.463Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:54.463Z",
@@ -1421,9 +1252,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 58,
@@ -1438,7 +1267,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:54.744Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:54.744Z",
@@ -1446,9 +1274,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 59,
@@ -1463,7 +1289,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:55.013Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:55.013Z",
@@ -1471,9 +1296,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 60,
@@ -1488,7 +1311,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:55.297Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:55.297Z",
@@ -1496,9 +1318,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 61,
@@ -1513,7 +1333,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:55.565Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:55.565Z",
@@ -1521,9 +1340,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 62,
@@ -1538,7 +1355,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:55.842Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:55.842Z",
@@ -1546,9 +1362,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 63,
@@ -1563,7 +1377,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:56.102Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:56.102Z",
@@ -1571,9 +1384,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 64,
@@ -1588,7 +1399,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:56.394Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:56.394Z",
@@ -1596,9 +1406,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 65,
@@ -1613,7 +1421,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:56.655Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:56.655Z",
@@ -1621,9 +1428,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 66,
@@ -1638,7 +1443,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:56.935Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:56.935Z",
@@ -1646,9 +1450,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 67,
@@ -1663,7 +1465,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:57.199Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:57.199Z",
@@ -1671,9 +1472,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 68,
@@ -1688,7 +1487,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:57.483Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:57.483Z",
@@ -1696,9 +1494,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 69,
@@ -1713,7 +1509,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:57.742Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:57.742Z",
@@ -1721,9 +1516,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 70,
@@ -1738,7 +1531,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:58.020Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:58.020Z",
@@ -1746,9 +1538,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 71,
@@ -1763,7 +1553,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:58.281Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:58.281Z",
@@ -1771,9 +1560,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 72,
@@ -1788,7 +1575,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:58.558Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:58.558Z",
@@ -1796,9 +1582,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 73,
@@ -1813,7 +1597,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:58.821Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:58.821Z",
@@ -1821,9 +1604,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 74,
@@ -1838,7 +1619,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:59.099Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:59.099Z",
@@ -1846,9 +1626,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 75,
@@ -1863,7 +1641,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:59.362Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:59.362Z",
@@ -1871,9 +1648,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 76,
@@ -1888,7 +1663,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:59.639Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:59.639Z",
@@ -1896,9 +1670,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 77,
@@ -1913,7 +1685,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:28:59.904Z",
       "status": "approved",
       "created_at": "2026-03-20T16:28:59.904Z",
@@ -1921,9 +1692,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 78,
@@ -1938,7 +1707,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:00.180Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:00.180Z",
@@ -1946,9 +1714,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 79,
@@ -1963,7 +1729,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:00.446Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:00.446Z",
@@ -1971,9 +1736,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 80,
@@ -1988,7 +1751,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:00.724Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:00.724Z",
@@ -1996,9 +1758,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 81,
@@ -2013,7 +1773,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:00.989Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:00.989Z",
@@ -2021,9 +1780,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 82,
@@ -2038,7 +1795,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:01.267Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:01.267Z",
@@ -2046,9 +1802,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 83,
@@ -2063,7 +1817,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:01.528Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:01.528Z",
@@ -2071,9 +1824,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 84,
@@ -2088,7 +1839,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:01.807Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:01.807Z",
@@ -2096,9 +1846,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 85,
@@ -2113,7 +1861,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:02.073Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:02.073Z",
@@ -2121,9 +1868,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 86,
@@ -2138,7 +1883,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:02.351Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:02.351Z",
@@ -2146,9 +1890,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 87,
@@ -2163,7 +1905,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:02.627Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:02.627Z",
@@ -2171,9 +1912,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 88,
@@ -2188,7 +1927,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:02.911Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:02.911Z",
@@ -2196,9 +1934,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 89,
@@ -2213,7 +1949,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:03.177Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:03.177Z",
@@ -2221,9 +1956,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 90,
@@ -2238,7 +1971,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:03.464Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:03.464Z",
@@ -2246,9 +1978,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 91,
@@ -2263,7 +1993,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:03.723Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:03.723Z",
@@ -2271,9 +2000,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 92,
@@ -2288,7 +2015,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:04.001Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:04.001Z",
@@ -2296,9 +2022,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 93,
@@ -2313,7 +2037,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:04.267Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:04.267Z",
@@ -2321,9 +2044,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 94,
@@ -2338,7 +2059,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:04.545Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:04.545Z",
@@ -2346,9 +2066,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 95,
@@ -2363,7 +2081,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:04.805Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:04.805Z",
@@ -2371,9 +2088,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 96,
@@ -2388,7 +2103,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:05.093Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:05.093Z",
@@ -2396,9 +2110,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 97,
@@ -2413,7 +2125,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:05.367Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:05.367Z",
@@ -2421,9 +2132,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 98,
@@ -2438,7 +2147,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:05.647Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:05.647Z",
@@ -2446,9 +2154,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 99,
@@ -2463,7 +2169,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:05.927Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:05.927Z",
@@ -2471,9 +2176,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 100,
@@ -2488,7 +2191,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:06.206Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:06.206Z",
@@ -2496,9 +2198,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 101,
@@ -2513,7 +2213,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:06.517Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:06.517Z",
@@ -2521,9 +2220,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 102,
@@ -2538,7 +2235,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:06.797Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:06.797Z",
@@ -2546,9 +2242,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 103,
@@ -2563,7 +2257,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:07.059Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:07.059Z",
@@ -2571,9 +2264,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 104,
@@ -2588,7 +2279,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:07.342Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:07.342Z",
@@ -2596,9 +2286,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 105,
@@ -2613,7 +2301,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:07.607Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:07.607Z",
@@ -2621,9 +2308,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 106,
@@ -2638,7 +2323,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:07.891Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:07.891Z",
@@ -2646,9 +2330,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 107,
@@ -2663,7 +2345,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:08.155Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:08.155Z",
@@ -2671,9 +2352,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 108,
@@ -2688,7 +2367,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:08.433Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:08.433Z",
@@ -2696,9 +2374,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 109,
@@ -2713,7 +2389,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:08.696Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:08.696Z",
@@ -2721,9 +2396,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     },
     {
       "id": 110,
@@ -2738,7 +2411,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:08.979Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:08.979Z",
@@ -2746,9 +2418,7 @@
       "agi_timeline": null,
       "ai_risk_level": null,
       "threat_models": null,
-      "bluesky": null,
-      "is_self_submission": false,
-      "submitter_relationship": null
+      "bluesky": null
     }
   ],
   "organizations": [
@@ -2764,7 +2434,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:09.326Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:09.326Z",
@@ -2773,9 +2442,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 2,
@@ -2789,7 +2456,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:09.614Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:09.614Z",
@@ -2798,9 +2464,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 3,
@@ -2814,7 +2478,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:09.880Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:09.880Z",
@@ -2823,9 +2486,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 4,
@@ -2839,7 +2500,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:10.170Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:10.170Z",
@@ -2848,9 +2508,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 5,
@@ -2864,7 +2522,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:10.447Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:10.447Z",
@@ -2873,9 +2530,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 6,
@@ -2889,7 +2544,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:10.747Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:10.747Z",
@@ -2898,9 +2552,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 7,
@@ -2914,7 +2566,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:11.259Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:11.259Z",
@@ -2923,9 +2574,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 8,
@@ -2939,7 +2588,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:11.541Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:11.541Z",
@@ -2948,9 +2596,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 9,
@@ -2964,7 +2610,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:11.803Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:11.803Z",
@@ -2973,9 +2618,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 10,
@@ -2989,7 +2632,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:12.079Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:12.079Z",
@@ -2998,9 +2640,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 11,
@@ -3014,7 +2654,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:12.342Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:12.342Z",
@@ -3023,9 +2662,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 12,
@@ -3039,7 +2676,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:12.692Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:12.692Z",
@@ -3048,9 +2684,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 13,
@@ -3064,7 +2698,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:12.978Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:12.978Z",
@@ -3073,9 +2706,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 14,
@@ -3089,7 +2720,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:13.263Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:13.263Z",
@@ -3098,9 +2728,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 15,
@@ -3114,7 +2742,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:13.532Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:13.532Z",
@@ -3123,9 +2750,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 16,
@@ -3139,7 +2764,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:13.824Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:13.824Z",
@@ -3148,9 +2772,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 17,
@@ -3164,7 +2786,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:14.086Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:14.086Z",
@@ -3173,9 +2794,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 18,
@@ -3189,7 +2808,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:14.382Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:14.382Z",
@@ -3198,9 +2816,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 19,
@@ -3214,7 +2830,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:14.650Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:14.650Z",
@@ -3223,9 +2838,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 20,
@@ -3239,7 +2852,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:14.940Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:14.940Z",
@@ -3248,9 +2860,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 21,
@@ -3264,7 +2874,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:15.207Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:15.207Z",
@@ -3273,9 +2882,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 22,
@@ -3289,7 +2896,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:15.493Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:15.493Z",
@@ -3298,9 +2904,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 23,
@@ -3314,7 +2918,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:15.876Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:15.876Z",
@@ -3323,9 +2926,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 24,
@@ -3339,7 +2940,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:16.160Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:16.160Z",
@@ -3348,9 +2948,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 25,
@@ -3364,7 +2962,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:16.425Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:16.425Z",
@@ -3373,9 +2970,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 26,
@@ -3389,7 +2984,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:16.704Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:16.704Z",
@@ -3398,9 +2992,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 27,
@@ -3414,7 +3006,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:16.972Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:16.972Z",
@@ -3423,9 +3014,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 28,
@@ -3439,7 +3028,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:17.255Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:17.255Z",
@@ -3448,9 +3036,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 29,
@@ -3464,7 +3050,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:17.517Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:17.517Z",
@@ -3473,9 +3058,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 30,
@@ -3489,7 +3072,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:17.801Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:17.801Z",
@@ -3498,9 +3080,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 31,
@@ -3514,7 +3094,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:18.104Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:18.104Z",
@@ -3523,9 +3102,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 32,
@@ -3539,7 +3116,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:18.406Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:18.406Z",
@@ -3548,9 +3124,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 33,
@@ -3564,7 +3138,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:18.682Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:18.682Z",
@@ -3573,9 +3146,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 34,
@@ -3589,7 +3160,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:18.972Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:18.972Z",
@@ -3598,9 +3168,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 35,
@@ -3614,7 +3182,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:19.242Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:19.242Z",
@@ -3623,9 +3190,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 36,
@@ -3639,7 +3204,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:19.530Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:19.530Z",
@@ -3648,9 +3212,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 37,
@@ -3664,7 +3226,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:19.808Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:19.808Z",
@@ -3673,9 +3234,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 38,
@@ -3689,7 +3248,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:20.090Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:20.090Z",
@@ -3698,9 +3256,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 39,
@@ -3714,7 +3270,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:20.361Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:20.361Z",
@@ -3723,9 +3278,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 40,
@@ -3739,7 +3292,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:20.644Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:20.644Z",
@@ -3748,9 +3300,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 41,
@@ -3764,7 +3314,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:20.914Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:20.914Z",
@@ -3773,9 +3322,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 42,
@@ -3789,7 +3336,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:21.210Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:21.210Z",
@@ -3798,9 +3344,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 43,
@@ -3814,7 +3358,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:21.487Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:21.487Z",
@@ -3823,9 +3366,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 44,
@@ -3839,7 +3380,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:21.780Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:21.780Z",
@@ -3848,9 +3388,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 45,
@@ -3864,7 +3402,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:22.070Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:22.070Z",
@@ -3873,9 +3410,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 46,
@@ -3889,7 +3424,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:22.359Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:22.359Z",
@@ -3898,9 +3432,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 47,
@@ -3914,7 +3446,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:22.630Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:22.630Z",
@@ -3923,9 +3454,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 48,
@@ -3939,7 +3468,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:22.916Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:22.916Z",
@@ -3948,9 +3476,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 49,
@@ -3964,7 +3490,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:23.201Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:23.201Z",
@@ -3973,9 +3498,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 50,
@@ -3989,7 +3512,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:23.495Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:23.495Z",
@@ -3998,9 +3520,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 51,
@@ -4014,7 +3534,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:23.771Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:23.771Z",
@@ -4023,9 +3542,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 52,
@@ -4039,7 +3556,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:24.050Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:24.050Z",
@@ -4048,9 +3564,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 53,
@@ -4064,7 +3578,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:24.323Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:24.323Z",
@@ -4073,9 +3586,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 54,
@@ -4089,7 +3600,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:24.616Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:24.616Z",
@@ -4098,9 +3608,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 55,
@@ -4114,7 +3622,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:24.889Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:24.889Z",
@@ -4123,9 +3630,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 56,
@@ -4139,7 +3644,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:25.171Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:25.171Z",
@@ -4148,9 +3652,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 57,
@@ -4164,7 +3666,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:25.448Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:25.448Z",
@@ -4173,9 +3674,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 58,
@@ -4189,7 +3688,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:25.734Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:25.734Z",
@@ -4198,9 +3696,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 59,
@@ -4214,7 +3710,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:26.006Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:26.006Z",
@@ -4223,9 +3718,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 60,
@@ -4239,7 +3732,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:26.296Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:26.296Z",
@@ -4248,9 +3740,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 61,
@@ -4264,7 +3754,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:26.610Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:26.610Z",
@@ -4273,9 +3762,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 62,
@@ -4289,7 +3776,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:26.906Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:26.906Z",
@@ -4298,9 +3784,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 63,
@@ -4314,7 +3798,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:27.185Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:27.185Z",
@@ -4323,9 +3806,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 64,
@@ -4339,7 +3820,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:27.474Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:27.474Z",
@@ -4348,9 +3828,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 65,
@@ -4364,7 +3842,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:27.744Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:27.744Z",
@@ -4373,9 +3850,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 66,
@@ -4389,7 +3864,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:28.025Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:28.025Z",
@@ -4398,9 +3872,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 67,
@@ -4414,7 +3886,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:28.291Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:28.291Z",
@@ -4423,9 +3894,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 68,
@@ -4439,7 +3908,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:28.575Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:28.575Z",
@@ -4448,9 +3916,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 69,
@@ -4464,7 +3930,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:28.838Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:28.838Z",
@@ -4473,9 +3938,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 70,
@@ -4489,7 +3952,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:29.126Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:29.126Z",
@@ -4498,9 +3960,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 71,
@@ -4514,7 +3974,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:29.403Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:29.403Z",
@@ -4523,9 +3982,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 72,
@@ -4539,7 +3996,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:29.711Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:29.711Z",
@@ -4548,9 +4004,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     },
     {
       "id": 73,
@@ -4564,7 +4018,6 @@
       "influence_type": null,
       "twitter": null,
       "notes": null,
-      "submitter_email": null,
       "submitted_at": "2026-03-20T16:29:29.988Z",
       "status": "approved",
       "created_at": "2026-03-20T16:29:29.988Z",
@@ -4573,9 +4026,7 @@
       "ai_risk_level": null,
       "threat_models": null,
       "bluesky": null,
-      "is_self_submission": false,
-      "last_verified": null,
-      "submitter_relationship": null
+      "last_verified": null
     }
   ]
 }
