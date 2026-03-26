@@ -749,7 +749,9 @@ const imageCache = {};
 function getOrgLogoUrl(name) {
   const domain = ORG_DOMAINS[name];
   if (!domain) return null;
-  return `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+  // Try S3-cached logo first (higher quality), fall back to Google Favicons
+  const cleanDomain = domain.replace('www.', '');
+  return `https://d3fo5mm9fktie3.cloudfront.net/logos/${cleanDomain}.png`;
 }
 
 function getPersonImageUrl(name) {
@@ -1478,13 +1480,21 @@ function render() {
         });
       }
     } else if (d.entityType === 'organization' && !d.isResource) {
-      // Orgs: try Google Favicon from ORG_DOMAINS or website field
-      const domain = ORG_DOMAINS[d.name] || (d.website ? new URL(d.website).hostname : null);
+      // Orgs: try S3-cached logo, fall back to Google Favicons
+      let domain;
+      try { domain = ORG_DOMAINS[d.name] || (d.website ? new URL(d.website).hostname.replace('www.', '') : null); } catch {}
       if (domain) {
-        const logoUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+        const s3LogoUrl = `https://d3fo5mm9fktie3.cloudfront.net/logos/${domain}.png`;
+        const fallbackUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
         const testImg = new Image();
-        testImg.onload = () => applyImage(logoUrl);
-        testImg.src = logoUrl;
+        testImg.onload = () => applyImage(s3LogoUrl);
+        testImg.onerror = () => {
+          // S3 logo not cached — try Google Favicons
+          const fallback = new Image();
+          fallback.onload = () => applyImage(fallbackUrl);
+          fallback.src = fallbackUrl;
+        };
+        testImg.src = s3LogoUrl;
       }
     }
   });
