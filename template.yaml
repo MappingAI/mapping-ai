@@ -64,6 +64,28 @@ Resources:
             Path: /search
             Method: GET
 
+  AdminFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: mapping-ai-admin
+      Handler: api/admin.handler
+      Environment:
+        Variables:
+          ADMIN_KEY: 'mappingai-admin-2026'
+      Events:
+        AdminGet:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref MappingAiApi
+            Path: /admin
+            Method: GET
+        AdminPost:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref MappingAiApi
+            Path: /admin
+            Method: POST
+
   SubmissionsFunction:
     Type: AWS::Serverless::Function
     Properties:

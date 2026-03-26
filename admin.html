@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Mapping AI</title>
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@400;500&display=swap');
+:root {
+  --serif: 'EB Garamond', Georgia, serif;
+  --mono: 'DM Mono', monospace;
+  --text-primary: #1a1a1a;
+  --text-secondary: #555;
+  --text-tertiary: #888;
+  --border: #ddd;
+  --bg-secondary: #f8f7f5;
+  --accent: #2563eb;
+  --green: #16a34a;
+  --red: #dc2626;
+  --yellow: #d97706;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #fff; font-family: var(--serif); color: var(--text-primary); font-size: 16px; line-height: 1.6; }
+
+/* Nav */
+.site-nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0 2rem; height: 48px;
+  background: #fff; border-bottom: 0.5px solid var(--border); z-index: 100;
+}
+.nav-brand {
+  font-family: var(--mono); font-size: 12px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-primary); text-decoration: none;
+}
+.nav-links { display: flex; gap: 2rem; }
+.nav-links a {
+  font-family: var(--mono); font-size: 12px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-tertiary); text-decoration: none;
+  transition: color 0.15s; position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -3px; left: 0;
+  width: 0; height: 1px; background: var(--text-primary); transition: width 0.2s ease;
+}
+.nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+.nav-links a:hover, .nav-links a.active { color: var(--text-primary); }
+.nav-hamburger {
+  display: none; flex-direction: column; justify-content: center;
+  gap: 5px; background: none; border: none; cursor: pointer; padding: 4px;
+}
+.nav-hamburger span { display: block; width: 20px; height: 1.5px; background: var(--text-primary); }
+
+/* Main */
+.admin-wrap {
+  max-width: 1100px; margin: 0 auto;
+  padding: calc(48px + 2rem) 1.5rem 4rem;
+}
+h1 {
+  font-family: var(--serif); font-size: 28px; font-weight: 400;
+  font-style: italic; margin-bottom: 1.5rem;
+}
+.eyebrow {
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--text-secondary); margin-bottom: 0.5rem;
+}
+
+/* Auth gate */
+.auth-gate {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; min-height: 60vh; gap: 1rem;
+}
+.auth-gate input {
+  font-family: var(--serif); font-size: 16px;
+  padding: 0.6rem 1rem; border: 1px solid var(--border);
+  border-radius: 4px; width: 280px; text-align: center;
+}
+.auth-gate input:focus { outline: none; border-color: var(--text-secondary); }
+.auth-gate .btn { margin-top: 0.5rem; }
+.auth-error { color: var(--red); font-family: var(--mono); font-size: 12px; }
+
+/* Tabs */
+.tab-bar {
+  display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 1.5rem;
+}
+.tab-btn {
+  font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em;
+  text-transform: uppercase; padding: 0.6rem 1.25rem;
+  background: none; border: none; border-bottom: 2px solid transparent;
+  color: var(--text-tertiary); cursor: pointer; transition: all 0.15s;
+}
+.tab-btn:hover { color: var(--text-secondary); }
+.tab-btn.active { color: var(--text-primary); border-bottom-color: var(--text-primary); }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* Sub-tabs */
+.sub-tab-bar {
+  display: flex; gap: 0.5rem; margin-bottom: 1rem;
+}
+.sub-tab-btn {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em;
+  text-transform: uppercase; padding: 0.4rem 0.9rem;
+  border: 1px solid var(--border); background: #fff;
+  color: var(--text-secondary); border-radius: 4px;
+  cursor: pointer; transition: all 0.15s;
+}
+.sub-tab-btn:hover { border-color: var(--text-secondary); }
+.sub-tab-btn.active {
+  background: var(--text-primary); color: #fff; border-color: var(--text-primary);
+}
+
+/* Buttons */
+.btn {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em;
+  text-transform: uppercase; padding: 0.5rem 1rem;
+  border: none; border-radius: 4px; cursor: pointer; transition: opacity 0.15s;
+  display: inline-flex; align-items: center; gap: 0.35rem;
+}
+.btn:hover { opacity: 0.85; }
+.btn-primary { background: var(--text-primary); color: #fff; }
+.btn-green { background: var(--green); color: #fff; }
+.btn-red { background: var(--red); color: #fff; }
+.btn-outline {
+  background: #fff; color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+.btn-outline:hover { border-color: var(--text-secondary); }
+.btn-sm { font-size: 10px; padding: 0.35rem 0.7rem; }
+.btn-link {
+  background: none; border: none; color: var(--accent);
+  font-family: var(--mono); font-size: 11px; cursor: pointer;
+  text-decoration: underline; padding: 0; letter-spacing: 0.04em;
+}
+
+/* Stats */
+.stats-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem; margin-bottom: 2rem;
+}
+.stat-card {
+  background: var(--bg-secondary); border-radius: 6px;
+  padding: 1.1rem 1.2rem; border: 1px solid transparent;
+  transition: border-color 0.15s;
+}
+.stat-card:hover { border-color: var(--border); }
+.stat-card .stat-label {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-tertiary); margin-bottom: 0.3rem;
+}
+.stat-card .stat-value {
+  font-family: var(--serif); font-size: 28px; font-weight: 500;
+  color: var(--text-primary);
+}
+.stat-card .stat-sub {
+  font-family: var(--mono); font-size: 11px;
+  color: var(--text-secondary); margin-top: 0.15rem;
+}
+
+/* Cards */
+.pending-card {
+  background: var(--bg-secondary); border-radius: 6px;
+  padding: 1.25rem 1.5rem; margin-bottom: 1rem;
+  border: 1px solid var(--border);
+}
+.pending-card-header {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;
+}
+.pending-card-title {
+  font-family: var(--serif); font-size: 20px; font-weight: 500;
+}
+.pending-card-meta {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--text-tertiary); letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.pending-card-fields {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.5rem 1.5rem; margin-bottom: 1rem;
+}
+.pending-field-label {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+.pending-field-value {
+  font-family: var(--serif); font-size: 15px;
+  color: var(--text-primary); word-break: break-word;
+}
+.pending-actions {
+  display: flex; gap: 0.5rem; flex-wrap: wrap;
+  padding-top: 0.75rem; border-top: 0.5px solid var(--border);
+}
+
+/* Comparison */
+.comparison {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+  margin-bottom: 1rem;
+}
+.comparison-col {
+  background: #fff; border-radius: 4px; padding: 1rem;
+  border: 1px solid var(--border);
+}
+.comparison-col-label {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-tertiary); margin-bottom: 0.5rem;
+}
+.diff-highlight { background: #fef3c7; padding: 0 2px; border-radius: 2px; }
+
+/* Table */
+.table-toolbar {
+  display: flex; gap: 0.75rem; align-items: center;
+  margin-bottom: 1rem; flex-wrap: wrap;
+}
+.table-toolbar input[type="text"] {
+  font-family: var(--serif); font-size: 15px;
+  padding: 0.5rem 0.75rem; border: 1px solid var(--border);
+  border-radius: 4px; flex: 1; min-width: 200px;
+}
+.table-toolbar input:focus { outline: none; border-color: var(--text-secondary); }
+.table-wrap { overflow-x: auto; }
+table {
+  width: 100%; border-collapse: collapse;
+  font-size: 14px;
+}
+th {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text-tertiary); text-align: left;
+  padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--border);
+  cursor: pointer; white-space: nowrap; user-select: none;
+}
+th:hover { color: var(--text-secondary); }
+th .sort-arrow { margin-left: 4px; font-size: 9px; }
+td {
+  padding: 0.55rem 0.75rem;
+  border-bottom: 0.5px solid #eee;
+  max-width: 200px; overflow: hidden; text-overflow: ellipsis;
+  white-space: nowrap; vertical-align: top;
+}
+td.editable { cursor: pointer; }
+td.editable:hover { background: #f0efed; }
+td input, td select {
+  font-family: var(--serif); font-size: 14px;
+  padding: 0.25rem 0.4rem; border: 1px solid var(--accent);
+  border-radius: 3px; width: 100%;
+}
+tr.selected { background: #eff6ff; }
+tr:hover { background: var(--bg-secondary); }
+
+/* Status badges */
+.badge {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 0.2rem 0.5rem; border-radius: 3px;
+  display: inline-block;
+}
+.badge-approved { background: #dcfce7; color: #166534; }
+.badge-pending { background: #fef3c7; color: #92400e; }
+.badge-rejected { background: #fee2e2; color: #991b1b; }
+
+/* Edit modal */
+.modal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.4); z-index: 200;
+  display: flex; align-items: center; justify-content: center;
+  padding: 1rem;
+}
+.modal {
+  background: #fff; border-radius: 8px; padding: 1.5rem 2rem;
+  max-width: 600px; width: 100%; max-height: 85vh;
+  overflow-y: auto; box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+}
+.modal h2 {
+  font-family: var(--serif); font-size: 22px; font-weight: 400;
+  font-style: italic; margin-bottom: 1rem;
+}
+.modal .field {
+  display: flex; flex-direction: column; margin-bottom: 0.75rem;
+}
+.modal .field label {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-tertiary); margin-bottom: 0.25rem;
+}
+.modal .field input, .modal .field select, .modal .field textarea {
+  font-family: var(--serif); font-size: 15px;
+  padding: 0.5rem 0.7rem; border: 1px solid var(--border);
+  border-radius: 4px; background: #fff; color: var(--text-primary);
+}
+.modal .field input:focus, .modal .field select:focus, .modal .field textarea:focus {
+  outline: none; border-color: var(--text-secondary);
+}
+.modal .field textarea { resize: vertical; min-height: 70px; }
+.modal-actions {
+  display: flex; gap: 0.5rem; justify-content: flex-end;
+  margin-top: 1rem; padding-top: 0.75rem; border-top: 0.5px solid var(--border);
+}
+
+/* Loading */
+.loading {
+  text-align: center; padding: 2rem;
+  font-family: var(--mono); font-size: 12px;
+  color: var(--text-tertiary); letter-spacing: 0.06em;
+}
+
+/* Toast */
+.toast {
+  position: fixed; bottom: 2rem; right: 2rem;
+  font-family: var(--mono); font-size: 12px;
+  padding: 0.7rem 1.2rem; border-radius: 4px;
+  background: var(--text-primary); color: #fff;
+  z-index: 300; opacity: 0; transform: translateY(10px);
+  transition: all 0.3s ease; pointer-events: none;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+.toast.error { background: var(--red); }
+
+/* Responsive */
+@media (max-width: 600px) {
+  .site-nav { padding: 0 1rem; }
+  .nav-hamburger { display: flex; }
+  .nav-links {
+    display: none; position: absolute; top: 48px;
+    left: 0; right: 0; background: #fff;
+    border-bottom: 0.5px solid var(--border);
+    flex-direction: column; padding: 1rem 1.5rem; gap: 1rem;
+  }
+  .nav-links.open { display: flex; }
+  .admin-wrap { padding: calc(48px + 1rem) 1rem 3rem; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .comparison { grid-template-columns: 1fr; }
+  .pending-card-fields { grid-template-columns: 1fr; }
+  table { font-size: 13px; }
+  td, th { padding: 0.4rem 0.5rem; }
+}
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a class="nav-brand" href="/">Mapping AI</a>
+  <button class="nav-hamburger" aria-label="Menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links">
+    <a href="/">Background</a>
+    <a href="/theoryofchange.html">Theory of Change</a>
+    <a href="/contribute.html">Take Part</a>
+    <a href="/map.html">Map</a>
+    <a href="/about.html">About Us</a>
+  </div>
+</nav>
+
+<div class="admin-wrap">
+
+  <!-- Auth Gate -->
+  <div id="auth-gate" class="auth-gate">
+    <div class="eyebrow">Admin Access</div>
+    <h1>Mapping AI Database</h1>
+    <input type="password" id="auth-input" placeholder="Enter admin key" onkeydown="if(event.key==='Enter')authenticate()">
+    <button class="btn btn-primary" onclick="authenticate()">Enter</button>
+    <div id="auth-error" class="auth-error" style="display:none"></div>
+  </div>
+
+  <!-- Admin Content (hidden until auth) -->
+  <div id="admin-content" style="display:none">
+    <div class="eyebrow">Internal</div>
+    <h1>Database Admin</h1>
+
+    <div class="tab-bar">
+      <button class="tab-btn active" data-tab="dashboard">Dashboard</button>
+      <button class="tab-btn" data-tab="pending">Pending Queue</button>
+      <button class="tab-btn" data-tab="entities">All Entities</button>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="tab-dashboard" class="tab-panel active">
+      <div id="stats-loading" class="loading">Loading stats...</div>
+      <div id="stats-content" style="display:none">
+        <div class="eyebrow">Overview</div>
+        <div id="stats-grid" class="stats-grid"></div>
+        <div class="eyebrow" style="margin-top:1.5rem">Quick Actions</div>
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.5rem">
+          <button class="btn btn-outline" onclick="switchToTab('pending')">Review Pending</button>
+          <button class="btn btn-outline" onclick="switchToTab('entities');switchSubTab('people')">Browse People</button>
+          <button class="btn btn-outline" onclick="switchToTab('entities');switchSubTab('organizations')">Browse Organizations</button>
+          <button class="btn btn-outline" onclick="switchToTab('entities');switchSubTab('resources')">Browse Resources</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pending Queue -->
+    <div id="tab-pending" class="tab-panel">
+      <div id="pending-loading" class="loading">Loading pending submissions...</div>
+      <div id="pending-content"></div>
+      <div id="pending-empty" style="display:none" class="loading">No pending submissions.</div>
+    </div>
+
+    <!-- All Entities -->
+    <div id="tab-entities" class="tab-panel">
+      <div class="sub-tab-bar">
+        <button class="sub-tab-btn active" data-subtab="people" onclick="switchSubTab('people')">People</button>
+        <button class="sub-tab-btn" data-subtab="organizations" onclick="switchSubTab('organizations')">Organizations</button>
+        <button class="sub-tab-btn" data-subtab="resources" onclick="switchSubTab('resources')">Resources</button>
+      </div>
+      <div class="table-toolbar">
+        <input type="text" id="entity-search" placeholder="Search..." oninput="filterEntities()">
+        <button class="btn btn-green btn-sm" id="bulk-approve-btn" style="display:none" onclick="bulkApprove()">Approve Selected</button>
+        <button class="btn btn-red btn-sm" id="bulk-delete-btn" style="display:none" onclick="bulkDelete()">Delete Selected</button>
+      </div>
+      <div id="entities-loading" class="loading">Loading...</div>
+      <div class="table-wrap">
+        <table id="entities-table" style="display:none">
+          <thead id="entities-thead"></thead>
+          <tbody id="entities-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+<div id="modal-container"></div>
+
+<script>
+// --- Config ---
+const API_BASE = window.location.hostname === 'localhost'
+  ? ''
+  : 'https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com';
+
+const FIELD_DEFS = {
+  people: {
+    fields: ['name','category','title','primary_org','location','regulatory_stance','agi_timeline','ai_risk_level','threat_models','influence_type','twitter','notes','status'],
+    categories: ['Executive','Researcher','Policymaker','Investor','Organizer','Journalist','Academic','Cultural figure'],
+    tableFields: ['name','category','title','primary_org','location','regulatory_stance','status'],
+    label: 'People',
+    singular: 'person'
+  },
+  organizations: {
+    fields: ['name','category','website','location','funding_model','regulatory_stance','influence_type','twitter','notes','status'],
+    categories: ['Frontier Lab','AI Safety','Think Tank','Government','Academic','VC','Labor','Ethics','Media','Political Campaign'],
+    tableFields: ['name','category','website','location','funding_model','regulatory_stance','status'],
+    label: 'Organizations',
+    singular: 'organization'
+  },
+  resources: {
+    fields: ['title','author','resource_type','url','year','category','key_argument','notes','status'],
+    categories: ['Essay','Book','Report','Podcast','Video','Website','Academic Paper','News Article','Substack','Newsletter'],
+    tableFields: ['title','author','resource_type','year','category','status'],
+    singular: 'resource'
+  }
+};
+
+let adminKey = sessionStorage.getItem('admin_key') || '';
+let currentSubTab = 'people';
+let entitiesData = [];
+let sortCol = null;
+let sortDir = 'asc';
+let selectedIds = new Set();
+
+// --- Auth ---
+function authenticate() {
+  const input = document.getElementById('auth-input');
+  const key = input.value.trim();
+  if (!key) return;
+  adminKey = key;
+  sessionStorage.setItem('admin_key', key);
+  // Test the key by fetching stats
+  testAuth(key);
+}
+
+async function testAuth(key) {
+  try {
+    const res = await apiFetch(`/admin?action=stats&key=${encodeURIComponent(key)}`);
+    if (!res.ok) throw new Error('Invalid key');
+    document.getElementById('auth-gate').style.display = 'none';
+    document.getElementById('admin-content').style.display = 'block';
+    loadDashboard();
+  } catch (e) {
+    document.getElementById('auth-error').textContent = 'Invalid admin key. Try again.';
+    document.getElementById('auth-error').style.display = 'block';
+    sessionStorage.removeItem('admin_key');
+    adminKey = '';
+  }
+}
+
+// Auto-auth if key in session
+if (adminKey) {
+  testAuth(adminKey);
+}
+
+// --- API helpers ---
+function apiFetch(path, opts = {}) {
+  const headers = { 'X-Admin-Key': adminKey, ...(opts.headers || {}) };
+  if (opts.body && typeof opts.body === 'object') {
+    headers['Content-Type'] = 'application/json';
+    opts.body = JSON.stringify(opts.body);
+  }
+  return fetch(API_BASE + path, { ...opts, headers });
+}
+
+async function apiPost(body) {
+  return apiFetch('/admin', { method: 'POST', body });
+}
+
+function toast(msg, isError = false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (isError ? ' error' : '');
+  setTimeout(() => t.className = 'toast', 2500);
+}
+
+// --- Tabs ---
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => switchToTab(btn.dataset.tab));
+});
+
+function switchToTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id === 'tab-' + tab));
+  if (tab === 'dashboard') loadDashboard();
+  if (tab === 'pending') loadPending();
+  if (tab === 'entities') loadEntities(currentSubTab);
+}
+
+function switchSubTab(type) {
+  currentSubTab = type;
+  document.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.toggle('active', b.dataset.subtab === type));
+  selectedIds.clear();
+  updateBulkButtons();
+  loadEntities(type);
+}
+
+// --- Dashboard ---
+async function loadDashboard() {
+  const loading = document.getElementById('stats-loading');
+  const content = document.getElementById('stats-content');
+  loading.style.display = 'block';
+  content.style.display = 'none';
+  try {
+    const res = await apiFetch(`/admin?action=stats&key=${encodeURIComponent(adminKey)}`);
+    const data = await res.json();
+    renderStats(data);
+    loading.style.display = 'none';
+    content.style.display = 'block';
+  } catch (e) {
+    loading.textContent = 'Failed to load stats.';
+  }
+}
+
+function renderStats(data) {
+  const grid = document.getElementById('stats-grid');
+  const s = data.stats || data;
+  const cards = [
+    { label: 'People — Approved', value: s.people_approved ?? s.people?.approved ?? '—', sub: '' },
+    { label: 'People — Pending', value: s.people_pending ?? s.people?.pending ?? '—', sub: '' },
+    { label: 'Organizations — Approved', value: s.organizations_approved ?? s.organizations?.approved ?? '—', sub: '' },
+    { label: 'Organizations — Pending', value: s.organizations_pending ?? s.organizations?.pending ?? '—', sub: '' },
+    { label: 'Resources — Approved', value: s.resources_approved ?? s.resources?.approved ?? '—', sub: '' },
+    { label: 'Resources — Pending', value: s.resources_pending ?? s.resources?.pending ?? '—', sub: '' },
+    { label: 'Relationships', value: s.relationships ?? s.relationships_count ?? '—', sub: '' },
+    { label: 'Person-Org Links', value: s.person_org_links ?? s.person_orgs ?? '—', sub: '' },
+  ];
+  grid.innerHTML = cards.map(c => `
+    <div class="stat-card">
+      <div class="stat-label">${c.label}</div>
+      <div class="stat-value">${c.value}</div>
+      ${c.sub ? `<div class="stat-sub">${c.sub}</div>` : ''}
+    </div>
+  `).join('');
+}
+
+// --- Pending Queue ---
+async function loadPending() {
+  const loading = document.getElementById('pending-loading');
+  const content = document.getElementById('pending-content');
+  const empty = document.getElementById('pending-empty');
+  loading.style.display = 'block';
+  content.style.display = 'none';
+  empty.style.display = 'none';
+  content.innerHTML = '';
+  try {
+    const res = await apiFetch(`/admin?action=pending&key=${encodeURIComponent(adminKey)}`);
+    const data = await res.json();
+    const items = data.pending || data.items || data;
+    loading.style.display = 'none';
+    if (!items || (Array.isArray(items) && items.length === 0)) {
+      // Check if it's an object with type keys
+      if (!Array.isArray(items) && typeof items === 'object') {
+        let total = 0;
+        for (const type of ['people','organizations','resources']) {
+          if (items[type]) total += items[type].length;
+        }
+        if (total === 0) { empty.style.display = 'block'; return; }
+        renderPendingGrouped(items, content);
+      } else {
+        empty.style.display = 'block';
+      }
+    } else if (Array.isArray(items)) {
+      renderPendingFlat(items, content);
+    } else if (typeof items === 'object') {
+      renderPendingGrouped(items, content);
+    }
+    content.style.display = 'block';
+  } catch (e) {
+    loading.textContent = 'Failed to load pending items.';
+  }
+}
+
+function renderPendingGrouped(data, container) {
+  let html = '';
+  for (const type of ['people','organizations','resources']) {
+    const items = data[type];
+    if (!items || items.length === 0) continue;
+    const def = FIELD_DEFS[type];
+    html += `<div class="eyebrow" style="margin:1rem 0 0.5rem">${def.label} (${items.length})</div>`;
+    items.forEach(item => { html += renderPendingCard(item, type); });
+  }
+  container.innerHTML = html;
+}
+
+function renderPendingFlat(items, container) {
+  let html = '';
+  items.forEach(item => {
+    const type = item._type || item.entity_type || guessType(item);
+    html += renderPendingCard(item, type);
+  });
+  container.innerHTML = html;
+}
+
+function guessType(item) {
+  if (item.primary_org || item.agi_timeline) return 'people';
+  if (item.website || item.funding_model) return 'organizations';
+  if (item.resource_type || item.key_argument) return 'resources';
+  return 'people';
+}
+
+function renderPendingCard(item, type) {
+  const def = FIELD_DEFS[type] || FIELD_DEFS.people;
+  const singular = def.singular;
+  const displayName = item.name || item.title || 'Untitled';
+  const id = item.id;
+
+  let fieldsHtml = '';
+  def.fields.forEach(f => {
+    if (f === 'status') return;
+    const val = item[f];
+    if (val !== undefined && val !== null && val !== '') {
+      fieldsHtml += `
+        <div>
+          <div class="pending-field-label">${f.replace(/_/g, ' ')}</div>
+          <div class="pending-field-value">${escHtml(String(val))}</div>
+        </div>`;
+    }
+  });
+
+  let metaHtml = '';
+  if (item.submitted_at) metaHtml += `Submitted: ${new Date(item.submitted_at).toLocaleDateString()} `;
+  if (item.submitter_relationship) metaHtml += `&middot; Relationship: ${escHtml(item.submitter_relationship)} `;
+  if (item.entity_id) metaHtml += `&middot; Edit to #${item.entity_id}`;
+
+  let comparisonHtml = '';
+  if (item.entity_id && item._existing) {
+    comparisonHtml = renderComparison(item, item._existing, def);
+  }
+
+  return `
+    <div class="pending-card" id="pending-${singular}-${id}">
+      <div class="pending-card-header">
+        <div>
+          <div class="pending-card-title">${escHtml(displayName)}</div>
+          <div class="pending-card-meta">${singular} &middot; ${metaHtml}</div>
+        </div>
+        <span class="badge badge-pending">Pending</span>
+      </div>
+      ${comparisonHtml}
+      <div class="pending-card-fields">${fieldsHtml}</div>
+      <div class="pending-actions">
+        <button class="btn btn-green btn-sm" onclick="approveItem('${singular}',${id})">Approve</button>
+        <button class="btn btn-red btn-sm" onclick="rejectItem('${singular}',${id})">Reject</button>
+        <button class="btn btn-outline btn-sm" onclick="editAndApprove('${type}','${singular}',${id})">Edit &amp; Approve</button>
+      </div>
+    </div>`;
+}
+
+function renderComparison(newItem, existing, def) {
+  let rows = '';
+  def.fields.forEach(f => {
+    if (f === 'status') return;
+    const nv = newItem[f] ?? '';
+    const ev = existing[f] ?? '';
+    const isDiff = String(nv) !== String(ev);
+    rows += `
+      <div>
+        <div class="pending-field-label">${f.replace(/_/g, ' ')}</div>
+        <div class="pending-field-value">${escHtml(String(ev))}</div>
+      </div>
+      <div>
+        <div class="pending-field-label">${f.replace(/_/g, ' ')}</div>
+        <div class="pending-field-value ${isDiff ? 'diff-highlight' : ''}">${escHtml(String(nv))}</div>
+      </div>`;
+  });
+  return `
+    <div class="comparison" style="margin-bottom:1rem">
+      <div class="comparison-col">
+        <div class="comparison-col-label">Current (Approved)</div>
+      </div>
+      <div class="comparison-col">
+        <div class="comparison-col-label">Submitted Edit</div>
+      </div>
+      ${rows}
+    </div>`;
+}
+
+async function approveItem(singular, id) {
+  try {
+    const res = await apiPost({ action: 'approve', type: singular, id });
+    if (!res.ok) throw new Error();
+    toast('Approved');
+    loadPending();
+    loadDashboard();
+  } catch (e) { toast('Failed to approve', true); }
+}
+
+async function rejectItem(singular, id) {
+  if (!confirm('Reject this submission?')) return;
+  try {
+    const res = await apiPost({ action: 'reject', type: singular, id });
+    if (!res.ok) throw new Error();
+    toast('Rejected');
+    loadPending();
+    loadDashboard();
+  } catch (e) { toast('Failed to reject', true); }
+}
+
+function editAndApprove(type, singular, id) {
+  // Find the item in current pending content
+  const card = document.getElementById(`pending-${singular}-${id}`);
+  // We need to fetch the item data; let's re-fetch pending and find it
+  editEntity(type, singular, id, true);
+}
+
+// --- All Entities ---
+async function loadEntities(type) {
+  const loading = document.getElementById('entities-loading');
+  const table = document.getElementById('entities-table');
+  loading.style.display = 'block';
+  table.style.display = 'none';
+  selectedIds.clear();
+  updateBulkButtons();
+  try {
+    const res = await apiFetch(`/admin?action=all&type=${type}&key=${encodeURIComponent(adminKey)}`);
+    const data = await res.json();
+    entitiesData = data.items || data[type] || data;
+    if (!Array.isArray(entitiesData)) entitiesData = [];
+    loading.style.display = 'none';
+    table.style.display = 'table';
+    renderEntitiesTable(type);
+  } catch (e) {
+    loading.textContent = 'Failed to load entities.';
+  }
+}
+
+function renderEntitiesTable(type) {
+  const def = FIELD_DEFS[type];
+  const cols = def.tableFields;
+  const thead = document.getElementById('entities-thead');
+  const tbody = document.getElementById('entities-tbody');
+
+  // Header
+  thead.innerHTML = '<tr>' +
+    '<th style="width:30px"><input type="checkbox" onchange="toggleSelectAll(this)"></th>' +
+    cols.map(c => {
+      const arrow = sortCol === c ? (sortDir === 'asc' ? ' &#9650;' : ' &#9660;') : '';
+      return `<th onclick="sortEntities('${c}')">${c.replace(/_/g, ' ')}<span class="sort-arrow">${arrow}</span></th>`;
+    }).join('') +
+    '<th>Actions</th></tr>';
+
+  // Filter
+  const search = (document.getElementById('entity-search').value || '').toLowerCase();
+  let filtered = entitiesData;
+  if (search) {
+    filtered = entitiesData.filter(item =>
+      cols.some(c => String(item[c] || '').toLowerCase().includes(search))
+    );
+  }
+
+  // Sort
+  if (sortCol) {
+    filtered = [...filtered].sort((a, b) => {
+      const av = String(a[sortCol] || '').toLowerCase();
+      const bv = String(b[sortCol] || '').toLowerCase();
+      return sortDir === 'asc' ? av.localeCompare(bv) : bv.localeCompare(av);
+    });
+  }
+
+  // Rows
+  tbody.innerHTML = filtered.map(item => {
+    const id = item.id;
+    const isSelected = selectedIds.has(id);
+    return '<tr class="' + (isSelected ? 'selected' : '') + '">' +
+      `<td><input type="checkbox" ${isSelected ? 'checked' : ''} onchange="toggleSelect(${id}, this)"></td>` +
+      cols.map(c => {
+        const val = item[c] ?? '';
+        if (c === 'status') {
+          const cls = val === 'approved' ? 'badge-approved' : val === 'pending' ? 'badge-pending' : 'badge-rejected';
+          return `<td><span class="badge ${cls}">${escHtml(val)}</span></td>`;
+        }
+        return `<td class="editable" title="${escHtml(String(val))}" onclick="inlineEdit(this, '${type}', ${id}, '${c}')">${escHtml(String(val))}</td>`;
+      }).join('') +
+      `<td style="white-space:nowrap">
+        <button class="btn btn-outline btn-sm" onclick="editEntity('${type}','${FIELD_DEFS[type].singular}',${id})">Edit</button>
+        <button class="btn btn-red btn-sm" onclick="deleteEntity('${FIELD_DEFS[type].singular}',${id})">Del</button>
+      </td></tr>`;
+  }).join('');
+}
+
+function sortEntities(col) {
+  if (sortCol === col) {
+    sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+  } else {
+    sortCol = col;
+    sortDir = 'asc';
+  }
+  renderEntitiesTable(currentSubTab);
+}
+
+function filterEntities() {
+  renderEntitiesTable(currentSubTab);
+}
+
+// --- Inline edit ---
+function inlineEdit(td, type, id, field) {
+  if (td.querySelector('input, select')) return;
+  const currentVal = td.textContent;
+  const def = FIELD_DEFS[type];
+
+  let input;
+  if (field === 'category') {
+    input = document.createElement('select');
+    (def.categories || []).forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c; opt.textContent = c;
+      if (c === currentVal) opt.selected = true;
+      input.appendChild(opt);
+    });
+  } else if (field === 'status') {
+    input = document.createElement('select');
+    ['approved','pending','rejected'].forEach(s => {
+      const opt = document.createElement('option');
+      opt.value = s; opt.textContent = s;
+      if (s === currentVal) opt.selected = true;
+      input.appendChild(opt);
+    });
+  } else if (field === 'resource_type') {
+    input = document.createElement('select');
+    (FIELD_DEFS.resources.categories || []).forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c; opt.textContent = c;
+      if (c === currentVal) opt.selected = true;
+      input.appendChild(opt);
+    });
+  } else {
+    input = document.createElement('input');
+    input.type = 'text';
+    input.value = currentVal;
+  }
+
+  td.textContent = '';
+  td.appendChild(input);
+  input.focus();
+
+  const save = async () => {
+    const newVal = input.value;
+    if (newVal === currentVal) {
+      td.textContent = currentVal;
+      return;
+    }
+    td.textContent = 'Saving...';
+    try {
+      const res = await apiPost({ action: 'update', type: def.singular, id, data: { [field]: newVal } });
+      if (!res.ok) throw new Error();
+      toast('Updated');
+      loadEntities(type);
+    } catch (e) {
+      toast('Failed to update', true);
+      td.textContent = currentVal;
+    }
+  };
+
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') save(); if (e.key === 'Escape') td.textContent = currentVal; });
+  input.addEventListener('blur', save);
+}
+
+// --- Selection ---
+function toggleSelect(id, checkbox) {
+  if (checkbox.checked) selectedIds.add(id); else selectedIds.delete(id);
+  checkbox.closest('tr').classList.toggle('selected', checkbox.checked);
+  updateBulkButtons();
+}
+
+function toggleSelectAll(checkbox) {
+  const tbody = document.getElementById('entities-tbody');
+  tbody.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+    cb.checked = checkbox.checked;
+    const id = parseInt(cb.getAttribute('onchange').match(/\d+/)[0]);
+    if (checkbox.checked) selectedIds.add(id); else selectedIds.delete(id);
+    cb.closest('tr').classList.toggle('selected', checkbox.checked);
+  });
+  updateBulkButtons();
+}
+
+function updateBulkButtons() {
+  const show = selectedIds.size > 0;
+  document.getElementById('bulk-approve-btn').style.display = show ? 'inline-flex' : 'none';
+  document.getElementById('bulk-delete-btn').style.display = show ? 'inline-flex' : 'none';
+}
+
+async function bulkApprove() {
+  if (!confirm(`Approve ${selectedIds.size} items?`)) return;
+  const singular = FIELD_DEFS[currentSubTab].singular;
+  for (const id of selectedIds) {
+    await apiPost({ action: 'approve', type: singular, id });
+  }
+  toast(`Approved ${selectedIds.size} items`);
+  selectedIds.clear();
+  loadEntities(currentSubTab);
+}
+
+async function bulkDelete() {
+  if (!confirm(`Delete ${selectedIds.size} items? This cannot be undone.`)) return;
+  const singular = FIELD_DEFS[currentSubTab].singular;
+  for (const id of selectedIds) {
+    await apiPost({ action: 'delete', type: singular, id });
+  }
+  toast(`Deleted ${selectedIds.size} items`);
+  selectedIds.clear();
+  loadEntities(currentSubTab);
+}
+
+// --- Edit Modal ---
+async function editEntity(type, singular, id, approveAfter = false) {
+  const def = FIELD_DEFS[type];
+  // Fetch current data
+  let item = entitiesData.find(e => e.id === id);
+  if (!item) {
+    // Might be from pending; try fetching all
+    try {
+      const res = await apiFetch(`/admin?action=all&type=${type}&key=${encodeURIComponent(adminKey)}`);
+      const data = await res.json();
+      const list = data.items || data[type] || data;
+      item = (Array.isArray(list) ? list : []).find(e => e.id === id);
+    } catch (e) {}
+  }
+  if (!item) { toast('Could not load item', true); return; }
+
+  let fieldsHtml = '';
+  def.fields.forEach(f => {
+    if (f === 'status' && approveAfter) return;
+    const val = item[f] ?? '';
+    if (f === 'category') {
+      fieldsHtml += `<div class="field"><label>${f.replace(/_/g, ' ')}</label><select name="${f}">
+        ${(def.categories || []).map(c => `<option value="${c}" ${c === val ? 'selected' : ''}>${c}</option>`).join('')}
+      </select></div>`;
+    } else if (f === 'resource_type') {
+      fieldsHtml += `<div class="field"><label>${f.replace(/_/g, ' ')}</label><select name="${f}">
+        ${(FIELD_DEFS.resources.categories || []).map(c => `<option value="${c}" ${c === val ? 'selected' : ''}>${c}</option>`).join('')}
+      </select></div>`;
+    } else if (f === 'status') {
+      fieldsHtml += `<div class="field"><label>${f}</label><select name="${f}">
+        ${['approved','pending','rejected'].map(s => `<option value="${s}" ${s === val ? 'selected' : ''}>${s}</option>`).join('')}
+      </select></div>`;
+    } else if (f === 'notes' || f === 'key_argument' || f === 'threat_models') {
+      fieldsHtml += `<div class="field"><label>${f.replace(/_/g, ' ')}</label><textarea name="${f}">${escHtml(String(val))}</textarea></div>`;
+    } else {
+      fieldsHtml += `<div class="field"><label>${f.replace(/_/g, ' ')}</label><input type="text" name="${f}" value="${escHtml(String(val))}"></div>`;
+    }
+  });
+
+  const title = approveAfter ? 'Edit & Approve' : 'Edit ' + (item.name || item.title || '');
+  const btnLabel = approveAfter ? 'Save & Approve' : 'Save';
+
+  document.getElementById('modal-container').innerHTML = `
+    <div class="modal-overlay" onclick="if(event.target===this)closeModal()">
+      <div class="modal">
+        <h2>${escHtml(title)}</h2>
+        <form id="edit-form">${fieldsHtml}</form>
+        <div class="modal-actions">
+          <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+          <button class="btn ${approveAfter ? 'btn-green' : 'btn-primary'}" onclick="saveEdit('${type}','${singular}',${id},${approveAfter})">${btnLabel}</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+async function saveEdit(type, singular, id, approveAfter) {
+  const form = document.getElementById('edit-form');
+  const data = {};
+  form.querySelectorAll('input, select, textarea').forEach(el => {
+    data[el.name] = el.value;
+  });
+  try {
+    const res = await apiPost({ action: 'update', type: singular, id, data });
+    if (!res.ok) throw new Error();
+    if (approveAfter) {
+      const res2 = await apiPost({ action: 'approve', type: singular, id });
+      if (!res2.ok) throw new Error();
+      toast('Updated and approved');
+    } else {
+      toast('Updated');
+    }
+    closeModal();
+    loadEntities(currentSubTab);
+    loadPending();
+  } catch (e) {
+    toast('Failed to save', true);
+  }
+}
+
+async function deleteEntity(singular, id) {
+  if (!confirm('Delete this entry? This cannot be undone.')) return;
+  try {
+    const res = await apiPost({ action: 'delete', type: singular, id });
+    if (!res.ok) throw new Error();
+    toast('Deleted');
+    loadEntities(currentSubTab);
+  } catch (e) { toast('Failed to delete', true); }
+}
+
+function closeModal() {
+  document.getElementById('modal-container').innerHTML = '';
+}
+
+// --- Util ---
+function escHtml(str) {
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+// Close modal on Escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+});
+</script>
+</body>
+</html>
