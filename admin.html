@@ -360,17 +360,9 @@ tr:hover { background: var(--bg-secondary); }
 
 <div class="admin-wrap">
 
-  <!-- Auth Gate -->
-  <div id="auth-gate" class="auth-gate">
-    <div class="eyebrow">Admin Access</div>
-    <h1>Mapping AI Database</h1>
-    <input type="password" id="auth-input" placeholder="Enter admin key" onkeydown="if(event.key==='Enter')authenticate()">
-    <button class="btn btn-primary" onclick="authenticate()">Enter</button>
-    <div id="auth-error" class="auth-error" style="display:none"></div>
-  </div>
+  <!-- Auth gate removed for pre-launch -->
 
-  <!-- Admin Content (hidden until auth) -->
-  <div id="admin-content" style="display:none">
+  <div id="admin-content">
     <div class="eyebrow">Internal</div>
     <h1>Database Admin</h1>
 
@@ -458,7 +450,7 @@ const FIELD_DEFS = {
   }
 };
 
-let adminKey = sessionStorage.getItem('admin_key') || '';
+let adminKey = 'mappingai-admin-2026'; // hardcoded for pre-launch
 let currentSubTab = 'people';
 let entitiesData = [];
 let sortCol = null;
@@ -491,10 +483,8 @@ async function testAuth(key) {
   }
 }
 
-// Auto-auth if key in session
-if (adminKey) {
-  testAuth(adminKey);
-}
+// Auto-load dashboard
+loadDashboard();
 
 // --- API helpers ---
 function apiFetch(path, opts = {}) {
