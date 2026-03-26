@@ -884,9 +884,10 @@ function buildFilters() {
   const container = document.getElementById('category-chips');
   container.innerHTML = '';
 
-  // If none of the new categories overlap with old active set, activate all (view changed)
+  // Activate all categories when: first load, view switch (no overlap), or explicitly empty
   const anyOverlap = allCats.some(cat => activeCategories.has(cat));
-  const activateAll = !anyOverlap || activeCategories.size === 0;
+  const activateAll = !anyOverlap || activeCategories.size === 0 || !window._filtersInitialized;
+  window._filtersInitialized = true;
 
   const newActive = new Set();
   allCats.forEach(cat => {
