@@ -753,7 +753,22 @@ function getOrgLogoUrl(name) {
 }
 
 function getPersonImageUrl(name) {
+  // First check hardcoded fallbacks, then we'll try Wikipedia API dynamically
   return PEOPLE_IMAGES[name] || null;
+}
+
+// Dynamically fetch Wikipedia thumbnail for people without hardcoded images
+const wikiImageCache = {};
+async function fetchWikiImage(name) {
+  if (wikiImageCache[name] !== undefined) return wikiImageCache[name];
+  try {
+    const res = await fetch('https://en.wikipedia.org/api/rest_v1/page/summary/' + encodeURIComponent(name));
+    if (!res.ok) { wikiImageCache[name] = null; return null; }
+    const data = await res.json();
+    const url = data.thumbnail?.source || null;
+    wikiImageCache[name] = url;
+    return url;
+  } catch { wikiImageCache[name] = null; return null; }
 }
 
 // Resource type icons (SVG data URIs for map nodes)
@@ -1401,46 +1416,74 @@ function render() {
     d._patternId = patId;
     d._imgIndex = i;
 
-    // Preload image — only create pattern if it actually loads
-    if (imgUrl) {
-      const testImg = new Image();
-      testImg.referrerPolicy = 'no-referrer';
-      testImg.onload = () => {
-        d._imgUrl = imgUrl;
-        // Create SVG pattern now that we know the image works
-        const pat = defs.append('pattern')
-          .attr('id', patId)
-          .attr('width', 1).attr('height', 1)
-          .attr('patternContentUnits', 'objectBoundingBox');
-        pat.append('rect')
-          .attr('width', 1).attr('height', 1)
-          .attr('fill', d.entityType === 'organization' ? '#fff' : getColor(d.category));
-        pat.append('image')
-          .attr('href', imgUrl)
-          .attr('width', 1).attr('height', 1)
-          .attr('preserveAspectRatio', 'xMidYMid slice');
+    // Load image — try multiple sources, add to node when one succeeds
+    function applyImage(url) {
+      d._imgUrl = url;
+      const pat = defs.append('pattern')
+        .attr('id', patId)
+        .attr('width', 1).attr('height', 1)
+        .attr('patternContentUnits', 'objectBoundingBox');
+      pat.append('rect')
+        .attr('width', 1).attr('height', 1)
+        .attr('fill', d.entityType === 'organization' ? '#fff' : getColor(d.category));
+      pat.append('image')
+        .attr('href', url)
+        .attr('width', 1).attr('height', 1)
+        .attr('preserveAspectRatio', 'xMidYMid slice');
+      const nodeEl = d3.select(nodeGroup.nodes()[i]);
+      if (nodeEl.node()) {
+        nodeEl.insert('circle', '.stance-pip')
+          .attr('class', 'node-image')
+          .attr('r', r - (d.entityType === 'organization' ? 2 : 1))
+          .attr('fill', `url(#${patId})`)
+          .attr('clip-path', `url(#${id})`);
+        nodeEl.insert('circle', '.stance-pip')
+          .attr('class', 'node-ring')
+          .attr('r', r)
+          .attr('fill', 'none')
+          .attr('stroke', getColor(d.category))
+          .attr('stroke-width', 2)
+          .attr('opacity', 0.8);
+      }
+    }
 
-        // Add the image circle to the node
-        const nodeEl = d3.select(nodeGroup.nodes()[i]);
-        if (nodeEl.node()) {
-          nodeEl.insert('circle', '.stance-pip')
-            .attr('class', 'node-image')
-            .attr('r', r - (d.entityType === 'organization' ? 2 : 1))
-            .attr('fill', `url(#${patId})`)
-            .attr('clip-path', `url(#${id})`);
-          nodeEl.insert('circle', '.stance-pip')
-            .attr('class', 'node-ring')
-            .attr('r', r)
-            .attr('fill', 'none')
-            .attr('stroke', getColor(d.category))
-            .attr('stroke-width', 2)
-            .attr('opacity', 0.8);
-        }
-      };
-      testImg.onerror = () => {
-        // Image failed — node keeps initials fallback, no broken icon
-      };
-      testImg.src = imgUrl;
+    if (d.entityType === 'person') {
+      // People: try hardcoded first, then Wikipedia API
+      if (imgUrl) {
+        const testImg = new Image();
+        testImg.referrerPolicy = 'no-referrer';
+        testImg.onload = () => applyImage(imgUrl);
+        testImg.onerror = async () => {
+          // Hardcoded URL failed — try Wikipedia API
+          const wikiUrl = await fetchWikiImage(d.name);
+          if (wikiUrl) {
+            const testImg2 = new Image();
+            testImg2.referrerPolicy = 'no-referrer';
+            testImg2.onload = () => applyImage(wikiUrl);
+            testImg2.src = wikiUrl;
+          }
+        };
+        testImg.src = imgUrl;
+      } else {
+        // No hardcoded — try Wikipedia API directly
+        fetchWikiImage(d.name).then(wikiUrl => {
+          if (wikiUrl) {
+            const testImg = new Image();
+            testImg.referrerPolicy = 'no-referrer';
+            testImg.onload = () => applyImage(wikiUrl);
+            testImg.src = wikiUrl;
+          }
+        });
+      }
+    } else if (d.entityType === 'organization' && !d.isResource) {
+      // Orgs: try Google Favicon from ORG_DOMAINS or website field
+      const domain = ORG_DOMAINS[d.name] || (d.website ? new URL(d.website).hostname : null);
+      if (domain) {
+        const logoUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+        const testImg = new Image();
+        testImg.onload = () => applyImage(logoUrl);
+        testImg.src = logoUrl;
+      }
     }
   });
 

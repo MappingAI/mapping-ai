@@ -10,31 +10,66 @@ Multi-page website with an interactive D3.js stakeholder map, crowdsourced data 
 
 ## Tech Stack
 
-- **DNS**: Cloudflare (CNAME → CloudFront)
-- **CDN + Hosting**: AWS CloudFront + S3
+All infrastructure is on AWS. No Vercel or Neon.
+
+- **DNS**: Cloudflare (CNAME flattening → CloudFront distribution)
+- **CDN**: AWS CloudFront (caches static files globally, SSL termination)
+- **Static hosting**: AWS S3 (`mapping-ai-website-561047280976` bucket, private, accessed only via CloudFront OAC)
 - **Frontend**: Static HTML/CSS/JS (no framework)
 - **Visualization**: D3.js force-directed graph with orbital cluster layout (`map.html`)
 - **Rich text**: TipTap (ProseMirror-based) for Notes fields with @mentions (`src/tiptap-notes.js`, bundled via esbuild)
-- **Backend**: AWS Lambda + API Gateway (3 functions: submit, submissions, search)
-- **Database**: Neon Postgres (6 tables — see schema below)
-- **Infrastructure**: AWS SAM (`template.yaml`)
-- **CI/CD**: GitHub Actions → npm install → build TipTap → generate map-data.json from DB → sync to S3 → invalidate CloudFront
-- **External APIs**: Google Favicons (org logos), Wikipedia (people headshots), Photon/OpenStreetMap (city search), Bluesky (handle search), Exa (data enrichment)
+- **API**: AWS API Gateway HTTP API + 3 Lambda functions (Node.js 20)
+- **Database**: AWS RDS PostgreSQL 17 (`mapping-ai-db.c9sccou2k3xe.eu-west-2.rds.amazonaws.com`, db.t4g.micro free tier, 20GB gp3)
+- **Infrastructure-as-code**: AWS SAM (`template.yaml`) — defines Lambda functions, API Gateway, S3 bucket, CloudFront distribution
+- **CI/CD**: GitHub Actions (auto-deploy on push to `main`)
+- **Data enrichment**: Exa API (web search), Anthropic API (Claude Haiku for quality classification)
+- **External APIs (client-side)**: Google Favicons (org logos), Wikipedia (people headshots), Photon/OpenStreetMap (city geocoding), Bluesky (handle search)
+
+### Why S3 + CloudFront?
+
+S3 stores the static website files (HTML, CSS, JS, map-data.json). CloudFront is the CDN that serves them globally with HTTPS, caching, and the custom domain (`mapping-ai.org`). Users never hit S3 directly — CloudFront sits in front via Origin Access Control (OAC). This is the standard AWS pattern for static site hosting.
+
+### Why RDS separate from Lambda?
+
+Lambda functions handle API requests (form submissions, search queries). They connect to RDS PostgreSQL over the network (public endpoint with security group). RDS stores the persistent relational data (people, orgs, resources, relationships). Lambda is stateless; RDS is the source of truth.
 
 ## Data Flow
 
+There are two data paths:
+
+### Path 1: Static map data (read-only, fast)
 ```
-Form submission → Lambda /submit → Postgres (status='pending')
-                                       ↓
-                              Admin approves in DB
-                                       ↓
-GitHub push → Actions: export-map-data.js → map-data.json → S3 → CloudFront
-                                       ↓
-map.html → fetch map-data.json → D3 render (client-side, no DB calls)
-contribute.html → fetch map-data.json → client-side search cache (instant autocomplete)
+GitHub push to main
+    → GitHub Actions workflow:
+        1. npm ci
+        2. npm run build:tiptap (esbuild bundles TipTap)
+        3. node scripts/export-map-data.js (queries RDS → generates map-data.json)
+        4. aws s3 sync (uploads HTML/CSS/JS/map-data.json to S3)
+        5. aws cloudfront create-invalidation (purges CDN cache)
+    → Users load map.html → fetches map-data.json from CloudFront (no DB call)
+    → contribute.html also loads map-data.json for instant client-side search/autocomplete
 ```
 
-**Key insight:** The map loads from a static JSON file, not the database. New submissions only appear after the next deploy regenerates map-data.json.
+### Path 2: Live API (form submissions, search)
+```
+User submits form on contribute.html
+    → POST to API Gateway (https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com/submit)
+    → Lambda function (api/submit.js) → INSERT into RDS PostgreSQL (status='pending')
+
+User searches in form autocomplete (if cache not loaded yet)
+    → GET /search?q=... → Lambda (api/search.js) → full-text search on RDS → results
+
+Admin approves submission
+    → Manual SQL: UPDATE people SET status='approved' WHERE id=X
+    → Next deploy regenerates map-data.json with new approved entries
+```
+
+**Key insight:** The map loads from a static JSON file on S3/CloudFront, NOT from the database. This makes the map load instantly for all users worldwide. The tradeoff: new submissions only appear on the map after the next deploy regenerates map-data.json. For manual data refresh without a deploy:
+```bash
+node scripts/export-map-data.js                           # regenerate from DB
+aws s3 cp map-data.json s3://mapping-ai-website-561047280976/  # upload to S3
+aws cloudfront create-invalidation --distribution-id E34ZXLC7CZX7XT --paths "/map-data.json"
+```
 
 ## Project Structure
 
