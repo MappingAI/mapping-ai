@@ -24,12 +24,15 @@ Resources:
     Properties:
       CorsConfiguration:
         AllowOrigins:
+          - 'https://mapping-ai.org'
+          - 'https://www.mapping-ai.org'
           - 'https://aimapping.org'
           - 'https://www.aimapping.org'
           - !Sub 'https://${WebsiteBucket}.s3.${AWS::Region}.amazonaws.com'
           - !Sub 'https://${CloudFrontDistribution.DomainName}'
         AllowHeaders:
           - Content-Type
+          - X-Admin-Key
         AllowMethods:
           - GET
           - POST
