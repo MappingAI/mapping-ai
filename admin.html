@@ -470,7 +470,7 @@ function authenticate() {
 
 async function testAuth(key) {
   try {
-    const res = await apiFetch(`/admin?action=stats&key=${encodeURIComponent(key)}`);
+    const res = await apiFetch('/admin?action=stats');
     if (!res.ok) throw new Error('Invalid key');
     document.getElementById('auth-gate').style.display = 'none';
     document.getElementById('admin-content').style.display = 'block';
@@ -484,7 +484,7 @@ async function testAuth(key) {
 }
 
 // Auto-load dashboard
-loadDashboard();
+document.addEventListener("DOMContentLoaded", () => loadDashboard());
 
 // --- API helpers ---
 function apiFetch(path, opts = {}) {
@@ -538,7 +538,7 @@ async function loadDashboard() {
   loading.style.display = 'block';
   content.style.display = 'none';
   try {
-    const res = await apiFetch(`/admin?action=stats&key=${encodeURIComponent(adminKey)}`);
+    const res = await apiFetch('/admin?action=stats');
     const data = await res.json();
     renderStats(data);
     loading.style.display = 'none';
@@ -580,7 +580,7 @@ async function loadPending() {
   empty.style.display = 'none';
   content.innerHTML = '';
   try {
-    const res = await apiFetch(`/admin?action=pending&key=${encodeURIComponent(adminKey)}`);
+    const res = await apiFetch('/admin?action=pending');
     const data = await res.json();
     const items = data.pending || data.items || data;
     loading.style.display = 'none';
@@ -749,7 +749,7 @@ async function loadEntities(type) {
   selectedIds.clear();
   updateBulkButtons();
   try {
-    const res = await apiFetch(`/admin?action=all&type=${type}&key=${encodeURIComponent(adminKey)}`);
+    const res = await apiFetch(`/admin?action=all&type=${type}`);
     const data = await res.json();
     entitiesData = data.items || data[type] || data;
     if (!Array.isArray(entitiesData)) entitiesData = [];
@@ -946,7 +946,7 @@ async function editEntity(type, singular, id, approveAfter = false) {
   if (!item) {
     // Might be from pending; try fetching all
     try {
-      const res = await apiFetch(`/admin?action=all&type=${type}&key=${encodeURIComponent(adminKey)}`);
+      const res = await apiFetch(`/admin?action=all&type=${type}`);
       const data = await res.json();
       const list = data.items || data[type] || data;
       item = (Array.isArray(list) ? list : []).find(e => e.id === id);
