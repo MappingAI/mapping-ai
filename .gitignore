@@ -5,10 +5,19 @@ node_modules/
 .aws-sam/
 submissions/
 exports/
-# Dev-only
-dev-server.js
 
-# Data files (stored in S3/DB, not git)
+# Dev-only tools
+dev-server.js
+scripts/exa-pilot.js
+
+# Data files (generated from DB during deploy, not tracked in git)
 map-data.json
 scripts/seed-test-data.js
 scripts/calc-disagreement.js
+
+# External data CSVs (stored locally, not in repo)
+data/AISafety.com_map.csv
+
+# OS files
+.DS_Store
+*.swp
