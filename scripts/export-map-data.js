@@ -21,6 +21,26 @@ async function exportMapData() {
       return clean;
     });
 
+    // Ordinal scores for 2D view axes (null = excluded from plot)
+    const STANCE_SCORES = {
+      'Accelerate': 1, 'Light-touch': 2, 'Targeted': 3,
+      'Moderate': 4, 'Restrictive': 5, 'Precautionary': 6, 'Nationalize': 7,
+    };
+    const TIMELINE_SCORES = {
+      'Already here': 1, '2-3 years': 2, '5-10 years': 3,
+      '10-25 years': 4, '25+ years or never': 5,
+    };
+    const RISK_SCORES = {
+      'Overstated': 1, 'Manageable': 2, 'Serious': 3,
+      'Catastrophic': 4, 'Existential': 5,
+    };
+    const addScores = (rows) => rows.map(row => ({
+      ...row,
+      stance_score:   STANCE_SCORES[row.regulatory_stance]  ?? null,
+      timeline_score: TIMELINE_SCORES[row.agi_timeline]     ?? null,
+      risk_score:     RISK_SCORES[row.ai_risk_level]        ?? null,
+    }));
+
     const people = await client.query(
       "SELECT * FROM people WHERE status = 'approved' ORDER BY id"
     );
@@ -51,8 +71,8 @@ async function exportMapData() {
         generated_at: new Date().toISOString(),
         note: 'TEST DATA — This dataset contains fictional entries for development purposes',
       },
-      people: stripSensitive(people.rows),
-      organizations: stripSensitive(orgs.rows),
+      people: addScores(stripSensitive(people.rows)),
+      organizations: addScores(stripSensitive(orgs.rows)),
       resources: stripSensitive(resources.rows),
       relationships: relationships.rows,
       person_organizations: personOrgs.rows,

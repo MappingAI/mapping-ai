@@ -263,10 +263,11 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
 .stance-legend-dot {
   width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
 }
-.node.dimmed circle { opacity: 0.12 !important; }
-.node.dimmed text { opacity: 0.12 !important; }
-.node.highlighted circle { opacity: 1 !important; }
+.node.dimmed { opacity: 0.2 !important; }
 .node.highlighted .node-ring { stroke-width: 3 !important; stroke: #fff !important; }
+.node-image { opacity: 0.75; }
+.node:hover .node-image,
+.node.highlighted .node-image { opacity: 1; }
 
 /* D3 */
 .cluster-label {
@@ -420,6 +421,7 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
       <button class="view-btn" data-view="people">People</button>
       <button class="view-btn" data-view="resources">Resources</button>
       <button class="view-btn active" data-view="all">All</button>
+      <button class="view-btn" data-view="2d">Plot</button>
     </div>
   </div>
   <div class="control-group" id="category-filters">
@@ -429,6 +431,35 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   <div class="control-group" id="stance-legend">
     <h3 style="display:flex;justify-content:space-between;align-items:center;">Regulatory Stance <span class="filter-reset" id="stance-reset" style="font-size:8px;text-transform:none;letter-spacing:0;color:var(--accent);cursor:pointer;font-weight:400;">select all</span></h3>
     <div class="stance-legend-items" id="stance-legend-items"></div>
+  </div>
+
+  <div class="control-group" id="axis-controls" style="display:none">
+    <h3>Dimensions</h3>
+    <div class="view-toggles" id="axis-mode-toggles">
+      <button class="view-btn" data-mode="1d">1D</button>
+      <button class="view-btn active" data-mode="2d">2D</button>
+    </div>
+    <h3 style="margin-top:12px">Entities</h3>
+    <select id="axis-entity-select" style="width:100%;padding:4px 6px;background:var(--bg-input,var(--bg-panel));color:var(--text-1);border:1px solid var(--line);border-radius:4px;font-family:var(--mono);font-size:11px;">
+      <option value="all">All</option>
+      <option value="people">People</option>
+      <option value="organizations">Orgs</option>
+    </select>
+    <h3 style="margin-top:12px">X Axis</h3>
+    <select id="axis-x-select" style="width:100%;padding:4px 6px;background:var(--bg-input,var(--bg-panel));color:var(--text-1);border:1px solid var(--line);border-radius:4px;font-family:var(--mono);font-size:11px;">
+      <option value="regulatory_stance">Regulatory Stance</option>
+      <option value="agi_timeline">AGI Timeline</option>
+      <option value="ai_risk_level">AI Risk Level</option>
+    </select>
+    <div id="axis-y-group">
+      <h3 style="margin-top:12px">Y Axis</h3>
+      <select id="axis-y-select" style="width:100%;padding:4px 6px;background:var(--bg-input,var(--bg-panel));color:var(--text-1);border:1px solid var(--line);border-radius:4px;font-family:var(--mono);font-size:11px;">
+        <option value="agi_timeline">AGI Timeline</option>
+        <option value="regulatory_stance">Regulatory Stance</option>
+        <option value="ai_risk_level">AI Risk Level</option>
+      </select>
+    </div>
+    <p id="axis-excluded-msg" style="font-size:11px;opacity:0.6;margin-top:10px;line-height:1.4;"></p>
   </div>
 </div>
 
@@ -875,6 +906,30 @@ const STANCE_ORDER = ['Accelerate','Light-touch','Targeted','Moderate','Restrict
 let activeStances = new Set(STANCE_ORDER);
 let stanceFilterActive = false; // true when user has toggled any stance off
 
+// 2D view state
+let axisMode = '2d';           // '1d' | '2d'
+let axisX = 'regulatory_stance';
+let axisY = 'agi_timeline';
+let axis2dEntityType = 'all';  // 'all' | 'people' | 'organizations'
+
+const AXES = {
+  regulatory_stance: {
+    label: 'Regulatory Stance',
+    scoreKey: 'stance_score',
+    ticks: ['Accelerate','Light-touch','Targeted','Moderate','Restrictive','Precautionary','Nationalize'],
+  },
+  agi_timeline: {
+    label: 'AGI Timeline',
+    scoreKey: 'timeline_score',
+    ticks: ['Already here','2-3 years','5-10 years','10-25 years','25+ years or never'],
+  },
+  ai_risk_level: {
+    label: 'AI Risk Level',
+    scoreKey: 'risk_score',
+    ticks: ['Overstated','Manageable','Serious','Catastrophic','Existential'],
+  },
+};
+
 // Normalize stance values like "Targeted regulation" → "Targeted"
 function getStanceColor(stance) {
   if (!stance) return null;
@@ -957,6 +1012,13 @@ function buildFilters() {
   } else if (currentView === 'resources') {
     // Resources view: show resource TYPE categories
     rawCats = [...new Set(allData.resources.map(d => d.resource_type || 'Other').filter(Boolean))];
+  } else if (currentView === '2d') {
+    // 2D view: show categories for whichever entity types are selected
+    const peopleCats = axis2dEntityType !== 'organizations'
+      ? allData.people.map(d => normalizeCategory(d.category)).filter(Boolean) : [];
+    const orgCats = axis2dEntityType !== 'people'
+      ? allData.organizations.map(d => normalizeCategory(d.category)).filter(Boolean) : [];
+    rawCats = [...new Set([...peopleCats, ...orgCats])];
   } else {
     // Orgs, All: show org SECTOR categories
     rawCats = [...new Set(allData.organizations.map(d => normalizeCategory(d.category)).filter(Boolean))];
@@ -1038,22 +1100,51 @@ function buildStanceLegend() {
 
 // Restore saved view from localStorage
 const savedView = localStorage.getItem('mapView');
-if (savedView && ['orgs','people','resources','all'].includes(savedView)) {
+if (savedView && ['orgs','people','resources','all','2d'].includes(savedView)) {
   currentView = savedView;
-  document.querySelectorAll('.view-btn').forEach(b => {
+  document.querySelectorAll('[data-view]').forEach(b => {
     b.classList.toggle('active', b.dataset.view === savedView);
   });
+  if (savedView === '2d') {
+    document.getElementById('axis-controls').style.display = '';
+    document.getElementById('stance-legend').style.display = 'none';
+  }
 }
 
-document.querySelectorAll('.view-btn').forEach(btn => {
+document.querySelectorAll('[data-view]').forEach(btn => {
   btn.addEventListener('click', () => {
-    document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('[data-view]').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     currentView = btn.dataset.view;
     localStorage.setItem('mapView', currentView);
+    const is2D = currentView === '2d';
+    document.getElementById('axis-controls').style.display = is2D ? '' : 'none';
+    document.getElementById('stance-legend').style.display = is2D ? 'none' : '';
     buildFilters(); // rebuild category chips for new view context
     render();
   });
+});
+
+// Axis mode toggle (1D / 2D)
+document.querySelectorAll('#axis-mode-toggles [data-mode]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    axisMode = btn.dataset.mode;
+    document.querySelectorAll('#axis-mode-toggles [data-mode]').forEach(b => b.classList.toggle('active', b === btn));
+    document.getElementById('axis-y-group').style.display = axisMode === '2d' ? '' : 'none';
+    if (currentView === '2d') render();
+  });
+});
+document.getElementById('axis-entity-select').addEventListener('change', e => {
+  axis2dEntityType = e.target.value;
+  if (currentView === '2d') { buildFilters(); render(); }
+});
+document.getElementById('axis-x-select').addEventListener('change', e => {
+  axisX = e.target.value;
+  if (currentView === '2d') render();
+});
+document.getElementById('axis-y-select').addEventListener('change', e => {
+  axisY = e.target.value;
+  if (currentView === '2d') render();
 });
 
 function passesStanceFilter(d) {
@@ -1242,6 +1333,8 @@ function render() {
     svg.transition().duration(500).call(zoomBehavior.transform, d3.zoomIdentity);
   };
 
+  if (currentView === '2d') { render2D(svg, g, width, height); return; }
+
   const nodes = getVisibleNodes();
   document.getElementById('entity-count').textContent = `${nodes.length} entities`;
   if (nodes.length === 0) return;
@@ -1383,7 +1476,13 @@ function render() {
     .data(nodes)
     .join('g')
     .attr('class', 'node')
-    .on('click', (event, d) => { event.stopPropagation(); showDetail(d, nodes); })
+    .on('click', (event, d) => {
+      event.stopPropagation();
+      showDetail(d, nodes);
+      const k = 3;
+      const t = d3.zoomIdentity.translate(width / 2 - k * d.x, height / 2 - k * d.y).scale(k);
+      svg.transition().duration(500).call(zoomBehavior.transform, t);
+    })
     .on('mouseenter', function(event, d) {
       d3.select(this).select('.node-bg').attr('opacity', d.isResource ? 0.3 : 1);
       d3.select(this).select('.node-ring').attr('stroke-width', 3);
@@ -1677,6 +1776,299 @@ function forceCluster(centers, strength) {
   return force;
 }
 
+
+function render2D(svg, g, width, height) {
+  const CONTROLS_WIDTH = 280;
+  const margin = { top: 60, right: 280, bottom: 70, left: 130 };
+  const plotW = width - CONTROLS_WIDTH - margin.left - margin.right;
+  const plotH = height - margin.top - margin.bottom;
+
+  const xAxisDef = AXES[axisX];
+  const yAxisDef = axisMode === '2d' ? AXES[axisY] : null;
+
+  // Build candidate nodes: people + orgs passing entity type and category filter
+  const candidates = [
+    ...(axis2dEntityType !== 'organizations' ? allData.people.map(d => ({ ...d, entityType: 'person', submissionCount: d.submission_count || 1 })) : []),
+    ...(axis2dEntityType !== 'people' ? allData.organizations.map(d => ({ ...d, entityType: 'organization', submissionCount: d.submission_count || 1 })) : []),
+  ].filter(d => {
+    if (!d.category) return false;
+    if (activeCategories.size === 0) return true;
+    return activeCategories.has(d.category) || activeCategories.has(normalizeCategory(d.category));
+  });
+
+  // Filter to nodes with valid scores on all selected axes
+  const nodes = candidates.filter(d => {
+    if (d[xAxisDef.scoreKey] == null) return false;
+    if (yAxisDef && d[yAxisDef.scoreKey] == null) return false;
+    return true;
+  }).map(d => ({ ...d }));
+  // Dynamic radius: fewer nodes → bigger circles, more → smaller
+  const nodeRadius = Math.max(7, Math.min(14, Math.round(Math.sqrt(2500 / Math.max(nodes.length, 1)))));
+  nodes.forEach(d => { d.radius = nodeRadius; });
+
+  // Update excluded count message
+  const excluded = candidates.length - nodes.length;
+  document.getElementById('axis-excluded-msg').textContent =
+    `${nodes.length} of ${candidates.length} shown` +
+    (excluded > 0 ? ` (${excluded} excluded — missing data)` : '');
+
+  document.getElementById('entity-count').textContent = `${nodes.length} entities`;
+
+  if (nodes.length === 0) return;
+
+  // Scale functions: score (1-based integer) → pixel position
+  const xTicks = xAxisDef.ticks;
+  const xScale = score => CONTROLS_WIDTH + margin.left + (score - 1) / (xTicks.length - 1) * plotW;
+
+  let yScale;
+  if (yAxisDef) {
+    const yTicks = yAxisDef.ticks;
+    // Higher score = top of chart
+    yScale = score => margin.top + (1 - (score - 1) / (yTicks.length - 1)) * plotH;
+  } else {
+    // 1D: all nodes target vertical center
+    yScale = () => height / 2;
+  }
+
+  // Set target positions
+  nodes.forEach(d => {
+    d.targetX = xScale(d[xAxisDef.scoreKey]);
+    d.targetY = yAxisDef ? yScale(d[yAxisDef.scoreKey]) : yScale();
+  });
+
+  // Draw axes
+  drawAxes2D(g, xAxisDef, yAxisDef, xScale, yScale, CONTROLS_WIDTH, margin, plotW, plotH, width, height);
+
+  // Node groups
+  const nodeGroup = g.selectAll('.node')
+    .data(nodes)
+    .join('g')
+    .attr('class', 'node')
+    .on('click', (event, d) => {
+      event.stopPropagation();
+      showDetail(d, nodes);
+      const k = 3;
+      const t = d3.zoomIdentity.translate(width / 2 - k * d.x, height / 2 - k * d.y).scale(k);
+      svg.transition().duration(500).call(zoomBehavior.transform, t);
+    })
+    .on('mouseenter', function(event, d) {
+      d3.select(this).select('.node-bg').attr('opacity', 1);
+      d3.select(this).select('.node-image').attr('opacity', 1);
+      showTooltip(event, d);
+    })
+    .on('mousemove', (event) => moveTooltip(event))
+    .on('mouseleave', function(event, d) {
+      const baseOpacity = d.entityType === 'organization' ? 0.9 : 0.7;
+      d3.select(this).select('.node-bg').attr('opacity', baseOpacity);
+      d3.select(this).select('.node-image').attr('opacity', baseOpacity);
+      hideTooltip();
+    })
+    .call(d3.drag()
+      .on('start', (event, d) => { if (!event.active) simulation.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
+      .on('drag', (event, d) => { d.fx = event.x; d.fy = event.y; })
+      .on('end', (event, d) => { if (!event.active) simulation.alphaTarget(0); d.fx = null; d.fy = null; }));
+
+  // Background circles (category color)
+  nodeGroup.append('circle')
+    .attr('class', 'node-bg')
+    .attr('r', d => d.radius)
+    .attr('fill', d => getColor(normalizeCategory(d.category)))
+    .attr('stroke', d => d.entityType === 'organization'
+      ? d3.color(getColor(normalizeCategory(d.category))).brighter(0.8) : 'none')
+    .attr('stroke-width', d => d.entityType === 'organization' ? 1.5 : 0)
+    .attr('opacity', d => d.entityType === 'organization' ? 0.9 : 0.7);
+
+  // Initials fallback text
+  nodeGroup.append('text')
+    .attr('text-anchor', 'middle')
+    .attr('dy', '0.35em')
+    .attr('font-family', 'var(--mono)')
+    .attr('font-size', '5px')
+    .attr('fill', '#fff')
+    .attr('opacity', 0.9)
+    .attr('pointer-events', 'none')
+    .text(d => {
+      const parts = (d.name || '').split(/[\s]+/);
+      return parts.length >= 2
+        ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
+        : (d.name || '').slice(0, 2).toUpperCase();
+    });
+
+  // Stance pip
+  nodeGroup.filter(d => getStanceColor(d.regulatory_stance))
+    .append('circle')
+    .attr('class', 'stance-pip')
+    .attr('cx', d => d.radius * 0.65)
+    .attr('cy', d => d.radius * 0.65)
+    .attr('r', d => Math.max(2, d.radius * 0.2))
+    .attr('fill', d => getStanceColor(d.regulatory_stance))
+    .attr('stroke', 'var(--bg-page)')
+    .attr('stroke-width', 1.5)
+    .attr('pointer-events', 'none');
+
+  // Submission count ring (5+ submissions)
+  nodeGroup.filter(d => (d.submissionCount || 0) >= 5)
+    .append('circle')
+    .attr('r', d => d.radius + 4)
+    .attr('fill', 'none')
+    .attr('stroke', '#d4a574')
+    .attr('stroke-dasharray', '2,2')
+    .attr('stroke-width', 1.5)
+    .attr('pointer-events', 'none');
+
+  // Async image loading (same pattern as main render)
+  const defs = svg.append('defs');
+  nodes.forEach((d, i) => {
+    const r = d.radius;
+    const clipId = `clip2d-${i}`;
+    const patId = `img2d-${i}`;
+    defs.append('clipPath').attr('id', clipId).append('circle').attr('r', r);
+    d._clipId2d = clipId;
+    d._patId2d = patId;
+    d._imgIdx2d = i;
+
+    function applyImage(url) {
+      const pat = defs.append('pattern')
+        .attr('id', patId).attr('width', 1).attr('height', 1)
+        .attr('patternContentUnits', 'objectBoundingBox');
+      pat.append('rect').attr('width', 1).attr('height', 1)
+        .attr('fill', d.entityType === 'organization' ? '#fff' : getColor(normalizeCategory(d.category)));
+      pat.append('image').attr('href', url).attr('width', 1).attr('height', 1)
+        .attr('preserveAspectRatio', 'xMidYMid slice');
+      const nodeEl = d3.select(nodeGroup.nodes()[i]);
+      if (nodeEl.node()) {
+        nodeEl.insert('circle', '.stance-pip')
+          .attr('class', 'node-image')
+          .attr('r', r - (d.entityType === 'organization' ? 2 : 1))
+          .attr('fill', `url(#${patId})`)
+          .attr('clip-path', `url(#${clipId})`);
+        nodeEl.insert('circle', '.stance-pip')
+          .attr('r', r).attr('fill', 'none')
+          .attr('stroke', getColor(normalizeCategory(d.category)))
+          .attr('stroke-width', 2).attr('opacity', 0.8);
+      }
+    }
+
+    if (d.entityType === 'person') {
+      const imgUrl = getImageUrl(d);
+      if (imgUrl) {
+        const img = new Image();
+        img.referrerPolicy = 'no-referrer';
+        img.onload = () => applyImage(imgUrl);
+        img.onerror = async () => {
+          const wikiUrl = await fetchWikiImage(d.name);
+          if (wikiUrl) { const img2 = new Image(); img2.referrerPolicy = 'no-referrer'; img2.onload = () => applyImage(wikiUrl); img2.src = wikiUrl; }
+        };
+        img.src = imgUrl;
+      } else {
+        fetchWikiImage(d.name).then(wikiUrl => {
+          if (wikiUrl) { const img = new Image(); img.referrerPolicy = 'no-referrer'; img.onload = () => applyImage(wikiUrl); img.src = wikiUrl; }
+        });
+      }
+    } else if (d.entityType === 'organization') {
+      let domain;
+      try { domain = ORG_DOMAINS[d.name] || (d.website ? new URL(d.website).hostname.replace('www.', '') : null); } catch {}
+      if (domain) {
+        const s3Url = `https://d3fo5mm9fktie3.cloudfront.net/logos/${domain}.png`;
+        const fbUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+        const img = new Image();
+        img.onload = () => applyImage(s3Url);
+        img.onerror = () => { const fb = new Image(); fb.onload = () => applyImage(fbUrl); fb.src = fbUrl; };
+        img.src = s3Url;
+      }
+    }
+  });
+
+  // Simulation: beeswarm — strong pull toward target (axis position), collision for separation
+  if (simulation) simulation.stop();
+  simulation = d3.forceSimulation(nodes)
+    .force('x', d3.forceX(d => d.targetX).strength(0.8))
+    .force('y', d3.forceY(d => d.targetY).strength(yAxisDef ? 0.8 : 0.02))
+    .force('collision', d3.forceCollide(d => d.radius + 2).strength(0.9))
+    .alpha(0.6)
+    .alphaDecay(0.04)
+    .on('tick', () => { nodeGroup.attr('transform', d => `translate(${d.x},${d.y})`); });
+
+  svg.on('click', () => document.getElementById('detail-panel').classList.remove('open'));
+}
+
+function drawAxes2D(g, xAxisDef, yAxisDef, xScale, yScale, controlsWidth, margin, plotW, plotH, width, height) {
+  g.selectAll('.axis-2d').remove();
+  const ax = g.append('g').attr('class', 'axis-2d');
+  const xTicks = xAxisDef.ticks;
+
+  // X axis baseline
+  ax.append('line')
+    .attr('x1', controlsWidth + margin.left).attr('x2', controlsWidth + margin.left + plotW)
+    .attr('y1', height - margin.bottom).attr('y2', height - margin.bottom)
+    .attr('stroke', 'var(--text-3,#888)').attr('stroke-width', 1);
+
+  // X ticks, labels, gridlines
+  xTicks.forEach((label, i) => {
+    const x = xScale(i + 1);
+    ax.append('line')
+      .attr('x1', x).attr('x2', x)
+      .attr('y1', height - margin.bottom).attr('y2', height - margin.bottom + 5)
+      .attr('stroke', 'var(--text-3,#888)');
+    ax.append('text')
+      .attr('x', x).attr('y', height - margin.bottom + 17)
+      .attr('text-anchor', 'middle').attr('font-size', 10)
+      .attr('font-family', 'var(--mono)').attr('fill', 'var(--text-2,#aaa)')
+      .text(label);
+    ax.append('line')
+      .attr('x1', x).attr('x2', x)
+      .attr('y1', margin.top).attr('y2', height - margin.bottom)
+      .attr('stroke', 'var(--text-3,#888)').attr('stroke-opacity', 0.12)
+      .attr('stroke-dasharray', '3,3');
+  });
+
+  // X axis label
+  ax.append('text')
+    .attr('x', controlsWidth + margin.left + plotW / 2)
+    .attr('y', height - margin.bottom + 40)
+    .attr('text-anchor', 'middle').attr('font-size', 12).attr('font-weight', 600)
+    .attr('font-family', 'var(--mono)').attr('fill', 'var(--text-1,#eee)')
+    .text(xAxisDef.label);
+
+  if (!yAxisDef) return; // 1D: no Y axis
+
+  const yTicks = yAxisDef.ticks;
+
+  // Y axis baseline
+  ax.append('line')
+    .attr('x1', controlsWidth + margin.left).attr('x2', controlsWidth + margin.left)
+    .attr('y1', margin.top).attr('y2', height - margin.bottom)
+    .attr('stroke', 'var(--text-3,#888)').attr('stroke-width', 1);
+
+  // Y ticks, labels, gridlines
+  yTicks.forEach((label, i) => {
+    const y = yScale(i + 1);
+    ax.append('line')
+      .attr('x1', controlsWidth + margin.left - 5).attr('x2', controlsWidth + margin.left)
+      .attr('y1', y).attr('y2', y)
+      .attr('stroke', 'var(--text-3,#888)');
+    ax.append('text')
+      .attr('x', controlsWidth + margin.left - 9).attr('y', y + 4)
+      .attr('text-anchor', 'end').attr('font-size', 10)
+      .attr('font-family', 'var(--mono)').attr('fill', 'var(--text-2,#aaa)')
+      .text(label);
+    ax.append('line')
+      .attr('x1', controlsWidth + margin.left).attr('x2', controlsWidth + margin.left + plotW)
+      .attr('y1', y).attr('y2', y)
+      .attr('stroke', 'var(--text-3,#888)').attr('stroke-opacity', 0.12)
+      .attr('stroke-dasharray', '3,3');
+  });
+
+  // Y axis label (rotated)
+  ax.append('text')
+    .attr('transform', `rotate(-90)`)
+    .attr('x', -(margin.top + plotH / 2))
+    .attr('y', controlsWidth + margin.left - 118)
+    .attr('text-anchor', 'middle').attr('font-size', 12).attr('font-weight', 600)
+    .attr('font-family', 'var(--mono)').attr('fill', 'var(--text-1,#eee)')
+    .text(yAxisDef.label);
+}
+
 // Tooltip
 const tooltip = document.getElementById('tooltip');
 function showTooltip(event, d) {
@@ -1899,6 +2291,11 @@ function showDetail(d, allNodes) {
 
 document.getElementById('detail-close').addEventListener('click', () => {
   document.getElementById('detail-panel').classList.remove('open');
+  if (zoomBehavior) {
+    d3.select('#map-container').select('svg')
+      .transition().duration(500)
+      .call(zoomBehavior.transform, d3.zoomIdentity);
+  }
 });
 
 // Nav
@@ -2043,8 +2440,10 @@ searchInput.addEventListener('keydown', (e) => {
 });
 
 document.addEventListener('click', (e) => {
+  if (!e.isTrusted) return; // ignore programmatic .click() calls (e.g. view switching)
   if (!e.target.closest('.search-box')) {
-    searchResults.classList.remove('visible');
+    clearSearch();
+    searchInput.value = '';
   }
 });
 
@@ -2056,10 +2455,13 @@ function doSearch() {
   }
 
   const query = expandQuery(val);
+  const includeOrgs     = currentView !== 'people' && currentView !== 'resources';
+  const includePeople   = currentView !== 'orgs'   && currentView !== 'resources';
+  const includeResources = currentView !== 'orgs'  && currentView !== 'people';
   const allEntities = [
-    ...allData.organizations.map(d => ({ ...d, entityType: 'organization' })),
-    ...allData.people.filter(d => d.category).map(d => ({ ...d, entityType: 'person' })),
-    ...(allData.resources || []).map(d => ({ ...d, name: d.title, entityType: 'resource' })),
+    ...(includeOrgs     ? allData.organizations.map(d => ({ ...d, entityType: 'organization' })) : []),
+    ...(includePeople   ? allData.people.filter(d => d.category).map(d => ({ ...d, entityType: 'person' })) : []),
+    ...(includeResources ? (allData.resources || []).map(d => ({ ...d, name: d.title, entityType: 'resource' })) : []),
   ];
 
   const scored = allEntities
@@ -2091,6 +2493,7 @@ function doSearch() {
     `;
     div.addEventListener('click', () => {
       searchResults.classList.remove('visible');
+      searchInput.value = d.name;
       // Switch view if needed
       if (d.entityType === 'resource' && currentView !== 'resources') {
         document.querySelector('[data-view="resources"]').click();
@@ -2105,17 +2508,24 @@ function doSearch() {
         const target = allNodes.find(n => n.name === d.name);
         if (target) {
           showDetail(target, allNodes);
-          // Zoom to node
           const svg = d3.select('#map-container svg');
           const mapEl = document.getElementById('map-container');
+          const k = 3;
           svg.transition().duration(500).call(
             zoomBehavior.transform,
             d3.zoomIdentity.translate(
-              mapEl.clientWidth / 2 - target.x,
-              mapEl.clientHeight / 2 - target.y
-            ).scale(1.5)
+              mapEl.clientWidth / 2 - k * target.x,
+              mapEl.clientHeight / 2 - k * target.y
+            ).scale(k)
           );
           highlightNodes([d.name]);
+        } else {
+          // Entity not rendered on current view — clear dimming and show inline message
+          highlightNodes([]);
+          const viewLabel = currentView === '2d' ? 'this plot (missing axis data)' : 'this view';
+          searchResults.innerHTML = `<div class="search-match-hint">${d.name} isn't shown on ${viewLabel}</div>`;
+          searchResults.classList.add('visible');
+          setTimeout(() => searchResults.classList.remove('visible'), 3500);
         }
       }, 100);
     });
@@ -2135,9 +2545,14 @@ function doSearch() {
 
 function highlightNodes(names) {
   const nameSet = new Set(names);
+  // Only apply dimming if at least one named entity is actually rendered on screen.
+  // Prevents every visible node getting dimmed when the match is off the current view.
+  const anyVisible = names.length > 0 &&
+    d3.selectAll('.node').data().some(d => nameSet.has(d.name));
+
   d3.selectAll('.node').each(function(d) {
     const el = d3.select(this);
-    if (names.length === 0) {
+    if (!anyVisible) {
       el.classed('dimmed', false).classed('highlighted', false);
     } else if (nameSet.has(d.name)) {
       el.classed('dimmed', false).classed('highlighted', true);
@@ -2145,10 +2560,9 @@ function highlightNodes(names) {
       el.classed('dimmed', true).classed('highlighted', false);
     }
   });
-  // Also dim cluster labels and backgrounds
-  d3.selectAll('.cluster-bg').attr('opacity', names.length > 0 ? 0.02 : 0.06);
-  d3.selectAll('.cluster-label-bg').attr('opacity', names.length > 0 ? 0.02 : 0.85);
-  d3.selectAll('.cluster-label').attr('opacity', names.length > 0 ? 0.05 : 1);
+  d3.selectAll('.cluster-bg').attr('opacity', anyVisible ? 0.02 : 0.06);
+  d3.selectAll('.cluster-label-bg').attr('opacity', anyVisible ? 0.02 : 0.85);
+  d3.selectAll('.cluster-label').attr('opacity', anyVisible ? 0.05 : 1);
 }
 
 function clearSearch() {
