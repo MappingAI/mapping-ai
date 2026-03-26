@@ -36,13 +36,13 @@ This document covers architecture, local development, deployment, and the API fo
                                          │ pg (node-postgres)
                                          ▼
                         ┌─────────────────────────────────┐
-                        │  Neon Postgres                  │
+                        │  AWS RDS Postgres               │
                         │  Tables: people, organizations, │
                         │          resources              │
                         └─────────────────────────────────┘
 ```
 
-Frontend is fully static — no build step. Backend is serverless via AWS Lambda, deployed with AWS SAM. Database is Neon Postgres (serverless Postgres). All infrastructure defined in `template.yaml`.
+Frontend is fully static — no build step. Backend is serverless via AWS Lambda, deployed with AWS SAM. Database is AWS RDS Postgres (eu-west-2). All infrastructure defined in `template.yaml`.
 
 ---
 
@@ -58,7 +58,7 @@ Frontend is fully static — no build step. Backend is serverless via AWS Lambda
 | Fonts | EB Garamond (serif) + DM Mono (mono) via Google Fonts |
 | Backend | AWS Lambda (Node.js 20) + API Gateway (HTTP API) |
 | Infrastructure-as-code | AWS SAM (`template.yaml`) |
-| Database | Neon Postgres (serverless) |
+| Database | AWS RDS Postgres (eu-west-2) |
 | DB client | `pg` (node-postgres v8) |
 | CI/CD | GitHub Actions (auto-deploy on push to main) |
 
@@ -72,7 +72,6 @@ mapping-ai/
 ├── theoryofchange.html     # Theory of change
 ├── contribute.html         # Submission forms (person, org, resource)
 ├── map.html                # Interactive stakeholder map (D3.js)
-├── map-data.json           # Map data export (regenerate with export-map-data.js)
 ├── about.html              # Team and project info
 ├── assets/
 │   ├── css/
@@ -147,7 +146,7 @@ Tests all validation logic in the Lambda handlers without requiring a database c
 
 | Variable | Where set | How to obtain |
 |----------|-----------|---------------|
-| `DATABASE_URL` | AWS Lambda (via `sam deploy`) | Neon dashboard → console.neon.tech → Connection Details |
+| `DATABASE_URL` | AWS Lambda (via `sam deploy`) + GitHub Secrets | RDS connection string — see `.env.example` for format |
 
 Copy `.env.example` to `.env` for local script usage:
 
@@ -164,13 +163,13 @@ cp .env.example .env
 
 ### Provider
 
-[Neon](https://neon.tech) — serverless Postgres. Connection string format:
+AWS RDS Postgres (eu-west-2). Connection string format:
 
 ```
-postgresql://user:password@host/dbname?sslmode=require
+postgresql://user:password@mapping-ai-db.c9sccou2k3xe.eu-west-2.rds.amazonaws.com:5432/mappingai
 ```
 
-Get the connection string from `console.neon.tech` → your project → Connection Details.
+Credentials are managed separately — never committed to the repo.
 
 ### Schema
 
@@ -264,7 +263,7 @@ This deploys both the backend (Lambda + API Gateway) AND frontend hosting (S3 + 
 
 ```bash
 sam build
-sam deploy --guided --parameter-overrides "DatabaseUrl=<your_neon_connection_string>"
+sam deploy --guided --parameter-overrides "DatabaseUrl=<your_rds_connection_string>"
 ```
 
 Follow the prompts. Recommended values:
@@ -311,63 +310,24 @@ aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/
 ### Subsequent backend deploys
 
 ```bash
-sam build && sam deploy --parameter-overrides "DatabaseUrl=<connection_string>"
+source .env && sam build && sam deploy --parameter-overrides "DatabaseUrl=$DATABASE_URL"
 ```
 
 > **Security:** Never put `DatabaseUrl` in `samconfig.toml` or any tracked file. Always pass it on the command line.
 
 ### GitHub Actions (auto-deploy)
 
-Create `.github/workflows/deploy.yml` to auto-deploy static files on push to `main`:
-
-```yaml
-name: Deploy to S3
-
-on:
-  push:
-    branches: [main]
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-west-2
-
-      - name: Sync to S3
-        run: |
-          aws s3 sync . s3://${{ secrets.S3_BUCKET_NAME }} \
-            --exclude ".*" \
-            --exclude "node_modules/*" \
-            --exclude "api/*" \
-            --exclude "scripts/*" \
-            --exclude "data/*" \
-            --exclude "exports/*" \
-            --exclude "*.yaml" \
-            --exclude "*.toml" \
-            --exclude "*.json" \
-            --exclude "*.mjs" \
-            --exclude "*.md" \
-            --delete
-
-      - name: Invalidate CloudFront
-        run: |
-          aws cloudfront create-invalidation \
-            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
-            --paths "/*"
-```
+On every push to `main`, `.github/workflows/deploy.yml` automatically:
+1. Generates `map-data.json` from RDS (via `export-map-data.js`)
+2. Syncs all static files to S3
+3. Invalidates the CloudFront cache
 
 **GitHub Secrets required** (Settings → Secrets → Actions):
 - `AWS_ACCESS_KEY_ID`
 - `AWS_SECRET_ACCESS_KEY`
 - `S3_BUCKET_NAME`
 - `CLOUDFRONT_DISTRIBUTION_ID`
+- `DATABASE_URL` — RDS connection string (used by the export step)
 
 ---
 
@@ -506,7 +466,7 @@ Use conventional commit prefixes:
 
 ## Security Practices
 
-- **No secrets in tracked files.** `DATABASE_URL` is passed to Lambda at deploy time via `--parameter-overrides`, never stored in `samconfig.toml` or any committed file.
+- **No secrets in tracked files.** `DATABASE_URL` is passed to Lambda at deploy time via `--parameter-overrides` and stored in GitHub Secrets for CI/CD — never stored in `samconfig.toml` or any committed file.
 - **`.env` is gitignored.** Copy `.env.example` to `.env` locally.
 - **`submissions/` and `exports/` are gitignored.** Submission data and CSV exports must never be committed to the repo.
 - **`is_self_submission` flag** is tracked in the DB for moderation context but not displayed publicly.
