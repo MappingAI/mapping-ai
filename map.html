@@ -970,8 +970,10 @@ function buildFilters() {
 
   // Activate all categories when: first load, view switch (no overlap), or explicitly empty
   const anyOverlap = allCats.some(cat => activeCategories.has(cat));
-  const activateAll = !anyOverlap || activeCategories.size === 0 || !window._filtersInitialized;
-  window._filtersInitialized = true;
+  // Always activate all on first load or when view changes (categories shift completely)
+  const viewChanged = window._lastFilterView !== currentView;
+  const activateAll = viewChanged || !anyOverlap || activeCategories.size === 0;
+  window._lastFilterView = currentView;
 
   const newActive = new Set();
   allCats.forEach(cat => {
@@ -1725,9 +1727,21 @@ function showDetail(d, allNodes) {
     addField('Bluesky', d.bluesky ? `<a href="https://bsky.app/profile/${d.bluesky.replace('@', '')}" target="_blank" rel="noopener">${d.bluesky}</a>` : null);
     addField('Notes', d.notes);
   } else if (d.entityType === 'resource') {
-    addField('Author', d.author);
+    // Make author clickable if they're in our people database
+    if (d.author) {
+      const authorNames = d.author.split(/,|&| and /).map(s => s.trim()).filter(Boolean);
+      const authorLinks = authorNames.map(name => {
+        const person = allData.people.find(p => p.name.toLowerCase() === name.toLowerCase() ||
+          name.toLowerCase().includes(p.name.toLowerCase()) || p.name.toLowerCase().includes(name.toLowerCase()));
+        if (person) {
+          return `<a href="#" class="detail-link" data-name="${person.name}" style="color:var(--accent);cursor:pointer;">${name}</a>`;
+        }
+        return name;
+      });
+      addField('Author', authorLinks.join(', '));
+    }
     addField('Type', d.resource_type ? `${RESOURCE_TYPE_LABELS[d.resource_type] || ''} ${d.resource_type}` : null);
-    addField('URL', d.url ? `<a href="${d.url}" target="_blank">${d.url}</a>` : null);
+    addField('URL', d.url ? `<a href="${d.url}" target="_blank" rel="noopener" style="word-break:break-all;">${d.url.length > 50 ? d.url.substring(0, 50) + '...' : d.url}</a>` : null);
     addField('Year', d.year);
     addField('Category', d.category);
     addField('Key Argument', d.key_argument);
@@ -1754,17 +1768,88 @@ function showDetail(d, allNodes) {
     fields = '<div class="detail-field"><span style="color:var(--text-3); font-style:italic;">No additional details yet. <a href="/contribute.html" style="color:var(--accent);">Contribute info</a></span></div>';
   }
 
-  // Affiliated people/orgs
+  // Build linked entities from all data sources
   let affiliated = '';
-  const links = inferredLinks.filter(l =>
-    l.personName === d.name || l.orgName === d.name
-  );
-  if (links.length > 0) {
-    const items = links.map(l => {
-      const linkedName = l.personName === d.name ? l.orgName : l.personName;
-      return `<div class="affiliated-item" data-name="${linkedName}">${linkedName}</div>`;
-    }).join('');
-    affiliated = `<div class="detail-affiliated"><h4>Affiliated</h4>${items}</div>`;
+  const linkedItems = [];
+
+  // From inferredLinks (person-org name matching)
+  inferredLinks.forEach(l => {
+    if (l.personName === d.name) linkedItems.push({ name: l.orgName, type: 'org', rel: 'affiliated' });
+    if (l.orgName === d.name) linkedItems.push({ name: l.personName, type: 'person', rel: 'affiliated' });
+  });
+
+  // From relationships table
+  if (allData.relationships) {
+    const entityKey = d.entityType === 'resource' ? 'resource' : d.entityType;
+    allData.relationships.forEach(rel => {
+      let linkedName = null, linkedType = null, relType = rel.relationship_type;
+      if (rel.source_type === entityKey && rel.source_id === d.id) {
+        // This entity is the source — find the target
+        if (rel.target_type === 'person') {
+          const p = allData.people.find(x => x.id === rel.target_id);
+          if (p) { linkedName = p.name; linkedType = 'person'; }
+        } else if (rel.target_type === 'organization') {
+          const o = allData.organizations.find(x => x.id === rel.target_id);
+          if (o) { linkedName = o.name; linkedType = 'org'; }
+        } else if (rel.target_type === 'resource') {
+          const r = allData.resources.find(x => x.id === rel.target_id);
+          if (r) { linkedName = r.title; linkedType = 'resource'; }
+        }
+      } else if (rel.target_type === entityKey && rel.target_id === d.id) {
+        // This entity is the target — find the source
+        if (rel.source_type === 'person') {
+          const p = allData.people.find(x => x.id === rel.source_id);
+          if (p) { linkedName = p.name; linkedType = 'person'; }
+        } else if (rel.source_type === 'organization') {
+          const o = allData.organizations.find(x => x.id === rel.source_id);
+          if (o) { linkedName = o.name; linkedType = 'org'; }
+        } else if (rel.source_type === 'resource') {
+          const r = allData.resources.find(x => x.id === rel.source_id);
+          if (r) { linkedName = r.title; linkedType = 'resource'; }
+        }
+      }
+      if (linkedName && !linkedItems.some(x => x.name === linkedName)) {
+        linkedItems.push({ name: linkedName, type: linkedType, rel: relType });
+      }
+    });
+  }
+
+  // From person_organizations
+  if (allData.person_organizations) {
+    if (d.entityType === 'person') {
+      allData.person_organizations.filter(po => po.person_id === d.id).forEach(po => {
+        const org = allData.organizations.find(o => o.id === po.organization_id);
+        if (org && !linkedItems.some(x => x.name === org.name)) {
+          linkedItems.push({ name: org.name, type: 'org', rel: po.role || 'affiliated' });
+        }
+      });
+    } else if (d.entityType === 'organization') {
+      allData.person_organizations.filter(po => po.organization_id === d.id).forEach(po => {
+        const person = allData.people.find(p => p.id === po.person_id);
+        if (person && !linkedItems.some(x => x.name === person.name)) {
+          linkedItems.push({ name: person.name, type: 'person', rel: po.role || 'affiliated' });
+        }
+      });
+    }
+  }
+
+  if (linkedItems.length > 0) {
+    // Group by type
+    const byType = {};
+    linkedItems.forEach(item => {
+      const label = item.type === 'resource' ? 'Resources' : item.type === 'person' ? 'People' : 'Organizations';
+      if (!byType[label]) byType[label] = [];
+      byType[label].push(item);
+    });
+    let sections = '';
+    for (const [label, items] of Object.entries(byType)) {
+      const itemsHtml = items.map(item => {
+        const relLabel = item.rel && item.rel !== 'affiliated' ? ` <span style="color:var(--text-3);font-size:10px;">(${item.rel.replace(/_/g, ' ')})</span>` : '';
+        return `<div class="affiliated-item" data-name="${item.name}">${item.name}${relLabel}</div>`;
+      }).join('');
+      sections += `<h4 style="margin-top:0.5rem;">${label}</h4>${itemsHtml}`;
+    }
+    affiliated = `<div class="detail-affiliated">${sections}</div>`;
   }
 
   const imgUrl = getImageUrl(d);
@@ -1781,12 +1866,21 @@ function showDetail(d, allNodes) {
     ${affiliated}
   `;
 
-  // Click affiliated items to navigate
-  content.querySelectorAll('.affiliated-item').forEach(el => {
-    el.addEventListener('click', () => {
+  // Click affiliated items and author links to navigate
+  content.querySelectorAll('.affiliated-item, .detail-link').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
       const name = el.dataset.name;
-      const target = allNodes.find(n => n.name === name);
-      if (target) showDetail(target, allNodes);
+      // Search in all entity types
+      const target = allNodes.find(n => n.name === name) ||
+        allData.people.find(p => p.name === name) ||
+        allData.organizations.find(o => o.name === name) ||
+        allData.resources.find(r => r.title === name);
+      if (target) {
+        // If it's a different entity type that's not currently visible, load from allData
+        const entityData = { ...target, entityType: target.entityType || (target.title ? 'resource' : target.website !== undefined ? 'organization' : 'person'), name: target.name || target.title };
+        showDetail(entityData, allNodes);
+      }
     });
   });
 
