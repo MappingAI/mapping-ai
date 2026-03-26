@@ -409,7 +409,7 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
 <div class="controls">
   <div class="control-group" style="position:relative; z-index:100;">
     <div class="search-box">
-      <span class="search-icon">&#9906;</span>
+      <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       <input class="search-input" id="search-input" type="text" placeholder="Search entities..." autocomplete="off">
       <div class="search-results" id="search-results"></div>
     </div>
@@ -1057,11 +1057,13 @@ function buildFilters() {
         activeCategories.add(cat);
         chip.classList.add('active');
       }
+      updateCategoryResetBtn();
       render();
     });
     container.appendChild(chip);
   });
   activeCategories = newActive;
+  updateCategoryResetBtn();
 }
 
 function buildStanceLegend() {
@@ -1079,6 +1081,7 @@ function buildStanceLegend() {
         item.classList.remove('inactive');
       }
       stanceFilterActive = activeStances.size < STANCE_ORDER.length;
+      updateStanceResetBtn();
       render();
     });
     container.appendChild(item);
@@ -1093,9 +1096,11 @@ function buildStanceLegend() {
     noStance.dataset.active = active ? 'false' : 'true';
     noStance.classList.toggle('inactive');
     stanceFilterActive = true;
+    updateStanceResetBtn();
     render();
   });
   container.appendChild(noStance);
+  updateStanceResetBtn();
 }
 
 // Restore saved view from localStorage
@@ -1109,6 +1114,8 @@ if (savedView && ['orgs','people','resources','all','2d'].includes(savedView)) {
     document.getElementById('axis-controls').style.display = '';
     document.getElementById('stance-legend').style.display = 'none';
   }
+  const phMap0 = { orgs: 'Search orgs...', people: 'Search people...', resources: 'Search resources...' };
+  document.getElementById('search-input').placeholder = phMap0[savedView] || 'Search entities...';
 }
 
 document.querySelectorAll('[data-view]').forEach(btn => {
@@ -1120,6 +1127,8 @@ document.querySelectorAll('[data-view]').forEach(btn => {
     const is2D = currentView === '2d';
     document.getElementById('axis-controls').style.display = is2D ? '' : 'none';
     document.getElementById('stance-legend').style.display = is2D ? 'none' : '';
+    const phMap = { orgs: 'Search orgs...', people: 'Search people...', resources: 'Search resources...' };
+    document.getElementById('search-input').placeholder = phMap[currentView] || 'Search entities...';
     buildFilters(); // rebuild category chips for new view context
     render();
   });
@@ -1535,6 +1544,7 @@ function render() {
         .attr('preserveAspectRatio', 'xMidYMid slice');
       const nodeEl = d3.select(nodeGroup.nodes()[i]);
       if (nodeEl.node()) {
+        nodeEl.select('text').remove(); // remove initials now that image loaded
         nodeEl.insert('circle', '.stance-pip')
           .attr('class', 'node-image')
           .attr('r', r - (d.entityType === 'organization' ? 2 : 1))
@@ -1937,6 +1947,7 @@ function render2D(svg, g, width, height) {
         .attr('preserveAspectRatio', 'xMidYMid slice');
       const nodeEl = d3.select(nodeGroup.nodes()[i]);
       if (nodeEl.node()) {
+        nodeEl.select('text').remove(); // remove initials now that image loaded
         nodeEl.insert('circle', '.stance-pip')
           .attr('class', 'node-image')
           .attr('r', r - (d.entityType === 'organization' ? 2 : 1))
@@ -2571,23 +2582,49 @@ function clearSearch() {
   highlightNodes([]);
 }
 
-// Category "select all" reset
+function updateCategoryResetBtn() {
+  const chips = document.querySelectorAll('#category-chips .chip');
+  const allActive = [...chips].every(c => c.classList.contains('active'));
+  document.getElementById('category-reset').textContent = allActive ? 'deselect all' : 'select all';
+}
+
+function updateStanceResetBtn() {
+  const items = document.querySelectorAll('#stance-legend-items .stance-legend-item');
+  const allActive = [...items].every(item => !item.classList.contains('inactive'));
+  document.getElementById('stance-reset').textContent = allActive ? 'deselect all' : 'select all';
+}
+
+// Category select/deselect all toggle
 document.getElementById('category-reset').addEventListener('click', () => {
-  document.querySelectorAll('#category-chips .chip').forEach(chip => {
-    chip.classList.add('active');
-    activeCategories.add(chip.dataset.category);
+  const chips = document.querySelectorAll('#category-chips .chip');
+  const allActive = [...chips].every(c => c.classList.contains('active'));
+  chips.forEach(chip => {
+    if (allActive) {
+      chip.classList.remove('active');
+      activeCategories.delete(chip.dataset.category);
+    } else {
+      chip.classList.add('active');
+      activeCategories.add(chip.dataset.category);
+    }
   });
+  updateCategoryResetBtn();
   render();
 });
 
-// Stance "select all" reset
+// Stance select/deselect all toggle
 document.getElementById('stance-reset').addEventListener('click', () => {
-  activeStances = new Set(STANCE_ORDER);
-  stanceFilterActive = false;
-  document.querySelectorAll('#stance-legend-items .stance-legend-item').forEach(item => {
-    item.classList.remove('inactive');
-    item.dataset.active = 'true';
-  });
+  const items = document.querySelectorAll('#stance-legend-items .stance-legend-item');
+  const allActive = [...items].every(item => !item.classList.contains('inactive'));
+  if (allActive) {
+    activeStances.clear();
+    stanceFilterActive = true;
+    items.forEach(item => { item.classList.add('inactive'); item.dataset.active = 'false'; });
+  } else {
+    activeStances = new Set(STANCE_ORDER);
+    stanceFilterActive = false;
+    items.forEach(item => { item.classList.remove('inactive'); item.dataset.active = 'true'; });
+  }
+  updateStanceResetBtn();
   render();
 });
 
