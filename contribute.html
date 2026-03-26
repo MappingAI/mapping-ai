@@ -207,6 +207,477 @@ details[open] summary { border-bottom: 1px solid var(--border); }
   text-align: center;
 }
 .hidden { display: none; }
+/* Duplicate detection */
+.duplicate-results {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  overflow: hidden;
+}
+.duplicate-header {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--accent);
+  padding: 0.5rem 0.75rem;
+  background: #f0f4ff;
+  border-bottom: 1px solid var(--border);
+}
+.duplicate-item {
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.1s;
+}
+.duplicate-item:last-child { border-bottom: none; }
+.duplicate-item:hover { background: #f0f4ff; }
+.duplicate-item .dup-name {
+  font-family: var(--serif); font-size: 14px;
+  font-weight: 500; color: var(--text-primary);
+}
+.duplicate-item .dup-detail {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--text-tertiary); margin-top: 2px;
+}
+.duplicate-actions {
+  padding: 0.5rem 0.75rem;
+  display: flex; gap: 0.5rem;
+}
+.dup-btn {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.04em;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  cursor: pointer;
+  background: #fff; color: var(--text-secondary);
+  transition: all 0.15s;
+}
+.dup-btn:hover { border-color: var(--text-secondary); color: var(--text-primary); }
+.dup-btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.dup-btn.primary:hover { opacity: 0.85; }
+.update-banner {
+  font-family: var(--mono); font-size: 11px;
+  background: #f0f4ff; color: var(--accent);
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  grid-column: span 2;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.update-banner .cancel-update {
+  cursor: pointer; text-decoration: underline;
+  color: var(--text-secondary);
+}
+/* Tag input for affiliated orgs */
+.tag-input-wrapper {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.4rem 0.5rem;
+  display: flex; flex-wrap: wrap; gap: 0.35rem;
+  align-items: center;
+  min-height: 38px;
+  cursor: text;
+}
+.tag-input-wrapper:focus-within { border-color: var(--text-secondary); }
+.tag {
+  font-family: var(--mono); font-size: 10px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.25rem 0.5rem;
+  display: flex; align-items: center; gap: 0.35rem;
+  color: var(--text-primary);
+}
+.tag .tag-remove {
+  cursor: pointer; color: var(--text-tertiary);
+  font-size: 12px; line-height: 1;
+}
+.tag .tag-remove:hover { color: var(--text-primary); }
+.tag-input {
+  border: none; outline: none;
+  font-family: var(--serif); font-size: 15px;
+  flex: 1; min-width: 120px;
+  padding: 0.2rem 0;
+}
+/* Org search dropdown */
+.org-search-results {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  margin-top: 0.25rem;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.org-search-results:empty { display: none; }
+.org-result {
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  font-family: var(--serif); font-size: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.org-result:last-child { border-bottom: none; }
+.org-result:hover { background: var(--bg-secondary); }
+.org-result { display: flex; justify-content: space-between; align-items: center; }
+.org-edit-link {
+  font-family: var(--mono); font-size: 9px;
+  color: var(--accent); cursor: pointer;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  opacity: 0; transition: opacity 0.1s;
+}
+.org-result:hover .org-edit-link, .org-result.active .org-edit-link { opacity: 1; }
+.org-result.active { background: var(--bg-secondary); }
+.org-edit-link:hover { text-decoration: underline; }
+/* Info tooltip */
+.info-tip {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--border); color: var(--text-tertiary);
+  font-family: var(--mono); font-size: 9px; font-weight: 500;
+  cursor: help; margin-left: 0.3rem;
+  position: relative;
+}
+.info-tip:hover { background: var(--text-tertiary); color: #fff; }
+.info-tip .tip-content {
+  display: none; position: absolute; bottom: calc(100% + 2px); left: 50%;
+  transform: translateX(-50%);
+  background: var(--text-primary); color: #fff;
+  font-family: var(--mono); font-size: 10px; font-weight: 400;
+  padding: 0.5rem 0.7rem; border-radius: 4px;
+  width: 240px; line-height: 1.5;
+  z-index: 100; pointer-events: auto;
+  text-transform: none; letter-spacing: 0;
+}
+/* Invisible bridge so mouse can travel from icon to tooltip */
+.info-tip .tip-content::after {
+  content: ''; position: absolute; top: 100%; left: 0; right: 0;
+  height: 8px;
+}
+.info-tip .tip-content a { color: #93c5fd; }
+.info-tip:hover .tip-content,
+.info-tip .tip-content:hover { display: block; }
+/* Custom select dropdown */
+.custom-select { position: relative; }
+.custom-select select { display: none; }
+.select-trigger {
+  font-family: var(--serif); font-size: 15px;
+  padding: 0.6rem 2.25rem 0.6rem 0.75rem;
+  border: 1px solid var(--border); border-radius: 4px;
+  background: #fff; color: var(--text-primary);
+  cursor: pointer; transition: border-color 0.15s;
+  position: relative;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.select-trigger::after {
+  content: ''; position: absolute; right: 0.75rem; top: 50%;
+  transform: translateY(-50%);
+  border: 4px solid transparent; border-top: 5px solid var(--text-tertiary);
+  transition: transform 0.2s;
+}
+.custom-select.open .select-trigger::after { transform: translateY(-75%) rotate(180deg); }
+.select-trigger:hover { border-color: var(--text-secondary); }
+.custom-select.open .select-trigger { border-color: var(--text-secondary); border-radius: 4px 4px 0 0; }
+.select-trigger .color-dot {
+  display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+  margin-right: 6px; vertical-align: middle;
+}
+.select-options {
+  position: absolute; top: 100%; left: 0; right: 0;
+  background: #fff; border: 1px solid var(--border); border-top: none;
+  border-radius: 0 0 4px 4px;
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.2s ease;
+  z-index: 40;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+.custom-select.open .select-options { max-height: 260px; overflow-y: auto; }
+.select-option {
+  padding: 0.5rem 0.75rem;
+  font-family: var(--serif); font-size: 14px;
+  color: var(--text-primary);
+  cursor: pointer; transition: background 0.1s;
+  display: flex; align-items: center; gap: 6px;
+}
+.select-option:hover, .select-option.active { background: var(--bg-secondary); }
+.select-option.selected { font-weight: 500; }
+.select-option .color-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.select-search {
+  padding: 0.4rem 0.6rem; border-bottom: 1px solid var(--border);
+}
+.select-search input {
+  width: 100%; border: none; outline: none;
+  font-family: var(--mono); font-size: 11px;
+  color: var(--text-primary); background: transparent;
+}
+.select-search input::placeholder { color: var(--text-tertiary); }
+.org-result .org-cat {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--text-tertiary);
+}
+.create-org-link {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--accent); cursor: pointer;
+  margin-top: 0.25rem; display: inline-block;
+}
+.create-org-link:hover { text-decoration: underline; }
+/* Existing entity card (sidebar) */
+.existing-card {
+  position: fixed; top: 48px; right: 0; bottom: 0; width: 320px;
+  background: var(--bg-secondary);
+  border-left: 1px solid var(--border);
+  z-index: 50; padding: 1.25rem;
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform 0.25s ease;
+}
+.existing-card.open { transform: translateX(0); }
+.existing-card-toggle {
+  position: fixed; top: 50%; right: 0;
+  transform: translateY(-50%);
+  z-index: 51;
+  font-family: var(--mono); font-size: 10px;
+  writing-mode: vertical-rl;
+  padding: 0.5rem 0.3rem;
+  background: #f0f4ff; color: var(--accent);
+  border: 1px solid var(--border); border-right: none;
+  border-radius: 4px 0 0 4px;
+  cursor: pointer;
+  display: none;
+  transition: right 0.25s ease;
+}
+.existing-card-toggle.visible { display: block; }
+.existing-card.open + .existing-card-toggle { right: 320px; }
+.existing-card-close {
+  position: absolute; top: 0.5rem; right: 0.75rem;
+  background: none; border: 1px solid var(--border); border-radius: 3px;
+  cursor: pointer; padding: 0.2rem 0.5rem;
+  font-size: 10px; color: var(--text-tertiary);
+  font-family: var(--mono); letter-spacing: 0.04em;
+}
+.existing-card-close:hover { border-color: var(--text-secondary); color: var(--text-primary); }
+.existing-card h3 {
+  font-family: var(--serif); font-size: 18px; font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+.existing-card .card-type {
+  font-family: var(--mono); font-size: 9px; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--text-tertiary); margin-bottom: 1rem;
+}
+.existing-card .card-field {
+  margin-bottom: 0.6rem;
+}
+.existing-card .card-field label {
+  font-family: var(--mono); font-size: 9px; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--text-tertiary);
+  display: block; margin-bottom: 0.15rem;
+}
+.existing-card .card-field span {
+  font-family: var(--serif); font-size: 14px; color: var(--text-primary);
+}
+.existing-card .card-hint {
+  font-family: var(--mono); font-size: 10px; color: var(--accent);
+  background: #f0f4ff; padding: 0.5rem 0.75rem; border-radius: 4px;
+  margin-top: 1rem; line-height: 1.5;
+}
+@media (max-width: 600px) {
+  .existing-card { width: 100%; }
+}
+/* TipTap editor */
+.tiptap-toolbar {
+  display: flex; align-items: center; gap: 2px;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid var(--border); border-bottom: none;
+  border-radius: 4px 4px 0 0;
+  background: var(--bg-secondary);
+}
+.tiptap-toolbar-btn {
+  font-family: var(--mono); font-size: 11px; font-weight: 600;
+  width: 26px; height: 24px;
+  display: flex; align-items: center; justify-content: center;
+  border: none; border-radius: 3px;
+  background: transparent; color: var(--text-tertiary);
+  cursor: pointer; transition: all 0.1s;
+}
+.tiptap-toolbar-btn:hover { background: var(--border); color: var(--text-primary); }
+.tiptap-toolbar-btn.active { background: var(--text-primary); color: #fff; }
+.tiptap-toolbar-sep {
+  width: 1px; height: 16px; background: var(--border); margin: 0 3px;
+}
+/* Link popover */
+.link-popover {
+  position: absolute; top: 100%; left: 0; right: 0;
+  background: #fff; border: 1px solid var(--border);
+  border-radius: 4px; padding: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  z-index: 50; display: flex; gap: 0.35rem; align-items: center;
+  animation: fadeIn 0.12s ease;
+}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+.link-popover input {
+  flex: 1; font-family: var(--mono); font-size: 11px;
+  padding: 0.35rem 0.5rem; border: 1px solid var(--border);
+  border-radius: 3px; outline: none; color: var(--text-primary);
+}
+.link-popover input:focus { border-color: var(--text-secondary); }
+.link-popover input::placeholder { color: var(--text-tertiary); }
+.link-popover button {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.04em;
+  padding: 0.35rem 0.6rem; border-radius: 3px;
+  cursor: pointer; border: 1px solid var(--border);
+  background: #fff; color: var(--text-secondary);
+  transition: all 0.1s;
+}
+.link-popover button:hover { border-color: var(--text-secondary); color: var(--text-primary); }
+.link-popover button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.link-popover button.primary:hover { opacity: 0.85; }
+.link-popover button.remove { color: #ef4444; border-color: #fca5a5; }
+.link-popover button.remove:hover { background: #fef2f2; }
+/* Link bubble (appears when clicking a link in the editor) */
+.link-bubble {
+  display: flex; align-items: center; gap: 0.3rem;
+  background: #fff; border: 1px solid var(--border);
+  border-radius: 4px; padding: 0.3rem 0.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  z-index: 50; white-space: nowrap;
+  animation: fadeIn 0.1s ease;
+}
+.link-bubble-url {
+  font-family: var(--mono); font-size: 11px;
+  color: var(--accent); text-decoration: none;
+  max-width: 200px; overflow: hidden; text-overflow: ellipsis;
+}
+.link-bubble-url:hover { text-decoration: underline; }
+.link-bubble button {
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.4rem; border-radius: 3px;
+  cursor: pointer; border: 1px solid var(--border);
+  background: transparent; color: var(--text-tertiary);
+  transition: all 0.1s;
+}
+.link-bubble button:hover { border-color: var(--text-secondary); color: var(--text-primary); }
+.link-bubble button[data-action="remove"] { color: #ef4444; }
+.link-bubble button[data-action="remove"]:hover { background: #fef2f2; border-color: #fca5a5; }
+.tiptap-notes {
+  border: 1px solid var(--border);
+  border-radius: 0 0 4px 4px;
+  min-height: 80px;
+  max-height: 200px;
+  overflow-y: auto;
+  padding: 0.6rem 0.75rem;
+  font-family: var(--serif);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  cursor: text;
+}
+.tiptap-notes:focus-within { border-color: var(--text-secondary); }
+.tiptap-notes .tiptap { outline: none; min-height: 60px; }
+.tiptap-notes .tiptap p { margin-bottom: 0.5rem; }
+.tiptap-notes .tiptap p:last-child { margin-bottom: 0; }
+.tiptap-notes .tiptap ul, .tiptap-notes .tiptap ol {
+  padding-left: 1.2rem; margin-bottom: 0.5rem;
+}
+.tiptap-notes .tiptap li { margin-bottom: 0.15rem; }
+.tiptap-notes .tiptap a {
+  color: var(--accent); text-decoration: underline;
+  text-decoration-thickness: 1px; text-underline-offset: 2px;
+}
+.tiptap-notes .tiptap blockquote {
+  border-left: 3px solid var(--border); padding-left: 0.75rem;
+  color: var(--text-secondary); font-style: italic; margin: 0.5rem 0;
+}
+.tiptap-notes .tiptap strong { font-weight: 600; }
+.tiptap-notes .tiptap s { text-decoration: line-through; color: var(--text-tertiary); }
+.tiptap-notes .tiptap p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left; height: 0;
+  color: var(--text-tertiary);
+  pointer-events: none;
+}
+.tiptap-mention {
+  background: #e8f0fe;
+  border-radius: 3px;
+  padding: 1px 4px;
+  color: var(--accent);
+  font-weight: 500;
+  cursor: pointer;
+}
+/* Mention dropdown */
+.tiptap-mention-list {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  max-height: 200px;
+  overflow-y: auto;
+  min-width: 240px;
+}
+.mention-item {
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 0.5rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+.mention-item:last-child { border-bottom: none; }
+.mention-item.active, .mention-item:hover { background: var(--bg-secondary); }
+.mention-type {
+  font-family: var(--mono); font-size: 9px;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--text-tertiary);
+  background: var(--bg-secondary);
+  padding: 1px 4px; border-radius: 2px;
+  min-width: 60px; text-align: center;
+}
+.mention-label { color: var(--text-primary); font-weight: 500; }
+.mention-detail { color: var(--text-tertiary); font-size: 11px; }
+.mention-empty {
+  padding: 0.75rem;
+  font-family: var(--mono); font-size: 11px;
+  color: var(--text-tertiary); text-align: center;
+}
+/* Relationship type picker (after selecting a @mention) */
+.mention-rel-header {
+  padding: 0.5rem 0.75rem;
+  font-family: var(--mono); font-size: 10px;
+  color: var(--text-tertiary);
+  border-bottom: 1px solid var(--border);
+  letter-spacing: 0.02em;
+}
+.mention-rel-header strong { color: var(--accent); font-weight: 500; }
+.mention-rel-option {
+  padding: 0.45rem 0.75rem;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.1s;
+  display: flex; flex-direction: column; gap: 1px;
+}
+.mention-rel-option:last-child { border-bottom: none; }
+.mention-rel-option:hover, .mention-rel-option.active { background: var(--bg-secondary); }
+.mention-rel-label {
+  font-family: var(--serif); font-size: 13px;
+  color: var(--text-primary); font-weight: 500;
+}
+.mention-rel-desc {
+  font-family: var(--mono); font-size: 9px;
+  color: var(--text-tertiary); letter-spacing: 0.02em;
+}
+/* Detail textarea (conditional) */
+.conditional-detail {
+  margin-top: 0.5rem;
+  transition: all 0.15s;
+}
+.conditional-detail textarea {
+  font-family: var(--serif); font-size: 15px;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: #fff; color: var(--text-primary);
+  width: 100%; resize: vertical; min-height: 60px;
+}
+.conditional-detail textarea:focus { outline: none; border-color: var(--text-secondary); }
 .footer-row {
   display: flex; justify-content: center;
   margin-top: 3rem; padding-top: 1.5rem;
@@ -221,6 +692,33 @@ details[open] summary { border-bottom: 1px solid var(--border); }
   .field.full { grid-column: span 1; }
   .submit { grid-column: span 1; }
   .checkbox-group { grid-template-columns: 1fr; }
+  .update-banner { grid-column: span 1; }
+  /* Existing card sidebar: full-width overlay on mobile */
+  .existing-card { width: 100%; }
+  .existing-card.open + .existing-card-toggle { right: 0; top: auto; bottom: 0; transform: none; writing-mode: horizontal-tb; border-radius: 4px 4px 0 0; border-right: 1px solid var(--border); border-bottom: none; width: 100%; text-align: center; padding: 0.6rem; }
+  /* Larger touch targets for org search */
+  .org-result { padding: 0.75rem; font-size: 15px; min-height: 44px; }
+  .org-edit-link { opacity: 1; font-size: 10px; }
+  /* Tag inputs: touch-friendly */
+  .tag { padding: 0.35rem 0.6rem; font-size: 11px; }
+  .tag .tag-remove { font-size: 14px; padding: 0.1rem 0.2rem; }
+  .tag-input-wrapper { min-height: 44px; padding: 0.5rem; gap: 0.4rem; }
+  .tag-input { font-size: 16px; }
+  /* Duplicate detection full-width */
+  .duplicate-results { margin-left: -0.5rem; margin-right: -0.5rem; border-radius: 0; }
+  .duplicate-item { padding: 0.75rem; min-height: 44px; }
+  .dup-btn { padding: 0.5rem 1rem; font-size: 11px; min-height: 40px; }
+  /* Form fields: larger touch targets */
+  .field input, .field select, .field textarea { font-size: 16px; padding: 0.7rem 0.75rem; min-height: 44px; }
+  .checkbox-group label { padding: 0.25rem 0; min-height: 36px; font-size: 12px; }
+  .checkbox-group input[type="checkbox"] { width: 18px; height: 18px; }
+  .radio-group label { padding: 0.25rem 0; min-height: 36px; font-size: 12px; }
+  .radio-group input[type="radio"] { width: 18px; height: 18px; }
+  /* Mention dropdown full-width on mobile */
+  .tiptap-mention-list { min-width: auto; width: 100%; }
+  .mention-item { padding: 0.6rem 0.75rem; min-height: 44px; }
+  /* Info tip: position left-aligned so it doesn't overflow */
+  .info-tip .tip-content { left: 0; transform: none; width: 200px; }
 }
 /* Site navigation */
 .site-nav {
@@ -408,21 +906,34 @@ details[open] summary { border-bottom: 1px solid var(--border); }
       <label>Title</label>
       <input type="text" name="title">
     </div>
-    <div class="field">
+    <div class="field" style="position:relative;">
       <label>Primary org</label>
-      <input type="text" name="primaryOrg">
+      <input type="text" name="primaryOrg" class="primary-org-search" data-search-type="organization" autocomplete="off">
+      <input type="hidden" name="primaryOrgId">
+      <div class="org-search-results"></div>
+      <span class="helper"><span class="create-org-link" data-switch="organization">Can't find it? Add this org</span></span>
     </div>
-    <div class="field">
-      <label>Other orgs</label>
-      <input type="text" name="otherOrgs">
+    <div class="field full">
+      <label>Additional affiliated orgs</label>
+      <div class="tag-input-wrapper" id="person-affiliated-orgs">
+        <input type="text" class="tag-input" data-search-type="organization" placeholder="Search existing orgs...">
+        <div class="org-search-results"></div>
+      </div>
+      <input type="hidden" name="affiliatedOrgIds">
+      <span class="helper">Type to search. <span class="create-org-link" data-switch="organization">Can't find it? Add this org</span></span>
     </div>
-    <div class="field">
+    <div class="field" style="position:relative;">
       <label>Location</label>
-      <input type="text" name="location">
+      <div class="tag-input-wrapper location-tags">
+        <input type="text" class="tag-input location-search" placeholder="Search cities..." autocomplete="off">
+        <div class="org-search-results location-results"></div>
+      </div>
+      <input type="hidden" name="location">
+      <span class="helper">Search for cities — add multiple if applicable</span>
     </div>
     <div class="field">
       <label>Regulatory stance</label>
-      <select name="regulatoryStance">
+      <select name="regulatoryStance" class="stance-select">
         <option value=""></option>
         <option value="Accelerate">Accelerate (minimal/no regulation)</option>
         <option value="Light-touch">Light-touch (voluntary, self-governance)</option>
@@ -432,7 +943,7 @@ details[open] summary { border-bottom: 1px solid var(--border); }
         <option value="Precautionary">Precautionary (pause/moratorium until governance catches up)</option>
         <option value="Nationalize">Nationalize/public control</option>
         <option value="Mixed/unclear">Mixed/unclear</option>
-        <option value="Other">Other (see notes)</option>
+        <option value="Other">Other (describe in notes)</option>
       </select>
     </div>
     <div class="field">
@@ -445,7 +956,7 @@ details[open] summary { border-bottom: 1px solid var(--border); }
       </select>
     </div>
     <div class="field">
-      <label>AGI timeline belief</label>
+      <label>AGI timeline belief <span class="info-tip">i<span class="tip-content">Artificial General Intelligence — AI that matches or exceeds human-level reasoning across domains. Definitions vary widely. <a href="https://en.wikipedia.org/wiki/Artificial_general_intelligence" target="_blank">Learn more</a></span></span></label>
       <select name="agiTimeline">
         <option value=""></option>
         <option value="Already here">Already here/emerging</option>
@@ -466,7 +977,7 @@ details[open] summary { border-bottom: 1px solid var(--border); }
         <option value="Serious">Serious societal risks (labor, power, democracy)</option>
         <option value="Catastrophic">Potentially catastrophic (bioweapons, loss of control)</option>
         <option value="Existential">Existential (threatens humanity's survival)</option>
-        <option value="Mixed/nuanced">Mixed/nuanced (see notes)</option>
+        <option value="Mixed/nuanced">Mixed/nuanced (describe in notes)</option>
         <option value="Unknown">Unknown/not publicly stated</option>
       </select>
     </div>
@@ -503,15 +1014,23 @@ details[open] summary { border-bottom: 1px solid var(--border); }
     </div>
     <div class="field">
       <label>Twitter/X</label>
-      <input type="text" name="twitter" placeholder="@handle">
+      <input type="text" name="twitter" class="twitter-search" placeholder="@handle" autocomplete="off">
+      <div class="org-search-results twitter-results"></div>
+      <span class="helper">Suggestions from our database — if not listed, just type the full handle</span>
     </div>
     <div class="field">
       <label>Bluesky</label>
-      <input type="text" name="bluesky" placeholder="@handle.bsky.social">
+      <input type="text" name="bluesky" class="bsky-search" placeholder="@handle.bsky.social" autocomplete="off">
+      <div class="org-search-results bsky-results"></div>
+      <span class="helper">Live search via Bluesky — or type the full handle directly</span>
     </div>
     <div class="field full">
       <label>Notes</label>
-      <textarea name="notes" rows="3"></textarea>
+      <div class="tiptap-notes"></div>
+      <textarea name="notes" rows="3" class="hidden"></textarea>
+      <input type="hidden" name="notesHtml">
+      <input type="hidden" name="notesMentions">
+      <span class="helper">Type @ to link people, orgs, or resources already in the database</span>
     </div>
     <div class="field full">
       <label>Your email (optional)</label>
@@ -556,8 +1075,21 @@ details[open] summary { border-bottom: 1px solid var(--border); }
       <input type="url" name="website">
     </div>
     <div class="field">
-      <label>Location</label>
-      <input type="text" name="location">
+      <label>Parent organization</label>
+      <input type="text" class="parent-org-search" data-search-type="organization" placeholder="Search existing orgs..." autocomplete="off">
+      <input type="hidden" name="parentOrgId">
+      <div class="org-search-results"></div>
+      <span class="helper">e.g. Anthropic Institute's parent org is Anthropic</span>
+    </div>
+    <div class="field" style="position:relative;">
+      <label>HQ / Primary location</label>
+      <div class="tag-input-wrapper location-tags">
+        <span class="tag remote-tag" style="display:none;cursor:pointer;" onclick="this.style.display='none';this.closest('.field').querySelector('input[name=location]').value=this.closest('.field').querySelector('input[name=location]').value.replace('Remote, ','').replace('Remote','');">Remote <span class="tag-remove">&times;</span></span>
+        <input type="text" class="tag-input location-search" placeholder="Search cities..." autocomplete="off">
+        <div class="org-search-results location-results"></div>
+      </div>
+      <input type="hidden" name="location">
+      <span class="helper">Search for cities, or <a href="#" class="remote-link" style="color:var(--accent);" onclick="event.preventDefault();const t=this.closest('.field').querySelector('.remote-tag');t.style.display='inline-flex';const h=this.closest('.field').querySelector('input[name=location]');h.value=h.value?'Remote, '+h.value:'Remote';">add Remote</a></span>
     </div>
     <div class="field">
       <label>Funding model</label>
@@ -571,7 +1103,7 @@ details[open] summary { border-bottom: 1px solid var(--border); }
         <option value="Mixed">Mixed (commercial + philanthropic)</option>
         <option value="Public benefit">Public benefit corp/capped-profit</option>
         <option value="Self-funded">Self-funded/endowed</option>
-        <option value="Other">Other (see notes)</option>
+        <option value="Other">Other (describe in notes)</option>
       </select>
     </div>
     <div class="field">
@@ -586,7 +1118,7 @@ details[open] summary { border-bottom: 1px solid var(--border); }
         <option value="Precautionary">Precautionary (pause/moratorium until governance catches up)</option>
         <option value="Nationalize">Nationalize/public control</option>
         <option value="Mixed/unclear">Mixed/unclear</option>
-        <option value="Other">Other (see notes)</option>
+        <option value="Other">Other (describe in notes)</option>
       </select>
     </div>
     <div class="field">
@@ -599,7 +1131,7 @@ details[open] summary { border-bottom: 1px solid var(--border); }
       </select>
     </div>
     <div class="field">
-      <label>AGI timeline belief</label>
+      <label>AGI timeline belief <span class="info-tip">i<span class="tip-content">Artificial General Intelligence — AI that matches or exceeds human-level reasoning across domains. Definitions vary widely. <a href="https://en.wikipedia.org/wiki/Artificial_general_intelligence" target="_blank">Learn more</a></span></span></label>
       <select name="agiTimeline">
         <option value=""></option>
         <option value="Already here">Already here/emerging</option>
@@ -620,7 +1152,7 @@ details[open] summary { border-bottom: 1px solid var(--border); }
         <option value="Serious">Serious societal risks (labor, power, democracy)</option>
         <option value="Catastrophic">Potentially catastrophic (bioweapons, loss of control)</option>
         <option value="Existential">Existential (threatens humanity's survival)</option>
-        <option value="Mixed/nuanced">Mixed/nuanced (see notes)</option>
+        <option value="Mixed/nuanced">Mixed/nuanced (describe in notes)</option>
         <option value="Unknown">Unknown/not publicly stated</option>
       </select>
     </div>
@@ -657,11 +1189,15 @@ details[open] summary { border-bottom: 1px solid var(--border); }
     </div>
     <div class="field">
       <label>Twitter/X</label>
-      <input type="text" name="twitter" placeholder="@handle">
+      <input type="text" name="twitter" class="twitter-search" placeholder="@handle" autocomplete="off">
+      <div class="org-search-results twitter-results"></div>
+      <span class="helper">Suggestions from our database — if not listed, just type the full handle</span>
     </div>
     <div class="field">
       <label>Bluesky</label>
-      <input type="text" name="bluesky" placeholder="@handle.bsky.social">
+      <input type="text" name="bluesky" class="bsky-search" placeholder="@handle.bsky.social" autocomplete="off">
+      <div class="org-search-results bsky-results"></div>
+      <span class="helper">Live search via Bluesky — or type the full handle directly</span>
     </div>
     <div class="field">
       <label>Last verified</label>
@@ -669,7 +1205,11 @@ details[open] summary { border-bottom: 1px solid var(--border); }
     </div>
     <div class="field full">
       <label>Notes</label>
-      <textarea name="notes" rows="3"></textarea>
+      <div class="tiptap-notes"></div>
+      <textarea name="notes" rows="3" class="hidden"></textarea>
+      <input type="hidden" name="notesHtml">
+      <input type="hidden" name="notesMentions">
+      <span class="helper">Type @ to link people, orgs, or resources already in the database</span>
     </div>
     <div class="field full">
       <label>Your email (optional)</label>
@@ -693,9 +1233,24 @@ details[open] summary { border-bottom: 1px solid var(--border); }
       <label>Title *</label>
       <input type="text" name="title" required>
     </div>
-    <div class="field">
+    <div class="field" style="position:relative;">
       <label>Author(s)</label>
-      <input type="text" name="author">
+      <div class="tag-input-wrapper" id="resource-authors">
+        <input type="text" class="tag-input resource-author-search" placeholder="Search people..." autocomplete="off">
+        <div class="org-search-results author-results"></div>
+      </div>
+      <input type="hidden" name="authorIds">
+      <input type="hidden" name="author">
+      <span class="helper">Search existing people. <span class="create-org-link" data-switch="person">Not found? Add this person</span></span>
+    </div>
+    <div class="field" style="position:relative;">
+      <label>Affiliated org(s)</label>
+      <div class="tag-input-wrapper" id="resource-orgs">
+        <input type="text" class="tag-input resource-org-search" data-search-type="organization" placeholder="Search orgs..." autocomplete="off">
+        <div class="org-search-results"></div>
+      </div>
+      <input type="hidden" name="affiliatedOrgIds">
+      <span class="helper">Org that published or is affiliated. <span class="create-org-link" data-switch="organization">Can't find it? Add this org</span></span>
     </div>
     <div class="field">
       <label>Type</label>
@@ -741,7 +1296,11 @@ details[open] summary { border-bottom: 1px solid var(--border); }
     </div>
     <div class="field full">
       <label>Notes (why it matters, who it influenced)</label>
-      <textarea name="notes" rows="3"></textarea>
+      <div class="tiptap-notes"></div>
+      <textarea name="notes" rows="3" class="hidden"></textarea>
+      <input type="hidden" name="notesHtml">
+      <input type="hidden" name="notesMentions">
+      <span class="helper">Type @ to link people, orgs, or resources already in the database</span>
     </div>
     <div class="field full">
       <label>Your email (optional)</label>
@@ -766,8 +1325,34 @@ details[open] summary { border-bottom: 1px solid var(--border); }
   </div>
 </div>
 
+<a href="/map.html" id="see-map-btn" style="
+  position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 60;
+  display: flex; align-items: center; gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  background: var(--accent); color: #fff; border: none; border-radius: 20px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase;
+  cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  text-decoration: none; transition: transform 0.15s;
+" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">See Map &rarr;</a>
 <script>
-// Form toggle
+// Hide "See Map" button when loaded inside an iframe (e.g. map page sidebar)
+if (window !== window.top) {
+  document.getElementById('see-map-btn').style.display = 'none';
+}
+</script>
+
+<!-- Existing entity card sidebar -->
+<div class="existing-card" id="existing-card">
+  <button class="existing-card-close" id="existing-card-close">&times; Minimize</button>
+  <div id="existing-card-content"></div>
+</div>
+<button class="existing-card-toggle" id="existing-card-toggle">Existing Entry</button>
+
+<script src="/assets/js/tiptap-notes.js"></script>
+<script>
+const API_BASE = window.location.hostname === 'localhost' ? '' : 'https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com';
+
+// ── Form toggle ──
 const toggles = document.querySelectorAll('.toggle');
 const forms = document.querySelectorAll('.form');
 const examples = {
@@ -779,115 +1364,1189 @@ const examples = {
 toggles.forEach(toggle => {
   toggle.addEventListener('click', () => {
     const formType = toggle.dataset.form;
-
     toggles.forEach(t => t.classList.remove('active'));
     toggle.classList.add('active');
-
     forms.forEach(f => f.classList.remove('active'));
     document.getElementById(`${formType}-form`).classList.add('active');
-
-    // Show/hide examples and close them when switching
     Object.entries(examples).forEach(([type, el]) => {
-      el.removeAttribute('open'); // Close the details element
-      if (type === formType) {
-        el.classList.remove('hidden');
-      } else {
-        el.classList.add('hidden');
-      }
+      el.removeAttribute('open');
+      type === formType ? el.classList.remove('hidden') : el.classList.add('hidden');
     });
+    document.getElementById('success').classList.add('hidden');
   });
 });
 
-// Checkbox limit for threat models (max 3)
+// ── Checkbox limit for threat models (max 3) ──
 document.querySelectorAll('.checkbox-group[data-max]').forEach(group => {
   const max = parseInt(group.dataset.max);
   const checkboxes = group.querySelectorAll('input[type="checkbox"]');
   const counter = group.parentElement.querySelector('.checkbox-counter');
-
   checkboxes.forEach(cb => {
     cb.addEventListener('change', () => {
       const checked = group.querySelectorAll('input:checked').length;
-
       if (checked >= max) {
-        checkboxes.forEach(c => {
-          if (!c.checked) c.disabled = true;
-        });
+        checkboxes.forEach(c => { if (!c.checked) c.disabled = true; });
         counter.classList.add('limit-reached');
       } else {
         checkboxes.forEach(c => c.disabled = false);
         counter.classList.remove('limit-reached');
       }
-
       counter.textContent = `${checked} of ${max} selected`;
     });
   });
 });
 
-// Form submission
+// ── Prevent Enter from submitting form when in search/autocomplete fields ──
+// Note: for .parent-org-search and .primary-org-search, arrow key + enter is handled
+// in their own keydown handlers below, so we only prevent default here
+document.querySelectorAll('.tag-input, input[name="name"], #resource-form input[name="title"]').forEach(input => {
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const results = input.closest('.field, .tag-input-wrapper')?.querySelector('.org-search-results, .duplicate-results');
+      if (results) {
+        const activeItem = results.querySelector('.org-result.active, .duplicate-item');
+        if (activeItem) activeItem.click();
+      }
+    }
+  });
+});
+
+// ── Custom styled selects ──
+const SELECT_COLORS = {
+  'Frontier Lab':'#d4644a','AI Safety/Alignment':'#2d8a6e','Think Tank/Policy Org':'#5b82bf',
+  'Government/Agency':'#7c5cbf','Academic':'#d4a44a','VC/Capital/Philanthropy':'#1a8a8a',
+  'Labor/Civil Society':'#d4885a','Media/Journalism':'#8b6914','Political Campaign/PAC':'#b06a8a',
+  'Ethics/Bias/Rights':'#e07020','Policymaker':'#9955cc',
+  'Accelerate':'#ef4444','Light-touch':'#f97316','Targeted':'#eab308',
+  'Moderate':'#22c55e','Restrictive':'#3b82f6','Precautionary':'#8b5cf6','Nationalize':'#ec4899',
+};
+
+document.querySelectorAll('.form select').forEach(sel => {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'custom-select';
+  sel.parentNode.insertBefore(wrapper, sel);
+  wrapper.appendChild(sel);
+
+  const trigger = document.createElement('div');
+  trigger.className = 'select-trigger';
+
+  const optionsDiv = document.createElement('div');
+  optionsDiv.className = 'select-options';
+
+  // Search input for filtering
+  const searchDiv = document.createElement('div');
+  searchDiv.className = 'select-search';
+  searchDiv.innerHTML = '<input type="text" placeholder="Search..." tabindex="-1">';
+  optionsDiv.appendChild(searchDiv);
+  const searchInput = searchDiv.querySelector('input');
+
+  const options = Array.from(sel.options);
+  const optionEls = [];
+
+  function renderTrigger() {
+    const val = sel.value;
+    const opt = options.find(o => o.value === val);
+    const color = SELECT_COLORS[val];
+    if (!val || !opt || !opt.text) {
+      trigger.innerHTML = '<span style="color:var(--text-tertiary);">Select...</span>';
+    } else {
+      trigger.innerHTML = (color ? `<span class="color-dot" style="background:${color};"></span>` : '') + opt.text;
+    }
+  }
+
+  function buildOptions(filter) {
+    // Remove old option elements
+    optionEls.forEach(el => el.remove());
+    optionEls.length = 0;
+
+    options.forEach(opt => {
+      if (!opt.value && !opt.text) return; // skip blank
+      if (filter && opt.text && !opt.text.toLowerCase().includes(filter.toLowerCase())) return;
+      const div = document.createElement('div');
+      div.className = 'select-option' + (opt.value === sel.value ? ' selected' : '');
+      const color = SELECT_COLORS[opt.value];
+      div.innerHTML = (color ? `<span class="color-dot" style="background:${color};"></span>` : '') +
+        (opt.value ? opt.text : '<span style="color:var(--text-tertiary);">None</span>');
+      div.dataset.value = opt.value;
+      div.addEventListener('click', (e) => {
+        e.stopPropagation();
+        sel.value = opt.value;
+        sel.dispatchEvent(new Event('change', { bubbles: true }));
+        renderTrigger();
+        close();
+      });
+      optionsDiv.appendChild(div);
+      optionEls.push(div);
+    });
+  }
+
+  function open() {
+    wrapper.classList.add('open');
+    searchInput.value = '';
+    buildOptions('');
+    setTimeout(() => searchInput.focus(), 50);
+  }
+
+  function close() {
+    wrapper.classList.remove('open');
+    searchInput.value = '';
+  }
+
+  trigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    // Close any other open selects
+    document.querySelectorAll('.custom-select.open').forEach(cs => {
+      if (cs !== wrapper) cs.classList.remove('open');
+    });
+    wrapper.classList.contains('open') ? close() : open();
+  });
+
+  searchInput.addEventListener('input', () => buildOptions(searchInput.value));
+  searchInput.addEventListener('keydown', (e) => {
+    const visible = optionEls.filter(el => el.offsetParent !== null);
+    const active = optionsDiv.querySelector('.select-option.active');
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      const idx = active ? visible.indexOf(active) : -1;
+      const next = visible[idx + 1] || visible[0];
+      if (next) { active?.classList.remove('active'); next.classList.add('active'); next.scrollIntoView({ block: 'nearest' }); }
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      const idx = active ? visible.indexOf(active) : visible.length;
+      const prev = visible[idx - 1] || visible[visible.length - 1];
+      if (prev) { active?.classList.remove('active'); prev.classList.add('active'); prev.scrollIntoView({ block: 'nearest' }); }
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      const target = active || visible[0];
+      if (target) target.click();
+    } else if (e.key === 'Escape') {
+      close();
+    }
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!wrapper.contains(e.target)) close();
+  });
+
+  wrapper.insertBefore(trigger, sel);
+  wrapper.appendChild(optionsDiv);
+  renderTrigger();
+  buildOptions('');
+});
+
+// ── Debounced search helper ──
+function debounce(fn, ms) {
+  let timer;
+  return (...args) => { clearTimeout(timer); timer = setTimeout(() => fn(...args), ms); };
+}
+
+// Preload all approved entities for instant client-side search
+// Uses static map-data.json (cached by browser, no DB query) for speed
+let _entityCache = { people: [], organizations: [], resources: [] };
+fetch('/map-data.json')
+  .then(r => r.json())
+  .then(data => {
+    _entityCache = {
+      people: data.people || [],
+      organizations: data.organizations || [],
+      resources: data.resources || [],
+    };
+    console.log(`Cache ready: ${_entityCache.people.length} people, ${_entityCache.organizations.length} orgs, ${_entityCache.resources.length} resources`);
+  })
+  .catch(e => console.warn('Failed to preload entities:', e));
+
+// Fast client-side fuzzy search
+function searchEntities(query, type) {
+  if (!query || query.length < 2) return { people: [], organizations: [], resources: [] };
+  const q = query.toLowerCase();
+  const match = (entity, fields) => {
+    let score = 0;
+    for (const f of fields) {
+      const val = (entity[f] || '').toLowerCase();
+      if (!val) continue;
+      if (val === q) return 100;
+      if (val.startsWith(q)) score = Math.max(score, 80);
+      else if (val.includes(q)) score = Math.max(score, 60);
+    }
+    return score;
+  };
+  const results = { people: [], organizations: [], resources: [] };
+  if (!type || type === 'person') {
+    results.people = _entityCache.people
+      .map(p => ({ ...p, _score: match(p, ['name', 'title', 'primary_org', 'category', 'notes']) }))
+      .filter(p => p._score > 0)
+      .sort((a, b) => b._score - a._score)
+      .slice(0, 10);
+  }
+  if (!type || type === 'organization') {
+    results.organizations = _entityCache.organizations
+      .map(o => ({ ...o, _score: match(o, ['name', 'category', 'website', 'notes']) }))
+      .filter(o => o._score > 0)
+      .sort((a, b) => b._score - a._score)
+      .slice(0, 10);
+  }
+  if (!type || type === 'resource') {
+    results.resources = _entityCache.resources
+      .map(r => ({ ...r, _score: match(r, ['title', 'author', 'category', 'notes']) }))
+      .filter(r => r._score > 0)
+      .sort((a, b) => b._score - a._score)
+      .slice(0, 10);
+  }
+  return results;
+}
+
+// ── Duplicate detection on Name/Title fields ──
+let updateEntityId = null; // set when user clicks "update existing"
+
+// Attach to both name fields (person/org) and title field (resource)
+document.querySelectorAll('input[name="name"], #resource-form input[name="title"]').forEach(nameInput => {
+  const form = nameInput.closest('form');
+  const formType = form.dataset.type;
+  const isResource = formType === 'resource';
+  let dupContainer = null;
+
+  const checkDuplicates = debounce(() => {
+    const query = nameInput.value.trim();
+    if (query.length < 2) { removeDupContainer(); return; }
+
+    const searchType = isResource ? 'resource' : (formType === 'person' ? 'person' : 'organization');
+    const results = searchEntities(query, searchType);
+    const matches = isResource ? results.resources : (searchType === 'person' ? results.people : results.organizations);
+
+    // Deduplicate by id
+    const seen = new Set();
+    const uniqueMatches = matches.filter(m => {
+      if (seen.has(m.id)) return false;
+      seen.add(m.id);
+      return true;
+    });
+
+    if (uniqueMatches.length === 0) { removeDupContainer(); return; }
+
+    if (!dupContainer) {
+      dupContainer = document.createElement('div');
+      dupContainer.className = 'duplicate-results';
+      nameInput.parentElement.appendChild(dupContainer);
+    }
+
+    dupContainer.innerHTML = `
+      <div class="duplicate-header">This ${searchType} may already exist in our database</div>
+      ${uniqueMatches.slice(0, 3).map(m => {
+        const displayName = isResource ? (m.title || m.name) : m.name;
+        const detail = isResource
+          ? [m.author, m.resource_type, m.year].filter(Boolean).join(' · ')
+          : [m.category, m.title, m.primary_org, m.location].filter(Boolean).join(' · ');
+        return `
+        <div class="duplicate-item" data-id="${m.id}">
+          <div class="dup-name">${displayName}</div>
+          <div class="dup-detail">${detail}</div>
+          <button type="button" class="dup-btn" data-action="view" data-match='${JSON.stringify(m).replace(/'/g, "&#39;")}'>View existing info</button>
+          <button type="button" class="dup-btn primary" data-action="update" data-match='${JSON.stringify(m).replace(/'/g, "&#39;")}'>Add info to this entry</button>
+        </div>`;
+      }).join('')}
+      <div class="duplicate-actions">
+        <button type="button" class="dup-btn" data-action="new">This is a different ${searchType} — create new entry</button>
+      </div>
+    `;
+
+    dupContainer.querySelectorAll('[data-action="update"]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const item = btn.closest('.duplicate-item');
+        const matchData = JSON.parse(btn.dataset.match);
+        updateEntityId = item.dataset.id;
+        removeDupContainer();
+        prefillFormFromExisting(form, matchData, formType);
+        showUpdateBanner(form, item.querySelector('.dup-name').textContent);
+        showExistingCard(matchData, searchType);
+      });
+    });
+
+    dupContainer.querySelectorAll('[data-action="view"]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const matchData = JSON.parse(btn.dataset.match);
+        showExistingCard(matchData, searchType);
+      });
+    });
+
+    dupContainer.querySelector('[data-action="new"]').addEventListener('click', () => {
+      removeDupContainer();
+    });
+  }, 80);
+
+  function removeDupContainer() {
+    if (dupContainer) { dupContainer.remove(); dupContainer = null; }
+  }
+
+  nameInput.addEventListener('input', checkDuplicates);
+});
+
+function showUpdateBanner(form, entityName) {
+  // Remove existing banner if any
+  form.querySelector('.update-banner')?.remove();
+  const banner = document.createElement('div');
+  banner.className = 'update-banner';
+  banner.innerHTML = `
+    Updating existing entry: <strong>${entityName}</strong>.
+    Fields are pre-filled with current info — adjust anything you disagree with, add what's missing.
+    Use Notes to explain what you changed or added.
+    <span class="cancel-update">Cancel</span>
+  `;
+  // Update notes placeholder for update mode
+  const notesHelper = form.querySelector('.tiptap-notes')?.closest('.field')?.querySelector('.helper');
+  if (notesHelper) {
+    notesHelper.textContent = 'Describe what you changed, added, or disagree with. Type @ to link related entries.';
+  }
+  banner.querySelector('.cancel-update').addEventListener('click', () => {
+    updateEntityId = null;
+    banner.remove();
+  });
+  form.insertBefore(banner, form.firstChild);
+}
+
+// ── Show existing entity card sidebar ──
+function showExistingCard(matchData, entityType) {
+  const card = document.getElementById('existing-card');
+  const content = document.getElementById('existing-card-content');
+  const fields = [];
+  const addField = (label, value) => {
+    if (value) fields.push(`<div class="card-field"><label>${label}</label><span>${value}</span></div>`);
+  };
+  const displayName = entityType === 'resource' ? (matchData.title || matchData.name) : matchData.name;
+  addField('Category', matchData.category);
+  if (entityType === 'person') {
+    addField('Title', matchData.title);
+    addField('Primary Organization', matchData.primary_org);
+    addField('Location', matchData.location);
+    addField('Regulatory Stance', matchData.regulatory_stance);
+  } else if (entityType === 'resource') {
+    addField('Author', matchData.author);
+    addField('Type', matchData.resource_type);
+    addField('URL', matchData.url ? `<a href="${matchData.url}" target="_blank" rel="noopener" style="color:var(--accent);word-break:break-all;">${matchData.url}</a>` : null);
+    addField('Year', matchData.year);
+    addField('Key Argument', matchData.key_argument);
+  } else {
+    addField('Website', matchData.website ? `<a href="${matchData.website}" target="_blank" rel="noopener" style="color:var(--accent);">${matchData.website}</a>` : null);
+    addField('Location', matchData.location);
+    addField('Regulatory Stance', matchData.regulatory_stance);
+  }
+  addField('Notes', matchData.notes ? `<span style="font-style:italic;color:var(--text-secondary);">${matchData.notes}</span>` : null);
+
+  // Category color from map
+  const CARD_COLORS = {
+    'Frontier Lab':'#d4644a','AI Safety/Alignment':'#2d8a6e','AI Safety':'#2d8a6e',
+    'Think Tank/Policy Org':'#5b82bf','Think Tank':'#5b82bf',
+    'Government/Agency':'#7c5cbf','Government':'#7c5cbf',
+    'Academic':'#d4a44a','VC/Capital/Philanthropy':'#1a8a8a','VC / Funder':'#1a8a8a',
+    'Labor/Civil Society':'#d4885a','Labor / Workforce':'#d4885a',
+    'Media/Journalism':'#8b6914','Media':'#8b6914',
+    'Ethics/Bias/Rights':'#e07020','Ethics / Civil Society':'#e07020',
+    'Policymaker':'#9955cc','AI Policy':'#5b82bf','AI Capabilities':'#d4644a','Ethics':'#e07020',
+  };
+  const catColor = CARD_COLORS[matchData.category] || '#6a7080';
+
+  content.innerHTML = `
+    <h3>${displayName}</h3>
+    <div class="card-type">${entityType} — already in database</div>
+    ${matchData.category ? `<div style="display:inline-block;padding:2px 8px;border-radius:3px;font-family:var(--mono);font-size:10px;background:${catColor}22;color:${catColor};margin-bottom:0.75rem;">${matchData.category}</div>` : ''}
+    ${fields.join('')}
+    <div class="card-hint">Please review the existing info above. Your submission will add new information and any conflicting details will be stored for review.</div>
+  `;
+  card.classList.add('open');
+  document.getElementById('existing-card-toggle').classList.remove('visible');
+}
+
+document.getElementById('existing-card-close').addEventListener('click', () => {
+  document.getElementById('existing-card').classList.remove('open');
+  document.getElementById('existing-card-toggle').classList.add('visible');
+});
+document.getElementById('existing-card-toggle').addEventListener('click', () => {
+  document.getElementById('existing-card').classList.add('open');
+  document.getElementById('existing-card-toggle').classList.remove('visible');
+});
+
+// ── Prefill form from existing entity data ──
+function prefillFormFromExisting(form, data, formType) {
+  // Map of DB field names → form input names
+  const fieldMap = {
+    person: {
+      category: 'category',
+      title: 'title',
+      primary_org: 'primaryOrg',
+      location: 'location',
+      regulatory_stance: 'regulatoryStance',
+      evidence_source: 'evidenceSource',
+      agi_timeline: 'agiTimeline',
+      ai_risk_level: 'aiRiskLevel',
+      twitter: 'twitter',
+      bluesky: 'bluesky',
+    },
+    organization: {
+      category: 'category',
+      website: 'website',
+      location: 'location',
+      funding_model: 'fundingModel',
+      regulatory_stance: 'regulatoryStance',
+      evidence_source: 'evidenceSource',
+      agi_timeline: 'agiTimeline',
+      ai_risk_level: 'aiRiskLevel',
+      twitter: 'twitter',
+      bluesky: 'bluesky',
+      last_verified: 'lastVerified',
+    },
+    resource: {
+      author: 'author',
+      resource_type: 'resourceType',
+      url: 'url',
+      year: 'year',
+      category: 'category',
+      key_argument: 'keyArgument',
+    },
+  };
+  const mapping = fieldMap[formType] || {};
+
+  // Fill text inputs and selects
+  Object.entries(mapping).forEach(([dbField, formField]) => {
+    const value = data[dbField];
+    if (!value) return;
+    const input = form.querySelector(`[name="${formField}"]`);
+    if (!input) return;
+    if (input.tagName === 'SELECT') {
+      // Try exact match first, then partial
+      const option = Array.from(input.options).find(o => o.value === value || value.startsWith(o.value));
+      if (option) input.value = option.value;
+    } else {
+      input.value = value;
+    }
+  });
+
+  // Fill checkboxes for threat models
+  if (data.threat_models && (formType === 'person' || formType === 'organization')) {
+    const models = data.threat_models.split(',').map(s => s.trim());
+    form.querySelectorAll('input[name="threatModels"]').forEach(cb => {
+      cb.checked = models.some(m => cb.value.toLowerCase().includes(m.toLowerCase()) || m.toLowerCase().includes(cb.value.toLowerCase()));
+    });
+    // Trigger the counter update
+    const counter = form.querySelector('.checkbox-counter');
+    if (counter) {
+      const checked = form.querySelectorAll('input[name="threatModels"]:checked').length;
+      counter.textContent = `${checked} of 3 selected`;
+    }
+  }
+
+  // Fill checkboxes for influence type
+  if (data.influence_type && (formType === 'person' || formType === 'organization')) {
+    const types = data.influence_type.split(',').map(s => s.trim());
+    form.querySelectorAll('input[name="influenceType"]').forEach(cb => {
+      cb.checked = types.some(t => cb.value.toLowerCase().includes(t.toLowerCase()) || t.toLowerCase().includes(cb.value.toLowerCase()));
+    });
+  }
+
+  // Leave notes, email, relationship EMPTY — but update placeholder
+  const notesTextarea = form.querySelector('textarea[name="notes"]');
+  if (notesTextarea) notesTextarea.value = '';
+  // Update TipTap placeholder if available
+  const tiptapEl = form.querySelector('.tiptap-notes');
+  if (tiptapEl && tiptapEl._editor) {
+    tiptapEl._editor.commands.setContent('');
+  }
+
+  // Scroll to top of form
+  form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── Switch to org form in edit mode for an existing org ──
+function editExistingOrg(orgData) {
+  // Switch to org form
+  const orgToggle = document.querySelector('.toggle[data-form="organization"]');
+  if (orgToggle) orgToggle.click();
+  // Wait for form to become visible, then prefill
+  setTimeout(() => {
+    const orgForm = document.getElementById('organization-form');
+    if (!orgForm) return;
+    // Set the name field
+    const nameInput = orgForm.querySelector('input[name="name"]');
+    if (nameInput) nameInput.value = orgData.name;
+    // Set entity ID for update mode
+    updateEntityId = orgData.id;
+    // Prefill all fields
+    prefillFormFromExisting(orgForm, orgData, 'organization');
+    // Show update banner
+    showUpdateBanner(orgForm, orgData.name);
+    // Show existing card
+    showExistingCard(orgData, 'organization');
+  }, 50);
+}
+
+// ── Org search for tag inputs (affiliated orgs) ──
+document.querySelectorAll('.tag-input-wrapper').forEach(wrapper => {
+  const input = wrapper.querySelector('.tag-input');
+  const resultsDiv = wrapper.querySelector('.org-search-results');
+  const hiddenInput = wrapper.parentElement.querySelector('input[name="affiliatedOrgIds"]');
+  const selectedOrgs = []; // [{id, name}]
+
+  const search = debounce(async () => {
+    const q = input.value.trim();
+    if (q.length < 2) { resultsDiv.innerHTML = ''; return; }
+    const results = await searchEntities(q, 'organization');
+    const orgs = results.organizations.filter(o => !selectedOrgs.some(s => s.id === o.id));
+
+    resultsDiv.innerHTML = orgs.slice(0, 5).map(o => `
+      <div class="org-result" data-id="${o.id}" data-name="${o.name}" data-org='${JSON.stringify(o).replace(/'/g, "&#39;")}'>
+        <span>${o.name} <span class="org-cat">${o.category || ''}</span></span>
+        <span class="org-edit-link" data-action="edit">edit</span>
+      </div>
+    `).join('');
+
+    resultsDiv.querySelectorAll('.org-result').forEach(item => {
+      item.querySelector('.org-edit-link')?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const orgData = JSON.parse(item.dataset.org);
+        resultsDiv.innerHTML = '';
+        editExistingOrg(orgData);
+      });
+      item.addEventListener('click', (e) => {
+        if (e.target.classList.contains('org-edit-link')) return;
+        addTag(item.dataset.id, item.dataset.name);
+        input.value = '';
+        resultsDiv.innerHTML = '';
+      });
+    });
+  }, 80);
+
+  function addTag(id, name) {
+    selectedOrgs.push({ id: parseInt(id), name });
+    const tag = document.createElement('span');
+    tag.className = 'tag';
+    tag.innerHTML = `${name} <span class="tag-remove">&times;</span>`;
+    tag.querySelector('.tag-remove').addEventListener('click', () => {
+      const idx = selectedOrgs.findIndex(o => o.id === parseInt(id));
+      if (idx >= 0) selectedOrgs.splice(idx, 1);
+      tag.remove();
+      hiddenInput.value = JSON.stringify(selectedOrgs.map(o => o.id));
+    });
+    wrapper.insertBefore(tag, input);
+    hiddenInput.value = JSON.stringify(selectedOrgs.map(o => o.id));
+  }
+
+  input.addEventListener('input', search);
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Backspace' && !input.value && selectedOrgs.length > 0) {
+      const last = selectedOrgs.pop();
+      wrapper.querySelector(`.tag:last-of-type`)?.remove();
+      hiddenInput.value = JSON.stringify(selectedOrgs.map(o => o.id));
+    }
+  });
+  wrapper.addEventListener('click', () => input.focus());
+});
+
+// ── Parent/Primary org search with arrow key navigation ──
+document.querySelectorAll('.parent-org-search, .primary-org-search').forEach(input => {
+  const resultsDiv = input.parentElement.querySelector('.org-search-results');
+  const hiddenInput = input.parentElement.querySelector('input[type="hidden"]');
+
+  function selectItem(item) {
+    input.value = item.dataset.name;
+    hiddenInput.value = item.dataset.id;
+    resultsDiv.innerHTML = '';
+  }
+
+  const search = debounce(() => {
+    const q = input.value.trim();
+    if (q.length < 2) { resultsDiv.innerHTML = ''; return; }
+    const results = searchEntities(q, 'organization');
+    resultsDiv.innerHTML = results.organizations.slice(0, 5).map(o => `
+      <div class="org-result" data-id="${o.id}" data-name="${o.name}" data-org='${JSON.stringify(o).replace(/'/g, "&#39;")}'>
+        <span>${o.name} <span class="org-cat">${o.category || ''}</span></span>
+        <span class="org-edit-link" data-action="edit">edit</span>
+      </div>
+    `).join('');
+
+    resultsDiv.querySelectorAll('.org-result').forEach(item => {
+      item.querySelector('.org-edit-link')?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const orgData = JSON.parse(item.dataset.org);
+        resultsDiv.innerHTML = '';
+        editExistingOrg(orgData);
+      });
+      item.addEventListener('click', (e) => {
+        if (e.target.classList.contains('org-edit-link')) return;
+        selectItem(item);
+      });
+    });
+  }, 80);
+
+  input.addEventListener('input', () => {
+    hiddenInput.value = '';
+    search();
+  });
+
+  input.addEventListener('keydown', (e) => {
+    const items = resultsDiv.querySelectorAll('.org-result');
+    if (items.length === 0) return;
+    const active = resultsDiv.querySelector('.org-result.active');
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      const next = active ? active.nextElementSibling : items[0];
+      if (next) { active?.classList.remove('active'); next.classList.add('active'); }
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      const prev = active?.previousElementSibling;
+      if (prev) { active.classList.remove('active'); prev.classList.add('active'); }
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      const selected = active || items[0];
+      if (selected) selectItem(selected);
+    } else if (e.key === 'Escape') {
+      resultsDiv.innerHTML = '';
+    }
+  });
+});
+
+// ── "Can't find it? Add this org" links ──
+document.querySelectorAll('.create-org-link').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const orgToggle = document.querySelector('.toggle[data-form="organization"]');
+    if (orgToggle) orgToggle.click();
+  });
+});
+
+// ── Location search (Photon/OpenStreetMap geocoding, free, no key) ──
+document.querySelectorAll('.location-tags').forEach(wrapper => {
+  const input = wrapper.querySelector('.location-search');
+  const resultsDiv = wrapper.querySelector('.location-results');
+  const hiddenInput = wrapper.parentElement.querySelector('input[name="location"]');
+  const selectedLocations = [];
+
+  function updateHidden() {
+    hiddenInput.value = selectedLocations.join(', ');
+  }
+
+  function addLocationTag(name) {
+    if (selectedLocations.includes(name)) return;
+    selectedLocations.push(name);
+    const tag = document.createElement('span');
+    tag.className = 'tag';
+    tag.innerHTML = `${name} <span class="tag-remove">&times;</span>`;
+    tag.querySelector('.tag-remove').addEventListener('click', () => {
+      const idx = selectedLocations.indexOf(name);
+      if (idx >= 0) selectedLocations.splice(idx, 1);
+      tag.remove();
+      updateHidden();
+    });
+    wrapper.insertBefore(tag, input);
+    updateHidden();
+  }
+
+  const search = debounce(async () => {
+    const q = input.value.trim();
+    if (q.length < 2) { resultsDiv.innerHTML = ''; return; }
+    try {
+      const res = await fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(q)}&limit=6&layer=city&layer=state`);
+      if (!res.ok) { resultsDiv.innerHTML = ''; return; }
+      const data = await res.json();
+      const cities = (data.features || [])
+        .map(f => {
+          const p = f.properties;
+          const parts = [p.city || p.name, p.state, p.country].filter(Boolean);
+          return parts.join(', ');
+        })
+        .filter((v, i, a) => a.indexOf(v) === i); // dedupe
+
+      if (cities.length === 0) { resultsDiv.innerHTML = ''; return; }
+      resultsDiv.innerHTML = cities.map(c => `
+        <div class="org-result" data-name="${c.replace(/"/g, '&quot;')}">${c}</div>
+      `).join('');
+      resultsDiv.querySelectorAll('.org-result').forEach(item => {
+        item.addEventListener('click', () => {
+          addLocationTag(item.dataset.name);
+          input.value = '';
+          resultsDiv.innerHTML = '';
+        });
+      });
+    } catch { resultsDiv.innerHTML = ''; }
+  }, 150);
+
+  input.addEventListener('input', () => {
+    if (input.value.trim().length < 2) { resultsDiv.innerHTML = ''; return; }
+    search();
+  });
+  input.addEventListener('keydown', (e) => {
+    const items = resultsDiv.querySelectorAll('.org-result');
+    const active = resultsDiv.querySelector('.org-result.active');
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      const next = active ? active.nextElementSibling : items[0];
+      if (next) { active?.classList.remove('active'); next.classList.add('active'); }
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      const prev = active?.previousElementSibling;
+      if (prev) { active.classList.remove('active'); prev.classList.add('active'); }
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      const selected = active || items[0];
+      if (selected) { selected.click(); }
+      else if (input.value.trim()) { addLocationTag(input.value.trim()); input.value = ''; }
+    } else if (e.key === 'Escape') {
+      resultsDiv.innerHTML = '';
+    } else if (e.key === 'Backspace' && !input.value && selectedLocations.length > 0) {
+      selectedLocations.pop();
+      wrapper.querySelector('.tag:last-of-type')?.remove();
+      updateHidden();
+    }
+  });
+  input.addEventListener('blur', () => setTimeout(() => { resultsDiv.innerHTML = ''; }, 200));
+  wrapper.addEventListener('click', () => input.focus());
+});
+
+// ── Resource author search (person search with tag input) ──
+document.querySelectorAll('#resource-authors').forEach(wrapper => {
+  const input = wrapper.querySelector('.resource-author-search');
+  const resultsDiv = wrapper.querySelector('.author-results');
+  const hiddenIds = wrapper.parentElement.querySelector('input[name="authorIds"]');
+  const hiddenNames = wrapper.parentElement.querySelector('input[name="author"]');
+  const selectedAuthors = [];
+
+  function updateHidden() {
+    hiddenIds.value = JSON.stringify(selectedAuthors.map(a => a.id));
+    hiddenNames.value = selectedAuthors.map(a => a.name).join(', ');
+  }
+
+  function addAuthorTag(id, name) {
+    if (selectedAuthors.some(a => a.id === id)) return;
+    selectedAuthors.push({ id: parseInt(id), name });
+    const tag = document.createElement('span');
+    tag.className = 'tag';
+    tag.innerHTML = `${name} <span class="tag-remove">&times;</span>`;
+    tag.querySelector('.tag-remove').addEventListener('click', () => {
+      const idx = selectedAuthors.findIndex(a => a.id === parseInt(id));
+      if (idx >= 0) selectedAuthors.splice(idx, 1);
+      tag.remove();
+      updateHidden();
+    });
+    wrapper.insertBefore(tag, input);
+    updateHidden();
+  }
+
+  const search = debounce(() => {
+    const q = input.value.trim();
+    if (q.length < 2) { resultsDiv.innerHTML = ''; return; }
+    const results = searchEntities(q, 'person');
+    const people = results.people.filter(p => !selectedAuthors.some(a => a.id === p.id));
+    resultsDiv.innerHTML = people.slice(0, 5).map(p => `
+      <div class="org-result" data-id="${p.id}" data-name="${p.name}" data-person='${JSON.stringify(p).replace(/'/g, "&#39;")}'>
+        <span>${p.name} <span class="org-cat">${p.title || p.category || ''}</span></span>
+        <span class="org-edit-link" data-action="edit">edit</span>
+      </div>
+    `).join('');
+    resultsDiv.querySelectorAll('.org-result').forEach(item => {
+      item.querySelector('.org-edit-link')?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        // Switch to person form to edit
+        const personData = JSON.parse(item.dataset.person);
+        const personToggle = document.querySelector('.toggle[data-form="person"]');
+        if (personToggle) personToggle.click();
+        setTimeout(() => {
+          const personForm = document.getElementById('person-form');
+          const nameInput = personForm.querySelector('input[name="name"]');
+          if (nameInput) nameInput.value = personData.name;
+          updateEntityId = personData.id;
+          prefillFormFromExisting(personForm, personData, 'person');
+          showUpdateBanner(personForm, personData.name);
+          showExistingCard(personData, 'person');
+        }, 50);
+        resultsDiv.innerHTML = '';
+      });
+      item.addEventListener('click', (e) => {
+        if (e.target.classList.contains('org-edit-link')) return;
+        addAuthorTag(item.dataset.id, item.dataset.name);
+        input.value = '';
+        resultsDiv.innerHTML = '';
+      });
+    });
+  }, 80);
+
+  input.addEventListener('input', () => {
+    if (input.value.trim().length < 2) { resultsDiv.innerHTML = ''; return; }
+    search();
+  });
+  input.addEventListener('keydown', (e) => {
+    const items = resultsDiv.querySelectorAll('.org-result');
+    const active = resultsDiv.querySelector('.org-result.active');
+    if (e.key === 'ArrowDown') { e.preventDefault(); const next = active ? active.nextElementSibling : items[0]; if (next) { active?.classList.remove('active'); next.classList.add('active'); } }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); const prev = active?.previousElementSibling; if (prev) { active.classList.remove('active'); prev.classList.add('active'); } }
+    else if (e.key === 'Enter') { e.preventDefault(); const sel = active || items[0]; if (sel) sel.click(); else if (input.value.trim()) { addAuthorTag(0, input.value.trim()); input.value = ''; } }
+    else if (e.key === 'Escape') resultsDiv.innerHTML = '';
+    else if (e.key === 'Backspace' && !input.value && selectedAuthors.length) { selectedAuthors.pop(); wrapper.querySelector('.tag:last-of-type')?.remove(); updateHidden(); }
+  });
+  input.addEventListener('blur', () => setTimeout(() => { resultsDiv.innerHTML = ''; }, 200));
+  wrapper.addEventListener('click', () => input.focus());
+});
+
+// ── Resource affiliated org search (reuse tag input pattern) ──
+document.querySelectorAll('#resource-orgs').forEach(wrapper => {
+  const input = wrapper.querySelector('.resource-org-search');
+  const resultsDiv = wrapper.querySelector('.org-search-results');
+  const hiddenInput = wrapper.parentElement.querySelector('input[name="affiliatedOrgIds"]');
+  const selectedOrgs = [];
+
+  const search = debounce(() => {
+    const q = input.value.trim();
+    if (q.length < 2) { resultsDiv.innerHTML = ''; return; }
+    const results = searchEntities(q, 'organization');
+    const orgs = results.organizations.filter(o => !selectedOrgs.some(s => s.id === o.id));
+    resultsDiv.innerHTML = orgs.slice(0, 5).map(o => `
+      <div class="org-result" data-id="${o.id}" data-name="${o.name}" data-org='${JSON.stringify(o).replace(/'/g, "&#39;")}'>
+        <span>${o.name} <span class="org-cat">${o.category || ''}</span></span>
+        <span class="org-edit-link" data-action="edit">edit</span>
+      </div>
+    `).join('');
+    resultsDiv.querySelectorAll('.org-result').forEach(item => {
+      item.querySelector('.org-edit-link')?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        editExistingOrg(JSON.parse(item.dataset.org));
+        resultsDiv.innerHTML = '';
+      });
+      item.addEventListener('click', (e) => {
+        if (e.target.classList.contains('org-edit-link')) return;
+        selectedOrgs.push({ id: parseInt(item.dataset.id), name: item.dataset.name });
+        const tag = document.createElement('span');
+        tag.className = 'tag';
+        tag.innerHTML = `${item.dataset.name} <span class="tag-remove">&times;</span>`;
+        tag.querySelector('.tag-remove').addEventListener('click', () => {
+          const idx = selectedOrgs.findIndex(o => o.id === parseInt(item.dataset.id));
+          if (idx >= 0) selectedOrgs.splice(idx, 1);
+          tag.remove();
+          hiddenInput.value = JSON.stringify(selectedOrgs.map(o => o.id));
+        });
+        wrapper.insertBefore(tag, input);
+        hiddenInput.value = JSON.stringify(selectedOrgs.map(o => o.id));
+        input.value = '';
+        resultsDiv.innerHTML = '';
+      });
+    });
+  }, 80);
+
+  input.addEventListener('input', () => { if (input.value.trim().length < 2) { resultsDiv.innerHTML = ''; return; } search(); });
+  input.addEventListener('keydown', (e) => {
+    const items = resultsDiv.querySelectorAll('.org-result');
+    const active = resultsDiv.querySelector('.org-result.active');
+    if (e.key === 'ArrowDown') { e.preventDefault(); const next = active ? active.nextElementSibling : items[0]; if (next) { active?.classList.remove('active'); next.classList.add('active'); } }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); const prev = active?.previousElementSibling; if (prev) { active.classList.remove('active'); prev.classList.add('active'); } }
+    else if (e.key === 'Enter') { e.preventDefault(); const sel = active || items[0]; if (sel) sel.click(); }
+    else if (e.key === 'Escape') resultsDiv.innerHTML = '';
+    else if (e.key === 'Backspace' && !input.value && selectedOrgs.length) { selectedOrgs.pop(); wrapper.querySelector('.tag:last-of-type')?.remove(); hiddenInput.value = JSON.stringify(selectedOrgs.map(o => o.id)); }
+  });
+  input.addEventListener('blur', () => setTimeout(() => { resultsDiv.innerHTML = ''; }, 200));
+  wrapper.addEventListener('click', () => input.focus());
+});
+
+// ── Twitter/X handle search (searches known handles in our DB) ──
+document.querySelectorAll('.twitter-search').forEach(input => {
+  const resultsDiv = input.parentElement.querySelector('.twitter-results');
+
+  const search = debounce(() => {
+    const q = input.value.trim().replace('@', '').toLowerCase();
+    if (q.length < 1) { resultsDiv.innerHTML = ''; return; }
+    // Search all cached entities for matching twitter handles
+    const matches = [];
+    [..._entityCache.people, ..._entityCache.organizations].forEach(e => {
+      const handle = (e.twitter || '').replace('@', '').toLowerCase();
+      if (handle && handle.includes(q)) {
+        matches.push({ name: e.name, handle: e.twitter, category: e.category });
+      }
+    });
+    if (matches.length === 0) { resultsDiv.innerHTML = ''; return; }
+    resultsDiv.innerHTML = matches.slice(0, 5).map(m => `
+      <div class="org-result" data-handle="${m.handle}">
+        <span style="font-weight:500;">${m.name}</span>
+        <span class="org-cat">${m.handle}</span>
+      </div>
+    `).join('');
+    resultsDiv.querySelectorAll('.org-result').forEach(item => {
+      item.addEventListener('click', () => {
+        input.value = item.dataset.handle;
+        resultsDiv.innerHTML = '';
+      });
+    });
+  }, 80);
+
+  input.addEventListener('input', () => {
+    const q = input.value.trim().replace('@', '');
+    if (q.length < 1) { resultsDiv.innerHTML = ''; return; }
+    search();
+  });
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); const f = resultsDiv.querySelector('.org-result'); if (f) f.click(); }
+    if (e.key === 'Escape') resultsDiv.innerHTML = '';
+  });
+  input.addEventListener('blur', () => setTimeout(() => { resultsDiv.innerHTML = ''; }, 200));
+});
+
+// ── Bluesky username search (free public API) ──
+document.querySelectorAll('.bsky-search').forEach(input => {
+  const resultsDiv = input.parentElement.querySelector('.bsky-results');
+
+  const search = debounce(async () => {
+    const q = input.value.trim().replace('@', '');
+    if (q.length < 2) { resultsDiv.innerHTML = ''; return; }
+    try {
+      const res = await fetch(`https://public.api.bsky.app/xrpc/app.bsky.actor.searchActorsTypeahead?q=${encodeURIComponent(q)}&limit=5`);
+      if (!res.ok) { resultsDiv.innerHTML = ''; return; }
+      const data = await res.json();
+      const actors = data.actors || [];
+      if (actors.length === 0) { resultsDiv.innerHTML = ''; return; }
+      resultsDiv.innerHTML = actors.map(a => `
+        <div class="org-result" data-handle="${a.handle}">
+          <span style="font-weight:500;">${a.displayName || a.handle}</span>
+          <span class="org-cat">@${a.handle}</span>
+        </div>
+      `).join('');
+      resultsDiv.querySelectorAll('.org-result').forEach(item => {
+        item.addEventListener('click', () => {
+          input.value = '@' + item.dataset.handle;
+          resultsDiv.innerHTML = '';
+        });
+      });
+    } catch { resultsDiv.innerHTML = ''; }
+  }, 150);
+
+  input.addEventListener('input', () => {
+    const q = input.value.trim().replace('@', '');
+    if (q.length < 2) { resultsDiv.innerHTML = ''; return; }
+    search();
+  });
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const first = resultsDiv.querySelector('.org-result');
+      if (first) first.click();
+    }
+    if (e.key === 'Escape') resultsDiv.innerHTML = '';
+  });
+  // Close dropdown on blur (with delay for click to register)
+  input.addEventListener('blur', () => setTimeout(() => { resultsDiv.innerHTML = ''; }, 200));
+});
+
+// ── Auto-save form progress to localStorage ──
+const SAVE_KEY = 'mappingai_form_draft';
+const SAVE_DEBOUNCE = 500;
+let saveTimer = null;
+
+function saveFormState() {
+  const state = { activeForm: document.querySelector('.toggle.active')?.dataset.form || 'person' };
+  forms.forEach(form => {
+    const formType = form.dataset.type;
+    const data = {};
+    // Text inputs and selects
+    form.querySelectorAll('input[type="text"], input[type="url"], input[type="email"], select, textarea').forEach(el => {
+      if (el.name && el.name !== '_hp' && !el.name.endsWith('Id') && el.type !== 'hidden') {
+        data[el.name] = el.value;
+      }
+    });
+    // Checkboxes
+    form.querySelectorAll('input[type="checkbox"]').forEach(el => {
+      if (el.name) {
+        if (!data._checks) data._checks = {};
+        if (!data._checks[el.name]) data._checks[el.name] = [];
+        if (el.checked) data._checks[el.name].push(el.value);
+      }
+    });
+    // Radio buttons
+    form.querySelectorAll('input[type="radio"]:checked').forEach(el => {
+      if (el.name) data[el.name] = el.value;
+    });
+    // TipTap content
+    const tiptap = form.querySelector('.tiptap-notes');
+    if (tiptap?._editor) {
+      data._notesHtml = tiptap._editor.getHTML();
+    }
+    state[formType] = data;
+  });
+  try { localStorage.setItem(SAVE_KEY, JSON.stringify(state)); } catch(e) {}
+}
+
+function restoreFormState() {
+  let state;
+  try { state = JSON.parse(localStorage.getItem(SAVE_KEY)); } catch(e) {}
+  if (!state) return;
+
+  // Restore active form tab
+  if (state.activeForm) {
+    const toggle = document.querySelector(`.toggle[data-form="${state.activeForm}"]`);
+    if (toggle) toggle.click();
+  }
+
+  forms.forEach(form => {
+    const formType = form.dataset.type;
+    const data = state[formType];
+    if (!data) return;
+
+    // Restore text inputs, selects, textareas
+    Object.entries(data).forEach(([name, value]) => {
+      if (name.startsWith('_')) return;
+      const el = form.querySelector(`[name="${name}"]`);
+      if (!el || !value) return;
+      if (el.type === 'radio') {
+        const radio = form.querySelector(`input[name="${name}"][value="${value}"]`);
+        if (radio) radio.checked = true;
+      } else {
+        el.value = value;
+        // Trigger change for custom selects
+        if (el.tagName === 'SELECT') el.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    });
+
+    // Restore checkboxes
+    if (data._checks) {
+      Object.entries(data._checks).forEach(([name, values]) => {
+        form.querySelectorAll(`input[name="${name}"]`).forEach(cb => {
+          cb.checked = values.includes(cb.value);
+        });
+        // Update counter
+        const counter = form.querySelector('.checkbox-counter');
+        if (counter && name === 'threatModels') {
+          counter.textContent = `${values.length} of 3 selected`;
+        }
+      });
+    }
+
+    // Restore TipTap content
+    if (data._notesHtml && data._notesHtml !== '<p></p>') {
+      const tiptap = form.querySelector('.tiptap-notes');
+      if (tiptap?._editor) {
+        tiptap._editor.commands.setContent(data._notesHtml);
+      }
+    }
+  });
+
+  // Show subtle restore indicator
+  const indicator = document.createElement('div');
+  indicator.style.cssText = 'position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:10px;color:var(--text-tertiary);background:var(--bg-secondary);padding:0.3rem 0.8rem;border-radius:20px;border:1px solid var(--border);z-index:100;transition:opacity 0.3s;';
+  indicator.textContent = 'Draft restored';
+  document.body.appendChild(indicator);
+  setTimeout(() => { indicator.style.opacity = '0'; }, 2000);
+  setTimeout(() => indicator.remove(), 2500);
+}
+
+function clearFormDraft() {
+  try { localStorage.removeItem(SAVE_KEY); } catch(e) {}
+}
+
+// Auto-save on any input change
+document.addEventListener('input', () => {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(saveFormState, SAVE_DEBOUNCE);
+});
+document.addEventListener('change', () => {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(saveFormState, SAVE_DEBOUNCE);
+});
+
+// Restore on load (after a short delay to let TipTap and custom selects init)
+setTimeout(restoreFormState, 300);
+
+// ── Email validation ──
+document.querySelectorAll('input[name="submitterEmail"]').forEach(input => {
+  const helper = input.parentElement.querySelector('.helper');
+  const originalText = helper?.textContent || '';
+  input.addEventListener('blur', () => {
+    const val = input.value.trim();
+    if (!val) {
+      input.style.borderColor = '';
+      if (helper) helper.textContent = originalText;
+      return;
+    }
+    const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+    input.style.borderColor = valid ? '#22c55e' : '#ef4444';
+    if (helper) {
+      helper.textContent = valid ? 'Looks good!' : 'This doesn\'t look like a valid email address';
+      helper.style.color = valid ? '#22c55e' : '#ef4444';
+    }
+  });
+  input.addEventListener('input', () => {
+    input.style.borderColor = '';
+    if (helper) { helper.textContent = originalText; helper.style.color = ''; }
+  });
+});
+
+// ── Form submission ──
 forms.forEach(form => {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
+    const btn = form.querySelector('.submit');
+    const original = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Submitting...';
 
     const formData = new FormData(form);
     const data = {};
-
-    // Handle checkboxes specially - collect as comma-separated
     const threatModels = [];
     const influenceTypes = [];
 
     formData.forEach((value, key) => {
-      if (key === 'threatModels') {
-        threatModels.push(value);
-      } else if (key === 'influenceType') {
-        influenceTypes.push(value);
-      } else if (key !== '_hp') {
-        data[key] = value;
-      }
+      if (key === '_hp') return;
+      if (!value.trim()) return;
+      if (key === 'threatModels') { threatModels.push(value); return; }
+      if (key === 'influenceType') { influenceTypes.push(value); return; }
+      data[key] = value.trim();
     });
 
-    if (threatModels.length > 0) {
-      data.threatModels = threatModels.join(', ');
-    }
-    if (influenceTypes.length > 0) {
-      data.influenceType = influenceTypes.join(', ');
+    if (threatModels.length > 0) data.threatModels = threatModels.join(', ');
+    if (influenceTypes.length > 0) data.influenceType = influenceTypes.join(', ');
+
+    // Include entity ID if updating an existing entry
+    if (updateEntityId) data.entityId = updateEntityId;
+
+    // Include affiliated org IDs
+    const affiliatedInput = form.querySelector('input[name="affiliatedOrgIds"]');
+    if (affiliatedInput && affiliatedInput.value) {
+      data.affiliatedOrgIds = JSON.parse(affiliatedInput.value);
     }
 
     const payload = {
       type: form.dataset.type,
       timestamp: new Date().toISOString(),
       data: data,
-      _hp: formData.get('_hp')
+      _hp: formData.get('_hp') || ''
     };
 
     try {
-      const res = await fetch('/api/submit', {
+      const res = await fetch(`${API_BASE}/submit`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
+      if (!res.ok) throw new Error('Failed');
 
-      if (res.ok) {
-        form.classList.add('hidden');
-        document.getElementById('success').classList.remove('hidden');
-      } else {
-        alert('Submission failed. Please try again.');
-      }
+      form.classList.remove('active');
+      document.getElementById('success').classList.remove('hidden');
+      form.reset();
+      updateEntityId = null;
+      form.querySelector('.update-banner')?.remove();
+      clearFormDraft();
     } catch (err) {
-      alert('Submission failed. Please try again.');
+      alert('Something went wrong. Please try again.');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = original;
     }
   });
 });
 
-// Clear links for radio groups
+// ── Clear links for radio groups ──
 document.querySelectorAll('.clear-link').forEach(link => {
   link.addEventListener('click', () => {
-    const targetId = link.dataset.target;
-    const group = document.getElementById(targetId);
+    const group = document.getElementById(link.dataset.target);
     group.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
   });
 });
 
-// Nav
+// ── Nav ──
 const path = window.location.pathname;
 document.querySelectorAll('.nav-links a').forEach(a => {
   if (a.getAttribute('href') === path) a.classList.add('active');

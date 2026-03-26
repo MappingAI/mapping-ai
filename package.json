@@ -4,15 +4,27 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "pg": "^8.20.0"
+    "@tiptap/core": "^3.20.5",
+    "@tiptap/extension-link": "^3.20.5",
+    "@tiptap/extension-mention": "^3.20.5",
+    "@tiptap/extension-placeholder": "^3.20.5",
+    "@tiptap/pm": "^3.20.5",
+    "@tiptap/starter-kit": "^3.20.5",
+    "pg": "^8.20.0",
+    "tippy.js": "^6.3.7"
   },
   "devDependencies": {
     "csv-parse": "^5.6.0",
-    "dotenv": "^16.4.7"
+    "dotenv": "^16.4.7",
+    "esbuild": "^0.27.4",
+    "express": "^5.2.1"
   },
   "scripts": {
     "db:migrate": "node scripts/migrate.js",
     "db:seed": "node scripts/seed.js",
-    "db:setup": "node scripts/migrate.js && node scripts/seed.js"
+    "db:setup": "node scripts/migrate.js && node scripts/seed.js",
+    "db:seed-test": "node scripts/seed-test-data.js --reset",
+    "db:export-map": "node scripts/export-map-data.js",
+    "build:tiptap": "esbuild src/tiptap-notes.js --bundle --outfile=assets/js/tiptap-notes.js --minify --format=iife --target=es2020"
   }
 }

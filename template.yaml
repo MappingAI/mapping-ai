@@ -51,6 +51,19 @@ Resources:
             Path: /submit
             Method: POST
 
+  SearchFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: mapping-ai-search
+      Handler: api/search.handler
+      Events:
+        Search:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref MappingAiApi
+            Path: /search
+            Method: GET
+
   SubmissionsFunction:
     Type: AWS::Serverless::Function
     Properties:

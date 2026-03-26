@@ -5,3 +5,10 @@ node_modules/
 .aws-sam/
 submissions/
 exports/
+# Dev-only
+dev-server.js
+
+# Data files (stored in S3/DB, not git)
+map-data.json
+scripts/seed-test-data.js
+scripts/calc-disagreement.js

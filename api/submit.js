@@ -79,10 +79,10 @@ export const handler = async (event) => {
     }
 
     const SHORT_LIMIT = 200;
-    const LONG_LIMIT = 1000;
+    const LONG_LIMIT = 2000;
     for (const [key, value] of Object.entries(data)) {
       if (typeof value !== 'string') continue;
-      const limit = ['notes', 'keyArgument', 'threatModels'].includes(key) ? LONG_LIMIT : SHORT_LIMIT;
+      const limit = ['notes', 'notesHtml', 'keyArgument', 'threatModels', 'threatModelsDetail', 'regulatoryStanceDetail'].includes(key) ? LONG_LIMIT : SHORT_LIMIT;
       if (value.length > limit) {
         return {
           statusCode: 400,
@@ -96,42 +96,87 @@ export const handler = async (event) => {
     try {
       const ts = timestamp || new Date().toISOString();
 
+      // Extract entity_id if this is an update to an existing entity
+      const entityId = data.entityId ? parseInt(data.entityId, 10) : null;
+
+      // Extract TipTap notes data
+      const notesHtml = data.notesHtml || null;
+      const notesMentions = data.notesMentions ? JSON.parse(data.notesMentions) : null;
+
+      // Store the full submission in the submissions table
+      const submissionData = { ...data };
+      delete submissionData.entityId;
+      delete submissionData.notesHtml;
+      delete submissionData.notesMentions;
+      delete submissionData.submitterEmail;
+      delete submissionData.submitterRelationship;
+
+      const submissionResult = await client.query(
+        `INSERT INTO submissions (entity_type, entity_id, data, submitter_email, submitter_relationship,
+          is_self_submission, notes_html, notes_mentions, submitted_at, status)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, 'pending')
+        RETURNING id`,
+        [
+          type, entityId, JSON.stringify(submissionData),
+          data.submitterEmail || null, data.submitterRelationship || null,
+          data.submitterRelationship === 'self' || false,
+          notesHtml, notesMentions ? JSON.stringify(notesMentions) : null, ts,
+        ]
+      );
+
+      // Also insert into the entity table (as pending) for backward compatibility
       if (type === 'person') {
         await client.query(
           `INSERT INTO people (
             name, category, title, primary_org, other_orgs, location,
-            regulatory_stance, evidence_source, agi_timeline, ai_risk_level,
-            threat_models, influence_type, twitter, bluesky,
+            regulatory_stance, regulatory_stance_detail, evidence_source,
+            agi_timeline, ai_risk_level,
+            threat_models, threat_models_detail, influence_type,
+            twitter, bluesky,
             notes, submitter_email, submitter_relationship, submitted_at, status
-          ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,'pending')`,
+          ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,'pending')
+          RETURNING id`,
           [
             data.name, data.category || null, data.title || null,
             data.primaryOrg || null, data.otherOrgs || null, data.location || null,
-            data.regulatoryStance || null, data.evidenceSource || null,
+            data.regulatoryStance || null, data.regulatoryStanceDetail || null,
+            data.evidenceSource || null,
             data.agiTimeline || null, data.aiRiskLevel || null,
-            data.threatModels || null, data.influenceType || null,
+            data.threatModels || null, data.threatModelsDetail || null,
+            data.influenceType || null,
             data.twitter || null, data.bluesky || null,
             data.notes || null, data.submitterEmail || null,
             data.submitterRelationship || null, ts,
           ]
         );
+
+        // If affiliated org IDs provided, store in person_organizations (on approval)
+        if (data.affiliatedOrgIds && Array.isArray(data.affiliatedOrgIds)) {
+          // Store in submission data for admin review; actual linking happens on approval
+        }
       } else if (type === 'organization') {
         await client.query(
           `INSERT INTO organizations (
             name, category, website, location, funding_model,
-            regulatory_stance, evidence_source, agi_timeline, ai_risk_level,
-            threat_models, influence_type, twitter, bluesky,
-            notes, submitter_email, submitter_relationship, last_verified, submitted_at, status
-          ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,'pending')`,
+            regulatory_stance, regulatory_stance_detail, evidence_source,
+            agi_timeline, ai_risk_level,
+            threat_models, threat_models_detail, influence_type,
+            twitter, bluesky,
+            notes, parent_org_id, submitter_email, submitter_relationship,
+            last_verified, submitted_at, status
+          ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,'pending')`,
           [
             data.name, data.category || null, data.website || null,
             data.location || null, data.fundingModel || null,
-            data.regulatoryStance || null, data.evidenceSource || null,
+            data.regulatoryStance || null, data.regulatoryStanceDetail || null,
+            data.evidenceSource || null,
             data.agiTimeline || null, data.aiRiskLevel || null,
-            data.threatModels || null, data.influenceType || null,
+            data.threatModels || null, data.threatModelsDetail || null,
+            data.influenceType || null,
             data.twitter || null, data.bluesky || null,
-            data.notes || null, data.submitterEmail || null,
-            data.submitterRelationship || null, data.lastVerified || null, ts,
+            data.notes || null, data.parentOrgId ? parseInt(data.parentOrgId, 10) : null,
+            data.submitterEmail || null, data.submitterRelationship || null,
+            data.lastVerified || null, ts,
           ]
         );
       } else if (type === 'resource') {
@@ -148,6 +193,30 @@ export const handler = async (event) => {
           ]
         );
       }
+
+      // If TipTap mentions exist, create relationship entries (pending review)
+      if (notesMentions && Array.isArray(notesMentions)) {
+        for (const mention of notesMentions) {
+          if (mention.type && mention.id) {
+            await client.query(
+              `INSERT INTO relationships (source_type, source_id, target_type, target_id, relationship_type, created_by)
+              VALUES ($1, $2, $3, $4, 'mentioned', 'tiptap_mention')
+              ON CONFLICT DO NOTHING`,
+              [type, submissionResult.rows[0].id, mention.type, parseInt(mention.id, 10)]
+            );
+          }
+        }
+      }
+
+      // If this is an update to existing entity, increment submission_count
+      if (entityId) {
+        const table = type === 'person' ? 'people' : type === 'organization' ? 'organizations' : 'resources';
+        await client.query(
+          `UPDATE ${table} SET submission_count = submission_count + 1 WHERE id = $1`,
+          [entityId]
+        );
+      }
+
     } finally {
       client.release();
     }

@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="no-referrer">
   <title>Map — Mapping AI</title>
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <style>
@@ -63,13 +64,14 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
 .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
 .nav-links a:hover, .nav-links a.active { color: var(--text-1); }
 
-.map-container { position: fixed; top: 48px; left: 0; right: 0; bottom: 0; }
+.map-container { position: fixed; top: 48px; left: 0; right: 0; bottom: 0; transition: right 0.3s ease; }
+.map-container.shifted { right: min(440px, 50vw); }
 
 /* Controls */
 .controls {
   position: fixed; top: 60px; left: 1rem;
   display: flex; flex-direction: column; gap: 0.4rem;
-  z-index: 50; max-height: calc(100vh - 80px); overflow-y: auto;
+  z-index: 50; max-height: calc(100vh - 80px); overflow: visible;
 }
 .control-group {
   background: var(--bg-panel-alpha); border-radius: 6px;
@@ -296,6 +298,89 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   .nav-links.open { display: flex; }
   .detail-panel { width: 100%; }
 }
+
+/* Mobile banner */
+.mobile-banner { display: none; }
+@media (max-width: 768px) {
+  .mobile-banner {
+    display: flex; align-items: center; justify-content: space-between;
+    position: fixed; top: 48px; left: 0; right: 0; z-index: 90;
+    padding: 0.4rem 1rem;
+    background: var(--bg-panel); border-bottom: 1px solid var(--line);
+    font-family: var(--mono); font-size: 10px; color: var(--text-3);
+    letter-spacing: 0.02em;
+  }
+  .mobile-banner button {
+    background: none; border: none; cursor: pointer;
+    font-size: 14px; color: var(--text-3); padding: 0.2rem 0.4rem;
+    line-height: 1;
+  }
+  .mobile-banner button:hover { color: var(--text-1); }
+  .controls { top: calc(48px + 32px + 12px); }
+  .mobile-banner ~ .map-container { top: calc(48px + 32px); }
+}
+
+/* Mobile controls: bottom bar with filter overlay */
+@media (max-width: 600px) {
+  .controls {
+    position: fixed; top: auto; left: 0; right: 0; bottom: 0;
+    flex-direction: row; align-items: center;
+    gap: 0.3rem; padding: 0.4rem 0.6rem;
+    max-height: none; overflow: visible;
+    background: var(--bg-panel-alpha); backdrop-filter: blur(8px);
+    border-top: 1px solid var(--line);
+  }
+  .controls .control-group { padding: 0.4rem 0.5rem; }
+  .controls .control-group:first-child { flex: 1; min-width: 0; }
+  .controls #category-filters,
+  .controls #stance-legend { display: none; }
+  .controls.filters-open #category-filters,
+  .controls.filters-open #stance-legend {
+    display: block; position: fixed; bottom: 52px; left: 0; right: 0;
+    background: var(--bg-panel); border-top: 1px solid var(--line);
+    padding: 0.75rem; max-height: 60vh; overflow-y: auto;
+    z-index: 55;
+  }
+  .filter-chips { max-width: none; }
+  .search-input { width: 100%; }
+  /* Larger tap targets on mobile */
+  .chip { padding: 0.35rem 0.6rem; font-size: 9px; }
+  .view-btn { padding: 0.4rem 0.6rem; font-size: 10px; }
+  .stance-legend-item { padding: 0.3rem 0; font-size: 9px; }
+  /* Detail panel full-width overlay */
+  .detail-panel { width: 100%; }
+  /* Contribute panel full-width */
+  #contribute-panel { width: 100vw; }
+  .map-container.shifted { right: 0; }
+  /* Zoom controls smaller */
+  .zoom-controls { bottom: 4rem; right: 0.75rem; }
+  .zoom-btn { width: 28px; height: 28px; font-size: 12px; }
+  /* Entity count repositioned above bottom bar */
+  .entity-count { bottom: 4rem; left: 0.75rem; font-size: 9px; }
+  /* Contribute button above bottom bar */
+  #contribute-btn { bottom: 4rem; right: 3.5rem; }
+}
+
+/* Mobile filter toggle button (injected via JS) */
+.mobile-filter-btn {
+  display: none;
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  padding: 0.4rem 0.6rem; border: 1px solid var(--line);
+  background: transparent; color: var(--text-3);
+  border-radius: 3px; cursor: pointer; white-space: nowrap;
+}
+@media (max-width: 600px) {
+  .mobile-filter-btn { display: block; }
+}
+
+/* Tablet: narrower controls */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .controls { left: 0.5rem; }
+  .filter-chips { max-width: 160px; }
+  .control-group { padding: 0.5rem 0.6rem; }
+  .detail-panel { width: 280px; }
+}
 </style>
 </head>
 <body>
@@ -315,8 +400,13 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   <button class="theme-toggle" id="theme-toggle" title="Toggle dark/light mode">&#9790;</button>
 </nav>
 
+<div class="mobile-banner" id="mobile-banner">
+  <span>Best viewed on desktop for the full interactive experience</span>
+  <button onclick="this.parentElement.remove();localStorage.setItem('mobileBannerDismissed','1')">&#10005;</button>
+</div>
+
 <div class="controls">
-  <div class="control-group">
+  <div class="control-group" style="position:relative; z-index:100;">
     <div class="search-box">
       <span class="search-icon">&#9906;</span>
       <input class="search-input" id="search-input" type="text" placeholder="Search entities..." autocomplete="off">
@@ -326,17 +416,18 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   <div class="control-group">
     <h3>View</h3>
     <div class="view-toggles">
-      <button class="view-btn active" data-view="orgs">Orgs</button>
+      <button class="view-btn" data-view="orgs">Orgs</button>
       <button class="view-btn" data-view="people">People</button>
-      <button class="view-btn" data-view="all">All</button>
+      <button class="view-btn" data-view="resources">Resources</button>
+      <button class="view-btn active" data-view="all">All</button>
     </div>
   </div>
   <div class="control-group" id="category-filters">
-    <h3>Category</h3>
+    <h3 style="display:flex;justify-content:space-between;align-items:center;">Category <span class="filter-reset" id="category-reset" style="font-size:8px;text-transform:none;letter-spacing:0;color:var(--accent);cursor:pointer;font-weight:400;">select all</span></h3>
     <div class="filter-chips" id="category-chips"></div>
   </div>
   <div class="control-group" id="stance-legend">
-    <h3>Regulatory Stance</h3>
+    <h3 style="display:flex;justify-content:space-between;align-items:center;">Regulatory Stance <span class="filter-reset" id="stance-reset" style="font-size:8px;text-transform:none;letter-spacing:0;color:var(--accent);cursor:pointer;font-weight:400;">select all</span></h3>
     <div class="stance-legend-items" id="stance-legend-items"></div>
   </div>
 </div>
@@ -361,25 +452,134 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
 
 <div class="entity-count" id="entity-count"></div>
 
+<!-- Contribute sidebar -->
+<style>
+#contribute-btn {
+  position: fixed; bottom: 1.5rem; right: 4.5rem; z-index: 60;
+  display: flex; align-items: center; gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  background: var(--accent); color: #fff; border: none; border-radius: 20px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase;
+  cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  transition: transform 0.15s;
+}
+#contribute-btn:hover { transform: scale(1.04); }
+#contribute-btn.hidden { display: none; }
+#contribute-panel {
+  position: fixed; top: 48px; right: 0; bottom: 0;
+  width: min(440px, 50vw);
+  background: var(--bg-panel); border-left: 1px solid var(--line);
+  z-index: 70; transform: translateX(100%); transition: transform 0.3s ease;
+  display: flex; flex-direction: column;
+}
+#contribute-panel.open { transform: translateX(0); }
+#contribute-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--mono); font-size: 10px;
+  color: var(--text-3); letter-spacing: 0.06em; text-transform: uppercase;
+}
+#contribute-header button {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.04em;
+  background: none; border: 1px solid var(--line); border-radius: 3px;
+  padding: 0.25rem 0.5rem; cursor: pointer; color: var(--text-3);
+}
+#contribute-header button:hover { border-color: var(--text-2); color: var(--text-1); }
+@media (max-width: 800px) {
+  #contribute-panel { width: 100vw; }
+  .map-container.shifted { right: 0; }
+}
+</style>
+
+<button id="contribute-btn">+ Add to Map</button>
+<div id="contribute-panel">
+  <div id="contribute-header">
+    <span>Add to map</span>
+    <div style="display:flex;gap:0.4rem;">
+      <button onclick="window.open('/contribute.html','_blank')">Open full page ↗</button>
+      <button id="contribute-close">Close ✕</button>
+    </div>
+  </div>
+  <iframe src="/contribute.html" style="width:100%;flex:1;border:none;" title="Contribute"></iframe>
+</div>
+
+<script>
+const contribBtn = document.getElementById('contribute-btn');
+const contribPanel = document.getElementById('contribute-panel');
+const contribClose = document.getElementById('contribute-close');
+const mapContainer = document.querySelector('.map-container');
+
+contribBtn.addEventListener('click', () => {
+  contribPanel.classList.add('open');
+  contribBtn.classList.add('hidden');
+  mapContainer.classList.add('shifted');
+  // Re-render map after transition to recalculate center
+  setTimeout(() => { if (typeof render === 'function') render(); }, 350);
+});
+contribClose.addEventListener('click', () => {
+  contribPanel.classList.remove('open');
+  contribBtn.classList.remove('hidden');
+  mapContainer.classList.remove('shifted');
+  setTimeout(() => { if (typeof render === 'function') render(); }, 350);
+});
+
+// Mobile banner: hide if previously dismissed
+if (localStorage.getItem('mobileBannerDismissed') === '1') {
+  const banner = document.getElementById('mobile-banner');
+  if (banner) banner.remove();
+}
+
+// Mobile filter toggle button
+(function() {
+  const controls = document.querySelector('.controls');
+  if (!controls) return;
+  const btn = document.createElement('button');
+  btn.className = 'mobile-filter-btn';
+  btn.textContent = 'Filters';
+  btn.addEventListener('click', () => {
+    controls.classList.toggle('filters-open');
+    btn.textContent = controls.classList.contains('filters-open') ? 'Close' : 'Filters';
+  });
+  controls.appendChild(btn);
+})();
+</script>
+
 <script>
 const CATEGORY_COLORS = {
-  'Frontier Lab':          '#d4644a',
-  'AI Safety/Alignment':   '#4a9e7e',
-  'Think Tank/Policy Org': '#5b82bf',
-  'Government/Agency':     '#8a72bf',
-  'Academic':              '#d4a44a',
-  'VC/Capital/Philanthropy':'#4aafa0',
-  'Labor/Civil Society':   '#d4885a',
-  'Media/Journalism':      '#a09060',
-  'Political Campaign/PAC':'#b06a8a',
-  'Ethics/Bias/Rights':    '#5abf9a',
-  'Policymaker':           '#8a72bf',
-  'Executive':             '#d4644a',
-  'Researcher':            '#4a9e7e',
-  'Investor':              '#4aafa0',
-  'Organizer':             '#d4885a',
-  'Journalist':            '#a09060',
-  'Cultural figure':       '#b06a8a',
+  // Full form names (from form dropdowns)
+  'Frontier Lab':           '#d4644a',   // coral/red-orange
+  'AI Safety/Alignment':    '#2d8a6e',   // dark teal
+  'Think Tank/Policy Org':  '#5b82bf',   // steel blue
+  'Government/Agency':      '#7c5cbf',   // violet
+  'Academic':               '#d4a44a',   // gold
+  'VC/Capital/Philanthropy':'#1a8a8a',   // dark cyan
+  'Labor/Civil Society':    '#d4885a',   // warm orange
+  'Media/Journalism':       '#8b6914',   // dark amber
+  'Political Campaign/PAC': '#b06a8a',   // mauve/rose
+  'Ethics/Bias/Rights':     '#e07020',   // bright orange
+  'Policymaker':            '#9955cc',   // bright purple
+  // Short form names (from test/seed data)
+  'AI Safety':              '#2d8a6e',   // dark teal
+  'Think Tank':             '#5b82bf',   // steel blue
+  'Government':             '#7c5cbf',   // violet
+  'VC / Funder':            '#1a8a8a',   // dark cyan
+  'Ethics / Civil Society': '#e07020',   // bright orange
+  'Labor / Workforce':      '#d4885a',   // warm orange
+  'Media':                  '#8b6914',   // dark amber
+  // Role-based
+  'Executive':              '#d4644a',
+  'Researcher':             '#2d8a6e',
+  'Investor':               '#1a8a8a',
+  'Organizer':              '#d4885a',
+  'Journalist':             '#8b6914',
+  'Cultural figure':        '#b06a8a',
+  // Resource categories
+  'AI Policy':              '#5b82bf',
+  'AI Capabilities':        '#d4644a',
+  'Ethics':                 '#e07020',
+  'National Security':      '#7c5cbf',
+  'Resources':              '#6b7280',
 };
 const DEFAULT_COLOR = '#6a7080';
 function getColor(cat) { return CATEGORY_COLORS[cat] || DEFAULT_COLOR; }
@@ -452,6 +652,15 @@ const PEOPLE_IMAGES = {
   'Marsha Blackburn': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Marsha_Blackburn_official_photo.jpg/200px-Marsha_Blackburn_official_photo.jpg',
   'Cory Booker': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Cory_Booker%2C_official_portrait%2C_114th_Congress.jpg/200px-Cory_Booker%2C_official_portrait%2C_114th_Congress.jpg',
   'Tim Wu': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Tim_Wu_-_Annual_Meeting_of_the_New_Champions_2011.jpg/200px-Tim_Wu_-_Annual_Meeting_of_the_New_Champions_2011.jpg',
+  'Yann LeCun': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Yann_LeCun_-_2018_%28cropped%29.jpg/200px-Yann_LeCun_-_2018_%28cropped%29.jpg',
+  'Eliezer Yudkowsky': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Eliezer_Yudkowsky%2C_Stanford_2006_%28cropped%29.jpg/200px-Eliezer_Yudkowsky%2C_Stanford_2006_%28cropped%29.jpg',
+  'Timnit Gebru': 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Timnit_Gebru_crop.jpg/200px-Timnit_Gebru_crop.jpg',
+  'Meredith Whittaker': 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Meredith_Whittaker_in_2023_%28cropped%29.jpg/200px-Meredith_Whittaker_in_2023_%28cropped%29.jpg',
+  'Dan Hendrycks': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Dan_Hendrycks_headshot.jpg/200px-Dan_Hendrycks_headshot.jpg',
+  'Holden Karnofsky': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Holden_Karnofsky_2015.jpg/200px-Holden_Karnofsky_2015.jpg',
+  'Gina Raimondo': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Gina_Raimondo_official_portrait.jpg/200px-Gina_Raimondo_official_portrait.jpg',
+  'Fran Drescher': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Fran_Drescher_2012_Shankbone.JPG/200px-Fran_Drescher_2012_Shankbone.JPG',
+  'Casey Newton': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Casey_Newton_2024.jpg/200px-Casey_Newton_2024.jpg',
 };
 
 // Track which images loaded successfully
@@ -460,15 +669,36 @@ const imageCache = {};
 function getOrgLogoUrl(name) {
   const domain = ORG_DOMAINS[name];
   if (!domain) return null;
-  return `https://logo.clearbit.com/${domain}`;
+  return `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
 }
 
 function getPersonImageUrl(name) {
   return PEOPLE_IMAGES[name] || null;
 }
 
+// Resource type icons (SVG data URIs for map nodes)
+// Clean minimalist SVG paths for resource type icons (24x24 viewBox)
+const RESOURCE_TYPE_ICONS = {
+  'Book':           'M4 19.5A2.5 2.5 0 0 1 6.5 17H20 M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z',
+  'Podcast':        'M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z M19 10v2a7 7 0 0 1-14 0v-2 M12 19v4 M8 23h8',
+  'Report':         'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z M14 2v6h6 M16 13H8 M16 17H8 M10 9H8',
+  'Essay':          'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z M14 2v6h6',
+  'Video':          'M23 7l-7 5 7 5V7z M1 5h15v14H1z',
+  'News Article':   'M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z M8 7h8 M8 11h8 M8 15h4',
+  'Academic Paper': 'M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z',
+  'Website':        'M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z M2 12h20 M12 2a15 15 0 0 1 4 10 15 15 0 0 1-4 10 15 15 0 0 1-4-10 15 15 0 0 1 4-10z',
+  'Substack/Newsletter': 'M4 4h16v16H4z M4 9h16 M9 4v16',
+};
+// Labels for detail panel
+const RESOURCE_TYPE_LABELS = {
+  'Book': '📕', 'Podcast': '🎙', 'Report': '📋', 'Essay': '📝',
+  'Video': '▶', 'News Article': '📰', 'Academic Paper': '📖',
+  'Website': '🌐', 'Substack/Newsletter': '📧',
+};
+
 function getImageUrl(d) {
   if (d.entityType === 'organization') return getOrgLogoUrl(d.name);
+  if (d.entityType === 'resource') return null; // resources use emoji icons
   return getPersonImageUrl(d.name);
 }
 
@@ -527,9 +757,9 @@ function inferOrgLinks(people, orgs) {
   return links;
 }
 
-let currentView = 'orgs';
+let currentView = 'all';
 let activeCategories = new Set();
-let allData = { people: [], organizations: [] };
+let allData = { people: [], organizations: [], resources: [], relationships: [], person_organizations: [] };
 let inferredLinks = [];
 let simulation = null;
 let currentZoom = d3.zoomIdentity;
@@ -548,20 +778,90 @@ const STANCE_ORDER = ['Accelerate','Light-touch','Targeted','Moderate','Restrict
 let activeStances = new Set(STANCE_ORDER);
 let stanceFilterActive = false; // true when user has toggled any stance off
 
+// Normalize stance values like "Targeted regulation" → "Targeted"
+function getStanceColor(stance) {
+  if (!stance) return null;
+  if (STANCE_COLORS[stance]) return STANCE_COLORS[stance];
+  // Try matching the first word
+  const firstWord = stance.split(/[\s\/]/)[0];
+  if (STANCE_COLORS[firstWord]) return STANCE_COLORS[firstWord];
+  // Try partial match
+  for (const key of Object.keys(STANCE_COLORS)) {
+    if (stance.toLowerCase().includes(key.toLowerCase())) return STANCE_COLORS[key];
+  }
+  return null;
+}
+function getStanceKey(stance) {
+  if (!stance) return null;
+  if (STANCE_COLORS[stance]) return stance;
+  const firstWord = stance.split(/[\s\/]/)[0];
+  if (STANCE_COLORS[firstWord]) return firstWord;
+  for (const key of Object.keys(STANCE_COLORS)) {
+    if (stance.toLowerCase().includes(key.toLowerCase())) return key;
+  }
+  return null;
+}
+
 fetch('map-data.json')
   .then(r => r.json())
   .then(data => {
     allData = data;
-    inferredLinks = inferOrgLinks(data.people, data.organizations);
+    // Ensure new fields have defaults for backward compat
+    if (!allData.resources) allData.resources = [];
+    if (!allData.relationships) allData.relationships = [];
+    if (!allData.person_organizations) allData.person_organizations = [];
+    // Build links: prefer explicit person_organizations, fall back to inferred
+    if (allData.person_organizations.length > 0) {
+      inferredLinks = buildExplicitLinks(allData);
+    } else {
+      inferredLinks = inferOrgLinks(data.people, data.organizations);
+    }
     buildFilters();
     buildStanceLegend();
     render();
   });
 
+// Build links from explicit person_organizations + relationships data
+function buildExplicitLinks(data) {
+  const links = [];
+  const orgById = {};
+  data.organizations.forEach(o => { orgById[o.id] = o; });
+  const personById = {};
+  data.people.forEach(p => { personById[p.id] = p; });
+
+  // Person-org affiliations
+  data.person_organizations.forEach(po => {
+    const person = personById[po.person_id];
+    const org = orgById[po.organization_id];
+    if (person && org) {
+      links.push({ personName: person.name, orgName: org.name });
+    }
+  });
+
+  // Also add relationships between people and orgs
+  data.relationships.forEach(rel => {
+    if (rel.source_type === 'person' && rel.target_type === 'organization') {
+      const person = personById[rel.source_id];
+      const org = orgById[rel.target_id];
+      if (person && org && !links.some(l => l.personName === person.name && l.orgName === org.name)) {
+        links.push({ personName: person.name, orgName: org.name });
+      }
+    }
+  });
+
+  return links;
+}
+
 function buildFilters() {
-  const orgCats = [...new Set(allData.organizations.map(d => d.category).filter(Boolean))];
-  const peopleCats = [...new Set(allData.people.map(d => d.category).filter(Boolean))];
-  const allCats = [...new Set([...orgCats, ...peopleCats])].sort();
+  const orgCats = [...new Set(allData.organizations.map(d => normalizeCategory(d.category)).filter(Boolean))];
+  const peopleCats = [...new Set(allData.people.map(d => normalizeCategory(d.category)).filter(Boolean))];
+  const rawCats = [...new Set([...orgCats, ...peopleCats])];
+  // Sort by semantic order
+  const allCats = rawCats.sort((a, b) => {
+    const ia = CLUSTER_ORDER.indexOf(a);
+    const ib = CLUSTER_ORDER.indexOf(b);
+    return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib);
+  });
 
   const container = document.getElementById('category-chips');
   allCats.forEach(cat => {
@@ -620,11 +920,21 @@ function buildStanceLegend() {
   container.appendChild(noStance);
 }
 
+// Restore saved view from localStorage
+const savedView = localStorage.getItem('mapView');
+if (savedView && ['orgs','people','resources','all'].includes(savedView)) {
+  currentView = savedView;
+  document.querySelectorAll('.view-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.view === savedView);
+  });
+}
+
 document.querySelectorAll('.view-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     currentView = btn.dataset.view;
+    localStorage.setItem('mapView', currentView);
     render();
   });
 });
@@ -632,28 +942,98 @@ document.querySelectorAll('.view-btn').forEach(btn => {
 function passesStanceFilter(d) {
   if (!stanceFilterActive) return true;
   const unknownActive = document.querySelector('#stance-legend-items .stance-legend-item:last-child')?.dataset.active !== 'false';
-  if (d.regulatory_stance && STANCE_COLORS[d.regulatory_stance]) {
-    return activeStances.has(d.regulatory_stance);
-  }
+  const key = getStanceKey(d.regulatory_stance);
+  if (key) return activeStances.has(key);
   return unknownActive;
 }
 
+// Normalize similar category names to a canonical form
+function normalizeCategory(cat) {
+  if (!cat) return null;
+  const c = cat.toLowerCase();
+  if (c.includes('ethics') || c.includes('civil society') || c.includes('bias') || c.includes('rights')) return 'Ethics / Civil Society';
+  if (c.includes('ai safety') || c.includes('alignment')) return 'AI Safety';
+  if (c.includes('think tank') || c.includes('policy org')) return 'Think Tank';
+  if (c.includes('government') || c.includes('agency')) return 'Government';
+  if (c.includes('policymaker')) return 'Policymaker';
+  if (c.includes('vc') || c.includes('capital') || c.includes('philanthropy') || c.includes('funder')) return 'VC / Funder';
+  if (c.includes('labor') || c.includes('workforce')) return 'Labor / Workforce';
+  if (c.includes('media') || c.includes('journalism')) return 'Media';
+  if (c.includes('academic')) return 'Academic';
+  if (c.includes('frontier')) return 'Frontier Lab';
+  if (c.includes('campaign') || c.includes('pac')) return 'Political Campaign';
+  return cat;
+}
+
+// Semantic cluster ordering — related categories are adjacent
+const CLUSTER_ORDER = [
+  'Frontier Lab',
+  'AI Safety',
+  'Academic',
+  'Think Tank',
+  'Government',
+  'Policymaker',
+  'VC / Funder',
+  'Ethics / Civil Society',
+  'Labor / Workforce',
+  'Media',
+  'Political Campaign',
+  'Resources', // collapsed cluster for all resources in "all" view
+];
+
 function getVisibleNodes() {
   let nodes = [];
+  // Count total visible nodes first for auto-scaling
+  let totalCount = 0;
+  if (currentView === 'orgs' || currentView === 'all') totalCount += allData.organizations.filter(d => d.category && activeCategories.has(d.category) && passesStanceFilter(d)).length;
+  if (currentView === 'people' || currentView === 'all') totalCount += allData.people.filter(d => d.category && activeCategories.has(d.category) && passesStanceFilter(d)).length;
+  if (currentView === 'resources' || currentView === 'all') totalCount += allData.resources.length;
+
+  // Scale factor: shrink nodes as dataset grows (1.0 at 30 nodes, 0.7 at 100, 0.5 at 200+)
+  const scale = Math.max(0.5, Math.min(1.0, 30 / Math.max(totalCount, 1)));
+
+  // Helper: check if a category (raw or normalized) is active
+  const isCatActive = (rawCat) => {
+    if (!rawCat) return false;
+    return activeCategories.has(rawCat) || activeCategories.has(normalizeCategory(rawCat));
+  };
+
   if (currentView === 'orgs' || currentView === 'all') {
     allData.organizations.forEach(d => {
-      if (!d.category || !activeCategories.has(d.category)) return;
+      if (!d.category || !isCatActive(d.category)) return;
       if (!passesStanceFilter(d)) return;
-      nodes.push({ ...d, entityType: 'organization', radius: currentView === 'all' ? 14 : 18 });
+      const sc = d.submission_count || 1;
+      const baseR = currentView === 'all' ? 14 : 18;
+      const r = Math.round((baseR + Math.min(Math.floor(sc / 3), 3)) * scale);
+      const normCat = normalizeCategory(d.category);
+      nodes.push({ ...d, category: normCat, _rawCategory: d.category, entityType: 'organization', radius: r, submissionCount: sc });
     });
   }
   if (currentView === 'people' || currentView === 'all') {
     allData.people.forEach(d => {
-      const cat = d.category || 'Unknown';
-      if (d.category && !activeCategories.has(d.category)) return;
-      if (!d.category) return;
+      if (!d.category || !isCatActive(d.category)) return;
       if (!passesStanceFilter(d)) return;
-      nodes.push({ ...d, category: cat, entityType: 'person', radius: currentView === 'all' ? 7 : 12 });
+      const sc = d.submission_count || 1;
+      const baseR = currentView === 'all' ? 7 : 12;
+      const r = Math.round((baseR + Math.min(Math.floor(sc / 3), 2)) * scale);
+      const normCat = normalizeCategory(d.category);
+      nodes.push({ ...d, category: normCat, _rawCategory: d.category, entityType: 'person', radius: r, submissionCount: sc });
+    });
+  }
+  if (currentView === 'resources') {
+    // Resources view: show by their own category
+    allData.resources.forEach(d => {
+      const cat = d.category || 'AI Policy';
+      const sc = d.submission_count || 1;
+      const r = Math.round((14 + Math.min(Math.floor(sc / 3), 3)) * scale);
+      nodes.push({ ...d, name: d.title, category: cat, entityType: 'resource', radius: r, submissionCount: sc, isResource: true });
+    });
+  } else if (currentView === 'all') {
+    // All view: collapse resources into single "Resources" cluster
+    allData.resources.forEach(d => {
+      const sc = d.submission_count || 1;
+      const r = Math.round((10 + Math.min(Math.floor(sc / 3), 3)) * scale);
+      nodes.push({ ...d, name: d.title, category: 'Resources', _rawCategory: d.category, entityType: 'resource', radius: r, submissionCount: sc, isResource: true });
     });
   }
   return nodes;
@@ -675,7 +1055,7 @@ function render() {
 
   // Restore zoom state
   zoomBehavior = d3.zoom()
-    .scaleExtent([0.2, 8])
+    .scaleExtent([0.1, 20])
     .on('zoom', (event) => {
       currentZoom = event.transform;
       g.attr('transform', event.transform);
@@ -694,24 +1074,68 @@ function render() {
   document.getElementById('entity-count').textContent = `${nodes.length} entities`;
   if (nodes.length === 0) return;
 
-  const categories = [...new Set(nodes.map(d => d.category))].sort();
-  const clusterCenters = {};
-  const centerX = width / 2;
-  const centerY = height / 2;
-  const orbitRadius = Math.min(width, height) * 0.3;
+  // Order categories semantically, filter out "Resources" from cluster layout in "all" view
+  const rawCats = [...new Set(nodes.map(d => d.category))];
+  const displayCats = currentView === 'all' ? rawCats.filter(c => c !== 'Resources') : rawCats;
+  const categories = displayCats.sort((a, b) => {
+    const ia = CLUSTER_ORDER.indexOf(a);
+    const ib = CLUSTER_ORDER.indexOf(b);
+    return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib);
+  });
 
-  categories.forEach((cat, i) => {
-    const angle = (i / categories.length) * 2 * Math.PI - Math.PI / 2;
+  // Count members per category for size-weighted positioning
+  const catCounts = {};
+  nodes.forEach(d => { catCounts[d.category] = (catCounts[d.category] || 0) + 1; });
+
+  const clusterCenters = {};
+  const controlsWidth = 280;
+  const centerX = controlsWidth + (width - controlsWidth) / 2;
+  const centerY = height / 2;
+  const orbitRadius = Math.min(width - controlsWidth, height) * 0.3;
+
+  // Sort by size descending — larger clusters get top positions (closer to -PI/2 = top)
+  const catsBySize = [...categories].sort((a, b) => (catCounts[b] || 0) - (catCounts[a] || 0));
+  catsBySize.forEach((cat, i) => {
+    const angle = (i / catsBySize.length) * 2 * Math.PI - Math.PI / 2;
     clusterCenters[cat] = {
       x: centerX + orbitRadius * Math.cos(angle),
       y: centerY + orbitRadius * Math.sin(angle)
     };
   });
 
+  // Position resource nodes near their closest related entity (author/org) in "all" view
+  const entityById = {};
+  nodes.forEach(d => { if (d.id) entityById[`${d.entityType}-${d.id}`] = d; });
+
   nodes.forEach(d => {
-    const center = clusterCenters[d.category] || { x: centerX, y: centerY };
-    d.x = center.x + (Math.random() - 0.5) * 60;
-    d.y = center.y + (Math.random() - 0.5) * 60;
+    if (d.isResource && currentView === 'all') {
+      // Find closest related entity from relationships
+      let placed = false;
+      for (const rel of (allData.relationships || [])) {
+        let relatedKey = null;
+        if (rel.source_type === 'resource' && rel.source_id === d.id) {
+          relatedKey = `${rel.target_type}-${rel.target_id}`;
+        } else if (rel.target_type === 'resource' && rel.target_id === d.id) {
+          relatedKey = `${rel.source_type}-${rel.source_id}`;
+        }
+        if (relatedKey && entityById[relatedKey]) {
+          const related = entityById[relatedKey];
+          const relCenter = clusterCenters[related.category] || { x: centerX, y: centerY };
+          d.x = relCenter.x + (Math.random() - 0.5) * 40;
+          d.y = relCenter.y + (Math.random() - 0.5) * 40;
+          placed = true;
+          break;
+        }
+      }
+      if (!placed) {
+        d.x = centerX + (Math.random() - 0.5) * 80;
+        d.y = centerY + (Math.random() - 0.5) * 80;
+      }
+    } else {
+      const center = clusterCenters[d.category] || { x: centerX, y: centerY };
+      d.x = center.x + (Math.random() - 0.5) * 60;
+      d.y = center.y + (Math.random() - 0.5) * 60;
+    }
   });
 
   // Cluster background circles (behind everything)
@@ -738,9 +1162,26 @@ function render() {
     const nodeByName = {};
     nodes.forEach(d => { nodeByName[d.name] = d; });
 
+    // Person-org links
     const visibleLinks = inferredLinks
       .filter(l => nodeByName[l.personName] && nodeByName[l.orgName])
       .map(l => ({ source: nodeByName[l.personName], target: nodeByName[l.orgName] }));
+
+    // Resource and other relationship links from DB
+    const nodeById = {};
+    nodes.forEach(d => {
+      if (d.entityType === 'organization') nodeById[`organization-${d.id}`] = d;
+      else if (d.entityType === 'person') nodeById[`person-${d.id}`] = d;
+      else if (d.entityType === 'resource') nodeById[`resource-${d.id}`] = d;
+    });
+    (allData.relationships || []).forEach(rel => {
+      if (rel.relationship_type === 'subsidiary') return; // skip, handled by hierarchy
+      const srcKey = `${rel.source_type}-${rel.source_id}`;
+      const tgtKey = `${rel.target_type}-${rel.target_id}`;
+      if (nodeById[srcKey] && nodeById[tgtKey]) {
+        visibleLinks.push({ source: nodeById[srcKey], target: nodeById[tgtKey], relType: rel.relationship_type });
+      }
+    });
 
     linkElements = g.selectAll('.connection-line')
       .data(visibleLinks)
@@ -756,10 +1197,11 @@ function render() {
   simulation = d3.forceSimulation(nodes)
     .force('charge', d3.forceManyBody().strength(d => d.entityType === 'organization' ? -5 : -2))
     .force('collision', d3.forceCollide().radius(d => d.radius + 2).strength(0.9))
-    .force('cluster', forceCluster(clusterCenters, 0.12))
-    .force('center', d3.forceCenter(centerX, centerY).strength(0.01))
-    .alpha(0.7)
-    .alphaDecay(0.025)
+    .force('cluster', forceCluster(clusterCenters, 0.15))
+    .force('x', d3.forceX(centerX).strength(0.02))
+    .force('y', d3.forceY(centerY).strength(0.02))
+    .alpha(0.5)
+    .alphaDecay(0.04)
     .on('tick', ticked);
 
   // Node groups
@@ -769,13 +1211,14 @@ function render() {
     .attr('class', 'node')
     .on('click', (event, d) => { event.stopPropagation(); showDetail(d, nodes); })
     .on('mouseenter', function(event, d) {
-      d3.select(this).select('.node-bg').attr('opacity', 1);
+      d3.select(this).select('.node-bg').attr('opacity', d.isResource ? 0.3 : 1);
       d3.select(this).select('.node-ring').attr('stroke-width', 3);
       showTooltip(event, d);
     })
     .on('mousemove', (event) => moveTooltip(event))
     .on('mouseleave', function(event, d) {
-      d3.select(this).select('.node-bg').attr('opacity', d.entityType === 'organization' ? 0.9 : 0.7);
+      const baseOpacity = d.isResource ? 0.15 : (d.entityType === 'organization' ? 0.9 : 0.7);
+      d3.select(this).select('.node-bg').attr('opacity', baseOpacity);
       d3.select(this).select('.node-ring').attr('stroke-width', 2);
       hideTooltip();
     })
@@ -799,32 +1242,55 @@ function render() {
       .append('circle')
       .attr('r', r);
 
-    // Image pattern
+    d._clipId = id;
+    d._patternId = patId;
+    d._imgIndex = i;
+
+    // Preload image — only create pattern if it actually loads
     if (imgUrl) {
-      d._patternId = patId;
-      d._clipId = id;
-      d._imgUrl = imgUrl;
-      d._imgIndex = i;
+      const testImg = new Image();
+      testImg.referrerPolicy = 'no-referrer';
+      testImg.onload = () => {
+        d._imgUrl = imgUrl;
+        // Create SVG pattern now that we know the image works
+        const pat = defs.append('pattern')
+          .attr('id', patId)
+          .attr('width', 1).attr('height', 1)
+          .attr('patternContentUnits', 'objectBoundingBox');
+        pat.append('rect')
+          .attr('width', 1).attr('height', 1)
+          .attr('fill', d.entityType === 'organization' ? '#fff' : getColor(d.category));
+        pat.append('image')
+          .attr('href', imgUrl)
+          .attr('width', 1).attr('height', 1)
+          .attr('preserveAspectRatio', 'xMidYMid slice');
 
-      const pat = defs.append('pattern')
-        .attr('id', patId)
-        .attr('width', 1).attr('height', 1)
-        .attr('patternContentUnits', 'objectBoundingBox');
-
-      // White background circle for logos
-      pat.append('rect')
-        .attr('width', 1).attr('height', 1)
-        .attr('fill', d.entityType === 'organization' ? '#fff' : getColor(d.category));
-
-      pat.append('image')
-        .attr('href', imgUrl)
-        .attr('width', 1).attr('height', 1)
-        .attr('preserveAspectRatio', 'xMidYMid slice');
+        // Add the image circle to the node
+        const nodeEl = d3.select(nodeGroup.nodes()[i]);
+        if (nodeEl.node()) {
+          nodeEl.insert('circle', '.stance-pip')
+            .attr('class', 'node-image')
+            .attr('r', r - (d.entityType === 'organization' ? 2 : 1))
+            .attr('fill', `url(#${patId})`)
+            .attr('clip-path', `url(#${id})`);
+          nodeEl.insert('circle', '.stance-pip')
+            .attr('class', 'node-ring')
+            .attr('r', r)
+            .attr('fill', 'none')
+            .attr('stroke', getColor(d.category))
+            .attr('stroke-width', 2)
+            .attr('opacity', 0.8);
+        }
+      };
+      testImg.onerror = () => {
+        // Image failed — node keeps initials fallback, no broken icon
+      };
+      testImg.src = imgUrl;
     }
   });
 
-  // Background circle (always present, visible as fallback or ring)
-  nodeGroup.append('circle')
+  // Background shape — circle for people/orgs, rounded rect for resources
+  nodeGroup.filter(d => !d.isResource).append('circle')
     .attr('class', 'node-bg')
     .attr('r', d => d.radius)
     .attr('fill', d => getColor(d.category))
@@ -833,36 +1299,28 @@ function render() {
     .attr('stroke-width', d => d.entityType === 'organization' ? 1.5 : 0)
     .attr('opacity', d => d.entityType === 'organization' ? 0.9 : 0.7);
 
-  // Image circle (on top, clipped)
-  nodeGroup.filter(d => d._imgUrl)
-    .append('circle')
-    .attr('class', 'node-image')
-    .attr('r', d => d.radius - (d.entityType === 'organization' ? 2 : 1))
-    .attr('fill', d => `url(#${d._patternId})`)
-    .attr('clip-path', d => `url(#${d._clipId})`)
-    .attr('opacity', 1)
-    .on('error', function(event, d) {
-      // On image load failure, hide this circle
-      d3.select(this).attr('opacity', 0);
-    });
-
-  // Border ring for image nodes
-  nodeGroup.filter(d => d._imgUrl)
-    .append('circle')
-    .attr('class', 'node-ring')
-    .attr('r', d => d.radius)
-    .attr('fill', 'none')
+  // Resource nodes: rounded squares
+  nodeGroup.filter(d => d.isResource).append('rect')
+    .attr('class', 'node-bg')
+    .attr('x', d => -d.radius)
+    .attr('y', d => -d.radius)
+    .attr('width', d => d.radius * 2)
+    .attr('height', d => d.radius * 2)
+    .attr('rx', 5).attr('ry', 5)
+    .attr('fill', d => getColor(d.category))
+    .attr('opacity', 0.15)
     .attr('stroke', d => getColor(d.category))
-    .attr('stroke-width', 2)
-    .attr('opacity', 0.8);
+    .attr('stroke-width', 1.5);
 
-  // Initials (only for nodes without images, or small nodes)
-  nodeGroup.filter(d => !d._imgUrl && d.radius >= 10)
+  // Image circles and rings are now added asynchronously via the preloader above
+
+  // Initials (only for nodes without images, or small nodes) — not for resources
+  nodeGroup.filter(d => !d._imgUrl && !d.isResource && d.radius >= 6)
     .append('text')
     .attr('text-anchor', 'middle')
     .attr('dy', '0.35em')
     .attr('font-family', 'var(--mono)')
-    .attr('font-size', d => d.radius >= 16 ? '7px' : '5px')
+    .attr('font-size', d => d.radius >= 16 ? '7px' : d.radius >= 10 ? '5px' : '4px')
     .attr('fill', '#fff')
     .attr('opacity', 0.9)
     .attr('pointer-events', 'none')
@@ -872,16 +1330,63 @@ function render() {
       return (d.name || '').slice(0, 2).toUpperCase();
     });
 
+  // Resource type icons (clean SVG paths)
+  nodeGroup.filter(d => d.isResource).each(function(d) {
+    const iconPath = RESOURCE_TYPE_ICONS[d.resource_type] || RESOURCE_TYPE_ICONS['Essay'];
+    const iconSize = d.radius * 1.1;
+    const g = d3.select(this).append('g')
+      .attr('transform', `translate(${-iconSize/2},${-iconSize/2})`)
+      .attr('pointer-events', 'none');
+    // Split multi-path strings (separated by ' M') and draw each
+    const paths = iconPath.split(/(?= M)/);
+    paths.forEach(p => {
+      g.append('path')
+        .attr('d', p.trim())
+        .attr('fill', 'none')
+        .attr('stroke', getColor(d.category))
+        .attr('stroke-width', 1.5)
+        .attr('stroke-linecap', 'round')
+        .attr('stroke-linejoin', 'round')
+        .attr('transform', `scale(${iconSize / 24})`);
+    });
+  });
+
   // Stance indicator (small colored pip at bottom-right of node)
-  nodeGroup.filter(d => d.regulatory_stance && STANCE_COLORS[d.regulatory_stance])
+  nodeGroup.filter(d => getStanceColor(d.regulatory_stance))
     .append('circle')
     .attr('class', 'stance-pip')
     .attr('cx', d => d.radius * 0.65)
     .attr('cy', d => d.radius * 0.65)
-    .attr('r', d => Math.max(3, d.radius * 0.22))
-    .attr('fill', d => STANCE_COLORS[d.regulatory_stance])
+    .attr('r', d => Math.max(2, d.radius * 0.2))
+    .attr('fill', d => getStanceColor(d.regulatory_stance))
     .attr('stroke', 'var(--bg-page)')
-    .attr('stroke-width', 1.5)
+    .attr('stroke-width', d => d.radius >= 10 ? 1.5 : 0.75)
+    .attr('pointer-events', 'none');
+
+  // Submission count indicator — subtle gold outer ring for entities with 5+ submissions
+  nodeGroup.filter(d => (d.submissionCount || 0) >= 5 && !d.isResource)
+    .append('circle')
+    .attr('class', 'submission-ring')
+    .attr('r', d => d.radius + 2)
+    .attr('fill', 'none')
+    .attr('stroke', '#fbbf24')
+    .attr('stroke-width', 1)
+    .attr('stroke-dasharray', '2,2')
+    .attr('opacity', 0.5)
+    .attr('pointer-events', 'none');
+  nodeGroup.filter(d => (d.submissionCount || 0) >= 5 && d.isResource)
+    .append('rect')
+    .attr('class', 'submission-ring')
+    .attr('x', d => -d.radius - 2)
+    .attr('y', d => -d.radius - 2)
+    .attr('width', d => d.radius * 2 + 4)
+    .attr('height', d => d.radius * 2 + 4)
+    .attr('rx', 6).attr('ry', 6)
+    .attr('fill', 'none')
+    .attr('stroke', '#fbbf24')
+    .attr('stroke-width', 1)
+    .attr('stroke-dasharray', '2,2')
+    .attr('opacity', 0.5)
     .attr('pointer-events', 'none');
 
   // Cluster labels (overlay layer, rendered AFTER nodes so they're on top)
@@ -975,24 +1480,59 @@ function showDetail(d, allNodes) {
     if (value) fields += `<div class="detail-field"><label>${label}</label><span>${value}</span></div>`;
   };
 
+  // Submission count + disagreement
+  const sc = d.submission_count || d.submissionCount || 1;
+  if (sc > 1) {
+    let badge = `<span style="background:#fbbf24;color:#000;padding:1px 6px;border-radius:3px;font-size:11px;font-weight:500;">${sc} entries</span>`;
+    const ds = d.disagreement_score;
+    if (ds > 0) {
+      const dsColor = ds > 0.3 ? '#ef4444' : ds > 0.1 ? '#f97316' : '#22c55e';
+      const dsLabel = ds > 0.3 ? 'High disagreement' : ds > 0.1 ? 'Some disagreement' : 'Low disagreement';
+      badge += ` <span style="background:${dsColor}18;color:${dsColor};padding:1px 6px;border-radius:3px;font-size:11px;font-weight:500;margin-left:4px;">${dsLabel}</span>`;
+    }
+    addField('Submissions', badge);
+  }
+
   if (d.entityType === 'person') {
     addField('Title', d.title);
     addField('Primary Organization', d.primary_org);
     addField('Other Organizations', d.other_orgs);
     addField('Location', d.location);
-    addField('Regulatory Stance', d.regulatory_stance);
-    addField('Capability Belief', d.capability_belief);
+    const stColor = getStanceColor(d.regulatory_stance);
+    addField('Regulatory Stance', d.regulatory_stance
+      ? `<span style="display:inline-flex;align-items:center;gap:5px;">${stColor ? `<span style="width:8px;height:8px;border-radius:50%;background:${stColor};display:inline-block;"></span>` : ''}${d.regulatory_stance}</span>`
+      : null);
+    addField('Evidence Source', d.evidence_source);
+    addField('AGI Timeline', d.agi_timeline);
+    addField('AI Risk Level', d.ai_risk_level);
+    addField('Key Concerns', d.threat_models);
     addField('Influence Type', d.influence_type);
-    addField('Twitter/X', d.twitter ? `@${d.twitter.replace('@', '')}` : null);
+    addField('Twitter/X', d.twitter ? `<a href="https://x.com/${d.twitter.replace('@', '')}" target="_blank" rel="noopener">@${d.twitter.replace('@', '')}</a>` : null);
+    addField('Bluesky', d.bluesky ? `<a href="https://bsky.app/profile/${d.bluesky.replace('@', '')}" target="_blank" rel="noopener">${d.bluesky}</a>` : null);
+    addField('Notes', d.notes);
+  } else if (d.entityType === 'resource') {
+    addField('Author', d.author);
+    addField('Type', d.resource_type ? `${RESOURCE_TYPE_LABELS[d.resource_type] || ''} ${d.resource_type}` : null);
+    addField('URL', d.url ? `<a href="${d.url}" target="_blank">${d.url}</a>` : null);
+    addField('Year', d.year);
+    addField('Category', d.category);
+    addField('Key Argument', d.key_argument);
     addField('Notes', d.notes);
   } else {
     addField('Website', d.website ? `<a href="${d.website}" target="_blank">${d.website}</a>` : null);
     addField('Location', d.location);
     addField('Funding Model', d.funding_model);
-    addField('Regulatory Stance', d.regulatory_stance);
-    addField('Capability Belief', d.capability_belief);
+    const stColor = getStanceColor(d.regulatory_stance);
+    addField('Regulatory Stance', d.regulatory_stance
+      ? `<span style="display:inline-flex;align-items:center;gap:5px;">${stColor ? `<span style="width:8px;height:8px;border-radius:50%;background:${stColor};display:inline-block;"></span>` : ''}${d.regulatory_stance}</span>`
+      : null);
+    addField('Evidence Source', d.evidence_source);
+    addField('AGI Timeline', d.agi_timeline);
+    addField('AI Risk Level', d.ai_risk_level);
+    addField('Key Concerns', d.threat_models);
     addField('Influence Type', d.influence_type);
-    addField('Twitter/X', d.twitter ? `@${d.twitter.replace('@', '')}` : null);
+    addField('Twitter/X', d.twitter ? `<a href="https://x.com/${d.twitter.replace('@', '')}" target="_blank" rel="noopener">@${d.twitter.replace('@', '')}</a>` : null);
+    addField('Bluesky', d.bluesky ? `<a href="https://bsky.app/profile/${d.bluesky.replace('@', '')}" target="_blank" rel="noopener">${d.bluesky}</a>` : null);
     addField('Notes', d.notes);
   }
 
@@ -1200,7 +1740,8 @@ function doSearch() {
   const query = expandQuery(val);
   const allEntities = [
     ...allData.organizations.map(d => ({ ...d, entityType: 'organization' })),
-    ...allData.people.filter(d => d.category).map(d => ({ ...d, entityType: 'person' }))
+    ...allData.people.filter(d => d.category).map(d => ({ ...d, entityType: 'person' })),
+    ...(allData.resources || []).map(d => ({ ...d, name: d.title, entityType: 'resource' })),
   ];
 
   const scored = allEntities
@@ -1228,14 +1769,16 @@ function doSearch() {
     div.innerHTML = `
       <span class="search-result-dot" style="background:${getColor(d.category)};"></span>
       <span class="search-result-name">${d.name}</span>
-      <span class="search-result-meta">${d.entityType === 'person' ? 'person' : 'org'}</span>
+      <span class="search-result-meta">${d.entityType === 'resource' ? 'resource' : d.entityType === 'person' ? 'person' : 'org'}</span>
     `;
     div.addEventListener('click', () => {
       searchResults.classList.remove('visible');
       // Switch view if needed
-      if (d.entityType === 'organization' && currentView === 'people') {
+      if (d.entityType === 'resource' && currentView !== 'resources') {
+        document.querySelector('[data-view="resources"]').click();
+      } else if (d.entityType === 'organization' && (currentView === 'people' || currentView === 'resources')) {
         document.querySelector('[data-view="orgs"]').click();
-      } else if (d.entityType === 'person' && currentView === 'orgs') {
+      } else if (d.entityType === 'person' && (currentView === 'orgs' || currentView === 'resources')) {
         document.querySelector('[data-view="people"]').click();
       }
       // Find and click the node after a short delay for re-render
@@ -1285,7 +1828,9 @@ function highlightNodes(names) {
     }
   });
   // Also dim cluster labels and backgrounds
-  d3.selectAll('.cluster-bg, .cluster-label').attr('opacity', names.length > 0 ? 0.03 : null);
+  d3.selectAll('.cluster-bg').attr('opacity', names.length > 0 ? 0.02 : 0.06);
+  d3.selectAll('.cluster-label-bg').attr('opacity', names.length > 0 ? 0.02 : 0.85);
+  d3.selectAll('.cluster-label').attr('opacity', names.length > 0 ? 0.05 : 1);
 }
 
 function clearSearch() {
@@ -1293,6 +1838,26 @@ function clearSearch() {
   searchResults.innerHTML = '';
   highlightNodes([]);
 }
+
+// Category "select all" reset
+document.getElementById('category-reset').addEventListener('click', () => {
+  document.querySelectorAll('#category-chips .chip').forEach(chip => {
+    chip.classList.add('active');
+    activeCategories.add(chip.dataset.category);
+  });
+  render();
+});
+
+// Stance "select all" reset
+document.getElementById('stance-reset').addEventListener('click', () => {
+  activeStances = new Set(STANCE_ORDER);
+  stanceFilterActive = false;
+  document.querySelectorAll('#stance-legend-items .stance-legend-item').forEach(item => {
+    item.classList.remove('inactive');
+    item.dataset.active = 'true';
+  });
+  render();
+});
 
 // Theme toggle
 const themeBtn = document.getElementById('theme-toggle');
