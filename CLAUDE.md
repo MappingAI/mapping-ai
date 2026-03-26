@@ -102,7 +102,7 @@ mapping-ai/
 │   ├── migrate.js          # Create/update all 6 tables + FTS triggers + indexes
 │   ├── seed.js             # Import Airtable CSV data (people + orgs)
 │   ├── export.js           # Export all tables to CSV
-│   └── export-map-data.js  # Generate map-data.json from approved DB entries
+│   └── export-map-data.js  # Generate map-data.json from approved DB entries (adds stance_score, timeline_score, risk_score)
 ├── data/
 │   ├── People-Grid view.csv       # Airtable export — people
 │   ├── Organizations-Grid view.csv # Airtable export — orgs
@@ -200,7 +200,8 @@ aws cloudfront create-invalidation --distribution-id E34ZXLC7CZX7XT --paths "/*"
 ## Map Features (map.html)
 
 - **D3.js force simulation** with orbital cluster layout, semantic ordering
-- **4 views**: Orgs (sector clusters), People (role clusters), Resources (type clusters), All (org sectors + people mapped to their org's sector)
+- **5 views**: Orgs (sector clusters), People (role clusters), Resources (type clusters), All (org sectors + people mapped to their org's sector), **Plot** (scatter/beeswarm)
+- **Plot view**: 2D scatter or 1D beeswarm plotting people + orgs on any two of {regulatory_stance, agi_timeline, ai_risk_level}; axes drawn with gridlines and tick labels; entities with null values on selected axes excluded with count shown; dynamic node radius scales with entity count
 - **Category normalization**: Merges variants ("AI Safety/Alignment" → "AI Safety")
 - **Resources**: Rounded squares with SVG type icons, clustered near related entities in All view
 - **Explicit edges**: From relationships + person_organizations tables (not just keyword-inferred)
@@ -208,13 +209,13 @@ aws cloudfront create-invalidation --distribution-id E34ZXLC7CZX7XT --paths "/*"
 - **Submission count**: Subtle gold dashed ring for ≥5 submissions
 - **Disagreement score**: Badge in detail panel for entities with conflicting submissions
 - **Cluster labels**: Positioned on outer edge, radiating away from center
-- **Search**: Semantic expansion (SEMANTIC_MAP), 40+ term groups
-- **Filters**: Category chips (rebuild per view), stance legend, "select all" reset
-- **Images**: Google Favicons (orgs), Wikipedia photos (people), async preload with fallback to initials
+- **Search**: Semantic expansion (SEMANTIC_MAP), 40+ term groups; placeholder updates per view; autocomplete filtered to entity types visible in current view; click-to-zoom (k=3) on match; inline message when entity is off-plot
+- **Filters**: Category chips (rebuild per view), stance legend; select/deselect all toggle
+- **Images**: Google Favicons (orgs), Wikipedia photos (people), async preload; initials removed when image loads
 - **Collapsible contribute sidebar**: iframe with "Open full page" option, map resizes
 - **View persistence**: localStorage saves last view tab
 - **Dark/light theme**: CSS variables, localStorage persistence
-- **Zoom**: 0.1x–20x range, controls bottom-right
+- **Zoom**: 0.1x–20x range, controls bottom-right; click any node to zoom to it (k=3); closing detail panel resets zoom
 
 ## Person Categories (roles)
 Executive, Researcher, Policymaker, Investor, Organizer, Journalist, Academic, Cultural figure

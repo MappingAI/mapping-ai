@@ -87,7 +87,7 @@ mapping-ai/
 │   ├── migrate.js          # Creates / updates database schema
 │   ├── seed.js             # Seeds DB from Airtable CSV exports
 │   ├── export.js           # Exports all DB tables to CSV
-│   └── export-map-data.js  # Generates map-data.json (strips sensitive fields)
+│   └── export-map-data.js  # Generates map-data.json (strips sensitive fields, adds stance_score/timeline_score/risk_score)
 ├── data/                   # Airtable CSV source exports
 ├── template.yaml           # AWS SAM infrastructure (Lambda + API Gateway + S3 + CloudFront)
 ├── samconfig.toml          # SAM deployment config (non-sensitive)
