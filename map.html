@@ -580,6 +580,17 @@ const CATEGORY_COLORS = {
   'Ethics':                 '#e07020',
   'National Security':      '#7c5cbf',
   'Resources':              '#6b7280',
+  // Resource type categories
+  'Book':                   '#8b5e3c',
+  'Essay':                  '#5b82bf',
+  'Report':                 '#7c5cbf',
+  'Podcast':                '#d4644a',
+  'Video':                  '#ef4444',
+  'News Article':           '#8b6914',
+  'Academic Paper':         '#2d8a6e',
+  'Website':                '#1a8a8a',
+  'Substack/Newsletter':    '#d4885a',
+  'Other':                  '#6b7280',
 };
 const DEFAULT_COLOR = '#6a7080';
 function getColor(cat) { return CATEGORY_COLORS[cat] || DEFAULT_COLOR; }
@@ -857,8 +868,11 @@ function buildFilters() {
   if (currentView === 'people') {
     // People solo view: show person ROLE categories
     rawCats = [...new Set(allData.people.map(d => normalizeCategory(d.category)).filter(Boolean))];
+  } else if (currentView === 'resources') {
+    // Resources view: show resource TYPE categories
+    rawCats = [...new Set(allData.resources.map(d => d.resource_type || 'Other').filter(Boolean))];
   } else {
-    // Orgs, All, Resources: show org SECTOR categories
+    // Orgs, All: show org SECTOR categories
     rawCats = [...new Set(allData.organizations.map(d => normalizeCategory(d.category)).filter(Boolean))];
   }
   const allCats = rawCats.sort((a, b) => {
@@ -1043,7 +1057,11 @@ function getVisibleNodes() {
   }
   if (currentView === 'people' || currentView === 'all') {
     allData.people.forEach(d => {
-      if (!d.category || !isCatActive(d.category)) return;
+      if (!d.category) return;
+      // In "all" view, people are clustered by their org's sector, so filter by the
+      // display category (org sector) not their personal role category
+      if (currentView === 'people' && !isCatActive(d.category)) return;
+      // In "all" view, always include people (they'll be mapped to an org sector cluster)
       if (!passesStanceFilter(d)) return;
       const sc = d.submission_count || 1;
 
@@ -1085,7 +1103,7 @@ function getVisibleNodes() {
   }
   if (currentView === 'resources') {
     allData.resources.forEach(d => {
-      const cat = d.category || 'AI Policy';
+      const cat = d.resource_type || 'Other'; // cluster by type in resources view
       const sc = d.submission_count || 1;
       const r = Math.round((14 + Math.min(Math.floor(sc / 3), 3)) * scale);
       nodes.push({ ...d, name: d.title, category: cat, entityType: 'resource', radius: r, submissionCount: sc, isResource: true });

@@ -257,17 +257,19 @@ details[open] summary { border-bottom: 1px solid var(--border); }
 .dup-btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
 .dup-btn.primary:hover { opacity: 0.85; }
 .update-banner {
-  font-family: var(--mono); font-size: 11px;
-  background: #f0f4ff; color: var(--accent);
+  font-family: var(--mono); font-size: 11px; line-height: 1.6;
+  background: #f0f4ff; color: var(--text-secondary);
   padding: 0.75rem 1rem;
   border-radius: 4px;
   margin-bottom: 1rem;
   grid-column: span 2;
-  display: flex; justify-content: space-between; align-items: center;
+  border-left: 3px solid var(--accent);
 }
+.update-banner strong { color: var(--accent); }
 .update-banner .cancel-update {
   cursor: pointer; text-decoration: underline;
-  color: var(--text-secondary);
+  color: var(--text-tertiary); margin-left: 0.5rem;
+  font-size: 10px;
 }
 /* Tag input for affiliated orgs */
 .tag-input-wrapper {
@@ -1691,10 +1693,8 @@ function showUpdateBanner(form, entityName) {
   const banner = document.createElement('div');
   banner.className = 'update-banner';
   banner.innerHTML = `
-    Updating existing entry: <strong>${entityName}</strong>.
-    Fields are pre-filled with current info — adjust anything you disagree with, add what's missing.
-    Use Notes to explain what you changed or added.
-    <span class="cancel-update">Cancel</span>
+    Updating <strong>${entityName}</strong> — adjust any fields you disagree with and add what's missing.
+    <span class="cancel-update">cancel</span>
   `;
   // Update notes placeholder for update mode
   const notesHelper = form.querySelector('.tiptap-notes')?.closest('.field')?.querySelector('.helper');
