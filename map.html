@@ -1476,15 +1476,34 @@ function render() {
 
   // Cluster labels (overlay layer, rendered AFTER nodes so they're on top)
   const labelLayer = g.append('g').attr('class', 'label-layer');
+  // Position labels on the outer edge of each cluster, radiating away from center
+  function getLabelPos(cat) {
+    const c = clusterCenters[cat];
+    const count = nodes.filter(n => n.category === cat).length;
+    const clusterR = Math.max(50, Math.sqrt(count) * 28);
+    // Direction from map center to cluster center
+    const dx = c.x - centerX;
+    const dy = c.y - centerY;
+    const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+    // Place label beyond the cluster circle, in the outward direction
+    const labelDist = clusterR + 14;
+    return {
+      x: c.x + (dx / dist) * labelDist,
+      y: c.y + (dy / dist) * labelDist,
+      anchor: dx > 20 ? 'start' : dx < -20 ? 'end' : 'middle',
+    };
+  }
+
   labelLayer.selectAll('.cluster-label-bg')
     .data(categories)
     .join('rect')
     .attr('class', 'cluster-label-bg')
-    .attr('x', d => clusterCenters[d].x - (d.length * 3.2 + 8))
-    .attr('y', d => {
-      const count = nodes.filter(n => n.category === d).length;
-      return clusterCenters[d].y - Math.max(50, Math.sqrt(count) * 28) - 18;
+    .attr('x', d => {
+      const pos = getLabelPos(d);
+      const w = d.length * 6.4 + 16;
+      return pos.anchor === 'end' ? pos.x - w : pos.anchor === 'start' ? pos.x - 4 : pos.x - w / 2;
     })
+    .attr('y', d => getLabelPos(d).y - 10)
     .attr('width', d => d.length * 6.4 + 16)
     .attr('height', 16)
     .attr('rx', 3)
@@ -1496,12 +1515,9 @@ function render() {
     .data(categories)
     .join('text')
     .attr('class', 'cluster-label')
-    .attr('x', d => clusterCenters[d].x)
-    .attr('y', d => {
-      const count = nodes.filter(n => n.category === d).length;
-      return clusterCenters[d].y - Math.max(50, Math.sqrt(count) * 28) - 7;
-    })
-    .attr('text-anchor', 'middle')
+    .attr('x', d => getLabelPos(d).x)
+    .attr('y', d => getLabelPos(d).y)
+    .attr('text-anchor', d => getLabelPos(d).anchor)
     .attr('font-size', '9px')
     .attr('font-weight', '500')
     .attr('fill', d => getColor(d))
