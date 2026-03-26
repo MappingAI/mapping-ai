@@ -23,16 +23,30 @@ async function exportMapData() {
 
     // Ordinal scores for 2D view axes (null = excluded from plot)
     const STANCE_SCORES = {
-      'Accelerate': 1, 'Light-touch': 2, 'Targeted': 3,
-      'Moderate': 4, 'Restrictive': 5, 'Precautionary': 6, 'Nationalize': 7,
+      'Accelerate': 1,
+      'Light-touch': 2, 'Light-touch regulation': 2,
+      'Targeted': 3, 'Targeted regulation': 3,
+      'Moderate': 4, 'Moderate regulation': 4,
+      'Restrictive': 5, 'Restrictive regulation': 5,
+      'Precautionary': 6,
+      'Nationalize': 7,
+      // 'Mixed', 'Mixed/unclear', 'Unknown', 'unclear' → null (excluded)
     };
     const TIMELINE_SCORES = {
-      'Already here': 1, '2-3 years': 2, '5-10 years': 3,
-      '10-25 years': 4, '25+ years or never': 5,
+      'Already here': 1,
+      '2-3 years': 2, 'Within 2-3 years': 2,
+      '5-10 years': 3,
+      '10-25 years': 4,
+      '25+ years or never': 5,
+      // 'Ill-defined', 'Ill-defined concept', 'Unknown' → null (excluded)
     };
     const RISK_SCORES = {
-      'Overstated': 1, 'Manageable': 2, 'Serious': 3,
-      'Catastrophic': 4, 'Existential': 5,
+      'Overstated': 1,
+      'Manageable': 2,
+      'Serious': 3,
+      'Catastrophic': 4, 'Potentially catastrophic': 4,
+      'Existential': 5,
+      // 'Mixed/nuanced', 'Unknown' → null (excluded)
     };
     const addScores = (rows) => rows.map(row => ({
       ...row,
