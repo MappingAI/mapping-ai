@@ -826,7 +826,7 @@ details[open] summary { border-bottom: 1px solid var(--border); }
     <summary>See example submission</summary>
     <div class="example-content">
       <strong>Name:</strong> Dario Amodei<br>
-      <strong>Category:</strong> Frontier Lab<br>
+      <strong>Role:</strong> Executive<br>
       <strong>Title:</strong> CEO, Anthropic<br>
       <strong>Primary org:</strong> Anthropic<br>
       <strong>Location:</strong> San Francisco, CA<br>
@@ -886,20 +886,17 @@ details[open] summary { border-bottom: 1px solid var(--border); }
       <input type="text" name="name" required>
     </div>
     <div class="field">
-      <label>Category</label>
+      <label>Role</label>
       <select name="category">
         <option value=""></option>
-        <option value="Frontier Lab">Frontier Lab</option>
-        <option value="AI Safety/Alignment">AI Safety/Alignment</option>
-        <option value="Think Tank/Policy Org">Think Tank/Policy Org</option>
-        <option value="Government/Agency">Government/Agency</option>
-        <option value="Policymaker">Policymaker</option>
-        <option value="Academic">Academic</option>
-        <option value="VC/Capital/Philanthropy">VC/Capital/Philanthropy</option>
-        <option value="Labor/Civil Society">Labor/Civil Society</option>
-        <option value="Ethics/Bias/Rights">Ethics/Bias/Rights</option>
-        <option value="Media/Journalism">Media/Journalism</option>
-        <option value="Political Campaign/PAC">Political Campaign/PAC</option>
+        <option value="Executive">Executive (CEO, CTO, founder)</option>
+        <option value="Researcher">Researcher (academic, lab scientist)</option>
+        <option value="Policymaker">Policymaker (legislator, regulator)</option>
+        <option value="Investor">Investor (VC, philanthropist, funder)</option>
+        <option value="Organizer">Organizer (activist, advocate, union)</option>
+        <option value="Journalist">Journalist (reporter, podcaster, author)</option>
+        <option value="Academic">Academic (professor, think tank fellow)</option>
+        <option value="Cultural figure">Cultural figure (public intellectual)</option>
       </select>
     </div>
     <div class="field">
@@ -1414,10 +1411,15 @@ document.querySelectorAll('.tag-input, input[name="name"], #resource-form input[
 
 // ── Custom styled selects ──
 const SELECT_COLORS = {
+  // Org categories
   'Frontier Lab':'#d4644a','AI Safety/Alignment':'#2d8a6e','Think Tank/Policy Org':'#5b82bf',
   'Government/Agency':'#7c5cbf','Academic':'#d4a44a','VC/Capital/Philanthropy':'#1a8a8a',
   'Labor/Civil Society':'#d4885a','Media/Journalism':'#8b6914','Political Campaign/PAC':'#b06a8a',
   'Ethics/Bias/Rights':'#e07020','Policymaker':'#9955cc',
+  // Person role categories
+  'Executive':'#d4644a','Researcher':'#2d8a6e','Investor':'#1a8a8a',
+  'Organizer':'#d4885a','Journalist':'#8b6914','Cultural figure':'#b06a8a',
+  // Regulatory stance
   'Accelerate':'#ef4444','Light-touch':'#f97316','Targeted':'#eab308',
   'Moderate':'#22c55e','Restrictive':'#3b82f6','Precautionary':'#8b5cf6','Nationalize':'#ec4899',
 };

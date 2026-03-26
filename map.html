@@ -853,10 +853,14 @@ function buildExplicitLinks(data) {
 }
 
 function buildFilters() {
-  const orgCats = [...new Set(allData.organizations.map(d => normalizeCategory(d.category)).filter(Boolean))];
-  const peopleCats = [...new Set(allData.people.map(d => normalizeCategory(d.category)).filter(Boolean))];
-  const rawCats = [...new Set([...orgCats, ...peopleCats])];
-  // Sort by semantic order
+  let rawCats;
+  if (currentView === 'people') {
+    // People solo view: show person ROLE categories
+    rawCats = [...new Set(allData.people.map(d => normalizeCategory(d.category)).filter(Boolean))];
+  } else {
+    // Orgs, All, Resources: show org SECTOR categories
+    rawCats = [...new Set(allData.organizations.map(d => normalizeCategory(d.category)).filter(Boolean))];
+  }
   const allCats = rawCats.sort((a, b) => {
     const ia = CLUSTER_ORDER.indexOf(a);
     const ib = CLUSTER_ORDER.indexOf(b);
@@ -864,14 +868,18 @@ function buildFilters() {
   });
 
   const container = document.getElementById('category-chips');
+  container.innerHTML = '';
+  // Keep existing active categories that still exist, add new ones as active
+  const newActive = new Set();
   allCats.forEach(cat => {
     const chip = document.createElement('span');
-    chip.className = 'chip active';
+    const wasActive = activeCategories.has(cat);
+    chip.className = 'chip' + (wasActive || !activeCategories.size ? ' active' : '');
     chip.textContent = cat;
     chip.style.background = getColor(cat) + '33';
     chip.style.color = getColor(cat);
     chip.dataset.category = cat;
-    activeCategories.add(cat);
+    if (wasActive || !activeCategories.size) newActive.add(cat);
     chip.addEventListener('click', () => {
       if (activeCategories.has(cat)) {
         activeCategories.delete(cat);
@@ -884,6 +892,7 @@ function buildFilters() {
     });
     container.appendChild(chip);
   });
+  activeCategories = newActive;
 }
 
 function buildStanceLegend() {
@@ -935,6 +944,7 @@ document.querySelectorAll('.view-btn').forEach(btn => {
     btn.classList.add('active');
     currentView = btn.dataset.view;
     localStorage.setItem('mapView', currentView);
+    buildFilters(); // rebuild category chips for new view context
     render();
   });
 });
@@ -950,12 +960,15 @@ function passesStanceFilter(d) {
 // Normalize similar category names to a canonical form
 function normalizeCategory(cat) {
   if (!cat) return null;
+  // Person role categories — pass through unchanged
+  const personRoles = ['Executive','Researcher','Policymaker','Investor','Organizer','Journalist','Academic','Cultural figure'];
+  if (personRoles.includes(cat)) return cat;
+  // Org sector normalization
   const c = cat.toLowerCase();
   if (c.includes('ethics') || c.includes('civil society') || c.includes('bias') || c.includes('rights')) return 'Ethics / Civil Society';
   if (c.includes('ai safety') || c.includes('alignment')) return 'AI Safety';
   if (c.includes('think tank') || c.includes('policy org')) return 'Think Tank';
   if (c.includes('government') || c.includes('agency')) return 'Government';
-  if (c.includes('policymaker')) return 'Policymaker';
   if (c.includes('vc') || c.includes('capital') || c.includes('philanthropy') || c.includes('funder')) return 'VC / Funder';
   if (c.includes('labor') || c.includes('workforce')) return 'Labor / Workforce';
   if (c.includes('media') || c.includes('journalism')) return 'Media';
@@ -967,36 +980,55 @@ function normalizeCategory(cat) {
 
 // Semantic cluster ordering — related categories are adjacent
 const CLUSTER_ORDER = [
+  // Org sector categories
   'Frontier Lab',
   'AI Safety',
   'Academic',
   'Think Tank',
   'Government',
-  'Policymaker',
   'VC / Funder',
   'Ethics / Civil Society',
   'Labor / Workforce',
   'Media',
   'Political Campaign',
-  'Resources', // collapsed cluster for all resources in "all" view
+  // Person role categories
+  'Executive',
+  'Researcher',
+  'Policymaker',
+  'Investor',
+  'Organizer',
+  'Journalist',
+  'Cultural figure',
+  // Collapsed
+  'Resources',
 ];
 
 function getVisibleNodes() {
   let nodes = [];
-  // Count total visible nodes first for auto-scaling
-  let totalCount = 0;
-  if (currentView === 'orgs' || currentView === 'all') totalCount += allData.organizations.filter(d => d.category && activeCategories.has(d.category) && passesStanceFilter(d)).length;
-  if (currentView === 'people' || currentView === 'all') totalCount += allData.people.filter(d => d.category && activeCategories.has(d.category) && passesStanceFilter(d)).length;
-  if (currentView === 'resources' || currentView === 'all') totalCount += allData.resources.length;
-
-  // Scale factor: shrink nodes as dataset grows (1.0 at 30 nodes, 0.7 at 100, 0.5 at 200+)
-  const scale = Math.max(0.5, Math.min(1.0, 30 / Math.max(totalCount, 1)));
-
   // Helper: check if a category (raw or normalized) is active
   const isCatActive = (rawCat) => {
     if (!rawCat) return false;
     return activeCategories.has(rawCat) || activeCategories.has(normalizeCategory(rawCat));
   };
+
+  // Build org lookup for mapping people to their org's sector
+  const orgById = {};
+  allData.organizations.forEach(o => { orgById[o.id] = o; });
+  const personOrgMap = {}; // person_id -> primary org
+  (allData.person_organizations || []).forEach(po => {
+    if (po.is_primary && orgById[po.organization_id]) {
+      personOrgMap[po.person_id] = orgById[po.organization_id];
+    }
+  });
+
+  // Count total for scaling
+  let totalCount = 0;
+  if (currentView === 'orgs' || currentView === 'all') totalCount += allData.organizations.filter(d => d.category && isCatActive(d.category) && passesStanceFilter(d)).length;
+  if (currentView === 'people' || currentView === 'all') totalCount += allData.people.filter(d => d.category && isCatActive(d.category) && passesStanceFilter(d)).length;
+  if (currentView === 'resources' || currentView === 'all') totalCount += allData.resources.length;
+
+  // Scale: gentler curve — 1.0 at 40, 0.7 at 100, 0.55 at 200
+  const scale = Math.max(0.55, Math.min(1.0, 40 / Math.max(totalCount, 1)));
 
   if (currentView === 'orgs' || currentView === 'all') {
     allData.organizations.forEach(d => {
@@ -1014,14 +1046,44 @@ function getVisibleNodes() {
       if (!d.category || !isCatActive(d.category)) return;
       if (!passesStanceFilter(d)) return;
       const sc = d.submission_count || 1;
-      const baseR = currentView === 'all' ? 7 : 12;
+
+      // In "all" view: cluster people by their PRIMARY ORG'S sector
+      // In "people" view: cluster by their personal role
+      let displayCat;
+      if (currentView === 'all') {
+        // Try person_organizations junction first
+        const primaryOrg = personOrgMap[d.id];
+        if (primaryOrg) {
+          displayCat = normalizeCategory(primaryOrg.category);
+        } else {
+          // Fall back: try to find org by primary_org text field
+          const orgMatch = allData.organizations.find(o =>
+            d.primary_org && o.name.toLowerCase().includes(d.primary_org.toLowerCase())
+          );
+          if (orgMatch) {
+            displayCat = normalizeCategory(orgMatch.category);
+          } else {
+            // No org found — use the org-sector version of their role if possible
+            const roleCat = normalizeCategory(d.category);
+            const personRoles = ['Executive','Researcher','Investor','Organizer','Journalist','Cultural figure'];
+            // Map roles to closest org sector so they don't create separate clusters
+            const roleToSector = {
+              'Executive': 'Frontier Lab', 'Researcher': 'Academic', 'Investor': 'VC / Funder',
+              'Organizer': 'Ethics / Civil Society', 'Journalist': 'Media', 'Cultural figure': 'Media',
+            };
+            displayCat = personRoles.includes(roleCat) ? (roleToSector[roleCat] || roleCat) : roleCat;
+          }
+        }
+      } else {
+        displayCat = normalizeCategory(d.category);
+      }
+
+      const baseR = currentView === 'all' ? 8 : 14; // bigger in solo people view
       const r = Math.round((baseR + Math.min(Math.floor(sc / 3), 2)) * scale);
-      const normCat = normalizeCategory(d.category);
-      nodes.push({ ...d, category: normCat, _rawCategory: d.category, entityType: 'person', radius: r, submissionCount: sc });
+      nodes.push({ ...d, category: displayCat, _rawCategory: d.category, entityType: 'person', radius: r, submissionCount: sc });
     });
   }
   if (currentView === 'resources') {
-    // Resources view: show by their own category
     allData.resources.forEach(d => {
       const cat = d.category || 'AI Policy';
       const sc = d.submission_count || 1;
@@ -1029,7 +1091,6 @@ function getVisibleNodes() {
       nodes.push({ ...d, name: d.title, category: cat, entityType: 'resource', radius: r, submissionCount: sc, isResource: true });
     });
   } else if (currentView === 'all') {
-    // All view: collapse resources into single "Resources" cluster
     allData.resources.forEach(d => {
       const sc = d.submission_count || 1;
       const r = Math.round((10 + Math.min(Math.floor(sc / 3), 3)) * scale);
