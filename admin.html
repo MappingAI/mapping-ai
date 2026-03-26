@@ -488,12 +488,15 @@ loadDashboard();
 
 // --- API helpers ---
 function apiFetch(path, opts = {}) {
-  const headers = { 'X-Admin-Key': adminKey, ...(opts.headers || {}) };
+  // Pass key as query param (avoids CORS preflight issues with custom headers)
+  const sep = path.includes('?') ? '&' : '?';
+  const url = API_BASE + path + sep + 'key=' + encodeURIComponent(adminKey);
+  const headers = { ...(opts.headers || {}) };
   if (opts.body && typeof opts.body === 'object') {
     headers['Content-Type'] = 'application/json';
     opts.body = JSON.stringify(opts.body);
   }
-  return fetch(API_BASE + path, { ...opts, headers });
+  return fetch(url, { ...opts, headers });
 }
 
 async function apiPost(body) {
