@@ -47,8 +47,8 @@ jobs:
             --exclude ".github/*" \
             --exclude "*.yaml" \
             --exclude "*.toml" \
-            --include "map-data.json" \
             --exclude "*.json" \
+            --include "map-data.json" \
             --exclude "*.mjs" \
             --exclude "*.md" \
             --exclude ".aws-sam/*" \
