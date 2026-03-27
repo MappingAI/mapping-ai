@@ -16,6 +16,11 @@ Parameters:
     Type: String
     NoEcho: true
     Description: Postgres connection string (from Neon)
+  AnthropicApiKey:
+    Type: String
+    NoEcho: true
+    Description: Anthropic API key for LLM submission review
+    Default: ''
 
 Resources:
   # ==================== API (Lambda + API Gateway) ====================
@@ -46,6 +51,10 @@ Resources:
     Properties:
       FunctionName: mapping-ai-submit
       Handler: api/submit.handler
+      Timeout: 15
+      Environment:
+        Variables:
+          ANTHROPIC_API_KEY: !Ref AnthropicApiKey
       Events:
         Submit:
           Type: HttpApi
@@ -72,9 +81,19 @@ Resources:
     Properties:
       FunctionName: mapping-ai-admin
       Handler: api/admin.handler
+      Timeout: 30
       Environment:
         Variables:
           ADMIN_KEY: 'mappingai-admin-2026'
+          S3_BUCKET: !Ref WebsiteBucket
+          CF_DISTRIBUTION_ID: !Ref CloudFrontDistribution
+      Policies:
+        - S3CrudPolicy:
+            BucketName: !Ref WebsiteBucket
+        - Statement:
+            - Effect: Allow
+              Action: cloudfront:CreateInvalidation
+              Resource: !Sub 'arn:aws:cloudfront::${AWS::AccountId}:distribution/${CloudFrontDistribution}'
       Events:
         AdminGet:
           Type: HttpApi
@@ -87,6 +106,29 @@ Resources:
           Properties:
             ApiId: !Ref MappingAiApi
             Path: /admin
+            Method: POST
+
+  UploadFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: mapping-ai-upload
+      Handler: api/upload.handler
+      Timeout: 30
+      MemorySize: 512
+      Environment:
+        Variables:
+          ADMIN_KEY: 'mappingai-admin-2026'
+          THUMBNAIL_BUCKET: !Ref WebsiteBucket
+          CLOUDFRONT_DOMAIN: !GetAtt CloudFrontDistribution.DomainName
+      Policies:
+        - S3CrudPolicy:
+            BucketName: !Ref WebsiteBucket
+      Events:
+        Upload:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref MappingAiApi
+            Path: /upload
             Method: POST
 
   SubmissionsFunction:

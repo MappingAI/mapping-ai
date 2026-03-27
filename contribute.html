@@ -9,6 +9,17 @@
   <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
   <link rel="manifest" href="/assets/favicon/site.webmanifest">
+  <meta name="description" content="Add a person, organization, or resource to the collaborative AI policy stakeholder map.">
+  <meta property="og:title" content="Contribute — Mapping AI">
+  <meta property="og:description" content="Add a person, organization, or resource to the collaborative AI policy stakeholder map.">
+  <meta property="og:image" content="https://mapping-ai.org/assets/images/og-image.png">
+  <meta property="og:url" content="https://mapping-ai.org/contribute">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Mapping AI">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Contribute — Mapping AI">
+  <meta name="twitter:description" content="Add to the collaborative AI policy stakeholder map.">
+  <meta name="twitter:image" content="https://mapping-ai.org/assets/images/og-image.png">
   <style>
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@400;500&display=swap');
 :root {
@@ -19,6 +30,7 @@
   --text-tertiary: #888;
   --border: #ddd;
   --bg-secondary: #f8f7f5;
+  --bg-active: #edecea;
   --accent: #2563eb;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -325,7 +337,7 @@ details[open] summary { border-bottom: 1px solid var(--border); }
   border-bottom: 1px solid var(--border);
 }
 .org-result:last-child { border-bottom: none; }
-.org-result:hover { background: var(--bg-secondary); }
+.org-result:hover { background: var(--bg-active); }
 .org-result { display: flex; justify-content: space-between; align-items: center; }
 .org-edit-link {
   font-family: var(--mono); font-size: 9px;
@@ -334,7 +346,14 @@ details[open] summary { border-bottom: 1px solid var(--border); }
   opacity: 0; transition: opacity 0.1s;
 }
 .org-result:hover .org-edit-link, .org-result.active .org-edit-link { opacity: 1; }
-.org-result.active { background: var(--bg-secondary); }
+.org-result.active { background: var(--bg-active); }
+.pending-badge {
+  font-family: var(--mono); font-size: 8px;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  background: #fef3c7; color: #92400e;
+  padding: 0.1rem 0.3rem; border-radius: 2px;
+  margin-left: 0.3rem;
+}
 .org-edit-link:hover { text-decoration: underline; }
 /* Info tooltip */
 .info-tip {
@@ -406,7 +425,7 @@ details[open] summary { border-bottom: 1px solid var(--border); }
   cursor: pointer; transition: background 0.1s;
   display: flex; align-items: center; gap: 6px;
 }
-.select-option:hover, .select-option.active { background: var(--bg-secondary); }
+.select-option:hover, .select-option.active { background: var(--bg-active); }
 .select-option.selected { font-weight: 500; }
 .select-option .color-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 .select-search {
@@ -629,7 +648,7 @@ details[open] summary { border-bottom: 1px solid var(--border); }
   font-size: 13px;
 }
 .mention-item:last-child { border-bottom: none; }
-.mention-item.active, .mention-item:hover { background: var(--bg-secondary); }
+.mention-item.active, .mention-item:hover { background: var(--bg-active); }
 .mention-type {
   font-family: var(--mono); font-size: 9px;
   text-transform: uppercase; letter-spacing: 0.06em;
@@ -662,7 +681,7 @@ details[open] summary { border-bottom: 1px solid var(--border); }
   display: flex; flex-direction: column; gap: 1px;
 }
 .mention-rel-option:last-child { border-bottom: none; }
-.mention-rel-option:hover, .mention-rel-option.active { background: var(--bg-secondary); }
+.mention-rel-option:hover, .mention-rel-option.active { background: var(--bg-active); }
 .mention-rel-label {
   font-family: var(--serif); font-size: 13px;
   color: var(--text-primary); font-weight: 500;
@@ -806,10 +825,10 @@ details[open] summary { border-bottom: 1px solid var(--border); }
   </button>
   <div class="nav-links">
     <a href="/">Background</a>
-    <a href="/theoryofchange.html">Theory of Change</a>
-    <a href="/contribute.html">Take Part</a>
-    <a href="/map.html">Map</a>
-    <a href="/about.html">About Us</a>
+    <a href="/theoryofchange">Theory of Change</a>
+    <a href="/contribute">Take Part</a>
+    <a href="/map">Map</a>
+    <a href="/about">About Us</a>
   </div>
 </nav>
 
@@ -1083,7 +1102,7 @@ details[open] summary { border-bottom: 1px solid var(--border); }
       <input type="text" class="parent-org-search" data-search-type="organization" placeholder="Search existing orgs..." autocomplete="off">
       <input type="hidden" name="parentOrgId">
       <div class="org-search-results"></div>
-      <span class="helper">e.g. Anthropic Institute's parent org is Anthropic</span>
+      <span class="helper">e.g. Anthropic Institute's parent org is Anthropic. <span class="create-org-link" data-switch="organization">Can't find it? Add this org</span></span>
     </div>
     <div class="field" style="position:relative;">
       <label>HQ / Primary location</label>
@@ -1294,6 +1313,47 @@ details[open] summary { border-bottom: 1px solid var(--border); }
         <option value="Philosophy/Ethics">Philosophy/Ethics</option>
       </select>
     </div>
+    <div class="field">
+      <label>Regulatory stance</label>
+      <select name="regulatoryStance">
+        <option value=""></option>
+        <option value="Accelerate">Accelerate</option>
+        <option value="Light-touch">Light-touch</option>
+        <option value="Targeted">Targeted</option>
+        <option value="Moderate">Moderate</option>
+        <option value="Restrictive">Restrictive</option>
+        <option value="Precautionary">Precautionary</option>
+        <option value="Nationalize">Nationalize</option>
+        <option value="Mixed/unclear">Mixed/unclear</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>AGI timeline belief</label>
+      <select name="agiTimeline">
+        <option value=""></option>
+        <option value="Already here">Already here/emerging</option>
+        <option value="2-3 years">Within 2–3 years</option>
+        <option value="5-10 years">Within 5–10 years</option>
+        <option value="10-25 years">10–25 years</option>
+        <option value="25+ years or never">25+ years or never</option>
+        <option value="Ill-defined">Ill-defined concept</option>
+        <option value="Unknown">Unknown</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>AI risk level</label>
+      <select name="aiRiskLevel">
+        <option value=""></option>
+        <option value="Overstated">Overstated</option>
+        <option value="Manageable">Manageable</option>
+        <option value="Serious">Serious</option>
+        <option value="Catastrophic">Catastrophic</option>
+        <option value="Existential">Existential</option>
+        <option value="Mixed/nuanced">Mixed/nuanced</option>
+        <option value="Unknown">Unknown</option>
+      </select>
+    </div>
     <div class="field full">
       <label>Key argument (1-2 sentences)</label>
       <textarea name="keyArgument" rows="2"></textarea>
@@ -1326,10 +1386,14 @@ details[open] summary { border-bottom: 1px solid var(--border); }
 
   <div class="footer-row">
     <span class="footer-label">Mapping AI Working Group · 2026</span>
+    <a href="mailto:info@mapping-ai.org" class="footer-label" style="text-decoration:none;color:var(--text-tertiary);display:inline-flex;align-items:center;gap:4px;">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      info@mapping-ai.org
+    </a>
   </div>
 </div>
 
-<a href="/map.html" id="see-map-btn" style="
+<a href="/map" id="see-map-btn" style="
   position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 60;
   display: flex; align-items: center; gap: 0.4rem;
   padding: 0.5rem 1rem;
@@ -1426,9 +1490,9 @@ const SELECT_COLORS = {
   // Person role categories
   'Executive':'#d4644a','Researcher':'#2d8a6e','Investor':'#1a8a8a',
   'Organizer':'#d4885a','Journalist':'#8b6914','Cultural figure':'#b06a8a',
-  // Regulatory stance
-  'Accelerate':'#ef4444','Light-touch':'#f97316','Targeted':'#eab308',
-  'Moderate':'#22c55e','Restrictive':'#3b82f6','Precautionary':'#8b5cf6','Nationalize':'#ec4899',
+  // Regulatory stance (amber gradient — distinct from category colors)
+  'Accelerate':'#f0c050','Light-touch':'#d9a840','Targeted':'#c09030',
+  'Moderate':'#a07828','Restrictive':'#806020','Precautionary':'#604818','Nationalize':'#403010',
 };
 
 document.querySelectorAll('.form select').forEach(sel => {
@@ -1603,6 +1667,30 @@ function searchEntities(query, type) {
       .slice(0, 10);
   }
   return results;
+}
+
+// Search with pending entity fallback — tries local cache first, then API for pending entities
+async function searchEntitiesWithPending(query, type) {
+  const local = searchEntities(query, type);
+  const localCount = (local.people?.length || 0) + (local.organizations?.length || 0) + (local.resources?.length || 0);
+  // Always check pending — user may have just created the entity
+  try {
+    const typeParam = type ? `&type=${type}` : '';
+    const res = await fetch(`${API_BASE}/search?q=${encodeURIComponent(query)}${typeParam}&status=pending`);
+    if (!res.ok) return local;
+    const apiResults = await res.json();
+    const merged = { ...local };
+    for (const key of ['people', 'organizations', 'resources']) {
+      const existing = new Set((merged[key] || []).map(e => e.id));
+      const pending = (apiResults[key] || [])
+        .filter(e => !existing.has(e.id))
+        .map(e => ({ ...e, _pending: true }));
+      merged[key] = [...(merged[key] || []), ...pending];
+    }
+    return merged;
+  } catch (e) {
+    return local;
+  }
 }
 
 // ── Duplicate detection on Name/Title fields ──
@@ -1897,12 +1985,12 @@ document.querySelectorAll('.tag-input-wrapper').forEach(wrapper => {
   const search = debounce(async () => {
     const q = input.value.trim();
     if (q.length < 2) { resultsDiv.innerHTML = ''; return; }
-    const results = await searchEntities(q, 'organization');
+    const results = await searchEntitiesWithPending(q, 'organization');
     const orgs = results.organizations.filter(o => !selectedOrgs.some(s => s.id === o.id));
 
     resultsDiv.innerHTML = orgs.slice(0, 5).map(o => `
       <div class="org-result" data-id="${o.id}" data-name="${o.name}" data-org='${JSON.stringify(o).replace(/'/g, "&#39;")}'>
-        <span>${o.name} <span class="org-cat">${o.category || ''}</span></span>
+        <span>${o.name} <span class="org-cat">${o.category || ''}</span>${o._pending ? '<span class="pending-badge">Pending</span>' : ''}</span>
         <span class="org-edit-link" data-action="edit">edit</span>
       </div>
     `).join('');
@@ -1960,13 +2048,13 @@ document.querySelectorAll('.parent-org-search, .primary-org-search').forEach(inp
     resultsDiv.innerHTML = '';
   }
 
-  const search = debounce(() => {
+  const search = debounce(async () => {
     const q = input.value.trim();
     if (q.length < 2) { resultsDiv.innerHTML = ''; return; }
-    const results = searchEntities(q, 'organization');
+    const results = await searchEntitiesWithPending(q, 'organization');
     resultsDiv.innerHTML = results.organizations.slice(0, 5).map(o => `
       <div class="org-result" data-id="${o.id}" data-name="${o.name}" data-org='${JSON.stringify(o).replace(/'/g, "&#39;")}'>
-        <span>${o.name} <span class="org-cat">${o.category || ''}</span></span>
+        <span>${o.name} <span class="org-cat">${o.category || ''}</span>${o._pending ? '<span class="pending-badge">Pending</span>' : ''}</span>
         <span class="org-edit-link" data-action="edit">edit</span>
       </div>
     `).join('');
@@ -1998,11 +2086,11 @@ document.querySelectorAll('.parent-org-search, .primary-org-search').forEach(inp
     if (e.key === 'ArrowDown') {
       e.preventDefault();
       const next = active ? active.nextElementSibling : items[0];
-      if (next) { active?.classList.remove('active'); next.classList.add('active'); }
+      if (next) { active?.classList.remove('active'); next.classList.add('active'); next.scrollIntoView({ block: 'nearest' }); }
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
       const prev = active?.previousElementSibling;
-      if (prev) { active.classList.remove('active'); prev.classList.add('active'); }
+      if (prev) { active.classList.remove('active'); prev.classList.add('active'); prev.scrollIntoView({ block: 'nearest' }); }
     } else if (e.key === 'Enter') {
       e.preventDefault();
       const selected = active || items[0];
@@ -2017,8 +2105,9 @@ document.querySelectorAll('.parent-org-search, .primary-org-search').forEach(inp
 document.querySelectorAll('.create-org-link').forEach(link => {
   link.addEventListener('click', (e) => {
     e.preventDefault();
-    const orgToggle = document.querySelector('.toggle[data-form="organization"]');
-    if (orgToggle) orgToggle.click();
+    const targetForm = link.dataset.switch || 'organization';
+    const toggle = document.querySelector(`.toggle[data-form="${targetForm}"]`);
+    if (toggle) toggle.click();
   });
 });
 
@@ -2088,11 +2177,11 @@ document.querySelectorAll('.location-tags').forEach(wrapper => {
     if (e.key === 'ArrowDown') {
       e.preventDefault();
       const next = active ? active.nextElementSibling : items[0];
-      if (next) { active?.classList.remove('active'); next.classList.add('active'); }
+      if (next) { active?.classList.remove('active'); next.classList.add('active'); next.scrollIntoView({ block: 'nearest' }); }
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
       const prev = active?.previousElementSibling;
-      if (prev) { active.classList.remove('active'); prev.classList.add('active'); }
+      if (prev) { active.classList.remove('active'); prev.classList.add('active'); prev.scrollIntoView({ block: 'nearest' }); }
     } else if (e.key === 'Enter') {
       e.preventDefault();
       const selected = active || items[0];
@@ -2139,14 +2228,14 @@ document.querySelectorAll('#resource-authors').forEach(wrapper => {
     updateHidden();
   }
 
-  const search = debounce(() => {
+  const search = debounce(async () => {
     const q = input.value.trim();
     if (q.length < 2) { resultsDiv.innerHTML = ''; return; }
-    const results = searchEntities(q, 'person');
+    const results = await searchEntitiesWithPending(q, 'person');
     const people = results.people.filter(p => !selectedAuthors.some(a => a.id === p.id));
     resultsDiv.innerHTML = people.slice(0, 5).map(p => `
       <div class="org-result" data-id="${p.id}" data-name="${p.name}" data-person='${JSON.stringify(p).replace(/'/g, "&#39;")}'>
-        <span>${p.name} <span class="org-cat">${p.title || p.category || ''}</span></span>
+        <span>${p.name} <span class="org-cat">${p.title || p.category || ''}</span>${p._pending ? '<span class="pending-badge">Pending</span>' : ''}</span>
         <span class="org-edit-link" data-action="edit">edit</span>
       </div>
     `).join('');
@@ -2184,8 +2273,8 @@ document.querySelectorAll('#resource-authors').forEach(wrapper => {
   input.addEventListener('keydown', (e) => {
     const items = resultsDiv.querySelectorAll('.org-result');
     const active = resultsDiv.querySelector('.org-result.active');
-    if (e.key === 'ArrowDown') { e.preventDefault(); const next = active ? active.nextElementSibling : items[0]; if (next) { active?.classList.remove('active'); next.classList.add('active'); } }
-    else if (e.key === 'ArrowUp') { e.preventDefault(); const prev = active?.previousElementSibling; if (prev) { active.classList.remove('active'); prev.classList.add('active'); } }
+    if (e.key === 'ArrowDown') { e.preventDefault(); const next = active ? active.nextElementSibling : items[0]; if (next) { active?.classList.remove('active'); next.classList.add('active'); next.scrollIntoView({ block: 'nearest' }); } }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); const prev = active?.previousElementSibling; if (prev) { active.classList.remove('active'); prev.classList.add('active'); prev.scrollIntoView({ block: 'nearest' }); } }
     else if (e.key === 'Enter') { e.preventDefault(); const sel = active || items[0]; if (sel) sel.click(); else if (input.value.trim()) { addAuthorTag(0, input.value.trim()); input.value = ''; } }
     else if (e.key === 'Escape') resultsDiv.innerHTML = '';
     else if (e.key === 'Backspace' && !input.value && selectedAuthors.length) { selectedAuthors.pop(); wrapper.querySelector('.tag:last-of-type')?.remove(); updateHidden(); }
@@ -2201,14 +2290,14 @@ document.querySelectorAll('#resource-orgs').forEach(wrapper => {
   const hiddenInput = wrapper.parentElement.querySelector('input[name="affiliatedOrgIds"]');
   const selectedOrgs = [];
 
-  const search = debounce(() => {
+  const search = debounce(async () => {
     const q = input.value.trim();
     if (q.length < 2) { resultsDiv.innerHTML = ''; return; }
-    const results = searchEntities(q, 'organization');
+    const results = await searchEntitiesWithPending(q, 'organization');
     const orgs = results.organizations.filter(o => !selectedOrgs.some(s => s.id === o.id));
     resultsDiv.innerHTML = orgs.slice(0, 5).map(o => `
       <div class="org-result" data-id="${o.id}" data-name="${o.name}" data-org='${JSON.stringify(o).replace(/'/g, "&#39;")}'>
-        <span>${o.name} <span class="org-cat">${o.category || ''}</span></span>
+        <span>${o.name} <span class="org-cat">${o.category || ''}</span>${o._pending ? '<span class="pending-badge">Pending</span>' : ''}</span>
         <span class="org-edit-link" data-action="edit">edit</span>
       </div>
     `).join('');
@@ -2242,8 +2331,8 @@ document.querySelectorAll('#resource-orgs').forEach(wrapper => {
   input.addEventListener('keydown', (e) => {
     const items = resultsDiv.querySelectorAll('.org-result');
     const active = resultsDiv.querySelector('.org-result.active');
-    if (e.key === 'ArrowDown') { e.preventDefault(); const next = active ? active.nextElementSibling : items[0]; if (next) { active?.classList.remove('active'); next.classList.add('active'); } }
-    else if (e.key === 'ArrowUp') { e.preventDefault(); const prev = active?.previousElementSibling; if (prev) { active.classList.remove('active'); prev.classList.add('active'); } }
+    if (e.key === 'ArrowDown') { e.preventDefault(); const next = active ? active.nextElementSibling : items[0]; if (next) { active?.classList.remove('active'); next.classList.add('active'); next.scrollIntoView({ block: 'nearest' }); } }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); const prev = active?.previousElementSibling; if (prev) { active.classList.remove('active'); prev.classList.add('active'); prev.scrollIntoView({ block: 'nearest' }); } }
     else if (e.key === 'Enter') { e.preventDefault(); const sel = active || items[0]; if (sel) sel.click(); }
     else if (e.key === 'Escape') resultsDiv.innerHTML = '';
     else if (e.key === 'Backspace' && !input.value && selectedOrgs.length) { selectedOrgs.pop(); wrapper.querySelector('.tag:last-of-type')?.remove(); hiddenInput.value = JSON.stringify(selectedOrgs.map(o => o.id)); }
@@ -2551,6 +2640,29 @@ document.querySelectorAll('.clear-link').forEach(link => {
     const group = document.getElementById(link.dataset.target);
     group.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
   });
+});
+
+// Add "clear" links to all select dropdowns
+document.querySelectorAll('.form select').forEach(sel => {
+  if (!sel.closest('.field')) return;
+  const label = sel.closest('.field').querySelector('label');
+  if (!label || label.querySelector('.select-clear')) return;
+  const clear = document.createElement('span');
+  clear.className = 'clear-link select-clear';
+  clear.textContent = 'clear';
+  clear.style.marginLeft = '0.5rem';
+  clear.addEventListener('click', (e) => {
+    e.preventDefault();
+    sel.value = '';
+    sel.dispatchEvent(new Event('change'));
+    // Also reset custom select trigger if present
+    const wrapper = sel.closest('.custom-select');
+    if (wrapper) {
+      const trigger = wrapper.querySelector('.select-trigger');
+      if (trigger) trigger.textContent = '';
+    }
+  });
+  label.appendChild(clear);
 });
 
 // ── Nav ──

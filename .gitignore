@@ -21,3 +21,9 @@ data/AISafety.com_map.csv
 # OS files
 .DS_Store
 *.swp
+
+# Claude Code local files
+.claude/
+
+# Testing output
+dogfood-output/

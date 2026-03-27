@@ -87,7 +87,7 @@ async function exportMapData() {
       },
       people: addScores(stripSensitive(people.rows)),
       organizations: addScores(stripSensitive(orgs.rows)),
-      resources: stripSensitive(resources.rows),
+      resources: addScores(stripSensitive(resources.rows)),
       relationships: relationships.rows,
       person_organizations: personOrgs.rows,
     };

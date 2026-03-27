@@ -1,10 +1,43 @@
 import pg from 'pg';
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { CloudFrontClient, CreateInvalidationCommand } from '@aws-sdk/client-cloudfront';
+import { generateMapData } from './export-map.js';
+
 const { Pool } = pg;
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false },
 });
+
+const s3 = new S3Client({});
+const cf = new CloudFrontClient({});
+const S3_BUCKET = process.env.S3_BUCKET;
+const CF_DIST_ID = process.env.CF_DISTRIBUTION_ID;
+
+async function refreshMapData(client) {
+  try {
+    const data = await generateMapData(client);
+    const json = JSON.stringify(data);
+    await s3.send(new PutObjectCommand({
+      Bucket: S3_BUCKET,
+      Key: 'map-data.json',
+      Body: json,
+      ContentType: 'application/json',
+      CacheControl: 'public, max-age=60',
+    }));
+    await cf.send(new CreateInvalidationCommand({
+      DistributionId: CF_DIST_ID,
+      InvalidationBatch: {
+        Paths: { Quantity: 1, Items: ['/map-data.json'] },
+        CallerReference: `admin-approve-${Date.now()}`,
+      },
+    }));
+    console.log('Map data refreshed on S3 + CloudFront invalidated');
+  } catch (e) {
+    console.warn('Map data refresh failed (non-critical):', e.message);
+  }
+}
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -49,11 +82,12 @@ export const handler = async (event) => {
       const type = params.type || 'people';
       const table = { people: 'people', organizations: 'organizations', resources: 'resources', submissions: 'submissions', relationships: 'relationships', person_organizations: 'person_organizations' }[type];
       if (!table) return { statusCode: 400, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Invalid type' }) };
-      const status = params.status || 'approved';
-      const query = ['submissions', 'relationships', 'person_organizations'].includes(table)
+      const status = params.status;
+      const noStatusFilter = ['submissions', 'relationships', 'person_organizations'].includes(table);
+      const query = (noStatusFilter || !status)
         ? `SELECT * FROM ${table} ORDER BY id DESC LIMIT 500`
         : `SELECT * FROM ${table} WHERE status = $1 ORDER BY id DESC LIMIT 500`;
-      const result = ['submissions', 'relationships', 'person_organizations'].includes(table)
+      const result = (noStatusFilter || !status)
         ? await client.query(query)
         : await client.query(query, [status]);
       return { statusCode: 200, headers: CORS_HEADERS, body: JSON.stringify({ data: result.rows, total: result.rows.length }) };
@@ -90,6 +124,8 @@ export const handler = async (event) => {
         await client.query(`UPDATE submissions SET status = 'merged', reviewed_at = NOW() WHERE entity_type = $1 AND entity_id = $2 AND status = 'pending'`, [type, id]);
         // If no entity_id match, try matching by data
         await client.query(`UPDATE submissions SET status = 'merged', reviewed_at = NOW() WHERE id IN (SELECT s.id FROM submissions s, ${table} t WHERE t.id = $1 AND s.entity_type = $2 AND s.status = 'pending' AND s.data->>'name' = t.name LIMIT 1)`, [id, type]);
+        // Regenerate map-data.json on S3 so the map reflects the approval
+        await refreshMapData(client);
         return { statusCode: 200, headers: CORS_HEADERS, body: JSON.stringify({ success: true, action: 'approved' }) };
       }
 
@@ -108,9 +144,9 @@ export const handler = async (event) => {
         if (!table || !data || !id) return { statusCode: 400, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Missing data' }) };
 
         const allowedFields = {
-          people: ['name','category','title','primary_org','other_orgs','location','regulatory_stance','evidence_source','agi_timeline','ai_risk_level','threat_models','influence_type','twitter','bluesky','notes','status'],
-          organizations: ['name','category','website','location','funding_model','regulatory_stance','evidence_source','agi_timeline','ai_risk_level','threat_models','influence_type','twitter','bluesky','notes','parent_org_id','status'],
-          resources: ['title','author','resource_type','url','year','category','key_argument','notes','status'],
+          people: ['name','category','title','primary_org','other_orgs','location','regulatory_stance','regulatory_stance_detail','evidence_source','agi_timeline','ai_risk_level','threat_models','threat_models_detail','influence_type','twitter','bluesky','notes','thumbnail_url','status'],
+          organizations: ['name','category','website','location','funding_model','regulatory_stance','regulatory_stance_detail','evidence_source','agi_timeline','ai_risk_level','threat_models','threat_models_detail','influence_type','twitter','bluesky','notes','parent_org_id','thumbnail_url','status'],
+          resources: ['title','author','resource_type','url','year','category','key_argument','notes','regulatory_stance','agi_timeline','ai_risk_level','status'],
         };
         const allowed = allowedFields[table] || [];
         const updates = [];

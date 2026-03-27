@@ -28,7 +28,7 @@ export const handler = async (event) => {
   }
 
   try {
-    const { q, type } = event.queryStringParameters || {};
+    const { q, type, status } = event.queryStringParameters || {};
 
     if (!q || q.trim().length < 2) {
       return {
@@ -39,17 +39,19 @@ export const handler = async (event) => {
     }
 
     const query = q.trim();
+    // status=pending → only pending, status=all → all statuses, default → no filter
+    const statusClause = status === 'pending' ? "AND status = 'pending'" : status === 'all' ? '' : '';
     const client = await pool.connect();
     try {
       const results = { people: [], organizations: [], resources: [] };
 
       if (!type || type === 'person') {
         const people = await client.query(
-          `SELECT id, name, category, title, primary_org, location, regulatory_stance,
+          `SELECT id, name, category, title, primary_org, location, regulatory_stance, status,
                   ts_rank(search_vector, plainto_tsquery('english', $1)) AS rank
            FROM people
-           WHERE search_vector @@ plainto_tsquery('english', $1)
-              OR name ILIKE $2
+           WHERE (search_vector @@ plainto_tsquery('english', $1)
+              OR name ILIKE $2) ${statusClause}
            ORDER BY
              CASE WHEN name ILIKE $2 THEN 0 ELSE 1 END,
              ts_rank(search_vector, plainto_tsquery('english', $1)) DESC
@@ -61,11 +63,11 @@ export const handler = async (event) => {
 
       if (!type || type === 'organization') {
         const orgs = await client.query(
-          `SELECT id, name, category, website, location, regulatory_stance, parent_org_id,
+          `SELECT id, name, category, website, location, regulatory_stance, parent_org_id, status,
                   ts_rank(search_vector, plainto_tsquery('english', $1)) AS rank
            FROM organizations
-           WHERE search_vector @@ plainto_tsquery('english', $1)
-              OR name ILIKE $2
+           WHERE (search_vector @@ plainto_tsquery('english', $1)
+              OR name ILIKE $2) ${statusClause}
            ORDER BY
              CASE WHEN name ILIKE $2 THEN 0 ELSE 1 END,
              ts_rank(search_vector, plainto_tsquery('english', $1)) DESC
@@ -77,11 +79,11 @@ export const handler = async (event) => {
 
       if (!type || type === 'resource') {
         const resources = await client.query(
-          `SELECT id, title, author, resource_type, category,
+          `SELECT id, title, author, resource_type, category, status,
                   ts_rank(search_vector, plainto_tsquery('english', $1)) AS rank
            FROM resources
-           WHERE search_vector @@ plainto_tsquery('english', $1)
-              OR title ILIKE $2
+           WHERE (search_vector @@ plainto_tsquery('english', $1)
+              OR title ILIKE $2) ${statusClause}
            ORDER BY
              CASE WHEN title ILIKE $2 THEN 0 ELSE 1 END,
              ts_rank(search_vector, plainto_tsquery('english', $1)) DESC

@@ -105,25 +105,24 @@ function suggestion() {
             cleanup();
             return true;
           }
-          // Support both mention items and relationship picker options
-          const items = component.querySelectorAll('.mention-item, .mention-rel-option');
-          const active = component.querySelector('.mention-item.active, .mention-rel-option.active');
+          const items = component.querySelectorAll('.mention-item');
+          const active = component.querySelector('.mention-item.active');
           if (props.event.key === 'ArrowDown') {
             const next = active ? active.nextElementSibling : items[0];
-            if (next && (next.classList.contains('mention-item') || next.classList.contains('mention-rel-option'))) {
+            if (next && next.classList.contains('mention-item')) {
               active?.classList.remove('active'); next.classList.add('active');
             }
             return true;
           }
           if (props.event.key === 'ArrowUp') {
             const prev = active?.previousElementSibling;
-            if (prev && (prev.classList.contains('mention-item') || prev.classList.contains('mention-rel-option'))) {
+            if (prev && prev.classList.contains('mention-item')) {
               active.classList.remove('active'); prev.classList.add('active');
             }
             return true;
           }
           if (props.event.key === 'Enter') {
-            const selected = component.querySelector('.mention-item.active, .mention-rel-option.active');
+            const selected = component.querySelector('.mention-item.active');
             if (selected) { selected.click(); cleanup(); }
             return true;
           }
@@ -157,57 +156,12 @@ function updateList(container, items, command) {
     el.addEventListener('click', () => {
       const idx = parseInt(el.dataset.index);
       const item = items[idx];
-      // Show relationship type picker before inserting mention
-      showRelationshipPicker(container, item, command);
+      // Insert mention directly
+      command({ ...item, id: item.id, label: item.label, relationshipType: 'mentioned' });
     });
     el.addEventListener('mouseenter', () => {
       container.querySelector('.mention-item.active')?.classList.remove('active');
       el.classList.add('active');
-    });
-  });
-}
-
-// Relationship types for @mention connections
-const RELATIONSHIP_TYPES = [
-  { value: 'affiliated', label: 'Affiliated with', desc: 'Works at, member of, part of' },
-  { value: 'collaborator', label: 'Collaborates with', desc: 'Works together, co-authors, partners' },
-  { value: 'funder', label: 'Funds / funded by', desc: 'Investor, grant maker, financial support' },
-  { value: 'advisor', label: 'Advises / advised by', desc: 'Formal or informal advisory role' },
-  { value: 'critic', label: 'Critic of / opposed to', desc: 'Public disagreement, opposition' },
-  { value: 'influenced_by', label: 'Influenced by', desc: 'Shaped their views or work' },
-  { value: 'authored', label: 'Authored / published', desc: 'Created this resource' },
-  { value: 'mentioned', label: 'Just mentioning', desc: 'No specific relationship — context only' },
-];
-
-function showRelationshipPicker(container, item, command) {
-  // Replace mention list with relationship picker
-  container.innerHTML = `
-    <div class="mention-rel-header">
-      How is <strong>${item.label}</strong> related?
-    </div>
-    ${RELATIONSHIP_TYPES.map((r, i) => `
-      <div class="mention-rel-option ${i === 0 ? 'active' : ''}" data-rel="${r.value}" data-index="${i}">
-        <span class="mention-rel-label">${r.label}</span>
-        <span class="mention-rel-desc">${r.desc}</span>
-      </div>
-    `).join('')}
-  `;
-
-  container.querySelectorAll('.mention-rel-option').forEach(opt => {
-    opt.addEventListener('click', () => {
-      // Insert mention with relationship metadata
-      const rel = opt.dataset.rel;
-      const mentionData = {
-        ...item,
-        id: item.id,
-        label: rel === 'mentioned' ? item.label : `${item.label} (${RELATIONSHIP_TYPES.find(r => r.value === rel)?.label || rel})`,
-        relationshipType: rel,
-      };
-      command(mentionData);
-    });
-    opt.addEventListener('mouseenter', () => {
-      container.querySelector('.mention-rel-option.active')?.classList.remove('active');
-      opt.classList.add('active');
     });
   });
 }

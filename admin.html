@@ -308,6 +308,99 @@ tr:hover { background: var(--bg-secondary); }
   margin-top: 1rem; padding-top: 0.75rem; border-top: 0.5px solid var(--border);
 }
 
+/* TipTap editor (admin modal) */
+.modal .tiptap-toolbar {
+  display: flex; align-items: center; gap: 2px;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid var(--border); border-bottom: none;
+  border-radius: 4px 4px 0 0;
+  background: var(--bg-secondary);
+}
+.modal .tiptap-toolbar-btn {
+  font-family: var(--mono); font-size: 11px; font-weight: 600;
+  width: 26px; height: 24px;
+  display: flex; align-items: center; justify-content: center;
+  border: none; border-radius: 3px;
+  background: transparent; color: var(--text-tertiary);
+  cursor: pointer;
+}
+.modal .tiptap-toolbar-btn:hover { background: var(--border); color: var(--text-primary); }
+.modal .tiptap-toolbar-btn.active { background: var(--text-primary); color: #fff; }
+.modal .tiptap-toolbar-sep { width: 1px; height: 16px; background: var(--border); margin: 0 3px; }
+.modal .tiptap-notes {
+  border: 1px solid var(--border); border-radius: 0 0 4px 4px;
+  min-height: 80px; max-height: 200px; overflow-y: auto;
+  padding: 0.6rem 0.75rem;
+  font-family: var(--serif); font-size: 15px; line-height: 1.6;
+  color: var(--text-primary); cursor: text;
+}
+.modal .tiptap-notes:focus-within { border-color: var(--text-secondary); }
+.modal .tiptap-notes .tiptap { outline: none; min-height: 60px; }
+.modal .tiptap-notes .tiptap p { margin-bottom: 0.5rem; }
+.modal .tiptap-notes .tiptap p:last-child { margin-bottom: 0; }
+.modal .tiptap-notes .tiptap p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder); float: left; height: 0;
+  color: var(--text-tertiary); pointer-events: none;
+}
+.modal .tiptap-mention {
+  background: #e0edff; color: var(--accent); padding: 1px 4px;
+  border-radius: 3px; font-size: 13px; font-weight: 500;
+}
+/* Checkbox groups (admin modal) */
+.modal .checkbox-group {
+  display: flex; flex-wrap: wrap; gap: 0.3rem 0.75rem;
+}
+.modal .checkbox-group label {
+  font-family: var(--mono); font-size: 11px;
+  color: var(--text-secondary); display: flex; align-items: center; gap: 4px;
+  cursor: pointer;
+}
+.modal .checkbox-group input[type="checkbox"] { margin: 0; }
+
+/* Multi-select tags in modal */
+.modal .tag-input-wrap {
+  display: flex; flex-wrap: wrap; gap: 4px; align-items: center;
+  border: 1px solid var(--border); border-radius: 4px;
+  padding: 0.3rem 0.4rem; min-height: 38px; cursor: text;
+}
+.modal .tag-input-wrap:focus-within { border-color: var(--text-secondary); }
+.modal .tag-input-wrap input {
+  border: none; outline: none; flex: 1; min-width: 80px;
+  font-family: var(--serif); font-size: 15px; padding: 0.15rem 0;
+  background: transparent; color: var(--text-primary);
+}
+.modal .es-tag {
+  display: inline-flex; align-items: center; gap: 3px;
+  background: var(--bg-secondary); border: 1px solid var(--border);
+  border-radius: 3px; padding: 2px 6px;
+  font-family: var(--mono); font-size: 11px; color: var(--text-secondary);
+}
+.modal .es-tag-remove {
+  cursor: pointer; font-size: 13px; color: var(--text-tertiary);
+  line-height: 1; margin-left: 2px;
+}
+.modal .es-tag-remove:hover { color: var(--red); }
+/* Entity search autocomplete in modal */
+.modal .entity-search-wrap { position: relative; }
+.modal .entity-search-wrap input { width: 100%; }
+.modal .entity-search-results {
+  position: absolute; left: 0; right: 0; top: 100%;
+  background: #fff; border: 1px solid var(--border); border-top: none;
+  border-radius: 0 0 4px 4px; max-height: 160px; overflow-y: auto;
+  z-index: 10; box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+.modal .entity-search-results .es-item {
+  padding: 0.4rem 0.6rem; cursor: pointer;
+  font-family: var(--serif); font-size: 14px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.modal .entity-search-results .es-item:hover,
+.modal .entity-search-results .es-item.active { background: #edecea; }
+.modal .es-item-cat {
+  font-family: var(--mono); font-size: 9px; color: var(--text-tertiary);
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+
 /* Loading */
 .loading {
   text-align: center; padding: 2rem;
@@ -356,10 +449,10 @@ tr:hover { background: var(--bg-secondary); }
   </button>
   <div class="nav-links">
     <a href="/">Background</a>
-    <a href="/theoryofchange.html">Theory of Change</a>
-    <a href="/contribute.html">Take Part</a>
-    <a href="/map.html">Map</a>
-    <a href="/about.html">About Us</a>
+    <a href="/theoryofchange">Theory of Change</a>
+    <a href="/contribute">Take Part</a>
+    <a href="/map">Map</a>
+    <a href="/about">About Us</a>
   </div>
 </nav>
 
@@ -426,29 +519,76 @@ tr:hover { background: var(--bg-secondary); }
 <div id="toast" class="toast"></div>
 <div id="modal-container"></div>
 
+<script src="/assets/js/tiptap-notes.js"></script>
 <script>
 // --- Config ---
 const API_BASE = window.location.hostname === 'localhost'
   ? ''
   : 'https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com';
 
+const FIELD_OPTIONS = {
+  regulatory_stance: ['Accelerate','Light-touch','Targeted','Moderate','Restrictive','Precautionary','Nationalize','Mixed/unclear','Other'],
+  agi_timeline: ['Already here','2-3 years','5-10 years','10-25 years','25+ years or never','Ill-defined','Unknown'],
+  ai_risk_level: ['Overstated','Manageable','Serious','Catastrophic','Existential','Mixed/nuanced','Unknown'],
+  evidence_source: ['Explicitly stated','Inferred','Unknown'],
+  funding_model: ['For-profit','Non-profit','Government','Hybrid','Unknown'],
+  threat_models: ['Labor displacement','Economic inequality','Power concentration','Democratic erosion','Cybersecurity threats','Misinformation/deepfakes','Environmental harm','Weapons proliferation','Loss of human control','Copyright/IP/creative economy','Existential/civilizational risk'],
+  influence_type: ['Decision-maker','Advisor/strategist','Researcher/analyst','Funder/investor','Builder','Organizer/advocate','Narrator','Implementer','Connector/convener'],
+};
+
+// Fields that link to other entities — rendered as autocomplete search inputs
+const LINK_FIELDS = {
+  primary_org:  { searchType: 'organizations', display: 'name' },
+  other_orgs:   { searchType: 'organizations', display: 'name', multi: true },
+  parent_org_id:{ searchType: 'organizations', display: 'name', valueField: 'id' },
+  author:       { searchType: 'people', display: 'name', multi: true },
+};
+
+// Cache of all entities for autocomplete (loaded on first edit)
+let _adminEntityCache = null;
+async function getEntityCache() {
+  if (_adminEntityCache) return _adminEntityCache;
+  try {
+    const [pRes, oRes] = await Promise.all([
+      apiFetch('/admin?action=all&type=people'),
+      apiFetch('/admin?action=all&type=organizations'),
+    ]);
+    const pData = await pRes.json();
+    const oData = await oRes.json();
+    _adminEntityCache = {
+      people: pData.data || pData.items || [],
+      organizations: oData.data || oData.items || [],
+    };
+  } catch (e) {
+    _adminEntityCache = { people: [], organizations: [] };
+  }
+  return _adminEntityCache;
+}
+
+function searchEntityCache(query, type) {
+  if (!_adminEntityCache || !query || query.length < 2) return [];
+  const q = query.toLowerCase();
+  const list = _adminEntityCache[type] || [];
+  return list.filter(e => (e.name || '').toLowerCase().includes(q)).slice(0, 8);
+}
+
 const FIELD_DEFS = {
   people: {
-    fields: ['name','category','title','primary_org','location','regulatory_stance','agi_timeline','ai_risk_level','threat_models','influence_type','twitter','notes','status'],
+    fields: ['name','category','title','primary_org','other_orgs','location','regulatory_stance','regulatory_stance_detail','evidence_source','agi_timeline','ai_risk_level','threat_models','threat_models_detail','influence_type','twitter','bluesky','thumbnail_url','notes','status'],
     categories: ['Executive','Researcher','Policymaker','Investor','Organizer','Journalist','Academic','Cultural figure'],
     tableFields: ['name','category','title','primary_org','location','regulatory_stance','status'],
     label: 'People',
     singular: 'person'
   },
   organizations: {
-    fields: ['name','category','website','location','funding_model','regulatory_stance','influence_type','twitter','notes','status'],
+    fields: ['name','category','website','location','funding_model','regulatory_stance','regulatory_stance_detail','evidence_source','agi_timeline','ai_risk_level','threat_models','threat_models_detail','influence_type','twitter','bluesky','thumbnail_url','notes','status'],
     categories: ['Frontier Lab','AI Safety','Think Tank','Government','Academic','VC','Labor','Ethics','Media','Political Campaign'],
     tableFields: ['name','category','website','location','funding_model','regulatory_stance','status'],
     label: 'Organizations',
     singular: 'organization'
   },
   resources: {
-    fields: ['title','author','resource_type','url','year','category','key_argument','notes','status'],
+    fields: ['title','author','resource_type','url','year','category','regulatory_stance','agi_timeline','ai_risk_level','key_argument','notes','status'],
     categories: ['Essay','Book','Report','Podcast','Video','Website','Academic Paper','News Article','Substack','Newsletter'],
     tableFields: ['title','author','resource_type','year','category','status'],
     singular: 'resource'
@@ -479,7 +619,11 @@ async function testAuth(key) {
     if (!res.ok) throw new Error('Invalid key');
     document.getElementById('auth-gate').style.display = 'none';
     document.getElementById('admin-content').style.display = 'block';
-    loadDashboard();
+    // Restore last active tab, default to dashboard
+    const savedTab = localStorage.getItem('admin_tab') || 'dashboard';
+    const savedSubTab = localStorage.getItem('admin_subtab');
+    if (savedSubTab) currentSubTab = savedSubTab;
+    switchToTab(savedTab);
   } catch (e) {
     document.getElementById('auth-error').textContent = 'Invalid admin key. Try again.';
     document.getElementById('auth-error').style.display = 'block';
@@ -488,8 +632,14 @@ async function testAuth(key) {
   }
 }
 
-// Auto-load dashboard
-document.addEventListener("DOMContentLoaded", () => loadDashboard());
+// Auto-load: restore saved tab or default to dashboard
+document.addEventListener("DOMContentLoaded", () => {
+  const savedTab = localStorage.getItem('admin_tab');
+  const savedSubTab = localStorage.getItem('admin_subtab');
+  if (savedSubTab) currentSubTab = savedSubTab;
+  if (savedTab) switchToTab(savedTab);
+  else loadDashboard();
+});
 
 // --- API helpers ---
 function apiFetch(path, opts = {}) {
@@ -523,14 +673,40 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 function switchToTab(tab) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id === 'tab-' + tab));
+  localStorage.setItem('admin_tab', tab);
   if (tab === 'dashboard') loadDashboard();
   if (tab === 'pending') loadPending();
-  if (tab === 'entities') loadEntities(currentSubTab);
+  if (tab === 'entities') {
+    document.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.toggle('active', b.dataset.subtab === currentSubTab));
+    loadEntities(currentSubTab);
+  }
+}
+
+// Entity type filters (all active by default)
+let activeEntityTypes = new Set(['people', 'organizations', 'resources']);
+let allEntitiesCache = {}; // { people: [], organizations: [], resources: [] }
+
+function toggleEntityFilter(type, btn) {
+  if (activeEntityTypes.has(type)) {
+    if (activeEntityTypes.size === 1) return; // don't deselect last one
+    activeEntityTypes.delete(type);
+    btn.classList.remove('active');
+  } else {
+    activeEntityTypes.add(type);
+    btn.classList.add('active');
+  }
+  localStorage.setItem('admin_entity_filters', JSON.stringify([...activeEntityTypes]));
+  selectedIds.clear();
+  updateBulkButtons();
+  renderMergedTable();
 }
 
 function switchSubTab(type) {
+  // Legacy compat — activate only this type
+  activeEntityTypes = new Set([type]);
+  document.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.toggle('active', activeEntityTypes.has(b.dataset.subtab)));
   currentSubTab = type;
-  document.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.toggle('active', b.dataset.subtab === type));
+  localStorage.setItem('admin_subtab', type);
   selectedIds.clear();
   updateBulkButtons();
   loadEntities(type);
@@ -564,7 +740,7 @@ function renderStats(data) {
     { label: 'Resources — Approved', value: s.resources_approved ?? s.resources?.approved ?? '—', sub: '' },
     { label: 'Resources — Pending', value: s.resources_pending ?? s.resources?.pending ?? '—', sub: '' },
     { label: 'Relationships', value: s.relationships ?? s.relationships_count ?? '—', sub: '' },
-    { label: 'Person-Org Links', value: s.person_org_links ?? s.person_orgs ?? '—', sub: '' },
+    { label: 'Person-Org Links', value: s.person_org_links ?? s.person_organizations ?? s.person_orgs ?? '—', sub: '' },
   ];
   grid.innerHTML = cards.map(c => `
     <div class="stat-card">
@@ -587,6 +763,15 @@ async function loadPending() {
   try {
     const res = await apiFetch('/admin?action=pending');
     const data = await res.json();
+    // Attach LLM reviews from submissions to entity items
+    const submissions = data.submissions || [];
+    for (const type of ['people','organizations','resources']) {
+      const singular = { people: 'person', organizations: 'organization', resources: 'resource' }[type];
+      (data[type] || []).forEach(item => {
+        const sub = submissions.find(s => s.entity_type === singular && s.entity_id === item.id);
+        if (sub?.llm_review) item._llmReview = typeof sub.llm_review === 'string' ? JSON.parse(sub.llm_review) : sub.llm_review;
+      });
+    }
     const items = data.pending || data.items || data;
     loading.style.display = 'none';
     if (!items || (Array.isArray(items) && items.length === 0)) {
@@ -669,6 +854,18 @@ function renderPendingCard(item, type) {
     comparisonHtml = renderComparison(item, item._existing, def);
   }
 
+  let llmHtml = '';
+  if (item._llmReview) {
+    const r = item._llmReview;
+    const stars = '★'.repeat(r.quality || 0) + '☆'.repeat(5 - (r.quality || 0));
+    const flags = (r.flags || []).map(f => `<span style="background:#fef3c7;color:#92400e;padding:1px 5px;border-radius:3px;font-size:10px;margin-left:4px;">${escHtml(f)}</span>`).join('');
+    llmHtml = `<div style="padding:0.5rem 0.75rem;background:var(--bg-secondary,#f8f7f5);border-radius:4px;margin-bottom:0.5rem;font-size:12px;">
+      <strong style="font-size:10px;letter-spacing:0.04em;text-transform:uppercase;color:#888;">LLM Review</strong>
+      <div>Quality: ${stars} ${flags}</div>
+      ${r.notes ? `<div style="color:#666;margin-top:2px;">${escHtml(r.notes)}</div>` : ''}
+    </div>`;
+  }
+
   return `
     <div class="pending-card" id="pending-${singular}-${id}">
       <div class="pending-card-header">
@@ -678,6 +875,7 @@ function renderPendingCard(item, type) {
         </div>
         <span class="badge badge-pending">Pending</span>
       </div>
+      ${llmHtml}
       ${comparisonHtml}
       <div class="pending-card-fields">${fieldsHtml}</div>
       <div class="pending-actions">
@@ -754,16 +952,98 @@ async function loadEntities(type) {
   selectedIds.clear();
   updateBulkButtons();
   try {
-    const res = await apiFetch(`/admin?action=all&type=${type}`);
-    const data = await res.json();
-    entitiesData = data.items || data[type] || data;
-    if (!Array.isArray(entitiesData)) entitiesData = [];
+    // Use cache if available for instant switching
+    if (allEntitiesCache[type]) {
+      entitiesData = allEntitiesCache[type];
+    } else {
+      const res = await apiFetch(`/admin?action=all&type=${type}`);
+      const data = await res.json();
+      entitiesData = data.items || data.data || data[type] || data;
+      if (!Array.isArray(entitiesData)) entitiesData = [];
+      allEntitiesCache[type] = entitiesData;
+    }
     loading.style.display = 'none';
     table.style.display = 'table';
     renderEntitiesTable(type);
+    // Preload other types in background for fast switching
+    for (const t of ['people', 'organizations', 'resources']) {
+      if (!allEntitiesCache[t] && t !== type) {
+        apiFetch(`/admin?action=all&type=${t}`).then(r => r.json()).then(d => {
+          allEntitiesCache[t] = d.items || d.data || d[t] || [];
+        }).catch(() => {});
+      }
+    }
   } catch (e) {
     loading.textContent = 'Failed to load entities.';
   }
+}
+
+function renderMergedTable() {
+  // Merge active entity types into a single list
+  entitiesData = [];
+  for (const t of activeEntityTypes) {
+    entitiesData.push(...(allEntitiesCache[t] || []));
+  }
+
+  // Unified columns: type + name/title + category + key detail + status
+  const thead = document.getElementById('entities-thead');
+  const tbody = document.getElementById('entities-tbody');
+  const cols = ['type', 'name', 'category', 'detail', 'regulatory_stance', 'status'];
+
+  thead.innerHTML = '<tr>' +
+    '<th style="width:30px"><input type="checkbox" onchange="toggleSelectAll(this)"></th>' +
+    cols.map(c => {
+      const arrow = sortCol === c ? (sortDir === 'asc' ? ' &#9650;' : ' &#9660;') : '';
+      return `<th onclick="sortEntities('${c}')" style="cursor:pointer">${c.replace(/_/g, ' ')}<span class="sort-arrow">${arrow}</span></th>`;
+    }).join('') +
+    '<th>Actions</th></tr>';
+
+  // Filter by search
+  const search = (document.getElementById('entity-search').value || '').toLowerCase();
+  let filtered = entitiesData;
+  if (search) {
+    filtered = entitiesData.filter(item =>
+      Object.values(item).some(v => v != null && String(v).toLowerCase().includes(search))
+    );
+  }
+
+  // Sort
+  if (sortCol) {
+    filtered = [...filtered].sort((a, b) => {
+      let av, bv;
+      if (sortCol === 'name') { av = (a.name || a.title || '').toLowerCase(); bv = (b.name || b.title || '').toLowerCase(); }
+      else if (sortCol === 'type') { av = a._entityType; bv = b._entityType; }
+      else if (sortCol === 'detail') { av = (a.title || a.website || a.resource_type || '').toLowerCase(); bv = (b.title || b.website || b.resource_type || '').toLowerCase(); }
+      else { av = String(a[sortCol] || '').toLowerCase(); bv = String(b[sortCol] || '').toLowerCase(); }
+      return sortDir === 'asc' ? av.localeCompare(bv) : bv.localeCompare(av);
+    });
+  }
+
+  tbody.innerHTML = filtered.map(item => {
+    const id = item.id;
+    const t = item._entityType;
+    const singular = FIELD_DEFS[t]?.singular || t;
+    const name = item.name || item.title || '';
+    const detail = t === 'people' ? (item.title || item.primary_org || '') : t === 'organizations' ? (item.website || '') : (item.resource_type || '');
+    const typeLabel = t === 'people' ? 'Person' : t === 'organizations' ? 'Org' : 'Resource';
+    const checked = selectedIds.has(`${t}-${id}`) ? 'checked' : '';
+
+    return `<tr>
+      <td><input type="checkbox" data-type="${t}" data-id="${id}" ${checked} onchange="toggleSelect('${t}',${id},this)"></td>
+      <td><span style="font-family:var(--mono);font-size:9px;letter-spacing:0.04em;text-transform:uppercase;color:var(--text-tertiary);background:var(--bg-secondary);padding:1px 4px;border-radius:2px;">${typeLabel}</span></td>
+      <td title="${escHtml(name)}">${escHtml(name)}</td>
+      <td>${escHtml(item.category || '')}</td>
+      <td title="${escHtml(detail)}">${escHtml(detail.length > 30 ? detail.slice(0, 30) + '...' : detail)}</td>
+      <td>${escHtml(item.regulatory_stance || '')}</td>
+      <td><span class="badge badge-${item.status || 'pending'}">${item.status || 'pending'}</span></td>
+      <td>
+        <button class="btn btn-outline btn-sm" onclick="editEntity('${t}','${singular}',${id})">Edit</button>
+        <button class="btn btn-red btn-sm" onclick="deleteEntity('${singular}',${id})">Del</button>
+      </td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('entities-table').style.display = 'table';
 }
 
 function renderEntitiesTable(type) {
@@ -781,12 +1061,12 @@ function renderEntitiesTable(type) {
     }).join('') +
     '<th>Actions</th></tr>';
 
-  // Filter
+  // Filter — searches ALL fields on the entity, not just visible table columns
   const search = (document.getElementById('entity-search').value || '').toLowerCase();
   let filtered = entitiesData;
   if (search) {
     filtered = entitiesData.filter(item =>
-      cols.some(c => String(item[c] || '').toLowerCase().includes(search))
+      Object.values(item).some(v => v != null && String(v).toLowerCase().includes(search))
     );
   }
 
@@ -833,6 +1113,8 @@ function sortEntities(col) {
 function filterEntities() {
   renderEntitiesTable(currentSubTab);
 }
+
+// renderMergedTable is unused now but kept for potential future use
 
 // --- Inline edit ---
 function inlineEdit(td, type, id, field) {
@@ -946,6 +1228,8 @@ async function bulkDelete() {
 // --- Edit Modal ---
 async function editEntity(type, singular, id, approveAfter = false) {
   const def = FIELD_DEFS[type];
+  // Prefetch entity cache for autocomplete
+  await getEntityCache();
   // Fetch current data
   let item = entitiesData.find(e => e.id === id);
   if (!item) {
@@ -960,25 +1244,85 @@ async function editEntity(type, singular, id, approveAfter = false) {
   if (!item) { toast('Could not load item', true); return; }
 
   let fieldsHtml = '';
+  let hasNotes = false;
   def.fields.forEach(f => {
     if (f === 'status' && approveAfter) return;
     const val = item[f] ?? '';
+    const label = f.replace(/_/g, ' ');
+
     if (f === 'category') {
-      fieldsHtml += `<div class="field"><label>${f.replace(/_/g, ' ')}</label><select name="${f}">
+      fieldsHtml += `<div class="field"><label>${label}</label><select name="${f}">
+        <option value="">—</option>
         ${(def.categories || []).map(c => `<option value="${c}" ${c === val ? 'selected' : ''}>${c}</option>`).join('')}
       </select></div>`;
     } else if (f === 'resource_type') {
-      fieldsHtml += `<div class="field"><label>${f.replace(/_/g, ' ')}</label><select name="${f}">
+      fieldsHtml += `<div class="field"><label>${label}</label><select name="${f}">
+        <option value="">—</option>
         ${(FIELD_DEFS.resources.categories || []).map(c => `<option value="${c}" ${c === val ? 'selected' : ''}>${c}</option>`).join('')}
       </select></div>`;
     } else if (f === 'status') {
       fieldsHtml += `<div class="field"><label>${f}</label><select name="${f}">
         ${['approved','pending','rejected'].map(s => `<option value="${s}" ${s === val ? 'selected' : ''}>${s}</option>`).join('')}
       </select></div>`;
-    } else if (f === 'notes' || f === 'key_argument' || f === 'threat_models') {
-      fieldsHtml += `<div class="field"><label>${f.replace(/_/g, ' ')}</label><textarea name="${f}">${escHtml(String(val))}</textarea></div>`;
+    } else if (FIELD_OPTIONS[f] && (f === 'threat_models' || f === 'influence_type')) {
+      // Checkbox group for multi-select fields
+      const selected = String(val).split(',').map(s => s.trim()).filter(Boolean);
+      fieldsHtml += `<div class="field"><label>${label}</label><div class="checkbox-group" data-field="${f}">
+        ${FIELD_OPTIONS[f].map(opt => `<label><input type="checkbox" name="${f}" value="${opt}" ${selected.includes(opt) ? 'checked' : ''}> ${opt}</label>`).join('')}
+      </div></div>`;
+    } else if (FIELD_OPTIONS[f]) {
+      // Select dropdown for fields with predefined options
+      fieldsHtml += `<div class="field"><label>${label}</label><select name="${f}">
+        <option value="">—</option>
+        ${FIELD_OPTIONS[f].map(opt => `<option value="${opt}" ${opt === val ? 'selected' : ''}>${opt}</option>`).join('')}
+      </select></div>`;
+    } else if (f === 'thumbnail_url') {
+      fieldsHtml += `<div class="field"><label>thumbnail</label>
+        ${val ? `<img src="${escHtml(String(val))}" style="max-width:80px;max-height:80px;border-radius:4px;margin-bottom:0.3rem;display:block;">` : ''}
+        <input type="file" name="thumbnail_file" accept="image/jpeg,image/png,image/webp" style="font-size:12px;">
+        <input type="hidden" name="thumbnail_url" value="${escHtml(String(val))}">
+      </div>`;
+    } else if (f === 'notes') {
+      hasNotes = true;
+      fieldsHtml += `<div class="field"><label>${label}</label>
+        <div class="tiptap-notes" id="admin-tiptap"></div>
+        <textarea name="notes" class="hidden" style="display:none">${escHtml(String(val))}</textarea>
+        <input type="hidden" name="notesHtml" value="${escHtml(item.notes_html || '')}">
+        <input type="hidden" name="notesMentions" value="">
+      </div>`;
+    } else if (LINK_FIELDS[f]) {
+      const linkDef = LINK_FIELDS[f];
+      if (linkDef.multi) {
+        // Multi-select tag input
+        const existingTags = String(val).split(',').map(s => s.trim()).filter(Boolean);
+        const tagsHtml = existingTags.map(t => `<span class="es-tag" data-value="${escHtml(t)}">${escHtml(t)}<span class="es-tag-remove">&times;</span></span>`).join('');
+        fieldsHtml += `<div class="field"><label>${label}</label>
+          <div class="entity-search-wrap" data-multi="true">
+            <div class="tag-input-wrap">
+              ${tagsHtml}
+              <input type="text" class="es-input" data-link-field="${f}" data-search-type="${linkDef.searchType}" data-value-field="${linkDef.valueField || ''}" placeholder="Search..." autocomplete="off">
+            </div>
+            <input type="hidden" name="${f}" value="${escHtml(String(val))}">
+            <div class="entity-search-results"></div>
+          </div>
+        </div>`;
+      } else {
+        // Single-value autocomplete
+        const displayVal = linkDef.valueField === 'id' && val
+          ? (_adminEntityCache?.[linkDef.searchType]?.find(e => e.id === parseInt(val))?.name || val)
+          : val;
+        fieldsHtml += `<div class="field"><label>${label}</label>
+          <div class="entity-search-wrap">
+            <input type="text" class="es-input" data-link-field="${f}" data-search-type="${linkDef.searchType}" data-value-field="${linkDef.valueField || ''}" value="${escHtml(String(displayVal))}" autocomplete="off">
+            <input type="hidden" name="${f}" value="${escHtml(String(val))}">
+            <div class="entity-search-results"></div>
+          </div>
+        </div>`;
+      }
+    } else if (f === 'key_argument' || f === 'regulatory_stance_detail' || f === 'threat_models_detail') {
+      fieldsHtml += `<div class="field"><label>${label}</label><textarea name="${f}">${escHtml(String(val))}</textarea></div>`;
     } else {
-      fieldsHtml += `<div class="field"><label>${f.replace(/_/g, ' ')}</label><input type="text" name="${f}" value="${escHtml(String(val))}"></div>`;
+      fieldsHtml += `<div class="field"><label>${label}</label><input type="text" name="${f}" value="${escHtml(String(val))}"></div>`;
     }
   });
 
@@ -996,15 +1340,156 @@ async function editEntity(type, singular, id, approveAfter = false) {
         </div>
       </div>
     </div>`;
+
+  // Initialize TipTap on notes field if present
+  if (hasNotes && typeof window.initTipTapEditors === 'function') {
+    window.initTipTapEditors();
+    const tiptapEl = document.querySelector('#admin-tiptap');
+    if (tiptapEl && tiptapEl._editor && item.notes_html) {
+      tiptapEl._editor.commands.setContent(item.notes_html);
+    } else if (tiptapEl && tiptapEl._editor && item.notes) {
+      tiptapEl._editor.commands.setContent(`<p>${escHtml(String(item.notes))}</p>`);
+    }
+  }
+
+  // Wire up entity search autocomplete inputs
+  document.querySelectorAll('#edit-form .es-input').forEach(input => {
+    const wrap = input.closest('.entity-search-wrap');
+    const resultsDiv = wrap.querySelector('.entity-search-results');
+    const hidden = wrap.querySelector('input[type="hidden"]');
+    const searchType = input.dataset.searchType;
+    const valueField = input.dataset.valueField;
+    const isMulti = wrap.dataset.multi === 'true';
+    const tagWrap = wrap.querySelector('.tag-input-wrap');
+
+    // For multi: update hidden from current tags
+    function updateMultiHidden() {
+      const tags = [...wrap.querySelectorAll('.es-tag')].map(t => t.dataset.value);
+      hidden.value = tags.join(', ');
+    }
+
+    // For multi: add a tag
+    function addTag(name) {
+      const existing = [...wrap.querySelectorAll('.es-tag')].map(t => t.dataset.value);
+      if (existing.includes(name)) return;
+      const tag = document.createElement('span');
+      tag.className = 'es-tag';
+      tag.dataset.value = name;
+      tag.innerHTML = `${escHtml(name)}<span class="es-tag-remove">&times;</span>`;
+      tag.querySelector('.es-tag-remove').addEventListener('click', () => { tag.remove(); updateMultiHidden(); });
+      tagWrap.insertBefore(tag, input);
+      updateMultiHidden();
+    }
+
+    // Wire existing tag remove buttons
+    if (isMulti) {
+      wrap.querySelectorAll('.es-tag-remove').forEach(btn => {
+        btn.addEventListener('click', () => { btn.parentElement.remove(); updateMultiHidden(); });
+      });
+      tagWrap.addEventListener('click', () => input.focus());
+    }
+
+    function selectResult(item) {
+      if (isMulti) {
+        addTag(item.dataset.name);
+        input.value = '';
+      } else {
+        input.value = item.dataset.name;
+        hidden.value = valueField === 'id' ? item.dataset.id : item.dataset.name;
+      }
+      resultsDiv.innerHTML = '';
+    }
+
+    input.addEventListener('input', () => {
+      const q = input.value.trim();
+      if (q.length < 2) { resultsDiv.innerHTML = ''; return; }
+      const results = searchEntityCache(q, searchType);
+      resultsDiv.innerHTML = results.map(e => `
+        <div class="es-item" data-id="${e.id}" data-name="${escHtml(e.name)}">
+          <span>${escHtml(e.name)}</span>
+          <span class="es-item-cat">${escHtml(e.category || '')}</span>
+        </div>`).join('');
+      resultsDiv.querySelectorAll('.es-item').forEach(item => {
+        item.addEventListener('click', () => selectResult(item));
+      });
+    });
+
+    if (!isMulti && !valueField) {
+      input.addEventListener('change', () => { hidden.value = input.value; });
+    }
+    input.addEventListener('blur', () => {
+      setTimeout(() => {
+        resultsDiv.innerHTML = '';
+        if (!isMulti && !valueField) hidden.value = input.value;
+      }, 200);
+    });
+
+    // Keyboard nav
+    input.addEventListener('keydown', (e) => {
+      const items = resultsDiv.querySelectorAll('.es-item');
+      const active = resultsDiv.querySelector('.es-item.active');
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        const next = active ? active.nextElementSibling : items[0];
+        if (next) { active?.classList.remove('active'); next.classList.add('active'); next.scrollIntoView({ block: 'nearest' }); }
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        const prev = active?.previousElementSibling;
+        if (prev) { active.classList.remove('active'); prev.classList.add('active'); prev.scrollIntoView({ block: 'nearest' }); }
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        const sel = active || items[0];
+        if (sel) selectResult(sel);
+      } else if (e.key === 'Escape') {
+        resultsDiv.innerHTML = '';
+      } else if (isMulti && e.key === 'Backspace' && !input.value) {
+        const lastTag = tagWrap.querySelector('.es-tag:last-of-type');
+        if (lastTag) { lastTag.remove(); updateMultiHidden(); }
+      }
+    });
+  });
 }
 
 async function saveEdit(type, singular, id, approveAfter) {
   const form = document.getElementById('edit-form');
   const data = {};
-  form.querySelectorAll('input, select, textarea').forEach(el => {
-    data[el.name] = el.value;
+
+  // Simple fields (inputs, selects, visible textareas)
+  form.querySelectorAll('input:not([type="file"]):not([type="checkbox"]):not([type="hidden"]), select, textarea:not(.hidden)').forEach(el => {
+    if (el.name) data[el.name] = el.value;
   });
+  // Hidden fields
+  form.querySelectorAll('input[type="hidden"]').forEach(el => {
+    if (el.name && el.value) data[el.name] = el.value;
+  });
+  // Checkbox groups → comma-separated
+  form.querySelectorAll('.checkbox-group').forEach(group => {
+    const field = group.dataset.field;
+    const checked = [...group.querySelectorAll('input:checked')].map(cb => cb.value);
+    data[field] = checked.join(', ');
+  });
+  // TipTap notes
+  const tiptapEl = document.querySelector('#admin-tiptap');
+  if (tiptapEl && tiptapEl._editor) {
+    data.notes = tiptapEl._editor.getText();
+  }
+
   try {
+    // Upload thumbnail if file selected
+    const fileInput = form.querySelector('input[name="thumbnail_file"]');
+    if (fileInput && fileInput.files.length > 0) {
+      const formData = new FormData();
+      formData.append('file', fileInput.files[0]);
+      formData.append('type', singular);
+      formData.append('id', String(id));
+      const uploadRes = await fetch(`${API_BASE}/upload?key=${adminKey}`, { method: 'POST', body: formData });
+      if (uploadRes.ok) {
+        const result = await uploadRes.json();
+        data.thumbnail_url = result.url;
+      } else {
+        toast('Thumbnail upload failed', true);
+      }
+    }
     const res = await apiPost({ action: 'update', type: singular, id, data });
     if (!res.ok) throw new Error();
     if (approveAfter) {

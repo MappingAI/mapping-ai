@@ -56,6 +56,7 @@ async function migrate() {
       ['is_self_submission', 'BOOLEAN DEFAULT FALSE'],
       ['regulatory_stance_detail', 'TEXT'],
       ['submission_count', 'INTEGER DEFAULT 1'],
+      ['thumbnail_url', 'VARCHAR(500)'],
     ];
     for (const [col, type] of peopleNewCols) {
       await client.query(`ALTER TABLE people ADD COLUMN IF NOT EXISTS ${col} ${type}`);
@@ -108,6 +109,7 @@ async function migrate() {
       ['parent_org_id', 'INTEGER REFERENCES organizations(id)'],
       ['regulatory_stance_detail', 'TEXT'],
       ['submission_count', 'INTEGER DEFAULT 1'],
+      ['thumbnail_url', 'VARCHAR(500)'],
     ];
     for (const [col, type] of orgsNewCols) {
       await client.query(`ALTER TABLE organizations ADD COLUMN IF NOT EXISTS ${col} ${type}`);
@@ -141,6 +143,9 @@ async function migrate() {
       ['submitter_relationship', 'VARCHAR(200)'],
       ['is_self_submission', 'BOOLEAN DEFAULT FALSE'],
       ['submission_count', 'INTEGER DEFAULT 1'],
+      ['regulatory_stance', 'VARCHAR(200)'],
+      ['agi_timeline', 'VARCHAR(200)'],
+      ['ai_risk_level', 'VARCHAR(200)'],
     ];
     for (const [col, type] of resourcesNewCols) {
       await client.query(`ALTER TABLE resources ADD COLUMN IF NOT EXISTS ${col} ${type}`);
@@ -197,6 +202,8 @@ async function migrate() {
       )
     `);
     console.log('  ✓ submissions table exists');
+    await client.query(`ALTER TABLE submissions ADD COLUMN IF NOT EXISTS llm_review JSONB`);
+    console.log('    + submissions.llm_review');
 
     // --- Indexes ---
     console.log('\nCreating indexes...');

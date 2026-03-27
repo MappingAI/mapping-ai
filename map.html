@@ -10,6 +10,17 @@
   <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
   <link rel="manifest" href="/assets/favicon/site.webmanifest">
+  <meta name="description" content="Interactive stakeholder map of the U.S. AI policy landscape — explore people, organizations, and resources by sector, stance, and connections.">
+  <meta property="og:title" content="Map — Mapping AI">
+  <meta property="og:description" content="Interactive stakeholder map of the U.S. AI policy landscape — explore by sector, stance, and connections.">
+  <meta property="og:image" content="https://mapping-ai.org/assets/images/og-image.png">
+  <meta property="og:url" content="https://mapping-ai.org/map">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Mapping AI">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Map — Mapping AI">
+  <meta name="twitter:description" content="Interactive stakeholder map of the U.S. AI policy landscape.">
+  <meta name="twitter:image" content="https://mapping-ai.org/assets/images/og-image.png">
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <style>
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@400;500&display=swap');
@@ -311,9 +322,9 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   .mobile-banner {
     display: flex; align-items: center; justify-content: space-between;
     position: fixed; top: 48px; left: 0; right: 0; z-index: 90;
-    padding: 0.4rem 1rem;
+    padding: 0.25rem 0.75rem;
     background: var(--bg-panel); border-bottom: 1px solid var(--line);
-    font-family: var(--mono); font-size: 10px; color: var(--text-3);
+    font-family: var(--mono); font-size: 9px; color: var(--text-3);
     letter-spacing: 0.02em;
   }
   .mobile-banner button {
@@ -339,10 +350,12 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   .controls .control-group { padding: 0.4rem 0.5rem; }
   .controls .control-group:first-child { flex: 1; min-width: 0; }
   .controls #category-filters,
-  .controls #stance-legend { display: none; }
+  .controls #stance-legend,
+  .controls #axis-controls { display: none !important; }
   .controls.filters-open #category-filters,
-  .controls.filters-open #stance-legend {
-    display: block; position: fixed; bottom: 52px; left: 0; right: 0;
+  .controls.filters-open #stance-legend,
+  .controls.filters-open #axis-controls {
+    display: block !important; position: fixed; bottom: 52px; left: 0; right: 0;
     background: var(--bg-panel); border-top: 1px solid var(--line);
     padding: 0.75rem; max-height: 60vh; overflow-y: auto;
     z-index: 55;
@@ -351,10 +364,10 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   .search-input { width: 100%; }
   /* Larger tap targets on mobile */
   .chip { padding: 0.35rem 0.6rem; font-size: 9px; }
-  .view-btn { padding: 0.4rem 0.6rem; font-size: 10px; }
+  .view-btn { padding: 0.3rem 0.45rem; font-size: 9px; }
   .stance-legend-item { padding: 0.3rem 0; font-size: 9px; }
   /* Detail panel full-width overlay */
-  .detail-panel { width: 100%; }
+  .detail-panel { width: 100%; overscroll-behavior: contain; max-height: 100vh; padding-bottom: calc(1.25rem + env(safe-area-inset-bottom)); }
   /* Contribute panel full-width */
   #contribute-panel { width: 100vw; }
   .map-container.shifted { right: 0; }
@@ -398,10 +411,10 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   </button>
   <div class="nav-links">
     <a href="/">Background</a>
-    <a href="/theoryofchange.html">Theory of Change</a>
-    <a href="/contribute.html">Contribute</a>
-    <a href="/map.html">Map</a>
-    <a href="/about.html">About</a>
+    <a href="/theoryofchange">Theory of Change</a>
+    <a href="/contribute">Contribute</a>
+    <a href="/map">Map</a>
+    <a href="/about">About</a>
   </div>
   <button class="theme-toggle" id="theme-toggle" title="Toggle dark/light mode">&#9790;</button>
 </nav>
@@ -533,11 +546,11 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   <div id="contribute-header">
     <span>Add to map</span>
     <div style="display:flex;gap:0.4rem;">
-      <button onclick="window.open('/contribute.html','_blank')">Open full page ↗</button>
+      <button onclick="window.open('/contribute','_blank')">Open full page ↗</button>
       <button id="contribute-close">Close ✕</button>
     </div>
   </div>
-  <iframe src="/contribute.html" style="width:100%;flex:1;border:none;" title="Contribute"></iframe>
+  <iframe src="/contribute" style="width:100%;flex:1;border:none;" title="Contribute"></iframe>
 </div>
 
 <script>
@@ -830,6 +843,7 @@ const RESOURCE_TYPE_LABELS = {
 };
 
 function getImageUrl(d) {
+  if (d.thumbnail_url) return d.thumbnail_url; // prefer admin-uploaded thumbnail
   if (d.entityType === 'organization') return getOrgLogoUrl(d.name);
   if (d.entityType === 'resource') return null; // resources use emoji icons
   return getPersonImageUrl(d.name);
@@ -898,14 +912,15 @@ let simulation = null;
 let currentZoom = d3.zoomIdentity;
 let zoomBehavior = null;
 
+// Stance colors: single-hue gradient (warm amber → deep brown), distinct from all category colors
 const STANCE_COLORS = {
-  'Accelerate':    '#ef4444',
-  'Light-touch':   '#f97316',
-  'Targeted':      '#eab308',
-  'Moderate':      '#22c55e',
-  'Restrictive':   '#3b82f6',
-  'Precautionary': '#8b5cf6',
-  'Nationalize':   '#ec4899',
+  'Accelerate':    '#f0c050',   // light warm gold
+  'Light-touch':   '#d9a840',   // medium gold
+  'Targeted':      '#c09030',   // amber
+  'Moderate':      '#a07828',   // warm brown
+  'Restrictive':   '#806020',   // deep brown
+  'Precautionary': '#604818',   // dark brown
+  'Nationalize':   '#403010',   // very dark brown
 };
 const STANCE_ORDER = ['Accelerate','Light-touch','Targeted','Moderate','Restrictive','Precautionary','Nationalize'];
 let activeStances = new Set(STANCE_ORDER);
@@ -1370,14 +1385,60 @@ function render() {
   const controlsWidth = 280;
   const centerX = controlsWidth + (width - controlsWidth) / 2;
   const centerY = height / 2;
-  // Scale orbit by number of clusters — fewer clusters = tighter orbit
   const maxDim = Math.min(width - controlsWidth, height);
   const orbitRadius = maxDim * Math.min(0.35, Math.max(0.15, categories.length * 0.035));
 
-  // Sort by size descending — larger clusters get top positions
-  const catsBySize = [...categories].sort((a, b) => (catCounts[b] || 0) - (catCounts[a] || 0));
-  catsBySize.forEach((cat, i) => {
-    const angle = (i / catsBySize.length) * 2 * Math.PI - Math.PI / 2;
+  // Build node-category lookup for connection counting
+  const nodeById = {};
+  nodes.forEach(d => { if (d.id) nodeById[`${d.entityType}-${d.id}`] = d; });
+
+  // Count inter-category connections from relationships + person_organizations
+  const interCatLinks = {};
+  function addCatLink(catA, catB) {
+    if (!catA || !catB || catA === catB) return;
+    const key = [catA, catB].sort().join('||');
+    interCatLinks[key] = (interCatLinks[key] || 0) + 1;
+  }
+  (allData.relationships || []).forEach(rel => {
+    const src = nodeById[`${rel.source_type}-${rel.source_id}`];
+    const tgt = nodeById[`${rel.target_type}-${rel.target_id}`];
+    if (src && tgt) addCatLink(src.category, tgt.category);
+  });
+  inferredLinks.forEach(l => {
+    const p = nodes.find(n => n.name === l.personName);
+    const o = nodes.find(n => n.name === l.orgName);
+    if (p && o) addCatLink(p.category, o.category);
+  });
+
+  // Position clusters using greedy nearest-neighbour on connection density
+  // Start with the largest category, then place each next category
+  // adjacent to its most-connected already-placed neighbour
+  const placed = [];
+  const remaining = new Set(categories);
+  // Start with the largest cluster
+  const startCat = [...categories].sort((a, b) => (catCounts[b] || 0) - (catCounts[a] || 0))[0];
+  placed.push(startCat);
+  remaining.delete(startCat);
+
+  while (remaining.size > 0) {
+    let bestCat = null, bestScore = -1;
+    for (const cat of remaining) {
+      let score = 0;
+      for (const p of placed) {
+        const key = [cat, p].sort().join('||');
+        score += interCatLinks[key] || 0;
+      }
+      if (score > bestScore || (score === bestScore && (catCounts[cat] || 0) > (catCounts[bestCat] || 0))) {
+        bestScore = score; bestCat = cat;
+      }
+    }
+    placed.push(bestCat);
+    remaining.delete(bestCat);
+  }
+
+  // Assign angles in placed order so most-connected categories are neighbours
+  placed.forEach((cat, i) => {
+    const angle = (i / placed.length) * 2 * Math.PI - Math.PI / 2;
     clusterCenters[cat] = {
       x: centerX + orbitRadius * Math.cos(angle),
       y: centerY + orbitRadius * Math.sin(angle)
@@ -1473,12 +1534,30 @@ function render() {
       .attr('stroke-opacity', 0.25);
   }
 
+  // Build link-based attraction: connected nodes pull toward each other
+  const allLinks = [];
+  (allData.relationships || []).forEach(rel => {
+    if (rel.relationship_type === 'subsidiary') return;
+    const src = nodeById[`${rel.source_type}-${rel.source_id}`];
+    const tgt = nodeById[`${rel.target_type}-${rel.target_id}`];
+    if (src && tgt) allLinks.push({ source: src, target: tgt });
+  });
+  inferredLinks.forEach(l => {
+    const p = nodes.find(n => n.name === l.personName);
+    const o = nodes.find(n => n.name === l.orgName);
+    if (p && o) allLinks.push({ source: p, target: o });
+  });
+
   // Simulation
   if (simulation) simulation.stop();
   simulation = d3.forceSimulation(nodes)
     .force('charge', d3.forceManyBody().strength(d => d.entityType === 'organization' ? -5 : -2))
     .force('collision', d3.forceCollide().radius(d => d.radius + 2).strength(0.9))
     .force('cluster', forceCluster(clusterCenters, 0.15))
+    .force('link', d3.forceLink(allLinks).strength(0.08).distance(d => {
+      // Shorter distance for same-category links, longer for cross-category
+      return d.source.category === d.target.category ? 30 : 80;
+    }))
     .force('x', d3.forceX(centerX).strength(0.02))
     .force('y', d3.forceY(centerY).strength(0.02))
     .alpha(0.5)
@@ -1792,10 +1871,28 @@ function forceCluster(centers, strength) {
 }
 
 
+// Tick label abbreviations for narrow screens
+const TICK_ABBREV = {
+  'Accelerate': 'Accel', 'Light-touch': 'Light', 'Targeted': 'Target',
+  'Moderate': 'Mod', 'Restrictive': 'Restr', 'Precautionary': 'Precaut', 'Nationalize': 'Natl',
+  'Already here': 'Now', '2-3 years': '2-3y', '5-10 years': '5-10y',
+  '10-25 years': '10-25y', '25+ years or never': '25y+',
+  'Overstated': 'Over', 'Manageable': 'Mgbl', 'Serious': 'Serious',
+  'Catastrophic': 'Cata', 'Existential': 'Exist',
+};
+
 function render2D(svg, g, width, height) {
-  const CONTROLS_WIDTH = 280;
-  const margin = { top: 60, right: 280, bottom: 70, left: 130 };
-  const plotW = width - CONTROLS_WIDTH - margin.left - margin.right;
+  const isMobile = width < 600;
+  const isTablet = width >= 600 && width < 1024;
+  // On mobile, controls are in bottom bar, not left panel
+  const CONTROLS_WIDTH = isMobile ? 0 : (isTablet ? 200 : 280);
+  const margin = {
+    top:    isMobile ? 40 : 60,
+    right:  isMobile ? 15 : (isTablet ? 40 : 280),
+    bottom: isMobile ? 60 : 70,
+    left:   isMobile ? 10 : (isTablet ? 80 : 130),
+  };
+  const plotW = Math.max(100, width - CONTROLS_WIDTH - margin.left - margin.right);
   const plotH = height - margin.top - margin.bottom;
 
   const xAxisDef = AXES[axisX];
@@ -2012,6 +2109,11 @@ function drawAxes2D(g, xAxisDef, yAxisDef, xScale, yScale, controlsWidth, margin
   g.selectAll('.axis-2d').remove();
   const ax = g.append('g').attr('class', 'axis-2d');
   const xTicks = xAxisDef.ticks;
+  const isMobile = width < 600;
+  const isTablet = width >= 600 && width < 1024;
+  const useAbbrev = width < 1200;
+  const tickFontSize = isMobile ? 7 : (isTablet ? 8 : 9);
+  const labelFontSize = isMobile ? 9 : 11;
 
   // X axis baseline
   ax.append('line')
@@ -2026,11 +2128,20 @@ function drawAxes2D(g, xAxisDef, yAxisDef, xScale, yScale, controlsWidth, margin
       .attr('x1', x).attr('x2', x)
       .attr('y1', height - margin.bottom).attr('y2', height - margin.bottom + 5)
       .attr('stroke', 'var(--text-3,#888)');
-    ax.append('text')
-      .attr('x', x).attr('y', height - margin.bottom + 17)
-      .attr('text-anchor', 'middle').attr('font-size', 10)
+    const displayLabel = useAbbrev ? (TICK_ABBREV[label] || label) : label;
+    const tickText = ax.append('text')
+      .attr('x', x).attr('y', height - margin.bottom + (isMobile ? 12 : 17))
+      .attr('font-size', tickFontSize)
       .attr('font-family', 'var(--mono)').attr('fill', 'var(--text-2,#aaa)')
-      .text(label);
+      .text(displayLabel);
+    // Rotate labels on narrower screens to prevent overlap
+    if (width < 1200) {
+      const yPos = height - margin.bottom + (isMobile ? 12 : 17);
+      tickText.attr('text-anchor', 'end')
+        .attr('transform', `rotate(-35, ${x}, ${yPos})`);
+    } else {
+      tickText.attr('text-anchor', 'middle');
+    }
     ax.append('line')
       .attr('x1', x).attr('x2', x)
       .attr('y1', margin.top).attr('y2', height - margin.bottom)
@@ -2041,8 +2152,8 @@ function drawAxes2D(g, xAxisDef, yAxisDef, xScale, yScale, controlsWidth, margin
   // X axis label
   ax.append('text')
     .attr('x', controlsWidth + margin.left + plotW / 2)
-    .attr('y', height - margin.bottom + 40)
-    .attr('text-anchor', 'middle').attr('font-size', 12).attr('font-weight', 600)
+    .attr('y', height - margin.bottom + (isMobile ? 50 : 40))
+    .attr('text-anchor', 'middle').attr('font-size', labelFontSize).attr('font-weight', 600)
     .attr('font-family', 'var(--mono)').attr('fill', 'var(--text-1,#eee)')
     .text(xAxisDef.label);
 
@@ -2063,11 +2174,12 @@ function drawAxes2D(g, xAxisDef, yAxisDef, xScale, yScale, controlsWidth, margin
       .attr('x1', controlsWidth + margin.left - 5).attr('x2', controlsWidth + margin.left)
       .attr('y1', y).attr('y2', y)
       .attr('stroke', 'var(--text-3,#888)');
+    const displayLabel = useAbbrev ? (TICK_ABBREV[label] || label) : label;
     ax.append('text')
       .attr('x', controlsWidth + margin.left - 9).attr('y', y + 4)
-      .attr('text-anchor', 'end').attr('font-size', 10)
+      .attr('text-anchor', 'end').attr('font-size', tickFontSize)
       .attr('font-family', 'var(--mono)').attr('fill', 'var(--text-2,#aaa)')
-      .text(label);
+      .text(displayLabel);
     ax.append('line')
       .attr('x1', controlsWidth + margin.left).attr('x2', controlsWidth + margin.left + plotW)
       .attr('y1', y).attr('y2', y)
@@ -2076,18 +2188,21 @@ function drawAxes2D(g, xAxisDef, yAxisDef, xScale, yScale, controlsWidth, margin
   });
 
   // Y axis label (rotated)
+  const yLabelX = isMobile ? controlsWidth + 8 : (isTablet ? controlsWidth + margin.left - 65 : controlsWidth + margin.left - 118);
   ax.append('text')
     .attr('transform', `rotate(-90)`)
     .attr('x', -(margin.top + plotH / 2))
-    .attr('y', controlsWidth + margin.left - 118)
-    .attr('text-anchor', 'middle').attr('font-size', 12).attr('font-weight', 600)
+    .attr('y', yLabelX)
+    .attr('text-anchor', 'middle').attr('font-size', labelFontSize).attr('font-weight', 600)
     .attr('font-family', 'var(--mono)').attr('fill', 'var(--text-1,#eee)')
     .text(yAxisDef.label);
 }
 
-// Tooltip
+// Tooltip (suppress on touch devices — tap triggers detail panel via click handler)
 const tooltip = document.getElementById('tooltip');
+const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 function showTooltip(event, d) {
+  if (isTouchDevice) return;
   document.getElementById('tooltip-name').textContent = d.name;
   const sub = d.entityType === 'person' ? (d.title || d.category) : d.category;
   const stance = d.regulatory_stance ? ` · ${d.regulatory_stance}` : '';
@@ -2183,7 +2298,7 @@ function showDetail(d, allNodes) {
   }
 
   if (!fields) {
-    fields = '<div class="detail-field"><span style="color:var(--text-3); font-style:italic;">No additional details yet. <a href="/contribute.html" style="color:var(--accent);">Contribute info</a></span></div>';
+    fields = '<div class="detail-field"><span style="color:var(--text-3); font-style:italic;">No additional details yet. <a href="/contribute" style="color:var(--accent);">Contribute info</a></span></div>';
   }
 
   // Build linked entities from all data sources

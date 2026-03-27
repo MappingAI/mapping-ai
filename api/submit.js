@@ -183,12 +183,15 @@ export const handler = async (event) => {
         await client.query(
           `INSERT INTO resources (
             title, author, resource_type, url, year, category,
-            key_argument, notes, submitter_email, submitter_relationship, submitted_at, status
-          ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,'pending')`,
+            key_argument, notes,
+            regulatory_stance, agi_timeline, ai_risk_level,
+            submitter_email, submitter_relationship, submitted_at, status
+          ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,'pending')`,
           [
             data.title, data.author || null, data.resourceType || null,
             data.url || null, data.year || null, data.category || null,
             data.keyArgument || null, data.notes || null,
+            data.regulatoryStance || null, data.agiTimeline || null, data.aiRiskLevel || null,
             data.submitterEmail || null, data.submitterRelationship || null, ts,
           ]
         );
@@ -215,6 +218,45 @@ export const handler = async (event) => {
           `UPDATE ${table} SET submission_count = submission_count + 1 WHERE id = $1`,
           [entityId]
         );
+      }
+
+      // Non-critical: LLM quality review via Claude Haiku
+      const submissionId = submissionResult.rows[0].id;
+      if (process.env.ANTHROPIC_API_KEY) {
+        try {
+          const reviewPrompt = `Review this crowdsourced submission to a U.S. AI policy stakeholder database. Rate its quality and flag issues.
+Entity type: ${type}
+Data: ${JSON.stringify(submissionData)}
+Respond in JSON only: {"quality": 1-5, "flags": ["spam"|"low-quality"|"duplicate"|"offensive"|"incomplete"], "notes": "brief explanation"}`;
+
+          const llmRes = await fetch('https://api.anthropic.com/v1/messages', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'x-api-key': process.env.ANTHROPIC_API_KEY,
+              'anthropic-version': '2023-06-01',
+            },
+            body: JSON.stringify({
+              model: 'claude-haiku-4-5-20251001',
+              max_tokens: 300,
+              messages: [{ role: 'user', content: reviewPrompt }],
+            }),
+            signal: AbortSignal.timeout(5000),
+          });
+
+          if (llmRes.ok) {
+            const llmData = await llmRes.json();
+            const reviewText = llmData.content?.[0]?.text;
+            let review;
+            try { review = JSON.parse(reviewText); } catch { review = { raw: reviewText }; }
+            await client.query(
+              'UPDATE submissions SET llm_review = $1 WHERE id = $2',
+              [JSON.stringify(review), submissionId]
+            );
+          }
+        } catch (e) {
+          console.warn('LLM review failed (non-critical):', e.message);
+        }
       }
 
     } finally {
