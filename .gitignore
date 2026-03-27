@@ -27,3 +27,6 @@ data/AISafety.com_map.csv
 
 # Testing output
 dogfood-output/
+
+# Local notes
+slack-update.md

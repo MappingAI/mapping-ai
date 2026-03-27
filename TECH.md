@@ -80,9 +80,14 @@ mapping-ai/
 │   │   └── mapping-ai-cropped.jpeg
 │   └── js/
 │       └── script.js       # Form toggle + submission logic
+├── admin.html              # Internal admin: dashboard, pending queue, entity editing
 ├── api/
-│   ├── submit.js           # Lambda: POST /submit — inserts submissions
-│   └── submissions.js      # Lambda: GET /submissions — queries approved entries
+│   ├── submit.js           # Lambda: POST /submit — inserts submissions + LLM review
+│   ├── submissions.js      # Lambda: GET /submissions — queries approved entries
+│   ├── search.js           # Lambda: GET /search — full-text search with status filter
+│   ├── admin.js            # Lambda: GET/POST /admin — admin operations + auto map refresh
+│   ├── upload.js           # Lambda: POST /upload — thumbnail image upload to S3
+│   └── export-map.js       # Shared module: generates map-data.json from DB
 ├── scripts/
 │   ├── migrate.js          # Creates / updates database schema
 │   ├── seed.js             # Seeds DB from Airtable CSV exports
@@ -223,6 +228,9 @@ Same as `people` minus `title`, `primary_org`, `other_orgs`; adds:
 | `category` | VARCHAR(200) | AI Safety, AI Governance, Labor & Economy, etc. |
 | `key_argument` | TEXT | |
 | `notes` | TEXT | |
+| `regulatory_stance` | VARCHAR(200) | Stance of the resource/author |
+| `agi_timeline` | VARCHAR(200) | |
+| `ai_risk_level` | VARCHAR(200) | |
 | `submitter_email` | VARCHAR(200) | |
 | `submitter_relationship` | VARCHAR(200) | |
 | `is_self_submission` | BOOLEAN | |
