@@ -878,6 +878,7 @@ function inferOrgLinks(people, orgs) {
 
   people.forEach(person => {
     const text = `${person.title || ''} ${person.primary_org || ''} ${person.other_orgs || ''}`;
+    const primaryOrg = (person.primary_org || '').toLowerCase();
     if (!text.trim()) return;
 
     // Check keyword matches
@@ -896,6 +897,23 @@ function inferOrgLinks(people, orgs) {
       if (orgName.length > 3 && text.includes(orgName)) {
         if (!links.find(l => l.personName === person.name && l.orgName === orgName)) {
           links.push({ personName: person.name, orgName });
+        }
+      }
+    });
+
+    // Check aliases: if person's primary_org matches an org's alias, link them
+    orgs.forEach(org => {
+      if (!org.aliases) return;
+      const aliasLower = org.aliases.toLowerCase();
+      // Match if primary_org equals alias, or alias contains primary_org, or primary_org contains alias
+      if (primaryOrg && (
+        primaryOrg === aliasLower ||
+        aliasLower.includes(primaryOrg) ||
+        primaryOrg.includes(aliasLower) ||
+        org.name.toLowerCase().includes(primaryOrg)
+      )) {
+        if (!links.find(l => l.personName === person.name && l.orgName === org.name)) {
+          links.push({ personName: person.name, orgName: org.name });
         }
       }
     });
@@ -982,12 +1000,16 @@ fetch('map-data.json')
     if (!allData.resources) allData.resources = [];
     if (!allData.relationships) allData.relationships = [];
     if (!allData.person_organizations) allData.person_organizations = [];
-    // Build links: prefer explicit person_organizations, fall back to inferred
-    if (allData.person_organizations.length > 0) {
-      inferredLinks = buildExplicitLinks(allData);
-    } else {
-      inferredLinks = inferOrgLinks(data.people, data.organizations);
-    }
+    // Build links: combine explicit person_organizations WITH inferred links
+    const explicitLinks = buildExplicitLinks(allData);
+    const fuzzyLinks = inferOrgLinks(data.people, data.organizations);
+    // Merge, avoiding duplicates
+    inferredLinks = [...explicitLinks];
+    fuzzyLinks.forEach(fl => {
+      if (!inferredLinks.some(el => el.personName === fl.personName && el.orgName === fl.orgName)) {
+        inferredLinks.push(fl);
+      }
+    });
     buildFilters();
     buildStanceLegend();
     render();
