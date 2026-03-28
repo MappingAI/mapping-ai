@@ -18,7 +18,7 @@ All infrastructure is on AWS. No Vercel or Neon.
 - **Frontend**: Static HTML/CSS/JS (no framework)
 - **Visualization**: D3.js force-directed graph with orbital cluster layout (`map.html`)
 - **Rich text**: TipTap (ProseMirror-based) for Notes fields with @mentions (`src/tiptap-notes.js`, bundled via esbuild)
-- **API**: AWS API Gateway HTTP API + 3 Lambda functions (Node.js 20)
+- **API**: AWS API Gateway HTTP API + 5 Lambda functions (Node.js 20)
 - **Database**: AWS RDS PostgreSQL 17 (`mapping-ai-db.c9sccou2k3xe.eu-west-2.rds.amazonaws.com`, db.t4g.micro free tier, 20GB gp3)
 - **Infrastructure-as-code**: AWS SAM (`template.yaml`) — defines Lambda functions, API Gateway, S3 bucket, CloudFront distribution
 - **CI/CD**: GitHub Actions (auto-deploy on push to `main`)
@@ -172,7 +172,7 @@ aws cloudfront create-invalidation --distribution-id E34ZXLC7CZX7XT --paths "/*"
 
 | Variable | Where | Description |
 |----------|-------|-------------|
-| `DATABASE_URL` | `.env` + Lambda + GitHub Secrets | Neon Postgres connection string |
+| `DATABASE_URL` | `.env` + Lambda + GitHub Secrets | RDS PostgreSQL connection string |
 | `AWS_ACCESS_KEY_ID` | `.env` + GitHub Secrets | AWS credentials |
 | `AWS_SECRET_ACCESS_KEY` | `.env` + GitHub Secrets | AWS credentials |
 | `S3_BUCKET_NAME` | GitHub Secrets | `mapping-ai-website-561047280976` |
@@ -241,8 +241,7 @@ Frontier Lab, AI Safety/Alignment, Think Tank/Policy Org, Government/Agency, Aca
 
 ## Known Technical Debt
 
-- **No admin UI**: Submission review requires manual SQL (`UPDATE people SET status='approved' WHERE id=X`)
 - **Inline CSS**: Each HTML page has its own `<style>` block (not shared stylesheet)
-- **map-data.json staleness**: Map data only refreshes on deploy, not on form submission
-- **No real-time updates**: Submissions don't appear on map until next deploy
+- **map-data.json staleness on submit**: Map data auto-refreshes on admin approval, but not on raw form submission — new entries still require approval first
 - **Category mapping fragile**: Normalization function handles known variants but may miss new ones
+- **person_organizations not linked on submit**: Affiliated org IDs from form submissions are stored in the submissions table and linked to `person_organizations` only when the person is approved via admin.html — not at submission time
