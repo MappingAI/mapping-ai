@@ -768,7 +768,16 @@ async function loadPending() {
     for (const type of ['people','organizations','resources']) {
       const singular = { people: 'person', organizations: 'organization', resources: 'resource' }[type];
       (data[type] || []).forEach(item => {
-        const sub = submissions.find(s => s.entity_type === singular && s.entity_id === item.id);
+        const itemName = (item.name || item.title || '').toLowerCase();
+        const sub = submissions.find(s => {
+          if (s.entity_type !== singular) return false;
+          // Match by entity_id if set
+          if (s.entity_id && s.entity_id === item.id) return true;
+          // Match by name from submission data
+          const subData = typeof s.data === 'string' ? JSON.parse(s.data) : (s.data || {});
+          const subName = (subData.name || subData.title || '').toLowerCase();
+          return subName && subName === itemName;
+        });
         if (sub?.llm_review) item._llmReview = typeof sub.llm_review === 'string' ? JSON.parse(sub.llm_review) : sub.llm_review;
       });
     }
