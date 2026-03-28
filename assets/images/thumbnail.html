@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mapping AI Thumbnail</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=DM+Mono:wght@400;500&display=swap');
+
+    :root {
+      --serif: 'EB Garamond', Georgia, serif;
+      --mono: 'DM Mono', monospace;
+      --text-primary: #1a1a1a;
+      --text-secondary: #555;
+      --text-tertiary: #888;
+      --border: #ddd;
+      --bg-secondary: #f8f7f5;
+      --accent: #2563eb;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--serif);
+      color: var(--text-primary);
+      background: #fff;
+    }
+
+    .thumbnail {
+      width: 1200px;
+      height: 630px;
+      position: relative;
+      background-image: url('og-image.png');
+      background-size: cover;
+      background-position: center;
+      overflow: hidden;
+    }
+
+    .content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 540px;
+      padding: 48px 56px 44px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Larger, bolder title */
+    .title {
+      font-family: var(--serif);
+      font-size: 56px;
+      font-weight: 500;
+      font-style: italic;
+      line-height: 1.1;
+      margin-bottom: 14px;
+      color: var(--text-primary);
+    }
+
+    /* Larger subtitle */
+    .subtitle {
+      font-family: var(--serif);
+      font-size: 19px;
+      line-height: 1.6;
+      color: var(--text-primary);
+      margin-bottom: 28px;
+    }
+
+    /* Section label */
+    .section-label {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+
+    /* Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    /* Grid items - slightly larger text */
+    .grid-item {
+      background: var(--bg-secondary);
+      border-radius: 6px;
+      padding: 9px 12px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      border: 1px solid transparent;
+    }
+
+    .grid-item span {
+      display: block;
+      font-family: var(--serif);
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    /* CTA button - larger */
+    .cta-btn {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 12px 20px;
+      background: var(--text-primary);
+      color: #fff;
+      border-radius: 4px;
+      text-decoration: none;
+      align-self: flex-start;
+    }
+
+    /* URL - much larger and bolder */
+    .url {
+      font-family: var(--mono);
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text-primary);
+      letter-spacing: 0.04em;
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="thumbnail">
+    <div class="content">
+      <h1 class="title">Mapping AI</h1>
+      <p class="subtitle">A comprehensive map of the individuals and organizations shaping US AI policy.</p>
+
+      <div class="section-label">Who We're Mapping</div>
+      <div class="grid">
+        <div class="grid-item"><span>Frontier Labs</span></div>
+        <div class="grid-item"><span>AI Safety & Alignment</span></div>
+        <div class="grid-item"><span>Think Tanks & Policy</span></div>
+        <div class="grid-item"><span>Government</span></div>
+        <div class="grid-item"><span>Academic Researchers</span></div>
+        <div class="grid-item"><span>VC & Capital</span></div>
+        <div class="grid-item"><span>Labor & Civil Society</span></div>
+        <div class="grid-item"><span>Ethics, Bias & Rights</span></div>
+        <div class="grid-item"><span>Media & Discourse</span></div>
+        <div class="grid-item"><span>Philanthropies</span></div>
+      </div>
+
+      <a href="#" class="cta-btn">Open to Contribute</a>
+
+      <div class="url">mapping-ai.org</div>
+    </div>
+  </div>
+</body>
+</html>
