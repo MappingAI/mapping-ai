@@ -59,6 +59,10 @@ a:hover { text-decoration: underline; }
   display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.75rem; margin: 1.25rem 0;
 }
+.one-col {
+  display: grid; grid-template-columns: 1fr;
+  gap: 0.75rem; margin: 1.25rem 0;
+}
 .box {
   background: var(--bg-secondary);
   border-radius: 6px;
@@ -318,9 +322,9 @@ a:hover { text-decoration: underline; }
   <div id="the-landscape" class="section-label fade-in">The existing landscape</div>
   <p class="fade-in" style="font-size:15px; color: var(--text-secondary); margin-bottom: 1.25rem;">Each camp has a diagnosis. None has a compact. This is the vacuum we are filling.</p>
 
-  <div class="two-col fade-in">
+  <div class="one-col fade-in">
     <div class="box">
-      <div class="box-label">The right</div>
+      <div class="box-label">Republican establishment</div>
       <div class="box-title">Win the race</div>
       <div class="box-body">Deregulate, accelerate, and dominate. The US-China frame is a prominent motivator. Distribution is an afterthought; workforce training is the concession to labor. Preempting state regulation is the active political agenda right now.</div>
       <div class="box-links">
@@ -341,21 +345,14 @@ a:hover { text-decoration: underline; }
       </div>
     </div>
     <div class="box">
-      <div class="box-label">Safety / alignment — short timelines camp</div>
+      <div class="box-label">AI frontier</div>
       <div class="box-title">Race to safety through speed</div>
-      <div class="box-body">AGI is imminent; the priority is ensuring the right actors win. Concentrated control in "responsible" Western labs is preferable to fragmentation. A subset argues that alignment is unsolved and building superintelligence before it is solved risks catastrophic, potentially irreversible outcomes.</div>
+      <div class="box-body">Power concentration is a key point of focus, distribution and labor are largely afterthoughts. Main camp holds that AGI is imminent, the priority is ensuring the right actors win, and concentrated control in "responsible" Western labs is preferable to fragmentation. A faction argues that alignment is unsolved and building superintelligence before it is solved risks catastrophic, potentially irreversible outcomes. Other subsets are focused on near-term harms, accountability, auditing, and institutional design, or argue that AI will diffuse slowly, giving institutions time to respond. Highly diverse views across the board.</div>
       <div class="box-links">
         <a class="box-link" href="https://situational-awareness.ai/" target="_blank" rel="noopener noreferrer">↗ Aschenbrenner, "Situational Awareness"</a>
         <a class="box-link" href="https://ai-2027.com/" target="_blank" rel="noopener noreferrer">↗ AI 2027 (Kokotajlo et al.)</a>
         <a class="box-link" href="https://darioamodei.com/essay/machines-of-loving-grace" target="_blank" rel="noopener noreferrer">↗ Dario Amodei, "Machines of Loving Grace"</a>
         <a class="box-link" href="https://ifanyonebuildsit.com/" target="_blank" rel="noopener noreferrer">↗ Yudkowsky & Soares, If Anyone Builds It, Everyone Dies</a>
-      </div>
-    </div>
-    <div class="box">
-      <div class="box-label">Safety / governance — institutional camp</div>
-      <div class="box-title">Govern the technology, not the race</div>
-      <div class="box-body">Focused on near-term harms, accountability, auditing, and institutional design, but still largely defensive and decoupled from distribution and labor. Internal factions argue that AI will diffuse slowly, giving institutions time to respond. Power concentration is a key point of focus.</div>
-      <div class="box-links">
         <a class="box-link" href="https://knightcolumbia.org/content/ai-as-normal-technology" target="_blank" rel="noopener noreferrer">↗ Narayanan & Kapoor, "AI as Normal Technology"</a>
         <a class="box-link" href="https://shapingwork.mit.edu/power-and-progress/" target="_blank" rel="noopener noreferrer">↗ Acemoglu & Johnson, Power and Progress</a>
       </div>
