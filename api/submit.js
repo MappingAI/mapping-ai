@@ -248,7 +248,11 @@ Respond in JSON only: {"quality": 1-5, "flags": ["spam"|"low-quality"|"duplicate
             const llmData = await llmRes.json();
             const reviewText = llmData.content?.[0]?.text;
             let review;
-            try { review = JSON.parse(reviewText); } catch { review = { raw: reviewText }; }
+            try {
+              // Strip markdown code fences if present
+              const cleaned = reviewText.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
+              review = JSON.parse(cleaned);
+            } catch { review = { raw: reviewText }; }
             await client.query(
               'UPDATE submissions SET llm_review = $1 WHERE id = $2',
               [JSON.stringify(review), submissionId]

@@ -856,7 +856,11 @@ function renderPendingCard(item, type) {
 
   let llmHtml = '';
   if (item._llmReview) {
-    const r = item._llmReview;
+    let r = item._llmReview;
+    // Handle raw format (markdown-fenced JSON from Haiku)
+    if (r.raw && !r.quality) {
+      try { r = JSON.parse(r.raw.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim()); } catch {}
+    }
     const stars = '★'.repeat(r.quality || 0) + '☆'.repeat(5 - (r.quality || 0));
     const flags = (r.flags || []).map(f => `<span style="background:#fef3c7;color:#92400e;padding:1px 5px;border-radius:3px;font-size:10px;margin-left:4px;">${escHtml(f)}</span>`).join('');
     llmHtml = `<div style="padding:0.5rem 0.75rem;background:var(--bg-secondary,#f8f7f5);border-radius:4px;margin-bottom:0.5rem;font-size:12px;">
