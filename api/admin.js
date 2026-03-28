@@ -119,12 +119,45 @@ export const handler = async (event) => {
       if (action === 'approve') {
         const table = { person: 'people', organization: 'organizations', resource: 'resources' }[type];
         if (!table) return { statusCode: 400, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Invalid type' }) };
+
+        // Fetch submission data before marking merged (needed for org linking below)
+        const subResult = await client.query(
+          `SELECT s.data FROM submissions s
+           JOIN ${table} t ON t.id = $1
+           WHERE s.entity_type = $2 AND s.status = 'pending'
+             AND (s.entity_id = $1 OR s.data->>'name' = t.name)
+           ORDER BY s.id DESC LIMIT 1`,
+          [id, type]
+        );
+
         await client.query(`UPDATE ${table} SET status = 'approved' WHERE id = $1`, [id]);
         // Also update linked submission
         await client.query(`UPDATE submissions SET status = 'merged', reviewed_at = NOW() WHERE entity_type = $1 AND entity_id = $2 AND status = 'pending'`, [type, id]);
         // If no entity_id match, try matching by data
         await client.query(`UPDATE submissions SET status = 'merged', reviewed_at = NOW() WHERE id IN (SELECT s.id FROM submissions s, ${table} t WHERE t.id = $1 AND s.entity_type = $2 AND s.status = 'pending' AND s.data->>'name' = t.name LIMIT 1)`, [id, type]);
-        // Regenerate map-data.json on S3 so the map reflects the approval
+
+        // For persons: link affiliated orgs into person_organizations
+        if (type === 'person' && subResult.rows.length > 0) {
+          const subData = subResult.rows[0].data;
+          const affiliatedOrgIds = subData.affiliatedOrgIds;
+          if (Array.isArray(affiliatedOrgIds)) {
+            for (const orgId of affiliatedOrgIds) {
+              const parsedOrgId = parseInt(orgId, 10);
+              if (!isNaN(parsedOrgId)) {
+                await client.query(
+                  `INSERT INTO person_organizations (person_id, organization_id, is_primary)
+                   SELECT $1, $2, false
+                   WHERE NOT EXISTS (
+                     SELECT 1 FROM person_organizations WHERE person_id = $1 AND organization_id = $2
+                   )`,
+                  [id, parsedOrgId]
+                );
+              }
+            }
+          }
+        }
+
+        // Regenerate map-data.json on S3 so the map reflects the approval (including new org links)
         await refreshMapData(client);
         return { statusCode: 200, headers: CORS_HEADERS, body: JSON.stringify({ success: true, action: 'approved' }) };
       }
