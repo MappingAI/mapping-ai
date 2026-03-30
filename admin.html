@@ -624,21 +624,21 @@ tr:hover { background: var(--bg-secondary); }
 const API_BASE = 'https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com';
 
 const FIELD_OPTIONS = {
-  regulatory_stance: ['Accelerate','Light-touch','Targeted','Moderate','Restrictive','Precautionary','Nationalize','Mixed/unclear','Other'],
-  agi_timeline: ['Already here','2-3 years','5-10 years','10-25 years','25+ years or never','Ill-defined','Unknown'],
-  ai_risk_level: ['Overstated','Manageable','Serious','Catastrophic','Existential','Mixed/nuanced','Unknown'],
-  evidence_source: ['Explicitly stated','Inferred','Unknown'],
+  belief_regulatory_stance: ['Accelerate','Light-touch','Targeted','Moderate','Restrictive','Precautionary','Nationalize','Mixed/unclear','Other'],
+  belief_agi_timeline: ['Already here','2-3 years','5-10 years','10-25 years','25+ years or never','Ill-defined','Unknown'],
+  belief_ai_risk: ['Overstated','Manageable','Serious','Catastrophic','Existential','Mixed/nuanced','Unknown'],
+  belief_evidence_source: ['Explicitly stated','Inferred','Unknown'],
   funding_model: ['For-profit','Non-profit','Government','Hybrid','Unknown'],
-  threat_models: ['Labor displacement','Economic inequality','Power concentration','Democratic erosion','Cybersecurity threats','Misinformation/deepfakes','Environmental harm','Weapons proliferation','Loss of human control','Copyright/IP/creative economy','Existential/civilizational risk'],
+  belief_threat_models: ['Labor displacement','Economic inequality','Power concentration','Democratic erosion','Cybersecurity threats','Misinformation/deepfakes','Environmental harm','Weapons proliferation','Loss of human control','Copyright/IP/creative economy','Existential/civilizational risk'],
   influence_type: ['Decision-maker','Advisor/strategist','Researcher/analyst','Funder/investor','Builder','Organizer/advocate','Narrator','Implementer','Connector/convener'],
 };
 
 // Fields that link to other entities — rendered as autocomplete search inputs
 const LINK_FIELDS = {
-  primary_org:  { searchType: 'organizations', display: 'name' },
-  other_orgs:   { searchType: 'organizations', display: 'name', multi: true },
-  parent_org_id:{ searchType: 'organizations', display: 'name', valueField: 'id' },
-  author:       { searchType: 'people', display: 'name', multi: true },
+  primary_org:     { searchType: 'organizations', display: 'name' },
+  other_orgs:      { searchType: 'organizations', display: 'name', multi: true },
+  parent_org_id:   { searchType: 'organizations', display: 'name', valueField: 'id' },
+  resource_author: { searchType: 'people', display: 'name', multi: true },
 };
 
 // Cache of all entities for autocomplete (loaded on first edit)
@@ -647,14 +647,14 @@ async function getEntityCache() {
   if (_adminEntityCache) return _adminEntityCache;
   try {
     const [pRes, oRes] = await Promise.all([
-      apiFetch('/admin?action=all&type=people'),
-      apiFetch('/admin?action=all&type=organizations'),
+      apiFetch('/admin?action=all&type=entity&entity_type=person'),
+      apiFetch('/admin?action=all&type=entity&entity_type=organization'),
     ]);
     const pData = await pRes.json();
     const oData = await oRes.json();
     _adminEntityCache = {
-      people: pData.data || pData.items || [],
-      organizations: oData.data || oData.items || [],
+      people: pData.data || [],
+      organizations: oData.data || [],
     };
   } catch (e) {
     _adminEntityCache = { people: [], organizations: [] };
@@ -671,23 +671,24 @@ function searchEntityCache(query, type) {
 
 const FIELD_DEFS = {
   people: {
-    fields: ['name','category','title','primary_org','other_orgs','location','regulatory_stance','regulatory_stance_detail','evidence_source','agi_timeline','ai_risk_level','threat_models','threat_models_detail','influence_type','twitter','bluesky','thumbnail_url','notes','status'],
+    fields: ['name','category','title','primary_org','other_orgs','location','belief_regulatory_stance','belief_regulatory_stance_detail','belief_evidence_source','belief_agi_timeline','belief_ai_risk','belief_threat_models','influence_type','twitter','bluesky','thumbnail_url','notes','status'],
     categories: ['Executive','Researcher','Policymaker','Investor','Organizer','Journalist','Academic','Cultural figure'],
-    tableFields: ['name','category','title','primary_org','location','regulatory_stance','status'],
+    tableFields: ['name','category','title','primary_org','location','belief_regulatory_stance','status'],
     label: 'People',
     singular: 'person'
   },
   organizations: {
-    fields: ['name','category','website','location','funding_model','regulatory_stance','regulatory_stance_detail','evidence_source','agi_timeline','ai_risk_level','threat_models','threat_models_detail','influence_type','twitter','bluesky','thumbnail_url','notes','status'],
+    fields: ['name','category','website','location','funding_model','belief_regulatory_stance','belief_regulatory_stance_detail','belief_evidence_source','belief_agi_timeline','belief_ai_risk','belief_threat_models','influence_type','twitter','bluesky','thumbnail_url','notes','status'],
     categories: ['Frontier Lab','AI Safety','Think Tank','Government','Academic','VC','Labor','Ethics','Media','Political Campaign'],
-    tableFields: ['name','category','website','location','funding_model','regulatory_stance','status'],
+    tableFields: ['name','category','website','location','funding_model','belief_regulatory_stance','status'],
     label: 'Organizations',
     singular: 'organization'
   },
   resources: {
-    fields: ['title','author','resource_type','url','year','category','regulatory_stance','agi_timeline','ai_risk_level','key_argument','notes','status'],
+    fields: ['resource_title','resource_author','resource_type','resource_url','resource_year','resource_category','resource_key_argument','belief_regulatory_stance','belief_agi_timeline','belief_ai_risk','notes','status'],
     categories: ['Essay','Book','Report','Podcast','Video','Website','Academic Paper','News Article','Substack','Newsletter'],
-    tableFields: ['title','author','resource_type','year','category','status'],
+    tableFields: ['resource_title','resource_author','resource_type','resource_year','resource_category','status'],
+    label: 'Resources',
     singular: 'resource'
   }
 };
@@ -829,22 +830,23 @@ async function loadDashboard() {
 
 function renderStats(data) {
   const grid = document.getElementById('stats-grid');
-  const s = data.stats || data;
+  const approved = data.approved || {};
+  const pending  = data.pending  || {};
   const cards = [
-    { label: 'People — Approved', value: s.people_approved ?? s.people?.approved ?? '—', sub: '' },
-    { label: 'People — Pending', value: s.people_pending ?? s.people?.pending ?? '—', sub: '' },
-    { label: 'Organizations — Approved', value: s.organizations_approved ?? s.organizations?.approved ?? '—', sub: '' },
-    { label: 'Organizations — Pending', value: s.organizations_pending ?? s.organizations?.pending ?? '—', sub: '' },
-    { label: 'Resources — Approved', value: s.resources_approved ?? s.resources?.approved ?? '—', sub: '' },
-    { label: 'Resources — Pending', value: s.resources_pending ?? s.resources?.pending ?? '—', sub: '' },
-    { label: 'Relationships', value: s.relationships ?? s.relationships_count ?? '—', sub: '' },
-    { label: 'Person-Org Links', value: s.person_org_links ?? s.person_organizations ?? s.person_orgs ?? '—', sub: '' },
+    { label: 'People — Approved',       value: approved.person       ?? '—' },
+    { label: 'People — Pending',         value: pending.person        ?? '—' },
+    { label: 'Orgs — Approved',          value: approved.organization ?? '—' },
+    { label: 'Orgs — Pending',           value: pending.organization  ?? '—' },
+    { label: 'Resources — Approved',     value: approved.resource     ?? '—' },
+    { label: 'Resources — Pending',      value: pending.resource      ?? '—' },
+    { label: 'New Submissions (Pending)',  value: data.pending_new_submissions  ?? '—' },
+    { label: 'Edit Submissions (Pending)', value: data.pending_edit_submissions ?? '—' },
+    { label: 'Edges',                    value: data.edges            ?? '—' },
   ];
   grid.innerHTML = cards.map(c => `
     <div class="stat-card">
       <div class="stat-label">${c.label}</div>
       <div class="stat-value">${c.value}</div>
-      ${c.sub ? `<div class="stat-sub">${c.sub}</div>` : ''}
     </div>
   `).join('');
 }
@@ -861,87 +863,32 @@ async function loadPending() {
   try {
     const res = await apiFetch('/admin?action=pending');
     const data = await res.json();
-    // Attach LLM reviews from submissions to entity items
+    // API returns { submissions: [...] } — flat rows with entity_id IS NULL
     const submissions = data.submissions || [];
-    for (const type of ['people','organizations','resources']) {
-      const singular = { people: 'person', organizations: 'organization', resources: 'resource' }[type];
-      (data[type] || []).forEach(item => {
-        const itemName = (item.name || item.title || '').toLowerCase();
-        const sub = submissions.find(s => {
-          if (s.entity_type !== singular) return false;
-          // Match by entity_id if set
-          if (s.entity_id && s.entity_id === item.id) return true;
-          // Match by name from submission data
-          const subData = typeof s.data === 'string' ? JSON.parse(s.data) : (s.data || {});
-          const subName = (subData.name || subData.title || '').toLowerCase();
-          return subName && subName === itemName;
-        });
-        if (sub?.llm_review) item._llmReview = typeof sub.llm_review === 'string' ? JSON.parse(sub.llm_review) : sub.llm_review;
-      });
-    }
-    const items = data.pending || data.items || data;
     loading.style.display = 'none';
-    if (!items || (Array.isArray(items) && items.length === 0)) {
-      // Check if it's an object with type keys
-      if (!Array.isArray(items) && typeof items === 'object') {
-        let total = 0;
-        for (const type of ['people','organizations','resources']) {
-          if (items[type]) total += items[type].length;
-        }
-        if (total === 0) { empty.style.display = 'block'; return; }
-        renderPendingGrouped(items, content);
-      } else {
-        empty.style.display = 'block';
-      }
-    } else if (Array.isArray(items)) {
-      renderPendingFlat(items, content);
-    } else if (typeof items === 'object') {
-      renderPendingGrouped(items, content);
+    if (submissions.length === 0) {
+      empty.style.display = 'block';
+      return;
     }
+    content.innerHTML = submissions.map(sub => renderPendingCard(sub)).join('');
     content.style.display = 'block';
   } catch (e) {
     loading.textContent = 'Failed to load pending items.';
   }
 }
 
-function renderPendingGrouped(data, container) {
-  let html = '';
-  for (const type of ['people','organizations','resources']) {
-    const items = data[type];
-    if (!items || items.length === 0) continue;
-    const def = FIELD_DEFS[type];
-    html += `<div class="eyebrow" style="margin:1rem 0 0.5rem">${def.label} (${items.length})</div>`;
-    items.forEach(item => { html += renderPendingCard(item, type); });
-  }
-  container.innerHTML = html;
-}
-
-function renderPendingFlat(items, container) {
-  let html = '';
-  items.forEach(item => {
-    const type = item._type || item.entity_type || guessType(item);
-    html += renderPendingCard(item, type);
-  });
-  container.innerHTML = html;
-}
-
-function guessType(item) {
-  if (item.primary_org || item.agi_timeline) return 'people';
-  if (item.website || item.funding_model) return 'organizations';
-  if (item.resource_type || item.key_argument) return 'resources';
-  return 'people';
-}
-
-function renderPendingCard(item, type) {
-  const def = FIELD_DEFS[type] || FIELD_DEFS.people;
-  const singular = def.singular;
-  const displayName = item.name || item.title || 'Untitled';
-  const id = item.id;
+function renderPendingCard(sub) {
+  // sub is a flat submission row (entity_id IS NULL)
+  const entityType = sub.entity_type || 'person'; // 'person' | 'organization' | 'resource'
+  const typeKey = entityType === 'person' ? 'people' : entityType === 'organization' ? 'organizations' : 'resources';
+  const def = FIELD_DEFS[typeKey] || FIELD_DEFS.people;
+  const displayName = sub.name || sub.resource_title || 'Untitled';
+  const id = sub.id;
 
   let fieldsHtml = '';
   def.fields.forEach(f => {
     if (f === 'status') return;
-    const val = item[f];
+    const val = sub[f];
     if (val !== undefined && val !== null && val !== '') {
       fieldsHtml += `
         <div>
@@ -952,19 +899,12 @@ function renderPendingCard(item, type) {
   });
 
   let metaHtml = '';
-  if (item.submitted_at) metaHtml += `Submitted: ${new Date(item.submitted_at).toLocaleDateString()} `;
-  if (item.submitter_relationship) metaHtml += `&middot; Relationship: ${escHtml(item.submitter_relationship)} `;
-  if (item.entity_id) metaHtml += `&middot; Edit to #${item.entity_id}`;
-
-  let comparisonHtml = '';
-  if (item.entity_id && item._existing) {
-    comparisonHtml = renderComparison(item, item._existing, def);
-  }
+  if (sub.submitted_at) metaHtml += `Submitted: ${new Date(sub.submitted_at).toLocaleDateString()} `;
+  if (sub.submitter_relationship) metaHtml += `&middot; ${escHtml(sub.submitter_relationship)} `;
 
   let llmHtml = '';
-  if (item._llmReview) {
-    let r = item._llmReview;
-    // Handle raw format (markdown-fenced JSON from Haiku)
+  if (sub.llm_review) {
+    let r = typeof sub.llm_review === 'string' ? JSON.parse(sub.llm_review) : sub.llm_review;
     if (r.raw && !r.quality) {
       try { r = JSON.parse(r.raw.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim()); } catch {}
     }
@@ -978,21 +918,20 @@ function renderPendingCard(item, type) {
   }
 
   return `
-    <div class="pending-card" id="pending-${singular}-${id}">
+    <div class="pending-card" id="pending-sub-${id}">
       <div class="pending-card-header">
         <div>
           <div class="pending-card-title">${escHtml(displayName)}</div>
-          <div class="pending-card-meta">${singular} &middot; ${metaHtml}</div>
+          <div class="pending-card-meta">${entityType} &middot; ${metaHtml}</div>
         </div>
         <span class="badge badge-pending">Pending</span>
       </div>
       ${llmHtml}
-      ${comparisonHtml}
       <div class="pending-card-fields">${fieldsHtml}</div>
       <div class="pending-actions">
-        <button class="btn btn-green btn-sm" onclick="approveItem('${singular}',${id})">Approve</button>
-        <button class="btn btn-red btn-sm" onclick="rejectItem('${singular}',${id})">Reject</button>
-        <button class="btn btn-outline btn-sm" onclick="editAndApprove('${type}','${singular}',${id})">Edit &amp; Approve</button>
+        <button class="btn btn-green btn-sm" onclick="approveItem(${id})">Approve</button>
+        <button class="btn btn-red btn-sm" onclick="rejectItem(${id})">Reject</button>
+        <button class="btn btn-outline btn-sm" onclick="editAndApproveSub(${id},'${typeKey}')">Edit &amp; Approve</button>
       </div>
     </div>`;
 }
@@ -1026,9 +965,9 @@ function renderComparison(newItem, existing, def) {
     </div>`;
 }
 
-async function approveItem(singular, id) {
+async function approveItem(submissionId) {
   try {
-    const res = await apiPost({ action: 'approve', type: singular, id });
+    const res = await apiPost({ action: 'approve', submission_id: submissionId });
     if (!res.ok) throw new Error();
     toast('Approved');
     loadPending();
@@ -1036,10 +975,10 @@ async function approveItem(singular, id) {
   } catch (e) { toast('Failed to approve', true); }
 }
 
-async function rejectItem(singular, id) {
+async function rejectItem(submissionId) {
   if (!confirm('Reject this submission?')) return;
   try {
-    const res = await apiPost({ action: 'reject', type: singular, id });
+    const res = await apiPost({ action: 'reject', submission_id: submissionId });
     if (!res.ok) throw new Error();
     toast('Rejected');
     loadPending();
@@ -1047,12 +986,86 @@ async function rejectItem(singular, id) {
   } catch (e) { toast('Failed to reject', true); }
 }
 
-function editAndApprove(type, singular, id) {
-  // Find the item in current pending content
-  const card = document.getElementById(`pending-${singular}-${id}`);
-  // We need to fetch the item data; let's re-fetch pending and find it
-  editEntity(type, singular, id, true);
+function editAndApproveSub(submissionId, typeKey) {
+  // Open a modal pre-filled with the submission's field values so admin can edit before approving.
+  // We'll re-fetch the pending list to find the submission data.
+  apiFetch('/admin?action=pending').then(r => r.json()).then(data => {
+    const sub = (data.submissions || []).find(s => s.id === submissionId);
+    if (!sub) { toast('Could not load submission', true); return; }
+    editAndApproveSubModal(sub, typeKey);
+  }).catch(() => toast('Failed to load submission', true));
 }
+
+function editAndApproveSubModal(sub, typeKey) {
+  const def = FIELD_DEFS[typeKey] || FIELD_DEFS.people;
+  let fieldsHtml = '';
+  def.fields.forEach(f => {
+    if (f === 'status') return;
+    const val = sub[f] ?? '';
+    const label = f.replace(/_/g, ' ');
+    if (FIELD_OPTIONS[f] && (f === 'belief_threat_models' || f === 'influence_type')) {
+      const selected = String(val).split(',').map(s => s.trim()).filter(Boolean);
+      fieldsHtml += `<div class="field"><label>${label}</label><div class="checkbox-group" data-field="${f}">
+        ${FIELD_OPTIONS[f].map(opt => `<label><input type="checkbox" name="${f}" value="${opt}" ${selected.includes(opt) ? 'checked' : ''}> ${opt}</label>`).join('')}
+      </div></div>`;
+    } else if (FIELD_OPTIONS[f]) {
+      fieldsHtml += `<div class="field"><label>${label}</label><select name="${f}">
+        <option value="">—</option>
+        ${FIELD_OPTIONS[f].map(opt => `<option value="${opt}" ${opt === val ? 'selected' : ''}>${opt}</option>`).join('')}
+      </select></div>`;
+    } else if (f === 'resource_category') {
+      fieldsHtml += `<div class="field"><label>${label}</label><select name="${f}">
+        <option value="">—</option>
+        ${(def.categories || []).map(c => `<option value="${c}" ${c === val ? 'selected' : ''}>${c}</option>`).join('')}
+      </select></div>`;
+    } else if (f === 'category') {
+      fieldsHtml += `<div class="field"><label>${label}</label><select name="${f}">
+        <option value="">—</option>
+        ${(def.categories || []).map(c => `<option value="${c}" ${c === val ? 'selected' : ''}>${c}</option>`).join('')}
+      </select></div>`;
+    } else if (f === 'belief_regulatory_stance_detail' || f === 'resource_key_argument' || f === 'belief_threat_models') {
+      fieldsHtml += `<div class="field"><label>${label}</label><textarea name="${f}">${escHtml(String(val))}</textarea></div>`;
+    } else {
+      fieldsHtml += `<div class="field"><label>${label}</label><input type="text" name="${f}" value="${escHtml(String(val))}"></div>`;
+    }
+  });
+
+  document.getElementById('modal-container').innerHTML = `
+    <div class="modal-overlay" onclick="if(event.target===this)closeModal()">
+      <div class="modal">
+        <h2>Edit &amp; Approve</h2>
+        <form id="edit-form">${fieldsHtml}</form>
+        <div class="modal-actions">
+          <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+          <button class="btn btn-green" onclick="saveAndApproveSub(${sub.id})">Save &amp; Approve</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+async function saveAndApproveSub(submissionId) {
+  const form = document.getElementById('edit-form');
+  const overrides = {};
+  form.querySelectorAll('input:not([type="checkbox"]), select, textarea').forEach(el => {
+    if (el.name && el.value !== '') overrides[el.name] = el.value;
+  });
+  form.querySelectorAll('.checkbox-group').forEach(group => {
+    const field = group.dataset.field;
+    const checked = [...group.querySelectorAll('input:checked')].map(cb => cb.value);
+    if (checked.length > 0) overrides[field] = checked.join(', ');
+  });
+  try {
+    const res = await apiPost({ action: 'approve', submission_id: submissionId, data: overrides });
+    if (!res.ok) throw new Error();
+    toast('Approved');
+    closeModal();
+    loadPending();
+    loadDashboard();
+  } catch (e) { toast('Failed to approve', true); }
+}
+
+// Map sub-tab key → entity_type value for API
+const ENTITY_TYPE_MAP = { people: 'person', organizations: 'organization', resources: 'resource' };
 
 // --- All Entities ---
 async function loadEntities(type) {
@@ -1067,9 +1080,10 @@ async function loadEntities(type) {
     if (allEntitiesCache[type]) {
       entitiesData = allEntitiesCache[type];
     } else {
-      const res = await apiFetch(`/admin?action=all&type=${type}`);
+      const entityType = ENTITY_TYPE_MAP[type] || type;
+      const res = await apiFetch(`/admin?action=all&type=entity&entity_type=${entityType}`);
       const data = await res.json();
-      entitiesData = data.items || data.data || data[type] || data;
+      entitiesData = data.data || [];
       if (!Array.isArray(entitiesData)) entitiesData = [];
       allEntitiesCache[type] = entitiesData;
     }
@@ -1079,8 +1093,9 @@ async function loadEntities(type) {
     // Preload other types in background for fast switching
     for (const t of ['people', 'organizations', 'resources']) {
       if (!allEntitiesCache[t] && t !== type) {
-        apiFetch(`/admin?action=all&type=${t}`).then(r => r.json()).then(d => {
-          allEntitiesCache[t] = d.items || d.data || d[t] || [];
+        const et = ENTITY_TYPE_MAP[t];
+        apiFetch(`/admin?action=all&type=entity&entity_type=${et}`).then(r => r.json()).then(d => {
+          allEntitiesCache[t] = d.data || [];
         }).catch(() => {});
       }
     }
@@ -1099,7 +1114,7 @@ function renderMergedTable() {
   // Unified columns: type + name/title + category + key detail + status
   const thead = document.getElementById('entities-thead');
   const tbody = document.getElementById('entities-tbody');
-  const cols = ['type', 'name', 'category', 'detail', 'regulatory_stance', 'status'];
+  const cols = ['type', 'name', 'category', 'detail', 'belief_regulatory_stance', 'status'];
 
   thead.innerHTML = '<tr>' +
     '<th style="width:30px"><input type="checkbox" onchange="toggleSelectAll(this)"></th>' +
@@ -1134,8 +1149,8 @@ function renderMergedTable() {
     const id = item.id;
     const t = item._entityType;
     const singular = FIELD_DEFS[t]?.singular || t;
-    const name = item.name || item.title || '';
-    const detail = t === 'people' ? (item.title || item.primary_org || '') : t === 'organizations' ? (item.website || '') : (item.resource_type || '');
+    const name = item.name || item.resource_title || '';
+    const detail = t === 'people' ? (item.title || item.primary_org || '') : t === 'organizations' ? (item.website || '') : (item.resource_type || item.resource_category || '');
     const typeLabel = t === 'people' ? 'Person' : t === 'organizations' ? 'Org' : 'Resource';
     const checked = selectedIds.has(`${t}-${id}`) ? 'checked' : '';
 
@@ -1145,7 +1160,7 @@ function renderMergedTable() {
       <td title="${escHtml(name)}">${escHtml(name)}</td>
       <td>${escHtml(item.category || '')}</td>
       <td title="${escHtml(detail)}">${escHtml(detail.length > 30 ? detail.slice(0, 30) + '...' : detail)}</td>
-      <td>${escHtml(item.regulatory_stance || '')}</td>
+      <td>${escHtml(item.belief_regulatory_stance || '')}</td>
       <td><span class="badge badge-${item.status || 'pending'}">${item.status || 'pending'}</span></td>
       <td>
         <button class="btn btn-outline btn-sm" onclick="editEntity('${t}','${singular}',${id})">Edit</button>
@@ -1276,7 +1291,7 @@ function inlineEdit(td, type, id, field) {
     }
     td.textContent = 'Saving...';
     try {
-      const res = await apiPost({ action: 'update', type: def.singular, id, data: { [field]: newVal } });
+      const res = await apiPost({ action: 'update_entity', entity_id: id, data: { [field]: newVal } });
       if (!res.ok) throw new Error();
       toast('Updated');
       loadEntities(type);
@@ -1316,40 +1331,40 @@ function updateBulkButtons() {
 
 async function bulkApprove() {
   if (!confirm(`Approve ${selectedIds.size} items?`)) return;
-  const singular = FIELD_DEFS[currentSubTab].singular;
   for (const id of selectedIds) {
-    await apiPost({ action: 'approve', type: singular, id });
+    await apiPost({ action: 'update_entity', entity_id: id, data: { status: 'approved' } });
   }
   toast(`Approved ${selectedIds.size} items`);
   selectedIds.clear();
+  allEntitiesCache = {};
   loadEntities(currentSubTab);
 }
 
 async function bulkDelete() {
   if (!confirm(`Delete ${selectedIds.size} items? This cannot be undone.`)) return;
-  const singular = FIELD_DEFS[currentSubTab].singular;
   for (const id of selectedIds) {
-    await apiPost({ action: 'delete', type: singular, id });
+    await apiPost({ action: 'delete', entity_id: id });
   }
   toast(`Deleted ${selectedIds.size} items`);
   selectedIds.clear();
+  allEntitiesCache = {};
   loadEntities(currentSubTab);
 }
 
 // --- Edit Modal ---
-async function editEntity(type, singular, id, approveAfter = false) {
+async function editEntity(type, singular, id) {
   const def = FIELD_DEFS[type];
   // Prefetch entity cache for autocomplete
   await getEntityCache();
   // Fetch current data
   let item = entitiesData.find(e => e.id === id);
   if (!item) {
-    // Might be from pending; try fetching all
+    // Try fetching from API
     try {
-      const res = await apiFetch(`/admin?action=all&type=${type}`);
+      const entityType = ENTITY_TYPE_MAP[type] || type;
+      const res = await apiFetch(`/admin?action=all&type=entity&entity_type=${entityType}`);
       const data = await res.json();
-      const list = data.items || data[type] || data;
-      item = (Array.isArray(list) ? list : []).find(e => e.id === id);
+      item = (data.data || []).find(e => e.id === id);
     } catch (e) {}
   }
   if (!item) { toast('Could not load item', true); return; }
@@ -1357,11 +1372,10 @@ async function editEntity(type, singular, id, approveAfter = false) {
   let fieldsHtml = '';
   let hasNotes = false;
   def.fields.forEach(f => {
-    if (f === 'status' && approveAfter) return;
     const val = item[f] ?? '';
     const label = f.replace(/_/g, ' ');
 
-    if (f === 'category') {
+    if (f === 'category' || f === 'resource_category') {
       fieldsHtml += `<div class="field"><label>${label}</label><select name="${f}">
         <option value="">—</option>
         ${(def.categories || []).map(c => `<option value="${c}" ${c === val ? 'selected' : ''}>${c}</option>`).join('')}
@@ -1375,7 +1389,7 @@ async function editEntity(type, singular, id, approveAfter = false) {
       fieldsHtml += `<div class="field"><label>${f}</label><select name="${f}">
         ${['approved','pending','rejected'].map(s => `<option value="${s}" ${s === val ? 'selected' : ''}>${s}</option>`).join('')}
       </select></div>`;
-    } else if (FIELD_OPTIONS[f] && (f === 'threat_models' || f === 'influence_type')) {
+    } else if (FIELD_OPTIONS[f] && (f === 'belief_threat_models' || f === 'influence_type')) {
       // Checkbox group for multi-select fields
       const selected = String(val).split(',').map(s => s.trim()).filter(Boolean);
       fieldsHtml += `<div class="field"><label>${label}</label><div class="checkbox-group" data-field="${f}">
@@ -1430,15 +1444,14 @@ async function editEntity(type, singular, id, approveAfter = false) {
           </div>
         </div>`;
       }
-    } else if (f === 'key_argument' || f === 'regulatory_stance_detail' || f === 'threat_models_detail') {
+    } else if (f === 'resource_key_argument' || f === 'belief_regulatory_stance_detail') {
       fieldsHtml += `<div class="field"><label>${label}</label><textarea name="${f}">${escHtml(String(val))}</textarea></div>`;
     } else {
       fieldsHtml += `<div class="field"><label>${label}</label><input type="text" name="${f}" value="${escHtml(String(val))}"></div>`;
     }
   });
 
-  const title = approveAfter ? 'Edit & Approve' : 'Edit ' + (item.name || item.title || '');
-  const btnLabel = approveAfter ? 'Save & Approve' : 'Save';
+  const title = 'Edit ' + (item.name || item.resource_title || '');
 
   document.getElementById('modal-container').innerHTML = `
     <div class="modal-overlay" onclick="if(event.target===this)closeModal()">
@@ -1447,7 +1460,7 @@ async function editEntity(type, singular, id, approveAfter = false) {
         <form id="edit-form">${fieldsHtml}</form>
         <div class="modal-actions">
           <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
-          <button class="btn ${approveAfter ? 'btn-green' : 'btn-primary'}" onclick="saveEdit('${type}','${singular}',${id},${approveAfter})">${btnLabel}</button>
+          <button class="btn btn-primary" onclick="saveEdit('${type}','${singular}',${id})">Save</button>
         </div>
       </div>
     </div>`;
@@ -1561,7 +1574,7 @@ async function editEntity(type, singular, id, approveAfter = false) {
   });
 }
 
-async function saveEdit(type, singular, id, approveAfter) {
+async function saveEdit(type, singular, id) {
   const form = document.getElementById('edit-form');
   const data = {};
 
@@ -1601,15 +1614,9 @@ async function saveEdit(type, singular, id, approveAfter) {
         toast('Thumbnail upload failed', true);
       }
     }
-    const res = await apiPost({ action: 'update', type: singular, id, data });
+    const res = await apiPost({ action: 'update_entity', entity_id: id, data });
     if (!res.ok) throw new Error();
-    if (approveAfter) {
-      const res2 = await apiPost({ action: 'approve', type: singular, id });
-      if (!res2.ok) throw new Error();
-      toast('Updated and approved');
-    } else {
-      toast('Updated');
-    }
+    toast('Updated');
     closeModal();
     loadEntities(currentSubTab);
     loadPending();
@@ -1621,9 +1628,10 @@ async function saveEdit(type, singular, id, approveAfter) {
 async function deleteEntity(singular, id) {
   if (!confirm('Delete this entry? This cannot be undone.')) return;
   try {
-    const res = await apiPost({ action: 'delete', type: singular, id });
+    const res = await apiPost({ action: 'delete', entity_id: id });
     if (!res.ok) throw new Error();
     toast('Deleted');
+    allEntitiesCache = {};
     loadEntities(currentSubTab);
   } catch (e) { toast('Failed to delete', true); }
 }
@@ -1663,22 +1671,24 @@ async function loadMergeQueue() {
     const data = await res.json();
     loading.style.display = 'none';
 
-    const people = data.people || [];
-    const orgs = data.organizations || [];
+    // API returns { entities: [...] } — each entity has pending_submissions[]
+    const entities = data.entities || [];
 
-    if (people.length === 0 && orgs.length === 0) {
+    if (entities.length === 0) {
       empty.style.display = 'block';
       return;
     }
 
+    // Group by entity_type for display
+    const byType = { person: [], organization: [], resource: [] };
+    entities.forEach(e => { (byType[e.entity_type] || byType.person).push(e); });
+
     let html = '';
-    if (people.length > 0) {
-      html += `<div class="eyebrow" style="margin:1rem 0 0.5rem">People (${people.length})</div>`;
-      people.forEach(entity => { html += renderMergeCard(entity, 'person', 'people'); });
-    }
-    if (orgs.length > 0) {
-      html += `<div class="eyebrow" style="margin:1rem 0 0.5rem">Organizations (${orgs.length})</div>`;
-      orgs.forEach(entity => { html += renderMergeCard(entity, 'organization', 'organizations'); });
+    for (const [eType, label] of [['person','People'],['organization','Organizations'],['resource','Resources']]) {
+      const group = byType[eType];
+      if (group.length === 0) continue;
+      html += `<div class="eyebrow" style="margin:1rem 0 0.5rem">${label} (${group.length})</div>`;
+      group.forEach(entity => { html += renderMergeCard(entity); });
     }
     content.innerHTML = html;
     content.style.display = 'block';
@@ -1688,34 +1698,33 @@ async function loadMergeQueue() {
   }
 }
 
-// Fields to show in merge comparison
+// Fields to show in merge comparison (per entity_type)
 const MERGE_FIELDS = {
-  people: ['category', 'title', 'primary_org', 'other_orgs', 'location', 'regulatory_stance', 'regulatory_stance_detail', 'evidence_source', 'agi_timeline', 'ai_risk_level', 'threat_models', 'threat_models_detail', 'influence_type', 'twitter', 'bluesky', 'notes'],
-  organizations: ['category', 'website', 'location', 'funding_model', 'regulatory_stance', 'regulatory_stance_detail', 'evidence_source', 'agi_timeline', 'ai_risk_level', 'threat_models', 'threat_models_detail', 'influence_type', 'twitter', 'bluesky', 'notes'],
+  person:       ['category', 'title', 'primary_org', 'other_orgs', 'location', 'belief_regulatory_stance', 'belief_regulatory_stance_detail', 'belief_evidence_source', 'belief_agi_timeline', 'belief_ai_risk', 'belief_threat_models', 'influence_type', 'twitter', 'bluesky', 'notes'],
+  organization: ['category', 'website', 'location', 'funding_model', 'belief_regulatory_stance', 'belief_regulatory_stance_detail', 'belief_evidence_source', 'belief_agi_timeline', 'belief_ai_risk', 'belief_threat_models', 'influence_type', 'twitter', 'bluesky', 'notes'],
+  resource:     ['resource_category', 'resource_author', 'resource_type', 'resource_url', 'resource_year', 'resource_key_argument', 'belief_regulatory_stance', 'belief_agi_timeline', 'belief_ai_risk', 'notes'],
 };
 
-function renderMergeCard(entity, singular, tableName) {
-  const displayName = entity.name || 'Untitled';
+function renderMergeCard(entity) {
+  const singular = entity.entity_type || 'person';
+  const displayName = entity.name || entity.resource_title || 'Untitled';
   const pendingSubs = entity.pending_submissions || [];
-  const unreviewedCount = entity.unreviewed_submissions || pendingSubs.length;
 
   let subsHtml = '';
-  pendingSubs.forEach((sub, idx) => {
+  pendingSubs.forEach(sub => {
     if (!sub || !sub.id) return;
-    const subData = typeof sub.data === 'string' ? JSON.parse(sub.data) : (sub.data || {});
     const llmReview = typeof sub.llm_review === 'string' ? JSON.parse(sub.llm_review) : (sub.llm_review || {});
     const stars = '★'.repeat(llmReview.quality || 0) + '☆'.repeat(5 - (llmReview.quality || 0));
-    const selfBadge = sub.is_self_submission ? '<span class="self-badge">Self</span>' : '';
+    const selfBadge = sub.submitter_relationship === 'self' ? '<span class="self-badge">Self</span>' : '';
     const submittedDate = sub.submitted_at ? new Date(sub.submitted_at).toLocaleDateString() : '';
 
-    // Build field comparison rows
+    // Build field comparison rows — sub columns are flat (no .data JSONB)
     let fieldsHtml = '';
-    const fields = MERGE_FIELDS[tableName] || [];
+    const fields = MERGE_FIELDS[singular] || MERGE_FIELDS.person;
     fields.forEach(f => {
-      const camelField = f.replace(/_([a-z])/g, (_, c) => c.toUpperCase());
       const currentVal = entity[f] ?? '';
-      const submittedVal = subData[camelField] ?? subData[f] ?? '';
-      // Only show fields where there's a difference or submitted value exists
+      const submittedVal = sub[f] ?? '';
+      // Only show fields where submitted value exists and differs from current
       if (submittedVal && String(submittedVal) !== String(currentVal)) {
         const fieldName = f.replace(/_/g, ' ');
         const radioName = `merge_${entity.id}_${sub.id}_${f}`;
@@ -1723,8 +1732,8 @@ function renderMergeCard(entity, singular, tableName) {
           <div class="merge-field" data-field="${f}">
             <div class="merge-field-label">${fieldName}</div>
             <div class="merge-options">
-              <label><input type="radio" name="${radioName}" value="current" checked> <span class="option-label">Keep:</span> ${escHtml(String(currentVal)) || '<em style="color:#888">(empty)</em>'}</label>
-              <label><input type="radio" name="${radioName}" value="submitted"> <span class="option-label">Change to:</span> <span class="diff-highlight">${escHtml(String(submittedVal))}</span></label>
+              <label><input type="radio" name="${radioName}" value="current" ${currentVal ? 'checked' : ''}> <span class="option-label">Keep:</span> ${escHtml(String(currentVal)) || '<em style="color:#888">(empty)</em>'}</label>
+              <label><input type="radio" name="${radioName}" value="submitted" ${!currentVal ? 'checked' : ''}> <span class="option-label">Use submitted:</span> <span class="diff-highlight">${escHtml(String(submittedVal))}</span></label>
               <label><input type="radio" name="${radioName}" value="custom"> <span class="option-label">Custom:</span> <input type="text" class="custom-input" placeholder="Enter value..."></label>
             </div>
           </div>`;
@@ -1736,14 +1745,14 @@ function renderMergeCard(entity, singular, tableName) {
     }
 
     subsHtml += `
-      <div class="submission-review" data-submission-id="${sub.id}" data-entity-id="${entity.id}" data-entity-type="${singular}">
+      <div class="submission-review" data-submission-id="${sub.id}" data-entity-id="${entity.id}">
         <div class="submission-meta">
           Submitted ${submittedDate} ${sub.submitter_email ? `by ${escHtml(sub.submitter_email)}` : ''} &middot; ${stars} ${selfBadge}
         </div>
         ${fieldsHtml}
         <div class="merge-actions">
           <textarea placeholder="Resolution notes (optional)" class="resolution-notes"></textarea>
-          <button class="btn btn-green" onclick="mergeSubmission(${entity.id}, ${sub.id}, '${singular}')">Merge</button>
+          <button class="btn btn-green" onclick="mergeSubmission(${entity.id}, ${sub.id})">Merge</button>
           <button class="btn btn-red btn-sm" onclick="rejectSubmission(${sub.id})">Reject</button>
         </div>
       </div>`;
@@ -1756,13 +1765,13 @@ function renderMergeCard(entity, singular, tableName) {
           <div class="pending-card-title">${escHtml(displayName)}</div>
           <div class="pending-card-meta">${singular} &middot; Ground truth entry</div>
         </div>
-        <span class="badge badge-pending">${unreviewedCount} to review</span>
+        <span class="badge badge-pending">${pendingSubs.length} to review</span>
       </div>
       ${subsHtml}
     </div>`;
 }
 
-async function mergeSubmission(entityId, submissionId, entityType) {
+async function mergeSubmission(entityId, submissionId) {
   const reviewEl = document.querySelector(`[data-submission-id="${submissionId}"]`);
   if (!reviewEl) return;
 
@@ -1772,19 +1781,13 @@ async function mergeSubmission(entityId, submissionId, entityType) {
     const selected = field.querySelector('input[type="radio"]:checked');
     if (!selected) return;
     if (selected.value === 'submitted') {
-      // Get the submitted value from the highlighted span
-      const submittedLabel = field.querySelector('input[value="submitted"]').parentElement;
-      const highlightSpan = submittedLabel.querySelector('.diff-highlight');
-      if (highlightSpan) {
-        mergedData[fieldName] = highlightSpan.textContent;
-      }
+      const highlightSpan = field.querySelector('.diff-highlight');
+      if (highlightSpan) mergedData[fieldName] = highlightSpan.textContent;
     } else if (selected.value === 'custom') {
       const customInput = field.querySelector('.custom-input');
-      if (customInput && customInput.value.trim()) {
-        mergedData[fieldName] = customInput.value.trim();
-      }
+      if (customInput && customInput.value.trim()) mergedData[fieldName] = customInput.value.trim();
     }
-    // If 'current' is selected, we don't include it in mergedData (keep existing)
+    // 'current' selected → don't include in mergedData (keep existing)
   });
 
   const resolutionNotes = reviewEl.querySelector('.resolution-notes')?.value || '';
@@ -1792,7 +1795,6 @@ async function mergeSubmission(entityId, submissionId, entityType) {
   try {
     const res = await apiPost({
       action: 'merge',
-      type: entityType,
       entity_id: entityId,
       submission_id: submissionId,
       merged_data: mergedData,
