@@ -285,6 +285,20 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
 .node:hover .node-image,
 .node.highlighted .node-image { opacity: 1; }
 
+/* Source type filter */
+.source-type-items { display: flex; flex-direction: column; gap: 0.15rem; }
+.source-type-item {
+  display: flex; align-items: center; gap: 0.35rem;
+  font-family: var(--mono); font-size: 8px; color: var(--text-2);
+  cursor: pointer; padding: 0.1rem 0; transition: opacity 0.15s;
+}
+.source-type-item.inactive { opacity: 0.3; }
+.source-type-icon {
+  width: 10px; height: 10px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 8px;
+}
+
 /* D3 */
 .cluster-label {
   font-family: var(--mono); text-transform: uppercase;
@@ -351,9 +365,11 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   .controls .control-group:first-child { flex: 1; min-width: 0; }
   .controls #category-filters,
   .controls #stance-legend,
+  .controls #source-type-filter,
   .controls #axis-controls { display: none !important; }
   .controls.filters-open #category-filters,
   .controls.filters-open #stance-legend,
+  .controls.filters-open #source-type-filter,
   .controls.filters-open #axis-controls {
     display: block !important; position: fixed; bottom: 52px; left: 0; right: 0;
     background: var(--bg-panel); border-top: 1px solid var(--line);
@@ -366,6 +382,7 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   .chip { padding: 0.35rem 0.6rem; font-size: 9px; }
   .view-btn { padding: 0.3rem 0.45rem; font-size: 9px; }
   .stance-legend-item { padding: 0.3rem 0; font-size: 9px; }
+  .source-type-item { padding: 0.3rem 0; font-size: 9px; }
   /* Detail panel full-width overlay */
   .detail-panel { width: 100%; overscroll-behavior: contain; max-height: 100vh; padding-bottom: calc(1.25rem + env(safe-area-inset-bottom)); }
   /* Contribute panel full-width */
@@ -449,6 +466,23 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   <div class="control-group" id="stance-legend">
     <h3 style="display:flex;justify-content:space-between;align-items:center;">Regulatory Stance <span class="filter-reset" id="stance-reset" style="font-size:8px;text-transform:none;letter-spacing:0;color:var(--accent);cursor:pointer;font-weight:400;">select all</span></h3>
     <div class="stance-legend-items" id="stance-legend-items"></div>
+  </div>
+  <div class="control-group" id="source-type-filter">
+    <h3 style="display:flex;justify-content:space-between;align-items:center;">Source <span class="filter-reset" id="source-reset" style="font-size:8px;text-transform:none;letter-spacing:0;color:var(--accent);cursor:pointer;font-weight:400;">select all</span></h3>
+    <div class="source-type-items" id="source-type-items">
+      <div class="source-type-item" data-source="self">
+        <span class="source-type-icon">●</span>
+        <span>Self-added</span>
+      </div>
+      <div class="source-type-item" data-source="connector">
+        <span class="source-type-icon">◐</span>
+        <span>Has connector</span>
+      </div>
+      <div class="source-type-item" data-source="external">
+        <span class="source-type-icon">○</span>
+        <span>External</span>
+      </div>
+    </div>
   </div>
 
   <div class="control-group" id="axis-controls" style="display:none">
@@ -944,6 +978,11 @@ const STANCE_ORDER = ['Accelerate','Light-touch','Targeted','Moderate','Restrict
 let activeStances = new Set(STANCE_ORDER);
 let stanceFilterActive = false; // true when user has toggled any stance off
 
+// Source type filter state
+const SOURCE_TYPES = ['self', 'connector', 'external'];
+let activeSourceTypes = new Set(SOURCE_TYPES);
+let sourceFilterActive = false; // true when user has toggled any source type off
+
 // 2D view state
 let axisMode = '2d';           // '1d' | '2d'
 let axisX = 'regulatory_stance';
@@ -1012,6 +1051,7 @@ fetch('map-data.json')
     });
     buildFilters();
     buildStanceLegend();
+    buildSourceTypeFilter();
     render();
   });
 
@@ -1145,6 +1185,46 @@ function buildStanceLegend() {
   updateStanceResetBtn();
 }
 
+function buildSourceTypeFilter() {
+  const container = document.getElementById('source-type-items');
+  container.querySelectorAll('.source-type-item').forEach(item => {
+    const sourceType = item.dataset.source;
+    item.addEventListener('click', () => {
+      if (activeSourceTypes.has(sourceType)) {
+        activeSourceTypes.delete(sourceType);
+        item.classList.add('inactive');
+      } else {
+        activeSourceTypes.add(sourceType);
+        item.classList.remove('inactive');
+      }
+      sourceFilterActive = activeSourceTypes.size < SOURCE_TYPES.length;
+      updateSourceResetBtn();
+      render();
+    });
+  });
+  updateSourceResetBtn();
+}
+
+function updateSourceResetBtn() {
+  const btn = document.getElementById('source-reset');
+  const allActive = activeSourceTypes.size === SOURCE_TYPES.length;
+  btn.textContent = allActive ? 'deselect all' : 'select all';
+}
+
+document.getElementById('source-reset').addEventListener('click', () => {
+  const allActive = activeSourceTypes.size === SOURCE_TYPES.length;
+  if (allActive) {
+    activeSourceTypes.clear();
+    document.querySelectorAll('.source-type-item').forEach(item => item.classList.add('inactive'));
+  } else {
+    activeSourceTypes = new Set(SOURCE_TYPES);
+    document.querySelectorAll('.source-type-item').forEach(item => item.classList.remove('inactive'));
+  }
+  sourceFilterActive = activeSourceTypes.size < SOURCE_TYPES.length;
+  updateSourceResetBtn();
+  render();
+});
+
 // Restore saved view from localStorage
 const savedView = localStorage.getItem('mapView');
 if (savedView && ['orgs','people','resources','all','2d'].includes(savedView)) {
@@ -1204,6 +1284,12 @@ function passesStanceFilter(d) {
   const key = getStanceKey(d.regulatory_stance);
   if (key) return activeStances.has(key);
   return unknownActive;
+}
+
+function passesSourceTypeFilter(d) {
+  if (!sourceFilterActive) return true;
+  const sourceType = d.source_type || 'external';
+  return activeSourceTypes.has(sourceType);
 }
 
 // Normalize similar category names to a canonical form
@@ -1272,9 +1358,9 @@ function getVisibleNodes() {
 
   // Count total for scaling
   let totalCount = 0;
-  if (currentView === 'orgs' || currentView === 'all') totalCount += allData.organizations.filter(d => d.category && isCatActive(d.category) && passesStanceFilter(d)).length;
-  if (currentView === 'people' || currentView === 'all') totalCount += allData.people.filter(d => d.category && isCatActive(d.category) && passesStanceFilter(d)).length;
-  if (currentView === 'resources' || currentView === 'all') totalCount += allData.resources.length;
+  if (currentView === 'orgs' || currentView === 'all') totalCount += allData.organizations.filter(d => d.category && isCatActive(d.category) && passesStanceFilter(d) && passesSourceTypeFilter(d)).length;
+  if (currentView === 'people' || currentView === 'all') totalCount += allData.people.filter(d => d.category && isCatActive(d.category) && passesStanceFilter(d) && passesSourceTypeFilter(d)).length;
+  if (currentView === 'resources' || currentView === 'all') totalCount += allData.resources.filter(d => passesSourceTypeFilter(d)).length;
 
   // Scale: gentler curve — 1.0 at 40, 0.7 at 100, 0.55 at 200
   const scale = Math.max(0.55, Math.min(1.0, 40 / Math.max(totalCount, 1)));
@@ -1283,6 +1369,7 @@ function getVisibleNodes() {
     allData.organizations.forEach(d => {
       if (!d.category || !isCatActive(d.category)) return;
       if (!passesStanceFilter(d)) return;
+      if (!passesSourceTypeFilter(d)) return;
       const sc = d.submission_count || 1;
       const baseR = currentView === 'all' ? 14 : 18;
       const r = Math.round((baseR + Math.min(Math.floor(sc / 3), 3)) * scale);
@@ -1298,6 +1385,7 @@ function getVisibleNodes() {
       if (currentView === 'people' && !isCatActive(d.category)) return;
       // In "all" view, always include people (they'll be mapped to an org sector cluster)
       if (!passesStanceFilter(d)) return;
+      if (!passesSourceTypeFilter(d)) return;
       const sc = d.submission_count || 1;
 
       // In "all" view: cluster people by their PRIMARY ORG'S sector
@@ -1338,6 +1426,7 @@ function getVisibleNodes() {
   }
   if (currentView === 'resources') {
     allData.resources.forEach(d => {
+      if (!passesSourceTypeFilter(d)) return;
       const cat = d.resource_type || 'Other'; // cluster by type in resources view
       const sc = d.submission_count || 1;
       const r = Math.round((14 + Math.min(Math.floor(sc / 3), 3)) * scale);
@@ -1345,6 +1434,7 @@ function getVisibleNodes() {
     });
   } else if (currentView === 'all') {
     allData.resources.forEach(d => {
+      if (!passesSourceTypeFilter(d)) return;
       const sc = d.submission_count || 1;
       const r = Math.round((10 + Math.min(Math.floor(sc / 3), 3)) * scale);
       nodes.push({ ...d, name: d.title, category: 'Resources', _rawCategory: d.category, entityType: 'resource', radius: r, submissionCount: sc, isResource: true });
@@ -1926,6 +2016,8 @@ function render2D(svg, g, width, height) {
     ...(axis2dEntityType !== 'people' ? allData.organizations.map(d => ({ ...d, entityType: 'organization', submissionCount: d.submission_count || 1 })) : []),
   ].filter(d => {
     if (!d.category) return false;
+    if (!passesStanceFilter(d)) return false;
+    if (!passesSourceTypeFilter(d)) return false;
     if (activeCategories.size === 0) return true;
     return activeCategories.has(d.category) || activeCategories.has(normalizeCategory(d.category));
   });

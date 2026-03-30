@@ -21,6 +21,39 @@ async function exportMapData() {
       return clean;
     });
 
+    // Compute source_type for entities based on their submission history:
+    // - "self": entity has a merged submission where is_self_submission = true
+    // - "connector": entity has a merged submission where submitter_relationship is not null (and not self)
+    // - "external": seeded data or submissions without relationship info
+    const selfRes = await client.query(`
+      SELECT DISTINCT entity_type, entity_id
+      FROM submissions
+      WHERE is_self_submission = true AND status = 'merged' AND entity_id IS NOT NULL
+    `);
+    const selfSet = new Set(selfRes.rows.map(r => `${r.entity_type}:${r.entity_id}`));
+
+    const connectorRes = await client.query(`
+      SELECT DISTINCT entity_type, entity_id
+      FROM submissions
+      WHERE submitter_relationship IS NOT NULL
+        AND submitter_relationship != ''
+        AND is_self_submission = false
+        AND status = 'merged'
+        AND entity_id IS NOT NULL
+    `);
+    const connectorSet = new Set(connectorRes.rows.map(r => `${r.entity_type}:${r.entity_id}`));
+
+    const addSourceType = (rows, entityType) => rows.map(row => {
+      const key = `${entityType}:${row.id}`;
+      let source_type = 'external';
+      if (selfSet.has(key)) {
+        source_type = 'self';
+      } else if (connectorSet.has(key)) {
+        source_type = 'connector';
+      }
+      return { ...row, source_type };
+    });
+
     // Ordinal scores for 2D view axes (null = excluded from plot)
     const STANCE_SCORES = {
       'Accelerate': 1,
@@ -87,9 +120,9 @@ async function exportMapData() {
         generated_at: new Date().toISOString(),
         note: 'TEST DATA — This dataset contains fictional entries for development purposes',
       },
-      people: addScores(stripSensitive(people.rows)),
-      organizations: addScores(stripSensitive(orgs.rows)),
-      resources: addScores(stripSensitive(resources.rows)),
+      people: addScores(addSourceType(stripSensitive(people.rows), 'person')),
+      organizations: addScores(addSourceType(stripSensitive(orgs.rows), 'organization')),
+      resources: addScores(addSourceType(stripSensitive(resources.rows), 'resource')),
       relationships: relationships.rows,
       person_organizations: personOrgs.rows,
     };
