@@ -12,19 +12,14 @@ const CORS_HEADERS = {
   'Access-Control-Allow-Headers': 'Content-Type',
 };
 
+const SENSITIVE = new Set(['submitter_email', 'submitter_relationship', 'search_vector']);
+
 export const handler = async (event) => {
   const method = event.requestContext.http.method;
 
-  if (method === 'OPTIONS') {
-    return { statusCode: 200, headers: CORS_HEADERS, body: '' };
-  }
-
+  if (method === 'OPTIONS') return { statusCode: 200, headers: CORS_HEADERS, body: '' };
   if (method !== 'GET') {
-    return {
-      statusCode: 405,
-      headers: CORS_HEADERS,
-      body: JSON.stringify({ error: 'Method not allowed' }),
-    };
+    return { statusCode: 405, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Method not allowed' }) };
   }
 
   try {
@@ -33,87 +28,40 @@ export const handler = async (event) => {
 
     const client = await pool.connect();
     try {
-      let people = { rows: [] };
-      let organizations = { rows: [] };
-      let resources = { rows: [] };
+      // Filter by entity_type if requested, otherwise return all
+      const typeClause = type ? `AND entity_type = $2` : '';
+      const queryParams = type ? [filterStatus, type] : [filterStatus];
 
-      if (!type || type === 'person') {
-        people = await client.query(
-          `SELECT id, name, category, title, primary_org, other_orgs, location,
-                  regulatory_stance, regulatory_stance_detail,
-                  evidence_source, agi_timeline, ai_risk_level,
-                  threat_models, threat_models_detail, influence_type,
-                  twitter, bluesky, notes, submission_count,
-                  submitted_at, status
-           FROM people
-           WHERE status = $1
-           ORDER BY name ASC`,
-          [filterStatus]
-        );
-      }
-
-      if (!type || type === 'organization') {
-        organizations = await client.query(
-          `SELECT id, name, category, website, location, funding_model,
-                  regulatory_stance, regulatory_stance_detail,
-                  evidence_source, agi_timeline, ai_risk_level,
-                  threat_models, threat_models_detail, influence_type,
-                  twitter, bluesky, notes, parent_org_id, submission_count,
-                  last_verified, submitted_at, status
-           FROM organizations
-           WHERE status = $1
-           ORDER BY name ASC`,
-          [filterStatus]
-        );
-      }
-
-      if (!type || type === 'resource') {
-        resources = await client.query(
-          `SELECT id, title, author, resource_type, url, year, category,
-                  key_argument, notes, submission_count,
-                  submitted_at, status
-           FROM resources
-           WHERE status = $1
-           ORDER BY title ASC`,
-          [filterStatus]
-        );
-      }
-
-      // Fetch relationships
-      const relationships = await client.query(
-        `SELECT id, source_type, source_id, target_type, target_id, relationship_type, evidence
-         FROM relationships
-         ORDER BY id`
+      const entityResult = await client.query(
+        `SELECT * FROM entity WHERE status = $1 ${typeClause} ORDER BY COALESCE(name, resource_title) ASC`,
+        queryParams
       );
 
-      // Fetch person-org links
-      const personOrgs = await client.query(
-        `SELECT id, person_id, organization_id, role, is_primary
-         FROM person_organizations
-         ORDER BY id`
+      const edges = await client.query(
+        `SELECT id, source_id, target_id, edge_type, role, is_primary FROM edge ORDER BY id`
       );
+
+      const clean = entityResult.rows.map(row => {
+        const r = { ...row };
+        SENSITIVE.forEach(f => delete r[f]);
+        return r;
+      });
+
+      // Split into typed arrays for backwards compatibility with map frontend
+      const people        = clean.filter(r => r.entity_type === 'person');
+      const organizations = clean.filter(r => r.entity_type === 'organization');
+      const resources     = clean.filter(r => r.entity_type === 'resource');
 
       return {
         statusCode: 200,
         headers: CORS_HEADERS,
-        body: JSON.stringify({
-          people: people.rows,
-          organizations: organizations.rows,
-          resources: resources.rows,
-          relationships: relationships.rows,
-          person_organizations: personOrgs.rows,
-        }),
+        body: JSON.stringify({ people, organizations, resources, edges: edges.rows }),
       };
     } finally {
       client.release();
     }
-
   } catch (error) {
     console.error('Query error:', error);
-    return {
-      statusCode: 500,
-      headers: CORS_HEADERS,
-      body: JSON.stringify({ error: 'Internal server error' }),
-    };
+    return { statusCode: 500, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Internal server error' }) };
   }
 };
