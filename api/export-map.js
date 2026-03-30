@@ -10,6 +10,49 @@ const stripSensitive = (rows) => rows.map(row => {
   return clean;
 });
 
+/**
+ * Compute source_type for entities based on their submission history:
+ * - "self": entity has a merged submission where is_self_submission = true
+ * - "connector": entity has a merged submission where submitter_relationship is not null (and not self)
+ * - "external": seeded data or submissions without relationship info
+ */
+async function computeSourceTypes(client) {
+  // Get entities with self-submissions
+  const selfRes = await client.query(`
+    SELECT DISTINCT entity_type, entity_id
+    FROM submissions
+    WHERE is_self_submission = true AND status = 'merged' AND entity_id IS NOT NULL
+  `);
+  const selfSet = new Set(selfRes.rows.map(r => `${r.entity_type}:${r.entity_id}`));
+
+  // Get entities with connector submissions (non-null submitter_relationship, not self)
+  const connectorRes = await client.query(`
+    SELECT DISTINCT entity_type, entity_id
+    FROM submissions
+    WHERE submitter_relationship IS NOT NULL
+      AND submitter_relationship != ''
+      AND is_self_submission = false
+      AND status = 'merged'
+      AND entity_id IS NOT NULL
+  `);
+  const connectorSet = new Set(connectorRes.rows.map(r => `${r.entity_type}:${r.entity_id}`));
+
+  return { selfSet, connectorSet };
+}
+
+function addSourceType(rows, entityType, selfSet, connectorSet) {
+  return rows.map(row => {
+    const key = `${entityType}:${row.id}`;
+    let source_type = 'external';
+    if (selfSet.has(key)) {
+      source_type = 'self';
+    } else if (connectorSet.has(key)) {
+      source_type = 'connector';
+    }
+    return { ...row, source_type };
+  });
+}
+
 const STANCE_SCORES = {
   'Accelerate': 1,
   'Light-touch': 2, 'Light-touch regulation': 2,
@@ -54,11 +97,14 @@ export async function generateMapData(client) {
     "SELECT id, person_id, organization_id, role, is_primary FROM person_organizations ORDER BY id"
   );
 
+  // Compute source types based on submission history
+  const { selfSet, connectorSet } = await computeSourceTypes(client);
+
   return {
     _meta: { generated_at: new Date().toISOString() },
-    people: addScores(stripSensitive(people.rows)),
-    organizations: addScores(stripSensitive(orgs.rows)),
-    resources: addScores(stripSensitive(resources.rows)),
+    people: addScores(addSourceType(stripSensitive(people.rows), 'person', selfSet, connectorSet)),
+    organizations: addScores(addSourceType(stripSensitive(orgs.rows), 'organization', selfSet, connectorSet)),
+    resources: addScores(addSourceType(stripSensitive(resources.rows), 'resource', selfSet, connectorSet)),
     relationships: relationships.rows,
     person_organizations: personOrgs.rows,
   };
