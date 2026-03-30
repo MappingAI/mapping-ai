@@ -1052,6 +1052,7 @@ fetch('map-data.json')
     buildFilters();
     buildStanceLegend();
     buildSourceTypeFilter();
+    updateSourceTypeVisibility();
     render();
   });
 
@@ -1207,18 +1208,35 @@ function buildSourceTypeFilter() {
 
 function updateSourceResetBtn() {
   const btn = document.getElementById('source-reset');
-  const allActive = activeSourceTypes.size === SOURCE_TYPES.length;
+  const visibleTypes = currentView === 'resources' ? ['self', 'external'] : SOURCE_TYPES;
+  const allActive = visibleTypes.every(t => activeSourceTypes.has(t));
   btn.textContent = allActive ? 'deselect all' : 'select all';
 }
 
+function updateSourceTypeVisibility() {
+  // Hide "connector" option in resources view (resources can't have connectors)
+  const connectorItem = document.querySelector('.source-type-item[data-source="connector"]');
+  if (connectorItem) {
+    connectorItem.style.display = currentView === 'resources' ? 'none' : '';
+  }
+  updateSourceResetBtn();
+}
+
 document.getElementById('source-reset').addEventListener('click', () => {
-  const allActive = activeSourceTypes.size === SOURCE_TYPES.length;
+  const visibleTypes = currentView === 'resources' ? ['self', 'external'] : SOURCE_TYPES;
+  const allActive = visibleTypes.every(t => activeSourceTypes.has(t));
   if (allActive) {
-    activeSourceTypes.clear();
-    document.querySelectorAll('.source-type-item').forEach(item => item.classList.add('inactive'));
+    // Deselect all visible types
+    visibleTypes.forEach(t => activeSourceTypes.delete(t));
+    document.querySelectorAll('.source-type-item').forEach(item => {
+      if (visibleTypes.includes(item.dataset.source)) item.classList.add('inactive');
+    });
   } else {
-    activeSourceTypes = new Set(SOURCE_TYPES);
-    document.querySelectorAll('.source-type-item').forEach(item => item.classList.remove('inactive'));
+    // Select all visible types
+    visibleTypes.forEach(t => activeSourceTypes.add(t));
+    document.querySelectorAll('.source-type-item').forEach(item => {
+      if (visibleTypes.includes(item.dataset.source)) item.classList.remove('inactive');
+    });
   }
   sourceFilterActive = activeSourceTypes.size < SOURCE_TYPES.length;
   updateSourceResetBtn();
@@ -1252,6 +1270,7 @@ document.querySelectorAll('[data-view]').forEach(btn => {
     const phMap = { orgs: 'Search orgs...', people: 'Search people...', resources: 'Search resources...' };
     document.getElementById('search-input').placeholder = phMap[currentView] || 'Search entities...';
     buildFilters(); // rebuild category chips for new view context
+    updateSourceTypeVisibility(); // show/hide connector option based on view
     render();
   });
 });
