@@ -5,11 +5,11 @@
 
 const SENSITIVE = new Set(['submitter_email', 'submitter_relationship', 'search_vector']);
 
-const stripSensitive = (rows) => rows.map(row => {
+const stripSensitive = (row) => {
   const clean = { ...row };
   SENSITIVE.forEach(f => delete clean[f]);
   return clean;
-});
+};
 
 /**
  * source_type priority: self > connector > external
