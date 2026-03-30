@@ -401,6 +401,96 @@ tr:hover { background: var(--bg-secondary); }
   text-transform: uppercase; letter-spacing: 0.04em;
 }
 
+/* Merge queue */
+.submission-review {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1rem;
+  margin: 0.75rem 0;
+}
+.submission-meta {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-tertiary);
+  margin-bottom: 0.75rem;
+}
+.self-badge {
+  background: #dbeafe;
+  color: #1e40af;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 10px;
+  margin-left: 4px;
+}
+.merge-field {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 0.5rem;
+  align-items: start;
+  padding: 0.4rem 0;
+  border-bottom: 0.5px solid #eee;
+}
+.merge-field:last-of-type { border-bottom: none; }
+.merge-field-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  padding-top: 0.2rem;
+}
+.merge-options label {
+  display: block;
+  font-size: 14px;
+  margin: 0.3rem 0;
+  cursor: pointer;
+  padding: 0.25rem 0;
+}
+.merge-options input[type="radio"] {
+  margin-right: 0.4rem;
+}
+.merge-options .option-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-tertiary);
+  margin-right: 0.4rem;
+}
+.merge-options .diff-highlight {
+  background: #fef3c7;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-weight: 500;
+}
+.merge-options .custom-input {
+  font-family: var(--serif);
+  font-size: 13px;
+  padding: 0.2rem 0.4rem;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  width: 200px;
+  margin-left: 0.3rem;
+}
+.merge-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 0.5px solid var(--border);
+}
+.merge-actions textarea {
+  flex: 1;
+  font-family: var(--serif);
+  font-size: 13px;
+  padding: 0.4rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  resize: none;
+  height: 36px;
+}
+
 /* Loading */
 .loading {
   text-align: center; padding: 2rem;
@@ -467,6 +557,7 @@ tr:hover { background: var(--bg-secondary); }
     <div class="tab-bar">
       <button class="tab-btn active" data-tab="dashboard">Dashboard</button>
       <button class="tab-btn" data-tab="pending">Pending Queue</button>
+      <button class="tab-btn" data-tab="merge">Merge Queue</button>
       <button class="tab-btn" data-tab="entities">All Entities</button>
     </div>
 
@@ -491,6 +582,13 @@ tr:hover { background: var(--bg-secondary); }
       <div id="pending-loading" class="loading">Loading pending submissions...</div>
       <div id="pending-content"></div>
       <div id="pending-empty" style="display:none" class="loading">No pending submissions.</div>
+    </div>
+
+    <!-- Merge Queue -->
+    <div id="tab-merge" class="tab-panel">
+      <div id="merge-loading" class="loading">Loading merge queue...</div>
+      <div id="merge-content"></div>
+      <div id="merge-empty" style="display:none" class="loading">No pending merges.</div>
     </div>
 
     <!-- All Entities -->
@@ -522,9 +620,8 @@ tr:hover { background: var(--bg-secondary); }
 <script src="/assets/js/tiptap-notes.js"></script>
 <script>
 // --- Config ---
-const API_BASE = window.location.hostname === 'localhost'
-  ? ''
-  : 'https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com';
+// NOTE: Always use production API for testing (no local API server)
+const API_BASE = 'https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com';
 
 const FIELD_OPTIONS = {
   regulatory_stance: ['Accelerate','Light-touch','Targeted','Moderate','Restrictive','Precautionary','Nationalize','Mixed/unclear','Other'],
@@ -676,6 +773,7 @@ function switchToTab(tab) {
   localStorage.setItem('admin_tab', tab);
   if (tab === 'dashboard') loadDashboard();
   if (tab === 'pending') loadPending();
+  if (tab === 'merge') loadMergeQueue();
   if (tab === 'entities') {
     document.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.toggle('active', b.dataset.subtab === currentSubTab));
     loadEntities(currentSubTab);
@@ -1545,6 +1643,191 @@ function escHtml(str) {
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeModal();
 });
+
+// --- Merge Queue ---
+async function loadMergeQueue() {
+  const loading = document.getElementById('merge-loading');
+  const content = document.getElementById('merge-content');
+  const empty = document.getElementById('merge-empty');
+  loading.style.display = 'block';
+  content.style.display = 'none';
+  empty.style.display = 'none';
+  content.innerHTML = '';
+
+  try {
+    const res = await apiFetch('/admin?action=pending_merges');
+    if (!res.ok) {
+      const errText = await res.text();
+      throw new Error(`API error ${res.status}: ${errText}`);
+    }
+    const data = await res.json();
+    loading.style.display = 'none';
+
+    const people = data.people || [];
+    const orgs = data.organizations || [];
+
+    if (people.length === 0 && orgs.length === 0) {
+      empty.style.display = 'block';
+      return;
+    }
+
+    let html = '';
+    if (people.length > 0) {
+      html += `<div class="eyebrow" style="margin:1rem 0 0.5rem">People (${people.length})</div>`;
+      people.forEach(entity => { html += renderMergeCard(entity, 'person', 'people'); });
+    }
+    if (orgs.length > 0) {
+      html += `<div class="eyebrow" style="margin:1rem 0 0.5rem">Organizations (${orgs.length})</div>`;
+      orgs.forEach(entity => { html += renderMergeCard(entity, 'organization', 'organizations'); });
+    }
+    content.innerHTML = html;
+    content.style.display = 'block';
+  } catch (e) {
+    loading.textContent = 'Failed to load merge queue: ' + e.message;
+    console.error('Merge queue error:', e);
+  }
+}
+
+// Fields to show in merge comparison
+const MERGE_FIELDS = {
+  people: ['category', 'title', 'primary_org', 'other_orgs', 'location', 'regulatory_stance', 'regulatory_stance_detail', 'evidence_source', 'agi_timeline', 'ai_risk_level', 'threat_models', 'threat_models_detail', 'influence_type', 'twitter', 'bluesky', 'notes'],
+  organizations: ['category', 'website', 'location', 'funding_model', 'regulatory_stance', 'regulatory_stance_detail', 'evidence_source', 'agi_timeline', 'ai_risk_level', 'threat_models', 'threat_models_detail', 'influence_type', 'twitter', 'bluesky', 'notes'],
+};
+
+function renderMergeCard(entity, singular, tableName) {
+  const displayName = entity.name || 'Untitled';
+  const pendingSubs = entity.pending_submissions || [];
+  const unreviewedCount = entity.unreviewed_submissions || pendingSubs.length;
+
+  let subsHtml = '';
+  pendingSubs.forEach((sub, idx) => {
+    if (!sub || !sub.id) return;
+    const subData = typeof sub.data === 'string' ? JSON.parse(sub.data) : (sub.data || {});
+    const llmReview = typeof sub.llm_review === 'string' ? JSON.parse(sub.llm_review) : (sub.llm_review || {});
+    const stars = '★'.repeat(llmReview.quality || 0) + '☆'.repeat(5 - (llmReview.quality || 0));
+    const selfBadge = sub.is_self_submission ? '<span class="self-badge">Self</span>' : '';
+    const submittedDate = sub.submitted_at ? new Date(sub.submitted_at).toLocaleDateString() : '';
+
+    // Build field comparison rows
+    let fieldsHtml = '';
+    const fields = MERGE_FIELDS[tableName] || [];
+    fields.forEach(f => {
+      const camelField = f.replace(/_([a-z])/g, (_, c) => c.toUpperCase());
+      const currentVal = entity[f] ?? '';
+      const submittedVal = subData[camelField] ?? subData[f] ?? '';
+      // Only show fields where there's a difference or submitted value exists
+      if (submittedVal && String(submittedVal) !== String(currentVal)) {
+        const fieldName = f.replace(/_/g, ' ');
+        const radioName = `merge_${entity.id}_${sub.id}_${f}`;
+        fieldsHtml += `
+          <div class="merge-field" data-field="${f}">
+            <div class="merge-field-label">${fieldName}</div>
+            <div class="merge-options">
+              <label><input type="radio" name="${radioName}" value="current" checked> <span class="option-label">Keep:</span> ${escHtml(String(currentVal)) || '<em style="color:#888">(empty)</em>'}</label>
+              <label><input type="radio" name="${radioName}" value="submitted"> <span class="option-label">Change to:</span> <span class="diff-highlight">${escHtml(String(submittedVal))}</span></label>
+              <label><input type="radio" name="${radioName}" value="custom"> <span class="option-label">Custom:</span> <input type="text" class="custom-input" placeholder="Enter value..."></label>
+            </div>
+          </div>`;
+      }
+    });
+
+    if (!fieldsHtml) {
+      fieldsHtml = '<div style="color:var(--text-tertiary);font-size:13px;padding:0.5rem 0">No field differences detected.</div>';
+    }
+
+    subsHtml += `
+      <div class="submission-review" data-submission-id="${sub.id}" data-entity-id="${entity.id}" data-entity-type="${singular}">
+        <div class="submission-meta">
+          Submitted ${submittedDate} ${sub.submitter_email ? `by ${escHtml(sub.submitter_email)}` : ''} &middot; ${stars} ${selfBadge}
+        </div>
+        ${fieldsHtml}
+        <div class="merge-actions">
+          <textarea placeholder="Resolution notes (optional)" class="resolution-notes"></textarea>
+          <button class="btn btn-green" onclick="mergeSubmission(${entity.id}, ${sub.id}, '${singular}')">Merge</button>
+          <button class="btn btn-red btn-sm" onclick="rejectSubmission(${sub.id})">Reject</button>
+        </div>
+      </div>`;
+  });
+
+  return `
+    <div class="pending-card" id="merge-${singular}-${entity.id}">
+      <div class="pending-card-header">
+        <div>
+          <div class="pending-card-title">${escHtml(displayName)}</div>
+          <div class="pending-card-meta">${singular} &middot; Ground truth entry</div>
+        </div>
+        <span class="badge badge-pending">${unreviewedCount} to review</span>
+      </div>
+      ${subsHtml}
+    </div>`;
+}
+
+async function mergeSubmission(entityId, submissionId, entityType) {
+  const reviewEl = document.querySelector(`[data-submission-id="${submissionId}"]`);
+  if (!reviewEl) return;
+
+  const mergedData = {};
+  reviewEl.querySelectorAll('.merge-field').forEach(field => {
+    const fieldName = field.dataset.field;
+    const selected = field.querySelector('input[type="radio"]:checked');
+    if (!selected) return;
+    if (selected.value === 'submitted') {
+      // Get the submitted value from the highlighted span
+      const submittedLabel = field.querySelector('input[value="submitted"]').parentElement;
+      const highlightSpan = submittedLabel.querySelector('.diff-highlight');
+      if (highlightSpan) {
+        mergedData[fieldName] = highlightSpan.textContent;
+      }
+    } else if (selected.value === 'custom') {
+      const customInput = field.querySelector('.custom-input');
+      if (customInput && customInput.value.trim()) {
+        mergedData[fieldName] = customInput.value.trim();
+      }
+    }
+    // If 'current' is selected, we don't include it in mergedData (keep existing)
+  });
+
+  const resolutionNotes = reviewEl.querySelector('.resolution-notes')?.value || '';
+
+  try {
+    const res = await apiPost({
+      action: 'merge',
+      type: entityType,
+      entity_id: entityId,
+      submission_id: submissionId,
+      merged_data: mergedData,
+      resolution_notes: resolutionNotes,
+    });
+    if (!res.ok) throw new Error();
+    toast('Merged');
+    loadMergeQueue();
+    loadDashboard();
+  } catch (e) {
+    toast('Failed to merge', true);
+    console.error(e);
+  }
+}
+
+async function rejectSubmission(submissionId) {
+  if (!confirm('Reject this submission?')) return;
+  const reviewEl = document.querySelector(`[data-submission-id="${submissionId}"]`);
+  const resolutionNotes = reviewEl?.querySelector('.resolution-notes')?.value || '';
+
+  try {
+    const res = await apiPost({
+      action: 'reject_submission',
+      submission_id: submissionId,
+      resolution_notes: resolutionNotes,
+    });
+    if (!res.ok) throw new Error();
+    toast('Rejected');
+    loadMergeQueue();
+    loadDashboard();
+  } catch (e) {
+    toast('Failed to reject', true);
+    console.error(e);
+  }
+}
 </script>
 </body>
 </html>

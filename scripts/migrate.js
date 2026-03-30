@@ -57,6 +57,10 @@ async function migrate() {
       ['regulatory_stance_detail', 'TEXT'],
       ['submission_count', 'INTEGER DEFAULT 1'],
       ['thumbnail_url', 'VARCHAR(500)'],
+      ['unreviewed_submissions', 'INTEGER DEFAULT 0'],
+      ['weighted_stance_score', 'REAL'],
+      ['weighted_timeline_score', 'REAL'],
+      ['weighted_risk_score', 'REAL'],
     ];
     for (const [col, type] of peopleNewCols) {
       await client.query(`ALTER TABLE people ADD COLUMN IF NOT EXISTS ${col} ${type}`);
@@ -110,6 +114,10 @@ async function migrate() {
       ['regulatory_stance_detail', 'TEXT'],
       ['submission_count', 'INTEGER DEFAULT 1'],
       ['thumbnail_url', 'VARCHAR(500)'],
+      ['unreviewed_submissions', 'INTEGER DEFAULT 0'],
+      ['weighted_stance_score', 'REAL'],
+      ['weighted_timeline_score', 'REAL'],
+      ['weighted_risk_score', 'REAL'],
     ];
     for (const [col, type] of orgsNewCols) {
       await client.query(`ALTER TABLE organizations ADD COLUMN IF NOT EXISTS ${col} ${type}`);
@@ -204,6 +212,8 @@ async function migrate() {
     console.log('  ✓ submissions table exists');
     await client.query(`ALTER TABLE submissions ADD COLUMN IF NOT EXISTS llm_review JSONB`);
     console.log('    + submissions.llm_review');
+    await client.query(`ALTER TABLE submissions ADD COLUMN IF NOT EXISTS resolution_notes TEXT`);
+    console.log('    + submissions.resolution_notes');
 
     // --- Indexes ---
     console.log('\nCreating indexes...');

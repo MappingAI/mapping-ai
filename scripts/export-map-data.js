@@ -50,9 +50,11 @@ async function exportMapData() {
     };
     const addScores = (rows) => rows.map(row => ({
       ...row,
-      stance_score:   STANCE_SCORES[row.regulatory_stance]  ?? null,
-      timeline_score: TIMELINE_SCORES[row.agi_timeline]     ?? null,
-      risk_score:     RISK_SCORES[row.ai_risk_level]        ?? null,
+      // Prefer weighted scores if available, fall back to direct mapping
+      stance_score:   row.weighted_stance_score ?? STANCE_SCORES[row.regulatory_stance] ?? null,
+      timeline_score: row.weighted_timeline_score ?? TIMELINE_SCORES[row.agi_timeline] ?? null,
+      risk_score:     row.weighted_risk_score ?? RISK_SCORES[row.ai_risk_level] ?? null,
+      // disagreement_score and submission_count are already included from DB
     }));
 
     const people = await client.query(

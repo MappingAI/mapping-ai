@@ -124,8 +124,19 @@ export const handler = async (event) => {
         ]
       );
 
-      // Also insert into the entity table (as pending) for backward compatibility
-      if (type === 'person') {
+      // If this is an edit to an existing entity, only increment unreviewed_submissions
+      // and skip creating a new entity row
+      if (entityId) {
+        const table = type === 'person' ? 'people' : type === 'organization' ? 'organizations' : 'resources';
+        await client.query(
+          `UPDATE ${table} SET
+            unreviewed_submissions = COALESCE(unreviewed_submissions, 0) + 1,
+            submission_count = submission_count + 1
+          WHERE id = $1`,
+          [entityId]
+        );
+      } else if (type === 'person') {
+      // New entity: create entity row (existing behavior for new submissions)
         await client.query(
           `INSERT INTO people (
             name, category, title, primary_org, other_orgs, location,
@@ -209,15 +220,6 @@ export const handler = async (event) => {
             );
           }
         }
-      }
-
-      // If this is an update to existing entity, increment submission_count
-      if (entityId) {
-        const table = type === 'person' ? 'people' : type === 'organization' ? 'organizations' : 'resources';
-        await client.query(
-          `UPDATE ${table} SET submission_count = submission_count + 1 WHERE id = $1`,
-          [entityId]
-        );
       }
 
       // Non-critical: LLM quality review via Claude Haiku

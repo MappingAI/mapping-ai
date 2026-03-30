@@ -35,6 +35,7 @@ Resources:
           - 'https://www.aimapping.org'
           - !Sub 'https://${WebsiteBucket}.s3.${AWS::Region}.amazonaws.com'
           - !Sub 'https://${CloudFrontDistribution.DomainName}'
+          - 'http://localhost:3000'
         AllowHeaders:
           - Content-Type
           - X-Admin-Key
