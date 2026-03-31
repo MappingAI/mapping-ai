@@ -11,6 +11,67 @@ const stripSensitive = (row) => {
   return clean;
 };
 
+// Ordinal scores derived from text labels — used as fallback when
+// the entity has no approved submissions (i.e. belief_*_wavg is null)
+const STANCE_SCORES = {
+  'Accelerate': 1,
+  'Light-touch': 2, 'Light-touch regulation': 2,
+  'Targeted': 3, 'Targeted regulation': 3,
+  'Moderate': 4, 'Moderate regulation': 4,
+  'Restrictive': 5, 'Restrictive regulation': 5,
+  'Precautionary': 6,
+  'Nationalize': 7,
+};
+const TIMELINE_SCORES = {
+  'Already here': 1,
+  '2-3 years': 2, 'Within 2-3 years': 2,
+  '5-10 years': 3,
+  '10-25 years': 4,
+  '25+ years or never': 5,
+};
+const RISK_SCORES = {
+  'Overstated': 1,
+  'Manageable': 2,
+  'Serious': 3,
+  'Catastrophic': 4, 'Potentially catastrophic': 4,
+  'Existential': 5,
+};
+
+/**
+ * Map entity row to the shape the frontend expects.
+ * Bridges new DB column names (belief_*) → old frontend field names
+ * (regulatory_stance, agi_timeline, ai_risk_level, title for resources).
+ */
+function toFrontendShape(row) {
+  const out = { ...row };
+
+  // Map belief columns → frontend field names
+  out.regulatory_stance        = row.belief_regulatory_stance;
+  out.regulatory_stance_detail = row.belief_regulatory_stance_detail;
+  out.evidence_source          = row.belief_evidence_source;
+  out.agi_timeline             = row.belief_agi_timeline;
+  out.ai_risk_level            = row.belief_ai_risk;
+  out.threat_models            = row.belief_threat_models;
+
+  // Resources: frontend uses `title` (mapped from resource_title)
+  if (row.entity_type === 'resource') {
+    out.title         = row.resource_title || row.name;
+    out.category      = row.resource_category || row.category;
+    out.author        = row.resource_author;
+    out.resource_type = row.resource_type;
+    out.url           = row.resource_url;
+    out.year          = row.resource_year;
+    out.key_argument  = row.resource_key_argument;
+  }
+
+  // Numeric scores: prefer wavg from submissions, fall back to text label lookup
+  out.stance_score   = row.belief_regulatory_stance_wavg ?? STANCE_SCORES[out.regulatory_stance]   ?? null;
+  out.timeline_score = row.belief_agi_timeline_wavg      ?? TIMELINE_SCORES[out.agi_timeline]      ?? null;
+  out.risk_score     = row.belief_ai_risk_wavg           ?? RISK_SCORES[out.ai_risk_level]         ?? null;
+
+  return out;
+}
+
 /**
  * source_type priority: self > connector > external
  * Derived from any approved submission for the entity.
@@ -46,18 +107,12 @@ export async function generateMapData(client) {
 
   for (const row of entities.rows) {
     const clean = stripSensitive(row);
-    const source_type = sourceTypeMap.get(row.id) || 'external';
-    const enriched = {
-      ...clean,
-      source_type,
-      // Expose belief aggregates as the canonical score fields for the map/plot views
-      stance_score:   row.belief_regulatory_stance_wavg ?? null,
-      timeline_score: row.belief_agi_timeline_wavg ?? null,
-      risk_score:     row.belief_ai_risk_wavg ?? null,
-    };
-    if (row.entity_type === 'person')       people.push(enriched);
-    else if (row.entity_type === 'organization') organizations.push(enriched);
-    else if (row.entity_type === 'resource')     resources.push(enriched);
+    const shaped = toFrontendShape(clean);
+    shaped.source_type = sourceTypeMap.get(row.id) || 'external';
+
+    if (row.entity_type === 'person')            people.push(shaped);
+    else if (row.entity_type === 'organization') organizations.push(shaped);
+    else if (row.entity_type === 'resource')     resources.push(shaped);
   }
 
   return {
