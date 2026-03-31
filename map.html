@@ -630,49 +630,49 @@ if (localStorage.getItem('mobileBannerDismissed') === '1') {
 
 <script>
 const CATEGORY_COLORS = {
-  // Full form names (from form dropdowns)
-  'Frontier Lab':           '#d4644a',   // coral/red-orange
-  'AI Safety/Alignment':    '#2d8a6e',   // dark teal
-  'Think Tank/Policy Org':  '#5b82bf',   // steel blue
-  'Government/Agency':      '#7c5cbf',   // violet
-  'Academic':               '#d4a44a',   // gold
-  'VC/Capital/Philanthropy':'#1a8a8a',   // dark cyan
-  'Labor/Civil Society':    '#d4885a',   // warm orange
-  'Media/Journalism':       '#8b6914',   // dark amber
-  'Political Campaign/PAC': '#b06a8a',   // mauve/rose
-  'Ethics/Bias/Rights':     '#e07020',   // bright orange
-  'Policymaker':            '#9955cc',   // bright purple
+  // Full form names (from form dropdowns) — RColorBrewer Set3 palette
+  'Frontier Lab':           '#FB8072',   // salmon
+  'AI Safety/Alignment':    '#8DD3C7',   // mint teal
+  'Think Tank/Policy Org':  '#80B1D3',   // steel blue
+  'Government/Agency':      '#BEBADA',   // lavender
+  'Academic':               '#FFED6F',   // yellow
+  'VC/Capital/Philanthropy':'#B3DE69',   // yellow-green
+  'Labor/Civil Society':    '#FDB462',   // orange
+  'Media/Journalism':       '#FFED6F',   // yellow (shares with Academic)
+  'Political Campaign/PAC': '#FCCDE5',   // pink
+  'Ethics/Bias/Rights':     '#FDB462',   // orange (shares with Labor)
+  'Policymaker':            '#BC80BD',   // muted purple
   // Short form names (from test/seed data)
-  'AI Safety':              '#2d8a6e',   // dark teal
-  'Think Tank':             '#5b82bf',   // steel blue
-  'Government':             '#7c5cbf',   // violet
-  'VC / Funder':            '#1a8a8a',   // dark cyan
-  'Ethics / Civil Society': '#e07020',   // bright orange
-  'Labor / Workforce':      '#d4885a',   // warm orange
-  'Media':                  '#8b6914',   // dark amber
+  'AI Safety':              '#8DD3C7',   // mint teal
+  'Think Tank':             '#80B1D3',   // steel blue
+  'Government':             '#BEBADA',   // lavender
+  'VC / Funder':            '#B3DE69',   // yellow-green
+  'Ethics / Civil Society': '#FDB462',   // orange
+  'Labor / Workforce':      '#FDB462',   // orange
+  'Media':                  '#FFED6F',   // yellow
   // Role-based
-  'Executive':              '#d4644a',
-  'Researcher':             '#2d8a6e',
-  'Investor':               '#1a8a8a',
-  'Organizer':              '#d4885a',
-  'Journalist':             '#8b6914',
-  'Cultural figure':        '#b06a8a',
+  'Executive':              '#FB8072',
+  'Researcher':             '#8DD3C7',
+  'Investor':               '#B3DE69',
+  'Organizer':              '#FDB462',
+  'Journalist':             '#FFED6F',
+  'Cultural figure':        '#FCCDE5',
   // Resource categories
-  'AI Policy':              '#5b82bf',
-  'AI Capabilities':        '#d4644a',
-  'Ethics':                 '#e07020',
-  'National Security':      '#7c5cbf',
+  'AI Policy':              '#80B1D3',
+  'AI Capabilities':        '#FB8072',
+  'Ethics':                 '#FDB462',
+  'National Security':      '#BEBADA',
   'Resources':              '#6b7280',
   // Resource type categories
-  'Book':                   '#8b5e3c',
-  'Essay':                  '#5b82bf',
-  'Report':                 '#7c5cbf',
-  'Podcast':                '#d4644a',
-  'Video':                  '#ef4444',
-  'News Article':           '#8b6914',
-  'Academic Paper':         '#2d8a6e',
-  'Website':                '#1a8a8a',
-  'Substack/Newsletter':    '#d4885a',
+  'Book':                   '#BC80BD',
+  'Essay':                  '#80B1D3',
+  'Report':                 '#BEBADA',
+  'Podcast':                '#FB8072',
+  'Video':                  '#FB8072',
+  'News Article':           '#FFED6F',
+  'Academic Paper':         '#8DD3C7',
+  'Website':                '#B3DE69',
+  'Substack/Newsletter':    '#FDB462',
   'Other':                  '#6b7280',
 };
 const DEFAULT_COLOR = '#6a7080';
