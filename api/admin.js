@@ -129,19 +129,32 @@ export const handler = async (event) => {
       return { statusCode: 200, headers: CORS_HEADERS, body: JSON.stringify({ entities: result.rows }) };
     }
 
-    // GET ?action=all&type=entity|submission|edge&status=approved
+    // GET ?action=all&type=entity|submission|edge&status=approved&entity_type=person|organization|resource
     if (method === 'GET' && params.action === 'all') {
       const type = params.type || 'entity';
       if (!['entity', 'submission', 'edge'].includes(type)) {
         return { statusCode: 400, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Invalid type' }) };
       }
       const hasStatus = ['entity', 'submission'].includes(type);
-      const query = (hasStatus && params.status)
-        ? `SELECT * FROM ${type} WHERE status = $1 ORDER BY id DESC LIMIT 500`
-        : `SELECT * FROM ${type} ORDER BY id DESC LIMIT 500`;
-      const result = (hasStatus && params.status)
-        ? await client.query(query, [params.status])
-        : await client.query(query);
+      const entityType = params.entity_type; // person, organization, resource
+
+      // Build query with optional filters
+      const conditions = [];
+      const values = [];
+      let idx = 1;
+
+      if (hasStatus && params.status) {
+        conditions.push(`status = $${idx++}`);
+        values.push(params.status);
+      }
+      if (type === 'entity' && entityType) {
+        conditions.push(`entity_type = $${idx++}`);
+        values.push(entityType);
+      }
+
+      const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
+      const query = `SELECT * FROM ${type} ${whereClause} ORDER BY id DESC LIMIT 500`;
+      const result = await client.query(query, values);
       return { statusCode: 200, headers: CORS_HEADERS, body: JSON.stringify({ data: result.rows, total: result.rows.length }) };
     }
 
