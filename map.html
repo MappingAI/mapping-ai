@@ -87,7 +87,7 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
 .controls {
   position: fixed; top: 60px; left: 1rem;
   display: flex; flex-direction: column; gap: 0.4rem;
-  z-index: 50; max-height: calc(100vh - 80px); overflow: visible;
+  z-index: 50; max-height: calc(100vh - 80px); overflow-y: auto;
 }
 .control-group {
   background: var(--bg-panel-alpha); border-radius: 6px;
@@ -417,6 +417,41 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   .control-group { padding: 0.5rem 0.6rem; }
   .detail-panel { width: 280px; }
 }
+/* Onboarding overlay */
+.onboarding-overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(0,0,0,0.5);
+  display: flex; align-items: center; justify-content: center;
+}
+.onboarding-card {
+  background: var(--bg-panel, #fff); color: var(--text-1, #222);
+  border-radius: 8px; padding: 1.5rem 2rem; max-width: 440px; width: 90%;
+  font-family: var(--serif, 'EB Garamond', serif);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+}
+.onboarding-card h2 {
+  font-size: 18px; margin: 0 0 0.75rem; font-family: var(--mono, monospace);
+  font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em;
+}
+.onboarding-card p { font-size: 15px; line-height: 1.5; margin: 0 0 1rem; color: var(--text-2, #555); }
+.onboarding-tips { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.25rem; }
+.onboarding-tip { font-size: 13px; line-height: 1.4; color: var(--text-2, #555); }
+.onboarding-tip strong { color: var(--text-1, #222); }
+.onboarding-dismiss {
+  font-family: var(--mono, monospace); font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  padding: 0.6rem 1.5rem; background: var(--text-1, #222); color: #fff;
+  border: none; border-radius: 4px; cursor: pointer;
+}
+.onboarding-dismiss:hover { opacity: 0.85; }
+.info-btn {
+  font-family: var(--mono, monospace); font-size: 10px;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  background: none; border: 1px solid var(--line, #ddd); border-radius: 4px;
+  padding: 0.4rem 0.6rem; cursor: pointer;
+  color: var(--text-2, #666); width: 100%;
+}
+.info-btn:hover { border-color: var(--text-2, #666); color: var(--text-1, #222); }
 </style>
 </head>
 <body>
@@ -439,6 +474,22 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
 <div class="mobile-banner" id="mobile-banner">
   <span>Best viewed on desktop for the full interactive experience</span>
   <button onclick="this.parentElement.remove();localStorage.setItem('mobileBannerDismissed','1')">&#10005;</button>
+</div>
+
+<!-- Onboarding overlay (first visit) -->
+<div class="onboarding-overlay" id="onboarding-overlay" style="display:none;">
+  <div class="onboarding-card">
+    <h2>Welcome to the AI Policy Map</h2>
+    <p>An interactive visualization of the people, organizations, and resources shaping U.S. AI governance.</p>
+    <div class="onboarding-tips">
+      <div class="onboarding-tip"><strong>Views:</strong> Switch between Orgs, People, Resources, All (combined), and Plot (scatter chart) using the tabs on the left.</div>
+      <div class="onboarding-tip"><strong>Filters:</strong> Use Category chips and Regulatory Stance legend to show/hide groups. Click "select all" to toggle.</div>
+      <div class="onboarding-tip"><strong>Search:</strong> Type to find any entity. Supports related terms (e.g., "safety" finds alignment orgs too).</div>
+      <div class="onboarding-tip"><strong>Interact:</strong> Click any node to see details. Scroll to zoom. Drag to pan.</div>
+      <div class="onboarding-tip"><strong>Source:</strong> Data is crowdsourced and admin-reviewed. Belief scores (stance, timeline, risk) are weighted averages from submissions.</div>
+    </div>
+    <button class="onboarding-dismiss" onclick="dismissOnboarding()">Got it</button>
+  </div>
 </div>
 
 <div class="controls">
@@ -483,6 +534,11 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
         <span>External</span>
       </div>
     </div>
+  </div>
+  <div class="control-group">
+    <button class="info-btn" onclick="document.getElementById('onboarding-overlay').style.display='flex'">
+      <span style="font-size:12px;">&#9432;</span> About this map
+    </button>
   </div>
 
   <div class="control-group" id="axis-controls" style="display:none">
@@ -606,6 +662,15 @@ contribClose.addEventListener('click', () => {
   mapContainer.classList.remove('shifted');
   setTimeout(() => { if (typeof render === 'function') render(); }, 350);
 });
+
+// Onboarding: show on first visit
+function dismissOnboarding() {
+  document.getElementById('onboarding-overlay').style.display = 'none';
+  localStorage.setItem('mapOnboardingSeen', '1');
+}
+if (!localStorage.getItem('mapOnboardingSeen')) {
+  document.getElementById('onboarding-overlay').style.display = 'flex';
+}
 
 // Mobile banner: hide if previously dismissed
 if (localStorage.getItem('mobileBannerDismissed') === '1') {

@@ -385,6 +385,7 @@ details[open] summary { border-bottom: 1px solid var(--border); }
 .info-tip .tip-content:hover { display: block; }
 /* Custom select dropdown */
 .custom-select { position: relative; }
+.custom-select.open { z-index: 41; }
 .custom-select select { display: none; }
 .select-trigger {
   font-family: var(--serif); font-size: 15px;
@@ -410,12 +411,14 @@ details[open] summary { border-bottom: 1px solid var(--border); }
 }
 .select-options {
   position: absolute; top: 100%; left: 0; right: 0;
-  background: #fff; border: 1px solid var(--border); border-top: none;
+  background: #fff; border: 1px solid var(--border);
+  margin-top: -1px;
   border-radius: 0 0 4px 4px;
   max-height: 0; overflow: hidden;
   transition: max-height 0.2s ease;
   z-index: 40;
   box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  transform: translateZ(0);
 }
 .custom-select.open .select-options { max-height: 260px; overflow-y: auto; }
 .select-option {
@@ -716,7 +719,12 @@ details[open] summary { border-bottom: 1px solid var(--border); }
 @media (max-width: 600px) {
   .form.active { grid-template-columns: 1fr; }
   .field.full { grid-column: span 1; }
-  .submit { grid-column: span 1; }
+  .submit {
+    grid-column: span 1;
+    position: sticky; bottom: 0;
+    z-index: 50;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
+  }
   .checkbox-group { grid-template-columns: 1fr; }
   .update-banner { grid-column: span 1; }
   /* Existing card sidebar: full-width overlay on mobile */
@@ -2659,7 +2667,7 @@ document.querySelectorAll('.form select').forEach(sel => {
     const wrapper = sel.closest('.custom-select');
     if (wrapper) {
       const trigger = wrapper.querySelector('.select-trigger');
-      if (trigger) trigger.textContent = '';
+      if (trigger) trigger.innerHTML = '<span style="color:var(--text-tertiary);">Select...</span>';
     }
   });
   label.appendChild(clear);

@@ -14,7 +14,7 @@ const s3 = new S3Client({});
 const cf = new CloudFrontClient({});
 const S3_BUCKET = process.env.S3_BUCKET;
 const CF_DIST_ID = process.env.CF_DISTRIBUTION_ID;
-const ADMIN_KEY = process.env.ADMIN_KEY || 'mappingai-admin-2026';
+const ADMIN_KEY = process.env.ADMIN_KEY;
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -267,8 +267,7 @@ export const handler = async (event) => {
           let idx = 1;
           for (const [field, value] of Object.entries(merged_data)) {
             if (!ENTITY_FIELDS.includes(field)) continue;
-            // Null-overwrite guard: skip if entity already has a value and submitted value is empty
-            if (current[field] !== null && current[field] !== undefined && (value === null || value === '')) continue;
+            // Admin explicitly selected this field for merge — allow clearing
             updates.push(`${field} = $${idx++}`);
             values.push(value);
           }
@@ -323,6 +322,7 @@ export const handler = async (event) => {
           `UPDATE entity SET ${updates.join(', ')}, updated_at = NOW() WHERE id = $${idx}`,
           values
         );
+        await refreshMapData(client);
         return { statusCode: 200, headers: CORS_HEADERS, body: JSON.stringify({ success: true, action: 'updated' }) };
       }
 

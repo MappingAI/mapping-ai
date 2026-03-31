@@ -88,6 +88,7 @@ async function migrate() {
         -- org-specific
         website                          VARCHAR(200),
         funding_model                    VARCHAR(200),
+        parent_org_id                    INTEGER,
         -- resource-specific (resource_ prefix)
         resource_title                   VARCHAR(300),
         resource_category                VARCHAR(200),
@@ -152,6 +153,10 @@ async function migrate() {
     await client.query('CREATE INDEX IF NOT EXISTS idx_edge_source   ON edge(source_id)');
     await client.query('CREATE INDEX IF NOT EXISTS idx_edge_target   ON edge(target_id)');
     console.log('  ✓ indexes');
+
+    // ── 4b. Schema migrations (safe ADD COLUMN for existing tables) ──────────
+    await client.query(`ALTER TABLE submission ADD COLUMN IF NOT EXISTS parent_org_id INTEGER`);
+    console.log('  ✓ schema migrations');
 
     // ── 5. Score recalculation function ──────────────────────────────────────
     // Weights: self=10, connector=2, external=1
@@ -282,7 +287,7 @@ async function migrate() {
           INSERT INTO entity (
             entity_type,
             name, title, category, primary_org, other_orgs,
-            website, funding_model,
+            website, funding_model, parent_org_id,
             resource_title, resource_category, resource_author, resource_type,
             resource_url, resource_year, resource_key_argument,
             location, influence_type, twitter, bluesky, notes,
@@ -293,7 +298,7 @@ async function migrate() {
           ) VALUES (
             NEW.entity_type,
             NEW.name, NEW.title, NEW.category, NEW.primary_org, NEW.other_orgs,
-            NEW.website, NEW.funding_model,
+            NEW.website, NEW.funding_model, NEW.parent_org_id,
             NEW.resource_title, NEW.resource_category, NEW.resource_author, NEW.resource_type,
             NEW.resource_url, NEW.resource_year, NEW.resource_key_argument,
             NEW.location, NEW.influence_type, NEW.twitter, NEW.bluesky, NEW.notes,

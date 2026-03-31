@@ -43,7 +43,27 @@ const RISK_SCORES = {
  * (regulatory_stance, agi_timeline, ai_risk_level, title for resources).
  */
 function toFrontendShape(row) {
-  const out = { ...row };
+  // Explicit allowlist — only export fields the frontend needs
+  const out = {
+    id:               row.id,
+    entity_type:      row.entity_type,
+    name:             row.name,
+    category:         row.category,
+    title:            row.title,
+    primary_org:      row.primary_org,
+    other_orgs:       row.other_orgs,
+    website:          row.website,
+    funding_model:    row.funding_model,
+    parent_org_id:    row.parent_org_id,
+    location:         row.location,
+    influence_type:   row.influence_type,
+    twitter:          row.twitter,
+    bluesky:          row.bluesky,
+    notes:            row.notes,
+    thumbnail_url:    row.thumbnail_url,
+    submission_count: row.submission_count,
+    status:           row.status,
+  };
 
   // Map belief columns → frontend field names
   out.regulatory_stance        = row.belief_regulatory_stance;
@@ -96,7 +116,14 @@ export async function generateMapData(client) {
     `SELECT * FROM entity WHERE status = 'approved' ORDER BY id`
   );
   const edges = await client.query(
-    `SELECT id, source_id, target_id, edge_type, role, is_primary, evidence, created_by FROM edge ORDER BY id`
+    `SELECT e.id, e.source_id, e.target_id, e.edge_type, e.role, e.is_primary,
+            e.evidence, e.created_by,
+            src.entity_type AS source_type,
+            tgt.entity_type AS target_type
+     FROM edge e
+     JOIN entity src ON src.id = e.source_id
+     JOIN entity tgt ON tgt.id = e.target_id
+     ORDER BY e.id`
   );
 
   const sourceTypeMap = await computeSourceTypes(client);
@@ -115,11 +142,38 @@ export async function generateMapData(client) {
     else if (row.entity_type === 'resource')     resources.push(shaped);
   }
 
+  // Build relationships array in the shape map.html expects:
+  // { source_type, target_type, source_id, target_id, relationship_type }
+  const relationships = edges.rows.map(e => ({
+    source_type: e.source_type,
+    target_type: e.target_type,
+    source_id: e.source_id,
+    target_id: e.target_id,
+    relationship_type: e.edge_type,
+    role: e.role,
+    evidence: e.evidence,
+  }));
+
+  // Build person_organizations array for affiliation edges:
+  // { person_id, organization_id, role, is_primary }
+  const person_organizations = edges.rows
+    .filter(e => e.edge_type === 'affiliated' &&
+      ((e.source_type === 'person' && e.target_type === 'organization') ||
+       (e.source_type === 'organization' && e.target_type === 'person')))
+    .map(e => ({
+      person_id: e.source_type === 'person' ? e.source_id : e.target_id,
+      organization_id: e.source_type === 'organization' ? e.source_id : e.target_id,
+      role: e.role,
+      is_primary: e.is_primary,
+    }));
+
   return {
     _meta: { generated_at: new Date().toISOString() },
     people,
     organizations,
     resources,
     edges: edges.rows,
+    relationships,
+    person_organizations,
   };
 }

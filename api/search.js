@@ -39,7 +39,7 @@ export const handler = async (event) => {
     }
 
     const query = q.trim();
-    const statusClause = status === 'pending' ? "AND status = 'pending'" : status === 'all' ? '' : '';
+    const statusClause = status === 'pending' ? "AND status = 'pending'" : status === 'all' ? '' : "AND status = 'approved'";
 
     // Map type param to entity_type values
     const typeMap = { person: 'person', organization: 'organization', resource: 'resource' };

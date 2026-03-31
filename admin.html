@@ -548,9 +548,15 @@ tr:hover { background: var(--bg-secondary); }
 
 <div class="admin-wrap">
 
-  <!-- Auth gate removed for pre-launch -->
+  <div id="auth-gate">
+    <h1>Database Admin</h1>
+    <p style="color:var(--text-secondary);font-size:14px;margin-bottom:1rem;">Enter admin key to continue</p>
+    <input type="password" id="auth-input" placeholder="Admin key..." onkeydown="if(event.key==='Enter')authenticate()">
+    <button class="btn" onclick="authenticate()">Authenticate</button>
+    <div id="auth-error" style="display:none;color:#c00;font-size:13px;margin-top:0.5rem;"></div>
+  </div>
 
-  <div id="admin-content">
+  <div id="admin-content" style="display:none">
     <div class="eyebrow">Internal</div>
     <h1>Database Admin</h1>
 
@@ -621,7 +627,9 @@ tr:hover { background: var(--bg-secondary); }
 <script>
 // --- Config ---
 // NOTE: Always use production API for testing (no local API server)
-const API_BASE = 'https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com';
+const API_BASE = window.location.hostname === 'localhost'
+  ? ''
+  : 'https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com';
 
 const FIELD_OPTIONS = {
   belief_regulatory_stance: ['Accelerate','Light-touch','Targeted','Moderate','Restrictive','Precautionary','Nationalize','Mixed/unclear','Other'],
@@ -643,6 +651,12 @@ const LINK_FIELDS = {
 
 // Cache of all entities for autocomplete (loaded on first edit)
 let _adminEntityCache = null;
+
+// Clear all entity caches after any mutation (approve/reject/merge/edit/delete)
+function invalidateEntityCaches() {
+  allEntitiesCache = {};
+  _adminEntityCache = null;
+}
 async function getEntityCache() {
   if (_adminEntityCache) return _adminEntityCache;
   try {
@@ -693,7 +707,7 @@ const FIELD_DEFS = {
   }
 };
 
-let adminKey = 'mappingai-admin-2026'; // hardcoded for pre-launch
+let adminKey = localStorage.getItem('adminKey') || '';
 let currentSubTab = 'people';
 let entitiesData = [];
 let sortCol = null;
@@ -706,7 +720,7 @@ function authenticate() {
   const key = input.value.trim();
   if (!key) return;
   adminKey = key;
-  sessionStorage.setItem('admin_key', key);
+  localStorage.setItem('adminKey', key);
   // Test the key by fetching stats
   testAuth(key);
 }
@@ -725,18 +739,17 @@ async function testAuth(key) {
   } catch (e) {
     document.getElementById('auth-error').textContent = 'Invalid admin key. Try again.';
     document.getElementById('auth-error').style.display = 'block';
-    sessionStorage.removeItem('admin_key');
+    localStorage.removeItem('adminKey');
     adminKey = '';
   }
 }
 
 // Auto-load: restore saved tab or default to dashboard
 document.addEventListener("DOMContentLoaded", () => {
-  const savedTab = localStorage.getItem('admin_tab');
-  const savedSubTab = localStorage.getItem('admin_subtab');
-  if (savedSubTab) currentSubTab = savedSubTab;
-  if (savedTab) switchToTab(savedTab);
-  else loadDashboard();
+  // Auto-authenticate if key is saved
+  if (adminKey) {
+    testAuth(adminKey);
+  }
 });
 
 // --- API helpers ---
@@ -970,6 +983,7 @@ async function approveItem(submissionId) {
     const res = await apiPost({ action: 'approve', submission_id: submissionId });
     if (!res.ok) throw new Error();
     toast('Approved');
+    invalidateEntityCaches();
     loadPending();
     loadDashboard();
   } catch (e) { toast('Failed to approve', true); }
@@ -981,6 +995,7 @@ async function rejectItem(submissionId) {
     const res = await apiPost({ action: 'reject', submission_id: submissionId });
     if (!res.ok) throw new Error();
     toast('Rejected');
+    invalidateEntityCaches();
     loadPending();
     loadDashboard();
   } catch (e) { toast('Failed to reject', true); }
@@ -1058,6 +1073,7 @@ async function saveAndApproveSub(submissionId) {
     const res = await apiPost({ action: 'approve', submission_id: submissionId, data: overrides });
     if (!res.ok) throw new Error();
     toast('Approved');
+    invalidateEntityCaches();
     closeModal();
     loadPending();
     loadDashboard();
@@ -1336,7 +1352,7 @@ async function bulkApprove() {
   }
   toast(`Approved ${selectedIds.size} items`);
   selectedIds.clear();
-  allEntitiesCache = {};
+  invalidateEntityCaches();
   loadEntities(currentSubTab);
 }
 
@@ -1347,7 +1363,7 @@ async function bulkDelete() {
   }
   toast(`Deleted ${selectedIds.size} items`);
   selectedIds.clear();
-  allEntitiesCache = {};
+  invalidateEntityCaches();
   loadEntities(currentSubTab);
 }
 
@@ -1617,6 +1633,7 @@ async function saveEdit(type, singular, id) {
     const res = await apiPost({ action: 'update_entity', entity_id: id, data });
     if (!res.ok) throw new Error();
     toast('Updated');
+    invalidateEntityCaches();
     closeModal();
     loadEntities(currentSubTab);
     loadPending();
@@ -1631,7 +1648,7 @@ async function deleteEntity(singular, id) {
     const res = await apiPost({ action: 'delete', entity_id: id });
     if (!res.ok) throw new Error();
     toast('Deleted');
-    allEntitiesCache = {};
+    invalidateEntityCaches();
     loadEntities(currentSubTab);
   } catch (e) { toast('Failed to delete', true); }
 }
@@ -1802,6 +1819,7 @@ async function mergeSubmission(entityId, submissionId) {
     });
     if (!res.ok) throw new Error();
     toast('Merged');
+    invalidateEntityCaches();
     loadMergeQueue();
     loadDashboard();
   } catch (e) {
