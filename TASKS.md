@@ -56,7 +56,19 @@ Open contribution from the public. Needs:
 ## Additional Material
 - [ ] Short research blog on visualization methodology, data processing, and results (showcasing how the tool can be used)
 
+---
+
+## In Progress
+
+| Task | Owner | Notes |
+|------|-------|-------|
+|      |       |       |
+
 ## Done
+
+| Task | Owner | Completed | Notes |
+|------|-------|-----------|-------|
+|      |       |           |       |
 
 ---
 
