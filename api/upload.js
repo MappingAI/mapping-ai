@@ -87,10 +87,9 @@ export const handler = async (event) => {
     const url = `https://${CF_DOMAIN}/${key}`;
 
     // Update entity in DB
-    const table = entityType === 'person' ? 'people' : 'organizations';
     const client = await pool.connect();
     try {
-      await client.query(`UPDATE ${table} SET thumbnail_url = $1 WHERE id = $2`, [url, entityId]);
+      await client.query(`UPDATE entity SET thumbnail_url = $1 WHERE id = $2 AND entity_type = $3`, [url, entityId, entityType]);
     } finally {
       client.release();
     }

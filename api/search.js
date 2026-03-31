@@ -39,58 +39,44 @@ export const handler = async (event) => {
     }
 
     const query = q.trim();
-    // status=pending → only pending, status=all → all statuses, default → no filter
     const statusClause = status === 'pending' ? "AND status = 'pending'" : status === 'all' ? '' : '';
+
+    // Map type param to entity_type values
+    const typeMap = { person: 'person', organization: 'organization', resource: 'resource' };
+    const entityType = typeMap[type];
+    const typeClause = entityType ? `AND entity_type = '${entityType}'` : '';
+
     const client = await pool.connect();
     try {
+      const result = await client.query(
+        `SELECT id, entity_type, name, category, title, primary_org, location,
+                belief_regulatory_stance AS regulatory_stance, status,
+                resource_title, resource_type, resource_author, resource_category, website, parent_org_id,
+                ts_rank(search_vector, plainto_tsquery('english', $1)) AS rank
+         FROM entity
+         WHERE (search_vector @@ plainto_tsquery('english', $1)
+            OR name ILIKE $2
+            OR resource_title ILIKE $2) ${typeClause} ${statusClause}
+         ORDER BY
+           CASE WHEN name ILIKE $2 OR resource_title ILIKE $2 THEN 0 ELSE 1 END,
+           ts_rank(search_vector, plainto_tsquery('english', $1)) DESC
+         LIMIT 30`,
+        [query, `%${query}%`]
+      );
+
+      // Group results by entity_type for backwards compatibility
       const results = { people: [], organizations: [], resources: [] };
-
-      if (!type || type === 'person') {
-        const people = await client.query(
-          `SELECT id, name, category, title, primary_org, location, regulatory_stance, status,
-                  ts_rank(search_vector, plainto_tsquery('english', $1)) AS rank
-           FROM people
-           WHERE (search_vector @@ plainto_tsquery('english', $1)
-              OR name ILIKE $2) ${statusClause}
-           ORDER BY
-             CASE WHEN name ILIKE $2 THEN 0 ELSE 1 END,
-             ts_rank(search_vector, plainto_tsquery('english', $1)) DESC
-           LIMIT 10`,
-          [query, `%${query}%`]
-        );
-        results.people = people.rows;
-      }
-
-      if (!type || type === 'organization') {
-        const orgs = await client.query(
-          `SELECT id, name, category, website, location, regulatory_stance, parent_org_id, status,
-                  ts_rank(search_vector, plainto_tsquery('english', $1)) AS rank
-           FROM organizations
-           WHERE (search_vector @@ plainto_tsquery('english', $1)
-              OR name ILIKE $2) ${statusClause}
-           ORDER BY
-             CASE WHEN name ILIKE $2 THEN 0 ELSE 1 END,
-             ts_rank(search_vector, plainto_tsquery('english', $1)) DESC
-           LIMIT 10`,
-          [query, `%${query}%`]
-        );
-        results.organizations = orgs.rows;
-      }
-
-      if (!type || type === 'resource') {
-        const resources = await client.query(
-          `SELECT id, title, author, resource_type, category, status,
-                  ts_rank(search_vector, plainto_tsquery('english', $1)) AS rank
-           FROM resources
-           WHERE (search_vector @@ plainto_tsquery('english', $1)
-              OR title ILIKE $2) ${statusClause}
-           ORDER BY
-             CASE WHEN title ILIKE $2 THEN 0 ELSE 1 END,
-             ts_rank(search_vector, plainto_tsquery('english', $1)) DESC
-           LIMIT 10`,
-          [query, `%${query}%`]
-        );
-        results.resources = resources.rows;
+      for (const row of result.rows) {
+        if (row.entity_type === 'person') {
+          results.people.push(row);
+        } else if (row.entity_type === 'organization') {
+          results.organizations.push(row);
+        } else if (row.entity_type === 'resource') {
+          // Map resource fields for frontend compatibility
+          row.title = row.resource_title;
+          row.author = row.resource_author;
+          results.resources.push(row);
+        }
       }
 
       return {
