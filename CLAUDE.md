@@ -120,27 +120,20 @@ mapping-ai/
 └── package.json            # Dependencies: pg, @tiptap/*, esbuild, exa-js
 ```
 
-## Database Schema (6 tables)
+## Database Schema
 
-### `people`
-Name, category (role: Executive/Researcher/Policymaker/etc.), title, primary_org, other_orgs, location, regulatory_stance, regulatory_stance_detail, evidence_source, agi_timeline, ai_risk_level, threat_models, threat_models_detail, influence_type, twitter, bluesky, notes, thumbnail_url, submission_count, disagreement_score, consensus_stance/risk/timeline, search_vector (tsvector), status
+The RDS schema uses a **unified `entity` table** (migrated from the old Neon schema that had separate `people`, `organizations`, `resources` tables). Do not assume the old per-type table names — they no longer exist.
 
-### `organizations`
-Name, category (sector: Frontier Lab/AI Safety/Think Tank/etc.), website, location, funding_model, parent_org_id (FK → organizations), regulatory_stance + detail, evidence_source, agi_timeline, ai_risk_level, threat_models + detail, influence_type, twitter, bluesky, notes, thumbnail_url, submission_count, last_verified, disagreement_score, consensus_*, search_vector, status
+### `entity`
+id, entity_type (person|organization|resource), name, category, title, primary_org, other_orgs, website, funding_model, parent_org_id (FK → entity), resource_title, resource_category, resource_author, resource_type, resource_url, resource_year, resource_key_argument, location, influence_type, twitter, bluesky, notes, thumbnail_url, belief_regulatory_stance + detail, belief_evidence_source, belief_agi_timeline, belief_ai_risk, belief_threat_models, submission_count, disagreement_score, consensus_stance/risk/timeline, search_vector (tsvector), status (approved|pending|internal)
 
-### `resources`
-Title, author, resource_type (Essay/Book/Report/Podcast/Video/etc.), url, year, category, key_argument, notes, regulatory_stance, agi_timeline, ai_risk_level, submission_count, search_vector, status
+### `submission`
+entity_type, entity_id (nullable — NULL for new entity submissions, set for edit submissions), data (JSONB), notes_html, notes_mentions (JSONB), submitter_email, submitter_relationship, llm_review (JSONB: quality 1-5, flags, notes from Claude Haiku), status (pending|approved|rejected)
 
-### `relationships` (polymorphic)
+### `edge` (relationships)
 source_type + source_id → target_type + target_id, relationship_type (affiliated/collaborator/funder/critic/authored_by/etc.), evidence, created_by
 
-### `person_organizations` (junction)
-person_id → organization_id, role, is_primary
-
-### `submissions` (versioned)
-entity_type, entity_id (nullable), data (JSONB), notes_html, notes_mentions (JSONB), submitter_email, submitter_relationship, llm_review (JSONB: quality 1-5, flags, notes from Claude Haiku), status
-
-**Full-text search:** tsvector columns with GIN indexes on people, orgs, resources. Auto-updated via triggers on INSERT/UPDATE.
+**Full-text search:** tsvector column with GIN index on `entity`. Auto-updated via triggers on INSERT/UPDATE.
 
 ## Commands
 
@@ -238,6 +231,10 @@ Frontier Lab, AI Safety/Alignment, Think Tank/Policy Org, Government/Agency, Aca
 - `map-data.json` is NOT tracked in git (generated during deploy from DB)
 - Test/seed data scripts gitignored
 - Push to `main` triggers deploy — test locally first
+
+## Pending Actions
+
+- **GitHub secret `DATABASE_URL` needs updating** — still points to old Neon DB. Sophia (sole repo admin) must update it at `github.com/sophiajwang/mapping-ai → Settings → Secrets → Actions → DATABASE_URL` to the RDS connection string. Until then, every deploy wipes `map-data.json` from S3 (deploy runs export, hits dead DB, generates nothing, `--delete` removes the file). Workaround: manually re-upload after each push (see manual S3 upload command above).
 
 ## Known Technical Debt
 
