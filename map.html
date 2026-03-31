@@ -700,7 +700,7 @@ const CATEGORY_COLORS = {
   'AI Safety/Alignment':    '#A6CEE3',   // light blue
   'Think Tank/Policy Org':  '#1F78B4',   // dark blue
   'Government/Agency':      '#CAB2D6',   // light purple
-  'Academic':               '#FFFF99',   // pale yellow
+  'Academic':               '#D4A017',   // golden amber
   'VC/Capital/Philanthropy':'#B2DF8A',   // light green
   'Labor/Civil Society':    '#FDBF6F',   // light orange
   'Media/Journalism':       '#B15928',   // brown
@@ -1193,17 +1193,21 @@ function buildFilters() {
     const isActive = activateAll || activeCategories.has(cat);
     chip.className = 'chip' + (isActive ? ' active' : '');
     chip.textContent = cat;
-    chip.style.background = getColor(cat) + '33';
-    chip.style.color = getColor(cat);
+    chip.style.background = getColor(cat) + (isActive ? '40' : '1a');
+    chip.style.color = isActive ? getColor(cat) : getColor(cat) + '88';
     chip.dataset.category = cat;
     if (isActive) newActive.add(cat);
     chip.addEventListener('click', () => {
       if (activeCategories.has(cat)) {
         activeCategories.delete(cat);
         chip.classList.remove('active');
+        chip.style.background = getColor(cat) + '1a';
+        chip.style.color = getColor(cat) + '88';
       } else {
         activeCategories.add(cat);
         chip.classList.add('active');
+        chip.style.background = getColor(cat) + '40';
+        chip.style.color = getColor(cat);
       }
       updateCategoryResetBtn();
       render();

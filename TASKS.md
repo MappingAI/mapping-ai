@@ -44,6 +44,8 @@ Open contribution from the public. Needs:
 - [x] **Admin auth gate missing**: restored auth-gate HTML, admin key prompt-on-load with localStorage persistence
 - [x] **Admin API_BASE hardcoded**: added localhost detection (same pattern as contribute.html)
 - [x] **No sticky submit on mobile**: added `position: sticky; bottom: 0` on mobile submit button
+- [x] **Academic category illegible**: changed from pale yellow (#FFFF99) to golden amber (#D4A017)
+- [x] **Category chips lack selected/deselected contrast**: active chips now 25% opacity bg + full color text; inactive chips 10% opacity bg + faded text
 
 ## Features
 
@@ -101,6 +103,8 @@ Open contribution from the public. Needs:
 | Dev server stats format fixed | Anushree | 3/31 | Matches production Lambda response shape |
 | Map controls scrollable | Anushree | 3/31 | overflow-y: auto so About button reachable |
 | Basic map onboarding overlay | Anushree | 3/31 | First-visit overlay + "About this map" button |
+| Academic category color fix | Anushree | 3/31 | #FFFF99 → #D4A017 (golden amber) |
+| Category chip active/inactive contrast | Anushree | 3/31 | Active=25% bg + full color, inactive=10% bg + faded |
 
 ---
 
