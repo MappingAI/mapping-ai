@@ -36,4 +36,4 @@ async function exportMapData() {
   }
 }
 
-exportMapData().catch(console.error);
+exportMapData().catch(err => { console.error(err); process.exit(1); });
