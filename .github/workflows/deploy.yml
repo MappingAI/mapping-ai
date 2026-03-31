@@ -22,6 +22,28 @@ jobs:
       - name: Build TipTap bundle
         run: npm run build:tiptap
 
+      - name: Verify DB schema (smoke test)
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          node -e "
+          import pg from 'pg';
+          const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL, ssl: { rejectUnauthorized: false } });
+          const client = await pool.connect();
+          try {
+            // Verify new tables exist
+            for (const t of ['entity', 'submission', 'edge']) {
+              await client.query('SELECT 1 FROM ' + t + ' LIMIT 0');
+              console.log('  ✓ ' + t + ' exists');
+            }
+            // Verify old tables are gone
+            for (const t of ['people', 'organizations', 'resources', 'submissions', 'relationships', 'person_organizations']) {
+              try { await client.query('SELECT 1 FROM ' + t + ' LIMIT 0'); console.error('  ✗ OLD TABLE ' + t + ' still exists!'); process.exit(1); }
+              catch { console.log('  ✓ ' + t + ' dropped'); }
+            }
+          } finally { client.release(); await pool.end(); }
+          "
+
       - name: Generate map-data.json from database
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}

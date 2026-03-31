@@ -1159,7 +1159,7 @@ function buildFilters() {
     rawCats = [...new Set(allData.people.map(d => normalizeCategory(d.category)).filter(Boolean))];
   } else if (currentView === 'resources') {
     // Resources view: show resource TYPE categories
-    rawCats = [...new Set(allData.resources.map(d => d.resource_type || 'Other').filter(Boolean))];
+    rawCats = [...new Set(allData.resources.map(d => d.category || 'Other').filter(Boolean))];
   } else if (currentView === '2d') {
     // 2D view: show categories for whichever entity types are selected
     const peopleCats = axis2dEntityType !== 'organizations'
@@ -1381,24 +1381,57 @@ function passesSourceTypeFilter(d) {
 }
 
 // Normalize similar category names to a canonical form
+// Declarative category normalization — maps raw DB values to canonical display names
+const CATEGORY_RULES = [
+  // Org sectors: [patterns, canonical]
+  { patterns: ['ethics', 'civil society', 'bias', 'rights'], canonical: 'Ethics / Civil Society' },
+  { patterns: ['ai safety', 'alignment'], canonical: 'AI Safety' },
+  { patterns: ['think tank', 'policy org'], canonical: 'Think Tank' },
+  { patterns: ['government', 'agency'], canonical: 'Government' },
+  { patterns: ['vc', 'capital', 'philanthropy', 'funder'], canonical: 'VC / Funder' },
+  { patterns: ['labor', 'workforce'], canonical: 'Labor / Workforce' },
+  { patterns: ['media', 'journalism'], canonical: 'Media' },
+  { patterns: ['academic'], canonical: 'Academic' },
+  { patterns: ['frontier'], canonical: 'Frontier Lab' },
+  { patterns: ['campaign', 'pac'], canonical: 'Political Campaign' },
+];
+const PERSON_ROLES = new Set(['Executive','Researcher','Policymaker','Investor','Organizer','Journalist','Academic','Cultural figure']);
+
+// Resource topic → nearest org sector (for positioning orphans in All view)
+const RESOURCE_SECTOR_MAP = {
+  'AI Safety':           'AI Safety',
+  'AI Safety/Alignment': 'AI Safety',
+  'AI Policy':           'Think Tank',
+  'AI Capabilities':     'Frontier Lab',
+  'Ethics':              'Ethics / Civil Society',
+  'National Security':   'Government',
+  'Labor & Economy':     'Labor / Workforce',
+  'Philosophy/Ethics':   'Ethics / Civil Society',
+  'Governance':          'Think Tank',
+  'Technical':           'AI Safety',
+  'Media':               'Media',
+};
+
 function normalizeCategory(cat) {
   if (!cat) return null;
-  // Person role categories — pass through unchanged
-  const personRoles = ['Executive','Researcher','Policymaker','Investor','Organizer','Journalist','Academic','Cultural figure'];
-  if (personRoles.includes(cat)) return cat;
-  // Org sector normalization
+  if (PERSON_ROLES.has(cat)) return cat;
   const c = cat.toLowerCase();
-  if (c.includes('ethics') || c.includes('civil society') || c.includes('bias') || c.includes('rights')) return 'Ethics / Civil Society';
-  if (c.includes('ai safety') || c.includes('alignment')) return 'AI Safety';
-  if (c.includes('think tank') || c.includes('policy org')) return 'Think Tank';
-  if (c.includes('government') || c.includes('agency')) return 'Government';
-  if (c.includes('vc') || c.includes('capital') || c.includes('philanthropy') || c.includes('funder')) return 'VC / Funder';
-  if (c.includes('labor') || c.includes('workforce')) return 'Labor / Workforce';
-  if (c.includes('media') || c.includes('journalism')) return 'Media';
-  if (c.includes('academic')) return 'Academic';
-  if (c.includes('frontier')) return 'Frontier Lab';
-  if (c.includes('campaign') || c.includes('pac')) return 'Political Campaign';
+  for (const rule of CATEGORY_RULES) {
+    if (rule.patterns.some(p => c.includes(p))) return rule.canonical;
+  }
   return cat;
+}
+
+function resourceCategoryToSector(resourceCat) {
+  if (!resourceCat) return null;
+  // Try exact match first, then pattern match
+  if (RESOURCE_SECTOR_MAP[resourceCat]) return RESOURCE_SECTOR_MAP[resourceCat];
+  // Fuzzy: check if any key partially matches
+  const c = resourceCat.toLowerCase();
+  for (const [key, sector] of Object.entries(RESOURCE_SECTOR_MAP)) {
+    if (c.includes(key.toLowerCase()) || key.toLowerCase().includes(c)) return sector;
+  }
+  return null;
 }
 
 // Semantic cluster ordering — related categories are adjacent
@@ -1515,7 +1548,7 @@ function getVisibleNodes() {
   if (currentView === 'resources') {
     allData.resources.forEach(d => {
       if (!passesSourceTypeFilter(d)) return;
-      const cat = d.resource_type || 'Other'; // cluster by type in resources view
+      const cat = d.category || 'Other'; // cluster by topic category in resources view
       const sc = d.submission_count || 1;
       const r = Math.round((14 + Math.min(Math.floor(sc / 3), 3)) * scale);
       nodes.push({ ...d, name: d.title, category: cat, entityType: 'resource', radius: r, submissionCount: sc, isResource: true });
@@ -1525,7 +1558,8 @@ function getVisibleNodes() {
       if (!passesSourceTypeFilter(d)) return;
       const sc = d.submission_count || 1;
       const r = Math.round((10 + Math.min(Math.floor(sc / 3), 3)) * scale);
-      nodes.push({ ...d, name: d.title, category: 'Resources', _rawCategory: d.category, entityType: 'resource', radius: r, submissionCount: sc, isResource: true });
+      const _sector = resourceCategoryToSector(d.category);
+      nodes.push({ ...d, name: d.title, category: 'Resources', _rawCategory: d.category, _sector, entityType: 'resource', radius: r, submissionCount: sc, isResource: true });
     });
   }
   return nodes;
@@ -1670,8 +1704,16 @@ function render() {
         }
       }
       if (!placed) {
-        d.x = centerX + (Math.random() - 0.5) * 80;
-        d.y = centerY + (Math.random() - 0.5) * 80;
+        // Anchor orphan resources near the org-sector cluster matching their topic
+        const sector = resourceCategoryToSector(d._rawCategory || d.category);
+        const sectorCenter = sector && clusterCenters[sector];
+        if (sectorCenter) {
+          d.x = sectorCenter.x + (Math.random() - 0.5) * 60;
+          d.y = sectorCenter.y + (Math.random() - 0.5) * 60;
+        } else {
+          d.x = centerX + (Math.random() - 0.5) * 80;
+          d.y = centerY + (Math.random() - 0.5) * 80;
+        }
       }
     } else {
       const center = clusterCenters[d.category] || { x: centerX, y: centerY };
@@ -1910,9 +1952,9 @@ function render() {
     .attr('width', d => d.radius * 2)
     .attr('height', d => d.radius * 2)
     .attr('rx', 5).attr('ry', 5)
-    .attr('fill', d => getColor(d.category))
+    .attr('fill', d => getColor(d._sector || d.category))
     .attr('opacity', 0.15)
-    .attr('stroke', d => getColor(d.category))
+    .attr('stroke', d => getColor(d._sector || d.category))
     .attr('stroke-width', 1.5);
 
   // Image circles and rings are now added asynchronously via the preloader above
