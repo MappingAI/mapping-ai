@@ -56,8 +56,8 @@ Open contribution from the public. Needs:
 - [ ] Edge/All visualization: hide resources not attached to people/orgs
 - [ ] Resources visualization improvements
 - [ ] Entity sizing based on importance (LLM)
-- [ ] Decisionmaker/influence: support multiple hats via "tags"
-- [ ] People: support multiple roles (e.g., Researcher + Policymaker)
+- [x] Decisionmaker/influence: support multiple hats via "tags" (implemented as other_categories — primary + secondary categories)
+- [x] People: support multiple roles (e.g., Researcher + Policymaker) (multi-select checkboxes on form, filter matches both primary + secondary, detail panel shows badges)
 - [ ] Community page (e.g., community Slack link/signup)
 
 ## Data
@@ -71,12 +71,17 @@ Open contribution from the public. Needs:
 - [ ] Production-scale DB structure and data persistence review
 
 ## Production Readiness
-- [ ] DB rate limiting: test read/write limits (e.g., 1,000 API requests) as safeguard against abuse/doxxing
+- [ ] **Load testing**: 1,000 simultaneous read/write to DB — verify Lambda/RDS can handle Phase 3 traffic
+- [ ] **Entity cache layer**: pre-load all entities (including pending) into a cached copy so dropdowns, @mentions, and autocomplete are instant
+- [ ] **Thumbnail caching**: cache Google Favicon + Wikipedia headshots to reduce 404s and load faster
+- [ ] **Search API auth for pending**: `/search?status=pending` currently accessible without admin key — should require auth
+- [ ] **Parameterize SQL type clause**: search.js type param uses string interpolation — switch to parameterized query
+- [ ] **Map physics damping**: reduce D3 force simulation jiggle when dragging nodes (alpha decay / velocity decay tuning)
 - [ ] Static JSON pulls: verify map-data.json served correctly from CloudFront
 - [ ] Caching strategy: proper cache headers, invalidation timing, CDN behavior
 - [ ] Full-text search: evaluate static filtering client-side vs live DB queries
-- [ ] Cybersecurity audit: SQL injection protection, API authentication, no public exposure of admin endpoints
 - [ ] Staging pipeline: separate staging environment for testing before prod deploys
+- [ ] **Mobile: SEE MAP button overlaps sticky submit** on contribute.html at 375px width
 
 ## UI/UX
 - [x] Contribute form dropdown has weird lines (fixed CSS border artifact)
@@ -134,6 +139,8 @@ Open contribution from the public. Needs:
 | Dropdown UX improvements | Sophia | 4/1 | Click-to-deselect, grey background on selected, fixed column width with text truncation |
 | Map: show stance detail in detail panel | Sophia | 4/1 | regulatory_stance_detail now displayed for people and orgs |
 | Map: affiliated person click navigates properly | Sophia | 4/1 | Clicking affiliated person switches view, zooms to node, shows full details |
+| Election enrichment: PACs + candidates | Anushree | 3/31 | 6 PACs, 13 candidates, 16 edges via Exa; notes_html added to entity table |
+| Multi-category support (primary + secondary) | Anushree | 4/1 | other_categories on entity/submission; form checkboxes, map filter + detail badges |
 
 ---
 
