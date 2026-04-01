@@ -4,6 +4,10 @@ const { Pool } = pg;
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false },
+  max: 1,
+  connectionTimeoutMillis: 5000,
+  idleTimeoutMillis: 30000,
+  options: '-c statement_timeout=10000',
 });
 
 const CORS_HEADERS = {
@@ -39,12 +43,40 @@ export const handler = async (event) => {
     }
 
     const query = q.trim();
-    const statusClause = status === 'pending' ? "AND status = 'pending'" : status === 'all' ? '' : "AND status = 'approved'";
 
-    // Map type param to entity_type values
+    // Auth check: status=pending and status=all require admin key
+    const ADMIN_KEY = process.env.ADMIN_KEY;
+    const providedKey = event.headers?.['x-admin-key'] || event.queryStringParameters?.key;
+    const isAdmin = ADMIN_KEY && providedKey === ADMIN_KEY;
+
+    // Build parameterized WHERE clauses
+    const params = [query, `%${query}%`];
+    let paramIdx = 3;
+    const clauses = [];
+
+    // Type filter (parameterized)
     const typeMap = { person: 'person', organization: 'organization', resource: 'resource' };
     const entityType = typeMap[type];
-    const typeClause = entityType ? `AND entity_type = '${entityType}'` : '';
+    if (entityType) {
+      clauses.push(`AND entity_type = $${paramIdx}`);
+      params.push(entityType);
+      paramIdx++;
+    }
+
+    // Status filter (parameterized; pending/all require admin auth)
+    if (status === 'pending' && isAdmin) {
+      clauses.push(`AND status = $${paramIdx}`);
+      params.push('pending');
+      paramIdx++;
+    } else if (status === 'all' && isAdmin) {
+      // No status filter — return all statuses
+    } else {
+      clauses.push(`AND status = $${paramIdx}`);
+      params.push('approved');
+      paramIdx++;
+    }
+
+    const whereExtra = clauses.join(' ');
 
     const client = await pool.connect();
     try {
@@ -56,12 +88,12 @@ export const handler = async (event) => {
          FROM entity
          WHERE (search_vector @@ plainto_tsquery('english', $1)
             OR name ILIKE $2
-            OR resource_title ILIKE $2) ${typeClause} ${statusClause}
+            OR resource_title ILIKE $2) ${whereExtra}
          ORDER BY
            CASE WHEN name ILIKE $2 OR resource_title ILIKE $2 THEN 0 ELSE 1 END,
            ts_rank(search_vector, plainto_tsquery('english', $1)) DESC
          LIMIT 30`,
-        [query, `%${query}%`]
+        params
       );
 
       // Group results by entity_type for backwards compatibility

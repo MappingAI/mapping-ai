@@ -5,6 +5,10 @@ const { Pool } = pg;
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false },
+  max: 1,
+  connectionTimeoutMillis: 5000,
+  idleTimeoutMillis: 30000,
+  options: '-c statement_timeout=30000',
 });
 
 const s3 = new S3Client({});

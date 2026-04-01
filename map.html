@@ -1824,6 +1824,7 @@ function render() {
     .force('y', d3.forceY(centerY).strength(0.02))
     .alpha(0.5)
     .alphaDecay(0.04)
+    .velocityDecay(0.6)
     .on('tick', ticked);
 
   // Node groups
@@ -1851,9 +1852,9 @@ function render() {
       hideTooltip();
     })
     .call(d3.drag()
-      .on('start', (event, d) => { if (!event.active) simulation.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
+      .on('start', (event, d) => { if (!event.active) simulation.alphaDecay(0.04).alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
       .on('drag', (event, d) => { d.fx = event.x; d.fy = event.y; })
-      .on('end', (event, d) => { if (!event.active) simulation.alphaTarget(0); d.fx = null; d.fy = null; }));
+      .on('end', (event, d) => { if (!event.active) { simulation.alphaTarget(0).alphaDecay(0.15); } d.fx = null; d.fy = null; }));
 
   // Define clip paths and image patterns in defs
   const defs = svg.append('defs');
@@ -2240,9 +2241,9 @@ function render2D(svg, g, width, height) {
       hideTooltip();
     })
     .call(d3.drag()
-      .on('start', (event, d) => { if (!event.active) simulation.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
+      .on('start', (event, d) => { if (!event.active) simulation.alphaDecay(0.04).alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
       .on('drag', (event, d) => { d.fx = event.x; d.fy = event.y; })
-      .on('end', (event, d) => { if (!event.active) simulation.alphaTarget(0); d.fx = null; d.fy = null; }));
+      .on('end', (event, d) => { if (!event.active) { simulation.alphaTarget(0).alphaDecay(0.15); } d.fx = null; d.fy = null; }));
 
   // Background circles (category color)
   nodeGroup.append('circle')
@@ -2364,6 +2365,7 @@ function render2D(svg, g, width, height) {
     .force('collision', d3.forceCollide(d => d.radius + 2).strength(0.9))
     .alpha(0.6)
     .alphaDecay(0.04)
+    .velocityDecay(0.6)
     .on('tick', () => { nodeGroup.attr('transform', d => `translate(${d.x},${d.y})`); });
 
   svg.on('click', () => document.getElementById('detail-panel').classList.remove('open'));
