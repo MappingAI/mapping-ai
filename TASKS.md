@@ -105,6 +105,7 @@ Open contribution from the public. Needs:
 | Basic map onboarding overlay | Anushree | 3/31 | First-visit overlay + "About this map" button |
 | Academic category color fix | Anushree | 3/31 | #FFFF99 → #D4A017 (golden amber) |
 | Category chip active/inactive contrast | Anushree | 3/31 | Active=25% bg + full color, inactive=10% bg + faded |
+| Homepage View Map + Contribute buttons | Sophia | 3/31 | Two CTA buttons: primary (View Map) + secondary outline (Contribute) |
 
 ---
 
