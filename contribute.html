@@ -837,6 +837,43 @@ details[open] summary { border-bottom: 1px solid var(--border); }
   }
   .nav-links.open { display: flex; }
 }
+/* Info overlay */
+.info-overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(0,0,0,0.5);
+  display: flex; align-items: center; justify-content: center;
+}
+.info-card {
+  background: #fff;
+  border-radius: 8px; padding: 1.5rem 2rem; max-width: 440px; width: 90%;
+  font-family: var(--serif);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+}
+.info-card h2 {
+  font-family: var(--mono);
+  font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em;
+  margin: 0 0 0.75rem;
+}
+.info-card > p { font-size: 15px; line-height: 1.5; margin: 0 0 1rem; color: var(--text-secondary); }
+.process-tips { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.25rem; }
+.process-tip { font-size: 13px; line-height: 1.4; color: var(--text-secondary); }
+.process-tip strong { color: var(--text-primary); }
+.info-dismiss {
+  font-family: var(--mono); font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  padding: 0.6rem 1.5rem; background: var(--text-primary); color: #fff;
+  border: none; border-radius: 4px; cursor: pointer;
+}
+.info-dismiss:hover { opacity: 0.85; }
+.how-it-works-btn {
+  font-family: var(--mono); font-size: 10px;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  background: none; border: 1px solid var(--border); border-radius: 4px;
+  padding: 0.4rem 0.6rem; cursor: pointer;
+  color: var(--text-secondary);
+  margin-left: 0.5rem;
+}
+.how-it-works-btn:hover { border-color: var(--text-secondary); color: var(--text-primary); }
 </style>
 </head>
 <body>
@@ -855,6 +892,21 @@ details[open] summary { border-bottom: 1px solid var(--border); }
   </div>
 </nav>
 
+<!-- How it works overlay -->
+<div class="info-overlay" id="info-overlay" style="display:none;">
+  <div class="info-card">
+    <h2>How Submissions Work</h2>
+    <p>Your contribution helps build a comprehensive resource for understanding the AI policy landscape.</p>
+    <div class="process-tips">
+      <div class="process-tip"><strong>Review:</strong> All submissions are manually reviewed by our team before appearing on the map.</div>
+      <div class="process-tip"><strong>Enrichment:</strong> We use AI-assisted research to verify and expand entries with additional context, affiliations, and public statements.</div>
+      <div class="process-tip"><strong>Belief Scores:</strong> Stance, timeline, and risk assessments are weighted averages. Self-submissions carry more weight than external observations.</div>
+      <div class="process-tip"><strong>Privacy:</strong> We only include publicly available information. You can request changes or removal anytime.</div>
+    </div>
+    <button class="info-dismiss" onclick="document.getElementById('info-overlay').style.display='none'">Got it</button>
+  </div>
+</div>
+
 <div class="doc">
   <div class="eyebrow"><a href="/">Mapping AI</a> — Contribute</div>
   <h1>Add to the Map</h1>
@@ -862,6 +914,7 @@ details[open] summary { border-bottom: 1px solid var(--border); }
 
   <div class="disclaimer">
     Anyone with knowledge of the U.S. AI policy landscape can contribute. You don't need to be affiliated with the person or organization you're submitting. All submissions are reviewed before publication.
+    <button class="how-it-works-btn" onclick="document.getElementById('info-overlay').style.display='flex'">How it works</button>
   </div>
 
   <div class="form-toggle">
@@ -1460,6 +1513,14 @@ details[open] summary { border-bottom: 1px solid var(--border); }
 if (window !== window.top) {
   document.getElementById('see-map-btn').style.display = 'none';
 }
+// Show "How it works" overlay on first visit (not in iframe)
+if (window === window.top && !localStorage.getItem('contributeInfoDismissed')) {
+  document.getElementById('info-overlay').style.display = 'flex';
+}
+// Mark as dismissed when closed
+document.getElementById('info-overlay').querySelector('.info-dismiss').addEventListener('click', function() {
+  localStorage.setItem('contributeInfoDismissed', '1');
+});
 </script>
 
 <!-- Existing entity card sidebar -->
