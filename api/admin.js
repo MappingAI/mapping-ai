@@ -51,7 +51,7 @@ async function refreshMapData(client) {
 
 // All editable non-aggregate entity fields. Score aggregates are trigger-maintained.
 const ENTITY_FIELDS = [
-  'name', 'title', 'category', 'primary_org', 'other_orgs',
+  'name', 'title', 'category', 'other_categories', 'primary_org', 'other_orgs',
   'website', 'funding_model', 'parent_org_id',
   'resource_title', 'resource_category', 'resource_author', 'resource_type',
   'resource_url', 'resource_year', 'resource_key_argument',

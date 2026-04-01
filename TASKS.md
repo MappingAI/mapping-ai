@@ -51,24 +51,44 @@ Open contribution from the public. Needs:
 
 - [ ] Mobile view: search feature for map optimized
 - [ ] Mobile view: contribute form responsive
-- [ ] Tooltip on how the viz can be used (basic onboarding overlay + "About this map" button added — still needs: animated walkthrough, stakeholder-specific guidance, contribution flow tutorial)
+- [x] Tooltip on how the viz can be used (basic onboarding overlay + "About this map" button added — still needs: animated walkthrough, stakeholder-specific guidance, contribution flow tutorial)
 - [ ] Entity/node information more condensed in detail panel -- right now, too overwhelming
 - [ ] Edge/All visualization: hide resources not attached to people/orgs
 - [ ] Resources visualization improvements
 - [ ] Entity sizing based on importance (LLM)
-- [ ] Decisionmaker/influence: support multiple hats via "tags"
+- [x] Decisionmaker/influence: support multiple hats via "tags" (implemented as other_categories — primary + secondary categories)
+- [x] People: support multiple roles (e.g., Researcher + Policymaker) (multi-select checkboxes on form, filter matches both primary + secondary, detail panel shows badges)
+- [ ] Community page (e.g., community Slack link/signup)
 
 ## Data
 - [ ] DB persistence ("transactions" db for merges, edits, etc.)
 - [ ] DB needs to be production tested (edge cases, traffic, etc.)
 - [ ] Data manual review (e.g., "Adolescence of Technology" vs "Technology Adolescence")
-- [ ] Data enrichment: more entities across the stakeholder categories
+- [x] Data enrichment: Tier 1 entities across all stakeholder categories (305 people, 461 orgs, 286 edges as of 4/1); all orgs now enriched
+- [ ] Data enrichment: Tier 2 entities (policymakers, executives, labor/advocacy — script ready but not run)
 - [ ] Fix tagging between people and organizations (right now, many people are missing organizational tags)
 - [ ] Add missing organizations (may need Exa API)
 - [ ] Production-scale DB structure and data persistence review
 
+## Production Readiness
+- [ ] **Load testing**: 1,000 simultaneous read/write to DB — verify Lambda/RDS can handle Phase 3 traffic
+- [ ] **Entity cache layer**: pre-load all entities (including pending) into a cached copy so dropdowns, @mentions, and autocomplete are instant
+- [ ] **Thumbnail caching**: cache Google Favicon + Wikipedia headshots to reduce 404s and load faster
+- [ ] **Search API auth for pending**: `/search?status=pending` currently accessible without admin key — should require auth
+- [ ] **Parameterize SQL type clause**: search.js type param uses string interpolation — switch to parameterized query
+- [ ] **Map physics damping**: reduce D3 force simulation jiggle when dragging nodes (alpha decay / velocity decay tuning)
+- [ ] Static JSON pulls: verify map-data.json served correctly from CloudFront
+- [ ] Caching strategy: proper cache headers, invalidation timing, CDN behavior
+- [ ] Full-text search: evaluate static filtering client-side vs live DB queries
+- [ ] Staging pipeline: separate staging environment for testing before prod deploys
+- [ ] **Mobile: SEE MAP button overlaps sticky submit** on contribute.html at 375px width
+
 ## UI/UX
 - [x] Contribute form dropdown has weird lines (fixed CSS border artifact)
+- [x] Contribute form: replace "Clear" with select/deselect toggle for dropdowns (click-to-deselect, grey background on selected, fixed column width expansion)
+- [ ] Contribute form: move "Your Relationship" section to the very top
+- [ ] Contribute form: make adding an org more obvious/discoverable
+- [ ] Theory of Change: revise "existing landscape" sentence (too dramatic/cosmetic)
 
 ## Additional Material
 - [ ] Short research blog on visualization methodology, data processing, and results (showcasing how the tool can be used)
@@ -105,6 +125,22 @@ Open contribution from the public. Needs:
 | Basic map onboarding overlay | Anushree | 3/31 | First-visit overlay + "About this map" button |
 | Academic category color fix | Anushree | 3/31 | #FFFF99 → #D4A017 (golden amber) |
 | Category chip active/inactive contrast | Anushree | 3/31 | Active=25% bg + full color, inactive=10% bg + faded |
+| Homepage View Map + Contribute buttons | Sophia | 3/31 | Two CTA buttons: primary (View Map) + secondary outline (Contribute) |
+| TIME100 AI 2025 seeding + enrichment | Sophia | 4/1 | 41 people, 38 orgs added with edges; all enriched with stances/timelines via Exa + Claude |
+| Tier 1 data seeding: Academics/Investors | Sophia | 4/1 | 41 people, 15 orgs added with edges; enriched via Exa + Claude (~$5.45) |
+| Tier 1 data seeding: Journalists/Organizers | Sophia | 4/1 | 26 people, 15 orgs added; enriched (~$3.46) |
+| Tier 1 data seeding: Ethics/Govt/Cultural | Sophia | 4/1 | 28 people, 13 orgs added; enriched (~$3.72) |
+| Expanded academics list (user consolidated) | Sophia | 4/1 | 37 people, 18 orgs added (political economy, law, STS, AI safety, discourse); enriched (~$4.90) |
+| Full enrichment pipeline run | Sophia | 4/1 | All new entities enriched + pushed to production; final counts: 305 people, 461 orgs, 286 edges |
+| Organization enrichment (all 99 unenriched) | Sophia | 4/1 | All 461 orgs now have stance/timeline/risk data; 97 orgs enriched via Exa + Claude (~$8.69) |
+| URL validation bug fix | Sophia | 4/1 | Changed from type="url" to type="text" with auto-prefix; accepts any TLD (.gov, .ai, etc.) |
+| affiliatedOrgIds storage fix | Sophia | 4/1 | Added JSONB column to submission table; backend creates edges on approve/merge |
+| Utility scripts schema migration | Sophia | 4/1 | 11 scripts updated from old tables to unified entity table |
+| Dropdown UX improvements | Sophia | 4/1 | Click-to-deselect, grey background on selected, fixed column width with text truncation |
+| Map: show stance detail in detail panel | Sophia | 4/1 | regulatory_stance_detail now displayed for people and orgs |
+| Map: affiliated person click navigates properly | Sophia | 4/1 | Clicking affiliated person switches view, zooms to node, shows full details |
+| Election enrichment: PACs + candidates | Anushree | 3/31 | 6 PACs, 13 candidates, 16 edges via Exa; notes_html added to entity table |
+| Multi-category support (primary + secondary) | Anushree | 4/1 | other_categories on entity/submission; form checkboxes, map filter + detail badges |
 
 ---
 

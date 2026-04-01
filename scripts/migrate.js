@@ -21,6 +21,7 @@ async function migrate() {
         name                            VARCHAR(200),
         title                           VARCHAR(300),
         category                        VARCHAR(200),
+        other_categories                TEXT,
         primary_org                     VARCHAR(200),
         other_orgs                      VARCHAR(200),
         -- org-specific
@@ -84,6 +85,7 @@ async function migrate() {
         name                             VARCHAR(200),
         title                            VARCHAR(300),
         category                         VARCHAR(200),
+        other_categories                 TEXT,
         primary_org                      VARCHAR(200),
         other_orgs                       VARCHAR(200),
         -- org-specific
@@ -287,7 +289,7 @@ async function migrate() {
         IF NEW.entity_id IS NULL AND NEW.status = 'approved' AND OLD.status <> 'approved' THEN
           INSERT INTO entity (
             entity_type,
-            name, title, category, primary_org, other_orgs,
+            name, title, category, other_categories, primary_org, other_orgs,
             website, funding_model, parent_org_id,
             resource_title, resource_category, resource_author, resource_type,
             resource_url, resource_year, resource_key_argument,
@@ -298,7 +300,7 @@ async function migrate() {
             status
           ) VALUES (
             NEW.entity_type,
-            NEW.name, NEW.title, NEW.category, NEW.primary_org, NEW.other_orgs,
+            NEW.name, NEW.title, NEW.category, NEW.other_categories, NEW.primary_org, NEW.other_orgs,
             NEW.website, NEW.funding_model, NEW.parent_org_id,
             NEW.resource_title, NEW.resource_category, NEW.resource_author, NEW.resource_type,
             NEW.resource_url, NEW.resource_year, NEW.resource_key_argument,

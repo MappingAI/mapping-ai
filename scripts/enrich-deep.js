@@ -175,7 +175,6 @@ CURRENT DATABASE ENTRY:
 - AGI timeline: ${person.agi_timeline || '(empty)'}
 - AI risk level: ${person.ai_risk_level || '(empty)'}
 - Threat models: ${person.threat_models || '(empty)'}
-- Threat models detail: ${person.threat_models_detail || '(empty)'}
 - Influence type: ${person.influence_type || '(empty)'}
 - Twitter: ${person.twitter || '(empty)'}
 - Notes: ${person.notes || '(empty)'}
@@ -196,8 +195,7 @@ Provide enriched values in JSON. BE THOROUGH AND SPECIFIC:
   "evidence_source": "Explicitly stated | Inferred from actions | Inferred from associations",
   "agi_timeline": "Already here | 2-3 years | 5-10 years | 10-25 years | 25+ years or never | Ill-defined | Unknown",
   "ai_risk_level": "Overstated | Manageable | Serious | Catastrophic | Existential | Mixed/nuanced | Unknown",
-  "threat_models": "Comma-separated from: Labor displacement, Economic inequality, Power concentration, Democratic erosion, Cybersecurity, Misinformation, Environmental, Weapons proliferation, Loss of control, Copyright/IP, Existential risk, Bias/discrimination, Privacy, National security",
-  "threat_models_detail": "1-3 sentences on their SPECIFIC concerns. Example for ${guidance.type}: '${guidance.threatExample}'",
+  "threat_models": "Comma-separated concerns from: Labor displacement, Economic inequality, Power concentration, Democratic erosion, Cybersecurity, Misinformation, Environmental, Weapons proliferation, Loss of control, Copyright/IP, Existential risk, Bias/discrimination, Privacy, National security. Include brief detail on their SPECIFIC concerns. Example: '${guidance.threatExample}'",
   "influence_type": "Comma-separated from: Decision-maker, Advisor/strategist, Researcher/analyst, Funder/investor, Builder, Organizer/advocate, Narrator, Implementer, Connector/convener",
   "twitter": "@handle",
   "notes": "2-4 sentences with SPECIFIC facts. Example for ${guidance.type}: '${guidance.notesExample}'"
@@ -258,13 +256,9 @@ function validateResponse(data) {
   if (data.ai_risk_level && VALID_RISKS.includes(data.ai_risk_level)) {
     clean.ai_risk_level = data.ai_risk_level;
   }
-  // TEXT field
+  // TEXT field - can include detail since threat_models_detail is not a column
   if (data.threat_models && typeof data.threat_models === 'string') {
-    clean.threat_models = data.threat_models.substring(0, 500);
-  }
-  // TEXT field
-  if (data.threat_models_detail && typeof data.threat_models_detail === 'string') {
-    clean.threat_models_detail = data.threat_models_detail.substring(0, 2000);
+    clean.threat_models = data.threat_models.substring(0, 2000);
   }
   // TEXT field
   if (data.influence_type && typeof data.influence_type === 'string') {
@@ -431,34 +425,32 @@ async function enrichPerson(client, person) {
   }
 
   // Always update these core fields if we got good data (they're the point of deep enrichment)
+  // Note: DB columns use belief_* prefix
   if (clean.regulatory_stance) {
-    updates.push(`regulatory_stance = $${idx++}`);
+    updates.push(`belief_regulatory_stance = $${idx++}`);
     values.push(clean.regulatory_stance);
   }
   if (clean.regulatory_stance_detail) {
-    updates.push(`regulatory_stance_detail = $${idx++}`);
+    updates.push(`belief_regulatory_stance_detail = $${idx++}`);
     values.push(clean.regulatory_stance_detail);
   }
   if (clean.evidence_source) {
-    updates.push(`evidence_source = $${idx++}`);
+    updates.push(`belief_evidence_source = $${idx++}`);
     values.push(clean.evidence_source);
   }
   if (clean.agi_timeline) {
-    updates.push(`agi_timeline = $${idx++}`);
+    updates.push(`belief_agi_timeline = $${idx++}`);
     values.push(clean.agi_timeline);
   }
   if (clean.ai_risk_level) {
-    updates.push(`ai_risk_level = $${idx++}`);
+    updates.push(`belief_ai_risk = $${idx++}`);
     values.push(clean.ai_risk_level);
   }
   if (clean.threat_models) {
-    updates.push(`threat_models = $${idx++}`);
+    updates.push(`belief_threat_models = $${idx++}`);
     values.push(clean.threat_models);
   }
-  if (clean.threat_models_detail) {
-    updates.push(`threat_models_detail = $${idx++}`);
-    values.push(clean.threat_models_detail);
-  }
+  // Note: threat_models_detail is not a DB column - detail goes in belief_threat_models
   if (clean.influence_type) {
     updates.push(`influence_type = $${idx++}`);
     values.push(clean.influence_type);
@@ -481,7 +473,7 @@ async function enrichPerson(client, person) {
   }
 
   values.push(person.id);
-  await client.query(`UPDATE people SET ${updates.join(', ')} WHERE id = $${idx}`, values);
+  await client.query(`UPDATE entity SET ${updates.join(', ')} WHERE id = $${idx}`, values);
   enriched++;
 
   // Log what we found - show changes from original
@@ -512,10 +504,7 @@ async function enrichPerson(client, person) {
     console.log(`    risk: ${person.ai_risk_level || '(empty)'} → ${clean.ai_risk_level}`);
   }
   if (clean.threat_models) {
-    console.log(`    threats: ${clean.threat_models}`);
-  }
-  if (clean.threat_models_detail) {
-    console.log(`    threats_detail: ${clean.threat_models_detail.substring(0, 150)}...`);
+    console.log(`    threats: ${clean.threat_models.substring(0, 150)}${clean.threat_models.length > 150 ? '...' : ''}`);
   }
   if (clean.influence_type) {
     console.log(`    influence: ${person.influence_type || '(empty)'} → ${clean.influence_type}`);
@@ -557,10 +546,14 @@ async function saveCheckpoint(client, checkpointNum) {
   const XLSX = await import('xlsx');
   const result = await client.query(`
     SELECT id, name, title, primary_org, other_orgs, category, location,
-           regulatory_stance, regulatory_stance_detail, evidence_source,
-           agi_timeline, ai_risk_level, threat_models, threat_models_detail,
+           belief_regulatory_stance AS regulatory_stance,
+           belief_regulatory_stance_detail AS regulatory_stance_detail,
+           belief_evidence_source AS evidence_source,
+           belief_agi_timeline AS agi_timeline,
+           belief_ai_risk AS ai_risk_level,
+           belief_threat_models AS threat_models,
            influence_type, twitter, notes
-    FROM people WHERE status = 'approved'
+    FROM entity WHERE entity_type = 'person' AND status = 'approved'
     ORDER BY id
   `);
 
@@ -590,12 +583,17 @@ async function main() {
   const client = await pool.connect();
   try {
     // Query all approved people
+    // Use aliases to map DB column names (belief_*) to script's expected names
     let query = `
       SELECT id, name, title, primary_org, other_orgs, category, location,
-             regulatory_stance, regulatory_stance_detail, evidence_source,
-             agi_timeline, ai_risk_level, threat_models, threat_models_detail,
+             belief_regulatory_stance AS regulatory_stance,
+             belief_regulatory_stance_detail AS regulatory_stance_detail,
+             belief_evidence_source AS evidence_source,
+             belief_agi_timeline AS agi_timeline,
+             belief_ai_risk AS ai_risk_level,
+             belief_threat_models AS threat_models,
              influence_type, twitter, bluesky, notes
-      FROM people WHERE status = 'approved'
+      FROM entity WHERE entity_type = 'person' AND status = 'approved'
     `;
 
     if (singleId) {

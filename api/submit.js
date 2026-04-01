@@ -96,7 +96,7 @@ export const handler = async (event) => {
         `INSERT INTO submission (
           entity_type, entity_id,
           submitter_email, submitter_relationship,
-          name, title, category, primary_org, other_orgs,
+          name, title, category, other_categories, primary_org, other_orgs,
           website, funding_model, parent_org_id,
           resource_title, resource_category, resource_author, resource_type,
           resource_url, resource_year, resource_key_argument,
@@ -108,11 +108,11 @@ export const handler = async (event) => {
           belief_threat_models,
           submitted_at, status
         ) VALUES (
-          $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12,
-          $13, $14, $15, $16, $17, $18, $19,
-          $20, $21, $22, $23, $24, $25, $26,
-          $27, $28, $29, $30, $31, $32, $33, $34, $35,
-          $36, 'pending'
+          $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13,
+          $14, $15, $16, $17, $18, $19, $20,
+          $21, $22, $23, $24, $25, $26, $27,
+          $28, $29, $30, $31, $32, $33, $34, $35, $36,
+          $37, 'pending'
         ) RETURNING id`,
         [
           type, entityId,
@@ -121,6 +121,7 @@ export const handler = async (event) => {
           data.name   || null,
           data.title  || null,
           data.category || null,
+          data.otherCategories || null,
           data.primaryOrg  || null,
           data.otherOrgs   || null,
           // org

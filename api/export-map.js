@@ -49,6 +49,7 @@ function toFrontendShape(row) {
     entity_type:      row.entity_type,
     name:             row.name,
     category:         row.category,
+    other_categories: row.other_categories || null,
     title:            row.title,
     primary_org:      row.primary_org,
     other_orgs:       row.other_orgs,
