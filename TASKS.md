@@ -64,7 +64,8 @@ Open contribution from the public. Needs:
 - [ ] DB persistence ("transactions" db for merges, edits, etc.)
 - [ ] DB needs to be production tested (edge cases, traffic, etc.)
 - [ ] Data manual review (e.g., "Adolescence of Technology" vs "Technology Adolescence")
-- [ ] Data enrichment: more entities across the stakeholder categories
+- [x] Data enrichment: Tier 1 entities across all stakeholder categories (305 people, 461 orgs, 286 edges as of 4/1)
+- [ ] Data enrichment: Tier 2 entities (policymakers, executives, labor/advocacy — script ready but not run)
 - [ ] Fix tagging between people and organizations (right now, many people are missing organizational tags)
 - [ ] Add missing organizations (may need Exa API)
 - [ ] Production-scale DB structure and data persistence review
@@ -121,6 +122,11 @@ Open contribution from the public. Needs:
 | Category chip active/inactive contrast | Anushree | 3/31 | Active=25% bg + full color, inactive=10% bg + faded |
 | Homepage View Map + Contribute buttons | Sophia | 3/31 | Two CTA buttons: primary (View Map) + secondary outline (Contribute) |
 | TIME100 AI 2025 seeding + enrichment | Sophia | 4/1 | 41 people, 38 orgs added with edges; all enriched with stances/timelines via Exa + Claude |
+| Tier 1 data seeding: Academics/Investors | Sophia | 4/1 | 41 people, 15 orgs added with edges; enriched via Exa + Claude (~$5.45) |
+| Tier 1 data seeding: Journalists/Organizers | Sophia | 4/1 | 26 people, 15 orgs added; enriched (~$3.46) |
+| Tier 1 data seeding: Ethics/Govt/Cultural | Sophia | 4/1 | 28 people, 13 orgs added; enriched (~$3.72) |
+| Expanded academics list (user consolidated) | Sophia | 4/1 | 37 people, 18 orgs added (political economy, law, STS, AI safety, discourse); enriched (~$4.90) |
+| Full enrichment pipeline run | Sophia | 4/1 | All new entities enriched + pushed to production; final counts: 305 people, 461 orgs, 286 edges |
 
 ---
 
