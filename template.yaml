@@ -69,6 +69,9 @@ Resources:
     Properties:
       FunctionName: mapping-ai-search
       Handler: api/search.handler
+      Environment:
+        Variables:
+          ADMIN_KEY: 'mappingai-admin-2026'
       Events:
         Search:
           Type: HttpApi

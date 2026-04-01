@@ -1825,7 +1825,8 @@ function render() {
     .alpha(0.5)
     .alphaDecay(0.04)
     .velocityDecay(0.6)
-    .on('tick', ticked);
+    .on('tick', ticked)
+    .on('end', () => simulation.alphaDecay(0.04));
 
   // Node groups
   const nodeGroup = g.selectAll('.node')
@@ -2366,7 +2367,8 @@ function render2D(svg, g, width, height) {
     .alpha(0.6)
     .alphaDecay(0.04)
     .velocityDecay(0.6)
-    .on('tick', () => { nodeGroup.attr('transform', d => `translate(${d.x},${d.y})`); });
+    .on('tick', () => { nodeGroup.attr('transform', d => `translate(${d.x},${d.y})`); })
+    .on('end', () => simulation.alphaDecay(0.04));
 
   svg.on('click', () => document.getElementById('detail-panel').classList.remove('open'));
 }
