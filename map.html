@@ -2453,6 +2453,7 @@ function showDetail(d, allNodes) {
     addField('Regulatory Stance', d.regulatory_stance
       ? `<span style="display:inline-flex;align-items:center;gap:5px;">${stColor ? `<span style="width:8px;height:8px;border-radius:50%;background:${stColor};display:inline-block;"></span>` : ''}${d.regulatory_stance}</span>`
       : null);
+    if (d.regulatory_stance_detail) addField('Stance Detail', d.regulatory_stance_detail);
     addField('Evidence Source', d.evidence_source);
     addField('AGI Timeline', d.agi_timeline);
     addField('AI Risk Level', d.ai_risk_level);
@@ -2489,6 +2490,7 @@ function showDetail(d, allNodes) {
     addField('Regulatory Stance', d.regulatory_stance
       ? `<span style="display:inline-flex;align-items:center;gap:5px;">${stColor ? `<span style="width:8px;height:8px;border-radius:50%;background:${stColor};display:inline-block;"></span>` : ''}${d.regulatory_stance}</span>`
       : null);
+    if (d.regulatory_stance_detail) addField('Stance Detail', d.regulatory_stance_detail);
     addField('Evidence Source', d.evidence_source);
     addField('AGI Timeline', d.agi_timeline);
     addField('AI Risk Level', d.ai_risk_level);
@@ -2601,21 +2603,48 @@ function showDetail(d, allNodes) {
     ${affiliated}
   `;
 
-  // Click affiliated items and author links to navigate
+  // Click affiliated items and author links to navigate — switch view, zoom, show detail
   content.querySelectorAll('.affiliated-item, .detail-link').forEach(el => {
     el.addEventListener('click', (e) => {
       e.preventDefault();
       const name = el.dataset.name;
-      // Search in all entity types
-      const target = allNodes.find(n => n.name === name) ||
-        allData.people.find(p => p.name === name) ||
-        allData.organizations.find(o => o.name === name) ||
-        allData.resources.find(r => r.title === name);
-      if (target) {
-        // If it's a different entity type that's not currently visible, load from allData
-        const entityData = { ...target, entityType: target.entityType || (target.title ? 'resource' : target.website !== undefined ? 'organization' : 'person'), name: target.name || target.title };
-        showDetail(entityData, allNodes);
+      // Find entity in allData
+      const person = allData.people.find(p => p.name === name);
+      const org = allData.organizations.find(o => o.name === name);
+      const resource = allData.resources.find(r => r.title === name);
+      const target = person || org || resource;
+      if (!target) return;
+
+      const entityType = person ? 'person' : org ? 'organization' : 'resource';
+
+      // Switch view if needed (same logic as search)
+      if (entityType === 'resource' && currentView !== 'resources') {
+        document.querySelector('[data-view="resources"]').click();
+      } else if (entityType === 'organization' && (currentView === 'people' || currentView === 'resources')) {
+        document.querySelector('[data-view="orgs"]').click();
+      } else if (entityType === 'person' && (currentView === 'orgs' || currentView === 'resources')) {
+        document.querySelector('[data-view="people"]').click();
       }
+
+      // Find and zoom to node after re-render
+      setTimeout(() => {
+        const renderedNodes = d3.selectAll('.node').data();
+        const node = renderedNodes.find(n => n.name === (target.name || target.title));
+        if (node) {
+          showDetail(node, renderedNodes);
+          const svg = d3.select('#map-container svg');
+          const mapEl = document.getElementById('map-container');
+          const k = 3;
+          svg.transition().duration(500).call(
+            zoomBehavior.transform,
+            d3.zoomIdentity.translate(
+              mapEl.clientWidth / 2 - k * node.x,
+              mapEl.clientHeight / 2 - k * node.y
+            ).scale(k)
+          );
+          highlightNodes([node.name]);
+        }
+      }, 100);
     });
   });
 
