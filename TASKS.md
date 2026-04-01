@@ -52,6 +52,7 @@ Open contribution from the public. Needs:
 - [ ] Mobile view: search feature for map optimized
 - [ ] Mobile view: contribute form responsive
 - [x] Tooltip on how the viz can be used (basic onboarding overlay + "About this map" button added — still needs: animated walkthrough, stakeholder-specific guidance, contribution flow tutorial)
+- [x] Contribute form: "How it works" popup explaining review process, AI enrichment, belief scores, and privacy
 - [ ] Entity/node information more condensed in detail panel -- right now, too overwhelming
 - [ ] Edge/All visualization: hide resources not attached to people/orgs
 - [ ] Resources visualization improvements
@@ -64,7 +65,8 @@ Open contribution from the public. Needs:
 - [ ] DB persistence ("transactions" db for merges, edits, etc.)
 - [ ] DB needs to be production tested (edge cases, traffic, etc.)
 - [ ] Data manual review (e.g., "Adolescence of Technology" vs "Technology Adolescence")
-- [x] Data enrichment: Tier 1 entities across all stakeholder categories (305 people, 461 orgs, 286 edges as of 4/1); all orgs now enriched
+- [x] Data enrichment: Tier 1 entities across all stakeholder categories (321 people, 430 orgs, 288 edges as of 4/1); all orgs now enriched
+- [x] Data cleanup: deduplicated 31 duplicate orgs (461 → 430), added 16 notable US AI figures (Pichai, Nadella, Tristan Harris, etc.)
 - [ ] Data enrichment: Tier 2 entities (policymakers, executives, labor/advocacy — script ready but not run)
 - [ ] Fix tagging between people and organizations (right now, many people are missing organizational tags)
 - [ ] Add missing organizations (may need Exa API)
@@ -141,6 +143,10 @@ Open contribution from the public. Needs:
 | Map: affiliated person click navigates properly | Sophia | 4/1 | Clicking affiliated person switches view, zooms to node, shows full details |
 | Election enrichment: PACs + candidates | Anushree | 3/31 | 6 PACs, 13 candidates, 16 edges via Exa; notes_html added to entity table |
 | Multi-category support (primary + secondary) | Anushree | 4/1 | other_categories on entity/submission; form checkboxes, map filter + detail badges |
+| Data cleanup: org deduplication | Sophia | 4/1 | 31 duplicate orgs merged (461 → 430); edges re-linked to canonical orgs |
+| Data cleanup: notable US figures added | Sophia | 4/1 | 16 people added (Pichai, Nadella, Tristan Harris, etc.) and enriched with stances |
+| enrich-deep.js DB compatibility fix | Sophia | 4/1 | Fixed column names (belief_* prefix), removed non-existent threat_models_detail |
+| Contribute form: "How it works" popup | Sophia | 4/1 | First-visit overlay explaining review, enrichment, belief scores, privacy |
 
 ---
 
