@@ -106,6 +106,7 @@ Open contribution from the public. Needs:
 | Academic category color fix | Anushree | 3/31 | #FFFF99 → #D4A017 (golden amber) |
 | Category chip active/inactive contrast | Anushree | 3/31 | Active=25% bg + full color, inactive=10% bg + faded |
 | Homepage View Map + Contribute buttons | Sophia | 3/31 | Two CTA buttons: primary (View Map) + secondary outline (Contribute) |
+| TIME100 AI 2025 seeding + enrichment | Sophia | 4/1 | 41 people, 38 orgs added with edges; all enriched with stances/timelines via Exa + Claude |
 
 ---
 
