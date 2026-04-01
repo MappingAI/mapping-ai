@@ -100,6 +100,18 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   letter-spacing: 0.1em; text-transform: uppercase;
   color: var(--text-3); margin-bottom: 0.4rem;
 }
+.view-mode-toggles { display: flex; gap: 0.3rem; margin-bottom: 0.4rem; }
+.mode-btn {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  padding: 0.35rem 0.6rem; border: 1px solid var(--line);
+  background: transparent; color: var(--text-3);
+  border-radius: 3px; cursor: pointer; transition: all 0.15s;
+  display: inline-flex; align-items: center; gap: 4px; font-weight: 600;
+}
+.mode-btn:hover { border-color: var(--text-3); color: var(--text-2); }
+.mode-btn.active { background: var(--text-1); color: var(--bg-panel); border-color: var(--text-1); }
+.mode-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
 .view-toggles { display: flex; gap: 0.2rem; }
 .view-btn {
   font-family: var(--mono); font-size: 9px;
@@ -282,7 +294,10 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
 .stance-legend-dot {
   width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
 }
-.node.dimmed { opacity: 0.2 !important; }
+.node.dimmed { opacity: 0.15 !important; transition: opacity 0.3s; }
+.node { transition: opacity 0.3s; }
+.connection-line.dimmed { opacity: 0.03 !important; }
+.connection-line.highlighted { opacity: 0.6 !important; stroke-width: 1.5 !important; }
 .node.highlighted .node-ring { stroke-width: 3 !important; stroke: #fff !important; }
 .node-image { opacity: 0.75; }
 .node:hover .node-image,
@@ -505,16 +520,34 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   </div>
   <div class="control-group">
     <h3>View</h3>
-    <div class="view-toggles">
+    <div class="view-mode-toggles">
+      <button class="mode-btn active" data-mode="network">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="3" cy="3" r="2"/><circle cx="11" cy="3" r="2"/><circle cx="7" cy="11" r="2"/><line x1="4.5" y1="4" x2="6" y2="9.5"/><line x1="9.5" y1="4" x2="8" y2="9.5"/></svg>
+        Network
+      </button>
+      <button class="mode-btn" data-mode="plot">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="3" cy="10" r="1.5" fill="currentColor"/><circle cx="6" cy="5" r="1.5" fill="currentColor"/><circle cx="10" cy="8" r="1.5" fill="currentColor"/><circle cx="11" cy="3" r="1.5" fill="currentColor"/></svg>
+        Plot
+      </button>
+    </div>
+    <div class="view-toggles" id="network-sub-tabs">
+      <button class="view-btn active" data-view="all">All</button>
       <button class="view-btn" data-view="orgs">Orgs</button>
       <button class="view-btn" data-view="people">People</button>
       <button class="view-btn" data-view="resources">Resources</button>
-      <button class="view-btn active" data-view="all">All</button>
-      <button class="view-btn" data-view="2d">Plot</button>
     </div>
   </div>
   <div class="control-group" id="category-filters">
-    <h3 style="display:flex;justify-content:space-between;align-items:center;">Category <span class="filter-reset" id="category-reset" style="font-size:8px;text-transform:none;letter-spacing:0;color:var(--accent);cursor:pointer;font-weight:400;">select all</span></h3>
+    <h3 style="display:flex;justify-content:space-between;align-items:center;">
+      <select id="cluster-by-select" style="font-family:var(--mono);font-size:9px;letter-spacing:0.04em;text-transform:uppercase;background:transparent;color:var(--text-1);border:none;cursor:pointer;font-weight:600;padding:0;margin:0;">
+        <option value="category">Category</option>
+        <option value="regulatory_stance">Regulatory Stance</option>
+        <option value="agi_timeline">AGI Timeline</option>
+        <option value="ai_risk_level">AI Risk Level</option>
+      </select>
+      <span class="filter-reset" id="category-reset" style="font-size:8px;text-transform:none;letter-spacing:0;color:var(--accent);cursor:pointer;font-weight:400;">select all</span>
+    </h3>
+    <div id="cluster-excluded-count" style="font-size:10px;color:var(--text-3);margin-bottom:4px;display:none;"></div>
     <div class="filter-chips" id="category-chips"></div>
   </div>
   <div class="control-group" id="stance-legend">
@@ -1028,9 +1061,12 @@ let currentView = 'all';
 let activeCategories = new Set();
 let allData = { people: [], organizations: [], resources: [], relationships: [], person_organizations: [] };
 let inferredLinks = [];
+let renderedLinks = [];
+let selectedNode = null;
 let simulation = null;
 let currentZoom = d3.zoomIdentity;
 let zoomBehavior = null;
+let clusterDimension = 'category';
 
 // Stance colors: single-hue gradient (warm amber → deep brown), distinct from all category colors
 const STANCE_COLORS = {
@@ -1043,6 +1079,52 @@ const STANCE_COLORS = {
   'Nationalize':   '#403010',   // very dark brown
 };
 const STANCE_ORDER = ['Accelerate','Light-touch','Targeted','Moderate','Restrictive','Precautionary','Nationalize'];
+
+// Timeline colors: blue gradient
+const TIMELINE_COLORS = {
+  'Already here':       '#c6dbef',
+  '2-3 years':          '#6baed6',
+  '5-10 years':         '#3182bd',
+  '10-25 years':        '#1c6ab0',
+  '25+ years or never': '#08519c',
+};
+const TIMELINE_ORDER = ['Already here','2-3 years','5-10 years','10-25 years','25+ years or never'];
+
+// Risk colors: red gradient
+const RISK_COLORS = {
+  'Overstated':    '#fee0d2',
+  'Manageable':    '#fc9272',
+  'Serious':       '#ef3b2c',
+  'Catastrophic':  '#cb181d',
+  'Existential':   '#99000d',
+};
+const RISK_ORDER = ['Overstated','Manageable','Serious','Catastrophic','Existential'];
+
+// Cluster dimension config
+function getDimensionColor(dim, val) {
+  if (dim === 'category') return getColor(val);
+  if (dim === 'regulatory_stance') return STANCE_COLORS[val] || DEFAULT_COLOR;
+  if (dim === 'agi_timeline') return TIMELINE_COLORS[val] || DEFAULT_COLOR;
+  if (dim === 'ai_risk_level') return RISK_COLORS[val] || DEFAULT_COLOR;
+  return DEFAULT_COLOR;
+}
+function getDimensionOrder(dim) {
+  if (dim === 'regulatory_stance') return STANCE_ORDER;
+  if (dim === 'agi_timeline') return TIMELINE_ORDER;
+  if (dim === 'ai_risk_level') return RISK_ORDER;
+  return null; // category uses CLUSTER_ORDER
+}
+// Get color for a node based on current cluster dimension
+function getClusterColor(d) {
+  return getDimensionColor(clusterDimension, d.clusterKey || d.category);
+}
+function getDimensionNodeKey(dim) {
+  if (dim === 'category') return null; // special handling
+  if (dim === 'regulatory_stance') return 'regulatory_stance';
+  if (dim === 'agi_timeline') return 'agi_timeline';
+  if (dim === 'ai_risk_level') return 'ai_risk_level';
+  return null;
+}
 let activeStances = new Set(STANCE_ORDER);
 let stanceFilterActive = false; // true when user has toggled any stance off
 
@@ -1170,55 +1252,69 @@ function getAllCats(entities, normalize = true) {
 }
 
 function buildFilters() {
+  const dim = clusterDimension;
+  const dimKey = getDimensionNodeKey(dim);
   let rawCats;
-  if (currentView === 'people') {
-    rawCats = [...new Set(getAllCats(allData.people))];
-  } else if (currentView === 'resources') {
-    rawCats = [...new Set(allData.resources.map(d => d.category || 'Other').filter(Boolean))];
-  } else if (currentView === '2d') {
-    const peopleCats = axis2dEntityType !== 'organizations' ? getAllCats(allData.people) : [];
-    const orgCats = axis2dEntityType !== 'people' ? getAllCats(allData.organizations) : [];
-    rawCats = [...new Set([...peopleCats, ...orgCats])];
+
+  if (dim !== 'category' && dimKey) {
+    // Non-category dimension: collect values from all relevant entities
+    const allEntities = [...allData.people, ...allData.organizations];
+    rawCats = [...new Set(allEntities.map(d => d[dimKey]).filter(Boolean))];
+    const order = getDimensionOrder(dim);
+    if (order) rawCats.sort((a, b) => order.indexOf(a) - order.indexOf(b));
   } else {
-    rawCats = [...new Set(getAllCats(allData.organizations))];
+    // Category dimension: use existing logic
+    if (currentView === 'people') {
+      rawCats = [...new Set(getAllCats(allData.people))];
+    } else if (currentView === 'resources') {
+      rawCats = [...new Set(allData.resources.map(d => d.category || 'Other').filter(Boolean))];
+    } else if (currentView === '2d') {
+      const peopleCats = axis2dEntityType !== 'organizations' ? getAllCats(allData.people) : [];
+      const orgCats = axis2dEntityType !== 'people' ? getAllCats(allData.organizations) : [];
+      rawCats = [...new Set([...peopleCats, ...orgCats])];
+    } else {
+      rawCats = [...new Set(getAllCats(allData.organizations))];
+    }
+    rawCats.sort((a, b) => {
+      const ia = CLUSTER_ORDER.indexOf(a);
+      const ib = CLUSTER_ORDER.indexOf(b);
+      return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib);
+    });
   }
-  const allCats = rawCats.sort((a, b) => {
-    const ia = CLUSTER_ORDER.indexOf(a);
-    const ib = CLUSTER_ORDER.indexOf(b);
-    return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib);
-  });
+  const allCats = rawCats;
 
   const container = document.getElementById('category-chips');
   container.innerHTML = '';
 
-  // Activate all categories when: first load, view switch (no overlap), or explicitly empty
+  // Activate all when: first load, view/dimension switch (no overlap), or empty
   const anyOverlap = allCats.some(cat => activeCategories.has(cat));
-  // Always activate all on first load or when view changes (categories shift completely)
-  const viewChanged = window._lastFilterView !== currentView;
+  const viewKey = currentView + ':' + dim;
+  const viewChanged = window._lastFilterView !== viewKey;
   const activateAll = viewChanged || !anyOverlap || activeCategories.size === 0;
-  window._lastFilterView = currentView;
+  window._lastFilterView = viewKey;
 
   const newActive = new Set();
   allCats.forEach(cat => {
+    const color = getDimensionColor(dim, cat);
     const chip = document.createElement('span');
     const isActive = activateAll || activeCategories.has(cat);
     chip.className = 'chip' + (isActive ? ' active' : '');
     chip.textContent = cat;
-    chip.style.background = getColor(cat) + (isActive ? '40' : '1a');
-    chip.style.color = isActive ? getColor(cat) : getColor(cat) + '88';
+    chip.style.background = color + (isActive ? '40' : '1a');
+    chip.style.color = isActive ? color : color + '88';
     chip.dataset.category = cat;
     if (isActive) newActive.add(cat);
     chip.addEventListener('click', () => {
       if (activeCategories.has(cat)) {
         activeCategories.delete(cat);
         chip.classList.remove('active');
-        chip.style.background = getColor(cat) + '1a';
-        chip.style.color = getColor(cat) + '88';
+        chip.style.background = color + '1a';
+        chip.style.color = color + '88';
       } else {
         activeCategories.add(cat);
         chip.classList.add('active');
-        chip.style.background = getColor(cat) + '40';
-        chip.style.color = getColor(cat);
+        chip.style.background = color + '40';
+        chip.style.color = color;
       }
       updateCategoryResetBtn();
       render();
@@ -1323,36 +1419,72 @@ document.getElementById('source-reset').addEventListener('click', () => {
   render();
 });
 
-// Restore saved view from localStorage
-const savedView = localStorage.getItem('mapView');
-if (savedView && ['orgs','people','resources','all','2d'].includes(savedView)) {
-  currentView = savedView;
-  document.querySelectorAll('[data-view]').forEach(b => {
-    b.classList.toggle('active', b.dataset.view === savedView);
-  });
-  if (savedView === '2d') {
-    document.getElementById('axis-controls').style.display = '';
-    document.getElementById('stance-legend').style.display = 'none';
-  }
-  const phMap0 = { orgs: 'Search orgs...', people: 'Search people...', resources: 'Search resources...' };
-  document.getElementById('search-input').placeholder = phMap0[savedView] || 'Search entities...';
+// ── View mode (Network / Plot) + sub-tabs ──
+let viewMode = localStorage.getItem('mapMode') || 'network';
+const savedSubView = localStorage.getItem('mapSubView') || 'all';
+
+function applyViewState() {
+  const is2D = viewMode === 'plot';
+  currentView = is2D ? '2d' : (localStorage.getItem('mapSubView') || 'all');
+  document.getElementById('axis-controls').style.display = is2D ? '' : 'none';
+  document.getElementById('stance-legend').style.display = is2D ? 'none' : '';
+  document.getElementById('network-sub-tabs').style.display = is2D ? 'none' : '';
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === viewMode));
+  document.querySelectorAll('#network-sub-tabs [data-view]').forEach(b => b.classList.toggle('active', b.dataset.view === currentView));
+  const phMap = { orgs: 'Search orgs...', people: 'Search people...', resources: 'Search resources...' };
+  document.getElementById('search-input').placeholder = phMap[currentView] || 'Search entities...';
+  buildFilters();
+  updateSourceTypeVisibility();
+  render();
 }
 
-document.querySelectorAll('[data-view]').forEach(btn => {
+// Restore saved state
+if (['orgs','people','resources','all'].includes(savedSubView)) {
+  currentView = viewMode === 'plot' ? '2d' : savedSubView;
+} else {
+  currentView = viewMode === 'plot' ? '2d' : 'all';
+}
+// Set initial UI state without triggering render (data not loaded yet)
+document.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === viewMode));
+document.querySelectorAll('#network-sub-tabs [data-view]').forEach(b => b.classList.toggle('active', b.dataset.view === currentView));
+if (viewMode === 'plot') {
+  document.getElementById('axis-controls').style.display = '';
+  document.getElementById('stance-legend').style.display = 'none';
+  document.getElementById('network-sub-tabs').style.display = 'none';
+}
+const phMap0 = { orgs: 'Search orgs...', people: 'Search people...', resources: 'Search resources...' };
+document.getElementById('search-input').placeholder = phMap0[currentView] || 'Search entities...';
+
+// Top-level mode buttons
+document.querySelectorAll('.mode-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    document.querySelectorAll('[data-view]').forEach(b => b.classList.remove('active'));
+    viewMode = btn.dataset.mode;
+    localStorage.setItem('mapMode', viewMode);
+    applyViewState();
+  });
+});
+
+// Network sub-tabs
+document.querySelectorAll('#network-sub-tabs [data-view]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#network-sub-tabs [data-view]').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     currentView = btn.dataset.view;
-    localStorage.setItem('mapView', currentView);
-    const is2D = currentView === '2d';
-    document.getElementById('axis-controls').style.display = is2D ? '' : 'none';
-    document.getElementById('stance-legend').style.display = is2D ? 'none' : '';
+    localStorage.setItem('mapSubView', currentView);
     const phMap = { orgs: 'Search orgs...', people: 'Search people...', resources: 'Search resources...' };
     document.getElementById('search-input').placeholder = phMap[currentView] || 'Search entities...';
-    buildFilters(); // rebuild category chips for new view context
-    updateSourceTypeVisibility(); // show/hide connector option based on view
+    buildFilters();
+    updateSourceTypeVisibility();
     render();
   });
+});
+
+// Cluster-by dimension dropdown
+document.getElementById('cluster-by-select').addEventListener('change', (e) => {
+  clusterDimension = e.target.value;
+  activeCategories = new Set(); // reset filters — will be rebuilt
+  buildFilters();
+  render();
 });
 
 // Axis mode toggle (1D / 2D)
@@ -1472,19 +1604,35 @@ const CLUSTER_ORDER = [
 
 function getVisibleNodes() {
   let nodes = [];
-  // Helper: check if a category (raw or normalized) is active
-  // Check if entity matches active category filters (primary OR other_categories)
-  const isCatActive = (rawCat, otherCats) => {
+  const dim = clusterDimension;
+  const dimKey = getDimensionNodeKey(dim);
+  let excludedCount = 0;
+
+  // Check if entity passes the active filter chips
+  const isFilterActive = (d) => {
+    if (dim !== 'category' && dimKey) {
+      // Non-category dimension: check the dimension value
+      const val = d[dimKey];
+      if (!val) return false; // null values excluded
+      return activeCategories.has(val);
+    }
+    // Category dimension
+    const rawCat = d.category || d._rawCategory;
     if (!rawCat) return false;
     if (activeCategories.has(rawCat) || activeCategories.has(normalizeCategory(rawCat))) return true;
-    // Also check other_categories
-    if (otherCats) {
-      const extras = otherCats.split(',').map(s => s.trim()).filter(Boolean);
+    if (d.other_categories) {
+      const extras = d.other_categories.split(',').map(s => s.trim()).filter(Boolean);
       for (const c of extras) {
         if (activeCategories.has(c) || activeCategories.has(normalizeCategory(c))) return true;
       }
     }
     return false;
+  };
+
+  // Get clusterKey for a node based on current dimension
+  const getClusterKey = (d, displayCat) => {
+    if (dim !== 'category' && dimKey) return d[dimKey] || null;
+    return displayCat;
   };
 
   // Build org lookup for mapping people to their org's sector
@@ -1499,8 +1647,8 @@ function getVisibleNodes() {
 
   // Count total for scaling
   let totalCount = 0;
-  if (currentView === 'orgs' || currentView === 'all') totalCount += allData.organizations.filter(d => d.category && isCatActive(d.category, d.other_categories) && passesStanceFilter(d) && passesSourceTypeFilter(d)).length;
-  if (currentView === 'people' || currentView === 'all') totalCount += allData.people.filter(d => d.category && isCatActive(d.category, d.other_categories) && passesStanceFilter(d) && passesSourceTypeFilter(d)).length;
+  if (currentView === 'orgs' || currentView === 'all') totalCount += allData.organizations.filter(d => d.category && isFilterActive(d) && passesStanceFilter(d) && passesSourceTypeFilter(d)).length;
+  if (currentView === 'people' || currentView === 'all') totalCount += allData.people.filter(d => d.category && isFilterActive(d) && passesStanceFilter(d) && passesSourceTypeFilter(d)).length;
   if (currentView === 'resources' || currentView === 'all') totalCount += allData.resources.filter(d => passesSourceTypeFilter(d)).length;
 
   // Scale: gentler curve — 1.0 at 40, 0.7 at 100, 0.55 at 200
@@ -1508,14 +1656,16 @@ function getVisibleNodes() {
 
   if (currentView === 'orgs' || currentView === 'all') {
     allData.organizations.forEach(d => {
-      if (!d.category || !isCatActive(d.category, d.other_categories)) return;
+      if (!d.category || !isFilterActive(d)) return;
       if (!passesStanceFilter(d)) return;
       if (!passesSourceTypeFilter(d)) return;
       const sc = d.submission_count || 1;
       const baseR = currentView === 'all' ? 14 : 18;
       const r = Math.round((baseR + Math.min(Math.floor(sc / 3), 3)) * scale);
       const normCat = normalizeCategory(d.category);
-      nodes.push({ ...d, category: normCat, _rawCategory: d.category, entityType: 'organization', radius: r, submissionCount: sc });
+      const ck = getClusterKey(d, normCat);
+      if (dim !== 'category' && !ck) { excludedCount++; return; }
+      nodes.push({ ...d, category: normCat, _rawCategory: d.category, clusterKey: ck || normCat, entityType: 'organization', radius: r, submissionCount: sc });
     });
   }
   if (currentView === 'people' || currentView === 'all') {
@@ -1523,7 +1673,7 @@ function getVisibleNodes() {
       if (!d.category) return;
       // In "all" view, people are clustered by their org's sector, so filter by the
       // display category (org sector) not their personal role category
-      if (currentView === 'people' && !isCatActive(d.category, d.other_categories)) return;
+      if (currentView === 'people' && !isFilterActive(d)) return;
       // In "all" view, always include people (they'll be mapped to an org sector cluster)
       if (!passesStanceFilter(d)) return;
       if (!passesSourceTypeFilter(d)) return;
@@ -1562,7 +1712,9 @@ function getVisibleNodes() {
 
       const baseR = currentView === 'all' ? 8 : 14; // bigger in solo people view
       const r = Math.round((baseR + Math.min(Math.floor(sc / 3), 2)) * scale);
-      nodes.push({ ...d, category: displayCat, _rawCategory: d.category, entityType: 'person', radius: r, submissionCount: sc });
+      const ck = getClusterKey(d, displayCat);
+      if (dim !== 'category' && !ck) { excludedCount++; return; }
+      nodes.push({ ...d, category: displayCat, _rawCategory: d.category, clusterKey: ck || displayCat, entityType: 'person', radius: r, submissionCount: sc });
     });
   }
   if (currentView === 'resources') {
@@ -1571,7 +1723,7 @@ function getVisibleNodes() {
       const cat = d.category || 'Other'; // cluster by topic category in resources view
       const sc = d.submission_count || 1;
       const r = Math.round((14 + Math.min(Math.floor(sc / 3), 3)) * scale);
-      nodes.push({ ...d, name: d.title, category: cat, entityType: 'resource', radius: r, submissionCount: sc, isResource: true });
+      nodes.push({ ...d, name: d.title, category: cat, clusterKey: cat, entityType: 'resource', radius: r, submissionCount: sc, isResource: true });
     });
   } else if (currentView === 'all') {
     allData.resources.forEach(d => {
@@ -1579,9 +1731,19 @@ function getVisibleNodes() {
       const sc = d.submission_count || 1;
       const r = Math.round((10 + Math.min(Math.floor(sc / 3), 3)) * scale);
       const _sector = resourceCategoryToSector(d.category);
-      nodes.push({ ...d, name: d.title, category: 'Resources', _rawCategory: d.category, _sector, entityType: 'resource', radius: r, submissionCount: sc, isResource: true });
+      nodes.push({ ...d, name: d.title, category: 'Resources', clusterKey: 'Resources', _rawCategory: d.category, _sector, entityType: 'resource', radius: r, submissionCount: sc, isResource: true });
     });
   }
+
+  // Update excluded count badge
+  const badge = document.getElementById('cluster-excluded-count');
+  if (excludedCount > 0 && dim !== 'category') {
+    badge.textContent = `${excludedCount} entities without data`;
+    badge.style.display = '';
+  } else {
+    badge.style.display = 'none';
+  }
+
   return nodes;
 }
 
@@ -1622,18 +1784,19 @@ function render() {
   document.getElementById('entity-count').textContent = `${nodes.length} entities`;
   if (nodes.length === 0) return;
 
-  // Order categories semantically, filter out "Resources" from cluster layout in "all" view
-  const rawCats = [...new Set(nodes.map(d => d.category))];
+  // Order clusters semantically, filter out "Resources" from cluster layout in "all" view
+  const rawCats = [...new Set(nodes.map(d => d.clusterKey))];
   const displayCats = currentView === 'all' ? rawCats.filter(c => c !== 'Resources') : rawCats;
+  const dimOrder = getDimensionOrder(clusterDimension) || CLUSTER_ORDER;
   const categories = displayCats.sort((a, b) => {
-    const ia = CLUSTER_ORDER.indexOf(a);
-    const ib = CLUSTER_ORDER.indexOf(b);
+    const ia = dimOrder.indexOf(a);
+    const ib = dimOrder.indexOf(b);
     return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib);
   });
 
-  // Count members per category for size-weighted positioning
+  // Count members per cluster for size-weighted positioning
   const catCounts = {};
-  nodes.forEach(d => { catCounts[d.category] = (catCounts[d.category] || 0) + 1; });
+  nodes.forEach(d => { catCounts[d.clusterKey] = (catCounts[d.clusterKey] || 0) + 1; });
 
   const clusterCenters = {};
   const controlsWidth = 280;
@@ -1656,12 +1819,12 @@ function render() {
   (allData.relationships || []).forEach(rel => {
     const src = nodeById[`${rel.source_type}-${rel.source_id}`];
     const tgt = nodeById[`${rel.target_type}-${rel.target_id}`];
-    if (src && tgt) addCatLink(src.category, tgt.category);
+    if (src && tgt) addCatLink(src.clusterKey, tgt.clusterKey);
   });
   inferredLinks.forEach(l => {
     const p = nodes.find(n => n.name === l.personName);
     const o = nodes.find(n => n.name === l.orgName);
-    if (p && o) addCatLink(p.category, o.category);
+    if (p && o) addCatLink(p.clusterKey, o.clusterKey);
   });
 
   // Position clusters using greedy nearest-neighbour on connection density
@@ -1751,12 +1914,12 @@ function render() {
     .attr('cx', d => clusterCenters[d].x)
     .attr('cy', d => clusterCenters[d].y)
     .attr('r', d => {
-      const count = nodes.filter(n => n.category === d).length;
+      const count = nodes.filter(n => n.clusterKey === d).length;
       return Math.max(50, Math.sqrt(count) * 28);
     })
-    .attr('fill', d => getColor(d))
+    .attr('fill', d => getDimensionColor(clusterDimension, d))
     .attr('opacity', 0.06)
-    .attr('stroke', d => getColor(d))
+    .attr('stroke', d => getDimensionColor(clusterDimension, d))
     .attr('stroke-width', 0.5)
     .attr('stroke-opacity', 0.15);
 
@@ -1809,6 +1972,7 @@ function render() {
     const o = nodes.find(n => n.name === l.orgName);
     if (p && o) allLinks.push({ source: p, target: o });
   });
+  renderedLinks = allLinks;
 
   // Simulation
   if (simulation) simulation.stop();
@@ -1836,6 +2000,8 @@ function render() {
     .on('click', (event, d) => {
       event.stopPropagation();
       showDetail(d, nodes);
+      selectedNode = d;
+      if (currentView === 'all') dimUnconnected(d);
       const k = 3;
       const t = d3.zoomIdentity.translate(width / 2 - k * d.x, height / 2 - k * d.y).scale(k);
       svg.transition().duration(500).call(zoomBehavior.transform, t);
@@ -1885,7 +2051,7 @@ function render() {
         .attr('patternContentUnits', 'objectBoundingBox');
       pat.append('rect')
         .attr('width', 1).attr('height', 1)
-        .attr('fill', d.entityType === 'organization' ? '#fff' : getColor(d.category));
+        .attr('fill', d.entityType === 'organization' ? '#fff' : getClusterColor(d));
       pat.append('image')
         .attr('href', url)
         .attr('width', 1).attr('height', 1)
@@ -1893,16 +2059,16 @@ function render() {
       const nodeEl = d3.select(nodeGroup.nodes()[i]);
       if (nodeEl.node()) {
         nodeEl.select('text').remove(); // remove initials now that image loaded
-        nodeEl.insert('circle', '.stance-pip')
+        nodeEl.insert('circle', 'text')
           .attr('class', 'node-image')
           .attr('r', r - (d.entityType === 'organization' ? 2 : 1))
           .attr('fill', `url(#${patId})`)
           .attr('clip-path', `url(#${id})`);
-        nodeEl.insert('circle', '.stance-pip')
+        nodeEl.insert('circle', 'text')
           .attr('class', 'node-ring')
           .attr('r', r)
           .attr('fill', 'none')
-          .attr('stroke', getColor(d.category))
+          .attr('stroke', getClusterColor(d))
           .attr('stroke-width', 2)
           .attr('opacity', 0.8);
       }
@@ -1960,9 +2126,9 @@ function render() {
   nodeGroup.filter(d => !d.isResource).append('circle')
     .attr('class', 'node-bg')
     .attr('r', d => d.radius)
-    .attr('fill', d => getColor(d.category))
+    .attr('fill', d => getClusterColor(d))
     .attr('stroke', d => d.entityType === 'organization'
-      ? d3.color(getColor(d.category)).brighter(0.8) : 'none')
+      ? d3.color(getClusterColor(d)).brighter(0.8) : 'none')
     .attr('stroke-width', d => d.entityType === 'organization' ? 1.5 : 0)
     .attr('opacity', d => d.entityType === 'organization' ? 0.9 : 0.7);
 
@@ -2018,18 +2184,6 @@ function render() {
     });
   });
 
-  // Stance indicator (small colored pip at bottom-right of node)
-  nodeGroup.filter(d => getStanceColor(d.regulatory_stance))
-    .append('circle')
-    .attr('class', 'stance-pip')
-    .attr('cx', d => d.radius * 0.65)
-    .attr('cy', d => d.radius * 0.65)
-    .attr('r', d => Math.max(2, d.radius * 0.2))
-    .attr('fill', d => getStanceColor(d.regulatory_stance))
-    .attr('stroke', 'var(--bg-page)')
-    .attr('stroke-width', d => d.radius >= 10 ? 1.5 : 0.75)
-    .attr('pointer-events', 'none');
-
   // Submission count indicator — subtle gold outer ring for entities with 5+ submissions
   nodeGroup.filter(d => (d.submissionCount || 0) >= 5 && !d.isResource)
     .append('circle')
@@ -2061,7 +2215,7 @@ function render() {
   // Position labels on the outer edge of each cluster, radiating away from center
   function getLabelPos(cat) {
     const c = clusterCenters[cat];
-    const count = nodes.filter(n => n.category === cat).length;
+    const count = nodes.filter(n => n.clusterKey === cat).length;
     const clusterR = Math.max(50, Math.sqrt(count) * 28);
     // Direction from map center to cluster center
     const dx = c.x - centerX;
@@ -2102,7 +2256,7 @@ function render() {
     .attr('text-anchor', d => getLabelPos(d).anchor)
     .attr('font-size', '9px')
     .attr('font-weight', '500')
-    .attr('fill', d => getColor(d))
+    .attr('fill', d => getDimensionColor(clusterDimension, d))
     .attr('opacity', 1)
     .attr('pointer-events', 'none')
     .text(d => d);
@@ -2117,14 +2271,14 @@ function render() {
   }
 
   // Click background to close panel
-  svg.on('click', () => document.getElementById('detail-panel').classList.remove('open'));
+  svg.on('click', () => { document.getElementById('detail-panel').classList.remove('open'); clearSelection(); });
 }
 
 function forceCluster(centers, strength) {
   let nodes;
   function force(alpha) {
     nodes.forEach(d => {
-      const c = centers[d.category];
+      const c = centers[d.clusterKey || d.category];
       if (!c) return;
       d.vx += (c.x - d.x) * alpha * strength;
       d.vy += (c.y - d.y) * alpha * strength;
@@ -2272,18 +2426,6 @@ function render2D(svg, g, width, height) {
         : (d.name || '').slice(0, 2).toUpperCase();
     });
 
-  // Stance pip
-  nodeGroup.filter(d => getStanceColor(d.regulatory_stance))
-    .append('circle')
-    .attr('class', 'stance-pip')
-    .attr('cx', d => d.radius * 0.65)
-    .attr('cy', d => d.radius * 0.65)
-    .attr('r', d => Math.max(2, d.radius * 0.2))
-    .attr('fill', d => getStanceColor(d.regulatory_stance))
-    .attr('stroke', 'var(--bg-page)')
-    .attr('stroke-width', 1.5)
-    .attr('pointer-events', 'none');
-
   // Submission count ring (5+ submissions)
   nodeGroup.filter(d => (d.submissionCount || 0) >= 5)
     .append('circle')
@@ -2316,12 +2458,12 @@ function render2D(svg, g, width, height) {
       const nodeEl = d3.select(nodeGroup.nodes()[i]);
       if (nodeEl.node()) {
         nodeEl.select('text').remove(); // remove initials now that image loaded
-        nodeEl.insert('circle', '.stance-pip')
+        nodeEl.insert('circle', 'text')
           .attr('class', 'node-image')
           .attr('r', r - (d.entityType === 'organization' ? 2 : 1))
           .attr('fill', `url(#${patId})`)
           .attr('clip-path', `url(#${clipId})`);
-        nodeEl.insert('circle', '.stance-pip')
+        nodeEl.insert('circle', 'text')
           .attr('r', r).attr('fill', 'none')
           .attr('stroke', getColor(normalizeCategory(d.category)))
           .attr('stroke-width', 2).attr('opacity', 0.8);
@@ -2370,7 +2512,7 @@ function render2D(svg, g, width, height) {
     .on('tick', () => { nodeGroup.attr('transform', d => `translate(${d.x},${d.y})`); })
     .on('end', () => simulation.alphaDecay(0.04));
 
-  svg.on('click', () => document.getElementById('detail-panel').classList.remove('open'));
+  svg.on('click', () => { document.getElementById('detail-panel').classList.remove('open'); clearSelection(); });
 }
 
 function drawAxes2D(g, xAxisDef, yAxisDef, xScale, yScale, controlsWidth, margin, plotW, plotH, width, height) {
@@ -3002,6 +3144,42 @@ function highlightNodes(names) {
   d3.selectAll('.cluster-bg').attr('opacity', anyVisible ? 0.02 : 0.06);
   d3.selectAll('.cluster-label-bg').attr('opacity', anyVisible ? 0.02 : 0.85);
   d3.selectAll('.cluster-label').attr('opacity', anyVisible ? 0.05 : 1);
+}
+
+// Dim all nodes/edges NOT connected to the selected node
+function dimUnconnected(node) {
+  if (!node) return;
+  const connectedNames = new Set([node.name]);
+  renderedLinks.forEach(l => {
+    const srcName = l.source.name || l.source;
+    const tgtName = l.target.name || l.target;
+    if (srcName === node.name) connectedNames.add(tgtName);
+    if (tgtName === node.name) connectedNames.add(srcName);
+  });
+  d3.selectAll('.node').each(function(d) {
+    const el = d3.select(this);
+    const isConnected = connectedNames.has(d.name);
+    el.classed('dimmed', !isConnected).classed('highlighted', isConnected);
+  });
+  d3.selectAll('.connection-line').each(function(d) {
+    const el = d3.select(this);
+    const srcName = (d.source && d.source.name) || '';
+    const tgtName = (d.target && d.target.name) || '';
+    const isConnected = connectedNames.has(srcName) && connectedNames.has(tgtName);
+    el.classed('dimmed', !isConnected).classed('highlighted', isConnected);
+  });
+  d3.selectAll('.cluster-bg').attr('opacity', 0.02);
+  d3.selectAll('.cluster-label-bg').attr('opacity', 0.02);
+  d3.selectAll('.cluster-label').attr('opacity', 0.05);
+}
+
+function clearSelection() {
+  selectedNode = null;
+  d3.selectAll('.node').classed('dimmed', false).classed('highlighted', false);
+  d3.selectAll('.connection-line').classed('dimmed', false).classed('highlighted', false);
+  d3.selectAll('.cluster-bg').attr('opacity', 0.06);
+  d3.selectAll('.cluster-label-bg').attr('opacity', 0.85);
+  d3.selectAll('.cluster-label').attr('opacity', 1);
 }
 
 function clearSearch() {
