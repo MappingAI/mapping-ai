@@ -51,7 +51,7 @@ Open contribution from the public. Needs:
 
 - [ ] Mobile view: search feature for map optimized
 - [ ] Mobile view: contribute form responsive
-- [ ] Tooltip on how the viz can be used (basic onboarding overlay + "About this map" button added — still needs: animated walkthrough, stakeholder-specific guidance, contribution flow tutorial)
+- [x] Tooltip on how the viz can be used (basic onboarding overlay + "About this map" button added — still needs: animated walkthrough, stakeholder-specific guidance, contribution flow tutorial)
 - [ ] Entity/node information more condensed in detail panel -- right now, too overwhelming
 - [ ] Edge/All visualization: hide resources not attached to people/orgs
 - [ ] Resources visualization improvements
@@ -64,7 +64,7 @@ Open contribution from the public. Needs:
 - [ ] DB persistence ("transactions" db for merges, edits, etc.)
 - [ ] DB needs to be production tested (edge cases, traffic, etc.)
 - [ ] Data manual review (e.g., "Adolescence of Technology" vs "Technology Adolescence")
-- [x] Data enrichment: Tier 1 entities across all stakeholder categories (305 people, 461 orgs, 286 edges as of 4/1)
+- [x] Data enrichment: Tier 1 entities across all stakeholder categories (305 people, 461 orgs, 286 edges as of 4/1); all orgs now enriched
 - [ ] Data enrichment: Tier 2 entities (policymakers, executives, labor/advocacy — script ready but not run)
 - [ ] Fix tagging between people and organizations (right now, many people are missing organizational tags)
 - [ ] Add missing organizations (may need Exa API)
@@ -80,7 +80,7 @@ Open contribution from the public. Needs:
 
 ## UI/UX
 - [x] Contribute form dropdown has weird lines (fixed CSS border artifact)
-- [ ] Contribute form: replace "Clear" with select/deselect toggle for dropdowns
+- [x] Contribute form: replace "Clear" with select/deselect toggle for dropdowns (click-to-deselect, grey background on selected, fixed column width expansion)
 - [ ] Contribute form: move "Your Relationship" section to the very top
 - [ ] Contribute form: make adding an org more obvious/discoverable
 - [ ] Theory of Change: revise "existing landscape" sentence (too dramatic/cosmetic)
@@ -127,6 +127,13 @@ Open contribution from the public. Needs:
 | Tier 1 data seeding: Ethics/Govt/Cultural | Sophia | 4/1 | 28 people, 13 orgs added; enriched (~$3.72) |
 | Expanded academics list (user consolidated) | Sophia | 4/1 | 37 people, 18 orgs added (political economy, law, STS, AI safety, discourse); enriched (~$4.90) |
 | Full enrichment pipeline run | Sophia | 4/1 | All new entities enriched + pushed to production; final counts: 305 people, 461 orgs, 286 edges |
+| Organization enrichment (all 99 unenriched) | Sophia | 4/1 | All 461 orgs now have stance/timeline/risk data; 97 orgs enriched via Exa + Claude (~$8.69) |
+| URL validation bug fix | Sophia | 4/1 | Changed from type="url" to type="text" with auto-prefix; accepts any TLD (.gov, .ai, etc.) |
+| affiliatedOrgIds storage fix | Sophia | 4/1 | Added JSONB column to submission table; backend creates edges on approve/merge |
+| Utility scripts schema migration | Sophia | 4/1 | 11 scripts updated from old tables to unified entity table |
+| Dropdown UX improvements | Sophia | 4/1 | Click-to-deselect, grey background on selected, fixed column width with text truncation |
+| Map: show stance detail in detail panel | Sophia | 4/1 | regulatory_stance_detail now displayed for people and orgs |
+| Map: affiliated person click navigates properly | Sophia | 4/1 | Clicking affiliated person switches view, zooms to node, shows full details |
 
 ---
 
