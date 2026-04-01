@@ -161,6 +161,22 @@ async function migrate() {
     await client.query(`ALTER TABLE submission ADD COLUMN IF NOT EXISTS parent_org_id INTEGER`);
     console.log('  ✓ schema migrations');
 
+    // ── 4c. contributor_keys table ──────────────────────────────────────────────
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS contributor_keys (
+        id SERIAL PRIMARY KEY,
+        key_hash VARCHAR(64) NOT NULL UNIQUE,   -- SHA256 of key (never store plaintext)
+        name VARCHAR(200) NOT NULL,             -- Contributor name
+        email VARCHAR(200),                     -- Contact email
+        daily_limit INTEGER DEFAULT 250,        -- Max submissions per day
+        created_at TIMESTAMPTZ DEFAULT NOW(),
+        revoked_at TIMESTAMPTZ                  -- NULL = active, set = revoked
+      )
+    `);
+    await client.query(`ALTER TABLE submission ADD COLUMN IF NOT EXISTS contributor_key_id INTEGER REFERENCES contributor_keys(id)`);
+    await client.query('CREATE INDEX IF NOT EXISTS idx_sub_contributor ON submission(contributor_key_id)');
+    console.log('  ✓ contributor_keys');
+
     // ── 5. Score recalculation function ──────────────────────────────────────
     // Weights: self=10, connector=2, external=1
     // _n counts only submissions with a non-null score for that field
