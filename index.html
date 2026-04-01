@@ -178,6 +178,14 @@ a:hover { text-decoration: underline; }
   margin-bottom: 2.5rem;
 }
 .cta-btn:hover { opacity: 0.85; text-decoration: none; }
+.cta-btn.secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--text-primary);
+}
+.cta-btn.secondary:hover { background: var(--bg-secondary); }
+.cta-buttons { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+.cta-buttons .cta-btn { margin-bottom: 0; }
 @media (max-width: 600px) {
   .grid { grid-template-columns: 1fr; }
   .form.active { grid-template-columns: 1fr; }
@@ -311,7 +319,10 @@ a:hover { text-decoration: underline; }
 
 <div class="doc">
   <h1>Mapping the U.S. AI Policy Landscape</h1>
-  <a href="/contribute" class="cta-btn">Contribute to the Map</a>
+  <div class="cta-buttons">
+    <a href="/map" class="cta-btn">View Map</a>
+    <a href="/contribute" class="cta-btn secondary">Contribute</a>
+  </div>
 
   <div id="what" class="section-label fade-in">What</div>
   <p class="fade-in">We are building a comprehensive map of the individuals and groups with the potential to shape AI policy in the United States. The goal is to produce a structured, shareable, and dynamic resource that identifies <span class="emph">who is working on what, where the gaps are, and which partnerships might form</span> across ideological and organizational lines.</p>
