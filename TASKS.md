@@ -59,6 +59,12 @@ Open contribution from the public. Needs:
 - [ ] Entity sizing based on importance (LLM)
 - [x] Decisionmaker/influence: support multiple hats via "tags" (implemented as other_categories — primary + secondary categories)
 - [x] People: support multiple roles (e.g., Researcher + Policymaker) (multi-select checkboxes on form, filter matches both primary + secondary, detail panel shows badges)
+- [x] Gray out unconnected nodes on selection (in "all" view: clicking a node dims unconnected nodes/edges)
+- [x] Network/Plot view restructuring (two top-level tabs with icons + network sub-tabs)
+- [x] Cluster-by-dimension dropdown (cluster by Category, Regulatory Stance, AGI Timeline, or AI Risk Level)
+- [x] Remove stance color pips from nodes (stance is now a clustering dimension)
+- [x] Form: move "Your Relationship" to top, rename Name/Role/Category labels for clarity
+- [x] Form: click-to-deselect on custom dropdowns + tag dropdown for other categories
 - [ ] Community page (e.g., community Slack link/signup)
 
 ## Data
@@ -143,6 +149,8 @@ Open contribution from the public. Needs:
 | Map: affiliated person click navigates properly | Sophia | 4/1 | Clicking affiliated person switches view, zooms to node, shows full details |
 | Election enrichment: PACs + candidates | Anushree | 3/31 | 6 PACs, 13 candidates, 16 edges via Exa; notes_html added to entity table |
 | Multi-category support (primary + secondary) | Anushree | 4/1 | other_categories on entity/submission; form checkboxes, map filter + detail badges |
+| Map viz overhaul: gray out, view restructure, cluster-by | Anushree | 4/1 | Gray out unconnected nodes, Network/Plot tabs, cluster by stance/timeline/risk/category, remove pips |
+| Form UX: relationship at top, click-to-deselect, tag dropdown | Anushree | 4/1 | Relationship field moved to top, label renames, click-to-deselect, tag-input for other categories |
 | Data cleanup: org deduplication | Sophia | 4/1 | 31 duplicate orgs merged (461 → 430); edges re-linked to canonical orgs |
 | Data cleanup: notable US figures added | Sophia | 4/1 | 16 people added (Pichai, Nadella, Tristan Harris, etc.) and enriched with stances |
 | enrich-deep.js DB compatibility fix | Sophia | 4/1 | Fixed column names (belief_* prefix), removed non-existent threat_models_detail |
