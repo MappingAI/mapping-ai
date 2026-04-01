@@ -143,21 +143,26 @@ details[open] summary { border-bottom: 1px solid var(--border); }
   outline: none; border-color: var(--text-secondary);
 }
 .field textarea { resize: vertical; min-height: 80px; }
-/* Other categories checkboxes */
-.other-categories-checkboxes {
-  display: flex; flex-wrap: wrap; gap: 0.4rem;
+/* Other categories tag dropdown */
+.other-cat-tags { position: relative; }
+.other-cat-add-btn {
+  font-family: var(--mono); font-size: 11px;
+  background: none; border: 1px dashed var(--border); border-radius: 3px;
+  padding: 4px 10px; cursor: pointer; color: var(--text-secondary);
 }
-.cat-check {
-  display: inline-flex; align-items: center; gap: 4px;
-  padding: 4px 10px; border-radius: 12px; cursor: pointer;
-  font-size: 13px; border: 1px solid var(--border); background: var(--bg-primary);
-  transition: all 0.15s;
+.other-cat-add-btn:hover { border-color: var(--text-secondary); color: var(--text-primary); }
+.other-cat-dropdown {
+  display: none; position: absolute; top: 100%; left: 0; right: 0; z-index: 42;
+  background: var(--bg-primary); border: 1px solid var(--border); border-radius: 4px;
+  max-height: 200px; overflow-y: auto; margin-top: 4px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
-.cat-check:hover { border-color: var(--text-secondary); }
-.cat-check input { display: none; }
-.cat-check:has(input:checked) {
-  background: var(--accent); color: #fff; border-color: var(--accent);
+.other-cat-dropdown.open { display: block; }
+.other-cat-option {
+  padding: 6px 10px; cursor: pointer; font-size: 13px;
+  display: flex; align-items: center; gap: 6px;
 }
+.other-cat-option:hover { background: var(--bg-secondary); }
 /* Checkbox groups */
 .checkbox-group {
   display: grid;
@@ -931,11 +936,19 @@ details[open] summary { border-bottom: 1px solid var(--border); }
   <form id="person-form" class="form active" data-type="person">
     <input type="text" name="_hp" class="honeypot" tabindex="-1" autocomplete="off">
     <div class="field">
-      <label>Name *</label>
+      <label>Person's Name *</label>
       <input type="text" name="name" required>
     </div>
+    <div class="field full">
+      <label>Your relationship to this entry (optional) <span class="clear-link" data-target="person-relationship">clear</span></label>
+      <div class="radio-group" id="person-relationship">
+        <label><input type="radio" name="submitterRelationship" value="I am this person"> I am this person</label>
+        <label><input type="radio" name="submitterRelationship" value="I can connect you with this person"> I can connect you with this person</label>
+      </div>
+      <span class="helper">Helps us prioritize reviews and connect contributors</span>
+    </div>
     <div class="field">
-      <label>Role</label>
+      <label>Primary Role</label>
       <select name="category">
         <option value=""></option>
         <option value="Executive">Executive (CEO, CTO, founder)</option>
@@ -949,16 +962,10 @@ details[open] summary { border-bottom: 1px solid var(--border); }
       </select>
     </div>
     <div class="field other-categories-field" style="display:none;">
-      <label>Additional roles <span style="font-weight:400;color:var(--text-3);">(select all that apply)</span></label>
-      <div class="other-categories-checkboxes" data-form="person">
-        <label class="cat-check"><input type="checkbox" value="Executive"><span>Executive</span></label>
-        <label class="cat-check"><input type="checkbox" value="Researcher"><span>Researcher</span></label>
-        <label class="cat-check"><input type="checkbox" value="Policymaker"><span>Policymaker</span></label>
-        <label class="cat-check"><input type="checkbox" value="Investor"><span>Investor</span></label>
-        <label class="cat-check"><input type="checkbox" value="Organizer"><span>Organizer</span></label>
-        <label class="cat-check"><input type="checkbox" value="Journalist"><span>Journalist</span></label>
-        <label class="cat-check"><input type="checkbox" value="Academic"><span>Academic</span></label>
-        <label class="cat-check"><input type="checkbox" value="Cultural figure"><span>Cultural figure</span></label>
+      <label>Other roles/tags</label>
+      <div class="tag-input-wrapper other-cat-tags" data-form="person">
+        <button type="button" class="other-cat-add-btn">+ Add</button>
+        <div class="other-cat-dropdown"></div>
       </div>
       <input type="hidden" name="otherCategories">
     </div>
@@ -1097,13 +1104,6 @@ details[open] summary { border-bottom: 1px solid var(--border); }
       <input type="email" name="submitterEmail">
       <span class="helper">We'll only use this to follow up if we have questions. It won't be published or shared.</span>
     </div>
-    <div class="field full">
-      <label>Your relationship (optional) <span class="clear-link" data-target="person-relationship">clear</span></label>
-      <div class="radio-group" id="person-relationship">
-        <label><input type="radio" name="submitterRelationship" value="I am this person"> I am this person</label>
-        <label><input type="radio" name="submitterRelationship" value="I can connect you with this person"> I can connect you with this person</label>
-      </div>
-    </div>
     <button type="submit" class="submit">Submit Person</button>
   </form>
 
@@ -1111,11 +1111,19 @@ details[open] summary { border-bottom: 1px solid var(--border); }
   <form id="organization-form" class="form" data-type="organization">
     <input type="text" name="_hp" class="honeypot" tabindex="-1" autocomplete="off">
     <div class="field">
-      <label>Name *</label>
+      <label>Organization's Name *</label>
       <input type="text" name="name" required>
     </div>
+    <div class="field full">
+      <label>Your relationship to this entry (optional) <span class="clear-link" data-target="org-relationship">clear</span></label>
+      <div class="radio-group" id="org-relationship">
+        <label><input type="radio" name="submitterRelationship" value="I represent this organization"> I represent this organization</label>
+        <label><input type="radio" name="submitterRelationship" value="I can connect you with this organization"> I can connect you with this organization</label>
+      </div>
+      <span class="helper">Helps us prioritize reviews and connect contributors</span>
+    </div>
     <div class="field">
-      <label>Category</label>
+      <label>Primary Category</label>
       <select name="category">
         <option value=""></option>
         <option value="Frontier Lab">Frontier Lab</option>
@@ -1131,18 +1139,10 @@ details[open] summary { border-bottom: 1px solid var(--border); }
       </select>
     </div>
     <div class="field other-categories-field" style="display:none;">
-      <label>Additional sectors <span style="font-weight:400;color:var(--text-3);">(select all that apply)</span></label>
-      <div class="other-categories-checkboxes" data-form="organization">
-        <label class="cat-check"><input type="checkbox" value="Frontier Lab"><span>Frontier Lab</span></label>
-        <label class="cat-check"><input type="checkbox" value="AI Safety/Alignment"><span>AI Safety/Alignment</span></label>
-        <label class="cat-check"><input type="checkbox" value="Think Tank/Policy Org"><span>Think Tank/Policy Org</span></label>
-        <label class="cat-check"><input type="checkbox" value="Government/Agency"><span>Government/Agency</span></label>
-        <label class="cat-check"><input type="checkbox" value="Academic"><span>Academic</span></label>
-        <label class="cat-check"><input type="checkbox" value="VC/Capital/Philanthropy"><span>VC/Capital/Philanthropy</span></label>
-        <label class="cat-check"><input type="checkbox" value="Labor/Civil Society"><span>Labor/Civil Society</span></label>
-        <label class="cat-check"><input type="checkbox" value="Ethics/Bias/Rights"><span>Ethics/Bias/Rights</span></label>
-        <label class="cat-check"><input type="checkbox" value="Media/Journalism"><span>Media/Journalism</span></label>
-        <label class="cat-check"><input type="checkbox" value="Political Campaign/PAC"><span>Political Campaign/PAC</span></label>
+      <label>Other sectors/tags</label>
+      <div class="tag-input-wrapper other-cat-tags" data-form="organization">
+        <button type="button" class="other-cat-add-btn">+ Add</button>
+        <div class="other-cat-dropdown"></div>
       </div>
       <input type="hidden" name="otherCategories">
     </div>
@@ -1292,13 +1292,6 @@ details[open] summary { border-bottom: 1px solid var(--border); }
       <input type="email" name="submitterEmail">
       <span class="helper">We'll only use this to follow up if we have questions. It won't be published or shared.</span>
     </div>
-    <div class="field full">
-      <label>Your relationship (optional) <span class="clear-link" data-target="org-relationship">clear</span></label>
-      <div class="radio-group" id="org-relationship">
-        <label><input type="radio" name="submitterRelationship" value="I represent this organization"> I represent this organization</label>
-        <label><input type="radio" name="submitterRelationship" value="I can connect you with this organization"> I can connect you with this organization</label>
-      </div>
-    </div>
     <button type="submit" class="submit">Submit Organization</button>
   </form>
 
@@ -1308,6 +1301,13 @@ details[open] summary { border-bottom: 1px solid var(--border); }
     <div class="field">
       <label>Title *</label>
       <input type="text" name="title" required>
+    </div>
+    <div class="field full">
+      <label>Your relationship to this entry (optional) <span class="clear-link" data-target="resource-relationship">clear</span></label>
+      <div class="radio-group" id="resource-relationship">
+        <label><input type="radio" name="submitterRelationship" value="I am the author"> I am the author</label>
+      </div>
+      <span class="helper">Helps us prioritize reviews and connect contributors</span>
     </div>
     <div class="field" style="position:relative;">
       <label>Author(s)</label>
@@ -1423,12 +1423,6 @@ details[open] summary { border-bottom: 1px solid var(--border); }
       <label>Your email (optional)</label>
       <input type="email" name="submitterEmail">
       <span class="helper">We'll only use this to follow up if we have questions. It won't be published or shared.</span>
-    </div>
-    <div class="field full">
-      <label>Your relationship (optional) <span class="clear-link" data-target="resource-relationship">clear</span></label>
-      <div class="radio-group" id="resource-relationship">
-        <label><input type="radio" name="submitterRelationship" value="I am the author"> I am the author</label>
-      </div>
     </div>
     <button type="submit" class="submit">Submit Resource</button>
   </form>
@@ -1597,7 +1591,12 @@ document.querySelectorAll('.form select').forEach(sel => {
       div.dataset.value = opt.value;
       div.addEventListener('click', (e) => {
         e.stopPropagation();
-        sel.value = opt.value;
+        // Click-to-deselect: clicking already-selected option clears it
+        if (opt.value && opt.value === sel.value) {
+          sel.value = '';
+        } else {
+          sel.value = opt.value;
+        }
         sel.dispatchEvent(new Event('change', { bubbles: true }));
         renderTrigger();
         close();
@@ -2623,55 +2622,88 @@ document.querySelectorAll('input[name="submitterEmail"]').forEach(input => {
   });
 });
 
-// ── Other categories (multi-select) ──
-// Show checkboxes when a primary category is selected; hide the primary from the list
+// ── Other categories (tag dropdown) ──
 document.querySelectorAll('select[name="category"]').forEach(sel => {
   const form = sel.closest('form');
   if (!form) return;
   const otherField = form.querySelector('.other-categories-field');
   if (!otherField) return;
-  const checkboxes = otherField.querySelector('.other-categories-checkboxes');
+  const tagsWrapper = otherField.querySelector('.other-cat-tags');
   const hiddenInput = otherField.querySelector('input[name="otherCategories"]');
+  const addBtn = tagsWrapper.querySelector('.other-cat-add-btn');
+  const dropdown = tagsWrapper.querySelector('.other-cat-dropdown');
+  const selectedTags = [];
 
-  function syncOtherCategories() {
+  // Get all category options from the primary select
+  const allOptions = Array.from(sel.options).filter(o => o.value).map(o => ({ value: o.value, label: o.text }));
+
+  function updateHiddenInput() {
+    hiddenInput.value = selectedTags.join(', ');
+  }
+
+  function addTag(value) {
+    if (selectedTags.includes(value)) return;
+    selectedTags.push(value);
+    const tag = document.createElement('span');
+    tag.className = 'tag';
+    tag.innerHTML = `${value} <span class="tag-remove">&times;</span>`;
+    tag.querySelector('.tag-remove').addEventListener('click', () => {
+      selectedTags.splice(selectedTags.indexOf(value), 1);
+      tag.remove();
+      updateHiddenInput();
+    });
+    tagsWrapper.insertBefore(tag, addBtn);
+    updateHiddenInput();
+    dropdown.classList.remove('open');
+  }
+
+  function buildDropdown() {
+    dropdown.innerHTML = '';
+    const primary = sel.value;
+    const available = allOptions.filter(o => o.value !== primary && !selectedTags.includes(o.value));
+    if (!available.length) {
+      dropdown.innerHTML = '<div class="other-cat-option" style="color:var(--text-3);cursor:default;">No more options</div>';
+      return;
+    }
+    available.forEach(opt => {
+      const div = document.createElement('div');
+      div.className = 'other-cat-option';
+      const color = typeof SELECT_COLORS !== 'undefined' ? SELECT_COLORS[opt.value] : null;
+      div.innerHTML = (color ? `<span class="color-dot" style="background:${color};"></span>` : '') + opt.label;
+      div.addEventListener('click', (e) => { e.stopPropagation(); addTag(opt.value); });
+      dropdown.appendChild(div);
+    });
+  }
+
+  addBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    buildDropdown();
+    dropdown.classList.toggle('open');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!tagsWrapper.contains(e.target)) dropdown.classList.remove('open');
+  });
+
+  // Show/hide when primary changes; remove tag if it matches new primary
+  function onPrimaryChange() {
     const primary = sel.value;
     if (!primary) { otherField.style.display = 'none'; return; }
     otherField.style.display = '';
-    // Hide the primary category from checkboxes, uncheck it if was checked
-    checkboxes.querySelectorAll('.cat-check').forEach(label => {
-      const cb = label.querySelector('input');
-      if (cb.value === primary) {
-        label.style.display = 'none';
-        cb.checked = false;
-      } else {
-        label.style.display = '';
-      }
-    });
-    updateHiddenInput();
+    // Remove tag if it matches newly selected primary
+    const idx = selectedTags.indexOf(primary);
+    if (idx !== -1) {
+      selectedTags.splice(idx, 1);
+      tagsWrapper.querySelectorAll('.tag').forEach(t => {
+        if (t.textContent.trim().replace('×', '').trim() === primary) t.remove();
+      });
+      updateHiddenInput();
+    }
   }
-
-  function updateHiddenInput() {
-    const checked = [...checkboxes.querySelectorAll('input:checked')].map(cb => cb.value);
-    hiddenInput.value = checked.length ? checked.join(', ') : '';
-  }
-
-  // Listen to the native select AND the custom select wrapper
-  sel.addEventListener('change', syncOtherCategories);
-  // Custom selects fire change on the hidden <select> — observe it
-  const observer = new MutationObserver(() => syncOtherCategories());
-  observer.observe(sel, { attributes: true, childList: true });
-  // Also listen for custom-select click events
+  sel.addEventListener('change', onPrimaryChange);
   const wrapper = sel.closest('.custom-select');
-  if (wrapper) {
-    wrapper.addEventListener('click', () => setTimeout(syncOtherCategories, 50));
-  }
-
-  checkboxes.querySelectorAll('input').forEach(cb => {
-    cb.addEventListener('change', updateHiddenInput);
-  });
-
-  // Init on load
-  syncOtherCategories();
+  if (wrapper) wrapper.addEventListener('click', () => setTimeout(onPrimaryChange, 50));
+  onPrimaryChange();
 });
 
 // ── Form submission ──
