@@ -57,6 +57,8 @@ Open contribution from the public. Needs:
 - [ ] Resources visualization improvements
 - [ ] Entity sizing based on importance (LLM)
 - [ ] Decisionmaker/influence: support multiple hats via "tags"
+- [ ] People: support multiple roles (e.g., Researcher + Policymaker)
+- [ ] Community page (e.g., community Slack link/signup)
 
 ## Data
 - [ ] DB persistence ("transactions" db for merges, edits, etc.)
@@ -67,8 +69,20 @@ Open contribution from the public. Needs:
 - [ ] Add missing organizations (may need Exa API)
 - [ ] Production-scale DB structure and data persistence review
 
+## Production Readiness
+- [ ] DB rate limiting: test read/write limits (e.g., 1,000 API requests) as safeguard against abuse/doxxing
+- [ ] Static JSON pulls: verify map-data.json served correctly from CloudFront
+- [ ] Caching strategy: proper cache headers, invalidation timing, CDN behavior
+- [ ] Full-text search: evaluate static filtering client-side vs live DB queries
+- [ ] Cybersecurity audit: SQL injection protection, API authentication, no public exposure of admin endpoints
+- [ ] Staging pipeline: separate staging environment for testing before prod deploys
+
 ## UI/UX
 - [x] Contribute form dropdown has weird lines (fixed CSS border artifact)
+- [ ] Contribute form: replace "Clear" with select/deselect toggle for dropdowns
+- [ ] Contribute form: move "Your Relationship" section to the very top
+- [ ] Contribute form: make adding an org more obvious/discoverable
+- [ ] Theory of Change: revise "existing landscape" sentence (too dramatic/cosmetic)
 
 ## Additional Material
 - [ ] Short research blog on visualization methodology, data processing, and results (showcasing how the tool can be used)
