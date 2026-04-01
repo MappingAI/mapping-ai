@@ -148,11 +148,14 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   letter-spacing: 0.08em; text-transform: uppercase;
   color: var(--text-3); margin-bottom: 0.75rem;
 }
+.detail-categories { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 0.75rem; }
 .detail-category {
   display: inline-block; padding: 0.15rem 0.5rem;
   border-radius: 3px; font-family: var(--mono);
   font-size: 9px; letter-spacing: 0.04em;
-  margin-bottom: 0.75rem;
+}
+.detail-category.secondary {
+  opacity: 0.7; border: 1px dashed;
 }
 .detail-fields { display: flex; flex-direction: column; gap: 0.6rem; }
 .detail-field label {
@@ -1152,24 +1155,32 @@ function buildExplicitLinks(data) {
   return links;
 }
 
+// Extract all categories (primary + other) from an entity list
+function getAllCats(entities, normalize = true) {
+  const cats = [];
+  for (const d of entities) {
+    if (d.category) cats.push(normalize ? normalizeCategory(d.category) : d.category);
+    if (d.other_categories) {
+      for (const c of d.other_categories.split(',').map(s => s.trim()).filter(Boolean)) {
+        cats.push(normalize ? normalizeCategory(c) : c);
+      }
+    }
+  }
+  return cats.filter(Boolean);
+}
+
 function buildFilters() {
   let rawCats;
   if (currentView === 'people') {
-    // People solo view: show person ROLE categories
-    rawCats = [...new Set(allData.people.map(d => normalizeCategory(d.category)).filter(Boolean))];
+    rawCats = [...new Set(getAllCats(allData.people))];
   } else if (currentView === 'resources') {
-    // Resources view: show resource TYPE categories
     rawCats = [...new Set(allData.resources.map(d => d.resource_type || 'Other').filter(Boolean))];
   } else if (currentView === '2d') {
-    // 2D view: show categories for whichever entity types are selected
-    const peopleCats = axis2dEntityType !== 'organizations'
-      ? allData.people.map(d => normalizeCategory(d.category)).filter(Boolean) : [];
-    const orgCats = axis2dEntityType !== 'people'
-      ? allData.organizations.map(d => normalizeCategory(d.category)).filter(Boolean) : [];
+    const peopleCats = axis2dEntityType !== 'organizations' ? getAllCats(allData.people) : [];
+    const orgCats = axis2dEntityType !== 'people' ? getAllCats(allData.organizations) : [];
     rawCats = [...new Set([...peopleCats, ...orgCats])];
   } else {
-    // Orgs, All: show org SECTOR categories
-    rawCats = [...new Set(allData.organizations.map(d => normalizeCategory(d.category)).filter(Boolean))];
+    rawCats = [...new Set(getAllCats(allData.organizations))];
   }
   const allCats = rawCats.sort((a, b) => {
     const ia = CLUSTER_ORDER.indexOf(a);
@@ -1429,9 +1440,18 @@ const CLUSTER_ORDER = [
 function getVisibleNodes() {
   let nodes = [];
   // Helper: check if a category (raw or normalized) is active
-  const isCatActive = (rawCat) => {
+  // Check if entity matches active category filters (primary OR other_categories)
+  const isCatActive = (rawCat, otherCats) => {
     if (!rawCat) return false;
-    return activeCategories.has(rawCat) || activeCategories.has(normalizeCategory(rawCat));
+    if (activeCategories.has(rawCat) || activeCategories.has(normalizeCategory(rawCat))) return true;
+    // Also check other_categories
+    if (otherCats) {
+      const extras = otherCats.split(',').map(s => s.trim()).filter(Boolean);
+      for (const c of extras) {
+        if (activeCategories.has(c) || activeCategories.has(normalizeCategory(c))) return true;
+      }
+    }
+    return false;
   };
 
   // Build org lookup for mapping people to their org's sector
@@ -1446,8 +1466,8 @@ function getVisibleNodes() {
 
   // Count total for scaling
   let totalCount = 0;
-  if (currentView === 'orgs' || currentView === 'all') totalCount += allData.organizations.filter(d => d.category && isCatActive(d.category) && passesStanceFilter(d) && passesSourceTypeFilter(d)).length;
-  if (currentView === 'people' || currentView === 'all') totalCount += allData.people.filter(d => d.category && isCatActive(d.category) && passesStanceFilter(d) && passesSourceTypeFilter(d)).length;
+  if (currentView === 'orgs' || currentView === 'all') totalCount += allData.organizations.filter(d => d.category && isCatActive(d.category, d.other_categories) && passesStanceFilter(d) && passesSourceTypeFilter(d)).length;
+  if (currentView === 'people' || currentView === 'all') totalCount += allData.people.filter(d => d.category && isCatActive(d.category, d.other_categories) && passesStanceFilter(d) && passesSourceTypeFilter(d)).length;
   if (currentView === 'resources' || currentView === 'all') totalCount += allData.resources.filter(d => passesSourceTypeFilter(d)).length;
 
   // Scale: gentler curve — 1.0 at 40, 0.7 at 100, 0.55 at 200
@@ -1455,7 +1475,7 @@ function getVisibleNodes() {
 
   if (currentView === 'orgs' || currentView === 'all') {
     allData.organizations.forEach(d => {
-      if (!d.category || !isCatActive(d.category)) return;
+      if (!d.category || !isCatActive(d.category, d.other_categories)) return;
       if (!passesStanceFilter(d)) return;
       if (!passesSourceTypeFilter(d)) return;
       const sc = d.submission_count || 1;
@@ -1470,7 +1490,7 @@ function getVisibleNodes() {
       if (!d.category) return;
       // In "all" view, people are clustered by their org's sector, so filter by the
       // display category (org sector) not their personal role category
-      if (currentView === 'people' && !isCatActive(d.category)) return;
+      if (currentView === 'people' && !isCatActive(d.category, d.other_categories)) return;
       // In "all" view, always include people (they'll be mapped to an org sector cluster)
       if (!passesStanceFilter(d)) return;
       if (!passesSourceTypeFilter(d)) return;
@@ -2594,11 +2614,22 @@ function showDetail(d, allNodes) {
     ? `<img src="${imgUrl}" alt="${d.name}" style="width:56px; height:56px; border-radius:50%; object-fit:cover; border:2px solid ${color}44; margin-bottom:0.75rem; display:block;" onerror="this.style.display='none'">`
     : '';
 
+  // Build category badges: primary + secondary
+  let categoryBadges = `<span class="detail-category" style="background:${color}33; color:${color};">${d.category}</span>`;
+  const otherCats = d.other_categories || (d._rawOtherCategories);
+  if (otherCats) {
+    const extras = (typeof otherCats === 'string' ? otherCats.split(',') : []).map(s => s.trim()).filter(Boolean);
+    for (const cat of extras) {
+      const catColor = getColor(cat) || color;
+      categoryBadges += ` <span class="detail-category secondary" style="background:${catColor}15; color:${catColor}; border-color:${catColor}55;">${normalizeCategory(cat)}</span>`;
+    }
+  }
+
   content.innerHTML = `
     ${imgHtml}
     <div class="detail-name">${d.name}</div>
     <div class="detail-type">${d.entityType}</div>
-    <div class="detail-category" style="background:${color}33; color:${color};">${d.category}</div>
+    <div class="detail-categories">${categoryBadges}</div>
     <div class="detail-fields">${fields}</div>
     ${affiliated}
   `;

@@ -143,6 +143,21 @@ details[open] summary { border-bottom: 1px solid var(--border); }
   outline: none; border-color: var(--text-secondary);
 }
 .field textarea { resize: vertical; min-height: 80px; }
+/* Other categories checkboxes */
+.other-categories-checkboxes {
+  display: flex; flex-wrap: wrap; gap: 0.4rem;
+}
+.cat-check {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 10px; border-radius: 12px; cursor: pointer;
+  font-size: 13px; border: 1px solid var(--border); background: var(--bg-primary);
+  transition: all 0.15s;
+}
+.cat-check:hover { border-color: var(--text-secondary); }
+.cat-check input { display: none; }
+.cat-check:has(input:checked) {
+  background: var(--accent); color: #fff; border-color: var(--accent);
+}
 /* Checkbox groups */
 .checkbox-group {
   display: grid;
@@ -933,6 +948,20 @@ details[open] summary { border-bottom: 1px solid var(--border); }
         <option value="Cultural figure">Cultural figure (public intellectual)</option>
       </select>
     </div>
+    <div class="field other-categories-field" style="display:none;">
+      <label>Additional roles <span style="font-weight:400;color:var(--text-3);">(select all that apply)</span></label>
+      <div class="other-categories-checkboxes" data-form="person">
+        <label class="cat-check"><input type="checkbox" value="Executive"><span>Executive</span></label>
+        <label class="cat-check"><input type="checkbox" value="Researcher"><span>Researcher</span></label>
+        <label class="cat-check"><input type="checkbox" value="Policymaker"><span>Policymaker</span></label>
+        <label class="cat-check"><input type="checkbox" value="Investor"><span>Investor</span></label>
+        <label class="cat-check"><input type="checkbox" value="Organizer"><span>Organizer</span></label>
+        <label class="cat-check"><input type="checkbox" value="Journalist"><span>Journalist</span></label>
+        <label class="cat-check"><input type="checkbox" value="Academic"><span>Academic</span></label>
+        <label class="cat-check"><input type="checkbox" value="Cultural figure"><span>Cultural figure</span></label>
+      </div>
+      <input type="hidden" name="otherCategories">
+    </div>
     <div class="field">
       <label>Title</label>
       <input type="text" name="title">
@@ -1100,6 +1129,22 @@ details[open] summary { border-bottom: 1px solid var(--border); }
         <option value="Media/Journalism">Media/Journalism</option>
         <option value="Political Campaign/PAC">Political Campaign/PAC</option>
       </select>
+    </div>
+    <div class="field other-categories-field" style="display:none;">
+      <label>Additional sectors <span style="font-weight:400;color:var(--text-3);">(select all that apply)</span></label>
+      <div class="other-categories-checkboxes" data-form="organization">
+        <label class="cat-check"><input type="checkbox" value="Frontier Lab"><span>Frontier Lab</span></label>
+        <label class="cat-check"><input type="checkbox" value="AI Safety/Alignment"><span>AI Safety/Alignment</span></label>
+        <label class="cat-check"><input type="checkbox" value="Think Tank/Policy Org"><span>Think Tank/Policy Org</span></label>
+        <label class="cat-check"><input type="checkbox" value="Government/Agency"><span>Government/Agency</span></label>
+        <label class="cat-check"><input type="checkbox" value="Academic"><span>Academic</span></label>
+        <label class="cat-check"><input type="checkbox" value="VC/Capital/Philanthropy"><span>VC/Capital/Philanthropy</span></label>
+        <label class="cat-check"><input type="checkbox" value="Labor/Civil Society"><span>Labor/Civil Society</span></label>
+        <label class="cat-check"><input type="checkbox" value="Ethics/Bias/Rights"><span>Ethics/Bias/Rights</span></label>
+        <label class="cat-check"><input type="checkbox" value="Media/Journalism"><span>Media/Journalism</span></label>
+        <label class="cat-check"><input type="checkbox" value="Political Campaign/PAC"><span>Political Campaign/PAC</span></label>
+      </div>
+      <input type="hidden" name="otherCategories">
     </div>
     <div class="field">
       <label>Website</label>
@@ -2576,6 +2621,57 @@ document.querySelectorAll('input[name="submitterEmail"]').forEach(input => {
     input.style.borderColor = '';
     if (helper) { helper.textContent = originalText; helper.style.color = ''; }
   });
+});
+
+// ── Other categories (multi-select) ──
+// Show checkboxes when a primary category is selected; hide the primary from the list
+document.querySelectorAll('select[name="category"]').forEach(sel => {
+  const form = sel.closest('form');
+  if (!form) return;
+  const otherField = form.querySelector('.other-categories-field');
+  if (!otherField) return;
+  const checkboxes = otherField.querySelector('.other-categories-checkboxes');
+  const hiddenInput = otherField.querySelector('input[name="otherCategories"]');
+
+  function syncOtherCategories() {
+    const primary = sel.value;
+    if (!primary) { otherField.style.display = 'none'; return; }
+    otherField.style.display = '';
+    // Hide the primary category from checkboxes, uncheck it if was checked
+    checkboxes.querySelectorAll('.cat-check').forEach(label => {
+      const cb = label.querySelector('input');
+      if (cb.value === primary) {
+        label.style.display = 'none';
+        cb.checked = false;
+      } else {
+        label.style.display = '';
+      }
+    });
+    updateHiddenInput();
+  }
+
+  function updateHiddenInput() {
+    const checked = [...checkboxes.querySelectorAll('input:checked')].map(cb => cb.value);
+    hiddenInput.value = checked.length ? checked.join(', ') : '';
+  }
+
+  // Listen to the native select AND the custom select wrapper
+  sel.addEventListener('change', syncOtherCategories);
+  // Custom selects fire change on the hidden <select> — observe it
+  const observer = new MutationObserver(() => syncOtherCategories());
+  observer.observe(sel, { attributes: true, childList: true });
+  // Also listen for custom-select click events
+  const wrapper = sel.closest('.custom-select');
+  if (wrapper) {
+    wrapper.addEventListener('click', () => setTimeout(syncOtherCategories, 50));
+  }
+
+  checkboxes.querySelectorAll('input').forEach(cb => {
+    cb.addEventListener('change', updateHiddenInput);
+  });
+
+  // Init on load
+  syncOtherCategories();
 });
 
 // ── Form submission ──
