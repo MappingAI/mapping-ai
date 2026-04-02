@@ -82,9 +82,11 @@ Open contribution from the public. Needs:
 - [ ] **Load testing**: 1,000 simultaneous read/write to DB — verify Lambda/RDS can handle Phase 3 traffic
 - [ ] **Entity cache layer**: pre-load all entities (including pending) into a cached copy so dropdowns, @mentions, and autocomplete are instant
 - [ ] **Thumbnail caching**: cache Google Favicon + Wikipedia headshots to reduce 404s and load faster
-- [ ] **Search API auth for pending**: `/search?status=pending` currently accessible without admin key — should require auth
-- [ ] **Parameterize SQL type clause**: search.js type param uses string interpolation — switch to parameterized query
-- [ ] **Map physics damping**: reduce D3 force simulation jiggle when dragging nodes (alpha decay / velocity decay tuning)
+- [x] **Search API: pending public, all admin-only**: `/search?status=pending` is public (needed for link-as-you-go); `status=all` requires admin key
+- [x] **Parameterize SQL type clause**: search.js fully parameterized ($N placeholders, no string interpolation)
+- [x] **Map physics damping**: velocityDecay(0.6) + faster alphaDecay on drag end (0.15 with restore on settle)
+- [x] **Instant org search**: focus preload (top 5 alphabetical), 1-char search, async pending results append
+- [x] **Dynamic CLEAR links removed**: was JS-generated on every page load; dropdowns now use click-to-deselect
 - [ ] Static JSON pulls: verify map-data.json served correctly from CloudFront
 - [ ] Caching strategy: proper cache headers, invalidation timing, CDN behavior
 - [ ] Full-text search: evaluate static filtering client-side vs live DB queries

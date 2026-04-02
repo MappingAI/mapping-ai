@@ -3010,28 +3010,7 @@ document.querySelectorAll('.clear-link').forEach(link => {
   });
 });
 
-// Add "clear" links to all select dropdowns
-document.querySelectorAll('.form select').forEach(sel => {
-  if (!sel.closest('.field')) return;
-  const label = sel.closest('.field').querySelector('label');
-  if (!label || label.querySelector('.select-clear')) return;
-  const clear = document.createElement('span');
-  clear.className = 'clear-link select-clear';
-  clear.textContent = 'clear';
-  clear.style.marginLeft = '0.5rem';
-  clear.addEventListener('click', (e) => {
-    e.preventDefault();
-    sel.value = '';
-    sel.dispatchEvent(new Event('change'));
-    // Also reset custom select trigger if present
-    const wrapper = sel.closest('.custom-select');
-    if (wrapper) {
-      const trigger = wrapper.querySelector('.select-trigger');
-      if (trigger) trigger.innerHTML = '<span style="color:var(--text-tertiary);">Select...</span>';
-    }
-  });
-  label.appendChild(clear);
-});
+// Clear links removed — dropdowns now support click-to-deselect natively
 
 // ── Nav ──
 const path = window.location.pathname;
