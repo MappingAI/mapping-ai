@@ -159,7 +159,7 @@ a:hover { text-decoration: underline; }
   transform: translateY(0);
 }
 .footer-row {
-  display: flex; justify-content: center;
+  display: flex; justify-content: center; align-items: center; gap: 0.5rem;
   margin-top: 3rem; padding-top: 1.5rem;
   border-top: 0.5px solid var(--border);
 }
@@ -359,7 +359,9 @@ a:hover { text-decoration: underline; }
 
 
   <div class="footer-row">
-    <span class="footer-label">Mapping AI Working Group · 2026</span>
+    <a href="/about" class="footer-label" style="text-decoration:none;color:var(--text-tertiary);">Mapping AI Working Group</a>
+    <span class="footer-label">· 2026</span>
+    <span class="footer-label">·</span>
     <a href="mailto:info@mapping-ai.org" class="footer-label" style="text-decoration:none;color:var(--text-tertiary);display:inline-flex;align-items:center;gap:4px;">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
       info@mapping-ai.org
