@@ -29,7 +29,7 @@ const LinkShortcut = Extension.create({
 
 // Use the parent page's searchEntities if available (preloaded cache), else fall back to API
 function searchEntitiesForMention(query) {
-  if (!query || query.length < 2) return [];
+  if (!query || query.length < 1) return [];
   // Try parent page's cached search (instant)
   if (typeof window.searchEntities === 'function') {
     const results = window.searchEntities(query);
@@ -138,7 +138,7 @@ function suggestion() {
 
 function updateList(container, items, command) {
   container.innerHTML = items.length === 0
-    ? '<div class="mention-empty">No results</div>'
+    ? '<div class="mention-empty">Keep typing to find people &amp; orgs...</div>'
     : items.map((item, i) => `
         <div class="mention-item ${i === 0 ? 'active' : ''}"
              data-index="${i}"

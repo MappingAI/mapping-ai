@@ -1744,7 +1744,7 @@ fetch('/map-data.json')
 
 // Fast client-side fuzzy search
 function searchEntities(query, type) {
-  if (!query || query.length < 2) return { people: [], organizations: [], resources: [] };
+  if (!query || query.length < 1) return { people: [], organizations: [], resources: [] };
   const q = query.toLowerCase();
   const match = (entity, fields) => {
     let score = 0;
@@ -1783,27 +1783,28 @@ function searchEntities(query, type) {
 }
 
 // Search with pending entity fallback — tries local cache first, then API for pending entities
-async function searchEntitiesWithPending(query, type) {
+// Search: returns local results immediately. Pending callback fires async if provided.
+function searchEntitiesWithPending(query, type, onPendingResults) {
   const local = searchEntities(query, type);
-  const localCount = (local.people?.length || 0) + (local.organizations?.length || 0) + (local.resources?.length || 0);
-  // Always check pending — user may have just created the entity
-  try {
+  // Fire async DB search for entities not in cache (pending/newly added)
+  if (query && query.length >= 2) {
     const typeParam = type ? `&type=${type}` : '';
-    const res = await fetch(`${API_BASE}/search?q=${encodeURIComponent(query)}${typeParam}&status=pending`);
-    if (!res.ok) return local;
-    const apiResults = await res.json();
-    const merged = { ...local };
-    for (const key of ['people', 'organizations', 'resources']) {
-      const existing = new Set((merged[key] || []).map(e => e.id));
-      const pending = (apiResults[key] || [])
-        .filter(e => !existing.has(e.id))
-        .map(e => ({ ...e, _pending: true }));
-      merged[key] = [...(merged[key] || []), ...pending];
-    }
-    return merged;
-  } catch (e) {
-    return local;
+    fetch(`${API_BASE}/search?q=${encodeURIComponent(query)}${typeParam}`)
+      .then(r => r.ok ? r.json() : null)
+      .then(apiResults => {
+        if (!apiResults) return;
+        const merged = {};
+        for (const key of ['people', 'organizations', 'resources']) {
+          const existing = new Set((local[key] || []).map(e => e.id));
+          const extra = (apiResults[key] || []).filter(e => !existing.has(e.id));
+          merged[key] = extra;
+        }
+        const hasExtra = Object.values(merged).some(arr => arr.length > 0);
+        if (hasExtra && onPendingResults) onPendingResults(merged);
+      })
+      .catch(() => {});
   }
+  return local;
 }
 
 // ── Duplicate detection on Name/Title fields ──
@@ -2096,10 +2097,10 @@ document.querySelectorAll('.tag-input-wrapper').forEach(wrapper => {
   const hiddenInput = wrapper.parentElement.querySelector('input[name="affiliatedOrgIds"]');
   const selectedOrgs = []; // [{id, name}]
 
-  const search = debounce(async () => {
+  const search = debounce(() => {
     const q = input.value.trim();
-    if (q.length < 2) { resultsDiv.innerHTML = ''; return; }
-    const results = await searchEntitiesWithPending(q, 'organization');
+    if (q.length < 1) { resultsDiv.innerHTML = ''; return; }
+    const results = searchEntitiesWithPending(q, 'organization');
     const orgs = results.organizations.filter(o => !selectedOrgs.some(s => s.id === o.id));
 
     resultsDiv.innerHTML = orgs.slice(0, 5).map(o => `
@@ -2162,17 +2163,13 @@ document.querySelectorAll('.parent-org-search, .primary-org-search').forEach(inp
     resultsDiv.innerHTML = '';
   }
 
-  const search = debounce(async () => {
-    const q = input.value.trim();
-    if (q.length < 2) { resultsDiv.innerHTML = ''; return; }
-    const results = await searchEntitiesWithPending(q, 'organization');
-    resultsDiv.innerHTML = results.organizations.slice(0, 5).map(o => `
+  function renderOrgResults(orgs) {
+    resultsDiv.innerHTML = orgs.slice(0, 8).map(o => `
       <div class="org-result" data-id="${o.id}" data-name="${o.name}" data-org='${JSON.stringify(o).replace(/'/g, "&#39;")}'>
-        <span>${o.name} <span class="org-cat">${o.category || ''}</span>${o._pending ? '<span class="pending-badge">Pending</span>' : ''}</span>
+        <span>${o.name} <span class="org-cat">${o.category || ''}</span></span>
         <span class="org-edit-link" data-action="edit">edit</span>
       </div>
     `).join('');
-
     resultsDiv.querySelectorAll('.org-result').forEach(item => {
       item.querySelector('.org-edit-link')?.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -2185,7 +2182,32 @@ document.querySelectorAll('.parent-org-search, .primary-org-search').forEach(inp
         selectItem(item);
       });
     });
-  }, 80);
+  }
+
+  const search = debounce(() => {
+    const q = input.value.trim();
+    if (q.length < 1) { resultsDiv.innerHTML = ''; return; }
+    // Show local results instantly
+    const local = searchEntitiesWithPending(q, 'organization', (extra) => {
+      // Append DB results that aren't already shown
+      if (input.value.trim() !== q) return; // user kept typing, skip stale results
+      const existing = new Set([...resultsDiv.querySelectorAll('.org-result')].map(el => el.dataset.id));
+      const newOrgs = (extra.organizations || []).filter(o => !existing.has(String(o.id)));
+      if (newOrgs.length > 0) {
+        const current = [...resultsDiv.querySelectorAll('.org-result')].map(el => JSON.parse(el.dataset.org));
+        renderOrgResults([...current, ...newOrgs]);
+      }
+    });
+    renderOrgResults(local.organizations || []);
+  }, 50);
+
+  // Show top orgs on focus (instant alphabetical list)
+  input.addEventListener('focus', () => {
+    if (input.value.trim().length === 0 && _entityCache.organizations.length > 0) {
+      const topOrgs = [..._entityCache.organizations].sort((a, b) => a.name.localeCompare(b.name)).slice(0, 5);
+      renderOrgResults(topOrgs);
+    }
+  });
 
   input.addEventListener('input', () => {
     hiddenInput.value = '';
