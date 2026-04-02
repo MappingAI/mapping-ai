@@ -2696,11 +2696,7 @@ function restoreFormState() {
   try { state = JSON.parse(localStorage.getItem(SAVE_KEY)); } catch(e) {}
   if (!state) return;
 
-  // Restore active form tab
-  if (state.activeForm) {
-    const toggle = document.querySelector(`.toggle[data-form="${state.activeForm}"]`);
-    if (toggle) toggle.click();
-  }
+  // Tab already restored immediately on page load (above setTimeout call)
 
   forms.forEach(form => {
     const formType = form.dataset.type;
@@ -2754,8 +2750,17 @@ function restoreFormState() {
   setTimeout(() => indicator.remove(), 2500);
 }
 
-function clearFormDraft() {
-  try { localStorage.removeItem(SAVE_KEY); } catch(e) {}
+function clearFormDraft(formType) {
+  // Clear draft for a specific form type only, preserving others
+  try {
+    if (formType) {
+      const state = JSON.parse(localStorage.getItem(SAVE_KEY) || '{}');
+      delete state[formType];
+      localStorage.setItem(SAVE_KEY, JSON.stringify(state));
+    } else {
+      localStorage.removeItem(SAVE_KEY);
+    }
+  } catch(e) {}
 }
 
 // Auto-save on any input change
@@ -2769,6 +2774,14 @@ document.addEventListener('change', () => {
 });
 
 // Restore on load (after a short delay to let TipTap and custom selects init)
+// Restore active tab immediately (prevents flash), delay field population
+try {
+  const draft = JSON.parse(localStorage.getItem(SAVE_KEY));
+  if (draft?.activeForm) {
+    const toggle = document.querySelector(`.toggle[data-form="${draft.activeForm}"]`);
+    if (toggle) toggle.click();
+  }
+} catch(e) {}
 setTimeout(restoreFormState, 300);
 
 // ── Email validation ──
@@ -2933,7 +2946,7 @@ forms.forEach(form => {
       form.reset();
       updateEntityId = null;
       form.querySelector('.update-banner')?.remove();
-      clearFormDraft();
+      clearFormDraft(form.dataset.type);
     } catch (err) {
       alert('Something went wrong. Please try again.');
     } finally {
@@ -2981,6 +2994,9 @@ document.querySelectorAll('.clear-form-link').forEach(link => {
     form.querySelectorAll('.tiptap-notes .tiptap').forEach(t => { t.innerHTML = ''; });
     // Hide other-categories
     form.querySelectorAll('.other-categories-field').forEach(f => f.style.display = 'none');
+    // Clear draft for this form type only (preserve other forms' drafts)
+    const formType = form.dataset?.type || link.dataset.form?.replace('-form', '');
+    clearFormDraft(formType);
   });
 });
 
