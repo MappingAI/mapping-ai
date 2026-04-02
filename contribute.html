@@ -165,7 +165,7 @@ details[open] summary { border-bottom: 1px solid var(--border); }
 .example-mention-card {
   position: absolute; bottom: calc(100% + 6px); left: 50%;
   transform: translateX(-50%);
-  background: var(--bg-primary); color: var(--text-primary);
+  background: #fff; color: var(--text-primary);
   font-family: var(--mono); font-size: 10px; font-weight: 400;
   padding: 0.5rem 0.7rem; border-radius: 4px;
   min-width: 180px; max-width: 260px; line-height: 1.5;
@@ -180,14 +180,14 @@ details[open] summary { border-bottom: 1px solid var(--border); }
   border: 5px solid transparent; border-top-color: var(--border);
 }
 
-/* Clear form link — positioned absolutely in form grid */
+/* Clear form link — inline with pills */
 .clear-form-link {
   font-family: var(--mono); font-size: 9px; letter-spacing: 0.04em;
   text-transform: uppercase; color: var(--text-tertiary);
-  cursor: pointer; grid-column: 1 / -1; text-align: right;
-  margin-top: -0.5rem;
+  cursor: pointer; margin-left: auto;
+  text-decoration: underline; text-underline-offset: 2px;
 }
-.clear-form-link:hover { color: var(--accent); text-decoration: underline; }
+.clear-form-link:hover { color: var(--accent); }
 
 /* Other categories tag dropdown */
 .other-cat-tags { position: relative; }
@@ -199,7 +199,7 @@ details[open] summary { border-bottom: 1px solid var(--border); }
 .other-cat-add-btn:hover { border-color: var(--text-secondary); color: var(--text-primary); }
 .other-cat-dropdown {
   display: none; position: absolute; top: 100%; left: 0; right: 0; z-index: 42;
-  background: var(--bg-primary); border: 1px solid var(--border); border-radius: 4px;
+  background: #fff; border: 1px solid var(--border); border-radius: 4px;
   max-height: 200px; overflow-y: auto; margin-top: 4px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
@@ -434,7 +434,7 @@ details[open] summary { border-bottom: 1px solid var(--border); }
 .info-tip .tip-content {
   display: none; position: absolute; bottom: calc(100% + 2px); left: 50%;
   transform: translateX(-50%);
-  background: var(--bg-primary); color: var(--text-primary);
+  background: #fff; color: var(--text-primary);
   font-family: var(--mono); font-size: 10px; font-weight: 400;
   padding: 0.6rem 0.8rem; border-radius: 6px;
   width: 280px; line-height: 1.6;
@@ -1036,13 +1036,13 @@ details[open] summary { border-bottom: 1px solid var(--border); }
   <!-- Person Form -->
   <form id="person-form" class="form active" data-type="person">
     <input type="text" name="_hp" class="honeypot" tabindex="-1" autocomplete="off">
-    <span class="clear-form-link" data-form="person-form">Clear form</span>
     <div class="field full relationship-pills">
       <label>Who are you adding?</label>
       <div class="pill-toggle" id="person-relationship">
         <button type="button" class="pill" data-value="I am this person">I am this person</button>
         <button type="button" class="pill" data-value="I can connect you with this person">I can connect you</button>
         <button type="button" class="pill" data-value="external">Someone I know of</button>
+        <span class="clear-form-link" data-form="person-form">Clear form</span>
       </div>
       <input type="hidden" name="submitterRelationship">
     </div>
@@ -1223,13 +1223,13 @@ details[open] summary { border-bottom: 1px solid var(--border); }
   <!-- Organization Form -->
   <form id="organization-form" class="form" data-type="organization">
     <input type="text" name="_hp" class="honeypot" tabindex="-1" autocomplete="off">
-    <span class="clear-form-link" data-form="organization-form">Clear form</span>
     <div class="field full relationship-pills">
       <label>Who are you adding?</label>
       <div class="pill-toggle" id="org-relationship">
         <button type="button" class="pill" data-value="I represent this organization">I represent this org</button>
         <button type="button" class="pill" data-value="I can connect you with this organization">I can connect you</button>
         <button type="button" class="pill" data-value="external">An org I know of</button>
+        <span class="clear-form-link" data-form="organization-form">Clear form</span>
       </div>
       <input type="hidden" name="submitterRelationship">
     </div>
@@ -1423,12 +1423,12 @@ details[open] summary { border-bottom: 1px solid var(--border); }
   <!-- Resource Form -->
   <form id="resource-form" class="form" data-type="resource">
     <input type="text" name="_hp" class="honeypot" tabindex="-1" autocomplete="off">
-    <span class="clear-form-link" data-form="resource-form">Clear form</span>
     <div class="field full relationship-pills">
       <label>Who are you adding?</label>
       <div class="pill-toggle" id="resource-relationship">
         <button type="button" class="pill" data-value="I am the author">I am the author</button>
         <button type="button" class="pill" data-value="external">A resource I found</button>
+        <span class="clear-form-link" data-form="resource-form">Clear form</span>
       </div>
       <input type="hidden" name="submitterRelationship">
     </div>
@@ -1559,7 +1559,8 @@ details[open] summary { border-bottom: 1px solid var(--border); }
   </div>
 
   <div class="footer-row">
-    <span class="footer-label">Mapping AI Working Group · 2026</span>
+    <a href="/about" class="footer-label" style="text-decoration:none;color:var(--text-tertiary);">Mapping AI Working Group</a>
+    <span class="footer-label">· 2026</span>
     <span class="footer-label">·</span>
     <a href="mailto:info@mapping-ai.org" class="footer-label" style="text-decoration:none;color:var(--text-tertiary);display:inline-flex;align-items:center;gap:4px;">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
