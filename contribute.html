@@ -1865,9 +1865,9 @@ function searchEntitiesWithPending(query, type, onPendingResults) {
   if (query && query.length >= 2) {
     const typeParam = type ? `&type=${type}` : '';
     fetch(`${API_BASE}/search?q=${encodeURIComponent(query)}${typeParam}&status=pending`)
-      .then(r => { console.log('[pending-search] status:', r.status); return r.ok ? r.json() : null; })
+      .then(r => r.ok ? r.json() : null)
       .then(apiResults => {
-        if (!apiResults) { console.log('[pending-search] no results'); return; }
+        if (!apiResults) return;
         const merged = {};
         let totalExtra = 0;
         for (const key of ['people', 'organizations', 'resources']) {
@@ -1878,10 +1878,9 @@ function searchEntitiesWithPending(query, type, onPendingResults) {
           merged[key] = extra;
           totalExtra += extra.length;
         }
-        console.log('[pending-search] found', totalExtra, 'extra entities', onPendingResults ? '(callback set)' : '(NO callback)');
         if (totalExtra > 0 && onPendingResults) onPendingResults(merged);
       })
-      .catch(e => { console.warn('[pending-search] error:', e.message); });
+      .catch(() => {});
   }
   return local;
 }
@@ -2268,15 +2267,13 @@ document.querySelectorAll('.parent-org-search, .primary-org-search').forEach(inp
     if (q.length < 1) { resultsDiv.innerHTML = ''; return; }
     // Show local results instantly
     const local = searchEntitiesWithPending(q, 'organization', (extra) => {
-      // Append pending DB results after approved results
-      console.log('[org-search] pending callback fired, extra orgs:', extra.organizations?.length);
-      if (input.value.trim() !== q) { console.log('[org-search] skipped: query changed'); return; }
+      // Append pending results whenever dropdown is still visible
+      if (resultsDiv.children.length === 0) return;
       const existing = new Set([...resultsDiv.querySelectorAll('.org-result')].map(el => el.dataset.id));
       const newOrgs = (extra.organizations || []).filter(o => !existing.has(String(o.id)));
-      console.log('[org-search] new orgs to append:', newOrgs.length, newOrgs.map(o => o.name));
       if (newOrgs.length > 0) {
-        const current = [...resultsDiv.querySelectorAll('.org-result')].map(el => JSON.parse(el.dataset.org));
-        renderOrgResults([...current, ...newOrgs]);
+        const currentOrgs = [...resultsDiv.querySelectorAll('.org-result')].map(el => JSON.parse(el.dataset.org));
+        renderOrgResults([...currentOrgs, ...newOrgs]);
       }
     });
     renderOrgResults(local.organizations || []);
