@@ -143,6 +143,50 @@ details[open] summary { border-bottom: 1px solid var(--border); }
   outline: none; border-color: var(--text-secondary);
 }
 .field textarea { resize: vertical; min-height: 80px; }
+/* Pill toggle for relationship */
+.relationship-pills { margin-bottom: 0.25rem; }
+.pill-toggle { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+.pill {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.03em;
+  padding: 0.3rem 0.6rem; border: 1px solid var(--border);
+  background: transparent; color: var(--text-secondary);
+  border-radius: 20px; cursor: pointer; transition: all 0.15s;
+}
+.pill:hover { border-color: var(--text-secondary); color: var(--text-primary); }
+.pill.active { background: var(--text-primary); color: var(--bg-primary); border-color: var(--text-primary); }
+
+/* Example @mentions in example submissions */
+.example-mention {
+  background: #e8f0fe; border-radius: 3px; padding: 1px 4px;
+  color: var(--accent); font-weight: 500; cursor: pointer;
+  position: relative;
+}
+.example-mention:hover { background: #d0e2fc; }
+.example-mention-card {
+  position: absolute; bottom: calc(100% + 6px); left: 50%;
+  transform: translateX(-50%);
+  background: var(--text-primary); color: #fff;
+  font-family: var(--mono); font-size: 10px; font-weight: 400;
+  padding: 0.5rem 0.7rem; border-radius: 4px;
+  min-width: 180px; max-width: 260px; line-height: 1.5;
+  z-index: 100; pointer-events: none;
+  text-transform: none; letter-spacing: 0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+.example-mention-card::after {
+  content: ''; position: absolute; top: 100%; left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent; border-top-color: var(--text-primary);
+}
+
+/* Clear form link */
+.clear-form-link {
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.04em;
+  text-transform: uppercase; color: var(--text-tertiary);
+  cursor: pointer; float: right; margin-top: -0.5rem; margin-bottom: 0.5rem;
+}
+.clear-form-link:hover { color: var(--accent); }
+
 /* Other categories tag dropdown */
 .other-cat-tags { position: relative; }
 .other-cat-add-btn {
@@ -728,7 +772,7 @@ details[open] summary { border-bottom: 1px solid var(--border); }
 }
 .conditional-detail textarea:focus { outline: none; border-color: var(--text-secondary); }
 .footer-row {
-  display: flex; justify-content: center;
+  display: flex; justify-content: center; align-items: center; gap: 0.5rem;
   margin-top: 3rem; padding-top: 1.5rem;
   border-top: 0.5px solid var(--border);
 }
@@ -944,7 +988,7 @@ details[open] summary { border-bottom: 1px solid var(--border); }
       <strong>Key concerns:</strong> Concentration of power, Weapons proliferation, Loss of human control<br>
       <strong>Influence type:</strong> Decision-maker, Builder, Narrator<br>
       <strong>Twitter/X:</strong> @DarioAmodei<br>
-      <strong>Notes:</strong> Co-founded Anthropic after leaving OpenAI over safety disagreements. Published "Machines of Loving Grace" (Oct 2024). Advocates for "responsible scaling" rather than pausing.
+      <strong>Notes:</strong> Co-founded <span class="tiptap-mention example-mention" data-name="Anthropic" data-type="organization">@Anthropic</span> after leaving <span class="tiptap-mention example-mention" data-name="OpenAI" data-type="organization">@OpenAI</span> over safety disagreements. Published <span class="tiptap-mention example-mention" data-name="Machines of Loving Grace" data-type="resource">@Machines of Loving Grace</span> (Oct 2024). Close collaborator with <span class="tiptap-mention example-mention" data-name="Daniela Amodei" data-type="person">@Daniela Amodei</span>. Advocates for "responsible scaling" rather than pausing.
     </div>
   </details>
 
@@ -966,7 +1010,7 @@ details[open] summary { border-bottom: 1px solid var(--border); }
       <strong>Twitter/X:</strong> @AnthropicAI<br>
       <strong>Bluesky:</strong> @anthropic.ai<br>
       <strong>Last verified:</strong> 2026<br>
-      <strong>Notes:</strong> Public benefit corporation. Pioneered "responsible scaling policy" framework. Revenue from Claude API and consumer products.
+      <strong>Notes:</strong> Public benefit corporation founded by <span class="tiptap-mention example-mention" data-name="Dario Amodei" data-type="person">@Dario Amodei</span> and <span class="tiptap-mention example-mention" data-name="Daniela Amodei" data-type="person">@Daniela Amodei</span>. Pioneered "responsible scaling policy" framework. Competes directly with <span class="tiptap-mention example-mention" data-name="OpenAI" data-type="organization">@OpenAI</span> and <span class="tiptap-mention example-mention" data-name="Google DeepMind" data-type="organization">@Google DeepMind</span>.
     </div>
   </details>
 
@@ -981,24 +1025,26 @@ details[open] summary { border-bottom: 1px solid var(--border); }
       <strong>Year:</strong> 2024<br>
       <strong>Category:</strong> AI Capabilities<br>
       <strong>Key argument:</strong> AGI is likely by 2027, superintelligence by end of decade. The US needs to treat frontier AI as a national security priority.<br>
-      <strong>Notes:</strong> Widely circulated in Silicon Valley and DC policy circles. Shifted discourse toward framing AI as geopolitical competition.
+      <strong>Notes:</strong> Written by former <span class="tiptap-mention example-mention" data-name="OpenAI" data-type="organization">@OpenAI</span> researcher <span class="tiptap-mention example-mention" data-name="Leopold Aschenbrenner" data-type="person">@Leopold Aschenbrenner</span>. Widely circulated in Silicon Valley and DC policy circles. Shifted discourse toward framing AI as geopolitical competition. Influenced thinking of <span class="tiptap-mention example-mention" data-name="Dario Amodei" data-type="person">@Dario Amodei</span> and others.
     </div>
   </details>
 
   <!-- Person Form -->
   <form id="person-form" class="form active" data-type="person">
     <input type="text" name="_hp" class="honeypot" tabindex="-1" autocomplete="off">
+    <span class="clear-form-link" data-form="person-form">Clear form</span>
+    <div class="field full relationship-pills">
+      <label>Who are you adding?</label>
+      <div class="pill-toggle" id="person-relationship">
+        <button type="button" class="pill" data-value="I am this person">I am this person</button>
+        <button type="button" class="pill" data-value="I can connect you with this person">I can connect you</button>
+        <button type="button" class="pill" data-value="external">Someone I know of</button>
+      </div>
+      <input type="hidden" name="submitterRelationship">
+    </div>
     <div class="field">
       <label>Person's Name *</label>
       <input type="text" name="name" required>
-    </div>
-    <div class="field full">
-      <label>Your relationship to this entry (optional) <span class="clear-link" data-target="person-relationship">clear</span></label>
-      <div class="radio-group" id="person-relationship">
-        <label><input type="radio" name="submitterRelationship" value="I am this person"> I am this person</label>
-        <label><input type="radio" name="submitterRelationship" value="I can connect you with this person"> I can connect you with this person</label>
-      </div>
-      <span class="helper">Helps us prioritize reviews and connect contributors</span>
     </div>
     <div class="field">
       <label>Primary Role</label>
@@ -1145,7 +1191,17 @@ details[open] summary { border-bottom: 1px solid var(--border); }
       <span class="helper">Live search via Bluesky — or type the full handle directly</span>
     </div>
     <div class="field full">
-      <label>Notes</label>
+      <label>Notes <span class="info-tip">i<span class="tip-content" style="width:300px;">
+        <strong>What to include:</strong><br>
+        • Key policy positions &amp; public statements<br>
+        • Relationships to other stakeholders<br>
+        • Funding sources or organizational ties<br>
+        • Career background &amp; notable projects<br>
+        • Recent relevant activity or controversies<br><br>
+        <strong>Use @mentions</strong> (like Notion or Obsidian) to create bidirectional links:<br>
+        <em>"Previously at <span style="background:#e8f0fe;border-radius:3px;padding:1px 3px;">@Google DeepMind</span> before joining <span style="background:#e8f0fe;border-radius:3px;padding:1px 3px;">@Anthropic</span>. Influenced by <span style="background:#e8f0fe;border-radius:3px;padding:1px 3px;">@Superintelligence (Bostrom)</span>."</em><br><br>
+        These links help us map connections between people, orgs, and resources.
+      </span></span></label>
       <div class="tiptap-notes"></div>
       <textarea name="notes" rows="3" class="hidden"></textarea>
       <input type="hidden" name="notesHtml">
@@ -1163,17 +1219,19 @@ details[open] summary { border-bottom: 1px solid var(--border); }
   <!-- Organization Form -->
   <form id="organization-form" class="form" data-type="organization">
     <input type="text" name="_hp" class="honeypot" tabindex="-1" autocomplete="off">
+    <span class="clear-form-link" data-form="organization-form">Clear form</span>
+    <div class="field full relationship-pills">
+      <label>Who are you adding?</label>
+      <div class="pill-toggle" id="org-relationship">
+        <button type="button" class="pill" data-value="I represent this organization">I represent this org</button>
+        <button type="button" class="pill" data-value="I can connect you with this organization">I can connect you</button>
+        <button type="button" class="pill" data-value="external">An org I know of</button>
+      </div>
+      <input type="hidden" name="submitterRelationship">
+    </div>
     <div class="field">
       <label>Organization's Name *</label>
       <input type="text" name="name" required>
-    </div>
-    <div class="field full">
-      <label>Your relationship to this entry (optional) <span class="clear-link" data-target="org-relationship">clear</span></label>
-      <div class="radio-group" id="org-relationship">
-        <label><input type="radio" name="submitterRelationship" value="I represent this organization"> I represent this organization</label>
-        <label><input type="radio" name="submitterRelationship" value="I can connect you with this organization"> I can connect you with this organization</label>
-      </div>
-      <span class="helper">Helps us prioritize reviews and connect contributors</span>
     </div>
     <div class="field">
       <label>Primary Category</label>
@@ -1333,7 +1391,17 @@ details[open] summary { border-bottom: 1px solid var(--border); }
       <input type="text" name="lastVerified" placeholder="e.g. 2026">
     </div>
     <div class="field full">
-      <label>Notes</label>
+      <label>Notes <span class="info-tip">i<span class="tip-content" style="width:300px;">
+        <strong>What to include:</strong><br>
+        • Key policy positions &amp; public statements<br>
+        • Relationships to other stakeholders<br>
+        • Funding sources or organizational ties<br>
+        • Career background &amp; notable projects<br>
+        • Recent relevant activity or controversies<br><br>
+        <strong>Use @mentions</strong> (like Notion or Obsidian) to create bidirectional links:<br>
+        <em>"Previously at <span style="background:#e8f0fe;border-radius:3px;padding:1px 3px;">@Google DeepMind</span> before joining <span style="background:#e8f0fe;border-radius:3px;padding:1px 3px;">@Anthropic</span>. Influenced by <span style="background:#e8f0fe;border-radius:3px;padding:1px 3px;">@Superintelligence (Bostrom)</span>."</em><br><br>
+        These links help us map connections between people, orgs, and resources.
+      </span></span></label>
       <div class="tiptap-notes"></div>
       <textarea name="notes" rows="3" class="hidden"></textarea>
       <input type="hidden" name="notesHtml">
@@ -1351,16 +1419,18 @@ details[open] summary { border-bottom: 1px solid var(--border); }
   <!-- Resource Form -->
   <form id="resource-form" class="form" data-type="resource">
     <input type="text" name="_hp" class="honeypot" tabindex="-1" autocomplete="off">
+    <span class="clear-form-link" data-form="resource-form">Clear form</span>
+    <div class="field full relationship-pills">
+      <label>Who are you adding?</label>
+      <div class="pill-toggle" id="resource-relationship">
+        <button type="button" class="pill" data-value="I am the author">I am the author</button>
+        <button type="button" class="pill" data-value="external">A resource I found</button>
+      </div>
+      <input type="hidden" name="submitterRelationship">
+    </div>
     <div class="field">
       <label>Title *</label>
       <input type="text" name="title" required>
-    </div>
-    <div class="field full">
-      <label>Your relationship to this entry (optional) <span class="clear-link" data-target="resource-relationship">clear</span></label>
-      <div class="radio-group" id="resource-relationship">
-        <label><input type="radio" name="submitterRelationship" value="I am the author"> I am the author</label>
-      </div>
-      <span class="helper">Helps us prioritize reviews and connect contributors</span>
     </div>
     <div class="field" style="position:relative;">
       <label>Author(s)</label>
@@ -1486,6 +1556,7 @@ details[open] summary { border-bottom: 1px solid var(--border); }
 
   <div class="footer-row">
     <span class="footer-label">Mapping AI Working Group · 2026</span>
+    <span class="footer-label">·</span>
     <a href="mailto:info@mapping-ai.org" class="footer-label" style="text-decoration:none;color:var(--text-tertiary);display:inline-flex;align-items:center;gap:4px;">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
       info@mapping-ai.org
@@ -2853,6 +2924,81 @@ forms.forEach(form => {
       btn.disabled = false;
       btn.textContent = original;
     }
+  });
+});
+
+// ── Pill toggle for relationship ──
+document.querySelectorAll('.pill-toggle').forEach(toggle => {
+  const hidden = toggle.closest('.field').querySelector('input[name="submitterRelationship"]');
+  toggle.querySelectorAll('.pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      const wasActive = pill.classList.contains('active');
+      toggle.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+      if (!wasActive) {
+        pill.classList.add('active');
+        hidden.value = pill.dataset.value;
+      } else {
+        hidden.value = '';
+      }
+    });
+  });
+});
+
+// ── Clear form buttons ──
+document.querySelectorAll('.clear-form-link').forEach(link => {
+  link.addEventListener('click', () => {
+    const form = document.getElementById(link.dataset.form);
+    if (!form) return;
+    form.reset();
+    // Clear custom selects
+    form.querySelectorAll('.custom-select .select-trigger').forEach(t => {
+      t.innerHTML = '<span style="color:var(--text-tertiary);">Select...</span>';
+    });
+    form.querySelectorAll('select').forEach(s => { s.value = ''; s.dispatchEvent(new Event('change')); });
+    // Clear pills
+    form.querySelectorAll('.pill.active').forEach(p => p.classList.remove('active'));
+    form.querySelectorAll('input[name="submitterRelationship"]').forEach(h => h.value = '');
+    // Clear tags
+    form.querySelectorAll('.tag').forEach(t => t.remove());
+    form.querySelectorAll('input[type="hidden"]').forEach(h => h.value = '');
+    // Clear TipTap
+    form.querySelectorAll('.tiptap-notes .tiptap').forEach(t => { t.innerHTML = ''; });
+    // Hide other-categories
+    form.querySelectorAll('.other-categories-field').forEach(f => f.style.display = 'none');
+  });
+});
+
+// ── Example @mention hover cards ──
+document.querySelectorAll('.example-mention').forEach(mention => {
+  let card = null;
+  mention.addEventListener('mouseenter', async () => {
+    const name = mention.dataset.name;
+    const type = mention.dataset.type;
+    card = document.createElement('div');
+    card.className = 'example-mention-card';
+    card.innerHTML = `<strong>${name}</strong><br><span style="opacity:0.7;">${type}</span><br><span style="opacity:0.5;">Loading...</span>`;
+    mention.style.position = 'relative';
+    mention.appendChild(card);
+    // Try to find in allEntities cache
+    try {
+      const res = await fetch(`${API_BASE}/search?q=${encodeURIComponent(name)}&type=${type}`);
+      if (res.ok) {
+        const data = await res.json();
+        const match = data.results?.[0];
+        if (match && card.parentNode) {
+          const details = [
+            match.category ? `<span style="opacity:0.7;">${match.category}</span>` : '',
+            match.title ? match.title : '',
+            match.primary_org ? `at ${match.primary_org}` : '',
+          ].filter(Boolean).join(' · ');
+          card.innerHTML = `<strong>${match.name || name}</strong><br>${details || `<span style="opacity:0.7;">${type}</span>`}`;
+        }
+      }
+    } catch {}
+  });
+  mention.addEventListener('mouseleave', () => {
+    if (card && card.parentNode) card.remove();
+    card = null;
   });
 });
 
