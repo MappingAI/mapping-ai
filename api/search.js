@@ -86,8 +86,8 @@ export const handler = async (event) => {
 
       if (status === 'pending') {
         // Search the submission table for new pending entities (entity_id IS NULL)
-        const pendingParams = [query, `%${query}%`];
-        let pIdx = 3;
+        const pendingParams = [`%${query}%`];
+        let pIdx = 2;
         let pendingTypeClause = '';
         if (entityType) {
           pendingTypeClause = `AND entity_type = $${pIdx}`;
@@ -100,9 +100,8 @@ export const handler = async (event) => {
                   resource_title, resource_type, resource_author, resource_category, website, parent_org_id
            FROM submission
            WHERE entity_id IS NULL AND status = 'pending'
-             AND (name ILIKE $2 OR resource_title ILIKE $2) ${pendingTypeClause}
-           ORDER BY
-             CASE WHEN name ILIKE $2 OR resource_title ILIKE $2 THEN 0 ELSE 1 END
+             AND (name ILIKE $1 OR resource_title ILIKE $1) ${pendingTypeClause}
+           ORDER BY submitted_at DESC
            LIMIT 15`,
           pendingParams
         );
