@@ -303,6 +303,71 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
 .node:hover .node-image,
 .node.highlighted .node-image { opacity: 1; }
 
+/* One-hop connection edges (search mode) */
+.connection-line.one-hop {
+  opacity: 0.25 !important;
+  stroke-width: 1px !important;
+  stroke-dasharray: 4 2;
+}
+
+/* Search mode controls */
+.search-mode-textarea {
+  width: 100%; padding: 0.6rem 0.7rem;
+  font-family: var(--mono); font-size: 11px;
+  background: var(--input-bg); color: var(--text-1);
+  border: 1px solid var(--line); border-radius: 4px;
+  outline: none; letter-spacing: 0.02em;
+  resize: vertical; min-height: 60px;
+  line-height: 1.5;
+}
+.search-mode-textarea::placeholder { color: var(--text-3); }
+.search-mode-textarea:focus { border-color: var(--accent); }
+.search-action-row {
+  display: flex; gap: 0.4rem; margin-top: 0.5rem; align-items: stretch;
+}
+.search-toggle-row {
+  display: flex; gap: 0.2rem; flex: 1;
+}
+.search-toggle-btn {
+  flex: 1; padding: 0.4rem 0.5rem;
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  background: transparent; color: var(--text-3);
+  border: 1px solid var(--line); border-radius: 3px;
+  cursor: pointer; transition: all 0.15s;
+}
+.search-toggle-btn:hover { border-color: var(--text-3); color: var(--text-2); }
+.search-toggle-btn.active {
+  background: var(--text-1); color: var(--bg-panel);
+  border-color: var(--text-1);
+}
+.search-run-btn {
+  padding: 0.4rem 0.8rem;
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  background: var(--accent); color: #fff;
+  border: none; border-radius: 3px;
+  cursor: pointer; transition: all 0.15s;
+  font-weight: 600;
+}
+.search-run-btn:hover { opacity: 0.85; }
+.search-mode-status {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--text-3); margin-top: 0.5rem;
+  min-height: 1.2em;
+}
+.search-mode-status.loading { color: var(--accent); }
+.search-mode-status.error { color: #e53935; }
+.search-clear-btn {
+  width: 100%; margin-top: 0.4rem; padding: 0.35rem 0.5rem;
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  background: transparent; color: var(--text-3);
+  border: 1px solid var(--line); border-radius: 3px;
+  cursor: pointer; transition: all 0.15s;
+}
+.search-clear-btn:hover { border-color: var(--text-2); color: var(--text-1); }
+
 /* Source type filter */
 .source-type-items { display: flex; flex-direction: column; gap: 0.15rem; }
 .source-type-item {
@@ -529,12 +594,30 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="3" cy="10" r="1.5" fill="currentColor"/><circle cx="6" cy="5" r="1.5" fill="currentColor"/><circle cx="10" cy="8" r="1.5" fill="currentColor"/><circle cx="11" cy="3" r="1.5" fill="currentColor"/></svg>
         Plot
       </button>
+      <button class="mode-btn" data-mode="search">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="6" cy="6" r="4"/><line x1="9" y1="9" x2="12" y2="12"/></svg>
+        Search
+      </button>
     </div>
     <div class="view-toggles" id="network-sub-tabs">
       <button class="view-btn active" data-view="all">All</button>
       <button class="view-btn" data-view="orgs">Orgs</button>
       <button class="view-btn" data-view="people">People</button>
       <button class="view-btn" data-view="resources">Resources</button>
+    </div>
+    <!-- Search mode query box (inside View group, shown when Search mode active) -->
+    <div id="search-mode-controls" style="display:none; margin-top:0.5rem;">
+      <h3>Query</h3>
+      <textarea id="search-mode-input" class="search-mode-textarea" placeholder="safety researchers&#10;people from OpenAI&#10;who supports regulation..." rows="3"></textarea>
+      <div class="search-action-row">
+        <div class="search-toggle-row">
+          <button class="search-toggle-btn active" data-method="keyword">Keyword</button>
+          <button class="search-toggle-btn" data-method="ai">AI</button>
+        </div>
+        <button id="search-run-btn" class="search-run-btn">Search</button>
+      </div>
+      <div id="search-mode-status" class="search-mode-status"></div>
+      <button id="search-clear-btn" class="search-clear-btn" style="display:none">Clear</button>
     </div>
   </div>
   <div class="control-group" id="category-filters">
@@ -1424,22 +1507,32 @@ const savedSubView = localStorage.getItem('mapSubView') || 'all';
 
 function applyViewState() {
   const is2D = viewMode === 'plot';
-  currentView = is2D ? '2d' : (localStorage.getItem('mapSubView') || 'all');
+  const isSearch = viewMode === 'search';
+  // In search mode, use 'all' view for orbital layout but with search highlighting
+  currentView = is2D ? '2d' : (isSearch ? 'all' : (localStorage.getItem('mapSubView') || 'all'));
   document.getElementById('axis-controls').style.display = is2D ? '' : 'none';
-  document.getElementById('stance-legend').style.display = is2D ? 'none' : '';
-  document.getElementById('network-sub-tabs').style.display = is2D ? 'none' : '';
+  document.getElementById('search-mode-controls').style.display = isSearch ? '' : 'none';
+  document.getElementById('stance-legend').style.display = (is2D || isSearch) ? 'none' : '';
+  document.getElementById('network-sub-tabs').style.display = (is2D || isSearch) ? 'none' : '';
+  // Hide the small search box in search mode (we have the big one)
+  const smallSearchGroup = document.querySelector('.controls .control-group:first-child');
+  if (smallSearchGroup) smallSearchGroup.style.display = isSearch ? 'none' : '';
   document.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === viewMode));
   document.querySelectorAll('#network-sub-tabs [data-view]').forEach(b => b.classList.toggle('active', b.dataset.view === currentView));
   const phMap = { orgs: 'Search orgs...', people: 'Search people...', resources: 'Search resources...' };
   document.getElementById('search-input').placeholder = phMap[currentView] || 'Search entities...';
   buildFilters();
   updateSourceTypeVisibility();
+  // Clear search highlighting when leaving search mode
+  if (!isSearch) {
+    clearSearchModeHighlighting();
+  }
   render();
 }
 
 // Restore saved state
 if (['orgs','people','resources','all'].includes(savedSubView)) {
-  currentView = viewMode === 'plot' ? '2d' : savedSubView;
+  currentView = viewMode === 'plot' ? '2d' : (viewMode === 'search' ? 'all' : savedSubView);
 } else {
   currentView = viewMode === 'plot' ? '2d' : 'all';
 }
@@ -1450,6 +1543,13 @@ if (viewMode === 'plot') {
   document.getElementById('axis-controls').style.display = '';
   document.getElementById('stance-legend').style.display = 'none';
   document.getElementById('network-sub-tabs').style.display = 'none';
+}
+if (viewMode === 'search') {
+  document.getElementById('search-mode-controls').style.display = '';
+  document.getElementById('stance-legend').style.display = 'none';
+  document.getElementById('network-sub-tabs').style.display = 'none';
+  const smallSearchGroup = document.querySelector('.controls .control-group:first-child');
+  if (smallSearchGroup) smallSearchGroup.style.display = 'none';
 }
 const phMap0 = { orgs: 'Search orgs...', people: 'Search people...', resources: 'Search resources...' };
 document.getElementById('search-input').placeholder = phMap0[currentView] || 'Search entities...';
@@ -1989,7 +2089,13 @@ function render() {
     .alphaDecay(0.04)
     .velocityDecay(0.6)
     .on('tick', ticked)
-    .on('end', () => simulation.alphaDecay(0.04));
+    .on('end', () => {
+      simulation.alphaDecay(0.04);
+      // Re-apply search highlighting when simulation settles
+      if (typeof reapplySearchHighlighting === 'function') {
+        reapplySearchHighlighting();
+      }
+    });
 
   // Node groups
   const nodeGroup = g.selectAll('.node')
@@ -2000,7 +2106,8 @@ function render() {
       event.stopPropagation();
       showDetail(d, nodes);
       selectedNode = d;
-      if (currentView === 'all') dimUnconnected(d);
+      // Don't dim to connections in search mode - keep search highlighting
+      if (currentView === 'all' && viewMode !== 'search') dimUnconnected(d);
       const k = 3;
       const t = d3.zoomIdentity.translate(width / 2 - k * d.x, height / 2 - k * d.y).scale(k);
       svg.transition().duration(500).call(zoomBehavior.transform, t);
@@ -2270,7 +2377,15 @@ function render() {
   }
 
   // Click background to close panel
-  svg.on('click', () => { document.getElementById('detail-panel').classList.remove('open'); clearSelection(); });
+  svg.on('click', () => {
+    document.getElementById('detail-panel').classList.remove('open');
+    clearSelection();
+  });
+
+  // Re-apply search highlighting if in search mode
+  if (typeof reapplySearchHighlighting === 'function') {
+    reapplySearchHighlighting();
+  }
 }
 
 function forceCluster(centers, strength) {
@@ -2871,6 +2986,7 @@ function showDetail(d, allNodes) {
 
 document.getElementById('detail-close').addEventListener('click', () => {
   document.getElementById('detail-panel').classList.remove('open');
+  clearSelection(); // This will re-apply search highlighting if in search mode
   if (zoomBehavior) {
     d3.select('#map-container').select('svg')
       .transition().duration(500)
@@ -3021,6 +3137,8 @@ searchInput.addEventListener('keydown', (e) => {
 
 document.addEventListener('click', (e) => {
   if (!e.isTrusted) return; // ignore programmatic .click() calls (e.g. view switching)
+  // Don't clear search when in Search mode - that has its own Clear button
+  if (viewMode === 'search') return;
   if (!e.target.closest('.search-box')) {
     clearSearch();
     searchInput.value = '';
@@ -3174,8 +3292,12 @@ function dimUnconnected(node) {
 
 function clearSelection() {
   selectedNode = null;
+  // In search mode, do NOT touch highlighting at all - only Clear button should reset it
+  if (viewMode === 'search') {
+    return;
+  }
   d3.selectAll('.node').classed('dimmed', false).classed('highlighted', false);
-  d3.selectAll('.connection-line').classed('dimmed', false).classed('highlighted', false);
+  d3.selectAll('.connection-line').classed('dimmed', false).classed('highlighted', false).classed('one-hop', false);
   d3.selectAll('.cluster-bg').attr('opacity', 0.06);
   d3.selectAll('.cluster-label-bg').attr('opacity', 0.85);
   d3.selectAll('.cluster-label').attr('opacity', 1);
@@ -3186,6 +3308,354 @@ function clearSearch() {
   searchResults.innerHTML = '';
   highlightNodes([]);
 }
+
+// ══════════════════════════════════════════════════════════════════════════════
+// SEARCH MODE: Semantic search with connection highlighting
+// ══════════════════════════════════════════════════════════════════════════════
+
+let searchModeMethod = 'keyword'; // 'keyword' or 'ai'
+let searchModeMatches = []; // current search results (entity names)
+
+const searchModeInput = document.getElementById('search-mode-input');
+const searchModeStatus = document.getElementById('search-mode-status');
+const searchClearBtn = document.getElementById('search-clear-btn');
+const searchRunBtn = document.getElementById('search-run-btn');
+
+// Toggle between Keyword and AI search methods
+document.querySelectorAll('.search-toggle-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.search-toggle-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    searchModeMethod = btn.dataset.method;
+  });
+});
+
+// Search button click
+searchRunBtn.addEventListener('click', () => {
+  executeSearchMode();
+});
+
+// Handle Enter key in textarea (Enter to search, Shift+Enter for newline)
+searchModeInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault(); // Don't add newline
+    executeSearchMode();
+  }
+  if (e.key === 'Escape') {
+    searchModeInput.blur();
+    clearSearchModeHighlighting();
+    searchModeInput.value = '';
+    searchClearBtn.style.display = 'none';
+    searchModeStatus.textContent = '';
+  }
+});
+
+// Clear button
+searchClearBtn.addEventListener('click', () => {
+  clearSearchModeHighlighting();
+  searchModeInput.value = '';
+  searchClearBtn.style.display = 'none';
+  searchModeStatus.textContent = '';
+  searchModeMatches = [];
+});
+
+// Re-apply search highlighting after render (called from render() and simulation end)
+function reapplySearchHighlighting() {
+  if (viewMode === 'search' && searchModeMatches.length > 0) {
+    // Delay to let D3 finish rendering nodes
+    setTimeout(() => {
+      highlightSearchSubgraph(searchModeMatches);
+    }, 150);
+  }
+}
+
+function executeSearchMode() {
+  const query = searchModeInput.value.trim();
+  if (!query) {
+    clearSearchModeHighlighting();
+    searchClearBtn.style.display = 'none';
+    searchModeStatus.textContent = '';
+    searchModeMatches = [];
+    return;
+  }
+
+  if (searchModeMethod === 'ai') {
+    executeAISearch(query);
+  } else {
+    executeKeywordSearch(query);
+  }
+}
+
+function executeKeywordSearch(query) {
+  searchModeStatus.textContent = 'Searching...';
+  searchModeStatus.className = 'search-mode-status loading';
+
+  // Use enhanced query expansion
+  const expandedQuery = expandQueryEnhanced(query);
+
+  // Score all entities
+  const allEntities = [
+    ...allData.organizations.map(d => ({ ...d, entityType: 'organization' })),
+    ...allData.people.filter(d => d.category).map(d => ({ ...d, entityType: 'person' })),
+    ...(allData.resources || []).map(d => ({ ...d, name: d.title, entityType: 'resource' })),
+  ];
+
+  const scored = allEntities
+    .map(d => ({ ...d, score: scoreEntityEnhanced(d, expandedQuery) }))
+    .filter(d => d.score > 0)
+    .sort((a, b) => b.score - a.score);
+
+  const matchedNames = scored.map(d => d.name);
+  searchModeMatches = matchedNames;
+
+  if (matchedNames.length === 0) {
+    searchModeStatus.textContent = 'No matches found';
+    searchModeStatus.className = 'search-mode-status';
+    clearSearchModeHighlighting();
+    searchClearBtn.style.display = 'block';
+    return;
+  }
+
+  // Limit display message
+  const displayLimit = 50;
+  const namesToHighlight = matchedNames.length > displayLimit ? matchedNames.slice(0, displayLimit) : matchedNames;
+
+  if (matchedNames.length > displayLimit) {
+    searchModeStatus.textContent = `Showing top ${displayLimit} of ${matchedNames.length} matches`;
+  } else {
+    searchModeStatus.textContent = `${matchedNames.length} match${matchedNames.length === 1 ? '' : 'es'} found`;
+  }
+  searchModeStatus.className = 'search-mode-status';
+  searchClearBtn.style.display = 'block';
+
+  // Apply highlighting with delay to ensure D3 simulation has settled
+  setTimeout(() => highlightSearchSubgraph(namesToHighlight), 200);
+}
+
+async function executeAISearch(query) {
+  searchModeStatus.textContent = 'Searching with AI...';
+  searchModeStatus.className = 'search-mode-status loading';
+  searchClearBtn.style.display = 'none';
+
+  try {
+    const response = await fetch(`https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com/semantic-search?q=${encodeURIComponent(query)}`);
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+    const data = await response.json();
+
+    if (data.error) {
+      searchModeStatus.textContent = data.error;
+      searchModeStatus.className = 'search-mode-status error';
+      searchClearBtn.style.display = 'block';
+      return;
+    }
+
+    const matchedNames = data.names || [];
+    searchModeMatches = matchedNames;
+
+    if (matchedNames.length === 0) {
+      searchModeStatus.textContent = 'No matches found';
+      searchModeStatus.className = 'search-mode-status';
+      clearSearchModeHighlighting();
+      searchClearBtn.style.display = 'block';
+      return;
+    }
+
+    searchModeStatus.textContent = `${matchedNames.length} match${matchedNames.length === 1 ? '' : 'es'} (AI)`;
+    searchModeStatus.className = 'search-mode-status';
+    searchClearBtn.style.display = 'block';
+
+    // Apply highlighting with delay to ensure D3 simulation has settled
+    setTimeout(() => highlightSearchSubgraph(matchedNames), 200);
+
+  } catch (err) {
+    console.error('AI search error:', err);
+    searchModeStatus.textContent = 'AI search unavailable, try keyword mode';
+    searchModeStatus.className = 'search-mode-status error';
+    searchClearBtn.style.display = 'block';
+  }
+}
+
+// Enhanced query expansion with natural language patterns
+function expandQueryEnhanced(query) {
+  const lower = query.toLowerCase().trim();
+
+  // Parse common query patterns
+  let focusTerms = [];
+  let orgFilters = [];
+  let roleFilters = [];
+  let stanceFilters = [];
+
+  // "from X" or "at X" pattern - focus on org affiliation
+  const fromMatch = lower.match(/(?:from|at|of)\s+([a-z0-9\s]+?)(?:\s+(?:who|that|and)|$)/i);
+  if (fromMatch) {
+    orgFilters.push(fromMatch[1].trim());
+  }
+
+  // "working on X" or "focused on X" pattern
+  const workingOnMatch = lower.match(/(?:working on|focused on|interested in|studying)\s+([a-z0-9\s]+)/i);
+  if (workingOnMatch) {
+    focusTerms.push(workingOnMatch[1].trim());
+  }
+
+  // "who supports/opposes regulation" pattern
+  if (/support.*regulation|pro-?regulation|wants?.*regulation/i.test(lower)) {
+    stanceFilters.push('restrictive', 'precautionary', 'moderate');
+  }
+  if (/oppose.*regulation|anti-?regulation|against.*regulation|accelerat/i.test(lower)) {
+    stanceFilters.push('accelerate', 'light-touch');
+  }
+
+  // Expand base query using existing SEMANTIC_MAP
+  const baseExpanded = expandQuery(lower);
+
+  // Additional term expansions for search mode
+  const SEARCH_MODE_EXPANSIONS = {
+    // Stance-related
+    'cautious': ['precautionary', 'restrictive', 'safety', 'concerned'],
+    'accelerationist': ['accelerate', 'light-touch', 'e/acc', 'techno-optimist'],
+    'concerned': ['safety', 'risk', 'precautionary', 'restrictive'],
+    'optimist': ['accelerate', 'light-touch', 'capability'],
+    'pro-safety': ['safety', 'alignment', 'precautionary', 'restrictive'],
+    // Role-related
+    'researchers': ['researcher', 'academic', 'professor', 'scientist', 'phd'],
+    'executives': ['executive', 'ceo', 'cto', 'founder', 'president', 'director'],
+    'politicians': ['policymaker', 'senator', 'representative', 'congress', 'government'],
+    'investors': ['investor', 'vc', 'venture', 'funder', 'capital'],
+    // Topic-related
+    'dangers': ['risk', 'danger', 'threat', 'harm', 'catastrophic', 'existential'],
+    'benefits': ['capability', 'progress', 'innovation', 'opportunity'],
+    'close': ['imminent', '2-3 years', 'already here', 'soon'],
+    'far': ['25+ years', 'never', 'distant', 'far off'],
+  };
+
+  // Expand additional terms
+  const words = lower.split(/\s+/);
+  words.forEach(word => {
+    if (SEARCH_MODE_EXPANSIONS[word]) {
+      SEARCH_MODE_EXPANSIONS[word].forEach(syn => baseExpanded.expanded.push(syn));
+    }
+    // Partial match expansions
+    Object.keys(SEARCH_MODE_EXPANSIONS).forEach(key => {
+      if (key.startsWith(word) || word.startsWith(key)) {
+        SEARCH_MODE_EXPANSIONS[key].forEach(syn => baseExpanded.expanded.push(syn));
+      }
+    });
+  });
+
+  return {
+    ...baseExpanded,
+    orgFilters,
+    roleFilters,
+    stanceFilters,
+    focusTerms: [...focusTerms, ...baseExpanded.expanded]
+  };
+}
+
+// Enhanced entity scoring for search mode
+function scoreEntityEnhanced(d, query) {
+  const { original, expanded, orgFilters, stanceFilters } = query;
+
+  // Base scoring from existing scoreEntity
+  let score = scoreEntity(d, { original, expanded });
+
+  // Boost for org filter matches
+  if (orgFilters && orgFilters.length > 0) {
+    const orgText = `${d.primary_org || ''} ${d.other_orgs || ''} ${d.name || ''}`.toLowerCase();
+    orgFilters.forEach(org => {
+      if (orgText.includes(org)) score += 50;
+    });
+  }
+
+  // Boost for stance filter matches
+  if (stanceFilters && stanceFilters.length > 0) {
+    const stanceKey = getStanceKey(d.regulatory_stance);
+    if (stanceKey && stanceFilters.some(s => stanceKey.toLowerCase().includes(s))) {
+      score += 30;
+    }
+  }
+
+  return score;
+}
+
+// Highlight matched nodes AND their connections with tiered opacity
+function highlightSearchSubgraph(matchedNames, showConnections = true, retryCount = 0) {
+  const nameSet = new Set(matchedNames);
+  const allNodes = d3.selectAll('.node').data();
+
+  // If no nodes rendered yet, retry after a short delay (up to 3 times)
+  if (allNodes.length === 0 && retryCount < 3) {
+    setTimeout(() => highlightSearchSubgraph(matchedNames, showConnections, retryCount + 1), 100);
+    return;
+  }
+
+  // Check if any matches are visible on screen
+  const anyVisible = matchedNames.length > 0 &&
+    d3.selectAll('.node').data().some(d => nameSet.has(d.name));
+
+  // Highlight matched nodes, dim non-matches
+  d3.selectAll('.node').each(function(d) {
+    const el = d3.select(this);
+    if (!anyVisible) {
+      el.classed('dimmed', false).classed('highlighted', false);
+    } else if (nameSet.has(d.name)) {
+      el.classed('dimmed', false).classed('highlighted', true);
+    } else {
+      el.classed('dimmed', true).classed('highlighted', false);
+    }
+  });
+
+  // Highlight edges with tiered opacity
+  if (showConnections && anyVisible) {
+    d3.selectAll('.connection-line').each(function(d) {
+      const srcName = (d.source && d.source.name) || '';
+      const tgtName = (d.target && d.target.name) || '';
+      const srcMatch = nameSet.has(srcName);
+      const tgtMatch = nameSet.has(tgtName);
+
+      const el = d3.select(this);
+      // Remove all highlight classes first
+      el.classed('dimmed', false).classed('highlighted', false).classed('one-hop', false);
+
+      if (srcMatch && tgtMatch) {
+        // Both endpoints match — full highlight
+        el.classed('highlighted', true);
+      } else if (srcMatch || tgtMatch) {
+        // One endpoint matches — one-hop context edge
+        el.classed('one-hop', true);
+      } else {
+        // Neither matches — dim
+        el.classed('dimmed', true);
+      }
+    });
+  } else {
+    // Clear edge highlighting
+    d3.selectAll('.connection-line')
+      .classed('dimmed', anyVisible)
+      .classed('highlighted', false)
+      .classed('one-hop', false);
+  }
+
+  // Dim cluster backgrounds
+  d3.selectAll('.cluster-bg').attr('opacity', anyVisible ? 0.02 : 0.06);
+  d3.selectAll('.cluster-label-bg').attr('opacity', anyVisible ? 0.02 : 0.85);
+  d3.selectAll('.cluster-label').attr('opacity', anyVisible ? 0.05 : 1);
+}
+
+function clearSearchModeHighlighting() {
+  searchModeMatches = [];
+  d3.selectAll('.node').classed('dimmed', false).classed('highlighted', false);
+  d3.selectAll('.connection-line')
+    .classed('dimmed', false)
+    .classed('highlighted', false)
+    .classed('one-hop', false);
+  d3.selectAll('.cluster-bg').attr('opacity', 0.06);
+  d3.selectAll('.cluster-label-bg').attr('opacity', 0.85);
+  d3.selectAll('.cluster-label').attr('opacity', 1);
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
 
 function updateCategoryResetBtn() {
   const chips = document.querySelectorAll('#category-chips .chip');

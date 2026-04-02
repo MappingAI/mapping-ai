@@ -36,6 +36,8 @@ Resources:
           - !Sub 'https://${WebsiteBucket}.s3.${AWS::Region}.amazonaws.com'
           - !Sub 'https://${CloudFrontDistribution.DomainName}'
           - 'http://localhost:3000'
+          - 'http://localhost:*'
+          - 'http://127.0.0.1:*'
         AllowHeaders:
           - Content-Type
           - X-Admin-Key
@@ -78,6 +80,23 @@ Resources:
           Properties:
             ApiId: !Ref MappingAiApi
             Path: /search
+            Method: GET
+
+  SemanticSearchFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: mapping-ai-semantic-search
+      Handler: api/semantic-search.handler
+      Timeout: 30
+      Environment:
+        Variables:
+          ANTHROPIC_API_KEY: !Ref AnthropicApiKey
+      Events:
+        SemanticSearch:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref MappingAiApi
+            Path: /semantic-search
             Method: GET
 
   AdminFunction:
