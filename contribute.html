@@ -2171,8 +2171,8 @@ function editExistingOrg(orgData) {
 
 // ── Org search for tag inputs (affiliated orgs) ──
 document.querySelectorAll('.tag-input-wrapper').forEach(wrapper => {
-  const input = wrapper.querySelector('.tag-input');
-  if (!input) return; // skip non-search tag wrappers (e.g., other-categories)
+  const input = wrapper.querySelector('.tag-input[data-search-type="organization"]');
+  if (!input) return; // skip non-org tag wrappers (location, other-categories, etc.)
   const resultsDiv = wrapper.querySelector('.org-search-results');
   const hiddenInput = wrapper.parentElement.querySelector('input[name="affiliatedOrgIds"]');
   const selectedOrgs = []; // [{id, name}]
