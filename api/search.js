@@ -82,21 +82,47 @@ export const handler = async (event) => {
 
     const client = await pool.connect();
     try {
-      const result = await client.query(
-        `SELECT id, entity_type, name, category, title, primary_org, location,
-                belief_regulatory_stance AS regulatory_stance, status,
-                resource_title, resource_type, resource_author, resource_category, website, parent_org_id,
-                ts_rank(search_vector, plainto_tsquery('english', $1)) AS rank
-         FROM entity
-         WHERE (search_vector @@ plainto_tsquery('english', $1)
-            OR name ILIKE $2
-            OR resource_title ILIKE $2) ${whereExtra}
-         ORDER BY
-           CASE WHEN name ILIKE $2 OR resource_title ILIKE $2 THEN 0 ELSE 1 END,
-           ts_rank(search_vector, plainto_tsquery('english', $1)) DESC
-         LIMIT 30`,
-        params
-      );
+      let result;
+
+      if (status === 'pending') {
+        // Search the submission table for new pending entities (entity_id IS NULL)
+        const pendingParams = [query, `%${query}%`];
+        let pIdx = 3;
+        let pendingTypeClause = '';
+        if (entityType) {
+          pendingTypeClause = `AND entity_type = $${pIdx}`;
+          pendingParams.push(entityType);
+          pIdx++;
+        }
+        result = await client.query(
+          `SELECT id, entity_type, name, category, title, primary_org, location,
+                  belief_regulatory_stance AS regulatory_stance, 'pending' AS status,
+                  resource_title, resource_type, resource_author, resource_category, website, parent_org_id
+           FROM submission
+           WHERE entity_id IS NULL AND status = 'pending'
+             AND (name ILIKE $2 OR resource_title ILIKE $2) ${pendingTypeClause}
+           ORDER BY
+             CASE WHEN name ILIKE $2 OR resource_title ILIKE $2 THEN 0 ELSE 1 END
+           LIMIT 15`,
+          pendingParams
+        );
+      } else {
+        result = await client.query(
+          `SELECT id, entity_type, name, category, title, primary_org, location,
+                  belief_regulatory_stance AS regulatory_stance, status,
+                  resource_title, resource_type, resource_author, resource_category, website, parent_org_id,
+                  ts_rank(search_vector, plainto_tsquery('english', $1)) AS rank
+           FROM entity
+           WHERE (search_vector @@ plainto_tsquery('english', $1)
+              OR name ILIKE $2
+              OR resource_title ILIKE $2) ${whereExtra}
+           ORDER BY
+             CASE WHEN name ILIKE $2 OR resource_title ILIKE $2 THEN 0 ELSE 1 END,
+             ts_rank(search_vector, plainto_tsquery('english', $1)) DESC
+           LIMIT 30`,
+          params
+        );
+      }
 
       // Group results by entity_type for backwards compatibility
       const results = { people: [], organizations: [], resources: [] };
