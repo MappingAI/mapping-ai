@@ -160,7 +160,7 @@ npm run db:backup               # Backup all tables to S3 (JSON + SQL)
 npm run db:backup:local         # Backup to local files only
 
 # Deploy backend (Lambda functions)
-sam build && sam deploy --parameter-overrides DatabaseUrl=$DATABASE_URL
+sam build && sam deploy --parameter-overrides DatabaseUrl=$DATABASE_URL AdminKey=$ADMIN_KEY AnthropicApiKey=$ANTHROPIC_API_KEY
 
 # Deploy frontend (automatic on push to main)
 git push origin main            # Triggers: build → export → S3 sync → CloudFront invalidate
@@ -180,8 +180,8 @@ aws cloudfront create-invalidation --distribution-id E34ZXLC7CZX7XT --paths "/*"
 | `S3_BUCKET_NAME` | GitHub Secrets | `mapping-ai-website-561047280976` |
 | `CLOUDFRONT_DISTRIBUTION_ID` | GitHub Secrets | `E34ZXLC7CZX7XT` |
 | `EXA_API_KEY` | `.env` | Exa API key for data enrichment |
-| `ANTHROPIC_API_KEY` | Lambda env var | Claude Haiku for LLM review |
-| `ADMIN_KEY` | Lambda env var | Admin authentication |
+| `ANTHROPIC_API_KEY` | `.env` + Lambda (via SAM parameter) | Claude Haiku for LLM review + semantic search |
+| `ADMIN_KEY` | `.env` + Lambda (via SAM parameter) | Admin authentication (passed via --parameter-overrides, never committed) |
 
 ## API Endpoints
 

@@ -1,15 +1,3 @@
-import pg from 'pg';
-const { Pool } = pg;
-
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false },
-  max: 1,
-  connectionTimeoutMillis: 5000,
-  idleTimeoutMillis: 30000,
-  options: '-c statement_timeout=10000',
-});
-
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, OPTIONS',
@@ -17,6 +5,27 @@ const CORS_HEADERS = {
 };
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
+const MAP_DATA_URL = 'https://mapping-ai.org/map-data.json';
+
+// Cache for map data (persists across warm Lambda invocations)
+let cachedMapData = null;
+let cacheTimestamp = 0;
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+
+async function getMapData() {
+  const now = Date.now();
+  if (cachedMapData && (now - cacheTimestamp) < CACHE_TTL) {
+    return cachedMapData;
+  }
+
+  const response = await fetch(MAP_DATA_URL);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch map data: ${response.status}`);
+  }
+  cachedMapData = await response.json();
+  cacheTimestamp = now;
+  return cachedMapData;
+}
 
 export const handler = async (event) => {
   const method = event.requestContext.http.method;
@@ -54,35 +63,20 @@ export const handler = async (event) => {
       };
     }
 
-    // Fetch all entity names from database for context
-    const client = await pool.connect();
-    let entityContext;
-    try {
-      const result = await client.query(`
-        SELECT entity_type, name, category, title, primary_org,
-               belief_regulatory_stance AS regulatory_stance,
-               belief_agi_timeline AS agi_timeline,
-               belief_ai_risk AS ai_risk,
-               resource_title, resource_category
-        FROM entity
-        WHERE status = 'approved'
-        ORDER BY name
-      `);
+    // Fetch cached map data from CDN (much faster than DB query)
+    const mapData = await getMapData();
 
-      // Build context for LLM - group by type
-      const people = result.rows
-        .filter(r => r.entity_type === 'person')
-        .map(r => `- ${r.name} (${r.category || 'unknown role'}${r.primary_org ? ', ' + r.primary_org : ''}${r.regulatory_stance ? ', stance: ' + r.regulatory_stance : ''})`);
+    // Build context for LLM - group by type
+    const people = (mapData.people || [])
+      .map(r => `- ${r.name} (${r.category || 'unknown role'}${r.primary_org ? ', ' + r.primary_org : ''}${r.regulatory_stance ? ', stance: ' + r.regulatory_stance : ''})`);
 
-      const orgs = result.rows
-        .filter(r => r.entity_type === 'organization')
-        .map(r => `- ${r.name} (${r.category || 'unknown sector'}${r.regulatory_stance ? ', stance: ' + r.regulatory_stance : ''})`);
+    const orgs = (mapData.organizations || [])
+      .map(r => `- ${r.name} (${r.category || 'unknown sector'}${r.regulatory_stance ? ', stance: ' + r.regulatory_stance : ''})`);
 
-      const resources = result.rows
-        .filter(r => r.entity_type === 'resource')
-        .map(r => `- ${r.resource_title || r.name} (${r.resource_category || 'resource'})`);
+    const resources = (mapData.resources || [])
+      .map(r => `- ${r.title || r.name} (${r.category || 'resource'})`);
 
-      entityContext = `
+    const entityContext = `
 PEOPLE (${people.length}):
 ${people.join('\n')}
 
@@ -91,11 +85,7 @@ ${orgs.join('\n')}
 
 RESOURCES (${resources.length}):
 ${resources.join('\n')}
-      `.trim();
-
-    } finally {
-      client.release();
-    }
+    `.trim();
 
     // Call Claude Haiku for semantic matching
     const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -107,11 +97,11 @@ ${resources.join('\n')}
       },
       body: JSON.stringify({
         model: 'claude-3-haiku-20240307',
-        max_tokens: 1024,
+        max_tokens: 2048,
         messages: [
           {
             role: 'user',
-            content: `You are helping search a database of AI policy stakeholders. Given a natural language query, return the names of entities that match.
+            content: `You are helping search a database of AI policy stakeholders. Your goal is to BROADLY interpret queries and return all entities that could be relevant.
 
 QUERY: "${query}"
 
@@ -120,23 +110,41 @@ Here are all the entities in the database:
 ${entityContext}
 
 Return a JSON object with:
-- "names": array of entity names that match the query (exact names from the list above)
-- "explanation": brief explanation of why these match (1 sentence)
+- "names": array of exact entity names from the list above that match
+- "explanation": 1 sentence explaining the matches
 
-Only return entities that genuinely match the query intent. Be selective - it's better to return fewer highly relevant matches than many weak ones. Return at most 30 matches.
+IMPORTANT - Be INCLUSIVE, not selective:
 
-For stance-related queries:
-- "pro-regulation", "cautious", "wants oversight" -> look for Restrictive, Precautionary, Moderate stances
-- "against regulation", "accelerationist", "e/acc" -> look for Accelerate, Light-touch stances
-- "safety-focused" -> AI Safety orgs, safety researchers
+1. **Topic queries** (e.g., "AI safety", "governance", "existential risk"):
+   - Include organizations in that space
+   - Include ALL people who work at those organizations (check their primary_org field!)
+   - Include people whose roles suggest involvement (researchers, policymakers)
 
-For role queries:
-- "researchers" -> people with Researcher, Academic roles
-- "executives", "leaders" -> people with Executive role
-- "politicians", "policymakers" -> people with Policymaker role
+2. **Organization queries** (e.g., "OpenAI", "Anthropic", "frontier labs"):
+   - Include the organization(s) themselves
+   - Include ALL people whose primary_org matches that organization
+   - For "frontier labs", include: OpenAI, Anthropic, Google DeepMind, Meta AI, xAI and ALL their employees
 
-For affiliation queries:
-- "from OpenAI", "at Anthropic" -> match the org name in primary_org
+3. **Stance queries** (e.g., "wants regulation", "accelerationists"):
+   - "pro-regulation", "cautious", "wants oversight" → include Restrictive, Precautionary, Moderate stances
+   - "against regulation", "accelerationist", "e/acc" → include Accelerate, Light-touch stances
+   - Include people at organizations known for those stances
+
+4. **Role queries** (e.g., "researchers", "policymakers", "executives"):
+   - Include all people with matching category/role
+
+5. **Ultra-specific policy queries** (e.g., "SB 1047", "preemption", "compute governance"):
+   - Use your world knowledge to identify who works on these specific issues
+   - Include relevant think tanks, policymakers, researchers, advocates
+   - Include organizations that have published on or advocated positions on these topics
+   - For "SB 1047" or California AI legislation, include Scott Wiener, Gavin Newsom, CAIS, AI Policy Institute, etc.
+
+6. **Belief queries** (e.g., "thinks AGI is close", "worried about AI risk"):
+   - Match against agi_timeline and ai_risk fields
+   - Include people at organizations known for those views
+
+Return up to 100 matches. For broad queries, return MORE entities rather than fewer.
+When in doubt, INCLUDE the entity rather than exclude it.
 
 Respond ONLY with valid JSON, no other text.`
           }
@@ -176,10 +184,11 @@ Respond ONLY with valid JSON, no other text.`
     }
 
     // Validate names against actual entity list to prevent hallucinations
-    const validNames = new Set(
-      (await pool.query("SELECT name FROM entity WHERE status = 'approved' UNION SELECT resource_title FROM entity WHERE entity_type = 'resource' AND status = 'approved'"))
-        .rows.map(r => r.name || r.resource_title)
-    );
+    const validNames = new Set([
+      ...(mapData.people || []).map(p => p.name),
+      ...(mapData.organizations || []).map(o => o.name),
+      ...(mapData.resources || []).map(r => r.title || r.name),
+    ]);
 
     const filteredNames = (parsed.names || []).filter(name => validNames.has(name));
 

@@ -357,6 +357,17 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   min-height: 1.2em;
 }
 .search-mode-status.loading { color: var(--accent); }
+.search-mode-status.loading::after {
+  content: '';
+  animation: dots 1.5s steps(4, end) infinite;
+}
+@keyframes dots {
+  0% { content: ''; }
+  25% { content: '.'; }
+  50% { content: '..'; }
+  75% { content: '...'; }
+  100% { content: ''; }
+}
 .search-mode-status.error { color: #e53935; }
 .search-clear-btn {
   width: 100%; margin-top: 0.4rem; padding: 0.35rem 0.5rem;
@@ -608,11 +619,11 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
     <!-- Search mode query box (inside View group, shown when Search mode active) -->
     <div id="search-mode-controls" style="display:none; margin-top:0.5rem;">
       <h3>Query</h3>
-      <textarea id="search-mode-input" class="search-mode-textarea" placeholder="safety researchers&#10;people from OpenAI&#10;who supports regulation..." rows="3"></textarea>
+      <textarea id="search-mode-input" class="search-mode-textarea" placeholder="Which academics have testified before Congress on AI?" rows="2"></textarea>
       <div class="search-action-row">
         <div class="search-toggle-row">
           <button class="search-toggle-btn active" data-method="keyword">Keyword</button>
-          <button class="search-toggle-btn" data-method="ai">AI</button>
+          <button class="search-toggle-btn" data-method="ai">LLM</button>
         </div>
         <button id="search-run-btn" class="search-run-btn">Search</button>
       </div>
@@ -1399,7 +1410,12 @@ function buildFilters() {
         chip.style.color = color;
       }
       updateCategoryResetBtn();
-      render();
+      // In search mode, filter the search results instead of re-rendering
+      if (viewMode === 'search' && searchModeMatches && searchModeMatches.length > 0) {
+        applyFiltersToSearchResults();
+      } else {
+        render();
+      }
     });
     container.appendChild(chip);
   });
@@ -1423,7 +1439,12 @@ function buildStanceLegend() {
       }
       stanceFilterActive = activeStances.size < STANCE_ORDER.length;
       updateStanceResetBtn();
-      render();
+      // In search mode, filter the search results instead of re-rendering
+      if (viewMode === 'search' && searchModeMatches && searchModeMatches.length > 0) {
+        applyFiltersToSearchResults();
+      } else {
+        render();
+      }
     });
     container.appendChild(item);
   });
@@ -1438,7 +1459,12 @@ function buildStanceLegend() {
     noStance.classList.toggle('inactive');
     stanceFilterActive = true;
     updateStanceResetBtn();
-    render();
+    // In search mode, filter the search results instead of re-rendering
+    if (viewMode === 'search' && searchModeMatches && searchModeMatches.length > 0) {
+      applyFiltersToSearchResults();
+    } else {
+      render();
+    }
   });
   container.appendChild(noStance);
   updateStanceResetBtn();
@@ -1458,7 +1484,12 @@ function buildSourceTypeFilter() {
       }
       sourceFilterActive = activeSourceTypes.size < SOURCE_TYPES.length;
       updateSourceResetBtn();
-      render();
+      // In search mode, filter the search results instead of re-rendering
+      if (viewMode === 'search' && searchModeMatches && searchModeMatches.length > 0) {
+        applyFiltersToSearchResults();
+      } else {
+        render();
+      }
     });
   });
   updateSourceResetBtn();
@@ -1498,7 +1529,11 @@ document.getElementById('source-reset').addEventListener('click', () => {
   }
   sourceFilterActive = activeSourceTypes.size < SOURCE_TYPES.length;
   updateSourceResetBtn();
-  render();
+  if (viewMode === 'search' && searchModeMatches && searchModeMatches.length > 0) {
+    applyFiltersToSearchResults();
+  } else {
+    render();
+  }
 });
 
 // ── View mode (Network / Plot) + sub-tabs ──
@@ -2107,7 +2142,7 @@ function render() {
       showDetail(d, nodes);
       selectedNode = d;
       // Don't dim to connections in search mode - keep search highlighting
-      if (currentView === 'all' && viewMode !== 'search') dimUnconnected(d);
+      if (viewMode !== 'search' && currentView === 'all') dimUnconnected(d);
       const k = 3;
       const t = d3.zoomIdentity.translate(width / 2 - k * d.x, height / 2 - k * d.y).scale(k);
       svg.transition().duration(500).call(zoomBehavior.transform, t);
@@ -3266,6 +3301,8 @@ function highlightNodes(names) {
 // Dim all nodes/edges NOT connected to the selected node
 function dimUnconnected(node) {
   if (!node) return;
+  // Never dim in search mode - search highlighting should be preserved
+  if (viewMode === 'search') return;
   const connectedNames = new Set([node.name]);
   renderedLinks.forEach(l => {
     const srcName = l.source.name || l.source;
@@ -3387,7 +3424,7 @@ function executeSearchMode() {
 }
 
 function executeKeywordSearch(query) {
-  searchModeStatus.textContent = 'Searching...';
+  searchModeStatus.textContent = 'Searching';
   searchModeStatus.className = 'search-mode-status loading';
 
   // Use enhanced query expansion
@@ -3406,19 +3443,23 @@ function executeKeywordSearch(query) {
     .sort((a, b) => b.score - a.score);
 
   const matchedNames = scored.map(d => d.name);
-  searchModeMatches = matchedNames;
 
   if (matchedNames.length === 0) {
     searchModeStatus.textContent = 'No matches found';
     searchModeStatus.className = 'search-mode-status';
     clearSearchModeHighlighting();
     searchClearBtn.style.display = 'block';
+    searchModeMatches = [];
     return;
   }
 
-  // Limit display message
+  // Limit display to top 50 for performance
   const displayLimit = 50;
   const namesToHighlight = matchedNames.length > displayLimit ? matchedNames.slice(0, displayLimit) : matchedNames;
+
+  // Store only the names we're actually highlighting (not the full list)
+  // This ensures reapplySearchHighlighting uses the same set
+  searchModeMatches = namesToHighlight;
 
   if (matchedNames.length > displayLimit) {
     searchModeStatus.textContent = `Showing top ${displayLimit} of ${matchedNames.length} matches`;
@@ -3433,7 +3474,7 @@ function executeKeywordSearch(query) {
 }
 
 async function executeAISearch(query) {
-  searchModeStatus.textContent = 'Searching with AI...';
+  searchModeStatus.textContent = 'Searching';
   searchModeStatus.className = 'search-mode-status loading';
   searchClearBtn.style.display = 'none';
 
@@ -3471,7 +3512,7 @@ async function executeAISearch(query) {
 
   } catch (err) {
     console.error('AI search error:', err);
-    searchModeStatus.textContent = 'AI search unavailable, try keyword mode';
+    searchModeStatus.textContent = 'LLM search unavailable, try keyword mode';
     searchModeStatus.className = 'search-mode-status error';
     searchClearBtn.style.display = 'block';
   }
@@ -3655,6 +3696,52 @@ function clearSearchModeHighlighting() {
   d3.selectAll('.cluster-label').attr('opacity', 1);
 }
 
+// Filter search results based on current category/stance/source filters
+function applyFiltersToSearchResults() {
+  if (!searchModeMatches || searchModeMatches.length === 0) return;
+
+  // Build a lookup of all entities by name
+  const entityByName = {};
+  allData.organizations.forEach(d => { entityByName[d.name] = { ...d, entityType: 'organization' }; });
+  allData.people.forEach(d => { entityByName[d.name] = { ...d, entityType: 'person' }; });
+  (allData.resources || []).forEach(d => { entityByName[d.title] = { ...d, name: d.title, entityType: 'resource' }; });
+
+  // Filter the search matches
+  const filteredMatches = searchModeMatches.filter(name => {
+    const entity = entityByName[name];
+    if (!entity) return false;
+
+    // Check category filter - try both raw and normalized forms
+    const rawCat = entity.category;
+    const normalizedCat = normalizeCategory(rawCat);
+    const categoryMatch = activeCategories.has(rawCat) || activeCategories.has(normalizedCat);
+    if (!categoryMatch) return false;
+
+    // Check stance filter (skip for resources)
+    if (entity.entityType !== 'resource' && !passesStanceFilter(entity)) return false;
+
+    // Check source type filter
+    if (!passesSourceTypeFilter(entity)) return false;
+
+    return true;
+  });
+
+  // Update status message
+  const totalMatches = searchModeMatches.length;
+  const filteredCount = filteredMatches.length;
+
+  if (filteredCount === 0) {
+    searchModeStatus.textContent = `0 of ${totalMatches} matches (all filtered out)`;
+  } else if (filteredCount < totalMatches) {
+    searchModeStatus.textContent = `${filteredCount} of ${totalMatches} matches (filtered)`;
+  } else {
+    searchModeStatus.textContent = `${totalMatches} match${totalMatches === 1 ? '' : 'es'} found`;
+  }
+
+  // Apply highlighting to filtered matches - use slight delay to ensure DOM is ready
+  setTimeout(() => highlightSearchSubgraph(filteredMatches), 50);
+}
+
 // ══════════════════════════════════════════════════════════════════════════════
 
 function updateCategoryResetBtn() {
@@ -3683,7 +3770,12 @@ document.getElementById('category-reset').addEventListener('click', () => {
     }
   });
   updateCategoryResetBtn();
-  render();
+  // In search mode, filter the search results instead of re-rendering
+  if (viewMode === 'search' && searchModeMatches && searchModeMatches.length > 0) {
+    applyFiltersToSearchResults();
+  } else {
+    render();
+  }
 });
 
 // Stance select/deselect all toggle
@@ -3700,7 +3792,12 @@ document.getElementById('stance-reset').addEventListener('click', () => {
     items.forEach(item => { item.classList.remove('inactive'); item.dataset.active = 'true'; });
   }
   updateStanceResetBtn();
-  render();
+  // In search mode, filter the search results instead of re-rendering
+  if (viewMode === 'search' && searchModeMatches && searchModeMatches.length > 0) {
+    applyFiltersToSearchResults();
+  } else {
+    render();
+  }
 });
 
 // Theme toggle

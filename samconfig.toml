@@ -8,7 +8,8 @@ region = "eu-west-2"
 confirm_changeset = true
 capabilities = "CAPABILITY_IAM"
 image_repositories = []
-# DatabaseUrl is passed at deploy time via --parameter-overrides, never committed
+# DatabaseUrl and AdminKey are passed at deploy time via --parameter-overrides, never committed
+# Example: sam deploy --parameter-overrides DatabaseUrl=$DATABASE_URL AdminKey=$ADMIN_KEY AnthropicApiKey=$ANTHROPIC_API_KEY
 
 [default.global.parameters]
 region = "eu-west-2"
