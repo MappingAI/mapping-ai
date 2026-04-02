@@ -710,7 +710,9 @@ details[open] summary { border-bottom: 1px solid var(--border); }
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   max-height: 200px;
   overflow-y: auto;
-  min-width: 240px;
+  min-width: 420px;
+  width: max-content;
+  max-width: 560px;
 }
 .mention-item {
   padding: 0.5rem 0.75rem;
@@ -2765,6 +2767,10 @@ function clearFormDraft(formType) {
     if (formType) {
       const state = JSON.parse(localStorage.getItem(SAVE_KEY) || '{}');
       delete state[formType];
+      // Also clear activeForm if it matches the cleared form
+      if (state.activeForm === formType + '-form' || state.activeForm === formType) {
+        delete state.activeForm;
+      }
       localStorage.setItem(SAVE_KEY, JSON.stringify(state));
     } else {
       localStorage.removeItem(SAVE_KEY);
