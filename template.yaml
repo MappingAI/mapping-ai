@@ -56,6 +56,10 @@ Resources:
       DefaultRouteSettings:
         ThrottlingRateLimit: 10
         ThrottlingBurstLimit: 20
+      RouteSettings:
+        "GET /semantic-search":
+          ThrottlingRateLimit: 1
+          ThrottlingBurstLimit: 3
 
   SubmitFunction:
     Type: AWS::Serverless::Function
