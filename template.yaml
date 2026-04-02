@@ -15,7 +15,7 @@ Parameters:
   DatabaseUrl:
     Type: String
     NoEcho: true
-    Description: Postgres connection string (from Neon)
+    Description: Postgres connection string (AWS RDS)
   AnthropicApiKey:
     Type: String
     NoEcho: true
