@@ -153,7 +153,7 @@ details[open] summary { border-bottom: 1px solid var(--border); }
   border-radius: 20px; cursor: pointer; transition: all 0.15s;
 }
 .pill:hover { border-color: var(--text-secondary); color: var(--text-primary); }
-.pill.active { background: var(--text-primary); color: var(--bg-primary); border-color: var(--text-primary); }
+.pill.active { background: var(--bg-secondary); color: var(--text-primary); border-color: var(--text-primary); font-weight: 600; }
 
 /* Example @mentions in example submissions */
 .example-mention {
@@ -165,27 +165,29 @@ details[open] summary { border-bottom: 1px solid var(--border); }
 .example-mention-card {
   position: absolute; bottom: calc(100% + 6px); left: 50%;
   transform: translateX(-50%);
-  background: var(--text-primary); color: #fff;
+  background: var(--bg-primary); color: var(--text-primary);
   font-family: var(--mono); font-size: 10px; font-weight: 400;
   padding: 0.5rem 0.7rem; border-radius: 4px;
   min-width: 180px; max-width: 260px; line-height: 1.5;
   z-index: 100; pointer-events: none;
   text-transform: none; letter-spacing: 0;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 .example-mention-card::after {
   content: ''; position: absolute; top: 100%; left: 50%;
   transform: translateX(-50%);
-  border: 5px solid transparent; border-top-color: var(--text-primary);
+  border: 5px solid transparent; border-top-color: var(--border);
 }
 
-/* Clear form link */
+/* Clear form link — positioned absolutely in form grid */
 .clear-form-link {
   font-family: var(--mono); font-size: 9px; letter-spacing: 0.04em;
   text-transform: uppercase; color: var(--text-tertiary);
-  cursor: pointer; float: right; margin-top: -0.5rem; margin-bottom: 0.5rem;
+  cursor: pointer; grid-column: 1 / -1; text-align: right;
+  margin-top: -0.5rem;
 }
-.clear-form-link:hover { color: var(--accent); }
+.clear-form-link:hover { color: var(--accent); text-decoration: underline; }
 
 /* Other categories tag dropdown */
 .other-cat-tags { position: relative; }
@@ -428,23 +430,25 @@ details[open] summary { border-bottom: 1px solid var(--border); }
   cursor: help; margin-left: 0.3rem;
   position: relative;
 }
-.info-tip:hover { background: var(--text-tertiary); color: #fff; }
+.info-tip:hover { background: var(--accent); color: #fff; }
 .info-tip .tip-content {
   display: none; position: absolute; bottom: calc(100% + 2px); left: 50%;
   transform: translateX(-50%);
-  background: var(--text-primary); color: #fff;
+  background: var(--bg-primary); color: var(--text-primary);
   font-family: var(--mono); font-size: 10px; font-weight: 400;
-  padding: 0.5rem 0.7rem; border-radius: 4px;
-  width: 240px; line-height: 1.5;
+  padding: 0.6rem 0.8rem; border-radius: 6px;
+  width: 280px; line-height: 1.6;
   z-index: 100; pointer-events: auto;
   text-transform: none; letter-spacing: 0;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
 }
 /* Invisible bridge so mouse can travel from icon to tooltip */
 .info-tip .tip-content::after {
   content: ''; position: absolute; top: 100%; left: 0; right: 0;
   height: 8px;
 }
-.info-tip .tip-content a { color: #93c5fd; }
+.info-tip .tip-content a { color: var(--accent); }
 .info-tip:hover .tip-content,
 .info-tip .tip-content:hover { display: block; }
 /* Custom select dropdown */
@@ -1199,7 +1203,7 @@ details[open] summary { border-bottom: 1px solid var(--border); }
         • Career background &amp; notable projects<br>
         • Recent relevant activity or controversies<br><br>
         <strong>Use @mentions</strong> (like Notion or Obsidian) to create bidirectional links:<br>
-        <em>"Previously at <span style="background:#e8f0fe;border-radius:3px;padding:1px 3px;">@Google DeepMind</span> before joining <span style="background:#e8f0fe;border-radius:3px;padding:1px 3px;">@Anthropic</span>. Influenced by <span style="background:#e8f0fe;border-radius:3px;padding:1px 3px;">@Superintelligence (Bostrom)</span>."</em><br><br>
+        <em>"Previously at <span style="background:#e8f0fe;border-radius:3px;padding:1px 3px;color:var(--accent);font-weight:500;">@Google DeepMind</span> before joining <span style="background:#e8f0fe;border-radius:3px;padding:1px 3px;color:var(--accent);font-weight:500;">@Anthropic</span>. Influenced by <span style="background:#e8f0fe;border-radius:3px;padding:1px 3px;color:var(--accent);font-weight:500;">@Superintelligence (Bostrom)</span>."</em><br><br>
         These links help us map connections between people, orgs, and resources.
       </span></span></label>
       <div class="tiptap-notes"></div>
@@ -1399,7 +1403,7 @@ details[open] summary { border-bottom: 1px solid var(--border); }
         • Career background &amp; notable projects<br>
         • Recent relevant activity or controversies<br><br>
         <strong>Use @mentions</strong> (like Notion or Obsidian) to create bidirectional links:<br>
-        <em>"Previously at <span style="background:#e8f0fe;border-radius:3px;padding:1px 3px;">@Google DeepMind</span> before joining <span style="background:#e8f0fe;border-radius:3px;padding:1px 3px;">@Anthropic</span>. Influenced by <span style="background:#e8f0fe;border-radius:3px;padding:1px 3px;">@Superintelligence (Bostrom)</span>."</em><br><br>
+        <em>"Previously at <span style="background:#e8f0fe;border-radius:3px;padding:1px 3px;color:var(--accent);font-weight:500;">@Google DeepMind</span> before joining <span style="background:#e8f0fe;border-radius:3px;padding:1px 3px;color:var(--accent);font-weight:500;">@Anthropic</span>. Influenced by <span style="background:#e8f0fe;border-radius:3px;padding:1px 3px;color:var(--accent);font-weight:500;">@Superintelligence (Bostrom)</span>."</em><br><br>
         These links help us map connections between people, orgs, and resources.
       </span></span></label>
       <div class="tiptap-notes"></div>
@@ -2971,33 +2975,27 @@ document.querySelectorAll('.clear-form-link').forEach(link => {
 // ── Example @mention hover cards ──
 document.querySelectorAll('.example-mention').forEach(mention => {
   let card = null;
-  mention.addEventListener('mouseenter', async () => {
+  mention.addEventListener('mouseenter', () => {
     const name = mention.dataset.name;
     const type = mention.dataset.type;
+    const typeLabel = { person: 'Person', organization: 'Organization', resource: 'Resource' }[type] || type;
     card = document.createElement('div');
     card.className = 'example-mention-card';
-    card.innerHTML = `<strong>${name}</strong><br><span style="opacity:0.7;">${type}</span><br><span style="opacity:0.5;">Loading...</span>`;
-    mention.style.position = 'relative';
+    card.innerHTML = `<strong>${name}</strong><br><span style="color:var(--text-secondary);">${typeLabel}</span><br><span style="color:var(--text-tertiary);font-size:9px;">Linked in the database ↗</span>`;
     mention.appendChild(card);
-    // Try to find in allEntities cache
-    try {
-      const res = await fetch(`${API_BASE}/search?q=${encodeURIComponent(name)}&type=${type}`);
-      if (res.ok) {
-        const data = await res.json();
-        const match = data.results?.[0];
-        if (match && card.parentNode) {
-          const details = [
-            match.category ? `<span style="opacity:0.7;">${match.category}</span>` : '',
-            match.title ? match.title : '',
-            match.primary_org ? `at ${match.primary_org}` : '',
-          ].filter(Boolean).join(' · ');
-          card.innerHTML = `<strong>${match.name || name}</strong><br>${details || `<span style="opacity:0.7;">${type}</span>`}`;
+    // Try to enhance from API (non-blocking)
+    fetch(`${API_BASE}/search?q=${encodeURIComponent(name)}&type=${type}`)
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        const match = data?.results?.[0];
+        if (match && card?.parentNode) {
+          const parts = [match.category, match.title, match.primary_org ? `at ${match.primary_org}` : ''].filter(Boolean);
+          card.innerHTML = `<strong>${match.name || name}</strong><br><span style="color:var(--text-secondary);">${parts.join(' · ') || typeLabel}</span>`;
         }
-      }
-    } catch {}
+      }).catch(() => {});
   });
   mention.addEventListener('mouseleave', () => {
-    if (card && card.parentNode) card.remove();
+    if (card?.parentNode) card.remove();
     card = null;
   });
 });
