@@ -146,7 +146,7 @@ ${f.slice(c+2)}`,d+=1;else break}e.push({indent:c,number:parseInt(a,10),content:
              data-entity-type="${r.entityType}"
              data-entity-id="${r.entityId}"
              data-label="${r.label}">
-          <span class="mention-type">${r.entityType}</span>
+          <span class="mention-type">${{person:"Person",organization:"Org",resource:"Resource"}[r.entityType]||r.entityType}</span>
           <span class="mention-label">${r.label}</span>
           <span class="mention-detail">${r.detail}</span>
         </div>

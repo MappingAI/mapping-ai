@@ -146,7 +146,7 @@ function updateList(container, items, command) {
              data-entity-type="${item.entityType}"
              data-entity-id="${item.entityId}"
              data-label="${item.label}">
-          <span class="mention-type">${item.entityType}</span>
+          <span class="mention-type">${({person:'Person',organization:'Org',resource:'Resource'})[item.entityType] || item.entityType}</span>
           <span class="mention-label">${item.label}</span>
           <span class="mention-detail">${item.detail}</span>
         </div>
