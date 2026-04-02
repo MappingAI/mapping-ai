@@ -1865,21 +1865,23 @@ function searchEntitiesWithPending(query, type, onPendingResults) {
   if (query && query.length >= 2) {
     const typeParam = type ? `&type=${type}` : '';
     fetch(`${API_BASE}/search?q=${encodeURIComponent(query)}${typeParam}&status=pending`)
-      .then(r => r.ok ? r.json() : null)
+      .then(r => { console.log('[pending-search] status:', r.status); return r.ok ? r.json() : null; })
       .then(apiResults => {
-        if (!apiResults) return;
+        if (!apiResults) { console.log('[pending-search] no results'); return; }
         const merged = {};
+        let totalExtra = 0;
         for (const key of ['people', 'organizations', 'resources']) {
           const existing = new Set((local[key] || []).map(e => e.id));
           const extra = (apiResults[key] || [])
             .filter(e => !existing.has(e.id))
             .map(e => ({ ...e, _pending: true }));
           merged[key] = extra;
+          totalExtra += extra.length;
         }
-        const hasExtra = Object.values(merged).some(arr => arr.length > 0);
-        if (hasExtra && onPendingResults) onPendingResults(merged);
+        console.log('[pending-search] found', totalExtra, 'extra entities', onPendingResults ? '(callback set)' : '(NO callback)');
+        if (totalExtra > 0 && onPendingResults) onPendingResults(merged);
       })
-      .catch(() => {});
+      .catch(e => { console.warn('[pending-search] error:', e.message); });
   }
   return local;
 }
@@ -2243,7 +2245,7 @@ document.querySelectorAll('.parent-org-search, .primary-org-search').forEach(inp
   function renderOrgResults(orgs) {
     resultsDiv.innerHTML = orgs.slice(0, 8).map(o => `
       <div class="org-result" data-id="${o.id}" data-name="${o.name}" data-org='${JSON.stringify(o).replace(/'/g, "&#39;")}'>
-        <span>${o.name} <span class="org-cat">${o.category || ''}</span></span>
+        <span>${o.name} <span class="org-cat">${o.category || ''}</span>${o._pending ? ' <span class="pending-badge">pending</span>' : ''}</span>
         <span class="org-edit-link" data-action="edit">edit</span>
       </div>
     `).join('');
@@ -2266,10 +2268,12 @@ document.querySelectorAll('.parent-org-search, .primary-org-search').forEach(inp
     if (q.length < 1) { resultsDiv.innerHTML = ''; return; }
     // Show local results instantly
     const local = searchEntitiesWithPending(q, 'organization', (extra) => {
-      // Append DB results that aren't already shown
-      if (input.value.trim() !== q) return; // user kept typing, skip stale results
+      // Append pending DB results after approved results
+      console.log('[org-search] pending callback fired, extra orgs:', extra.organizations?.length);
+      if (input.value.trim() !== q) { console.log('[org-search] skipped: query changed'); return; }
       const existing = new Set([...resultsDiv.querySelectorAll('.org-result')].map(el => el.dataset.id));
       const newOrgs = (extra.organizations || []).filter(o => !existing.has(String(o.id)));
+      console.log('[org-search] new orgs to append:', newOrgs.length, newOrgs.map(o => o.name));
       if (newOrgs.length > 0) {
         const current = [...resultsDiv.querySelectorAll('.org-result')].map(el => JSON.parse(el.dataset.org));
         renderOrgResults([...current, ...newOrgs]);
