@@ -571,12 +571,6 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
       </div>
     </div>
   </div>
-  <div class="control-group">
-    <button class="info-btn" onclick="document.getElementById('onboarding-overlay').style.display='flex'">
-      <span style="font-size:12px;">&#9432;</span> About this map
-    </button>
-  </div>
-
   <div class="control-group" id="axis-controls" style="display:none">
     <h3>Dimensions</h3>
     <div class="view-toggles" id="axis-mode-toggles">
@@ -604,6 +598,11 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
       </select>
     </div>
     <p id="axis-excluded-msg" style="font-size:11px;opacity:0.6;margin-top:10px;line-height:1.4;"></p>
+  </div>
+  <div class="control-group">
+    <button class="info-btn" onclick="document.getElementById('onboarding-overlay').style.display='flex'">
+      <span style="font-size:12px;">&#9432;</span> About this map
+    </button>
   </div>
 </div>
 
