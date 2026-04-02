@@ -1783,20 +1783,22 @@ function searchEntities(query, type) {
 }
 
 // Search with pending entity fallback — tries local cache first, then API for pending entities
-// Search: returns local results immediately. Pending callback fires async if provided.
+// Search: returns local (approved) results immediately. Async callback appends pending entities from DB.
 function searchEntitiesWithPending(query, type, onPendingResults) {
   const local = searchEntities(query, type);
-  // Fire async DB search for entities not in cache (pending/newly added)
+  // Fire async DB search for pending entities (link-as-you-go workflow)
   if (query && query.length >= 2) {
     const typeParam = type ? `&type=${type}` : '';
-    fetch(`${API_BASE}/search?q=${encodeURIComponent(query)}${typeParam}`)
+    fetch(`${API_BASE}/search?q=${encodeURIComponent(query)}${typeParam}&status=pending`)
       .then(r => r.ok ? r.json() : null)
       .then(apiResults => {
         if (!apiResults) return;
         const merged = {};
         for (const key of ['people', 'organizations', 'resources']) {
           const existing = new Set((local[key] || []).map(e => e.id));
-          const extra = (apiResults[key] || []).filter(e => !existing.has(e.id));
+          const extra = (apiResults[key] || [])
+            .filter(e => !existing.has(e.id))
+            .map(e => ({ ...e, _pending: true }));
           merged[key] = extra;
         }
         const hasExtra = Object.values(merged).some(arr => arr.length > 0);

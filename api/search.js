@@ -63,8 +63,10 @@ export const handler = async (event) => {
       paramIdx++;
     }
 
-    // Status filter (parameterized; pending/all require admin auth)
-    if (status === 'pending' && isAdmin) {
+    // Status filter (parameterized)
+    // pending: public (needed for link-as-you-go form workflow)
+    // all: admin only (exposes internal entities)
+    if (status === 'pending') {
       clauses.push(`AND status = $${paramIdx}`);
       params.push('pending');
       paramIdx++;
