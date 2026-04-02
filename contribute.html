@@ -91,6 +91,7 @@ details {
   border-radius: 6px;
   overflow: hidden;
 }
+details[open] { overflow: visible; }
 details summary {
   font-family: var(--mono); font-size: 11px;
   letter-spacing: 0.06em; text-transform: uppercase;
@@ -2263,21 +2264,30 @@ document.querySelectorAll('.parent-org-search, .primary-org-search').forEach(inp
     });
   }
 
+  let _pendingOrgs = []; // persists across re-renders so pending results survive debounce
+
   const search = debounce(() => {
     const q = input.value.trim();
-    if (q.length < 1) { resultsDiv.innerHTML = ''; return; }
-    // Show local results instantly
+    if (q.length < 1) { resultsDiv.innerHTML = ''; _pendingOrgs = []; return; }
     const local = searchEntitiesWithPending(q, 'organization', (extra) => {
-      // Append pending results whenever dropdown is still visible
-      if (resultsDiv.children.length === 0) return;
-      const existing = new Set([...resultsDiv.querySelectorAll('.org-result')].map(el => el.dataset.id));
-      const newOrgs = (extra.organizations || []).filter(o => !existing.has(String(o.id)));
-      if (newOrgs.length > 0) {
-        const currentOrgs = [...resultsDiv.querySelectorAll('.org-result')].map(el => JSON.parse(el.dataset.org));
-        renderOrgResults([...currentOrgs, ...newOrgs]);
+      // Store pending results — they'll be merged on next render too
+      _pendingOrgs = (extra.organizations || []).filter(o => o._pending);
+      // Re-render with current local + pending
+      const localNow = searchEntities(input.value.trim(), 'organization');
+      const merged = [...(localNow.organizations || [])];
+      const existingIds = new Set(merged.map(o => o.id));
+      for (const po of _pendingOrgs) {
+        if (!existingIds.has(po.id)) merged.push(po);
       }
+      renderOrgResults(merged);
     });
-    renderOrgResults(local.organizations || []);
+    // Merge stored pending results with local results
+    const merged = [...(local.organizations || [])];
+    const existingIds = new Set(merged.map(o => o.id));
+    for (const po of _pendingOrgs) {
+      if (!existingIds.has(po.id)) merged.push(po);
+    }
+    renderOrgResults(merged);
   }, 50);
 
   // Show top orgs on focus (instant alphabetical list)
