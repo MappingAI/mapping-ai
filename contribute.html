@@ -2188,15 +2188,15 @@ document.querySelectorAll('.tag-input-wrapper').forEach(wrapper => {
   const hiddenInput = wrapper.parentElement.querySelector('input[name="affiliatedOrgIds"]');
   const selectedOrgs = []; // [{id, name}]
 
-  const search = debounce(() => {
-    const q = input.value.trim();
-    if (q.length < 1) { resultsDiv.innerHTML = ''; return; }
-    const results = searchEntitiesWithPending(q, 'organization');
-    const orgs = results.organizations.filter(o => !selectedOrgs.some(s => s.id === o.id));
+  let _tagPendingTimer = null;
 
-    resultsDiv.innerHTML = orgs.slice(0, 5).map(o => `
+  function renderTagOrgResults(orgs) {
+    const approved = orgs.filter(o => !o._pending).slice(0, 4);
+    const pending = orgs.filter(o => o._pending).slice(0, 3);
+    const display = [...approved, ...pending].filter(o => !selectedOrgs.some(s => s.id === o.id));
+    resultsDiv.innerHTML = display.map(o => `
       <div class="org-result" data-id="${o.id}" data-name="${o.name}" data-org='${JSON.stringify(o).replace(/'/g, "&#39;")}'>
-        <span>${o.name} <span class="org-cat">${o.category || ''}</span>${o._pending ? '<span class="pending-badge">Pending</span>' : ''}</span>
+        <span>${o.name} <span class="org-cat">${o.category || ''}</span>${o._pending ? ' <span class="pending-badge">pending</span>' : ''}</span>
         <span class="org-edit-link" data-action="edit">edit</span>
       </div>
     `).join('');
@@ -2215,7 +2215,36 @@ document.querySelectorAll('.tag-input-wrapper').forEach(wrapper => {
         resultsDiv.innerHTML = '';
       });
     });
-  }, 80);
+  }
+
+  const search = debounce(() => {
+    const q = input.value.trim();
+    if (q.length < 1) { resultsDiv.innerHTML = ''; return; }
+    const local = searchEntities(q, 'organization');
+    renderTagOrgResults(local.organizations || []);
+    // Fetch pending after typing settles
+    clearTimeout(_tagPendingTimer);
+    if (q.length >= 2) {
+      _tagPendingTimer = setTimeout(() => {
+        const currentQ = input.value.trim();
+        if (currentQ.length < 2) return;
+        fetch(`${API_BASE}/search?q=${encodeURIComponent(currentQ)}&type=organization&status=pending`)
+          .then(r => r.ok ? r.json() : null)
+          .then(data => {
+            if (!data || input.value.trim() !== currentQ) return;
+            const pendingOrgs = (data.organizations || []).map(o => ({ ...o, _pending: true }));
+            if (pendingOrgs.length === 0) return;
+            const existingIds = new Set([...resultsDiv.querySelectorAll('.org-result')].map(el => el.dataset.id));
+            const newOrgs = pendingOrgs.filter(o => !existingIds.has(String(o.id)));
+            if (newOrgs.length > 0) {
+              const currentOrgs = [...resultsDiv.querySelectorAll('.org-result')].map(el => JSON.parse(el.dataset.org));
+              renderTagOrgResults([...currentOrgs, ...newOrgs]);
+            }
+          })
+          .catch(() => {});
+      }, 300);
+    }
+  }, 50);
 
   function addTag(id, name) {
     selectedOrgs.push({ id: parseInt(id), name });
@@ -2255,7 +2284,11 @@ document.querySelectorAll('.parent-org-search, .primary-org-search').forEach(inp
   }
 
   function renderOrgResults(orgs) {
-    resultsDiv.innerHTML = orgs.slice(0, 8).map(o => `
+    // Show approved first, then pending; cap approved at 6, always show all pending
+    const approved = orgs.filter(o => !o._pending).slice(0, 6);
+    const pending = orgs.filter(o => o._pending).slice(0, 4);
+    const display = [...approved, ...pending];
+    resultsDiv.innerHTML = display.map(o => `
       <div class="org-result" data-id="${o.id}" data-name="${o.name}" data-org='${JSON.stringify(o).replace(/'/g, "&#39;")}'>
         <span>${o.name} <span class="org-cat">${o.category || ''}</span>${o._pending ? ' <span class="pending-badge">pending</span>' : ''}</span>
         <span class="org-edit-link" data-action="edit">edit</span>
