@@ -668,6 +668,10 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
     <h3 style="display:flex;justify-content:space-between;align-items:center;">Regulatory Stance <span class="filter-reset" id="stance-reset" style="font-size:8px;text-transform:none;letter-spacing:0;color:var(--accent);cursor:pointer;font-weight:400;">select all</span></h3>
     <div class="stance-legend-items" id="stance-legend-items"></div>
   </div>
+  <div class="control-group" id="secondary-category-filter" style="display:none">
+    <h3 style="display:flex;justify-content:space-between;align-items:center;">Category <span class="filter-reset" id="secondary-category-reset" style="font-size:8px;text-transform:none;letter-spacing:0;color:var(--accent);cursor:pointer;font-weight:400;">select all</span></h3>
+    <div class="filter-chips" id="secondary-category-chips"></div>
+  </div>
   <div class="control-group" id="source-type-filter">
     <h3 style="display:flex;justify-content:space-between;align-items:center;">Source <span class="filter-reset" id="source-reset" style="font-size:8px;text-transform:none;letter-spacing:0;color:var(--accent);cursor:pointer;font-weight:400;">select all</span></h3>
     <div class="source-type-items" id="source-type-items">
@@ -1268,6 +1272,10 @@ function getDimensionNodeKey(dim) {
 let activeStances = new Set(STANCE_ORDER);
 let stanceFilterActive = false; // true when user has toggled any stance off
 
+// Secondary category filter state (shown when clustering by belief dimensions)
+let activeSecondaryCategories = new Set();
+let secondaryCategoryFilterActive = false;
+
 // Source type filter state
 const SOURCE_TYPES = ['self', 'connector', 'external'];
 let activeSourceTypes = new Set(SOURCE_TYPES);
@@ -1392,7 +1400,8 @@ function getAllCats(entities, normalize = true) {
 }
 
 function buildFilters() {
-  const dim = clusterDimension;
+  // In plot mode, always use category for filtering (ignore clusterDimension)
+  const dim = (currentView === '2d') ? 'category' : clusterDimension;
   const dimKey = getDimensionNodeKey(dim);
   let rawCats;
 
@@ -1517,6 +1526,87 @@ function buildStanceLegend() {
   updateStanceResetBtn();
 }
 
+function buildSecondaryCategoryFilter() {
+  const container = document.getElementById('secondary-category-chips');
+  container.innerHTML = '';
+
+  // Get org categories for the secondary filter
+  const rawCats = [...new Set(getAllCats(allData.organizations))];
+  rawCats.sort((a, b) => {
+    const ia = CLUSTER_ORDER.indexOf(a);
+    const ib = CLUSTER_ORDER.indexOf(b);
+    return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib);
+  });
+
+  // Initialize all as active if empty
+  if (activeSecondaryCategories.size === 0) {
+    rawCats.forEach(cat => activeSecondaryCategories.add(cat));
+  }
+
+  rawCats.forEach(cat => {
+    const color = CATEGORY_COLORS[cat] || DEFAULT_COLOR;
+    const chip = document.createElement('span');
+    const isActive = activeSecondaryCategories.has(cat);
+    chip.className = 'chip' + (isActive ? ' active' : '');
+    chip.textContent = cat;
+    chip.style.background = color + (isActive ? '40' : '1a');
+    chip.style.color = isActive ? color : color + '88';
+    chip.dataset.category = cat;
+    chip.addEventListener('click', () => {
+      if (activeSecondaryCategories.has(cat)) {
+        activeSecondaryCategories.delete(cat);
+        chip.classList.remove('active');
+        chip.style.background = color + '1a';
+        chip.style.color = color + '88';
+      } else {
+        activeSecondaryCategories.add(cat);
+        chip.classList.add('active');
+        chip.style.background = color + '40';
+        chip.style.color = color;
+      }
+      secondaryCategoryFilterActive = activeSecondaryCategories.size < rawCats.length;
+      updateSecondaryCategoryResetBtn();
+      if (viewMode === 'search' && searchModeMatches && searchModeMatches.length > 0) {
+        applyFiltersToSearchResults();
+      } else {
+        render();
+      }
+    });
+    container.appendChild(chip);
+  });
+  updateSecondaryCategoryResetBtn();
+}
+
+function updateSecondaryCategoryResetBtn() {
+  const btn = document.getElementById('secondary-category-reset');
+  const chips = document.querySelectorAll('#secondary-category-chips .chip');
+  const allActive = [...chips].every(c => c.classList.contains('active'));
+  btn.textContent = allActive ? 'deselect all' : 'select all';
+}
+
+function updateSecondaryFilterVisibility() {
+  const isBeliefDimension = clusterDimension !== 'category';
+  const stanceLegend = document.getElementById('stance-legend');
+  const secondaryCategoryFilter = document.getElementById('secondary-category-filter');
+
+  // In plot/search mode, hide both
+  if (viewMode === 'plot' || viewMode === 'search') {
+    stanceLegend.style.display = 'none';
+    secondaryCategoryFilter.style.display = 'none';
+    return;
+  }
+
+  // In network mode, swap based on cluster dimension
+  if (isBeliefDimension) {
+    stanceLegend.style.display = 'none';
+    secondaryCategoryFilter.style.display = '';
+    buildSecondaryCategoryFilter();
+  } else {
+    stanceLegend.style.display = '';
+    secondaryCategoryFilter.style.display = 'none';
+  }
+}
+
 function buildSourceTypeFilter() {
   const container = document.getElementById('source-type-items');
   container.querySelectorAll('.source-type-item').forEach(item => {
@@ -1594,8 +1684,9 @@ function applyViewState() {
   currentView = is2D ? '2d' : (isSearch ? 'all' : (localStorage.getItem('mapSubView') || 'all'));
   document.getElementById('axis-controls').style.display = is2D ? '' : 'none';
   document.getElementById('search-mode-controls').style.display = isSearch ? '' : 'none';
-  document.getElementById('stance-legend').style.display = (is2D || isSearch) ? 'none' : '';
   document.getElementById('network-sub-tabs').style.display = (is2D || isSearch) ? 'none' : '';
+  // Hide cluster-by dropdown in plot mode (plot uses axis selectors instead)
+  document.getElementById('cluster-by-select').style.display = is2D ? 'none' : '';
   // Hide the small search box in search mode (we have the big one)
   const smallSearchGroup = document.querySelector('.controls .control-group:first-child');
   if (smallSearchGroup) smallSearchGroup.style.display = isSearch ? 'none' : '';
@@ -1604,6 +1695,7 @@ function applyViewState() {
   const phMap = { orgs: 'Search orgs...', people: 'Search people...', resources: 'Search resources...' };
   document.getElementById('search-input').placeholder = phMap[currentView] || 'Search entities...';
   buildFilters();
+  updateSecondaryFilterVisibility();
   updateSourceTypeVisibility();
   // Clear search highlighting when leaving search mode
   if (!isSearch) {
@@ -1665,6 +1757,7 @@ document.getElementById('cluster-by-select').addEventListener('change', (e) => {
   clusterDimension = e.target.value;
   activeCategories = new Set(); // reset filters — will be rebuilt
   buildFilters();
+  updateSecondaryFilterVisibility();
   render();
 });
 
@@ -1702,6 +1795,14 @@ function passesSourceTypeFilter(d) {
   if (!sourceFilterActive) return true;
   const sourceType = d.source_type || 'external';
   return activeSourceTypes.has(sourceType);
+}
+
+function passesSecondaryCategoryFilter(d) {
+  // Only applies when clustering by belief dimensions (not category)
+  if (clusterDimension === 'category') return true;
+  if (!secondaryCategoryFilterActive) return true;
+  const normCat = normalizeCategory(d.category);
+  return activeSecondaryCategories.has(normCat);
 }
 
 // Normalize similar category names to a canonical form
@@ -1828,8 +1929,8 @@ function getVisibleNodes() {
 
   // Count total for scaling
   let totalCount = 0;
-  if (currentView === 'orgs' || currentView === 'all') totalCount += allData.organizations.filter(d => d.category && isFilterActive(d) && passesStanceFilter(d) && passesSourceTypeFilter(d)).length;
-  if (currentView === 'people' || currentView === 'all') totalCount += allData.people.filter(d => d.category && isFilterActive(d) && passesStanceFilter(d) && passesSourceTypeFilter(d)).length;
+  if (currentView === 'orgs' || currentView === 'all') totalCount += allData.organizations.filter(d => d.category && isFilterActive(d) && passesStanceFilter(d) && passesSourceTypeFilter(d) && passesSecondaryCategoryFilter(d)).length;
+  if (currentView === 'people' || currentView === 'all') totalCount += allData.people.filter(d => d.category && isFilterActive(d) && passesStanceFilter(d) && passesSourceTypeFilter(d) && passesSecondaryCategoryFilter(d)).length;
   if (currentView === 'resources' || currentView === 'all') totalCount += allData.resources.filter(d => passesSourceTypeFilter(d)).length;
 
   // Scale: gentler curve — 1.0 at 40, 0.7 at 100, 0.55 at 200
@@ -1840,9 +1941,11 @@ function getVisibleNodes() {
       if (!d.category || !isFilterActive(d)) return;
       if (!passesStanceFilter(d)) return;
       if (!passesSourceTypeFilter(d)) return;
+      if (!passesSecondaryCategoryFilter(d)) return;
       const sc = d.submission_count || 1;
-      const baseR = currentView === 'all' ? 14 : 18;
-      const r = Math.round((baseR + Math.min(Math.floor(sc / 3), 3)) * scale);
+      // Smaller nodes for belief dimension clustering to improve readability
+      const baseR = currentView === 'all' ? (clusterDimension === 'category' ? 14 : 10) : 18;
+      const r = Math.round((baseR + Math.min(Math.floor(sc / 3), 2)) * scale);
       const normCat = normalizeCategory(d.category);
       const ck = getClusterKey(d, normCat);
       if (dim !== 'category' && !ck) { excludedCount++; return; }
@@ -1858,6 +1961,7 @@ function getVisibleNodes() {
       // In "all" view, always include people (they'll be mapped to an org sector cluster)
       if (!passesStanceFilter(d)) return;
       if (!passesSourceTypeFilter(d)) return;
+      if (!passesSecondaryCategoryFilter(d)) return;
       const sc = d.submission_count || 1;
 
       // In "all" view: cluster people by their PRIMARY ORG'S sector
@@ -1891,7 +1995,8 @@ function getVisibleNodes() {
         displayCat = normalizeCategory(d.category);
       }
 
-      const baseR = currentView === 'all' ? 8 : 14; // bigger in solo people view
+      // Smaller nodes for belief dimension clustering to improve readability
+      const baseR = currentView === 'all' ? (clusterDimension === 'category' ? 8 : 6) : 14;
       const r = Math.round((baseR + Math.min(Math.floor(sc / 3), 2)) * scale);
       const ck = getClusterKey(d, displayCat);
       if (dim !== 'category' && !ck) { excludedCount++; return; }
@@ -1984,7 +2089,9 @@ function render() {
   const centerX = controlsWidth + (width - controlsWidth) / 2;
   const centerY = height / 2;
   const maxDim = Math.min(width - controlsWidth, height);
-  const orbitRadius = maxDim * Math.min(0.35, Math.max(0.15, categories.length * 0.035));
+  // Use larger orbit radius for belief dimensions to improve separation
+  const baseOrbitFactor = clusterDimension === 'category' ? 0.035 : 0.045;
+  const orbitRadius = maxDim * Math.min(0.38, Math.max(0.18, categories.length * baseOrbitFactor));
 
   // Build node-category lookup for connection counting
   const nodeById = {};
@@ -2080,7 +2187,7 @@ function render() {
         }
       }
     } else {
-      const center = clusterCenters[d.category] || { x: centerX, y: centerY };
+      const center = clusterCenters[d.clusterKey] || clusterCenters[d.category] || { x: centerX, y: centerY };
       d.x = center.x + (Math.random() - 0.5) * 60;
       d.y = center.y + (Math.random() - 0.5) * 60;
     }
@@ -2096,7 +2203,9 @@ function render() {
     .attr('cy', d => clusterCenters[d].y)
     .attr('r', d => {
       const count = nodes.filter(n => n.clusterKey === d).length;
-      return Math.max(50, Math.sqrt(count) * 28);
+      // Larger radius for belief dimensions (fewer clusters = more spread)
+      const multiplier = clusterDimension === 'category' ? 28 : 38;
+      return Math.max(60, Math.sqrt(count) * multiplier);
     })
     .attr('fill', d => getDimensionColor(clusterDimension, d))
     .attr('opacity', 0.06)
@@ -2158,15 +2267,28 @@ function render() {
   // Simulation
   if (simulation) simulation.stop();
   simulation = d3.forceSimulation(nodes)
-    .force('charge', d3.forceManyBody().strength(d => d.entityType === 'organization' ? -5 : -2))
-    .force('collision', d3.forceCollide().radius(d => d.radius + 2).strength(0.9))
-    .force('cluster', forceCluster(clusterCenters, 0.15))
-    .force('link', d3.forceLink(allLinks).strength(0.08).distance(d => {
-      // Shorter distance for same-category links, longer for cross-category
-      return d.source.category === d.target.category ? 30 : 80;
+    // More repulsion for belief dimensions to spread nodes out
+    .force('charge', d3.forceManyBody().strength(d => {
+      const base = d.entityType === 'organization' ? -4 : -1.5;
+      return clusterDimension === 'category' ? base : base * 3;
     }))
-    .force('x', d3.forceX(centerX).strength(0.02))
-    .force('y', d3.forceY(centerY).strength(0.02))
+    // More collision padding for belief dimensions
+    .force('collision', d3.forceCollide().radius(d => d.radius + (clusterDimension === 'category' ? 1 : 4)).strength(0.85))
+    .force('cluster', forceCluster(clusterCenters, clusterDimension === 'category' ? 0.25 : 0.3))
+    // Weaker link force for belief dimensions - some organic clustering but nodes stay in belief groups
+    .force('link', d3.forceLink(allLinks).strength(clusterDimension === 'category' ? 0.08 : 0.02).distance(d => {
+      const srcCluster = d.source.clusterKey || d.source.category;
+      const tgtCluster = d.target.clusterKey || d.target.category;
+      if (clusterDimension === 'category') {
+        return srcCluster === tgtCluster ? 30 : 80;
+      } else {
+        // Longer distances for belief dimensions, especially cross-cluster
+        return srcCluster === tgtCluster ? 40 : 150;
+      }
+    }))
+    // Weaker center pull for belief dimensions to allow better cluster separation
+    .force('x', d3.forceX(centerX).strength(clusterDimension === 'category' ? 0.02 : 0.01))
+    .force('y', d3.forceY(centerY).strength(clusterDimension === 'category' ? 0.02 : 0.01))
     .alpha(0.5)
     .alphaDecay(0.04)
     .velocityDecay(0.6)
@@ -3865,6 +3987,34 @@ document.getElementById('stance-reset').addEventListener('click', () => {
   }
   updateStanceResetBtn();
   // In search mode, filter the search results instead of re-rendering
+  if (viewMode === 'search' && searchModeMatches && searchModeMatches.length > 0) {
+    applyFiltersToSearchResults();
+  } else {
+    render();
+  }
+});
+
+// Secondary category select/deselect all toggle
+document.getElementById('secondary-category-reset').addEventListener('click', () => {
+  const chips = document.querySelectorAll('#secondary-category-chips .chip');
+  const allActive = [...chips].every(c => c.classList.contains('active'));
+  chips.forEach(chip => {
+    const cat = chip.dataset.category;
+    const color = CATEGORY_COLORS[cat] || DEFAULT_COLOR;
+    if (allActive) {
+      activeSecondaryCategories.delete(cat);
+      chip.classList.remove('active');
+      chip.style.background = color + '1a';
+      chip.style.color = color + '88';
+    } else {
+      activeSecondaryCategories.add(cat);
+      chip.classList.add('active');
+      chip.style.background = color + '40';
+      chip.style.color = color;
+    }
+  });
+  secondaryCategoryFilterActive = !allActive ? false : true;
+  updateSecondaryCategoryResetBtn();
   if (viewMode === 'search' && searchModeMatches && searchModeMatches.length > 0) {
     applyFiltersToSearchResults();
   } else {
