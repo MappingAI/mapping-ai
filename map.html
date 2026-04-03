@@ -2685,9 +2685,9 @@ function render2D(svg, g, width, height) {
     // Higher score = top of chart
     yScale = score => margin.top + (1 - (score - 1) / (yTicks.length - 1)) * plotH;
   } else {
-    // 1D: position beeswarm center above axis
-    const beeswarmY = height - margin.bottom - 60;
-    yScale = () => beeswarmY;
+    // 1D: center beeswarm in the plot area, biased slightly toward axis
+    const plotMidY = margin.top + plotH * 0.55;
+    yScale = () => plotMidY;
   }
 
   // Draw axes (always, even with no nodes)
@@ -2834,13 +2834,20 @@ function render2D(svg, g, width, height) {
   if (simulation) simulation.stop();
   simulation = d3.forceSimulation(nodes)
     .force('x', d3.forceX(d => d.targetX).strength(0.8))
-    // In 1D mode, use weak y strength for more vertical spread
-    .force('y', d3.forceY(d => d.targetY).strength(yAxisDef ? 0.8 : 0.06))
+    .force('y', d3.forceY(d => d.targetY).strength(yAxisDef ? 0.8 : 0.08))
     .force('collision', d3.forceCollide(d => d.radius + 2).strength(0.9))
     .alpha(0.6)
     .alphaDecay(0.04)
     .velocityDecay(0.6)
-    .on('tick', () => { nodeGroup.attr('transform', d => `translate(${d.x},${d.y})`); })
+    .on('tick', () => {
+      // In 1D mode, clamp nodes within the plot area (above axis, below top margin)
+      if (!yAxisDef) {
+        const yMin = margin.top + 10;
+        const yMax = height - margin.bottom - 15;
+        nodes.forEach(d => { d.y = Math.max(yMin, Math.min(yMax, d.y)); });
+      }
+      nodeGroup.attr('transform', d => `translate(${d.x},${d.y})`);
+    })
     .on('end', () => simulation.alphaDecay(0.04));
 
   svg.on('click', () => { document.getElementById('detail-panel').classList.remove('open'); clearSelection(); });
