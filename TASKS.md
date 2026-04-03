@@ -97,7 +97,7 @@ Open contribution from the public. Needs:
 - [x] Contribute form dropdown has weird lines (fixed CSS border artifact)
 - [x] Contribute form: replace "Clear" with select/deselect toggle for dropdowns (click-to-deselect, grey background on selected, fixed column width expansion)
 - [ ] Contribute form: move "Your Relationship" section to the very top
-- [ ] Contribute form: make adding an org more obvious/discoverable
+- [ ] **Inline org creation side panel**: slide-in panel for adding parent/affiliated orgs without leaving the form (requirements at docs/brainstorms/2026-04-03-inline-org-creation-requirements.md)
 - [ ] Theory of Change: revise "existing landscape" sentence (too dramatic/cosmetic)
 
 ## Additional Material
@@ -110,8 +110,9 @@ Open contribution from the public. Needs:
 | Task | Owner | Notes |
 |------|-------|-------|
 | Map onboarding: animated walkthrough | | Basic overlay done, needs stakeholder-specific guidance + contribution flow tutorial |
-| Resource viz improvements | | Tier 2: topic-based clustering, orphan anchoring, multi-category tags |
+| Resource viz improvements | | On feat/tier2-improvements: topic-based clustering, orphan anchoring done; multi-category tags pending |
 | Mobile optimization | | Tier 2: bottom sheet controls, progressive form, touch gestures |
+| Inline org creation side panel | Anushree | Requirements done (docs/brainstorms/); needs /ce:plan + implementation on feature branch |
 
 ## Done
 
@@ -154,6 +155,24 @@ Open contribution from the public. Needs:
 | Map viz overhaul: gray out, view restructure, cluster-by | Anushree | 4/1 | Gray out unconnected nodes, Network/Plot tabs, cluster by stance/timeline/risk/category, remove pips |
 | Form UX: relationship at top, click-to-deselect, tag dropdown | Anushree | 4/1 | Relationship field moved to top, label renames, click-to-deselect, tag-input for other categories |
 | Data cleanup: org deduplication | Sophia | 4/1 | 31 duplicate orgs merged (461 → 430); edges re-linked to canonical orgs |
+| Lambda connection hardening | Anushree | 4/1 | pool max=1, connectionTimeout=5s, statement_timeout on all 5 Lambdas |
+| SQL parameterization (search.js) | Anushree | 4/1 | All clauses use $N placeholders; no string interpolation |
+| D3 simulation damping | Anushree | 4/1 | velocityDecay(0.6), alphaDecay(0.15) on drag end with restore on settle |
+| Pending search from submission table | Anushree | 4/2 | /search?status=pending queries submission table for new pending entities |
+| contributor_keys migration | Anushree | 4/3 | Ran db:migrate to add contributor_keys table + column (was missing, causing 500 on all submissions) |
+| Fix org search crash (other-categories) | Anushree | 4/3 | Guard clause skips .tag-input-wrapper without .tag-input children |
+| Instant org search + focus preload | Anushree | 4/2 | Top 5 orgs on focus, 1-char search, async pending append |
+| Remove dynamic CLEAR links | Anushree | 4/3 | JS was re-adding "clear" to every dropdown on page load |
+| Pending orgs in all search fields | Anushree | 4/3 | Primary org, parent org, affiliated orgs all show pending results with badge |
+| Fix org search on location fields | Anushree | 4/3 | Filter by data-search-type="organization" so location/author fields unaffected |
+| Draft restore: no ghost indicator | Anushree | 4/3 | Only shows "Draft restored" when actual fields were populated |
+| Draft clear: per-form + suppress auto-save | Anushree | 4/3 | Clear only affects that form's draft; auto-save suppressed during reset |
+| Width flash on form tab restore | Anushree | 4/3 | body.forms-loading hides forms until JS sets correct tab |
+| ADMIN_KEY on SearchFunction | Anushree | 4/1 | Was missing from template.yaml; admin search features were dead code |
+| CI schema smoke test | Anushree | 4/1 | deploy.yml verifies entity/submission/edge exist, old tables dropped |
+| Resource topic clustering (Resources view) | Anushree | 4/1 | Clusters by category (AI Safety, AI Policy, Ethics) not format (Book, Report) |
+| Orphan resource anchoring (All view) | Anushree | 4/1 | Resources positioned near matching org-sector cluster via topic→sector mapping |
+| Data-driven normalizeCategory | Anushree | 4/1 | Declarative CATEGORY_RULES + RESOURCE_SECTOR_MAP replaces if/else chain |
 | Data cleanup: notable US figures added | Sophia | 4/1 | 16 people added (Pichai, Nadella, Tristan Harris, etc.) and enriched with stances |
 | enrich-deep.js DB compatibility fix | Sophia | 4/1 | Fixed column names (belief_* prefix), removed non-existent threat_models_detail |
 | Contribute form: "How it works" popup | Sophia | 4/1 | First-visit overlay explaining review, enrichment, belief scores, privacy |
