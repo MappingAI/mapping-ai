@@ -3057,7 +3057,13 @@ function showDetail(d, allNodes) {
               mapEl.clientHeight / 2 - k * node.y
             ).scale(k)
           );
-          highlightNodes([node.name]);
+          // Use same highlighting as direct node click for consistency
+          selectedNode = node;
+          if (viewMode !== 'search' && currentView === 'all') {
+            dimUnconnected(node);
+          } else {
+            highlightNodes([node.name]);
+          }
         }
       }, 100);
     });
@@ -3298,7 +3304,13 @@ function doSearch() {
               mapEl.clientHeight / 2 - k * target.y
             ).scale(k)
           );
-          highlightNodes([d.name]);
+          // Use same highlighting as direct node click for consistency
+          selectedNode = target;
+          if (viewMode !== 'search' && currentView === 'all') {
+            dimUnconnected(target);
+          } else {
+            highlightNodes([d.name]);
+          }
         } else {
           // Entity not rendered on current view — clear dimming and show inline message
           highlightNodes([]);
@@ -3340,6 +3352,24 @@ function highlightNodes(names) {
       el.classed('dimmed', true).classed('highlighted', false);
     }
   });
+
+  // Also highlight edges connected to the highlighted nodes
+  d3.selectAll('.connection-line').each(function(d) {
+    const el = d3.select(this);
+    el.classed('dimmed', false).classed('highlighted', false).classed('one-hop', false);
+    if (!anyVisible) return;
+
+    const srcName = (d.source && d.source.name) || '';
+    const tgtName = (d.target && d.target.name) || '';
+    const isConnected = nameSet.has(srcName) || nameSet.has(tgtName);
+
+    if (isConnected) {
+      el.classed('highlighted', true);
+    } else {
+      el.classed('dimmed', true);
+    }
+  });
+
   d3.selectAll('.cluster-bg').attr('opacity', anyVisible ? 0.02 : 0.06);
   d3.selectAll('.cluster-label-bg').attr('opacity', anyVisible ? 0.02 : 0.85);
   d3.selectAll('.cluster-label').attr('opacity', anyVisible ? 0.05 : 1);
@@ -3694,26 +3724,19 @@ function highlightSearchSubgraph(matchedNames, showConnections = true, retryCoun
     }
   });
 
-  // Highlight edges with tiered opacity
+  // Highlight edges connected to matched nodes (solid or dimmed, no dotted)
   if (showConnections && anyVisible) {
     d3.selectAll('.connection-line').each(function(d) {
       const srcName = (d.source && d.source.name) || '';
       const tgtName = (d.target && d.target.name) || '';
-      const srcMatch = nameSet.has(srcName);
-      const tgtMatch = nameSet.has(tgtName);
+      const isConnected = nameSet.has(srcName) || nameSet.has(tgtName);
 
       const el = d3.select(this);
-      // Remove all highlight classes first
       el.classed('dimmed', false).classed('highlighted', false).classed('one-hop', false);
 
-      if (srcMatch && tgtMatch) {
-        // Both endpoints match — full highlight
+      if (isConnected) {
         el.classed('highlighted', true);
-      } else if (srcMatch || tgtMatch) {
-        // One endpoint matches — one-hop context edge
-        el.classed('one-hop', true);
       } else {
-        // Neither matches — dim
         el.classed('dimmed', true);
       }
     });
