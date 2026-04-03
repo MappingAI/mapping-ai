@@ -215,7 +215,7 @@ aws cloudfront create-invalidation --distribution-id E34ZXLC7CZX7XT --paths "/*"
 - **Plot view**: 2D scatter or 1D beeswarm plotting people + orgs on any two of {regulatory_stance, agi_timeline, ai_risk_level}; uses `stance_score` / `timeline_score` / `risk_score` from map-data.json; entities with null scores excluded with count shown
 - **Category normalization**: Merges variants ("AI Safety/Alignment" → "AI Safety")
 - **Resources**: Rounded squares with SVG type icons, clustered near related entities in All view
-- **Edges**: From edge table (affiliations + relationships)
+- **Edges**: From edge table (affiliations + relationships); clicking any node (directly, from search, or from detail panel links) highlights connected edges and dims others
 - **Regulatory stance**: Color pips on nodes + colored badge in detail panel
 - **Submission count**: Subtle gold dashed ring for ≥5 submissions
 - **Source type filter**: Self/connector/external
