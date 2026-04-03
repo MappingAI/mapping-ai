@@ -2275,30 +2275,37 @@ document.querySelectorAll('.parent-org-search, .primary-org-search').forEach(inp
     });
   }
 
-  let _pendingOrgs = []; // persists across re-renders so pending results survive debounce
+  let _pendingFetchTimer = null;
 
   const search = debounce(() => {
     const q = input.value.trim();
-    if (q.length < 1) { resultsDiv.innerHTML = ''; _pendingOrgs = []; return; }
-    const local = searchEntitiesWithPending(q, 'organization', (extra) => {
-      // Store pending results — they'll be merged on next render too
-      _pendingOrgs = (extra.organizations || []).filter(o => o._pending);
-      // Re-render with current local + pending
-      const localNow = searchEntities(input.value.trim(), 'organization');
-      const merged = [...(localNow.organizations || [])];
-      const existingIds = new Set(merged.map(o => o.id));
-      for (const po of _pendingOrgs) {
-        if (!existingIds.has(po.id)) merged.push(po);
-      }
-      renderOrgResults(merged);
-    });
-    // Merge stored pending results with local results
-    const merged = [...(local.organizations || [])];
-    const existingIds = new Set(merged.map(o => o.id));
-    for (const po of _pendingOrgs) {
-      if (!existingIds.has(po.id)) merged.push(po);
+    if (q.length < 1) { resultsDiv.innerHTML = ''; return; }
+    // Show local (approved) results instantly
+    const local = searchEntities(q, 'organization');
+    renderOrgResults(local.organizations || []);
+    // Fetch pending after a settle delay (one fetch, not per-keystroke)
+    clearTimeout(_pendingFetchTimer);
+    if (q.length >= 2) {
+      _pendingFetchTimer = setTimeout(() => {
+        const currentQ = input.value.trim();
+        if (currentQ.length < 2) return;
+        fetch(`${API_BASE}/search?q=${encodeURIComponent(currentQ)}&type=organization&status=pending`)
+          .then(r => r.ok ? r.json() : null)
+          .then(data => {
+            if (!data || input.value.trim() !== currentQ) return; // query changed
+            const pendingOrgs = (data.organizations || []).map(o => ({ ...o, _pending: true }));
+            if (pendingOrgs.length === 0) return;
+            // Append to whatever is currently showing
+            const existingIds = new Set([...resultsDiv.querySelectorAll('.org-result')].map(el => el.dataset.id));
+            const newOrgs = pendingOrgs.filter(o => !existingIds.has(String(o.id)));
+            if (newOrgs.length > 0) {
+              const currentOrgs = [...resultsDiv.querySelectorAll('.org-result')].map(el => JSON.parse(el.dataset.org));
+              renderOrgResults([...currentOrgs, ...newOrgs]);
+            }
+          })
+          .catch(() => {});
+      }, 300); // wait 300ms after last keystroke before fetching pending
     }
-    renderOrgResults(merged);
   }, 50);
 
   // Show top orgs on focus (instant alphabetical list)
