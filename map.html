@@ -639,6 +639,11 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
       <button class="view-btn" data-view="people">People</button>
       <button class="view-btn" data-view="resources">Resources</button>
     </div>
+    <div class="view-toggles" id="plot-sub-tabs" style="display:none">
+      <button class="view-btn active" data-entity="all">All</button>
+      <button class="view-btn" data-entity="organizations">Orgs</button>
+      <button class="view-btn" data-entity="people">People</button>
+    </div>
     <!-- Search mode query box (inside View group, shown when Search mode active) -->
     <div id="search-mode-controls" style="display:none; margin-top:0.5rem;">
       <h3>Query</h3>
@@ -700,12 +705,6 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
       <button class="view-btn" data-mode="1d">1D</button>
       <button class="view-btn active" data-mode="2d">2D</button>
     </div>
-    <h3 style="margin-top:12px">Entities</h3>
-    <select id="axis-entity-select" style="width:100%;padding:4px 6px;background:var(--bg-input,var(--bg-panel));color:var(--text-1);border:1px solid var(--line);border-radius:4px;font-family:var(--mono);font-size:11px;">
-      <option value="all">All</option>
-      <option value="people">People</option>
-      <option value="organizations">Orgs</option>
-    </select>
     <h3 style="margin-top:12px">X Axis</h3>
     <select id="axis-x-select" style="width:100%;padding:4px 6px;background:var(--bg-input,var(--bg-panel));color:var(--text-1);border:1px solid var(--line);border-radius:4px;font-family:var(--mono);font-size:11px;">
       <option value="regulatory_stance">Regulatory Stance</option>
@@ -1693,6 +1692,9 @@ function applyViewState() {
   document.getElementById('axis-controls').style.display = is2D ? '' : 'none';
   document.getElementById('search-mode-controls').style.display = isSearch ? '' : 'none';
   document.getElementById('network-sub-tabs').style.display = (is2D || isSearch) ? 'none' : '';
+  document.getElementById('plot-sub-tabs').style.display = is2D ? '' : 'none';
+  // Sync plot sub-tab active state
+  document.querySelectorAll('#plot-sub-tabs [data-entity]').forEach(b => b.classList.toggle('active', b.dataset.entity === axis2dEntityType));
   // Hide the small search box in search mode (we have the big one)
   const smallSearchGroup = document.querySelector('.controls .control-group:first-child');
   if (smallSearchGroup) smallSearchGroup.style.display = isSearch ? 'none' : '';
@@ -1730,6 +1732,8 @@ if (viewMode === 'plot') {
   document.getElementById('axis-controls').style.display = '';
   document.getElementById('stance-legend').style.display = 'none';
   document.getElementById('network-sub-tabs').style.display = 'none';
+  document.getElementById('plot-sub-tabs').style.display = '';
+  document.querySelectorAll('#plot-sub-tabs [data-entity]').forEach(b => b.classList.toggle('active', b.dataset.entity === axis2dEntityType));
 }
 if (viewMode === 'search') {
   document.getElementById('search-mode-controls').style.display = '';
@@ -1781,9 +1785,12 @@ document.querySelectorAll('#axis-mode-toggles [data-mode]').forEach(btn => {
     if (currentView === '2d') render();
   });
 });
-document.getElementById('axis-entity-select').addEventListener('change', e => {
-  axis2dEntityType = e.target.value;
-  if (currentView === '2d') { buildFilters(); render(); }
+document.querySelectorAll('#plot-sub-tabs [data-entity]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    axis2dEntityType = btn.dataset.entity;
+    document.querySelectorAll('#plot-sub-tabs [data-entity]').forEach(b => b.classList.toggle('active', b === btn));
+    if (currentView === '2d') { buildFilters(); render(); }
+  });
 });
 document.getElementById('axis-x-select').addEventListener('change', e => {
   axisX = e.target.value;
