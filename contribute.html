@@ -941,6 +941,77 @@ body.forms-loading .form { visibility: hidden; }
   margin-left: 0.5rem;
 }
 .how-it-works-btn:hover { border-color: var(--text-secondary); color: var(--text-primary); }
+
+/* ── Inline org creation side panel ── */
+.org-panel-overlay {
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.2);
+  z-index: 200;
+}
+.org-panel-overlay.open { display: block; }
+#org-side-panel {
+  position: fixed; top: 0; right: 0; bottom: 0;
+  width: min(460px, 85vw);
+  background: var(--bg-primary, #fff); border-left: 1px solid var(--border);
+  z-index: 201; transform: translateX(100%); transition: transform 0.25s ease;
+  display: flex; flex-direction: column; overflow-y: auto;
+}
+#org-side-panel.open { transform: translateX(0); }
+.org-panel-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1rem 1.25rem; border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; background: var(--bg-primary, #fff); z-index: 1;
+}
+.org-panel-header h3 {
+  font-family: var(--mono); font-size: 11px; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--text-primary); margin: 0;
+}
+.org-panel-context {
+  font-family: var(--mono); font-size: 9px; color: var(--text-tertiary);
+  letter-spacing: 0.04em; margin-top: 0.2rem;
+}
+.org-panel-close {
+  background: none; border: none; font-size: 18px; cursor: pointer;
+  color: var(--text-secondary); padding: 0.25rem;
+}
+.org-panel-close:hover { color: var(--text-primary); }
+.org-panel-body { padding: 1rem 1.25rem; flex: 1; }
+.org-panel-body .field { margin-bottom: 0.75rem; display: flex; flex-direction: column; }
+.org-panel-body .field label {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 0.3rem;
+}
+.org-panel-body input[type="text"],
+.org-panel-body select {
+  font-family: var(--serif); font-size: 15px; padding: 0.5rem 0.65rem;
+  border: 1px solid var(--border); border-radius: 4px; background: #fff;
+  color: var(--text-primary); width: 100%;
+}
+.org-panel-body input:focus,
+.org-panel-body select:focus { outline: none; border-color: var(--text-secondary); }
+.org-panel-expand-btn {
+  font-family: var(--mono); font-size: 10px; text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--accent, #2563eb); cursor: pointer;
+  background: none; border: none; padding: 0.5rem 0; margin: 0.5rem 0;
+}
+.org-panel-expand-btn:hover { text-decoration: underline; }
+.org-panel-extra { display: none; }
+.org-panel-extra.open { display: block; }
+.org-panel-submit {
+  font-family: var(--mono); font-size: 11px; text-transform: uppercase;
+  letter-spacing: 0.08em; padding: 0.7rem 1.5rem; width: 100%;
+  background: var(--text-primary); color: #fff; border: none; border-radius: 4px;
+  cursor: pointer; margin-top: 0.75rem;
+}
+.org-panel-submit:hover { opacity: 0.85; }
+.org-panel-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+.org-panel-success {
+  text-align: center; padding: 2rem 1rem;
+  font-family: var(--serif); font-size: 16px; color: var(--text-secondary);
+}
+.org-panel-success strong { color: var(--text-primary); }
+@media (max-width: 768px) {
+  #org-side-panel { width: 100vw; }
+}
 </style>
 </head>
 <body class="forms-loading">
@@ -3117,6 +3188,394 @@ document.querySelectorAll('.nav-links a').forEach(a => {
 document.querySelector('.nav-hamburger').addEventListener('click', () => {
   document.querySelector('.nav-links').classList.toggle('open');
 });
+
+// ══════════════════════════════════════════════════════════════════════════════
+// ── Inline Org Creation Side Panel ──────────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════════════════
+
+(function() {
+  // Create panel HTML
+  const panelHTML = `
+    <div class="org-panel-overlay" id="org-panel-overlay"></div>
+    <div id="org-side-panel">
+      <div class="org-panel-header">
+        <div>
+          <h3>Add New Organization</h3>
+          <div class="org-panel-context" id="org-panel-context"></div>
+        </div>
+        <button class="org-panel-close" id="org-panel-close">&times;</button>
+      </div>
+      <div class="org-panel-body">
+        <div class="field">
+          <label>Name *</label>
+          <input type="text" id="panel-org-name" required>
+        </div>
+        <div class="field">
+          <label>Category</label>
+          <select id="panel-org-category">
+            <option value="">Select...</option>
+            <option value="Frontier Lab">Frontier Lab</option>
+            <option value="AI Safety/Alignment">AI Safety/Alignment</option>
+            <option value="Think Tank/Policy Org">Think Tank/Policy Org</option>
+            <option value="Government/Agency">Government/Agency</option>
+            <option value="Academic">Academic</option>
+            <option value="VC/Capital/Philanthropy">VC/Capital/Philanthropy</option>
+            <option value="Labor/Civil Society">Labor/Civil Society</option>
+            <option value="Ethics/Bias/Rights">Ethics/Bias/Rights</option>
+            <option value="Media/Journalism">Media/Journalism</option>
+            <option value="Political Campaign/PAC">Political Campaign/PAC</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Website</label>
+          <input type="text" id="panel-org-website" placeholder="https://...">
+        </div>
+        <div class="field">
+          <label>Location</label>
+          <input type="text" id="panel-org-location" placeholder="City, State/Country">
+        </div>
+
+        <button type="button" class="org-panel-expand-btn" id="panel-expand-btn">+ Add more details</button>
+
+        <div class="org-panel-extra" id="panel-extra-fields">
+          <div class="field">
+            <label>Funding Model</label>
+            <select id="panel-org-funding">
+              <option value="">Select...</option>
+              <option value="Venture-backed/for-profit">Venture-backed/for-profit</option>
+              <option value="Revenue-generating (SaaS, enterprise)">Revenue-generating (SaaS, enterprise)</option>
+              <option value="Government-funded (grants, contracts)">Government-funded (grants, contracts)</option>
+              <option value="Philanthropic/foundation-funded">Philanthropic/foundation-funded</option>
+              <option value="Membership/dues-based">Membership/dues-based</option>
+              <option value="Mixed (commercial + philanthropic)">Mixed (commercial + philanthropic)</option>
+              <option value="Public benefit corp/capped-profit">Public benefit corp/capped-profit</option>
+              <option value="Self-funded/endowed">Self-funded/endowed</option>
+              <option value="Other (describe in notes)">Other (describe in notes)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Regulatory Stance</label>
+            <select id="panel-org-stance">
+              <option value="">Select...</option>
+              <option value="Accelerate">Accelerate</option>
+              <option value="Light-touch">Light-touch</option>
+              <option value="Targeted">Targeted</option>
+              <option value="Moderate">Moderate</option>
+              <option value="Restrictive">Restrictive</option>
+              <option value="Precautionary">Precautionary</option>
+              <option value="Nationalize">Nationalize</option>
+              <option value="Mixed/unclear">Mixed/unclear</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Twitter/X</label>
+            <input type="text" id="panel-org-twitter" placeholder="@handle">
+          </div>
+          <div class="field">
+            <label>Bluesky</label>
+            <input type="text" id="panel-org-bluesky" placeholder="@handle.bsky.social">
+          </div>
+          <div class="field">
+            <label>Notes</label>
+            <textarea id="panel-org-notes" rows="3" style="font-family:var(--serif);font-size:14px;padding:0.5rem;border:1px solid var(--border);border-radius:4px;resize:vertical;"></textarea>
+          </div>
+        </div>
+
+        <button type="button" class="org-panel-submit" id="panel-submit-btn">Submit Organization</button>
+      </div>
+    </div>
+  `;
+  document.body.insertAdjacentHTML('beforeend', panelHTML);
+
+  const panel = document.getElementById('org-side-panel');
+  const overlay = document.getElementById('org-panel-overlay');
+  const closeBtn = document.getElementById('org-panel-close');
+  const expandBtn = document.getElementById('panel-expand-btn');
+  const extraFields = document.getElementById('panel-extra-fields');
+  const submitBtn = document.getElementById('panel-submit-btn');
+  const contextEl = document.getElementById('org-panel-context');
+
+  let _triggerField = null; // the input/hidden that triggered the panel
+  let _triggerType = null;  // 'primary', 'parent', or 'affiliated'
+  let _triggerAddTag = null; // function to call for affiliated orgs
+
+  // Open panel
+  function openOrgPanel(queryText, triggerField, triggerType, contextName, addTagFn) {
+    _triggerField = triggerField;
+    _triggerType = triggerType;
+    _triggerAddTag = addTagFn || null;
+
+    // Pre-fill name from search query
+    document.getElementById('panel-org-name').value = queryText || '';
+    document.getElementById('panel-org-category').value = '';
+    document.getElementById('panel-org-website').value = '';
+    document.getElementById('panel-org-location').value = '';
+    document.getElementById('panel-org-funding').value = '';
+    document.getElementById('panel-org-stance').value = '';
+    document.getElementById('panel-org-twitter').value = '';
+    document.getElementById('panel-org-bluesky').value = '';
+    document.getElementById('panel-org-notes').value = '';
+    extraFields.classList.remove('open');
+    expandBtn.textContent = '+ Add more details';
+
+    // Set context note
+    if (contextName) {
+      contextEl.textContent = triggerType === 'parent'
+        ? `Adding parent org for ${contextName}`
+        : triggerType === 'affiliated'
+        ? `Adding affiliated org for ${contextName}`
+        : `Adding primary org for ${contextName}`;
+    } else {
+      contextEl.textContent = '';
+    }
+
+    panel.classList.add('open');
+    overlay.classList.add('open');
+    document.getElementById('panel-org-name').focus();
+  }
+
+  // Close panel
+  function closeOrgPanel() {
+    panel.classList.remove('open');
+    overlay.classList.remove('open');
+    _triggerField = null;
+    _triggerType = null;
+    _triggerAddTag = null;
+  }
+
+  closeBtn.addEventListener('click', closeOrgPanel);
+  overlay.addEventListener('click', (e) => {
+    // Only close if clicking the overlay itself, not the panel
+    if (e.target === overlay) closeOrgPanel();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && panel.classList.contains('open')) closeOrgPanel();
+  });
+
+  // Expand/collapse extra fields
+  expandBtn.addEventListener('click', () => {
+    const isOpen = extraFields.classList.toggle('open');
+    expandBtn.textContent = isOpen ? '- Hide extra details' : '+ Add more details';
+  });
+
+  // Submit panel form
+  submitBtn.addEventListener('click', async () => {
+    const name = document.getElementById('panel-org-name').value.trim();
+    if (!name) {
+      document.getElementById('panel-org-name').style.borderColor = '#c00';
+      return;
+    }
+    document.getElementById('panel-org-name').style.borderColor = '';
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+
+    const data = { name };
+    const category = document.getElementById('panel-org-category').value;
+    const website = document.getElementById('panel-org-website').value.trim();
+    const location = document.getElementById('panel-org-location').value.trim();
+    const funding = document.getElementById('panel-org-funding').value;
+    const stance = document.getElementById('panel-org-stance').value;
+    const twitter = document.getElementById('panel-org-twitter').value.trim();
+    const bluesky = document.getElementById('panel-org-bluesky').value.trim();
+    const notes = document.getElementById('panel-org-notes').value.trim();
+
+    if (category) data.category = category;
+    if (website) data.website = website;
+    if (location) data.location = location;
+    if (funding) data.fundingModel = funding;
+    if (stance) data.regulatoryStance = stance;
+    if (twitter) data.twitter = twitter;
+    if (bluesky) data.bluesky = bluesky;
+    if (notes) data.notes = notes;
+
+    try {
+      const res = await fetch(`${API_BASE}/submit`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'organization',
+          timestamp: new Date().toISOString(),
+          data: data,
+          _hp: ''
+        })
+      });
+      if (!res.ok) throw new Error('Failed');
+      const result = await res.json();
+      const submissionId = result.submissionId;
+
+      // Show success overlay briefly (don't destroy the form DOM)
+      const successEl = document.createElement('div');
+      successEl.className = 'org-panel-success';
+      successEl.style.cssText = 'position:absolute;inset:0;background:var(--bg-primary,#fff);display:flex;align-items:center;justify-content:center;z-index:5;';
+      successEl.innerHTML = `<div><strong>${name}</strong><br>Org submitted! Linking...</div>`;
+      panel.querySelector('.org-panel-body').style.position = 'relative';
+      panel.querySelector('.org-panel-body').appendChild(successEl);
+
+      // Auto-fill the triggering field after brief delay, then close
+      setTimeout(() => {
+        if (_triggerType === 'affiliated' && _triggerAddTag) {
+          _triggerAddTag(String(submissionId), name);
+        } else if (_triggerField) {
+          const field = _triggerField.closest('.field');
+          const textInput = field?.querySelector('input[type="text"]') || _triggerField;
+          const hiddenInput = field?.querySelector('input[type="hidden"]');
+          textInput.value = name;
+          if (hiddenInput) hiddenInput.value = String(submissionId);
+          const resultsDiv = field?.querySelector('.org-search-results');
+          if (resultsDiv) resultsDiv.innerHTML = '';
+        }
+        successEl.remove();
+        closeOrgPanel();
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Organization';
+      }, 1500);
+
+    } catch (err) {
+      alert('Something went wrong submitting the org. Please try again.');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit Organization';
+    }
+  });
+
+  // ── Inject "Add new org" into search dropdowns ──
+
+  // Helper: get entity name from the active form
+  function getActiveEntityName() {
+    const activeForm = document.querySelector('.form.active');
+    if (!activeForm) return '';
+    return activeForm.querySelector('input[name="name"]')?.value?.trim() || '';
+  }
+
+  // For primary/parent org search: add "Add new org" option to renderOrgResults
+  // We monkey-patch by observing the results divs
+  document.querySelectorAll('.primary-org-search, .parent-org-search').forEach(input => {
+    const field = input.closest('.field');
+    const resultsDiv = field?.querySelector('.org-search-results');
+    const hiddenInput = field?.querySelector('input[type="hidden"]');
+    if (!resultsDiv) return;
+
+    const isParent = input.classList.contains('parent-org-search');
+    const isInsidePanel = input.closest('#org-side-panel');
+    if (isInsidePanel) return; // No inception — panel's own fields don't get "Add new org"
+
+    // Watch for results changes and append "Add new org" option
+    const observer = new MutationObserver(() => {
+      // Don't add if already present
+      if (resultsDiv.querySelector('.org-add-new')) return;
+      const q = input.value.trim();
+      if (q.length < 1) return;
+
+      const addNewEl = document.createElement('div');
+      addNewEl.className = 'org-result org-add-new';
+      addNewEl.style.cssText = 'color:var(--accent,#2563eb);font-style:italic;cursor:pointer;';
+      addNewEl.textContent = `Add "${q}" as new org...`;
+      addNewEl.addEventListener('click', () => {
+        resultsDiv.innerHTML = '';
+        openOrgPanel(q, input, isParent ? 'parent' : 'primary', getActiveEntityName());
+      });
+      resultsDiv.appendChild(addNewEl);
+    });
+    observer.observe(resultsDiv, { childList: true });
+
+    // Also show "Add new org" when results are empty (override :empty CSS hide)
+    input.addEventListener('input', () => {
+      setTimeout(() => {
+        const q = input.value.trim();
+        if (q.length >= 2 && resultsDiv.children.length === 0) {
+          const addNewEl = document.createElement('div');
+          addNewEl.className = 'org-result org-add-new';
+          addNewEl.style.cssText = 'color:var(--accent,#2563eb);font-style:italic;cursor:pointer;';
+          addNewEl.textContent = `Add "${q}" as new org...`;
+          addNewEl.addEventListener('click', () => {
+            resultsDiv.innerHTML = '';
+            openOrgPanel(q, input, isParent ? 'parent' : 'primary', getActiveEntityName());
+          });
+          resultsDiv.appendChild(addNewEl);
+        }
+      }, 400); // after debounce + pending fetch settle
+    });
+  });
+
+  // For affiliated org tag inputs: inject "Add new org" option
+  document.querySelectorAll('.tag-input-wrapper').forEach(wrapper => {
+    const input = wrapper.querySelector('.tag-input[data-search-type="organization"]');
+    if (!input) return;
+    const resultsDiv = wrapper.querySelector('.org-search-results');
+    if (!resultsDiv) return;
+    const isInsidePanel = wrapper.closest('#org-side-panel');
+    if (isInsidePanel) return;
+
+    // Find the addTag function — it's in a closure, so we recreate it
+    const hiddenInput = wrapper.parentElement?.querySelector('input[name="affiliatedOrgIds"]');
+
+    const observer = new MutationObserver(() => {
+      if (resultsDiv.querySelector('.org-add-new')) return;
+      const q = input.value.trim();
+      if (q.length < 1) return;
+
+      const addNewEl = document.createElement('div');
+      addNewEl.className = 'org-result org-add-new';
+      addNewEl.style.cssText = 'color:var(--accent,#2563eb);font-style:italic;cursor:pointer;';
+      addNewEl.textContent = `Add "${q}" as new org...`;
+      addNewEl.addEventListener('click', () => {
+        resultsDiv.innerHTML = '';
+        // For affiliated: we need to add a tag after submit
+        openOrgPanel(q, input, 'affiliated', getActiveEntityName(), (id, name) => {
+          // Create a tag element (mirroring the existing addTag pattern)
+          const tag = document.createElement('span');
+          tag.className = 'tag';
+          tag.innerHTML = `${name} <span class="tag-remove">&times;</span>`;
+          tag.querySelector('.tag-remove').addEventListener('click', () => tag.remove());
+          wrapper.insertBefore(tag, input);
+          input.value = '';
+        });
+      });
+      resultsDiv.appendChild(addNewEl);
+    });
+    observer.observe(resultsDiv, { childList: true });
+
+    input.addEventListener('input', () => {
+      setTimeout(() => {
+        const q = input.value.trim();
+        if (q.length >= 2 && resultsDiv.children.length === 0) {
+          const addNewEl = document.createElement('div');
+          addNewEl.className = 'org-result org-add-new';
+          addNewEl.style.cssText = 'color:var(--accent,#2563eb);font-style:italic;cursor:pointer;';
+          addNewEl.textContent = `Add "${q}" as new org...`;
+          addNewEl.addEventListener('click', () => {
+            resultsDiv.innerHTML = '';
+            openOrgPanel(q, input, 'affiliated', getActiveEntityName(), (id, name) => {
+              const tag = document.createElement('span');
+              tag.className = 'tag';
+              tag.innerHTML = `${name} <span class="tag-remove">&times;</span>`;
+              tag.querySelector('.tag-remove').addEventListener('click', () => tag.remove());
+              wrapper.insertBefore(tag, input);
+              input.value = '';
+            });
+          });
+          resultsDiv.appendChild(addNewEl);
+        }
+      }, 400);
+    });
+  });
+
+  // Remove old "Can't find it? Add this org" click handlers that switch forms
+  // (Keep the elements but change their behavior to open the panel instead)
+  document.querySelectorAll('.create-org-link').forEach(link => {
+    const newLink = link.cloneNode(true); // remove old event listeners
+    newLink.textContent = "Can't find it? Add this org";
+    link.parentNode.replaceChild(newLink, link);
+    newLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      const field = newLink.closest('.field');
+      const input = field?.querySelector('input[type="text"]');
+      const q = input?.value?.trim() || '';
+      const isParent = input?.classList?.contains('parent-org-search');
+      openOrgPanel(q, input, isParent ? 'parent' : 'primary', getActiveEntityName());
+    });
+  });
+})();
 </script>
 </body>
 </html>
