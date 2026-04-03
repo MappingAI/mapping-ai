@@ -38,6 +38,7 @@
   --line: #ddd;
   --input-bg: #f0eeeb;
   --node-text: #fff;
+  --belief-dot-rgb: 0, 0, 0;
 }
 [data-theme="dark"] {
   --bg-page: #1a1f2e;
@@ -49,6 +50,7 @@
   --line: #2a2f3e;
   --input-bg: #1a1f2e;
   --node-text: #fff;
+  --belief-dot-rgb: 255, 255, 255;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { background: var(--bg-page); font-family: var(--serif); color: var(--text-1); overflow: hidden; height: 100vh; transition: background 0.3s, color 0.3s; }
@@ -654,19 +656,21 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   </div>
   <div class="control-group" id="category-filters">
     <h3 style="display:flex;justify-content:space-between;align-items:center;">
-      <select id="cluster-by-select" style="font-family:var(--mono);font-size:9px;letter-spacing:0.04em;text-transform:uppercase;background:transparent;color:var(--text-1);border:none;cursor:pointer;font-weight:600;padding:0;margin:0;">
-        <option value="category">Category</option>
-        <option value="regulatory_stance">Regulatory Stance</option>
-        <option value="agi_timeline">AGI Timeline</option>
-        <option value="ai_risk_level">AI Risk Level</option>
-      </select>
+      <span>Category</span>
       <span class="filter-reset" id="category-reset" style="font-size:8px;text-transform:none;letter-spacing:0;color:var(--accent);cursor:pointer;font-weight:400;">select all</span>
     </h3>
     <div id="cluster-excluded-count" style="font-size:10px;color:var(--text-3);margin-bottom:4px;display:none;"></div>
     <div class="filter-chips" id="category-chips"></div>
   </div>
   <div class="control-group" id="stance-legend">
-    <h3 style="display:flex;justify-content:space-between;align-items:center;">Regulatory Stance <span class="filter-reset" id="stance-reset" style="font-size:8px;text-transform:none;letter-spacing:0;color:var(--accent);cursor:pointer;font-weight:400;">select all</span></h3>
+    <h3 style="display:flex;justify-content:space-between;align-items:center;">
+      <select id="belief-dim-select" style="font-family:var(--mono);font-size:9px;letter-spacing:0.04em;text-transform:uppercase;background:transparent;color:var(--text-1);border:none;cursor:pointer;font-weight:600;padding:0;margin:0;">
+        <option value="regulatory_stance">Regulatory Stance</option>
+        <option value="agi_timeline">AGI Timeline</option>
+        <option value="ai_risk_level">AI Risk Level</option>
+      </select>
+      <span class="filter-reset" id="stance-reset" style="font-size:8px;text-transform:none;letter-spacing:0;color:var(--accent);cursor:pointer;font-weight:400;">select all</span>
+    </h3>
     <div class="stance-legend-items" id="stance-legend-items"></div>
   </div>
   <div class="control-group" id="secondary-category-filter" style="display:none">
@@ -682,7 +686,7 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
       </div>
       <div class="source-type-item" data-source="connector">
         <span class="source-type-icon">◐</span>
-        <span>Has connector</span>
+        <span>Connector</span>
       </div>
       <div class="source-type-item" data-source="external">
         <span class="source-type-icon">○</span>
@@ -1212,6 +1216,7 @@ let simulation = null;
 let currentZoom = d3.zoomIdentity;
 let zoomBehavior = null;
 let clusterDimension = 'category';
+let beliefLegendDim = 'regulatory_stance';
 
 // Stance colors: single-hue gradient (warm amber → deep brown), distinct from all category colors
 const STANCE_COLORS = {
@@ -1489,21 +1494,31 @@ function buildFilters() {
 
 function buildStanceLegend() {
   const container = document.getElementById('stance-legend-items');
-  STANCE_ORDER.forEach(stance => {
+  container.innerHTML = '';
+
+  const order = getDimensionOrder(beliefLegendDim) || STANCE_ORDER;
+  const n = order.length;
+
+  // Reset active set to match new dimension
+  activeStances = new Set(order);
+  stanceFilterActive = false;
+
+  order.forEach((val, i) => {
+    // Opacity steps: equally spaced from 1/n to 1.0
+    const opacity = (i + 1) / n;
     const item = document.createElement('div');
     item.className = 'stance-legend-item';
-    item.innerHTML = `<span class="stance-legend-dot" style="background:${STANCE_COLORS[stance]};"></span>${stance}`;
+    item.innerHTML = `<span class="stance-legend-dot" style="background:rgba(var(--belief-dot-rgb),${opacity.toFixed(3)});"></span>${val}`;
     item.addEventListener('click', () => {
-      if (activeStances.has(stance)) {
-        activeStances.delete(stance);
+      if (activeStances.has(val)) {
+        activeStances.delete(val);
         item.classList.add('inactive');
       } else {
-        activeStances.add(stance);
+        activeStances.add(val);
         item.classList.remove('inactive');
       }
-      stanceFilterActive = activeStances.size < STANCE_ORDER.length;
+      stanceFilterActive = activeStances.size < order.length;
       updateStanceResetBtn();
-      // In search mode, filter the search results instead of re-rendering
       if (viewMode === 'search' && searchModeMatches && searchModeMatches.length > 0) {
         applyFiltersToSearchResults();
       } else {
@@ -1512,10 +1527,11 @@ function buildStanceLegend() {
     });
     container.appendChild(item);
   });
-  // "No stance" toggle
+
+  // "Unknown" toggle — empty circle
   const noStance = document.createElement('div');
   noStance.className = 'stance-legend-item';
-  noStance.innerHTML = `<span class="stance-legend-dot" style="background:var(--text-3); opacity:0.4;"></span><em>Unknown</em>`;
+  noStance.innerHTML = `<span class="stance-legend-dot" style="background:transparent;border:1px solid rgba(var(--belief-dot-rgb),0.4);"></span><em>Unknown</em>`;
   noStance.dataset.active = 'true';
   noStance.addEventListener('click', () => {
     const active = noStance.dataset.active === 'true';
@@ -1523,7 +1539,6 @@ function buildStanceLegend() {
     noStance.classList.toggle('inactive');
     stanceFilterActive = true;
     updateStanceResetBtn();
-    // In search mode, filter the search results instead of re-rendering
     if (viewMode === 'search' && searchModeMatches && searchModeMatches.length > 0) {
       applyFiltersToSearchResults();
     } else {
@@ -1593,26 +1608,11 @@ function updateSecondaryCategoryResetBtn() {
 }
 
 function updateSecondaryFilterVisibility() {
-  const isBeliefDimension = clusterDimension !== 'category';
   const stanceLegend = document.getElementById('stance-legend');
   const secondaryCategoryFilter = document.getElementById('secondary-category-filter');
-
-  // In plot/search mode, hide both
-  if (viewMode === 'plot' || viewMode === 'search') {
-    stanceLegend.style.display = 'none';
-    secondaryCategoryFilter.style.display = 'none';
-    return;
-  }
-
-  // In network mode, swap based on cluster dimension
-  if (isBeliefDimension) {
-    stanceLegend.style.display = 'none';
-    secondaryCategoryFilter.style.display = '';
-    buildSecondaryCategoryFilter();
-  } else {
-    stanceLegend.style.display = '';
-    secondaryCategoryFilter.style.display = 'none';
-  }
+  secondaryCategoryFilter.style.display = 'none';
+  // In plot/search mode, hide belief legend
+  stanceLegend.style.display = (viewMode === 'plot' || viewMode === 'search') ? 'none' : '';
 }
 
 function buildSourceTypeFilter() {
@@ -1693,8 +1693,6 @@ function applyViewState() {
   document.getElementById('axis-controls').style.display = is2D ? '' : 'none';
   document.getElementById('search-mode-controls').style.display = isSearch ? '' : 'none';
   document.getElementById('network-sub-tabs').style.display = (is2D || isSearch) ? 'none' : '';
-  // Hide cluster-by dropdown in plot mode (plot uses axis selectors instead)
-  document.getElementById('cluster-by-select').style.display = is2D ? 'none' : '';
   // Hide the small search box in search mode (we have the big one)
   const smallSearchGroup = document.querySelector('.controls .control-group:first-child');
   if (smallSearchGroup) smallSearchGroup.style.display = isSearch ? 'none' : '';
@@ -1732,7 +1730,6 @@ if (viewMode === 'plot') {
   document.getElementById('axis-controls').style.display = '';
   document.getElementById('stance-legend').style.display = 'none';
   document.getElementById('network-sub-tabs').style.display = 'none';
-  document.getElementById('cluster-by-select').style.display = 'none';
 }
 if (viewMode === 'search') {
   document.getElementById('search-mode-controls').style.display = '';
@@ -1768,12 +1765,10 @@ document.querySelectorAll('#network-sub-tabs [data-view]').forEach(btn => {
   });
 });
 
-// Cluster-by dimension dropdown
-document.getElementById('cluster-by-select').addEventListener('change', (e) => {
-  clusterDimension = e.target.value;
-  activeCategories = new Set(); // reset filters — will be rebuilt
-  buildFilters();
-  updateSecondaryFilterVisibility();
+// Belief dimension dropdown
+document.getElementById('belief-dim-select').addEventListener('change', (e) => {
+  beliefLegendDim = e.target.value;
+  buildStanceLegend();
   render();
 });
 
@@ -1799,10 +1794,24 @@ document.getElementById('axis-y-select').addEventListener('change', e => {
   if (currentView === '2d') render();
 });
 
+function getBeliefKey(dim, val) {
+  if (!val) return null;
+  if (dim === 'regulatory_stance') return getStanceKey(val);
+  const order = getDimensionOrder(dim);
+  if (!order) return null;
+  // Exact match first
+  if (order.includes(val)) return val;
+  // Case-insensitive partial match
+  const lower = val.toLowerCase();
+  return order.find(v => v.toLowerCase() === lower || lower.includes(v.toLowerCase())) || null;
+}
+
 function passesStanceFilter(d) {
   if (!stanceFilterActive) return true;
   const unknownActive = document.querySelector('#stance-legend-items .stance-legend-item:last-child')?.dataset.active !== 'false';
-  const key = getStanceKey(d.regulatory_stance);
+  const fieldMap = { regulatory_stance: 'regulatory_stance', agi_timeline: 'agi_timeline', ai_risk_level: 'ai_risk_level' };
+  const field = fieldMap[beliefLegendDim];
+  const key = getBeliefKey(beliefLegendDim, d[field]);
   if (key) return activeStances.has(key);
   return unknownActive;
 }
@@ -2028,8 +2037,33 @@ function getVisibleNodes() {
       nodes.push({ ...d, name: d.title, category: cat, clusterKey: cat, entityType: 'resource', radius: r, submissionCount: sc, isResource: true });
     });
   } else if (currentView === 'all') {
+    // Build lookup of visible entity IDs (people + orgs that passed all filters)
+    const visibleEntityIds = new Set(nodes.filter(n => !n.isResource).map(n => `${n.entityType}-${n.id}`));
+    const unknownActive = document.querySelector('#stance-legend-items .stance-legend-item:last-child')?.dataset.active !== 'false';
+
     allData.resources.forEach(d => {
       if (!passesSourceTypeFilter(d)) return;
+
+      // When belief filter is active, only show resources that have a checked belief value
+      // OR are connected (via relationships) to a visible entity that passed the belief filter
+      if (stanceFilterActive) {
+        const field = beliefLegendDim;
+        const key = getBeliefKey(beliefLegendDim, d[field]);
+        let passes = key ? activeStances.has(key) : unknownActive;
+        if (!passes) {
+          passes = (allData.relationships || []).some(rel => {
+            let connectedKey = null;
+            if (rel.source_type === 'resource' && rel.source_id === d.id) {
+              connectedKey = `${rel.target_type}-${rel.target_id}`;
+            } else if (rel.target_type === 'resource' && rel.target_id === d.id) {
+              connectedKey = `${rel.source_type}-${rel.source_id}`;
+            }
+            return connectedKey && visibleEntityIds.has(connectedKey);
+          });
+        }
+        if (!passes) return;
+      }
+
       const sc = d.submission_count || 1;
       const r = Math.round((10 + Math.min(Math.floor(sc / 3), 3)) * scale);
       const _sector = resourceCategoryToSector(d.category);
@@ -4007,12 +4041,13 @@ document.getElementById('category-reset').addEventListener('click', () => {
 document.getElementById('stance-reset').addEventListener('click', () => {
   const items = document.querySelectorAll('#stance-legend-items .stance-legend-item');
   const allActive = [...items].every(item => !item.classList.contains('inactive'));
+  const order = getDimensionOrder(beliefLegendDim) || STANCE_ORDER;
   if (allActive) {
     activeStances.clear();
     stanceFilterActive = true;
     items.forEach(item => { item.classList.add('inactive'); item.dataset.active = 'false'; });
   } else {
-    activeStances = new Set(STANCE_ORDER);
+    activeStances = new Set(order);
     stanceFilterActive = false;
     items.forEach(item => { item.classList.remove('inactive'); item.dataset.active = 'true'; });
   }
