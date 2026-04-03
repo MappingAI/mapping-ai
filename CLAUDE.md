@@ -99,7 +99,10 @@ mapping-ai/
 │   ├── seed.js             # Import Airtable CSV data
 │   ├── export.js           # Export all tables to CSV
 │   ├── export-map-data.js  # Generate map-data.json from approved entries
-│   └── backup-db.js        # Backup all tables to S3 as JSON + SQL
+│   ├── backup-db.js        # Backup all tables to S3 as JSON + SQL
+│   ├── enrich-elections.js  # Enrich political candidates + PACs via Exa API (4-step: enrich→review→insert→edges)
+│   ├── enrich-people.js    # General-purpose people enrichment via Exa API
+│   └── seed-time100.js     # Seed TIME100 AI list entities
 ├── data/                   # Airtable CSV source exports
 ├── admin.html              # Internal admin: dashboard, pending queue, entity editing
 ├── template.yaml           # AWS SAM (5 Lambdas + API Gateway + S3 + CloudFront)
@@ -114,7 +117,7 @@ mapping-ai/
 The RDS schema uses a **unified `entity` table** (migrated from the old schema that had separate `people`, `organizations`, `resources` tables). Do not assume the old per-type table names — they no longer exist.
 
 ### `entity`
-id, entity_type (person|organization|resource), name, category, title, primary_org, other_orgs, website, funding_model, parent_org_id (FK → entity), resource_title, resource_category, resource_author, resource_type, resource_url, resource_year, resource_key_argument, location, influence_type, twitter, bluesky, notes, thumbnail_url, belief_regulatory_stance + detail, belief_evidence_source, belief_agi_timeline, belief_ai_risk, belief_threat_models, belief_*_wavg/wvar/n (trigger-maintained weighted aggregates), submission_count, search_vector (tsvector), status (approved|pending|internal)
+id, entity_type (person|organization|resource), name, category, other_categories (TEXT, comma-separated secondary categories), title, primary_org, other_orgs, website, funding_model, parent_org_id (FK → entity), resource_title, resource_category, resource_author, resource_type, resource_url, resource_year, resource_key_argument, location, influence_type, twitter, bluesky, notes, notes_html (TEXT, rich text from TipTap), thumbnail_url, belief_regulatory_stance + detail, belief_evidence_source, belief_agi_timeline, belief_ai_risk, belief_threat_models, belief_*_wavg/wvar/n (trigger-maintained weighted aggregates), submission_count, search_vector (tsvector), status (approved|pending|internal)
 
 ### `submission`
 entity_type, entity_id (nullable — NULL for new entity submissions, set for edit submissions), submitter_email, submitter_relationship (self|connector|external), (all entity fields as flat columns), belief_*_score (SMALLINT — numeric scores for trigger aggregation), notes_html, notes_mentions (JSONB), llm_review (JSONB: quality 1-5, flags, notes from Claude Haiku), status (pending|approved|rejected), resolution_notes, reviewed_at, reviewed_by
@@ -198,35 +201,43 @@ aws cloudfront create-invalidation --distribution-id E34ZXLC7CZX7XT --paths "/*"
 
 ## Form Features (contribute.html)
 
+- **Relationship pills**: Compact pill toggle at top of each form ("I am this person" / "I can connect you" / "Someone I know of") — click to select, click again to deselect
+- **Clear form**: Inline link on pill row — resets all fields, custom selects, tags, TipTap editors
+- **Primary + secondary categories**: Primary via dropdown ("Primary Role" / "Primary Category"), additional via tag dropdown with click-to-add and × remove
 - **Duplicate detection**: Client-side search on Name/Title fields with existing entry card sidebar
-- **Org search**: Primary org, affiliated orgs, parent org — all search existing DB with edit/add links
+- **Org search**: Primary org, affiliated orgs, parent org — all search existing DB (approved + pending with badge) with edit/add links. Focus preload (top 5), 1-char search.
 - **Author search**: Resource form searches existing people for author field
-- **TipTap notes**: Rich text (bold/italic/lists/links) with @mentions
-- **Custom dropdowns**: Styled selects with category/stance colors, search, arrow key navigation
+- **TipTap notes**: Rich text (bold/italic/lists/links) with @mentions. Info tooltip explains what to include (policy positions, relationships, funding, career) with @mention example showing bidirectional linking. @mention dropdown shows type badge (Person/Org/Resource), name with ellipsis for long names, detail text.
+- **Custom dropdowns**: Styled selects with category/stance colors, search, arrow key nav, click-to-deselect (clicking selected option clears it)
+- **Example submissions**: Collapsible `<details>` with interactive @mentions — hover shows entity card fetched from search API
 - **Location search**: Multi-city tag input via Photon geocoding API, Remote option for orgs
 - **Social search**: Bluesky handle search (free public API)
-- **Auto-save**: localStorage draft every 500ms, restored on page load
+- **Auto-save**: localStorage draft every 500ms, restored on page load, per-form clear
 - **Request body**: camelCase field names in `data` object, `_hp` honeypot field
 
 ## Map Features (map.html)
 
 - **D3.js force simulation** with orbital cluster layout, semantic ordering
-- **5 views**: Orgs (sector clusters), People (role clusters), Resources (type clusters), All (org sectors + people mapped to their org's sector), **Plot** (scatter/beeswarm)
+- **Two-level view system**: Top-level "Network" (with sub-tabs: All/Orgs/People/Resources) and "Plot" (scatter/beeswarm). SVG icons on buttons. Sub-view persisted to localStorage.
 - **Plot view**: 2D scatter or 1D beeswarm plotting people + orgs on any two of {regulatory_stance, agi_timeline, ai_risk_level}; uses `stance_score` / `timeline_score` / `risk_score` from map-data.json; entities with null scores excluded with count shown
+- **Cluster-by-dimension dropdown**: Switch clustering/coloring between Category (default), Regulatory Stance, AGI Timeline, or AI Risk Level. Each has its own color palette (category: multi-hue, stance: amber gradient, timeline: blue gradient, risk: red gradient). Filter chips update to match.
 - **Category normalization**: Merges variants ("AI Safety/Alignment" → "AI Safety")
+- **Multi-category support**: Entities can have a primary category + `other_categories`. Filtering by any category shows entities where it's primary OR secondary. Detail panel shows primary as solid badge, secondary as dashed badges.
 - **Resources**: Rounded squares with SVG type icons, clustered near related entities in All view
-- **Edges**: From edge table (affiliations + relationships); clicking any node (directly, from search, or from detail panel links) highlights connected edges and dims others
-- **Regulatory stance**: Color pips on nodes + colored badge in detail panel
+- **Edges**: From edge table (affiliations + relationships); clicking any node (directly, from search, or from detail panel links) highlights connected edges and dims unconnected nodes/edges with smooth opacity transition
+- **Node selection dimming**: In "all" view, clicking a node grays out all unconnected nodes and edges. Background click clears selection. Uses `.dimmed`/`.highlighted` CSS classes with 0.3s transitions.
 - **Submission count**: Subtle gold dashed ring for ≥5 submissions
 - **Source type filter**: Self/connector/external
 - **Cluster labels**: Positioned on outer edge, radiating away from center
 - **Search**: Semantic expansion (SEMANTIC_MAP), 40+ term groups; autocomplete filtered to current view; click-to-zoom on match
-- **Filters**: Category chips (rebuild per view), stance legend; select/deselect all toggle
+- **Filters**: Dimension-aware chips (rebuild per view + dimension), stance legend; select/deselect all toggle
 - **Images**: Google Favicons (orgs), Wikipedia photos (people), async preload
+- **Collapsible controls sidebar**: Chevron button collapses sidebar with slide animation; "> Controls" button re-expands. Auto-collapses when contribute panel opens, auto-re-expands on close.
 - **Collapsible contribute sidebar**: iframe with "Open full page" option, map resizes
-- **View persistence**: localStorage saves last view tab
+- **View persistence**: localStorage saves view mode (network/plot) and sub-view
 - **Dark/light theme**: CSS variables, localStorage persistence
 - **Zoom**: 0.1x–20x range, controls bottom-right; click node to zoom (k=3)
+- **Entity count**: Inside controls sidebar (below "About this map"), not floating overlay
 
 ## Person Categories (roles)
 Executive, Researcher, Policymaker, Investor, Organizer, Journalist, Academic, Cultural figure

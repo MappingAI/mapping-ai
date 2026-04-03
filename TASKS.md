@@ -96,7 +96,12 @@ Open contribution from the public. Needs:
 ## UI/UX
 - [x] Contribute form dropdown has weird lines (fixed CSS border artifact)
 - [x] Contribute form: replace "Clear" with select/deselect toggle for dropdowns (click-to-deselect, grey background on selected, fixed column width expansion)
-- [ ] Contribute form: move "Your Relationship" section to the very top
+- [x] Contribute form: move "Your Relationship" to top as compact pill toggle
+- [x] Collapsible controls sidebar (chevron collapse/expand, auto-collapse on contribute open)
+- [x] Notes info tooltip with @mention guidance + interactive example submissions
+- [x] Footer: consistent spacing + "Mapping AI Working Group" links to /about on all pages
+- [x] @mention dropdown: wider (420-560px), type labels shortened (Org/Person/Resource), truncation for long names
+- [ ] **1D plot spacing**: bottom gap between beeswarm and axis still too large; needs tighter vertical centering without flattening the distribution shape
 - [ ] **Inline org creation side panel**: slide-in panel for adding parent/affiliated orgs without leaving the form (requirements at docs/brainstorms/2026-04-03-inline-org-creation-requirements.md)
 - [ ] Theory of Change: revise "existing landscape" sentence (too dramatic/cosmetic)
 
@@ -176,6 +181,12 @@ Open contribution from the public. Needs:
 | Data cleanup: notable US figures added | Sophia | 4/1 | 16 people added (Pichai, Nadella, Tristan Harris, etc.) and enriched with stances |
 | enrich-deep.js DB compatibility fix | Sophia | 4/1 | Fixed column names (belief_* prefix), removed non-existent threat_models_detail |
 | Contribute form: "How it works" popup | Sophia | 4/1 | First-visit overlay explaining review, enrichment, belief scores, privacy |
+| Collapsible controls sidebar | Anushree | 4/2 | Chevron collapse/expand, auto-collapse on contribute open, auto-expand on close |
+| Form: pill toggle relationship + clear form | Anushree | 4/2 | Compact pills at top of each form, inline "Clear form" link |
+| Notes info tooltip + interactive examples | Anushree | 4/2 | Bullet guidance + @mention demo in tooltip; example submissions with hover cards |
+| Footer consistency across all pages | Anushree | 4/2 | Gap + dot separator + /about link on index, about, contribute |
+| @mention dropdown polish | Anushree | 4/2 | Wider (420-560px), shortened type labels (Org/Person/Resource), truncation |
+| Entity count moved to sidebar | Anushree | 4/2 | No longer overlaps controls; inside sidebar below About button |
 
 ---
 
