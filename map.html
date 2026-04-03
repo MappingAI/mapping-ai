@@ -602,14 +602,16 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   Controls
 </button>
 <div class="controls">
-  <div class="control-group" style="position:relative; z-index:100; display:flex; align-items:center; gap:0.5rem;">
-    <button id="sidebar-collapse" style="background:none;border:none;cursor:pointer;color:var(--text-3);padding:2px;flex-shrink:0;" title="Collapse sidebar">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="9,2 4,7 9,12"/></svg>
-    </button>
+  <div class="control-group" style="position:relative; z-index:100;">
+    <div style="display:flex; align-items:center; gap:0.4rem; flex-wrap:nowrap;">
+      <button id="sidebar-collapse" style="background:none;border:none;cursor:pointer;color:var(--text-3);padding:2px;flex-shrink:0;line-height:1;" title="Collapse sidebar">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="9,2 4,7 9,12"/></svg>
+      </button>
     <div class="search-box">
       <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       <input class="search-input" id="search-input" type="text" placeholder="Search entities..." autocomplete="off">
       <div class="search-results" id="search-results"></div>
+    </div>
     </div>
   </div>
   <div class="control-group">
@@ -2553,8 +2555,8 @@ function render2D(svg, g, width, height) {
     // Higher score = top of chart
     yScale = score => margin.top + (1 - (score - 1) / (yTicks.length - 1)) * plotH;
   } else {
-    // 1D: center beeswarm lower — 60% down the plot area (closer to axis)
-    const plotCenter = margin.top + plotH * 0.6;
+    // 1D: center beeswarm in the plot area
+    const plotCenter = margin.top + plotH * 0.5;
     yScale = () => plotCenter;
   }
 
@@ -2700,7 +2702,7 @@ function render2D(svg, g, width, height) {
   if (simulation) simulation.stop();
   simulation = d3.forceSimulation(nodes)
     .force('x', d3.forceX(d => d.targetX).strength(0.8))
-    .force('y', d3.forceY(d => d.targetY).strength(yAxisDef ? 0.8 : 0.15))
+    .force('y', d3.forceY(d => d.targetY).strength(yAxisDef ? 0.8 : 0.05))
     .force('collision', d3.forceCollide(d => d.radius + 2).strength(0.9))
     .alpha(0.6)
     .alphaDecay(0.04)
