@@ -1259,8 +1259,11 @@ function getDimensionOrder(dim) {
   return null; // category uses CLUSTER_ORDER
 }
 // Get color for a node based on current cluster dimension
+// In plot mode, always use category for coloring (axes show belief dimensions)
 function getClusterColor(d) {
-  return getDimensionColor(clusterDimension, d.clusterKey || d.category);
+  const dim = (currentView === '2d') ? 'category' : clusterDimension;
+  const key = (currentView === '2d') ? d.category : (d.clusterKey || d.category);
+  return getDimensionColor(dim, key);
 }
 function getDimensionNodeKey(dim) {
   if (dim === 'category') return null; // special handling
@@ -1271,6 +1274,9 @@ function getDimensionNodeKey(dim) {
 }
 let activeStances = new Set(STANCE_ORDER);
 let stanceFilterActive = false; // true when user has toggled any stance off
+
+// Category filter state
+let categoryFilterActive = false; // true when user has toggled any category off
 
 // Secondary category filter state (shown when clustering by belief dimensions)
 let activeSecondaryCategories = new Set();
@@ -1465,6 +1471,7 @@ function buildFilters() {
         chip.style.background = color + '40';
         chip.style.color = color;
       }
+      categoryFilterActive = activeCategories.size < allCats.length;
       updateCategoryResetBtn();
       // In search mode, filter the search results instead of re-rendering
       if (viewMode === 'search' && searchModeMatches && searchModeMatches.length > 0) {
@@ -1717,6 +1724,7 @@ if (viewMode === 'plot') {
   document.getElementById('axis-controls').style.display = '';
   document.getElementById('stance-legend').style.display = 'none';
   document.getElementById('network-sub-tabs').style.display = 'none';
+  document.getElementById('cluster-by-select').style.display = 'none';
 }
 if (viewMode === 'search') {
   document.getElementById('search-mode-controls').style.display = '';
@@ -2643,7 +2651,9 @@ function render2D(svg, g, width, height) {
     if (!d.category) return false;
     if (!passesStanceFilter(d)) return false;
     if (!passesSourceTypeFilter(d)) return false;
-    if (activeCategories.size === 0) return true;
+    // If filter is active (user interacted), respect selections; otherwise show all
+    if (!categoryFilterActive) return true;
+    if (activeCategories.size === 0) return false; // all deselected = show none
     return activeCategories.has(d.category) || activeCategories.has(normalizeCategory(d.category));
   });
 
@@ -2665,8 +2675,6 @@ function render2D(svg, g, width, height) {
 
   document.getElementById('entity-count').textContent = `${nodes.length} entities`;
 
-  if (nodes.length === 0) return;
-
   // Scale functions: score (1-based integer) → pixel position
   const xTicks = xAxisDef.ticks;
   const xScale = score => CONTROLS_WIDTH + margin.left + (score - 1) / (xTicks.length - 1) * plotW;
@@ -2677,19 +2685,21 @@ function render2D(svg, g, width, height) {
     // Higher score = top of chart
     yScale = score => margin.top + (1 - (score - 1) / (yTicks.length - 1)) * plotH;
   } else {
-    // 1D: center beeswarm in the plot area
-    const plotCenter = margin.top + plotH * 0.5;
-    yScale = () => plotCenter;
+    // 1D: position beeswarm center above axis
+    const beeswarmY = height - margin.bottom - 60;
+    yScale = () => beeswarmY;
   }
+
+  // Draw axes (always, even with no nodes)
+  drawAxes2D(g, xAxisDef, yAxisDef, xScale, yScale, CONTROLS_WIDTH, margin, plotW, plotH, width, height);
+
+  if (nodes.length === 0) return;
 
   // Set target positions
   nodes.forEach(d => {
     d.targetX = xScale(d[xAxisDef.scoreKey]);
     d.targetY = yAxisDef ? yScale(d[yAxisDef.scoreKey]) : yScale();
   });
-
-  // Draw axes
-  drawAxes2D(g, xAxisDef, yAxisDef, xScale, yScale, CONTROLS_WIDTH, margin, plotW, plotH, width, height);
 
   // Node groups
   const nodeGroup = g.selectAll('.node')
@@ -2824,7 +2834,8 @@ function render2D(svg, g, width, height) {
   if (simulation) simulation.stop();
   simulation = d3.forceSimulation(nodes)
     .force('x', d3.forceX(d => d.targetX).strength(0.8))
-    .force('y', d3.forceY(d => d.targetY).strength(yAxisDef ? 0.8 : 0.05))
+    // In 1D mode, use weak y strength for more vertical spread
+    .force('y', d3.forceY(d => d.targetY).strength(yAxisDef ? 0.8 : 0.06))
     .force('collision', d3.forceCollide(d => d.radius + 2).strength(0.9))
     .alpha(0.6)
     .alphaDecay(0.04)
@@ -3963,6 +3974,7 @@ document.getElementById('category-reset').addEventListener('click', () => {
       activeCategories.add(chip.dataset.category);
     }
   });
+  categoryFilterActive = allActive; // true when user just deselected all
   updateCategoryResetBtn();
   // In search mode, filter the search results instead of re-rendering
   if (viewMode === 'search' && searchModeMatches && searchModeMatches.length > 0) {
