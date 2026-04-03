@@ -111,6 +111,8 @@ details[open] summary { border-bottom: 1px solid var(--border); }
 .example-content strong { color: var(--text-primary); font-weight: 500; }
 .form { display: none; }
 .form.active { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+/* Hide forms until JS determines which tab to show (prevents width flash on restore) */
+body.forms-loading .form { visibility: hidden; }
 .field { display: flex; flex-direction: column; }
 .field.full { grid-column: span 2; }
 .field label {
@@ -941,7 +943,7 @@ details[open] summary { border-bottom: 1px solid var(--border); }
 .how-it-works-btn:hover { border-color: var(--text-secondary); color: var(--text-primary); }
 </style>
 </head>
-<body>
+<body class="forms-loading">
 
 <nav class="site-nav">
   <a class="nav-brand" href="/">Mapping AI</a>
@@ -2749,6 +2751,7 @@ function restoreFormState() {
 
   // Tab already restored immediately on page load (above setTimeout call)
 
+  let restoredFields = 0;
   forms.forEach(form => {
     const formType = form.dataset.type;
     const data = state[formType];
@@ -2761,10 +2764,10 @@ function restoreFormState() {
       if (!el || !value) return;
       if (el.type === 'radio') {
         const radio = form.querySelector(`input[name="${name}"][value="${value}"]`);
-        if (radio) radio.checked = true;
+        if (radio) { radio.checked = true; restoredFields++; }
       } else {
         el.value = value;
-        // Trigger change for custom selects
+        restoredFields++;
         if (el.tagName === 'SELECT') el.dispatchEvent(new Event('change', { bubbles: true }));
       }
     });
@@ -2772,10 +2775,11 @@ function restoreFormState() {
     // Restore checkboxes
     if (data._checks) {
       Object.entries(data._checks).forEach(([name, values]) => {
+        if (values.length === 0) return;
         form.querySelectorAll(`input[name="${name}"]`).forEach(cb => {
           cb.checked = values.includes(cb.value);
         });
-        // Update counter
+        restoredFields += values.length;
         const counter = form.querySelector('.checkbox-counter');
         if (counter && name === 'threatModels') {
           counter.textContent = `${values.length} of 3 selected`;
@@ -2788,17 +2792,20 @@ function restoreFormState() {
       const tiptap = form.querySelector('.tiptap-notes');
       if (tiptap?._editor) {
         tiptap._editor.commands.setContent(data._notesHtml);
+        restoredFields++;
       }
     }
   });
 
-  // Show subtle restore indicator
-  const indicator = document.createElement('div');
-  indicator.style.cssText = 'position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:10px;color:var(--text-tertiary);background:var(--bg-secondary);padding:0.3rem 0.8rem;border-radius:20px;border:1px solid var(--border);z-index:100;transition:opacity 0.3s;';
-  indicator.textContent = 'Draft restored';
-  document.body.appendChild(indicator);
-  setTimeout(() => { indicator.style.opacity = '0'; }, 2000);
-  setTimeout(() => indicator.remove(), 2500);
+  // Only show indicator if actual form data was restored
+  if (restoredFields > 0) {
+    const indicator = document.createElement('div');
+    indicator.style.cssText = 'position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:10px;color:var(--text-tertiary);background:var(--bg-secondary);padding:0.3rem 0.8rem;border-radius:20px;border:1px solid var(--border);z-index:100;transition:opacity 0.3s;';
+    indicator.textContent = 'Draft restored';
+    document.body.appendChild(indicator);
+    setTimeout(() => { indicator.style.opacity = '0'; }, 2000);
+    setTimeout(() => indicator.remove(), 2500);
+  }
 }
 
 function clearFormDraft(formType) {
@@ -2818,12 +2825,15 @@ function clearFormDraft(formType) {
   } catch(e) {}
 }
 
-// Auto-save on any input change
+// Auto-save on any input change (suppressed briefly after clear form)
+let _saveSuppressed = false;
 document.addEventListener('input', () => {
+  if (_saveSuppressed) return;
   clearTimeout(saveTimer);
   saveTimer = setTimeout(saveFormState, SAVE_DEBOUNCE);
 });
 document.addEventListener('change', () => {
+  if (_saveSuppressed) return;
   clearTimeout(saveTimer);
   saveTimer = setTimeout(saveFormState, SAVE_DEBOUNCE);
 });
@@ -2837,6 +2847,8 @@ try {
     if (toggle) toggle.click();
   }
 } catch(e) {}
+// Reveal forms after tab is set (prevents width flash)
+document.body.classList.remove('forms-loading');
 setTimeout(restoreFormState, 300);
 
 // ── Email validation ──
@@ -3033,6 +3045,8 @@ document.querySelectorAll('.clear-form-link').forEach(link => {
   link.addEventListener('click', () => {
     const form = document.getElementById(link.dataset.form);
     if (!form) return;
+    // Suppress auto-save during clear (form.reset triggers change events)
+    _saveSuppressed = true;
     form.reset();
     // Clear custom selects
     form.querySelectorAll('.custom-select .select-trigger').forEach(t => {
@@ -3052,6 +3066,8 @@ document.querySelectorAll('.clear-form-link').forEach(link => {
     // Clear draft for this form type only (preserve other forms' drafts)
     const formType = form.dataset?.type || link.dataset.form?.replace('-form', '');
     clearFormDraft(formType);
+    // Re-enable auto-save after clear completes
+    setTimeout(() => { _saveSuppressed = false; }, 100);
   });
 });
 
