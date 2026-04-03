@@ -88,7 +88,20 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   position: fixed; top: 60px; left: 1rem;
   display: flex; flex-direction: column; gap: 0.4rem;
   z-index: 50; max-height: calc(100vh - 80px); overflow-y: auto;
+  transition: transform 0.25s ease, opacity 0.25s ease;
 }
+.controls.collapsed { transform: translateX(calc(-100% - 1rem)); opacity: 0; pointer-events: none; }
+#sidebar-toggle {
+  position: fixed; top: 60px; left: 1rem; z-index: 51;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.04em; text-transform: uppercase;
+  background: var(--bg-panel-alpha); border: 1px solid var(--line); border-radius: 6px;
+  padding: 0.4rem 0.6rem; cursor: pointer; color: var(--text-2);
+  backdrop-filter: blur(8px); transition: opacity 0.25s ease;
+  opacity: 0; pointer-events: none;
+  display: flex; align-items: center; gap: 4px;
+}
+#sidebar-toggle.visible { opacity: 1; pointer-events: auto; }
+#sidebar-toggle:hover { border-color: var(--text-2); color: var(--text-1); }
 .control-group {
   background: var(--bg-panel-alpha); border-radius: 6px;
   padding: 0.6rem 0.75rem;
@@ -211,11 +224,8 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
 .zoom-btn:hover { border-color: var(--text-3); color: var(--text-1); }
 
 .entity-count {
-  position: fixed; bottom: 1.5rem; left: 1rem;
-  font-family: var(--mono); font-size: 10px; color: var(--text-3);
-  letter-spacing: 0.04em;
-  background: var(--bg-panel-alpha); padding: 0.3rem 0.6rem;
-  border-radius: 3px; border: 1px solid var(--line);
+  font-family: var(--mono); font-size: 9px; color: var(--text-3);
+  letter-spacing: 0.04em; padding: 0.2rem 0;
   z-index: 50; backdrop-filter: blur(8px);
 }
 
@@ -486,7 +496,7 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   .zoom-controls { bottom: 4rem; right: 0.75rem; }
   .zoom-btn { width: 28px; height: 28px; font-size: 12px; }
   /* Entity count repositioned above bottom bar */
-  .entity-count { bottom: 4rem; left: 0.75rem; font-size: 9px; }
+  .entity-count { font-size: 8px; }
   /* Contribute button above bottom bar */
   #contribute-btn { bottom: 4rem; right: 3.5rem; }
 }
@@ -586,8 +596,15 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   </div>
 </div>
 
+<button id="sidebar-toggle" title="Show controls">
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="5,2 10,7 5,12"/></svg>
+  Controls
+</button>
 <div class="controls">
-  <div class="control-group" style="position:relative; z-index:100;">
+  <div class="control-group" style="position:relative; z-index:100; display:flex; align-items:center; gap:0.5rem;">
+    <button id="sidebar-collapse" style="background:none;border:none;cursor:pointer;color:var(--text-3);padding:2px;flex-shrink:0;" title="Collapse sidebar">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="9,2 4,7 9,12"/></svg>
+    </button>
     <div class="search-box">
       <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       <input class="search-input" id="search-input" type="text" placeholder="Search entities..." autocomplete="off">
@@ -698,6 +715,7 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
       <span style="font-size:12px;">&#9432;</span> About this map
     </button>
   </div>
+  <div id="entity-count" style="font-family:var(--mono);font-size:9px;color:var(--text-3);letter-spacing:0.04em;padding:0.2rem 0.4rem;"></div>
 </div>
 
 <div class="detail-panel" id="detail-panel">
@@ -718,7 +736,6 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   <button class="zoom-btn" id="zoom-reset" style="font-size:11px;">&#9678;</button>
 </div>
 
-<div class="entity-count" id="entity-count"></div>
 
 <!-- Contribute sidebar -->
 <style>
@@ -778,17 +795,44 @@ const contribPanel = document.getElementById('contribute-panel');
 const contribClose = document.getElementById('contribute-close');
 const mapContainer = document.querySelector('.map-container');
 
+// Sidebar collapse/expand
+const controls = document.querySelector('.controls');
+const sidebarToggle = document.getElementById('sidebar-toggle');
+const sidebarCollapse = document.getElementById('sidebar-collapse');
+let sidebarWasCollapsedByContrib = false;
+
+function collapseSidebar() {
+  controls.classList.add('collapsed');
+  sidebarToggle.classList.add('visible');
+}
+function expandSidebar() {
+  controls.classList.remove('collapsed');
+  sidebarToggle.classList.remove('visible');
+}
+
+sidebarCollapse.addEventListener('click', () => collapseSidebar());
+sidebarToggle.addEventListener('click', () => expandSidebar());
+
 contribBtn.addEventListener('click', () => {
   contribPanel.classList.add('open');
   contribBtn.classList.add('hidden');
   mapContainer.classList.add('shifted');
-  // Re-render map after transition to recalculate center
+  // Auto-collapse sidebar to give more map space
+  if (!controls.classList.contains('collapsed')) {
+    collapseSidebar();
+    sidebarWasCollapsedByContrib = true;
+  }
   setTimeout(() => { if (typeof render === 'function') render(); }, 350);
 });
 contribClose.addEventListener('click', () => {
   contribPanel.classList.remove('open');
   contribBtn.classList.remove('hidden');
   mapContainer.classList.remove('shifted');
+  // Auto-expand sidebar if we collapsed it
+  if (sidebarWasCollapsedByContrib) {
+    expandSidebar();
+    sidebarWasCollapsedByContrib = false;
+  }
   setTimeout(() => { if (typeof render === 'function') render(); }, 350);
 });
 
@@ -2453,9 +2497,10 @@ function render2D(svg, g, width, height) {
   const isTablet = width >= 600 && width < 1024;
   // On mobile, controls are in bottom bar, not left panel
   const CONTROLS_WIDTH = isMobile ? 0 : (isTablet ? 200 : 280);
+  const is1D = axisMode !== '2d';
   const margin = {
     top:    isMobile ? 40 : 60,
-    right:  isMobile ? 15 : (isTablet ? 40 : 280),
+    right:  isMobile ? 15 : (isTablet ? 40 : (is1D ? 60 : 280)),
     bottom: isMobile ? 60 : 70,
     left:   isMobile ? 10 : (isTablet ? 80 : 130),
   };
@@ -2507,8 +2552,9 @@ function render2D(svg, g, width, height) {
     // Higher score = top of chart
     yScale = score => margin.top + (1 - (score - 1) / (yTicks.length - 1)) * plotH;
   } else {
-    // 1D: all nodes target vertical center
-    yScale = () => height / 2;
+    // 1D: center beeswarm within plot area (between top margin and axis)
+    const plotCenter = margin.top + plotH * 0.5;
+    yScale = () => plotCenter;
   }
 
   // Set target positions
