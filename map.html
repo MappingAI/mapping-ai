@@ -251,6 +251,7 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
 /* Search */
 .search-box {
   position: relative;
+  flex: 1; min-width: 0;
 }
 .search-input {
   width: 100%; padding: 0.35rem 0.5rem 0.35rem 1.6rem;
@@ -2499,9 +2500,9 @@ function render2D(svg, g, width, height) {
   const CONTROLS_WIDTH = isMobile ? 0 : (isTablet ? 200 : 280);
   const is1D = axisMode !== '2d';
   const margin = {
-    top:    isMobile ? 40 : 60,
+    top:    isMobile ? 40 : (is1D ? 30 : 60),
     right:  isMobile ? 15 : (isTablet ? 40 : (is1D ? 60 : 280)),
-    bottom: isMobile ? 60 : 70,
+    bottom: isMobile ? 60 : (is1D ? 50 : 70),
     left:   isMobile ? 10 : (isTablet ? 80 : 130),
   };
   const plotW = Math.max(100, width - CONTROLS_WIDTH - margin.left - margin.right);
@@ -2552,8 +2553,8 @@ function render2D(svg, g, width, height) {
     // Higher score = top of chart
     yScale = score => margin.top + (1 - (score - 1) / (yTicks.length - 1)) * plotH;
   } else {
-    // 1D: center beeswarm within plot area (between top margin and axis)
-    const plotCenter = margin.top + plotH * 0.5;
+    // 1D: center beeswarm lower — 60% down the plot area (closer to axis)
+    const plotCenter = margin.top + plotH * 0.6;
     yScale = () => plotCenter;
   }
 
@@ -2699,7 +2700,7 @@ function render2D(svg, g, width, height) {
   if (simulation) simulation.stop();
   simulation = d3.forceSimulation(nodes)
     .force('x', d3.forceX(d => d.targetX).strength(0.8))
-    .force('y', d3.forceY(d => d.targetY).strength(yAxisDef ? 0.8 : 0.02))
+    .force('y', d3.forceY(d => d.targetY).strength(yAxisDef ? 0.8 : 0.15))
     .force('collision', d3.forceCollide(d => d.radius + 2).strength(0.9))
     .alpha(0.6)
     .alphaDecay(0.04)
