@@ -363,6 +363,9 @@ function createToolbar(editor, container) {
 // Initialize TipTap on all .tiptap-notes containers
 function initTipTapEditors() {
   document.querySelectorAll('.tiptap-notes').forEach(container => {
+    // Skip already-initialized containers
+    if (container._editor) return;
+
     const hiddenHtml = container.parentElement.querySelector('input[name="notesHtml"]');
     const hiddenMentions = container.parentElement.querySelector('input[name="notesMentions"]');
     const plainTextarea = container.parentElement.querySelector('textarea[name="notes"]');

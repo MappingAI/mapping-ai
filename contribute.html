@@ -981,13 +981,45 @@ body.forms-loading .form { visibility: hidden; }
   text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 0.3rem;
 }
 .org-panel-body input[type="text"],
-.org-panel-body select {
+.org-panel-body select,
+.org-panel-body textarea {
   font-family: var(--serif); font-size: 15px; padding: 0.5rem 0.65rem;
   border: 1px solid var(--border); border-radius: 4px; background: #fff;
-  color: var(--text-primary); width: 100%;
+  color: var(--text-primary); width: 100%; box-sizing: border-box;
 }
 .org-panel-body input:focus,
 .org-panel-body select:focus { outline: none; border-color: var(--text-secondary); }
+.org-panel-body .tag-input-wrapper {
+  border: 1px solid var(--border); border-radius: 4px; padding: 0.3rem 0.5rem;
+  display: flex; flex-wrap: wrap; gap: 0.3rem; align-items: center; cursor: text;
+  background: #fff; position: relative;
+}
+.org-panel-body .tag-input-wrapper:focus-within { border-color: var(--text-secondary); }
+.org-panel-body .tag-input {
+  border: none !important; padding: 0.2rem 0 !important; flex: 1; min-width: 80px;
+  font-size: 15px !important;
+}
+.org-panel-body .tag-input:focus { outline: none; }
+.org-panel-body .org-search-results {
+  position: absolute; top: 100%; left: 0; right: 0; z-index: 10;
+  background: #fff; border: 1px solid var(--border); border-radius: 4px;
+  max-height: 180px; overflow-y: auto; box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+.org-panel-body .org-search-results:empty { display: none; }
+.org-panel-body .org-result {
+  padding: 0.4rem 0.65rem; cursor: pointer; font-family: var(--serif); font-size: 14px;
+}
+.org-panel-body .org-result:hover,
+.org-panel-body .org-result.active { background: var(--bg-secondary, #f5f5f5); }
+.org-panel-body .bsky-results { position: absolute; top: 100%; left: 0; right: 0; z-index: 10; }
+.org-panel-body .tiptap-notes { font-size: 14px; }
+.org-panel-body .helper {
+  font-family: var(--mono); font-size: 9px; color: var(--text-tertiary);
+  letter-spacing: 0.03em; margin-top: 0.25rem;
+}
+#org-side-panel .info-tip .tip-content {
+  left: 0; transform: none; width: 260px;
+}
 .org-panel-expand-btn {
   font-family: var(--mono); font-size: 10px; text-transform: uppercase;
   letter-spacing: 0.06em; color: var(--accent, #2563eb); cursor: pointer;
@@ -3230,9 +3262,14 @@ document.querySelector('.nav-hamburger').addEventListener('click', () => {
           <label>Website</label>
           <input type="text" id="panel-org-website" placeholder="https://...">
         </div>
-        <div class="field">
-          <label>Location</label>
-          <input type="text" id="panel-org-location" placeholder="City, State/Country">
+        <div class="field" style="position:relative;">
+          <label>HQ / Primary location</label>
+          <div class="tag-input-wrapper location-tags" id="panel-location-tags">
+            <input type="text" class="tag-input location-search" id="panel-org-location" placeholder="Search cities..." autocomplete="off">
+            <div class="org-search-results location-results"></div>
+          </div>
+          <input type="hidden" id="panel-org-location-hidden">
+          <span class="helper">Search for cities or type a location directly</span>
         </div>
 
         <button type="button" class="org-panel-expand-btn" id="panel-expand-btn">+ Add more details</button>
@@ -3242,42 +3279,59 @@ document.querySelector('.nav-hamburger').addEventListener('click', () => {
             <label>Funding Model</label>
             <select id="panel-org-funding">
               <option value="">Select...</option>
-              <option value="Venture-backed/for-profit">Venture-backed/for-profit</option>
-              <option value="Revenue-generating (SaaS, enterprise)">Revenue-generating (SaaS, enterprise)</option>
-              <option value="Government-funded (grants, contracts)">Government-funded (grants, contracts)</option>
-              <option value="Philanthropic/foundation-funded">Philanthropic/foundation-funded</option>
-              <option value="Membership/dues-based">Membership/dues-based</option>
-              <option value="Mixed (commercial + philanthropic)">Mixed (commercial + philanthropic)</option>
-              <option value="Public benefit corp/capped-profit">Public benefit corp/capped-profit</option>
-              <option value="Self-funded/endowed">Self-funded/endowed</option>
-              <option value="Other (describe in notes)">Other (describe in notes)</option>
+              <option value="Venture-backed">Venture-backed/for-profit</option>
+              <option value="Revenue-generating">Revenue-generating (SaaS, enterprise)</option>
+              <option value="Government-funded">Government-funded (grants, contracts)</option>
+              <option value="Philanthropic">Philanthropic/foundation-funded</option>
+              <option value="Membership">Membership/dues-based</option>
+              <option value="Mixed">Mixed (commercial + philanthropic)</option>
+              <option value="Public benefit">Public benefit corp/capped-profit</option>
+              <option value="Self-funded">Self-funded/endowed</option>
+              <option value="Other">Other (describe in notes)</option>
             </select>
           </div>
           <div class="field">
             <label>Regulatory Stance</label>
             <select id="panel-org-stance">
               <option value="">Select...</option>
-              <option value="Accelerate">Accelerate</option>
-              <option value="Light-touch">Light-touch</option>
-              <option value="Targeted">Targeted</option>
-              <option value="Moderate">Moderate</option>
-              <option value="Restrictive">Restrictive</option>
-              <option value="Precautionary">Precautionary</option>
-              <option value="Nationalize">Nationalize</option>
+              <option value="Accelerate">Accelerate (minimal/no regulation)</option>
+              <option value="Light-touch">Light-touch (voluntary, self-governance)</option>
+              <option value="Targeted">Targeted (sector-specific rules)</option>
+              <option value="Moderate">Moderate (mandatory safety evals + transparency)</option>
+              <option value="Restrictive">Restrictive (external oversight of compute)</option>
+              <option value="Precautionary">Precautionary (pause/moratorium)</option>
+              <option value="Nationalize">Nationalize/public control</option>
               <option value="Mixed/unclear">Mixed/unclear</option>
+              <option value="Other">Other (describe in notes)</option>
             </select>
           </div>
           <div class="field">
             <label>Twitter/X</label>
-            <input type="text" id="panel-org-twitter" placeholder="@handle">
+            <input type="text" id="panel-org-twitter" placeholder="@handle" autocomplete="off">
+            <span class="helper">Type the full handle, e.g. @openai</span>
           </div>
-          <div class="field">
+          <div class="field" style="position:relative;">
             <label>Bluesky</label>
-            <input type="text" id="panel-org-bluesky" placeholder="@handle.bsky.social">
+            <input type="text" id="panel-org-bluesky" class="bsky-search" placeholder="@handle.bsky.social" autocomplete="off">
+            <div class="org-search-results bsky-results"></div>
+            <span class="helper">Live search via Bluesky — or type the full handle directly</span>
           </div>
-          <div class="field">
-            <label>Notes</label>
-            <textarea id="panel-org-notes" rows="3" style="font-family:var(--serif);font-size:14px;padding:0.5rem;border:1px solid var(--border);border-radius:4px;resize:vertical;"></textarea>
+          <div class="field full">
+            <label>Notes <span class="info-tip">i<span class="tip-content" style="width:280px;">
+              <strong>What to include:</strong><br>
+              • Key policy positions &amp; public statements<br>
+              • Relationships to other stakeholders<br>
+              • Funding sources or organizational ties<br>
+              • Recent relevant activity or controversies<br><br>
+              <strong>Use @mentions</strong> to create bidirectional links:<br>
+              <em>"Funded by <span style="background:#e8f0fe;border-radius:3px;padding:1px 3px;color:var(--accent);font-weight:500;">@Open Philanthropy</span>. Works closely with <span style="background:#e8f0fe;border-radius:3px;padding:1px 3px;color:var(--accent);font-weight:500;">@MIRI</span>."</em><br><br>
+              These links help us map connections.
+            </span></span></label>
+            <div class="tiptap-notes" id="panel-org-tiptap"></div>
+            <textarea id="panel-org-notes" name="notes" rows="3" class="hidden"></textarea>
+            <input type="hidden" id="panel-org-notes-html" name="notesHtml">
+            <input type="hidden" id="panel-org-notes-mentions" name="notesMentions">
+            <span class="helper">Type @ to link people, orgs, or resources already in the database</span>
           </div>
         </div>
 
@@ -3299,6 +3353,122 @@ document.querySelector('.nav-hamburger').addEventListener('click', () => {
   let _triggerType = null;  // 'primary', 'parent', or 'affiliated'
   let _triggerAddTag = null; // function to call for affiliated orgs
 
+  // ── Panel location search (Photon/OpenStreetMap) ──
+  const panelLocWrapper = document.getElementById('panel-location-tags');
+  const panelLocInput = document.getElementById('panel-org-location');
+  const panelLocResults = panelLocWrapper.querySelector('.location-results');
+  const panelLocHidden = document.getElementById('panel-org-location-hidden');
+  let panelSelectedLocations = [];
+
+  function panelUpdateLocHidden() {
+    panelLocHidden.value = panelSelectedLocations.join(', ');
+  }
+  function panelAddLocationTag(name) {
+    if (panelSelectedLocations.includes(name)) return;
+    panelSelectedLocations.push(name);
+    const tag = document.createElement('span');
+    tag.className = 'tag';
+    tag.innerHTML = `${name} <span class="tag-remove">&times;</span>`;
+    tag.querySelector('.tag-remove').addEventListener('click', () => {
+      const idx = panelSelectedLocations.indexOf(name);
+      if (idx >= 0) panelSelectedLocations.splice(idx, 1);
+      tag.remove();
+      panelUpdateLocHidden();
+    });
+    panelLocWrapper.insertBefore(tag, panelLocInput);
+    panelUpdateLocHidden();
+  }
+  function panelClearLocationTags() {
+    panelSelectedLocations = [];
+    panelLocWrapper.querySelectorAll('.tag').forEach(t => t.remove());
+    panelLocHidden.value = '';
+  }
+
+  const panelLocSearch = debounce(async () => {
+    const q = panelLocInput.value.trim();
+    if (q.length < 2) { panelLocResults.innerHTML = ''; return; }
+    try {
+      const res = await fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(q)}&limit=6&layer=city&layer=state`);
+      if (!res.ok) { panelLocResults.innerHTML = ''; return; }
+      const data = await res.json();
+      const cities = (data.features || [])
+        .map(f => { const p = f.properties; return [p.city || p.name, p.state, p.country].filter(Boolean).join(', '); })
+        .filter((v, i, a) => a.indexOf(v) === i);
+      if (cities.length === 0) { panelLocResults.innerHTML = ''; return; }
+      panelLocResults.innerHTML = cities.map(c => `<div class="org-result" data-name="${c.replace(/"/g, '&quot;')}">${c}</div>`).join('');
+      panelLocResults.querySelectorAll('.org-result').forEach(item => {
+        item.addEventListener('click', () => { panelAddLocationTag(item.dataset.name); panelLocInput.value = ''; panelLocResults.innerHTML = ''; });
+      });
+    } catch { panelLocResults.innerHTML = ''; }
+  }, 150);
+
+  panelLocInput.addEventListener('input', () => {
+    if (panelLocInput.value.trim().length < 2) { panelLocResults.innerHTML = ''; return; }
+    panelLocSearch();
+  });
+  panelLocInput.addEventListener('keydown', (e) => {
+    const items = panelLocResults.querySelectorAll('.org-result');
+    const active = panelLocResults.querySelector('.org-result.active');
+    if (e.key === 'ArrowDown') { e.preventDefault(); const next = active ? active.nextElementSibling : items[0]; if (next) { active?.classList.remove('active'); next.classList.add('active'); } }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); const prev = active?.previousElementSibling; if (prev) { active.classList.remove('active'); prev.classList.add('active'); } }
+    else if (e.key === 'Enter') { e.preventDefault(); const sel = active || items[0]; if (sel) sel.click(); else if (panelLocInput.value.trim()) { panelAddLocationTag(panelLocInput.value.trim()); panelLocInput.value = ''; } }
+    else if (e.key === 'Escape') panelLocResults.innerHTML = '';
+    else if (e.key === 'Backspace' && !panelLocInput.value && panelSelectedLocations.length > 0) { panelSelectedLocations.pop(); panelLocWrapper.querySelector('.tag:last-of-type')?.remove(); panelUpdateLocHidden(); }
+  });
+  panelLocInput.addEventListener('blur', () => setTimeout(() => { panelLocResults.innerHTML = ''; }, 200));
+  panelLocWrapper.addEventListener('click', () => panelLocInput.focus());
+
+  // ── Panel Bluesky search ──
+  const panelBskyInput = document.getElementById('panel-org-bluesky');
+  const panelBskyResults = panelBskyInput.parentElement.querySelector('.bsky-results');
+
+  const panelBskySearch = debounce(async () => {
+    const q = panelBskyInput.value.trim().replace('@', '');
+    if (q.length < 2) { panelBskyResults.innerHTML = ''; return; }
+    try {
+      const res = await fetch(`https://public.api.bsky.app/xrpc/app.bsky.actor.searchActorsTypeahead?q=${encodeURIComponent(q)}&limit=5`);
+      if (!res.ok) { panelBskyResults.innerHTML = ''; return; }
+      const data = await res.json();
+      const actors = data.actors || [];
+      if (actors.length === 0) { panelBskyResults.innerHTML = ''; return; }
+      panelBskyResults.innerHTML = actors.map(a => `
+        <div class="org-result" data-handle="${a.handle}">
+          <span style="font-weight:500;">${a.displayName || a.handle}</span>
+          <span class="org-cat">@${a.handle}</span>
+        </div>
+      `).join('');
+      panelBskyResults.querySelectorAll('.org-result').forEach(item => {
+        item.addEventListener('click', () => { panelBskyInput.value = '@' + item.dataset.handle; panelBskyResults.innerHTML = ''; });
+      });
+    } catch { panelBskyResults.innerHTML = ''; }
+  }, 150);
+
+  panelBskyInput.addEventListener('input', () => {
+    const q = panelBskyInput.value.trim().replace('@', '');
+    if (q.length < 2) { panelBskyResults.innerHTML = ''; return; }
+    panelBskySearch();
+  });
+  panelBskyInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); const first = panelBskyResults.querySelector('.org-result'); if (first) first.click(); }
+    if (e.key === 'Escape') panelBskyResults.innerHTML = '';
+  });
+  panelBskyInput.addEventListener('blur', () => setTimeout(() => { panelBskyResults.innerHTML = ''; }, 200));
+
+  // ── Panel TipTap initialization ──
+  let panelTiptapInitialized = false;
+  function initPanelTiptap() {
+    const tiptapContainer = document.getElementById('panel-org-tiptap');
+    if (panelTiptapInitialized && tiptapContainer._editor) {
+      tiptapContainer._editor.commands.setContent('');
+      return;
+    }
+    if (typeof window.initTipTapEditors === 'function') {
+      // Only init the panel's tiptap (not all containers again)
+      window.initTipTapEditors();
+      panelTiptapInitialized = true;
+    }
+  }
+
   // Open panel
   function openOrgPanel(queryText, triggerField, triggerType, contextName, addTagFn) {
     _triggerField = triggerField;
@@ -3309,12 +3479,15 @@ document.querySelector('.nav-hamburger').addEventListener('click', () => {
     document.getElementById('panel-org-name').value = queryText || '';
     document.getElementById('panel-org-category').value = '';
     document.getElementById('panel-org-website').value = '';
-    document.getElementById('panel-org-location').value = '';
+    panelLocInput.value = '';
+    panelClearLocationTags();
     document.getElementById('panel-org-funding').value = '';
     document.getElementById('panel-org-stance').value = '';
     document.getElementById('panel-org-twitter').value = '';
-    document.getElementById('panel-org-bluesky').value = '';
+    panelBskyInput.value = '';
     document.getElementById('panel-org-notes').value = '';
+    document.getElementById('panel-org-notes-html').value = '';
+    document.getElementById('panel-org-notes-mentions').value = '';
     extraFields.classList.remove('open');
     expandBtn.textContent = '+ Add more details';
 
@@ -3332,6 +3505,9 @@ document.querySelector('.nav-hamburger').addEventListener('click', () => {
     panel.classList.add('open');
     overlay.classList.add('open');
     document.getElementById('panel-org-name').focus();
+
+    // Init TipTap (lazy, on first expand or immediately if extra fields already open)
+    initPanelTiptap();
   }
 
   // Close panel
@@ -3373,12 +3549,14 @@ document.querySelector('.nav-hamburger').addEventListener('click', () => {
     const data = { name };
     const category = document.getElementById('panel-org-category').value;
     const website = document.getElementById('panel-org-website').value.trim();
-    const location = document.getElementById('panel-org-location').value.trim();
+    const location = panelLocHidden.value.trim();
     const funding = document.getElementById('panel-org-funding').value;
     const stance = document.getElementById('panel-org-stance').value;
     const twitter = document.getElementById('panel-org-twitter').value.trim();
-    const bluesky = document.getElementById('panel-org-bluesky').value.trim();
-    const notes = document.getElementById('panel-org-notes').value.trim();
+    const bluesky = panelBskyInput.value.trim();
+    const notesPlain = document.getElementById('panel-org-notes').value.trim();
+    const notesHtml = document.getElementById('panel-org-notes-html').value.trim();
+    const notesMentions = document.getElementById('panel-org-notes-mentions').value.trim();
 
     if (category) data.category = category;
     if (website) data.website = website;
@@ -3387,7 +3565,9 @@ document.querySelector('.nav-hamburger').addEventListener('click', () => {
     if (stance) data.regulatoryStance = stance;
     if (twitter) data.twitter = twitter;
     if (bluesky) data.bluesky = bluesky;
-    if (notes) data.notes = notes;
+    if (notesPlain) data.notes = notesPlain;
+    if (notesHtml) data.notesHtml = notesHtml;
+    if (notesMentions) data.notesMentions = notesMentions;
 
     try {
       const res = await fetch(`${API_BASE}/submit`, {
@@ -3422,8 +3602,11 @@ document.querySelector('.nav-hamburger').addEventListener('click', () => {
           const hiddenInput = field?.querySelector('input[type="hidden"]');
           textInput.value = name;
           if (hiddenInput) hiddenInput.value = String(submissionId);
+          // Mark as linked so search dropdown doesn't re-trigger
+          textInput.dataset.linkedOrgId = String(submissionId);
           const resultsDiv = field?.querySelector('.org-search-results');
           if (resultsDiv) resultsDiv.innerHTML = '';
+          textInput.blur();
         }
         successEl.remove();
         closeOrgPanel();
@@ -3461,8 +3644,9 @@ document.querySelector('.nav-hamburger').addEventListener('click', () => {
 
     // Watch for results changes and append "Add new org" option
     const observer = new MutationObserver(() => {
-      // Don't add if already present
+      // Don't add if already present or if field is already linked to a submitted org
       if (resultsDiv.querySelector('.org-add-new')) return;
+      if (input.dataset.linkedOrgId) return;
       const q = input.value.trim();
       if (q.length < 1) return;
 
@@ -3480,6 +3664,8 @@ document.querySelector('.nav-hamburger').addEventListener('click', () => {
 
     // Also show "Add new org" when results are empty (override :empty CSS hide)
     input.addEventListener('input', () => {
+      // Clear linked state when user edits the field
+      delete input.dataset.linkedOrgId;
       setTimeout(() => {
         const q = input.value.trim();
         if (q.length >= 2 && resultsDiv.children.length === 0) {
