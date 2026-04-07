@@ -1911,7 +1911,8 @@ function renderMiniGraph(entity, container) {
   const startY = height - lineH * 0.5 - (lineCount - 1) * lineH;
   lines.slice(0, 3).forEach((line, i) => {
     centerLabel.append('tspan')
-      .attr('x', 0)
+      .attr('x', width / 2)
+      .attr('text-anchor', 'middle')
       .attr('dy', i === 0 ? 0 : lineH)
       .text(line);
   });
@@ -1935,8 +1936,10 @@ function renderMiniGraph(entity, container) {
     nodeEls.attr('transform', d => `translate(${d.x},${d.y})`);
     // Keep center label below center node
     const cn = nodes[0];
-    centerLabel.selectAll('tspan').attr('x', cn.x);
-    centerLabel.attr('x', cn.x);
+    // Label stays centered in SVG (not attached to node)
+    const cx = width / 2;
+    centerLabel.selectAll('tspan').attr('x', cx);
+    centerLabel.attr('x', cx);
   });
 
   setTimeout(() => sim.stop(), 2500);
