@@ -568,6 +568,16 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; transition: all 0.15s;
 }
 .mobile-type-chip.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.mobile-explore-btn {
+  display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+  margin: 0.5rem 0.75rem; padding: 0.5rem; border-radius: 8px;
+  background: var(--accent); color: #fff;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.04em; text-transform: uppercase;
+  cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent;
+  transition: opacity 0.15s;
+}
+.mobile-explore-btn:active { opacity: 0.8; }
+.mobile-explore-btn svg { stroke: #fff; }
 .mobile-active-filters { display: flex; flex-wrap: wrap; gap: 0.3rem; padding: 0.4rem 0.75rem; }
 .mobile-active-filters:empty { padding: 0; }
 .mobile-filter-chip {
@@ -601,6 +611,11 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
 .mobile-card-dots { display: flex; gap: 3px; flex-shrink: 0; }
 .mobile-card-dot { width: 6px; height: 6px; border-radius: 50%; }
 .mobile-card-dot.empty { background: none; border: 1px solid var(--text-3); opacity: 0.4; }
+.mobile-card-edges {
+  font-family: var(--mono); font-size: 8px; color: var(--accent); opacity: 0.7;
+  margin-left: 2px; display: inline-flex; align-items: center; gap: 1px;
+}
+.mobile-card-edges::before { content: '⌁'; font-size: 9px; }
 .mobile-no-results { padding: 2rem 1rem; text-align: center; font-family: var(--mono); font-size: 12px; color: var(--text-3); }
 .mobile-not-found { padding: 2rem 1rem; text-align: center; font-family: var(--mono); font-size: 12px; color: var(--text-3); }
 .mobile-not-found a { color: var(--accent); }
@@ -991,6 +1006,10 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
       <button class="mobile-type-chip" data-type="person">People</button>
       <button class="mobile-type-chip" data-type="organization">Orgs</button>
     </div>
+  </div>
+  <div id="mobile-explore-btn" class="mobile-explore-btn">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="3" cy="3" r="2"/><circle cx="11" cy="3" r="2"/><circle cx="7" cy="11" r="2"/><line x1="4.5" y1="4" x2="6" y2="9.5"/><line x1="9.5" y1="4" x2="8" y2="9.5"/></svg>
+    Explore a network
   </div>
   <div id="mobile-active-filters" class="mobile-active-filters"></div>
   <div id="mobile-card-list" class="mobile-card-list"></div>
@@ -2111,6 +2130,12 @@ function renderMobileDirectory() {
     document.getElementById('mobile-hero').innerHTML = bubblesHtml + spectrumHtml;
   }
 
+  // Pre-compute connection counts for all entities (used for card badges + explore button)
+  const connectionCounts = new Map();
+  for (const d of allEntities) {
+    connectionCounts.set(d.entityType + ':' + d.id, buildConnections(d).length);
+  }
+
   // ── Card list grouped by category ──
   const grouped = {};
   for (const d of allEntities) {
@@ -2143,6 +2168,7 @@ function renderMobileDirectory() {
       } else {
         thumbHtml = `<div class="mobile-card-thumb" style="display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-3);">${d.name ? d.name[0] : '?'}</div>`;
       }
+      const connCount = connectionCounts.get(d.entityType + ':' + d.id) || 0;
       let sub = '';
       if (d.entityType === 'person') sub = [d.title, d.primary_org].filter(Boolean).join(' at ');
       else if (d.entityType === 'organization') sub = d.category || '';
@@ -2159,7 +2185,7 @@ function renderMobileDirectory() {
       cardsHtml += `<div class="mobile-card" data-entity-id="${d.id}" data-entity-type="${d.entityType}" data-category="${normalizeCategory(d.category)}" data-slug="${slug}" data-stance="${_cs}" data-timeline="${_ct}" data-risk="${_cr}">
         ${thumbHtml}<div class="mobile-card-info">
           <div class="mobile-card-row1"><span class="mobile-card-name">${escHtml(d.name || d.title)}</span><span class="mobile-card-badge" style="background:${catColor}22;color:${catColor};">${normalizeCategory(d.category)}</span></div>
-          <div class="mobile-card-row2"><span class="mobile-card-sub">${sub}</span><span class="mobile-card-dots">${stanceDot}${timelineDot}${riskDot}</span></div>
+          <div class="mobile-card-row2"><span class="mobile-card-sub">${sub}</span><span class="mobile-card-dots">${stanceDot}${timelineDot}${riskDot}${connCount > 0 ? `<span class="mobile-card-edges" title="${connCount} connections">${connCount}</span>` : ''}</span></div>
         </div></div>`;
     }
     cardsHtml += '</div>';
@@ -2359,6 +2385,15 @@ function renderMobileDirectory() {
   // Hide autocomplete when clicking outside
   document.addEventListener('click', (e) => {
     if (!e.target.closest('.mobile-search-box')) autocomplete.classList.remove('visible');
+  });
+
+  // "Explore a network" — pick a random well-connected entity
+  const wellConnected = allEntities.filter(d => (connectionCounts.get(d.entityType + ':' + d.id) || 0) >= 3);
+  document.getElementById('mobile-explore-btn').addEventListener('click', () => {
+    if (wellConnected.length === 0) return;
+    const entity = wellConnected[Math.floor(Math.random() * wellConnected.length)];
+    mobileScrollPos = dir.scrollTop;
+    showDetail(entity, []);
   });
 
   // Card tap → detail panel
