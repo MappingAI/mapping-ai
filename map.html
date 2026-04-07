@@ -4268,7 +4268,8 @@ function showDetail(d, allNodes) {
     const graphContainer = document.getElementById('mini-graph-container');
     const graphBanner = graphContainer.parentElement.querySelector('.mini-graph-banner');
     const dragHandle = document.getElementById('mobile-split-handle');
-    if (d.entityType === 'resource') {
+    const connections = buildConnections(d);
+    if (d.entityType === 'resource' || connections.length === 0) {
       graphContainer.style.display = 'none';
       if (graphBanner) graphBanner.style.display = 'none';
       if (dragHandle) dragHandle.style.display = 'none';
