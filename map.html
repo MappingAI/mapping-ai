@@ -629,15 +629,15 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
 .mini-graph-container .mini-center-label {
   font-family: var(--mono); font-weight: 600; fill: var(--text-1);
 }
-.split-drag-handle {
+.mobile-split-handle {
   flex-shrink: 0; height: 20px; display: flex; align-items: center; justify-content: center;
   cursor: ns-resize; background: var(--bg-panel); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
   -webkit-tap-highlight-color: transparent; touch-action: none;
 }
-.split-drag-handle span {
+.mobile-split-handle span {
   width: 32px; height: 4px; border-radius: 2px; background: var(--text-3); opacity: 0.4;
 }
-.split-detail-content {
+.mobile-split-detail {
   flex: 1 1 55%; overflow-y: auto; -webkit-overflow-scrolling: touch;
   padding: 1rem 1.25rem; min-height: 100px;
 }
@@ -654,17 +654,17 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
 .mobile-breadcrumb-item:hover { text-decoration: underline; }
 .mobile-breadcrumb-sep { color: var(--text-3); opacity: 0.5; margin: 0 1px; }
 .mobile-breadcrumb-current { color: var(--text-1); font-weight: 500; white-space: nowrap; }
-.split-detail-header {
+.mobile-split-header {
   display: flex; align-items: center; justify-content: space-between;
   padding: 0.5rem 0; margin-bottom: 0.5rem; border-bottom: 1px solid var(--line);
 }
-.split-detail-header .detail-name { margin: 0; font-size: 18px; }
-.split-detail-header-actions { display: flex; align-items: center; gap: 0.5rem; }
-.split-detail-header-actions button {
+.mobile-split-header .detail-name { margin: 0; font-size: 18px; }
+.mobile-split-header-actions { display: flex; align-items: center; gap: 0.5rem; }
+.mobile-split-header-actions button {
   background: none; border: none; cursor: pointer; color: var(--text-3); padding: 4px;
   font-family: var(--mono);
 }
-.split-detail-header-actions button:hover { color: var(--text-1); }
+.mobile-split-header-actions button:hover { color: var(--text-1); }
 /* Subtle desktop banner below mini graph */
 .mini-graph-banner {
   text-align: center; padding: 2px 0;
@@ -961,8 +961,8 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
       <svg id="mini-graph-svg"></svg>
     </div>
     <div class="mini-graph-banner">Full interactive map on desktop</div>
-    <div id="split-drag-handle" class="split-drag-handle"><span></span></div>
-    <div id="split-detail-content" class="split-detail-content"></div>
+    <div id="mobile-split-handle" class="mobile-split-handle"><span></span></div>
+    <div id="mobile-split-detail" class="mobile-split-detail"></div>
   </div>
   <!-- Desktop detail (unchanged) -->
   <div id="detail-content"></div>
@@ -1897,7 +1897,7 @@ function renderMiniGraph(entity, container) {
 // Stored drag handlers so we can remove them before re-adding
 let _dragHandlers = null;
 function initSplitDragHandle() {
-  const handle = document.getElementById('split-drag-handle');
+  const handle = document.getElementById('mobile-split-handle');
   const graphContainer = document.getElementById('mini-graph-container');
   if (!handle || !graphContainer) return;
 
@@ -1992,26 +1992,28 @@ function bindBreadcrumbClicks(container) {
   });
 }
 
+// Shared share handler — used by both desktop and mobile share buttons
+function shareEntity(entity) {
+  const url = getDeepLinkUrl(entity);
+  if (navigator.share) {
+    navigator.share({ title: entity.name || entity.title, url }).catch(() => {});
+  }
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(url).then(() => {
+      const toast = document.getElementById('share-toast');
+      toast.classList.add('visible');
+      setTimeout(() => toast.classList.remove('visible'), 2000);
+    }).catch(() => {});
+  }
+}
+
 function initShareButton(entity) {
   const shareBtn = document.getElementById('detail-share');
   if (!shareBtn) return;
   const newBtn = shareBtn.cloneNode(true);
   shareBtn.parentNode.replaceChild(newBtn, shareBtn);
   newBtn.id = 'detail-share';
-  newBtn.addEventListener('click', () => {
-    const url = getDeepLinkUrl(entity);
-    if (navigator.share) {
-      navigator.share({ title: entity.name || entity.title, url }).catch(() => {});
-    }
-    // Always copy to clipboard
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(url).then(() => {
-        const toast = document.getElementById('share-toast');
-        toast.classList.add('visible');
-        setTimeout(() => toast.classList.remove('visible'), 2000);
-      }).catch(() => {});
-    }
-  });
+  newBtn.addEventListener('click', () => shareEntity(entity));
 }
 
 // ─── Mobile Directory Rendering ───
@@ -2037,74 +2039,72 @@ function renderMobileDirectory() {
   const resourceEntities = allData.resources.map(d => Object.assign({}, d, { entityType: 'resource', name: d.name || d.title }));
   const allSearchable = [...allEntities, ...resourceEntities];
 
-  // ── Hero: Category pills (people + orgs only, no resources) ──
-  const PERSON_ROLE_SET = new Set(['Executive','Researcher','Policymaker','Investor','Organizer','Journalist','Academic','Cultural figure']);
-  const catCounts = {};
-  for (const d of allEntities) {
-    if (d.entityType === 'resource') continue;
-    const primary = normalizeCategory(d.category);
-    if (primary) catCounts[primary] = (catCounts[primary] || 0) + 1;
-    if (d.other_categories) {
-      for (const c of d.other_categories.split(',').map(s => s.trim()).filter(Boolean)) {
-        const norm = normalizeCategory(c);
-        if (norm) catCounts[norm] = (catCounts[norm] || 0) + 1;
+  renderMobileHero(allEntities);
+  function renderMobileHero(entities) {
+    const PERSON_ROLE_SET = new Set(['Executive','Researcher','Policymaker','Investor','Organizer','Journalist','Academic','Cultural figure']);
+    const catCounts = {};
+    for (const d of entities) {
+      const primary = normalizeCategory(d.category);
+      if (primary) catCounts[primary] = (catCounts[primary] || 0) + 1;
+      if (d.other_categories) {
+        for (const c of d.other_categories.split(',').map(s => s.trim()).filter(Boolean)) {
+          const norm = normalizeCategory(c);
+          if (norm) catCounts[norm] = (catCounts[norm] || 0) + 1;
+        }
       }
     }
-  }
-  const sortedCats = Object.keys(catCounts).sort((a, b) => {
-    const ia = CLUSTER_ORDER.indexOf(a), ib = CLUSTER_ORDER.indexOf(b);
-    return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib);
-  });
-  const sectorCats = sortedCats.filter(c => !PERSON_ROLE_SET.has(c));
-  const roleCats = sortedCats.filter(c => PERSON_ROLE_SET.has(c));
+    const sortedCats = Object.keys(catCounts).sort((a, b) => {
+      const ia = CLUSTER_ORDER.indexOf(a), ib = CLUSTER_ORDER.indexOf(b);
+      return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib);
+    });
+    const sectorCats = sortedCats.filter(c => !PERSON_ROLE_SET.has(c));
+    const roleCats = sortedCats.filter(c => PERSON_ROLE_SET.has(c));
 
-  function renderBubbleGroup(label, cats) {
-    let html = `<div class="mobile-bubbles-group"><div class="mobile-bubbles-group-label">${label}</div><div class="mobile-bubbles-row">`;
-    for (const cat of cats) {
-      const count = catCounts[cat];
-      const color = getColor(cat) || DEFAULT_COLOR;
-      // Pastel background with solid text
-      html += `<div class="mobile-bubble" data-category="${cat}" style="background:${color}20;color:${color};border:1px solid ${color}40;">
-        <span class="bubble-label">${cat}</span><span class="bubble-count">${count}</span></div>`;
+    function pillGroup(label, cats) {
+      let html = `<div class="mobile-bubbles-group"><div class="mobile-bubbles-group-label">${label}</div><div class="mobile-bubbles-row">`;
+      for (const cat of cats) {
+        const count = catCounts[cat];
+        const color = getColor(cat) || DEFAULT_COLOR;
+        html += `<div class="mobile-bubble" data-category="${cat}" style="background:${color}20;color:${color};border:1px solid ${color}40;">
+          <span class="bubble-label">${cat}</span><span class="bubble-count">${count}</span></div>`;
+      }
+      return html + '</div></div>';
     }
-    html += '</div></div>';
-    return html;
-  }
-  let bubblesHtml = '<div class="mobile-bubbles">';
-  if (sectorCats.length > 0) bubblesHtml += renderBubbleGroup('Sectors', sectorCats);
-  if (roleCats.length > 0) bubblesHtml += renderBubbleGroup('Roles', roleCats);
-  bubblesHtml += '</div>';
+    let bubblesHtml = '<div class="mobile-bubbles">';
+    if (sectorCats.length > 0) bubblesHtml += pillGroup('Sectors', sectorCats);
+    if (roleCats.length > 0) bubblesHtml += pillGroup('Roles', roleCats);
+    bubblesHtml += '</div>';
 
-  // ── Hero: Belief spectrum bars ──
-  const dims = [
-    { key: 'regulatory_stance', label: 'Regulatory Stance', order: STANCE_ORDER, colors: STANCE_COLORS },
-    { key: 'agi_timeline', label: 'AGI Timeline', order: TIMELINE_ORDER, colors: TIMELINE_COLORS },
-    { key: 'ai_risk_level', label: 'AI Risk Level', order: RISK_ORDER, colors: RISK_COLORS },
-  ];
-  let spectrumHtml = '<div class="mobile-spectrum">';
-  for (const dim of dims) {
-    const buckets = {};
-    let nullCount = 0;
-    for (const d of allEntities) {
-      if (d.entityType === 'resource') continue;
-      const val = d[dim.key];
-      if (!val) { nullCount++; continue; }
-      const canonical = dim.order.find(l => val.toLowerCase().includes(l.toLowerCase().split(' ')[0].toLowerCase()));
-      if (canonical) buckets[canonical] = (buckets[canonical] || 0) + 1;
-      else nullCount++;
+    // Belief spectrum bars
+    const dims = [
+      { key: 'regulatory_stance', label: 'Regulatory Stance', order: STANCE_ORDER, colors: STANCE_COLORS },
+      { key: 'agi_timeline', label: 'AGI Timeline', order: TIMELINE_ORDER, colors: TIMELINE_COLORS },
+      { key: 'ai_risk_level', label: 'AI Risk Level', order: RISK_ORDER, colors: RISK_COLORS },
+    ];
+    let spectrumHtml = '<div class="mobile-spectrum">';
+    for (const dim of dims) {
+      const buckets = {};
+      let nullCount = 0;
+      for (const d of entities) {
+        const val = d[dim.key];
+        if (!val) { nullCount++; continue; }
+        const canonical = dim.order.find(l => val.toLowerCase().includes(l.toLowerCase().split(' ')[0].toLowerCase()));
+        if (canonical) buckets[canonical] = (buckets[canonical] || 0) + 1;
+        else nullCount++;
+      }
+      spectrumHtml += `<div class="mobile-spectrum-row">
+        <div class="mobile-spectrum-label"><span>${dim.label}</span>${nullCount > 0 ? `<span>(${nullCount} no data)</span>` : ''}</div>
+        <div class="mobile-spectrum-bar">`;
+      for (const label of dim.order) {
+        const count = buckets[label] || 0;
+        if (count === 0) continue;
+        spectrumHtml += `<div class="mobile-spectrum-segment" data-dimension="${dim.key}" data-value="${label}" style="flex-grow:${count};background:${dim.colors[label]};" title="${label}: ${count}">${count > 3 ? count : ''}</div>`;
+      }
+      spectrumHtml += `</div><div class="mobile-spectrum-endpoints"><span>${dim.order[0]}</span><span>${dim.order[dim.order.length - 1]}</span></div></div>`;
     }
-    spectrumHtml += `<div class="mobile-spectrum-row">
-      <div class="mobile-spectrum-label"><span>${dim.label}</span>${nullCount > 0 ? `<span>(${nullCount} no data)</span>` : ''}</div>
-      <div class="mobile-spectrum-bar">`;
-    for (const label of dim.order) {
-      const count = buckets[label] || 0;
-      if (count === 0) continue;
-      spectrumHtml += `<div class="mobile-spectrum-segment" data-dimension="${dim.key}" data-value="${label}" style="flex-grow:${count};background:${dim.colors[label]};" title="${label}: ${count}">${count > 3 ? count : ''}</div>`;
-    }
-    spectrumHtml += `</div><div class="mobile-spectrum-endpoints"><span>${dim.order[0]}</span><span>${dim.order[dim.order.length - 1]}</span></div></div>`;
+    spectrumHtml += '</div>';
+    document.getElementById('mobile-hero').innerHTML = bubblesHtml + spectrumHtml;
   }
-  spectrumHtml += '</div>';
-  document.getElementById('mobile-hero').innerHTML = bubblesHtml + spectrumHtml;
 
   // ── Card list grouped by category ──
   const grouped = {};
@@ -4238,16 +4238,16 @@ function showDetail(d, allNodes) {
   if (isMobileDirectory) {
     // Mobile: split view with mini graph on top, detail on bottom
     const splitView = document.getElementById('mobile-split-view');
-    const splitDetail = document.getElementById('split-detail-content');
+    const splitDetail = document.getElementById('mobile-split-detail');
     panel.classList.add('mobile-split');
     content.style.display = 'none';
     splitView.style.display = 'flex';
     pushBreadcrumb(d);
     const breadcrumbHtml = renderBreadcrumb(d);
     // Build detail with breadcrumb + inline header (share + close)
-    splitDetail.innerHTML = `${breadcrumbHtml}<div class="split-detail-header">
+    splitDetail.innerHTML = `${breadcrumbHtml}<div class="mobile-split-header">
       <div><div class="detail-name" style="font-size:18px;">${escHtml(d.name || d.title)}</div></div>
-      <div class="split-detail-header-actions">
+      <div class="mobile-split-header-actions">
         <button id="split-share-btn" title="Share">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
         </button>
@@ -4262,7 +4262,7 @@ function showDetail(d, allNodes) {
     // Mini graph for people/orgs; resources skip the graph (no edges/beliefs)
     const graphContainer = document.getElementById('mini-graph-container');
     const graphBanner = graphContainer.parentElement.querySelector('.mini-graph-banner');
-    const dragHandle = document.getElementById('split-drag-handle');
+    const dragHandle = document.getElementById('mobile-split-handle');
     if (d.entityType === 'resource') {
       graphContainer.style.display = 'none';
       if (graphBanner) graphBanner.style.display = 'none';
@@ -4284,20 +4284,7 @@ function showDetail(d, allNodes) {
     // Wire split share button
     const splitShareBtn = document.getElementById('split-share-btn');
     if (splitShareBtn) {
-      splitShareBtn.addEventListener('click', () => {
-        const url = getDeepLinkUrl(d);
-        if (navigator.share) {
-          navigator.share({ title: d.name || d.title, url }).catch(() => {});
-        }
-        // Always copy to clipboard too
-        if (navigator.clipboard) {
-          navigator.clipboard.writeText(url).then(() => {
-            const toast = document.getElementById('share-toast');
-            toast.classList.add('visible');
-            setTimeout(() => toast.classList.remove('visible'), 2000);
-          }).catch(() => {});
-        }
-      });
+      splitShareBtn.addEventListener('click', () => shareEntity(d));
     }
   } else {
     // Desktop: regular detail panel
@@ -4316,7 +4303,7 @@ function showDetail(d, allNodes) {
   }
 
   // Click affiliated items and author links to navigate — switch view, zoom, show detail
-  const activeContent = isMobileDirectory ? document.getElementById('split-detail-content') : content;
+  const activeContent = isMobileDirectory ? document.getElementById('mobile-split-detail') : content;
   activeContent.querySelectorAll('.affiliated-item, .detail-link').forEach(el => {
     el.addEventListener('click', (e) => {
       e.preventDefault();
