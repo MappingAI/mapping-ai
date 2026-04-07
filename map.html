@@ -628,6 +628,16 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
 /* When split view is active, the detail panel becomes a flex container without its own scroll */
 .detail-panel.mobile-split { overflow: hidden; padding: 0; }
 .detail-panel.mobile-split > .detail-header-actions { display: none; }
+.mobile-breadcrumb {
+  display: flex; align-items: center; gap: 2px; margin-bottom: 0.35rem;
+  font-family: var(--mono); font-size: 9px; color: var(--text-3);
+  overflow-x: auto; scrollbar-width: none; white-space: nowrap;
+}
+.mobile-breadcrumb::-webkit-scrollbar { display: none; }
+.mobile-breadcrumb-item { cursor: pointer; color: var(--accent); white-space: nowrap; }
+.mobile-breadcrumb-item:hover { text-decoration: underline; }
+.mobile-breadcrumb-sep { color: var(--text-3); opacity: 0.5; margin: 0 1px; }
+.mobile-breadcrumb-current { color: var(--text-1); font-weight: 500; white-space: nowrap; }
 .split-detail-header {
   display: flex; align-items: center; justify-content: space-between;
   padding: 0.5rem 0; margin-bottom: 0.5rem; border-bottom: 1px solid var(--line);
@@ -1904,6 +1914,51 @@ function initSplitDragHandle() {
 }
 
 // Share button handler
+// ─── Mobile Breadcrumb Navigation ───
+const mobileBreadcrumb = []; // [{name, entity}] — max 5 unique
+function pushBreadcrumb(d) {
+  if (!isMobileDirectory) return;
+  // Don't add if same as current
+  if (mobileBreadcrumb.length > 0 && mobileBreadcrumb[mobileBreadcrumb.length - 1].entity.id === d.id && mobileBreadcrumb[mobileBreadcrumb.length - 1].entity.entityType === d.entityType) return;
+  // Remove if already in trail (move to end)
+  const idx = mobileBreadcrumb.findIndex(b => b.entity.id === d.id && b.entity.entityType === d.entityType);
+  if (idx !== -1) mobileBreadcrumb.splice(idx, 1);
+  mobileBreadcrumb.push({ name: d.name || d.title, entity: d });
+  // Keep max 5
+  if (mobileBreadcrumb.length > 5) mobileBreadcrumb.shift();
+}
+
+function renderBreadcrumb(currentEntity) {
+  if (!isMobileDirectory) return '';
+  if (mobileBreadcrumb.length <= 1) return '';
+  const items = mobileBreadcrumb.slice(0, -1); // all except current
+  let html = '<div class="mobile-breadcrumb">';
+  items.forEach((b, i) => {
+    const truncName = b.name.length > 14 ? b.name.slice(0, 12) + '..' : b.name;
+    html += `<span class="mobile-breadcrumb-item" data-bc-idx="${i}">${truncName}</span>`;
+    html += '<span class="mobile-breadcrumb-sep">›</span>';
+  });
+  const curName = currentEntity.name || currentEntity.title;
+  html += `<span class="mobile-breadcrumb-current">${curName.length > 16 ? curName.slice(0, 14) + '..' : curName}</span>`;
+  html += '</div>';
+  return html;
+}
+
+function bindBreadcrumbClicks(container) {
+  if (!container) return;
+  container.querySelectorAll('.mobile-breadcrumb-item').forEach(el => {
+    el.addEventListener('click', () => {
+      const idx = parseInt(el.dataset.bcIdx);
+      const target = mobileBreadcrumb[idx];
+      if (target) {
+        // Trim breadcrumb to this point
+        mobileBreadcrumb.length = idx + 1;
+        showDetail(target.entity, []);
+      }
+    });
+  });
+}
+
 function initShareButton(entity) {
   const shareBtn = document.getElementById('detail-share');
   if (!shareBtn) return;
@@ -2170,6 +2225,7 @@ function renderMobileDirectory() {
   });
   // Detail close → restore scroll
   document.getElementById('detail-close').addEventListener('click', () => {
+    mobileBreadcrumb.length = 0; // Clear breadcrumb on close
     setTimeout(() => { dir.scrollTop = mobileScrollPos; }, 50);
   });
 
@@ -4042,8 +4098,10 @@ function showDetail(d, allNodes) {
     panel.classList.add('mobile-split');
     content.style.display = 'none';
     splitView.style.display = 'flex';
-    // Build detail with inline header (share + close)
-    splitDetail.innerHTML = `<div class="split-detail-header">
+    pushBreadcrumb(d);
+    const breadcrumbHtml = renderBreadcrumb(d);
+    // Build detail with breadcrumb + inline header (share + close)
+    splitDetail.innerHTML = `${breadcrumbHtml}<div class="split-detail-header">
       <div><div class="detail-name" style="font-size:18px;">${d.name}</div></div>
       <div class="split-detail-header-actions">
         <button id="split-share-btn" title="Share">
@@ -4073,6 +4131,7 @@ function showDetail(d, allNodes) {
       });
     }
     initSplitDragHandle();
+    bindBreadcrumbClicks(splitDetail);
     // Wire split share button
     const splitShareBtn = document.getElementById('split-share-btn');
     if (splitShareBtn) {
