@@ -2049,12 +2049,29 @@ function shareEntity(entity) {
   if (navigator.share) {
     navigator.share({ title: entity.name || entity.title, url }).catch(() => {});
   }
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(url).then(() => {
-      const toast = document.getElementById('share-toast');
-      toast.classList.add('visible');
-      setTimeout(() => toast.classList.remove('visible'), 2000);
-    }).catch(() => {});
+  // Copy to clipboard with fallback for non-HTTPS / older browsers
+  function showCopiedToast() {
+    const toast = document.getElementById('share-toast');
+    toast.classList.remove('visible'); // reset in case it's still showing
+    void toast.offsetWidth; // force reflow to restart animation
+    toast.classList.add('visible');
+    setTimeout(() => toast.classList.remove('visible'), 2000);
+  }
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(url).then(showCopiedToast).catch(() => {
+      // Fallback: textarea + execCommand
+      const ta = document.createElement('textarea');
+      ta.value = url; ta.style.cssText = 'position:fixed;opacity:0';
+      document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
+      showCopiedToast();
+    });
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = url; ta.style.cssText = 'position:fixed;opacity:0';
+    document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    showCopiedToast();
   }
 }
 
