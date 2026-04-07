@@ -21,7 +21,7 @@
   <meta name="twitter:title" content="Map — Mapping AI">
   <meta name="twitter:description" content="Interactive stakeholder map of the U.S. AI policy landscape.">
   <meta name="twitter:image" content="https://mapping-ai.org/assets/images/og-image.png">
-  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script>if(window.innerWidth>=768){document.write('<scr'+'ipt src="https://d3js.org/d3.v7.min.js"><\/scr'+'ipt>')}</script>
   <style>
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@400;500&display=swap');
 :root {
@@ -979,7 +979,7 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
 <!-- Mobile Entity Directory (shown <768px, replaces D3 map) -->
 <div id="mobile-directory" style="display:none;">
   <div id="mobile-hero"></div>
-  <div class="mobile-mode-label">Mobile directory — <a href="/map" onclick="localStorage.setItem('forceDesktop','1')">full interactive map</a> on desktop</div>
+  <div class="mobile-mode-label">Mobile directory — full interactive map on desktop</div>
   <div id="mobile-search-bar" class="mobile-search-bar">
     <div class="mobile-search-box">
       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -1454,7 +1454,9 @@ function buildConnections(d) {
     if (seen.has(key)) return;
     seen.add(key);
     const typeName = entityType === 'organization' ? 'org' : entityType;
-    items.push({ entity, entityType, name: entity.name || entity.title, type: typeName, rel: rel || 'affiliated' });
+    // Resources use title as canonical name (entity.name is often null for resources)
+    const displayName = entityType === 'resource' ? (entity.title || entity.name) : (entity.name || entity.title);
+    items.push({ entity, entityType, name: displayName, type: typeName, rel: rel || 'affiliated' });
   }
 
   // From inferredLinks
@@ -1770,7 +1772,6 @@ function ensureD3() {
   });
 }
 
-// getConnectedEntities removed — use shared buildConnections() instead
 
 let _miniGraphSim = null; // Track simulation for cleanup
 function renderMiniGraph(entity, container) {
@@ -2146,7 +2147,11 @@ function renderMobileDirectory() {
       const timelineDot = d.timeline_score ? `<span class="mobile-card-dot" style="background:${TIMELINE_COLORS[TIMELINE_ORDER[Math.round(d.timeline_score) - 1]] || 'var(--text-3)'}" title="${d.agi_timeline || ''}"></span>` : '<span class="mobile-card-dot empty"></span>';
       const riskDot = d.risk_score ? `<span class="mobile-card-dot" style="background:${RISK_COLORS[RISK_ORDER[Math.round(d.risk_score) - 1]] || 'var(--text-3)'}" title="${d.ai_risk_level || ''}"></span>` : '<span class="mobile-card-dot empty"></span>';
 
-      cardsHtml += `<div class="mobile-card" data-entity-id="${d.id}" data-entity-type="${d.entityType}" data-category="${normalizeCategory(d.category)}" data-slug="${slug}" data-stance="${d.regulatory_stance || ''}" data-timeline="${d.agi_timeline || ''}" data-risk="${d.ai_risk_level || ''}">
+      // Canonicalize belief values to match spectrum bar labels for filter consistency
+      const _cs = d.regulatory_stance ? (STANCE_ORDER.find(l => d.regulatory_stance.toLowerCase().includes(l.split(' ')[0].toLowerCase())) || d.regulatory_stance) : '';
+      const _ct = d.agi_timeline ? (TIMELINE_ORDER.find(l => d.agi_timeline.toLowerCase().includes(l.split(' ')[0].toLowerCase())) || d.agi_timeline) : '';
+      const _cr = d.ai_risk_level ? (RISK_ORDER.find(l => d.ai_risk_level.toLowerCase().includes(l.split(' ')[0].toLowerCase())) || d.ai_risk_level) : '';
+      cardsHtml += `<div class="mobile-card" data-entity-id="${d.id}" data-entity-type="${d.entityType}" data-category="${normalizeCategory(d.category)}" data-slug="${slug}" data-stance="${_cs}" data-timeline="${_ct}" data-risk="${_cr}">
         ${thumbHtml}<div class="mobile-card-info">
           <div class="mobile-card-row1"><span class="mobile-card-name">${escHtml(d.name || d.title)}</span><span class="mobile-card-badge" style="background:${catColor}22;color:${catColor};">${normalizeCategory(d.category)}</span></div>
           <div class="mobile-card-row2"><span class="mobile-card-sub">${sub}</span><span class="mobile-card-dots">${stanceDot}${timelineDot}${riskDot}</span></div>
