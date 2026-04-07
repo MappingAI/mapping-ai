@@ -569,12 +569,12 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
 }
 .mobile-type-chip.active { background: var(--accent); color: #fff; border-color: var(--accent); }
 .mobile-explore-btn {
-  display: flex; align-items: center; justify-content: center; gap: 0.4rem;
-  margin: 0.5rem 0.75rem; padding: 0.5rem; border-radius: 8px;
-  background: var(--accent); color: #fff;
-  font-family: var(--mono); font-size: 10px; letter-spacing: 0.04em; text-transform: uppercase;
+  display: inline-flex; align-items: center; gap: 3px; flex-shrink: 0;
+  padding: 0.3rem 0.6rem; border-radius: 20px;
+  background: var(--accent); color: #fff; border: none;
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.04em; text-transform: uppercase;
   cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent;
-  transition: opacity 0.15s;
+  transition: opacity 0.15s; white-space: nowrap;
 }
 .mobile-explore-btn:active { opacity: 0.8; }
 .mobile-explore-btn svg { stroke: #fff; }
@@ -1005,11 +1005,13 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
       <button class="mobile-type-chip active" data-type="all">All</button>
       <button class="mobile-type-chip" data-type="person">People</button>
       <button class="mobile-type-chip" data-type="organization">Orgs</button>
+      <button class="mobile-type-chip" data-type="connected" title="Entities with connections">⌁ Connected</button>
+      <span style="flex:1"></span>
+      <button id="mobile-explore-btn" class="mobile-explore-btn" title="Open a random well-connected entity">
+        <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="3" cy="3" r="2"/><circle cx="11" cy="3" r="2"/><circle cx="7" cy="11" r="2"/><line x1="4.5" y1="4" x2="6" y2="9.5"/><line x1="9.5" y1="4" x2="8" y2="9.5"/></svg>
+        Explore
+      </button>
     </div>
-  </div>
-  <div id="mobile-explore-btn" class="mobile-explore-btn">
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="3" cy="3" r="2"/><circle cx="11" cy="3" r="2"/><circle cx="7" cy="11" r="2"/><line x1="4.5" y1="4" x2="6" y2="9.5"/><line x1="9.5" y1="4" x2="8" y2="9.5"/></svg>
-    Explore a network
   </div>
   <div id="mobile-active-filters" class="mobile-active-filters"></div>
   <div id="mobile-card-list" class="mobile-card-list"></div>
@@ -1886,13 +1888,30 @@ function renderMiniGraph(entity, container) {
     });
   });
 
-  // Center label — placed as a standalone text at bottom of SVG (avoids node overlap)
+  // Center label — word-wrapped via tspans at bottom of SVG
+  const fullName = entity.name || entity.title || '';
   const centerLabel = svgEl.append('text')
     .attr('class', 'mini-center-label')
     .attr('text-anchor', 'middle')
-    .attr('font-size', '11px')
-    .attr('y', height - 8)
-    .text(entity.name.length > 24 ? entity.name.slice(0, 22) + '..' : entity.name);
+    .attr('font-size', '11px');
+  // Split into lines of ~20 chars on word boundaries
+  const words = fullName.split(/\s+/);
+  const lines = [];
+  let cur = '';
+  for (const w of words) {
+    if (cur && (cur + ' ' + w).length > 22) { lines.push(cur); cur = w; }
+    else cur = cur ? cur + ' ' + w : w;
+  }
+  if (cur) lines.push(cur);
+  const lineCount = Math.min(lines.length, 3);
+  const startY = height - 6 - (lineCount - 1) * 13;
+  lines.slice(0, 3).forEach((line, i) => {
+    centerLabel.append('tspan')
+      .attr('x', 0) // will be updated on tick
+      .attr('dy', i === 0 ? 0 : 13)
+      .text(line);
+  });
+  centerLabel.attr('y', startY);
 
   // Click handler: navigate to that entity
   nodeEls.on('click', (event, d) => {
@@ -1912,6 +1931,7 @@ function renderMiniGraph(entity, container) {
     nodeEls.attr('transform', d => `translate(${d.x},${d.y})`);
     // Keep center label below center node
     const cn = nodes[0];
+    centerLabel.selectAll('tspan').attr('x', cn.x);
     centerLabel.attr('x', cn.x);
   });
 
@@ -2193,7 +2213,7 @@ function renderMobileDirectory() {
   document.getElementById('mobile-card-list').innerHTML = cardsHtml;
 
   // ── Filter state machine ──
-  const mobileFilters = { categories: new Set(), stance: new Set(), timeline: new Set(), risk: new Set(), type: 'all', searchQuery: '', searchMatches: null };
+  const mobileFilters = { categories: new Set(), stance: new Set(), timeline: new Set(), risk: new Set(), type: 'all', connectedOnly: false, searchQuery: '', searchMatches: null };
 
   function applyMobileFilters() {
     const cards = document.querySelectorAll('.mobile-card');
@@ -2206,6 +2226,7 @@ function renderMobileDirectory() {
       if (show && mobileFilters.stance.size > 0 && !mobileFilters.stance.has(card.dataset.stance)) show = false;
       if (show && mobileFilters.timeline.size > 0 && !mobileFilters.timeline.has(card.dataset.timeline)) show = false;
       if (show && mobileFilters.risk.size > 0 && !mobileFilters.risk.has(card.dataset.risk)) show = false;
+      if (show && mobileFilters.connectedOnly && !(connectionCounts.get(card.dataset.entityType + ':' + parseInt(card.dataset.entityId)) > 0)) show = false;
       if (show && mobileFilters.searchMatches && !mobileFilters.searchMatches.has(card.dataset.entityId + ':' + card.dataset.entityType)) show = false;
       card.style.display = show ? '' : 'none';
       if (show) visibleCount++;
@@ -2257,12 +2278,17 @@ function renderMobileDirectory() {
       applyMobileFilters();
     });
   });
-  // Type chips
+  // Type chips (All/People/Orgs are radio; Connected is an independent toggle)
   document.querySelectorAll('.mobile-type-chip').forEach(chip => {
     chip.addEventListener('click', () => {
-      document.querySelectorAll('.mobile-type-chip').forEach(c => c.classList.remove('active'));
-      chip.classList.add('active');
-      mobileFilters.type = chip.dataset.type;
+      if (chip.dataset.type === 'connected') {
+        chip.classList.toggle('active');
+        mobileFilters.connectedOnly = chip.classList.contains('active');
+      } else {
+        document.querySelectorAll('.mobile-type-chip:not([data-type="connected"])').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        mobileFilters.type = chip.dataset.type;
+      }
       applyMobileFilters();
     });
   });
