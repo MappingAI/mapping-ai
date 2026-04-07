@@ -540,9 +540,25 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
 .mobile-spectrum-segment.active { box-shadow: inset 0 0 0 2px var(--accent); }
 .mobile-spectrum-endpoints { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 8px; color: var(--text-3); margin-top: 2px; }
 .mobile-search-bar { padding: 0.5rem 0.75rem; background: var(--bg-panel); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 10; }
-.mobile-search-box { display: flex; align-items: center; gap: 0.5rem; background: var(--input-bg); border: 1px solid var(--line); border-radius: 6px; padding: 0.5rem 0.75rem; }
+.mobile-search-box { display: flex; align-items: center; gap: 0.5rem; background: var(--input-bg); border: 1px solid var(--line); border-radius: 6px; padding: 0.5rem 0.75rem; position: relative; }
 .mobile-search-box svg { flex-shrink: 0; color: var(--text-3); }
 .mobile-search-box input { flex: 1; border: none; background: none; outline: none; font-family: var(--mono); font-size: 13px; color: var(--text-1); }
+.mobile-autocomplete {
+  display: none; position: absolute; top: 100%; left: -1px; right: -1px;
+  background: var(--bg-panel); border: 1px solid var(--line); border-top: none;
+  border-radius: 0 0 6px 6px; max-height: 240px; overflow-y: auto; z-index: 20;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.mobile-autocomplete.visible { display: block; }
+.mobile-ac-item {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.5rem 0.75rem; cursor: pointer; transition: background 0.1s;
+  -webkit-tap-highlight-color: transparent;
+}
+.mobile-ac-item:active, .mobile-ac-item:hover { background: var(--input-bg); }
+.mobile-ac-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.mobile-ac-name { font-family: var(--mono); font-size: 12px; color: var(--text-1); flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mobile-ac-type { font-family: var(--mono); font-size: 9px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.04em; flex-shrink: 0; }
 .mobile-type-chips { display: flex; gap: 0.4rem; margin-top: 0.5rem; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
 .mobile-type-chips::-webkit-scrollbar { display: none; }
 .mobile-type-chip {
@@ -968,6 +984,7 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
     <div class="mobile-search-box">
       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       <input id="mobile-search-input" type="text" placeholder="Search entities..." autocomplete="off">
+      <div id="mobile-autocomplete" class="mobile-autocomplete"></div>
     </div>
     <div id="mobile-type-chips" class="mobile-type-chips">
       <button class="mobile-type-chip active" data-type="all">All</button>
@@ -2198,28 +2215,97 @@ function renderMobileDirectory() {
       applyMobileFilters();
     });
   });
-  // Search (searches people + orgs + resources; resources shown as inline results)
+  // Search with autocomplete dropdown + boosted name/title scoring
   let searchTimer;
+  const autocomplete = document.getElementById('mobile-autocomplete');
+  const searchInput = document.getElementById('mobile-search-input');
   const resourceResultsContainer = document.createElement('div');
   resourceResultsContainer.id = 'mobile-resource-results';
   resourceResultsContainer.style.cssText = 'padding:0 0.75rem;';
   document.getElementById('mobile-card-list').before(resourceResultsContainer);
 
-  document.getElementById('mobile-search-input').addEventListener('input', (e) => {
+  // Boosted scoring: name/title matches score much higher than other field matches
+  function scoreMobile(d, q, expanded) {
+    const nameLower = (d.name || d.title || '').toLowerCase();
+    const qLower = q.toLowerCase();
+    // Exact name match
+    if (nameLower === qLower) return 200;
+    // Name starts with query
+    if (nameLower.startsWith(qLower)) return 150;
+    // Name contains query
+    if (nameLower.includes(qLower)) return 120;
+    // Fall back to shared scoreEntity for other field matches
+    return scoreEntity(d, expanded);
+  }
+
+  function showAutocomplete(q) {
+    const expanded = expandQuery(q);
+    const scored = [];
+    for (const d of allSearchable) {
+      const s = scoreMobile(d, q, expanded);
+      if (s > 0) scored.push({ d, s });
+    }
+    scored.sort((a, b) => b.s - a.s);
+    const top = scored.slice(0, 8);
+
+    if (top.length === 0) {
+      autocomplete.innerHTML = '<div style="padding:0.5rem 0.75rem;font-family:var(--mono);font-size:11px;color:var(--text-3);">No matches</div>';
+      autocomplete.classList.add('visible');
+      return scored;
+    }
+
+    autocomplete.innerHTML = top.map(({ d }) => {
+      const color = getColor(d.category) || DEFAULT_COLOR;
+      const typeLabel = d.entityType === 'resource' ? 'resource' : d.entityType === 'person' ? 'person' : 'org';
+      const displayName = d.name || d.title;
+      return `<div class="mobile-ac-item" data-ac-id="${d.id}" data-ac-type="${d.entityType}">
+        <span class="mobile-ac-dot" style="background:${color}"></span>
+        <span class="mobile-ac-name">${displayName}</span>
+        <span class="mobile-ac-type">${typeLabel}</span>
+      </div>`;
+    }).join('');
+    autocomplete.classList.add('visible');
+
+    // Bind clicks
+    autocomplete.querySelectorAll('.mobile-ac-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const id = parseInt(item.dataset.acId);
+        const type = item.dataset.acType;
+        const entity = allSearchable.find(e => e.id === id && e.entityType === type);
+        if (entity) {
+          autocomplete.classList.remove('visible');
+          searchInput.value = '';
+          mobileFilters.searchMatches = null;
+          mobileFilters.searchQuery = '';
+          resourceResultsContainer.innerHTML = '';
+          applyMobileFilters();
+          mobileScrollPos = dir.scrollTop;
+          showDetail(entity, []);
+        }
+      });
+    });
+
+    return scored;
+  }
+
+  searchInput.addEventListener('input', (e) => {
     clearTimeout(searchTimer);
     searchTimer = setTimeout(() => {
       const q = e.target.value.trim();
       resourceResultsContainer.innerHTML = '';
-      if (!q) { mobileFilters.searchMatches = null; mobileFilters.searchQuery = ''; applyMobileFilters(); return; }
+      if (!q) {
+        autocomplete.classList.remove('visible');
+        mobileFilters.searchMatches = null;
+        mobileFilters.searchQuery = '';
+        applyMobileFilters();
+        return;
+      }
       mobileFilters.searchQuery = q;
-      const expanded = expandQuery(q);
-      const scored = [];
-      for (const d of allSearchable) { const s = scoreEntity(d, expanded); if (s > 0) scored.push({ d, s }); }
-      scored.sort((a, b) => b.s - a.s);
-      // People/org matches filter the card list
+      const scored = showAutocomplete(q);
+      // Also filter card list for people/orgs
       mobileFilters.searchMatches = new Set(scored.filter(x => x.d.entityType !== 'resource').map(x => x.d.id + ':' + x.d.entityType));
       applyMobileFilters();
-      // Resource matches shown as inline result cards above the list
+      // Resource matches shown as inline cards
       const resourceMatches = scored.filter(x => x.d.entityType === 'resource').slice(0, 5);
       if (resourceMatches.length > 0) {
         let rhtml = '<div class="mobile-category-header" style="position:static;"><span class="cat-dot" style="background:#6b7280"></span><span>Resources</span><span class="cat-count">' + resourceMatches.length + '</span></div>';
@@ -2234,7 +2320,6 @@ function renderMobileDirectory() {
             </div></div>`;
         }
         resourceResultsContainer.innerHTML = rhtml;
-        // Bind clicks — resources open detail only (no graph)
         resourceResultsContainer.querySelectorAll('.mobile-card').forEach(card => {
           card.addEventListener('click', () => {
             const id = parseInt(card.dataset.entityId);
@@ -2244,6 +2329,11 @@ function renderMobileDirectory() {
         });
       }
     }, 80);
+  });
+
+  // Hide autocomplete when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.mobile-search-box')) autocomplete.classList.remove('visible');
   });
 
   // Card tap → detail panel
