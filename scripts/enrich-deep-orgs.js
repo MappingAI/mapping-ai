@@ -279,7 +279,6 @@ CURRENT DATABASE ENTRY:
 - AGI timeline: ${org.agi_timeline || '(empty)'}
 - AI risk level: ${org.ai_risk_level || '(empty)'}
 - Threat models: ${org.threat_models || '(empty)'}
-- Threat models detail: ${org.threat_models_detail || '(empty)'}
 - Influence type: ${org.influence_type || '(empty)'}
 - Twitter: ${org.twitter || '(empty)'}
 - Notes: ${org.notes || '(empty)'}
@@ -305,8 +304,7 @@ Provide enriched values in JSON. BE THOROUGH AND SPECIFIC:
   "evidence_source": "Explicitly stated | Inferred from actions | Inferred from associations",
   "agi_timeline": "Already here | 2-3 years | 5-10 years | 10-25 years | 25+ years or never | Ill-defined | Unknown",
   "ai_risk_level": "Overstated | Manageable | Serious | Catastrophic | Existential | Mixed/nuanced | Unknown",
-  "threat_models": "Comma-separated from: Labor displacement, Economic inequality, Power concentration, Democratic erosion, Cybersecurity, Misinformation, Environmental, Weapons proliferation, Loss of control, Copyright/IP, Existential risk, Bias/discrimination, Privacy, National security",
-  "threat_models_detail": "1-3 sentences on specific focus areas. Example: '${guidance.threatExample}'",
+  "threat_models": "Comma-separated concerns from: Labor displacement, Economic inequality, Power concentration, Democratic erosion, Cybersecurity, Misinformation, Environmental, Weapons proliferation, Loss of control, Copyright/IP, Existential risk, Bias/discrimination, Privacy, National security. Include brief detail on specific focus areas. Example: '${guidance.threatExample}'",
   "influence_type": "Comma-separated from: Decision-maker, Advisor/strategist, Researcher/analyst, Funder/investor, Builder, Organizer/advocate, Narrator, Implementer, Connector/convener",
   "twitter": "@handle",
   "notes": "2-4 sentences with SPECIFIC facts. Example: '${guidance.notesExample}'"
@@ -375,12 +373,9 @@ function validateResponse(data) {
     clean.ai_risk_level = data.ai_risk_level;
   }
 
-  // Threat models
+  // Threat models - can include detail since threat_models_detail is not a column
   if (data.threat_models && typeof data.threat_models === 'string') {
-    clean.threat_models = data.threat_models.substring(0, 500);
-  }
-  if (data.threat_models_detail && typeof data.threat_models_detail === 'string') {
-    clean.threat_models_detail = data.threat_models_detail.substring(0, 2000);
+    clean.threat_models = data.threat_models.substring(0, 2000);
   }
 
   // Influence type
@@ -516,35 +511,32 @@ async function enrichOrg(client, org) {
     values.push(clean.funding_model);
   }
 
-  // Core enrichment fields
+  // Core enrichment fields - use belief_* column names
   if (clean.regulatory_stance) {
-    updates.push(`regulatory_stance = $${idx++}`);
+    updates.push(`belief_regulatory_stance = $${idx++}`);
     values.push(clean.regulatory_stance);
   }
   if (clean.regulatory_stance_detail) {
-    updates.push(`regulatory_stance_detail = $${idx++}`);
+    updates.push(`belief_regulatory_stance_detail = $${idx++}`);
     values.push(clean.regulatory_stance_detail);
   }
   if (clean.evidence_source) {
-    updates.push(`evidence_source = $${idx++}`);
+    updates.push(`belief_evidence_source = $${idx++}`);
     values.push(clean.evidence_source);
   }
   if (clean.agi_timeline) {
-    updates.push(`agi_timeline = $${idx++}`);
+    updates.push(`belief_agi_timeline = $${idx++}`);
     values.push(clean.agi_timeline);
   }
   if (clean.ai_risk_level) {
-    updates.push(`ai_risk_level = $${idx++}`);
+    updates.push(`belief_ai_risk = $${idx++}`);
     values.push(clean.ai_risk_level);
   }
   if (clean.threat_models) {
-    updates.push(`threat_models = $${idx++}`);
+    updates.push(`belief_threat_models = $${idx++}`);
     values.push(clean.threat_models);
   }
-  if (clean.threat_models_detail) {
-    updates.push(`threat_models_detail = $${idx++}`);
-    values.push(clean.threat_models_detail);
-  }
+  // Note: threat_models_detail is not a DB column
   if (clean.influence_type) {
     updates.push(`influence_type = $${idx++}`);
     values.push(clean.influence_type);
@@ -569,7 +561,7 @@ async function enrichOrg(client, org) {
   }
 
   values.push(org.id);
-  await client.query(`UPDATE organizations SET ${updates.join(', ')} WHERE id = $${idx}`, values);
+  await client.query(`UPDATE entity SET ${updates.join(', ')} WHERE id = $${idx}`, values);
   enriched++;
 
   // Log what we found
@@ -612,10 +604,14 @@ async function saveCheckpoint(client, checkpointNum) {
   const XLSX = await import('xlsx');
   const result = await client.query(`
     SELECT id, name, category, website, location, funding_model,
-           regulatory_stance, regulatory_stance_detail, evidence_source,
-           agi_timeline, ai_risk_level, threat_models, threat_models_detail,
+           belief_regulatory_stance AS regulatory_stance,
+           belief_regulatory_stance_detail AS regulatory_stance_detail,
+           belief_evidence_source AS evidence_source,
+           belief_agi_timeline AS agi_timeline,
+           belief_ai_risk AS ai_risk_level,
+           belief_threat_models AS threat_models,
            influence_type, twitter, notes
-    FROM organizations WHERE status = 'approved'
+    FROM entity WHERE entity_type = 'organization' AND status = 'approved'
     ORDER BY id
   `);
 
@@ -642,12 +638,17 @@ async function main() {
 
   const client = await pool.connect();
   try {
+    // Use aliases to map DB column names (belief_*) to script's expected names
     let query = `
       SELECT id, name, category, website, location, funding_model,
-             regulatory_stance, regulatory_stance_detail, evidence_source,
-             agi_timeline, ai_risk_level, threat_models, threat_models_detail,
+             belief_regulatory_stance AS regulatory_stance,
+             belief_regulatory_stance_detail AS regulatory_stance_detail,
+             belief_evidence_source AS evidence_source,
+             belief_agi_timeline AS agi_timeline,
+             belief_ai_risk AS ai_risk_level,
+             belief_threat_models AS threat_models,
              influence_type, twitter, bluesky, notes
-      FROM organizations WHERE status = 'approved'
+      FROM entity WHERE entity_type = 'organization' AND status = 'approved'
     `;
 
     if (singleId) {

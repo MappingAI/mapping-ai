@@ -1,0 +1,810 @@
+# AI Mapping Data Export (4/1/2026)
+
+## PEOPLE (305)
+
+
+### Academic
+- **Ajay Agrawal** — Geoffrey Taber Chair in Entrepreneurship and Innovation and Professor of Strategic Management, Rotma...
+- **Alison Gopnik** — Professor of Psychology and Philosophy, UC Berkeley; Member of Berkeley AI Research Group; Expert on...
+- **Andrew Ng** — Founder, DeepLearning.AI; Managing General Partner, AI Fund; Executive Chairman, Landing AI; Adjunct...
+- **Anton Korinek** — Professor of Economics, University of Virginia Department of Economics and Darden School of Business... @ University of Virginia
+- **Arvind Narayanan** — Professor of Computer Science and Director of the Center for Information Technology Policy @ Princeton University
+- **Avi Goldfarb** — Rotman Chair in AI and Healthcare, Professor of Marketing, University of Toronto; Co-author of Predi...
+- **Betsey Stevenson** — Professor of Public Policy and Economics, University of Michigan; Former Member, Council of Economic...
+- **danah boyd** — Founder, Data & Society Research Institute; Partner Researcher, Microsoft Research; Incoming Profess...
+- **Daniela Rus** — Director, MIT CSAIL; Deputy Dean of Research, MIT Schwarzman College; Andrew & Erna Viterbi Professo...
+- **Daniel Ho** — William Benjamin Scott and Luna M. Scott Professor of Law, Professor of Political Science, Professor... @ Stanford RegLab (Regulation, Evaluation, and Governance Lab)
+- **Danielle Allen** — James Bryant Conant University Professor, Harvard; Director, Allen Lab for Democracy Renovation
+- **Daniel Susskind** — Research Professor in Economics, King's College London; Senior Research Associate, Institute for Eth...
+- **Daron Acemoglu** — Institute Professor of Economics, MIT; Nobel Prize Winner in Economic Sciences (2024) @ Massachusetts Institute of Technology
+- **David Autor** — Ford Professor of Economics, MIT; Co-Director, MIT Shaping the Future of Work Initiative; Co-Directo...
+- **David Krueger** — Assistant Professor in Robust, Reasoning and Responsible AI, University of Montreal; Core Academic M...
+- **Emily Bender** — Professor of Linguistics, University of Washington; Director, Computational Linguistics Laboratory; ...
+- **Erik Brynjolfsson** — Jerry Yang and Akiko Yamazaki Professor and Senior Fellow at Stanford Institute for Human-Centered A... @ Stanford University
+- **Ethan Mollick** — Associate Professor of Management, Wharton School; Co-Director, Generative AI Labs at Wharton; Autho...
+- **Eugene Volokh** — Gary T. Schwartz Distinguished Professor of Law Emeritus, UCLA; Thomas M. Siebel Senior Fellow, Hoov...
+- **Fei-Fei Li** — Co-Director, Stanford Institute for Human-Centered Artificial Intelligence; Co-founder, World Labs @ Stanford University
+- **Fiona Scott Morton** — Theodore Nierenberg Professor of Economics, Yale School of Management; Former DOJ Chief Economist (2...
+- **Frank Pasquale** — Professor of Law, Cornell Tech and Cornell Law School; Author, The Black Box Society and New Laws of...
+- **Ganesh Sitaraman** — New York Alumni Chancellor's Chair in Law & Professor of Law; Director of the Vanderbilt Policy Acce... @ Vanderbilt University Law School
+- **Geoffrey Hinton** — Professor Emeritus, University of Toronto; Former VP & Engineering Fellow, Google; 2024 Nobel Prize ...
+- **Hélène Landemore** — Damon Wells '58 Professor of Political Science, Yale University; Distinguished Research Fellow, Inst...
+- **Helen Toner** — Director of Strategy & Foundational Research Grants, Georgetown CSET; Former OpenAI Board Member
+- **Henry Farrell** — SNF Agora Professor of International Affairs, Johns Hopkins SAIS; Scholar of AI governance and democ...
+- **Ioana Marinescu** — Associate Professor of Economics, University of Pennsylvania; Principal Economist, DOJ Antitrust Div...
+- **Jacob Steinhardt** — Assistant Professor of Statistics and EECS at UC Berkeley; AI Safety Researcher; Co-founder and CEO ...
+- **Jason Furman** — Aetna Professor of the Practice of Economic Policy at Harvard Kennedy School and Harvard Economics D...
+- **Jason Matheny** — President & CEO, RAND Corporation; Former Director, IARPA; Former White House NSC Technology Coordin...
+- **Joseph Stiglitz** — University Professor, Columbia University; Nobel Prize Economics 2001; Chief Economist, Roosevelt In...
+- **Joshua Gans** — Professor of Strategic Management, Rotman School; Jeffrey S. Skoll Chair of Technical Innovation and...
+- **Kate Crawford** — Research Professor of Communication and STS, USC Annenberg; Senior Principal Researcher, Microsoft R...
+- **Latanya Sweeney** — Daniel Paul Professor of the Practice of Government and Technology, Harvard Kennedy School and Harva... @ Harvard University
+- **Lawrence Katz** — Elisabeth Allison Professor of Economics, Harvard University; Editor, Quarterly Journal of Economics
+- **Lawrence Lessig** — Roy L. Furman Professor of Law and Leadership at Harvard Law School @ Harvard Law School
+- **Lily Tsai** — Ford Professor of Political Science, MIT; Director and Founder, MIT Governance Lab (GOV/LAB)
+- **Mariana Mazzucato** — Professor in the Economics of Innovation and Public Value at University College London, Founding Dir... @ University College London
+- **Max Tegmark** — Professor of Physics, MIT; President and Co-founder, Future of Life Institute
+- **Mitesh Khapra** — Associate Professor, Department of Data Science and AI, IIT Madras; Co-founder of AI4Bharat @ IIT Madras
+- **Nathaniel Persily** — James B. McClatchy Professor of Law, Stanford; Co-Director, Stanford Cyber Policy Center; Co-Directo...
+- **Neil Thompson** — Director, MIT FutureTech Research Project; Research Scientist, MIT CSAIL; Principal Investigator, MI...
+- **Nick Bostrom** — Philosopher and Former Founding Director, Future of Humanity Institute (closed 2024); Founder and Di...
+- **Noam Chomsky** — Institute Professor Emeritus, MIT; Laureate Professor of Linguistics, University of Arizona; Linguis...
+- **Percy Liang** — Associate Professor of Computer Science, Stanford; Director, Stanford Center for Research on Foundat...
+- **Priya Donti** — Assistant Professor and Silverman Family Career Development Professor, MIT EECS and LIDS @ MIT
+- **Ramin Toloui** — Distinguished Policy Fellow, Stanford Institute for Economic Policy Research (SIEPR); Former Assista...
+- **Rediet Abebe** — Assistant Professor of Computer Science, UC Berkeley; Co-founder, Black in AI and Mechanism Design f...
+- **Regina Barzilay** — School of Engineering Distinguished Professor for AI and Health, MIT; AI Faculty Lead, Jameel Clinic @ MIT
+- **Ruha Benjamin** — Alexander Stewart 1886 Professor of African American Studies, Princeton; Founding Director, Ida B. W...
+- **Ryan Calo** — Lane Powell and D. Wayne Gittinger Professor, University of Washington School of Law; Co-Director, T...
+- **Safiya Noble** — David O. Sears Presidential Endowed Chair of Social Sciences and Professor of Gender Studies, Africa...
+- **Samantha Bradshaw** — Assistant Professor in New Technology & Security, American University; Director, Center for Security...
+- **Sandy Pentland** — Toshiba Professor of Media Arts and Sciences at MIT; HAI Fellow at Stanford University @ MIT Media Lab
+- **Sayash Kapoor** — Ph.D. Candidate in Computer Science, Center for Information Technology Policy @ Princeton University
+- **Shoshana Zuboff** — Charles Edward Wilson Professor Emerita, Harvard Business School; Author, The Age of Surveillance Ca...
+- **Simon Johnson** — Ronald A. Kurtz (1954) Professor of Entrepreneurship, MIT Sloan School of Management; Co-director, M... @ MIT Sloan
+- **Stuart Russell** — Professor of Computer Science, UC Berkeley / Director, Center for Human-Compatible AI / President, I... @ University of California, Berkeley
+- **Suresh Venkatasubramanian** — Director, Center for Technological Responsibility, Reimagination, and Redesign (CNTR), Brown Univers... @ Brown University
+- **Susan Athey** — Economics of Technology Professor, Stanford GSB; Senior Fellow, Stanford Institute for Economic Poli...
+- **Tim Wu** — Julius Silver Professor of Law, Science and Technology at Columbia Law School @ Columbia University
+- **Toby Ord** — Senior Research Fellow in Philosophy, University of Oxford; Author of 'The Precipice'
+- **Veena Dubal** — Professor of Law, UC Irvine; General Counsel, American Association of University Professors; Gig Eco...
+- **Virginia Eubanks** — Associate Professor of Political Science, University at Albany, SUNY; Author of 'Automating Inequali...
+- **Woodrow Hartzog** — Andrew R. Randall Professor of Law at Boston University School of Law; Author, Privacy's Blueprint
+- **Yejin Choi** — Dieter Schwarz Foundation HAI Professor of Computer Science, Senior Fellow at Stanford HAI, Co-Direc... @ University of Washington
+- **Yolanda Gil** — Research Professor & Director, AI & Data Science, USC Information Sciences Institute; Co-Director, S...
+- **Yoshua Bengio** — Full Professor & Scientific Director of Mila, Chair of International AI Safety Report, Co-President ... @ Mila
+
+### Cultural figure
+- **Brian Christian** — Author, The Alignment Problem, The Most Human Human, Algorithms to Live By; DPhil student at Oxford
+- **Cory Doctorow** — Science Fiction Author, Activist & Journalist; Special Advisor, Electronic Frontier Foundation; Crea...
+- **Kim Stanley Robinson** — Science Fiction Author, Climate Fiction Writer
+- **Naomi Klein** — Author, Activist & Professor of Climate Justice at University of British Columbia; Co-Director, Cent...
+- **Natasha Lyonne** — Co-founder, Asteria Film Co.; Actress, Writer, Director @ Asteria Film Co.
+- **Refik Anadol** — Media Artist and Pioneer of AI Art, Director of Refik Anadol Studio
+- **Rick Rubin** — Music Producer and Author
+- **Shalini Kantayya** — Documentary Filmmaker; Director, Coded Bias (Netflix) and TikTok, Boom (Sundance)
+- **Ted Chiang** — Science Fiction Author; Stories include "Story of Your Life" (Arrival), "Exhalation"; Computer Scien...
+- **Yuval Noah Harari** — Historian & Author; Co-founder of Sapienship; Distinguished Research Fellow at Cambridge Centre for ...
+
+### Executive
+- **Adam Evans** — EVP & GM, Salesforce AI Platform @ Salesforce
+- **Alan Descoins** — CEO, Tryolabs @ Tryolabs
+- **Alexandr Wang** — CEO and Founder, Scale AI @ Scale AI
+- **Alex Blania** — Co-founder and CEO, Tools for Humanity; Co-founder, World; Co-founder, Merge Labs @ Tools for Humanity
+- **Allie K. Miller** — CEO, Open Machine; Former Global Head of Machine Learning for Startups and VC at AWS @ Open Machine
+- **Alondra Nelson** — Harold F. Linder Professor, Institute for Advanced Study; Former Acting Director, White House Office... @ Office of Science and Technology Policy
+- **Alvin Graylin** — Chairman, Virtual World Society; Digital Fellow, Stanford HAI; Guest Lecturer, MIT; Former President...
+- **Amnon Shashua** — President and CEO, Mobileye; Senior Vice President (former), Intel; Professor, Hebrew University of ... @ Mobileye
+- **Andy Jassy** — President and CEO, Amazon @ Amazon
+- **Andy Parsons** — Senior Director of Content Authenticity Initiative, Adobe @ Adobe
+- **Arati Prabhakar** — OSTP Director (Biden Admin, 2022-2025); fmr DARPA Director (2012-2017); fmr NIST Director (1993-1997... @ White House Office of Science and Technology Policy
+- **Brandon Tseng** — Co-founder and President, Shield AI @ Shield AI
+- **C.C. Wei** — Chairman and CEO, Taiwan Semiconductor Manufacturing Company (TSMC) @ TSMC
+- **Chris Lehane** — Chief Global Affairs Officer, OpenAI @ OpenAI
+- **Cristiano Amon** — President and CEO, Qualcomm Incorporated @ Qualcomm
+- **Daniela Amodei** — Co-Founder and President, Anthropic @ Anthropic
+- **Dario Amodei** — CEO and Co-founder @ Anthropic
+- **David Ha** — Co-founder and CEO, Sakana AI @ Sakana AI
+- **David Holz** — Founder and CEO, Midjourney @ Midjourney
+- **Demis Hassabis** — CEO and Co-Founder, Google DeepMind @ Google DeepMind
+- **Edwin Chen** — Founder and CEO, Surge AI @ Surge AI
+- **Elon Musk** — Founder and CEO, xAI; CEO and Product Architect, Tesla; Founder, CEO, and Chief Engineer, SpaceX @ xAI
+- **Fidji Simo** — CEO of Applications, OpenAI @ OpenAI
+- **Gavin Newsom** — Governor of California @ State of California
+- **James Peng** — Founder and CEO, Pony.ai @ Pony.ai
+- **Jared Kaplan** — Co-founder and Chief Science Officer, Anthropic; Responsible Scaling Officer @ Anthropic
+- **Jared Polis** — Governor of Colorado (2019-present), Former U.S. Representative CO-02 (2009-2019) @ State of Colorado
+- **Jeff Leek** — VP and Chief Data Officer, Fred Hutchinson Cancer Center; Co-founder and Co-CEO, Synthesize Bio @ Fred Hutchinson Cancer Center
+- **Jensen Huang** — Founder, President & CEO, Nvidia @ Nvidia
+- **Jon Husted** — U.S. Senator from Ohio (2025-present), former Lt. Governor of Ohio (2019-2025) @ State of Ohio
+- **Josh Woodward** — VP Google Labs, Gemini App, and AI Studio @ Google
+- **Kakul Srivastava** — CEO, Splice @ Splice
+- **Kathy Hochul** — Governor of New York State @ State of New York
+- **Liang Wenfeng** — CEO and Founder, DeepSeek @ DeepSeek
+- **Lynne Parker** — Principal Deputy Director of the White House Office of Science and Technology Policy; Executive Dire... @ White House Office of Science and Technology Policy (OSTP)
+- **Maithra Raghu** — Co-founder and CEO, Samaya AI @ Samaya AI
+- **Marius Hobbhahn** — CEO and Co-Founder, Apollo Research @ Apollo Research
+- **Mark Zuckerberg** — CEO and Chairman, Meta Platforms @ Meta
+- **Mati Staniszewski** — Co-founder and CEO, ElevenLabs @ ElevenLabs
+- **Matthew Prince** — Co-founder and CEO, Cloudflare @ Cloudflare
+- **Mfikeyi Makayi** — CEO, KoBold Metals Africa @ KoBold Metals
+- **Michael Kratsios** — Director of Office of Science and Technology Policy and Science Advisor to the President @ Office of Science and Technology Policy
+- **Mike Krieger** — Chief Product Officer, Anthropic @ Anthropic
+- **Mira Murati** — Founder & CEO, Thinking Machines Lab; Former CTO, OpenAI
+- **Navrina Singh** — Founder and CEO, Credo AI; Member, National AI Advisory Committee (NAIAC) @ Credo AI
+- **Peggy Johnson** — CEO, Agility Robotics @ Agility Robotics
+- **Rene Haas** — CEO, Arm Holdings @ Arm
+- **Ren Zhengfei** — Founder and CEO, Huawei Technologies @ Huawei
+- **Sam Altman** — CEO of OpenAI @ OpenAI
+- **Sam Rodriques** — Co-founder and CEO, FutureHouse; Co-founder and CEO, Edison Scientific @ FutureHouse
+- **Sriram Krishnan** — Senior Policy Advisor for Artificial Intelligence, White House Office of Science and Technology Poli... @ White House Office of Science and Technology Policy
+- **Steve Huffman** — Co-founder and CEO, Reddit @ Reddit
+- **Strive Masiyiwa** — Founder and Executive Chairman, Cassava Technologies @ Cassava Technologies
+- **Tareq Amin** — CEO, Humain @ Humain
+- **Wang Xingxing** — Founder and CEO, Unitree Robotics @ Unitree Robotics
+
+### Investor
+- **Anjney Midha** — General Partner, Andreessen Horowitz; Venture Partner (as of Oct 2024); Founder, AMP (Autonomous Mac...
+- **Dustin Moskovitz** — Co-founder and Chairman, Asana; Co-founder, Coefficient Giving (formerly Open Philanthropy) @ Coefficient Giving (formerly Open Philanthropy)
+- **Elad Gil** — Investor & Advisor; Author, High Growth Handbook; Former Twitter VP; Managing ~$3B fund
+- **Eric Schmidt** — Former CEO & Chairman, Google; Co-founder, Schmidt Futures; Former Chair, NSCAI (2019-2021); CEO, Re...
+- **Holden Karnofsky** — Member of Technical Staff - Anthropic @ Coefficient Giving (formerly Open Philanthropy)
+- **Ian Hogarth** — Chair, UK AI Security Institute (formerly AI Safety Institute); General Partner, Plural; Co-author, ...
+- **Jaan Tallinn** — Co-founder, Skype & Kazaa; Co-founder, Centre for the Study of Existential Risk; Co-founder, Future ...
+- **Joe Lonsdale** — Co-founder, Palantir & 8VC; Founding Chairman, University of Austin
+- **Joi Ito** — Former Director, MIT Media Lab (2011-2019); President, Chiba Institute of Technology @ MIT Media Lab
+- **Joshua Kushner** — Founder and Managing Partner, Thrive Capital @ Thrive Capital
+- **Josh Wolfe** — Co-founder & Managing Partner, Lux Capital; Defense Tech & National Security AI Investor
+- **Marc Andreessen** — Co-Founder & General Partner, Andreessen Horowitz (a16z) @ Andreessen Horowitz (a16z)
+- **Martin Casado** — General Partner, Andreessen Horowitz (Infrastructure Practice Leader); Former VMware SVP/GM, Nicira ...
+- **Masayoshi Son** — Founder, Chairman, and CEO, SoftBank Group Corp.; Chairman, Arm Holdings; Chairman, Stargate LLC @ SoftBank
+- **Matt Clifford** — Co-founder & CEO, Entrepreneur First; Chair, ARIA; Prime Minister's Adviser on AI Opportunities; UK ...
+- **Nat Friedman** — Co-leader, Meta Superintelligence Labs; Investor and Co-founder, AI Grant/NFDG @ AI Grant
+- **Peter Thiel** — Co-founder and Chairman, Palantir Technologies; Managing Partner, Founders Fund @ Founders Fund
+- **Reid Hoffman** — Co-founder, LinkedIn; Partner, Greylock; Co-founder, Inflection AI & Manas AI; Author, Impromptu and...
+- **Sam Lessin** — General Partner, Slow Ventures; Former VP Product, Facebook
+- **Seth Rosenberg** — Partner, Greylock Partners; Enterprise AI and Fintech Investor
+- **Sonya Huang** — Partner, Sequoia Capital; Co-host, Training Data podcast; Co-author, State of AI Reports
+- **Vinod Khosla** — Founder, Khosla Ventures; Vocal on AI Regulation
+
+### Journalist
+- **Cade Metz** — Technology Reporter, The New York Times; Author of 'Genius Makers: The Mavericks Who Brought AI to G...
+- **Casey Newton** — Founder of Platformer and Co-host of Hard Fork podcast @ Platformer
+- **Craig Smith** — Host, Eye on AI Podcast; Former Foreign Correspondent, The New York Times
+- **Dan Kagan-Kans** — Writer covering AI, science, and ideas for publications including Transformer, Wall Street Journal, ... @ Unknown
+- **Dan Wang** — Research Fellow at Hoover Institution, Technology Analyst and Writer @ Unknown
+- **Dwarkesh Patel** — Host, Dwarkesh Podcast; AI Policy Commentator and Writer
+- **Ezra Klein** — NYT columnist and podcast host @ New York Times
+- **James Vincent** — Senior Reporter, The Verge; AI & Science Coverage; Author of 'Beyond Measure'
+- **Kara Swisher** — Host, On with Kara Swisher & Pivot Podcasts; Technology Journalist and Author
+- **Karen Hao** — Award-winning AI journalist, author of 'Empire of AI', former senior AI editor at MIT Technology Rev... @ MIT Technology Review
+- **Kevin Roose** — Technology Columnist, The New York Times; Co-host, Hard Fork Podcast; Author
+- **Lex Fridman** — Host, Lex Fridman Podcast; Research Scientist, MIT Laboratory for Information and Decision Systems (...
+- **Madhumita Murgia** — AI Editor, Financial Times; Author of Code Dependent: Living in the Shadow of AI
+- **Matt O'Brien** — Technology Writer, Associated Press; Covers AI policy, copyright issues, and tech regulation
+- **Melissa Heikkilä** — AI Correspondent, Financial Times (formerly Senior Reporter, MIT Technology Review)
+- **Michel Justen** — AI Grants Lead at Tarbell Center for AI Journalism @ Unknown
+- **Nathaniel Whittemore** — Host, The AI Daily Brief Podcast; Founder and CEO, Superintelligent
+- **Nitasha Tiku** — Technology Culture Reporter, The Washington Post; covers AI ethics, labor impacts, and Silicon Valle...
+- **Parmy Olson** — Bloomberg Opinion Columnist covering technology, AI and regulation; Author of 'Supremacy: AI, ChatGP...
+- **Will Knight** — Senior Writer, Wired; AI & Robotics Coverage; Author of AI Lab Newsletter
+- **Zeynep Tufekci** — Henry G. Bryan Professor of Sociology and Public Affairs at Princeton University; New York Times Opi...
+
+### Organizer
+- **Alexandra Reeve Givens** — President & CEO, Center for Democracy & Technology
+- **Alex Hanna** — Director of Research, Distributed AI Research Institute (DAIR); Former Senior Research Scientist, Go...
+- **Ana Helena Ulbrich** — Co-founder and Director, NoHarm; Pharmacist and AI Safety Advocate @ NoHarm
+- **Ben Wizner** — Director, ACLU Speech, Privacy & Technology Project; Attorney for Edward Snowden
+- **Cindy Cohn** — Executive Director, Electronic Frontier Foundation
+- **Corynne McSherry** — Legal Director, Electronic Frontier Foundation
+- **Duncan Crabtree-Ireland** — National Executive Director and Chief Negotiator, SAG-AFTRA @ SAG-AFTRA
+- **Ed Newton-Rex** — CEO, Fairly Trained @ Fairly Trained
+- **Elliston Berry** — Deepfake victim turned AI safety advocate @ Unknown
+- **Fran Drescher** — President of SAG-AFTRA @ SAG-AFTRA
+- **Janet Haven** — Executive Director, Data & Society Research Institute
+- **Jennifer Pahlka** — Author of 'Recoding America', Co-founder and Board Chair of Recoding America Fund, Former US Deputy ... @ Civic Signals
+- **Liz Shuler** — President, AFL-CIO
+- **Mark Surman** — President & Executive Director, Mozilla Foundation
+- **Mary Wareham** — Deputy Director, Crisis, Conflict and Arms Division, Human Rights Watch; Former Coordinator, Campaig...
+- **Meredith Whittaker** — President of Signal Foundation @ Signal (or Center for AI Safety)
+- **Milagros Miceli** — Founder, Data Workers' Inquiry; Research Lead, Distributed AI Research Institute (DAIR); Head of Dat... @ Data Workers' Inquiry
+- **Randi Weingarten** — President, American Federation of Teachers @ American Federation of Teachers
+- **Rebecca Finlay** — CEO, Partnership on AI
+- **Sneha Revanur** — Founder & President, Encode Justice; Gen Z AI Policy Advocate
+- **Timnit Gebru** — Founder and Executive Director @ DAIR Institute
+
+### Policymaker
+- **Alan Davidson** — Assistant Secretary for Communications and Information, National Telecommunications and Information ...
+- **Alexandra Mealer** — Candidate, TX House District 09 @ Republican Party
+- **Alexandria Ocasio-Cortez** — U.S. Representative, NY-14 @ U.S. House of Representatives
+- **Alex Bores** — New York State Assemblymember, 73rd District @ New York State Assembly
+- **Anna Eshoo** — fmr U.S. Representative, CA-16 @ Unknown
+- **Audrey Tang** — Taiwan's Cyber Ambassador (2024-present); Former Digital Minister (2016-2024); World's First Transge...
+- **Ben Ray Luján** — U.S. Senator from New Mexico, Chair of Subcommittee on Communications, Media, and Broadband @ United States Senate
+- **Ben Reinhardt** — Founder & CEO, Speculative Technologies @ Justified Priors
+- **Bernie Sanders** — U.S. Senator from Vermont, Independent (Senior Senator) @ United States Senate
+- **Brian Deese** — fmr Director of the National Economic Council (Biden Administration) @ White House
+- **Brian Schatz** — U.S. Senator, HI - Senior Senator @ United States Senate
+- **Bruce Reed** — Head of AI, Common Sense Media; Former White House Deputy Chief of Staff for Policy @ Common Sense Media
+- **Carlos De La Cruz** — Candidate, TX House District 35 @ Republican Party
+- **Chris Coons** — U.S. Senator from Delaware, Chair of Senate Judiciary Subcommittee on Intellectual Property @ United States Senate
+- **Chris Gober** — Candidate, TX House District 10 @ Republican Party
+- **Chris Murphy** — U.S. Senator from Connecticut (Junior Senator) @ United States Senate
+- **Chuck Schumer** — U.S. Senator, NY; Senate Majority Leader (2021-2025), Senate Minority Leader (2017-2021, 2025-presen... @ United States Senate
+- **Clay Fuller** — Candidate, GA House District 14 @ Republican Party
+- **Colin Allred** — Candidate, TX House District 33 @ Democratic Party
+- **Cory Booker** — U.S. Senator from New Jersey, Senior Senator @ United States Senate
+- **Cynthia Lummis** — U.S. Senator, WY (2021-present) @ United States Senate
+- **David Evan Harris** — Senior Policy Advisor, California Initiative for Technology and Democracy; Chancellor's Public Schol... @ Center for AI Safety
+- **David Sacks** — Former White House AI and Crypto Czar (Jan 2025 - Mar 2026), Co-Chair of President's Council of Advi... @ White House
+- **Don Beyer** — U.S. Representative, VA-8; Co-Chair, Congressional AI Caucus @ U.S. House of Representatives
+- **Ed Markey** — U.S. Senator from Massachusetts (Junior Senator) @ United States Senate
+- **Elham Tabassi** — Associate Director for Emerging Technologies, Information Technology Laboratory, NIST; Chief AI Advi...
+- **Frank Lucas** — Chairman, U.S. House Committee on Science, Space and Technology, OK-3 @ U.S. House of Representatives
+- **Gary Peters** — U.S. Senator from Michigan, Chairman of Senate Homeland Security and Governmental Affairs Committee @ United States Senate
+- **Gina Raimondo** — 40th Secretary of Commerce (2021-2025) @ U.S. Department of Commerce
+- **Greg Abbott** — Governor of Texas @ State of Texas
+- **Jace Yarbrough** — Candidate, TX House District 32 @ S|L Law PLLC
+- **Jacky Rosen** — U.S. Senator from Nevada @ United States Senate
+- **Jay Obernolte** — U.S. Representative, CA-23, Chairman of House Science Subcommittee on Research and Technology @ U.S. House of Representatives
+- **Jeffrey Kessler** — Under Secretary of Commerce for Industry and Security @ U.S. Department of Commerce
+- **Jen Easterly** — Former Director, Cybersecurity and Infrastructure Security Agency (CISA)
+- **Jerry Moran** — U.S. Senator, KS (R) - Senior member Commerce Committee, Chair Veterans' Affairs Committee @ United States Senate
+- **Jesse Jackson Jr.** — Candidate, IL House District 02 @ Democratic Party
+- **Jessica Steinmann** — Candidate, TX House District 08 @ Republican Party
+- **John Hickenlooper** — U.S. Senator, CO (Chair, Subcommittee on Consumer Protection, Product Safety, and Data Security) @ U.S. Senate
+- **Jonathan Kanter** — Assistant Attorney General for the Antitrust Division, Department of Justice (2021-2024); Distinguis...
+- **Joni Ernst** — U.S. Senator, IA (Ranking Member, Senate Armed Services Subcommittee on Emerging Threats and Capabil... @ United States Senate
+- **Laurie Buckhout** — Candidate, NC House District 01 @ Republican Party
+- **Laurie Locascio** — President and CEO, American National Standards Institute (ANSI); Former Director, National Institute...
+- **Lina Khan** — Former Chair, Federal Trade Commission (FTC), 2021-2025
+- **Maggie Hassan** — U.S. Senator from New Hampshire, Ranking Member of Joint Economic Committee @ United States Senate
+- **Margrethe Vestager** — Former Executive Vice President, European Commission for A Europe Fit for the Digital Age; Former EU...
+- **Maria Cantwell** — U.S. Senator from Washington, Ranking Member of the Senate Committee on Commerce, Science, and Trans... @ United States Senate
+- **Marietje Schaake** — International Policy Director, Stanford HAI; Former Member, European Parliament (2009-2019)
+- **Mark Warner** — U.S. Senator from Virginia, Vice Chairman of Senate Select Committee on Intelligence @ United States Senate
+- **Marsha Blackburn** — U.S. Senator, TN (Senior Senator) @ U.S. Senate
+- **Martin Heinrich** — U.S. Senator from New Mexico, Founder and Co-Chair of Senate AI Caucus, Member of Senate Intelligenc... @ United States Senate
+- **Melissa Bean** — Candidate, IL House District 08 @ Democratic Party
+- **Michael McCaul** — U.S. Representative, TX-10, Chairman Emeritus House Foreign Affairs Committee @ U.S. House of Representatives
+- **Mike Braun** — Governor of Indiana (2025-present); former U.S. Senator, IN (2019-2025) @ Office of the Governor of Indiana
+- **Mike Rounds** — U.S. Senator, SD (Chair, Senate Banking Subcommittee on Securities, Insurance and Investments) @ United States Senate
+- **Pete Buttigieg** — Former United States Secretary of Transportation (2021-2025) @ Unknown
+- **Pete Ricketts** — Candidate, NE Senate @ Republican Party
+- **Richard Blumenthal** — U.S. Senator, CT (Senior Senator, Ranking Member of Veterans' Affairs Committee) @ United States Senate
+- **Ro Khanna** — U.S. Representative, CA-17 (Silicon Valley) @ U.S. House of Representatives
+- **Saikat Chakrabarti** — Founder, New Consensus; fmr AOC Chief of Staff; 2026 Congressional Candidate, CA-11 @ New Consensus
+- **Scott Wiener** — CA State Senator, District 11 (San Francisco, Broadmoor, Colma, Daly City) @ California State Senate
+- **Stefano Mazzocchi** — Chief AI Officer, Department of Commerce
+- **Suhas Subramanyam** — U.S. Representative, VA-10 @ U.S. House of Representatives
+- **Ted Cruz** — U.S. Senator from Texas, Chairman of Senate Commerce Committee @ U.S. Senate
+- **Ted Lieu** — U.S. Representative, CA-36th District, Vice Chair of House Democratic Caucus, Co-Chair of House Demo... @ U.S. House of Representatives
+- **Thierry Breton** — Former European Commissioner for Internal Market; EU AI Act Architect
+- **Todd Young** — U.S. Senator (R-IN), member of Senate Commerce Committee @ United States Senate
+- **Tom Kalil** — Deputy Director for Policy, White House Office of Science and Technology Policy (Obama Administratio... @ White House Office of Science and Technology Policy
+- **Tom Sell** — Candidate, TX House District 19 @ Republican Party
+- **Valerie Foushee** — Candidate, NC House District 04 @ U.S. House of Representatives (Democratic Party)
+- **Zoe Lofgren** — U.S. Representative (CA-18), Ranking Member of House Science, Space and Technology Committee @ U.S. House of Representatives
+
+### Researcher
+- **Abeba Birhane** — Senior Advisor in AI Accountability, Mozilla Foundation; Assistant Professor, Trinity College Dublin...
+- **Ajeya Cotra** — Member of Technical Staff at METR; Former Senior Program Officer at Open Philanthropy/Coefficient Gi...
+- **Allan Dafoe** — Director of Frontier Safety and Governance, Google DeepMind; President, Centre for the Governance of...
+- **Azeem Azhar** — Founder and Editor, Exponential View; Author, The Exponential Age
+- **Cathy O'Neil** — Founder, ORCAA (algorithmic auditing company); Author, Weapons of Math Destruction; Former Harvard P...
+- **Chris Olah** — Co-founder and Head of Interpretability Research, Anthropic
+- **Connor Leahy** — CEO and Co-founder, Conjecture
+- **Dan Hendrycks** — Executive Director, Center for AI Safety (CAIS) @ Center for AI Safety (CAIS)
+- **Daniel Kokotajlo** — Executive Director, AI Futures Project; former OpenAI governance researcher @ Center for AI Safety
+- **Denise Herzing** — Founder and Research Director, Wild Dolphin Project; Affiliate Assistant Professor, Florida Atlantic... @ Wild Dolphin Project
+- **Divya Siddarth** — Co-Founder & Executive Director, Collective Intelligence Project; Democracy Lead, UK AI Safety Insti...
+- **E. Glen Weyl** — Founder, Plurality Institute; Research Lead, Microsoft Research Plural Technology Collaboratory; Co-...
+- **Eliezer Yudkowsky** — Co-Founder and Research Fellow @ Machine Intelligence Research Institute (MIRI)
+- **Gary Marcus** — Professor Emeritus, Psychology and Neuroscience, NYU; Founder, Geometric Intelligence (acquired by U...
+- **Heidy Khlaaf** — Chief AI Scientist, AI Now Institute @ AI Now Institute
+- **Ilya Sutskever** — Co-founder & CEO, Safe Superintelligence Inc; Former Chief Scientist & Co-founder, OpenAI
+- **Jack Clark** — Co-founder and Head of Policy, Anthropic; Author, Import AI Newsletter
+- **Jakub Pachocki** — Chief Scientist, OpenAI @ OpenAI
+- **Jan Leike** — Head of Alignment Science, Anthropic (joined May 2024); Former Head of Superalignment, OpenAI (2021-...
+- **Joanne Jang** — Head of Model Behavior and Policy, OpenAI @ OpenAI
+- **John Schulman** — Co-founder, OpenAI (2015-2024); Head of Alignment Science; Chief Scientist, Thinking Machines Lab
+- **Joy Buolamwini** — Founder, Algorithmic Justice League; MIT Media Lab Researcher; Creator, Gender Shades Study
+- **Kyle Fish** — Model Welfare Lead, Anthropic @ Anthropic
+- **Leopold Aschenbrenner** — Founder, Situational Awareness LP; Former OpenAI Superalignment Researcher
+- **Nate Soares** — Executive Director, Machine Intelligence Research Institute (MIRI)
+- **Nathan Lambert** — Research Scientist, Allen Institute for AI (AI2); Author, Interconnects Newsletter; RLHF and Post-Tr...
+- **Paul Christiano** — Head of AI Safety, U.S. AI Safety Institute (NIST); Founder, Alignment Research Center @ Alignment Research Center (ARC)
+- **Remco Zwetsloot** — Executive Director, Horizon Institute for Public Service; Former Research Fellow, Georgetown CSET; A...
+- **Rohin Shah** — Research Scientist and Team Lead, Google DeepMind; Former Editor, Alignment Newsletter
+- **Rumman Chowdhury** — CEO, Humane Intelligence; Former U.S. Science Envoy for AI; Former Director of ML Ethics, Twitter
+- **Saffron Huang** — Research Scientist, Societal Impacts Team, Anthropic; Co-Founder, Collective Intelligence Project; F...
+- **Sarah Myers West** — Co-Executive Director, AI Now Institute; Former Senior Advisor on AI, Federal Trade Commission
+- **Seán Ó hÉigeartaigh** — Director, AI: Futures and Responsibility Programme, University of Cambridge; Former Executive Direct...
+- **Shakir Mohamed** — Staff Research Scientist, Google DeepMind; Co-author, Decolonial AI; Research on AI Safety, Ethics, ...
+- **Yann LeCun** — Chief AI Scientist (former), Meta AI; Silver Professor, NYU; Founder and Executive Chairman, Advance... @ Meta AI
+- **Zvi Mowshowitz** — AI Policy Analyst and Author, Don't Worry About the Vase Substack
+
+
+## ORGANIZATIONS (461)
+
+
+### Academic
+- **AI Safety Initiative at Georgia Tech** (Mixed)
+- **Alignment Research Engineer Accelerator (ARENA)** (Philanthropic)
+- **Arcadia Impact** (Philanthropic)
+- **Berkeley CHAI** (Philanthropic)
+- **Cambridge ERA:AI Fellowship** (Philanthropic)
+- **Cambridge Leverhulme Centre for Future of Intelligence** (Philanthropic)
+- **Center for Human-Compatible AI** (Philanthropic)
+- **Center for Human-Compatible AI (CHAI)** (Philanthropic)
+- **Center for Human-Compatible AI (CHAI) - UC Berkeley** (Mixed)
+- **Center for Human-Compatible Artificial Intelligence (CHAI) - UC Berkeley** (Philanthropic)
+- **Center for Long-Term Cybersecurity** (Philanthropic)
+- **Center on Long-Term Risk: Summer Research Fellowship** (Philanthropic)
+- **Centre for the Study of Existential Risk (CSER)** (Mixed)
+- **Computational and Biological Learning Lab (University of Cambridge)** (Government-funded)
+- **Cooperative AI Summer School** (Philanthropic)
+- **Creative Destruction Lab**
+- **CSER**
+- **Dr. Roman Yampolskiy** (Government-funded)
+- **Dylan Hadfield-Menell** (Government-funded)
+- **EconTAI**
+- **Effective Thesis** (Philanthropic)
+- **Fred Hutchinson Cancer Center**
+- **Future Impact Group: Fellowship** (Philanthropic)
+- **Future of Humanity Institute** (Philanthropic)
+- **Future of Humanity Institute (Oxford University) - CLOSED 2024** (Philanthropic)
+- **Global Challenges Project** (Philanthropic)
+- **Global Priorities Institute (University of Oxford)** (Philanthropic)
+- **Harvard Ash Center**
+- **Harvard Berkman Klein Center**
+- **Human-aligned AI Summer School** (Philanthropic)
+- **IIT Madras**
+- **Impact Research Groups** (Philanthropic)
+- **Krueger AI Safety Lab (KASL)** (Mixed)
+- **Leaf: Dilemmas and Dangers in AI** (Mixed)
+- **Leverhulme Centre for the Future of Intelligence** (Philanthropic)
+- **Leverhulme Centre for the Future of Intelligence (University of Cambridge)** (Philanthropic)
+- **Mentorship for Alignment Research Students (MARS)** (Philanthropic)
+- **Meridian Cambridge** (Mixed)
+- **MIT Algorithmic Alignment Group** (Mixed)
+- **MIT CSAIL**
+- **MIT FutureTech** (Mixed)
+- **MIT GOV/LAB**
+- **MIT Media Lab**
+- **MIT Shaping the Future of Work**
+- **ML4Good Laboratory - New York University** (Mixed)
+- **Non-Trivial** (Philanthropic)
+- **NYU Alignment Research Group (ARG)** (Mixed)
+- **Orion AI Governance Initiative (Arcadia Impact)** (Philanthropic)
+- **Oxford Future of Humanity Institute (legacy)** (Philanthropic)
+- **Oxford Martin AI Governance Initiative** (Philanthropic)
+- **Pathfinder Fellowship (Kairos)** (Philanthropic)
+- **PIBBSS Fellowship (Principles of Intelligent Behavior in Biological and Social Systems)** (Philanthropic)
+- **Pivotal Research Fellowship** (Philanthropic)
+- **Princeton CITP**
+- **Princeton (Narayanan/Kapoor AI Snake Oil)** (Philanthropic)
+- **Princeton University Center for Information Technology Policy (Narayanan/Kapoor AI Snake Oil)** (Mixed)
+- **Stanford CRFM**
+- **Stanford Digital Economy Lab**
+- **Stanford HAI** (Mixed)
+- **Stanford Institute for Human-Centered Artificial Intelligence (HAI)** (Mixed)
+- **Stanford RegLab** (Philanthropic)
+- **Stanford RegLab (Regulation, Evaluation, and Governance Lab)** (Mixed)
+- **Stanford SIEPR**
+- **Supervised Program for Alignment Research (SPAR)** (Philanthropic)
+- **Technical Alignment Research Accelerator (TARA)** (Philanthropic)
+- **Tsinghua University (AI governance)** (Government-funded)
+- **Tsinghua University (Institute for AI International Governance & Center for AI Governance)** (Government-funded)
+- **UChicago Existential Risk Laboratory (XLab)** (Philanthropic)
+- **UW Tech Policy Lab**
+- **Wild Dolphin Project**
+
+### AI Safety/Alignment
+- **AE Studio** (Self-funded)
+- **Aether** (Philanthropic)
+- **AI Alignment Awards** (Philanthropic)
+- **AI Alignment Forum** (Philanthropic)
+- **AI Futures Project** (Philanthropic)
+- **AI Governance and Safety Institute** (Government-funded)
+- **AI Governance and Safety Institute (AIGSI)** (Philanthropic)
+- **AI Impacts** (Philanthropic)
+- **AI Lab Watch** (Philanthropic)
+- **AI Objectives Institute** (Philanthropic)
+- **AI-Plans** (Mixed)
+- **AI Safety Asia (AISA)** (Philanthropic)
+- **AI Safety Awareness Project (AISAP)** (Philanthropic)
+- **AI Safety Camp** (Philanthropic)
+- **AISafety.com: Advisors** (Public benefit)
+- **AISafety.com: Donation Guide** (Philanthropic)
+- **AISafety.com: Funding** (Public benefit)
+- **AI Safety Communications Centre** (Philanthropic)
+- **AISafety.com: Self-study** (Philanthropic)
+- **AI Safety, Ethics and Society (Center for AI Safety)** (Philanthropic)
+- **AI Safety Foundation** (Philanthropic)
+- **AISafety.info** (Philanthropic)
+- **AI Safety Quest** (Philanthropic)
+- **AI Safety Support Newsletter** (Philanthropic)
+- **Aligned AI** (Venture-backed)
+- **Alignment Ecosystem Development (AED)** (Philanthropic)
+- **Alignment of Complex Systems Research Group** (Philanthropic)
+- **Alignment of Complex Systems Research Group (ACS)** (Mixed)
+- **Alignment Research Center** (Philanthropic)
+- **Alignment Research Center (ARC)** (Philanthropic)
+- **Anthropic Institute** (Revenue-generating)
+- **Apart Research** (Philanthropic)
+- **Apollo Research** (Mixed)
+- **Arbital** (Philanthropic)
+- **Ashgro** (Philanthropic)
+- **Astera Neuro & AGI** (Philanthropic)
+- **Athena Mentorship Program for Women (AI Alignment Research)** (Philanthropic)
+- **Atlas Computing** (Philanthropic)
+- **Beneficial AI Foundation** (Philanthropic)
+- **Berkeley Existential Risk Initiative (BERI)** (Philanthropic)
+- **BlueDot Impact** (Philanthropic)
+- **Buddhism & AI Initiative** (Philanthropic)
+- **Cadenza Labs** (Philanthropic)
+- **Cambridge Boston Alignment Initiative (CBAI)** (Philanthropic)
+- **Campaign for AI Safety** (Philanthropic)
+- **Cavendish Labs** (Philanthropic)
+- **Center for AI Policy** (Philanthropic)
+- **Center for AI Policy (CAIP)** (Philanthropic)
+- **Center for AI Risk Management & Alignment** (Philanthropic)
+- **Center for AI Risk Management & Alignment (CARMA)** (Philanthropic)
+- **Center for AI Safety** (Philanthropic)
+- **Center for AI Safety (CAIS)** (Philanthropic)
+- **Center on Long-Term Risk** (Philanthropic)
+- **Centre for Enabling EA Learning & Research (CEEALAR)** (Philanthropic)
+- **Centre for the Study of Existential Risk** (Philanthropic)
+- **Centre pour la Sécurité de l'IA (CeSIA)** (Philanthropic)
+- **Collective Action for Existential Safety (CAES)** (Philanthropic)
+- **Compassion in Machine Learning (CaML)** (Philanthropic)
+- **Computational Rational Agents Laboratory (CORAL)** (Philanthropic)
+- **Conjecture** (Venture-backed)
+- **Constellation Institute** (Philanthropic)
+- **Contramont Research** (Philanthropic)
+- **Coordinal Research** (Philanthropic)
+- **Credo AI**
+- **Cyborgism** (Mixed)
+- **Dovetail Research**
+- **EleutherAI** (Philanthropic)
+- **Epoch AI** (Mixed)
+- **Equilibria Network** (Philanthropic)
+- **EquiStamp** (Revenue-generating)
+- **European Network for AI Safety (ENAIS)** (Philanthropic)
+- **Evitable** (Philanthropic)
+- **Existential Risk Observatory** (Philanthropic)
+- **FAR.AI** (Philanthropic)
+- **Forethought (AI Safety Research Nonprofit)** (Philanthropic)
+- **Formation Research**
+- **From AI to ZI** (Philanthropic)
+- **Frontier AI Safety Research** (Philanthropic)
+- **FutureHouse**
+- **generative.ink**
+- **Geodesic Research** (Philanthropic)
+- **Global AI Moratorium** (Philanthropic)
+- **Global AI Moratorium (GAIM)** (Philanthropic)
+- **Global Catastrophic Risk Institute** (Philanthropic)
+- **Goodfire** (Venture-backed)
+- **Gray Swan** (Venture-backed)
+- **Harmony Intelligence** (Venture-backed)
+- **Heron AI Security Initiative** (Philanthropic)
+- **How to pursue a career in technical AI alignment** (Public benefit)
+- **Humans in Control**
+- **Iliad** (Philanthropic)
+- **Impact Academy: Global AI Safety Fellowship** (Philanthropic)
+- **Impact Ops** (Revenue-generating)
+- **Institute for AI Policy and Strategy (IAPS)** (Philanthropic)
+- **Intelligence Rising** (Mixed)
+- **International AI Governance Alliance (IAIGA)** (Philanthropic)
+- **International Association for Safe & Ethical AI (IASEAI)** (Philanthropic)
+- **John Wentworth** (Philanthropic)
+- **LawZero** (Philanthropic)
+- **Legal Advocates for Safe Science and Technology** (Philanthropic)
+- **Legal Safety Lab** (Philanthropic)
+- **Lightcone Infrastructure** (Philanthropic)
+- **London AI Safety Research Labs (LASR Labs)** (Philanthropic)
+- **London Initiative for Safe AI (LISA)** (Philanthropic)
+- **Luthien** (Philanthropic)
+- **Machine Intelligence Research Institute** (Philanthropic)
+- **Machine Intelligence Research Institute (MIRI)** (Philanthropic)
+- **Machine Learning for Alignment Bootcamp (MLAB)** (Philanthropic)
+- **Meaning Alignment Institute** (Philanthropic)
+- **Median Group** (Philanthropic)
+- **MIRI** (Philanthropic)
+- **ML Alignment & Theory Scholars (MATS)** (Philanthropic)
+- **Model Evaluation & Threat Research (METR)** (Philanthropic)
+- **Modeling Cooperation** (Philanthropic)
+- **Mox** (Philanthropic)
+- **Narrow Path** (Philanthropic)
+- **Narrow Path (by ControlAI)** (Philanthropic)
+- **Neuronpedia** (Philanthropic)
+- **Nonlinear** (Philanthropic)
+- **Open Machine**
+- **Ought** (Philanthropic)
+- **Palisade Research** (Philanthropic)
+- **Pause House** (Philanthropic)
+- **PEAKS** (Mixed)
+- **Quantified Uncertainty Research Institute (QURI)** (Philanthropic)
+- **RAISEimpact** (Philanthropic)
+- **Redwood Research** (Philanthropic)
+- **Rethink Wellbeing** (Philanthropic)
+- **Safe AI Forum** (Philanthropic)
+- **Safe Superintelligence Inc**
+- **Samaya AI**
+- **Simplex** (Philanthropic)
+- **Singapore AI Safety Hub** (Mixed)
+- **Softmax** (Venture-backed)
+- **Steve Byrnes's Brain-Like AGI Safety** (Philanthropic)
+- **Team Shard** (Mixed)
+- **The Alliance for Secure AI Action** (Philanthropic)
+- **The Compendium** (Self-funded)
+- **The Midas Project** (Philanthropic)
+- **Timaeus** (Philanthropic)
+- **Trajectory Labs** (Philanthropic)
+- **Transluce** (Philanthropic)
+- **TruthfulAI** (Philanthropic)
+- **WhiteBox Research** (Philanthropic)
+- **Workshop Labs** (Venture-backed)
+
+### Ethics/Bias/Rights
+- **ACLU**
+- **Algorithmic Justice League**
+- **Center for Democracy & Technology**
+- **DAIR**
+- **Data & Society**
+- **Electronic Frontier Foundation**
+- **Humane Intelligence**
+- **Human Rights Watch**
+- **International Association for Safe & Ethical AI** (Philanthropic)
+- **Mozilla Foundation**
+- **NoHarm**
+- **ORCAA**
+- **Partnership on AI** (Mixed)
+
+### Frontier Lab
+- **Adobe**
+- **Agility Robotics**
+- **Amazon**
+- **Anthropic** (Venture-backed)
+- **Arkose Labs** (Venture-backed)
+- **Arm**
+- **Cassava Technologies**
+- **Cloudflare**
+- **DeepSeek** (Venture-backed)
+- **ElevenLabs**
+- **Google DeepMind** (Revenue-generating)
+- **Huawei**
+- **Humain**
+- **KoBold Metals**
+- **Meta AI** (Revenue-generating)
+- **Midjourney**
+- **Mistral AI** (Venture-backed)
+- **Mobileye**
+- **Nvidia**
+- **OpenAI** (Venture-backed)
+- **Pony.ai**
+- **Qualcomm**
+- **Safe Superintelligence Inc.** (Venture-backed)
+- **Sakana AI**
+- **Salesforce**
+- **Scale AI**
+- **Shield AI**
+- **Splice**
+- **Surge AI**
+- **Thinking Machines Lab**
+- **Time (AI coverage)** (Revenue-generating)
+- **Tools for Humanity**
+- **Tryolabs**
+- **TSMC**
+- **Unitree Robotics**
+- **World Labs**
+- **xAI** (Venture-backed)
+
+### Government/Agency
+- **Advanced Research + Invention Agency** (Government-funded)
+- **Advanced Research + Invention Agency (ARIA)** (Government-funded)
+- **AI Security Institute (AISI)** (Government-funded)
+- **AI Security Institute (formerly UK AI Safety Institute)** (Government-funded)
+- **AI Security Institute (UK government)** (Government-funded)
+- **Beijing Institute of AI Safety and Governance** (Other)
+- **Center for AI Standards and Innovation** (Government-funded)
+- **Center for AI Standards and Innovation (CAISI)** (Government-funded)
+- **Center for AI Standards and Innovation (CAISI) - NIST** (Government-funded)
+- **CISA**
+- **Department of Commerce**
+- **Department of Justice**
+- **European AI Office** (Government-funded)
+- **European Commission**
+- **Federal Trade Commission**
+- **FTC (AI enforcement)** (Government-funded)
+- **FTC (Federal Trade Commission)** (Government-funded)
+- **Global Partnership on AI** (Government-funded)
+- **NIST**
+- **NIST AI Safety Institute** (Government-funded)
+- **NIST AI Safety Institute (CAISI)** (Government-funded)
+- **NIST AI Safety Institute (Center for AI Standards and Innovation - CAISI)** (Government-funded)
+- **NTIA**
+- **Senate AI Working Group** (Government-funded)
+- **Senate Commerce Committee (AI jurisdiction)** (Government-funded)
+- **Taiwan Ministry of Digital Affairs**
+- **UK AI Safety Institute** (Government-funded)
+- **UK AI Security Institute** (Government-funded)
+- **White House Office of Science and Technology Policy (OSTP)** (Government-funded)
+- **White House OSTP** (Government-funded)
+
+### Labor/Civil Society
+- **80,000 Hours Job Board** (Philanthropic)
+- **AFL-CIO**
+- **American Federation of Teachers** (Membership)
+- **Americans for Responsible Innovation** (Philanthropic)
+- **Campaign to Stop Killer Robots**
+- **ControlAI** (Philanthropic)
+- **Data Workers' Inquiry** (Philanthropic)
+- **Encode Justice**
+- **Fairly Trained** (Philanthropic)
+- **High Impact Professionals** (Philanthropic)
+- **PauseAI** (Philanthropic)
+- **Probably Good** (Philanthropic)
+- **SAG-AFTRA** (Membership)
+- **Stop AGI**
+- **Stop AI** (Self-funded)
+- **Successif** (Philanthropic)
+- **The AI Whistleblower Initiative (AIWI)** (Philanthropic)
+- **Upgradable** (Mixed)
+- **Writers Guild of America** (Membership)
+
+### Media/Journalism
+- **An Overview of the AI Safety Funding Situation** (Public benefit)
+- **Associated Press**
+- **Asteria Film Co.**
+- **Bloomberg**
+- **CSIS AI Policy Podcast (Center for Strategic and International Studies)** (Mixed)
+- **Donations List Website** (Self-funded)
+- **Explainable**
+- **Exponential View**
+- **Financial Times**
+- **Manifold Markets** (Venture-backed)
+- **MIT Technology Review**
+- **ML & AI Safety Updates** (Self-funded)
+- **Reddit**
+- **Tarbell Center for AI Journalism** (Philanthropic)
+- **The New York Times**
+- **The Verge** (Revenue-generating)
+- **The Verge (AI Beat)** (Revenue-generating)
+- **The Washington Post**
+- **TIME Magazine** (Revenue-generating)
+- **Transformer (newsletter)** (Philanthropic)
+- **Vox Media**
+- **Wired**
+
+### Political Campaign/PAC
+- **Alex Bores campaign** (Mixed)
+- **American Mission** (Super PAC funded primarily by Leading the Future ($10 million), Lonsdale Enterprises Inc. ($250,000), Greg Brockman/OpenAI ($25 million), and Andreessen Horowitz ($25 million). Raised approximately $10.25 million total as of early 2026.)
+- **Defending Our Values PAC** (Super PAC; Top donor: Public First Action, Inc. ($50,000); Total raised approximately $50,000; Total spent over $277,000; Independent expenditures nearly $965,000)
+- **Dream NYC** (Super PAC funded by Daniel Ziegler of Anthropic PBC ($50,000 raised as of Dec 31, 2025))
+- **Jobs and Democracy PAC** (Super PAC with major contributions from Alex Bores (~$468K) and Valerie Foushee (~$1.6M); does not publicly disclose specific funding sources or AI companies/individuals behind it)
+- **Leading the Future** (Super PAC with over $100 million in initial funding from AI industry figures including Andreessen Horowitz, Greg Brockman, Anna Brockman, Ron Conway, Joe Lonsdale, and Perplexity. Raised $125 million in late 2025 with $70 million cash on hand entering 2026.)
+- **Think Big** (Super PAC funded by Leading the Future ($10 million), Ron Conway ($500,000), and Joe Lonsdale ($250,000). Raised approximately $10.5 million total as of March 2026.)
+
+### Think Tank/Policy Org
+- **80,000 Hours** (Philanthropic)
+- **AI Governance & Safety Canada** (Philanthropic)
+- **AI Now Institute** (Philanthropic)
+- **AI Policy Institute** (Philanthropic)
+- **AI Standards Lab** (Philanthropic)
+- **Americans for Responsible Innovation (ARI)** (Philanthropic)
+- **Association for Long Term Existence and Resilience (ALTER)** (Philanthropic)
+- **Beijing Institute of AI Safety and Governance (Beijing-AISI)** (Government-funded)
+- **Berggruen Institute** (Philanthropic)
+- **Brookings Institution** (Philanthropic)
+- **Brookings Institution (AI Governance)** (Philanthropic)
+- **Brookings Institution (Artificial Intelligence and Emerging Technology Initiative)** (Mixed)
+- **Center for American Progress** (Philanthropic)
+- **Center for a New American Security (CNAS)** (Mixed)
+- **Center for Law & AI Risk**
+- **Center for Security and Emerging Technology (CSET)** (Philanthropic)
+- **Center for Security and Emerging Technology (Georgetown University)** (Philanthropic)
+- **Centre for Future Generations** (Philanthropic)
+- **Centre for Long-Term Resilience** (Philanthropic)
+- **Centre for the Governance of AI** (Philanthropic)
+- **Centre for the Governance of AI (GovAI)** (Philanthropic)
+- **China AI Safety & Development Association** (Other)
+- **China AI Safety & Development Association (CnAISDA)** (Government-funded)
+- **Collective Intelligence Project**
+- **Convergence Analysis** (Philanthropic)
+- **CSIS AI Policy Podcast** (Philanthropic)
+- **Effective Institutions Project** (Philanthropic)
+- **Forecasting Research Institute** (Philanthropic)
+- **Foresight Institute** (Philanthropic)
+- **Future Matters** (Philanthropic)
+- **Future of Life Institute** (Philanthropic)
+- **Georgetown CSET**
+- **Good Ancestors** (Mixed)
+- **ILINA Program** (Philanthropic)
+- **Institute for AI Policy and Strategy** (Philanthropic)
+- **Institute for AI Policy and Strategy (IAPS) AI Policy Fellowship** (Philanthropic)
+- **Institute for Law & AI** (Philanthropic)
+- **Institute for Law & AI (LawAI)** (Philanthropic)
+- **International AI Governance Alliance** (Philanthropic)
+- **Metaculus** (Mixed)
+- **New Consensus** (Philanthropic)
+- **New Consensus (Saikat Chakrabarti)** (Mixed)
+- **Odyssean Institute** (Philanthropic)
+- **Plurality Institute**
+- **Public AI** (Philanthropic)
+- **Public AI Network** (Mixed)
+- **RadicalxChange**
+- **RAND Corporation** (Mixed)
+- **RAND Global and Emerging Risks** (Mixed)
+- **Rethink Priorities** (Philanthropic)
+- **Roosevelt Institute**
+- **SaferAI** (Philanthropic)
+- **Secure AI Project** (Philanthropic)
+- **Simon Institute for Longterm Governance** (Philanthropic)
+- **Talos Fellowship (Talos Network)** (Philanthropic)
+- **The AI Policy Network** (Mixed)
+- **The Future Society** (Philanthropic)
+- **Transformative Futures Institute** (Philanthropic)
+- **Vista Institute for AI Policy** (Philanthropic)
+- **Windfall Trust**
+
+### VC/Capital/Philanthropy
+- **5050 AI (by Fifty Years)** (Venture-backed)
+- **8VC**
+- **a16z** (Venture-backed)
+- **a16z (Andreessen Horowitz)** (Venture-backed)
+- **AE Studio Research** (Self-funded)
+- **AI2050 (Schmidt Sciences)** (Philanthropic)
+- **AI Alignment Foundation** (Philanthropic)
+- **AI Grant**
+- **AI Risk Mitigation Fund** (Philanthropic)
+- **AI Safety Tactical Opportunities Fund (AISTOF)** (Philanthropic)
+- **Andreessen Horowitz (a16z)** (Venture-backed)
+- **Astralis Foundation** (Philanthropic)
+- **Catalyze Impact** (Philanthropic)
+- **Center on Long-Term Risk: Fund** (Philanthropic)
+- **Coefficient Giving** (Philanthropic)
+- **Coefficient Giving (fka Open Philanthropy)** (Philanthropic)
+- **Coefficient Giving (formerly Open Philanthropy)** (Philanthropic)
+- **Cooperative AI Foundation** (Philanthropic)
+- **EA Infrastructure Fund** (Philanthropic)
+- **EA Long-Term Future Fund** (Philanthropic)
+- **Entrepreneur First**
+- **Ergo Impact** (Philanthropic)
+- **Foresight Institute: Funding** (Philanthropic)
+- **Founders Fund** (Venture-backed)
+- **Future of Life Foundation** (Philanthropic)
+- **Future of Life Institute: Fellowships** (Philanthropic)
+- **GiveWiki** (Public benefit)
+- **Giving What We Can** (Philanthropic)
+- **Greylock**
+- **Halcyon Futures** (Mixed)
+- **Juniper Ventures** (Venture-backed)
+- **Khosla Ventures**
+- **Lightspeed Grants** (Philanthropic)
+- **Lionheart Ventures** (Venture-backed)
+- **Long-Term Future Fund** (Philanthropic)
+- **Longview Philanthropy** (Philanthropic)
+- **Lux Capital**
+- **Macroscopic Ventures** (Philanthropic)
+- **Manifund** (Philanthropic)
+- **Meta Charity Funders** (Philanthropic)
+- **Mythos Ventures** (Venture-backed)
+- **Nonlinear AI Safety Advocacy Grants** (Philanthropic)
+- **Nonlinear Network** (Philanthropic)
+- **OpenBook** (Other)
+- **Open Philanthropy** (Philanthropic)
+- **Plural**
+- **Preamble Windfall Foundation** (Philanthropic)
+- **Saving Humanity from Homo Sapiens (SHfHS)** (Philanthropic)
+- **Schmidt Futures**
+- **Science of Trustworthy AI (Schmidt Sciences)** (Philanthropic)
+- **Sequoia Capital**
+- **Slow Ventures**
+- **SoftBank**
+- **Superlinear Prizes** (Philanthropic)
+- **Survival and Flourishing Fund** (Philanthropic)
+- **The Navigation Fund** (Philanthropic)
+- **Thrive Capital** (Venture-backed)
+- **Y Combinator** (Venture-backed)

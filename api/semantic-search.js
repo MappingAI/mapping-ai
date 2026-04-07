@@ -7,7 +7,7 @@ const CORS_HEADERS = {
 // Use dedicated key for semantic search (separate from submission review key)
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_SEMANTIC_SEARCH_KEY || process.env.ANTHROPIC_API_KEY;
 const MAP_DATA_URL = 'https://mapping-ai.org/map-data.json';
-const LLM_TIMEOUT_MS = 20000; // 20 second timeout for Sonnet API (slower but more accurate)
+const LLM_TIMEOUT_MS = 10000; // 10 second timeout for Haiku API
 
 // Cache for map data (persists across warm Lambda invocations)
 let cachedMapData = null;
@@ -219,7 +219,7 @@ ${resources.join('\n')}
         },
         signal: controller.signal,
         body: JSON.stringify({
-          model: 'claude-3-5-sonnet-20241022',
+          model: 'claude-3-haiku-20240307',
           max_tokens: 4096,
           temperature: 0.1, // Low temperature for consistent, predictable results
           messages: [
