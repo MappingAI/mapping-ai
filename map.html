@@ -505,12 +505,12 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   overflow-y: auto; -webkit-overflow-scrolling: touch;
   background: var(--bg-page); z-index: 5;
 }
-.mobile-cta {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0.5rem 1rem; background: var(--bg-panel); border-bottom: 1px solid var(--line);
-  font-family: var(--mono); font-size: 10px; color: var(--text-3); letter-spacing: 0.02em;
+.mobile-mode-label {
+  text-align: center; padding: 0.35rem 0.75rem;
+  font-family: var(--mono); font-size: 9px; color: var(--text-3); letter-spacing: 0.02em;
+  opacity: 0.7;
 }
-.mobile-cta button { background: none; border: none; cursor: pointer; font-size: 14px; color: var(--text-3); padding: 0.2rem 0.4rem; line-height: 1; }
+.mobile-mode-label a { color: var(--accent); text-decoration: none; }
 .mobile-bubbles { padding: 0.75rem 0.75rem 0.25rem; }
 .mobile-bubbles-group { margin-bottom: 0.5rem; }
 .mobile-bubbles-group-label { font-family: var(--mono); font-size: 8px; color: var(--text-3); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.3rem; padding-left: 2px; }
@@ -951,10 +951,7 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
 <!-- Mobile Entity Directory (shown <768px, replaces D3 map) -->
 <div id="mobile-directory" style="display:none;">
   <div id="mobile-hero"></div>
-  <div id="mobile-cta" class="mobile-cta">
-    <span>Explore the full interactive map on desktop</span>
-    <button onclick="this.parentElement.style.display='none';localStorage.setItem('mobileCtaDismissed','1')">&times;</button>
-  </div>
+  <div class="mobile-mode-label">Mobile directory — <a href="/map" onclick="localStorage.setItem('forceDesktop','1')">full interactive map</a> on desktop</div>
   <div id="mobile-search-bar" class="mobile-search-bar">
     <div class="mobile-search-box">
       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -1367,6 +1364,116 @@ function getImageUrl(d) {
   return getPersonImageUrl(d.name);
 }
 
+/**
+ * Shared image resolver: tries all sources with test-loads and fallbacks.
+ * Calls onSuccess(url) when a working image URL is found.
+ * Works for persons (hardcoded → Wikipedia), orgs (S3 logo → Google Favicons).
+ */
+function resolveEntityImage(d, onSuccess) {
+  if (d.entityType === 'resource') return;
+  if (d.entityType === 'person') {
+    const imgUrl = getImageUrl(d);
+    if (imgUrl) {
+      const img = new Image();
+      img.referrerPolicy = 'no-referrer';
+      img.onload = () => onSuccess(imgUrl);
+      img.onerror = () => {
+        if (typeof fetchWikiImage === 'function') {
+          fetchWikiImage(d.name).then(wikiUrl => {
+            if (wikiUrl) { const t = new Image(); t.referrerPolicy = 'no-referrer'; t.onload = () => onSuccess(wikiUrl); t.src = wikiUrl; }
+          });
+        }
+      };
+      img.src = imgUrl;
+    } else if (typeof fetchWikiImage === 'function') {
+      fetchWikiImage(d.name).then(wikiUrl => {
+        if (wikiUrl) { const t = new Image(); t.referrerPolicy = 'no-referrer'; t.onload = () => onSuccess(wikiUrl); t.src = wikiUrl; }
+      });
+    }
+  } else if (d.entityType === 'organization') {
+    let domain;
+    try { domain = ORG_DOMAINS[d.name] || (d.website ? new URL(d.website).hostname.replace('www.', '') : null); } catch {}
+    if (domain) {
+      const s3Url = `https://d3fo5mm9fktie3.cloudfront.net/logos/${domain}.png`;
+      const favUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+      const img = new Image();
+      img.onload = () => onSuccess(s3Url);
+      img.onerror = () => { const f = new Image(); f.onload = () => onSuccess(favUrl); f.src = favUrl; };
+      img.src = s3Url;
+    }
+  }
+}
+
+/**
+ * Shared connection builder: finds all 1-degree connections for an entity.
+ * Returns [{ entity, entityType, name, rel }] — full objects for graph, name for display.
+ * Used by both mobile mini-graph and desktop detail panel.
+ */
+function buildConnections(d) {
+  const items = [];
+  const seen = new Set();
+  seen.add((d.entityType || 'organization') + ':' + d.id);
+
+  function findEntity(type, id) {
+    if (type === 'person') return allData.people.find(x => x.id === id);
+    if (type === 'organization') return allData.organizations.find(x => x.id === id);
+    if (type === 'resource') return allData.resources.find(x => x.id === id);
+    return null;
+  }
+
+  function addItem(entity, entityType, rel) {
+    const key = entityType + ':' + entity.id;
+    if (seen.has(key)) return;
+    seen.add(key);
+    const typeName = entityType === 'organization' ? 'org' : entityType;
+    items.push({ entity, entityType, name: entity.name || entity.title, type: typeName, rel: rel || 'affiliated' });
+  }
+
+  // From inferredLinks
+  inferredLinks.forEach(l => {
+    if (l.personName === d.name) {
+      const org = allData.organizations.find(o => o.name === l.orgName);
+      if (org) addItem(org, 'organization', 'affiliated');
+    }
+    if (l.orgName === d.name) {
+      const person = allData.people.find(p => p.name === l.personName);
+      if (person) addItem(person, 'person', 'affiliated');
+    }
+  });
+
+  // From relationships
+  if (allData.relationships) {
+    const entityKey = d.entityType === 'resource' ? 'resource' : d.entityType;
+    allData.relationships.forEach(rel => {
+      const relType = rel.relationship_type || rel.edge_type || '';
+      if (rel.source_type === entityKey && rel.source_id === d.id) {
+        const target = findEntity(rel.target_type, rel.target_id);
+        if (target) addItem(target, rel.target_type, relType);
+      } else if (rel.target_type === entityKey && rel.target_id === d.id) {
+        const source = findEntity(rel.source_type, rel.source_id);
+        if (source) addItem(source, rel.source_type, relType);
+      }
+    });
+  }
+
+  // From person_organizations
+  if (allData.person_organizations) {
+    if (d.entityType === 'person') {
+      allData.person_organizations.filter(po => po.person_id === d.id).forEach(po => {
+        const org = allData.organizations.find(o => o.id === po.organization_id);
+        if (org) addItem(org, 'organization', po.role || 'affiliated');
+      });
+    } else if (d.entityType === 'organization') {
+      allData.person_organizations.filter(po => po.organization_id === d.id).forEach(po => {
+        const person = allData.people.find(p => p.id === po.person_id);
+        if (person) addItem(person, 'person', po.role || 'affiliated');
+      });
+    }
+  }
+
+  return items;
+}
+
 // Known org affiliations parsed from titles
 const ORG_KEYWORDS = {
   'Anthropic': ['Anthropic'],
@@ -1633,69 +1740,7 @@ function ensureD3() {
   });
 }
 
-function getConnectedEntities(entity) {
-  const connected = [];
-  const seen = new Set();
-  seen.add(entity.entityType + ':' + entity.id);
-
-  // From relationships
-  if (allData.relationships) {
-    allData.relationships.forEach(rel => {
-      let target = null, relType = rel.relationship_type || rel.edge_type || '';
-      if (rel.source_id === entity.id && ['person','organization','resource'].includes(rel.source_type) &&
-          (rel.source_type === entity.entityType || (entity.entityType === 'organization' && rel.source_type === 'organization'))) {
-        const key = rel.target_type + ':' + rel.target_id;
-        if (!seen.has(key)) {
-          if (rel.target_type === 'person') target = allData.people.find(p => p.id === rel.target_id);
-          else if (rel.target_type === 'organization') target = allData.organizations.find(o => o.id === rel.target_id);
-          else if (rel.target_type === 'resource') target = allData.resources.find(r => r.id === rel.target_id);
-          if (target) { seen.add(key); connected.push({ entity: target, entityType: rel.target_type, rel: relType }); }
-        }
-      }
-      if (rel.target_id === entity.id && ['person','organization','resource'].includes(rel.target_type) &&
-          (rel.target_type === entity.entityType || (entity.entityType === 'organization' && rel.target_type === 'organization'))) {
-        const key = rel.source_type + ':' + rel.source_id;
-        if (!seen.has(key)) {
-          if (rel.source_type === 'person') target = allData.people.find(p => p.id === rel.source_id);
-          else if (rel.source_type === 'organization') target = allData.organizations.find(o => o.id === rel.source_id);
-          else if (rel.source_type === 'resource') target = allData.resources.find(r => r.id === rel.source_id);
-          if (target) { seen.add(key); connected.push({ entity: target, entityType: rel.source_type, rel: relType }); }
-        }
-      }
-    });
-  }
-
-  // From person_organizations
-  if (allData.person_organizations) {
-    if (entity.entityType === 'person') {
-      allData.person_organizations.filter(po => po.person_id === entity.id).forEach(po => {
-        const org = allData.organizations.find(o => o.id === po.organization_id);
-        const key = 'organization:' + po.organization_id;
-        if (org && !seen.has(key)) { seen.add(key); connected.push({ entity: org, entityType: 'organization', rel: po.role || 'affiliated' }); }
-      });
-    } else if (entity.entityType === 'organization') {
-      allData.person_organizations.filter(po => po.organization_id === entity.id).forEach(po => {
-        const person = allData.people.find(p => p.id === po.person_id);
-        const key = 'person:' + po.person_id;
-        if (person && !seen.has(key)) { seen.add(key); connected.push({ entity: person, entityType: 'person', rel: po.role || 'affiliated' }); }
-      });
-    }
-  }
-
-  // From inferredLinks (name-based)
-  inferredLinks.forEach(l => {
-    if (l.personName === entity.name) {
-      const org = allData.organizations.find(o => o.name === l.orgName);
-      if (org && !seen.has('organization:' + org.id)) { seen.add('organization:' + org.id); connected.push({ entity: org, entityType: 'organization', rel: 'affiliated' }); }
-    }
-    if (l.orgName === entity.name) {
-      const person = allData.people.find(p => p.name === l.personName);
-      if (person && !seen.has('person:' + person.id)) { seen.add('person:' + person.id); connected.push({ entity: person, entityType: 'person', rel: 'affiliated' }); }
-    }
-  });
-
-  return connected;
-}
+// getConnectedEntities removed — use shared buildConnections() instead
 
 function renderMiniGraph(entity, container) {
   const svg = container.querySelector('svg');
@@ -1705,7 +1750,7 @@ function renderMiniGraph(entity, container) {
   const height = rect.height || 200;
   svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
 
-  const connected = getConnectedEntities(entity);
+  const connected = buildConnections(entity);
   const limitedConnected = connected.slice(0, 12);
   const nodeCount = limitedConnected.length + 1;
 
@@ -1754,61 +1799,26 @@ function renderMiniGraph(entity, container) {
     .attr('stroke', d => d.isCenter ? 'var(--text-1)' : d.color + '60')
     .attr('stroke-width', d => d.isCenter ? 2 : 1);
 
-  // Load images using same pattern as desktop map
+  // Load images using shared resolveEntityImage (same fallback chain as desktop)
   nodeEls.each(function(d, i) {
     const nodeEl = d3.select(this);
-    const r = d.radius;
-
-    function applyMiniImage(url) {
-      // Use pattern fill for clean circular clipping (same as desktop)
+    resolveEntityImage(d.entity, (url) => {
       const patId = `mini-pat-${i}`;
       defs.append('pattern').attr('id', patId)
         .attr('width', 1).attr('height', 1).attr('patternContentUnits', 'objectBoundingBox')
         .append('image').attr('href', url)
         .attr('width', 1).attr('height', 1).attr('preserveAspectRatio', 'xMidYMid slice');
       nodeEl.select('circle').attr('fill', `url(#${patId})`).attr('stroke', d.color + '80').attr('stroke-width', 1.5);
-    }
-
-    if (d.entityType === 'person') {
-      const imgUrl = getImageUrl(d.entity);
-      if (imgUrl) {
-        const img = new Image();
-        img.referrerPolicy = 'no-referrer';
-        img.onload = () => applyMiniImage(imgUrl);
-        img.onerror = () => {
-          // Try Wikipedia API
-          if (typeof fetchWikiImage === 'function') {
-            fetchWikiImage(d.entity.name).then(wikiUrl => {
-              if (wikiUrl) { const t = new Image(); t.referrerPolicy = 'no-referrer'; t.onload = () => applyMiniImage(wikiUrl); t.src = wikiUrl; }
-            });
-          }
-        };
-        img.src = imgUrl;
-      } else if (typeof fetchWikiImage === 'function') {
-        fetchWikiImage(d.entity.name).then(wikiUrl => {
-          if (wikiUrl) { const t = new Image(); t.referrerPolicy = 'no-referrer'; t.onload = () => applyMiniImage(wikiUrl); t.src = wikiUrl; }
-        });
-      }
-    } else if (d.entityType === 'organization') {
-      let domain;
-      try { domain = ORG_DOMAINS[d.entity.name] || (d.entity.website ? new URL(d.entity.website).hostname.replace('www.', '') : null); } catch {}
-      if (domain) {
-        const s3Url = `https://d3fo5mm9fktie3.cloudfront.net/logos/${domain}.png`;
-        const favUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
-        const img = new Image();
-        img.onload = () => applyMiniImage(s3Url);
-        img.onerror = () => { const f = new Image(); f.onload = () => applyMiniImage(favUrl); f.src = favUrl; };
-        img.src = s3Url;
-      }
-    }
+    });
   });
 
-  // Only show label for center node — leaf labels cause overlap
-  nodeEls.filter(d => d.isCenter).append('text')
+  // Center label — placed as a standalone text at bottom of SVG (avoids node overlap)
+  const centerLabel = svgEl.append('text')
     .attr('class', 'mini-center-label')
-    .attr('dy', d => d.radius + 12)
-    .attr('font-size', '10px')
-    .text(d => d.name.length > 20 ? d.name.slice(0, 18) + '..' : d.name);
+    .attr('text-anchor', 'middle')
+    .attr('font-size', '11px')
+    .attr('y', height - 8)
+    .text(entity.name.length > 24 ? entity.name.slice(0, 22) + '..' : entity.name);
 
   // Click handler: navigate to that entity
   nodeEls.on('click', (event, d) => {
@@ -1821,11 +1831,14 @@ function renderMiniGraph(entity, container) {
   sim.on('tick', () => {
     nodes.forEach(n => {
       n.x = Math.max(n.radius + 4, Math.min(width - n.radius - 4, n.x));
-      n.y = Math.max(n.radius + 14, Math.min(height - n.radius - 16, n.y));
+      n.y = Math.max(n.radius + 4, Math.min(height - n.radius - 30, n.y));
     });
     linkEls.attr('x1', d => d.source.x).attr('y1', d => d.source.y)
            .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
     nodeEls.attr('transform', d => `translate(${d.x},${d.y})`);
+    // Keep center label below center node
+    const cn = nodes[0];
+    centerLabel.attr('x', cn.x);
   });
 
   setTimeout(() => sim.stop(), 2500);
@@ -1909,9 +1922,6 @@ function renderMobileDirectory() {
   if (sidebarToggle) sidebarToggle.style.display = 'none';
   const contributeBtn = document.getElementById('contribute-btn');
   if (contributeBtn) contributeBtn.style.display = 'none';
-  if (localStorage.getItem('mobileCtaDismissed') === '1') {
-    document.getElementById('mobile-cta').style.display = 'none';
-  }
 
   const allEntities = [
     ...allData.people.map(d => Object.assign({}, d, { entityType: 'person' })),
@@ -3309,54 +3319,8 @@ function render() {
       }
     }
 
-    // Simplified image loading: prefer cached thumbnail_url, fallback to external APIs
-    if (imgUrl) {
-      // Use cached thumbnail (from S3/CloudFront) or pre-computed URL
-      const testImg = new Image();
-      testImg.referrerPolicy = 'no-referrer';
-      testImg.onload = () => applyImage(imgUrl);
-      testImg.onerror = () => {
-        // Cached URL failed - try fallback sources
-        if (d.entityType === 'person') {
-          fetchWikiImage(d.name).then(wikiUrl => {
-            if (wikiUrl) {
-              const fallback = new Image();
-              fallback.referrerPolicy = 'no-referrer';
-              fallback.onload = () => applyImage(wikiUrl);
-              fallback.src = wikiUrl;
-            }
-          });
-        } else if (d.entityType === 'organization') {
-          let domain;
-          try { domain = ORG_DOMAINS[d.name] || (d.website ? new URL(d.website).hostname.replace('www.', '') : null); } catch {}
-          if (domain) {
-            const fallback = new Image();
-            fallback.onload = () => applyImage(`https://www.google.com/s2/favicons?domain=${domain}&sz=128`);
-            fallback.src = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
-          }
-        }
-      };
-      testImg.src = imgUrl;
-    } else if (d.entityType === 'person') {
-      // No cached URL - try Wikipedia directly
-      fetchWikiImage(d.name).then(wikiUrl => {
-        if (wikiUrl) {
-          const testImg = new Image();
-          testImg.referrerPolicy = 'no-referrer';
-          testImg.onload = () => applyImage(wikiUrl);
-          testImg.src = wikiUrl;
-        }
-      });
-    } else if (d.entityType === 'organization' && !d.isResource) {
-      // No cached URL - use Google Favicons directly (no S3 probe)
-      let domain;
-      try { domain = ORG_DOMAINS[d.name] || (d.website ? new URL(d.website).hostname.replace('www.', '') : null); } catch {}
-      if (domain) {
-        const testImg = new Image();
-        testImg.onload = () => applyImage(`https://www.google.com/s2/favicons?domain=${domain}&sz=128`);
-        testImg.src = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
-      }
-    }
+    // Resolve image using shared function (handles person/org fallback chains)
+    if (!d.isResource) resolveEntityImage(d, applyImage);
   });
 
   // Background shape — circle for people/orgs, rounded rect for resources
@@ -3981,70 +3945,9 @@ function showDetail(d, allNodes) {
     fields = '<div class="detail-field"><span style="color:var(--text-3); font-style:italic;">No additional details yet. <a href="/contribute" style="color:var(--accent);">Contribute info</a></span></div>';
   }
 
-  // Build linked entities from all data sources
+  // Build linked entities using shared buildConnections()
   let affiliated = '';
-  const linkedItems = [];
-
-  // From inferredLinks (person-org name matching)
-  inferredLinks.forEach(l => {
-    if (l.personName === d.name) linkedItems.push({ name: l.orgName, type: 'org', rel: 'affiliated' });
-    if (l.orgName === d.name) linkedItems.push({ name: l.personName, type: 'person', rel: 'affiliated' });
-  });
-
-  // From relationships table
-  if (allData.relationships) {
-    const entityKey = d.entityType === 'resource' ? 'resource' : d.entityType;
-    allData.relationships.forEach(rel => {
-      let linkedName = null, linkedType = null, relType = rel.relationship_type;
-      if (rel.source_type === entityKey && rel.source_id === d.id) {
-        // This entity is the source — find the target
-        if (rel.target_type === 'person') {
-          const p = allData.people.find(x => x.id === rel.target_id);
-          if (p) { linkedName = p.name; linkedType = 'person'; }
-        } else if (rel.target_type === 'organization') {
-          const o = allData.organizations.find(x => x.id === rel.target_id);
-          if (o) { linkedName = o.name; linkedType = 'org'; }
-        } else if (rel.target_type === 'resource') {
-          const r = allData.resources.find(x => x.id === rel.target_id);
-          if (r) { linkedName = r.title; linkedType = 'resource'; }
-        }
-      } else if (rel.target_type === entityKey && rel.target_id === d.id) {
-        // This entity is the target — find the source
-        if (rel.source_type === 'person') {
-          const p = allData.people.find(x => x.id === rel.source_id);
-          if (p) { linkedName = p.name; linkedType = 'person'; }
-        } else if (rel.source_type === 'organization') {
-          const o = allData.organizations.find(x => x.id === rel.source_id);
-          if (o) { linkedName = o.name; linkedType = 'org'; }
-        } else if (rel.source_type === 'resource') {
-          const r = allData.resources.find(x => x.id === rel.source_id);
-          if (r) { linkedName = r.title; linkedType = 'resource'; }
-        }
-      }
-      if (linkedName && !linkedItems.some(x => x.name === linkedName)) {
-        linkedItems.push({ name: linkedName, type: linkedType, rel: relType });
-      }
-    });
-  }
-
-  // From person_organizations
-  if (allData.person_organizations) {
-    if (d.entityType === 'person') {
-      allData.person_organizations.filter(po => po.person_id === d.id).forEach(po => {
-        const org = allData.organizations.find(o => o.id === po.organization_id);
-        if (org && !linkedItems.some(x => x.name === org.name)) {
-          linkedItems.push({ name: org.name, type: 'org', rel: po.role || 'affiliated' });
-        }
-      });
-    } else if (d.entityType === 'organization') {
-      allData.person_organizations.filter(po => po.organization_id === d.id).forEach(po => {
-        const person = allData.people.find(p => p.id === po.person_id);
-        if (person && !linkedItems.some(x => x.name === person.name)) {
-          linkedItems.push({ name: person.name, type: 'person', rel: po.role || 'affiliated' });
-        }
-      });
-    }
-  }
+  const linkedItems = buildConnections(d);
 
   if (linkedItems.length > 0) {
     // Group by type
@@ -4067,9 +3970,10 @@ function showDetail(d, allNodes) {
 
   const imgUrl = getImageUrl(d);
   // Only show image if entity has a known thumbnail or org domain — avoids flash-then-hide
-  const hasReliableImage = d.thumbnail_url || (d.entityType === 'organization' && ORG_DOMAINS[d.name]);
-  const imgHtml = (imgUrl && hasReliableImage)
-    ? `<img src="${imgUrl}" alt="${d.name}" style="width:56px; height:56px; border-radius:50%; object-fit:cover; border:2px solid ${color}44; margin-bottom:0.75rem; display:block;" onerror="this.style.display='none'">`
+  // Show image placeholder, load asynchronously via resolveEntityImage (same as map nodes)
+  const detailImgId = 'detail-img-' + (d.id || Math.random().toString(36).slice(2));
+  const imgHtml = (d.entityType !== 'resource')
+    ? `<div id="${detailImgId}" style="width:56px;height:56px;margin-bottom:0.75rem;"></div>`
     : '';
 
   // Build category badges: primary + secondary
@@ -4176,6 +4080,14 @@ function showDetail(d, allNodes) {
     document.getElementById('mobile-split-view').style.display = 'none';
     content.style.display = '';
     content.innerHTML = detailHtml;
+  }
+
+  // Load detail image asynchronously using shared resolver
+  const detailImgContainer = document.getElementById(detailImgId);
+  if (detailImgContainer) {
+    resolveEntityImage(d, (url) => {
+      detailImgContainer.innerHTML = `<img src="${url}" alt="${d.name}" style="width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid ${color}44;display:block;">`;
+    });
   }
 
   // Click affiliated items and author links to navigate — switch view, zoom, show detail
