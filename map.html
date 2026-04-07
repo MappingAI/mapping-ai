@@ -511,16 +511,21 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   font-family: var(--mono); font-size: 10px; color: var(--text-3); letter-spacing: 0.02em;
 }
 .mobile-cta button { background: none; border: none; cursor: pointer; font-size: 14px; color: var(--text-3); padding: 0.2rem 0.4rem; line-height: 1; }
-.mobile-bubbles { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px; padding: 1rem 0.75rem 0.5rem; }
+.mobile-bubbles { padding: 0.75rem 0.75rem 0.25rem; }
+.mobile-bubbles-group { margin-bottom: 0.5rem; }
+.mobile-bubbles-group-label { font-family: var(--mono); font-size: 8px; color: var(--text-3); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.3rem; padding-left: 2px; }
+.mobile-bubbles-row { display: flex; flex-wrap: wrap; gap: 5px; }
 .mobile-bubble {
-  border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center;
-  color: #fff; font-family: var(--mono); cursor: pointer; text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 10px; border-radius: 14px;
+  font-family: var(--mono); cursor: pointer;
   transition: transform 0.15s, box-shadow 0.15s; user-select: none; -webkit-tap-highlight-color: transparent;
+  white-space: nowrap;
 }
-.mobile-bubble:active { transform: scale(0.95); }
-.mobile-bubble.active { box-shadow: 0 0 0 3px var(--accent); }
-.mobile-bubble .bubble-label { font-size: 7px; letter-spacing: 0.02em; line-height: 1; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90%; }
-.mobile-bubble .bubble-count { font-size: 11px; font-weight: 600; line-height: 1; }
+.mobile-bubble:active { transform: scale(0.97); }
+.mobile-bubble.active { box-shadow: 0 0 0 2px var(--accent); }
+.mobile-bubble .bubble-label { font-size: 9px; letter-spacing: 0.02em; }
+.mobile-bubble .bubble-count { font-size: 9px; font-weight: 600; opacity: 0.7; }
 .mobile-spectrum { padding: 0.25rem 1rem 0.75rem; }
 .mobile-spectrum-row { margin-bottom: 0.5rem; }
 .mobile-spectrum-label { font-family: var(--mono); font-size: 9px; color: var(--text-3); letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 3px; display: flex; justify-content: space-between; }
@@ -1701,15 +1706,21 @@ function renderMiniGraph(entity, container) {
   svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
 
   const connected = getConnectedEntities(entity);
-  // Limit to top 15 connections to keep graph readable
-  const limitedConnected = connected.slice(0, 15);
+  const limitedConnected = connected.slice(0, 12);
+  const nodeCount = limitedConnected.length + 1;
+
+  // Scale radii based on node count
+  const centerR = nodeCount > 8 ? 18 : 22;
+  const leafR = nodeCount > 8 ? 10 : 14;
 
   const nodes = [
     { id: entity.entityType + ':' + entity.id, name: entity.name || entity.title, entityType: entity.entityType, entity, isCenter: true,
-      radius: 20, color: getColor(entity.category) || DEFAULT_COLOR },
+      radius: centerR, color: getColor(entity.category) || DEFAULT_COLOR,
+      imgUrl: getImageUrl(entity), hasReliableImg: entity.thumbnail_url || (entity.entityType === 'organization' && ORG_DOMAINS[entity.name]) },
     ...limitedConnected.map(c => ({
       id: c.entityType + ':' + c.entity.id, name: c.entity.name || c.entity.title, entityType: c.entityType, entity: c.entity, isCenter: false,
-      radius: 12, color: getColor(c.entity.category) || DEFAULT_COLOR,
+      radius: leafR, color: getColor(c.entity.category) || DEFAULT_COLOR,
+      imgUrl: getImageUrl(c.entity), hasReliableImg: c.entity.thumbnail_url || (c.entityType === 'organization' && ORG_DOMAINS[c.entity.name]),
     })),
   ];
   const links = limitedConnected.map(c => ({
@@ -1718,30 +1729,57 @@ function renderMiniGraph(entity, container) {
   }));
 
   const sim = d3.forceSimulation(nodes)
-    .force('link', d3.forceLink(links).id(d => d.id).distance(60))
-    .force('charge', d3.forceManyBody().strength(-120))
+    .force('link', d3.forceLink(links).id(d => d.id).distance(nodeCount > 8 ? 50 : 65))
+    .force('charge', d3.forceManyBody().strength(nodeCount > 8 ? -80 : -120))
     .force('center', d3.forceCenter(width / 2, height / 2))
-    .force('collision', d3.forceCollide().radius(d => d.radius + 8));
+    .force('collision', d3.forceCollide().radius(d => d.radius + 6));
 
   const svgEl = d3.select(svg);
+  // Defs for clip paths
+  const defs = svgEl.append('defs');
   const linkGroup = svgEl.append('g');
   const nodeGroup = svgEl.append('g');
 
   const linkEls = linkGroup.selectAll('line').data(links).join('line').attr('class', 'mini-edge');
   const nodeEls = nodeGroup.selectAll('g').data(nodes).join('g').attr('class', 'mini-node');
 
+  // Clip paths for circular images
+  nodeEls.each(function(d, i) {
+    defs.append('clipPath').attr('id', `mini-clip-${i}`)
+      .append('circle').attr('r', d.radius);
+  });
+
+  // Background circle (fallback color)
   nodeEls.append('circle')
     .attr('r', d => d.radius)
-    .attr('fill', d => d.color)
-    .attr('stroke', d => d.isCenter ? 'var(--text-1)' : 'none')
-    .attr('stroke-width', d => d.isCenter ? 2 : 0)
-    .attr('opacity', d => d.isCenter ? 1 : 0.85);
+    .attr('fill', d => d.color + (d.isCenter ? '' : 'cc'))
+    .attr('stroke', d => d.isCenter ? 'var(--text-1)' : d.color + '60')
+    .attr('stroke-width', d => d.isCenter ? 2 : 1);
 
+  // Try to load images for nodes that have reliable thumbnails
+  nodeEls.each(function(d, i) {
+    if (d.imgUrl && d.hasReliableImg) {
+      d3.select(this).append('image')
+        .attr('href', d.imgUrl)
+        .attr('x', -d.radius).attr('y', -d.radius)
+        .attr('width', d.radius * 2).attr('height', d.radius * 2)
+        .attr('clip-path', `url(#mini-clip-${i})`)
+        .attr('preserveAspectRatio', 'xMidYMid slice')
+        .on('error', function() { this.remove(); });
+    }
+  });
+
+  // Labels — hide if too many nodes and too crowded
+  const showAllLabels = nodeCount <= 8;
   nodeEls.append('text')
     .attr('class', d => d.isCenter ? 'mini-center-label' : 'mini-label')
-    .attr('dy', d => d.radius + 12)
-    .attr('font-size', d => d.isCenter ? '11px' : '9px')
-    .text(d => d.name.length > 16 ? d.name.slice(0, 14) + '...' : d.name);
+    .attr('dy', d => d.radius + 11)
+    .attr('font-size', d => d.isCenter ? '10px' : (showAllLabels ? '8px' : '7px'))
+    .text(d => {
+      if (d.isCenter) return d.name.length > 18 ? d.name.slice(0, 16) + '..' : d.name;
+      if (!showAllLabels) return d.name.split(' ')[0]; // First name only when crowded
+      return d.name.length > 14 ? d.name.slice(0, 12) + '..' : d.name;
+    });
 
   // Click handler: navigate to that entity
   nodeEls.on('click', (event, d) => {
@@ -1752,18 +1790,16 @@ function renderMiniGraph(entity, container) {
   });
 
   sim.on('tick', () => {
-    // Constrain nodes within bounds
     nodes.forEach(n => {
       n.x = Math.max(n.radius + 4, Math.min(width - n.radius - 4, n.x));
-      n.y = Math.max(n.radius + 4, Math.min(height - n.radius - 4, n.y));
+      n.y = Math.max(n.radius + 14, Math.min(height - n.radius - 16, n.y));
     });
     linkEls.attr('x1', d => d.source.x).attr('y1', d => d.source.y)
            .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
     nodeEls.attr('transform', d => `translate(${d.x},${d.y})`);
   });
 
-  // Stop simulation after settling
-  setTimeout(() => sim.stop(), 2000);
+  setTimeout(() => sim.stop(), 2500);
 }
 
 function initSplitDragHandle() {
@@ -1854,7 +1890,8 @@ function renderMobileDirectory() {
     ...allData.resources.map(d => Object.assign({}, d, { entityType: 'resource' })),
   ];
 
-  // ── Hero: Category bubbles (people + orgs only, no resources) ──
+  // ── Hero: Category pills (people + orgs only, no resources) ──
+  const PERSON_ROLE_SET = new Set(['Executive','Researcher','Policymaker','Investor','Organizer','Journalist','Academic','Cultural figure']);
   const catCounts = {};
   for (const d of allEntities) {
     if (d.entityType === 'resource') continue;
@@ -1871,19 +1908,24 @@ function renderMobileDirectory() {
     const ia = CLUSTER_ORDER.indexOf(a), ib = CLUSTER_ORDER.indexOf(b);
     return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib);
   });
-  const maxCount = Math.max(...Object.values(catCounts));
-  let bubblesHtml = '<div class="mobile-bubbles">';
-  for (const cat of sortedCats) {
-    const count = catCounts[cat];
-    // Size: sqrt scaling, min 56px so text fits
-    const size = Math.max(56, Math.round(44 + 36 * Math.sqrt(count / maxCount)));
-    const color = getColor(cat) || DEFAULT_COLOR;
-    // Scale font based on bubble size and label length
-    const labelLen = cat.length;
-    const fontSize = Math.max(7, Math.min(9, Math.floor(size * 0.75 / Math.max(labelLen * 0.55, 1))));
-    bubblesHtml += `<div class="mobile-bubble" data-category="${cat}" style="width:${size}px;height:${size}px;background:${color};">
-      <span class="bubble-count">${count}</span><span class="bubble-label" style="font-size:${fontSize}px;">${cat}</span></div>`;
+  const sectorCats = sortedCats.filter(c => !PERSON_ROLE_SET.has(c));
+  const roleCats = sortedCats.filter(c => PERSON_ROLE_SET.has(c));
+
+  function renderBubbleGroup(label, cats) {
+    let html = `<div class="mobile-bubbles-group"><div class="mobile-bubbles-group-label">${label}</div><div class="mobile-bubbles-row">`;
+    for (const cat of cats) {
+      const count = catCounts[cat];
+      const color = getColor(cat) || DEFAULT_COLOR;
+      // Pastel background with solid text
+      html += `<div class="mobile-bubble" data-category="${cat}" style="background:${color}20;color:${color};border:1px solid ${color}40;">
+        <span class="bubble-label">${cat}</span><span class="bubble-count">${count}</span></div>`;
+    }
+    html += '</div></div>';
+    return html;
   }
+  let bubblesHtml = '<div class="mobile-bubbles">';
+  if (sectorCats.length > 0) bubblesHtml += renderBubbleGroup('Sectors', sectorCats);
+  if (roleCats.length > 0) bubblesHtml += renderBubbleGroup('Roles', roleCats);
   bubblesHtml += '</div>';
 
   // ── Hero: Belief spectrum bars ──
@@ -3995,7 +4037,9 @@ function showDetail(d, allNodes) {
   }
 
   const imgUrl = getImageUrl(d);
-  const imgHtml = imgUrl
+  // Only show image if entity has a known thumbnail or org domain — avoids flash-then-hide
+  const hasReliableImage = d.thumbnail_url || (d.entityType === 'organization' && ORG_DOMAINS[d.name]);
+  const imgHtml = (imgUrl && hasReliableImage)
     ? `<img src="${imgUrl}" alt="${d.name}" style="width:56px; height:56px; border-radius:50%; object-fit:cover; border:2px solid ${color}44; margin-bottom:0.75rem; display:block;" onerror="this.style.display='none'">`
     : '';
 
