@@ -221,7 +221,7 @@ ${resources.join('\n')}
         body: JSON.stringify({
           model: 'claude-3-haiku-20240307',
           max_tokens: 4096,
-          temperature: 0.1, // Low temperature for consistent, predictable results
+          temperature: 0, // Zero temperature for fully deterministic results
           messages: [
             {
               role: 'user',
