@@ -639,12 +639,13 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   font-family: var(--mono);
 }
 .split-detail-header-actions button:hover { color: var(--text-1); }
-/* Subtle desktop banner in mini graph */
+/* Subtle desktop banner below mini graph */
 .mini-graph-banner {
-  position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%);
+  text-align: center; padding: 2px 0;
   font-family: var(--mono); font-size: 8px; color: var(--text-3); letter-spacing: 0.03em;
-  opacity: 0.7; pointer-events: none; white-space: nowrap;
+  opacity: 0.6;
 }
+.mini-graph-banner a { color: var(--accent); text-decoration: none; }
 
 /* Mobile controls: bottom bar with filter overlay */
 @media (max-width: 600px) {
@@ -933,6 +934,7 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
     <div id="mini-graph-container" class="mini-graph-container">
       <svg id="mini-graph-svg"></svg>
     </div>
+    <div class="mini-graph-banner">Full interactive map on desktop</div>
     <div id="split-drag-handle" class="split-drag-handle"><span></span></div>
     <div id="split-detail-content" class="split-detail-content"></div>
   </div>
@@ -961,7 +963,6 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
       <button class="mobile-type-chip active" data-type="all">All</button>
       <button class="mobile-type-chip" data-type="person">People</button>
       <button class="mobile-type-chip" data-type="organization">Orgs</button>
-      <button class="mobile-type-chip" data-type="resource">Resources</button>
     </div>
   </div>
   <div id="mobile-active-filters" class="mobile-active-filters"></div>
@@ -1799,16 +1800,32 @@ function renderMiniGraph(entity, container) {
     .attr('stroke', d => d.isCenter ? 'var(--text-1)' : d.color + '60')
     .attr('stroke-width', d => d.isCenter ? 2 : 1);
 
+  // Add initials text (shown until image loads, same as desktop map)
+  nodeEls.append('text')
+    .attr('class', 'mini-label')
+    .attr('dy', '0.35em')
+    .attr('font-size', d => d.isCenter ? '6px' : '5px')
+    .attr('fill', '#fff')
+    .attr('opacity', 0.9)
+    .attr('pointer-events', 'none')
+    .text(d => {
+      const parts = (d.name || '').split(/\s+/);
+      return parts.length >= 2 ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase() : (d.name || '').slice(0, 2).toUpperCase();
+    });
+
   // Load images using shared resolveEntityImage (same fallback chain as desktop)
   nodeEls.each(function(d, i) {
     const nodeEl = d3.select(this);
-    resolveEntityImage(d.entity, (url) => {
+    // Merge entity data with entityType for resolveEntityImage
+    const entityWithType = Object.assign({}, d.entity, { entityType: d.entityType });
+    resolveEntityImage(entityWithType, (url) => {
       const patId = `mini-pat-${i}`;
       defs.append('pattern').attr('id', patId)
         .attr('width', 1).attr('height', 1).attr('patternContentUnits', 'objectBoundingBox')
         .append('image').attr('href', url)
         .attr('width', 1).attr('height', 1).attr('preserveAspectRatio', 'xMidYMid slice');
       nodeEl.select('circle').attr('fill', `url(#${patId})`).attr('stroke', d.color + '80').attr('stroke-width', 1.5);
+      nodeEl.select('text').remove(); // remove initials now that image loaded
     });
   });
 
@@ -1923,10 +1940,10 @@ function renderMobileDirectory() {
   const contributeBtn = document.getElementById('contribute-btn');
   if (contributeBtn) contributeBtn.style.display = 'none';
 
+  // Resources excluded from mobile directory (no edges, no belief data, title field issues)
   const allEntities = [
     ...allData.people.map(d => Object.assign({}, d, { entityType: 'person' })),
     ...allData.organizations.map(d => Object.assign({}, d, { entityType: 'organization' })),
-    ...allData.resources.map(d => Object.assign({}, d, { entityType: 'resource' })),
   ];
 
   // ── Hero: Category pills (people + orgs only, no resources) ──
@@ -4040,21 +4057,21 @@ function showDetail(d, allNodes) {
     ${beliefSummary}
     <div class="detail-fields">${fields}</div>
     ${affiliated}`;
-    // Reset graph container height for fresh layout
+    // Mini graph for people/orgs; resources skip the graph (no edges/beliefs)
     const graphContainer = document.getElementById('mini-graph-container');
-    graphContainer.style.flex = '';
-    graphContainer.style.height = '';
-    // Lazy-load D3 then render mini graph with "best on desktop" label
-    ensureD3().then(() => {
-      renderMiniGraph(d, graphContainer);
-      // Add subtle desktop banner
-      if (!graphContainer.querySelector('.mini-graph-banner')) {
-        const banner = document.createElement('div');
-        banner.className = 'mini-graph-banner';
-        banner.textContent = 'Full interactive map on desktop';
-        graphContainer.appendChild(banner);
-      }
-    });
+    const graphBanner = graphContainer.parentElement.querySelector('.mini-graph-banner');
+    if (d.entityType === 'resource') {
+      graphContainer.style.display = 'none';
+      if (graphBanner) graphBanner.style.display = 'none';
+    } else {
+      graphContainer.style.display = '';
+      graphContainer.style.flex = '';
+      graphContainer.style.height = '';
+      if (graphBanner) graphBanner.style.display = '';
+      ensureD3().then(() => {
+        renderMiniGraph(d, graphContainer);
+      });
+    }
     initSplitDragHandle();
     // Wire split share button
     const splitShareBtn = document.getElementById('split-share-btn');
