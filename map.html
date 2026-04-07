@@ -180,7 +180,10 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   letter-spacing: 0.08em; text-transform: uppercase;
   color: var(--text-3); margin-bottom: 0.75rem;
 }
-.detail-categories { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 0.75rem; }
+.detail-categories { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 0.5rem; }
+.detail-beliefs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.75rem; }
+.detail-belief-item { display: inline-flex; align-items: center; gap: 4px; font-family: var(--mono); font-size: 10px; color: var(--text-2); letter-spacing: 0.02em; }
+.detail-belief-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 .detail-category {
   display: inline-block; padding: 0.15rem 0.5rem;
   border-radius: 3px; font-family: var(--mono);
@@ -516,8 +519,8 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
 }
 .mobile-bubble:active { transform: scale(0.95); }
 .mobile-bubble.active { box-shadow: 0 0 0 3px var(--accent); }
-.mobile-bubble .bubble-label { font-size: 8px; letter-spacing: 0.02em; line-height: 1.1; text-align: center; max-width: 90%; overflow: hidden; }
-.mobile-bubble .bubble-count { font-size: 10px; font-weight: 600; }
+.mobile-bubble .bubble-label { font-size: 8px; letter-spacing: 0.02em; line-height: 1.1; text-align: center; max-width: 85%; overflow: hidden; word-break: break-word; padding: 0 2px; }
+.mobile-bubble .bubble-count { font-size: 11px; font-weight: 600; }
 .mobile-spectrum { padding: 0.25rem 1rem 0.75rem; }
 .mobile-spectrum-row { margin-bottom: 0.5rem; }
 .mobile-spectrum-label { font-family: var(--mono); font-size: 9px; color: var(--text-3); letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 3px; display: flex; justify-content: space-between; }
@@ -588,6 +591,37 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   font-family: var(--mono); font-size: 11px; z-index: 200; opacity: 0; transition: opacity 0.3s; pointer-events: none;
 }
 .share-toast.visible { opacity: 1; }
+/* ─── Mobile Split View (mini graph + detail) ─── */
+#mobile-split-view { display: flex; flex-direction: column; height: 100%; }
+.mini-graph-container {
+  flex: 1 1 45%; min-height: 120px; max-height: 70%;
+  background: var(--bg-page); border-bottom: 1px solid var(--line);
+  position: relative; overflow: hidden;
+}
+.mini-graph-container svg { width: 100%; height: 100%; }
+.mini-graph-container .mini-node { cursor: pointer; }
+.mini-graph-container .mini-node:hover { opacity: 0.85; }
+.mini-graph-container .mini-label {
+  font-family: var(--mono); fill: var(--text-1); pointer-events: none; text-anchor: middle;
+}
+.mini-graph-container .mini-edge { stroke: var(--line); stroke-width: 1; stroke-opacity: 0.5; }
+.mini-graph-container .mini-center-label {
+  font-family: var(--serif); font-weight: 600; fill: var(--text-1);
+}
+.split-drag-handle {
+  flex-shrink: 0; height: 20px; display: flex; align-items: center; justify-content: center;
+  cursor: ns-resize; background: var(--bg-panel); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  -webkit-tap-highlight-color: transparent; touch-action: none;
+}
+.split-drag-handle span {
+  width: 32px; height: 4px; border-radius: 2px; background: var(--text-3); opacity: 0.4;
+}
+.split-detail-content {
+  flex: 1 1 55%; overflow-y: auto; -webkit-overflow-scrolling: touch;
+  padding: 1rem 1.25rem; min-height: 100px;
+}
+/* When split view is active, the detail panel becomes a flex container without its own scroll */
+.detail-panel.mobile-split { overflow: hidden; padding: 0; padding-top: 2rem; }
 
 /* Mobile controls: bottom bar with filter overlay */
 @media (max-width: 600px) {
@@ -871,6 +905,15 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
     </button>
     <button class="detail-close" id="detail-close">&times;</button>
   </div>
+  <!-- Mobile split view: mini graph + detail card -->
+  <div id="mobile-split-view" style="display:none;">
+    <div id="mini-graph-container" class="mini-graph-container">
+      <svg id="mini-graph-svg"></svg>
+    </div>
+    <div id="split-drag-handle" class="split-drag-handle"><span></span></div>
+    <div id="split-detail-content" class="split-detail-content"></div>
+  </div>
+  <!-- Desktop detail (unchanged) -->
   <div id="detail-content"></div>
 </div>
 <div class="share-toast" id="share-toast">Link copied!</div>
@@ -1551,6 +1594,202 @@ function resolveDeepLink() {
   return slugMap.get(entityParam) || null;
 }
 
+// ─── Mini Network Graph for Mobile ───
+let d3Loaded = !isMobileDirectory; // desktop already has D3
+let d3Loading = false;
+
+function ensureD3() {
+  return new Promise((resolve) => {
+    if (d3Loaded || typeof d3 !== 'undefined') { d3Loaded = true; resolve(); return; }
+    if (d3Loading) { const check = setInterval(() => { if (d3Loaded) { clearInterval(check); resolve(); } }, 50); return; }
+    d3Loading = true;
+    const script = document.createElement('script');
+    script.src = 'https://d3js.org/d3.v7.min.js';
+    script.onload = () => { d3Loaded = true; d3Loading = false; resolve(); };
+    document.head.appendChild(script);
+  });
+}
+
+function getConnectedEntities(entity) {
+  const connected = [];
+  const seen = new Set();
+  seen.add(entity.entityType + ':' + entity.id);
+
+  // From relationships
+  if (allData.relationships) {
+    allData.relationships.forEach(rel => {
+      let target = null, relType = rel.relationship_type || rel.edge_type || '';
+      if (rel.source_id === entity.id && ['person','organization','resource'].includes(rel.source_type) &&
+          (rel.source_type === entity.entityType || (entity.entityType === 'organization' && rel.source_type === 'organization'))) {
+        const key = rel.target_type + ':' + rel.target_id;
+        if (!seen.has(key)) {
+          if (rel.target_type === 'person') target = allData.people.find(p => p.id === rel.target_id);
+          else if (rel.target_type === 'organization') target = allData.organizations.find(o => o.id === rel.target_id);
+          else if (rel.target_type === 'resource') target = allData.resources.find(r => r.id === rel.target_id);
+          if (target) { seen.add(key); connected.push({ entity: target, entityType: rel.target_type, rel: relType }); }
+        }
+      }
+      if (rel.target_id === entity.id && ['person','organization','resource'].includes(rel.target_type) &&
+          (rel.target_type === entity.entityType || (entity.entityType === 'organization' && rel.target_type === 'organization'))) {
+        const key = rel.source_type + ':' + rel.source_id;
+        if (!seen.has(key)) {
+          if (rel.source_type === 'person') target = allData.people.find(p => p.id === rel.source_id);
+          else if (rel.source_type === 'organization') target = allData.organizations.find(o => o.id === rel.source_id);
+          else if (rel.source_type === 'resource') target = allData.resources.find(r => r.id === rel.source_id);
+          if (target) { seen.add(key); connected.push({ entity: target, entityType: rel.source_type, rel: relType }); }
+        }
+      }
+    });
+  }
+
+  // From person_organizations
+  if (allData.person_organizations) {
+    if (entity.entityType === 'person') {
+      allData.person_organizations.filter(po => po.person_id === entity.id).forEach(po => {
+        const org = allData.organizations.find(o => o.id === po.organization_id);
+        const key = 'organization:' + po.organization_id;
+        if (org && !seen.has(key)) { seen.add(key); connected.push({ entity: org, entityType: 'organization', rel: po.role || 'affiliated' }); }
+      });
+    } else if (entity.entityType === 'organization') {
+      allData.person_organizations.filter(po => po.organization_id === entity.id).forEach(po => {
+        const person = allData.people.find(p => p.id === po.person_id);
+        const key = 'person:' + po.person_id;
+        if (person && !seen.has(key)) { seen.add(key); connected.push({ entity: person, entityType: 'person', rel: po.role || 'affiliated' }); }
+      });
+    }
+  }
+
+  // From inferredLinks (name-based)
+  inferredLinks.forEach(l => {
+    if (l.personName === entity.name) {
+      const org = allData.organizations.find(o => o.name === l.orgName);
+      if (org && !seen.has('organization:' + org.id)) { seen.add('organization:' + org.id); connected.push({ entity: org, entityType: 'organization', rel: 'affiliated' }); }
+    }
+    if (l.orgName === entity.name) {
+      const person = allData.people.find(p => p.name === l.personName);
+      if (person && !seen.has('person:' + person.id)) { seen.add('person:' + person.id); connected.push({ entity: person, entityType: 'person', rel: 'affiliated' }); }
+    }
+  });
+
+  return connected;
+}
+
+function renderMiniGraph(entity, container) {
+  const svg = container.querySelector('svg');
+  svg.innerHTML = '';
+  const rect = container.getBoundingClientRect();
+  const width = rect.width || 350;
+  const height = rect.height || 200;
+  svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+
+  const connected = getConnectedEntities(entity);
+  // Limit to top 15 connections to keep graph readable
+  const limitedConnected = connected.slice(0, 15);
+
+  const nodes = [
+    { id: entity.entityType + ':' + entity.id, name: entity.name || entity.title, entityType: entity.entityType, entity, isCenter: true,
+      radius: 20, color: getColor(entity.category) || DEFAULT_COLOR },
+    ...limitedConnected.map(c => ({
+      id: c.entityType + ':' + c.entity.id, name: c.entity.name || c.entity.title, entityType: c.entityType, entity: c.entity, isCenter: false,
+      radius: 12, color: getColor(c.entity.category) || DEFAULT_COLOR,
+    })),
+  ];
+  const links = limitedConnected.map(c => ({
+    source: entity.entityType + ':' + entity.id,
+    target: c.entityType + ':' + c.entity.id,
+  }));
+
+  const sim = d3.forceSimulation(nodes)
+    .force('link', d3.forceLink(links).id(d => d.id).distance(60))
+    .force('charge', d3.forceManyBody().strength(-120))
+    .force('center', d3.forceCenter(width / 2, height / 2))
+    .force('collision', d3.forceCollide().radius(d => d.radius + 8));
+
+  const svgEl = d3.select(svg);
+  const linkGroup = svgEl.append('g');
+  const nodeGroup = svgEl.append('g');
+
+  const linkEls = linkGroup.selectAll('line').data(links).join('line').attr('class', 'mini-edge');
+  const nodeEls = nodeGroup.selectAll('g').data(nodes).join('g').attr('class', 'mini-node');
+
+  nodeEls.append('circle')
+    .attr('r', d => d.radius)
+    .attr('fill', d => d.color)
+    .attr('stroke', d => d.isCenter ? 'var(--text-1)' : 'none')
+    .attr('stroke-width', d => d.isCenter ? 2 : 0)
+    .attr('opacity', d => d.isCenter ? 1 : 0.85);
+
+  nodeEls.append('text')
+    .attr('class', d => d.isCenter ? 'mini-center-label' : 'mini-label')
+    .attr('dy', d => d.radius + 12)
+    .attr('font-size', d => d.isCenter ? '11px' : '9px')
+    .text(d => d.name.length > 16 ? d.name.slice(0, 14) + '...' : d.name);
+
+  // Click handler: navigate to that entity
+  nodeEls.on('click', (event, d) => {
+    if (d.isCenter) return;
+    event.stopPropagation();
+    const target = Object.assign({}, d.entity, { entityType: d.entityType });
+    showDetail(target, []);
+  });
+
+  sim.on('tick', () => {
+    // Constrain nodes within bounds
+    nodes.forEach(n => {
+      n.x = Math.max(n.radius + 4, Math.min(width - n.radius - 4, n.x));
+      n.y = Math.max(n.radius + 4, Math.min(height - n.radius - 4, n.y));
+    });
+    linkEls.attr('x1', d => d.source.x).attr('y1', d => d.source.y)
+           .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
+    nodeEls.attr('transform', d => `translate(${d.x},${d.y})`);
+  });
+
+  // Stop simulation after settling
+  setTimeout(() => sim.stop(), 2000);
+}
+
+function initSplitDragHandle() {
+  const handle = document.getElementById('split-drag-handle');
+  const graphContainer = document.getElementById('mini-graph-container');
+  const detailContainer = document.getElementById('split-detail-content');
+  if (!handle || !graphContainer || !detailContainer) return;
+
+  let dragging = false;
+  let startY = 0;
+  let startGraphHeight = 0;
+  const panel = document.getElementById('detail-panel');
+
+  function onStart(e) {
+    dragging = true;
+    startY = e.touches ? e.touches[0].clientY : e.clientY;
+    startGraphHeight = graphContainer.getBoundingClientRect().height;
+    handle.style.background = 'var(--input-bg)';
+    e.preventDefault();
+  }
+  function onMove(e) {
+    if (!dragging) return;
+    const y = e.touches ? e.touches[0].clientY : e.clientY;
+    const delta = y - startY;
+    const panelHeight = panel.getBoundingClientRect().height - 40; // minus header + handle
+    const newHeight = Math.max(80, Math.min(panelHeight - 100, startGraphHeight + delta));
+    graphContainer.style.flex = 'none';
+    graphContainer.style.height = newHeight + 'px';
+    e.preventDefault();
+  }
+  function onEnd() {
+    if (!dragging) return;
+    dragging = false;
+    handle.style.background = '';
+  }
+
+  handle.addEventListener('mousedown', onStart);
+  handle.addEventListener('touchstart', onStart, { passive: false });
+  window.addEventListener('mousemove', onMove);
+  window.addEventListener('touchmove', onMove, { passive: false });
+  window.addEventListener('mouseup', onEnd);
+  window.addEventListener('touchend', onEnd);
+}
+
 // Share button handler
 function initShareButton(entity) {
   const shareBtn = document.getElementById('detail-share');
@@ -1595,9 +1834,10 @@ function renderMobileDirectory() {
     ...allData.resources.map(d => Object.assign({}, d, { entityType: 'resource' })),
   ];
 
-  // ── Hero: Category bubbles ──
+  // ── Hero: Category bubbles (people + orgs only, no resources) ──
   const catCounts = {};
   for (const d of allEntities) {
+    if (d.entityType === 'resource') continue;
     const primary = normalizeCategory(d.category);
     if (primary) catCounts[primary] = (catCounts[primary] || 0) + 1;
     if (d.other_categories) {
@@ -1615,10 +1855,14 @@ function renderMobileDirectory() {
   let bubblesHtml = '<div class="mobile-bubbles">';
   for (const cat of sortedCats) {
     const count = catCounts[cat];
-    const size = Math.max(44, Math.round(36 + 30 * Math.sqrt(count / maxCount)));
+    // Size: sqrt scaling, min 56px so text fits
+    const size = Math.max(56, Math.round(44 + 36 * Math.sqrt(count / maxCount)));
     const color = getColor(cat) || DEFAULT_COLOR;
+    // Scale font based on bubble size and label length
+    const labelLen = cat.length;
+    const fontSize = Math.max(7, Math.min(9, Math.floor(size * 0.75 / Math.max(labelLen * 0.55, 1))));
     bubblesHtml += `<div class="mobile-bubble" data-category="${cat}" style="width:${size}px;height:${size}px;background:${color};">
-      <span class="bubble-count">${count}</span><span class="bubble-label">${cat}</span></div>`;
+      <span class="bubble-count">${count}</span><span class="bubble-label" style="font-size:${fontSize}px;">${cat}</span></div>`;
   }
   bubblesHtml += '</div>';
 
@@ -3744,17 +3988,65 @@ function showDetail(d, allNodes) {
     }
   }
 
-  content.innerHTML = `
+  // Build belief summary (colored dots with labels)
+  let beliefSummary = '';
+  if (d.entityType !== 'resource') {
+    const beliefs = [];
+    if (d.regulatory_stance) {
+      const c = getStanceColor(d.regulatory_stance) || STANCE_COLORS[d.regulatory_stance] || '#a07828';
+      beliefs.push(`<span class="detail-belief-item"><span class="detail-belief-dot" style="background:${c}"></span>${d.regulatory_stance}</span>`);
+    }
+    if (d.agi_timeline) {
+      const c = TIMELINE_COLORS[d.agi_timeline] || '#3182bd';
+      beliefs.push(`<span class="detail-belief-item"><span class="detail-belief-dot" style="background:${c}"></span>${d.agi_timeline}</span>`);
+    }
+    if (d.ai_risk_level) {
+      const c = RISK_COLORS[d.ai_risk_level] || '#ef3b2c';
+      beliefs.push(`<span class="detail-belief-item"><span class="detail-belief-dot" style="background:${c}"></span>${d.ai_risk_level}</span>`);
+    }
+    if (beliefs.length > 0) {
+      beliefSummary = `<div class="detail-beliefs">${beliefs.join('')}</div>`;
+    }
+  }
+
+  const detailHtml = `
     ${imgHtml}
     <div class="detail-name">${d.name}</div>
     <div class="detail-type">${d.entityType}</div>
     <div class="detail-categories">${categoryBadges}</div>
+    ${beliefSummary}
     <div class="detail-fields">${fields}</div>
     ${affiliated}
   `;
 
+  if (isMobileDirectory) {
+    // Mobile: split view with mini graph on top, detail on bottom
+    const splitView = document.getElementById('mobile-split-view');
+    const splitDetail = document.getElementById('split-detail-content');
+    panel.classList.add('mobile-split');
+    content.style.display = 'none';
+    splitView.style.display = 'flex';
+    splitDetail.innerHTML = detailHtml;
+    // Reset graph container height for fresh layout
+    const graphContainer = document.getElementById('mini-graph-container');
+    graphContainer.style.flex = '';
+    graphContainer.style.height = '';
+    // Lazy-load D3 then render mini graph
+    ensureD3().then(() => {
+      renderMiniGraph(d, graphContainer);
+    });
+    initSplitDragHandle();
+  } else {
+    // Desktop: regular detail panel
+    panel.classList.remove('mobile-split');
+    document.getElementById('mobile-split-view').style.display = 'none';
+    content.style.display = '';
+    content.innerHTML = detailHtml;
+  }
+
   // Click affiliated items and author links to navigate — switch view, zoom, show detail
-  content.querySelectorAll('.affiliated-item, .detail-link').forEach(el => {
+  const activeContent = isMobileDirectory ? document.getElementById('split-detail-content') : content;
+  activeContent.querySelectorAll('.affiliated-item, .detail-link').forEach(el => {
     el.addEventListener('click', (e) => {
       e.preventDefault();
       const name = el.dataset.name;
