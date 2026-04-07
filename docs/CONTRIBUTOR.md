@@ -225,6 +225,8 @@ Select the **one** role that best describes their primary function in the AI pol
 | `Ethics/Bias/Rights` | Focused on fairness, bias, rights | Algorithmic Justice League, Data & Society, DAIR |
 | `Media/Journalism` | News outlets covering AI | The Verge, MIT Tech Review, Platformer |
 | `Political Campaign/PAC` | Electoral politics, PACs | Tech industry PACs, campaign AI advisors |
+| `AI Infrastructure & Compute` | Cloud, chips, data center providers | NVIDIA, AWS, CoreWeave, Lambda |
+| `AI Deployers & Platforms` | Companies deploying AI in products | Salesforce, Adobe, Palantir, Scale AI |
 
 ---
 

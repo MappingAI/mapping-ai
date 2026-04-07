@@ -33,6 +33,8 @@ Strategy for expanding coverage across stakeholder categories.
 | Media/Journalism | 13 | 25 | 12 |
 | Political Campaign/PAC | 7 | 15 | 8 |
 | Ethics/Bias/Rights | 3 | 20 | 17 |
+| AI Infrastructure & Compute | 0 | 20 | 20 |
+| AI Deployers & Platforms | 0 | 20 | 20 |
 
 ---
 
@@ -460,3 +462,4 @@ Strategy for expanding coverage across stakeholder categories.
 - TIME100 AI 2025 seeded on 4/1 (41 people, 38 orgs)
 - Enrichment cost: ~$0.04/person, ~$0.02/org
 - Form categories must match allowed values (see contribute.html)
+- New categories added 4/7: AI Infrastructure & Compute, AI Deployers & Platforms

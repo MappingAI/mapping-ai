@@ -242,7 +242,7 @@ Frontend deploys automatically on push to `main` via GitHub Actions.
 
 ### Tips
 
-- The dev server (`dev-server.js`) uses an older schema with separate `people`/`organizations`/`resources` tables. The production Lambdas in `api/` use the current unified `entity` table. Don't be confused by the mismatch -- the dev server is a simplified local approximation.
+- The dev server (`dev-server.js`) uses the same unified `entity/submission/edge` schema as production. Run `node dev-server.js` to start on port 3000.
 - Each HTML page has all its CSS inline. When you change styles on one page, it won't affect any other page.
 - `map-data.json` is not tracked in git. It's generated during CI/CD from the database. Run `npm run db:export-map` to generate it locally.
 - See [`TECH.md`](TECH.md) for the full API reference, schema details, and deployment instructions.

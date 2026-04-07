@@ -61,7 +61,7 @@ Open contribution from the public. Needs:
 - [x] People: support multiple roles (e.g., Researcher + Policymaker) (multi-select checkboxes on form, filter matches both primary + secondary, detail panel shows badges)
 - [x] Gray out unconnected nodes on selection (in "all" view: clicking a node dims unconnected nodes/edges)
 - [x] Network/Plot view restructuring (two top-level tabs with icons + network sub-tabs)
-- [x] Cluster-by-dimension dropdown (cluster by Category, Regulatory Stance, AGI Timeline, or AI Risk Level)
+- [x] ~~Cluster-by-dimension dropdown~~ (removed; replaced by AI Belief panel with opacity legend)
 - [x] Remove stance color pips from nodes (stance is now a clustering dimension)
 - [x] Form: move "Your Relationship" to top, rename Name/Role/Category labels for clarity
 - [x] Form: click-to-deselect on custom dropdowns + tag dropdown for other categories
@@ -101,8 +101,8 @@ Open contribution from the public. Needs:
 - [x] Notes info tooltip with @mention guidance + interactive example submissions
 - [x] Footer: consistent spacing + "Mapping AI Working Group" links to /about on all pages
 - [x] @mention dropdown: wider (420-560px), type labels shortened (Org/Person/Resource), truncation for long names
-- [ ] **1D plot spacing**: bottom gap between beeswarm and axis still too large; needs tighter vertical centering without flattening the distribution shape
-- [ ] **Inline org creation side panel**: slide-in panel for adding parent/affiliated orgs without leaving the form (requirements at docs/brainstorms/2026-04-03-inline-org-creation-requirements.md)
+- [x] **1D plot spacing**: beeswarm fills plot area with y-clamping
+- [x] **Inline org creation side panel**: slide-in panel with rich form fields (location search, Bluesky, TipTap notes) for adding parent/affiliated orgs without leaving the form
 - [ ] Theory of Change: revise "existing landscape" sentence (too dramatic/cosmetic)
 
 ## Additional Material
@@ -117,7 +117,7 @@ Open contribution from the public. Needs:
 | Map onboarding: animated walkthrough | | Basic overlay done, needs stakeholder-specific guidance + contribution flow tutorial |
 | Resource viz improvements | | On feat/tier2-improvements: topic-based clustering, orphan anchoring done; multi-category tags pending |
 | Mobile optimization | | Tier 2: bottom sheet controls, progressive form, touch gestures |
-| Inline org creation side panel | Anushree | Requirements done (docs/brainstorms/); needs /ce:plan + implementation on feature branch |
+| ~~Inline org creation side panel~~ | Anushree | **Done 4/7** — Implemented + upgraded with rich fields; moved to Done |
 
 ## Done
 
@@ -187,6 +187,14 @@ Open contribution from the public. Needs:
 | Footer consistency across all pages | Anushree | 4/2 | Gap + dot separator + /about link on index, about, contribute |
 | @mention dropdown polish | Anushree | 4/2 | Wider (420-560px), shortened type labels (Org/Person/Resource), truncation |
 | Entity count moved to sidebar | Anushree | 4/2 | No longer overlaps controls; inside sidebar below About button |
+| Belief dimension clustering in network view | Anushree | 4/2 | Semantic ordering by belief dimensions in network clusters |
+| 1D beeswarm improvements | Anushree | 4/3 | Improved plot mode, fills plot area with y-clamping |
+| AI Belief panel + remove cluster-by | Anushree | 4/3 | Opacity legend for belief dimensions, resource belief filtering, replaced cluster-by dropdown |
+| Plot node dimming + dark mode fixes | Anushree | 4/3 | Close panel on view switch, icon color in dark mode |
+| Plot entity selector to sub-tabs | Anushree | 4/3 | Moved entity type selector below view buttons as sub-tabs |
+| Inline org creation side panel | Anushree | 4/3 | Slide-in panel for creating orgs without leaving form; name pre-fill, submit + auto-link |
+| Inline org panel: rich form fields | Anushree | 4/7 | Location search (Photon/OSM), Bluesky search, TipTap notes with @mentions, info tooltip |
+| AI Infrastructure & Deployer categories | Sophia | 4/7 | Two new org categories added; Theory of Change removed from nav |
 
 ---
 

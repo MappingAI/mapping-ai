@@ -71,7 +71,7 @@ aws cloudfront create-invalidation --distribution-id E34ZXLC7CZX7XT --paths "/ma
 ```
 mapping-ai/
 ├── index.html              # Background / home page
-├── theoryofchange.html     # Theory of change
+├── theoryofchange.html     # Theory of change (not linked in nav)
 ├── contribute.html         # Rich submission forms (person, org, resource)
 │                            with TipTap notes, @mentions, duplicate detection,
 │                            org search, location search, custom dropdowns
@@ -213,6 +213,7 @@ aws cloudfront create-invalidation --distribution-id E34ZXLC7CZX7XT --paths "/*"
 - **Location search**: Multi-city tag input via Photon geocoding API, Remote option for orgs
 - **Social search**: Bluesky handle search (free public API)
 - **Auto-save**: localStorage draft every 500ms, restored on page load, per-form clear
+- **Inline org creation panel**: Slide-in side panel (460px, 100vw mobile) for creating new orgs without leaving the person/resource form. Triggered from "Add 'X' as new org..." dropdown or "Can't find it?" links. Features: name pre-fill from search, category dropdown, website, location search with multi-city tags (Photon/OSM), expandable section with funding model, regulatory stance, Twitter/X, Bluesky live search, TipTap rich text notes with @mentions and info tooltip. Auto-submits via `/submit` API, shows success overlay, auto-closes and links org back to triggering field.
 - **Request body**: camelCase field names in `data` object, `_hp` honeypot field
 
 ## Map Features (map.html)
@@ -220,7 +221,7 @@ aws cloudfront create-invalidation --distribution-id E34ZXLC7CZX7XT --paths "/*"
 - **D3.js force simulation** with orbital cluster layout, semantic ordering
 - **Two-level view system**: Top-level "Network" (with sub-tabs: All/Orgs/People/Resources) and "Plot" (scatter/beeswarm). SVG icons on buttons. Sub-view persisted to localStorage.
 - **Plot view**: 2D scatter or 1D beeswarm plotting people + orgs on any two of {regulatory_stance, agi_timeline, ai_risk_level}; uses `stance_score` / `timeline_score` / `risk_score` from map-data.json; entities with null scores excluded with count shown
-- **Cluster-by-dimension dropdown**: Switch clustering/coloring between Category (default), Regulatory Stance, AGI Timeline, or AI Risk Level. Each has its own color palette (category: multi-hue, stance: amber gradient, timeline: blue gradient, risk: red gradient). Filter chips update to match.
+- **AI Belief panel**: Opacity-based legend showing belief dimension values (stance, timeline, risk). Replaces the former cluster-by-dimension dropdown. Category coloring is default; belief dimensions shown via opacity encoding.
 - **Category normalization**: Merges variants ("AI Safety/Alignment" → "AI Safety")
 - **Multi-category support**: Entities can have a primary category + `other_categories`. Filtering by any category shows entities where it's primary OR secondary. Detail panel shows primary as solid badge, secondary as dashed badges.
 - **Resources**: Rounded squares with SVG type icons, clustered near related entities in All view
@@ -243,7 +244,7 @@ aws cloudfront create-invalidation --distribution-id E34ZXLC7CZX7XT --paths "/*"
 Executive, Researcher, Policymaker, Investor, Organizer, Journalist, Academic, Cultural figure
 
 ## Organization Categories (sectors)
-Frontier Lab, AI Safety/Alignment, Think Tank/Policy Org, Government/Agency, Academic, VC/Capital/Philanthropy, Labor/Civil Society, Ethics/Bias/Rights, Media/Journalism, Political Campaign/PAC
+Frontier Lab, AI Safety/Alignment, Think Tank/Policy Org, Government/Agency, Academic, VC/Capital/Philanthropy, Labor/Civil Society, Ethics/Bias/Rights, Media/Journalism, Political Campaign/PAC, AI Infrastructure & Compute, AI Deployers & Platforms
 
 ## Version Control Practices
 

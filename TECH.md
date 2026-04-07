@@ -76,7 +76,7 @@ Frontend is fully static — build step only for TipTap bundle. Backend is serve
 ```
 mapping-ai/
 ├── index.html              # Background / home page
-├── theoryofchange.html     # Theory of change
+├── theoryofchange.html     # Theory of change (not linked in nav)
 ├── contribute.html         # Rich submission forms (person, org, resource)
 │                            with TipTap notes, @mentions, duplicate detection,
 │                            org search, location search, custom dropdowns
