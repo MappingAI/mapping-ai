@@ -159,12 +159,17 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   overflow-y: auto; padding: 1.25rem;
 }
 .detail-panel.open { transform: translateX(0); }
-.detail-close {
+.detail-header-actions {
   position: absolute; top: 0.75rem; right: 0.75rem;
-  background: none; border: none; cursor: pointer;
-  font-size: 16px; color: var(--text-3); font-family: var(--mono);
+  display: flex; align-items: center; gap: 0.5rem;
 }
-.detail-close:hover { color: var(--text-1); }
+.detail-share, .detail-close {
+  background: none; border: none; cursor: pointer;
+  color: var(--text-3); font-family: var(--mono); padding: 2px;
+}
+.detail-close { font-size: 16px; }
+.detail-share svg { display: block; }
+.detail-share:hover, .detail-close:hover { color: var(--text-1); }
 .detail-name {
   font-family: var(--serif); font-size: 20px;
   font-weight: 500; margin-bottom: 0.2rem;
@@ -491,6 +496,99 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   .mobile-banner ~ .map-container { top: calc(48px + 32px); }
 }
 
+/* ─── Mobile Entity Directory ─── */
+#mobile-directory {
+  position: fixed; top: 48px; left: 0; right: 0; bottom: 0;
+  overflow-y: auto; -webkit-overflow-scrolling: touch;
+  background: var(--bg-page); z-index: 5;
+}
+.mobile-cta {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.5rem 1rem; background: var(--bg-panel); border-bottom: 1px solid var(--line);
+  font-family: var(--mono); font-size: 10px; color: var(--text-3); letter-spacing: 0.02em;
+}
+.mobile-cta button { background: none; border: none; cursor: pointer; font-size: 14px; color: var(--text-3); padding: 0.2rem 0.4rem; line-height: 1; }
+.mobile-bubbles { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px; padding: 1rem 0.75rem 0.5rem; }
+.mobile-bubble {
+  border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  color: #fff; font-family: var(--mono); cursor: pointer; text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  transition: transform 0.15s, box-shadow 0.15s; user-select: none; -webkit-tap-highlight-color: transparent;
+}
+.mobile-bubble:active { transform: scale(0.95); }
+.mobile-bubble.active { box-shadow: 0 0 0 3px var(--accent); }
+.mobile-bubble .bubble-label { font-size: 8px; letter-spacing: 0.02em; line-height: 1.1; text-align: center; max-width: 90%; overflow: hidden; }
+.mobile-bubble .bubble-count { font-size: 10px; font-weight: 600; }
+.mobile-spectrum { padding: 0.25rem 1rem 0.75rem; }
+.mobile-spectrum-row { margin-bottom: 0.5rem; }
+.mobile-spectrum-label { font-family: var(--mono); font-size: 9px; color: var(--text-3); letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 3px; display: flex; justify-content: space-between; }
+.mobile-spectrum-bar { display: flex; height: 24px; border-radius: 4px; overflow: hidden; gap: 1px; }
+.mobile-spectrum-segment {
+  cursor: pointer; min-width: 20px; position: relative; transition: opacity 0.15s;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 8px; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+  user-select: none; -webkit-tap-highlight-color: transparent;
+}
+.mobile-spectrum-segment:active { opacity: 0.8; }
+.mobile-spectrum-segment.active { box-shadow: inset 0 0 0 2px var(--accent); }
+.mobile-spectrum-endpoints { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 8px; color: var(--text-3); margin-top: 2px; }
+.mobile-search-bar { padding: 0.5rem 0.75rem; background: var(--bg-panel); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 10; }
+.mobile-search-box { display: flex; align-items: center; gap: 0.5rem; background: var(--input-bg); border: 1px solid var(--line); border-radius: 6px; padding: 0.5rem 0.75rem; }
+.mobile-search-box svg { flex-shrink: 0; color: var(--text-3); }
+.mobile-search-box input { flex: 1; border: none; background: none; outline: none; font-family: var(--mono); font-size: 13px; color: var(--text-1); }
+.mobile-type-chips { display: flex; gap: 0.4rem; margin-top: 0.5rem; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.mobile-type-chips::-webkit-scrollbar { display: none; }
+.mobile-type-chip {
+  flex-shrink: 0; padding: 0.35rem 0.75rem; border-radius: 20px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.04em; text-transform: uppercase;
+  border: 1px solid var(--line); background: transparent; color: var(--text-3);
+  cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; transition: all 0.15s;
+}
+.mobile-type-chip.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.mobile-active-filters { display: flex; flex-wrap: wrap; gap: 0.3rem; padding: 0.4rem 0.75rem; }
+.mobile-active-filters:empty { padding: 0; }
+.mobile-filter-chip {
+  display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.25rem 0.5rem; border-radius: 12px;
+  font-family: var(--mono); font-size: 9px; color: #fff; cursor: pointer; user-select: none;
+}
+.mobile-filter-chip .chip-x { font-size: 11px; opacity: 0.8; }
+.mobile-card-list { padding: 0 0.75rem calc(2rem + env(safe-area-inset-bottom)); }
+.mobile-category-header {
+  display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 0 0.35rem;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.04em; text-transform: uppercase;
+  color: var(--text-3); border-bottom: 1px solid var(--line);
+  position: sticky; top: 76px; background: var(--bg-page); z-index: 5;
+}
+.mobile-category-header .cat-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.mobile-category-header .cat-count { color: var(--text-3); opacity: 0.6; }
+.mobile-card {
+  display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem 0;
+  border-bottom: 1px solid var(--line); cursor: pointer;
+  -webkit-tap-highlight-color: transparent; transition: background 0.1s;
+}
+.mobile-card:active { background: var(--bg-panel); }
+.mobile-card-thumb { width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; object-fit: cover; background: var(--line); }
+.mobile-card-thumb.resource-icon { border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 16px; background: var(--bg-panel); border: 1px solid var(--line); }
+.mobile-card-info { flex: 1; min-width: 0; }
+.mobile-card-row1 { display: flex; align-items: center; gap: 0.4rem; }
+.mobile-card-name { font-family: var(--serif); font-size: 14px; font-weight: 500; color: var(--text-1); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; min-width: 0; }
+.mobile-card-badge { flex-shrink: 0; padding: 1px 6px; border-radius: 3px; font-family: var(--mono); font-size: 8px; letter-spacing: 0.03em; text-transform: uppercase; white-space: nowrap; }
+.mobile-card-row2 { display: flex; align-items: center; gap: 0.5rem; margin-top: 2px; }
+.mobile-card-sub { font-family: var(--mono); font-size: 10px; color: var(--text-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; min-width: 0; }
+.mobile-card-dots { display: flex; gap: 3px; flex-shrink: 0; }
+.mobile-card-dot { width: 6px; height: 6px; border-radius: 50%; }
+.mobile-card-dot.empty { background: none; border: 1px solid var(--text-3); opacity: 0.4; }
+.mobile-no-results { padding: 2rem 1rem; text-align: center; font-family: var(--mono); font-size: 12px; color: var(--text-3); }
+.mobile-not-found { padding: 2rem 1rem; text-align: center; font-family: var(--mono); font-size: 12px; color: var(--text-3); }
+.mobile-not-found a { color: var(--accent); }
+@keyframes card-highlight { 0% { background: var(--accent); opacity: 0.2; } 100% { background: transparent; opacity: 1; } }
+.mobile-card.highlight { animation: card-highlight 1.5s ease-out; }
+.share-toast {
+  position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
+  background: var(--text-1); color: var(--bg-page); padding: 0.5rem 1rem; border-radius: 8px;
+  font-family: var(--mono); font-size: 11px; z-index: 200; opacity: 0; transition: opacity 0.3s; pointer-events: none;
+}
+.share-toast.visible { opacity: 1; }
+
 /* Mobile controls: bottom bar with filter overlay */
 @media (max-width: 600px) {
   .controls {
@@ -767,9 +865,15 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
 </div>
 
 <div class="detail-panel" id="detail-panel">
-  <button class="detail-close" id="detail-close">&times;</button>
+  <div class="detail-header-actions">
+    <button class="detail-share" id="detail-share" title="Share link to this entity">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+    </button>
+    <button class="detail-close" id="detail-close">&times;</button>
+  </div>
   <div id="detail-content"></div>
 </div>
+<div class="share-toast" id="share-toast">Link copied!</div>
 
 <div class="tooltip" id="tooltip">
   <div class="tooltip-name" id="tooltip-name"></div>
@@ -777,6 +881,30 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
 </div>
 
 <div class="map-container" id="map-container"></div>
+
+<!-- Mobile Entity Directory (shown <768px, replaces D3 map) -->
+<div id="mobile-directory" style="display:none;">
+  <div id="mobile-hero"></div>
+  <div id="mobile-cta" class="mobile-cta">
+    <span>Explore the full interactive map on desktop</span>
+    <button onclick="this.parentElement.style.display='none';localStorage.setItem('mobileCtaDismissed','1')">&times;</button>
+  </div>
+  <div id="mobile-search-bar" class="mobile-search-bar">
+    <div class="mobile-search-box">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="mobile-search-input" type="text" placeholder="Search entities..." autocomplete="off">
+    </div>
+    <div id="mobile-type-chips" class="mobile-type-chips">
+      <button class="mobile-type-chip active" data-type="all">All</button>
+      <button class="mobile-type-chip" data-type="person">People</button>
+      <button class="mobile-type-chip" data-type="organization">Orgs</button>
+      <button class="mobile-type-chip" data-type="resource">Resources</button>
+    </div>
+  </div>
+  <div id="mobile-active-filters" class="mobile-active-filters"></div>
+  <div id="mobile-card-list" class="mobile-card-list"></div>
+  <div id="mobile-no-results" class="mobile-no-results" style="display:none;">No matching entities</div>
+</div>
 
 <div class="zoom-controls">
   <button class="zoom-btn" id="zoom-in">+</button>
@@ -1381,18 +1509,344 @@ function getStanceKey(stance) {
   return null;
 }
 
+// ─── Deep link slug utilities ───
+function slugify(name) {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+}
+const slugMap = new Map();
+const entitySlugMap = new Map();
+const isMobileDirectory = window.innerWidth < 768;
+
+function buildSlugMaps() {
+  const typePrefix = { person: 'person', organization: 'org', resource: 'resource' };
+  const allEntities = [
+    ...allData.people.map(d => ({ ...d, entityType: 'person' })),
+    ...allData.organizations.map(d => ({ ...d, entityType: 'organization' })),
+    ...allData.resources.map(d => ({ ...d, entityType: 'resource' })),
+  ];
+  for (const d of allEntities) {
+    const prefix = typePrefix[d.entityType];
+    const slug = slugify(d.name || d.title || '');
+    const key = prefix + '/' + slug;
+    const finalKey = slugMap.has(key) ? key + '-' + d.id : key;
+    slugMap.set(finalKey, d);
+    entitySlugMap.set(d.entityType + ':' + d.id, finalKey);
+  }
+}
+
+function getEntitySlug(d) {
+  return entitySlugMap.get(d.entityType + ':' + d.id) || '';
+}
+
+function getDeepLinkUrl(d) {
+  const slug = getEntitySlug(d);
+  if (!slug) return window.location.href;
+  return window.location.origin + window.location.pathname + '?entity=' + encodeURIComponent(slug);
+}
+
+function resolveDeepLink() {
+  const params = new URLSearchParams(window.location.search);
+  const entityParam = params.get('entity');
+  if (!entityParam) return null;
+  return slugMap.get(entityParam) || null;
+}
+
+// Share button handler
+function initShareButton(entity) {
+  const shareBtn = document.getElementById('detail-share');
+  if (!shareBtn) return;
+  const newBtn = shareBtn.cloneNode(true);
+  shareBtn.parentNode.replaceChild(newBtn, shareBtn);
+  newBtn.id = 'detail-share';
+  newBtn.addEventListener('click', () => {
+    const url = getDeepLinkUrl(entity);
+    if (navigator.share) {
+      navigator.share({ title: entity.name || entity.title, url }).catch(() => {});
+    } else if (navigator.clipboard) {
+      navigator.clipboard.writeText(url).then(() => {
+        const toast = document.getElementById('share-toast');
+        toast.classList.add('visible');
+        setTimeout(() => toast.classList.remove('visible'), 2000);
+      }).catch(() => {});
+    }
+  });
+}
+
+// ─── Mobile Directory Rendering ───
+function renderMobileDirectory() {
+  const dir = document.getElementById('mobile-directory');
+  dir.style.display = 'block';
+  document.querySelector('.map-container').style.display = 'none';
+  document.querySelector('.controls').style.display = 'none';
+  document.querySelector('.zoom-controls').style.display = 'none';
+  const mobileBanner = document.getElementById('mobile-banner');
+  if (mobileBanner) mobileBanner.style.display = 'none';
+  const sidebarToggle = document.getElementById('sidebar-toggle');
+  if (sidebarToggle) sidebarToggle.style.display = 'none';
+  const contributeBtn = document.getElementById('contribute-btn');
+  if (contributeBtn) contributeBtn.style.display = 'none';
+  if (localStorage.getItem('mobileCtaDismissed') === '1') {
+    document.getElementById('mobile-cta').style.display = 'none';
+  }
+
+  const allEntities = [
+    ...allData.people.map(d => Object.assign({}, d, { entityType: 'person' })),
+    ...allData.organizations.map(d => Object.assign({}, d, { entityType: 'organization' })),
+    ...allData.resources.map(d => Object.assign({}, d, { entityType: 'resource' })),
+  ];
+
+  // ── Hero: Category bubbles ──
+  const catCounts = {};
+  for (const d of allEntities) {
+    const primary = normalizeCategory(d.category);
+    if (primary) catCounts[primary] = (catCounts[primary] || 0) + 1;
+    if (d.other_categories) {
+      for (const c of d.other_categories.split(',').map(s => s.trim()).filter(Boolean)) {
+        const norm = normalizeCategory(c);
+        if (norm) catCounts[norm] = (catCounts[norm] || 0) + 1;
+      }
+    }
+  }
+  const sortedCats = Object.keys(catCounts).sort((a, b) => {
+    const ia = CLUSTER_ORDER.indexOf(a), ib = CLUSTER_ORDER.indexOf(b);
+    return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib);
+  });
+  const maxCount = Math.max(...Object.values(catCounts));
+  let bubblesHtml = '<div class="mobile-bubbles">';
+  for (const cat of sortedCats) {
+    const count = catCounts[cat];
+    const size = Math.max(44, Math.round(36 + 30 * Math.sqrt(count / maxCount)));
+    const color = getColor(cat) || DEFAULT_COLOR;
+    bubblesHtml += `<div class="mobile-bubble" data-category="${cat}" style="width:${size}px;height:${size}px;background:${color};">
+      <span class="bubble-count">${count}</span><span class="bubble-label">${cat}</span></div>`;
+  }
+  bubblesHtml += '</div>';
+
+  // ── Hero: Belief spectrum bars ──
+  const dims = [
+    { key: 'regulatory_stance', label: 'Regulatory Stance', order: STANCE_ORDER, colors: STANCE_COLORS },
+    { key: 'agi_timeline', label: 'AGI Timeline', order: TIMELINE_ORDER, colors: TIMELINE_COLORS },
+    { key: 'ai_risk_level', label: 'AI Risk Level', order: RISK_ORDER, colors: RISK_COLORS },
+  ];
+  let spectrumHtml = '<div class="mobile-spectrum">';
+  for (const dim of dims) {
+    const buckets = {};
+    let nullCount = 0;
+    for (const d of allEntities) {
+      if (d.entityType === 'resource') continue;
+      const val = d[dim.key];
+      if (!val) { nullCount++; continue; }
+      const canonical = dim.order.find(l => val.toLowerCase().includes(l.toLowerCase().split(' ')[0].toLowerCase()));
+      if (canonical) buckets[canonical] = (buckets[canonical] || 0) + 1;
+      else nullCount++;
+    }
+    spectrumHtml += `<div class="mobile-spectrum-row">
+      <div class="mobile-spectrum-label"><span>${dim.label}</span>${nullCount > 0 ? `<span>(${nullCount} no data)</span>` : ''}</div>
+      <div class="mobile-spectrum-bar">`;
+    for (const label of dim.order) {
+      const count = buckets[label] || 0;
+      if (count === 0) continue;
+      spectrumHtml += `<div class="mobile-spectrum-segment" data-dimension="${dim.key}" data-value="${label}" style="flex-grow:${count};background:${dim.colors[label]};" title="${label}: ${count}">${count > 3 ? count : ''}</div>`;
+    }
+    spectrumHtml += `</div><div class="mobile-spectrum-endpoints"><span>${dim.order[0]}</span><span>${dim.order[dim.order.length - 1]}</span></div></div>`;
+  }
+  spectrumHtml += '</div>';
+  document.getElementById('mobile-hero').innerHTML = bubblesHtml + spectrumHtml;
+
+  // ── Card list grouped by category ──
+  const grouped = {};
+  for (const d of allEntities) {
+    const cat = normalizeCategory(d.category) || 'Other';
+    if (!grouped[cat]) grouped[cat] = [];
+    grouped[cat].push(d);
+  }
+  const groupOrder = CLUSTER_ORDER.filter(c => grouped[c]);
+  for (const c of Object.keys(grouped)) { if (!groupOrder.includes(c)) groupOrder.push(c); }
+
+  let cardsHtml = '';
+  for (const cat of groupOrder) {
+    const entities = grouped[cat];
+    if (!entities || entities.length === 0) continue;
+    const color = getColor(cat) || DEFAULT_COLOR;
+    cardsHtml += `<div class="mobile-category-section" data-section-category="${cat}">
+      <div class="mobile-category-header"><span class="cat-dot" style="background:${color}"></span><span>${cat}</span><span class="cat-count">${entities.length}</span></div>`;
+    for (const d of entities) {
+      const slug = getEntitySlug(d);
+      const catColor = getColor(d.category) || DEFAULT_COLOR;
+      let thumbHtml;
+      if (d.entityType === 'resource') {
+        const icon = d.resource_type === 'Book' ? '\u{1F4D5}' : d.resource_type === 'Podcast' ? '\u{1F399}' : d.resource_type === 'Video' ? '\u{1F3AC}' : '\u{1F4C4}';
+        thumbHtml = `<div class="mobile-card-thumb resource-icon">${icon}</div>`;
+      } else if (d.entityType === 'organization' && d.website) {
+        const domain = d.website.replace(/^https?:\/\//, '').replace(/\/.*$/, '');
+        thumbHtml = `<img class="mobile-card-thumb" src="https://www.google.com/s2/favicons?domain=${domain}&sz=64" alt="" onerror="this.style.background='var(--line)'">`;
+      } else if (d.thumbnail_url) {
+        thumbHtml = `<img class="mobile-card-thumb" src="${d.thumbnail_url}" alt="" onerror="this.style.background='var(--line)'">`;
+      } else {
+        thumbHtml = `<div class="mobile-card-thumb" style="display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-3);">${d.name ? d.name[0] : '?'}</div>`;
+      }
+      let sub = '';
+      if (d.entityType === 'person') sub = [d.title, d.primary_org].filter(Boolean).join(' at ');
+      else if (d.entityType === 'organization') sub = d.category || '';
+      else sub = [d.author, d.year].filter(Boolean).join(' \u00b7 ');
+
+      const stanceDot = d.stance_score ? `<span class="mobile-card-dot" style="background:${STANCE_COLORS[STANCE_ORDER[Math.round(d.stance_score) - 1]] || 'var(--text-3)'}" title="${d.regulatory_stance || ''}"></span>` : '<span class="mobile-card-dot empty"></span>';
+      const timelineDot = d.timeline_score ? `<span class="mobile-card-dot" style="background:${TIMELINE_COLORS[TIMELINE_ORDER[Math.round(d.timeline_score) - 1]] || 'var(--text-3)'}" title="${d.agi_timeline || ''}"></span>` : '<span class="mobile-card-dot empty"></span>';
+      const riskDot = d.risk_score ? `<span class="mobile-card-dot" style="background:${RISK_COLORS[RISK_ORDER[Math.round(d.risk_score) - 1]] || 'var(--text-3)'}" title="${d.ai_risk_level || ''}"></span>` : '<span class="mobile-card-dot empty"></span>';
+
+      cardsHtml += `<div class="mobile-card" data-entity-id="${d.id}" data-entity-type="${d.entityType}" data-category="${normalizeCategory(d.category)}" data-slug="${slug}" data-stance="${d.regulatory_stance || ''}" data-timeline="${d.agi_timeline || ''}" data-risk="${d.ai_risk_level || ''}">
+        ${thumbHtml}<div class="mobile-card-info">
+          <div class="mobile-card-row1"><span class="mobile-card-name">${d.name || d.title}</span><span class="mobile-card-badge" style="background:${catColor}22;color:${catColor};">${normalizeCategory(d.category)}</span></div>
+          <div class="mobile-card-row2"><span class="mobile-card-sub">${sub}</span><span class="mobile-card-dots">${stanceDot}${timelineDot}${riskDot}</span></div>
+        </div></div>`;
+    }
+    cardsHtml += '</div>';
+  }
+  document.getElementById('mobile-card-list').innerHTML = cardsHtml;
+
+  // ── Filter state machine ──
+  const mobileFilters = { categories: new Set(), stance: new Set(), timeline: new Set(), risk: new Set(), type: 'all', searchQuery: '', searchMatches: null };
+
+  function applyMobileFilters() {
+    const cards = document.querySelectorAll('.mobile-card');
+    const sections = document.querySelectorAll('.mobile-category-section');
+    let visibleCount = 0;
+    cards.forEach(card => {
+      let show = true;
+      if (mobileFilters.type !== 'all' && card.dataset.entityType !== mobileFilters.type) show = false;
+      if (show && mobileFilters.categories.size > 0 && !mobileFilters.categories.has(card.dataset.category)) show = false;
+      if (show && mobileFilters.stance.size > 0 && !mobileFilters.stance.has(card.dataset.stance)) show = false;
+      if (show && mobileFilters.timeline.size > 0 && !mobileFilters.timeline.has(card.dataset.timeline)) show = false;
+      if (show && mobileFilters.risk.size > 0 && !mobileFilters.risk.has(card.dataset.risk)) show = false;
+      if (show && mobileFilters.searchMatches && !mobileFilters.searchMatches.has(card.dataset.entityId + ':' + card.dataset.entityType)) show = false;
+      card.style.display = show ? '' : 'none';
+      if (show) visibleCount++;
+    });
+    sections.forEach(section => {
+      const vis = section.querySelectorAll('.mobile-card:not([style*="display: none"])');
+      section.style.display = vis.length > 0 ? '' : 'none';
+      const countEl = section.querySelector('.cat-count');
+      if (countEl) countEl.textContent = vis.length;
+    });
+    document.getElementById('mobile-no-results').style.display = visibleCount === 0 ? '' : 'none';
+    renderActiveFilterChips();
+  }
+
+  function renderActiveFilterChips() {
+    const container = document.getElementById('mobile-active-filters');
+    let html = '';
+    mobileFilters.categories.forEach(cat => { const c = getColor(cat) || DEFAULT_COLOR; html += `<span class="mobile-filter-chip" data-filter="category" data-value="${cat}" style="background:${c};"><span>${cat}</span> <span class="chip-x">&times;</span></span>`; });
+    mobileFilters.stance.forEach(v => html += `<span class="mobile-filter-chip" data-filter="stance" data-value="${v}" style="background:${STANCE_COLORS[v] || '#888'};"><span>${v}</span> <span class="chip-x">&times;</span></span>`);
+    mobileFilters.timeline.forEach(v => html += `<span class="mobile-filter-chip" data-filter="timeline" data-value="${v}" style="background:${TIMELINE_COLORS[v] || '#888'};"><span>${v}</span> <span class="chip-x">&times;</span></span>`);
+    mobileFilters.risk.forEach(v => html += `<span class="mobile-filter-chip" data-filter="risk" data-value="${v}" style="background:${RISK_COLORS[v] || '#888'};"><span>${v}</span> <span class="chip-x">&times;</span></span>`);
+    container.innerHTML = html;
+    container.querySelectorAll('.mobile-filter-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const f = chip.dataset.filter, val = chip.dataset.value;
+        if (f === 'category') { mobileFilters.categories.delete(val); document.querySelector(`.mobile-bubble[data-category="${val}"]`)?.classList.remove('active'); }
+        else { mobileFilters[f].delete(val); document.querySelector(`.mobile-spectrum-segment[data-dimension="${f === 'stance' ? 'regulatory_stance' : f === 'timeline' ? 'agi_timeline' : 'ai_risk_level'}"][data-value="${val}"]`)?.classList.remove('active'); }
+        applyMobileFilters();
+      });
+    });
+  }
+
+  // Bubble tap → filter
+  document.querySelectorAll('.mobile-bubble').forEach(b => {
+    b.addEventListener('click', () => {
+      const cat = b.dataset.category;
+      if (mobileFilters.categories.has(cat)) { mobileFilters.categories.delete(cat); b.classList.remove('active'); }
+      else { mobileFilters.categories.add(cat); b.classList.add('active'); }
+      applyMobileFilters();
+    });
+  });
+  // Spectrum segment tap → filter
+  document.querySelectorAll('.mobile-spectrum-segment').forEach(seg => {
+    seg.addEventListener('click', () => {
+      const dim = seg.dataset.dimension, val = seg.dataset.value;
+      const fk = dim === 'regulatory_stance' ? 'stance' : dim === 'agi_timeline' ? 'timeline' : 'risk';
+      if (mobileFilters[fk].has(val)) { mobileFilters[fk].delete(val); seg.classList.remove('active'); }
+      else { mobileFilters[fk].add(val); seg.classList.add('active'); }
+      applyMobileFilters();
+    });
+  });
+  // Type chips
+  document.querySelectorAll('.mobile-type-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('.mobile-type-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      mobileFilters.type = chip.dataset.type;
+      applyMobileFilters();
+    });
+  });
+  // Search
+  let searchTimer;
+  document.getElementById('mobile-search-input').addEventListener('input', (e) => {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => {
+      const q = e.target.value.trim();
+      if (!q) { mobileFilters.searchMatches = null; mobileFilters.searchQuery = ''; applyMobileFilters(); return; }
+      mobileFilters.searchQuery = q;
+      const expanded = expandQuery(q);
+      const scored = [];
+      for (const d of allEntities) { const s = scoreEntity(d, q, expanded); if (s > 0) scored.push({ d, s }); }
+      scored.sort((a, b) => b.s - a.s);
+      mobileFilters.searchMatches = new Set(scored.map(x => x.d.id + ':' + x.d.entityType));
+      applyMobileFilters();
+    }, 80);
+  });
+
+  // Card tap → detail panel
+  let mobileScrollPos = 0;
+  document.querySelectorAll('.mobile-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const id = parseInt(card.dataset.entityId), type = card.dataset.entityType;
+      const entity = allEntities.find(e => e.id === id && e.entityType === type);
+      if (!entity) return;
+      mobileScrollPos = dir.scrollTop;
+      showDetail(entity, []);
+    });
+  });
+  // Detail close → restore scroll
+  document.getElementById('detail-close').addEventListener('click', () => {
+    setTimeout(() => { dir.scrollTop = mobileScrollPos; }, 50);
+  });
+
+  // Deep link
+  const deepLinkTarget = resolveDeepLink();
+  if (deepLinkTarget) {
+    const targetSlug = getEntitySlug(deepLinkTarget);
+    const targetCard = document.querySelector(`.mobile-card[data-slug="${targetSlug}"]`);
+    if (targetCard) {
+      setTimeout(() => {
+        targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        targetCard.classList.add('highlight');
+        setTimeout(() => {
+          const entity = allEntities.find(e => e.id === deepLinkTarget.id && e.entityType === deepLinkTarget.entityType) || deepLinkTarget;
+          showDetail(entity, []);
+        }, 500);
+      }, 300);
+    }
+  }
+}
+
 fetch('map-data.json')
   .then(r => r.json())
   .then(data => {
     allData = data;
-    // Ensure new fields have defaults for backward compat
     if (!allData.resources) allData.resources = [];
     if (!allData.relationships) allData.relationships = [];
     if (!allData.person_organizations) allData.person_organizations = [];
-    // Build links: combine explicit person_organizations WITH inferred links
+
+    buildSlugMaps();
+
+    if (isMobileDirectory) {
+      renderMobileDirectory();
+      return;
+    }
+
+    // Desktop path: existing behavior unchanged
     const explicitLinks = buildExplicitLinks(allData);
     const fuzzyLinks = inferOrgLinks(data.people, data.organizations);
-    // Merge, avoiding duplicates
     inferredLinks = [...explicitLinks];
     fuzzyLinks.forEach(fl => {
       if (!inferredLinks.some(el => el.personName === fl.personName && el.orgName === fl.orgName)) {
@@ -1404,6 +1858,25 @@ fetch('map-data.json')
     buildSourceTypeFilter();
     updateSourceTypeVisibility();
     render();
+
+    // Desktop deep link handling
+    const deepLinkTarget = resolveDeepLink();
+    if (deepLinkTarget) {
+      setTimeout(() => {
+        const renderedNodes = d3.selectAll('.node').data();
+        const node = renderedNodes.find(n => n.name === (deepLinkTarget.name || deepLinkTarget.title));
+        if (node) {
+          showDetail(node, renderedNodes);
+          const svg = d3.select('#map-container svg');
+          const mapEl = document.getElementById('map-container');
+          const k = 3;
+          svg.transition().duration(500).call(
+            zoomBehavior.transform,
+            d3.zoomIdentity.translate(mapEl.clientWidth / 2 - k * node.x, mapEl.clientHeight / 2 - k * node.y).scale(k)
+          );
+        }
+      }, 1000);
+    }
   });
 
 // Build links from explicit person_organizations + relationships data
@@ -3294,6 +3767,12 @@ function showDetail(d, allNodes) {
 
       const entityType = person ? 'person' : org ? 'organization' : 'resource';
 
+      // Mobile: just show target detail, no zoom
+      if (isMobileDirectory) {
+        showDetail(Object.assign({}, target, { entityType }), []);
+        return;
+      }
+
       // Switch view if needed (same logic as search)
       if (entityType === 'resource' && currentView !== 'resources') {
         document.querySelector('[data-view="resources"]').click();
@@ -3330,6 +3809,9 @@ function showDetail(d, allNodes) {
       }, 100);
     });
   });
+
+  // Share button
+  initShareButton(d);
 
   panel.classList.add('open');
 }
