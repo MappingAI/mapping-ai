@@ -4,8 +4,10 @@ const CORS_HEADERS = {
   'Access-Control-Allow-Headers': 'Content-Type',
 };
 
-const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
+// Use dedicated key for semantic search (separate from submission review key)
+const ANTHROPIC_API_KEY = process.env.ANTHROPIC_SEMANTIC_SEARCH_KEY || process.env.ANTHROPIC_API_KEY;
 const MAP_DATA_URL = 'https://mapping-ai.org/map-data.json';
+const LLM_TIMEOUT_MS = 8000; // 8 second timeout for Haiku API
 
 // Cache for map data (persists across warm Lambda invocations)
 let cachedMapData = null;
@@ -25,6 +27,104 @@ async function getMapData() {
   cachedMapData = await response.json();
   cacheTimestamp = now;
   return cachedMapData;
+}
+
+/**
+ * Build a lookup of person ID → Set of affiliated organization sectors.
+ * Uses person_organizations array + organizations to map affiliations.
+ */
+function buildPersonSectorsLookup(mapData) {
+  const orgById = new Map();
+  for (const org of (mapData.organizations || [])) {
+    orgById.set(org.id, org);
+  }
+
+  const personSectors = new Map(); // personId → Set<sector>
+
+  // Process person_organizations affiliations
+  for (const affil of (mapData.person_organizations || [])) {
+    const org = orgById.get(affil.organization_id);
+    if (!org || !org.category) continue;
+
+    if (!personSectors.has(affil.person_id)) {
+      personSectors.set(affil.person_id, new Set());
+    }
+    personSectors.get(affil.person_id).add(org.category);
+  }
+
+  // Also check primary_org as fallback (match by name)
+  const orgByName = new Map();
+  for (const org of (mapData.organizations || [])) {
+    orgByName.set(org.name?.toLowerCase(), org);
+  }
+
+  for (const person of (mapData.people || [])) {
+    if (person.primary_org) {
+      const org = orgByName.get(person.primary_org.toLowerCase());
+      if (org?.category) {
+        if (!personSectors.has(person.id)) {
+          personSectors.set(person.id, new Set());
+        }
+        personSectors.get(person.id).add(org.category);
+      }
+    }
+  }
+
+  return personSectors;
+}
+
+/**
+ * Build relationship summaries for funder/critic/collaborator edges.
+ * Returns a string section for the LLM context.
+ */
+function buildRelationshipContext(mapData) {
+  const validEdgeTypes = new Set(['funder', 'critic', 'collaborator', 'authored_by']);
+  const entityById = new Map();
+
+  for (const p of (mapData.people || [])) entityById.set(p.id, p.name);
+  for (const o of (mapData.organizations || [])) entityById.set(o.id, o.name);
+
+  // Group edges by target org and edge type
+  const orgRelations = new Map(); // orgName → { funders: [], critics: [], collaborators: [] }
+
+  for (const rel of (mapData.relationships || [])) {
+    if (!validEdgeTypes.has(rel.relationship_type)) continue;
+    if (rel.relationship_type === 'affiliated') continue; // Skip affiliations, handled separately
+
+    const targetName = entityById.get(rel.target_id);
+    const sourceName = entityById.get(rel.source_id);
+    if (!targetName || !sourceName) continue;
+
+    if (!orgRelations.has(targetName)) {
+      orgRelations.set(targetName, { funders: [], critics: [], collaborators: [] });
+    }
+
+    const rels = orgRelations.get(targetName);
+    if (rel.relationship_type === 'funder') rels.funders.push(sourceName);
+    else if (rel.relationship_type === 'critic') rels.critics.push(sourceName);
+    else if (rel.relationship_type === 'collaborator') rels.collaborators.push(sourceName);
+  }
+
+  // Format as context string (cap at ~15KB)
+  const lines = [];
+  let charCount = 0;
+  const MAX_CHARS = 15000;
+
+  for (const [orgName, rels] of orgRelations) {
+    const parts = [];
+    if (rels.funders.length) parts.push(`funders: ${rels.funders.join(', ')}`);
+    if (rels.critics.length) parts.push(`critics: ${rels.critics.join(', ')}`);
+    if (rels.collaborators.length) parts.push(`collaborators: ${rels.collaborators.join(', ')}`);
+
+    if (parts.length === 0) continue;
+
+    const line = `- ${orgName}: ${parts.join('; ')}`;
+    if (charCount + line.length > MAX_CHARS) break;
+    lines.push(line);
+    charCount += line.length;
+  }
+
+  return lines.length > 0 ? lines.join('\n') : '';
 }
 
 export const handler = async (event) => {
@@ -63,12 +163,21 @@ export const handler = async (event) => {
       };
     }
 
-    // Fetch cached map data from CDN (much faster than DB query)
+    // Fetch cached map data from CDN
     const mapData = await getMapData();
 
-    // Build context for LLM - group by type
-    const people = (mapData.people || [])
-      .map(r => `- ${r.name} (${r.category || 'unknown role'}${r.primary_org ? ', ' + r.primary_org : ''}${r.regulatory_stance ? ', stance: ' + r.regulatory_stance : ''})`);
+    // Build person-to-sectors lookup for multi-affiliation queries
+    const personSectors = buildPersonSectorsLookup(mapData);
+
+    // Build relationship context for funder/critic queries
+    const relationshipContext = buildRelationshipContext(mapData);
+
+    // Build enriched context for LLM
+    const people = (mapData.people || []).map(r => {
+      const sectors = personSectors.get(r.id);
+      const affiliations = sectors ? `[sectors: ${[...sectors].join(', ')}]` : '';
+      return `- ${r.name} (${r.category || 'unknown role'}${r.primary_org ? ', ' + r.primary_org : ''}${r.regulatory_stance ? ', stance: ' + r.regulatory_stance : ''}) ${affiliations}`;
+    });
 
     const orgs = (mapData.organizations || [])
       .map(r => `- ${r.name} (${r.category || 'unknown sector'}${r.regulatory_stance ? ', stance: ' + r.regulatory_stance : ''})`);
@@ -76,7 +185,7 @@ export const handler = async (event) => {
     const resources = (mapData.resources || [])
       .map(r => `- ${r.title || r.name} (${r.category || 'resource'})`);
 
-    const entityContext = `
+    let entityContext = `
 PEOPLE (${people.length}):
 ${people.join('\n')}
 
@@ -87,21 +196,35 @@ RESOURCES (${resources.length}):
 ${resources.join('\n')}
     `.trim();
 
-    // Call Claude Haiku for semantic matching
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01',
-      },
-      body: JSON.stringify({
-        model: 'claude-3-haiku-20240307',
-        max_tokens: 2048,
-        messages: [
-          {
-            role: 'user',
-            content: `You are helping search a database of AI policy stakeholders. Your goal is to BROADLY interpret queries and return all entities that could be relevant.
+    // Add relationship context if available
+    if (relationshipContext) {
+      entityContext += `\n\nRELATIONSHIPS (funders, critics, collaborators):\n${relationshipContext}`;
+    }
+
+    // Log context size for monitoring
+    console.log(`Context size: ${entityContext.length} chars`);
+
+    // Call Claude Haiku with timeout
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), LLM_TIMEOUT_MS);
+
+    let response;
+    try {
+      response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': ANTHROPIC_API_KEY,
+          'anthropic-version': '2023-06-01',
+        },
+        signal: controller.signal,
+        body: JSON.stringify({
+          model: 'claude-3-haiku-20240307',
+          max_tokens: 4096,
+          messages: [
+            {
+              role: 'user',
+              content: `You are helping search a database of AI policy stakeholders. Your goal is to BROADLY interpret queries and return relevant entities.
 
 QUERY: "${query}"
 
@@ -110,47 +233,49 @@ Here are all the entities in the database:
 ${entityContext}
 
 Return a JSON object with:
-- "names": array of exact entity names from the list above that match
-- "explanation": 1 sentence explaining the matches
+- "names": array of exact entity names from the list above that match the query
+- "summary": 1-2 sentences describing the result set (e.g., "Found 15 researchers and executives who have worked at both frontier labs and government agencies")
+- "match_reasons": object mapping entity names to brief explanations of why they matched (e.g., {"Heidy Khlaaf": "affiliated with: Trail of Bits, NIST [Government/Agency], Google [Frontier Lab]"})
 
-IMPORTANT - Be INCLUSIVE, not selective:
+QUERY TYPES - Handle these patterns:
 
-1. **Topic queries** (e.g., "AI safety", "governance", "existential risk"):
-   - Include organizations in that space
-   - Include ALL people who work at those organizations (check their primary_org field!)
-   - Include people whose roles suggest involvement (researchers, policymakers)
+1. **Multi-affiliation intersection queries** (e.g., "people at frontier labs AND think tanks AND government"):
+   - Look at each person's [sectors: ...] field
+   - Return ONLY people whose sectors include ALL the requested types
+   - Be strict about intersections - "AND" means they must have affiliations in ALL mentioned sectors
 
-2. **Organization queries** (e.g., "OpenAI", "Anthropic", "frontier labs"):
-   - Include the organization(s) themselves
-   - Include ALL people whose primary_org matches that organization
-   - For "frontier labs", include: OpenAI, Anthropic, Google DeepMind, Meta AI, xAI and ALL their employees
+2. **Connection/path queries** (e.g., "how is X connected to Y"):
+   - Return both X and Y
+   - Return any entities that appear in relationships with both X and Y
+   - Explain the connection path in match_reasons
 
-3. **Stance queries** (e.g., "wants regulation", "accelerationists"):
-   - "pro-regulation", "cautious", "wants oversight" → include Restrictive, Precautionary, Moderate stances
-   - "against regulation", "accelerationist", "e/acc" → include Accelerate, Light-touch stances
-   - Include people at organizations known for those stances
+3. **Relationship-type queries** (e.g., "funders of X", "critics of Y"):
+   - Check the RELATIONSHIPS section for funder/critic/collaborator edges
+   - Return entities that have the specified relationship type to the target
 
-4. **Role queries** (e.g., "researchers", "policymakers", "executives"):
-   - Include all people with matching category/role
+4. **Neighborhood queries** (e.g., "tell me about X", "who is X"):
+   - Return X and all entities directly connected to X
+   - Include connected orgs, collaborators, funders, critics
 
-5. **Ultra-specific policy queries** (e.g., "SB 1047", "preemption", "compute governance"):
-   - Use your world knowledge to identify who works on these specific issues
-   - Include relevant think tanks, policymakers, researchers, advocates
-   - Include organizations that have published on or advocated positions on these topics
-   - For "SB 1047" or California AI legislation, include Scott Wiener, Gavin Newsom, CAIS, AI Policy Institute, etc.
+5. **Standard queries** (topic, organization, stance, role):
+   - Be INCLUSIVE - return all plausibly relevant entities
+   - For org queries, include all people at that org
+   - For topic queries, include orgs AND their people
 
-6. **Belief queries** (e.g., "thinks AGI is close", "worried about AI risk"):
-   - Match against agi_timeline and ai_risk fields
-   - Include people at organizations known for those views
+EMPTY RESULTS:
+If no entities match ALL criteria in an intersection query, return:
+- "names": []
+- "summary": "No entities matched all criteria. [Explain what was missing]. Try relaxing to: [suggest simpler query]"
+- "match_reasons": {}
 
-Return up to 100 matches. For broad queries, return MORE entities rather than fewer.
-When in doubt, INCLUDE the entity rather than exclude it.
-
-Respond ONLY with valid JSON, no other text.`
-          }
-        ],
-      }),
-    });
+Return up to 100 matches. Respond ONLY with valid JSON, no other text.`
+            }
+          ],
+        }),
+      });
+    } finally {
+      clearTimeout(timeoutId);
+    }
 
     if (!response.ok) {
       const errText = await response.text();
@@ -168,7 +293,6 @@ Respond ONLY with valid JSON, no other text.`
     // Parse JSON from response
     let parsed;
     try {
-      // Handle potential markdown code blocks
       const jsonMatch = content.match(/\{[\s\S]*\}/);
       if (!jsonMatch) {
         throw new Error('No JSON found in response');
@@ -179,7 +303,12 @@ Respond ONLY with valid JSON, no other text.`
       return {
         statusCode: 500,
         headers: CORS_HEADERS,
-        body: JSON.stringify({ error: 'Failed to parse AI response', names: [] }),
+        body: JSON.stringify({
+          error: 'Failed to parse AI response',
+          names: [],
+          summary: '',
+          match_reasons: {}
+        }),
       };
     }
 
@@ -192,18 +321,40 @@ Respond ONLY with valid JSON, no other text.`
 
     const filteredNames = (parsed.names || []).filter(name => validNames.has(name));
 
+    // Filter match_reasons to only include valid names
+    const filteredReasons = {};
+    if (parsed.match_reasons && typeof parsed.match_reasons === 'object') {
+      for (const [name, reason] of Object.entries(parsed.match_reasons)) {
+        if (validNames.has(name) && filteredNames.includes(name)) {
+          filteredReasons[name] = reason;
+        }
+      }
+    }
+
     return {
       statusCode: 200,
       headers: CORS_HEADERS,
       body: JSON.stringify({
         names: filteredNames,
-        explanation: parsed.explanation || '',
+        summary: parsed.summary || '',
+        match_reasons: filteredReasons,
+        explanation: parsed.summary || parsed.explanation || '', // backwards compat
         query: query,
       }),
     };
 
   } catch (error) {
     console.error('Semantic search error:', error);
+
+    // Handle timeout specifically
+    if (error.name === 'AbortError') {
+      return {
+        statusCode: 504,
+        headers: CORS_HEADERS,
+        body: JSON.stringify({ error: 'Search timed out, please try again' }),
+      };
+    }
+
     return {
       statusCode: 500,
       headers: CORS_HEADERS,

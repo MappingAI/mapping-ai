@@ -391,6 +391,38 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   cursor: pointer; transition: all 0.15s;
 }
 .search-clear-btn:hover { border-color: var(--text-2); color: var(--text-1); }
+.search-summary {
+  font-family: var(--sans); font-size: 11px;
+  color: var(--text-2); margin-top: 0.5rem;
+  padding: 0.5rem; background: var(--bg-2);
+  border-radius: 4px; line-height: 1.4;
+}
+.search-controls {
+  display: flex; flex-direction: column; gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+.search-toggle-label {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--text-2); cursor: pointer;
+  display: flex; align-items: center; gap: 0.4rem;
+}
+.search-toggle-label input { cursor: pointer; }
+/* Filtered subgraph styles */
+.node.filtered-hidden { opacity: 0 !important; pointer-events: none; }
+.connection-line.filtered-hidden { opacity: 0 !important; }
+.node.one-hop { opacity: 0.4; }
+.node.one-hop circle, .node.one-hop rect { stroke-dasharray: 3,2; }
+.connection-line.one-hop { opacity: 0.25; stroke-dasharray: 4,3; }
+/* Match reason tooltip */
+.match-reason-tooltip {
+  position: absolute; z-index: 1000;
+  background: var(--bg-1); border: 1px solid var(--line);
+  border-radius: 4px; padding: 0.4rem 0.6rem;
+  font-family: var(--mono); font-size: 10px;
+  color: var(--text-2); max-width: 280px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  pointer-events: none;
+}
 
 /* Source type filter */
 .source-type-items { display: flex; flex-direction: column; gap: 0.15rem; }
@@ -649,13 +681,19 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
       <textarea id="search-mode-input" class="search-mode-textarea" placeholder="Which academics have testified before Congress on AI?" rows="2"></textarea>
       <div class="search-action-row">
         <div class="search-toggle-row">
-          <button class="search-toggle-btn active" data-method="keyword">Keyword</button>
-          <button class="search-toggle-btn" data-method="ai">LLM</button>
+          <button class="search-toggle-btn" data-method="keyword">Keyword</button>
+          <button class="search-toggle-btn active" data-method="ai">LLM</button>
         </div>
         <button id="search-run-btn" class="search-run-btn">Search</button>
       </div>
       <div id="search-mode-status" class="search-mode-status"></div>
-      <button id="search-clear-btn" class="search-clear-btn" style="display:none">Clear</button>
+      <div id="search-summary" class="search-summary" style="display:none"></div>
+      <div id="search-controls" class="search-controls" style="display:none">
+        <label class="search-toggle-label">
+          <input type="checkbox" id="show-connections-toggle" checked> Show connections
+        </label>
+        <button id="search-clear-btn" class="search-clear-btn">Back to full map</button>
+      </div>
     </div>
   </div>
   <div class="control-group" id="category-filters">
@@ -1977,6 +2015,8 @@ function getVisibleNodes() {
 
   if (currentView === 'orgs' || currentView === 'all') {
     allData.organizations.forEach(d => {
+      // Search filter: when active, only show entities in searchVisibleNames
+      if (searchFilterActive && !searchVisibleNames.has(d.name)) return;
       if (!d.category || !isFilterActive(d)) return;
       if (!passesStanceFilter(d)) return;
       if (!passesSourceTypeFilter(d)) return;
@@ -1993,6 +2033,8 @@ function getVisibleNodes() {
   }
   if (currentView === 'people' || currentView === 'all') {
     allData.people.forEach(d => {
+      // Search filter: when active, only show entities in searchVisibleNames
+      if (searchFilterActive && !searchVisibleNames.has(d.name)) return;
       if (!d.category) return;
       // In "all" view, people are clustered by their org's sector, so filter by the
       // display category (org sector) not their personal role category
@@ -2049,6 +2091,8 @@ function getVisibleNodes() {
   }
   if (currentView === 'resources') {
     allData.resources.forEach(d => {
+      // Search filter: when active, only show entities in searchVisibleNames (resources use title as name)
+      if (searchFilterActive && !searchVisibleNames.has(d.title)) return;
       if (!passesSourceTypeFilter(d)) return;
       const cat = d.category || 'Other'; // cluster by topic category in resources view
       const sc = d.submission_count || 1;
@@ -2061,6 +2105,8 @@ function getVisibleNodes() {
     const unknownActive = document.querySelector('#stance-legend-items .stance-legend-item:last-child')?.dataset.active !== 'false';
 
     allData.resources.forEach(d => {
+      // Search filter: when active, only show entities in searchVisibleNames (resources use title as name)
+      if (searchFilterActive && !searchVisibleNames.has(d.title)) return;
       if (!passesSourceTypeFilter(d)) return;
 
       // When belief filter is active, only show resources that have a checked belief value
@@ -3044,6 +3090,13 @@ function showDetail(d, allNodes) {
     if (value) fields += `<div class="detail-field"><label>${label}</label><span>${value}</span></div>`;
   };
 
+  // Match reason (when in search mode with LLM results)
+  const entityName = d.name || d.title;
+  const matchReason = searchMatchReasons[entityName];
+  if (matchReason && viewMode === 'search') {
+    addField('Why matched', `<span style="background:#fef9c3;color:#713f12;padding:2px 8px;border-radius:3px;font-size:11px;">${matchReason}</span>`);
+  }
+
   // Submission count + disagreement
   const sc = d.submission_count || d.submissionCount || 1;
   if (sc > 1) {
@@ -3636,13 +3689,20 @@ function clearSearch() {
 // SEARCH MODE: Semantic search with connection highlighting
 // ══════════════════════════════════════════════════════════════════════════════
 
-let searchModeMethod = 'keyword'; // 'keyword' or 'ai'
+let searchModeMethod = 'ai'; // 'keyword' or 'ai' - default to LLM
 let searchModeMatches = []; // current search results (entity names)
+let searchMatchReasons = {}; // entity name → match reason (from LLM)
+let showOneHopConnections = true; // whether to show 1-hop neighbors - default ON
+let searchFilterActive = false; // when true, render() only shows search matches + 1-hop
+let searchVisibleNames = new Set(); // set of entity names to show when searchFilterActive
 
 const searchModeInput = document.getElementById('search-mode-input');
 const searchModeStatus = document.getElementById('search-mode-status');
+const searchSummary = document.getElementById('search-summary');
+const searchControls = document.getElementById('search-controls');
 const searchClearBtn = document.getElementById('search-clear-btn');
 const searchRunBtn = document.getElementById('search-run-btn');
+const showConnectionsToggle = document.getElementById('show-connections-toggle');
 
 // Toggle between Keyword and AI search methods
 document.querySelectorAll('.search-toggle-btn').forEach(btn => {
@@ -3673,21 +3733,69 @@ searchModeInput.addEventListener('keydown', (e) => {
   }
 });
 
-// Clear button
+// Clear button - back to full map
 searchClearBtn.addEventListener('click', () => {
   clearSearchModeHighlighting();
   searchModeInput.value = '';
-  searchClearBtn.style.display = 'none';
   searchModeStatus.textContent = '';
+  searchSummary.style.display = 'none';
+  searchSummary.textContent = '';
+  searchControls.style.display = 'none';
   searchModeMatches = [];
+  searchMatchReasons = {};
+  showOneHopConnections = true; // reset to default (on)
+  showConnectionsToggle.checked = true;
+});
+
+// Show connections toggle
+showConnectionsToggle.addEventListener('change', () => {
+  showOneHopConnections = showConnectionsToggle.checked;
+  if (searchModeMatches.length > 0) {
+    showFilteredSubgraph(searchModeMatches, showOneHopConnections);
+  }
 });
 
 // Re-apply search highlighting after render (called from render() and simulation end)
 function reapplySearchHighlighting() {
-  if (viewMode === 'search' && searchModeMatches.length > 0) {
+  // Only apply styling if we have search results - the filtering is handled in getVisibleNodes()
+  if (viewMode === 'search' && searchModeMatches.length > 0 && window._searchMatchSet) {
+    const matchSet = window._searchMatchSet;
+    const oneHopSet = window._searchOneHopSet || new Set();
+
     // Delay to let D3 finish rendering nodes
     setTimeout(() => {
-      highlightSearchSubgraph(searchModeMatches);
+      d3.selectAll('.node').each(function(d) {
+        const el = d3.select(this);
+        const isMatch = matchSet.has(d.name);
+        const isOneHop = oneHopSet.has(d.name);
+
+        el.classed('dimmed', false)
+          .classed('highlighted', isMatch)
+          .classed('filtered-hidden', false)
+          .classed('one-hop', isOneHop && !isMatch);
+      });
+
+      d3.selectAll('.connection-line').each(function(d) {
+        const el = d3.select(this);
+        const srcName = (d.source && d.source.name) || '';
+        const tgtName = (d.target && d.target.name) || '';
+
+        const srcIsMatch = matchSet.has(srcName);
+        const tgtIsMatch = matchSet.has(tgtName);
+        const srcIsOneHop = oneHopSet.has(srcName);
+        const tgtIsOneHop = oneHopSet.has(tgtName);
+
+        el.classed('dimmed', false)
+          .classed('filtered-hidden', false);
+
+        if (srcIsMatch && tgtIsMatch) {
+          el.classed('highlighted', true).classed('one-hop', false);
+        } else if ((srcIsMatch && tgtIsOneHop) || (tgtIsMatch && srcIsOneHop)) {
+          el.classed('highlighted', false).classed('one-hop', true);
+        } else {
+          el.classed('highlighted', false).classed('one-hop', false);
+        }
+      });
     }, 150);
   }
 }
@@ -3712,6 +3820,8 @@ function executeSearchMode() {
 function executeKeywordSearch(query) {
   searchModeStatus.textContent = 'Searching';
   searchModeStatus.className = 'search-mode-status loading';
+  searchSummary.style.display = 'none';
+  searchControls.style.display = 'none';
 
   // Use enhanced query expansion
   const expandedQuery = expandQueryEnhanced(query);
@@ -3734,8 +3844,9 @@ function executeKeywordSearch(query) {
     searchModeStatus.textContent = 'No matches found';
     searchModeStatus.className = 'search-mode-status';
     clearSearchModeHighlighting();
-    searchClearBtn.style.display = 'block';
+    searchControls.style.display = 'block';
     searchModeMatches = [];
+    searchMatchReasons = {};
     return;
   }
 
@@ -3743,9 +3854,9 @@ function executeKeywordSearch(query) {
   const displayLimit = 50;
   const namesToHighlight = matchedNames.length > displayLimit ? matchedNames.slice(0, displayLimit) : matchedNames;
 
-  // Store only the names we're actually highlighting (not the full list)
-  // This ensures reapplySearchHighlighting uses the same set
+  // Store only the names we're actually highlighting
   searchModeMatches = namesToHighlight;
+  searchMatchReasons = {}; // No match reasons for keyword search
 
   if (matchedNames.length > displayLimit) {
     searchModeStatus.textContent = `Showing top ${displayLimit} of ${matchedNames.length} matches`;
@@ -3753,16 +3864,17 @@ function executeKeywordSearch(query) {
     searchModeStatus.textContent = `${matchedNames.length} match${matchedNames.length === 1 ? '' : 'es'} found`;
   }
   searchModeStatus.className = 'search-mode-status';
-  searchClearBtn.style.display = 'block';
+  searchControls.style.display = 'flex';
 
-  // Apply highlighting with delay to ensure D3 simulation has settled
-  setTimeout(() => highlightSearchSubgraph(namesToHighlight), 200);
+  // Apply filtered subgraph view with delay to ensure D3 simulation has settled
+  setTimeout(() => showFilteredSubgraph(namesToHighlight, showOneHopConnections), 200);
 }
 
 async function executeAISearch(query) {
   searchModeStatus.textContent = 'Searching';
   searchModeStatus.className = 'search-mode-status loading';
-  searchClearBtn.style.display = 'none';
+  searchSummary.style.display = 'none';
+  searchControls.style.display = 'none';
 
   try {
     const response = await fetch(`https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com/semantic-search?q=${encodeURIComponent(query)}`);
@@ -3774,33 +3886,53 @@ async function executeAISearch(query) {
     if (data.error) {
       searchModeStatus.textContent = data.error;
       searchModeStatus.className = 'search-mode-status error';
-      searchClearBtn.style.display = 'block';
+      searchControls.style.display = 'block';
       return;
     }
 
     const matchedNames = data.names || [];
     searchModeMatches = matchedNames;
+    searchMatchReasons = data.match_reasons || {};
 
     if (matchedNames.length === 0) {
       searchModeStatus.textContent = 'No matches found';
       searchModeStatus.className = 'search-mode-status';
+      // Show summary even for no results (may contain helpful suggestion)
+      if (data.summary) {
+        searchSummary.textContent = data.summary;
+        searchSummary.style.display = 'block';
+      }
       clearSearchModeHighlighting();
-      searchClearBtn.style.display = 'block';
+      searchControls.style.display = 'block';
       return;
     }
 
     searchModeStatus.textContent = `${matchedNames.length} match${matchedNames.length === 1 ? '' : 'es'} (AI)`;
     searchModeStatus.className = 'search-mode-status';
-    searchClearBtn.style.display = 'block';
 
-    // Apply highlighting with delay to ensure D3 simulation has settled
-    setTimeout(() => highlightSearchSubgraph(matchedNames), 200);
+    // Show summary if available
+    if (data.summary) {
+      searchSummary.textContent = data.summary;
+      searchSummary.style.display = 'block';
+    }
+
+    // Show controls (toggle + clear button)
+    searchControls.style.display = 'flex';
+
+    // Apply filtered subgraph view with delay to ensure D3 simulation has settled
+    setTimeout(() => showFilteredSubgraph(matchedNames, showOneHopConnections), 200);
 
   } catch (err) {
     console.error('AI search error:', err);
-    searchModeStatus.textContent = 'LLM search unavailable, try keyword mode';
+    let errorMsg = 'LLM search unavailable';
+    if (err.message.includes('Failed to fetch') || err.name === 'TypeError') {
+      errorMsg = 'Network error - check console for CORS issues';
+    } else if (err.message.includes('HTTP')) {
+      errorMsg = `Server error (${err.message})`;
+    }
+    searchModeStatus.textContent = errorMsg + ', try keyword mode';
     searchModeStatus.className = 'search-mode-status error';
-    searchClearBtn.style.display = 'block';
+    searchControls.style.display = 'block';
   }
 }
 
@@ -3963,16 +4095,106 @@ function highlightSearchSubgraph(matchedNames, showConnections = true, retryCoun
   d3.selectAll('.cluster-label').attr('opacity', anyVisible ? 0.05 : 1);
 }
 
+/**
+ * Show filtered subgraph: re-render the map with only matching entities
+ * (and optionally 1-hop neighbors) so they fill the available space.
+ */
+function showFilteredSubgraph(matchedNames, includeOneHop = false) {
+  const matchSet = new Set(matchedNames);
+
+  // Build 1-hop neighbor set if needed
+  const oneHopSet = new Set();
+  if (includeOneHop) {
+    // Find all entities directly connected to any match
+    (allData.relationships || []).forEach(rel => {
+      const srcName = getEntityNameById(rel.source_id);
+      const tgtName = getEntityNameById(rel.target_id);
+      if (matchSet.has(srcName) && tgtName && !matchSet.has(tgtName)) {
+        oneHopSet.add(tgtName);
+      }
+      if (matchSet.has(tgtName) && srcName && !matchSet.has(srcName)) {
+        oneHopSet.add(srcName);
+      }
+    });
+  }
+
+  // Combine matches and 1-hop neighbors into the visible set
+  searchVisibleNames = new Set([...matchSet, ...oneHopSet]);
+  searchFilterActive = true;
+
+  // Store which are matches vs 1-hop for styling after render
+  window._searchMatchSet = matchSet;
+  window._searchOneHopSet = oneHopSet;
+
+  // Re-render with only the filtered entities
+  render();
+
+  // After render, apply highlight styling to distinguish matches from 1-hop
+  requestAnimationFrame(() => {
+    d3.selectAll('.node').each(function(d) {
+      const el = d3.select(this);
+      const isMatch = matchSet.has(d.name);
+      const isOneHop = oneHopSet.has(d.name);
+
+      // Clear all states first
+      el.classed('dimmed', false)
+        .classed('highlighted', false)
+        .classed('filtered-hidden', false)
+        .classed('one-hop', false);
+
+      if (isMatch) {
+        el.classed('highlighted', true);
+      } else if (isOneHop) {
+        el.classed('one-hop', true);
+      }
+    });
+
+    // Style edges
+    d3.selectAll('.connection-line').each(function(d) {
+      const el = d3.select(this);
+      const srcName = (d.source && d.source.name) || '';
+      const tgtName = (d.target && d.target.name) || '';
+
+      const srcIsMatch = matchSet.has(srcName);
+      const tgtIsMatch = matchSet.has(tgtName);
+      const srcIsOneHop = oneHopSet.has(srcName);
+      const tgtIsOneHop = oneHopSet.has(tgtName);
+
+      // Clear all states
+      el.classed('dimmed', false)
+        .classed('highlighted', false)
+        .classed('filtered-hidden', false)
+        .classed('one-hop', false);
+
+      // Style edge based on endpoint types
+      if (srcIsMatch && tgtIsMatch) {
+        el.classed('highlighted', true);
+      } else if ((srcIsMatch && tgtIsOneHop) || (tgtIsMatch && srcIsOneHop)) {
+        el.classed('one-hop', true);
+      } else if ((srcIsMatch || tgtIsMatch) && includeOneHop) {
+        el.classed('one-hop', true);
+      }
+    });
+  });
+}
+
+// Helper to get entity name by ID
+function getEntityNameById(id) {
+  const entity = [...(allData.people || []), ...(allData.organizations || []), ...(allData.resources || [])]
+    .find(e => e.id === id);
+  return entity ? (entity.name || entity.title) : null;
+}
+
 function clearSearchModeHighlighting() {
   searchModeMatches = [];
-  d3.selectAll('.node').classed('dimmed', false).classed('highlighted', false);
-  d3.selectAll('.connection-line')
-    .classed('dimmed', false)
-    .classed('highlighted', false)
-    .classed('one-hop', false);
-  d3.selectAll('.cluster-bg').attr('opacity', 0.06);
-  d3.selectAll('.cluster-label-bg').attr('opacity', 0.85);
-  d3.selectAll('.cluster-label').attr('opacity', 1);
+  searchMatchReasons = {};
+  searchFilterActive = false;
+  searchVisibleNames = new Set();
+  window._searchMatchSet = null;
+  window._searchOneHopSet = null;
+
+  // Re-render to show all entities
+  render();
 }
 
 // Filter search results based on current category/stance/source filters

@@ -21,6 +21,11 @@ Parameters:
     NoEcho: true
     Description: Anthropic API key for LLM submission review
     Default: ''
+  AnthropicSemanticSearchKey:
+    Type: String
+    NoEcho: true
+    Description: Anthropic API key for semantic search (separate from submission review)
+    Default: ''
   AdminKey:
     Type: String
     NoEcho: true
@@ -41,11 +46,16 @@ Resources:
           - !Sub 'https://${WebsiteBucket}.s3.${AWS::Region}.amazonaws.com'
           - !Sub 'https://${CloudFrontDistribution.DomainName}'
           - 'http://localhost:3000'
+          - 'http://localhost:4000'
           - 'http://localhost:5000'
+          - 'http://localhost:5173'
+          - 'http://localhost:5500'
           - 'http://localhost:8000'
           - 'http://localhost:8080'
           - 'http://127.0.0.1:3000'
           - 'http://127.0.0.1:5000'
+          - 'http://127.0.0.1:5173'
+          - 'http://127.0.0.1:5500'
         AllowHeaders:
           - Content-Type
           - X-Admin-Key
@@ -102,7 +112,7 @@ Resources:
       Timeout: 30
       Environment:
         Variables:
-          ANTHROPIC_API_KEY: !Ref AnthropicApiKey
+          ANTHROPIC_SEMANTIC_SEARCH_KEY: !Ref AnthropicSemanticSearchKey
       Events:
         SemanticSearch:
           Type: HttpApi
