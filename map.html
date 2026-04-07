@@ -1815,8 +1815,10 @@ function renderMiniGraph(entity, container) {
   const nodeCount = limitedConnected.length + 1;
 
   // Scale radii based on node count
-  const centerR = nodeCount > 8 ? 18 : 22;
-  const leafR = nodeCount > 8 ? 10 : 14;
+  // Scale radii relative to container (smaller dimension)
+  const minDim = Math.min(width, height);
+  const centerR = Math.max(14, Math.round(minDim * (nodeCount > 8 ? 0.07 : 0.09)));
+  const leafR = Math.max(8, Math.round(minDim * (nodeCount > 8 ? 0.04 : 0.055)));
 
   const nodes = [
     { id: entity.entityType + ':' + entity.id, name: entity.name || entity.title, entityType: entity.entityType, entity, isCenter: true,
@@ -1832,8 +1834,8 @@ function renderMiniGraph(entity, container) {
   }));
 
   const sim = _miniGraphSim = d3.forceSimulation(nodes)
-    .force('link', d3.forceLink(links).id(d => d.id).distance(nodeCount > 8 ? 50 : 65))
-    .force('charge', d3.forceManyBody().strength(nodeCount > 8 ? -80 : -120))
+    .force('link', d3.forceLink(links).id(d => d.id).distance(minDim * (nodeCount > 8 ? 0.15 : 0.22)))
+    .force('charge', d3.forceManyBody().strength(minDim * (nodeCount > 8 ? -0.3 : -0.45)))
     .force('center', d3.forceCenter(width / 2, height / 2))
     .force('collision', d3.forceCollide().radius(d => d.radius + 4));
 
@@ -1893,22 +1895,24 @@ function renderMiniGraph(entity, container) {
   const centerLabel = svgEl.append('text')
     .attr('class', 'mini-center-label')
     .attr('text-anchor', 'middle')
-    .attr('font-size', '11px');
-  // Split into lines of ~20 chars on word boundaries
+    .attr('font-size', Math.max(9, Math.min(12, width * 0.03)) + 'px');
+  // Word-wrap: chars per line and line height scale with container width
+  const charsPerLine = Math.max(16, Math.round(width / 16));
+  const lineH = Math.max(10, Math.round(height * 0.05));
   const words = fullName.split(/\s+/);
   const lines = [];
   let cur = '';
   for (const w of words) {
-    if (cur && (cur + ' ' + w).length > 22) { lines.push(cur); cur = w; }
+    if (cur && (cur + ' ' + w).length > charsPerLine) { lines.push(cur); cur = w; }
     else cur = cur ? cur + ' ' + w : w;
   }
   if (cur) lines.push(cur);
   const lineCount = Math.min(lines.length, 3);
-  const startY = height - 6 - (lineCount - 1) * 13;
+  const startY = height - lineH * 0.5 - (lineCount - 1) * lineH;
   lines.slice(0, 3).forEach((line, i) => {
     centerLabel.append('tspan')
-      .attr('x', 0) // will be updated on tick
-      .attr('dy', i === 0 ? 0 : 13)
+      .attr('x', 0)
+      .attr('dy', i === 0 ? 0 : lineH)
       .text(line);
   });
   centerLabel.attr('y', startY);
