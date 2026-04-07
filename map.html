@@ -1419,14 +1419,19 @@ function resolveEntityImage(d, onSuccess) {
       });
     }
   } else if (d.entityType === 'organization') {
+    // Only try image loading for orgs with known domains to avoid 404 spam
+    const knownDomain = ORG_DOMAINS[d.name];
     let domain;
-    try { domain = ORG_DOMAINS[d.name] || (d.website ? new URL(d.website).hostname.replace('www.', '') : null); } catch {}
+    try { domain = knownDomain || (d.website ? new URL(d.website).hostname.replace('www.', '') : null); } catch {}
     if (domain) {
       const s3Url = `https://d3fo5mm9fktie3.cloudfront.net/logos/${domain}.png`;
       const favUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
       const img = new Image();
       img.onload = () => onSuccess(s3Url);
-      img.onerror = () => { const f = new Image(); f.onload = () => onSuccess(favUrl); f.src = favUrl; };
+      img.onerror = () => {
+        // Only try favicon fallback for known domains (avoids 404 spam for obscure sites)
+        if (knownDomain) { const f = new Image(); f.onload = () => onSuccess(favUrl); f.src = favUrl; }
+      };
       img.src = s3Url;
     }
   }
@@ -2130,11 +2135,11 @@ function renderMobileDirectory() {
       if (d.entityType === 'resource') {
         const icon = d.resource_type === 'Book' ? '\u{1F4D5}' : d.resource_type === 'Podcast' ? '\u{1F399}' : d.resource_type === 'Video' ? '\u{1F3AC}' : '\u{1F4C4}';
         thumbHtml = `<div class="mobile-card-thumb resource-icon">${icon}</div>`;
-      } else if (d.entityType === 'organization' && d.website) {
-        const domain = d.website.replace(/^https?:\/\//, '').replace(/\/.*$/, '');
-        thumbHtml = `<img class="mobile-card-thumb" src="https://www.google.com/s2/favicons?domain=${domain}&sz=64" alt="" onerror="this.style.background='var(--line)'">`;
+      } else if (d.entityType === 'organization' && (ORG_DOMAINS[d.name] || d.website)) {
+        const domain = ORG_DOMAINS[d.name] || d.website.replace(/^https?:\/\//, '').replace(/\/.*$/, '');
+        thumbHtml = `<img class="mobile-card-thumb" src="https://www.google.com/s2/favicons?domain=${domain}&sz=64" alt="" onerror="this.outerHTML='<div class=\\'mobile-card-thumb\\' style=\\'display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-3)\\'>${escHtml((d.name||'?')[0])}</div>'">`;
       } else if (d.thumbnail_url) {
-        thumbHtml = `<img class="mobile-card-thumb" src="${d.thumbnail_url}" alt="" onerror="this.style.background='var(--line)'">`;
+        thumbHtml = `<img class="mobile-card-thumb" src="${d.thumbnail_url}" alt="" onerror="this.outerHTML='<div class=\\'mobile-card-thumb\\' style=\\'display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-3)\\'>${(d.name||'?')[0]}</div>'">`;
       } else {
         thumbHtml = `<div class="mobile-card-thumb" style="display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-3);">${d.name ? d.name[0] : '?'}</div>`;
       }
