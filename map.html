@@ -1995,11 +1995,14 @@ function renderMobileDirectory() {
   const contributeBtn = document.getElementById('contribute-btn');
   if (contributeBtn) contributeBtn.style.display = 'none';
 
-  // Resources excluded from mobile directory (no edges, no belief data, title field issues)
+  // People + orgs shown in card list; resources only appear via search
   const allEntities = [
     ...allData.people.map(d => Object.assign({}, d, { entityType: 'person' })),
     ...allData.organizations.map(d => Object.assign({}, d, { entityType: 'organization' })),
   ];
+  // Resources searchable but not in card list (name field is null, use title)
+  const resourceEntities = allData.resources.map(d => Object.assign({}, d, { entityType: 'resource', name: d.name || d.title }));
+  const allSearchable = [...allEntities, ...resourceEntities];
 
   // ── Hero: Category pills (people + orgs only, no resources) ──
   const PERSON_ROLE_SET = new Set(['Executive','Researcher','Policymaker','Investor','Organizer','Journalist','Academic','Cultural figure']);
@@ -2195,20 +2198,51 @@ function renderMobileDirectory() {
       applyMobileFilters();
     });
   });
-  // Search
+  // Search (searches people + orgs + resources; resources shown as inline results)
   let searchTimer;
+  const resourceResultsContainer = document.createElement('div');
+  resourceResultsContainer.id = 'mobile-resource-results';
+  resourceResultsContainer.style.cssText = 'padding:0 0.75rem;';
+  document.getElementById('mobile-card-list').before(resourceResultsContainer);
+
   document.getElementById('mobile-search-input').addEventListener('input', (e) => {
     clearTimeout(searchTimer);
     searchTimer = setTimeout(() => {
       const q = e.target.value.trim();
+      resourceResultsContainer.innerHTML = '';
       if (!q) { mobileFilters.searchMatches = null; mobileFilters.searchQuery = ''; applyMobileFilters(); return; }
       mobileFilters.searchQuery = q;
       const expanded = expandQuery(q);
       const scored = [];
-      for (const d of allEntities) { const s = scoreEntity(d, expanded); if (s > 0) scored.push({ d, s }); }
+      for (const d of allSearchable) { const s = scoreEntity(d, expanded); if (s > 0) scored.push({ d, s }); }
       scored.sort((a, b) => b.s - a.s);
-      mobileFilters.searchMatches = new Set(scored.map(x => x.d.id + ':' + x.d.entityType));
+      // People/org matches filter the card list
+      mobileFilters.searchMatches = new Set(scored.filter(x => x.d.entityType !== 'resource').map(x => x.d.id + ':' + x.d.entityType));
       applyMobileFilters();
+      // Resource matches shown as inline result cards above the list
+      const resourceMatches = scored.filter(x => x.d.entityType === 'resource').slice(0, 5);
+      if (resourceMatches.length > 0) {
+        let rhtml = '<div class="mobile-category-header" style="position:static;"><span class="cat-dot" style="background:#6b7280"></span><span>Resources</span><span class="cat-count">' + resourceMatches.length + '</span></div>';
+        for (const { d } of resourceMatches) {
+          const icon = d.resource_type === 'Book' ? '\u{1F4D5}' : d.resource_type === 'Podcast' ? '\u{1F399}' : d.resource_type === 'Video' ? '\u{1F3AC}' : '\u{1F4C4}';
+          const sub = [d.author, d.year].filter(Boolean).join(' \u00b7 ');
+          rhtml += `<div class="mobile-card" data-entity-id="${d.id}" data-entity-type="resource">
+            <div class="mobile-card-thumb resource-icon">${icon}</div>
+            <div class="mobile-card-info">
+              <div class="mobile-card-row1"><span class="mobile-card-name">${d.name || d.title}</span><span class="mobile-card-badge" style="background:#6b728022;color:#6b7280;">Resource</span></div>
+              <div class="mobile-card-row2"><span class="mobile-card-sub">${sub}</span></div>
+            </div></div>`;
+        }
+        resourceResultsContainer.innerHTML = rhtml;
+        // Bind clicks — resources open detail only (no graph)
+        resourceResultsContainer.querySelectorAll('.mobile-card').forEach(card => {
+          card.addEventListener('click', () => {
+            const id = parseInt(card.dataset.entityId);
+            const entity = resourceEntities.find(e => e.id === id);
+            if (entity) { mobileScrollPos = dir.scrollTop; showDetail(entity, []); }
+          });
+        });
+      }
     }, 80);
   });
 
@@ -4118,10 +4152,13 @@ function showDetail(d, allNodes) {
     // Mini graph for people/orgs; resources skip the graph (no edges/beliefs)
     const graphContainer = document.getElementById('mini-graph-container');
     const graphBanner = graphContainer.parentElement.querySelector('.mini-graph-banner');
+    const dragHandle = document.getElementById('split-drag-handle');
     if (d.entityType === 'resource') {
       graphContainer.style.display = 'none';
       if (graphBanner) graphBanner.style.display = 'none';
+      if (dragHandle) dragHandle.style.display = 'none';
     } else {
+      if (dragHandle) dragHandle.style.display = '';
       graphContainer.style.display = '';
       graphContainer.style.flex = '';
       graphContainer.style.height = '';
