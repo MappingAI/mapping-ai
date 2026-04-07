@@ -7,7 +7,7 @@ const CORS_HEADERS = {
 // Use dedicated key for semantic search (separate from submission review key)
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_SEMANTIC_SEARCH_KEY || process.env.ANTHROPIC_API_KEY;
 const MAP_DATA_URL = 'https://mapping-ai.org/map-data.json';
-const LLM_TIMEOUT_MS = 10000; // 10 second timeout for Haiku API
+const LLM_TIMEOUT_MS = 15000; // 15 second timeout for Haiku (100K context needs time)
 
 // Cache for map data (persists across warm Lambda invocations)
 let cachedMapData = null;
