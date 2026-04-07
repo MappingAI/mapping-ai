@@ -519,8 +519,8 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
 }
 .mobile-bubble:active { transform: scale(0.95); }
 .mobile-bubble.active { box-shadow: 0 0 0 3px var(--accent); }
-.mobile-bubble .bubble-label { font-size: 8px; letter-spacing: 0.02em; line-height: 1.1; text-align: center; max-width: 85%; overflow: hidden; word-break: break-word; padding: 0 2px; }
-.mobile-bubble .bubble-count { font-size: 11px; font-weight: 600; }
+.mobile-bubble .bubble-label { font-size: 7px; letter-spacing: 0.02em; line-height: 1; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90%; }
+.mobile-bubble .bubble-count { font-size: 11px; font-weight: 600; line-height: 1; }
 .mobile-spectrum { padding: 0.25rem 1rem 0.75rem; }
 .mobile-spectrum-row { margin-bottom: 0.5rem; }
 .mobile-spectrum-label { font-family: var(--mono); font-size: 9px; color: var(--text-3); letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 3px; display: flex; justify-content: space-between; }
@@ -604,9 +604,9 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
 .mini-graph-container .mini-label {
   font-family: var(--mono); fill: var(--text-1); pointer-events: none; text-anchor: middle;
 }
-.mini-graph-container .mini-edge { stroke: var(--line); stroke-width: 1; stroke-opacity: 0.5; }
+.mini-graph-container .mini-edge { stroke: var(--text-3); stroke-width: 1.5; stroke-opacity: 0.3; }
 .mini-graph-container .mini-center-label {
-  font-family: var(--serif); font-weight: 600; fill: var(--text-1);
+  font-family: var(--mono); font-weight: 600; fill: var(--text-1);
 }
 .split-drag-handle {
   flex-shrink: 0; height: 20px; display: flex; align-items: center; justify-content: center;
@@ -621,7 +621,25 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   padding: 1rem 1.25rem; min-height: 100px;
 }
 /* When split view is active, the detail panel becomes a flex container without its own scroll */
-.detail-panel.mobile-split { overflow: hidden; padding: 0; padding-top: 2rem; }
+.detail-panel.mobile-split { overflow: hidden; padding: 0; }
+.detail-panel.mobile-split > .detail-header-actions { display: none; }
+.split-detail-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.5rem 0; margin-bottom: 0.5rem; border-bottom: 1px solid var(--line);
+}
+.split-detail-header .detail-name { margin: 0; font-size: 18px; }
+.split-detail-header-actions { display: flex; align-items: center; gap: 0.5rem; }
+.split-detail-header-actions button {
+  background: none; border: none; cursor: pointer; color: var(--text-3); padding: 4px;
+  font-family: var(--mono);
+}
+.split-detail-header-actions button:hover { color: var(--text-1); }
+/* Subtle desktop banner in mini graph */
+.mini-graph-banner {
+  position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%);
+  font-family: var(--mono); font-size: 8px; color: var(--text-3); letter-spacing: 0.03em;
+  opacity: 0.7; pointer-events: none; white-space: nowrap;
+}
 
 /* Mobile controls: bottom bar with filter overlay */
 @media (max-width: 600px) {
@@ -1801,7 +1819,9 @@ function initShareButton(entity) {
     const url = getDeepLinkUrl(entity);
     if (navigator.share) {
       navigator.share({ title: entity.name || entity.title, url }).catch(() => {});
-    } else if (navigator.clipboard) {
+    }
+    // Always copy to clipboard
+    if (navigator.clipboard) {
       navigator.clipboard.writeText(url).then(() => {
         const toast = document.getElementById('share-toast');
         toast.classList.add('visible');
@@ -2083,12 +2103,7 @@ fetch('map-data.json')
 
     buildSlugMaps();
 
-    if (isMobileDirectory) {
-      renderMobileDirectory();
-      return;
-    }
-
-    // Desktop path: existing behavior unchanged
+    // Build links (needed by both mobile mini-graph and desktop map)
     const explicitLinks = buildExplicitLinks(allData);
     const fuzzyLinks = inferOrgLinks(data.people, data.organizations);
     inferredLinks = [...explicitLinks];
@@ -2097,6 +2112,13 @@ fetch('map-data.json')
         inferredLinks.push(fl);
       }
     });
+
+    if (isMobileDirectory) {
+      renderMobileDirectory();
+      return;
+    }
+
+    // Desktop path: existing behavior unchanged
     buildFilters();
     buildStanceLegend();
     buildSourceTypeFilter();
@@ -4026,16 +4048,55 @@ function showDetail(d, allNodes) {
     panel.classList.add('mobile-split');
     content.style.display = 'none';
     splitView.style.display = 'flex';
-    splitDetail.innerHTML = detailHtml;
+    // Build detail with inline header (share + close)
+    splitDetail.innerHTML = `<div class="split-detail-header">
+      <div>${imgHtml}<div class="detail-name" style="font-size:18px;">${d.name}</div></div>
+      <div class="split-detail-header-actions">
+        <button id="split-share-btn" title="Share">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+        </button>
+        <button onclick="document.getElementById('detail-panel').classList.remove('open');document.getElementById('detail-panel').classList.remove('mobile-split');" style="font-size:16px;">&times;</button>
+      </div>
+    </div>
+    <div class="detail-type">${d.entityType}</div>
+    <div class="detail-categories">${categoryBadges}</div>
+    ${beliefSummary}
+    <div class="detail-fields">${fields}</div>
+    ${affiliated}`;
     // Reset graph container height for fresh layout
     const graphContainer = document.getElementById('mini-graph-container');
     graphContainer.style.flex = '';
     graphContainer.style.height = '';
-    // Lazy-load D3 then render mini graph
+    // Lazy-load D3 then render mini graph with "best on desktop" label
     ensureD3().then(() => {
       renderMiniGraph(d, graphContainer);
+      // Add subtle desktop banner
+      if (!graphContainer.querySelector('.mini-graph-banner')) {
+        const banner = document.createElement('div');
+        banner.className = 'mini-graph-banner';
+        banner.textContent = 'Full interactive map on desktop';
+        graphContainer.appendChild(banner);
+      }
     });
     initSplitDragHandle();
+    // Wire split share button
+    const splitShareBtn = document.getElementById('split-share-btn');
+    if (splitShareBtn) {
+      splitShareBtn.addEventListener('click', () => {
+        const url = getDeepLinkUrl(d);
+        if (navigator.share) {
+          navigator.share({ title: d.name || d.title, url }).catch(() => {});
+        }
+        // Always copy to clipboard too
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(url).then(() => {
+            const toast = document.getElementById('share-toast');
+            toast.classList.add('visible');
+            setTimeout(() => toast.classList.remove('visible'), 2000);
+          }).catch(() => {});
+        }
+      });
+    }
   } else {
     // Desktop: regular detail panel
     panel.classList.remove('mobile-split');
