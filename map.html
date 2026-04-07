@@ -1710,13 +1710,13 @@ function getStanceKey(stance) {
   return null;
 }
 
+// ─── Shared utilities ───
+function escHtml(s) { if (!s) return ''; return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
 // ─── Deep link slug utilities ───
-function slugify(name) {
-  return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
-}
-const slugMap = new Map();
-const entitySlugMap = new Map();
+const slugMap = new Map();       // "person/42" → entity
 const isMobileDirectory = window.innerWidth < 768;
+let mobileScrollPos = 0;
 
 function buildSlugMaps() {
   const typePrefix = { person: 'person', organization: 'org', resource: 'resource' };
@@ -1726,17 +1726,14 @@ function buildSlugMaps() {
     ...allData.resources.map(d => ({ ...d, entityType: 'resource' })),
   ];
   for (const d of allEntities) {
-    const prefix = typePrefix[d.entityType];
-    const slug = slugify(d.name || d.title || '');
-    const key = prefix + '/' + slug;
-    const finalKey = slugMap.has(key) ? key + '-' + d.id : key;
-    slugMap.set(finalKey, d);
-    entitySlugMap.set(d.entityType + ':' + d.id, finalKey);
+    const key = typePrefix[d.entityType] + '/' + d.id;
+    slugMap.set(key, d);
   }
 }
 
 function getEntitySlug(d) {
-  return entitySlugMap.get(d.entityType + ':' + d.id) || '';
+  const typePrefix = { person: 'person', organization: 'org', resource: 'resource' };
+  return (typePrefix[d.entityType] || d.entityType) + '/' + d.id;
 }
 
 function getDeepLinkUrl(d) {
@@ -1757,20 +1754,28 @@ let d3Loaded = !isMobileDirectory; // desktop already has D3
 let d3Loading = false;
 
 function ensureD3() {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     if (d3Loaded || typeof d3 !== 'undefined') { d3Loaded = true; resolve(); return; }
-    if (d3Loading) { const check = setInterval(() => { if (d3Loaded) { clearInterval(check); resolve(); } }, 50); return; }
+    if (d3Loading) {
+      let attempts = 0;
+      const check = setInterval(() => { if (d3Loaded) { clearInterval(check); resolve(); } else if (++attempts > 200) { clearInterval(check); reject(new Error('D3 load timeout')); } }, 50);
+      return;
+    }
     d3Loading = true;
     const script = document.createElement('script');
     script.src = 'https://d3js.org/d3.v7.min.js';
     script.onload = () => { d3Loaded = true; d3Loading = false; resolve(); };
+    script.onerror = () => { d3Loading = false; reject(new Error('D3 failed to load')); };
     document.head.appendChild(script);
   });
 }
 
 // getConnectedEntities removed — use shared buildConnections() instead
 
+let _miniGraphSim = null; // Track simulation for cleanup
 function renderMiniGraph(entity, container) {
+  // Stop any previous simulation to prevent zombie tick handlers
+  if (_miniGraphSim) { _miniGraphSim.stop(); _miniGraphSim = null; }
   const svg = container.querySelector('svg');
   svg.innerHTML = '';
   const rect = container.getBoundingClientRect();
@@ -1799,7 +1804,7 @@ function renderMiniGraph(entity, container) {
     target: c.entityType + ':' + c.entity.id,
   }));
 
-  const sim = d3.forceSimulation(nodes)
+  const sim = _miniGraphSim = d3.forceSimulation(nodes)
     .force('link', d3.forceLink(links).id(d => d.id).distance(nodeCount > 8 ? 50 : 65))
     .force('charge', d3.forceManyBody().strength(nodeCount > 8 ? -80 : -120))
     .force('center', d3.forceCenter(width / 2, height / 2))
@@ -1888,11 +1893,20 @@ function renderMiniGraph(entity, container) {
   setTimeout(() => sim.stop(), 2500);
 }
 
+// Stored drag handlers so we can remove them before re-adding
+let _dragHandlers = null;
 function initSplitDragHandle() {
   const handle = document.getElementById('split-drag-handle');
   const graphContainer = document.getElementById('mini-graph-container');
-  const detailContainer = document.getElementById('split-detail-content');
-  if (!handle || !graphContainer || !detailContainer) return;
+  if (!handle || !graphContainer) return;
+
+  // Remove previous listeners to prevent accumulation
+  if (_dragHandlers) {
+    window.removeEventListener('mousemove', _dragHandlers.onMove);
+    window.removeEventListener('touchmove', _dragHandlers.onMove);
+    window.removeEventListener('mouseup', _dragHandlers.onEnd);
+    window.removeEventListener('touchend', _dragHandlers.onEnd);
+  }
 
   let dragging = false;
   let startY = 0;
@@ -1910,7 +1924,7 @@ function initSplitDragHandle() {
     if (!dragging) return;
     const y = e.touches ? e.touches[0].clientY : e.clientY;
     const delta = y - startY;
-    const panelHeight = panel.getBoundingClientRect().height - 40; // minus header + handle
+    const panelHeight = panel.getBoundingClientRect().height - 40;
     const newHeight = Math.max(80, Math.min(panelHeight - 100, startGraphHeight + delta));
     graphContainer.style.flex = 'none';
     graphContainer.style.height = newHeight + 'px';
@@ -1922,8 +1936,9 @@ function initSplitDragHandle() {
     handle.style.background = '';
   }
 
-  handle.addEventListener('mousedown', onStart);
-  handle.addEventListener('touchstart', onStart, { passive: false });
+  _dragHandlers = { onMove, onEnd };
+  handle.onmousedown = onStart;
+  handle.ontouchstart = onStart;
   window.addEventListener('mousemove', onMove);
   window.addEventListener('touchmove', onMove, { passive: false });
   window.addEventListener('mouseup', onEnd);
@@ -2133,7 +2148,7 @@ function renderMobileDirectory() {
 
       cardsHtml += `<div class="mobile-card" data-entity-id="${d.id}" data-entity-type="${d.entityType}" data-category="${normalizeCategory(d.category)}" data-slug="${slug}" data-stance="${d.regulatory_stance || ''}" data-timeline="${d.agi_timeline || ''}" data-risk="${d.ai_risk_level || ''}">
         ${thumbHtml}<div class="mobile-card-info">
-          <div class="mobile-card-row1"><span class="mobile-card-name">${d.name || d.title}</span><span class="mobile-card-badge" style="background:${catColor}22;color:${catColor};">${normalizeCategory(d.category)}</span></div>
+          <div class="mobile-card-row1"><span class="mobile-card-name">${escHtml(d.name || d.title)}</span><span class="mobile-card-badge" style="background:${catColor}22;color:${catColor};">${normalizeCategory(d.category)}</span></div>
           <div class="mobile-card-row2"><span class="mobile-card-sub">${sub}</span><span class="mobile-card-dots">${stanceDot}${timelineDot}${riskDot}</span></div>
         </div></div>`;
     }
@@ -2160,7 +2175,7 @@ function renderMobileDirectory() {
       if (show) visibleCount++;
     });
     sections.forEach(section => {
-      const vis = section.querySelectorAll('.mobile-card:not([style*="display: none"])');
+      const vis = [...section.querySelectorAll('.mobile-card')].filter(c => c.style.display !== 'none');
       section.style.display = vis.length > 0 ? '' : 'none';
       const countEl = section.querySelector('.cat-count');
       if (countEl) countEl.textContent = vis.length;
@@ -2260,7 +2275,7 @@ function renderMobileDirectory() {
       const displayName = d.name || d.title;
       return `<div class="mobile-ac-item" data-ac-id="${d.id}" data-ac-type="${d.entityType}">
         <span class="mobile-ac-dot" style="background:${color}"></span>
-        <span class="mobile-ac-name">${displayName}</span>
+        <span class="mobile-ac-name">${escHtml(displayName)}</span>
         <span class="mobile-ac-type">${typeLabel}</span>
       </div>`;
     }).join('');
@@ -2315,7 +2330,7 @@ function renderMobileDirectory() {
           rhtml += `<div class="mobile-card" data-entity-id="${d.id}" data-entity-type="resource">
             <div class="mobile-card-thumb resource-icon">${icon}</div>
             <div class="mobile-card-info">
-              <div class="mobile-card-row1"><span class="mobile-card-name">${d.name || d.title}</span><span class="mobile-card-badge" style="background:#6b728022;color:#6b7280;">Resource</span></div>
+              <div class="mobile-card-row1"><span class="mobile-card-name">${escHtml(d.name || d.title)}</span><span class="mobile-card-badge" style="background:#6b728022;color:#6b7280;">Resource</span></div>
               <div class="mobile-card-row2"><span class="mobile-card-sub">${sub}</span></div>
             </div></div>`;
         }
@@ -2337,7 +2352,7 @@ function renderMobileDirectory() {
   });
 
   // Card tap → detail panel
-  let mobileScrollPos = 0;
+  mobileScrollPos = 0;
   document.querySelectorAll('.mobile-card').forEach(card => {
     card.addEventListener('click', () => {
       const id = parseInt(card.dataset.entityId), type = card.dataset.entityType;
@@ -4207,7 +4222,7 @@ function showDetail(d, allNodes) {
 
   const detailHtml = `
     ${imgHtml}
-    <div class="detail-name">${d.name || d.title}</div>
+    <div class="detail-name">${escHtml(d.name || d.title)}</div>
     <div class="detail-type">${d.entityType}</div>
     <div class="detail-categories">${categoryBadges}</div>
     ${beliefSummary}
@@ -4226,12 +4241,12 @@ function showDetail(d, allNodes) {
     const breadcrumbHtml = renderBreadcrumb(d);
     // Build detail with breadcrumb + inline header (share + close)
     splitDetail.innerHTML = `${breadcrumbHtml}<div class="split-detail-header">
-      <div><div class="detail-name" style="font-size:18px;">${d.name || d.title}</div></div>
+      <div><div class="detail-name" style="font-size:18px;">${escHtml(d.name || d.title)}</div></div>
       <div class="split-detail-header-actions">
         <button id="split-share-btn" title="Share">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
         </button>
-        <button onclick="document.getElementById('detail-panel').classList.remove('open');document.getElementById('detail-panel').classList.remove('mobile-split');mobileBreadcrumb.length=0;" style="font-size:16px;">&times;</button>
+        <button onclick="document.getElementById('detail-panel').classList.remove('open');document.getElementById('detail-panel').classList.remove('mobile-split');mobileBreadcrumb.length=0;if(_miniGraphSim){_miniGraphSim.stop();_miniGraphSim=null;}setTimeout(()=>{document.getElementById('mobile-directory').scrollTop=mobileScrollPos},50);" style="font-size:16px;">&times;</button>
       </div>
     </div>
     <div class="detail-type">${d.entityType}</div>
@@ -4255,6 +4270,8 @@ function showDetail(d, allNodes) {
       if (graphBanner) graphBanner.style.display = '';
       ensureD3().then(() => {
         renderMiniGraph(d, graphContainer);
+      }).catch(() => {
+        graphContainer.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-family:var(--mono);font-size:10px;color:var(--text-3);">Network graph unavailable</div>';
       });
     }
     initSplitDragHandle();
