@@ -1715,12 +1715,10 @@ function renderMiniGraph(entity, container) {
 
   const nodes = [
     { id: entity.entityType + ':' + entity.id, name: entity.name || entity.title, entityType: entity.entityType, entity, isCenter: true,
-      radius: centerR, color: getColor(entity.category) || DEFAULT_COLOR,
-      imgUrl: getImageUrl(entity), hasReliableImg: entity.thumbnail_url || (entity.entityType === 'organization' && ORG_DOMAINS[entity.name]) },
+      radius: centerR, color: getColor(entity.category) || DEFAULT_COLOR },
     ...limitedConnected.map(c => ({
       id: c.entityType + ':' + c.entity.id, name: c.entity.name || c.entity.title, entityType: c.entityType, entity: c.entity, isCenter: false,
       radius: leafR, color: getColor(c.entity.category) || DEFAULT_COLOR,
-      imgUrl: getImageUrl(c.entity), hasReliableImg: c.entity.thumbnail_url || (c.entityType === 'organization' && ORG_DOMAINS[c.entity.name]),
     })),
   ];
   const links = limitedConnected.map(c => ({
@@ -1732,7 +1730,7 @@ function renderMiniGraph(entity, container) {
     .force('link', d3.forceLink(links).id(d => d.id).distance(nodeCount > 8 ? 50 : 65))
     .force('charge', d3.forceManyBody().strength(nodeCount > 8 ? -80 : -120))
     .force('center', d3.forceCenter(width / 2, height / 2))
-    .force('collision', d3.forceCollide().radius(d => d.radius + 6));
+    .force('collision', d3.forceCollide().radius(d => d.radius + 4));
 
   const svgEl = d3.select(svg);
   // Defs for clip paths
@@ -1756,30 +1754,61 @@ function renderMiniGraph(entity, container) {
     .attr('stroke', d => d.isCenter ? 'var(--text-1)' : d.color + '60')
     .attr('stroke-width', d => d.isCenter ? 2 : 1);
 
-  // Try to load images for nodes that have reliable thumbnails
+  // Load images using same pattern as desktop map
   nodeEls.each(function(d, i) {
-    if (d.imgUrl && d.hasReliableImg) {
-      d3.select(this).append('image')
-        .attr('href', d.imgUrl)
-        .attr('x', -d.radius).attr('y', -d.radius)
-        .attr('width', d.radius * 2).attr('height', d.radius * 2)
-        .attr('clip-path', `url(#mini-clip-${i})`)
-        .attr('preserveAspectRatio', 'xMidYMid slice')
-        .on('error', function() { this.remove(); });
+    const nodeEl = d3.select(this);
+    const r = d.radius;
+
+    function applyMiniImage(url) {
+      // Use pattern fill for clean circular clipping (same as desktop)
+      const patId = `mini-pat-${i}`;
+      defs.append('pattern').attr('id', patId)
+        .attr('width', 1).attr('height', 1).attr('patternContentUnits', 'objectBoundingBox')
+        .append('image').attr('href', url)
+        .attr('width', 1).attr('height', 1).attr('preserveAspectRatio', 'xMidYMid slice');
+      nodeEl.select('circle').attr('fill', `url(#${patId})`).attr('stroke', d.color + '80').attr('stroke-width', 1.5);
+    }
+
+    if (d.entityType === 'person') {
+      const imgUrl = getImageUrl(d.entity);
+      if (imgUrl) {
+        const img = new Image();
+        img.referrerPolicy = 'no-referrer';
+        img.onload = () => applyMiniImage(imgUrl);
+        img.onerror = () => {
+          // Try Wikipedia API
+          if (typeof fetchWikiImage === 'function') {
+            fetchWikiImage(d.entity.name).then(wikiUrl => {
+              if (wikiUrl) { const t = new Image(); t.referrerPolicy = 'no-referrer'; t.onload = () => applyMiniImage(wikiUrl); t.src = wikiUrl; }
+            });
+          }
+        };
+        img.src = imgUrl;
+      } else if (typeof fetchWikiImage === 'function') {
+        fetchWikiImage(d.entity.name).then(wikiUrl => {
+          if (wikiUrl) { const t = new Image(); t.referrerPolicy = 'no-referrer'; t.onload = () => applyMiniImage(wikiUrl); t.src = wikiUrl; }
+        });
+      }
+    } else if (d.entityType === 'organization') {
+      let domain;
+      try { domain = ORG_DOMAINS[d.entity.name] || (d.entity.website ? new URL(d.entity.website).hostname.replace('www.', '') : null); } catch {}
+      if (domain) {
+        const s3Url = `https://d3fo5mm9fktie3.cloudfront.net/logos/${domain}.png`;
+        const favUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+        const img = new Image();
+        img.onload = () => applyMiniImage(s3Url);
+        img.onerror = () => { const f = new Image(); f.onload = () => applyMiniImage(favUrl); f.src = favUrl; };
+        img.src = s3Url;
+      }
     }
   });
 
-  // Labels — hide if too many nodes and too crowded
-  const showAllLabels = nodeCount <= 8;
-  nodeEls.append('text')
-    .attr('class', d => d.isCenter ? 'mini-center-label' : 'mini-label')
-    .attr('dy', d => d.radius + 11)
-    .attr('font-size', d => d.isCenter ? '10px' : (showAllLabels ? '8px' : '7px'))
-    .text(d => {
-      if (d.isCenter) return d.name.length > 18 ? d.name.slice(0, 16) + '..' : d.name;
-      if (!showAllLabels) return d.name.split(' ')[0]; // First name only when crowded
-      return d.name.length > 14 ? d.name.slice(0, 12) + '..' : d.name;
-    });
+  // Only show label for center node — leaf labels cause overlap
+  nodeEls.filter(d => d.isCenter).append('text')
+    .attr('class', 'mini-center-label')
+    .attr('dy', d => d.radius + 12)
+    .attr('font-size', '10px')
+    .text(d => d.name.length > 20 ? d.name.slice(0, 18) + '..' : d.name);
 
   // Click handler: navigate to that entity
   nodeEls.on('click', (event, d) => {
@@ -4094,7 +4123,7 @@ function showDetail(d, allNodes) {
     splitView.style.display = 'flex';
     // Build detail with inline header (share + close)
     splitDetail.innerHTML = `<div class="split-detail-header">
-      <div>${imgHtml}<div class="detail-name" style="font-size:18px;">${d.name}</div></div>
+      <div><div class="detail-name" style="font-size:18px;">${d.name}</div></div>
       <div class="split-detail-header-actions">
         <button id="split-share-btn" title="Share">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
