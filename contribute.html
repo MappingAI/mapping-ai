@@ -1055,7 +1055,6 @@ body.forms-loading .form { visibility: hidden; }
   </button>
   <div class="nav-links">
     <a href="/">Background</a>
-    <a href="/theoryofchange">Theory of Change</a>
     <a href="/contribute">Contribute</a>
     <a href="/map">Map</a>
     <a href="/about">About</a>
@@ -1359,6 +1358,8 @@ body.forms-loading .form { visibility: hidden; }
       <select name="category">
         <option value=""></option>
         <option value="Frontier Lab">Frontier Lab</option>
+        <option value="AI Infrastructure & Compute">AI Infrastructure & Compute</option>
+        <option value="AI Deployers & Platforms">AI Deployers & Platforms</option>
         <option value="AI Safety/Alignment">AI Safety/Alignment</option>
         <option value="Think Tank/Policy Org">Think Tank/Policy Org</option>
         <option value="Government/Agency">Government/Agency</option>
@@ -1784,7 +1785,8 @@ document.querySelectorAll('.tag-input, input[name="name"], #resource-form input[
 // ── Custom styled selects ──
 const SELECT_COLORS = {
   // Org categories
-  'Frontier Lab':'#d4644a','AI Safety/Alignment':'#2d8a6e','Think Tank/Policy Org':'#5b82bf',
+  'Frontier Lab':'#d4644a','AI Infrastructure & Compute':'#6366F1','AI Deployers & Platforms':'#EC4899',
+  'AI Safety/Alignment':'#2d8a6e','Think Tank/Policy Org':'#5b82bf',
   'Government/Agency':'#7c5cbf','Academic':'#d4a44a','VC/Capital/Philanthropy':'#1a8a8a',
   'Labor/Civil Society':'#d4885a','Media/Journalism':'#8b6914','Political Campaign/PAC':'#b06a8a',
   'Ethics/Bias/Rights':'#e07020','Policymaker':'#9955cc',
@@ -2141,7 +2143,8 @@ function showExistingCard(matchData, entityType) {
 
   // Category color from map
   const CARD_COLORS = {
-    'Frontier Lab':'#d4644a','AI Safety/Alignment':'#2d8a6e','AI Safety':'#2d8a6e',
+    'Frontier Lab':'#d4644a','AI Infrastructure & Compute':'#6366F1','AI Deployers & Platforms':'#EC4899',
+    'AI Safety/Alignment':'#2d8a6e','AI Safety':'#2d8a6e',
     'Think Tank/Policy Org':'#5b82bf','Think Tank':'#5b82bf',
     'Government/Agency':'#7c5cbf','Government':'#7c5cbf',
     'Academic':'#d4a44a','VC/Capital/Philanthropy':'#1a8a8a','VC / Funder':'#1a8a8a',

@@ -571,7 +571,6 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   </button>
   <div class="nav-links">
     <a href="/">Background</a>
-    <a href="/theoryofchange">Theory of Change</a>
     <a href="/contribute">Contribute</a>
     <a href="/map">Map</a>
     <a href="/about">About</a>
@@ -881,6 +880,8 @@ if (localStorage.getItem('mobileBannerDismissed') === '1') {
 const CATEGORY_COLORS = {
   // Full form names (from form dropdowns) — RColorBrewer Paired palette
   'Frontier Lab':           '#E31A1C',   // red
+  'AI Infrastructure & Compute': '#6366F1', // indigo
+  'AI Deployers & Platforms': '#EC4899',  // pink
   'AI Safety/Alignment':    '#A6CEE3',   // light blue
   'Think Tank/Policy Org':  '#1F78B4',   // dark blue
   'Government/Agency':      '#CAB2D6',   // light purple
@@ -899,6 +900,8 @@ const CATEGORY_COLORS = {
   'Ethics / Civil Society': '#FF7F00',   // dark orange
   'Labor / Workforce':      '#FDBF6F',   // light orange
   'Media':                  '#B15928',   // brown
+  'AI Infrastructure':      '#6366F1',   // indigo (short form)
+  'AI Deployers':           '#EC4899',   // pink (short form)
   // Role-based
   'Executive':              '#E31A1C',
   'Researcher':             '#A6CEE3',
@@ -1895,6 +1898,8 @@ function resourceCategoryToSector(resourceCat) {
 const CLUSTER_ORDER = [
   // Org sector categories
   'Frontier Lab',
+  'AI Infrastructure & Compute',
+  'AI Deployers & Platforms',
   'AI Safety',
   'Academic',
   'Think Tank',
