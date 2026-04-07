@@ -2453,50 +2453,52 @@ function render() {
       }
     }
 
-    if (d.entityType === 'person') {
-      // People: try hardcoded first, then Wikipedia API
-      if (imgUrl) {
-        const testImg = new Image();
-        testImg.referrerPolicy = 'no-referrer';
-        testImg.onload = () => applyImage(imgUrl);
-        testImg.onerror = async () => {
-          // Hardcoded URL failed — try Wikipedia API
-          const wikiUrl = await fetchWikiImage(d.name);
-          if (wikiUrl) {
-            const testImg2 = new Image();
-            testImg2.referrerPolicy = 'no-referrer';
-            testImg2.onload = () => applyImage(wikiUrl);
-            testImg2.src = wikiUrl;
+    // Simplified image loading: prefer cached thumbnail_url, fallback to external APIs
+    if (imgUrl) {
+      // Use cached thumbnail (from S3/CloudFront) or pre-computed URL
+      const testImg = new Image();
+      testImg.referrerPolicy = 'no-referrer';
+      testImg.onload = () => applyImage(imgUrl);
+      testImg.onerror = () => {
+        // Cached URL failed - try fallback sources
+        if (d.entityType === 'person') {
+          fetchWikiImage(d.name).then(wikiUrl => {
+            if (wikiUrl) {
+              const fallback = new Image();
+              fallback.referrerPolicy = 'no-referrer';
+              fallback.onload = () => applyImage(wikiUrl);
+              fallback.src = wikiUrl;
+            }
+          });
+        } else if (d.entityType === 'organization') {
+          let domain;
+          try { domain = ORG_DOMAINS[d.name] || (d.website ? new URL(d.website).hostname.replace('www.', '') : null); } catch {}
+          if (domain) {
+            const fallback = new Image();
+            fallback.onload = () => applyImage(`https://www.google.com/s2/favicons?domain=${domain}&sz=128`);
+            fallback.src = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
           }
-        };
-        testImg.src = imgUrl;
-      } else {
-        // No hardcoded — try Wikipedia API directly
-        fetchWikiImage(d.name).then(wikiUrl => {
-          if (wikiUrl) {
-            const testImg = new Image();
-            testImg.referrerPolicy = 'no-referrer';
-            testImg.onload = () => applyImage(wikiUrl);
-            testImg.src = wikiUrl;
-          }
-        });
-      }
+        }
+      };
+      testImg.src = imgUrl;
+    } else if (d.entityType === 'person') {
+      // No cached URL - try Wikipedia directly
+      fetchWikiImage(d.name).then(wikiUrl => {
+        if (wikiUrl) {
+          const testImg = new Image();
+          testImg.referrerPolicy = 'no-referrer';
+          testImg.onload = () => applyImage(wikiUrl);
+          testImg.src = wikiUrl;
+        }
+      });
     } else if (d.entityType === 'organization' && !d.isResource) {
-      // Orgs: try S3-cached logo, fall back to Google Favicons
+      // No cached URL - use Google Favicons directly (no S3 probe)
       let domain;
       try { domain = ORG_DOMAINS[d.name] || (d.website ? new URL(d.website).hostname.replace('www.', '') : null); } catch {}
       if (domain) {
-        const s3LogoUrl = `https://d3fo5mm9fktie3.cloudfront.net/logos/${domain}.png`;
-        const fallbackUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
         const testImg = new Image();
-        testImg.onload = () => applyImage(s3LogoUrl);
-        testImg.onerror = () => {
-          // S3 logo not cached — try Google Favicons
-          const fallback = new Image();
-          fallback.onload = () => applyImage(fallbackUrl);
-          fallback.src = fallbackUrl;
-        };
-        testImg.src = s3LogoUrl;
+        testImg.onload = () => applyImage(`https://www.google.com/s2/favicons?domain=${domain}&sz=128`);
+        testImg.src = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
       }
     }
   });
