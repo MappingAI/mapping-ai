@@ -4,21 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="no-referrer">
-  <title>Map — Mapping AI</title>
+  <title>Map—Mapping AI</title>
   <link rel="icon" type="image/svg+xml" href="/assets/favicon/favicon.svg">
   <link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon/favicon-96x96.png">
   <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
   <link rel="manifest" href="/assets/favicon/site.webmanifest">
-  <meta name="description" content="Interactive stakeholder map of the U.S. AI policy landscape — explore people, organizations, and resources by sector, stance, and connections.">
-  <meta property="og:title" content="Map — Mapping AI">
-  <meta property="og:description" content="Interactive stakeholder map of the U.S. AI policy landscape — explore by sector, stance, and connections.">
+  <meta name="description" content="Interactive stakeholder map of the U.S. AI policy landscape—explore people, organizations, and resources by sector, stance, and connections.">
+  <meta property="og:title" content="Map—Mapping AI">
+  <meta property="og:description" content="Interactive stakeholder map of the U.S. AI policy landscape—explore by sector, stance, and connections.">
   <meta property="og:image" content="https://mapping-ai.org/assets/images/og-image.png">
   <meta property="og:url" content="https://mapping-ai.org/map">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Mapping AI">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Map — Mapping AI">
+  <meta name="twitter:title" content="Map—Mapping AI">
   <meta name="twitter:description" content="Interactive stakeholder map of the U.S. AI policy landscape.">
   <meta name="twitter:image" content="https://mapping-ai.org/assets/images/og-image.png">
   <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -1031,7 +1031,7 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   </div>
   <div id="mobile-hero-content" class="mobile-hero-content">
     <div id="mobile-hero"></div>
-    <div class="mobile-mode-label">Mobile directory — full interactive map on desktop</div>
+    <div class="mobile-mode-label">Mobile directory—full interactive map on desktop</div>
   </div>
   <div id="mobile-search-bar" class="mobile-search-bar">
     <div class="mobile-search-box">
@@ -1194,7 +1194,7 @@ if (localStorage.getItem('mobileBannerDismissed') === '1') {
 
 <script>
 const CATEGORY_COLORS = {
-  // Full form names (from form dropdowns) — RColorBrewer Paired palette
+  // Full form names (from form dropdowns)—RColorBrewer Paired palette
   'Frontier Lab':           '#E31A1C',   // red
   'Infrastructure & Compute': '#6366F1', // indigo
   'Deployers & Platforms': '#EC4899',  // pink
@@ -1498,7 +1498,7 @@ function resolveEntityImage(d, onSuccess) {
 
 /**
  * Shared connection builder: finds all 1-degree connections for an entity.
- * Returns [{ entity, entityType, name, rel }] — full objects for graph, name for display.
+ * Returns [{ entity, entityType, name, rel }]—full objects for graph, name for display.
  * Used by both mobile mini-graph and desktop detail panel.
  */
 function buildConnections(d) {
@@ -1928,7 +1928,7 @@ function renderMiniGraph(entity, container) {
     });
   });
 
-  // Center label — word-wrapped via tspans at bottom of SVG
+  // Center label—word-wrapped via tspans at bottom of SVG
   const fullName = entity.name || entity.title || '';
   const centerLabel = svgEl.append('text')
     .attr('class', 'mini-center-label')
@@ -1965,7 +1965,7 @@ function renderMiniGraph(entity, container) {
       .attr('font-size', Math.max(7, width * 0.02) + 'px')
       .attr('fill', 'var(--text-3)')
       .attr('opacity', 0.7)
-      .text(connected.length + ' connections — see full list below');
+      .text(connected.length + ' connections—see full list below');
   }
 
   // Click handler: navigate to that entity
@@ -2049,7 +2049,7 @@ function initSplitDragHandle() {
 
 // Share button handler
 // ─── Mobile Breadcrumb Navigation ───
-const mobileBreadcrumb = []; // [{name, entity}] — max 5 unique
+const mobileBreadcrumb = []; // [{name, entity}]—max 5 unique
 function pushBreadcrumb(d) {
   if (!isMobileDirectory) return;
   // Don't add if same as current
@@ -2093,7 +2093,7 @@ function bindBreadcrumbClicks(container) {
   });
 }
 
-// Shared share handler — used by both desktop and mobile share buttons
+// Shared share handler—used by both desktop and mobile share buttons
 function shareEntity(entity) {
   const url = getDeepLinkUrl(entity);
   if (navigator.share) {
@@ -2512,7 +2512,7 @@ function renderMobileDirectory() {
     if (!e.target.closest('.mobile-search-box')) autocomplete.classList.remove('visible');
   });
 
-  // "Explore a network" — pick a random well-connected entity
+  // "Explore a network"—pick a random well-connected entity
   const wellConnected = allEntities.filter(d => (connectionCounts.get(d.entityType + ':' + d.id) || 0) >= 3);
   document.getElementById('mobile-explore-btn').addEventListener('click', () => {
     if (wellConnected.length === 0) return;
@@ -2770,7 +2770,7 @@ function buildStanceLegend() {
     container.appendChild(item);
   });
 
-  // "Unknown" toggle — empty circle
+  // "Unknown" toggle—empty circle
   const noStance = document.createElement('div');
   noStance.className = 'stance-legend-item';
   noStance.innerHTML = `<span class="stance-legend-dot" style="background:transparent;border:1px solid rgba(var(--belief-dot-rgb),0.4);"></span><em>Unknown</em>`;
@@ -2925,7 +2925,7 @@ document.getElementById('source-reset').addEventListener('click', () => {
 
 // ── View mode (Network / Plot) + sub-tabs ──
 // PASSWORD GATE: force plot view when locked (don't overwrite saved preference)
-let viewMode = document.body.classList.contains('locked') ? 'plot' : (localStorage.getItem('mapMode') || 'network');
+let viewMode = localStorage.getItem('mapMode') || 'plot';
 const savedSubView = localStorage.getItem('mapSubView') || 'all';
 
 function applyViewState() {
@@ -3082,7 +3082,7 @@ function passesSecondaryCategoryFilter(d) {
 }
 
 // Normalize similar category names to a canonical form
-// Declarative category normalization — maps raw DB values to canonical display names
+// Declarative category normalization—maps raw DB values to canonical display names
 const CATEGORY_RULES = [
   // Org sectors: [patterns, canonical]
   { patterns: ['ethics', 'civil society', 'bias', 'rights'], canonical: 'Ethics / Civil Society' },
@@ -3137,7 +3137,7 @@ function resourceCategoryToSector(resourceCat) {
   return null;
 }
 
-// Semantic cluster ordering — related categories are adjacent
+// Semantic cluster ordering—related categories are adjacent
 const CLUSTER_ORDER = [
   // Org sector categories
   'Frontier Lab',
@@ -3213,7 +3213,7 @@ function getVisibleNodes() {
   if (currentView === 'people' || currentView === 'all') totalCount += allData.people.filter(d => d.category && isFilterActive(d) && passesStanceFilter(d) && passesSourceTypeFilter(d) && passesSecondaryCategoryFilter(d)).length;
   if (currentView === 'resources' || currentView === 'all') totalCount += allData.resources.filter(d => passesSourceTypeFilter(d)).length;
 
-  // Scale: gentler curve — 1.0 at 40, 0.7 at 100, 0.55 at 200
+  // Scale: gentler curve—1.0 at 40, 0.7 at 100, 0.55 at 200
   const scale = Math.max(0.55, Math.min(1.0, 40 / Math.max(totalCount, 1)));
 
   if (currentView === 'orgs' || currentView === 'all') {
@@ -3264,7 +3264,7 @@ function getVisibleNodes() {
           if (orgMatch) {
             displayCat = normalizeCategory(orgMatch.category);
           } else {
-            // No org found — use the org-sector version of their role if possible
+            // No org found—use the org-sector version of their role if possible
             const roleCat = normalizeCategory(d.category);
             const personRoles = ['Executive','Researcher','Investor','Organizer','Journalist','Cultural figure'];
             // Map roles to closest org sector so they don't create separate clusters
@@ -3670,7 +3670,7 @@ function render() {
     d._patternId = patId;
     d._imgIndex = i;
 
-    // Load image — try multiple sources, add to node when one succeeds
+    // Load image—try multiple sources, add to node when one succeeds
     function applyImage(url) {
       d._imgUrl = url;
       const pat = defs.append('pattern')
@@ -3706,7 +3706,7 @@ function render() {
     if (!d.isResource) resolveEntityImage(d, applyImage);
   });
 
-  // Background shape — circle for people/orgs, rounded rect for resources
+  // Background shape—circle for people/orgs, rounded rect for resources
   nodeGroup.filter(d => !d.isResource).append('circle')
     .attr('class', 'node-bg')
     .attr('r', d => d.radius)
@@ -3731,7 +3731,7 @@ function render() {
 
   // Image circles and rings are now added asynchronously via the preloader above
 
-  // Initials (only for nodes without images, or small nodes) — not for resources
+  // Initials (only for nodes without images, or small nodes)—not for resources
   nodeGroup.filter(d => !d._imgUrl && !d.isResource && d.radius >= 6)
     .append('text')
     .attr('text-anchor', 'middle')
@@ -3768,7 +3768,7 @@ function render() {
     });
   });
 
-  // Submission count indicator — subtle gold outer ring for entities with 5+ submissions
+  // Submission count indicator—subtle gold outer ring for entities with 5+ submissions
   nodeGroup.filter(d => (d.submissionCount || 0) >= 5 && !d.isResource)
     .append('circle')
     .attr('class', 'submission-ring')
@@ -3937,7 +3937,7 @@ function render2D(svg, g, width, height) {
   const excluded = candidates.length - nodes.length;
   document.getElementById('axis-excluded-msg').textContent =
     `${nodes.length} of ${candidates.length} shown` +
-    (excluded > 0 ? ` (${excluded} excluded — missing data)` : '');
+    (excluded > 0 ? ` (${excluded} excluded—missing data)` : '');
 
   document.getElementById('entity-count').textContent = `${nodes.length} entities`;
 
@@ -4100,7 +4100,7 @@ function render2D(svg, g, width, height) {
     }
   });
 
-  // Simulation: beeswarm — strong pull toward target (axis position), collision for separation
+  // Simulation: beeswarm—strong pull toward target (axis position), collision for separation
   if (simulation) simulation.stop();
   simulation = d3.forceSimulation(nodes)
     .force('x', d3.forceX(d => d.targetX).strength(0.8))
@@ -4216,7 +4216,7 @@ function drawAxes2D(g, xAxisDef, yAxisDef, xScale, yScale, controlsWidth, margin
     .text(yAxisDef.label);
 }
 
-// Tooltip (suppress on touch devices — tap triggers detail panel via click handler)
+// Tooltip (suppress on touch devices—tap triggers detail panel via click handler)
 const tooltip = document.getElementById('tooltip');
 const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 function showTooltip(event, d) {
@@ -4352,7 +4352,7 @@ function showDetail(d, allNodes) {
   }
 
   const imgUrl = getImageUrl(d);
-  // Only show image if entity has a known thumbnail or org domain — avoids flash-then-hide
+  // Only show image if entity has a known thumbnail or org domain—avoids flash-then-hide
   // Show image placeholder, load asynchronously via resolveEntityImage (same as map nodes)
   const detailImgId = 'detail-img-' + (d.id || Math.random().toString(36).slice(2));
   const imgHtml = (d.entityType !== 'resource')
@@ -4469,7 +4469,7 @@ function showDetail(d, allNodes) {
     });
   }
 
-  // Click affiliated items and author links to navigate — switch view, zoom, show detail
+  // Click affiliated items and author links to navigate—switch view, zoom, show detail
   const activeContent = isMobileDirectory ? document.getElementById('mobile-split-detail') : content;
   activeContent.querySelectorAll('.affiliated-item, .detail-link').forEach(el => {
     el.addEventListener('click', (e) => {
@@ -4773,7 +4773,7 @@ function doSearch() {
             highlightNodes([d.name]);
           }
         } else {
-          // Entity not rendered on current view — clear dimming and show inline message
+          // Entity not rendered on current view—clear dimming and show inline message
           highlightNodes([]);
           const viewLabel = currentView === '2d' ? 'this plot (missing axis data)' : 'this view';
           searchResults.innerHTML = `<div class="search-match-hint">${d.name} isn't shown on ${viewLabel}</div>`;
@@ -5621,7 +5621,7 @@ themeBtn.addEventListener('click', () => {
       passwordOv.style.display = 'none';
       document.body.classList.remove('locked');
       // Restore saved view preference now that we're unlocked
-      var savedMode = localStorage.getItem('mapMode') || 'network';
+      var savedMode = localStorage.getItem('mapMode') || 'plot';
       if (typeof viewMode !== 'undefined' && viewMode !== savedMode) {
         viewMode = savedMode;
         if (typeof applyViewState === 'function') applyViewState();
@@ -5647,7 +5647,7 @@ themeBtn.addEventListener('click', () => {
 })();
 </script>
 <style>
-/* PASSWORD GATE — locked state styles */
+/* PASSWORD GATE—locked state styles */
 body.locked .controls { pointer-events: none; }
 body.locked #search-input { pointer-events: none; }
 body.locked .view-btn,
