@@ -513,7 +513,11 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
 .mobile-mode-label a { color: var(--accent); text-decoration: none; }
 .mobile-bubbles { padding: 0.75rem 0.75rem 0.25rem; }
 .mobile-bubbles-group { margin-bottom: 0.5rem; }
-.mobile-bubbles-group-label { font-family: var(--mono); font-size: 8px; color: var(--text-3); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.3rem; padding-left: 2px; }
+.mobile-bubbles-group-label { font-family: var(--mono); font-size: 8px; color: var(--text-3); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.3rem; padding-left: 2px; cursor: pointer; user-select: none; }
+.mobile-bubbles-group-label .toggle-arrow { font-size: 7px; margin-left: 2px; display: inline-block; transition: transform 0.15s; }
+.mobile-bubbles-group.collapsed .mobile-bubbles-row { display: none; }
+.mobile-bubbles-group.collapsed .toggle-arrow { transform: rotate(0deg); }
+.mobile-bubbles-group:not(.collapsed) .toggle-arrow { transform: rotate(90deg); }
 .mobile-bubbles-row { display: flex; flex-wrap: wrap; gap: 5px; }
 .mobile-bubble {
   display: inline-flex; align-items: center; gap: 4px;
@@ -562,17 +566,17 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
 .mobile-type-chips { display: flex; gap: 0.4rem; margin-top: 0.5rem; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
 .mobile-type-chips::-webkit-scrollbar { display: none; }
 .mobile-type-chip {
-  flex-shrink: 0; padding: 0.35rem 0.75rem; border-radius: 20px;
-  font-family: var(--mono); font-size: 10px; letter-spacing: 0.04em; text-transform: uppercase;
+  flex-shrink: 0; padding: 0.25rem 0.55rem; border-radius: 16px;
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.03em; text-transform: uppercase;
   border: 1px solid var(--line); background: transparent; color: var(--text-3);
   cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; transition: all 0.15s;
 }
 .mobile-type-chip.active { background: var(--accent); color: #fff; border-color: var(--accent); }
 .mobile-explore-btn {
-  display: inline-flex; align-items: center; gap: 3px; flex-shrink: 0;
-  padding: 0.3rem 0.6rem; border-radius: 20px;
+  display: inline-flex; align-items: center; gap: 2px; flex-shrink: 0;
+  padding: 0.25rem 0.5rem; border-radius: 16px;
   background: var(--accent); color: #fff; border: none;
-  font-family: var(--mono); font-size: 9px; letter-spacing: 0.04em; text-transform: uppercase;
+  font-family: var(--mono); font-size: 8px; letter-spacing: 0.03em; text-transform: uppercase;
   cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent;
   transition: opacity 0.15s; white-space: nowrap;
 }
@@ -585,6 +589,10 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   font-family: var(--mono); font-size: 9px; color: #fff; cursor: pointer; user-select: none;
 }
 .mobile-filter-chip .chip-x { font-size: 11px; opacity: 0.8; }
+.mobile-filter-clear {
+  font-family: var(--mono); font-size: 9px; color: var(--accent); cursor: pointer;
+  padding: 0.25rem 0.4rem; user-select: none; white-space: nowrap;
+}
 .mobile-card-list { padding: 0 0.75rem calc(2rem + env(safe-area-inset-bottom)); }
 .mobile-category-header {
   display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 0 0.35rem;
@@ -1811,7 +1819,7 @@ function renderMiniGraph(entity, container) {
   svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
 
   const connected = buildConnections(entity);
-  const limitedConnected = connected.slice(0, 12);
+  const limitedConnected = connected.slice(0, 8);
   const nodeCount = limitedConnected.length + 1;
 
   // Scale radii based on node count
@@ -1917,6 +1925,18 @@ function renderMiniGraph(entity, container) {
       .text(line);
   });
   centerLabel.attr('y', startY);
+  // Connection count below name (when more connections than shown)
+  if (connected.length > limitedConnected.length) {
+    svgEl.append('text')
+      .attr('text-anchor', 'middle')
+      .attr('x', width / 2)
+      .attr('y', height - 2)
+      .attr('font-family', 'var(--mono)')
+      .attr('font-size', Math.max(7, width * 0.02) + 'px')
+      .attr('fill', 'var(--text-3)')
+      .attr('opacity', 0.7)
+      .text(connected.length + ' connections — see full list below');
+  }
 
   // Click handler: navigate to that entity
   nodeEls.on('click', (event, d) => {
@@ -2128,8 +2148,8 @@ function renderMobileDirectory() {
     const sectorCats = sortedCats.filter(c => !PERSON_ROLE_SET.has(c));
     const roleCats = sortedCats.filter(c => PERSON_ROLE_SET.has(c));
 
-    function pillGroup(label, cats) {
-      let html = `<div class="mobile-bubbles-group"><div class="mobile-bubbles-group-label">${label}</div><div class="mobile-bubbles-row">`;
+    function pillGroup(label, cats, collapsed) {
+      let html = `<div class="mobile-bubbles-group${collapsed ? ' collapsed' : ''}"><div class="mobile-bubbles-group-label">${label} <span class="toggle-arrow">&#x25B8;</span></div><div class="mobile-bubbles-row">`;
       for (const cat of cats) {
         const count = catCounts[cat];
         const color = getColor(cat) || DEFAULT_COLOR;
@@ -2139,8 +2159,8 @@ function renderMobileDirectory() {
       return html + '</div></div>';
     }
     let bubblesHtml = '<div class="mobile-bubbles">';
-    if (sectorCats.length > 0) bubblesHtml += pillGroup('Sectors', sectorCats);
-    if (roleCats.length > 0) bubblesHtml += pillGroup('Roles', roleCats);
+    if (sectorCats.length > 0) bubblesHtml += pillGroup('Sectors', sectorCats, false);
+    if (roleCats.length > 0) bubblesHtml += pillGroup('Roles', roleCats, true);
     bubblesHtml += '</div>';
 
     // Belief spectrum bars
@@ -2272,6 +2292,9 @@ function renderMobileDirectory() {
     mobileFilters.stance.forEach(v => html += `<span class="mobile-filter-chip" data-filter="stance" data-value="${v}" style="background:${STANCE_COLORS[v] || '#888'};"><span>${v}</span> <span class="chip-x">&times;</span></span>`);
     mobileFilters.timeline.forEach(v => html += `<span class="mobile-filter-chip" data-filter="timeline" data-value="${v}" style="background:${TIMELINE_COLORS[v] || '#888'};"><span>${v}</span> <span class="chip-x">&times;</span></span>`);
     mobileFilters.risk.forEach(v => html += `<span class="mobile-filter-chip" data-filter="risk" data-value="${v}" style="background:${RISK_COLORS[v] || '#888'};"><span>${v}</span> <span class="chip-x">&times;</span></span>`);
+    // Clear-all link when any filter is active
+    const hasFilters = mobileFilters.categories.size > 0 || mobileFilters.stance.size > 0 || mobileFilters.timeline.size > 0 || mobileFilters.risk.size > 0 || mobileFilters.connectedOnly;
+    if (hasFilters) html += `<span class="mobile-filter-clear" id="mobile-clear-all">Clear all</span>`;
     container.innerHTML = html;
     container.querySelectorAll('.mobile-filter-chip').forEach(chip => {
       chip.addEventListener('click', () => {
@@ -2281,7 +2304,25 @@ function renderMobileDirectory() {
         applyMobileFilters();
       });
     });
+    // Clear-all handler
+    const clearBtn = document.getElementById('mobile-clear-all');
+    if (clearBtn) {
+      clearBtn.addEventListener('click', () => {
+        mobileFilters.categories.clear(); mobileFilters.stance.clear(); mobileFilters.timeline.clear(); mobileFilters.risk.clear();
+        mobileFilters.connectedOnly = false;
+        document.querySelectorAll('.mobile-bubble.active, .mobile-spectrum-segment.active').forEach(el => el.classList.remove('active'));
+        document.querySelector('.mobile-type-chip[data-type="connected"]')?.classList.remove('active');
+        applyMobileFilters();
+      });
+    }
   }
+
+  // Toggle collapsible pill groups (Roles)
+  document.querySelectorAll('.mobile-bubbles-group-label').forEach(label => {
+    label.addEventListener('click', () => {
+      label.parentElement.classList.toggle('collapsed');
+    });
+  });
 
   // Bubble tap → filter
   document.querySelectorAll('.mobile-bubble').forEach(b => {
