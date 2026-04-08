@@ -175,7 +175,6 @@ export async function generateMapData(client) {
     people,
     organizations,
     resources,
-    edges: edges.rows,
     relationships,
     person_organizations,
   };

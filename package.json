@@ -11,6 +11,10 @@
     "@tiptap/extension-placeholder": "^3.20.5",
     "@tiptap/pm": "^3.20.5",
     "@tiptap/starter-kit": "^3.20.5",
+    "d3-dispatch": "^3.0.1",
+    "d3-force": "^3.0.0",
+    "d3-quadtree": "^3.0.1",
+    "d3-timer": "^3.0.1",
     "exa-js": "^2.10.2",
     "pg": "^8.20.0",
     "tippy.js": "^6.3.7"

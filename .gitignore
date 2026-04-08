@@ -20,6 +20,7 @@ backup-*.json
 backup-*.sql
 scripts/seed-test-data.js
 scripts/calc-disagreement.js
+scripts/export-pending.js
 
 # External data CSVs (stored locally, not in repo)
 data/AISafety.com_map.csv
@@ -33,6 +34,7 @@ data/AISafety.com_map.csv
 
 # Testing output
 dogfood-output/
+test-screenshots/
 
 # Local notes
 slack-update.md

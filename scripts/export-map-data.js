@@ -2,6 +2,7 @@ import pg from 'pg';
 import 'dotenv/config';
 import fs from 'fs';
 import { generateMapData } from '../api/export-map.js';
+import { computePositions } from './compute-positions.js';
 
 const { Pool } = pg;
 const pool = new Pool({
@@ -19,7 +20,7 @@ async function exportMapData() {
       people:        data.people.length,
       organizations: data.organizations.length,
       resources:     data.resources.length,
-      edges:         data.edges.length,
+      relationships: data.relationships.length,
     };
     for (const [k, v] of Object.entries(counts)) console.log(`  ✓ ${v} ${k}`);
 
@@ -28,7 +29,21 @@ async function exportMapData() {
       data._meta.note = 'No approved entities — run migrate.js and seed data first';
     }
 
-    fs.writeFileSync('map-data.json', JSON.stringify(data, null, 2));
+    // Pre-compute force simulation positions for the "all" view
+    const positions = computePositions(data);
+    // Attach positions to each entity
+    for (const arr of [data.people, data.organizations, data.resources]) {
+      for (const entity of arr) {
+        const key = `${entity.entity_type}-${entity.id}`;
+        const pos = positions[key];
+        if (pos) {
+          entity._x = Math.round(pos.x * 10000) / 10000;
+          entity._y = Math.round(pos.y * 10000) / 10000;
+        }
+      }
+    }
+
+    fs.writeFileSync('map-data.json', JSON.stringify(data));
     console.log('\n✓ map-data.json written');
   } finally {
     client.release();
