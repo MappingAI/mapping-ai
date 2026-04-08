@@ -2538,8 +2538,8 @@ function renderMobileDirectory() {
     setTimeout(() => { dir.scrollTop = mobileScrollPos; }, 50);
   });
 
-  // Deep link
-  const deepLinkTarget = resolveDeepLink();
+  // Deep link (PASSWORD GATE: defer until unlocked)
+  const deepLinkTarget = document.body.classList.contains('locked') ? null : resolveDeepLink();
   if (deepLinkTarget) {
     const targetSlug = getEntitySlug(deepLinkTarget);
     const targetCard = document.querySelector(`.mobile-card[data-slug="${targetSlug}"]`);
@@ -2588,8 +2588,8 @@ fetch('map-data.json')
     updateSourceTypeVisibility();
     render();
 
-    // Desktop deep link handling
-    const deepLinkTarget = resolveDeepLink();
+    // Desktop deep link handling (PASSWORD GATE: defer until unlocked)
+    const deepLinkTarget = document.body.classList.contains('locked') ? null : resolveDeepLink();
     if (deepLinkTarget) {
       setTimeout(() => {
         const renderedNodes = d3.selectAll('.node').data();
@@ -2924,7 +2924,8 @@ document.getElementById('source-reset').addEventListener('click', () => {
 });
 
 // ── View mode (Network / Plot) + sub-tabs ──
-let viewMode = localStorage.getItem('mapMode') || 'network';
+// PASSWORD GATE: force plot view when locked (don't overwrite saved preference)
+let viewMode = document.body.classList.contains('locked') ? 'plot' : (localStorage.getItem('mapMode') || 'network');
 const savedSubView = localStorage.getItem('mapSubView') || 'all';
 
 function applyViewState() {
@@ -5549,22 +5550,117 @@ themeBtn.addEventListener('click', () => {
   }
 });
 </script>
-<!-- Beta notice popup -->
-<div id="beta-overlay" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.5);align-items:center;justify-content:center;">
+<!-- PASSWORD GATE START -->
+<!-- Disclaimer popup (shows every page load) -->
+<div id="disclaimer-overlay" style="display:flex;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.5);align-items:center;justify-content:center;">
   <div style="background:#fff;border-radius:8px;padding:1.5rem 2rem;max-width:480px;width:90%;font-family:var(--serif);box-shadow:0 8px 32px rgba(0,0,0,0.2);">
     <h2 style="font-family:var(--mono);font-size:13px;text-transform:uppercase;letter-spacing:0.08em;margin:0 0 0.75rem;">Pre-Launch Beta</h2>
     <p style="font-size:15px;line-height:1.6;color:var(--text-secondary);margin:0 0 1rem;">This tool is in a pre-launch beta. We are actively improving data issues and enrichment, as well as adding new features and improving the UX.</p>
     <p style="font-size:15px;line-height:1.6;color:var(--text-secondary);margin:0 0 1.25rem;">Please email us at <a href="mailto:info@mapping-ai.org" style="color:var(--accent);">info@mapping-ai.org</a> if you'd like to contribute or provide any feedback.</p>
-    <button id="beta-dismiss" style="font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;padding:0.6rem 1.5rem;background:var(--text-primary);color:#fff;border:none;border-radius:4px;cursor:pointer;">Got it</button>
+    <button id="disclaimer-dismiss" style="font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;padding:0.6rem 1.5rem;background:var(--text-primary);color:#fff;border:none;border-radius:4px;cursor:pointer;">Continue</button>
   </div>
 </div>
+
+<!-- Lock overlay (blocks all interaction when not authenticated) -->
+<div id="lock-overlay" style="display:none;position:fixed;inset:0;z-index:500;cursor:pointer;"></div>
+
+<!-- Password prompt modal -->
+<div id="password-overlay" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.5);align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:8px;padding:1.5rem 2rem;max-width:380px;width:90%;font-family:var(--serif);box-shadow:0 8px 32px rgba(0,0,0,0.2);">
+    <h2 style="font-family:var(--mono);font-size:13px;text-transform:uppercase;letter-spacing:0.08em;margin:0 0 0.75rem;">Enter Password</h2>
+    <p style="font-size:14px;line-height:1.5;color:var(--text-secondary);margin:0 0 1rem;">This tool is in a pre-launch beta. Enter the password to access the full interactive experience.</p>
+    <input id="gate-password" type="password" placeholder="Password" style="width:100%;padding:0.6rem 0.75rem;font-family:var(--mono);font-size:13px;border:1px solid #ddd;border-radius:4px;margin-bottom:0.5rem;box-sizing:border-box;">
+    <div id="gate-error" style="color:#dc2626;font-size:12px;font-family:var(--mono);margin-bottom:0.5rem;display:none;">Incorrect password</div>
+    <button id="gate-submit" style="font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;padding:0.6rem 1.5rem;background:var(--text-primary);color:#fff;border:none;border-radius:4px;cursor:pointer;width:100%;">Submit</button>
+  </div>
+</div>
+
 <script>
 (function(){
-  var ov = document.getElementById('beta-overlay');
-  if (!localStorage.getItem('betaDismissed')) ov.style.display = 'flex';
-  document.getElementById('beta-dismiss').addEventListener('click', function(){ ov.style.display='none'; localStorage.setItem('betaDismissed','1'); });
-  ov.addEventListener('click', function(e){ if(e.target===ov){ov.style.display='none';localStorage.setItem('betaDismissed','1');} });
+  var SITE_HASH = '__SITE_PASSWORD_HASH__';
+  var isDevMode = SITE_HASH === '__SITE_' + 'PASSWORD_HASH__';
+  var isUnlocked = isDevMode || localStorage.getItem('siteUnlocked') === '1';
+
+  // Always show disclaimer
+  var disclaimerOv = document.getElementById('disclaimer-overlay');
+  var lockOv = document.getElementById('lock-overlay');
+  var passwordOv = document.getElementById('password-overlay');
+
+  document.getElementById('disclaimer-dismiss').addEventListener('click', function(){
+    disclaimerOv.style.display = 'none';
+    if (!isUnlocked) {
+      lockOv.style.display = 'block';
+    }
+  });
+  disclaimerOv.addEventListener('click', function(e){
+    if (e.target === disclaimerOv) {
+      disclaimerOv.style.display = 'none';
+      if (!isUnlocked) {
+        lockOv.style.display = 'block';
+      }
+    }
+  });
+
+  // Lock overlay click → show password prompt
+  lockOv.addEventListener('click', function(){
+    passwordOv.style.display = 'flex';
+    document.getElementById('gate-password').focus();
+  });
+
+  // Password submission
+  async function tryUnlock() {
+    var input = document.getElementById('gate-password').value;
+    if (!input) return;
+    var encoded = new TextEncoder().encode(input);
+    var hashBuf = await crypto.subtle.digest('SHA-256', encoded);
+    var hashHex = Array.from(new Uint8Array(hashBuf)).map(function(b){ return b.toString(16).padStart(2,'0'); }).join('');
+    if (hashHex === SITE_HASH) {
+      localStorage.setItem('siteUnlocked', '1');
+      isUnlocked = true;
+      lockOv.style.display = 'none';
+      passwordOv.style.display = 'none';
+      document.body.classList.remove('locked');
+      // Restore saved view preference now that we're unlocked
+      var savedMode = localStorage.getItem('mapMode') || 'network';
+      if (typeof viewMode !== 'undefined' && viewMode !== savedMode) {
+        viewMode = savedMode;
+        if (typeof applyViewState === 'function') applyViewState();
+      }
+    } else {
+      document.getElementById('gate-error').style.display = 'block';
+      document.getElementById('gate-password').value = '';
+      document.getElementById('gate-password').focus();
+    }
+  }
+  document.getElementById('gate-submit').addEventListener('click', tryUnlock);
+  document.getElementById('gate-password').addEventListener('keydown', function(e){
+    if (e.key === 'Enter') tryUnlock();
+  });
+  passwordOv.addEventListener('click', function(e){
+    if (e.target === passwordOv) { passwordOv.style.display = 'none'; }
+  });
+
+  // Apply locked state
+  if (!isUnlocked) {
+    document.body.classList.add('locked');
+  }
 })();
 </script>
+<style>
+/* PASSWORD GATE — locked state styles */
+body.locked .controls { pointer-events: none; }
+body.locked #search-input { pointer-events: none; }
+body.locked .view-btn,
+body.locked .mode-btn { pointer-events: none; }
+body.locked #contribute-btn { pointer-events: none; opacity: 0.4; }
+body.locked .zoom-controls { pointer-events: none; opacity: 0.4; }
+body.locked #detail-panel { pointer-events: none; }
+body.locked #mobile-directory { pointer-events: none; }
+body.locked .mobile-search-bar { pointer-events: none; }
+body.locked .mobile-type-chips { pointer-events: none; }
+body.locked #mobile-hero-toggle { pointer-events: none; }
+body.locked .site-nav a[href="/contribute"] { pointer-events: none; opacity: 0.4; }
+</style>
+<!-- PASSWORD GATE END -->
 </body>
 </html>

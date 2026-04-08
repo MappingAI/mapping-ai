@@ -319,7 +319,7 @@ a:hover { text-decoration: underline; }
 <div class="doc">
   <h1>Mapping the U.S. AI Policy Landscape</h1>
   <div class="cta-buttons">
-    <a href="/map" class="cta-btn">View Map</a>
+    <a href="/map" class="cta-btn">View Map (Beta)</a>
     <a href="/contribute" class="cta-btn secondary">Contribute</a>
   </div>
 
@@ -447,9 +447,9 @@ a:hover { text-decoration: underline; }
 <script>
 (function(){
   var ov = document.getElementById('beta-overlay');
-  if (!localStorage.getItem('betaDismissed')) ov.style.display = 'flex';
-  document.getElementById('beta-dismiss').addEventListener('click', function(){ ov.style.display='none'; localStorage.setItem('betaDismissed','1'); });
-  ov.addEventListener('click', function(e){ if(e.target===ov){ov.style.display='none';localStorage.setItem('betaDismissed','1');} });
+  ov.style.display = 'flex';
+  document.getElementById('beta-dismiss').addEventListener('click', function(){ ov.style.display='none'; });
+  ov.addEventListener('click', function(e){ if(e.target===ov){ov.style.display='none';} });
 })();
 </script>
 </body>

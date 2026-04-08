@@ -49,6 +49,19 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: node scripts/export-map-data.js
 
+      # PASSWORD GATE — remove after public launch
+      - name: Inject password gate hash
+        env:
+          SITE_PASSWORD: ${{ secrets.SITE_PASSWORD }}
+        run: |
+          if [ -n "$SITE_PASSWORD" ]; then
+            HASH=$(echo -n "$SITE_PASSWORD" | sha256sum | cut -d' ' -f1)
+            sed -i "s/__SITE_PASSWORD_HASH__/$HASH/g" map.html contribute.html
+            echo "✓ Password gate hash injected into map.html and contribute.html"
+          else
+            echo "⚠ No SITE_PASSWORD set — gate will auto-bypass"
+          fi
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -56,8 +69,20 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-west-2
 
-      - name: Sync static files to S3
+      - name: Sync static files to S3 (with cache headers)
         run: |
+          # HTML files — always revalidate so users get latest on deploy
+          aws s3 sync . s3://${{ secrets.S3_BUCKET_NAME }} \
+            --exclude "*" \
+            --include "*.html" \
+            --cache-control "no-cache" \
+            --delete
+
+          # map-data.json — short cache, stale-while-revalidate for fast repeat loads
+          aws s3 cp map-data.json s3://${{ secrets.S3_BUCKET_NAME }}/map-data.json \
+            --cache-control "public, max-age=60, stale-while-revalidate=300"
+
+          # CSS/JS/images — long cache (CloudFront invalidation handles updates)
           aws s3 sync . s3://${{ secrets.S3_BUCKET_NAME }} \
             --exclude ".*" \
             --exclude "node_modules/*" \
@@ -70,13 +95,14 @@ jobs:
             --exclude "*.yaml" \
             --exclude "*.toml" \
             --exclude "*.json" \
-            --include "map-data.json" \
             --exclude "*.mjs" \
             --exclude "*.md" \
+            --exclude "*.html" \
             --exclude ".aws-sam/*" \
             --exclude ".vercel/*" \
             --exclude "test-*" \
             --exclude "dev-server*" \
+            --cache-control "public, max-age=86400" \
             --delete
 
       - name: Invalidate CloudFront cache

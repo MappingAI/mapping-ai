@@ -544,9 +544,9 @@ a:hover { text-decoration: underline; }
 <script>
 (function(){
   var ov = document.getElementById('beta-overlay');
-  if (!localStorage.getItem('betaDismissed')) ov.style.display = 'flex';
-  document.getElementById('beta-dismiss').addEventListener('click', function(){ ov.style.display='none'; localStorage.setItem('betaDismissed','1'); });
-  ov.addEventListener('click', function(e){ if(e.target===ov){ov.style.display='none';localStorage.setItem('betaDismissed','1');} });
+  ov.style.display = 'flex';
+  document.getElementById('beta-dismiss').addEventListener('click', function(){ ov.style.display='none'; });
+  ov.addEventListener('click', function(e){ if(e.target===ov){ov.style.display='none';} });
 })();
 </script>
 </body>

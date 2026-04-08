@@ -3770,5 +3770,78 @@ document.querySelector('.nav-hamburger').addEventListener('click', () => {
   });
 })();
 </script>
+
+<!-- PASSWORD GATE START -->
+<!-- Lock overlay (blocks all interaction when not authenticated) -->
+<div id="lock-overlay" style="display:none;position:fixed;inset:0;z-index:500;cursor:pointer;"></div>
+
+<!-- Password prompt modal -->
+<div id="password-overlay" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.5);align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:8px;padding:1.5rem 2rem;max-width:380px;width:90%;font-family:var(--serif);box-shadow:0 8px 32px rgba(0,0,0,0.2);">
+    <h2 style="font-family:var(--mono);font-size:13px;text-transform:uppercase;letter-spacing:0.08em;margin:0 0 0.75rem;">Enter Password</h2>
+    <p style="font-size:14px;line-height:1.5;color:var(--text-secondary);margin:0 0 1rem;">This tool is in a pre-launch beta. Enter the password to access the contribution form.</p>
+    <input id="gate-password" type="password" placeholder="Password" style="width:100%;padding:0.6rem 0.75rem;font-family:var(--mono);font-size:13px;border:1px solid #ddd;border-radius:4px;margin-bottom:0.5rem;box-sizing:border-box;">
+    <div id="gate-error" style="color:#dc2626;font-size:12px;font-family:var(--mono);margin-bottom:0.5rem;display:none;">Incorrect password</div>
+    <button id="gate-submit" style="font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;padding:0.6rem 1.5rem;background:var(--text-primary);color:#fff;border:none;border-radius:4px;cursor:pointer;width:100%;">Submit</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var SITE_HASH = '__SITE_PASSWORD_HASH__';
+  var isDevMode = SITE_HASH === '__SITE_' + 'PASSWORD_HASH__';
+  var isUnlocked = isDevMode || localStorage.getItem('siteUnlocked') === '1';
+
+  var lockOv = document.getElementById('lock-overlay');
+  var passwordOv = document.getElementById('password-overlay');
+
+  if (!isUnlocked) {
+    document.body.classList.add('locked');
+    lockOv.style.display = 'block';
+  }
+
+  // Lock overlay click → show password prompt
+  lockOv.addEventListener('click', function(){
+    passwordOv.style.display = 'flex';
+    document.getElementById('gate-password').focus();
+  });
+
+  // Password submission
+  async function tryUnlock() {
+    var input = document.getElementById('gate-password').value;
+    if (!input) return;
+    var encoded = new TextEncoder().encode(input);
+    var hashBuf = await crypto.subtle.digest('SHA-256', encoded);
+    var hashHex = Array.from(new Uint8Array(hashBuf)).map(function(b){ return b.toString(16).padStart(2,'0'); }).join('');
+    if (hashHex === SITE_HASH) {
+      localStorage.setItem('siteUnlocked', '1');
+      lockOv.style.display = 'none';
+      passwordOv.style.display = 'none';
+      document.body.classList.remove('locked');
+    } else {
+      document.getElementById('gate-error').style.display = 'block';
+      document.getElementById('gate-password').value = '';
+      document.getElementById('gate-password').focus();
+    }
+  }
+  document.getElementById('gate-submit').addEventListener('click', tryUnlock);
+  document.getElementById('gate-password').addEventListener('keydown', function(e){
+    if (e.key === 'Enter') tryUnlock();
+  });
+  passwordOv.addEventListener('click', function(e){
+    if (e.target === passwordOv) { passwordOv.style.display = 'none'; }
+  });
+})();
+</script>
+<style>
+/* PASSWORD GATE — locked state styles */
+body.locked .form-toggle,
+body.locked .form,
+body.locked details,
+body.locked .disclaimer,
+body.locked #see-map-btn { opacity: 0.4; pointer-events: none; }
+body.locked .info-overlay { display: none !important; }
+</style>
+<!-- PASSWORD GATE END -->
 </body>
 </html>
