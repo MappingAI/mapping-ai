@@ -22,8 +22,10 @@
   <meta name="twitter:description" content="Interactive stakeholder map of the U.S. AI policy landscape.">
   <meta name="twitter:image" content="https://mapping-ai.org/assets/images/og-image.png">
   <script src="https://d3js.org/d3.v7.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'">
   <style>
-@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@400;500&display=swap');
 :root {
   --serif: 'EB Garamond', Georgia, serif;
   --mono: 'DM Mono', monospace;
@@ -834,6 +836,7 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
     <a href="/">Background</a>
     <a href="/contribute">Contribute</a>
     <a href="/map">Map</a>
+    <a href="/insights">Insights</a>
     <a href="/about">About</a>
   </div>
   <button class="theme-toggle" id="theme-toggle" title="Toggle dark/light mode">&#9790;</button>
@@ -2691,7 +2694,7 @@ function buildFilters() {
 
   // Activate all when: first load, view/dimension switch (no overlap), or empty
   const anyOverlap = allCats.some(cat => activeCategories.has(cat));
-  const viewKey = currentView + ':' + dim;
+  const viewKey = currentView + ':' + dim + (currentView === '2d' ? ':' + axis2dEntityType : '');
   const viewChanged = window._lastFilterView !== viewKey;
   const activateAll = viewChanged || !anyOverlap || activeCategories.size === 0;
   window._lastFilterView = viewKey;
