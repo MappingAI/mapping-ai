@@ -2107,6 +2107,8 @@ document.querySelectorAll('input[name="name"], #resource-form input[name="title"
   }
 
   nameInput.addEventListener('input', checkDuplicates);
+  // Dismiss duplicate results when clicking outside the name field
+  nameInput.addEventListener('blur', () => setTimeout(() => removeDupContainer(), 300));
 });
 
 function showUpdateBanner(form, entityName) {
@@ -2380,17 +2382,20 @@ document.querySelectorAll('.tag-input-wrapper').forEach(wrapper => {
           .then(r => r.ok ? r.json() : null)
           .then(data => {
             if (!data || input.value.trim() !== currentQ) return;
+            if (document.activeElement !== input) return;
             const pendingOrgs = (data.organizations || []).map(o => ({ ...o, _pending: true }));
             if (pendingOrgs.length === 0) return;
             const existingIds = new Set([...resultsDiv.querySelectorAll('.org-result')].map(el => el.dataset.id));
             const newOrgs = pendingOrgs.filter(o => !existingIds.has(String(o.id)));
             if (newOrgs.length > 0) {
-              const currentOrgs = [...resultsDiv.querySelectorAll('.org-result')].map(el => JSON.parse(el.dataset.org));
+              const currentOrgs = [...resultsDiv.querySelectorAll('.org-result')].map(el => {
+                try { return JSON.parse(el.dataset.org); } catch { return null; }
+              }).filter(Boolean);
               renderTagOrgResults([...currentOrgs, ...newOrgs]);
             }
           })
           .catch(() => {});
-      }, 300);
+      }, 150);
     }
   }, 50);
 
@@ -2474,18 +2479,21 @@ document.querySelectorAll('.parent-org-search, .primary-org-search').forEach(inp
           .then(r => r.ok ? r.json() : null)
           .then(data => {
             if (!data || input.value.trim() !== currentQ) return; // query changed
+            if (document.activeElement !== input) return; // user already left field
             const pendingOrgs = (data.organizations || []).map(o => ({ ...o, _pending: true }));
             if (pendingOrgs.length === 0) return;
-            // Append to whatever is currently showing
+            // Merge with whatever is currently showing
             const existingIds = new Set([...resultsDiv.querySelectorAll('.org-result')].map(el => el.dataset.id));
             const newOrgs = pendingOrgs.filter(o => !existingIds.has(String(o.id)));
             if (newOrgs.length > 0) {
-              const currentOrgs = [...resultsDiv.querySelectorAll('.org-result')].map(el => JSON.parse(el.dataset.org));
+              const currentOrgs = [...resultsDiv.querySelectorAll('.org-result')].map(el => {
+                try { return JSON.parse(el.dataset.org); } catch { return null; }
+              }).filter(Boolean);
               renderOrgResults([...currentOrgs, ...newOrgs]);
             }
           })
           .catch(() => {});
-      }, 300); // wait 300ms after last keystroke before fetching pending
+      }, 150); // wait 150ms after last keystroke before fetching pending
     }
   }, 50);
 
