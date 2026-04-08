@@ -521,8 +521,8 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
 .mobile-hero-toggle .chevron { font-size: 10px; color: var(--text-3); transition: transform 0.2s; }
 .mobile-hero-toggle.collapsed .chevron { transform: rotate(0deg); }
 .mobile-hero-toggle:not(.collapsed) .chevron { transform: rotate(90deg); }
-.mobile-hero-content { transition: max-height 0.25s ease; overflow: hidden; }
-.mobile-hero-toggle.collapsed + .mobile-hero-content { max-height: 0 !important; }
+.mobile-hero-content {}
+.mobile-hero-toggle.collapsed + .mobile-hero-content { display: none; }
 .mobile-bubbles { padding: 0.25rem 0.75rem 0.15rem; }
 .mobile-bubbles-group { margin-bottom: 0.35rem; }
 .mobile-bubbles-group-label {
@@ -2356,17 +2356,6 @@ function renderMobileDirectory() {
   });
   document.getElementById('mobile-hero-toggle').addEventListener('click', function() {
     this.classList.toggle('collapsed');
-    const content = document.getElementById('mobile-hero-content');
-    if (this.classList.contains('collapsed')) {
-      content.style.maxHeight = '0';
-    } else {
-      content.style.maxHeight = content.scrollHeight + 'px';
-    }
-  });
-  // Set initial max-height for hero content (expanded by default)
-  requestAnimationFrame(() => {
-    const content = document.getElementById('mobile-hero-content');
-    if (content) content.style.maxHeight = content.scrollHeight + 'px';
   });
 
   // Bubble tap → filter
