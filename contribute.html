@@ -2029,22 +2029,15 @@ document.querySelectorAll('input[name="name"], #resource-form input[name="title"
   const isResource = formType === 'resource';
   let dupContainer = null;
 
-  const checkDuplicates = debounce(() => {
-    const query = nameInput.value.trim();
-    if (query.length < 2) { removeDupContainer(); return; }
+  const searchType = isResource ? 'resource' : (formType === 'person' ? 'person' : 'organization');
 
-    const searchType = isResource ? 'resource' : (formType === 'person' ? 'person' : 'organization');
-    const results = searchEntities(query, searchType);
-    const matches = isResource ? results.resources : (searchType === 'person' ? results.people : results.organizations);
-
-    // Deduplicate by id
+  function renderDuplicates(allMatches) {
     const seen = new Set();
-    const uniqueMatches = matches.filter(m => {
+    const uniqueMatches = allMatches.filter(m => {
       if (seen.has(m.id)) return false;
       seen.add(m.id);
       return true;
     });
-
     if (uniqueMatches.length === 0) { removeDupContainer(); return; }
 
     if (!dupContainer) {
@@ -2055,14 +2048,14 @@ document.querySelectorAll('input[name="name"], #resource-form input[name="title"
 
     dupContainer.innerHTML = `
       <div class="duplicate-header">This ${searchType} may already exist in our database</div>
-      ${uniqueMatches.slice(0, 3).map(m => {
+      ${uniqueMatches.slice(0, 5).map(m => {
         const displayName = isResource ? (m.title || m.name) : m.name;
         const detail = isResource
           ? [m.author, m.resource_type, m.year].filter(Boolean).join(' · ')
-          : [m.category, m.title, m.primary_org, m.location].filter(Boolean).join(' · ');
+          : [m.category, m.title, m.primary_org, m.location, m._pending ? 'pending' : ''].filter(Boolean).join(' · ');
         return `
         <div class="duplicate-item" data-id="${m.id}">
-          <div class="dup-name">${displayName}</div>
+          <div class="dup-name">${displayName}${m._pending ? ' <span class="pending-badge">pending</span>' : ''}</div>
           <div class="dup-detail">${detail}</div>
           <button type="button" class="dup-btn" data-action="view" data-match='${JSON.stringify(m).replace(/'/g, "&#39;")}'>View existing info</button>
           <button type="button" class="dup-btn primary" data-action="update" data-match='${JSON.stringify(m).replace(/'/g, "&#39;")}'>Add info to this entry</button>
@@ -2082,12 +2075,10 @@ document.querySelectorAll('input[name="name"], #resource-form input[name="title"
         removeDupContainer();
         const entityName = matchData.name || matchData.title || item.querySelector('.dup-name').textContent;
         prefillFormFromExisting(form, matchData, formType);
-        // Set name AFTER prefill to ensure nothing overwrites it
-        // Use the entity's actual name, not whatever was partially typed
-        const nameInput = form.querySelector('input[name="name"]') || form.querySelector('input[name="resourceTitle"]');
-        if (nameInput) {
-          nameInput.value = entityName;
-          nameInput.setAttribute('readonly', true);
+        const nameEl = form.querySelector('input[name="name"]') || form.querySelector('input[name="resourceTitle"]');
+        if (nameEl) {
+          nameEl.value = entityName;
+          nameEl.setAttribute('readonly', true);
         }
         showUpdateBanner(form, entityName);
         showExistingCard(matchData, searchType);
@@ -2105,6 +2096,22 @@ document.querySelectorAll('input[name="name"], #resource-form input[name="title"
     dupContainer.querySelector('[data-action="new"]').addEventListener('click', () => {
       removeDupContainer();
     });
+  }
+
+  const checkDuplicates = debounce(() => {
+    const query = nameInput.value.trim();
+    if (query.length < 2) { removeDupContainer(); return; }
+
+    const results = searchEntitiesWithPending(query, searchType, (pendingResults) => {
+      if (document.activeElement !== nameInput) return;
+      const pendingMatches = isResource ? (pendingResults.resources || []) : (searchType === 'person' ? (pendingResults.people || []) : (pendingResults.organizations || []));
+      if (pendingMatches.length === 0) return;
+      // Merge with current approved matches
+      const currentMatches = isResource ? results.resources : (searchType === 'person' ? results.people : results.organizations);
+      renderDuplicates([...currentMatches, ...pendingMatches]);
+    });
+    const matches = isResource ? results.resources : (searchType === 'person' ? results.people : results.organizations);
+    renderDuplicates(matches);
   }, 80);
 
   function removeDupContainer() {
