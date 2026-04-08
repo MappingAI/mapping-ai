@@ -2271,18 +2271,24 @@ function prefillFormFromExisting(form, data, formType) {
     if (input.tagName === 'SELECT') {
       // Try exact match first, then partial
       const option = Array.from(input.options).find(o => o.value === value || value.startsWith(o.value));
-      if (option) {
-        input.value = option.value;
-        // Sync the visible custom select trigger (native select is inside .custom-select wrapper)
-        const wrapper = input.closest('.custom-select');
-        const trigger = wrapper?.querySelector('.select-trigger');
-        if (trigger) {
-          const color = SELECT_COLORS[option.value];
-          trigger.innerHTML = (color ? `<span class="color-dot" style="background:${color};"></span>` : '') + option.text;
-        }
-      }
+      if (option) input.value = option.value;
     } else {
       input.value = value;
+    }
+  });
+
+  // Sync all custom select triggers to match their native <select> values
+  form.querySelectorAll('.custom-select').forEach(wrapper => {
+    const sel = wrapper.querySelector('select');
+    const trigger = wrapper.querySelector('.select-trigger');
+    if (!sel || !trigger) return;
+    const val = sel.value;
+    const opt = Array.from(sel.options).find(o => o.value === val);
+    if (!val || !opt || !opt.text) {
+      trigger.innerHTML = '<span style="color:var(--text-tertiary);">Select...</span>';
+    } else {
+      const color = SELECT_COLORS[val];
+      trigger.innerHTML = (color ? `<span class="color-dot" style="background:${color};"></span>` : '') + opt.text;
     }
   });
 
