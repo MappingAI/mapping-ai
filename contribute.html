@@ -390,6 +390,7 @@ body.forms-loading .form { visibility: hidden; }
 }
 /* Org search dropdown */
 .org-search-results {
+  position: absolute; top: 100%; left: 0; right: 0; z-index: 10;
   background: #fff;
   border: 1px solid var(--border);
   border-radius: 4px;
@@ -799,7 +800,8 @@ body.forms-loading .form { visibility: hidden; }
   color: var(--text-tertiary); letter-spacing: 0.06em;
 }
 @media (max-width: 600px) {
-  .form.active { grid-template-columns: 1fr; }
+  .doc { padding-left: 1rem; padding-right: 1rem; }
+  .form.active { grid-template-columns: 1fr; gap: 0.75rem; padding-bottom: 4rem; }
   .field.full { grid-column: span 1; }
   .submit {
     grid-column: span 1;
@@ -807,6 +809,8 @@ body.forms-loading .form { visibility: hidden; }
     z-index: 50;
     box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
   }
+  .pill { font-size: 10px; padding: 0.4rem 0.65rem; }
+  .relationship-pills label { font-size: 13px; }
   .checkbox-group { grid-template-columns: 1fr; }
   .update-banner { grid-column: span 1; }
   /* Existing card sidebar: full-width overlay on mobile */
@@ -1156,8 +1160,8 @@ body.forms-loading .form { visibility: hidden; }
     <div class="field full relationship-pills">
       <label>Who are you adding?</label>
       <div class="pill-toggle" id="person-relationship">
-        <button type="button" class="pill" data-value="I am this person">I am this person</button>
-        <button type="button" class="pill" data-value="I can connect you with this person">I can connect you</button>
+        <button type="button" class="pill" data-value="self">I am this person</button>
+        <button type="button" class="pill" data-value="connector">I am connected</button>
         <button type="button" class="pill" data-value="external">Someone I know of</button>
         <span class="clear-form-link" data-form="person-form">Clear form</span>
       </div>
@@ -1343,8 +1347,8 @@ body.forms-loading .form { visibility: hidden; }
     <div class="field full relationship-pills">
       <label>Who are you adding?</label>
       <div class="pill-toggle" id="org-relationship">
-        <button type="button" class="pill" data-value="I represent this organization">I represent this org</button>
-        <button type="button" class="pill" data-value="I can connect you with this organization">I can connect you</button>
+        <button type="button" class="pill" data-value="self">I am part of this org</button>
+        <button type="button" class="pill" data-value="connector">I am connected</button>
         <button type="button" class="pill" data-value="external">An org I know of</button>
         <span class="clear-form-link" data-form="organization-form">Clear form</span>
       </div>
@@ -1384,7 +1388,7 @@ body.forms-loading .form { visibility: hidden; }
       <label>Website</label>
       <input type="url" name="website">
     </div>
-    <div class="field">
+    <div class="field" style="position:relative;">
       <label>Parent organization</label>
       <input type="text" class="parent-org-search" data-search-type="organization" placeholder="Search existing orgs..." autocomplete="off">
       <input type="hidden" name="parentOrgId">
@@ -1545,7 +1549,7 @@ body.forms-loading .form { visibility: hidden; }
     <div class="field full relationship-pills">
       <label>Who are you adding?</label>
       <div class="pill-toggle" id="resource-relationship">
-        <button type="button" class="pill" data-value="I am the author">I am the author</button>
+        <button type="button" class="pill" data-value="self">I am a creator</button>
         <button type="button" class="pill" data-value="external">A resource I found</button>
         <span class="clear-form-link" data-form="resource-form">Clear form</span>
       </div>
@@ -2071,6 +2075,9 @@ document.querySelectorAll('input[name="name"], #resource-form input[name="title"
         updateEntityId = item.dataset.id;
         removeDupContainer();
         prefillFormFromExisting(form, matchData, formType);
+        // Lock name field when editing existing entity
+        const nameInput = form.querySelector('input[name="name"]') || form.querySelector('input[name="resourceTitle"]');
+        if (nameInput) nameInput.setAttribute('readonly', true);
         showUpdateBanner(form, item.querySelector('.dup-name').textContent);
         showExistingCard(matchData, searchType);
       });
@@ -2113,6 +2120,29 @@ function showUpdateBanner(form, entityName) {
   banner.querySelector('.cancel-update').addEventListener('click', () => {
     updateEntityId = null;
     banner.remove();
+    // Close existing entity sidebar
+    document.getElementById('existing-card').classList.remove('open');
+    document.getElementById('existing-card-toggle').classList.remove('visible');
+    // Unlock name field
+    const nameInput = form.querySelector('input[name="name"]') || form.querySelector('input[name="resourceTitle"]');
+    if (nameInput) nameInput.removeAttribute('readonly');
+    // Reset form fields
+    _saveSuppressed = true;
+    form.reset();
+    form.querySelectorAll('.custom-select .select-trigger').forEach(t => {
+      t.innerHTML = '<span style="color:var(--text-tertiary);">Select...</span>';
+    });
+    form.querySelectorAll('select').forEach(s => { s.value = ''; s.dispatchEvent(new Event('change')); });
+    form.querySelectorAll('.pill.active').forEach(p => p.classList.remove('active'));
+    form.querySelectorAll('input[name="submitterRelationship"]').forEach(h => h.value = '');
+    form.querySelectorAll('.tag').forEach(t => t.remove());
+    form.querySelectorAll('input[type="hidden"]').forEach(h => h.value = '');
+    form.querySelectorAll('.tiptap-notes .tiptap').forEach(t => { t.innerHTML = ''; });
+    form.querySelectorAll('.other-categories-field').forEach(f => f.style.display = 'none');
+    // Restore notes helper text
+    const notesHelper = form.querySelector('.tiptap-notes')?.closest('.field')?.querySelector('.helper');
+    if (notesHelper) notesHelper.textContent = 'Type @ to link people, orgs, or resources already in the database';
+    setTimeout(() => { _saveSuppressed = false; }, 100);
   });
   form.insertBefore(banner, form.firstChild);
 }
@@ -2487,6 +2517,9 @@ document.querySelectorAll('.parent-org-search, .primary-org-search').forEach(inp
       resultsDiv.innerHTML = '';
     }
   });
+
+  // Close dropdown on click-outside (matches location/author/twitter/bluesky pattern)
+  input.addEventListener('blur', () => setTimeout(() => { resultsDiv.innerHTML = ''; }, 200));
 });
 
 // ── "Can't find it? Add this org" links ──
@@ -3254,6 +3287,8 @@ document.querySelector('.nav-hamburger').addEventListener('click', () => {
           <select id="panel-org-category">
             <option value="">Select...</option>
             <option value="Frontier Lab">Frontier Lab</option>
+            <option value="AI Infrastructure & Compute">Infrastructure & Compute</option>
+            <option value="AI Deployers & Platforms">Deployers & Platforms</option>
             <option value="AI Safety/Alignment">AI Safety/Alignment</option>
             <option value="Think Tank/Policy Org">Think Tank/Policy Org</option>
             <option value="Government/Agency">Government/Agency</option>
@@ -3591,6 +3626,14 @@ document.querySelector('.nav-hamburger').addEventListener('click', () => {
       const result = await res.json();
       const submissionId = result.submissionId;
 
+      // Add to in-memory cache so it appears in subsequent searches immediately
+      if (_entityCache.organizations) {
+        _entityCache.organizations.push({
+          id: submissionId, name: name, category: data.category || '',
+          entity_type: 'organization', status: 'pending', _pending: true
+        });
+      }
+
       // Show success overlay briefly (don't destroy the form DOM)
       const successEl = document.createElement('div');
       successEl.className = 'org-panel-success';
@@ -3753,20 +3796,23 @@ document.querySelector('.nav-hamburger').addEventListener('click', () => {
     });
   });
 
-  // Remove old "Can't find it? Add this org" click handlers that switch forms
+  // Remove old "Can't find it?" click handlers that switch forms
   // (Keep the elements but change their behavior to open the panel instead)
   document.querySelectorAll('.create-org-link').forEach(link => {
     const newLink = link.cloneNode(true); // remove old event listeners
-    newLink.textContent = "Can't find it? Add this org";
+    const isPersonLink = newLink.dataset.switch === 'person';
+    newLink.textContent = isPersonLink ? "Can't find it? Add this person" : "Can't find it? Add this org";
     link.parentNode.replaceChild(newLink, link);
-    newLink.addEventListener('click', (e) => {
-      e.preventDefault();
-      const field = newLink.closest('.field');
-      const input = field?.querySelector('input[type="text"]');
-      const q = input?.value?.trim() || '';
-      const isParent = input?.classList?.contains('parent-org-search');
-      openOrgPanel(q, input, isParent ? 'parent' : 'primary', getActiveEntityName());
-    });
+    if (!isPersonLink) {
+      newLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        const field = newLink.closest('.field');
+        const input = field?.querySelector('input[type="text"]');
+        const q = input?.value?.trim() || '';
+        const isParent = input?.classList?.contains('parent-org-search');
+        openOrgPanel(q, input, isParent ? 'parent' : 'primary', getActiveEntityName());
+      });
+    }
   });
 })();
 </script>

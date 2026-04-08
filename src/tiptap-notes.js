@@ -208,8 +208,12 @@ function showLinkPopover(editor, toolbar) {
 function setupPopoverEvents(popover, editor) {
   const input = popover.querySelector('input');
   popover.querySelector('[data-action="save"]').addEventListener('click', () => {
-    const url = input.value.trim();
+    let url = input.value.trim();
     if (url) {
+      // Normalize URL: prepend https:// if no protocol present
+      if (url && !/^(https?:\/\/|mailto:)/i.test(url)) {
+        url = 'https://' + url;
+      }
       editor.chain().focus().setLink({ href: url, target: '_blank' }).run();
     }
     popover.remove();
@@ -388,7 +392,11 @@ function initTipTapEditors() {
         }),
         Mention.configure({
           HTMLAttributes: { class: 'tiptap-mention' },
-          suggestion: suggestion(),
+          suggestion: {
+            ...suggestion(),
+            // Allow spaces in the mention query so multi-word names work (e.g. "@Dario Amodei")
+            allowSpaces: true,
+          },
           renderText: ({ node }) => `@${node.attrs.label}`,
         }),
       ],

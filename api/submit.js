@@ -207,8 +207,14 @@ export const handler = async (event) => {
 
       submissionId = result.rows[0].id;
 
-      // Non-critical: LLM quality review via Claude Haiku
-      if (process.env.ANTHROPIC_API_KEY) {
+    } finally {
+      client.release();
+    }
+
+    // Fire-and-forget: LLM quality review runs after response is sent
+    // Uses a separate DB connection so the main client is already released
+    if (process.env.ANTHROPIC_API_KEY && submissionId) {
+      (async () => {
         try {
           const reviewPayload = {
             name: data.name || data.title,
@@ -246,18 +252,20 @@ Respond in JSON only: {"quality": 1-5, "flags": ["spam"|"low-quality"|"duplicate
               const cleaned = reviewText.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
               review = JSON.parse(cleaned);
             } catch { review = { raw: reviewText }; }
-            await client.query(
-              'UPDATE submission SET llm_review = $1 WHERE id = $2',
-              [JSON.stringify(review), submissionId]
-            );
+            const reviewClient = await pool.connect();
+            try {
+              await reviewClient.query(
+                'UPDATE submission SET llm_review = $1 WHERE id = $2',
+                [JSON.stringify(review), submissionId]
+              );
+            } finally {
+              reviewClient.release();
+            }
           }
         } catch (e) {
           console.warn('LLM review failed (non-critical):', e.message);
         }
-      }
-
-    } finally {
-      client.release();
+      })();
     }
 
     return {
