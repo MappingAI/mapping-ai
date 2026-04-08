@@ -3772,8 +3772,8 @@ document.querySelector('.nav-hamburger').addEventListener('click', () => {
 </script>
 
 <!-- PASSWORD GATE START -->
-<!-- Lock overlay (blocks all interaction when not authenticated) -->
-<div id="lock-overlay" style="display:none;position:fixed;inset:0;z-index:500;cursor:pointer;"></div>
+<!-- Lock overlay (blocks all interaction when not authenticated; top:48px keeps navbar clickable) -->
+<div id="lock-overlay" style="display:none;position:fixed;top:48px;left:0;right:0;bottom:0;z-index:500;cursor:pointer;"></div>
 
 <!-- Password prompt modal -->
 <div id="password-overlay" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.5);align-items:center;justify-content:center;">
