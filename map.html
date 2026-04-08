@@ -506,18 +506,34 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   background: var(--bg-page); z-index: 5;
 }
 .mobile-mode-label {
-  text-align: center; padding: 0.35rem 0.75rem;
+  text-align: center; padding: 0.2rem 0.75rem;
   font-family: var(--mono); font-size: 9px; color: var(--text-3); letter-spacing: 0.02em;
   opacity: 0.7;
 }
 .mobile-mode-label a { color: var(--accent); text-decoration: none; }
-.mobile-bubbles { padding: 0.75rem 0.75rem 0.25rem; }
-.mobile-bubbles-group { margin-bottom: 0.5rem; }
-.mobile-bubbles-group-label { font-family: var(--mono); font-size: 8px; color: var(--text-3); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.3rem; padding-left: 2px; cursor: pointer; user-select: none; }
-.mobile-bubbles-group-label .toggle-arrow { font-size: 7px; margin-left: 2px; display: inline-block; transition: transform 0.15s; }
+/* Hero collapse toggle */
+.mobile-hero-toggle {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.4rem 0.75rem 0.15rem; cursor: pointer; user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.mobile-hero-toggle span { font-family: var(--mono); font-size: 8px; color: var(--text-3); letter-spacing: 0.06em; text-transform: uppercase; }
+.mobile-hero-toggle .chevron { font-size: 10px; color: var(--text-3); transition: transform 0.2s; }
+.mobile-hero-toggle.collapsed .chevron { transform: rotate(0deg); }
+.mobile-hero-toggle:not(.collapsed) .chevron { transform: rotate(90deg); }
+.mobile-hero-content { transition: max-height 0.25s ease; overflow: hidden; }
+.mobile-hero-toggle.collapsed + .mobile-hero-content { max-height: 0 !important; }
+.mobile-bubbles { padding: 0.25rem 0.75rem 0.15rem; }
+.mobile-bubbles-group { margin-bottom: 0.35rem; }
+.mobile-bubbles-group-label {
+  font-family: var(--mono); font-size: 8px; color: var(--text-3); letter-spacing: 0.06em;
+  text-transform: uppercase; margin-bottom: 0.2rem; padding-left: 2px;
+  cursor: pointer; user-select: none; display: flex; align-items: center; gap: 3px;
+}
+.mobile-bubbles-group-label .chevron { font-size: 9px; transition: transform 0.15s; }
 .mobile-bubbles-group.collapsed .mobile-bubbles-row { display: none; }
-.mobile-bubbles-group.collapsed .toggle-arrow { transform: rotate(0deg); }
-.mobile-bubbles-group:not(.collapsed) .toggle-arrow { transform: rotate(90deg); }
+.mobile-bubbles-group.collapsed .chevron { transform: rotate(0deg); }
+.mobile-bubbles-group:not(.collapsed) .chevron { transform: rotate(90deg); }
 .mobile-bubbles-row { display: flex; flex-wrap: wrap; gap: 5px; }
 .mobile-bubble {
   display: inline-flex; align-items: center; gap: 4px;
@@ -530,9 +546,17 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
 .mobile-bubble.active { box-shadow: 0 0 0 2px var(--accent); }
 .mobile-bubble .bubble-label { font-size: 9px; letter-spacing: 0.02em; }
 .mobile-bubble .bubble-count { font-size: 9px; font-weight: 600; opacity: 0.7; }
-.mobile-spectrum { padding: 0.25rem 1rem 0.75rem; }
-.mobile-spectrum-row { margin-bottom: 0.5rem; }
-.mobile-spectrum-label { font-family: var(--mono); font-size: 9px; color: var(--text-3); letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 3px; display: flex; justify-content: space-between; }
+.mobile-spectrum { padding: 0.15rem 0.75rem 0.25rem; }
+.mobile-spectrum-row { margin-bottom: 0.3rem; }
+.mobile-spectrum-row.collapsed .mobile-spectrum-bar, .mobile-spectrum-row.collapsed .mobile-spectrum-endpoints { display: none; }
+.mobile-spectrum-label {
+  font-family: var(--mono); font-size: 9px; color: var(--text-3); letter-spacing: 0.04em;
+  text-transform: uppercase; margin-bottom: 2px; display: flex; justify-content: space-between;
+  cursor: pointer; user-select: none;
+}
+.mobile-spectrum-label .chevron { font-size: 8px; transition: transform 0.15s; margin-right: 2px; }
+.mobile-spectrum-row.collapsed .chevron { transform: rotate(0deg); }
+.mobile-spectrum-row:not(.collapsed) .chevron { transform: rotate(90deg); }
 .mobile-spectrum-bar { display: flex; height: 24px; border-radius: 4px; overflow: hidden; gap: 1px; }
 .mobile-spectrum-segment {
   cursor: pointer; min-width: 20px; position: relative; transition: opacity 0.15s;
@@ -1001,8 +1025,14 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
 
 <!-- Mobile Entity Directory (shown <768px, replaces D3 map) -->
 <div id="mobile-directory" style="display:none;">
-  <div id="mobile-hero"></div>
-  <div class="mobile-mode-label">Mobile directory — full interactive map on desktop</div>
+  <div id="mobile-hero-toggle" class="mobile-hero-toggle">
+    <span>Filters &amp; Overview</span>
+    <span class="chevron">&#x25B8;</span>
+  </div>
+  <div id="mobile-hero-content" class="mobile-hero-content">
+    <div id="mobile-hero"></div>
+    <div class="mobile-mode-label">Mobile directory — full interactive map on desktop</div>
+  </div>
   <div id="mobile-search-bar" class="mobile-search-bar">
     <div class="mobile-search-box">
       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -2149,7 +2179,7 @@ function renderMobileDirectory() {
     const roleCats = sortedCats.filter(c => PERSON_ROLE_SET.has(c));
 
     function pillGroup(label, cats, collapsed) {
-      let html = `<div class="mobile-bubbles-group${collapsed ? ' collapsed' : ''}"><div class="mobile-bubbles-group-label">${label} <span class="toggle-arrow">&#x25B8;</span></div><div class="mobile-bubbles-row">`;
+      let html = `<div class="mobile-bubbles-group${collapsed ? ' collapsed' : ''}"><div class="mobile-bubbles-group-label"><span class="chevron">&#x25B8;</span> ${label}</div><div class="mobile-bubbles-row">`;
       for (const cat of cats) {
         const count = catCounts[cat];
         const color = getColor(cat) || DEFAULT_COLOR;
@@ -2181,7 +2211,7 @@ function renderMobileDirectory() {
         else nullCount++;
       }
       spectrumHtml += `<div class="mobile-spectrum-row">
-        <div class="mobile-spectrum-label"><span>${dim.label}</span>${nullCount > 0 ? `<span>(${nullCount} no data)</span>` : ''}</div>
+        <div class="mobile-spectrum-label"><span><span class="chevron">&#x25B8;</span> ${dim.label}</span>${nullCount > 0 ? `<span>(${nullCount} no data)</span>` : ''}</div>
         <div class="mobile-spectrum-bar">`;
       for (const label of dim.order) {
         const count = buckets[label] || 0;
@@ -2317,11 +2347,26 @@ function renderMobileDirectory() {
     }
   }
 
-  // Toggle collapsible pill groups (Roles)
+  // Toggle collapsible sections (pill groups, spectrum rows, and entire hero)
   document.querySelectorAll('.mobile-bubbles-group-label').forEach(label => {
-    label.addEventListener('click', () => {
-      label.parentElement.classList.toggle('collapsed');
-    });
+    label.addEventListener('click', () => label.parentElement.classList.toggle('collapsed'));
+  });
+  document.querySelectorAll('.mobile-spectrum-label').forEach(label => {
+    label.addEventListener('click', () => label.parentElement.classList.toggle('collapsed'));
+  });
+  document.getElementById('mobile-hero-toggle').addEventListener('click', function() {
+    this.classList.toggle('collapsed');
+    const content = document.getElementById('mobile-hero-content');
+    if (this.classList.contains('collapsed')) {
+      content.style.maxHeight = '0';
+    } else {
+      content.style.maxHeight = content.scrollHeight + 'px';
+    }
+  });
+  // Set initial max-height for hero content (expanded by default)
+  requestAnimationFrame(() => {
+    const content = document.getElementById('mobile-hero-content');
+    if (content) content.style.maxHeight = content.scrollHeight + 'px';
   });
 
   // Bubble tap → filter
