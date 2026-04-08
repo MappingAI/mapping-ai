@@ -5549,5 +5549,22 @@ themeBtn.addEventListener('click', () => {
   }
 });
 </script>
+<!-- Beta notice popup -->
+<div id="beta-overlay" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.5);align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:8px;padding:1.5rem 2rem;max-width:480px;width:90%;font-family:var(--serif);box-shadow:0 8px 32px rgba(0,0,0,0.2);">
+    <h2 style="font-family:var(--mono);font-size:13px;text-transform:uppercase;letter-spacing:0.08em;margin:0 0 0.75rem;">Pre-Launch Beta</h2>
+    <p style="font-size:15px;line-height:1.6;color:var(--text-secondary);margin:0 0 1rem;">This tool is in a pre-launch beta. We are actively improving data issues and enrichment, as well as adding new features and improving the UX.</p>
+    <p style="font-size:15px;line-height:1.6;color:var(--text-secondary);margin:0 0 1.25rem;">Please email us at <a href="mailto:info@mapping-ai.org" style="color:var(--accent);">info@mapping-ai.org</a> if you'd like to contribute or provide any feedback.</p>
+    <button id="beta-dismiss" style="font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;padding:0.6rem 1.5rem;background:var(--text-primary);color:#fff;border:none;border-radius:4px;cursor:pointer;">Got it</button>
+  </div>
+</div>
+<script>
+(function(){
+  var ov = document.getElementById('beta-overlay');
+  if (!localStorage.getItem('betaDismissed')) ov.style.display = 'flex';
+  document.getElementById('beta-dismiss').addEventListener('click', function(){ ov.style.display='none'; localStorage.setItem('betaDismissed','1'); });
+  ov.addEventListener('click', function(e){ if(e.target===ov){ov.style.display='none';localStorage.setItem('betaDismissed','1');} });
+})();
+</script>
 </body>
 </html>
