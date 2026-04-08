@@ -2080,11 +2080,15 @@ document.querySelectorAll('input[name="name"], #resource-form input[name="title"
         const matchData = JSON.parse(btn.dataset.match);
         updateEntityId = item.dataset.id;
         removeDupContainer();
-        prefillFormFromExisting(form, matchData, formType);
-        // Lock name field when editing existing entity
+        // Set name to the entity's actual name (not whatever was partially typed)
+        const entityName = matchData.name || matchData.title || item.querySelector('.dup-name').textContent;
         const nameInput = form.querySelector('input[name="name"]') || form.querySelector('input[name="resourceTitle"]');
-        if (nameInput) nameInput.setAttribute('readonly', true);
-        showUpdateBanner(form, item.querySelector('.dup-name').textContent);
+        if (nameInput) {
+          nameInput.value = entityName;
+          nameInput.setAttribute('readonly', true);
+        }
+        prefillFormFromExisting(form, matchData, formType);
+        showUpdateBanner(form, entityName);
         showExistingCard(matchData, searchType);
       });
     });
@@ -2266,7 +2270,17 @@ function prefillFormFromExisting(form, data, formType) {
     if (input.tagName === 'SELECT') {
       // Try exact match first, then partial
       const option = Array.from(input.options).find(o => o.value === value || value.startsWith(o.value));
-      if (option) input.value = option.value;
+      if (option) {
+        input.value = option.value;
+        // Sync the visible custom select trigger
+        const customSelect = input.closest('.custom-select') || input.parentElement.querySelector('.custom-select');
+        const trigger = customSelect?.querySelector('.select-trigger');
+        if (trigger) {
+          const colorMap = typeof SELECT_COLORS !== 'undefined' ? SELECT_COLORS : {};
+          const dot = colorMap[option.value] ? `<span class="color-dot" style="background:${colorMap[option.value]}"></span>` : '';
+          trigger.innerHTML = dot + option.text;
+        }
+      }
     } else {
       input.value = value;
     }
