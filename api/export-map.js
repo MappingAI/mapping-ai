@@ -113,17 +113,19 @@ async function computeSourceTypes(client) {
 }
 
 export async function generateMapData(client) {
+  // Only export entities that have passed QA review
   const entities = await client.query(
-    `SELECT * FROM entity WHERE status = 'approved' ORDER BY id`
+    `SELECT * FROM entity WHERE status = 'approved' AND qa_approved = true ORDER BY id`
   );
+  // Only export edges between QA-approved entities
   const edges = await client.query(
     `SELECT e.id, e.source_id, e.target_id, e.edge_type, e.role, e.is_primary,
             e.evidence, e.created_by,
             src.entity_type AS source_type,
             tgt.entity_type AS target_type
      FROM edge e
-     JOIN entity src ON src.id = e.source_id
-     JOIN entity tgt ON tgt.id = e.target_id
+     JOIN entity src ON src.id = e.source_id AND src.qa_approved = true
+     JOIN entity tgt ON tgt.id = e.target_id AND tgt.qa_approved = true
      ORDER BY e.id`
   );
 
