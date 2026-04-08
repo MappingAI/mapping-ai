@@ -113,7 +113,7 @@ details[open] summary { border-bottom: 1px solid var(--border); }
 .form.active { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 /* Hide forms until JS determines which tab to show (prevents width flash on restore) */
 body.forms-loading .form { visibility: hidden; }
-.field { display: flex; flex-direction: column; }
+.field { display: flex; flex-direction: column; min-width: 0; }
 .field.full { grid-column: span 2; }
 .field label {
   font-family: var(--mono); font-size: 10px;
@@ -364,6 +364,7 @@ body.forms-loading .form { visibility: hidden; }
   padding: 0.4rem 0.5rem;
   display: flex; flex-wrap: wrap; gap: 0.35rem;
   align-items: center;
+  position: relative;
   min-height: 38px;
   cursor: text;
 }
@@ -811,7 +812,8 @@ body.forms-loading .form { visibility: hidden; }
   }
   .pill { font-size: 10px; padding: 0.4rem 0.65rem; }
   .relationship-pills label { font-size: 13px; }
-  .checkbox-group { grid-template-columns: 1fr; }
+  .checkbox-group { grid-template-columns: 1fr; gap: 0.15rem; }
+  .checkbox-group label { min-height: auto; padding: 0.15rem 0; }
   .update-banner { grid-column: span 1; }
   /* Existing card sidebar: full-width overlay on mobile */
   .existing-card { width: 100%; }
