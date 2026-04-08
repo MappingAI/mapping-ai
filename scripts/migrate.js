@@ -313,7 +313,7 @@ async function migrate() {
             belief_regulatory_stance, belief_regulatory_stance_detail,
             belief_evidence_source, belief_agi_timeline, belief_ai_risk,
             belief_threat_models,
-            status
+            status, qa_approved
           ) VALUES (
             NEW.entity_type,
             NEW.name, NEW.title, NEW.category, NEW.other_categories, NEW.primary_org, NEW.other_orgs,
@@ -324,7 +324,7 @@ async function migrate() {
             NEW.belief_regulatory_stance, NEW.belief_regulatory_stance_detail,
             NEW.belief_evidence_source, NEW.belief_agi_timeline, NEW.belief_ai_risk,
             NEW.belief_threat_models,
-            'approved'
+            'approved', true
           ) RETURNING id INTO v_entity_id;
 
           NEW.entity_id   := v_entity_id;
