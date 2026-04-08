@@ -2663,12 +2663,9 @@ document.querySelectorAll('#resource-authors').forEach(wrapper => {
     updateHidden();
   }
 
-  const search = debounce(async () => {
-    const q = input.value.trim();
-    if (q.length < 2) { resultsDiv.innerHTML = ''; return; }
-    const results = await searchEntitiesWithPending(q, 'person');
-    const people = results.people.filter(p => !selectedAuthors.some(a => a.id === p.id));
-    resultsDiv.innerHTML = people.slice(0, 5).map(p => `
+  function renderAuthorResults(people) {
+    const filtered = people.filter(p => !selectedAuthors.some(a => a.id === p.id));
+    resultsDiv.innerHTML = filtered.slice(0, 5).map(p => `
       <div class="org-result" data-id="${p.id}" data-name="${p.name}" data-person='${JSON.stringify(p).replace(/'/g, "&#39;")}'>
         <span>${p.name} <span class="org-cat">${p.title || p.category || ''}</span>${p._pending ? '<span class="pending-badge">Pending</span>' : ''}</span>
         <span class="org-edit-link" data-action="edit">edit</span>
@@ -2677,7 +2674,6 @@ document.querySelectorAll('#resource-authors').forEach(wrapper => {
     resultsDiv.querySelectorAll('.org-result').forEach(item => {
       item.querySelector('.org-edit-link')?.addEventListener('click', (e) => {
         e.stopPropagation();
-        // Switch to person form to edit
         const personData = JSON.parse(item.dataset.person);
         const personToggle = document.querySelector('.toggle[data-form="person"]');
         if (personToggle) personToggle.click();
@@ -2699,6 +2695,25 @@ document.querySelectorAll('#resource-authors').forEach(wrapper => {
         resultsDiv.innerHTML = '';
       });
     });
+  }
+
+  const search = debounce(() => {
+    const q = input.value.trim();
+    if (q.length < 2) { resultsDiv.innerHTML = ''; return; }
+    const results = searchEntitiesWithPending(q, 'person', (pendingResults) => {
+      if (document.activeElement !== input) return;
+      const pendingPeople = pendingResults.people || [];
+      if (pendingPeople.length === 0) return;
+      const existingIds = new Set([...resultsDiv.querySelectorAll('.org-result')].map(el => el.dataset.id));
+      const newPeople = pendingPeople.filter(p => !existingIds.has(String(p.id)));
+      if (newPeople.length > 0) {
+        const currentPeople = [...resultsDiv.querySelectorAll('.org-result')].map(el => {
+          try { return JSON.parse(el.dataset.person); } catch { return null; }
+        }).filter(Boolean);
+        renderAuthorResults([...currentPeople, ...newPeople]);
+      }
+    });
+    renderAuthorResults(results.people || []);
   }, 80);
 
   input.addEventListener('input', () => {
@@ -3825,7 +3840,23 @@ document.querySelector('.nav-hamburger').addEventListener('click', () => {
     const isPersonLink = newLink.dataset.switch === 'person';
     newLink.textContent = isPersonLink ? "Can't find it? Add this person" : "Can't find it? Add this org";
     link.parentNode.replaceChild(newLink, link);
-    if (!isPersonLink) {
+    if (isPersonLink) {
+      // Switch to person form with the query pre-filled in the name field
+      newLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        const field = newLink.closest('.field');
+        const input = field?.querySelector('input[type="text"]');
+        const q = input?.value?.trim() || '';
+        const personToggle = document.querySelector('.toggle[data-form="person"]');
+        if (personToggle) personToggle.click();
+        if (q) {
+          setTimeout(() => {
+            const nameInput = document.querySelector('#person-form input[name="name"]');
+            if (nameInput) { nameInput.value = q; nameInput.dispatchEvent(new Event('input')); }
+          }, 50);
+        }
+      });
+    } else {
       newLink.addEventListener('click', (e) => {
         e.preventDefault();
         const field = newLink.closest('.field');
