@@ -1084,10 +1084,10 @@ body.forms-loading .form { visibility: hidden; }
 <div class="doc">
   <div class="eyebrow"><a href="/">Mapping AI</a>—Contribute</div>
   <h1>Add to the Map</h1>
-  <p>Help us build a comprehensive map of the AI policy landscape. Submit a person, organization, or influential resource that should be included.</p>
+  <p>Help us build a comprehensive map of the AI policy landscape. Submit new entries or update existing ones with corrections, additional context, or new perspectives.</p>
 
   <div class="disclaimer">
-    Anyone with knowledge of the U.S. AI policy landscape can contribute. You don't need to be affiliated with the person or organization you're submitting. All submissions are reviewed before publication.
+    Anyone with knowledge of the U.S. AI policy landscape can contribute. You can add a completely new person, organization, or resource, or search for an existing entry and submit updates, corrections, or additional information. All submissions are reviewed before publication.
     <button class="how-it-works-btn" onclick="document.getElementById('info-overlay').style.display='flex'">How it works</button>
   </div>
 
@@ -1751,6 +1751,10 @@ toggles.forEach(toggle => {
       type === formType ? el.classList.remove('hidden') : el.classList.add('hidden');
     });
     document.getElementById('success').classList.add('hidden');
+    // Close existing entity sidebar when switching forms
+    document.getElementById('existing-card').classList.remove('open');
+    document.getElementById('existing-card-toggle').classList.remove('visible');
+    updateEntityId = null;
   });
 });
 
@@ -3188,6 +3192,14 @@ document.querySelectorAll('.clear-form-link').forEach(link => {
   link.addEventListener('click', () => {
     const form = document.getElementById(link.dataset.form);
     if (!form) return;
+    // Close existing entity sidebar and clear edit state
+    document.getElementById('existing-card').classList.remove('open');
+    document.getElementById('existing-card-toggle').classList.remove('visible');
+    updateEntityId = null;
+    form.querySelector('.update-banner')?.remove();
+    // Unlock name field if it was locked
+    const nameInput = form.querySelector('input[name="name"]') || form.querySelector('input[name="resourceTitle"]');
+    if (nameInput) nameInput.removeAttribute('readonly');
     // Suppress auto-save during clear (form.reset triggers change events)
     _saveSuppressed = true;
     form.reset();
