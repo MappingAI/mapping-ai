@@ -2080,14 +2080,15 @@ document.querySelectorAll('input[name="name"], #resource-form input[name="title"
         const matchData = JSON.parse(btn.dataset.match);
         updateEntityId = item.dataset.id;
         removeDupContainer();
-        // Set name to the entity's actual name (not whatever was partially typed)
         const entityName = matchData.name || matchData.title || item.querySelector('.dup-name').textContent;
+        prefillFormFromExisting(form, matchData, formType);
+        // Set name AFTER prefill to ensure nothing overwrites it
+        // Use the entity's actual name, not whatever was partially typed
         const nameInput = form.querySelector('input[name="name"]') || form.querySelector('input[name="resourceTitle"]');
         if (nameInput) {
           nameInput.value = entityName;
           nameInput.setAttribute('readonly', true);
         }
-        prefillFormFromExisting(form, matchData, formType);
         showUpdateBanner(form, entityName);
         showExistingCard(matchData, searchType);
       });
@@ -2272,13 +2273,12 @@ function prefillFormFromExisting(form, data, formType) {
       const option = Array.from(input.options).find(o => o.value === value || value.startsWith(o.value));
       if (option) {
         input.value = option.value;
-        // Sync the visible custom select trigger
-        const customSelect = input.closest('.custom-select') || input.parentElement.querySelector('.custom-select');
-        const trigger = customSelect?.querySelector('.select-trigger');
+        // Sync the visible custom select trigger (native select is inside .custom-select wrapper)
+        const wrapper = input.closest('.custom-select');
+        const trigger = wrapper?.querySelector('.select-trigger');
         if (trigger) {
-          const colorMap = typeof SELECT_COLORS !== 'undefined' ? SELECT_COLORS : {};
-          const dot = colorMap[option.value] ? `<span class="color-dot" style="background:${colorMap[option.value]}"></span>` : '';
-          trigger.innerHTML = dot + option.text;
+          const color = SELECT_COLORS[option.value];
+          trigger.innerHTML = (color ? `<span class="color-dot" style="background:${color};"></span>` : '') + option.text;
         }
       }
     } else {
