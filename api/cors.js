@@ -30,6 +30,7 @@ export function getCorsHeaders(event, { methods = 'GET, OPTIONS', headers = 'Con
   const corsHeaders = {
     'Access-Control-Allow-Methods': methods,
     'Access-Control-Allow-Headers': headers,
+    'X-Content-Type-Options': 'nosniff',
   };
   if (origin && ALLOWED_ORIGINS.has(origin)) {
     corsHeaders['Access-Control-Allow-Origin'] = origin;
