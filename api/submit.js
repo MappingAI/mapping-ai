@@ -21,6 +21,24 @@ const CORS_HEADERS = {
 // Contributor key format: mak_ + 32 hex chars
 const CONTRIBUTOR_KEY_REGEX = /^mak_[a-f0-9]{32}$/;
 
+// Anonymous IP rate limiting (in-memory, best-effort across Lambda warm instances)
+// Limit: 10 submissions per IP per hour for anonymous (no contributor key) requests
+const ANON_RATE_LIMIT = 10;
+const ANON_RATE_WINDOW_MS = 60 * 60 * 1000; // 1 hour
+const anonIpCounts = new Map(); // ip → { count, windowStart }
+
+function checkAnonRateLimit(ip) {
+  if (!ip) return false;
+  const now = Date.now();
+  const entry = anonIpCounts.get(ip);
+  if (!entry || now - entry.windowStart > ANON_RATE_WINDOW_MS) {
+    anonIpCounts.set(ip, { count: 1, windowStart: now });
+    return false; // not rate limited
+  }
+  entry.count++;
+  return entry.count > ANON_RATE_LIMIT;
+}
+
 // Ordinal score mappings — values not present get NULL score (mixed/unclear/other)
 const STANCE_SCORES = {
   'Accelerate': 1, 'Light-touch': 2, 'Targeted': 3, 'Moderate': 4,
@@ -95,6 +113,15 @@ export const handler = async (event) => {
     // Format validation before DB connection
     if (contributorKey && !CONTRIBUTOR_KEY_REGEX.test(contributorKey)) {
       return { statusCode: 401, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Invalid contributor key format' }) };
+    }
+
+    // Anonymous IP rate limiting (no contributor key)
+    if (!contributorKey) {
+      const clientIp = event.headers?.['x-forwarded-for']?.split(',')[0]?.trim()
+        || event.requestContext?.http?.sourceIp;
+      if (checkAnonRateLimit(clientIp)) {
+        return { statusCode: 429, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Too many submissions. Please try again later.' }) };
+      }
     }
 
     const client = await pool.connect();

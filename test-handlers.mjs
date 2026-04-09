@@ -12,11 +12,12 @@ import { handler as submissionsHandler } from './api/submissions.js';
 let passed = 0;
 let failed = 0;
 
-function makeEvent({ method = 'POST', body = null, query = {} } = {}) {
+function makeEvent({ method = 'POST', body = null, query = {}, headers = {}, sourceIp = null } = {}) {
   return {
-    requestContext: { http: { method } },
+    requestContext: { http: { method, sourceIp: sourceIp || '1.2.3.4' } },
     body: body ? JSON.stringify(body) : null,
     queryStringParameters: query,
+    headers,
   };
 }
 
@@ -105,24 +106,24 @@ await test('short field over 200 chars returns 400', async () => {
   assert(res.statusCode === 400, `expected 400, got ${res.statusCode}`);
 });
 
-await test('notes at exactly 1000 chars passes validation', async () => {
+await test('notes at exactly 2000 chars passes validation', async () => {
   const res = await submitHandler(makeEvent({
-    body: { type: 'person', data: { name: 'Jane Doe', notes: 'x'.repeat(1000) }, _hp: '' }
+    body: { type: 'person', data: { name: 'Jane Doe', notes: 'x'.repeat(2000) }, _hp: '' }
   }));
   // 500 means validation passed and hit the mock DB — expected
   assert(res.statusCode === 500, `expected 500 (DB error), got ${res.statusCode}`);
 });
 
-await test('notes over 1000 chars returns 400', async () => {
+await test('notes over 2000 chars returns 400', async () => {
   const res = await submitHandler(makeEvent({
-    body: { type: 'person', data: { name: 'Jane Doe', notes: 'x'.repeat(1001) }, _hp: '' }
+    body: { type: 'person', data: { name: 'Jane Doe', notes: 'x'.repeat(2001) }, _hp: '' }
   }));
   assert(res.statusCode === 400, `expected 400, got ${res.statusCode}`);
 });
 
-await test('threatModels over 1000 chars returns 400', async () => {
+await test('threatModels over 2000 chars returns 400', async () => {
   const res = await submitHandler(makeEvent({
-    body: { type: 'person', data: { name: 'Jane Doe', threatModels: 'x'.repeat(1001) }, _hp: '' }
+    body: { type: 'person', data: { name: 'Jane Doe', threatModels: 'x'.repeat(2001) }, _hp: '' }
   }));
   assert(res.statusCode === 400, `expected 400, got ${res.statusCode}`);
 });
@@ -202,6 +203,93 @@ await test('POST returns 405', async () => {
 await test('valid GET reaches DB (returns 500 without real DB)', async () => {
   const res = await submissionsHandler(makeEvent({ method: 'GET', query: { status: 'approved' } }));
   assert(res.statusCode === 500, `expected 500 (DB error), got ${res.statusCode}`);
+});
+
+console.log('\nsubmit handler — contributor key validation');
+
+await test('malformed contributor key (wrong prefix) returns 401', async () => {
+  const res = await submitHandler(makeEvent({
+    body: { type: 'person', data: { name: 'Test' }, _hp: '' },
+    headers: { 'x-contributor-key': 'bad_abc123' },
+  }));
+  assert(res.statusCode === 401, `expected 401, got ${res.statusCode}`);
+});
+
+await test('malformed contributor key (too short) returns 401', async () => {
+  const res = await submitHandler(makeEvent({
+    body: { type: 'person', data: { name: 'Test' }, _hp: '' },
+    headers: { 'x-contributor-key': 'mak_tooshort' },
+  }));
+  assert(res.statusCode === 401, `expected 401, got ${res.statusCode}`);
+});
+
+await test('malformed contributor key (uppercase hex) returns 401', async () => {
+  const res = await submitHandler(makeEvent({
+    body: { type: 'person', data: { name: 'Test' }, _hp: '' },
+    headers: { 'x-contributor-key': 'mak_ABCDEF1234567890ABCDEF1234567890' },
+  }));
+  assert(res.statusCode === 401, `expected 401, got ${res.statusCode}`);
+});
+
+await test('sql injection in name field reaches DB safely (parameterized)', async () => {
+  // Injection payload — safe because submit.js uses parameterized queries ($1, $2, ...)
+  const res = await submitHandler(makeEvent({
+    body: { type: 'person', data: { name: "'; DROP TABLE submission; --" }, _hp: '' }
+  }));
+  // Validation passes (under 200 chars, valid type), hits DB, DB unreachable → 500
+  assert(res.statusCode === 500, `expected 500 (reached DB safely), got ${res.statusCode}`);
+});
+
+await test('sql injection in notes field reaches DB safely', async () => {
+  const res = await submitHandler(makeEvent({
+    body: { type: 'person', data: { name: 'Test', notes: "' OR '1'='1'; --" }, _hp: '' }
+  }));
+  assert(res.statusCode === 500, `expected 500 (reached DB safely), got ${res.statusCode}`);
+});
+
+console.log('\nsubmit handler — anonymous IP rate limiting');
+
+await test('anonymous submissions up to limit succeed (reach DB)', async () => {
+  // Fresh IP — up to ANON_RATE_LIMIT (10) should pass validation
+  for (let i = 0; i < 10; i++) {
+    const res = await submitHandler(makeEvent({
+      body: { type: 'person', data: { name: `Person ${i}` }, _hp: '' },
+      sourceIp: '9.9.9.9',
+    }));
+    assert(res.statusCode === 500, `attempt ${i+1}: expected 500 (DB), got ${res.statusCode}`);
+  }
+});
+
+await test('11th anonymous submission from same IP returns 429', async () => {
+  // IP 9.9.9.9 already has 10 submissions from previous test
+  const res = await submitHandler(makeEvent({
+    body: { type: 'person', data: { name: 'Over limit' }, _hp: '' },
+    sourceIp: '9.9.9.9',
+  }));
+  assert(res.statusCode === 429, `expected 429, got ${res.statusCode}`);
+  const body = JSON.parse(res.body);
+  assert(body.error, 'expected error message in body');
+});
+
+await test('different IP is not rate limited by previous IP', async () => {
+  const res = await submitHandler(makeEvent({
+    body: { type: 'person', data: { name: 'Different IP person' }, _hp: '' },
+    sourceIp: '8.8.8.8',
+  }));
+  // Different IP, first request — should reach DB, not be rate limited
+  assert(res.statusCode === 500, `expected 500 (DB), got ${res.statusCode}`);
+});
+
+await test('contributor key bypasses IP rate limit', async () => {
+  // IP 9.9.9.9 is over anon limit, but a valid-format contributor key skips anon check
+  // (it will fail at DB lookup with 500, not 429)
+  const res = await submitHandler(makeEvent({
+    body: { type: 'person', data: { name: 'Keyed person' }, _hp: '' },
+    headers: { 'x-contributor-key': 'mak_abcdef1234567890abcdef1234567890' },
+    sourceIp: '9.9.9.9',
+  }));
+  // contributor key format is valid, skips IP rate limit, hits DB → 500
+  assert(res.statusCode === 500, `expected 500 (DB, not rate limited), got ${res.statusCode}`);
 });
 
 console.log(`\n${passed} passed, ${failed} failed\n`);
