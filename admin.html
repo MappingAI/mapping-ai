@@ -706,7 +706,7 @@ const FIELD_DEFS = {
   }
 };
 
-let adminKey = localStorage.getItem('adminKey') || '';
+let adminKey = sessionStorage.getItem('adminKey') || '';
 let currentSubTab = 'people';
 let entitiesData = [];
 let sortCol = null;
@@ -719,7 +719,7 @@ function authenticate() {
   const key = input.value.trim();
   if (!key) return;
   adminKey = key;
-  localStorage.setItem('adminKey', key);
+  sessionStorage.setItem('adminKey', key);
   // Test the key by fetching stats
   testAuth(key);
 }
@@ -738,7 +738,7 @@ async function testAuth(key) {
   } catch (e) {
     document.getElementById('auth-error').textContent = 'Invalid admin key. Try again.';
     document.getElementById('auth-error').style.display = 'block';
-    localStorage.removeItem('adminKey');
+    sessionStorage.removeItem('adminKey');
     adminKey = '';
   }
 }
@@ -753,10 +753,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // --- API helpers ---
 function apiFetch(path, opts = {}) {
-  // Pass key as query param (avoids CORS preflight issues with custom headers)
-  const sep = path.includes('?') ? '&' : '?';
-  const url = API_BASE + path + sep + 'key=' + encodeURIComponent(adminKey);
-  const headers = { ...(opts.headers || {}) };
+  const url = API_BASE + path;
+  const headers = { 'X-Admin-Key': adminKey, ...(opts.headers || {}) };
   if (opts.body && typeof opts.body === 'object') {
     headers['Content-Type'] = 'application/json';
     opts.body = JSON.stringify(opts.body);

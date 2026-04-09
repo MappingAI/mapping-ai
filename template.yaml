@@ -59,6 +59,7 @@ Resources:
         AllowHeaders:
           - Content-Type
           - X-Admin-Key
+          - X-Contributor-Key
         AllowMethods:
           - GET
           - POST
