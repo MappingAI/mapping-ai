@@ -624,7 +624,7 @@ tr:hover { background: var(--bg-secondary); }
 <div id="toast" class="toast"></div>
 <div id="modal-container"></div>
 
-<script src="/assets/js/tiptap-notes.js"></script>
+<!-- TipTap loaded dynamically after auth (see testAuth) -->
 <script>
 // --- Config ---
 // NOTE: Always use production API for testing (no local API server)
@@ -732,6 +732,12 @@ async function testAuth(key) {
     if (!res.ok) throw new Error('Invalid key');
     document.getElementById('auth-gate').style.display = 'none';
     document.getElementById('admin-content').style.display = 'block';
+    // Load TipTap editor bundle (deferred until auth succeeds)
+    if (!document.querySelector('script[src*="tiptap"]')) {
+      const s = document.createElement('script');
+      s.src = '/assets/js/tiptap-notes.js';
+      document.head.appendChild(s);
+    }
     // Restore last active tab, default to dashboard
     const savedTab = localStorage.getItem('admin_tab') || 'dashboard';
     const savedSubTab = localStorage.getItem('admin_subtab');
