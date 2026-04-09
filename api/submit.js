@@ -1,5 +1,6 @@
 import pg from 'pg';
 import crypto from 'crypto';
+import { getCorsHeaders } from './cors.js';
 
 const { Pool } = pg;
 
@@ -11,12 +12,6 @@ const pool = new Pool({
   idleTimeoutMillis: 30000,
   options: '-c statement_timeout=15000',
 });
-
-const CORS_HEADERS = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type, X-Contributor-Key',
-};
 
 // Contributor key format: mak_ + 32 hex chars
 const CONTRIBUTOR_KEY_REGEX = /^mak_[a-f0-9]{32}$/;
@@ -61,6 +56,7 @@ function normalizeRelationship(raw) {
 }
 
 export const handler = async (event) => {
+  const CORS_HEADERS = getCorsHeaders(event, { methods: 'POST, OPTIONS', headers: 'Content-Type, X-Contributor-Key' });
   const method = event.requestContext.http.method;
 
   if (method === 'OPTIONS') return { statusCode: 200, headers: CORS_HEADERS, body: '' };

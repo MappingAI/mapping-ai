@@ -1,4 +1,5 @@
 import pg from 'pg';
+import { getCorsHeaders } from './cors.js';
 const { Pool } = pg;
 
 const pool = new Pool({
@@ -10,15 +11,10 @@ const pool = new Pool({
   options: '-c statement_timeout=10000',
 });
 
-const CORS_HEADERS = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type',
-};
-
 const SENSITIVE = new Set(['submitter_email', 'submitter_relationship', 'search_vector']);
 
 export const handler = async (event) => {
+  const CORS_HEADERS = getCorsHeaders(event);
   const method = event.requestContext.http.method;
 
   if (method === 'OPTIONS') return { statusCode: 200, headers: CORS_HEADERS, body: '' };

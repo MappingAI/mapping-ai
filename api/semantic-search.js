@@ -1,8 +1,4 @@
-const CORS_HEADERS = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type',
-};
+import { getCorsHeaders } from './cors.js';
 
 // Use dedicated key for semantic search (separate from submission review key)
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_SEMANTIC_SEARCH_KEY || process.env.ANTHROPIC_API_KEY;
@@ -128,6 +124,7 @@ function buildRelationshipContext(mapData) {
 }
 
 export const handler = async (event) => {
+  const CORS_HEADERS = getCorsHeaders(event);
   const method = event.requestContext.http.method;
 
   if (method === 'OPTIONS') {

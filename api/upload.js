@@ -1,5 +1,6 @@
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import pg from 'pg';
+import { getCorsHeaders } from './cors.js';
 const { Pool } = pg;
 
 const pool = new Pool({
@@ -17,13 +18,8 @@ const CF_DOMAIN = process.env.CLOUDFRONT_DOMAIN;
 const ADMIN_KEY = process.env.ADMIN_KEY;
 const MAX_SIZE = 2 * 1024 * 1024; // 2MB
 
-const CORS_HEADERS = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type, X-Admin-Key',
-};
-
 export const handler = async (event) => {
+  const CORS_HEADERS = getCorsHeaders(event, { methods: 'POST, OPTIONS', headers: 'Content-Type, X-Admin-Key' });
   if (event.requestContext.http.method === 'OPTIONS') {
     return { statusCode: 200, headers: CORS_HEADERS, body: '' };
   }

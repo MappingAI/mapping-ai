@@ -3,6 +3,7 @@ import pg from 'pg';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { CloudFrontClient, CreateInvalidationCommand } from '@aws-sdk/client-cloudfront';
 import { generateMapData } from './export-map.js';
+import { getCorsHeaders } from './cors.js';
 
 const { Pool } = pg;
 const pool = new Pool({
@@ -19,16 +20,6 @@ const cf = new CloudFrontClient({});
 const S3_BUCKET = process.env.S3_BUCKET;
 const CF_DIST_ID = process.env.CF_DISTRIBUTION_ID;
 const ADMIN_KEY = process.env.ADMIN_KEY;
-
-const CORS_HEADERS = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type, X-Admin-Key',
-};
-
-function unauthorized() {
-  return { statusCode: 401, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Unauthorized' }) };
-}
 
 async function refreshMapData(client) {
   try {
@@ -66,11 +57,12 @@ const ENTITY_FIELDS = [
 ];
 
 export const handler = async (event) => {
+  const CORS_HEADERS = getCorsHeaders(event, { methods: 'GET, POST, PUT, DELETE, OPTIONS', headers: 'Content-Type, X-Admin-Key' });
   const method = event.requestContext.http.method;
   if (method === 'OPTIONS') return { statusCode: 200, headers: CORS_HEADERS, body: '' };
 
   const key = event.headers?.['x-admin-key'] || event.queryStringParameters?.key;
-  if (key !== ADMIN_KEY) return unauthorized();
+  if (key !== ADMIN_KEY) return { statusCode: 401, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Unauthorized' }) };
 
   const params = event.queryStringParameters || {};
   const client = await pool.connect();
