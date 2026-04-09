@@ -166,21 +166,25 @@ export const handler = async (event) => {
       return { statusCode: 200, headers: CORS_HEADERS, body: JSON.stringify({ data: result.rows, total: result.rows.length }) };
     }
 
-    // GET ?action=stats
+    // GET ?action=stats — single query instead of 5 round-trips
     if (method === 'GET' && params.action === 'stats') {
-      const approved = await client.query(`SELECT entity_type, COUNT(*) FROM entity WHERE status = 'approved' GROUP BY entity_type`);
-      const pending  = await client.query(`SELECT entity_type, COUNT(*) FROM entity WHERE status = 'pending'  GROUP BY entity_type`);
-      const pendingNew  = await client.query(`SELECT COUNT(*) FROM submission WHERE entity_id IS NULL  AND status = 'pending'`);
-      const pendingEdit = await client.query(`SELECT COUNT(*) FROM submission WHERE entity_id IS NOT NULL AND status = 'pending'`);
-      const edges = await client.query(`SELECT COUNT(*) FROM edge`);
+      const result = await client.query(`
+        SELECT
+          (SELECT json_object_agg(entity_type, cnt) FROM (SELECT entity_type, COUNT(*)::int AS cnt FROM entity WHERE status = 'approved' GROUP BY entity_type) t) AS approved,
+          (SELECT json_object_agg(entity_type, cnt) FROM (SELECT entity_type, COUNT(*)::int AS cnt FROM entity WHERE status = 'pending'  GROUP BY entity_type) t) AS pending,
+          (SELECT COUNT(*)::int FROM submission WHERE entity_id IS NULL     AND status = 'pending') AS pending_new,
+          (SELECT COUNT(*)::int FROM submission WHERE entity_id IS NOT NULL AND status = 'pending') AS pending_edit,
+          (SELECT COUNT(*)::int FROM edge) AS edges
+      `);
+      const r = result.rows[0];
       return {
         statusCode: 200, headers: CORS_HEADERS,
         body: JSON.stringify({
-          approved: Object.fromEntries(approved.rows.map(r => [r.entity_type, parseInt(r.count)])),
-          pending:  Object.fromEntries(pending.rows.map(r => [r.entity_type, parseInt(r.count)])),
-          pending_new_submissions:  parseInt(pendingNew.rows[0].count),
-          pending_edit_submissions: parseInt(pendingEdit.rows[0].count),
-          edges: parseInt(edges.rows[0].count),
+          approved: r.approved || {},
+          pending:  r.pending || {},
+          pending_new_submissions:  r.pending_new,
+          pending_edit_submissions: r.pending_edit,
+          edges: r.edges,
         }),
       };
     }
