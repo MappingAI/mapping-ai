@@ -58,7 +58,7 @@ The site grew from ~654 to 1,600+ entities after a batch import on 2026-04-07. K
 **Downsides:** `buildConnections()` and `inferredLinks` may reference some detail-only fields. Admin Lambda must output both files. Requires careful field audit.
 **Confidence:** 75%
 **Complexity:** Medium
-**Status:** Unexplored
+**Status:** Implemented (2026-04-09) — splitMapData() strips detail-only fields (notes, stance_detail, threat_models, evidence_source, key_argument, twitter, bluesky, etc.) into map-detail.json. Skeleton: 142 KB gzipped (was 392 KB). Detail: 236 KB lazy-loaded in background after render. Zero data loss verified. Admin Lambda uploads both files. Deploy workflow updated.
 
 ### 6. Export Pipeline Cleanup (Minify JSON + Remove Dead Edge Array)
 **Description:** (a) Change `JSON.stringify(data, null, 2)` to `JSON.stringify(data)` — saves ~15% raw. (b) Remove unused `edges` array from export — `allData.edges` has zero references in map.html. Saves 40 KB raw.
@@ -101,9 +101,10 @@ The site grew from ~654 to 1,600+ entities after a batch import on 2026-04-07. K
 - Verified thumbnail_url coverage — 49% of entities already cached
 
 **Post-launch:**
-1. Split JSON into skeleton + detail (idea 5) — halves payload
+1. ~~Split JSON into skeleton + detail (idea 5)~~ — Done (2026-04-09). 63.9% initial payload reduction.
 2. Incremental re-rendering / stop nuking SVG (idea 4) — eliminates filter jank
 
 ## Session Log
 - 2026-04-08: Initial ideation — 38 candidates generated across 5 frames, 7 survived adversarial filtering. 4 quick wins implemented immediately (minify JSON, remove dead edges, defer fonts on 6 pages, cache-control headers). 3 ideas queued for pre-launch, 2 for post-launch.
 - 2026-04-08: Session 2 — Implemented pre-computed positions (scripts/compute-positions.js, 170-tick server-side sim → 25-tick client settle). Built adjacency index (Map-based O(1) lookups replacing O(n) scans in buildConnections). Verified thumbnail coverage is already 49%. Final JSON: 1.96 MB raw, 402 KB gzipped for 1,020 entities.
+- 2026-04-09: Session 3 — Implemented split JSON (idea 5). map-data.json skeleton: 1,118 KB raw / 142 KB gzipped. map-detail.json: 804 KB raw / 236 KB gzipped. 63.9% gzipped reduction for initial load. Detail lazy-loaded after render via background fetch. Also completed security hardening plan: CORS origin allowlist (shared api/cors.js replacing wildcard), API Gateway throttle 10→100 rps, artillery load testing infrastructure.

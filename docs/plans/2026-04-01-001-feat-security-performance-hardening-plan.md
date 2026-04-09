@@ -1,7 +1,7 @@
 ---
 title: "feat: Security hardening + performance optimization for Phase 2/3"
 type: feat
-status: active
+status: completed
 date: 2026-04-01
 ---
 
@@ -79,7 +79,7 @@ The site launches to trusted contacts on 4/3 and goes public on 4/9. Current iss
 
 ## Implementation Units
 
-- [ ] **Unit 1: Lambda connection hardening**
+- [x] **Unit 1: Lambda connection hardening**
 
   **Goal:** Prevent connection exhaustion under load by limiting pool size and adding timeouts.
 
@@ -107,7 +107,7 @@ The site launches to trusted contacts on 4/3 and goes public on 4/9. Current iss
 
 ---
 
-- [ ] **Unit 2: Parameterize search.js SQL**
+- [x] **Unit 2: Parameterize search.js SQL**
 
   **Goal:** Eliminate string interpolation in SQL queries for defense-in-depth.
 
@@ -135,7 +135,7 @@ The site launches to trusted contacts on 4/3 and goes public on 4/9. Current iss
 
 ---
 
-- [ ] **Unit 3: Restrict search status to admin-only**
+- [x] **Unit 3: Restrict search status to admin-only**
 
   **Goal:** Prevent unauthenticated access to pending/internal entities via search.
 
@@ -164,7 +164,7 @@ The site launches to trusted contacts on 4/3 and goes public on 4/9. Current iss
 
 ---
 
-- [ ] **Unit 4: Fix CORS headers**
+- [x] **Unit 4: Fix CORS headers**
 
   **Goal:** Restrict API access to known origins instead of `*`.
 
@@ -193,7 +193,7 @@ The site launches to trusted contacts on 4/3 and goes public on 4/9. Current iss
 
 ---
 
-- [ ] **Unit 5: Image URL caching in localStorage**
+- [~] **Unit 5: Image URL caching in localStorage** *(Skipped — superseded by deploy-time thumbnail caching, see ideation doc)*
 
   **Goal:** Cache resolved image URLs to eliminate redundant 404s and Wikipedia API calls across page loads.
 
@@ -223,7 +223,7 @@ The site launches to trusted contacts on 4/3 and goes public on 4/9. Current iss
 
 ---
 
-- [ ] **Unit 6: D3 force simulation damping**
+- [x] **Unit 6: D3 force simulation damping**
 
   **Goal:** Reduce post-drag jiggle so nodes settle within ~1 second.
 
@@ -251,7 +251,7 @@ The site launches to trusted contacts on 4/3 and goes public on 4/9. Current iss
 
 ---
 
-- [ ] **Unit 7: API Gateway throttle adjustment**
+- [x] **Unit 7: API Gateway throttle adjustment**
 
   **Goal:** Increase API throughput limits for Phase 2/3 traffic.
 
@@ -275,7 +275,7 @@ The site launches to trusted contacts on 4/3 and goes public on 4/9. Current iss
 
 ---
 
-- [ ] **Unit 8: Load testing script**
+- [x] **Unit 8: Load testing script**
 
   **Goal:** Create a repeatable load test that validates R1 and R2 before each phase launch.
 
