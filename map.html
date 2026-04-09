@@ -4570,9 +4570,14 @@ document.querySelector('.nav-hamburger').addEventListener('click', () => {
   document.querySelector('.nav-links').classList.toggle('open');
 });
 
-window.addEventListener('resize', () => {
-  if (allData.people.length || allData.organizations.length) render();
-});
+{ let _resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(_resizeTimer);
+    _resizeTimer = setTimeout(() => {
+      if (allData.people.length || allData.organizations.length) render();
+    }, 200);
+  });
+}
 
 // Semantic search: synonym/concept expansion for AI policy domain
 const SEMANTIC_MAP = {
