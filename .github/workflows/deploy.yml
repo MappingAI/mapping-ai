@@ -78,8 +78,10 @@ jobs:
             --cache-control "no-cache" \
             --delete
 
-          # map-data.json — short cache, stale-while-revalidate for fast repeat loads
+          # map-data.json + map-detail.json — short cache, stale-while-revalidate
           aws s3 cp map-data.json s3://${{ secrets.S3_BUCKET_NAME }}/map-data.json \
+            --cache-control "public, max-age=60, stale-while-revalidate=300"
+          aws s3 cp map-detail.json s3://${{ secrets.S3_BUCKET_NAME }}/map-detail.json \
             --cache-control "public, max-age=60, stale-while-revalidate=300"
 
           # CSS/JS/images — long cache (CloudFront invalidation handles updates)

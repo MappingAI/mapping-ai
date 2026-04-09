@@ -2,7 +2,7 @@
 import pg from 'pg';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { CloudFrontClient, CreateInvalidationCommand } from '@aws-sdk/client-cloudfront';
-import { generateMapData } from './export-map.js';
+import { generateMapData, splitMapData } from './export-map.js';
 import { getCorsHeaders } from './cors.js';
 
 const { Pool } = pg;
@@ -24,18 +24,30 @@ const ADMIN_KEY = process.env.ADMIN_KEY;
 async function refreshMapData(client) {
   try {
     const data = await generateMapData(client);
-    const json = JSON.stringify(data);
-    await s3.send(new PutObjectCommand({
-      Bucket: S3_BUCKET,
-      Key: 'map-data.json',
-      Body: json,
-      ContentType: 'application/json',
-      CacheControl: 'public, max-age=60',
-    }));
+    const { skeleton, detail } = splitMapData(data);
+
+    // Upload skeleton + detail in parallel
+    await Promise.all([
+      s3.send(new PutObjectCommand({
+        Bucket: S3_BUCKET,
+        Key: 'map-data.json',
+        Body: JSON.stringify(skeleton),
+        ContentType: 'application/json',
+        CacheControl: 'public, max-age=60',
+      })),
+      s3.send(new PutObjectCommand({
+        Bucket: S3_BUCKET,
+        Key: 'map-detail.json',
+        Body: JSON.stringify(detail),
+        ContentType: 'application/json',
+        CacheControl: 'public, max-age=60',
+      })),
+    ]);
+
     await cf.send(new CreateInvalidationCommand({
       DistributionId: CF_DIST_ID,
       InvalidationBatch: {
-        Paths: { Quantity: 1, Items: ['/map-data.json'] },
+        Paths: { Quantity: 2, Items: ['/map-data.json', '/map-detail.json'] },
         CallerReference: `admin-${Date.now()}`,
       },
     }));

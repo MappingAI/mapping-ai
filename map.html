@@ -2564,6 +2564,21 @@ fetch('map-data.json')
     if (!allData.relationships) allData.relationships = [];
     if (!allData.person_organizations) allData.person_organizations = [];
 
+    // Lazy-load detail data (notes, stance_detail, threat_models, etc.)
+    // in the background — merges into entities when ready
+    fetch('map-detail.json')
+      .then(r => r.ok ? r.json() : null)
+      .then(detail => {
+        if (!detail) return;
+        for (const arr of [allData.people, allData.organizations, allData.resources]) {
+          for (const entity of arr) {
+            const d = detail[entity.id];
+            if (d) Object.assign(entity, d);
+          }
+        }
+      })
+      .catch(() => {}); // Non-critical — detail panel degrades gracefully
+
     buildSlugMaps();
 
     // Build links (needed by both mobile mini-graph and desktop map)

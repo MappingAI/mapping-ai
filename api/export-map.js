@@ -179,3 +179,50 @@ export async function generateMapData(client) {
     person_organizations,
   };
 }
+
+/**
+ * Detail-only fields — heavy text (notes, stance_detail, threat_models)
+ * plus fields only shown when clicking a node. These are stripped from
+ * the skeleton and served as a separate lazy-loaded file.
+ */
+const DETAIL_FIELDS = new Set([
+  'notes', 'regulatory_stance_detail', 'evidence_source',
+  'threat_models', 'key_argument', 'author', 'url', 'year',
+  'twitter', 'bluesky', 'parent_org_id', 'status',
+]);
+
+/**
+ * Split full map data into skeleton (render-critical) + detail (lazy-loaded).
+ * Skeleton: id, name, category, scores, thumbnail, positions, relationships.
+ * Detail: keyed by entity id — notes, stance_detail, threat_models, etc.
+ */
+export function splitMapData(fullData) {
+  const detail = {};
+
+  const stripDetail = (entity) => {
+    const d = {};
+    const skeleton = {};
+    for (const [k, v] of Object.entries(entity)) {
+      if (DETAIL_FIELDS.has(k) && v != null) {
+        d[k] = v;
+      } else {
+        skeleton[k] = v;
+      }
+    }
+    if (Object.keys(d).length > 0) {
+      detail[entity.id] = d;
+    }
+    return skeleton;
+  };
+
+  const skeleton = {
+    _meta: fullData._meta,
+    people: fullData.people.map(stripDetail),
+    organizations: fullData.organizations.map(stripDetail),
+    resources: (fullData.resources || []).map(stripDetail),
+    relationships: fullData.relationships,
+    person_organizations: fullData.person_organizations,
+  };
+
+  return { skeleton, detail };
+}

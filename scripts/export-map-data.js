@@ -1,7 +1,7 @@
 import pg from 'pg';
 import 'dotenv/config';
 import fs from 'fs';
-import { generateMapData } from '../api/export-map.js';
+import { generateMapData, splitMapData } from '../api/export-map.js';
 import { computePositions } from './compute-positions.js';
 
 const { Pool } = pg;
@@ -43,8 +43,16 @@ async function exportMapData() {
       }
     }
 
-    fs.writeFileSync('map-data.json', JSON.stringify(data));
-    console.log('\n✓ map-data.json written');
+    // Split into skeleton (render-critical) + detail (lazy-loaded)
+    const { skeleton, detail } = splitMapData(data);
+    fs.writeFileSync('map-data.json', JSON.stringify(skeleton));
+    fs.writeFileSync('map-detail.json', JSON.stringify(detail));
+
+    const skeletonSize = (JSON.stringify(skeleton).length / 1024).toFixed(0);
+    const detailSize = (JSON.stringify(detail).length / 1024).toFixed(0);
+    const detailCount = Object.keys(detail).length;
+    console.log(`\n✓ map-data.json written (${skeletonSize} KB skeleton)`);
+    console.log(`✓ map-detail.json written (${detailSize} KB detail for ${detailCount} entities)`);
   } finally {
     client.release();
     await pool.end();

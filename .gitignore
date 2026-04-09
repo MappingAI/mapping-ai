@@ -16,6 +16,7 @@ enriched-elections.json
 
 # Data files (generated from DB during deploy, not tracked in git)
 map-data.json
+map-detail.json
 backup-*.json
 backup-*.sql
 scripts/seed-test-data.js
