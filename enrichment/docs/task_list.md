@@ -3,7 +3,7 @@
 Execution tracker for the data enrichment project. Strategy and design rationale live in [plan.md](plan.md).
 
 **Status:**
-- Phase 0 Setup — Not started
+- Phase 0 Setup — Complete
 - Phase 1 Audit — Not started
 - Phase 2 Cleanup — Not started
 - Phase 3 Entity Enrichment — Not started
@@ -16,9 +16,9 @@ Execution tracker for the data enrichment project. Strategy and design rationale
 ## Phase 0: Setup
 > See plan.md Phase 0
 
-- [ ] Create `.env` with `DATABASE_URL`, `ANTHROPIC_API_KEY`, `EXA_API_KEY`
-- [ ] Set up Python venv + install dependencies (`psycopg2`, `anthropic`, `exa-py`, `python-dotenv`)
-- [ ] Verify DB connectivity to `mapping_ai_staging`
+- [x] Create `.env` with `DATABASE_URL`, (`ANTHROPIC_API_KEY`, `EXA_API_KEY` for later use)
+- [x] Set up Python venv + install dependencies (`psycopg2`, `anthropic`, `exa-py`, `python-dotenv`)
+- [x] Verify DB connectivity to `mapping_ai_staging`
 
 ## Phase 1: Audit & Baseline
 > See plan.md Phase 1
