@@ -234,8 +234,7 @@ This cascade is expected. It's how the graph grows. Just be systematic about tra
 1. **Verify it's accurate** — Does this relationship actually exist? Is the role correct? Are the dates right?
 2. **Add `source_url`** — Link to a page that confirms this relationship
 3. **Add/improve `evidence`** — 1-2 sentences explaining the relationship
-4. **Set `bidirectional`** — Is this a symmetric relationship (collaborator, partner) or directional (employer, founder)?
-5. **Check entity mapping** — Do both `source_id` and `target_id` point to real entities?
+4. **Check entity mapping** — Do both `source_id` and `target_id` point to real entities?
 
 **When an edge references a non-existent entity:**
 1. The edge is "dangling" — it points to an ID that doesn't exist
@@ -514,12 +513,12 @@ When adding a new entity, always add relevant edges:
 - Person → orgs they founded (`founder`)
 - Person → orgs they advise (`advisor`)
 - Person → orgs they're members of (`member`)
-- Person ↔ collaborators (`collaborator`, `bidirectional: true`)
+- Person ↔ collaborators (`collaborator` — symmetric, pick one direction)
 
 **For organizations:**
 - Org → parent org (`parent_company`)
 - Org → funders (`funder` — note: funder is source, recipient is target)
-- Org ↔ partners (`partner`, `bidirectional: true`)
+- Org ↔ partners (`partner` — symmetric, pick one direction)
 
 **For resources:**
 - Resource → author (`author` — person is source, resource is target)
@@ -829,59 +828,46 @@ If someone asks "Where does Yoshua Bengio work?", you'd say "Mila" — that's hi
 - Former roles should have `end_date` set, not `is_primary`
 - When in doubt, primary = where they spend most of their time / where they'd list on a business card
 
-#### `bidirectional` — Is the relationship symmetric?
+### Edge Types & Direction Conventions
 
-Some relationships are **directional** (A→B is different from B→A). Others are **symmetric** (A↔B means the same as B↔A).
+**Why direction matters:** The frontend can display edges from either entity's perspective using a lookup table. But for query consistency and data cleanliness, follow these canonical directions.
 
-| bidirectional | meaning | example |
-|---------------|---------|---------|
-| `false` | Directional — source and target have different roles | employer, founder, funder |
-| `true` | Symmetric — either direction means the same thing | collaborator, partner |
+| Type | Canonical Direction | Example | Frontend renders reverse as... |
+|------|---------------------|---------|-------------------------------|
+| `employer` | person → org | Sam Altman → OpenAI | "OpenAI employs Sam Altman" |
+| `founder` | person → org | Dario Amodei → Anthropic | "Anthropic was founded by Dario Amodei" |
+| `funder` | funder → recipient | a16z → Anthropic | "Anthropic is funded by a16z" |
+| `parent_company` | parent → child | Anthropic → Anthropic Institute | "Anthropic Institute is subsidiary of Anthropic" |
+| `advisor` | advisor → advisee | Yoshua Bengio → Stanford HAI | "Stanford HAI is advised by Yoshua Bengio" |
+| `member` | person → org | Dan Hendrycks → CAIS | "CAIS has member Dan Hendrycks" |
+| `author` | person → resource | Bengio → "Managing AI Risk" | "Managing AI Risk was authored by Bengio" |
+| `publisher` | org → resource | Brookings → AI Report | "AI Report was published by Brookings" |
+| `collaborator` | person → person | Dario Amodei → Sam Altman | Same both ways (symmetric) |
+| `partner` | org → org | OpenAI → Microsoft | Same both ways (symmetric) |
+| `critic` | critic → target | Timnit Gebru → Google | "Google is criticized by Timnit Gebru" |
+| `supporter` | supporter → target | Reid Hoffman → OpenAI | "OpenAI is supported by Reid Hoffman" |
 
-**Directional examples (bidirectional=false):**
-- "Sam Altman employed_by OpenAI" — Sam is employed by OpenAI, not the reverse
-- "Dario Amodei founded Anthropic" — Dario founded Anthropic, not the reverse
-- "a16z funded Anthropic" — a16z is the funder, Anthropic is the recipient
+**For symmetric relationships** (collaborator, partner): Pick one direction and stick with it. Don't create both A→B and B→A — that's a duplicate.
 
-**Symmetric examples (bidirectional=true):**
-- "OpenAI partner Microsoft" — they're partners with each other (either direction works)
-- "Dario Amodei collaborator Sam Altman" — they collaborated (mutual relationship)
-
-### Edge Types
-
-**Core types (use these first):**
-
-| Type | Direction | Typical Entities | Notes |
-|------|-----------|------------------|-------|
-| `employer` | person → org | person → org | Use `role` for job title. Mark `is_primary: true` for main job. |
-| `founder` | person → org | person → org | Use `role` for "Co-founder", "Founding CEO", etc. |
-| `funder` | funder → recipient | org → org, person → org | Investor, grant-maker, donor. Use `role` for round/type. |
-| `parent_company` | child → parent | org → org | Subsidiaries, divisions. |
-| `advisor` | advisor → advisee | person → org/person | Consultants, board advisors. Use `role` for type. |
-| `member` | person → org | person → org | Think tanks, working groups, boards. Use `role` for position. |
-| `author` | person → resource | person → resource | Who wrote it. |
-| `publisher` | resource → org | resource → org | Who published it. |
-| `collaborator` | person ↔ person | person ↔ person | **bidirectional=true**. Research collaborations, co-authors. |
-| `partner` | org ↔ org | org ↔ org | **bidirectional=true**. Strategic partnerships. Be careful — what makes a "partner"? |
-| `critic` | critic → target | person → org/person | Public criticism, opposition. |
-| `supporter` | supporter → target | person → org/person | Public support, endorsement. |
+**Use `role` for specificity:**
+| edge_type | role examples |
+|-----------|---------------|
+| `employer` | "CEO", "Chief Scientist", "VP of Policy" |
+| `founder` | "Co-founder", "Founding CEO" |
+| `advisor` | "Board Advisor", "Technical Advisor" |
+| `member` | "Board Member", "Fellow", "Working Group Member" |
+| `funder` | "Series B Lead", "Angel Investor", "Grant Program Officer" |
 
 **Proposing new edge types:**
 
-The types above cover most relationships. If you encounter a relationship that doesn't fit, you can propose a new type — but be conservative. Ask yourself:
-- Does this really not fit any existing type? (e.g., "technical advisor" → just use `advisor` with `role: "Technical Advisor"`)
-- Will this type be used for more than 2-3 edges? (If not, maybe it doesn't need its own type)
-- Is it clear what direction means? (Who is source, who is target?)
+The types above cover most relationships. If you encounter one that doesn't fit, you can propose a new type — but be conservative:
+- Does this really not fit? ("technical advisor" → just use `advisor` with `role: "Technical Advisor"`)
+- Will it be used for more than 2-3 edges?
+- Is the direction convention clear?
 
-**If you propose a new type:**
-1. Document it in your logs with examples
-2. Explain why existing types don't work
-3. We'll discuss whether to add it to the canonical list
+**If you propose a new type:** Document it in your logs with examples and explain why existing types don't work.
 
-**Avoid creating variations like:**
-- `employed_by` vs `employer` (pick one direction convention)
-- `mentor_of` vs `mentored_by` (just pick one and be consistent)
-- `invested_in` vs `investor` vs `funder` (use `funder` for all investment/grant relationships)
+**Don't create variations:** Use `funder` for all investment/grant relationships (not `investor`, `invested_in`, `funded_by`). Pick one name, one direction.
 
 ### Belief Fields
 
