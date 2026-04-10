@@ -105,22 +105,19 @@ git push origin main              # NO — triggers public deploy
 
 ### Folder Structure
 
-All your work goes in `/enrichment/`:
+All your documentation goes in `/enrichment/`:
 
 ```
 enrichment/
 ├── ONBOARDING.md          # This document
-├── scripts/               # Your processing scripts (Python, Node, etc.)
+├── scripts/               # Your processing scripts (Python, Node, SQL, etc.)
 ├── latex/                 # Your difference charts and analysis docs
-├── output/                # Generated JSON files for review
-│   ├── fixes/             # Entity corrections
-│   ├── enrichments/       # Empty entity completions
-│   ├── additions/         # New entities and edges
-│   └── batch-updates/     # Bulk operations (citation cleanup, etc.)
-└── logs/                  # Processing logs, verification notes
+└── logs/                  # Processing logs, change logs, issues
+    ├── changes.md         # What you changed, with entity IDs
+    └── issues.md          # New issues you discover
 ```
 
-Create these folders as needed.
+Your scripts modify the staging database directly. The repo stores your code and documentation, not data exports.
 
 ---
 
@@ -384,57 +381,36 @@ We will evaluate your work on:
    - Any errors or edge cases encountered
    - **Manual decisions and rationale** — This is critical. When you make a judgment call (e.g., "I classified this person as Policymaker rather than Executive because..."), write it down. These decisions are institutional knowledge.
 
-4. **Output JSON** — All changes as JSON in `enrichment/output/`
-   - Organized by type (fixes, enrichments, additions)
-   - Include `_verification` blocks explaining your research
-
-### JSON Output Format
-
-Follow the same format as your trial deliverables:
-
-**Entity fix/enrichment:**
-```json
-{
-  "id": 123,
-  "entity_type": "person",
-  "name": "...",
-  // ... all fields ...
-  "_verification": {
-    "issues_found": "Description of what was wrong",
-    "notes": "How you verified and what you changed"
-  }
-}
-```
-
-**New edge:**
-```json
-{
-  "source_id": 123,
-  "target_id": 456,
-  "edge_type": "employed_by",
-  "role": "CEO",
-  "is_primary": true,
-  "evidence": "...",
-  "source_url": "https://..."
-}
-```
+4. **Change logs** — Track what you changed in the database
+   - Keep a running log of entities modified/created with IDs
+   - Note what was wrong and how you fixed it
+   - This doesn't need to be JSON — a markdown table or spreadsheet works
 
 ---
 
 ## Workflow
 
+### How This Works
+
+**You work directly on the staging database.** No JSON files to submit — you INSERT, UPDATE, and fix data directly in `mapping_ai_staging`.
+
+We review your changes by:
+1. Querying the staging database to see what changed
+2. Reviewing your scripts and logs to understand your process
+3. Promoting verified changes to production
+
 ### Daily Process
 
-1. **Pull latest** from branch (in case we push updates)
+1. **Pull latest** from branch (in case we push script updates)
    ```bash
    git pull origin connor/data-processing
    ```
 
-2. **Run your scripts** against staging database
+2. **Run your scripts** against staging database — they should directly modify the data
 
-3. **Generate output JSON** with verification notes
+3. **Log what you changed** — Update your change logs with entity IDs and descriptions
 
-4. **Commit your work** with clear messages
+4. **Commit your scripts and logs**
    ```bash
    git add enrichment/
    git commit -m "feat: enrich 50 frontier lab executives"
@@ -443,10 +419,11 @@ Follow the same format as your trial deliverables:
 
 ### Review Cycle
 
-1. You push changes to `connor/data-processing`
-2. We review your output JSON and verification notes
-3. We apply approved changes to production
-4. We may ask for revisions or clarifications
+1. You make changes directly in the staging database
+2. You commit your scripts and logs to `connor/data-processing`
+3. We query staging to review your changes
+4. We promote approved changes to production
+5. We may ask for revisions (you fix in staging, we re-review)
 
 ### Communication
 
