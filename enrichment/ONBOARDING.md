@@ -187,17 +187,25 @@ Your trial work identified 12 data quality issues. Now apply that same rigor to 
 
 1. **Fix citation artifacts** — Strip `[n]`, `[n,n]` patterns from all notes
 2. **Fix hallucinated/incorrect data** — Verify and correct entries like you did in the trial
-3. **Enrich empty entities** — Prioritize those with existing edges
+3. **Enrich empty entities** — Prioritize those with existing edges (people, orgs, AND resources)
 4. **Add source URLs to edges** — Currently 0% have sources
 5. **Connect orphan entities** — 254 entities have zero edges
-6. **Normalize edge types** — Fix non-standard types (`person_organization` → `employed_by`, etc.)
-7. **Seed missing key entities** — See Seeding Strategy below
+6. **Normalize edge types** — Fix non-standard types (`person_organization` → `employer`, etc.)
+7. **Seed missing key entities** — See Seeding Strategy below (includes resources!)
+8. **Enrich and seed resources** — Papers, reports, testimony, books that shaped AI policy
+
+### Resources Are Part of Your Work
+
+Resources (papers, reports, books, podcasts, etc.) are first-class entities. You should:
+- **Enrich existing resources** — Fill in `resource_key_argument`, verify `resource_author`, add notes explaining why this resource matters
+- **Seed new resources** — Add influential papers, landmark reports, congressional testimony (see Seeding Strategy)
+- **Create edges for resources** — `author` (person → resource) and `publisher` (resource → org)
 
 ### The Cascade Effect: Edges Require Entities First
 
 **The edge table has foreign key constraints.** You cannot insert an edge until both `source_id` and `target_id` exist in the entity table. The database will reject the insert.
 
-Example: You want to add "Sam Altman employed_by OpenAI". Before you can insert that edge:
+Example: You want to add "Sam Altman is employed by OpenAI". Before you can insert that edge:
 1. Sam Altman must exist in `entity` (check: does he? what's his ID?)
 2. OpenAI must exist in `entity` (check: does it? what's its ID?)
 
@@ -226,7 +234,8 @@ This cascade is expected. It's how the graph grows. Just be systematic about tra
 1. **Verify it's accurate** — Does this relationship actually exist? Is the role correct? Are the dates right?
 2. **Add `source_url`** — Link to a page that confirms this relationship
 3. **Add/improve `evidence`** — 1-2 sentences explaining the relationship
-4. **Check entity mapping** — Do both `source_id` and `target_id` point to real entities?
+4. **Set `bidirectional`** — Is this a symmetric relationship (collaborator, partner) or directional (employer, founder)?
+5. **Check entity mapping** — Do both `source_id` and `target_id` point to real entities?
 
 **When an edge references a non-existent entity:**
 1. The edge is "dangling" — it points to an ID that doesn't exist
@@ -500,11 +509,21 @@ For major organizations already in the database, ensure we have their major exec
 
 When adding a new entity, always add relevant edges:
 
-- Person → their primary organization (`employed_by`)
-- Person → orgs they founded (`founded`)
-- Person → orgs they advise (`affiliated`)
-- Org → parent org (`subsidiary_of`)
-- Org → funders (`funded_by`)
+**For people:**
+- Person → their primary organization (`employer`, `is_primary: true`)
+- Person → orgs they founded (`founder`)
+- Person → orgs they advise (`advisor`)
+- Person → orgs they're members of (`member`)
+- Person ↔ collaborators (`collaborator`, `bidirectional: true`)
+
+**For organizations:**
+- Org → parent org (`parent_company`)
+- Org → funders (`funder` — note: funder is source, recipient is target)
+- Org ↔ partners (`partner`, `bidirectional: true`)
+
+**For resources:**
+- Resource → author (`author` — person is source, resource is target)
+- Resource → publisher (`publisher` — resource is source, org is target)
 
 ---
 
@@ -762,22 +781,107 @@ We review your changes by:
 - Technical
 - Philosophy/Ethics
 
+### Edge Table: Understanding the Columns
+
+The edge table has these key columns you'll work with:
+
+#### `source_id` and `target_id`
+
+These are foreign keys pointing to entities. **The relationship reads as: source → target.**
+
+Example: If source_id=100 (Sam Altman) and target_id=200 (OpenAI) with edge_type="employer", it means "Sam Altman is employed by OpenAI."
+
+#### `role` — The specific position or function
+
+The `role` column provides more detail within the edge_type. Think of edge_type as the category and role as the specific instance.
+
+| edge_type | role examples |
+|-----------|---------------|
+| `employer` | "CEO", "Chief Scientist", "VP of Policy", "Research Scientist" |
+| `founder` | "Co-founder", "Founding CEO", "Co-founder and Chairman" |
+| `advisor` | "Board Advisor", "Technical Advisor", "Policy Advisor" |
+| `member` | "Board Member", "Fellow", "Working Group Member", "Steering Committee" |
+| `funder` | "Lead Investor (Series B)", "Angel Investor", "Grant Program Officer" |
+
+**Examples:**
+- Sam Altman → OpenAI: `edge_type: "employer"`, `role: "CEO"`
+- Yoshua Bengio → Stanford HAI: `edge_type: "advisor"`, `role: "Advisory Board Member"`
+- Marc Andreessen → OpenAI: `edge_type: "funder"`, `role: "Series A Lead Investor"`
+- Dario Amodei → Anthropic: `edge_type: "founder"`, `role: "Co-founder and CEO"`
+
+#### `is_primary` — Is this their main affiliation?
+
+A person often has multiple edges to organizations. `is_primary` marks which one is their **main** affiliation — the one you'd list first if describing who they are.
+
+**Example: Yoshua Bengio**
+| target | edge_type | role | is_primary |
+|--------|-----------|------|------------|
+| Mila | employer | Scientific Director | **true** |
+| Université de Montréal | employer | Professor | false |
+| Stanford HAI | advisor | Advisory Board | false |
+| Vector Institute | advisor | Co-founder | false |
+
+If someone asks "Where does Yoshua Bengio work?", you'd say "Mila" — that's his primary affiliation.
+
+**Rules for `is_primary`:**
+- Each person should have exactly ONE `is_primary: true` edge (their main job)
+- Advisory roles, board seats, and affiliations are typically `is_primary: false`
+- Former roles should have `end_date` set, not `is_primary`
+- When in doubt, primary = where they spend most of their time / where they'd list on a business card
+
+#### `bidirectional` — Is the relationship symmetric?
+
+Some relationships are **directional** (A→B is different from B→A). Others are **symmetric** (A↔B means the same as B↔A).
+
+| bidirectional | meaning | example |
+|---------------|---------|---------|
+| `false` | Directional — source and target have different roles | employer, founder, funder |
+| `true` | Symmetric — either direction means the same thing | collaborator, partner |
+
+**Directional examples (bidirectional=false):**
+- "Sam Altman employed_by OpenAI" — Sam is employed by OpenAI, not the reverse
+- "Dario Amodei founded Anthropic" — Dario founded Anthropic, not the reverse
+- "a16z funded Anthropic" — a16z is the funder, Anthropic is the recipient
+
+**Symmetric examples (bidirectional=true):**
+- "OpenAI partner Microsoft" — they're partners with each other (either direction works)
+- "Dario Amodei collaborator Sam Altman" — they collaborated (mutual relationship)
+
 ### Edge Types
 
-| Type | Direction | Example |
-|------|-----------|---------|
-| `employed_by` | person → org | "Sam Altman employed_by OpenAI" |
-| `founded` | person → org | "Dario Amodei founded Anthropic" |
-| `affiliated` | person → org | "Yoshua Bengio affiliated Stanford HAI" |
-| `invested_in` | org/person → org | "a16z invested_in Anthropic" |
-| `funded_by` | org → org/person | "Anthropic funded_by Google" |
-| `subsidiary_of` | org → org | "DeepMind subsidiary_of Alphabet" |
-| `partner_of` | org ↔ org | "OpenAI partner_of Microsoft" |
-| `collaborated` | person ↔ person | Research collaborations |
-| `former_colleague` | person ↔ person | Past work together |
-| `critic_of` | person → org/person | Public criticism |
-| `authored_by` | resource → person | "Paper authored_by Bengio" |
-| `published_by` | resource → org | "Report published_by Brookings" |
+**Core types (use these first):**
+
+| Type | Direction | Typical Entities | Notes |
+|------|-----------|------------------|-------|
+| `employer` | person → org | person → org | Use `role` for job title. Mark `is_primary: true` for main job. |
+| `founder` | person → org | person → org | Use `role` for "Co-founder", "Founding CEO", etc. |
+| `funder` | funder → recipient | org → org, person → org | Investor, grant-maker, donor. Use `role` for round/type. |
+| `parent_company` | child → parent | org → org | Subsidiaries, divisions. |
+| `advisor` | advisor → advisee | person → org/person | Consultants, board advisors. Use `role` for type. |
+| `member` | person → org | person → org | Think tanks, working groups, boards. Use `role` for position. |
+| `author` | person → resource | person → resource | Who wrote it. |
+| `publisher` | resource → org | resource → org | Who published it. |
+| `collaborator` | person ↔ person | person ↔ person | **bidirectional=true**. Research collaborations, co-authors. |
+| `partner` | org ↔ org | org ↔ org | **bidirectional=true**. Strategic partnerships. Be careful — what makes a "partner"? |
+| `critic` | critic → target | person → org/person | Public criticism, opposition. |
+| `supporter` | supporter → target | person → org/person | Public support, endorsement. |
+
+**Proposing new edge types:**
+
+The types above cover most relationships. If you encounter a relationship that doesn't fit, you can propose a new type — but be conservative. Ask yourself:
+- Does this really not fit any existing type? (e.g., "technical advisor" → just use `advisor` with `role: "Technical Advisor"`)
+- Will this type be used for more than 2-3 edges? (If not, maybe it doesn't need its own type)
+- Is it clear what direction means? (Who is source, who is target?)
+
+**If you propose a new type:**
+1. Document it in your logs with examples
+2. Explain why existing types don't work
+3. We'll discuss whether to add it to the canonical list
+
+**Avoid creating variations like:**
+- `employed_by` vs `employer` (pick one direction convention)
+- `mentor_of` vs `mentored_by` (just pick one and be consistent)
+- `invested_in` vs `investor` vs `funder` (use `funder` for all investment/grant relationships)
 
 ### Belief Fields
 
