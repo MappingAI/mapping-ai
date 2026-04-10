@@ -569,12 +569,33 @@ Then populate it for all entities. This can be done programmatically with manual
 
 ### What Good Notes Look Like
 
-Notes should answer: **"Why does this person/org matter to U.S. AI policy?"**
+Notes should answer: **"Why does this person/org/resource matter to the U.S. AI policy landscape?"**
 
+**Every note must explain AI relevance.** If someone reads the note, they should understand why this entity is in an AI policy database — not just who they are.
+
+**Bad (generic bio, no AI relevance):**
+> "Jennifer Pahlka is the founder of Code for America. She previously worked at CDBaby and earned a degree from UC Berkeley."
+
+**Good (AI-specific, explains relevance):**
+> "Jennifer Pahlka founded Code for America in 2009 and served as U.S. Deputy Chief Technology Officer under President Obama (2013-2014). Her 2023 book 'Recoding America' critiques federal technology procurement and has influenced AI governance discussions around government AI adoption. She advocates for iterative, human-centered approaches to public sector technology deployment."
+
+**Bad (Wikipedia summary):**
+> "Marc Andreessen is an American businessman and investor. He co-founded Netscape and later Andreessen Horowitz. His net worth is estimated at $1.9 billion."
+
+**Good (AI policy focus):**
+> "Marc Andreessen co-founded Andreessen Horowitz (a16z), one of the most influential investors in AI companies. He authored 'Why AI Will Save the World' in 2023, arguing against AI regulation. a16z led the campaign against California's SB 1047 AI safety bill, and Andreessen advises the Trump administration on technology policy."
+
+**Checklist for every note:**
+- [ ] Does it mention AI, AI policy, or AI-adjacent work?
+- [ ] Does it explain *why* this entity matters to the AI landscape?
+- [ ] Would someone unfamiliar with the person understand their AI relevance?
+- [ ] Is it specific (policy positions, actions, testimony, publications) rather than vague?
+
+**Format:**
 - 2-4 sentences of clean prose
 - No inline citations like [1], [2] — sources go in `notes_sources`
-- Specific policy positions, actions, or relationships
-- Not Wikipedia biography — AI policy relevance
+- No superlatives unless directly quoted ("world's leading" → remove)
+- Include dates where relevant (founded X in 2021, testified in July 2023)
 
 ### Evidence Standards
 
