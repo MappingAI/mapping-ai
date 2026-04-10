@@ -32,6 +32,7 @@ data/AISafety.com_map.csv
 
 # Claude Code local files
 .claude/
+CLAUDE.md
 
 # Testing output
 dogfood-output/
