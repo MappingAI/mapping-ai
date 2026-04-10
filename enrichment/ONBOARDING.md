@@ -388,9 +388,61 @@ Go beyond the obvious lists. Here are specific, actionable research directions f
 - Influential op-eds in major outlets (search NYT, WSJ, WaPo opinion sections for "artificial intelligence")
 - Amicus briefs in AI-related lawsuits (copyright cases, etc.)
 
+### Research Questions to Ask Yourself
+
+As you research each category, ask:
+
+**Who has power?**
+- Who makes decisions that affect AI development or deployment?
+- Who controls funding, compute, or talent pipelines?
+- Who can block or enable AI legislation?
+
+**Who shapes the narrative?**
+- Who do journalists call for quotes on AI?
+- Whose writing/speeches get cited in policy debates?
+- Who has a large platform and uses it to discuss AI?
+
+**Who has expertise?**
+- Who wrote the papers that policymakers cite?
+- Who do companies hire to advise on AI safety?
+- Who trains the next generation of AI researchers/policymakers?
+
+**Who is newly influential?**
+- Who emerged in 2024-2026 as a voice on AI?
+- Which orgs were founded recently and are already making impact?
+- Who moved from one sector to another (industry → government, academia → advocacy)?
+
+**Who is missing from the conversation?**
+- Are there perspectives underrepresented in our database?
+- Labor voices? Civil rights perspectives? International voices with US influence?
+- Critics who aren't from the usual AI safety circles?
+
+### Quality Filter: Don't Add Randos
+
+**Not everyone tangentially connected to AI belongs in this database.**
+
+Before adding someone, ask:
+- Would an informed person researching US AI policy expect to find them here?
+- Have they taken public action on AI policy (testimony, writing, organizing, building)?
+- Do they have influence beyond their immediate circle?
+
+**DO add:**
+- The CTO of a frontier lab (even if not famous outside tech)
+- A state legislator who authored a major AI bill
+- A union negotiator who secured AI contract terms
+- A researcher whose paper changed how people think about alignment
+
+**DON'T add:**
+- Random employees at AI companies (unless leadership or policy roles)
+- Academics who mentioned AI once in a paper
+- Journalists who wrote one article about ChatGPT
+- People who are "interested in AI" but haven't shaped policy
+
+**When in doubt:** If you can't write 2 sentences about why they matter to US AI policy, they probably don't belong.
+
 ### Research Each Stakeholder Category
 
-For each category, use the resources above as starting points. Ask "who are the most important players?" and check if we have them.
+For each category, use the resources above as starting points. Systematically work through the research questions above.
 
 **People categories:**
 | Category | Research Questions |
