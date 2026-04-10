@@ -5576,11 +5576,11 @@ themeBtn.addEventListener('click', () => {
 <!-- PASSWORD GATE START -->
 <!-- Disclaimer popup (shows every page load) -->
 <div id="disclaimer-overlay" style="display:flex;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.5);align-items:center;justify-content:center;">
-  <div style="background:#fff;border-radius:8px;padding:1.5rem 2rem;max-width:480px;width:90%;font-family:var(--serif);box-shadow:0 8px 32px rgba(0,0,0,0.2);">
+  <div style="background:var(--bg-panel);border-radius:8px;padding:1.5rem 2rem;max-width:480px;width:90%;font-family:var(--serif);box-shadow:0 8px 32px rgba(0,0,0,0.2);">
     <h2 style="font-family:var(--mono);font-size:13px;text-transform:uppercase;letter-spacing:0.08em;margin:0 0 0.75rem;">Pre-Launch Beta</h2>
-    <p style="font-size:15px;line-height:1.6;color:var(--text-secondary);margin:0 0 1rem;">This tool is in a pre-launch beta. We are actively improving data issues and enrichment, as well as adding new features and improving the UX.</p>
-    <p style="font-size:15px;line-height:1.6;color:var(--text-secondary);margin:0 0 1.25rem;">Please email us at <a href="mailto:info@mapping-ai.org" style="color:var(--accent);">info@mapping-ai.org</a> if you'd like to contribute or provide any feedback.</p>
-    <button id="disclaimer-dismiss" style="font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;padding:0.6rem 1.5rem;background:var(--text-primary);color:#fff;border:none;border-radius:4px;cursor:pointer;">Continue</button>
+    <p style="font-size:15px;line-height:1.6;color:var(--text-2);margin:0 0 1rem;">This tool is in a pre-launch beta. We are actively improving data issues and enrichment, as well as adding new features and improving the UX.</p>
+    <p style="font-size:15px;line-height:1.6;color:var(--text-2);margin:0 0 1.25rem;">Please email us at <a href="mailto:info@mapping-ai.org" style="color:var(--accent);">info@mapping-ai.org</a> if you'd like to contribute or provide any feedback.</p>
+    <button id="disclaimer-dismiss" style="font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;padding:0.6rem 1.5rem;background:var(--text-1);color:var(--bg-page);border:none;border-radius:4px;cursor:pointer;">Continue</button>
   </div>
 </div>
 
@@ -5589,12 +5589,12 @@ themeBtn.addEventListener('click', () => {
 
 <!-- Password prompt modal -->
 <div id="password-overlay" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.5);align-items:center;justify-content:center;">
-  <div style="background:#fff;border-radius:8px;padding:1.5rem 2rem;max-width:380px;width:90%;font-family:var(--serif);box-shadow:0 8px 32px rgba(0,0,0,0.2);">
+  <div style="background:var(--bg-panel);border-radius:8px;padding:1.5rem 2rem;max-width:380px;width:90%;font-family:var(--serif);box-shadow:0 8px 32px rgba(0,0,0,0.2);">
     <h2 style="font-family:var(--mono);font-size:13px;text-transform:uppercase;letter-spacing:0.08em;margin:0 0 0.75rem;">Enter Password</h2>
-    <p style="font-size:14px;line-height:1.5;color:var(--text-secondary);margin:0 0 1rem;">This tool is in a pre-launch beta. Enter the password to access the full interactive experience.</p>
-    <input id="gate-password" type="password" placeholder="Password" style="width:100%;padding:0.6rem 0.75rem;font-family:var(--mono);font-size:13px;border:1px solid #ddd;border-radius:4px;margin-bottom:0.5rem;box-sizing:border-box;">
+    <p style="font-size:14px;line-height:1.5;color:var(--text-2);margin:0 0 1rem;">This tool is in a pre-launch beta. Enter the password to access the full interactive experience.</p>
+    <input id="gate-password" type="password" placeholder="Password" style="width:100%;padding:0.6rem 0.75rem;font-family:var(--mono);font-size:13px;background:var(--input-bg);color:var(--text-1);border:1px solid var(--line);border-radius:4px;margin-bottom:0.5rem;box-sizing:border-box;">
     <div id="gate-error" style="color:#dc2626;font-size:12px;font-family:var(--mono);margin-bottom:0.5rem;display:none;">Incorrect password</div>
-    <button id="gate-submit" style="font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;padding:0.6rem 1.5rem;background:var(--text-primary);color:#fff;border:none;border-radius:4px;cursor:pointer;width:100%;">Submit</button>
+    <button id="gate-submit" style="font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;padding:0.6rem 1.5rem;background:var(--text-1);color:var(--bg-page);border:none;border-radius:4px;cursor:pointer;width:100%;">Submit</button>
   </div>
 </div>
 
