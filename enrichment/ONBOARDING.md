@@ -119,6 +119,8 @@ SSL:      Required (rejectUnauthorized: false)
 postgresql://connor_staging:PASSWORD@mapping-ai-db.c9sccou2k3xe.eu-west-2.rds.amazonaws.com:5432/mapping_ai_staging?sslmode=require
 ```
 
+**NEVER commit your password to git.** Store it in a local `.env` file that's gitignored, or use environment variables.
+
 ### Important Notes
 
 1. **This is a staging copy** — changes here do NOT affect the public site
@@ -168,6 +170,68 @@ Your trial work identified 12 data quality issues. Now apply that same rigor to 
 5. **Connect orphan entities** — 254 entities have zero edges
 6. **Normalize edge types** — Fix non-standard types (`person_organization` → `employed_by`, etc.)
 7. **Seed missing key entities** — See Seeding Strategy below
+
+### The Cascade Effect: Edges Create Entities
+
+**This is important:** As you enrich data and add edges, you will inevitably reference entities that don't yet exist in the database.
+
+Example: You're enriching OpenAI and want to add an edge "Sam Altman employed_by OpenAI". But wait — is Sam Altman in the database? What about his board seat at Reddit? His connection to Y Combinator?
+
+**The workflow:**
+1. You add an edge referencing a new entity (person, org, or resource)
+2. That entity now needs to be created and enriched
+3. That entity has its own relationships that need edges
+4. Those edges may reference more entities...
+
+**How to handle this:**
+- Keep a running list of entities you need to create
+- Batch similar entities (all OpenAI leadership, all a16z partners, etc.)
+- Don't create stub entries — if you create an entity, enrich it properly
+- Use `source_name` and `target_name` in your edge JSON when you don't have the ID yet
+
+This cascade is expected. It's how the graph grows. Just be systematic about tracking what needs to be done.
+
+### Executing on Your Trial Issues
+
+In your trial, you identified 12 systemic issues. Now execute on them:
+
+| Issue | Action |
+|-------|--------|
+| 1. Citation artifacts `[n]` in notes | Regex sweep, then manual review |
+| 2. `notes_sources` as JSON strings | Parse and convert to arrays |
+| 3. Incorrect `primary_org` assignments | Cross-reference against notes |
+| 4. Duplicate entities (House AI Task Force) | Merge and redirect edges |
+| 5. Notes lack AI policy relevance | Rewrite to explain AI relevance |
+| 6. Hallucinated government titles | Verify against official sources |
+| 7. 710 empty-notes entities | Prioritize by edges, then prominence |
+| 8. ALL 2,228 edges have null `source_url` | This is highest priority — add sources |
+| 9. 254 orphan entities | Connect to the graph |
+| 10. Non-standard edge types | Map to canonical types |
+| 11. Dangling edge references | Delete or fix broken references |
+| 12. Stale `primary_org` for former officials | Update to current affiliations |
+
+### Surfacing New Issues
+
+You will find more issues as you work. **Document them immediately.**
+
+Create `enrichment/logs/issues.md` and add entries as you go:
+
+```markdown
+## Issues Surfaced
+
+### [Date] — [Issue Title]
+- **Scope:** How many entities affected?
+- **Example:** [specific entity ID and problem]
+- **Suggested fix:** [how to address at scale]
+- **Priority:** High / Medium / Low
+```
+
+**Communicate proactively:**
+- Found a pattern affecting 100+ entities? Tell us before fixing all of them — we may want to discuss the approach
+- Found something that might require a schema change? Flag it
+- Uncertain about a judgment call? Ask
+
+We'd rather know about problems early than discover them in review.
 
 ### Batching
 
@@ -223,16 +287,30 @@ When adding a new entity, always add relevant edges:
 
 ### The #1 Problem: Hallucinations
 
-Our database contains fabricated or inaccurate information from AI-assisted enrichment.
+**Our database likely contains fabricated or inaccurate information.** Because the database was built through a combination of manual entry, web scraping, and AI-assisted enrichment, some entries include facts that cannot be verified or are demonstrably false. Identifying and correcting these is your primary responsibility.
 
-**Red flags:**
-- Hyper-specific dates ("founded on December 11, 2015")
-- Round dollar amounts ("raised $500 million")
-- Superlatives ("world's leading")
-- Future events stated as fact
-- Vague prestige claims ("trusted partner of the UN")
+**Real examples of hallucinations you found in your trial:**
+- "Under Secretary of War" — fabricated title (correct: "Acting Under Secretary of Defense for Research and Engineering")
+- Twitter handle `@t` — obviously wrong
+- "Center for AI Safety" as primary_org when it should be UC Berkeley — completely wrong organization
+- Obsolete affiliations stated as current (Gina Raimondo still listed at Commerce after leaving)
 
-**When you can't verify a claim:** Remove it. Better to have less information than false information.
+**How to spot hallucinations:**
+
+| Red Flag | Action |
+|----------|--------|
+| Hyper-specific dates ("founded on December 11, 2015") | Verify against official source |
+| Round dollar amounts ("raised $500 million") | Find the actual figure or remove |
+| Superlatives ("world's leading", "most influential") | Remove unless directly quoted |
+| Future dates stated as fact | Check if this actually happened |
+| Vague prestige claims ("trusted partner of the UN") | Find evidence of formal relationship |
+| Citation artifacts like [6,7,9] | Clean up — these are formatting errors |
+| Government titles | Cross-reference against congress.gov, whitehouse.gov — these are frequently wrong |
+
+**When you encounter a claim you cannot verify:**
+1. **Remove it** — Better to have less information than false information
+2. **Flag it** — Note in your `_verification` that you removed an unverifiable claim
+3. **Replace it** — If you can find the correct information, use that instead
 
 ### What Good Notes Look Like
 
