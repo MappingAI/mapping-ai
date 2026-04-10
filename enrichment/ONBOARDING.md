@@ -9,14 +9,14 @@ Welcome to the Mapping AI data enrichment project. This document covers everythi
 1. [Core Priorities](#core-priorities)
 2. [Project Overview](#project-overview)
 3. [Your Workspace](#your-workspace)
-4. [Database Access](#database-access)
+4. [Database Access](#database-access) (includes full schema)
 5. [Your Tasks](#your-tasks)
 6. [Seeding Strategy](#seeding-strategy)
 7. [Final Task: Importance Ratings](#final-task-importance-ratings)
 8. [Quality Standards](#quality-standards)
 9. [Documentation Requirements](#documentation-requirements)
 10. [Workflow](#workflow)
-11. [Reference: Schema & Field Options](#reference-schema--field-options)
+11. [Reference: Field Options & Edge Types](#reference-field-options--edge-types)
 
 ---
 
@@ -179,6 +179,101 @@ LEFT JOIN edge src ON e.id = src.source_id
 LEFT JOIN edge tgt ON e.id = tgt.target_id
 WHERE src.id IS NULL AND tgt.id IS NULL;
 ```
+
+### Database Schema
+
+The database uses a **unified `entity` table** for all people, organizations, and resources. Different entity types use different columns.
+
+#### Entity Table — All Columns
+
+**Core columns (all entity types):**
+| Column | Type | Description |
+|--------|------|-------------|
+| `id` | INTEGER | Primary key |
+| `entity_type` | TEXT | `person`, `organization`, or `resource` |
+| `name` | TEXT | Display name |
+| `category` | TEXT | Primary category (Executive, Frontier Lab, etc.) |
+| `other_categories` | TEXT | Secondary categories, comma-separated |
+| `notes` | TEXT | Plain text notes (AI relevance required) |
+| `notes_html` | TEXT | Rich text version (from TipTap editor) |
+| `notes_sources` | TEXT | Source citations as JSON array |
+| `influence_type` | TEXT | Comma-separated influence types |
+| `thumbnail_url` | TEXT | Profile image URL |
+| `status` | TEXT | `approved`, `pending`, or `internal` |
+| `created_at` | TIMESTAMP | When created |
+| `updated_at` | TIMESTAMP | When last modified |
+
+**Person-specific columns:**
+| Column | Type | Description |
+|--------|------|-------------|
+| `title` | TEXT | Job title / role description |
+| `primary_org` | TEXT | Main organization (text, not FK) |
+| `other_orgs` | TEXT | Other affiliations |
+| `twitter` | TEXT | Twitter/X handle |
+| `bluesky` | TEXT | Bluesky handle |
+| `location` | TEXT | City/region |
+
+**Organization-specific columns:**
+| Column | Type | Description |
+|--------|------|-------------|
+| `website` | TEXT | Organization URL |
+| `funding_model` | TEXT | How the org is funded |
+| `parent_org_id` | INTEGER | FK to parent org entity (if subsidiary) |
+| `location` | TEXT | Headquarters location |
+
+**Resource-specific columns:**
+| Column | Type | Description |
+|--------|------|-------------|
+| `resource_title` | TEXT | Title of the resource |
+| `resource_url` | TEXT | Link to the resource |
+| `resource_author` | TEXT | Author name(s) |
+| `resource_type` | TEXT | Essay, Book, Report, etc. |
+| `resource_category` | TEXT | AI Safety, AI Governance, etc. |
+| `resource_year` | TEXT | Publication year |
+| `resource_key_argument` | TEXT | Main thesis / why it matters |
+
+**Belief fields (people and orgs):**
+| Column | Type | Description |
+|--------|------|-------------|
+| `belief_regulatory_stance` | TEXT | Their position on AI regulation |
+| `belief_regulatory_stance_detail` | TEXT | Explanation of stance |
+| `belief_agi_timeline` | TEXT | When they think AGI arrives |
+| `belief_ai_risk` | TEXT | How serious they view AI risk |
+| `belief_threat_models` | TEXT | Which threats concern them |
+| `belief_evidence_source` | TEXT | How we know (explicit, inferred, unknown) |
+
+**Enrichment tracking columns (your sign-off mechanism):**
+| Column | Type | Description |
+|--------|------|-------------|
+| `qa_approved` | BOOLEAN | Set TRUE when you've fully verified an entity |
+| `notes_confidence` | SMALLINT | Your confidence in the notes (1-5) |
+| `enrichment_version` | TEXT | Which enrichment pass produced this data |
+| `notes_v1` | TEXT | Original notes before enrichment (for comparison) |
+
+**System columns (don't modify directly):**
+| Column | Type | Description |
+|--------|------|-------------|
+| `search_vector` | TSVECTOR | Full-text search index (auto-generated) |
+| `submission_count` | INTEGER | Number of user submissions |
+| `belief_*_wavg`, `_wvar`, `_n` | REAL/INT | Weighted belief aggregates from submissions |
+
+#### Edge Table — All Columns
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `id` | INTEGER | Primary key |
+| `source_id` | INTEGER | FK → entity (the "from" side) |
+| `target_id` | INTEGER | FK → entity (the "to" side) |
+| `edge_type` | TEXT | Relationship type (see canonical types below) |
+| `role` | TEXT | Specific role/position within the relationship |
+| `is_primary` | BOOLEAN | Is this their main affiliation? |
+| `evidence` | TEXT | 1-2 sentences explaining the relationship |
+| `source_url` | TEXT | Citation for this relationship |
+| `start_date` | TEXT | When relationship began (YYYY or YYYY-MM) |
+| `end_date` | TEXT | When relationship ended (NULL if current) |
+| `confidence` | SMALLINT | Your confidence in this edge (1-5) |
+| `created_by` | TEXT | Who created this edge |
+| `created_at` | TIMESTAMP | When created |
 
 ---
 
@@ -762,22 +857,9 @@ We review your changes by:
 
 ---
 
-## Reference: Schema & Field Options
+## Reference: Field Options & Edge Types
 
-### Entity Table — Key Columns
-
-| Column | Type | Description |
-|--------|------|-------------|
-| `entity_type` | TEXT | `person`, `organization`, or `resource` |
-| `category` | TEXT | Primary category (see options below) |
-| `influence_type` | TEXT | Comma-separated influence types |
-| `notes` | TEXT | Plain text notes (AI relevance required) |
-| `notes_html` | TEXT | Rich text version |
-| `notes_sources` | TEXT | Source URLs as JSON string |
-| `notes_confidence` | SMALLINT | Confidence score for the notes (1-5) |
-| `enrichment_version` | TEXT | Tracks which enrichment pass produced this data |
-| `notes_v1` | TEXT | Original pre-enrichment notes (preserved for comparison) |
-| `qa_approved` | BOOLEAN | Set to TRUE when fully verified — Connor's sign-off mechanism |
+This section lists the valid values for key fields. For full column listings, see [Database Schema](#database-schema) above.
 
 ### `entity_type` (pick ONE)
 
