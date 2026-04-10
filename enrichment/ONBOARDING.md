@@ -320,46 +320,73 @@ Beyond fixing existing data, we need to **fill gaps** in coverage.
 
 ### Starting Points for Research
 
-Since the AI policy landscape is specialized, here are concrete resources to guide your seeding:
+Go beyond the obvious lists. Here are specific, actionable research directions for each category:
 
-**Authoritative Lists (check if we have everyone on these):**
-- TIME100 AI (2024, 2025) — https://time.com/collection/time100-ai/
-- Politico AI Power List — influential DC figures in AI policy
-- Fortune AI 50 — business leaders shaping AI
-- MIT Technology Review 35 Under 35 (AI category)
+**Finding People — Executives:**
+- Who testified before Congress on AI? (Search congress.gov hearing transcripts)
+- Who signed the CAIS "Statement on AI Risk"? (May 2023, ~350 signatories)
+- Who signed the Frontier AI Safety Commitments at Seoul/Bletchley summits?
+- Who's quoted in major AI policy stories? (Check NYT, WaPo, Wired AI coverage)
+- Who's on the boards of AI companies? (Check SEC filings, company pages)
 
-**Government Sources:**
-- Senate AI Working Group members (Schumer, Rounds, Heinrich, Young)
-- House AI Task Force members (24 members across 20 committees)
-- OSTP leadership and AI staff
-- NIST AI Safety Institute staff
-- FTC technologists working on AI
-- State-level AI task forces (California, Colorado, etc.)
+**Finding People — Researchers:**
+- Authors of most-cited AI safety/alignment papers (Google Scholar, Semantic Scholar)
+- NeurIPS, ICML, ICLR keynote speakers on policy/safety topics
+- Authors on landmark papers: "Attention Is All You Need", Constitutional AI, RLHF papers
+- Who peer-reviews for AI safety journals? Who's on program committees?
 
-**Think Tank / Research Sources:**
-- Brookings AI Governance project team
-- RAND AI policy researchers
-- CSET (Georgetown) team
-- AI Now Institute team
-- Partnership on AI staff
-- Future of Life Institute team
-- Center for AI Safety team
+**Finding People — Policymakers:**
+- Sponsors and co-sponsors of AI bills — search congress.gov for "artificial intelligence"
+- State legislators: California (SB 1047 authors/opponents), Colorado, Texas AI bills
+- Agency officials giving speeches on AI (search NIST, FTC, OSTP press releases)
+- Congressional staff who specialize in AI (harder to find, check hearing credits)
+- International officials with US influence (UK AI Safety Institute, EU AI Act negotiators)
 
-**Industry Sources:**
-- Leadership pages of: OpenAI, Anthropic, Google DeepMind, Meta AI, xAI, Cohere, Mistral, Inflection
-- AI policy/government affairs leads at major tech companies
-- a16z AI investment team, Sequoia AI partners, other major AI VCs
+**Finding People — Investors:**
+- Who led Series A/B/C for frontier labs? (Check Crunchbase, PitchBook)
+- General partners at AI-focused funds (a16z, Sequoia, Khosla, Greylock AI teams)
+- Philanthropists funding AI safety (Open Philanthropy grantees, Survival and Flourishing Fund)
+- Angel investors in AI startups
 
-**Academic Sources:**
-- Stanford HAI affiliated faculty
-- MIT AI Policy Forum participants
-- Berkeley AI Research (BAIR) leadership
-- Oxford Future of Humanity Institute alumni (now dispersed)
+**Finding People — Organizers:**
+- Who organized the "Pause Giant AI Experiments" letter? (Future of Life Institute, March 2023)
+- Union leaders negotiating AI clauses (SAG-AFTRA, WGA AI negotiators)
+- Civil society advocates who've testified on AI (ACLU, EFF, Color of Change)
+- Grassroots organizers: Distributed AI Research Institute, Algorithmic Justice League leadership
 
-**Media Sources:**
-- Bylines on AI policy at: NYT, WaPo, Wired, The Verge, Platformer, MIT Tech Review
-- AI-focused newsletters: Import AI, The Gradient, Jack Clark's writing
-- AI-focused podcasts: Hard Fork, Your Undivided Attention, 80000 Hours
+**Finding People — Journalists:**
+- Who broke major AI stories? (Search for exclusives, scoops)
+- Who's on the AI beat? (Check mastheads: NYT, WaPo, WSJ, Wired, The Verge, Reuters)
+- Newsletter authors: Platformer, Import AI, The Gradient, Axios AI+, The Decoder
+- Podcast hosts covering AI policy
+
+**Finding People — Academics:**
+- Who advises government on AI? (Check NIST AI Safety Institute advisors, NAIAC members)
+- Authors of widely-assigned AI ethics syllabi
+- Conference organizers for AI policy events (AIES, FAccT, AI & Society)
+- University AI policy center directors
+
+**Finding People — Cultural Figures:**
+- Authors of AI-themed fiction influencing discourse (Ted Chiang, etc.)
+- Public intellectuals commenting on AI (who appears on mainstream podcasts?)
+- Documentary filmmakers covering AI
+- Artists in the AI copyright debate
+
+**Finding Organizations:**
+- Who submitted comments on NTIA AI accountability RFC? (Public record)
+- Who submitted comments on EU AI Act? (Public consultations)
+- Who signed the White House voluntary AI commitments? (July 2023, 15 companies)
+- Industry associations: ITI, BSA, NetChoice — who are their AI policy leads?
+- New orgs founded 2023-2026 focused on AI (search Crunchbase, news)
+
+**Finding Resources:**
+- Congressional testimony transcripts (congress.gov — search AI hearings)
+- GAO reports on AI (gao.gov)
+- NIST AI Risk Management Framework and related docs
+- White House Executive Orders and fact sheets on AI
+- State-level AI task force reports
+- Influential op-eds in major outlets (search NYT, WSJ, WaPo opinion sections for "artificial intelligence")
+- Amicus briefs in AI-related lawsuits (copyright cases, etc.)
 
 ### Research Each Stakeholder Category
 
@@ -403,7 +430,7 @@ For each category, use the resources above as starting points. Ask "who are the 
 
 ### Executive Teams
 
-For major organizations already in the database, ensure we have their key leadership:
+For major organizations already in the database, ensure we have their major executive team:
 
 | Org Type | Who to Add |
 |----------|------------|
