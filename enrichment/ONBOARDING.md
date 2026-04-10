@@ -777,25 +777,33 @@ We review your changes by:
 ### Belief Fields
 
 **regulatory_stance** (pick ONE):
-- Light-touch
-- Targeted
-- Moderate
-- Restrictive
-- Unknown
+- Accelerate — minimal/no regulation
+- Light-touch — voluntary, self-governance
+- Targeted — sector-specific rules, not broad R&D restrictions
+- Moderate — mandatory safety evals + transparency
+- Restrictive — external oversight of compute, training runs
+- Precautionary — pause/moratorium until governance catches up
+- Nationalize — nationalize/public control
+- Mixed/unclear
+- Other — describe in notes
 
 **agi_timeline** (pick ONE):
-- Already here
-- 2-3 years
-- 5-10 years
+- Already here — already here/emerging
+- 2-3 years — within 2-3 years
+- 5-10 years — within 5-10 years
 - 10-25 years
 - 25+ years or never
-- Unknown
+- Ill-defined — considers the concept ill-defined
+- Unknown — not publicly stated
 
 **ai_risk** (pick ONE):
-- Manageable
-- Serious
-- Existential
-- Unknown
+- Overstated — hype will fade
+- Manageable — real but manageable (like previous technologies)
+- Serious — serious societal risks (labor, power, democracy)
+- Catastrophic — potentially catastrophic (bioweapons, loss of control)
+- Existential — threatens humanity's survival
+- Mixed/nuanced — describe in notes
+- Unknown — not publicly stated
 
 **threat_models** (pick up to 3):
 - Labor displacement
@@ -811,8 +819,8 @@ We review your changes by:
 - Existential risk
 
 **evidence_source** (pick ONE):
-- Explicitly stated
-- Inferred
+- Explicitly stated — speeches, testimony, writing
+- Inferred — from actions/funding/affiliations
 - Unknown
 
 ---
