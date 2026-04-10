@@ -375,6 +375,8 @@ Follow the same format as your trial deliverables:
 ### Organization Categories (pick ONE primary)
 
 - Frontier Lab
+- Infrastructure & Compute
+- Deployers & Platforms
 - AI Safety/Alignment
 - Think Tank/Policy Org
 - Government/Agency
@@ -384,8 +386,18 @@ Follow the same format as your trial deliverables:
 - Ethics/Bias/Rights
 - Media/Journalism
 - Political Campaign/PAC
-- Infrastructure & Compute
-- Deployers & Platforms
+
+### Influence Type (pick ANY that apply, comma-separated)
+
+- Decision-maker (legislator, regulator)
+- Advisor/strategist
+- Researcher/analyst
+- Funder/investor
+- Builder (develops AI systems)
+- Organizer/advocate
+- Narrator (journalist, author, podcaster)
+- Implementer (executes policy/deploys AI)
+- Connector/convener
 
 ### Edge Types
 
