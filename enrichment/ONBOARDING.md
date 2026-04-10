@@ -869,6 +869,45 @@ The types above cover most relationships. If you encounter one that doesn't fit,
 
 **Don't create variations:** Use `funder` for all investment/grant relationships (not `investor`, `invested_in`, `funded_by`). Pick one name, one direction.
 
+### Legacy Edge Types (Need Cleanup)
+
+The database currently has 24 different edge_type values. Many are duplicates or need migration to the canonical types above. Here's the mapping:
+
+| Legacy Type | Count | → Canonical Type | Action |
+|-------------|-------|------------------|--------|
+| `employed_by` | 518 | `employer` | Flip direction (person→org) |
+| `person_organization` | 72 | `employer` | These are employment relationships |
+| `founded` | 118 | `founder` | Keep as-is |
+| `co_founded_with` | 71 | `founder` | Set role="Co-founder" |
+| `funded_by` | 79 | `funder` | Flip direction (funder→recipient) |
+| `invested_in` | 45 | `funder` | Keep direction, rename |
+| `funder` | 17 | `funder` | Keep as-is |
+| `subsidiary_of` | 116 | `parent_company` | Flip direction (parent→child) |
+| `spun_out_from` | 13 | `parent_company` | Flip direction |
+| `collaborator` | 239 | `collaborator` | Keep as-is |
+| `former_colleague` | 26 | `collaborator` | Set end_date if known |
+| `partner_of` | 155 | `partner` | Keep as-is |
+| `advises` | 26 | `advisor` | Keep as-is |
+| `mentored_by` | 15 | `advisor` | Flip direction, set role="Mentor" |
+| `mentor_of` | 1 | `advisor` | Set role="Mentor" |
+| `board_member` | 36 | `member` | Set role="Board Member" |
+| `authored_by` | 30 | `author` | Flip direction (person→resource) |
+| `published_by` | 16 | `publisher` | Flip direction (org→resource) |
+| `critic_of` | 22 | `critic` | Keep as-is |
+| `critic` | 1 | `critic` | Keep as-is |
+| `supporter_of` | 19 | `supporter` | Keep as-is |
+| `affiliated` | 585 | **NEEDS REVIEW** | Mixed: some are `member`, `advisor`, `employer` |
+| `affiliated_with` | 7 | **NEEDS REVIEW** | Same as `affiliated` |
+| `mentioned` | 1 | **DROP?** | Weak relationship |
+
+**The `affiliated` bucket (585 edges) needs manual review.** Samples show:
+- Senators → Committees (should be `member`)
+- People → Think tanks (should be `member` or `advisor`)
+- Person → Org employment (should be `employer`)
+- Spouse relationships (probably drop — not relevant to AI policy)
+
+When you encounter an `affiliated` edge, reclassify it to the appropriate canonical type.
+
 ### Belief Fields
 
 **regulatory_stance** (pick ONE):
