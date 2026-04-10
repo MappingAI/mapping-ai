@@ -148,6 +148,8 @@ async function setupStaging() {
         if (col.column_default) def += ` DEFAULT ${col.column_default}`;
       } else if (col.data_type === 'integer') {
         def += 'INTEGER';
+      } else if (col.data_type === 'smallint') {
+        def += 'SMALLINT';
       } else {
         def += 'TEXT';
       }
