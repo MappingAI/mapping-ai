@@ -399,6 +399,30 @@ Follow the same format as your trial deliverables:
 - Implementer (executes policy/deploys AI)
 - Connector/convener
 
+### Resource Types (pick ONE)
+
+- Essay
+- Book
+- Report
+- Podcast
+- Video
+- Website
+- Academic Paper
+- News Article
+- Substack/Newsletter
+
+### Resource Categories (pick ONE)
+
+- AI Safety
+- AI Governance
+- AI Capabilities
+- Labor & Economy
+- National Security
+- Industry Analysis
+- Policy Proposal
+- Technical
+- Philosophy/Ethics
+
 ### Edge Types
 
 | Type | Direction | Example |
