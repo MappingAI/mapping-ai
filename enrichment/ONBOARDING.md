@@ -58,10 +58,11 @@ This means: commit early and often, comment your code explaining *why*, keep log
 4. [Database Access](#database-access)
 5. [Your Tasks](#your-tasks)
 6. [Seeding Strategy](#seeding-strategy)
-7. [Quality Standards](#quality-standards)
-8. [Documentation Requirements](#documentation-requirements)
-9. [Workflow](#workflow)
-10. [Reference: Schema & Field Options](#reference-schema--field-options)
+7. [Final Task: Importance Ratings](#final-task-importance-ratings)
+8. [Quality Standards](#quality-standards)
+9. [Documentation Requirements](#documentation-requirements)
+10. [Workflow](#workflow)
+11. [Reference: Schema & Field Options](#reference-schema--field-options)
 
 ---
 
