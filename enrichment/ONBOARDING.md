@@ -4,30 +4,55 @@ Welcome to the Mapping AI data enrichment project. This document covers everythi
 
 ---
 
-## The Most Important Thing: Replicability
+## Core Priorities
 
-**We hired you because we want to build a repeatable, documented process — not just clean data.**
+You're not just cleaning data — you're building a foundation we can trust and extend. These are the priorities that matter most:
 
-Your scripts, methodology, and verification steps are as valuable as the data itself. A year from now, someone else (or you) should be able to:
+### 1. Ground Truthing & Accuracy
 
-1. **Understand exactly what you did** — Every decision documented
-2. **Re-run your entire process** — Scripts work, dependencies listed
-3. **Verify your changes** — Before/after comparisons, source citations
-4. **Extend your work** — Build on your foundation for future enrichment
+**The database contains hallucinations. Finding and fixing them is job #1.**
 
-**This means:**
-- Commit early and often with clear messages
-- Comment your code explaining *why*, not just *what*
-- Keep a running log of decisions, edge cases, and manual interventions
-- Treat your LaTeX difference charts as deliverables, not scratchwork
+- Verify every claim you touch against a reliable source
+- Remove unverifiable information — less data is better than false data
+- Keep formatting clean (no `[n]` citation artifacts, proper field values)
+- When adding edges, ensure both entities exist and are correctly enriched
+- Remember: edges create entities — when you add a relationship to someone not in the DB, you need to create and enrich that entity too
 
-If you're ever choosing between "quick and undocumented" vs "slower but traceable" — choose traceable.
+### 2. Replicability & Documentation
+
+**Your process is as valuable as the data.**
+
+A year from now, someone else (or you) should be able to:
+- **Understand exactly what you did** — Every decision documented
+- **Re-run your entire process** — Scripts work, dependencies listed
+- **Verify your changes** — Before/after comparisons, source citations
+- **Extend your work** — Build on your foundation for future enrichment
+
+This means: commit early and often, comment your code explaining *why*, keep logs of manual decisions, treat your LaTeX difference charts as deliverables.
+
+### 3. Data Seeding & Coverage
+
+**Fill the gaps systematically.**
+
+- Add executive teams for major orgs (Frontier Labs, Big Tech, key agencies)
+- Ensure balanced coverage across all stakeholder categories
+- When you add an entity, add their key relationships too
+- Prioritize entities that connect to many others — they have outsized value
+
+### 4. Surfacing Issues
+
+**Tell us what you find.**
+
+- Document new issues as you discover them
+- Communicate proactively when patterns affect many entities
+- Ask when you're uncertain about a judgment call
+- Propose schema changes if the current structure doesn't fit reality
 
 ---
 
 ## Table of Contents
 
-1. [The Most Important Thing: Replicability](#the-most-important-thing-replicability)
+1. [Core Priorities](#core-priorities)
 2. [Project Overview](#project-overview)
 3. [Your Workspace](#your-workspace)
 4. [Database Access](#database-access)
