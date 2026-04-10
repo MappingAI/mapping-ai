@@ -272,9 +272,92 @@ Group similar fixes for efficiency:
 
 Beyond fixing existing data, we need to **fill gaps** in coverage.
 
+### Starting Points for Research
+
+Since the AI policy landscape is specialized, here are concrete resources to guide your seeding:
+
+**Authoritative Lists (check if we have everyone on these):**
+- TIME100 AI (2024, 2025) — https://time.com/collection/time100-ai/
+- Politico AI Power List — influential DC figures in AI policy
+- Fortune AI 50 — business leaders shaping AI
+- MIT Technology Review 35 Under 35 (AI category)
+
+**Government Sources:**
+- Senate AI Working Group members (Schumer, Rounds, Heinrich, Young)
+- House AI Task Force members (24 members across 20 committees)
+- OSTP leadership and AI staff
+- NIST AI Safety Institute staff
+- FTC technologists working on AI
+- State-level AI task forces (California, Colorado, etc.)
+
+**Think Tank / Research Sources:**
+- Brookings AI Governance project team
+- RAND AI policy researchers
+- CSET (Georgetown) team
+- AI Now Institute team
+- Partnership on AI staff
+- Future of Life Institute team
+- Center for AI Safety team
+
+**Industry Sources:**
+- Leadership pages of: OpenAI, Anthropic, Google DeepMind, Meta AI, xAI, Cohere, Mistral, Inflection
+- AI policy/government affairs leads at major tech companies
+- a16z AI investment team, Sequoia AI partners, other major AI VCs
+
+**Academic Sources:**
+- Stanford HAI affiliated faculty
+- MIT AI Policy Forum participants
+- Berkeley AI Research (BAIR) leadership
+- Oxford Future of Humanity Institute alumni (now dispersed)
+
+**Media Sources:**
+- Bylines on AI policy at: NYT, WaPo, Wired, The Verge, Platformer, MIT Tech Review
+- AI-focused newsletters: Import AI, The Gradient, Jack Clark's writing
+- AI-focused podcasts: Hard Fork, Your Undivided Attention, 80000 Hours
+
+### Research Each Stakeholder Category
+
+For each category, use the resources above as starting points. Ask "who are the most important players?" and check if we have them.
+
+**People categories:**
+| Category | Research Questions |
+|----------|-------------------|
+| Executive | Who runs the major AI companies? Who makes deployment decisions? |
+| Researcher | Who publishes the most influential AI safety/capabilities papers? Who leads major labs? |
+| Policymaker | Who writes AI legislation? Who runs the relevant committees and agencies? |
+| Investor | Who funds AI companies? Who shapes capital allocation in the space? |
+| Organizer | Who leads AI labor/advocacy movements? Who mobilizes public opinion? |
+| Journalist | Who covers AI policy? Whose reporting shapes the narrative? |
+| Academic | Who teaches AI ethics/policy? Who advises policymakers? |
+| Cultural figure | Who shapes public perception of AI through art, writing, commentary? |
+
+**Organization categories:**
+| Category | Research Questions |
+|----------|-------------------|
+| Frontier Lab | Do we have all the major labs? Their key subsidiaries? |
+| AI Safety/Alignment | Which safety orgs are missing? New ones founded recently? |
+| Think Tank/Policy Org | Who publishes influential AI policy research? |
+| Government/Agency | Federal agencies, state bodies, international orgs with US influence? |
+| Academic | Which universities have major AI programs? AI ethics centers? |
+| VC/Capital/Philanthropy | Who funds AI? Who funds AI safety? Major grants? |
+| Labor/Civil Society | Unions, advocacy groups, civil rights orgs working on AI? |
+| Ethics/Bias/Rights | Algorithmic justice orgs? AI accountability groups? |
+| Media/Journalism | Major outlets covering AI? Newsletters? Podcasts? |
+| Political Campaign/PAC | Who's spending on AI policy? Tech PACs? |
+| Infrastructure & Compute | Chip companies, cloud providers, data center operators? |
+| Deployers & Platforms | Companies deploying AI at scale? |
+
+**Resources:**
+| Type | Research Questions |
+|------|-------------------|
+| Reports | Major AI policy reports from 2023-2026? Government reports? |
+| Books | Influential books on AI risk, governance, economics? |
+| Papers | Seminal academic papers on AI safety, alignment, policy? |
+| Podcasts/Media | Where do AI policymakers go to talk? |
+
 ### Executive Teams
 
-For major organizations, ensure we have their key leadership:
+For major organizations already in the database, ensure we have their key leadership:
 
 | Org Type | Who to Add |
 |----------|------------|
@@ -282,16 +365,6 @@ For major organizations, ensure we have their key leadership:
 | Major Tech (Microsoft, Google, Amazon, Apple, Meta) | CEO, AI leads, Policy leads |
 | Government Agencies (NIST, OSTP, FTC, NSF) | Director, AI-specific leads |
 | Think Tanks | Executive Director, AI program leads |
-
-### Stakeholder Coverage
-
-Ensure balanced representation across all categories:
-
-**People categories:** Executive, Researcher, Policymaker, Investor, Organizer, Journalist, Academic, Cultural figure
-
-**Organization categories:** Frontier Lab, AI Safety/Alignment, Think Tank/Policy Org, Government/Agency, Academic, VC/Capital/Philanthropy, Labor/Civil Society, Ethics/Bias/Rights, Media/Journalism, Political Campaign/PAC, Infrastructure & Compute, Deployers & Platforms
-
-For each category, identify who's missing and prioritize by influence.
 
 ### Edge Completeness
 
@@ -302,6 +375,41 @@ When adding a new entity, always add relevant edges:
 - Person → orgs they advise (`affiliated`)
 - Org → parent org (`subsidiary_of`)
 - Org → funders (`funded_by`)
+
+---
+
+## Final Task: Importance Ratings
+
+**Do this AFTER enrichment and seeding are complete.**
+
+Once the data is clean and comprehensive, add an `importance` rating (1-5) to every entity. This will be used to size nodes in the visualization.
+
+### The Scale
+
+| Rating | Meaning | Examples |
+|--------|---------|----------|
+| 5 | Defining figure in their category | Sam Altman (Executive), Yoshua Bengio (Researcher), Chuck Schumer (Policymaker) |
+| 4 | Major player, widely recognized | CTO of a frontier lab, key Senate staffer, lead author of landmark paper |
+| 3 | Significant contributor | Mid-level exec at major org, active policy advocate, respected journalist |
+| 2 | Notable but narrower influence | Regional figure, niche expertise, early-career but promising |
+| 1 | Peripheral or emerging | New to the space, limited track record, included for completeness |
+
+### How to Assign
+
+- Rate within category — a 5 in "Journalist" is the most important AI journalist, not compared to a 5 in "Executive"
+- Consider: decision-making power, public influence, track record, reach
+- When uncertain, err toward the middle (3)
+- Document your reasoning for 5s and 1s — these are the extremes
+
+### Database Change
+
+You'll need to add the column:
+
+```sql
+ALTER TABLE entity ADD COLUMN importance SMALLINT CHECK (importance >= 1 AND importance <= 5);
+```
+
+Then populate it for all entities. This can be done programmatically with manual review for edge cases.
 
 ---
 
