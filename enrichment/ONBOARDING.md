@@ -236,6 +236,34 @@ This cascade is expected. It's how the graph grows. Just be systematic about tra
 3. **Add/improve `evidence`** — 1-2 sentences explaining the relationship
 4. **Check entity mapping** — Do both `source_id` and `target_id` point to real entities?
 
+### Check Existing Edges Before Creating New Ones
+
+**IMPORTANT:** Before adding any edge, check if a related edge already exists — even in the opposite direction.
+
+Because the frontend handles directionality display, an edge stored as `A → B` can be displayed from B's perspective. You don't need to create `B → A` as well.
+
+**Before creating an edge, query:**
+```sql
+-- Check for existing edges between these two entities (either direction)
+SELECT e.*, s.name as source_name, t.name as target_name
+FROM edge e
+JOIN entity s ON e.source_id = s.id
+JOIN entity t ON e.target_id = t.id
+WHERE (e.source_id = 123 AND e.target_id = 456)
+   OR (e.source_id = 456 AND e.target_id = 123);
+```
+
+**Example scenario:**
+- You're enriching Anthropic Institute and want to add "Anthropic Institute is a subsidiary of Anthropic"
+- First check: does an edge already exist between these two entities?
+- If you find `Anthropic → Anthropic Institute, parent_company` — **don't create a new edge**
+- The existing edge already captures this relationship; the frontend will display it correctly from either perspective
+
+**When you find an existing edge:**
+- If it's the same relationship, don't duplicate it
+- If it needs enrichment (missing source_url, evidence), enrich the existing edge
+- If the edge_type is wrong (e.g., `affiliated` should be `employer`), update it
+
 **When an edge references a non-existent entity:**
 1. The edge is "dangling" — it points to an ID that doesn't exist
 2. You need to either: delete the edge (if the relationship is wrong) OR create the missing entity
