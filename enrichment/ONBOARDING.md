@@ -193,23 +193,28 @@ Your trial work identified 12 data quality issues. Now apply that same rigor to 
 6. **Normalize edge types** — Fix non-standard types (`person_organization` → `employed_by`, etc.)
 7. **Seed missing key entities** — See Seeding Strategy below
 
-### The Cascade Effect: Edges Create Entities
+### The Cascade Effect: Edges Require Entities First
 
-**This is important:** As you enrich data and add edges, you will inevitably reference entities that don't yet exist in the database.
+**The edge table has foreign key constraints.** You cannot insert an edge until both `source_id` and `target_id` exist in the entity table. The database will reject the insert.
 
-Example: You're enriching OpenAI and want to add an edge "Sam Altman employed_by OpenAI". But wait — is Sam Altman in the database? What about his board seat at Reddit? His connection to Y Combinator?
+Example: You want to add "Sam Altman employed_by OpenAI". Before you can insert that edge:
+1. Sam Altman must exist in `entity` (check: does he? what's his ID?)
+2. OpenAI must exist in `entity` (check: does it? what's its ID?)
 
-**The workflow:**
-1. You add an edge referencing a new entity (person, org, or resource)
-2. That entity now needs to be created and enriched
-3. That entity has its own relationships that need edges
-4. Those edges may reference more entities...
+If either is missing, create and enrich the entity FIRST, then add the edge.
+
+**The cascade:**
+- You enrich an entity and discover relationships
+- Those relationships require edges
+- Some edges reference entities that don't exist yet
+- You must create those entities before you can add the edges
+- Those new entities have their own relationships...
 
 **How to handle this:**
 - Keep a running list of entities you need to create
 - Batch similar entities (all OpenAI leadership, all a16z partners, etc.)
+- Create entities BEFORE the edges that reference them
 - Don't create stub entries — if you create an entity, enrich it properly
-- Use `source_name` and `target_name` in your edge JSON when you don't have the ID yet
 
 This cascade is expected. It's how the graph grows. Just be systematic about tracking what needs to be done.
 
