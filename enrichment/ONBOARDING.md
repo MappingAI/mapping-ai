@@ -264,10 +264,13 @@ WHERE (e.source_id = 123 AND e.target_id = 456)
 - If it needs enrichment (missing source_url, evidence), enrich the existing edge
 - If the edge_type is wrong (e.g., `affiliated` should be `employer`), update it
 
-**When an edge references a non-existent entity:**
-1. The edge is "dangling" — it points to an ID that doesn't exist
-2. You need to either: delete the edge (if the relationship is wrong) OR create the missing entity
-3. If you create the entity, enrich it properly — don't leave stubs
+**When an edge points to the wrong entity:**
+
+Note: The edge table has `ON DELETE CASCADE` on both FKs — truly dangling edges (pointing to non-existent IDs) cannot exist. But edges can point to the *wrong* entity — source_id or target_id resolves to a real entity but the incorrect one.
+
+1. Find these by cross-referencing edge evidence text against the actual entity names at those IDs
+2. You need to either: delete the edge (if the relationship is wrong) OR update the source_id/target_id to point to the correct entity
+3. If the correct entity doesn't exist yet, create and enrich it first
 
 ### Deduplication: Check Before Creating
 
@@ -349,7 +352,7 @@ Group similar fixes for efficiency:
 | Batch Type | Example |
 |------------|---------|
 | Regex cleanup | Citation artifact removal across all notes |
-| Category fixes | Normalize all `person_organization` edges |
+| Edge type fixes | Normalize non-standard edge types (see Legacy Edge Types table) |
 | Org enrichment | All frontier labs, all think tanks, etc. |
 | Person enrichment | All executives at a single org |
 
@@ -380,7 +383,7 @@ Go beyond the obvious lists. Here are specific, actionable research directions f
 - Sponsors and co-sponsors of AI bills — search congress.gov for "artificial intelligence"
 - State legislators: California (SB 1047 authors/opponents), Colorado, Texas AI bills
 - Agency officials giving speeches on AI (search NIST, FTC, OSTP press releases)
-- Congressional staff who specialize in AI (harder to find, check hearing credits)
+- Congressional staff who specialize in AI — the most efficient path is through elected officials who have taken public AI stances. Identify their chiefs of staff and legislative directors for tech/science. Use LinkedIn, official .gov staff directories, and hearing transcripts (staff are sometimes credited). Key committees: House Science, Space & Technology; Senate Commerce; Senate Homeland Security & Governmental Affairs; House Energy & Commerce
 - International officials with US influence (UK AI Safety Institute, EU AI Act negotiators)
 
 **Finding People — Investors:**
@@ -391,7 +394,7 @@ Go beyond the obvious lists. Here are specific, actionable research directions f
 
 **Finding People — Organizers:**
 - Who organized the "Pause Giant AI Experiments" letter? (Future of Life Institute, March 2023)
-- Union leaders negotiating AI clauses (SAG-AFTRA, WGA AI negotiators)
+- Union leaders negotiating AI clauses (SAG-AFTRA, WGA AI negotiators, UAW, CWA — both have been leaders on labor AI issues)
 - Civil society advocates who've testified on AI (ACLU, EFF, Color of Change)
 - Grassroots organizers: Distributed AI Research Institute, Algorithmic Justice League leadership
 
@@ -428,6 +431,11 @@ Go beyond the obvious lists. Here are specific, actionable research directions f
 - State-level AI task force reports
 - Influential op-eds in major outlets (search NYT, WSJ, WaPo opinion sections for "artificial intelligence")
 - Amicus briefs in AI-related lawsuits (copyright cases, etc.)
+
+**Social Media as Research Source:**
+- Twitter/X, Bluesky, LinkedIn — for surfacing who is actively shaping public AI discourse
+- Use social media to track public positions, find who's being quoted/cited, identify rising voices
+- Check follower networks of known AI policy figures to find adjacent influencers
 
 ### Research Questions to Ask Yourself
 
@@ -481,6 +489,10 @@ Before adding someone, ask:
 
 **When in doubt:** If you can't write 2 sentences about why they matter to US AI policy, they probably don't belong.
 
+**Edge test:** If a new entity is unlikely to connect to at least 2–3 other entities already in (or being added to) the DB, that's a strong signal they don't belong. Influence in a network is relational — if you can't draw edges to/from them, they're probably not central enough.
+
+**Bluechip org rule:** If an individual is clearly heavily influencing AI governance and is strongly associated with a well-known organization — meaning employed by, founded, or leads it (not just tangentially connected) — that organization should also be added as an entity.
+
 ### Research Each Stakeholder Category
 
 For each category, use the resources above as starting points. Systematically work through the research questions above.
@@ -529,7 +541,7 @@ For major organizations already in the database, ensure we have their major exec
 |----------|------------|
 | Frontier Labs (OpenAI, Anthropic, Google DeepMind, Meta AI, xAI) | CEO, CTO, Chief Scientist, Head of Policy |
 | Major Tech (Microsoft, Google, Amazon, Apple, Meta) | CEO, AI leads, Policy leads |
-| Government Agencies (NIST, OSTP, FTC, NSF) | Director, AI-specific leads |
+| Government Agencies (NIST, OSTP, FTC, NSF, OMB, AISI, NSC, PCAST) | Director, AI-specific leads, White House AI task force members |
 | Think Tanks | Executive Director, AI program leads |
 
 ### Edge Completeness
@@ -577,9 +589,11 @@ Once the data is clean and comprehensive, add an `importance` rating (1-5) to ev
 - When uncertain, err toward the middle (3)
 - Document your reasoning for 5s and 1s — these are the extremes
 
+**Cross-category calibration:** While within-category is the primary lens, there should be meaningful across-category differences in absolute floor and ceiling. Example: Ezra Klein may be the top journalist on AI (a 5 in Journalist) but is not as important to AI governance as Donald Trump or Dario Amodei. Let the top of high-influence categories — heads of state, frontier lab CEOs, top regulators — anchor the absolute top of the scale.
+
 ### Database Change
 
-You'll need to add the column:
+**⚠️ Coordinate with team before running DDL.** This ALTER TABLE should be agreed before you execute it on staging.
 
 ```sql
 ALTER TABLE entity ADD COLUMN importance SMALLINT CHECK (importance >= 1 AND importance <= 5);
@@ -740,13 +754,28 @@ We review your changes by:
 
 ## Reference: Schema & Field Options
 
-### Entity Types
+### Entity Table — Key Columns
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `entity_type` | TEXT | `person`, `organization`, or `resource` |
+| `category` | TEXT | Primary category (see options below) |
+| `influence_type` | TEXT | Comma-separated influence types |
+| `notes` | TEXT | Plain text notes (AI relevance required) |
+| `notes_html` | TEXT | Rich text version |
+| `notes_sources` | TEXT | Source URLs as JSON string |
+| `notes_confidence` | SMALLINT | Confidence score for the notes (1-5) |
+| `enrichment_version` | TEXT | Tracks which enrichment pass produced this data |
+| `notes_v1` | TEXT | Original pre-enrichment notes (preserved for comparison) |
+| `qa_approved` | BOOLEAN | Set to TRUE when fully verified — Connor's sign-off mechanism |
+
+### `entity_type` (pick ONE)
 
 - `person`
 - `organization`
 - `resource`
 
-### Person Categories (pick ONE)
+### `category` — Person Categories (pick ONE)
 
 - Executive
 - Researcher
@@ -757,7 +786,7 @@ We review your changes by:
 - Academic
 - Cultural figure
 
-### Organization Categories (pick ONE primary)
+### `category` — Organization Categories (pick ONE primary)
 
 - Frontier Lab
 - Infrastructure & Compute
@@ -772,7 +801,7 @@ We review your changes by:
 - Media/Journalism
 - Political Campaign/PAC
 
-### Influence Type (pick ANY that apply, comma-separated)
+### `influence_type` (pick ANY that apply, comma-separated)
 
 - Decision-maker (legislator, regulator)
 - Advisor/strategist
@@ -784,7 +813,7 @@ We review your changes by:
 - Implementer (executes policy/deploys AI)
 - Connector/convener
 
-### Resource Types (pick ONE)
+### `resource_type` (pick ONE)
 
 - Essay
 - Book
@@ -796,7 +825,7 @@ We review your changes by:
 - News Article
 - Substack/Newsletter
 
-### Resource Categories (pick ONE)
+### `resource_category` (pick ONE)
 
 - AI Safety
 - AI Governance
@@ -938,7 +967,7 @@ When you encounter an `affiliated` edge, reclassify it to the appropriate canoni
 
 ### Belief Fields
 
-**regulatory_stance** (pick ONE):
+**`belief_regulatory_stance`** (pick ONE):
 - Accelerate — minimal/no regulation
 - Light-touch — voluntary, self-governance
 - Targeted — sector-specific rules, not broad R&D restrictions
@@ -949,7 +978,7 @@ When you encounter an `affiliated` edge, reclassify it to the appropriate canoni
 - Mixed/unclear
 - Other — describe in notes
 
-**agi_timeline** (pick ONE):
+**`belief_agi_timeline`** (pick ONE):
 - Already here — already here/emerging
 - 2-3 years — within 2-3 years
 - 5-10 years — within 5-10 years
@@ -958,7 +987,7 @@ When you encounter an `affiliated` edge, reclassify it to the appropriate canoni
 - Ill-defined — considers the concept ill-defined
 - Unknown — not publicly stated
 
-**ai_risk** (pick ONE):
+**`belief_ai_risk`** (pick ONE):
 - Overstated — hype will fade
 - Manageable — real but manageable (like previous technologies)
 - Serious — serious societal risks (labor, power, democracy)
@@ -967,7 +996,7 @@ When you encounter an `affiliated` edge, reclassify it to the appropriate canoni
 - Mixed/nuanced — describe in notes
 - Unknown — not publicly stated
 
-**threat_models** (pick up to 3):
+**`belief_threat_models`** (pick up to 3, comma-separated):
 - Labor displacement
 - Economic inequality
 - Power concentration
@@ -980,10 +1009,22 @@ When you encounter an `affiliated` edge, reclassify it to the appropriate canoni
 - Copyright/IP
 - Existential risk
 
-**evidence_source** (pick ONE):
+**`belief_evidence_source`** (pick ONE):
 - Explicitly stated — speeches, testimony, writing
 - Inferred — from actions/funding/affiliations
 - Unknown
+
+### Belief Field Cleanup Task
+
+**The live DB contains non-canonical belief values** written by Claude during prior enrichment passes. Normalize these:
+
+| Column | Dirty Values | Action |
+|--------|--------------|--------|
+| `belief_regulatory_stance` | Various non-standard strings | Map to canonical values above or set NULL |
+| `belief_ai_risk` | Various non-standard strings | Map to canonical values above or set NULL |
+| `belief_agi_timeline` | "Ill-defined", "Ill-defined concept" | Map to "Ill-defined" or "Unknown" |
+
+Run a query to find distinct values and map them to the canonical options listed above.
 
 ---
 
