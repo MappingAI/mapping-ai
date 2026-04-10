@@ -3,6 +3,17 @@ import 'dotenv/config';
 
 const { Pool } = pg;
 
+// JSONB columns need to be stringified when copying between databases
+const JSONB_COLUMNS = new Set(['llm_review', 'notes_mentions']);
+
+function prepareValue(colName, value) {
+  if (value === null || value === undefined) return value;
+  if (JSONB_COLUMNS.has(colName) && typeof value === 'object') {
+    return JSON.stringify(value);
+  }
+  return value;
+}
+
 // Production connection
 const prodPool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -205,7 +216,7 @@ async function setupStaging() {
       const colList = cols.join(', ');
 
       for (const row of submissions.rows) {
-        const values = cols.map(c => row[c]);
+        const values = cols.map(c => prepareValue(c, row[c]));
         const placeholders = cols.map((_, i) => `$${i + 1}`).join(', ');
         await stagingClient.query(`INSERT INTO submission (${colList}) VALUES (${placeholders})`, values);
       }
