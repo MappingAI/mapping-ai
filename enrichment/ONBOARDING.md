@@ -4,6 +4,22 @@ Welcome to the Mapping AI data enrichment project. This document covers everythi
 
 ---
 
+## Table of Contents
+
+1. [Core Priorities](#core-priorities)
+2. [Project Overview](#project-overview)
+3. [Your Workspace](#your-workspace)
+4. [Database Access](#database-access)
+5. [Your Tasks](#your-tasks)
+6. [Seeding Strategy](#seeding-strategy)
+7. [Final Task: Importance Ratings](#final-task-importance-ratings)
+8. [Quality Standards](#quality-standards)
+9. [Documentation Requirements](#documentation-requirements)
+10. [Workflow](#workflow)
+11. [Reference: Schema & Field Options](#reference-schema--field-options)
+
+---
+
 ## Core Priorities
 
 You're not just cleaning data — you're building a foundation we can trust and extend. These are the priorities that matter most:
@@ -22,13 +38,13 @@ You're not just cleaning data — you're building a foundation we can trust and 
 
 **Your process is as valuable as the data.**
 
-A year from now, someone else (or you) should be able to:
+Someone else (or you) should be able to:
 - **Understand exactly what you did** — Every decision documented
 - **Re-run your entire process** — Scripts work, dependencies listed
 - **Verify your changes** — Before/after comparisons, source citations
 - **Extend your work** — Build on your foundation for future enrichment
 
-This means: commit early and often, comment your code explaining *why*, keep logs of manual decisions, treat your LaTeX difference charts as deliverables.
+This means: commit early and often, comment your code explaining *why*, keep logs of manual decisions, and treat your documentation as a deliverable.
 
 ### 3. Data Seeding & Coverage
 
@@ -38,31 +54,17 @@ This means: commit early and often, comment your code explaining *why*, keep log
 - Ensure balanced coverage across all stakeholder categories
 - When you add an entity, add their key relationships too
 - Prioritize entities that connect to many others — they have outsized value
+- **Do independent research** — Don't just work from lists we provide; find influential figures and orgs we've missed
 
 ### 4. Surfacing Issues
 
-**Tell us what you find.**
+**Tell us what you find — and take steps to resolve them.**
 
 - Document new issues as you discover them
 - Communicate proactively when patterns affect many entities
-- Ask when you're uncertain about a judgment call
+- Propose fixes and start implementing them (don't just report problems)
 - Propose schema changes if the current structure doesn't fit reality
-
----
-
-## Table of Contents
-
-1. [Core Priorities](#core-priorities)
-2. [Project Overview](#project-overview)
-3. [Your Workspace](#your-workspace)
-4. [Database Access](#database-access)
-5. [Your Tasks](#your-tasks)
-6. [Seeding Strategy](#seeding-strategy)
-7. [Final Task: Importance Ratings](#final-task-importance-ratings)
-8. [Quality Standards](#quality-standards)
-9. [Documentation Requirements](#documentation-requirements)
-10. [Workflow](#workflow)
-11. [Reference: Schema & Field Options](#reference-schema--field-options)
+- **If you have any questions, just ask us directly** — don't guess or get stuck
 
 ---
 
@@ -112,11 +114,10 @@ All your documentation goes in `/enrichment/`:
 enrichment/
 ├── ONBOARDING.md          # This document
 ├── scripts/               # Your processing scripts (Python, Node, SQL, etc.)
-├── latex/                 # Your difference charts and analysis docs
-└── logs/                  # Processing logs, change logs, issues
-    ├── changes.md         # What you changed, with entity IDs
-    └── issues.md          # New issues you discover
+└── [your docs]            # Analysis, logs, change tracking — organize as you see fit
 ```
+
+This structure is a starting point. Organize subfolders based on whatever documentation methodology works best for you — the important thing is that your work is documented and reproducible, not that it follows a specific folder structure.
 
 Your scripts modify the staging database directly. The repo stores your code and documentation, not data exports.
 
@@ -156,7 +157,8 @@ postgresql://connor_staging:PASSWORD@mapping-ai-db.c9sccou2k3xe.eu-west-2.rds.am
 |-------|-------------|
 | `entity` | All people, organizations, and resources |
 | `edge` | Relationships between entities |
-| `submission` | User submissions (less relevant for your work) |
+
+Note: There's also a `submission` table for user submissions, but **you won't need to touch it** — your work is on `entity` and `edge` only.
 
 ### Quick Queries
 
@@ -186,14 +188,14 @@ Your trial work identified 12 data quality issues. Now apply that same rigor to 
 
 ### Priority Order
 
-1. **Fix citation artifacts** — Strip `[n]`, `[n,n]` patterns from all notes
-2. **Fix hallucinated/incorrect data** — Verify and correct entries like you did in the trial
-3. **Enrich empty entities** — Prioritize those with existing edges (people, orgs, AND resources)
-4. **Add source URLs to edges** — Currently 0% have sources
-5. **Connect orphan entities** — 254 entities have zero edges
-6. **Normalize edge types** — Fix non-standard types (`person_organization` → `employer`, etc.)
-7. **Seed missing key entities** — See Seeding Strategy below (includes resources!)
-8. **Enrich and seed resources** — Papers, reports, testimony, books that shaped AI policy
+1. **Fix hallucinated/incorrect data** — Verify and correct entries like you did in the trial
+2. **Enrich empty entities** — Prioritize those with existing edges (people, orgs, AND resources)
+3. **Add sources to edges** — Currently 0% have sources (see note on source format below)
+4. **Connect orphan entities** — 254 entities have zero edges
+5. **Normalize edge types** — Fix non-standard types (`person_organization` → `employer`, etc.)
+6. **Seed missing key entities** — See Seeding Strategy below (includes resources!)
+7. **Enrich and seed resources** — Papers, reports, testimony, books that shaped AI policy
+8. **Fix citation artifacts** — Strip `[n]`, `[n,n]` patterns from notes (lower priority, can batch)
 
 ### Resources Are Part of Your Work
 
@@ -432,6 +434,7 @@ Go beyond the obvious lists. Here are specific, actionable research directions f
 - State-level AI task force reports
 - Influential op-eds in major outlets (search NYT, WSJ, WaPo opinion sections for "artificial intelligence")
 - Amicus briefs in AI-related lawsuits (copyright cases, etc.)
+- **Influential essays and scenarios** — "AI 2027" (AI futures scenario), "Situational Awareness" (Leopold Aschenbrenner), Marc Andreessen's "Why AI Will Save the World", Anthropic's "Core Views on AI Safety"
 
 **Social Media as Research Source:**
 - Twitter/X, Bluesky, LinkedIn — for surfacing who is actively shaping public AI discourse
@@ -565,6 +568,8 @@ When adding a new entity, always add relevant edges:
 - Resource → author (`author` — person is source, resource is target)
 - Resource → publisher (`publisher` — resource is source, org is target)
 
+**This list isn't exhaustive.** You'll encounter relationships that don't fit neatly — use `critic`, `supporter`, or propose new types if needed (see Reference section for full edge type list and guidelines on proposing new types).
+
 ---
 
 ## Final Task: Importance Ratings
@@ -609,6 +614,8 @@ Then populate it for all entities. This can be done programmatically with manual
 ### The #1 Problem: Hallucinations
 
 **Our database likely contains fabricated or inaccurate information.** Because the database was built through a combination of manual entry, web scraping, and AI-assisted enrichment, some entries include facts that cannot be verified or are demonstrably false. Identifying and correcting these is your primary responsibility.
+
+**Assume nothing is verified.** Every piece of existing data should be treated as potentially wrong until you've checked it against a reliable source. Don't just enrich empty fields — verify the fields that already have values too.
 
 **Real examples of hallucinations you found in your trial:**
 - "Under Secretary of War" — fabricated title (correct: "Acting Under Secretary of Defense for Research and Engineering")
@@ -668,9 +675,11 @@ Notes should answer: **"Why does this person/org/resource matter to the U.S. AI 
 | Field | Evidence Required |
 |-------|-------------------|
 | `notes` | Every factual claim must be verifiable |
-| `notes_sources` | 1-4 URLs supporting the notes |
+| `notes_sources` | 1-4 sources supporting the notes |
 | Edge `evidence` | 1-2 sentences explaining the relationship |
-| Edge `source_url` | URL confirming the relationship |
+| Edge `source_url` | Source confirming the relationship |
+
+**Note on sources:** Sources don't have to be URLs. A clear citation works too — e.g., "Congressional testimony, July 2024" or "LinkedIn profile" or "Company About page". The goal is that someone could verify the claim; make clear what you're citing.
 
 ---
 
@@ -691,12 +700,12 @@ We will evaluate your work on:
    - Input/output file paths documented
    - Version any external dependencies
 
-2. **LaTeX/Analysis** — Your difference charts and verification documents in `enrichment/latex/`
-   - Before/after comparisons
-   - Verification methodology
-   - Statistics on changes made
+2. **Analysis & verification docs** — Before/after comparisons, verification methodology, statistics on changes made
+   - You mentioned LaTeX as your preference — feel free to use that
+   - But use whatever format works best for you (Markdown, spreadsheets, Jupyter notebooks, etc.)
+   - The folder structure (`enrichment/latex/`, `enrichment/logs/`) is a suggestion — reorganize as needed for your workflow
 
-3. **Logs** — Processing logs in `enrichment/logs/`
+3. **Logs** — Processing logs
    - What was run, when, in what order
    - Any errors or edge cases encountered
    - **Manual decisions and rationale** — This is critical. When you make a judgment call (e.g., "I classified this person as Policymaker rather than Executive because..."), write it down. These decisions are institutional knowledge.
