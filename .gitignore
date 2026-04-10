@@ -34,6 +34,9 @@ data/AISafety.com_map.csv
 .claude/
 CLAUDE.md
 
+# Python virtual environments
+.venv/
+
 # Testing output
 dogfood-output/
 test-screenshots/
