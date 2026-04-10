@@ -213,6 +213,52 @@ Example: You're enriching OpenAI and want to add an edge "Sam Altman employed_by
 
 This cascade is expected. It's how the graph grows. Just be systematic about tracking what needs to be done.
 
+### Edge Enrichment & Ground Truthing
+
+**Every edge in the database needs work.** You found that 100% of edges lack `source_url` and 33% lack `evidence` text. This is critical — unsourced relationships are unverifiable.
+
+**For each edge:**
+1. **Verify it's accurate** — Does this relationship actually exist? Is the role correct? Are the dates right?
+2. **Add `source_url`** — Link to a page that confirms this relationship
+3. **Add/improve `evidence`** — 1-2 sentences explaining the relationship
+4. **Check entity mapping** — Do both `source_id` and `target_id` point to real entities?
+
+**When an edge references a non-existent entity:**
+1. The edge is "dangling" — it points to an ID that doesn't exist
+2. You need to either: delete the edge (if the relationship is wrong) OR create the missing entity
+3. If you create the entity, enrich it properly — don't leave stubs
+
+### Deduplication: Check Before Creating
+
+**Before creating ANY new entity, check for fuzzy matches.**
+
+The database may already have the entity under a different name:
+- "a16z" vs "Andreessen Horowitz"
+- "Google DeepMind" vs "DeepMind"
+- "Sen. Schumer" vs "Chuck Schumer" vs "Charles Schumer"
+- "UC Berkeley" vs "University of California, Berkeley"
+
+**How to check:**
+```sql
+-- Search for similar names
+SELECT id, name, entity_type FROM entity
+WHERE LOWER(name) LIKE '%schumer%'
+   OR LOWER(name) LIKE '%andreessen%';
+
+-- Check for orgs that might be the same
+SELECT id, name, website FROM entity
+WHERE entity_type = 'organization'
+  AND (LOWER(name) LIKE '%deepmind%' OR website LIKE '%deepmind%');
+```
+
+**If you find a match:**
+- Don't create a duplicate
+- Use the existing entity ID
+- If the existing entity needs enrichment, enrich it
+- If there are actual duplicates in the DB already, flag them for merging
+
+**Document your deduplication decisions** in your logs — "Searched for X, found existing entity ID Y, using that instead of creating new."
+
 ### Executing on Your Trial Issues
 
 In your trial, you identified 12 systemic issues. Now execute on them:
