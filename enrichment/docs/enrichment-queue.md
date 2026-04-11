@@ -468,102 +468,102 @@ Mark `[x]` when enrichment is written to DB. Add batch ref in the note column.
 | [x] | 1436 | 1 | 0 | person | Executive | Alex LeBrun |
 | [x] | 1437 | 1 | 0 | organization | Government/Agency | National Artificial Intelligence Advisory Commission |
 | [x] | 1438 | 1 | 0 | organization | Government/Agency | U.S. Department of Labor |
-| [ ] | 1439 | 1 | 0 | organization | Political Campaign/PAC | Public First Action |
-| [ ] | 1440 | 1 | 0 | person | Policymaker | Lisa Hansmann |
-| [ ] | 1441 | 1 | 0 | person | Academic | Gabriel Unger |
-| [ ] | 1442 | 1 | 0 | person | Academic | Andrew McAfee |
-| [ ] | 1443 | 1 | 0 | person | Researcher | Lindsey Raymond |
-| [ ] | 1444 | 1 | 0 | organization | Academic | Columbia Law School |
-| [ ] | 1445 | 1 | 0 | person | Executive | President Biden |
-| [ ] | 1447 | 1 | 0 | organization | Academic | Stony Brook University |
-| [ ] | 1448 | 1 | 0 | organization | Academic | Seoul National University |
-| [ ] | 1449 | 1 | 0 | person | Researcher | Claire Cardie |
-| [ ] | 1450 | 1 | 0 | person | Academic | Jeff Hancock |
-| [ ] | 1451 | 1 | 0 | person | Academic | John Tasioulas |
-| [ ] | 1452 | 1 | 0 | person | Academic | Matt Salganik |
-| [ ] | 1453 | 1 | 0 | organization | AI Safety/Alignment | Trail of Bits |
-| [ ] | 1454 | 1 | 0 | organization | Think Tank/Policy Org | UNSG's AI Advisory Body |
-| [ ] | 1455 | 1 | 0 | organization | Think Tank/Policy Org | British Standards Institute |
-| [ ] | 1456 | 1 | 0 | person | Cultural figure | Melania Trump |
-| [ ] | 1457 | 1 | 0 | person | Organizer | Sean McGarvey |
-| [ ] | 1458 | 1 | 0 | organization | Deployers & Platforms | Adaptive Security |
-| [ ] | 1459 | 1 | 0 | organization | Ethics/Bias/Rights | Pathos Consulting Group |
-| [ ] | 1460 | 1 | 0 | person | Executive | Brian Long |
-| [ ] | 1461 | 1 | 0 | person | Organizer | Anna McAdams |
-| [ ] | 1462 | 1 | 0 | organization | Media/Journalism | Quartz |
-| [ ] | 1463 | 1 | 0 | organization | Media/Journalism | Pulitzer Center |
-| [ ] | 1464 | 1 | 0 | organization | Media/Journalism | Craig Newmark Graduate School of Journalism |
-| [ ] | 1465 | 1 | 0 | person | Policymaker | Eric Schmitt |
-| [ ] | 1466 | 1 | 0 | person | Policymaker | Thom Tillis |
-| [ ] | 1467 | 1 | 0 | organization | Government/Agency | House Science, Space, and Technology Committee |
+| [x] | 1439 | 1 | 0 | organization | Political Campaign/PAC | Public First Action |
+| [x] | 1440 | 1 | 0 | person | Policymaker | Lisa Hansmann |
+| [x] | 1441 | 1 | 0 | person | Academic | Gabriel Unger |
+| [x] | 1442 | 1 | 0 | person | Academic | Andrew McAfee |
+| [x] | 1443 | 1 | 0 | person | Researcher | Lindsey Raymond |
+| [x] | 1444 | 1 | 0 | organization | Academic | Columbia Law School |
+| [x] | 1445 | 1 | 0 | person | Executive | President Biden |
+| [x] | 1447 | 1 | 0 | organization | Academic | Stony Brook University |
+| [x] | 1448 | 1 | 0 | organization | Academic | Seoul National University |
+| [x] | 1449 | 1 | 0 | person | Researcher | Claire Cardie |
+| [x] | 1450 | 1 | 0 | person | Academic | Jeff Hancock |
+| [x] | 1451 | 1 | 0 | person | Academic | John Tasioulas |
+| [x] | 1452 | 1 | 0 | person | Academic | Matt Salganik |
+| [x] | 1453 | 1 | 0 | organization | AI Safety/Alignment | Trail of Bits |
+| [x] | 1454 | 1 | 0 | organization | Think Tank/Policy Org | UNSG's AI Advisory Body |
+| [x] | 1455 | 1 | 0 | organization | Think Tank/Policy Org | British Standards Institute |
+| [x] | 1456 | 1 | 0 | person | Cultural figure | Melania Trump |
+| [x] | 1457 | 1 | 0 | person | Organizer | Sean McGarvey |
+| [x] | 1458 | 1 | 0 | organization | Deployers & Platforms | Adaptive Security |
+| [x] | 1459 | 1 | 0 | organization | Ethics/Bias/Rights | Pathos Consulting Group |
+| [x] | 1460 | 1 | 0 | person | Executive | Brian Long |
+| [x] | 1461 | 1 | 0 | person | Organizer | Anna McAdams |
+| [x] | 1462 | 1 | 0 | organization | Media/Journalism | Quartz |
+| [x] | 1463 | 1 | 0 | organization | Media/Journalism | Pulitzer Center |
+| [x] | 1464 | 1 | 0 | organization | Media/Journalism | Craig Newmark Graduate School of Journalism |
+| [x] | 1465 | 1 | 0 | person | Policymaker | Eric Schmitt |
+| [x] | 1466 | 1 | 0 | person | Policymaker | Thom Tillis |
+| [x] | 1467 | 1 | 0 | organization | Government/Agency | House Science, Space, and Technology Committee |
 | [ ] | 1468 | 1 | 0 | organization | Government/Agency | National Institutes of Standard and Technology |
-| [ ] | 1469 | 1 | 0 | organization | Government/Agency | House Democratic Commission on AI and the Innovation Economy |
-| [ ] | 1470 | 1 | 0 | organization | Government/Agency | Bipartisan Taskforce on Artificial Intelligence |
-| [ ] | 1471 | 1 | 0 | person | Policymaker | Josh Gottheimer |
-| [ ] | 1472 | 1 | 0 | person | Policymaker | Yvette Clarke |
-| [ ] | 1473 | 1 | 0 | person | Policymaker | Pramila Jayapal |
-| [ ] | 1474 | 1 | 0 | person | Policymaker | Summer Lee |
-| [ ] | 1475 | 1 | 0 | person | Policymaker | Ayanna Pressley |
-| [ ] | 1476 | 1 | 0 | person | Policymaker | Elizabeth Warren |
-| [ ] | 1477 | 1 | 0 | organization | Ethics/Bias/Rights | Lawyers' Committee for Civil Rights Under Law |
-| [ ] | 1478 | 1 | 0 | organization | Ethics/Bias/Rights | The Leadership Conference on Civil and Human Rights |
-| [ ] | 1479 | 1 | 0 | organization | Government/Agency | Commerce, Science and Transportation Committee |
-| [ ] | 1480 | 1 | 0 | organization | Academic | George Mason University |
-| [ ] | 1482 | 1 | 0 | person | Policymaker | Ken Buck |
-| [ ] | 1483 | 1 | 0 | organization | Government/Agency | House Task Force on Artificial Intelligence |
-| [ ] | 1484 | 1 | 0 | organization | Government/Agency | Congressional AI Caucus |
-| [ ] | 1485 | 1 | 0 | organization | Academic | University of California, Los Angeles |
-| [ ] | 1486 | 1 | 0 | organization | Academic | University of Tennessee |
-| [ ] | 1487 | 1 | 0 | organization | Academic | AI Tennessee Initiative |
-| [ ] | 1488 | 1 | 0 | organization | Government/Agency | National Artificial Intelligence Initiative Office |
-| [ ] | 1489 | 1 | 0 | person | Academic | Rodney Brooks |
-| [ ] | 1490 | 1 | 0 | organization | Academic | AI Research Institute on Interaction for AI assistants (ARIA) |
-| [ ] | 1491 | 1 | 0 | organization | Think Tank/Policy Org | ACM US Technology Policy Committee |
-| [ ] | 1492 | 1 | 0 | organization | Government/Agency | Empire AI |
-| [ ] | 1493 | 1 | 0 | organization | Academic | University at Buffalo |
-| [ ] | 1494 | 1 | 0 | organization | Academic | SUNY |
-| [ ] | 1495 | 1 | 0 | person | Policymaker | Tom DiNapoli |
-| [ ] | 1496 | 1 | 0 | person | Researcher | Mark Muro |
-| [ ] | 1497 | 1 | 0 | person | Researcher | Darrell M. West |
-| [ ] | 1498 | 1 | 0 | person | Researcher | Valerie Wirtschafter |
-| [ ] | 1499 | 1 | 0 | person | Executive | Matt Fredrikson |
-| [ ] | 1500 | 1 | 0 | person | Executive | Zico Kolter |
-| [ ] | 1501 | 1 | 0 | person | Executive | Rob Jenks |
-| [ ] | 1502 | 1 | 0 | person | Executive | Nick Winter |
-| [ ] | 1503 | 1 | 0 | person | Executive | Claire Zabel |
-| [ ] | 1504 | 1 | 0 | person | Policymaker | Luke Muehlhauser |
-| [ ] | 1505 | 1 | 0 | person | Organizer | Peter Favaloro |
-| [ ] | 1506 | 1 | 0 | person | Organizer | Eli Rose |
-| [ ] | 1508 | 1 | 0 | person | Executive | Nate Thomas |
-| [ ] | 1509 | 1 | 0 | person | Executive | Bill Zito |
-| [ ] | 1512 | 1 | 0 | person | Executive | Tristan Cook |
-| [ ] | 1514 | 1 | 0 | person | Researcher | Anni Leskelä |
-| [ ] | 1515 | 1 | 0 | organization | VC/Capital/Philanthropy | William and Flora Hewlett Foundation |
-| [ ] | 1516 | 1 | 0 | organization | VC/Capital/Philanthropy | Public Interest Technology University Network |
-| [ ] | 1517 | 1 | 0 | organization | Think Tank/Policy Org | Bipartisan Policy Center |
-| [ ] | 1518 | 1 | 0 | person | Academic | Dewey Murdick |
-| [ ] | 1519 | 1 | 0 | person | Researcher | Cara LaPointe |
-| [ ] | 1520 | 1 | 0 | organization | Academic | Association for Computing Machinery |
-| [ ] | 1521 | 1 | 0 | organization | Academic | Association for the Advancement of Artificial Intelligence (AAAI) |
-| [ ] | 1522 | 1 | 0 | organization | Ethics/Bias/Rights | Human Rights Data Analysis Group |
-| [ ] | 1524 | 1 | 0 | organization | Think Tank/Policy Org | The Hastings Center |
-| [ ] | 1525 | 1 | 0 | organization | VC/Capital/Philanthropy | MacArthur Foundation |
-| [ ] | 1526 | 1 | 0 | person | Researcher | Tom Brown |
-| [ ] | 1528 | 1 | 0 | organization | Labor/Civil Society | Alliance of Motion Picture and Television Producers |
-| [ ] | 1529 | 1 | 0 | person | Journalist | Leah Harrison |
-| [ ] | 1530 | 1 | 0 | person | Researcher | Matt Botvinick |
-| [ ] | 1531 | 1 | 0 | person | Researcher | Zoë Hitzig |
-| [ ] | 1533 | 1 | 0 | person | Organizer | Otto Barten |
-| [ ] | 1534 | 1 | 0 | person | Researcher | Rebecca Scholefield |
-| [ ] | 1535 | 1 | 0 | person | Researcher | Samuel Martin |
-| [ ] | 1537 | 1 | 0 | person | Researcher | Nik Samoylov |
-| [ ] | 1538 | 1 | 0 | person | Executive | Eric Ho |
-| [ ] | 1539 | 1 | 0 | organization | VC/Capital/Philanthropy | B Capital |
-| [ ] | 1540 | 1 | 0 | organization | VC/Capital/Philanthropy | Menlo Ventures |
-| [ ] | 1541 | 1 | 0 | organization | Deployers & Platforms | Mayo Clinic |
-| [ ] | 1542 | 1 | 0 | organization | AI Safety/Alignment | Radical AI |
-| [ ] | 1543 | 1 | 0 | person | Executive | Sarah Friar |
-| [ ] | 1544 | 1 | 0 | person | Executive | Ankesh Chandaria |
+| [x] | 1469 | 1 | 0 | organization | Government/Agency | House Democratic Commission on AI and the Innovation Economy |
+| [x] | 1470 | 1 | 0 | organization | Government/Agency | Bipartisan Taskforce on Artificial Intelligence |
+| [x] | 1471 | 1 | 0 | person | Policymaker | Josh Gottheimer |
+| [x] | 1472 | 1 | 0 | person | Policymaker | Yvette Clarke |
+| [x] | 1473 | 1 | 0 | person | Policymaker | Pramila Jayapal |
+| [x] | 1474 | 1 | 0 | person | Policymaker | Summer Lee |
+| [x] | 1475 | 1 | 0 | person | Policymaker | Ayanna Pressley |
+| [x] | 1476 | 1 | 0 | person | Policymaker | Elizabeth Warren |
+| [x] | 1477 | 1 | 0 | organization | Ethics/Bias/Rights | Lawyers' Committee for Civil Rights Under Law |
+| [x] | 1478 | 1 | 0 | organization | Ethics/Bias/Rights | The Leadership Conference on Civil and Human Rights |
+| [x] | 1479 | 1 | 0 | organization | Government/Agency | Commerce, Science and Transportation Committee |
+| [x] | 1480 | 1 | 0 | organization | Academic | George Mason University |
+| [x] | 1482 | 1 | 0 | person | Policymaker | Ken Buck |
+| [x] | 1483 | 1 | 0 | organization | Government/Agency | House Task Force on Artificial Intelligence |
+| [x] | 1484 | 1 | 0 | organization | Government/Agency | Congressional AI Caucus |
+| [x] | 1485 | 1 | 0 | organization | Academic | University of California, Los Angeles |
+| [x] | 1486 | 1 | 0 | organization | Academic | University of Tennessee |
+| [x] | 1487 | 1 | 0 | organization | Academic | AI Tennessee Initiative |
+| [x] | 1488 | 1 | 0 | organization | Government/Agency | National Artificial Intelligence Initiative Office |
+| [x] | 1489 | 1 | 0 | person | Academic | Rodney Brooks |
+| [x] | 1490 | 1 | 0 | organization | Academic | AI Research Institute on Interaction for AI assistants (ARIA) |
+| [x] | 1491 | 1 | 0 | organization | Think Tank/Policy Org | ACM US Technology Policy Committee |
+| [x] | 1492 | 1 | 0 | organization | Government/Agency | Empire AI |
+| [x] | 1493 | 1 | 0 | organization | Academic | University at Buffalo |
+| [x] | 1494 | 1 | 0 | organization | Academic | SUNY |
+| [x] | 1495 | 1 | 0 | person | Policymaker | Tom DiNapoli |
+| [x] | 1496 | 1 | 0 | person | Researcher | Mark Muro |
+| [x] | 1497 | 1 | 0 | person | Researcher | Darrell M. West |
+| [x] | 1498 | 1 | 0 | person | Researcher | Valerie Wirtschafter |
+| [x] | 1499 | 1 | 0 | person | Executive | Matt Fredrikson |
+| [x] | 1500 | 1 | 0 | person | Executive | Zico Kolter |
+| [x] | 1501 | 1 | 0 | person | Executive | Rob Jenks |
+| [x] | 1502 | 1 | 0 | person | Executive | Nick Winter |
+| [x] | 1503 | 1 | 0 | person | Executive | Claire Zabel |
+| [x] | 1504 | 1 | 0 | person | Policymaker | Luke Muehlhauser |
+| [x] | 1505 | 1 | 0 | person | Organizer | Peter Favaloro |
+| [x] | 1506 | 1 | 0 | person | Organizer | Eli Rose |
+| [x] | 1508 | 1 | 0 | person | Executive | Nate Thomas |
+| [x] | 1509 | 1 | 0 | person | Executive | Bill Zito |
+| [x] | 1512 | 1 | 0 | person | Executive | Tristan Cook |
+| [x] | 1514 | 1 | 0 | person | Researcher | Anni Leskelä |
+| [x] | 1515 | 1 | 0 | organization | VC/Capital/Philanthropy | William and Flora Hewlett Foundation |
+| [x] | 1516 | 1 | 0 | organization | VC/Capital/Philanthropy | Public Interest Technology University Network |
+| [x] | 1517 | 1 | 0 | organization | Think Tank/Policy Org | Bipartisan Policy Center |
+| [x] | 1518 | 1 | 0 | person | Academic | Dewey Murdick |
+| [x] | 1519 | 1 | 0 | person | Researcher | Cara LaPointe |
+| [x] | 1520 | 1 | 0 | organization | Academic | Association for Computing Machinery |
+| [x] | 1521 | 1 | 0 | organization | Academic | Association for the Advancement of Artificial Intelligence (AAAI) |
+| [x] | 1522 | 1 | 0 | organization | Ethics/Bias/Rights | Human Rights Data Analysis Group |
+| [x] | 1524 | 1 | 0 | organization | Think Tank/Policy Org | The Hastings Center |
+| [x] | 1525 | 1 | 0 | organization | VC/Capital/Philanthropy | MacArthur Foundation |
+| [x] | 1526 | 1 | 0 | person | Researcher | Tom Brown |
+| [x] | 1528 | 1 | 0 | organization | Labor/Civil Society | Alliance of Motion Picture and Television Producers |
+| [x] | 1529 | 1 | 0 | person | Journalist | Leah Harrison |
+| [x] | 1530 | 1 | 0 | person | Researcher | Matt Botvinick |
+| [x] | 1531 | 1 | 0 | person | Researcher | Zoë Hitzig |
+| [x] | 1533 | 1 | 0 | person | Organizer | Otto Barten |
+| [x] | 1534 | 1 | 0 | person | Researcher | Rebecca Scholefield |
+| [x] | 1535 | 1 | 0 | person | Researcher | Samuel Martin |
+| [x] | 1537 | 1 | 0 | person | Researcher | Nik Samoylov |
+| [x] | 1538 | 1 | 0 | person | Executive | Eric Ho |
+| [x] | 1539 | 1 | 0 | organization | VC/Capital/Philanthropy | B Capital |
+| [x] | 1540 | 1 | 0 | organization | VC/Capital/Philanthropy | Menlo Ventures |
+| [x] | 1541 | 1 | 0 | organization | Deployers & Platforms | Mayo Clinic |
+| [x] | 1542 | 1 | 0 | organization | AI Safety/Alignment | Radical AI |
+| [x] | 1543 | 1 | 0 | person | Executive | Sarah Friar |
+| [x] | 1544 | 1 | 0 | person | Executive | Ankesh Chandaria |
 | [ ] | 1545 | 1 | 0 | person | Executive | Richard Phillips |
 | [ ] | 1546 | 1 | 0 | person | Executive | Meg Sintzel |
 | [ ] | 1547 | 1 | 0 | person | Executive | David Duvenaud |
@@ -600,18 +600,18 @@ Mark `[x]` when enrichment is written to DB. Add batch ref in the note column.
 | [ ] | 1580 | 1 | 0 | person | Organizer | Adam Schumacher |
 | [ ] | 1581 | 1 | 0 | person | Organizer | Zoey Tseng |
 | [ ] | 1582 | 1 | 0 | person | Researcher | Anna Leshinskaya |
-| [ ] | 1585 | 1 | 0 | person | Executive | Jaime Sevilla |
-| [ ] | 1586 | 1 | 0 | person | Executive | Tamay Besiroglu |
-| [ ] | 1587 | 1 | 0 | person | Executive | Pablo Villalobos |
-| [ ] | 1588 | 1 | 0 | person | Researcher | Lennart Heim |
-| [ ] | 1589 | 1 | 0 | person | Researcher | Anson Ho |
-| [ ] | 1591 | 1 | 0 | person | Executive | Maria de la Lama |
-| [ ] | 1593 | 1 | 0 | person | Executive | Ruairí Donnelly |
-| [ ] | 1595 | 1 | 0 | person | Investor | Arden Berg |
-| [ ] | 1596 | 1 | 0 | organization | Think Tank/Policy Org | Forward Global |
-| [ ] | 1598 | 1 | 0 | person | Organizer | Thore Graepel |
-| [ ] | 1599 | 1 | 0 | person | Organizer | Gillian Hadfield |
-| [ ] | 1600 | 1 | 0 | person | Researcher | Lewis Hammond |
+| [x] | 1585 | 1 | 0 | person | Executive | Jaime Sevilla |
+| [x] | 1586 | 1 | 0 | person | Executive | Tamay Besiroglu |
+| [x] | 1587 | 1 | 0 | person | Executive | Pablo Villalobos |
+| [x] | 1588 | 1 | 0 | person | Researcher | Lennart Heim |
+| [x] | 1589 | 1 | 0 | person | Researcher | Anson Ho |
+| [x] | 1591 | 1 | 0 | person | Executive | Maria de la Lama |
+| [x] | 1593 | 1 | 0 | person | Executive | Ruairí Donnelly |
+| [x] | 1595 | 1 | 0 | person | Investor | Arden Berg |
+| [x] | 1596 | 1 | 0 | organization | Think Tank/Policy Org | Forward Global |
+| [x] | 1598 | 1 | 0 | person | Organizer | Thore Graepel |
+| [x] | 1599 | 1 | 0 | person | Organizer | Gillian Hadfield |
+| [x] | 1600 | 1 | 0 | person | Researcher | Lewis Hammond |
 | [ ] | 1601 | 1 | 0 | person | Organizer | Cecilia Elena Tilli |
 | [ ] | 1602 | 1 | 0 | person | Organizer | Goda Mockutė |
 | [ ] | 1603 | 1 | 0 | person | Executive | David Norman |
@@ -636,18 +636,18 @@ Mark `[x]` when enrichment is written to DB. Add batch ref in the note column.
 | [ ] | 1630 | 1 | 0 | person | Executive | Amba Kak |
 | [ ] | 1631 | 1 | 0 | person | Executive | Kate Brennan |
 | [ ] | 1632 | 1 | 0 | organization | Think Tank/Policy Org | Distributed AI Research Institute |
-| [ ] | 1633 | 1 | 0 | person | Executive | Rudolf Laine |
-| [ ] | 1634 | 1 | 0 | person | Organizer | Gergő Gáspár |
-| [ ] | 1635 | 1 | 0 | person | Executive | Esben Kran |
-| [ ] | 1636 | 1 | 0 | person | Executive | Jonathan Claybrough |
-| [ ] | 1637 | 1 | 0 | person | Policymaker | Kambar Orazbekov |
-| [ ] | 1638 | 1 | 0 | organization | AI Safety/Alignment | AI Safety Dublin |
-| [ ] | 1639 | 1 | 0 | organization | AI Safety/Alignment | Dutch Network for AI Safety |
-| [ ] | 1640 | 1 | 0 | organization | VC/Capital/Philanthropy | Cisco Investments |
-| [ ] | 1641 | 1 | 0 | person | Executive | Anthony Armstrong |
-| [ ] | 1642 | 1 | 0 | person | Organizer | Fynn Heide |
-| [ ] | 1643 | 1 | 0 | person | Organizer | Conor McGurk |
-| [ ] | 1644 | 1 | 0 | person | Researcher | Saad Siddiqui |
+| [x] | 1633 | 1 | 0 | person | Executive | Rudolf Laine |
+| [x] | 1634 | 1 | 0 | person | Organizer | Gergő Gáspár |
+| [x] | 1635 | 1 | 0 | person | Researcher | Esben Kran |
+| [x] | 1636 | 1 | 0 | person | Organizer | Jonathan Claybrough |
+| [x] | 1637 | 1 | 0 | person | Policymaker | Kambar Orazbekov |
+| [x] | 1638 | 1 | 0 | organization | AI Safety/Alignment | AI Safety Dublin |
+| [x] | 1639 | 1 | 0 | organization | AI Safety/Alignment | Dutch Network for AI Safety |
+| [x] | 1640 | 1 | 0 | organization | VC/Capital/Philanthropy | Cisco Investments |
+| [x] | 1641 | 1 | 0 | person | Executive | Anthony Armstrong |
+| [x] | 1642 | 1 | 0 | person | Organizer | Fynn Heide |
+| [x] | 1643 | 1 | 0 | person | Organizer | Conor McGurk |
+| [x] | 1644 | 1 | 0 | person | Researcher | Saad Siddiqui |
 | [ ] | 1645 | 1 | 0 | person | Researcher | Isabella Duan |
 | [ ] | 1646 | 1 | 0 | person | Executive | Mario Gibney |
 | [ ] | 1647 | 1 | 0 | person | Organizer | Juliana Eberschlag |
@@ -712,7 +712,7 @@ Mark `[x]` when enrichment is written to DB. Add batch ref in the note column.
 | [ ] | 122 | 0 | 0 | person | Researcher | Test LLM Review Person |
 | [ ] | 540 | 0 | 0 | organization | Think Tank/Policy Org | Public AI |
 | [ ] | 9 | 0 | 0 | person |  | ant |
-| [ ] | 1532 | 0 | 0 | organization | Academic | Yale Law School |
+| [x] | 1532 | 0 | 0 | organization | Academic | Yale Law School |
 | [ ] | 123 | 0 | 0 | person |  | Test Person with Pending Organization |
 | [ ] | 446 | 0 | 0 | organization |  | Test Organization for Pending Feature |
 | [ ] | 5 | 0 | 25 | person | Academic | Test Person |
