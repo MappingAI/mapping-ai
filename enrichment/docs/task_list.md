@@ -5,7 +5,7 @@ Execution tracker for the data enrichment project. Strategy and design rationale
 **Status:**
 - Phase 0 Setup — Complete
 - Phase 1 Audit — Complete
-- Phase 2 Cleanup — Not started
+- Phase 2 Cleanup — In progress
 - Phase 3 Entity Enrichment — Not started
 - Phase 4 Edge Enrichment — Not started
 - Phase 5 Seeding — Not started
@@ -36,14 +36,14 @@ Execution tracker for the data enrichment project. Strategy and design rationale
 - [ ] Run live, log entity count + IDs changed
 
 **Edge type normalization:**
-- [ ] Write `normalize_edges.py` — 24 legacy types to 12 canonical
-- [ ] Dry run, review mapping output
-- [ ] Run live, log edge counts per type migration
+- [x] Write `normalize_edges.py` — 24 legacy types to 12 canonical (861a4c3)
+- [x] Dry run, review mapping output (5f8d11b)
+- [x] Run live, log edge counts per type migration (13c1c49)
 
 **Belief field normalization:**
-- [ ] Write `normalize_beliefs.py` — non-standard to canonical values
-- [ ] Dry run, review distinct values found
-- [ ] Run live, log counts
+- [x] Write `normalize_beliefs.py` — non-standard to canonical values
+- [x] Dry run, review distinct values found
+- [x] Run live, log counts — 113 entities updated (2 belief_agi_timeline, 111 belief_evidence_source)
 
 ## Phase 3: Entity Enrichment
 > See plan.md Phase 3
