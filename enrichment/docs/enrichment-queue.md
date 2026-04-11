@@ -207,219 +207,219 @@ Mark `[x]` when enrichment is written to DB. Add batch ref in the note column.
 | [x] | 1758 | 1 | 0 | person | Policymaker | Thomas Woodside |
 | [x] | 1759 | 1 | 0 | person | Executive | Lily Sands |
 | [x] | 1760 | 1 | 0 | person | Organizer | Emily Soice |
-| [ ] | 1761 | 1 | 0 | person | Policymaker | Andrew Doris |
-| [ ] | 1762 | 1 | 0 | organization | Think Tank/Policy Org | Economic Security Action California |
-| [ ] | 1763 | 1 | 0 | person | Executive | Paul Scharre |
-| [ ] | 1764 | 1 | 0 | person | Researcher | Vivek Chilukuri |
-| [ ] | 1765 | 1 | 0 | organization | VC/Capital/Philanthropy | Carnegie Corporation of New York |
-| [ ] | 1766 | 1 | 0 | organization | VC/Capital/Philanthropy | Effective Ventures |
-| [ ] | 1767 | 1 | 0 | person | Organizer | Daniel Colson |
-| [ ] | 1768 | 1 | 0 | person | Organizer | Brad Carson |
-| [ ] | 1769 | 1 | 0 | person | Organizer | Eric Gastfriend |
-| [ ] | 1770 | 1 | 0 | organization | Think Tank/Policy Org | Information Technology Industry Council |
-| [ ] | 1771 | 1 | 0 | person | Researcher | Viktoriya Krakovna |
-| [ ] | 1772 | 1 | 0 | person | Organizer | Anthony Aguirre |
-| [ ] | 1773 | 1 | 0 | person | Organizer | Meia Chita-Tegmark |
-| [ ] | 1774 | 1 | 0 | organization | Government/Agency | Department for Science, Innovation and Technology |
-| [ ] | 1775 | 1 | 0 | person | Policymaker | Hamish Hobbs |
-| [ ] | 1776 | 1 | 0 | person | Policymaker | Dr Jess Whittlestone |
-| [ ] | 1777 | 1 | 0 | person | Policymaker | Tommy Shaffer Shane |
-| [ ] | 1778 | 1 | 0 | person | Policymaker | Nicole Alvarez |
-| [ ] | 1779 | 1 | 0 | person | Policymaker | Megan Shahi |
-| [ ] | 1780 | 1 | 0 | person | Policymaker | Adam Conner |
-| [ ] | 1062 | 1 | 0 | organization | Think Tank/Policy Org | Civic Signals |
-| [ ] | 1120 | 1 | 0 | person | Journalist | Billy Perrigo |
-| [ ] | 1123 | 1 | 0 | person | Executive | Marc Benioff |
-| [ ] | 1131 | 1 | 0 | organization | Government/Agency | DAF-MIT AI Accelerator |
-| [ ] | 1133 | 1 | 0 | organization | Academic | Kempner Institute |
-| [ ] | 1134 | 1 | 0 | organization | Infrastructure & Compute | Massachusetts Green High Performance Computing Center |
-| [ ] | 1135 | 1 | 0 | person | Academic | Sanjeev Arora |
-| [ ] | 1136 | 1 | 0 | person | Academic | Arthur Spirling |
-| [ ] | 1137 | 1 | 0 | person | Academic | Olga Troyanskaya |
-| [ ] | 1138 | 1 | 0 | person | Academic | Tom Griffiths |
-| [ ] | 1139 | 1 | 0 | organization | Academic | The Princeton Laboratory for Artificial Intelligence |
-| [ ] | 1140 | 1 | 0 | organization | Academic | ai@cam |
-| [ ] | 1141 | 1 | 0 | person | Academic | Neil Lawrence |
-| [ ] | 1142 | 1 | 0 | person | Researcher | Adrian Weller |
-| [ ] | 1144 | 1 | 0 | organization | Academic | Saïd Business School |
-| [ ] | 1145 | 1 | 0 | person | Academic | Kyunghyun Cho |
-| [ ] | 1146 | 1 | 0 | organization | Government/Agency | Global AI Frontier Lab |
-| [ ] | 1147 | 1 | 0 | organization | Government/Agency | Institute for Information & Communications Technology Planning & Evaluation |
-| [ ] | 1150 | 1 | 0 | organization | Government/Agency | House Committee on Science Space & Tech |
-| [ ] | 1151 | 1 | 0 | organization | Government/Agency | Education and Workforce Committee |
-| [ ] | 1152 | 1 | 0 | person | Policymaker | Jerry McNerney |
-| [ ] | 1153 | 1 | 0 | person | Policymaker | Thomas Umberg |
-| [ ] | 1154 | 1 | 0 | person | Policymaker | Steve Padilla |
-| [ ] | 1155 | 1 | 0 | organization | Government/Agency | International Trade Administration |
-| [ ] | 1156 | 1 | 0 | person | Policymaker | William Kimmitt |
-| [ ] | 1157 | 1 | 0 | organization | Government/Agency | U.S. Department of State |
-| [ ] | 1158 | 1 | 0 | organization | Government/Agency | Government Operations Agency |
-| [ ] | 1159 | 1 | 0 | organization | Government/Agency | California Department of General Services |
-| [ ] | 1160 | 1 | 0 | organization | Government/Agency | California Department of Technology |
-| [ ] | 1161 | 1 | 0 | organization | Government/Agency | California Department of Human Resources |
-| [ ] | 1164 | 1 | 0 | organization | Government/Agency | NYS Office of Information Technology Services |
-| [ ] | 1165 | 1 | 0 | organization | Government/Agency | Ohio Department of Job and Family Services |
-| [ ] | 1166 | 1 | 0 | person | Policymaker | Matt Damschroder |
-| [ ] | 1167 | 1 | 0 | person | Policymaker | Ron DeSantis |
-| [ ] | 1168 | 1 | 0 | person | Policymaker | Spencer Cox |
-| [ ] | 1169 | 1 | 0 | organization | Government/Agency | Trump administration |
-| [ ] | 1170 | 1 | 0 | organization | Deployers & Platforms | LinkedIn |
-| [ ] | 1171 | 1 | 0 | organization | Academic | Darden School of Business |
-| [ ] | 1172 | 1 | 0 | organization | Academic | UVA Information Technology Services |
-| [ ] | 1173 | 1 | 0 | person | Academic | Jules White |
-| [ ] | 1174 | 1 | 0 | person | Executive | Allen Karns |
-| [ ] | 1175 | 1 | 0 | person | Academic | Daniel Diermeier |
-| [ ] | 1176 | 1 | 0 | organization | Academic | College of Connected Computing |
-| [ ] | 1177 | 1 | 0 | person | Academic | Matthew Johnson-Roberson |
-| [ ] | 1178 | 1 | 0 | organization | Academic | University of North Carolina system |
-| [ ] | 1179 | 1 | 0 | organization | Deployers & Platforms | Darktrace |
-| [ ] | 1180 | 1 | 0 | organization | Deployers & Platforms | Quantexa |
-| [ ] | 1182 | 1 | 0 | organization | Deployers & Platforms | Evolution AI |
-| [ ] | 1184 | 1 | 0 | organization | Government/Agency | Engineering and Physical Sciences Research Council |
-| [ ] | 1186 | 1 | 0 | person | Academic | Ellie Pavlick |
-| [ ] | 1187 | 1 | 0 | person | Academic | Francis J. Doyle III |
-| [ ] | 1188 | 1 | 0 | organization | Academic | Dartmouth College |
-| [ ] | 1190 | 1 | 0 | organization | Academic | Baylor College of Medicine |
-| [ ] | 1191 | 1 | 0 | organization | Academic | City University of New York |
-| [ ] | 1193 | 1 | 0 | person | Academic | Richard Zemel |
-| [ ] | 1195 | 1 | 0 | person | Academic | Robert J. Jones |
-| [ ] | 1196 | 1 | 0 | person | Executive | Brad Smith |
-| [ ] | 1197 | 1 | 0 | person | Academic | Richard M. Locke |
-| [ ] | 1198 | 1 | 0 | person | Academic | Sinan Aral |
-| [ ] | 1199 | 1 | 0 | person | Academic | Kate Kellogg |
-| [ ] | 1200 | 1 | 0 | person | Academic | Roberto Rigobon |
-| [ ] | 1202 | 1 | 0 | person | Academic | Swati Gupta |
-| [ ] | 1203 | 1 | 0 | person | Policymaker | Casey Mock |
-| [ ] | 1204 | 1 | 0 | person | Policymaker | Camille Carlton |
-| [ ] | 1205 | 1 | 0 | person | Executive | Daniel Barcay |
-| [ ] | 1206 | 1 | 0 | organization | Labor/Civil Society | Social Media Victims Law Center |
-| [ ] | 1207 | 1 | 0 | organization | Labor/Civil Society | Tech Justice Law Project |
-| [ ] | 1208 | 1 | 0 | person | Researcher | Dylan Baker |
-| [ ] | 1212 | 1 | 0 | person | Executive | Pierre Boivin |
-| [ ] | 1213 | 1 | 0 | organization | VC/Capital/Philanthropy | Inovia Capital |
-| [ ] | 1214 | 1 | 0 | organization | Deployers & Platforms | Khan Academy |
-| [ ] | 1215 | 1 | 0 | organization | VC/Capital/Philanthropy | Ballmer Group |
-| [ ] | 1216 | 1 | 0 | organization | Deployers & Platforms | Formation Bio |
-| [ ] | 1217 | 1 | 0 | person | Executive | Zach Seward |
-| [ ] | 1218 | 1 | 0 | person | Journalist | Rubina Fillion |
-| [ ] | 1219 | 1 | 0 | person | Researcher | Dylan Freedman |
-| [ ] | 1220 | 1 | 0 | person | Researcher | Duy Nguyen |
-| [ ] | 1222 | 1 | 0 | organization | VC/Capital/Philanthropy | Craig Newmark Philanthropies |
-| [ ] | 1223 | 1 | 0 | person | Researcher | Jeff Dean |
-| [ ] | 1224 | 1 | 0 | person | Researcher | Greg Corrado |
-| [ ] | 1225 | 1 | 0 | organization | Deployers & Platforms | Alphabet Inc. |
-| [ ] | 1226 | 1 | 0 | person | Executive | Yossi Matias |
-| [ ] | 1227 | 1 | 0 | organization | Academic | People + AI Research |
-| [ ] | 1228 | 1 | 0 | person | Policymaker | Gordon M. Goldstein |
-| [ ] | 1229 | 1 | 0 | person | Organizer | Børge Brende |
-| [ ] | 1230 | 1 | 0 | person | Executive | Maria Basso |
-| [ ] | 1231 | 1 | 0 | person | Organizer | Francisco Betti |
-| [ ] | 1232 | 1 | 0 | person | Executive | Cathy Li |
-| [ ] | 1233 | 1 | 0 | person | Executive | Peter Lee |
-| [ ] | 1235 | 1 | 0 | person | Executive | Ashok Elluswamy |
-| [ ] | 1238 | 1 | 0 | organization | Government/Agency | Pentagon |
-| [ ] | 1239 | 1 | 0 | organization | VC/Capital/Philanthropy | In-Q-Tel |
-| [ ] | 1240 | 1 | 0 | organization | Deployers & Platforms | Cognizant |
-| [ ] | 1241 | 1 | 0 | organization | Government/Agency | U.S. Army |
-| [ ] | 1242 | 1 | 0 | organization | Deployers & Platforms | Workera |
-| [ ] | 1243 | 1 | 0 | organization | VC/Capital/Philanthropy | AI Fund |
-| [ ] | 1244 | 1 | 0 | organization | Deployers & Platforms | LandingAI |
-| [ ] | 1245 | 1 | 0 | person | Academic | Daphne Koller |
-| [ ] | 1246 | 1 | 0 | organization | VC/Capital/Philanthropy | MGX investment group |
-| [ ] | 1247 | 1 | 0 | person | Executive | Larry Fink |
-| [ ] | 1248 | 1 | 0 | person | Executive | Rob Goldstein |
-| [ ] | 1249 | 1 | 0 | organization | VC/Capital/Philanthropy | Macquarie Asset Management |
-| [ ] | 1250 | 1 | 0 | organization | Infrastructure & Compute | AMD |
-| [ ] | 1252 | 1 | 0 | organization | Academic | University of Pittsburgh |
-| [ ] | 1253 | 1 | 0 | person | Researcher | Allen Newell |
-| [ ] | 1254 | 1 | 0 | person | Researcher | Herb Simon |
-| [ ] | 1255 | 1 | 0 | person | Academic | Robert M. Groves |
-| [ ] | 1256 | 1 | 0 | person | Academic | Scott Strobel |
-| [ ] | 1257 | 1 | 0 | organization | Infrastructure & Compute | Yale Center for Research Computing |
-| [ ] | 1258 | 1 | 0 | person | Policymaker | António Guterres |
-| [ ] | 1259 | 1 | 0 | organization | Government/Agency | International Telecommunication Union |
-| [ ] | 1260 | 1 | 0 | organization | Government/Agency | UNESCO |
-| [ ] | 1261 | 1 | 0 | person | Policymaker | Amandeep Singh Gill |
-| [ ] | 1262 | 1 | 0 | organization | Government/Agency | European Artificial Intelligence Board |
-| [ ] | 1263 | 1 | 0 | person | Policymaker | Matt Turek |
-| [ ] | 1264 | 1 | 0 | person | Policymaker | Benjamin Grosof |
-| [ ] | 1265 | 1 | 0 | person | Organizer | Andrew Carney |
-| [ ] | 1266 | 1 | 0 | organization | Government/Agency | ARPA-H |
-| [ ] | 1267 | 1 | 0 | organization | Academic | Johns Hopkins Applied Physics Laboratory |
-| [ ] | 1268 | 1 | 0 | person | Academic | Barton Paulhamus |
-| [ ] | 1269 | 1 | 0 | person | Academic | Dr. Ian McCulloh |
-| [ ] | 1271 | 1 | 0 | organization | Academic | Speed School of Engineering |
-| [ ] | 1273 | 1 | 0 | person | Academic | David Marchick |
-| [ ] | 1274 | 1 | 0 | person | Academic | Gwanhoo Lee |
-| [ ] | 1275 | 1 | 0 | person | Academic | Angela Virtu |
-| [ ] | 1276 | 1 | 0 | person | Academic | Bei Xiao |
-| [ ] | 1277 | 1 | 0 | person | Academic | Thenkurussi (Kesh) Kesavadas |
-| [ ] | 1278 | 1 | 0 | organization | Academic | USC Center for AI in Society |
-| [ ] | 1279 | 1 | 0 | organization | Academic | USC Suzanne Dworak-Peck School of Social Work |
-| [ ] | 1280 | 1 | 0 | organization | Academic | USC Viterbi School of Engineering |
-| [ ] | 1281 | 1 | 0 | organization | Academic | USC Marshall School of Business |
-| [ ] | 1282 | 1 | 0 | person | Academic | Geoff Garrett |
-| [ ] | 1283 | 1 | 0 | organization | Academic | USC School of Advanced Computing |
-| [ ] | 1284 | 1 | 0 | person | Academic | Carol L. Folt |
-| [ ] | 1286 | 1 | 0 | person | Academic | Erika James |
-| [ ] | 1287 | 1 | 0 | person | Academic | Kartik Hosanagar |
-| [ ] | 1288 | 1 | 0 | person | Academic | Kevin Werbach |
-| [ ] | 1289 | 1 | 0 | person | Academic | Eric Bradlow |
-| [ ] | 1290 | 1 | 0 | person | Academic | Prasanna (Sonny) Tambe |
-| [ ] | 1291 | 1 | 0 | person | Academic | Giles Hooker |
-| [ ] | 1292 | 1 | 0 | organization | Academic | Jurist Center for Artificial Intelligence |
-| [ ] | 1293 | 1 | 0 | organization | Academic | Center for Community-Engaged Artificial Intelligence |
-| [ ] | 1294 | 1 | 0 | organization | Labor/Civil Society | Court Watch NOLA |
-| [ ] | 1296 | 1 | 0 | organization | Government/Agency | NASA Ames Research Center |
-| [ ] | 1297 | 1 | 0 | person | Academic | Sebastian Thrun |
-| [ ] | 1298 | 1 | 0 | person | Executive | Nimar Arora |
-| [ ] | 1299 | 1 | 0 | organization | Government/Agency | CTBT organization |
-| [ ] | 1303 | 1 | 0 | organization | Government/Agency | Idaho National Laboratory |
-| [ ] | 1304 | 1 | 0 | person | Policymaker | Pam Bondi |
-| [ ] | 1305 | 1 | 0 | person | Policymaker | Mike Johnson |
-| [ ] | 1306 | 1 | 0 | person | Policymaker | Steve Scalise |
-| [ ] | 1310 | 1 | 0 | person | Executive | Ylli Bajraktari |
-| [ ] | 1311 | 1 | 0 | person | Researcher | Trevor Darrell |
-| [ ] | 1312 | 1 | 0 | organization | Deployers & Platforms | Clarifai |
-| [ ] | 1313 | 1 | 0 | organization | Academic | College of Computing, Data Science, and Society |
-| [ ] | 1315 | 1 | 0 | organization | Academic | Emory University |
-| [ ] | 1316 | 1 | 0 | organization | Academic | Emory AI Group |
-| [ ] | 1317 | 1 | 0 | organization | Academic | Block Center for Technology and Society |
-| [ ] | 1318 | 1 | 0 | person | Academic | Manish Parashar |
-| [ ] | 1319 | 1 | 0 | organization | Academic | Amii |
-| [ ] | 1320 | 1 | 0 | person | Executive | Jean-François Gagné |
-| [ ] | 1322 | 1 | 0 | organization | Government/Agency | Government of Canada |
-| [ ] | 1323 | 1 | 0 | organization | VC/Capital/Philanthropy | Data Collective |
-| [ ] | 1324 | 1 | 0 | organization | VC/Capital/Philanthropy | Real Ventures |
-| [ ] | 1325 | 1 | 0 | organization | Ethics/Bias/Rights | Amnesty International |
-| [ ] | 1326 | 1 | 0 | organization | Academic | Singapore Management University |
-| [ ] | 1331 | 1 | 0 | organization | Academic | McGill Centre for Intelligent Machines |
-| [ ] | 1332 | 1 | 0 | organization | Academic | McGill Collaborative for AI and Society |
-| [ ] | 1333 | 1 | 0 | organization | Frontier Lab | McGill AI Lab |
-| [ ] | 1335 | 1 | 0 | person | Organizer | Amir Banifatemi |
-| [ ] | 1336 | 1 | 0 | organization | Government/Agency | OECD |
-| [ ] | 1337 | 1 | 0 | person | Policymaker | Joanna Rodriguez |
-| [ ] | 1338 | 1 | 0 | organization | VC/Capital/Philanthropy | Public Investment Fund |
-| [ ] | 1339 | 1 | 0 | person | Executive | Mohammed bin Salman |
-| [ ] | 1340 | 1 | 0 | organization | Infrastructure & Compute | National Infrastructure Fund |
-| [ ] | 1341 | 1 | 0 | person | Academic | Michael J. Berry |
-| [ ] | 1342 | 1 | 0 | person | Academic | William Bialek |
-| [ ] | 1343 | 1 | 0 | organization | Government/Agency | Arizona Secretary of State |
-| [ ] | 1344 | 1 | 0 | person | Executive | Mark Chen |
-| [ ] | 1345 | 1 | 0 | organization | Think Tank/Policy Org | Colorado AI Policy Work Group |
-| [ ] | 1349 | 1 | 0 | person | Executive | Ben Mann |
-| [ ] | 1350 | 1 | 0 | person | Executive | Clay Bavor |
-| [ ] | 1351 | 1 | 0 | organization | AI Safety/Alignment | Eleos AI |
-| [ ] | 1352 | 1 | 0 | person | Researcher | David Chalmers |
-| [ ] | 1353 | 1 | 0 | person | Researcher | Robert Long |
-| [ ] | 1354 | 1 | 0 | person | Researcher | Rob Long |
-| [ ] | 1355 | 1 | 0 | person | Researcher | Kathleen Finlinson |
-| [ ] | 1356 | 1 | 0 | organization | Think Tank/Policy Org | Niskanen Center |
-| [ ] | 1358 | 1 | 0 | organization | Government/Agency | U.S. Artificial Intelligence Safety Institute |
-| [ ] | 1359 | 1 | 0 | organization | AI Safety/Alignment | Model Evaluation and Threat Research |
-| [ ] | 1366 | 1 | 0 | person | Researcher | John M. Jumper |
-| [ ] | 1367 | 1 | 0 | organization | Labor/Civil Society | Black in AI |
-| [ ] | 1368 | 1 | 0 | person | Researcher | Margaret Mitchell |
+| [x] | 1761 | 1 | 0 | person | Policymaker | Andrew Doris |
+| [x] | 1762 | 1 | 0 | organization | Think Tank/Policy Org | Economic Security Action California |
+| [x] | 1763 | 1 | 0 | person | Executive | Paul Scharre |
+| [x] | 1764 | 1 | 0 | person | Researcher | Vivek Chilukuri |
+| [x] | 1765 | 1 | 0 | organization | VC/Capital/Philanthropy | Carnegie Corporation of New York |
+| [x] | 1766 | 1 | 0 | organization | VC/Capital/Philanthropy | Effective Ventures |
+| [x] | 1767 | 1 | 0 | person | Organizer | Daniel Colson |
+| [x] | 1768 | 1 | 0 | person | Organizer | Brad Carson |
+| [x] | 1769 | 1 | 0 | person | Organizer | Eric Gastfriend |
+| [x] | 1770 | 1 | 0 | organization | Think Tank/Policy Org | Information Technology Industry Council |
+| [x] | 1771 | 1 | 0 | person | Researcher | Viktoriya Krakovna |
+| [x] | 1772 | 1 | 0 | person | Organizer | Anthony Aguirre |
+| [x] | 1773 | 1 | 0 | person | Organizer | Meia Chita-Tegmark |
+| [x] | 1774 | 1 | 0 | organization | Government/Agency | Department for Science, Innovation and Technology |
+| [x] | 1775 | 1 | 0 | person | Policymaker | Hamish Hobbs |
+| [x] | 1776 | 1 | 0 | person | Policymaker | Dr Jess Whittlestone |
+| [x] | 1777 | 1 | 0 | person | Policymaker | Tommy Shaffer Shane |
+| [x] | 1778 | 1 | 0 | person | Policymaker | Nicole Alvarez |
+| [x] | 1779 | 1 | 0 | person | Policymaker | Megan Shahi |
+| [x] | 1780 | 1 | 0 | person | Policymaker | Adam Conner |
+| [x] | 1062 | 1 | 0 | organization | Think Tank/Policy Org | Civic Signals |
+| [x] | 1120 | 1 | 0 | person | Journalist | Billy Perrigo |
+| [x] | 1123 | 1 | 0 | person | Executive | Marc Benioff |
+| [x] | 1131 | 1 | 0 | organization | Government/Agency | DAF-MIT AI Accelerator |
+| [x] | 1133 | 1 | 0 | organization | Academic | Kempner Institute |
+| [x] | 1134 | 1 | 0 | organization | Infrastructure & Compute | Massachusetts Green High Performance Computing Center |
+| [x] | 1135 | 1 | 0 | person | Academic | Sanjeev Arora |
+| [x] | 1136 | 1 | 0 | person | Academic | Arthur Spirling |
+| [x] | 1137 | 1 | 0 | person | Academic | Olga Troyanskaya |
+| [x] | 1138 | 1 | 0 | person | Academic | Tom Griffiths |
+| [x] | 1139 | 1 | 0 | organization | Academic | The Princeton Laboratory for Artificial Intelligence |
+| [x] | 1140 | 1 | 0 | organization | Academic | ai@cam |
+| [x] | 1141 | 1 | 0 | person | Academic | Neil Lawrence |
+| [x] | 1142 | 1 | 0 | person | Researcher | Adrian Weller |
+| [x] | 1144 | 1 | 0 | organization | Academic | Saïd Business School |
+| [x] | 1145 | 1 | 0 | person | Academic | Kyunghyun Cho |
+| [x] | 1146 | 1 | 0 | organization | Government/Agency | Global AI Frontier Lab |
+| [x] | 1147 | 1 | 0 | organization | Government/Agency | Institute for Information & Communications Technology Planning & Evaluation |
+| [x] | 1150 | 1 | 0 | organization | Government/Agency | House Committee on Science Space & Tech |
+| [x] | 1151 | 1 | 0 | organization | Government/Agency | Education and Workforce Committee |
+| [x] | 1152 | 1 | 0 | person | Policymaker | Jerry McNerney |
+| [x] | 1153 | 1 | 0 | person | Policymaker | Thomas Umberg |
+| [x] | 1154 | 1 | 0 | person | Policymaker | Steve Padilla |
+| [x] | 1155 | 1 | 0 | organization | Government/Agency | International Trade Administration |
+| [x] | 1156 | 1 | 0 | person | Policymaker | William Kimmitt |
+| [x] | 1157 | 1 | 0 | organization | Government/Agency | U.S. Department of State |
+| [x] | 1158 | 1 | 0 | organization | Government/Agency | Government Operations Agency |
+| [x] | 1159 | 1 | 0 | organization | Government/Agency | California Department of General Services |
+| [x] | 1160 | 1 | 0 | organization | Government/Agency | California Department of Technology |
+| [x] | 1161 | 1 | 0 | organization | Government/Agency | California Department of Human Resources |
+| [x] | 1164 | 1 | 0 | organization | Government/Agency | NYS Office of Information Technology Services |
+| [x] | 1165 | 1 | 0 | organization | Government/Agency | Ohio Department of Job and Family Services |
+| [x] | 1166 | 1 | 0 | person | Policymaker | Matt Damschroder |
+| [x] | 1167 | 1 | 0 | person | Policymaker | Ron DeSantis |
+| [x] | 1168 | 1 | 0 | person | Policymaker | Spencer Cox |
+| [x] | 1169 | 1 | 0 | organization | Government/Agency | Trump administration |
+| [x] | 1170 | 1 | 0 | organization | Deployers & Platforms | LinkedIn |
+| [x] | 1171 | 1 | 0 | organization | Academic | Darden School of Business |
+| [x] | 1172 | 1 | 0 | organization | Academic | UVA Information Technology Services |
+| [x] | 1173 | 1 | 0 | person | Academic | Jules White |
+| [x] | 1174 | 1 | 0 | person | Executive | Allen Karns |
+| [x] | 1175 | 1 | 0 | person | Academic | Daniel Diermeier |
+| [x] | 1176 | 1 | 0 | organization | Academic | College of Connected Computing |
+| [x] | 1177 | 1 | 0 | person | Academic | Matthew Johnson-Roberson |
+| [x] | 1178 | 1 | 0 | organization | Academic | University of North Carolina system |
+| [x] | 1179 | 1 | 0 | organization | Deployers & Platforms | Darktrace |
+| [x] | 1180 | 1 | 0 | organization | Deployers & Platforms | Quantexa |
+| [x] | 1182 | 1 | 0 | organization | Deployers & Platforms | Evolution AI |
+| [x] | 1184 | 1 | 0 | organization | Government/Agency | Engineering and Physical Sciences Research Council |
+| [x] | 1186 | 1 | 0 | person | Academic | Ellie Pavlick |
+| [x] | 1187 | 1 | 0 | person | Academic | Francis J. Doyle III |
+| [x] | 1188 | 1 | 0 | organization | Academic | Dartmouth College |
+| [x] | 1190 | 1 | 0 | organization | Academic | Baylor College of Medicine |
+| [x] | 1191 | 1 | 0 | organization | Academic | City University of New York |
+| [x] | 1193 | 1 | 0 | person | Academic | Richard Zemel |
+| [x] | 1195 | 1 | 0 | person | Academic | Robert J. Jones |
+| [x] | 1196 | 1 | 0 | person | Executive | Brad Smith |
+| [x] | 1197 | 1 | 0 | person | Academic | Richard M. Locke |
+| [x] | 1198 | 1 | 0 | person | Academic | Sinan Aral |
+| [x] | 1199 | 1 | 0 | person | Academic | Kate Kellogg |
+| [x] | 1200 | 1 | 0 | person | Academic | Roberto Rigobon |
+| [x] | 1202 | 1 | 0 | person | Academic | Swati Gupta |
+| [x] | 1203 | 1 | 0 | person | Policymaker | Casey Mock |
+| [x] | 1204 | 1 | 0 | person | Policymaker | Camille Carlton |
+| [x] | 1205 | 1 | 0 | person | Executive | Daniel Barcay |
+| [x] | 1206 | 1 | 0 | organization | Labor/Civil Society | Social Media Victims Law Center |
+| [x] | 1207 | 1 | 0 | organization | Labor/Civil Society | Tech Justice Law Project |
+| [x] | 1208 | 1 | 0 | person | Researcher | Dylan Baker |
+| [x] | 1212 | 1 | 0 | person | Executive | Pierre Boivin |
+| [x] | 1213 | 1 | 0 | organization | VC/Capital/Philanthropy | Inovia Capital |
+| [x] | 1214 | 1 | 0 | organization | Deployers & Platforms | Khan Academy |
+| [x] | 1215 | 1 | 0 | organization | VC/Capital/Philanthropy | Ballmer Group |
+| [x] | 1216 | 1 | 0 | organization | Deployers & Platforms | Formation Bio |
+| [x] | 1217 | 1 | 0 | person | Executive | Zach Seward |
+| [x] | 1218 | 1 | 0 | person | Journalist | Rubina Fillion |
+| [x] | 1219 | 1 | 0 | person | Researcher | Dylan Freedman |
+| [x] | 1220 | 1 | 0 | person | Researcher | Duy Nguyen |
+| [x] | 1222 | 1 | 0 | organization | VC/Capital/Philanthropy | Craig Newmark Philanthropies |
+| [x] | 1223 | 1 | 0 | person | Researcher | Jeff Dean |
+| [x] | 1224 | 1 | 0 | person | Researcher | Greg Corrado |
+| [x] | 1225 | 1 | 0 | organization | Deployers & Platforms | Alphabet Inc. |
+| [x] | 1226 | 1 | 0 | person | Executive | Yossi Matias |
+| [x] | 1227 | 1 | 0 | organization | Academic | People + AI Research |
+| [x] | 1228 | 1 | 0 | person | Policymaker | Gordon M. Goldstein |
+| [x] | 1229 | 1 | 0 | person | Organizer | Børge Brende |
+| [x] | 1230 | 1 | 0 | person | Executive | Maria Basso |
+| [x] | 1231 | 1 | 0 | person | Organizer | Francisco Betti |
+| [x] | 1232 | 1 | 0 | person | Executive | Cathy Li |
+| [x] | 1233 | 1 | 0 | person | Executive | Peter Lee |
+| [x] | 1235 | 1 | 0 | person | Executive | Ashok Elluswamy |
+| [x] | 1238 | 1 | 0 | organization | Government/Agency | Pentagon |
+| [x] | 1239 | 1 | 0 | organization | VC/Capital/Philanthropy | In-Q-Tel |
+| [x] | 1240 | 1 | 0 | organization | Deployers & Platforms | Cognizant |
+| [x] | 1241 | 1 | 0 | organization | Government/Agency | U.S. Army |
+| [x] | 1242 | 1 | 0 | organization | Deployers & Platforms | Workera |
+| [x] | 1243 | 1 | 0 | organization | VC/Capital/Philanthropy | AI Fund |
+| [x] | 1244 | 1 | 0 | organization | Deployers & Platforms | LandingAI |
+| [x] | 1245 | 1 | 0 | person | Academic | Daphne Koller |
+| [x] | 1246 | 1 | 0 | organization | VC/Capital/Philanthropy | MGX investment group |
+| [x] | 1247 | 1 | 0 | person | Executive | Larry Fink |
+| [x] | 1248 | 1 | 0 | person | Executive | Rob Goldstein |
+| [x] | 1249 | 1 | 0 | organization | VC/Capital/Philanthropy | Macquarie Asset Management |
+| [x] | 1250 | 1 | 0 | organization | Infrastructure & Compute | AMD |
+| [x] | 1252 | 1 | 0 | organization | Academic | University of Pittsburgh |
+| [x] | 1253 | 1 | 0 | person | Researcher | Allen Newell |
+| [x] | 1254 | 1 | 0 | person | Researcher | Herb Simon |
+| [x] | 1255 | 1 | 0 | person | Academic | Robert M. Groves |
+| [x] | 1256 | 1 | 0 | person | Academic | Scott Strobel |
+| [x] | 1257 | 1 | 0 | organization | Infrastructure & Compute | Yale Center for Research Computing |
+| [x] | 1258 | 1 | 0 | person | Policymaker | António Guterres |
+| [x] | 1259 | 1 | 0 | organization | Government/Agency | International Telecommunication Union |
+| [x] | 1260 | 1 | 0 | organization | Government/Agency | UNESCO |
+| [x] | 1261 | 1 | 0 | person | Policymaker | Amandeep Singh Gill |
+| [x] | 1262 | 1 | 0 | organization | Government/Agency | European Artificial Intelligence Board |
+| [x] | 1263 | 1 | 0 | person | Policymaker | Matt Turek |
+| [x] | 1264 | 1 | 0 | person | Policymaker | Benjamin Grosof |
+| [x] | 1265 | 1 | 0 | person | Organizer | Andrew Carney |
+| [x] | 1266 | 1 | 0 | organization | Government/Agency | ARPA-H |
+| [x] | 1267 | 1 | 0 | organization | Academic | Johns Hopkins Applied Physics Laboratory |
+| [x] | 1268 | 1 | 0 | person | Academic | Barton Paulhamus |
+| [x] | 1269 | 1 | 0 | person | Academic | Dr. Ian McCulloh |
+| [x] | 1271 | 1 | 0 | organization | Academic | Speed School of Engineering |
+| [x] | 1273 | 1 | 0 | person | Academic | David Marchick |
+| [x] | 1274 | 1 | 0 | person | Academic | Gwanhoo Lee |
+| [x] | 1275 | 1 | 0 | person | Academic | Angela Virtu |
+| [x] | 1276 | 1 | 0 | person | Academic | Bei Xiao |
+| [x] | 1277 | 1 | 0 | person | Academic | Thenkurussi (Kesh) Kesavadas |
+| [x] | 1278 | 1 | 0 | organization | Academic | USC Center for AI in Society |
+| [x] | 1279 | 1 | 0 | organization | Academic | USC Suzanne Dworak-Peck School of Social Work |
+| [x] | 1280 | 1 | 0 | organization | Academic | USC Viterbi School of Engineering |
+| [x] | 1281 | 1 | 0 | organization | Academic | USC Marshall School of Business |
+| [x] | 1282 | 1 | 0 | person | Academic | Geoff Garrett |
+| [x] | 1283 | 1 | 0 | organization | Academic | USC School of Advanced Computing |
+| [x] | 1284 | 1 | 0 | person | Academic | Carol L. Folt |
+| [x] | 1286 | 1 | 0 | person | Academic | Erika James |
+| [x] | 1287 | 1 | 0 | person | Academic | Kartik Hosanagar |
+| [x] | 1288 | 1 | 0 | person | Academic | Kevin Werbach |
+| [x] | 1289 | 1 | 0 | person | Academic | Eric Bradlow |
+| [x] | 1290 | 1 | 0 | person | Academic | Prasanna (Sonny) Tambe |
+| [x] | 1291 | 1 | 0 | person | Academic | Giles Hooker |
+| [x] | 1292 | 1 | 0 | organization | Academic | Jurist Center for Artificial Intelligence |
+| [x] | 1293 | 1 | 0 | organization | Academic | Center for Community-Engaged Artificial Intelligence |
+| [x] | 1294 | 1 | 0 | organization | Labor/Civil Society | Court Watch NOLA |
+| [x] | 1296 | 1 | 0 | organization | Government/Agency | NASA Ames Research Center |
+| [x] | 1297 | 1 | 0 | person | Academic | Sebastian Thrun |
+| [x] | 1298 | 1 | 0 | person | Executive | Nimar Arora |
+| [x] | 1299 | 1 | 0 | organization | Government/Agency | CTBT organization |
+| [x] | 1303 | 1 | 0 | organization | Government/Agency | Idaho National Laboratory |
+| [x] | 1304 | 1 | 0 | person | Policymaker | Pam Bondi |
+| [x] | 1305 | 1 | 0 | person | Policymaker | Mike Johnson |
+| [x] | 1306 | 1 | 0 | person | Policymaker | Steve Scalise |
+| [x] | 1310 | 1 | 0 | person | Executive | Ylli Bajraktari |
+| [x] | 1311 | 1 | 0 | person | Researcher | Trevor Darrell |
+| [x] | 1312 | 1 | 0 | organization | Deployers & Platforms | Clarifai |
+| [x] | 1313 | 1 | 0 | organization | Academic | College of Computing, Data Science, and Society |
+| [x] | 1315 | 1 | 0 | organization | Academic | Emory University |
+| [x] | 1316 | 1 | 0 | organization | Academic | Emory AI Group |
+| [x] | 1317 | 1 | 0 | organization | Academic | Block Center for Technology and Society |
+| [x] | 1318 | 1 | 0 | person | Academic | Manish Parashar |
+| [x] | 1319 | 1 | 0 | organization | Academic | Amii |
+| [x] | 1320 | 1 | 0 | person | Executive | Jean-François Gagné |
+| [x] | 1322 | 1 | 0 | organization | Government/Agency | Government of Canada |
+| [x] | 1323 | 1 | 0 | organization | VC/Capital/Philanthropy | Data Collective |
+| [x] | 1324 | 1 | 0 | organization | VC/Capital/Philanthropy | Real Ventures |
+| [x] | 1325 | 1 | 0 | organization | Ethics/Bias/Rights | Amnesty International |
+| [x] | 1326 | 1 | 0 | organization | Academic | Singapore Management University |
+| [x] | 1331 | 1 | 0 | organization | Academic | McGill Centre for Intelligent Machines |
+| [x] | 1332 | 1 | 0 | organization | Academic | McGill Collaborative for AI and Society |
+| [x] | 1333 | 1 | 0 | organization | Frontier Lab | McGill AI Lab |
+| [x] | 1335 | 1 | 0 | person | Organizer | Amir Banifatemi |
+| [x] | 1336 | 1 | 0 | organization | Government/Agency | OECD |
+| [x] | 1337 | 1 | 0 | person | Policymaker | Joanna Rodriguez |
+| [x] | 1338 | 1 | 0 | organization | VC/Capital/Philanthropy | Public Investment Fund |
+| [x] | 1339 | 1 | 0 | person | Executive | Mohammed bin Salman |
+| [x] | 1340 | 1 | 0 | organization | Infrastructure & Compute | National Infrastructure Fund |
+| [x] | 1341 | 1 | 0 | person | Academic | Michael J. Berry |
+| [x] | 1342 | 1 | 0 | person | Academic | William Bialek |
+| [x] | 1343 | 1 | 0 | organization | Government/Agency | Arizona Secretary of State |
+| [x] | 1344 | 1 | 0 | person | Executive | Mark Chen |
+| [x] | 1345 | 1 | 0 | organization | Think Tank/Policy Org | Colorado AI Policy Work Group |
+| [x] | 1349 | 1 | 0 | person | Executive | Ben Mann |
+| [x] | 1350 | 1 | 0 | person | Executive | Clay Bavor |
+| [x] | 1351 | 1 | 0 | organization | AI Safety/Alignment | Eleos AI |
+| [x] | 1352 | 1 | 0 | person | Researcher | David Chalmers |
+| [x] | 1353 | 1 | 0 | person | Researcher | Robert Long |
+| [x] | 1354 | 1 | 0 | person | Researcher | Rob Long |
+| [x] | 1355 | 1 | 0 | person | Researcher | Kathleen Finlinson |
+| [x] | 1356 | 1 | 0 | organization | Think Tank/Policy Org | Niskanen Center |
+| [x] | 1358 | 1 | 0 | organization | Government/Agency | U.S. Artificial Intelligence Safety Institute |
+| [x] | 1359 | 1 | 0 | organization | AI Safety/Alignment | Model Evaluation and Threat Research |
+| [x] | 1366 | 1 | 0 | person | Researcher | John M. Jumper |
+| [x] | 1367 | 1 | 0 | organization | Labor/Civil Society | Black in AI |
+| [x] | 1368 | 1 | 0 | person | Researcher | Margaret Mitchell |
 | [ ] | 1369 | 1 | 0 | person | Organizer | Meredith Stiehm |
 | [ ] | 1370 | 1 | 0 | person | Organizer | Lisa Takeuchi Cullen |
 | [ ] | 1371 | 1 | 0 | organization | Political Campaign/PAC | Club for Growth Action |
