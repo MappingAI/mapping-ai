@@ -420,54 +420,54 @@ Mark `[x]` when enrichment is written to DB. Add batch ref in the note column.
 | [x] | 1366 | 1 | 0 | person | Researcher | John M. Jumper |
 | [x] | 1367 | 1 | 0 | organization | Labor/Civil Society | Black in AI |
 | [x] | 1368 | 1 | 0 | person | Researcher | Margaret Mitchell |
-| [ ] | 1369 | 1 | 0 | person | Organizer | Meredith Stiehm |
-| [ ] | 1370 | 1 | 0 | person | Organizer | Lisa Takeuchi Cullen |
-| [ ] | 1371 | 1 | 0 | organization | Political Campaign/PAC | Club for Growth Action |
-| [ ] | 1372 | 1 | 0 | organization | Academic | University of Notre Dame |
-| [ ] | 1373 | 1 | 0 | person | Researcher | Molly Kinder |
-| [ ] | 1374 | 1 | 0 | organization | Think Tank/Policy Org | Munich Security Conference |
-| [ ] | 1379 | 1 | 0 | organization | Infrastructure & Compute | Neuralink |
-| [ ] | 1381 | 1 | 0 | person | Academic | Tejas N. Narechania |
-| [ ] | 1384 | 1 | 0 | organization | Labor/Civil Society | AI4ALL |
-| [ ] | 1385 | 1 | 0 | person | Executive | Justin Johnson |
-| [ ] | 1386 | 1 | 0 | person | Executive | Christoph Lassner |
-| [ ] | 1387 | 1 | 0 | person | Executive | Ben Mildenhall |
-| [ ] | 1388 | 1 | 0 | person | Academic | John Etchemendy |
-| [ ] | 1390 | 1 | 0 | organization | VC/Capital/Philanthropy | Ford Foundation |
-| [ ] | 1391 | 1 | 0 | organization | Academic | Indian Institute of Technology, Kanpur |
-| [ ] | 1392 | 1 | 0 | organization | AI Safety/Alignment | Trust::Data Alliance |
-| [ ] | 1393 | 1 | 0 | person | Researcher | Scott Alexander |
-| [ ] | 1397 | 1 | 0 | organization | Academic | University of Tuebingen |
-| [ ] | 1398 | 1 | 0 | person | Academic | Philipp Hennig |
-| [ ] | 1400 | 1 | 0 | organization | Deployers & Platforms | Jukedeck |
-| [ ] | 1401 | 1 | 0 | organization | Deployers & Platforms | ByteDance |
-| [ ] | 1402 | 1 | 0 | organization | Frontier Lab | Stability AI |
-| [ ] | 1403 | 1 | 0 | organization | Deployers & Platforms | TikTok |
-| [ ] | 1404 | 1 | 0 | organization | VC/Capital/Philanthropy | Thrive Holdings |
-| [ ] | 1405 | 1 | 0 | organization | Academic | Weizenbaum Institute |
-| [ ] | 1406 | 1 | 0 | organization | Academic | Technische Universität Berlin |
-| [ ] | 1407 | 1 | 0 | organization | Academic | Universidad de Buenos Aires |
-| [ ] | 1408 | 1 | 0 | organization | Government/Agency | Senate AI Caucus |
-| [ ] | 1410 | 1 | 0 | organization | Media/Journalism | The American Scholar |
-| [ ] | 1411 | 1 | 0 | person | Policymaker | Dave McCormick |
-| [ ] | 1412 | 1 | 0 | person | Policymaker | Roger Wicker |
-| [ ] | 1415 | 1 | 0 | person | Policymaker | Peter Welch |
-| [ ] | 1416 | 1 | 0 | organization | Government/Agency | National Institute for Standards and Technology |
-| [ ] | 1419 | 1 | 0 | organization | Government/Agency | Small Business Administration |
-| [ ] | 1423 | 1 | 0 | person | Policymaker | Jim Banks |
-| [ ] | 1424 | 1 | 0 | person | Policymaker | Shelley Moore Capito |
-| [ ] | 1425 | 1 | 0 | person | Policymaker | John Thune |
-| [ ] | 1426 | 1 | 0 | person | Policymaker | Bill Cassidy |
-| [ ] | 1427 | 1 | 0 | organization | Government/Agency | Senate Committee on Homeland Security and Governmental Affairs |
-| [ ] | 1429 | 1 | 0 | person | Policymaker | Jacob Helberg |
-| [ ] | 1430 | 1 | 0 | person | Policymaker | Matt Pottinger |
-| [ ] | 1432 | 1 | 0 | organization | Frontier Lab | Advanced Machine Intelligence Labs |
-| [ ] | 1433 | 1 | 0 | organization | Frontier Lab | AMI Labs |
-| [ ] | 1434 | 1 | 0 | organization | Academic | AT&T Bell Laboratories |
-| [ ] | 1435 | 1 | 0 | organization | Academic | Collège de France |
-| [ ] | 1436 | 1 | 0 | person | Executive | Alex LeBrun |
-| [ ] | 1437 | 1 | 0 | organization | Government/Agency | National Artificial Intelligence Advisory Commission |
-| [ ] | 1438 | 1 | 0 | organization | Government/Agency | U.S. Department of Labor |
+| [x] | 1369 | 1 | 0 | person | Organizer | Meredith Stiehm |
+| [x] | 1370 | 1 | 0 | person | Organizer | Lisa Takeuchi Cullen |
+| [x] | 1371 | 1 | 0 | organization | Political Campaign/PAC | Club for Growth Action |
+| [x] | 1372 | 1 | 0 | organization | Academic | University of Notre Dame |
+| [x] | 1373 | 1 | 0 | person | Researcher | Molly Kinder |
+| [x] | 1374 | 1 | 0 | organization | Think Tank/Policy Org | Munich Security Conference |
+| [x] | 1379 | 1 | 0 | organization | Infrastructure & Compute | Neuralink |
+| [x] | 1381 | 1 | 0 | person | Academic | Tejas N. Narechania |
+| [x] | 1384 | 1 | 0 | organization | Labor/Civil Society | AI4ALL |
+| [x] | 1385 | 1 | 0 | person | Executive | Justin Johnson |
+| [x] | 1386 | 1 | 0 | person | Executive | Christoph Lassner |
+| [x] | 1387 | 1 | 0 | person | Executive | Ben Mildenhall |
+| [x] | 1388 | 1 | 0 | person | Academic | John Etchemendy |
+| [x] | 1390 | 1 | 0 | organization | VC/Capital/Philanthropy | Ford Foundation |
+| [x] | 1391 | 1 | 0 | organization | Academic | Indian Institute of Technology, Kanpur |
+| [x] | 1392 | 1 | 0 | organization | AI Safety/Alignment | Trust::Data Alliance |
+| [x] | 1393 | 1 | 0 | person | Researcher | Scott Alexander |
+| [x] | 1397 | 1 | 0 | organization | Academic | University of Tuebingen |
+| [x] | 1398 | 1 | 0 | person | Academic | Philipp Hennig |
+| [x] | 1400 | 1 | 0 | organization | Deployers & Platforms | Jukedeck |
+| [x] | 1401 | 1 | 0 | organization | Deployers & Platforms | ByteDance |
+| [x] | 1402 | 1 | 0 | organization | Frontier Lab | Stability AI |
+| [x] | 1403 | 1 | 0 | organization | Deployers & Platforms | TikTok |
+| [x] | 1404 | 1 | 0 | organization | VC/Capital/Philanthropy | Thrive Holdings |
+| [x] | 1405 | 1 | 0 | organization | Academic | Weizenbaum Institute |
+| [x] | 1406 | 1 | 0 | organization | Academic | Technische Universität Berlin |
+| [x] | 1407 | 1 | 0 | organization | Academic | Universidad de Buenos Aires |
+| [x] | 1408 | 1 | 0 | organization | Government/Agency | Senate AI Caucus |
+| [x] | 1410 | 1 | 0 | organization | Media/Journalism | The American Scholar |
+| [x] | 1411 | 1 | 0 | person | Policymaker | Dave McCormick |
+| [x] | 1412 | 1 | 0 | person | Policymaker | Roger Wicker |
+| [x] | 1415 | 1 | 0 | person | Policymaker | Peter Welch |
+| [x] | 1416 | 1 | 0 | organization | Government/Agency | National Institute for Standards and Technology |
+| [x] | 1419 | 1 | 0 | organization | Government/Agency | Small Business Administration |
+| [x] | 1423 | 1 | 0 | person | Policymaker | Jim Banks |
+| [x] | 1424 | 1 | 0 | person | Policymaker | Shelley Moore Capito |
+| [x] | 1425 | 1 | 0 | person | Policymaker | John Thune |
+| [x] | 1426 | 1 | 0 | person | Policymaker | Bill Cassidy |
+| [x] | 1427 | 1 | 0 | organization | Government/Agency | Senate Committee on Homeland Security and Governmental Affairs |
+| [x] | 1429 | 1 | 0 | person | Policymaker | Jacob Helberg |
+| [x] | 1430 | 1 | 0 | person | Policymaker | Matt Pottinger |
+| [x] | 1432 | 1 | 0 | organization | Frontier Lab | Advanced Machine Intelligence Labs |
+| [x] | 1433 | 1 | 0 | organization | Frontier Lab | AMI Labs |
+| [x] | 1434 | 1 | 0 | organization | Academic | AT&T Bell Laboratories |
+| [x] | 1435 | 1 | 0 | organization | Academic | Collège de France |
+| [x] | 1436 | 1 | 0 | person | Executive | Alex LeBrun |
+| [x] | 1437 | 1 | 0 | organization | Government/Agency | National Artificial Intelligence Advisory Commission |
+| [x] | 1438 | 1 | 0 | organization | Government/Agency | U.S. Department of Labor |
 | [ ] | 1439 | 1 | 0 | organization | Political Campaign/PAC | Public First Action |
 | [ ] | 1440 | 1 | 0 | person | Policymaker | Lisa Hansmann |
 | [ ] | 1441 | 1 | 0 | person | Academic | Gabriel Unger |
