@@ -139,6 +139,13 @@ def null_role_count(conn, edge_type):
         return cur.fetchone()[0]
 
 
+def format_ids(ids):
+    """Format a list of edge IDs as a compact comma-separated string."""
+    if not ids:
+        return "(none)"
+    return ", ".join(str(i) for i in ids)
+
+
 def apply_simple(cur, legacy, canonical, flip, set_role):
     """Blanket rename, optional flip, optional role backfill."""
     if flip and set_role:
@@ -319,16 +326,55 @@ def main():
         migrated = 0
         with conn.cursor() as cur:
             for legacy, canonical, flip, role, expected, _ in simple_plan:
+                cur.execute(
+                    "SELECT id FROM edge WHERE edge_type = %s ORDER BY id",
+                    (legacy,),
+                )
+                ids = [row[0] for row in cur.fetchall()]
+
                 affected = apply_simple(cur, legacy, canonical, flip, role)
                 migrated += affected
                 check = "" if affected == expected else f" (expected {expected})"
-                out(f"- `{legacy}` → `{canonical}`: **{affected}**{check}")
+                action = "flip + rename" if flip else "rename"
+                out(f"### `{legacy}` → `{canonical}`: **{affected}**{check}")
+                out(f"- Action: {action}")
+                if role:
+                    out(f"- Role backfill: `{role}`")
+                out(f"- Edge IDs: {format_ids(ids)}")
+                out()
 
             for legacy, canonical, role, expected, _, _ in cond_plan:
+                cur.execute("""
+                    SELECT e.id FROM edge e
+                    JOIN entity s ON e.source_id = s.id
+                    JOIN entity t ON e.target_id = t.id
+                    WHERE e.edge_type = %s
+                      AND s.entity_type = 'organization'
+                      AND t.entity_type = 'person'
+                    ORDER BY e.id
+                """, (legacy,))
+                flip_ids = [row[0] for row in cur.fetchall()]
+
+                cur.execute("""
+                    SELECT e.id FROM edge e
+                    JOIN entity s ON e.source_id = s.id
+                    JOIN entity t ON e.target_id = t.id
+                    WHERE e.edge_type = %s
+                      AND NOT (s.entity_type = 'organization'
+                               AND t.entity_type = 'person')
+                    ORDER BY e.id
+                """, (legacy,))
+                rename_ids = [row[0] for row in cur.fetchall()]
+
                 affected = apply_conditional(cur, legacy, canonical, role)
                 migrated += affected
                 check = "" if affected == expected else f" (expected {expected})"
-                out(f"- `{legacy}` → `{canonical}` (conditional): **{affected}**{check}")
+                out(f"### `{legacy}` → `{canonical}` (conditional): **{affected}**{check}")
+                if role:
+                    out(f"- Role backfill: `{role}`")
+                out(f"- Flipped (org→person): {format_ids(flip_ids)} ({len(flip_ids)} edges)")
+                out(f"- Renamed only: {format_ids(rename_ids)} ({len(rename_ids)} edges)")
+                out()
 
         conn.commit()
         out()
