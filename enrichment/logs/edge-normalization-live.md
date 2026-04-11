@@ -191,3 +191,28 @@ Role backfill: `Co-founder` (12 null roles)
 | mentioned | 1 | no |
 
 **Canonical:** 1633 / 2226 (73.4%)
+
+## Post-Review Fix: Founder Direction Flip
+
+*2026-04-10 — discovered during manual review (review_phase2.py)*
+
+77 `founder` edges had org→person direction (e.g., "Microsoft → Bill Gates") instead of person→org. The original `founded` migration was a simple rename that assumed consistent direction, but 77 of the 118 original `founded` edges were entered backwards.
+
+**Fix:** Flipped `source_id` ↔ `target_id` where source=organization and target=person.
+
+**Edges flipped (77):** 889, 894, 952, 957, 965, 969, 982, 985, 986, 987, 1012, 1017, 1022, 1023, 1160, 1170, 1703, 1704, 1710, 1711, 1716, 1717, 1718, 1748, 1758, 1785, 1799, 1814, 1824, 1866, 1886, 1887, 1888, 1889, 1924, 1958, 1970, 1971, 1990, 1996, 1997, 2004, 2005, 2015, 2043, 2051, 2090, 2099, 2100, 2101, 2102, 2116, 2126, 2127, 2140, 2149, 2150, 2151, 2159, 2161, 2162, 2166, 2170, 2176, 2186, 2194, 2195, 2196, 2227, 2234, 2237, 2238, 2240, 2241, 2242, 2243, 2244
+
+**Post-fix founder directions:**
+
+| Direction | Count |
+| --------- | ----: |
+| person → organization | 164 |
+| person → person | 18 |
+| organization → organization | 5 |
+| person → resource | 2 |
+
+**Remaining org→person founder edges:** 0
+
+**Known issues for Phase 4:**
+- 18 person→person `founder` edges — co-founding relationships stored as person→person instead of person→org
+- 5 org→org `founder` edges — may be legitimate (spin-offs) or data entry issues

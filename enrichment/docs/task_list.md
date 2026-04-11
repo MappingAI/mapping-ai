@@ -5,7 +5,7 @@ Execution tracker for the data enrichment project. Strategy and design rationale
 **Status:**
 - Phase 0 Setup — Complete
 - Phase 1 Audit — Complete
-- Phase 2 Cleanup — In progress
+- Phase 2 Cleanup — Complete
 - Phase 3 Entity Enrichment — Not started
 - Phase 4 Edge Enrichment — Not started
 - Phase 5 Seeding — Not started
@@ -26,14 +26,16 @@ Execution tracker for the data enrichment project. Strategy and design rationale
 - [x] Write `enrichment/scripts/audit.py`
 - [x] Run audit and save output to `enrichment/logs/baseline-audit.md`
 - [x] Review baseline numbers, flag anything unexpected
+- [x] Manual check of phase 1 outputs
+
 
 ## Phase 2: Mechanical Cleanup
 > See plan.md Phase 2
 
 **Citation artifacts:**
-- [ ] Write `cleanup_citations.py` — regex for `[n]`, `[n,n]` patterns in notes
-- [ ] Dry run, review output
-- [ ] Run live, log entity count + IDs changed
+- [x] Write `cleanup_citations.py` — regex for `[n]`, `[n,n]` patterns in notes (05ba014)
+- [x] Dry run, review output (05ba014)
+- [x] Run live, log entity count + IDs changed — 300 entities updated, 1,375 citations removed (05ba014)
 
 **Edge type normalization:**
 - [x] Write `normalize_edges.py` — 24 legacy types to 12 canonical (861a4c3)
@@ -44,6 +46,9 @@ Execution tracker for the data enrichment project. Strategy and design rationale
 - [x] Write `normalize_beliefs.py` — non-standard to canonical values
 - [x] Dry run, review distinct values found
 - [x] Run live, log counts — 113 entities updated (2 belief_agi_timeline, 111 belief_evidence_source)
+
+- [x] Manual check of phase 2 changes to the staging database (logged in phase2_diff.md)
+
 
 ## Phase 3: Entity Enrichment
 > See plan.md Phase 3
@@ -115,4 +120,5 @@ Execution tracker for the data enrichment project. Strategy and design rationale
 
 Items found during execution that don't fit neatly into a phase above.
 
-*(empty — items will be added as they emerge)*
+- [ ] 18 person→person `founder` edges need manual review — co-founding relationships stored as person→person instead of each person→org (see Phase 4: Edge directionality)
+- [ ] 5 org→org `founder` edges need review — may be legitimate (spin-offs) or data entry issues
