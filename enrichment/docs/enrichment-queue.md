@@ -58,78 +58,78 @@ Mark `[x]` when enrichment is written to DB. Add batch ref in the note column.
 
 | Status | ID | Edges | Notes | Type | Category | Name |
 | ------ | -: | ----: | ----: | ---- | -------- | ---- |
-| [ ] | 1383 | 2 | 0 | organization | Academic | Stanford Vision and Learning Lab |
-| [ ] | 1380 | 2 | 0 | organization | Frontier Lab | High-Flyer AI |
-| [ ] | 1378 | 2 | 0 | organization | Deployers & Platforms | X |
-| [ ] | 1365 | 2 | 0 | person | Executive | Mustafa Suleyman |
-| [ ] | 1364 | 2 | 0 | person | Executive | Shane Legg |
-| [ ] | 1362 | 2 | 0 | organization | Academic | MIT Computer Science & Artificial Intelligence Laboratory |
-| [ ] | 1361 | 2 | 0 | organization | Academic | MIT Jameel Clinic |
-| [ ] | 1347 | 2 | 0 | organization | Infrastructure & Compute | Helion Energy |
-| [ ] | 1346 | 2 | 0 | person | Executive | Greg Brockman |
-| [ ] | 1334 | 2 | 0 | person | Executive | Mark Nitzberg |
-| [ ] | 1330 | 2 | 0 | person | Researcher | Aaron Courville |
-| [ ] | 1321 | 2 | 0 | organization | Deployers & Platforms | ServiceNow |
-| [ ] | 1314 | 2 | 0 | organization | Academic | University of Utah |
-| [ ] | 1302 | 2 | 0 | person | Policymaker | Dick Durbin |
-| [ ] | 1295 | 2 | 0 | organization | Government/Agency | Office of Management and Budget |
-| [ ] | 1285 | 2 | 0 | organization | Academic | University of Pennsylvania |
-| [ ] | 1221 | 2 | 0 | organization | Deployers & Platforms | Perplexity AI |
-| [ ] | 1211 | 2 | 0 | person | Executive | Valérie Pisano |
-| [ ] | 1201 | 2 | 0 | person | Academic | Danielle Li |
-| [ ] | 1194 | 2 | 0 | organization | Academic | Allen Institute for AI |
-| [ ] | 1149 | 2 | 0 | organization | Government/Agency | House Bipartisan Task Force on Artificial Intelligence |
-| [ ] | 1132 | 2 | 0 | organization | Academic | MIT Schwarzman College of Computing |
-| [ ] | 1130 | 2 | 0 | organization | Academic | MIT Data to AI Lab |
-| [ ] | 1128 | 2 | 0 | organization | AI Safety/Alignment | Stanford Center for AI Safety |
-| [ ] | 1127 | 2 | 0 | organization | Academic | Stanford Artificial Intelligence Laboratory (SAIL) |
-| [ ] | 1060 | 2 | 0 | organization | Media/Journalism | Platformer |
-| [ ] | 1058 | 2 | 0 | organization | Deployers & Platforms | Anduril Industries |
-| [ ] | 1234 | 2 | 0 | organization | Academic | NYU School of Medicine |
-| [ ] | 1783 | 2 | 0 | person | Researcher | Daniel Filan |
-| [ ] | 1693 | 2 | 0 | organization | AI Safety/Alignment | Berkeley AI Safety Initiative for Students (BASIS) |
-| [ ] | 1691 | 2 | 0 | organization | AI Safety/Alignment | Cambridge AI Safety Hub |
-| [ ] | 1662 | 2 | 0 | person | Researcher | Adam Shimi |
-| [ ] | 1649 | 2 | 0 | person | Executive | Daniel Gross |
-| [ ] | 1629 | 2 | 0 | organization | Government/Agency | US AI Safety Institute Consortium |
-| [ ] | 1628 | 2 | 0 | organization | Think Tank/Policy Org | SecureBio |
-| [ ] | 1618 | 2 | 0 | organization | Think Tank/Policy Org | Oxford Martin School |
-| [ ] | 1616 | 2 | 0 | person | Researcher | Ben Garfinkel |
-| [ ] | 450 | 2 | 0 | organization |  | Vector Institute |
-| [ ] | 1606 | 2 | 0 | person | Investor | Vishal Maini |
-| [ ] | 1605 | 2 | 0 | person | Executive | Allison Duettmann |
-| [ ] | 1597 | 2 | 0 | organization | Think Tank/Policy Org | Founders Pledge |
-| [ ] | 1594 | 2 | 0 | person | Organizer | Jesse Clifton |
-| [ ] | 1592 | 2 | 0 | person | Executive | Jonas Vollmer |
-| [ ] | 1584 | 2 | 0 | organization | Academic | Princeton AI Lab |
-| [ ] | 1559 | 2 | 0 | person | Academic | Robert Trager |
-| [ ] | 1536 | 2 | 0 | person | Researcher | Ayushmaan Sharma |
-| [ ] | 1513 | 2 | 0 | person | Organizer | Stefan Torges |
-| [ ] | 1510 | 2 | 0 | person | Researcher | Ryan Greenblatt |
-| [ ] | 1507 | 2 | 0 | person | Executive | Buck Shlegeris |
-| [ ] | 1481 | 2 | 0 | organization | Government/Agency | Congressional Artificial Intelligence Caucus |
-| [ ] | 1431 | 2 | 0 | organization | Think Tank/Policy Org | Encode AI |
-| [ ] | 1428 | 2 | 0 | organization | Government/Agency | U.S. Senate Commerce Committee |
-| [ ] | 1421 | 2 | 0 | organization | Government/Agency | Joint Economic Committee |
-| [ ] | 1420 | 2 | 0 | organization | Government/Agency | Department of Defense |
-| [ ] | 1418 | 2 | 0 | person | Policymaker | Catherine Cortez Masto |
-| [ ] | 1414 | 2 | 0 | person | Policymaker | Rob Portman |
-| [ ] | 1413 | 2 | 0 | person | Policymaker | Jeanne Shaheen |
-| [ ] | 1409 | 2 | 0 | organization | Media/Journalism | Wall Street Journal |
-| [ ] | 1396 | 2 | 0 | person | Researcher | Romeo Dean |
-| [ ] | 1395 | 2 | 0 | person | Researcher | Eli Lifland |
-| [ ] | 1394 | 2 | 0 | person | Researcher | Thomas Larsen |
-| [ ] | 1389 | 2 | 0 | organization | Academic | Harvard Faculty of Arts and Sciences |
-| [ ] | 1054 | 2 | 0 | organization | Ethics/Bias/Rights | Signal |
-| [ ] | 948 | 2 | 37 | organization | Academic | MIT GOV/LAB |
-| [ ] | 958 | 2 | 41 | organization | Think Tank/Policy Org | Collective Intelligence Project |
-| [ ] | 876 | 2 | 42 | organization | Frontier Lab | Thinking Machines Lab |
-| [ ] | 956 | 2 | 53 | organization | Think Tank/Policy Org | Roosevelt Institute |
-| [ ] | 875 | 2 | 58 | organization | Ethics/Bias/Rights | DAIR |
-| [ ] | 910 | 2 | 58 | organization | Government/Agency | NTIA |
-| [ ] | 905 | 2 | 69 | organization | Ethics/Bias/Rights | ACLU |
-| [ ] | 911 | 2 | 77 | organization | Government/Agency | NIST |
-| [ ] | 197 | 2 | 280 | organization | AI Safety/Alignment | From AI to ZI |
+| [x] | 1383 | 2 | 0 | organization | Academic | Stanford Vision and Learning Lab |
+| [x] | 1380 | 2 | 0 | organization | Frontier Lab | High-Flyer AI |
+| [x] | 1378 | 2 | 0 | organization | Deployers & Platforms | X |
+| [x] | 1365 | 2 | 0 | person | Executive | Mustafa Suleyman |
+| [x] | 1364 | 2 | 0 | person | Executive | Shane Legg |
+| [x] | 1362 | 2 | 0 | organization | Academic | MIT Computer Science & Artificial Intelligence Laboratory |
+| [x] | 1361 | 2 | 0 | organization | Academic | MIT Jameel Clinic |
+| [x] | 1347 | 2 | 0 | organization | Infrastructure & Compute | Helion Energy |
+| [x] | 1346 | 2 | 0 | person | Executive | Greg Brockman |
+| [x] | 1334 | 2 | 0 | person | Executive | Mark Nitzberg |
+| [x] | 1330 | 2 | 0 | person | Researcher | Aaron Courville |
+| [x] | 1321 | 2 | 0 | organization | Deployers & Platforms | ServiceNow |
+| [x] | 1314 | 2 | 0 | organization | Academic | University of Utah |
+| [x] | 1302 | 2 | 0 | person | Policymaker | Dick Durbin |
+| [x] | 1295 | 2 | 0 | organization | Government/Agency | Office of Management and Budget |
+| [x] | 1285 | 2 | 0 | organization | Academic | University of Pennsylvania |
+| [x] | 1221 | 2 | 0 | organization | Deployers & Platforms | Perplexity AI |
+| [x] | 1211 | 2 | 0 | person | Executive | Valérie Pisano |
+| [x] | 1201 | 2 | 0 | person | Academic | Danielle Li |
+| [x] | 1194 | 2 | 0 | organization | Academic | Allen Institute for AI |
+| [x] | 1149 | 2 | 0 | organization | Government/Agency | House Bipartisan Task Force on Artificial Intelligence |
+| [x] | 1132 | 2 | 0 | organization | Academic | MIT Schwarzman College of Computing |
+| [x] | 1130 | 2 | 0 | organization | Academic | MIT Data to AI Lab |
+| [x] | 1128 | 2 | 0 | organization | AI Safety/Alignment | Stanford Center for AI Safety |
+| [x] | 1127 | 2 | 0 | organization | Academic | Stanford Artificial Intelligence Laboratory (SAIL) |
+| [x] | 1060 | 2 | 0 | organization | Media/Journalism | Platformer |
+| [x] | 1058 | 2 | 0 | organization | Deployers & Platforms | Anduril Industries |
+| [x] | 1234 | 2 | 0 | organization | Academic | NYU School of Medicine |
+| [x] | 1783 | 2 | 0 | person | Researcher | Daniel Filan |
+| [x] | 1693 | 2 | 0 | organization | AI Safety/Alignment | Berkeley AI Safety Initiative for Students (BASIS) |
+| [x] | 1691 | 2 | 0 | organization | AI Safety/Alignment | Cambridge AI Safety Hub |
+| [x] | 1662 | 2 | 0 | person | Researcher | Adam Shimi |
+| [x] | 1649 | 2 | 0 | person | Executive | Daniel Gross |
+| [x] | 1629 | 2 | 0 | organization | Government/Agency | US AI Safety Institute Consortium |
+| [x] | 1628 | 2 | 0 | organization | Think Tank/Policy Org | SecureBio |
+| [x] | 1618 | 2 | 0 | organization | Think Tank/Policy Org | Oxford Martin School |
+| [x] | 1616 | 2 | 0 | person | Researcher | Ben Garfinkel |
+| [x] | 450 | 2 | 0 | organization |  | Vector Institute |
+| [x] | 1606 | 2 | 0 | person | Investor | Vishal Maini |
+| [x] | 1605 | 2 | 0 | person | Executive | Allison Duettmann |
+| [x] | 1597 | 2 | 0 | organization | Think Tank/Policy Org | Founders Pledge |
+| [x] | 1594 | 2 | 0 | person | Organizer | Jesse Clifton |
+| [x] | 1592 | 2 | 0 | person | Executive | Jonas Vollmer |
+| [x] | 1584 | 2 | 0 | organization | Academic | Princeton AI Lab |
+| [x] | 1559 | 2 | 0 | person | Academic | Robert Trager |
+| [x] | 1536 | 2 | 0 | person | Researcher | Ayushmaan Sharma |
+| [x] | 1513 | 2 | 0 | person | Organizer | Stefan Torges |
+| [x] | 1510 | 2 | 0 | person | Researcher | Ryan Greenblatt |
+| [x] | 1507 | 2 | 0 | person | Executive | Buck Shlegeris |
+| [x] | 1481 | 2 | 0 | organization | Government/Agency | Congressional Artificial Intelligence Caucus |
+| [x] | 1431 | 2 | 0 | organization | Think Tank/Policy Org | Encode AI |
+| [x] | 1428 | 2 | 0 | organization | Government/Agency | U.S. Senate Commerce Committee |
+| [x] | 1421 | 2 | 0 | organization | Government/Agency | Joint Economic Committee |
+| [x] | 1420 | 2 | 0 | organization | Government/Agency | Department of Defense |
+| [x] | 1418 | 2 | 0 | person | Policymaker | Catherine Cortez Masto |
+| [x] | 1414 | 2 | 0 | person | Policymaker | Rob Portman |
+| [x] | 1413 | 2 | 0 | person | Policymaker | Jeanne Shaheen |
+| [x] | 1409 | 2 | 0 | organization | Media/Journalism | Wall Street Journal |
+| [x] | 1396 | 2 | 0 | person | Researcher | Romeo Dean |
+| [x] | 1395 | 2 | 0 | person | Researcher | Eli Lifland |
+| [x] | 1394 | 2 | 0 | person | Researcher | Thomas Larsen |
+| [x] | 1389 | 2 | 0 | organization | Academic | Harvard Faculty of Arts and Sciences |
+| [x] | 1054 | 2 | 0 | organization | Ethics/Bias/Rights | Signal |
+| [x] | 948 | 2 | 37 | organization | Academic | MIT GOV/LAB |
+| [x] | 958 | 2 | 41 | organization | Think Tank/Policy Org | Collective Intelligence Project |
+| [x] | 876 | 2 | 42 | organization | Frontier Lab | Thinking Machines Lab |
+| [x] | 956 | 2 | 53 | organization | Think Tank/Policy Org | Roosevelt Institute |
+| [x] | 875 | 2 | 58 | organization | Ethics/Bias/Rights | DAIR |
+| [x] | 910 | 2 | 58 | organization | Government/Agency | NTIA |
+| [x] | 905 | 2 | 69 | organization | Ethics/Bias/Rights | ACLU |
+| [x] | 911 | 2 | 77 | organization | Government/Agency | NIST |
+| [x] | 197 | 2 | 280 | organization | AI Safety/Alignment | From AI to ZI |
 
 ## 1 edge (569 entities)
 
