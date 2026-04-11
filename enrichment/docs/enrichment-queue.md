@@ -29,30 +29,30 @@ Mark `[x]` when enrichment is written to DB. Add batch ref in the note column.
 
 | Status | ID | Edges | Notes | Type | Category | Name |
 | ------ | -: | ----: | ----: | ---- | -------- | ---- |
-| [ ] | 1301 | 4 | 0 | person | Policymaker | Ted Budd |
-| [ ] | 1376 | 4 | 0 | person | Executive | Joe Biden |
-| [ ] | 1329 | 4 | 0 | organization | Deployers & Platforms | Apple |
-| [ ] | 1417 | 4 | 0 | organization | Government/Agency | Department of Energy |
-| [ ] | 904 | 4 | 37 | organization | Ethics/Bias/Rights | Electronic Frontier Foundation |
-| [ ] | 914 | 4 | 40 | organization | Government/Agency | Department of Commerce |
-| [ ] | 952 | 4 | 43 | organization | Academic | Harvard Berkman Klein Center |
-| [ ] | 912 | 4 | 51 | organization | Government/Agency | Department of Justice |
-| [ ] | 947 | 4 | 77 | organization | Academic | MIT CSAIL |
-| [ ] | 1357 | 3 | 0 | organization | Think Tank/Policy Org | Federation of American Scientists |
-| [ ] | 1360 | 3 | 0 | organization | Government/Agency | UK government's Frontier AI Taskforce |
-| [ ] | 1590 | 3 | 0 | person | Researcher | Tom Davidson |
-| [ ] | 1209 | 3 | 0 | organization | Academic | Polytechnique Montréal |
-| [ ] | 1148 | 3 | 0 | organization | Government/Agency | Senate Committee on Commerce, Science and Transportation |
-| [ ] | 1363 | 3 | 0 | organization | Academic | Cornell University |
-| [ ] | 1210 | 3 | 0 | organization | Academic | HEC Montréal |
-| [ ] | 1422 | 3 | 0 | person | Policymaker | Josh Hawley |
-| [ ] | 1583 | 3 | 0 | organization | VC/Capital/Philanthropy | Good Ventures |
-| [ ] | 1300 | 3 | 0 | organization | Academic | Stanford Law School |
-| [ ] | 954 | 3 | 42 | organization | Academic | Creative Destruction Lab |
-| [ ] | 950 | 3 | 64 | organization | Academic | Princeton CITP |
-| [ ] | 711 | 3 | 225 | organization | Political Campaign/PAC | Defending Our Values PAC |
-| [ ] | 712 | 3 | 261 | organization | Political Campaign/PAC | Jobs and Democracy PAC |
-| [ ] | 709 | 3 | 287 | organization | Political Campaign/PAC | Think Big |
+| [x] | 1301 | 4 | 0 | person | Policymaker | Ted Budd |
+| [x] | 1376 | 4 | 0 | person | Executive | Joe Biden |
+| [x] | 1329 | 4 | 0 | organization | Deployers & Platforms | Apple |
+| [x] | 1417 | 4 | 0 | organization | Government/Agency | Department of Energy |
+| [x] | 904 | 4 | 37 | organization | Ethics/Bias/Rights | Electronic Frontier Foundation |
+| [x] | 914 | 4 | 40 | organization | Government/Agency | Department of Commerce |
+| [x] | 952 | 4 | 43 | organization | Academic | Harvard Berkman Klein Center |
+| [x] | 912 | 4 | 51 | organization | Government/Agency | Department of Justice |
+| [x] | 947 | 4 | 77 | organization | Academic | MIT CSAIL |
+| [x] | 1357 | 3 | 0 | organization | Think Tank/Policy Org | Federation of American Scientists |
+| [x] | 1360 | 3 | 0 | organization | Government/Agency | UK government's Frontier AI Taskforce |
+| [x] | 1590 | 3 | 0 | person | Researcher | Tom Davidson |
+| [x] | 1209 | 3 | 0 | organization | Academic | Polytechnique Montréal |
+| [x] | 1148 | 3 | 0 | organization | Government/Agency | Senate Committee on Commerce, Science and Transportation |
+| [x] | 1363 | 3 | 0 | organization | Academic | Cornell University |
+| [x] | 1210 | 3 | 0 | organization | Academic | HEC Montréal |
+| [x] | 1422 | 3 | 0 | person | Policymaker | Josh Hawley |
+| [x] | 1583 | 3 | 0 | organization | VC/Capital/Philanthropy | Good Ventures |
+| [x] | 1300 | 3 | 0 | organization | Academic | Stanford Law School |
+| [x] | 954 | 3 | 42 | organization | Academic | Creative Destruction Lab |
+| [x] | 950 | 3 | 64 | organization | Academic | Princeton CITP |
+| [x] | 711 | 3 | 225 | organization | Political Campaign/PAC | Defending Our Values PAC |
+| [x] | 712 | 3 | 261 | organization | Political Campaign/PAC | Jobs and Democracy PAC |
+| [x] | 709 | 3 | 287 | organization | Political Campaign/PAC | Think Big |
 
 ## 2 edges (72 entities)
 
