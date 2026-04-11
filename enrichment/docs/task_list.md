@@ -4,7 +4,7 @@ Execution tracker for the data enrichment project. Strategy and design rationale
 
 **Status:**
 - Phase 0 Setup — Complete
-- Phase 1 Audit — Not started
+- Phase 1 Audit — Complete
 - Phase 2 Cleanup — Not started
 - Phase 3 Entity Enrichment — Not started
 - Phase 4 Edge Enrichment — Not started
@@ -23,9 +23,9 @@ Execution tracker for the data enrichment project. Strategy and design rationale
 ## Phase 1: Audit & Baseline
 > See plan.md Phase 1
 
-- [ ] Write `enrichment/scripts/audit.py`
-- [ ] Run audit and save output to `enrichment/logs/baseline-audit.md`
-- [ ] Review baseline numbers, flag anything unexpected
+- [x] Write `enrichment/scripts/audit.py`
+- [x] Run audit and save output to `enrichment/logs/baseline-audit.md`
+- [x] Review baseline numbers, flag anything unexpected
 
 ## Phase 2: Mechanical Cleanup
 > See plan.md Phase 2
