@@ -135,78 +135,78 @@ Mark `[x]` when enrichment is written to DB. Add batch ref in the note column.
 
 | Status | ID | Edges | Notes | Type | Category | Name |
 | ------ | -: | ----: | ----: | ---- | -------- | ---- |
-| [ ] | 1784 | 1 | 0 | person | Organizer | Frances Lorenz |
-| [ ] | 1683 | 1 | 0 | person | Executive | Peter Wildeford |
-| [ ] | 1684 | 1 | 0 | person | Executive | Amanda El-Dakhakhni |
-| [ ] | 1685 | 1 | 0 | person | Executive | Zoe Williams |
-| [ ] | 1686 | 1 | 0 | person | Organizer | Renan Araujo |
-| [ ] | 1687 | 1 | 0 | organization | VC/Capital/Philanthropy | Protocol Labs |
-| [ ] | 1688 | 1 | 0 | organization | VC/Capital/Philanthropy | Gigafund |
-| [ ] | 1689 | 1 | 0 | organization | VC/Capital/Philanthropy | 100 Plus Capital |
-| [ ] | 1690 | 1 | 0 | person | Executive | Connor Axiotes |
-| [ ] | 1692 | 1 | 0 | person | Organizer | Joey Skaf |
-| [ ] | 1694 | 1 | 0 | person | Researcher | Robert Huben |
-| [ ] | 1695 | 1 | 0 | person | Researcher | Dawn Drescher |
-| [ ] | 1696 | 1 | 0 | person | Policymaker | Mark Gray |
-| [ ] | 1697 | 1 | 0 | person | Executive | Mark D Gray |
-| [ ] | 1698 | 1 | 0 | person | Policymaker | Melissa Holyoak |
-| [ ] | 1699 | 1 | 0 | organization | Government/Agency | General Services Administration |
-| [ ] | 1700 | 1 | 0 | person | Executive | Rob Fergus |
-| [ ] | 1701 | 1 | 0 | person | Executive | Serkan Piantino |
-| [ ] | 1702 | 1 | 0 | person | Executive | Jérôme Pesenti |
-| [ ] | 1703 | 1 | 0 | person | Executive | David Singleton |
-| [ ] | 1704 | 1 | 0 | person | Executive | Hugo Barra |
-| [ ] | 1705 | 1 | 0 | person | Executive | Nicholas Jitkoff |
-| [ ] | 1706 | 1 | 0 | organization | Government/Agency | Department of Homeland Security |
-| [ ] | 1707 | 1 | 0 | organization | Government/Agency | National Institutes of Health |
-| [ ] | 1708 | 1 | 0 | person | Executive | Judd Rosenblatt |
-| [ ] | 1709 | 1 | 0 | person | Researcher | Diogo de Lucena |
-| [ ] | 1710 | 1 | 0 | person | Executive | Marc Carauleanu |
-| [ ] | 1711 | 1 | 0 | person | Academic | John Bargh |
-| [ ] | 1712 | 1 | 0 | person | Organizer | Søren Elverlin |
-| [ ] | 1713 | 1 | 0 | person | Organizer | Bryce Robertson |
-| [ ] | 1714 | 1 | 0 | person | Organizer | Oliver Zhang |
-| [ ] | 1715 | 1 | 0 | organization | AI Safety/Alignment | Center for AI Safety Action Fund |
-| [ ] | 1717 | 1 | 0 | person | Investor | Anish Acharya |
-| [ ] | 1718 | 1 | 0 | person | Investor | Alex Immerman |
-| [ ] | 1719 | 1 | 0 | person | Investor | Santiago Rodriguez |
-| [ ] | 1720 | 1 | 0 | organization | VC/Capital/Philanthropy | EliseAI |
-| [ ] | 1721 | 1 | 0 | person | Researcher | Lauren Mangla |
-| [ ] | 1722 | 1 | 0 | person | Executive | Arthur Mensch |
-| [ ] | 1723 | 1 | 0 | person | Researcher | Guillaume Lample |
-| [ ] | 1724 | 1 | 0 | person | Researcher | Timothée Lacroix |
-| [ ] | 1725 | 1 | 0 | organization | VC/Capital/Philanthropy | ASML |
-| [ ] | 1728 | 1 | 0 | person | Researcher | Miles Tidmarsh |
-| [ ] | 1729 | 1 | 0 | person | Researcher | Jasmine Brazilek |
-| [ ] | 1730 | 1 | 0 | organization | VC/Capital/Philanthropy | Players Philanthropy Fund, Inc. |
-| [ ] | 1731 | 1 | 0 | organization | VC/Capital/Philanthropy | Survival & Flourishing Fund |
-| [ ] | 1732 | 1 | 0 | organization | AI Safety/Alignment | Electric Sheep |
-| [ ] | 1733 | 1 | 0 | person | Researcher | Sam Bowman |
-| [ ] | 1734 | 1 | 0 | organization | Academic | Machine Learning for Language (ML2) |
-| [ ] | 1735 | 1 | 0 | organization | Academic | Center for Data Science |
-| [ ] | 1736 | 1 | 0 | organization | Academic | The Department of Linguistics |
-| [ ] | 1737 | 1 | 0 | person | Executive | Jacob Hilton |
-| [ ] | 1738 | 1 | 0 | person | Organizer | Kyle Scott |
-| [ ] | 1739 | 1 | 0 | person | Organizer | Harshita Khera |
-| [ ] | 1740 | 1 | 0 | person | Organizer | Ben Hoskin |
-| [ ] | 1741 | 1 | 0 | person | Researcher | Scott Aaronson |
-| [ ] | 1742 | 1 | 0 | person | Academic | Stuart J. Russell |
-| [ ] | 1743 | 1 | 0 | person | Academic | Pieter Abbeel |
-| [ ] | 1744 | 1 | 0 | person | Academic | Anca Dragan |
-| [ ] | 1745 | 1 | 0 | organization | VC/Capital/Philanthropy | Open Philanthropy Project |
-| [ ] | 1746 | 1 | 0 | person | Researcher | Rachel Freedman |
-| [ ] | 1747 | 1 | 0 | person | Researcher | Sid Black |
-| [ ] | 1748 | 1 | 0 | person | Researcher | Gabriel Alfour |
-| [ ] | 1749 | 1 | 0 | person | Investor | Patrick Collison |
-| [ ] | 1750 | 1 | 0 | person | Investor | John Collison |
-| [ ] | 1751 | 1 | 0 | person | Investor | Arthur Breitman |
-| [ ] | 1754 | 1 | 0 | person | Organizer | Jamie Bernardi |
-| [ ] | 1755 | 1 | 0 | person | Policymaker | Howie Lempel |
-| [ ] | 1756 | 1 | 0 | person | Policymaker | Scott Wisor |
-| [ ] | 1757 | 1 | 0 | person | Executive | Nick Beckstead |
-| [ ] | 1758 | 1 | 0 | person | Policymaker | Thomas Woodside |
-| [ ] | 1759 | 1 | 0 | person | Executive | Lily Sands |
-| [ ] | 1760 | 1 | 0 | person | Organizer | Emily Soice |
+| [x] | 1784 | 1 | 0 | person | Organizer | Frances Lorenz |
+| [x] | 1683 | 1 | 0 | person | Executive | Peter Wildeford |
+| [x] | 1684 | 1 | 0 | person | Executive | Amanda El-Dakhakhni |
+| [x] | 1685 | 1 | 0 | person | Executive | Zoe Williams |
+| [x] | 1686 | 1 | 0 | person | Organizer | Renan Araujo |
+| [x] | 1687 | 1 | 0 | organization | VC/Capital/Philanthropy | Protocol Labs |
+| [x] | 1688 | 1 | 0 | organization | VC/Capital/Philanthropy | Gigafund |
+| [x] | 1689 | 1 | 0 | organization | VC/Capital/Philanthropy | 100 Plus Capital |
+| [x] | 1690 | 1 | 0 | person | Executive | Connor Axiotes |
+| [x] | 1692 | 1 | 0 | person | Organizer | Joey Skaf |
+| [x] | 1694 | 1 | 0 | person | Researcher | Robert Huben |
+| [x] | 1695 | 1 | 0 | person | Researcher | Dawn Drescher |
+| [x] | 1696 | 1 | 0 | person | Policymaker | Mark Gray |
+| [x] | 1697 | 1 | 0 | person | Executive | Mark D Gray |
+| [x] | 1698 | 1 | 0 | person | Policymaker | Melissa Holyoak |
+| [x] | 1699 | 1 | 0 | organization | Government/Agency | General Services Administration |
+| [x] | 1700 | 1 | 0 | person | Executive | Rob Fergus |
+| [x] | 1701 | 1 | 0 | person | Executive | Serkan Piantino |
+| [x] | 1702 | 1 | 0 | person | Executive | Jérôme Pesenti |
+| [x] | 1703 | 1 | 0 | person | Executive | David Singleton |
+| [x] | 1704 | 1 | 0 | person | Executive | Hugo Barra |
+| [x] | 1705 | 1 | 0 | person | Executive | Nicholas Jitkoff |
+| [x] | 1706 | 1 | 0 | organization | Government/Agency | Department of Homeland Security |
+| [x] | 1707 | 1 | 0 | organization | Government/Agency | National Institutes of Health |
+| [x] | 1708 | 1 | 0 | person | Executive | Judd Rosenblatt |
+| [x] | 1709 | 1 | 0 | person | Researcher | Diogo de Lucena |
+| [x] | 1710 | 1 | 0 | person | Executive | Marc Carauleanu |
+| [x] | 1711 | 1 | 0 | person | Academic | John Bargh |
+| [x] | 1712 | 1 | 0 | person | Organizer | Søren Elverlin |
+| [x] | 1713 | 1 | 0 | person | Organizer | Bryce Robertson |
+| [x] | 1714 | 1 | 0 | person | Organizer | Oliver Zhang |
+| [x] | 1715 | 1 | 0 | organization | AI Safety/Alignment | Center for AI Safety Action Fund |
+| [x] | 1717 | 1 | 0 | person | Investor | Anish Acharya |
+| [x] | 1718 | 1 | 0 | person | Investor | Alex Immerman |
+| [x] | 1719 | 1 | 0 | person | Investor | Santiago Rodriguez |
+| [x] | 1720 | 1 | 0 | organization | VC/Capital/Philanthropy | EliseAI |
+| [x] | 1721 | 1 | 0 | person | Researcher | Lauren Mangla |
+| [x] | 1722 | 1 | 0 | person | Executive | Arthur Mensch |
+| [x] | 1723 | 1 | 0 | person | Researcher | Guillaume Lample |
+| [x] | 1724 | 1 | 0 | person | Researcher | Timothée Lacroix |
+| [x] | 1725 | 1 | 0 | organization | VC/Capital/Philanthropy | ASML |
+| [x] | 1728 | 1 | 0 | person | Researcher | Miles Tidmarsh |
+| [x] | 1729 | 1 | 0 | person | Researcher | Jasmine Brazilek |
+| [x] | 1730 | 1 | 0 | organization | VC/Capital/Philanthropy | Players Philanthropy Fund, Inc. |
+| [x] | 1731 | 1 | 0 | organization | VC/Capital/Philanthropy | Survival & Flourishing Fund |
+| [x] | 1732 | 1 | 0 | organization | AI Safety/Alignment | Electric Sheep |
+| [x] | 1733 | 1 | 0 | person | Researcher | Sam Bowman |
+| [x] | 1734 | 1 | 0 | organization | Academic | Machine Learning for Language (ML2) |
+| [x] | 1735 | 1 | 0 | organization | Academic | Center for Data Science |
+| [x] | 1736 | 1 | 0 | organization | Academic | The Department of Linguistics |
+| [x] | 1737 | 1 | 0 | person | Executive | Jacob Hilton |
+| [x] | 1738 | 1 | 0 | person | Organizer | Kyle Scott |
+| [x] | 1739 | 1 | 0 | person | Organizer | Harshita Khera |
+| [x] | 1740 | 1 | 0 | person | Organizer | Ben Hoskin |
+| [x] | 1741 | 1 | 0 | person | Researcher | Scott Aaronson |
+| [x] | 1742 | 1 | 0 | person | Academic | Stuart J. Russell |
+| [x] | 1743 | 1 | 0 | person | Academic | Pieter Abbeel |
+| [x] | 1744 | 1 | 0 | person | Academic | Anca Dragan |
+| [x] | 1745 | 1 | 0 | organization | VC/Capital/Philanthropy | Open Philanthropy Project |
+| [x] | 1746 | 1 | 0 | person | Researcher | Rachel Freedman |
+| [x] | 1747 | 1 | 0 | person | Researcher | Sid Black |
+| [x] | 1748 | 1 | 0 | person | Researcher | Gabriel Alfour |
+| [x] | 1749 | 1 | 0 | person | Investor | Patrick Collison |
+| [x] | 1750 | 1 | 0 | person | Investor | John Collison |
+| [x] | 1751 | 1 | 0 | person | Investor | Arthur Breitman |
+| [x] | 1754 | 1 | 0 | person | Organizer | Jamie Bernardi |
+| [x] | 1755 | 1 | 0 | person | Policymaker | Howie Lempel |
+| [x] | 1756 | 1 | 0 | person | Policymaker | Scott Wisor |
+| [x] | 1757 | 1 | 0 | person | Executive | Nick Beckstead |
+| [x] | 1758 | 1 | 0 | person | Policymaker | Thomas Woodside |
+| [x] | 1759 | 1 | 0 | person | Executive | Lily Sands |
+| [x] | 1760 | 1 | 0 | person | Organizer | Emily Soice |
 | [ ] | 1761 | 1 | 0 | person | Policymaker | Andrew Doris |
 | [ ] | 1762 | 1 | 0 | organization | Think Tank/Policy Org | Economic Security Action California |
 | [ ] | 1763 | 1 | 0 | person | Executive | Paul Scharre |
