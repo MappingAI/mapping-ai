@@ -54,8 +54,8 @@ Execution tracker for the data enrichment project. Strategy and design rationale
 > See plan.md Phase 3
 
 **Scripted enrichment tooling:**
-- [ ] Write `enrich_entity.py` (Exa search + Claude verification + structured output)
-- [ ] Write `enrich_batch.py` (batch wrapper with progress tracking)
+- [x] Write `enrich_entity.py` (thin wrapper — delegates to enrich_batch.py --ids)
+- [x] Write `enrich_batch.py` (batch wrapper with progress tracking) — handles single entity via `--ids` too
 - [ ] Test on 5 entities, review output quality
 
 **Manual enrichment — high-edge entities:**
@@ -77,16 +77,24 @@ Execution tracker for the data enrichment project. Strategy and design rationale
 **Source URLs and evidence (0% currently have sources):**
 - [ ] Add `source_url` + `evidence` to edges for top-connected entities first
 
-**Affiliated edge reclassification (585 edges):**
-- [ ] Sample 20 `affiliated` edges, determine distribution of true types
-- [ ] Reclassify Senators → Committees batch (`affiliated` → `member`)
-- [ ] Reclassify People → Think tanks batch
-- [ ] Reclassify People → Orgs employment batch
-- [ ] Review remaining `affiliated` edges, handle edge cases
+**Affiliated edge reclassification (591 edges):**
+- [x] Sample affiliated edges, determine distribution — 59 party membership, 9 journalist-employer, 27 reversed org→person, 496 unresolved (see reclassify_affiliated.py report)
+- [ ] Run `reclassify_affiliated.py --live --party-membership` — 59 person→PAC → member
+- [ ] Run `reclassify_affiliated.py --live --journalist-employer` — 9 journalist→media → employer
+- [ ] Run `reclassify_affiliated.py --live --org-to-person-flip` — 27 reversed edges
+- [ ] Review remaining 496 `affiliated` edges, handle edge cases manually
 
 **Edge directionality + correctness:**
-- [ ] Spot-check edges against canonical direction conventions
-- [ ] Fix any reversed or mispointed edges
+- [x] Spot-check edges against canonical direction conventions — violations found:
+  - `employer` (9): target not org — 8x person→person "worked for [person]", 1x person→resource
+  - `founder` (5): source not person — org→org spin-off relationships, need manual reclassification
+  - `founder` (20): target not org — 18x person→person co-founder, 2x person→resource
+  - `advisor` (10): source not person — 8x org→person (reversed), 2x org→org (should be partner)
+  - `member` (1): source not person — 1 edge
+  - `critic` (6): source not person
+  - `supporter` (3): source not person
+- [ ] Run `fix_edge_directions.py` — auto-fixes reversed advisor (org→person) edges
+- [ ] Manual review: founder person→person edges, employer person→person edges (see Discovered Work)
 
 ## Phase 5: Seeding
 > See plan.md Phase 5
@@ -120,5 +128,8 @@ Execution tracker for the data enrichment project. Strategy and design rationale
 
 Items found during execution that don't fit neatly into a phase above.
 
-- [ ] 18 person→person `founder` edges need manual review — co-founding relationships stored as person→person instead of each person→org (see Phase 4: Edge directionality)
-- [ ] 5 org→org `founder` edges need review — may be legitimate (spin-offs) or data entry issues
+- [ ] 18 person→person `founder` edges — co-founder relationships stored as person→person (e.g., Altman→Brockman [co-founder]). Should each point to the shared org. Requires finding/creating the org entity.
+- [ ] 5 org→org `founder` edges — possible spin-offs (ENAIS→AI Safety Dublin) or bad data (GovAI→Yale, Element AI→Real Ventures). Real Ventures→Element AI should probably be `funder` flipped.
+- [ ] 8 person→person `employer` edges — "worked for [person]" (e.g., Bruce Reed→Joe Biden [Deputy COS]). Target should be an org (White House, etc.) not the person.
+- [ ] 8 reversed `advisor` edges where org→person — auto-fixable via fix_edge_directions.py
+- [ ] 2 org→org `advisor` edges — should be `partner` or `collaborator`
