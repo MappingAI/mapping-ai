@@ -7,7 +7,7 @@ Execution tracker for the data enrichment project. Strategy and design rationale
 - Phase 1 Audit — Complete
 - Phase 2 Cleanup — Complete
 - Phase 3 Entity Enrichment — Complete
-- Phase 4 Edge Enrichment — Not started
+- Phase 4 Edge Enrichment — In progress (reclassify 61%, +48 backfilled edges)
 - Phase 5 Seeding — Not started
 - Phase 6 Importance Ratings — Not started
 
@@ -83,15 +83,16 @@ Execution tracker for the data enrichment project. Strategy and design rationale
 ## Phase 4: Edge Enrichment
 > See plan.md Phase 4
 
-**Source URLs and evidence (0% currently have sources):**
-- [ ] Add `source_url` + `evidence` to edges for top-connected entities first
-
 **Affiliated edge reclassification (591 edges):**
 - [x] Sample affiliated edges, determine distribution — 59 party membership, 9 journalist-employer, 27 reversed org→person, 496 unresolved (see reclassify_affiliated.py report)
-- [ ] Run `reclassify_affiliated.py --live --party-membership` — 59 person→PAC → member
-- [ ] Run `reclassify_affiliated.py --live --journalist-employer` — 9 journalist→media → employer
-- [ ] Run `reclassify_affiliated.py --live --org-to-person-flip` — 27 reversed edges
-- [ ] Review remaining 496 `affiliated` edges, handle edge cases manually
+- [x] Rounds 1-3: 361 reclassified via deterministic rules (commits through 38e9e94)
+- [ ] Review remaining 230 `affiliated` edges, handle edge cases manually (requires web search per edge)
+
+**Backfill missing edges from notes (Phase 4A):**
+- [x] Write `backfill_employer_edges.py` — regex extraction of employment/founder/member patterns from person notes, with guards for past roles and duplicate-stub entities — `logs/backfill-employer-edges-20260412.md`
+- [x] Live run: **48 edges added** (23 employer + 17 founder + 8 member) across 46 persons
+- [x] Flag delta: 271 → 249 `influence_without_edge` (−22)
+- [ ] Consider org-side backfill (120 flagged orgs still need member/employer edges pointing to them)
 
 **Edge directionality + correctness:**
 - [x] Spot-check edges against canonical direction conventions — violations found:
@@ -102,8 +103,17 @@ Execution tracker for the data enrichment project. Strategy and design rationale
   - `member` (1): source not person — 1 edge
   - `critic` (6): source not person
   - `supporter` (3): source not person
-- [ ] Run `fix_edge_directions.py` — auto-fixes reversed advisor (org→person) edges
-- [ ] Manual review: founder person→person edges, employer person→person edges (see Discovered Work)
+- [x] Phase 4B.1: Flipped 7 reversed `advisor` org→person edges via `fix_edge_directions.py --live` — `logs/phase4b1-4e-20260412.md`
+- [ ] Manual review: founder person→person edges, employer person→person edges, 3 org→org advisor edges, 6 `critic` org→person, 3 `supporter` org→org (see Discovered Work)
+
+**Phase 4E close-outs (completed 2026-04-12):**
+- [x] Citation artifact cleanup — 16 entities, 63 markers stripped (fixed `cleanup_citations.py` regex bug)
+- [x] Dead URL removal — 4 URLs (federalregister 500, whitehouse 404, darioamodei 404, helionenergy DNS)
+- [x] Belief backfill for 6 policymakers (Tom Cotton, Andy Kim, Ben Horowitz, Donald Trump, John Kennedy, Katie Britt)
+
+**Source URLs and evidence (0% currently have sources):**
+- [ ] Cheap pass: parse batch logs + notes_sources, backfill `source_url` on edges where entity→org URL mapping is clear
+- [ ] Targeted pass: top-20 highest-degree entities (OpenAI, Google, Anthropic, etc.)
 
 ## Phase 5: Seeding
 > See plan.md Phase 5
