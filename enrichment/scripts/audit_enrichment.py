@@ -270,13 +270,20 @@ def tier2_consistency_checks(entities, conn):
                           f'confidence={confidence} but only {len(urls)} source URL(s)'))
 
         # --- Check 3: Role keywords in notes without matching edge ---
-        notes_lower = notes.lower()
-        for keyword, expected_edges in ROLE_KEYWORDS.items():
-            if keyword.lower() in notes_lower:
-                if not edge_types.intersection(expected_edges):
-                    flags.append((eid, name, "role_without_edge",
-                                  f'notes mention "{keyword}" but no {"/".join(expected_edges)} edge'))
-                    break  # one flag per entity for this check
+        # Only run on persons — role claims about orgs/resources usually
+        # describe OTHER people in the notes (e.g., book author, org
+        # leadership), not the entity itself. Use word-boundary regex
+        # to avoid substring false positives (CTO matching "sector"/"actor",
+        # COO matching "cooperation", CEO matching "ceo" in the phrase
+        # "Anthropic CEO" about someone else).
+        if etype == "person":
+            for keyword, expected_edges in ROLE_KEYWORDS.items():
+                # Case-insensitive, word-boundary match
+                if re.search(rf'\b{re.escape(keyword)}\b', notes, re.IGNORECASE):
+                    if not edge_types.intersection(expected_edges):
+                        flags.append((eid, name, "role_without_edge",
+                                      f'notes mention "{keyword}" but no {"/".join(expected_edges)} edge'))
+                        break  # one flag per entity for this check
 
         # --- Check 4: Influence type without supporting edges ---
         if influence_type:
@@ -288,13 +295,16 @@ def tier2_consistency_checks(entities, conn):
                     break  # one flag per entity
 
         # --- Check 5: All belief fields null for high-confidence entity ---
-        # Skip orgs in Government/Agency and Academic — beliefs often
-        # genuinely don't apply to institutional entities.
+        # Skip resource-type entities — books, papers, EOs etc. don't
+        # have beliefs themselves. Skip orgs in Government/Agency and
+        # Academic — beliefs often genuinely don't apply to institutional
+        # entities.
         skip_categories = {"Government/Agency", "Academic"}
         beliefs = [reg_stance, agi_timeline, ai_risk]
         non_null_beliefs = [b for b in beliefs if b and b != "Unknown"]
         if (confidence is not None and confidence >= 4
                 and len(non_null_beliefs) == 0
+                and etype != "resource"
                 and category not in skip_categories):
             flags.append((eid, name, "no_beliefs_high_confidence",
                           f'confidence={confidence} but all belief fields are null/Unknown'))
