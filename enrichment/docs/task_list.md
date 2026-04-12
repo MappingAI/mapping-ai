@@ -6,7 +6,7 @@ Execution tracker for the data enrichment project. Strategy and design rationale
 - Phase 0 Setup — Complete
 - Phase 1 Audit — Complete
 - Phase 2 Cleanup — Complete
-- Phase 3 Entity Enrichment — Not started
+- Phase 3 Entity Enrichment — Complete
 - Phase 4 Edge Enrichment — Not started
 - Phase 5 Seeding — Not started
 - Phase 6 Importance Ratings — Not started
@@ -56,20 +56,29 @@ Execution tracker for the data enrichment project. Strategy and design rationale
 **Scripted enrichment tooling:**
 - [x] Write `enrich_entity.py` (thin wrapper — delegates to enrich_batch.py --ids)
 - [x] Write `enrich_batch.py` (batch wrapper with progress tracking) — handles single entity via `--ids` too
-- [ ] Test on 5 entities, review output quality
+- [ ] Test on 5 entities, review output quality — **deferred**; manual Claude Code enrichment used instead (see batches 01-86)
 
-**Manual enrichment — high-edge entities:**
-- [ ] Pull list of entities ordered by edge count (descending)
-- [ ] Enrich top 20 highest-connected entities
+**Manual enrichment — persons & organizations:**
+- [x] Pull prioritized list by edge count descending — see `enrichment/docs/enrichment-queue.md`
+- [x] Enrich top entities (3+ edges) — batches 01-27 (4 per agent)
+- [x] Scale to 6-per-agent for 2+ edge tier — batches 28-43
+- [x] Scale to 12-per-agent × 4 parallel agents for truly-empty entities — batches 44-81
+- [x] Final totals: 293 orgs + 373 persons with `enrichment_version='phase3-manual'`
 
-**Manual enrichment — empty/thin notes (~710 entities):**
-- [ ] Pull prioritized list (by edge count)
-- [ ] Enrich first batch (50 entities)
-- [ ] Enrich second batch (next 50)
+**Manual enrichment — resources:**
+- [x] Enrich 92 empty resources (books, papers, bills, EOs, transcripts) — batches 82-85 (23 per agent)
+- [x] 1-2 sentence descriptions; no belief fields (resources don't hold beliefs)
 
-**Orphan entities (254 with zero edges):**
-- [ ] Review orphan list — triage into "enrich + connect" vs "possibly remove"
-- [ ] Enrich + add edges for valuable orphans
+**Phase 3 close-out passes:**
+- [x] Pass #1: Delete 5 test entities + expand 12 thin v1 stubs — batch 86
+- [x] Pass #2: Dead URL cleanup — 2 real fixes, 35 audit flags confirmed as bot blocks — `logs/audit-url-cleanup-20260411.md`
+- [x] Pass #3: Resource dedup — 11 merges across 6 canonical clusters, 1 edge redirected, 0 orphans — `logs/resource-dedup-20260411.md`
+- [x] Pass #4: Category corrections — 2 applied (ASML, PIT-UN), 13 already in-batch, 1 held for schema (AMPTP) — `logs/category-corrections-20260411.md`
+- [x] Pass #5: Audit finish — short-notes flags resolved; no-beliefs sample documented (6 policymaker backfills flagged for Phase 4) — `logs/audit-finish-20260411.md`
+
+**NIST dedup:** consolidated 4 duplicate entities (911, 1309, 1416, 1468) into canonical 1309 with 10 edges merged.
+
+**Orphan entities:** not explicitly triaged in Phase 3 — enrichment scope was coverage-first (notes ≥50 chars for all 1,651 entities). Orphan review deferred to Phase 4/5.
 
 ## Phase 4: Edge Enrichment
 > See plan.md Phase 4
@@ -133,3 +142,5 @@ Items found during execution that don't fit neatly into a phase above.
 - [ ] 8 person→person `employer` edges — "worked for [person]" (e.g., Bruce Reed→Joe Biden [Deputy COS]). Target should be an org (White House, etc.) not the person.
 - [ ] 8 reversed `advisor` edges where org→person — auto-fixable via fix_edge_directions.py
 - [ ] 2 org→org `advisor` edges — should be `partner` or `collaborator`
+- [ ] **AMPTP category schema gap** — current category list in `canon.md` has no fit for trade/industry associations (studio-management bargaining groups). Currently bucketed as `Labor/Civil Society` with a note in `other_categories`. Consider adding `Trade Association/Industry`.
+- [ ] **Policymaker belief backfill (~6 entities)** — Tom Cotton (1099), Andy Kim (1100), Ben Horowitz (1102), Donald Trump (1103), John Kennedy (1105), Katie Britt (1119) have clear public positions documented in their notes but belief fields are NULL/Unknown. Audit surfaced these — fix in early Phase 4 alongside belief enrichment pass.
