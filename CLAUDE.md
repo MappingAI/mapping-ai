@@ -246,13 +246,19 @@ Executive, Researcher, Policymaker, Investor, Organizer, Journalist, Academic, C
 ## Organization Categories (sectors)
 Frontier Lab, AI Safety/Alignment, Think Tank/Policy Org, Government/Agency, Academic, VC/Capital/Philanthropy, Labor/Civil Society, Ethics/Bias/Rights, Media/Journalism, Political Campaign/PAC, AI Infrastructure & Compute, AI Deployers & Platforms
 
-## Version Control Practices
+## Version Control & Deployment Practices
+
+See `docs/DEPLOYMENT.md` for the full deployment and review process.
 
 - Conventional commit prefixes: `feat:`, `fix:`, `refactor:`, `docs:`
-- `map-data.json` is NOT tracked in git (generated during deploy from DB)
+- `map-data.json` and `map-detail.json` are NOT tracked in git (generated during deploy from DB)
 - `backup-*.json` and `backup-*.sql` are gitignored
 - Test/seed data scripts gitignored
-- Push to `main` triggers deploy — test locally first
+- **Push to `main` auto-deploys frontend** — test in a browser first, not just with scripts
+- **All changes to `main` must go through a PR** — no direct pushes except P0 hotfixes
+- **Backend (Lambda/API Gateway) requires separate `sam deploy`** — merging api/*.js or template.yaml to main does NOT deploy them
+- **Never add `defer` or `async` to the D3 script tag** — inline map code depends on it synchronously (see `docs/post-mortems/2026-04-09-d3-defer-map-outage.md`)
+- **Browser-test map.html before pushing any HTML/JS changes** — automated checks cannot catch rendering failures
 
 ## DB Safety
 
