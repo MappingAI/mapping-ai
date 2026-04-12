@@ -7,7 +7,7 @@ Execution tracker for the data enrichment project. Strategy and design rationale
 - Phase 1 Audit — Complete
 - Phase 2 Cleanup — Complete
 - Phase 3 Entity Enrichment — Complete
-- Phase 4 Edge Enrichment — In progress (reclassify 61%, +48 backfilled edges)
+- Phase 4 Edge Enrichment — In progress (reclassify 61%, +48 backfilled edges, source_url 81.2%)
 - Phase 5 Seeding — Not started
 - Phase 6 Importance Ratings — Not started
 
@@ -111,9 +111,10 @@ Execution tracker for the data enrichment project. Strategy and design rationale
 - [x] Dead URL removal — 4 URLs (federalregister 500, whitehouse 404, darioamodei 404, helionenergy DNS)
 - [x] Belief backfill for 6 policymakers (Tom Cotton, Andy Kim, Ben Horowitz, Donald Trump, John Kennedy, Katie Britt)
 
-**Source URLs and evidence (0% currently have sources):**
-- [ ] Cheap pass: parse batch logs + notes_sources, backfill `source_url` on edges where entity→org URL mapping is clear
-- [ ] Targeted pass: top-20 highest-degree entities (OpenAI, Google, Anthropic, etc.)
+**Source URLs and evidence:**
+- [x] Phase 4C.1: Zero-API backfill via `backfill_source_urls.py --live` — filled **1,842 / 2,269 edges (81.2%)** using target_resource_url → target_website → source_website fallbacks — `logs/source-url-backfill-20260412.md`
+- [ ] Phase 4C.2: Fill 427 remaining unfilled edges (mostly collaborator 175, employer 63, founder 50 — require org-website seeding or evidence pass)
+- [ ] Phase 4C.3 (stretch): Upgrade generic org-homepage URLs to specific evidence pages for high-degree entities
 
 ## Phase 5: Seeding
 > See plan.md Phase 5
