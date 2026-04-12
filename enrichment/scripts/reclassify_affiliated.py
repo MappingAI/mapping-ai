@@ -21,6 +21,25 @@ Rules implemented (safe, high-confidence cases only):
   --resource-author     resource → person edges (reversed author relationship)
                         Flips to person → resource as author
 
+  --role-relationship   Role string explicitly describes the relationship
+                        (not the person's other job). Examples:
+                          "Founder", "Co-founder and CEO"     → founder
+                          "Advisor", "Policy Advisor"          → advisor
+                          "Board Member", "Trustee"            → member
+                          "Senior Fellow", "Research Fellow"   → member
+                          "PhD Student", "Alumnus"             → member
+                          "CEO", "President and CEO"           → employer
+                          "Partner University", "Affiliated School" → partner
+
+  --structural-default  For no-role person→org edges, apply a structural default.
+                        Uses existing-employer-edge check + multi-affiliation check
+                        to avoid mis-classifying secondary affiliations as primary.
+                          Researcher/Academic → Frontier Lab/Academic → employer (if single) else member
+                          Executive → Frontier Lab/Deployers/Compute → employer (if single) else advisor
+                          Executive → other org → advisor
+                          Policymaker → Gov/Agency → employer (if single) else member
+                          Investor → VC/Capital → employer (if single) else advisor
+
 Anything not matching a rule is left for manual review and surfaced in the report.
 
 Usage:
@@ -32,7 +51,9 @@ Usage:
 
 import argparse
 import os
+import re
 import sys
+from collections import Counter, defaultdict
 from datetime import datetime, timezone
 
 import psycopg2
@@ -164,16 +185,192 @@ def infer_org_person_type(role):
     return "member"  # safe default for unknown
 
 
+def classify_role_relationship(role):
+    """Rule A: role string unambiguously describes the target relationship.
+
+    Returns 'employer' | 'founder' | 'advisor' | 'member' | 'partner' | None.
+    Returns None for ambiguous roles (role describes person's other job, etc.).
+    """
+    if not role:
+        return None
+    rl = role.lower().strip()
+
+    # Skip historical / former-role markers — too ambiguous for auto-classification
+    if re.search(r"\b(fmr|former)\b|\(former\)", rl):
+        return None
+
+    # Founder of target. Skip cases like "Founder, OtherOrg" (role describes other org).
+    if re.search(r"\b(co-?founder|founder)\b", rl):
+        if re.search(r"\bfounder,\s+[a-z]", rl) and not re.search(
+            r"founder,\s+(and|\&)", rl
+        ):
+            return None
+        return "founder"
+
+    # "President and CEO" / "Founder and CEO" combos (before single CEO regex)
+    if re.match(
+        r"^(president and ceo|chairman and ceo|chair and ceo|ceo and founder|"
+        r"founder and ceo|ceo and co-founder|co-founder and ceo|president & ceo)$",
+        rl,
+    ):
+        return "founder" if "founder" in rl else "employer"
+
+    # Single senior-exec title (person holds exactly one of these at a time)
+    if re.match(
+        r"^(co-?)?(ceo|cto|cfo|coo|cio|chro|cmo|cpo|clo|cso|"
+        r"chief executive officer|chief technology officer|"
+        r"chief financial officer|chief operating officer)$",
+        rl,
+    ):
+        return "employer"
+
+    # Professor at target (title-only, no comma)
+    if re.match(
+        r"^(assistant professor|associate professor|professor|"
+        r"distinguished professor|chair professor|lecturer|"
+        r"senior lecturer|reader)$",
+        rl,
+    ):
+        return "employer"
+
+    # Pure advisor title (not "Advisor to [person]" or similar)
+    if re.match(
+        r"^(senior\s+|policy\s+|strategic\s+|scientific\s+|science\s+|"
+        r"technical\s+|special\s+)?(advisor|adviser)s?$",
+        rl,
+    ):
+        return "advisor"
+
+    # Board / trustee — describes relationship to target
+    if re.search(
+        r"\b(board member|board of directors|board of trustees|trustee|"
+        r"board chair|chairman of the board|chairwoman of the board)\b",
+        rl,
+    ):
+        return "member"
+
+    # Fellow types
+    if re.match(
+        r"^(senior\s+|research\s+|non-?resident\s+|nonresident\s+|visiting\s+|"
+        r"affiliate\s+|founding\s+|distinguished\s+)?fellow(s)?$",
+        rl,
+    ):
+        return "member"
+
+    # Affiliate / scholar
+    if re.match(
+        r"^(affiliate|associate|visiting scholar|scholar in residence|"
+        r"nonresident scholar|non-resident scholar|visiting researcher|"
+        r"visiting professor)(s)?$",
+        rl,
+    ):
+        return "member"
+
+    # Member / participant
+    if re.match(r"^(member|participant|delegate|ranking member)(s)?$", rl):
+        return "member"
+    if re.match(r"^member of\b|^participant in\b", rl):
+        return "member"
+
+    # Chair / co-chair (of committee/caucus — member-of-committee relationship)
+    if re.match(r"^(co-?chair|chair|vice chair|chairman|chairwoman)$", rl):
+        return "member"
+
+    # Research associate — academic affiliate status
+    if re.match(r"^research associate$", rl):
+        return "member"
+
+    # Educational / alumni relationships
+    if re.match(
+        r"^(graduate|phd graduate|phd student|alumnus|alumna|alumni|student|undergraduate)$",
+        rl,
+    ):
+        return "member"
+
+    # Org-to-org partner labels
+    if re.match(
+        r"^(partner university|affiliated school|sister organization|parent organization)$",
+        rl,
+    ):
+        return "partner"
+
+    return None
+
+
+def build_edge_index(conn):
+    """Pre-load existing employer/founder edges + per-person affiliated counts.
+
+    Used by classify_structural to avoid mis-classifying secondary affiliations.
+    Returns (has_other_employer_fn, affiliated_per_source_counter).
+    """
+    existing = defaultdict(list)
+    with conn.cursor() as cur:
+        cur.execute(
+            """
+            SELECT source_id, edge_type, target_id FROM edge
+            WHERE edge_type IN ('employer','founder','member','advisor')
+            """
+        )
+        for src, et, tgt in cur.fetchall():
+            existing[src].append((et, tgt))
+
+        cur.execute(
+            "SELECT source_id FROM edge WHERE edge_type IN %s",
+            (AFFILIATED_TYPES,),
+        )
+        affils = Counter(r[0] for r in cur.fetchall())
+
+    def has_other_employer(sid, tid):
+        return any(et == "employer" and t != tid for et, t in existing[sid])
+
+    return has_other_employer, affils
+
+
+def classify_structural(row, has_other_employer, affiliated_per_source):
+    """Rule B: for no-role person→org edges, apply structural defaults.
+
+    Uses two signals to avoid mis-classifying secondary affiliations:
+      1. has_other_employer(sid, tid): person already has an employer edge elsewhere
+      2. affiliated_per_source[sid] > 1: person has multiple affiliated candidates
+
+    Either signal downgrades 'employer' to 'member' or 'advisor'.
+    """
+    eid, etype, role, evidence, sid, sname, stype, scat, tid, tname, ttype, tcat = row
+    if role:
+        return None
+    if stype != "person" or ttype != "organization":
+        return None
+
+    other_emp = has_other_employer(sid, tid)
+    many_affils = affiliated_per_source[sid] > 1
+    secondary = other_emp or many_affils
+
+    if scat in ("Researcher", "Academic"):
+        if tcat in ("Frontier Lab", "Academic", "AI Safety/Alignment", "Think Tank/Policy Org"):
+            return "member" if secondary else "employer"
+    if scat == "Executive":
+        if tcat in ("Frontier Lab", "Deployers & Platforms", "Infrastructure & Compute"):
+            return "advisor" if secondary else "employer"
+        return "advisor"  # Executive at non-primary org category
+    if scat == "Policymaker" and tcat == "Government/Agency":
+        return "member" if secondary else "employer"
+    if scat == "Investor" and tcat == "VC/Capital/Philanthropy":
+        return "advisor" if secondary else "employer"
+    return None
+
+
 # ---------------------------------------------------------------------------
 # Report
 # ---------------------------------------------------------------------------
 
-def print_report(edges, rules_enabled):
+def print_report(edges, rules_enabled, has_other_employer, affiliated_per_source):
     counts = {
         "party_membership": 0,
         "journalist_employer": 0,
         "org_to_person": 0,
         "resource_author": 0,
+        "role_relationship": 0,
+        "structural_default": 0,
         "unresolved": 0,
     }
 
@@ -189,6 +386,10 @@ def print_report(edges, rules_enabled):
             counts["org_to_person"] += 1
         elif classify_resource_author(row):
             counts["resource_author"] += 1
+        elif classify_role_relationship(role) is not None:
+            counts["role_relationship"] += 1
+        elif classify_structural(row, has_other_employer, affiliated_per_source) is not None:
+            counts["structural_default"] += 1
         else:
             counts["unresolved"] += 1
             if len(unresolved_samples) < 20:
@@ -206,6 +407,8 @@ def print_report(edges, rules_enabled):
     print(f"  {'person/Journalist → Media/Journalism':<40} {counts['journalist_employer']:>5}  --journalist-employer")
     print(f"  {'org → person (reversed, needs flip)':<40} {counts['org_to_person']:>5}  --org-to-person-flip")
     print(f"  {'resource → person (reversed author)':<40} {counts['resource_author']:>5}  --resource-author")
+    print(f"  {'Role explicitly describes relationship':<40} {counts['role_relationship']:>5}  --role-relationship")
+    print(f"  {'Structural default (no role)':<40} {counts['structural_default']:>5}  --structural-default")
     print(f"  {'Unresolved (manual review needed)':<40} {counts['unresolved']:>5}")
     print()
 
@@ -225,7 +428,7 @@ def print_report(edges, rules_enabled):
 # Apply rules
 # ---------------------------------------------------------------------------
 
-def apply_rules(conn, edges, rules, dry_run):
+def apply_rules(conn, edges, rules, dry_run, has_other_employer, affiliated_per_source):
     counts = {rule: 0 for rule in rules}
     counts["skipped"] = 0
 
@@ -249,6 +452,29 @@ def apply_rules(conn, edges, rules, dry_run):
         elif "resource_author" in rules and classify_resource_author(row):
             apply_reclassification(conn, eid, "author", flip=True, dry_run=dry_run)
             counts["resource_author"] += 1
+
+        elif "role_relationship" in rules:
+            new_type = classify_role_relationship(role)
+            if new_type is not None:
+                apply_reclassification(conn, eid, new_type, flip=False, dry_run=dry_run)
+                counts["role_relationship"] += 1
+            else:
+                # Fall through to structural if enabled
+                if "structural_default" in rules:
+                    st = classify_structural(row, has_other_employer, affiliated_per_source)
+                    if st is not None:
+                        apply_reclassification(conn, eid, st, flip=False, dry_run=dry_run)
+                        counts["structural_default"] += 1
+                        continue
+                counts["skipped"] += 1
+
+        elif "structural_default" in rules:
+            st = classify_structural(row, has_other_employer, affiliated_per_source)
+            if st is not None:
+                apply_reclassification(conn, eid, st, flip=False, dry_run=dry_run)
+                counts["structural_default"] += 1
+            else:
+                counts["skipped"] += 1
 
         else:
             counts["skipped"] += 1
@@ -276,6 +502,10 @@ def main():
     parser.add_argument("--journalist-employer", action="store_true")
     parser.add_argument("--org-to-person-flip", action="store_true")
     parser.add_argument("--resource-author", action="store_true")
+    parser.add_argument("--role-relationship", action="store_true",
+                        help="Classify edges whose role explicitly describes the relationship")
+    parser.add_argument("--structural-default", action="store_true",
+                        help="For no-role person→org edges, apply structural defaults")
     args = parser.parse_args()
 
     if args.live and args.dry_run:
@@ -284,7 +514,10 @@ def main():
 
     # Determine which rules to run
     if args.apply_all:
-        rules = {"party_membership", "journalist_employer", "org_to_person", "resource_author"}
+        rules = {
+            "party_membership", "journalist_employer", "org_to_person",
+            "resource_author", "role_relationship", "structural_default",
+        }
     else:
         rules = set()
         if args.party_membership:
@@ -295,14 +528,21 @@ def main():
             rules.add("org_to_person")
         if args.resource_author:
             rules.add("resource_author")
+        if args.role_relationship:
+            rules.add("role_relationship")
+        if args.structural_default:
+            rules.add("structural_default")
 
     write_mode = args.live and not args.dry_run
 
     conn = get_connection()
     edges = fetch_affiliated(conn)
 
+    # Pre-build indexes used by structural classifier
+    has_other_employer, affiliated_per_source = build_edge_index(conn)
+
     # Always print the report
-    counts = print_report(edges, rules)
+    counts = print_report(edges, rules, has_other_employer, affiliated_per_source)
 
     if not rules:
         print("  No rules selected — run with --dry-run + a rule flag to preview changes.")
@@ -315,7 +555,9 @@ def main():
     print(f"  [{mode_label}] Applying rules: {', '.join(sorted(rules))}")
     print()
 
-    applied = apply_rules(conn, edges, rules, dry_run=not write_mode)
+    applied = apply_rules(conn, edges, rules, dry_run=not write_mode,
+                          has_other_employer=has_other_employer,
+                          affiliated_per_source=affiliated_per_source)
 
     for rule, n in applied.items():
         if rule == "skipped":
