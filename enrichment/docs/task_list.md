@@ -8,7 +8,7 @@ Execution tracker for the data enrichment project. Strategy and design rationale
 - Phase 2 Cleanup — Complete
 - Phase 3 Entity Enrichment — Complete
 - Phase 4 Edge Enrichment — In progress (reclassify 61%, +48 backfilled edges, source_url 81.2%)
-- Phase 5 Seeding — Not started
+- Phase 5 Seeding — In progress (gap analysis + seeding queue drafted; Tier A zero-token cleanup done: resources/influence canonicalized, FTC dedup'd, 3 edges seeded)
 - Phase 6 Importance Ratings — Not started
 
 ---
@@ -119,17 +119,44 @@ Execution tracker for the data enrichment project. Strategy and design rationale
 ## Phase 5: Seeding
 > See plan.md Phase 5
 
-**Gap analysis:**
-- [ ] Run gap analysis by `entity_type` and `category`
-- [ ] Identify top coverage gaps
+**Phase 5A: Gap analysis (complete):**
+- [x] Write `scripts/gap_analysis.py` — category counts, exec coverage, orphans, watchlist
+- [x] Run gap analysis — `logs/gap-analysis-20260412.md`
+- [x] Draft prioritized seeding queue — `docs/seeding-queue.md`
+- [x] Surfaced: 7 canonical orgs missing (Cohere, Inflection, CAISI, BIS, NSC, PCAST, State Dept AI); 5 orgs with zero leadership edges (AISI, DoD, OMB, CSIS, CAIP); 52 resources mis-categorized as non-canonical "AI Policy"; Nancy Pelosi missing from watchlist; FTC duplicate (199 v2 + 909 phase3-manual)
 
-**Executive teams for major orgs:**
-- [ ] Frontier labs (OpenAI, Anthropic, Google DeepMind, Meta AI, xAI) — CEO, CTO, Chief Scientist, Head of Policy
-- [ ] Government agencies (NIST, OSTP, FTC, NSF, AISI) — Director, AI leads
+**Phase 5A.x: Tier A zero-token cleanup (complete):**
+- [x] Resource category normalization — 57 rows updated: 52 "AI Policy"→"AI Governance", 2 "AI Safety, Philosophy/Ethics"→"AI Safety", 1 "AI Safety, Policy Proposal"→"AI Safety", 1 "Ethics"→"Philosophy/Ethics", 1 "Media"→"Industry Analysis" — `logs/normalize-resources-20260412.md`
+- [x] Influence-type normalization — 91 rows updated; ~22 non-canonical token variants folded into the 9 canonical types (Electoral→Decision-maker, Researcher→Researcher/analyst, Technical leader→Builder, Convener→Connector/convener, Policy advocate→Organizer/advocate, Public intellectual/Thought leader/Educator→Narrator, etc.) — `logs/normalize-influence-types-20260412.md`
+- [x] FTC duplicate merge — entity 199 → 909; 5 edges redirected, 12 notes_sources URLs appended, 199 deleted; 909 now has 17 edges — `logs/ftc-merge-20260412.md`
+- [x] 3 zero-research leadership edges — Paul Christiano→AISI (employer/Head of AI Safety), Thomas Larsen→CAIP (employer/Director of Policy), Alan Davidson→Commerce (member/NTIA Admin) — `logs/seed-known-edges-20260412.md`
+- [x] Deferred: CSIS (entity 349) — needs note rewrite, not mechanical fix. Documented in `seeding-queue.md` for Phase 5C.
 
-**Seeding script:**
-- [ ] Write `seed_entity.py`
-- [ ] Seed first batch of new entities + edges
+**Phase 5B: Seeding script:**
+- [ ] Write `seed_entity.py` — create new entity + required structural edges in one transaction (template: name, category, notes, notes_sources, enrichment_version='phase5-seed')
+
+**Phase 5C: Tier 1 — Canonical orgs missing outright:**
+- [ ] Seed Cohere, Inflection AI (frontier labs)
+- [ ] Seed CAISI, BIS, NSC, PCAST, State Department AI coordinator (federal agencies)
+- [ ] Seed Nancy Pelosi (policymaker)
+
+**Phase 5D: Tier 2 — Leadership edges for existing orgs:**
+- [ ] Link directors/AI leads to AISI (205), DoD (1420), OMB (1295), CAIP (443)
+- [ ] Fix CSIS (349) — split main think tank from podcast entity, add Greg Allen
+
+**Phase 5E: Tier 3-4 — Frontier-lab + agency AI-lead backfill:**
+- [ ] Frontier labs: CTOs, Heads of Policy (OpenAI, Anthropic, DeepMind, Meta AI, xAI, Amazon, NVIDIA)
+- [ ] NIST/OSTP/FTC/NSF/Commerce AI-specific leads
+
+**Phase 5F: Resources:**
+- [ ] Normalize "AI Policy" (52) → "AI Governance" via script; re-class comma-joined values
+- [ ] Seed anchor resources (AI 2027, Situational Awareness, Core Views on AI Safety, Andreessen "Why AI Will Save the World", Constitutional AI paper, RLHF paper)
+- [ ] Fill "Industry Analysis" + "Technical" resource buckets (currently 0 each)
+
+**Phase 5G: Person-category coverage:**
+- [ ] +10-15 AI-beat journalists (category is thinnest at 25)
+- [ ] +5-8 cultural figures (category is thinnest at 14)
+- [ ] Verify Investor tagging for Hoffman, Andreessen, Thiel, Khosla
 
 ## Phase 6: Importance Ratings
 > See plan.md Phase 6
@@ -155,3 +182,8 @@ Items found during execution that don't fit neatly into a phase above.
 - [ ] 2 org→org `advisor` edges — should be `partner` or `collaborator`
 - [ ] **AMPTP category schema gap** — current category list in `canon.md` has no fit for trade/industry associations (studio-management bargaining groups). Currently bucketed as `Labor/Civil Society` with a note in `other_categories`. Consider adding `Trade Association/Industry`.
 - [ ] **Policymaker belief backfill (~6 entities)** — Tom Cotton (1099), Andy Kim (1100), Ben Horowitz (1102), Donald Trump (1103), John Kennedy (1105), Katie Britt (1119) have clear public positions documented in their notes but belief fields are NULL/Unknown. Audit surfaced these — fix in early Phase 4 alongside belief enrichment pass.
+- [x] ~~**FTC duplicate merge**~~ — Done in Phase 5A Tier A (199 merged into 909)
+- [ ] **CSIS entity rewrite** — entity 349 "CSIS AI Policy Podcast (Center for Strategic and International Studies)" has 0 edges and podcast-focused notes. Deferred to Phase 5C seeding pass (requires note rewrite, not mechanical fix).
+- [x] ~~**Non-canonical `influence_type` normalization**~~ — Done in Phase 5A Tier A (91 rows normalized, all canonical)
+- [x] ~~**Resource category normalization**~~ — Done in Phase 5A Tier A (57 rows normalized, all canonical)
+- [ ] **Mark Gray duplicate** — entities 1696 "Mark Gray" and 1697 "Mark D Gray" both claim FTC Chief AI Officer role (surfaced during FTC merge). Likely same person; merge needed.
