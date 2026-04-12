@@ -40,6 +40,11 @@ Rules implemented (safe, high-confidence cases only):
                           Policymaker → Gov/Agency → employer (if single) else member
                           Investor → VC/Capital → employer (if single) else advisor
 
+  --target-specific     Hand-coded rules keyed on specific target org IDs for which
+                        the relationship is unambiguous by membership, e.g.:
+                          Policymaker → Senate AI Working Group (id 166) → member
+                        Org-to-org edges with role="alumni workplace" → collaborator
+
 Anything not matching a rule is left for manual review and surfaced in the report.
 
 Usage:
@@ -185,6 +190,25 @@ def infer_org_person_type(role):
     return "member"  # safe default for unknown
 
 
+def _is_educational_role(rl):
+    """True if role describes an educational / alumni relationship."""
+    patterns = [
+        r"\bgraduate\b",               # "PhD graduate", "graduate student", "sociology graduate"
+        r"\bundergraduate\b",
+        r"\balumn[ius]+\b",            # alumnus, alumna, alumni
+        r"\bph\.?d\b",                 # PhD, Ph.D.
+        r"\bcandidate\b",              # "PhD Candidate"
+        r"\bstudent\b",                # "former student", "graduate student", "part time student"
+        r"\bbachelor\b", r"\bmaster\b",
+        r"\blaw (school|degree)\b",
+        r"\bdegree\b",
+        r"\bb\.?(a|s|tech|sc)\.?\b",   # BA, B.S., BTech
+        r"\bm\.?(a|s|sc)\.?\b",
+        r"\bj\.?d\.?\b",               # JD
+    ]
+    return any(re.search(p, rl) for p in patterns)
+
+
 def classify_role_relationship(role):
     """Rule A: role string unambiguously describes the target relationship.
 
@@ -194,6 +218,10 @@ def classify_role_relationship(role):
     if not role:
         return None
     rl = role.lower().strip()
+
+    # Educational / alumni: check FIRST — historically valid, "former" is expected here
+    if _is_educational_role(rl):
+        return "member"
 
     # Skip historical / former-role markers — too ambiguous for auto-classification
     if re.search(r"\b(fmr|former)\b|\(former\)", rl):
@@ -266,14 +294,20 @@ def classify_role_relationship(role):
     ):
         return "member"
 
-    # Member / participant
-    if re.match(r"^(member|participant|delegate|ranking member)(s)?$", rl):
+    # Member / participant (including "Committee Member", "Senior member")
+    if re.match(
+        r"^(senior\s+|committee\s+|ranking\s+|founding\s+|"
+        r"associate\s+|full\s+)?(member|participant|delegate)(s)?$",
+        rl,
+    ):
         return "member"
     if re.match(r"^member of\b|^participant in\b", rl):
         return "member"
 
-    # Chair / co-chair (of committee/caucus — member-of-committee relationship)
-    if re.match(r"^(co-?chair|chair|vice chair|chairman|chairwoman)$", rl):
+    # Chair / co-chair / vice-chair (of committee/caucus — member-of-committee relationship)
+    if re.match(
+        r"^(co-?chair|vice-?chair|chair|chairman|chairwoman)$", rl
+    ):
         return "member"
 
     # Research associate — academic affiliate status
@@ -326,6 +360,39 @@ def build_edge_index(conn):
     return has_other_employer, affils
 
 
+# Target-specific rules for well-known orgs where the relationship is clear from
+# source category alone (role usually describes the person's other job, not the
+# relationship to this target).
+TARGET_SPECIFIC_RULES = {
+    # Senate AI Working Group — all senator members
+    166: {
+        "Policymaker": "member",
+    },
+}
+
+
+def classify_target_specific(row):
+    """Rule C: hand-coded (source_cat, target_id) → edge_type mapping.
+
+    Also handles org→org edges with role='alumni workplace' → collaborator.
+    """
+    eid, etype, role, evidence, sid, sname, stype, scat, tid, tname, ttype, tcat = row
+
+    # Org-to-org alumni workplace (e.g. training programs → employers of their grads)
+    if (
+        stype == "organization"
+        and ttype == "organization"
+        and role
+        and role.strip().lower() == "alumni workplace"
+    ):
+        return "collaborator"
+
+    rules = TARGET_SPECIFIC_RULES.get(tid)
+    if not rules:
+        return None
+    return rules.get(scat)
+
+
 def classify_structural(row, has_other_employer, affiliated_per_source):
     """Rule B: for no-role person→org edges, apply structural defaults.
 
@@ -369,6 +436,7 @@ def print_report(edges, rules_enabled, has_other_employer, affiliated_per_source
         "journalist_employer": 0,
         "org_to_person": 0,
         "resource_author": 0,
+        "target_specific": 0,
         "role_relationship": 0,
         "structural_default": 0,
         "unresolved": 0,
@@ -386,6 +454,8 @@ def print_report(edges, rules_enabled, has_other_employer, affiliated_per_source
             counts["org_to_person"] += 1
         elif classify_resource_author(row):
             counts["resource_author"] += 1
+        elif classify_target_specific(row) is not None:
+            counts["target_specific"] += 1
         elif classify_role_relationship(role) is not None:
             counts["role_relationship"] += 1
         elif classify_structural(row, has_other_employer, affiliated_per_source) is not None:
@@ -407,6 +477,7 @@ def print_report(edges, rules_enabled, has_other_employer, affiliated_per_source
     print(f"  {'person/Journalist → Media/Journalism':<40} {counts['journalist_employer']:>5}  --journalist-employer")
     print(f"  {'org → person (reversed, needs flip)':<40} {counts['org_to_person']:>5}  --org-to-person-flip")
     print(f"  {'resource → person (reversed author)':<40} {counts['resource_author']:>5}  --resource-author")
+    print(f"  {'Target-specific hand-coded rules':<40} {counts['target_specific']:>5}  --target-specific")
     print(f"  {'Role explicitly describes relationship':<40} {counts['role_relationship']:>5}  --role-relationship")
     print(f"  {'Structural default (no role)':<40} {counts['structural_default']:>5}  --structural-default")
     print(f"  {'Unresolved (manual review needed)':<40} {counts['unresolved']:>5}")
@@ -430,6 +501,9 @@ def print_report(edges, rules_enabled, has_other_employer, affiliated_per_source
 
 def apply_rules(conn, edges, rules, dry_run, has_other_employer, affiliated_per_source):
     counts = {rule: 0 for rule in rules}
+    counts.setdefault("role_relationship", 0)
+    counts.setdefault("structural_default", 0)
+    counts.setdefault("target_specific", 0)
     counts["skipped"] = 0
 
     for row in edges:
@@ -452,6 +526,27 @@ def apply_rules(conn, edges, rules, dry_run, has_other_employer, affiliated_per_
         elif "resource_author" in rules and classify_resource_author(row):
             apply_reclassification(conn, eid, "author", flip=True, dry_run=dry_run)
             counts["resource_author"] += 1
+
+        elif "target_specific" in rules:
+            ts = classify_target_specific(row)
+            if ts is not None:
+                apply_reclassification(conn, eid, ts, flip=False, dry_run=dry_run)
+                counts["target_specific"] += 1
+                continue
+            # Fall through to role_relationship / structural below
+            if "role_relationship" in rules:
+                new_type = classify_role_relationship(role)
+                if new_type is not None:
+                    apply_reclassification(conn, eid, new_type, flip=False, dry_run=dry_run)
+                    counts["role_relationship"] += 1
+                    continue
+            if "structural_default" in rules:
+                st = classify_structural(row, has_other_employer, affiliated_per_source)
+                if st is not None:
+                    apply_reclassification(conn, eid, st, flip=False, dry_run=dry_run)
+                    counts["structural_default"] += 1
+                    continue
+            counts["skipped"] += 1
 
         elif "role_relationship" in rules:
             new_type = classify_role_relationship(role)
@@ -506,6 +601,8 @@ def main():
                         help="Classify edges whose role explicitly describes the relationship")
     parser.add_argument("--structural-default", action="store_true",
                         help="For no-role person→org edges, apply structural defaults")
+    parser.add_argument("--target-specific", action="store_true",
+                        help="Apply hand-coded rules for specific target org IDs")
     args = parser.parse_args()
 
     if args.live and args.dry_run:
@@ -516,7 +613,8 @@ def main():
     if args.apply_all:
         rules = {
             "party_membership", "journalist_employer", "org_to_person",
-            "resource_author", "role_relationship", "structural_default",
+            "resource_author", "target_specific", "role_relationship",
+            "structural_default",
         }
     else:
         rules = set()
@@ -528,6 +626,8 @@ def main():
             rules.add("org_to_person")
         if args.resource_author:
             rules.add("resource_author")
+        if args.target_specific:
+            rules.add("target_specific")
         if args.role_relationship:
             rules.add("role_relationship")
         if args.structural_default:
