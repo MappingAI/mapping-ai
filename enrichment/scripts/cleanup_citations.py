@@ -60,7 +60,7 @@ def find_affected(conn):
         cur.execute(r"""
             SELECT id, name, entity_type, notes
             FROM entity
-            WHERE notes ~ '\[\d+\]'
+            WHERE notes ~ '\[\d'
             ORDER BY id
         """)
         return cur.fetchall()
