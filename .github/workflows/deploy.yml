@@ -62,6 +62,17 @@ jobs:
             echo "⚠ No SITE_PASSWORD set — gate will auto-bypass"
           fi
 
+      - name: Inject Cloudflare analytics token
+        env:
+          CF_ANALYTICS_TOKEN: ${{ secrets.CF_ANALYTICS_TOKEN }}
+        run: |
+          if [ -n "$CF_ANALYTICS_TOKEN" ]; then
+            sed -i "s/__CF_ANALYTICS_TOKEN__/$CF_ANALYTICS_TOKEN/g" *.html
+            echo "✓ Cloudflare Web Analytics token injected"
+          else
+            echo "⚠ No CF_ANALYTICS_TOKEN set — analytics beacon will not fire"
+          fi
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
