@@ -8,7 +8,7 @@ Execution tracker for the data enrichment project. Strategy and design rationale
 - Phase 2 Cleanup — Complete
 - Phase 3 Entity Enrichment — Complete
 - Phase 4 Edge Enrichment — In progress (reclassify 61%, +48 backfilled edges, source_url 81.2%)
-- Phase 5 Seeding — In progress (gap analysis + seeding queue drafted; Tier A zero-token cleanup done: resources/influence canonicalized, FTC dedup'd, 3 edges seeded)
+- Phase 5 Seeding — In progress (Tier A cleanup + Tier B seeding done; 6 canonical orgs seeded with structural edges)
 - Phase 6 Importance Ratings — Not started
 
 ---
@@ -132,17 +132,25 @@ Execution tracker for the data enrichment project. Strategy and design rationale
 - [x] 3 zero-research leadership edges — Paul Christiano→AISI (employer/Head of AI Safety), Thomas Larsen→CAIP (employer/Director of Policy), Alan Davidson→Commerce (member/NTIA Admin) — `logs/seed-known-edges-20260412.md`
 - [x] Deferred: CSIS (entity 349) — needs note rewrite, not mechanical fix. Documented in `seeding-queue.md` for Phase 5C.
 
-**Phase 5B: Seeding script:**
-- [ ] Write `seed_entity.py` — create new entity + required structural edges in one transaction (template: name, category, notes, notes_sources, enrichment_version='phase5-seed')
+**Phase 5B: Seeding script (complete):**
+- [x] Write `seed_entity.py` — library that takes spec dicts; inserts entity + edges in one transaction, dry-run default, pre-flight duplicate + endpoint check
+- [x] Seed 6 canonical orgs via `seed_tier_b.py` — `logs/tier-b-seeding-20260412.md`
+  - [1787] Cohere (no founder edges — founders missing from DB, see Discovered Work)
+  - [1788] Inflection AI (+2 founder edges: Suleyman, Hoffman)
+  - [1789] Bureau of Industry and Security (BIS) (+parent_company → Commerce)
+  - [1790] National Security Council (NSC) (+parent_company → White House)
+  - [1791] PCAST (+parent_company → White House)
+  - [1792] Bureau of Cyberspace and Digital Policy (CDP) (+parent_company → State Dept)
+- [x] Skipped with reasoning: CAISI (uncertain post-Trump-admin status), Nancy Pelosi (doesn't pass ONBOARDING "don't add randos" bar for AI-specific policy)
 
-**Phase 5C: Tier 1 — Canonical orgs missing outright:**
-- [ ] Seed Cohere, Inflection AI (frontier labs)
-- [ ] Seed CAISI, BIS, NSC, PCAST, State Department AI coordinator (federal agencies)
-- [ ] Seed Nancy Pelosi (policymaker)
+**Phase 5C: Tier C — Leadership edges for existing orgs (needs Exa/Claude API):**
 
-**Phase 5D: Tier 2 — Leadership edges for existing orgs:**
-- [ ] Link directors/AI leads to AISI (205), DoD (1420), OMB (1295), CAIP (443)
-- [ ] Fix CSIS (349) — split main think tank from podcast entity, add Greg Allen
+**Phase 5D: Leadership edges for existing orgs (needs per-person research):**
+- [x] 3 free edges added in Tier A (Paul Christiano→AISI, Thomas Larsen→CAIP, Alan Davidson→Commerce/NTIA)
+- [ ] Link additional leaders: AISI (Elizabeth Kelly), DoD (Craig Martell, Radha Plumb), OMB (Clare Martorana), CAIP (Jason Green-Lowe)
+- [ ] Fix CSIS (349) — needs note rewrite to describe the think tank instead of just the podcast; then add Greg Allen (Wadhwani AI Center director)
+- [ ] Revisit CAISI — confirm current status before attempting a seed
+- [ ] Tier 3 seed leaders for new orgs: Cohere founders (Aidan Gomez, Nick Frosst, Ivan Zhang); BIS/NSC/PCAST/CDP AI-specific leads
 
 **Phase 5E: Tier 3-4 — Frontier-lab + agency AI-lead backfill:**
 - [ ] Frontier labs: CTOs, Heads of Policy (OpenAI, Anthropic, DeepMind, Meta AI, xAI, Amazon, NVIDIA)
@@ -187,3 +195,5 @@ Items found during execution that don't fit neatly into a phase above.
 - [x] ~~**Non-canonical `influence_type` normalization**~~ — Done in Phase 5A Tier A (91 rows normalized, all canonical)
 - [x] ~~**Resource category normalization**~~ — Done in Phase 5A Tier A (57 rows normalized, all canonical)
 - [ ] **Mark Gray duplicate** — entities 1696 "Mark Gray" and 1697 "Mark D Gray" both claim FTC Chief AI Officer role (surfaced during FTC merge). Likely same person; merge needed.
+- [ ] **Cohere founders missing** — Aidan Gomez, Nick Frosst, Ivan Zhang not in DB. Seed them to anchor Cohere (1787) with founder edges. Aidan Gomez is particularly notable as a co-author of "Attention Is All You Need".
+- [ ] **Karén Simonyan missing** — co-founder of Inflection AI (along with Suleyman and Hoffman, both now in DB). Former DeepMind Principal Scientist. Seed to complete Inflection founding team.
