@@ -1159,7 +1159,7 @@ body.forms-loading .form { visibility: hidden; }
   </details>
 
   <!-- Person Form -->
-  <form id="person-form" class="form active" data-type="person">
+  <form id="person-form" class="form active" data-type="person" novalidate>
     <input type="text" name="_hp" class="honeypot" tabindex="-1" autocomplete="off">
     <div class="field full relationship-pills">
       <label>Who are you adding?</label>
@@ -1346,7 +1346,7 @@ body.forms-loading .form { visibility: hidden; }
   </form>
 
   <!-- Organization Form -->
-  <form id="organization-form" class="form" data-type="organization">
+  <form id="organization-form" class="form" data-type="organization" novalidate>
     <input type="text" name="_hp" class="honeypot" tabindex="-1" autocomplete="off">
     <div class="field full relationship-pills">
       <label>Who are you adding?</label>
@@ -1548,7 +1548,7 @@ body.forms-loading .form { visibility: hidden; }
   </form>
 
   <!-- Resource Form -->
-  <form id="resource-form" class="form" data-type="resource">
+  <form id="resource-form" class="form" data-type="resource" novalidate>
     <input type="text" name="_hp" class="honeypot" tabindex="-1" autocomplete="off">
     <div class="field full relationship-pills">
       <label>Who are you adding?</label>
@@ -1939,11 +1939,21 @@ function debounce(fn, ms) {
 }
 
 // Preload all approved entities for instant client-side search
-// Uses static map-data.json (cached by browser, no DB query) for speed
+// Uses static map-data.json + map-detail.json (cached by browser, no DB query) for speed
 let _entityCache = { people: [], organizations: [], resources: [] };
-fetch('/map-data.json')
-  .then(r => r.json())
-  .then(data => {
+Promise.all([
+  fetch('/map-data.json').then(r => r.json()),
+  fetch('/map-detail.json').then(r => r.json()).catch(() => ({})),
+])
+  .then(([data, detail]) => {
+    // Merge detail fields (notes, twitter, author, url, etc.) back into entities
+    for (const arr of [data.people, data.organizations, data.resources]) {
+      if (!arr) continue;
+      for (const entity of arr) {
+        const d = detail[entity.id];
+        if (d) Object.assign(entity, d);
+      }
+    }
     _entityCache = {
       people: data.people || [],
       organizations: data.organizations || [],
@@ -2077,7 +2087,7 @@ document.querySelectorAll('input[name="name"], #resource-form input[name="title"
         removeDupContainer();
         const entityName = matchData.name || matchData.title || item.querySelector('.dup-name').textContent;
         prefillFormFromExisting(form, matchData, formType);
-        const nameEl = form.querySelector('input[name="name"]') || form.querySelector('input[name="resourceTitle"]');
+        const nameEl = form.querySelector('input[name="name"]') || form.querySelector('#resource-form input[name="title"]');
         if (nameEl) {
           nameEl.value = entityName;
           nameEl.setAttribute('readonly', true);
@@ -2146,7 +2156,7 @@ function showUpdateBanner(form, entityName) {
     document.getElementById('existing-card').classList.remove('open');
     document.getElementById('existing-card-toggle').classList.remove('visible');
     // Unlock name field
-    const nameInput = form.querySelector('input[name="name"]') || form.querySelector('input[name="resourceTitle"]');
+    const nameInput = form.querySelector('input[name="name"]') || form.querySelector('#resource-form input[name="title"]');
     if (nameInput) nameInput.removeAttribute('readonly');
     // Reset form fields
     _saveSuppressed = true;
@@ -3252,7 +3262,7 @@ document.querySelectorAll('.clear-form-link').forEach(link => {
     updateEntityId = null;
     form.querySelector('.update-banner')?.remove();
     // Unlock name field if it was locked
-    const nameInput = form.querySelector('input[name="name"]') || form.querySelector('input[name="resourceTitle"]');
+    const nameInput = form.querySelector('input[name="name"]') || form.querySelector('#resource-form input[name="title"]');
     if (nameInput) nameInput.removeAttribute('readonly');
     // Suppress auto-save during clear (form.reset triggers change events)
     _saveSuppressed = true;
