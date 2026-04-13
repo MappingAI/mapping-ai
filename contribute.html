@@ -3774,7 +3774,7 @@ document.querySelector('.nav-hamburger').addEventListener('click', () => {
     const observer = new MutationObserver(() => {
       // Don't add if already present or if field is already linked to a submitted org
       if (resultsDiv.querySelector('.org-add-new')) return;
-      if (input.dataset.linkedOrgId) return;
+      if (hiddenInput && hiddenInput.value) return;
       const q = input.value.trim();
       if (q.length < 1) return;
 
@@ -3795,6 +3795,7 @@ document.querySelector('.nav-hamburger').addEventListener('click', () => {
       // Clear linked state when user edits the field
       delete input.dataset.linkedOrgId;
       setTimeout(() => {
+        if (hiddenInput && hiddenInput.value) return; // already selected an org
         const q = input.value.trim();
         if (q.length >= 2 && resultsDiv.children.length === 0) {
           const addNewEl = document.createElement('div');
