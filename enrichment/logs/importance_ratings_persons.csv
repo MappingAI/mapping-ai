@@ -1,0 +1,757 @@
+id,name,category,importance,rationale
+1456,Melania Trump,Cultural figure,4,Uniquely platformed (First Lady); Presidential AI Challenge + White House AI Education Task Force give institutional AI leverage few cultural figures have.
+941,Naomi Klein,Cultural figure,4,"Mainstream left-cultural figure (No Logo, Shock Doctrine) with sustained AI-critical voice; real broader-public recognition."
+938,Yuval Noah Harari,Cultural figure,4,"Globally bestselling author (Sapiens, Nexus); advises world leaders; known in intellectual-mainstream circles but not household-name tier."
+937,Ted Chiang,Cultural figure,3,"Niche-famous SF author with influential NYer AI essays; recognized in literary/tech circles, not mainstream."
+787,Rick Rubin,Cultural figure,3,"Major mainstream cultural figure (producer) but AI footprint narrow — one book, one podcast. Cultural weight × thin AI thesis = middle."
+1014,Walter Isaacson,Cultural figure,3,"Famous tech biographer (Jobs, Musk, Isaacson-on-AI narrative connector); mainstream-adjacent name."
+783,Natasha Lyonne,Cultural figure,3,"Mainstream actress with concrete AI organizing (400+ Hollywood signatories against AI deregulation, ethical-AI studio)."
+15,Kim Stanley Robinson,Cultural figure,3,"SF-community-famous (Ministry for the Future, Mars trilogy); AI thesis tangential but cultural standing real."
+940,Cory Doctorow,Cultural figure,3,Blog/tech-culture famous ('enshittification'); real AI-critic voice but niche outside tech-literate circles.
+1846,Jaron Lanier,Cultural figure,3,"Tech-intellectual famous (VR pioneer, Microsoft Prime Unifying Scientist); shapes elite AI skepticism but not household-name."
+1847,Sherry Turkle,Cultural figure,3,"Academic-famous (MIT); foundational voice on AI companionship psychology; known in intellectual circles, not mainstream."
+942,Brian Christian,Cultural figure,2,'The Alignment Problem' is influential but he's niche — tech-book-reader recognition only.
+1845,Douglas Rushkoff,Cultural figure,2,"Niche media-theory critic (Team Human, CUNY); real voice in sub-niche but narrow mainstream reach."
+1015,Kevin Kelly,Cultural figure,2,"Wired co-founder, declining futurist presence; tech-circle name only."
+1844,Molly Crabapple,Cultural figure,2,Art-world-organizing impact (anti-gen-AI letter) but narrow mainstream recognition.
+784,Refik Anadol,Cultural figure,2,"Art-world AI pioneer (MoMA, DATALAND); known inside art world, not broader culture."
+943,Shalini Kantayya,Cultural figure,2,'Coded Bias' has real reach but Kantayya herself is niche — film > filmmaker recognition.
+1665,Elena Andreicheva,Cultural figure,1,Narrow single-product AI footprint (one 2026 documentary); minimal broader cultural recognition.
+886,Kara Swisher,Journalist,5,"Most mainstream-recognized tech/AI journalist in U.S. (Pivot, On with Kara Swisher); decades-long household name in tech media."
+67,Ezra Klein,Journalist,5,NYT columnist + Ezra Klein Show — major broad-public intellectual reach; co-founder of Vox; AI-policy episodes shape liberal-mainstream framing.
+878,Kevin Roose,Journalist,4,NYT columnist + Hard Fork co-host; viral 'Sydney' Bing chatbot story; forthcoming 'AGI Chronicles' (2026).
+877,Cade Metz,Journalist,4,NYT technology reporter; 'Genius Makers' (2021) is canonical AI history; broke Hinton-leaves-Google story.
+4,Casey Newton,Journalist,4,Platformer founder + Hard Fork co-host with Roose; serious audience inside and outside tech.
+891,Lex Fridman,Journalist,4,4.88M YouTube subs is mainstream-tier reach; interviews nearly every AI leader; household name among tech-attentive public.
+107,Karen Hao,Journalist,4,'Empire of AI' (2025) was NYT bestseller and defining AI book of the year; long MIT Tech Review tenure.
+987,Zeynep Tufekci,Journalist,4,NYT Opinion columnist + Princeton professor; major public intellectual recognized by broad news-reading public.
+892,Dwarkesh Patel,Journalist,4,"Most important AI-leader interviewer in 2025–26 (Amodei, Musk, etc.); Time 100 AI; consensus-maker in AI elite circles."
+1841,Ben Thompson,Journalist,4,Stratechery is the most-read strategy newsletter in tech; disproportionate influence on how AI industry + policy insiders frame the field.
+1837,Nilay Patel,Journalist,3,Verge EIC + Decoder podcast host — well-known in tech-media circles; shapes Verge's AI coverage but narrower mainstream profile.
+1013,Kashmir Hill,Journalist,3,NYT tech reporter who broke Clearview AI; author of 'Your Face Belongs to Us'; respected specialist beat.
+883,Madhumita Murgia,Journalist,3,First AI Editor at FT; Code Dependent (Women's Prize shortlist 2024); two-time UK Press Awards Tech/Science Journalist of the Year.
+882,Parmy Olson,Journalist,3,Bloomberg Opinion columnist; Supremacy won 2024 FT/Schroders Business Book of the Year; respected AI-business voice.
+885,Nitasha Tiku,Journalist,3,WaPo tech reporter covering AI ethics/labor; broke Anthropic book-scanning + AI-chatbot-harm stories; specialist recognition.
+879,Will Knight,Journalist,3,"Wired senior writer; AI Lab newsletter; decade-plus covering AI, pre-boom to now."
+881,Melissa Heikkilä,Journalist,3,FT AI Correspondent (from MIT Tech Review); widely-quoted AI expert in mainstream press.
+1838,Reed Albergotti,Journalist,3,Semafor Technology Editor; 30K+ tech-exec newsletter reach; leading AI-infrastructure reporter.
+1839,Shirin Ghaffary,Journalist,3,Bloomberg lead West Coast AI reporter; award-winning Q&AI newsletter; major frontier-lab funding scoops.
+1120,Billy Perrigo,Journalist,3,TIME correspondent; broke Kenyan AI-worker exploitation story; consequential investigative AI reporting.
+1834,Deepa Seetharaman,Journalist,3,"Reuters AI reporter, formerly WSJ (Facebook Files); one of most experienced AI-accountability U.S. journalists."
+1833,Hayden Field,Journalist,3,Senior AI Reporter (Lead) at The Verge; anchors Verge AI coverage across the frontier labs.
+1835,Berber Jin,Journalist,3,"WSJ AI/startups/VC reporter; broke OpenAI 'code red', Sora shutdown, Altman conflicts scoops in 2025–26."
+1836,Alex Heath,Journalist,3,Founder of Sources (independent); ex-Verge; Access podcast (Vox); known for AI talent-war scoops and CEO access.
+880,James Vincent,Journalist,2,Verge Senior Reporter; 'Beyond Measure' was an Economist/NYer book of the year but is not AI-specific; solid but narrower AI footprint.
+884,Matt O'Brien,Journalist,2,"AP tech writer covering AI policy/copyright; steady beat reporting, not a prominent voice-setter."
+1832,Kylie Robison,Journalist,2,Independent AI journalist (KylieBytes); ex-Wired Senior Correspondent; narrower reach as independent.
+1842,Sigal Samuel,Journalist,2,Vox Future Perfect senior reporter covering AI consciousness/ethics; thoughtful but sub-niche.
+1843,Garrison Lovely,Journalist,2,Freelance AI journalist; 'Obsolete' Substack + forthcoming book; real NYT/Bloomberg/TIME bylines but independent reach.
+1840,Anna Tong,Journalist,2,Forbes AI (joined Oct 2025 from Reuters); AI 50 curator; rising profile but still building platform.
+893,Craig Smith,Journalist,2,Eye on AI podcast (ranked #2–3 AI podcasts); ex-NYT foreign correspondent; niche podcaster reach.
+894,Nathaniel Whittemore,Journalist,2,AI Daily Brief daily podcast; Superintelligent founder; niche AI-industry daily-listener audience.
+23,Michel Justen,Journalist,1,"AI Grants Lead at Tarbell Center — journalism-funder role, not a working journalist; narrow public footprint."
+65,Dan Wang,Journalist,1,China-tech analyst at Hoover Institution; not primarily an AI journalist; tangential to AI beat.
+69,Dan Kagan-Kans,Journalist,1,Writes for Transformer/WSJ/American Scholar; narrow AI-journalism footprint; emerging.
+1218,Rubina Fillion,Journalist,1,"NYT Associate Editorial Director of AI Initiatives — behind-the-scenes editorial role, not a public-facing journalist."
+1529,Leah Harrison,Journalist,1,"Partnerships Director at Tarbell Center — journalism-infrastructure role, not primary journalist voice."
+3,Marc Andreessen,Investor,5,Defining mainstream AI-investor figure — co-founder of Netscape + a16z; a16z's AI thesis shapes industry framing; major public voice.
+38,Peter Thiel,Investor,5,Household-name tech billionaire — PayPal/Palantir/Founders Fund; politically significant AI-adjacent figure with broad mainstream recognition.
+1009,Bill Gates,Investor,5,Iconic — Microsoft co-founder; Gates Foundation; Microsoft's $11.8B OpenAI investment is pivotal to AI industry trajectory.
+778,Masayoshi Son,Investor,5,Globally famous SoftBank founder; $40B+ into OpenAI; leads $500B Stargate; single largest AI infrastructure bet in the world.
+855,Eric Schmidt,Investor,4,Former Google CEO — mainstream name; Schmidt Futures; Congressional AI testimony; high-profile AI-policy voice (Genesis book with Kissinger).
+848,Reid Hoffman,Investor,4,LinkedIn co-founder; Greylock; co-founder Inflection AI; major OpenAI/Anthropic investor; Masters of Scale podcast — broadly known.
+849,Vinod Khosla,Investor,4,Sun Microsystems co-founder + Khosla Ventures; earliest major OpenAI backer ($50M at $1B); outspoken AI-policy voice.
+90,Dustin Moskovitz,Investor,4,Facebook + Asana co-founder; Good Ventures/Coefficient Giving anchor of AI-safety philanthropy ($580M+ field-building).
+1010,Laurene Powell Jobs,Investor,4,Mainstream-known ($11.5B net worth); Emerson Collective has invested $1B+ across 9+ AI startups including OpenAI and Jony Ive's io.
+1749,Patrick Collison,Investor,4,Stripe co-founder/CEO — household tech name; Conjecture investor; major voice in tech-industry AI framing.
+773,Nat Friedman,Investor,4,"Ex-GitHub CEO; co-leads Meta Superintelligence Labs; NFDG ($1.1B, 4x returns); AI Grant — central figure in AI-builder investor circles."
+1102,Ben Horowitz,Investor,4,a16z co-founder — other half of the Andreessen Horowitz brand; major AI investor voice alongside Marc.
+1750,John Collison,Investor,3,Stripe co-founder/President; less face-forward than Patrick individually but real AI-policy voice; Conjecture investor.
+857,Joe Lonsdale,Investor,3,"Palantir co-founder, 8VC founder; $125M Leading the Future super PAC (anti-AI-regulation); notable Austin-tech figure."
+856,Josh Wolfe,Investor,3,"Lux Capital co-founder — leading defense-tech AI investor (Anduril, Hugging Face, Palantir); respected in policy circles."
+850,Martin Casado,Investor,3,"a16z GP leading $1.25B Infrastructure practice — OpenAI, World Labs, Cursor; outspoken open-source AI advocate."
+854,Elad Gil,Investor,3,~$3B solo-GP fund; 40+ unicorn portfolio; 'No Priors' AI podcast; central AI-investor network node but narrower public profile.
+852,Sonya Huang,Investor,3,Sequoia Partner; Training Data podcast; 'Generative AI's Act Two' / '2026: This is AGI' authored Sequoia AI framing.
+842,Jaan Tallinn,Investor,3,Skype/Kazaa co-founder; early DeepMind + Anthropic investor; FLI + CSER co-founder; leading voice in AI-safety-funder world.
+1011,Naval Ravikant,Investor,3,AngelList chairman; mainstream-known via viral 'How to Get Rich' content; distributed AI-investment footprint.
+61,Holden Karnofsky,Investor,3,Open Phil / Coefficient Giving co-founder ($4B+ in grants); ex-OpenAI board; now MTS at Anthropic (moved out of primary-funder role).
+1785,Cari Tuna,Investor,3,Co-founded Good Ventures + Open Phil with Moskovitz; anchor of AI-safety philanthropy field-building.
+860,Ian Hogarth,Investor,3,UK AISI Chair (£100M budget); FT 'We Must Slow Down' essay; State of AI Report co-author; Plural GP.
+859,Matt Clifford,Investor,3,Entrepreneur First founder; ARIA Chair; UK PM AI advisor; authored UK AI Opportunities Action Plan (all 50 recs accepted).
+851,Anjney Midha,Investor,3,a16z GP controlling 20K+ GPU Oxygen cluster — gatekeeper-level compute access; Anthropic early angel.
+63,Joshua Kushner,Investor,3,Thrive Capital founder; ~$1B into OpenAI at $285B valuation; tier-1 NY VC — AI-investment weight significant but discrete public profile.
+853,Seth Rosenberg,Investor,2,Greylock partner with narrow fintech/AI focus; solid but specialized investor.
+858,Sam Lessin,Investor,2,Slow Ventures GP; ex-Facebook VP; skeptical AI-VC voice but narrow public reach.
+70,Joi Ito,Investor,2,Former MIT Media Lab director (resigned 2019 over Epstein ties); Japanese entrepreneur; post-scandal reduced profile.
+1717,Anish Acharya,Investor,2,"a16z GP — consumer/fintech focus, not AI-primary; narrow AI-specific footprint."
+1718,Alex Immerman,Investor,2,"a16z Growth GP — B2C/B2B/fintech focus, not AI-primary."
+1719,Santiago Rodriguez,Investor,2,"a16z Growth Partner — fintech/consumer/crypto focus, AI-peripheral."
+1751,Arthur Breitman,Investor,2,Tezos co-founder — crypto-famous; AI footprint is Conjecture investment + ex-Waymo background.
+1593,Ruairí Donnelly,Investor,1,Macroscopic Ventures board president — $10M/year AI-safety grants; niche with narrow public footprint.
+1595,Arden Berg,Investor,1,Macroscopic Ventures investor; narrow AI-safety-grants role; emerging.
+1606,Vishal Maini,Investor,1,Mythos Ventures founder — $14M inaugural fund; narrow seed-stage AI-safety focus.
+36,Fran Drescher,Organizer,5,Mainstream-famous actress (The Nanny) + SAG-AFTRA president who led 118-day Hollywood AI strike — defining face of AI-vs-labor moment.
+35,Timnit Gebru,Organizer,4,"Defining AI-ethics-organizer figure (Google firing, Stochastic Parrots, DAIR); widely known in tech-attentive press but not household-name."
+1002,Tristan Harris,Organizer,4,Center for Humane Technology co-founder; Netflix 'Social Dilemma' reached broad mainstream audience; key AI-harms framing voice.
+95,Meredith Whittaker,Organizer,4,Signal Foundation president; AI Now co-founder; widely recognized AI-ethics/privacy organizer across tech and policy press.
+105,Randi Weingarten,Organizer,4,President of 1.8M-member AFT — major mainstream labor leader; AI footprint via education-sector AI policy advocacy.
+901,Liz Shuler,Organizer,4,AFL-CIO President — top U.S. labor federation leader; Workers First AI Initiative; Microsoft AI-labor partnership.
+28,Jennifer Pahlka,Organizer,3,Former U.S. Deputy CTO; Code for America founder; 'Recoding America' author; well-known civic-tech organizer.
+1012,Chris Smalls,Organizer,3,Amazon Labor Union founder (first successful Amazon warehouse union); Time 100; major labor-organizer story.
+1003,Aza Raskin,Organizer,3,Center for Humane Technology co-founder; Social Dilemma architect; Earth Species Project; slightly lower profile than Harris but core partner.
+922,Alexandra Reeve Givens,Organizer,3,CDT President/CEO; testified before House on AI-Ready America; consistent voice for current-AI-harms framing over existential focus.
+917,Cindy Cohn,Organizer,3,EFF Executive Director (25+ years); landmark Bernstein encryption case; pillar of digital-rights organizing.
+895,Sneha Revanur,Organizer,3,Encode Justice founder (at 15); Time 100 AI (youngest ever); prominent Gen Z AI-policy organizer.
+1229,Børge Brende,Organizer,3,World Economic Forum President/CEO; launched AI Governance Alliance + Global Regulatory Innovation; major convener.
+1369,Meredith Stiehm,Organizer,3,WGA West President during 148-day strike that won precedent-setting AI protections; Time 100 AI 2024.
+897,Rebecca Finlay,Organizer,3,"Partnership on AI CEO (141 partners, 19 countries); central multi-stakeholder AI-governance organizer."
+898,Mark Surman,Organizer,3,Mozilla Foundation President/ED; $30M Mozilla AI; 'Public AI' vision; long-running open-web and AI advocacy.
+1797,Jason Green-Lowe,Organizer,2,Center for AI Policy Executive Director; DC frontier-AI legislative advocacy; niche but real-policy presence.
+64,Duncan Crabtree-Ireland,Organizer,2,SAG-AFTRA National ED + chief negotiator during 2023 strike; specialized role behind Drescher's public face.
+1370,Lisa Takeuchi Cullen,Organizer,2,WGA East President during the 2023 strike; behind Stiehm in public visibility but part of the AI-labor win.
+900,Alex Hanna,Organizer,2,DAIR Research Director; co-author 'The AI Con' (2025); ex-Google AI ethicist; real voice in AI-critique but sub-niche.
+918,Corynne McSherry,Organizer,2,EFF Legal Director; Congressional Section 230/DMCA testimony; AI-policy/copyright specialist.
+919,Ben Wizner,Organizer,2,ACLU Speech/Privacy/Tech Project Director; Snowden attorney; AI-surveillance voice but niche.
+106,Elliston Berry,Organizer,2,Deepfake-victim-turned-advocate; helped produce online deepfake-education training; policy testimony around Texas case.
+1461,Anna McAdams,Organizer,2,Mother of Elliston Berry; co-advocated deepfake child-safety legislation; consequential personal-story testimony.
+896,Mary Wareham,Organizer,2,HRW deputy director for arms division; coordinated Stop Killer Robots (2013–2021); autonomous-weapons specialist.
+62,Ed Newton-Rex,Organizer,2,Fairly Trained CEO — training-data-ethics certifier; ex-Stability AI; niche AI-ethics-organizer voice.
+920,Janet Haven,Organizer,2,Data & Society ED; chaired NAIAC Rights/Trust/Safety working group (2022–2025); known in DC-research circles.
+804,Ana Helena Ulbrich,Organizer,2,NoHarm co-founder; Time 100 AI 2025; Brazilian healthcare-AI deployment (200+ hospitals); real implementation work.
+1767,Daniel Colson,Organizer,2,AI Policy Institute (AIPI) co-founder/ED — public-opinion research shaping AI-regulation narrative; DC-niche.
+1768,Brad Carson,Organizer,2,Americans for Responsible Innovation co-founder/president; former Congressman; bipartisan AI-policy advocacy.
+1772,Anthony Aguirre,Organizer,2,Future of Life Institute ED; UC Santa Cruz physicist; behind FLI's AI-pause-letter + AI-governance work.
+1576,Peter Eckersley,Organizer,2,DECEASED 2022; Let's Encrypt co-founder (290M+ domains); pillar of pre-boom digital-rights/AI-safety organizing.
+1754,Jamie Bernardi,Organizer,2,BlueDot Impact co-founder; AI Safety Fundamentals courses trained thousands since 2022; niche but real scale.
+1335,Amir Banifatemi,Organizer,2,Cognizant Chief Responsible AI Officer; ex-XPRIZE innovation lead; AI for Good Summit co-creator; GPAI.
+1265,Andrew Carney,Organizer,2,DARPA joint PM; leads $8.5M AI Cyber Challenge (AIxCC); concrete gov-AI-program organizer.
+1457,Sean McGarvey,Organizer,2,"NABTU President (14 unions, 3M+ workers); building-trades AI/labor voice."
+66,Milagros Miceli,Organizer,2,Data Workers' Inquiry founder; DAIR research lead; leading AI-labor-research-organizer; niche academic presence.
+1714,Oliver Zhang,Organizer,2,CAIS co-founder (with Hendrycks); MATS co-founder; helped organize 2023 CAIS 'Statement on AI Risk' letter.
+1773,Meia Chita-Tegmark,Organizer,1,FLI co-founder alongside Max Tegmark; cognitive scientist; behind-scenes FLI role.
+1769,Eric Gastfriend,Organizer,1,Americans for Responsible Innovation co-founder/ED; narrow public profile.
+1505,Peter Favaloro,Organizer,1,"Coefficient Giving Program Director, Technical AI Safety; ~$150M/yr grant oversight but behind-scenes."
+1506,Eli Rose,Organizer,1,"Coefficient Giving Program Director, GCR Capacity Building; narrow back-office philanthropy role."
+1513,Stefan Torges,Organizer,1,Forethought Head of Strategic Initiatives; ex-Center on Long-Term Risk ops; niche AI-safety-org staff.
+1533,Otto Barten,Organizer,1,Existential Risk Observatory (Amsterdam) founder/president; narrow European x-risk advocacy.
+1574,Alexandra Narin,Organizer,1,Geodesic Research Strategic Delivery + UK AI Forum co-founder; early-career org-builder.
+1580,Adam Schumacher,Organizer,1,AI Objectives Institute Program Director; narrow org-staff role.
+1581,Zoey Tseng,Organizer,1,AOI APAC Partnerships + Taiwan g0v collaborator; niche.
+1594,Jesse Clifton,Organizer,1,Co-founded Center on Long-Term Risk; now Macroscopic Ventures Grantmaking Officer; small-org lineage.
+1601,Cecilia Elena Tilli,Organizer,1,Cooperative AI Foundation Associate Director (Research + Grants); narrow.
+1602,Goda Mockutė,Organizer,1,CAIF Programme Manager; small-org staff role.
+1634,Gergő Gáspár,Organizer,1,AI Safety Hungary founder; ENAIS part-time Director; small European AI-safety community-builder.
+1636,Jonathan Claybrough,Organizer,1,ENAIS + EffiSciences board member; narrow European AI-safety org governance.
+1642,Fynn Heide,Organizer,1,Safe AI Forum co-founder/ED (IDAIS dialogues); very niche.
+1643,Conor McGurk,Organizer,1,Safe AI Forum co-founder; now Coefficient Giving Chief of Staff Biosecurity; behind-scenes.
+1646,Mario Gibney,Organizer,1,Trajectory Labs ED (Toronto AI-safety coworking ~30 people); very narrow.
+1647,Juliana Eberschlag,Organizer,1,Trajectory Labs Ops Generalist; narrow.
+1668,Robert Kralisch,Organizer,1,AI Safety Camp research coordinator; narrow.
+1669,Remmelt Ellen,Organizer,1,AI Safety Camp co-founder; niche community-builder.
+1670,Linda Linsefors,Organizer,1,AI Safety Camp co-founder; niche.
+1686,Renan Araujo,Organizer,1,IAPS Director of Programs; narrow AI-policy fellowship pipeline.
+1692,Joey Skaf,Organizer,1,ex-Meridian Cambridge CEO; early-career AI-safety organizer.
+1712,Søren Elverlin,Organizer,1,AISafety.com project lead; niche community volunteer.
+1713,Bryce Robertson,Organizer,1,AISafety.com manager; narrow.
+1738,Kyle Scott,Organizer,1,METR Operations Lead + ARC Treasurer; behind-scenes ops.
+1739,Harshita Khera,Organizer,1,ARC Secretary; narrow org officer.
+1740,Ben Hoskin,Organizer,1,ARC Board member + VARA co-founder; narrow.
+1760,Emily Soice,Organizer,1,Secure AI Project Ops Manager; narrow.
+1784,Frances Lorenz,Organizer,1,FAR.AI events PM; narrow.
+1231,Francisco Betti,Organizer,1,WEF Global Industries head; behind-Brende backstage role.
+29,Yoshua Bengio,Academic,5,Turing Award (2018) for deep learning; defining AI academic; Mila founder; mainstream-recognized AI pioneer.
+821,Geoffrey Hinton,Academic,5,Turing Award (2018) + Nobel Prize Physics 2024; 'AI godfather' — single most mainstream-famous AI academic.
+1,Stuart Russell,Academic,5,Co-author of 'AI: A Modern Approach' (standard AI textbook); 'Human Compatible' author; defining AI-safety academic. [DUP of 1742]
+1742,Stuart J. Russell,Academic,5,Duplicate of [1] — same person; defining AI-safety academic. Flag for merge.
+55,Fei-Fei Li,Academic,5,'Godmother of AI'; ImageNet; Stanford HAI co-director; mainstream-recognized AI pioneer.
+52,Daron Acemoglu,Academic,5,2024 Nobel Prize Economics; mainstream-famous via 'Why Nations Fail'; major AI-and-labor critic.
+991,Noam Chomsky,Academic,4,Iconic global public intellectual; AI-critic voice (LLM scepticism); broad recognition but primary AI contribution is critique.
+964,Joseph Stiglitz,Academic,4,Nobel Prize Economics 2001; mainstream-known; AI-labor/bubble critic but AI is adjacent to his core work.
+26,Simon Johnson,Academic,4,2024 Nobel Economics co-winner with Acemoglu; MIT Sloan; AI-power-and-institutions research.
+847,Nick Bostrom,Academic,4,'Superintelligence' (2014) shaped AI-safety discourse; FHI founder; major name in AI-existential-risk academic world.
+846,Max Tegmark,Academic,4,FLI co-founder; March 2023 AI pause letter (30K+ signatures); Senate AI Insight Forum testimony.
+1094,Peter Norvig,Academic,4,Co-author of Russell & Norvig AI textbook; Google + Stanford HAI Fellow; tier-1 AI academic voice.
+976,Andrew Ng,Academic,4,Coursera co-founder; Google Brain founder; defining AI-education voice; Senate AI Insight Forum; mainstream tech-famous.
+939,Kate Crawford,Academic,4,'Atlas of AI'; Datasheets for Datasets (in EU AI Act); major critical-AI scholar in academic + policy discourse.
+101,Tim Wu,Academic,4,Columbia Law; Biden White House Special Assistant for competition/tech; 'Attention Merchants' author; mainstream tech-policy name.
+978,Shoshana Zuboff,Academic,4,Coined 'surveillance capitalism' (2019 book); mainstream public intellectual; Congressional testimony.
+974,Jason Furman,Academic,4,Obama's chief economist; Harvard; major mainstream economics-policy voice; AI-labor analysis.
+1245,Daphne Koller,Academic,4,Coursera co-founder; MacArthur Fellow; insitro CEO (AI drug discovery); Stanford CS; major AI-tech academic-entrepreneur.
+825,Helen Toner,Academic,4,Co-founded CSET; famously voted to remove Altman from OpenAI board (Nov 2023); major AI-policy academic voice.
+924,Safiya Noble,Academic,4,'Algorithms of Oppression' (2018) — defining algorithmic-bias text; UCLA; MacArthur; broad academic impact.
+925,Ruha Benjamin,Academic,4,'Race After Technology' + 'New Jim Code'; Princeton; major critical-AI scholar with broad reach.
+100,Erik Brynjolfsson,Academic,4,Stanford HAI + Digital Economy Lab; 'Second Machine Age'; mainstream AI-economics academic voice.
+21,Lawrence Lessig,Academic,4,Harvard Law; Creative Commons founder; mainstream-famous cyberlaw scholar; AI-policy adjacent.
+54,Mariana Mazzucato,Academic,4,UCL Economics of Innovation; 'Entrepreneurial State'; major mainstream economist; AI-industrial-policy voice.
+1297,Sebastian Thrun,Academic,4,Google X founder; Waymo (self-driving); Udacity; Stanford AI Lab former director; mainstream AI-entrepreneur.
+826,Jason Matheny,Academic,4,RAND CEO; co-founder CSET; Biden White House tech-policy advisor; major AI-national-security academic/policy figure.
+973,Susan Athey,Academic,4,Stanford; DOJ Antitrust Division Chief Economist (2022–2024); major AI-competition-policy academic.
+831,Emily Bender,Academic,3,Co-author 'Stochastic Parrots' (2021) + 'The AI Con' (2025); UW linguistics; canonical LLM-critic.
+103,Arvind Narayanan,Academic,3,Princeton CITP director; 'AI Snake Oil' co-author; major AI-skeptic academic voice.
+57,Sayash Kapoor,Academic,3,Princeton PhD student; 'AI Snake Oil' co-author with Narayanan.
+94,Daniel Ho,Academic,3,Stanford RegLab director; AI-in-government scholar; Senate testimony; major AI-regulation academic.
+887,Ethan Mollick,Academic,3,Wharton; 'Co-Intelligence' NYT bestseller; TIME 100 AI; widely-read practical-AI writer.
+837,Percy Liang,Academic,3,Stanford; HELM benchmark creator; California AI Report co-author; major AI-evals academic.
+838,Jacob Steinhardt,Academic,3,Transluce founder; 'Concrete Problems in AI Safety' co-author; major AI-alignment academic.
+841,Toby Ord,Academic,3,Oxford; 'The Precipice' (2020) — canonical x-risk book; well-known in AI-safety policy circles.
+102,Yejin Choi,Academic,3,UW/Stanford HAI; MacArthur Fellow; major NLP academic; well-regarded.
+962,David Autor,Academic,3,MIT labor economist; Hamilton Project AI-worker report; major AI-labor academic.
+963,Lawrence Katz,Academic,3,Harvard labor econ; AI-employment framework; major academic voice.
+1489,Rodney Brooks,Academic,3,iRobot co-founder; former MIT CSAIL director; Rethink Robotics; major robotics academic.
+1743,Pieter Abbeel,Academic,3,UC Berkeley; Covariant co-founder; leading robotics/RL academic.
+1744,Anca Dragan,Academic,3,Berkeley EECS; Google DeepMind Senior Director of AI Safety and Alignment; major AI-safety academic.
+921,danah boyd,Academic,3,Data & Society founder (2013); sociotechnical-systems scholar; broad academic-policy reach.
+985,Henry Farrell,Academic,3,JHU; Science paper on AI as 'cultural and social technologies'; Annual Review 'AI as Governance'; major academic commentator.
+56,Latanya Sweeney,Academic,3,Harvard Kennedy School + FAS; former FTC Chief Technologist; major privacy/AI academic.
+31,Regina Barzilay,Academic,3,MIT Jameel Clinic; School of Engineering Distinguished Prof; major AI-and-health academic.
+979,Frank Pasquale,Academic,3,Cornell Tech Law; NAIAC 2022–2024; 'Black Box Society' author.
+992,Alison Gopnik,Academic,3,Berkeley developmental psychologist; 'AI as cultural technology' framing; well-regarded academic critic.
+977,Daniela Rus,Academic,3,MIT CSAIL director; 'physical AI' research; major robotics academic.
+53,Ganesh Sitaraman,Academic,3,Vanderbilt Law; longtime Elizabeth Warren advisor; major law-and-tech academic.
+968,Fiona Scott Morton,Academic,3,Yale; AI-competition/welfare paper with Athey (2025); former DOJ antitrust; major academic.
+982,Danielle Allen,Academic,3,Harvard political philosopher; 'Roadmap for Governing AI'; major public intellectual.
+980,Ryan Calo,Academic,3,UW Law; Senate AI/privacy testimony; AI100 co-author; major law-and-AI academic.
+986,Hélène Landemore,Academic,3,Yale democratic theory; OpenAI Democratic Inputs advisor; major AI-democracy academic.
+1135,Sanjeev Arora,Academic,3,Princeton; Princeton Language and Intelligence director; tier-1 theoretical ML academic.
+120,Suresh Venkatasubramanian,Academic,3,Brown; directed Biden OSTP's AI Bill of Rights; major AI-ethics academic-policy.
+1145,Kyunghyun Cho,Academic,3,NYU; co-head Global AI Frontier Lab with LeCun; major NLP academic.
+1141,Neil Lawrence,Academic,3,Cambridge DeepMind Professor; ai@cam lead; major UK academic.
+1138,Tom Griffiths,Academic,3,Princeton; cog-sci computational models of AI; well-regarded academic.
+983,Nathaniel Persily,Academic,3,Stanford; AI-democracy scholar; major academic voice.
+1800,Michael Littman,Academic,3,NSF Information and Intelligent Systems director (2022–); Brown CS; major CS academic in federal role.
+1816,Greg Hager,Academic,3,NSF CISE Assistant Director (since June 2024); JHU; major federal CS academic.
+1388,John Etchemendy,Academic,3,Stanford HAI co-director with Fei-Fei Li; former Stanford provost; major AI-policy academic.
+1518,Dewey Murdick,Academic,3,Ex-CSET ED (2021–2025); ~60-staff AI-policy think tank; major AI-national-security academic-policy figure.
+832,Rediet Abebe,Academic,3,Black in AI co-founder; UC Berkeley; major AI-and-social-inequality academic.
+899,Veena Dubal,Academic,3,UC Law SF; 'algorithmic wage discrimination' scholar; CA Supreme Court citation; major gig-economy AI academic.
+58,Sandy Pentland,Academic,3,MIT Media Lab professor; Stanford HAI; pioneer in computational social science; major academic.
+1442,Andrew McAfee,Academic,3,MIT IDE co-founder; 'Second Machine Age' co-author; well-known AI-economics academic.
+927,Virginia Eubanks,Academic,2,'Automating Inequality' (2018); SUNY Albany; canonical AI-welfare critique but narrower academic profile.
+1599,Gillian Hadfield,Academic,2,JHU AI Alignment and Governance Professor; AI-governance academic; rising.
+12,Anton Korinek,Academic,2,UVA EconTAI director; AI-economics-of-transformation researcher; specialist profile.
+326,Roman Yampolskiy,Academic,2,Louisville; 100+ AI safety publications; well-known in AI-safety but narrower academic weight.
+845,Yolanda Gil,Academic,2,USC; AAAI past president; Stanford AI Index co-chair; major admin role but narrower public profile.
+997,Samantha Bradshaw,Academic,2,Oxford OII; computational propaganda researcher; specialist profile.
+965,Ajay Agrawal,Academic,3,Toronto; 'Prediction Machines' + 'Power and Prediction'; Creative Destruction Lab; well-known AI-econ academic.
+967,Daniel Susskind,Academic,2,'Future of the Professions' co-author; Oxford; specialist AI-labor academic.
+966,Joshua Gans,Academic,2,Toronto; NBER AI regulation papers; specialist academic.
+975,Avi Goldfarb,Academic,2,Toronto; Senate testimony on digital ads/data; specialist academic.
+969,Betsey Stevenson,Academic,2,Michigan econ; AI-policy papers; specialist academic voice.
+970,Ioana Marinescu,Academic,2,Penn labor econ; DOJ Antitrust (2022–2024); specialist academic.
+971,Ramin Toloui,Academic,2,Stanford; first university AI-economics course; Digitalist Papers author.
+972,Neil Thompson,Academic,2,MIT; AI Risk Repository (777 risks) + Mitigation Taxonomy; specialist.
+1451,John Tasioulas,Academic,2,Oxford Institute for Ethics in AI inaugural director (resigned Sep 2025); moral philosopher.
+1452,Matt Salganik,Academic,2,Princeton sociology; computational social science; specialist academic.
+1450,Jeff Hancock,Academic,2,Stanford Social Media Lab; AI-trust/deception researcher.
+1613,Michael Osborne,Academic,2,Oxford ML; Oxford Martin AI Governance Initiative co-director; specialist.
+1559,Robert Trager,Academic,2,Oxford Martin AI Governance Initiative co-director; GovAI; AI-governance academic.
+1565,Clark Barrett,Academic,2,Stanford Centaur director; Stanford Center for AI Safety co-director; formal-methods AI academic.
+1566,Bryan Parno,Academic,2,CMU; formal verification; AI-safety-adjacent.
+984,Eugene Volokh,Academic,2,UCLA/Hoover; First Amendment + AI; specialist law-academic.
+988,Lily Tsai,Academic,2,MIT GOV/LAB founder; Digitalist Papers contributor; specialist academic.
+1198,Sinan Aral,Academic,2,MIT Sloan; 'Hype Machine' author; digital economy academic.
+1381,Tejas Narechania,Academic,2,UC Berkeley Law; Berkeley Center for Law & Technology co-director; specialist.
+1398,Philipp Hennig,Academic,2,Tübingen ML chair; probabilistic numerics; specialist.
+1671,Tan Zhi Xuan,Academic,2,NUS Presidential Young Professor; AI-ethics specialist.
+1672,Michael P. Wellman,Academic,2,Michigan; multi-agent systems; decision-theoretic AI academic.
+1674,Vincent Conitzer,Academic,2,CMU Foundations of Cooperative AI Lab; game-theory AI academic.
+1287,Kartik Hosanagar,Academic,2,Wharton; 'Algorithmic Bill of Rights' advocate; specialist.
+1288,Kevin Werbach,Academic,2,Wharton Accountable AI Lab; Blockchain director; specialist.
+1255,Robert M. Groves,Academic,2,Georgetown Interim President; social statistician; administrative role.
+1256,Scott Strobel,Academic,2,Yale Provost; assembled Yale Task Force on AI; admin role.
+1273,David Marchick,Academic,2,AU Kogod Dean; led 'most consequential AI transformation in business education' per Poets&Quants.
+1268,Barton Paulhamus,Academic,2,JHU APL Intelligent Systems Center chief; specialist.
+1193,Richard Zemel,Academic,2,Columbia; NSF AI Institute director; major ML academic but not public-facing.
+839,David Krueger,Academic,2,Mila; ARCHES paper on existential safety; CAIS statement signatory.
+1342,William Bialek,Academic,2,Princeton theoretical biophysics; Dario Amodei co-advisor; specialist.
+798,Priya Donti,Academic,2,MIT LIDS; 'Making AI Work for All Americans' co-author; AI-for-climate academic.
+803,Mitesh Khapra,Academic,2,IIT Madras AI4Bharat; Bhashini 80% data supplier; specialist Indian-AI academic.
+1277,Thenkurussi Kesavadas,Academic,2,SUNY Albany VP Research; $200M AI initiative lead; admin role.
+327,Dylan Hadfield-Menell,Academic,2,MIT CSAIL Algorithmic Alignment Group; AI2050 Fellow; rising specialist.
+1186,Ellie Pavlick,Academic,2,Brown CS + Google DeepMind Research Scientist; NLP academic.
+1187,Francis J. Doyle III,Academic,1,"Brown Provost; ex-Harvard SEAS Dean; admin role, not primarily AI academic."
+1098,Michael Genesereth,Academic,1,Stanford logician; computational logic; narrow AI-specific profile.
+1136,Arthur Spirling,Academic,1,Princeton politics; NLP-in-politics; specialist narrow.
+1137,Olga Troyanskaya,Academic,1,Princeton Precision Health; computational biology; narrow AI-policy footprint.
+1173,Jules White,Academic,1,Vanderbilt CS; Chancellor Senior Advisor Generative AI; admin role.
+1175,Daniel Diermeier,Academic,1,Vanderbilt Chancellor; political-scientist admin role.
+1177,Matthew Johnson-Roberson,Academic,1,Vanderbilt College of Connected Computing inaugural dean; admin.
+1195,Robert J. Jones,Academic,1,UW 34th President (2025–); admin role.
+1197,Richard M. Locke,Academic,1,MIT Sloan Dean (since July 2025); admin role.
+1199,Kate Kellogg,Academic,1,MIT Sloan; AI-implementation research; narrow specialist.
+1200,Roberto Rigobon,Academic,1,MIT Sloan applied econ; AI-peripheral.
+1201,Danielle Li,Academic,1,MIT Sloan labor econ of technology; narrow specialist.
+1202,Swati Gupta,Academic,1,MIT Sloan Operations Research; narrow specialist.
+1282,Geoff Garrett,Academic,1,USC Marshall Dean; USC AI Strategy Committee chair; admin.
+1284,Carol L. Folt,Academic,1,Ex-USC President (2019–2025); launched USC School of Advanced Computing; admin.
+1286,Erika James,Academic,1,Wharton Dean (since July 2020); admin role.
+1289,Eric Bradlow,Academic,1,Wharton VP AI & Analytics; admin.
+1290,Prasanna (Sonny) Tambe,Academic,1,Wharton Human-AI; narrow specialist.
+1291,Giles Hooker,Academic,1,Wharton statistics; narrow AI-peripheral.
+1318,Manish Parashar,Academic,1,Utah AI Director; SCI Institute; admin-technical role.
+1341,Michael J. Berry,Academic,1,Princeton neuroscience; Amodei co-advisor; AI-peripheral.
+1269,Ian McCulloh,Academic,1,JHU Lifelong Learning AI portfolio director; narrow.
+1274,Gwanhoo Lee,Academic,1,AU Kogod IT&A department chair; narrow admin-academic.
+1275,Angela Virtu,Academic,1,AU Kogod Professorial Lecturer; narrow early-career.
+1276,Bei Xiao,Academic,1,AU CS Associate Professor; narrow specialist.
+1441,Gabriel Unger,Academic,1,Stanford Digital Economy Lab postdoc; early-career.
+1673,Kate Larson,Academic,1,Waterloo CS multi-agent; specialist narrow.
+1711,John Bargh,Academic,1,Yale psych automaticity research; AI-peripheral.
+981,Woodrow Hartzog,Academic,3,BU Law; Senate Judiciary testimony; 'How AI Destroys Institutions'; Massachusetts Facial Recognition Commission; significant AI-privacy law academic.
+92,Yann LeCun,Researcher,5,Turing Award (2018); Meta Chief AI Scientist; NYU; mainstream-famous AI pioneer.
+835,Ilya Sutskever,Researcher,5,Co-founder OpenAI + SSI; AlexNet co-inventor; November 2023 OpenAI board vote; mainstream tech-famous.
+1223,Jeff Dean,Researcher,5,Google DeepMind Chief Scientist; Google Brain co-founder; TIME 100 AI; mainstream engineering-world-famous.
+1007,Andrej Karpathy,Researcher,5,Ex-Tesla Autopilot head; Stanford PhD; Eureka Labs; ML-Twitter and YouTube educator with enormous mainstream AI reach.
+1366,John M. Jumper,Researcher,5,"Nobel Prize Chemistry 2024 (AlphaFold, with Hassabis + Baker); household-level scientific recognition."
+16,Jakub Pachocki,Researcher,4,OpenAI Chief Scientist; GPT-4 + reasoning models lead; major but less mainstream than Sutskever.
+22,Eliezer Yudkowsky,Researcher,4,"MIRI co-founder; 2025 NYT bestseller 'If Anyone Builds It, Everyone Dies' with Soares; defining AI-doom voice."
+30,Paul Christiano,Researcher,4,US AISI (now CAISI) Head of AI Safety; ARC founder; major AI-alignment academic-policy figure.
+836,John Schulman,Researcher,4,Co-invented PPO + pioneered RLHF (enabled ChatGPT); OpenAI co-founder; Anthropic MTS.
+822,Jan Leike,Researcher,4,Anthropic Head of Alignment Science; ex-OpenAI Superalignment co-lead (public resignation May 2024); TIME 100 AI.
+823,Chris Olah,Researcher,4,Anthropic Head of Interpretability; ex-OpenAI; mechanistic-interpretability pioneer; widely known in AI-safety world.
+93,Dan Hendrycks,Researcher,4,CAIS ED; organized 2023 Statement on AI Risk (500+ signatories); MATS co-founder; xAI advisor.
+829,Jack Clark,Researcher,4,Anthropic co-founder + Head of Policy; Import AI newsletter; Congressional testimony; major AI-policy voice.
+990,Gary Marcus,Researcher,4,NYU Professor Emeritus; Senate Judiciary testimony 2023; consistent mainstream AI-skeptic voice; 'Rebooting AI' author.
+926,Cathy O'Neil,Researcher,4,"'Weapons of Math Destruction' (NYT bestseller, National Book Award longlist); ORCAA founder; major mainstream AI-critic."
+916,Joy Buolamwini,Researcher,4,Algorithmic Justice League founder; Gender Shades study; 'Coded Bias' film subject; mainstream AI-bias name.
+1368,Margaret Mitchell,Researcher,4,Hugging Face Chief Ethics Scientist; ex-Google Ethical AI co-lead (fired 2021 with Gebru); Model Cards pioneer.
+999,Nate Soares,Researcher,4,"MIRI ED; 2025 NYT bestseller 'If Anyone Builds It, Everyone Dies' with Yudkowsky; major AI-doom voice."
+1733,Sam Bowman,Researcher,4,"Anthropic safety/evals research teams manager; NYU; benchmark-setting AI researcher (GLUE, SuperGLUE)."
+1115,Ian Goodfellow,Researcher,4,Invented Generative Adversarial Networks (GANs); major deep-learning pioneer; well-known in AI research.
+1798,Sam McCandlish,Researcher,4,Anthropic co-founder + Chief Scientist; lead author 2020 Scaling Laws paper; pre-training research leader.
+1741,Scott Aaronson,Researcher,4,UT Austin; top quantum-computing theorist; ex-OpenAI safety; well-known academic-public voice.
+1658,William MacAskill,Researcher,4,Oxford moral philosopher; co-founder EA movement; 'What We Owe the Future' bestseller; Forethought Senior Research Fellow.
+1526,Tom Brown,Researcher,4,Anthropic co-founder; lead author GPT-3 paper (2020) — the scaling-works paper that defined modern LLMs.
+1810,Karén Simonyan,Researcher,4,Microsoft AI Chief Scientist; Inflection AI co-founder; ex-DeepMind; VGG architecture; major ML academic.
+1723,Guillaume Lample,Researcher,4,Mistral AI co-founder + Chief Scientist; LLaMA co-creator; major European-AI research figure.
+1724,Timothée Lacroix,Researcher,4,Mistral AI co-founder + CTO; LLaMA contributor; major European-AI research figure.
+888,Leopold Aschenbrenner,Researcher,3,"'Situational Awareness' (2024, 165-page influential essay); $5.5B hedge fund; ex-OpenAI Superalignment; rising name."
+1393,Scott Alexander,Researcher,3,Astral Codex Ten blogger; most influential AI-forecasting voice in rationalist/EA community; AI 2027 co-author.
+59,Daniel Kokotajlo,Researcher,3,AI Futures Project founder; famously refused OpenAI non-disparagement ($2M equity cost); AI 2027 lead.
+989,E. Glen Weyl,Researcher,3,Microsoft Research Plurality Lead; 'Radical Markets' co-author; quadratic voting inventor.
+844,Rumman Chowdhury,Researcher,3,Humane Intelligence CEO; former U.S. Science Envoy for AI; ex-Twitter ML Ethics Director.
+104,Heidy Khlaaf,Researcher,3,AI Now Institute Chief AI Scientist; leading academic on autonomous-weapons AI safety.
+827,Allan Dafoe,Researcher,3,Google DeepMind Director of Frontier Safety + Governance; GovAI president; Frontier Safety Framework co-author.
+833,Abeba Birhane,Researcher,3,Mozilla Senior Advisor + Trinity College Dublin; LAION dataset audits (led to removals); 'algorithmic colonization' scholar.
+1352,David Chalmers,Researcher,3,NYU; formulated 'hard problem of consciousness'; leading philosopher on AI consciousness.
+824,Connor Leahy,Researcher,3,Conjecture CEO; EleutherAI co-founder (GPT-Neo/J); major open-LLM + interpretable-AI figure.
+1811,Gregory C. Allen,Researcher,3,CSIS Wadhwani AI Center Director; leading public analyst of U.S. chip export controls.
+889,Nathan Lambert,Researcher,3,Allen Institute for AI (AI2) Research Scientist; Interconnects newsletter; leading RLHF/post-training expert.
+890,Zvi Mowshowitz,Researcher,3,'Don't Worry About the Vase' Substack; influential weekly AI-policy analysis in rationalist/EA circles.
+830,Azeem Azhar,Researcher,3,Exponential View founder; 'The Exponential Age' author; major European AI-business public intellectual.
+923,Sarah Myers West,Researcher,3,AI Now Institute co-ED; former FTC Senior Advisor on AI; Congressional testimony.
+1771,Viktoriya Krakovna,Researcher,3,Google DeepMind alignment research; Future of Life Institute co-founder (2014); leading AI-safety academic.
+834,Shakir Mohamed,Researcher,3,Google DeepMind Staff Research Scientist; Decolonial AI co-author; STELA methodology.
+840,Rohin Shah,Researcher,3,Google DeepMind Team Lead; Alignment Newsletter former editor; AGI Safety Framework co-author.
+1353,Robert Long,Researcher,3,Eleos AI Executive Director; PhD NYU Philosophy; leading academic on AI consciousness/welfare.
+1828,Igor Babuschkin,Researcher,3,xAI Head of Research; ~29 direct reports under Musk; primary non-Musk technical leader at xAI.
+1585,Jaime Sevilla,Researcher,3,Epoch AI founder/director (est. 2022); defining AI-compute-trends research organization.
+1588,Lennart Heim,Researcher,3,RAND compute-governance researcher; ex-GovAI; leading AI-compute-policy voice.
+1510,Ryan Greenblatt,Researcher,3,Redwood Research Chief Scientist; lead author 'Alignment Faking in Large Language Models' (with Anthropic).
+1496,Mark Muro,Researcher,3,Brookings Metro Senior Fellow; leading AI-and-work geographic-economic researcher.
+1497,Darrell M. West,Researcher,3,Brookings Center for Technology Innovation Senior Fellow; former Governance Studies VP; AI-and-policy academic.
+1142,Adrian Weller,Researcher,3,Cambridge; Leverhulme CFI Trust+Society Programme Director; Turing AI Fellow; MBE.
+1330,Aaron Courville,Researcher,3,Mila founding core member; 'Deep Learning' textbook co-author with Bengio + Goodfellow; CIFAR AI Chair.
+1311,Trevor Darrell,Researcher,3,UC Berkeley; BAIR founding co-director; major ML academic.
+1224,Greg Corrado,Researcher,3,Google Distinguished Scientist; Google Brain co-founder; Health AI Division lead.
+993,Divya Siddarth,Researcher,3,Collective Intelligence Project co-founder/ED; UK AISI Democracy Lead; major AI-democratic-governance voice.
+1254,Herb Simon,Researcher,3,"DECEASED (1916–2001); Nobel Prize Economics 1978; AI pioneer (Logic Theorist, 1956); historical figure."
+1253,Allen Newell,Researcher,3,DECEASED (1927–1992); Logic Theorist + General Problem Solver co-creator; AI-founding pioneer.
+25,Kyle Fish,Researcher,2,Anthropic's first Model Welfare Lead; hired to research AI consciousness; niche but novel role.
+51,Joanne Jang,Researcher,2,Ex-OpenAI Head of Model Behavior + Policy; TIME 100 AI 2025; departed after 4.5 years.
+861,Ajeya Cotra,Researcher,2,METR MTS; ex-Open Phil $25M AI safety grants; well-known AI-forecaster in EA circles.
+1373,Molly Kinder,Researcher,2,Brookings Senior Fellow; generative-AI-and-work project; specialist AI-labor researcher.
+1498,Valerie Wirtschafter,Researcher,2,Brookings Foreign Policy + AI Fellow; AI-democracy specialist.
+843,Seán Ó hÉigeartaigh,Researcher,2,Cambridge AI:FaR Director; ex-CSER ED; contributed to 2026 International AI Safety Report.
+828,Remco Zwetsloot,Researcher,2,Horizon Institute ED; ex-CSET; AI-immigration-policy specialist.
+1801,Reva Schwartz,Researcher,2,NIST Principal Investigator for AI Bias; AI RMF 1.0 principal contributor.
+1547,David Duvenaud,Researcher,2,U Toronto Associate Professor; Canada Research Chair Generative Models; Vector Institute founding member.
+1548,Roger Grosse,Researcher,2,U Toronto; Schwartz Reisman Chair; Schmidt Sciences AI2050 Fellow; Vector Institute founding member.
+1208,Dylan Baker,Researcher,2,DAIR Institute lead research engineer; ex-Google Ethical AI team.
+1783,Daniel Filan,Researcher,2,METR Risk Assessor; host AXRP podcast (since 2020); AI-safety-research interviewer.
+1531,Zoë Hitzig,Researcher,2,Ex-OpenAI Research Scientist (public resignation 2026); Harvard Society of Fellows Junior Fellow.
+1530,Matt Botvinick,Researcher,2,DeepMind Senior Director of Research; Yale Law Resident Fellow; cognitive-neuroscience + AI.
+1564,Ken Stanley,Researcher,2,Lila Sciences SVP Open-Endedness; ex-OpenAI; pioneering open-endedness research.
+1764,Vivek Chilukuri,Researcher,2,CNAS Technology + National Security Program Director; AI-national-security researcher.
+1616,Ben Garfinkel,Researcher,2,GovAI Director; Oxford AI-security implications researcher.
+1519,Cara LaPointe,Researcher,2,Georgetown CSET Director of Analysis; ex-Navy Strategic Assessment Director.
+995,Saffron Huang,Researcher,2,Anthropic Societal Impacts Research Scientist; CIP co-founder; ex-DeepMind Research Engineer.
+1615,Fazl Barez,Researcher,2,Oxford AIGI Technical AI Governance Lead; interpretability + AI governance researcher.
+1395,Eli Lifland,Researcher,2,AI Futures Project founding researcher; AI 2027 scenario co-author; leading AI forecaster.
+1394,Thomas Larsen,Researcher,2,AI Futures Project researcher; AI 2027 co-author; dangerous-capability evaluations.
+1598,Thore Graepel,Researcher,2,Google DeepMind Research Lead; UCL ML Professor; post-AGI-futures research team lead.
+1681,Nora Ammann,Researcher,2,ARIA (UK) Programme Director for Safeguarded AI; technical AI-governance specialist.
+1747,Sid Black,Researcher,2,EleutherAI co-founder; Conjecture co-founder; open-LLM pioneer.
+1748,Gabriel Alfour,Researcher,2,Conjecture co-founder + CTO; with Leahy and Black.
+802,Denise Herzing,Researcher,2,TIME AI 100 2025; Wild Dolphin Project founder; 40+ years marine-mammal AI-communication research.
+261,John Wentworth,Researcher,2,Independent AI-alignment researcher; MATS mentor; well-known in LessWrong-alignment circles.
+1586,Tamay Besiroglu,Researcher,2,Epoch AI co-founder; compute-based view of AI progress; specialist.
+1567,Steve Omohundro,Researcher,2,AI-safety pioneer; 'The Basic AI Drives' (2008) seminal paper; Beneficial AI Research founder.
+1590,Tom Davidson,Researcher,2,Forethought researcher; ex-Open Phil Senior Research Fellow; UK AISI.
+1355,Kathleen Finlinson,Researcher,2,Eleos AI Head of Strategy + co-founder; AI-welfare specialist.
+1449,Claire Cardie,Researcher,2,Cornell CS/IS Professor; leading NLP academic; specialist.
+1354,Rob Long,Researcher,1,DUPLICATE of [1353] Robert Long — same person; merge candidate.
+1396,Romeo Dean,Researcher,1,AI Futures Project researcher; AI 2027 co-author; early-career.
+1582,Anna Leshinskaya,Researcher,1,UC Irvine Cog Sci Assistant Professor; AOI Affiliated Researcher; narrow.
+1554,Sven Herrmann,Researcher,1,IAPS AI Policy Fellow (2025); specialist European AI-governance.
+1572,Cameron Tice,Researcher,1,Geodesic Research founder/co-director; Marshall Scholar; small technical-AI-safety org.
+1573,Kyle O'Brien,Researcher,1,Geodesic Research founding TS; pretraining safety; niche.
+1575,Tomek Korbak,Researcher,1,OpenAI MTS; ex-UK AISI; narrow specialist.
+1443,Lindsey Raymond,Researcher,1,MSR postdoc; future MIT Assistant Professor (2026); early-career.
+1219,Dylan Freedman,Researcher,1,NYT AI Initiatives Senior ML Engineer; editorial-role.
+1220,Duy Nguyen,Researcher,1,NYT AI Initiatives ML Engineer; editorial-role.
+1659,Amrit Sidhu-Brar,Researcher,1,Forethought Director of Operations; admin.
+1614,Nikki Sun,Researcher,1,Oxford AIGI Research + Programme Manager; admin.
+1617,Marta Ziosi,Researcher,1,Oxford AIGI Postdoctoral Researcher; early-career.
+1600,Lewis Hammond,Researcher,1,CAIF Research Director; Oxford DPhil; narrow.
+1587,Pablo Villalobos,Researcher,1,Epoch AI Staff Researcher; narrow specialist.
+1589,Anson Ho,Researcher,1,Epoch AI founding Staff Researcher; narrow.
+1562,Eoghan Stafford,Researcher,1,AAAS Science & Tech Policy Fellow; ex-GovAI; narrow.
+1561,Nicholas Emery-Xu,Researcher,1,UCLA econ PhD candidate; early-career.
+1560,Paolo Bova,Researcher,1,Independent AI-governance researcher; PhD student.
+1555,Jérémy Andréoletti,Researcher,1,GPAI Policy Lab; EffiSciences co-founder; narrow.
+1556,Charlie Rogers-Smith,Researcher,1,Palisade Research Chief of Staff; EA Forum guide author.
+1553,Daniel Clothiaux,Researcher,1,CMU Language Technologies PhD; narrow specialist.
+1551,NicholasKees,Researcher,1,Mosaic Labs founder; Cyborgism co-founder; niche.
+1552,janus,Researcher,1,Pseudonymous (Repligate); Cyborgism leader; niche online.
+1627,Malcolm Murray,Researcher,1,SaferAI Research Lead; International AI Safety Report chapter.
+1635,Esben Kran,Researcher,1,Apart Research founder; narrow indie AI-safety org.
+1644,Saad Siddiqui,Researcher,1,SAIF Senior AI Policy Researcher; IDAIS dialogue support.
+1645,Isabella Duan,Researcher,1,SAIF Senior AI Policy Researcher; narrow.
+1655,Daniel Murfet,Researcher,1,Timaeus co-founder + Head of Research; ex-Melbourne math; niche.
+1661,Tolga Bilge,Researcher,1,ControlAI Policy Researcher; 'A Narrow Path' contributor.
+1662,Adam Shimi,Researcher,1,ControlAI Policy Researcher; ex-Conjecture Epistemology Lead.
+1676,Jan Kulveit,Researcher,1,Charles University ACS Research PI + co-founder.
+1677,Raymond Douglas,Researcher,1,ACS Research (Charles University); Toronto CS research affiliate.
+1678,Theia Vogel,Researcher,1,ACS Research; LLM persona researcher.
+1679,Ondřej Havlíček,Researcher,1,ACS Research; AI psychology researcher.
+1680,Annie Stephenson,Researcher,1,ACS Research; ex-Princeton postdoc.
+1694,Robert Huben,Researcher,1,Indie AI safety researcher; 'From AI to ZI' Substack.
+1695,Dawn Drescher,Researcher,1,GiveWiki co-founder; AI-safety donation platform.
+1709,Diogo de Lucena,Researcher,1,AE Studio Chief Scientist; BCI-OS + AI alignment.
+1721,Lauren Mangla,Researcher,1,AI Futures Project COO; admin.
+1728,Miles Tidmarsh,Researcher,1,CaML co-founder + Director; synthetic-data AI-welfare.
+1729,Jasmine Brazilek,Researcher,1,CaML co-founder + technical lead.
+1746,Rachel Freedman,Researcher,1,Berkeley CHAI PhD student under Stuart Russell; early-career.
+1514,Anni Leskelä,Researcher,1,Center on Long-Term Risk conceptual researcher; narrow.
+1534,Rebecca Scholefield,Researcher,1,XRO collaborator; Conditional AI Safety Treaty co-author.
+1535,Samuel Martin,Researcher,1,Independent; Conditional AI Safety Treaty co-author.
+1536,Ayushmaan Sharma,Researcher,1,Junior researcher; Effective Thesis + BlueDot facilitator.
+1537,Nik Samoylov,Researcher,1,Conjointly founder; Campaign for AI Safety founder (merged into XRO).
+1620,Koen Holtman,Researcher,1,AI Standards Lab co-founder; independent AI safety researcher.
+1621,Rokas Gipiškis,Researcher,1,AI Standards Lab researcher; Vilnius PhD.
+1619,Marcel Mir Teijeiro,Researcher,1,AI Standards Lab; EU AI framework consultant.
+1622,Jan Betley,Researcher,1,TruthfulAI researcher/consultant; ARENA/Astra alumni.
+1623,James Chua,Researcher,1,TruthfulAI researcher.
+1624,Anna Sztyber-Betley,Researcher,1,Warsaw U + TruthfulAI part-time; narrow.
+1568,Walter Laurito,Researcher,1,Cadenza Labs co-founder; SERI-MATS alum; narrow.
+18,Sam Altman,Executive,5,OpenAI CEO — most famous AI executive globally; ChatGPT; 2023 board ouster saga; household name.
+8,Dario Amodei,Executive,5,Anthropic CEO + co-founder; mainstream AI-CEO recognition; major public voice on AI policy.
+33,Demis Hassabis,Executive,5,Google DeepMind CEO + co-founder; Nobel Prize Chemistry 2024 (AlphaFold); household-level recognition.
+48,Elon Musk,Executive,5,xAI + Tesla + SpaceX; wealthiest person in world; iconic mainstream figure with central AI presence.
+47,Mark Zuckerberg,Executive,5,Meta CEO; mainstream household name; Meta AI + Superintelligence Labs; major AI-industry voice.
+1000,Sundar Pichai,Executive,5,Google/Alphabet CEO; mainstream household name; Google's AI pivot and Gemini.
+1001,Satya Nadella,Executive,5,Microsoft CEO; mainstream household name; $13B+ OpenAI investment; 'Governing AI' blueprint.
+733,Jensen Huang,Executive,5,Nvidia founder/CEO; mainstream tech-famous; Nvidia has defined the AI-compute era; AGI-claim 2026.
+735,Andy Jassy,Executive,5,Amazon CEO; mainstream business-famous; $100B+ AI capex; AWS AI dominance.
+1376,Joe Biden,Executive,5,46th U.S. President; Executive Order 14110 (most comprehensive U.S. AI governance action); household name. [CATEGORY: should likely be Policymaker not Executive]
+13,Daniela Amodei,Executive,4,Anthropic co-founder + President; major AI-exec figure though less public-facing than Dario.
+1346,Greg Brockman,Executive,4,OpenAI co-founder + President; $100M 'Leading the Future' super PAC; well-known in tech.
+1344,Mark Chen,Executive,4,OpenAI Chief Research Officer; Codex lead; GPT-4 vision co-lead; major OpenAI research leader.
+50,Jared Kaplan,Executive,4,Anthropic co-founder + Chief Science Officer; Responsible Scaling Officer; Scaling Laws paper co-author.
+49,Liang Wenfeng,Executive,4,DeepSeek CEO/founder; disrupted AI landscape (DeepSeek V3/R1); major Chinese AI figure.
+1365,Mustafa Suleyman,Executive,4,Microsoft AI CEO; DeepMind + Inflection co-founder; mainstream tech-recognized AI executive.
+902,Mira Murati,Executive,4,Thinking Machines Lab founder; ex-OpenAI CTO + interim CEO during Altman crisis; major exec story.
+1008,Palmer Luckey,Executive,4,Anduril founder; Oculus founder ($2B exit); defense-AI household name in tech.
+772,Alexandr Wang,Executive,4,Scale AI founder; Meta Superintelligence Labs (via $14B+ Meta deal); Superintelligence Strategy co-author.
+1196,Brad Smith,Executive,4,Microsoft Vice Chair + President; top Washington AI-policy voice; prolific regulator-dialogue.
+1123,Marc Benioff,Executive,4,Salesforce CEO; TIME magazine owner; mainstream business-famous; Davos AI policy voice.
+776,Ren Zhengfei,Executive,4,Huawei founder/CEO; mainstream globally-recognized Chinese tech figure; Huawei's AI chips pivotal.
+774,C.C. Wei,Executive,4,TSMC CEO; TSMC produces ~95% of advanced AI chips globally; structurally pivotal.
+734,Fidji Simo,Executive,4,OpenAI CEO of Applications; ex-Instacart CEO + ex-Facebook App VP; major tech exec.
+1364,Shane Legg,Executive,4,Google DeepMind co-founder + Chief AGI Scientist; Technical AGI Safety team lead.
+19,Mike Krieger,Executive,4,Anthropic CPO; Instagram co-founder (2010) — mainstream tech-famous for Instagram.
+1247,Larry Fink,Executive,4,BlackRock CEO (~$11.5T AUM); mainstream business-famous; AI-wealth-gap voice.
+1339,Mohammed bin Salman,Executive,4,Saudi Crown Prince + PM; chairs Humain; $600B AI infrastructure initiative; state-level AI architect.
+1722,Arthur Mensch,Executive,4,Mistral AI CEO + co-founder; leading European frontier AI company; ex-Meta FAIR.
+99,Chris Lehane,Executive,3,OpenAI Chief Global Affairs Officer; Clinton admin veteran; major AI-policy DC figure.
+732,Matthew Prince,Executive,3,Cloudflare co-founder/CEO; launched 'pay-per-crawl'; major tech-infra voice on AI.
+1349,Ben Mann,Executive,3,Anthropic co-founder; ex-OpenAI GPT-3 architect; behind-scenes technical leader.
+1543,Sarah Friar,Executive,3,OpenAI's first CFO (June 2024); major financial leadership role.
+1563,Emmett Shear,Executive,3,Ex-Twitch CEO (2011–2023); briefly interim OpenAI CEO (Nov 2023 crisis); Softmax CEO.
+1823,Joel Kaplan,Executive,3,Meta Chief Global Affairs Officer; replaced Nick Clegg; ex-W Bush Deputy COS.
+1822,James Manyika,Executive,3,"Google-Alphabet SVP Research, Labs, Technology & Society; major AI-society voice."
+1821,Koray Kavukcuoglu,Executive,3,Google DeepMind CTO + Google Chief AI Architect (SVP); reports to Pichai.
+1649,Daniel Gross,Executive,3,SSI co-founder (ex); ex-YC partner; Pioneer founder; Apple acquisition (Cue).
+1226,Yossi Matias,Executive,3,Google VP Engineering + Research; Google Research head; major technical leadership.
+1233,Peter Lee,Executive,3,Microsoft Science President (ex-Microsoft Research President); major AI-science research leader.
+1350,Clay Bavor,Executive,3,"Sierra AI co-founder (with Bret Taylor); $10B valuation; ex-Google VP (Labs, AR/VR, Lens)."
+1820,Ned Finkle,Executive,3,Nvidia VP Government Affairs (since 2015); primary Nvidia public voice on AI chip export controls.
+1500,Zico Kolter,Executive,3,CMU ML Dept Head; Gray Swan AI Chief Scientist; OpenAI Board of Directors + Safety Advisory Group chair.
+1650,Daniel Levy,Executive,3,SSI co-founder + President (with Sutskever + Gross); ex-OpenAI; Stanford CS PhD.
+20,Josh Woodward,Executive,3,"Google VP leading Gemini App, Labs, and AI Studio; major consumer-AI-products lead."
+1824,Jacob Andreou,Executive,3,Microsoft EVP of Copilot (March 2026 reorg); reports directly to Nadella.
+1700,Rob Fergus,Executive,3,Meta Director of AI Research / Head of FAIR; co-founded FAIR with LeCun (2013).
+1557,Lila Ibrahim,Executive,3,Google DeepMind COO → Chief AI Readiness Officer; operations + governance + policy lead.
+770,Strive Masiyiwa,Executive,3,Cassava Technologies founder; $720M Africa AI factories with 15K Nvidia GPUs; Google partner.
+1825,Joelle Pineau,Executive,3,Cohere Chief AI Officer (from Meta 2025); ex-FAIR VP; McGill CS Professor.
+782,Amnon Shashua,Executive,3,Mobileye CEO (sold to Intel $15.3B); Responsibility-Sensitive Safety framework (IEEE 2846).
+771,Cristiano Amon,Executive,3,Qualcomm CEO (since 2021); chip maker leading edge-AI.
+780,Rene Haas,Executive,3,Arm Holdings CEO; Arm chips serve 70% of world's devices; AI-override-mechanisms voice.
+1248,Rob Goldstein,Executive,3,BlackRock COO; Aladdin platform; AI = 'most significant tech evolution' of his career.
+1807,Aidan Gomez,Executive,3,Cohere co-founder/CEO; 'Attention Is All You Need' 2017 co-author; leading enterprise-AI CEO.
+1310,Ylli Bajraktari,Executive,3,SCSP President/CEO (Eric Schmidt-founded); ex-Exec Director NSCAI; major AI-national-security-policy exec.
+1819,Peter DeSantis,Executive,3,Amazon SVP leading Amazon AGI group (from Rohit Prasad); 27-year Amazon veteran.
+1818,Swami Sivasubramanian,Executive,3,AWS VP Agentic AI (Jan 2026 reshuffle); 20-year Amazon veteran.
+1827,Kevin Weil,Executive,3,OpenAI VP for Science (formerly CPO 2024–2025); major product-leadership role.
+1211,Valérie Pisano,Executive,3,Mila President/CEO; leading one of world's foremost academic AI labs.
+777,Steve Huffman,Executive,3,Reddit co-founder/CEO; TIME 100 AI; major social-platform AI voice.
+1630,Amba Kak,Executive,3,AI Now Institute co-ED; TIME 100 AI 2024; major AI-policy think-tank leader.
+1763,Paul Scharre,Executive,3,CNAS EVP + Director of Studies; drafted DoD Directive 3000.09 on autonomous weapons.
+1666,Marc Warner,Executive,3,Faculty AI CEO; Accenture $600M+ acquisition (Jan 2026); major UK AI-services figure.
+788,Mati Staniszewski,Executive,3,ElevenLabs CEO/co-founder; first AIUC-1 insured AI voice agents (2026); $33M+ ARR.
+775,David Holz,Executive,3,Midjourney founder/CEO; ~15-employee self-funded AI-image giant; controversial training-data stance.
+805,Jeff Leek,Executive,2,Fred Hutchinson CDO; Cancer AI Alliance $40M+ ($2B Mingomba pending); TIME 100 AI.
+1235,Ashok Elluswamy,Executive,2,Tesla VP of AI; Autopilot/FSD + Optimus lead; major single-employer role.
+779,Adam Evans,Executive,2,Salesforce EVP & GM of Salesforce AI Platform (Agentforce).
+785,Alex Blania,Executive,2,Tools for Humanity CEO; World (iris-scanning) + Merge Labs co-founder with Altman.
+801,Brandon Tseng,Executive,2,Shield AI co-founder/President; ex-Navy SEAL; autonomous-F16 combat sim.
+789,Peggy Johnson,Executive,2,Agility Robotics CEO (since March 2024); humanoid robots in Amazon warehouses.
+790,James Peng,Executive,2,Pony.ai founder/CEO; $413M Nasdaq IPO Nov 2024; leading China AV company.
+791,Tareq Amin,Executive,2,Humain CEO; Saudi Arabia $600B AI infrastructure initiative.
+793,Sam Rodriques,Executive,2,FutureHouse co-founder/CEO; Edison Scientific; TIME 100 AI 2025; AI scientific discovery.
+794,Andy Parsons,Executive,2,Adobe Senior Director Content Authenticity Initiative; C2PA Content Credentials standards.
+795,Navrina Singh,Executive,2,Credo AI founder/CEO; NAIAC member; Forrester Wave AI Governance leader.
+796,David Ha,Executive,2,Sakana AI co-founder/CEO; AI Scientist system; $1B unicorn; TIME 100 AI.
+797,Edwin Chen,Executive,2,Surge AI founder/CEO; $1B revenue bootstrapped; TIME 100 AI 2025; data-labeling leader.
+800,Kakul Srivastava,Executive,2,Splice CEO; AI-music tools; Universal Music Group partnership.
+998,Alvin Graylin,Executive,2,Virtual World Society Chairman; ex-HTC China President; Stanford HAI Digital Fellow.
+736,Allie K. Miller,Executive,2,Open Machine CEO; ex-AWS Global Head of ML for Startups/VC; public AI commentator.
+781,Wang Xingxing,Executive,2,Unitree Robotics founder/CEO; youngest participant at Xi Jinping's Feb 2025 business symposium.
+786,Maithra Raghu,Executive,2,Samaya AI co-founder/CEO; TIME AI 100 2025; $43.5M raised; specialized AI-finance.
+792,Mfikeyi Makayi,Executive,2,KoBold Metals Africa CEO; TIME 100 AI 2025; $2B Mingomba copper project in Zambia.
+799,Alan Descoins,Executive,2,Tryolabs CEO; TIME 100 AI 2025; commercial AI with social-good partnerships.
+1385,Justin Johnson,Executive,2,World Labs co-founder (with Fei-Fei Li); Michigan CS Assistant Professor.
+1386,Christoph Lassner,Executive,2,World Labs co-founder; PhD Tübingen; ex-Epic Games research lead.
+1387,Ben Mildenhall,Executive,2,World Labs co-founder; co-creator NeRF (ECCV 2020 honorable mention); specialist.
+1436,Alex LeBrun,Executive,2,"AMI Labs CEO (with LeCun, 2025); serial French AI entrepreneur (VirtuOz, Wit.ai)."
+1499,Matt Fredrikson,Executive,2,CMU Associate Professor; Gray Swan AI co-founder/CEO; adversarial robustness.
+1507,Buck Shlegeris,Executive,2,Redwood Research CEO; AI-control specialist; ARC board.
+1508,Nate Thomas,Executive,2,Redwood Research co-founder/CEO; Constellation co-founder.
+1663,Adam Gleave,Executive,2,FAR.AI CEO + co-founder; Berkeley PhD under Stuart Russell.
+1334,Mark Nitzberg,Executive,2,CHAI (Berkeley) ED + IASEAI Interim ED; BAIR strategic outreach head.
+1757,Nick Beckstead,Executive,2,Secure AI Project co-founder/CEO; ex-FTX Future Fund CEO; ex-Open Phil.
+1704,Hugo Barra,Executive,2,Dreamer co-founder (AI agent OS); ex-Meta Reality Labs VP; ex-Xiaomi VP.
+60,Marius Hobbhahn,Executive,2,Apollo Research CEO; TIME 100 AI 2025; AI deception/scheming specialist.
+1538,Eric Ho,Executive,2,Goodfire CEO + co-founder; mechanistic-interpretability tools.
+1701,Serkan Piantino,Executive,2,Ex-Meta FAIR co-founder (2013); Big Sur GPU server developer.
+1702,Jérôme Pesenti,Executive,2,Ex-Meta VP of AI (2018–2022); UK AI review co-chair.
+1703,David Singleton,Executive,2,Dreamer co-founder; ex-Stripe CTO + ex-Google VP Engineering.
+1605,Allison Duettmann,Executive,2,Foresight Institute President/CEO; AI Safety Grant Program co-initiator.
+1625,Siméon Campos,Executive,2,SaferAI founder/ED; French AI-risk-management nonprofit.
+1683,Peter Wildeford,Executive,2,IAPS CSO + co-founder; Rethink Priorities co-founder; top-20 Metaculus forecaster.
+1826,Sean White,Executive,2,"Inflection AI CEO (2024, post-Suleyman-Microsoft transition)."
+1631,Kate Brennan,Executive,2,AI Now Institute Associate Director; Yale Law; policy + research programs.
+1217,Zach Seward,Executive,2,NYT AI Initiatives Editorial Director; newsroom generative-AI experimentation.
+1174,Allen Karns,Executive,1,Vanderbilt CAIO; admin role; narrow institutional-AI lead.
+1509,Bill Zito,Executive,1,Ex-Redwood Research COO; now RAND CAST Associate Director.
+1512,Tristan Cook,Executive,1,CLR Managing Director; s-risks work; narrow.
+1503,Claire Zabel,Executive,1,Coefficient Giving Short Timelines Special Projects MD; narrow internal role.
+1544,Ankesh Chandaria,Executive,1,AI Safety Foundation (Canadian charity) CEO; small org.
+1545,Richard Phillips,Executive,1,AISF Board Chair; ex-CIBC; narrow.
+1546,Meg Sintzel,Executive,1,AISF Director; ex-Accenture Canada; narrow.
+1549,Bill Morris,Executive,1,AISF Director; ex-Accenture Canada CEO; narrow nonprofit role.
+1577,Colleen Mckenzie,Executive,1,AI Objectives Institute ED; small org.
+1578,Stacey Svetlichnaya,Executive,1,AOI CTO; ex-Weights & Biases; narrow.
+1579,Brittney G,Executive,1,AOI Board Chair + VP; co-founded with Eckersley.
+1591,Maria de la Lama,Executive,1,Epoch AI Ops Head + Board; narrow admin.
+1592,Jonas Vollmer,Executive,1,Macroscopic Ventures CFO + AI Futures Project COO; narrow EA-exec.
+1603,David Norman,Executive,1,Cooperative AI Foundation MD; small org.
+1626,Henry Papadatos,Executive,1,SaferAI MD; AI-risk-rating specialist.
+1641,Anthony Armstrong,Executive,1,Ex-xAI CFO (Oct 2025–Apr 2026); departed amid senior exits; ex-Morgan Stanley.
+1648,Peter McIntyre,Executive,1,Trajectory Labs PBC co-founder (stealth AI-safety startup).
+1682,Jenny Marron,Executive,1,IAPS ED; AI-policy think tank director.
+1684,Amanda El-Dakhakhni,Executive,1,IAPS Director compute-policy team; ex-Uber/Cruise.
+1685,Zoe Williams,Executive,1,IAPS MD overseeing research teams.
+1690,Connor Axiotes,Executive,1,Adam Smith Institute Communications Director; ex-Conjecture.
+1664,Karl Berzins,Executive,1,FAR.AI co-founder + COO/President; small nonprofit.
+1737,Jacob Hilton,Executive,1,ARC President; ex-OpenAI; narrow alignment-org role.
+1759,Lily Sands,Executive,1,Secure AI Project COS; ex-State Dept; narrow ops.
+1710,Marc Carauleanu,Executive,1,AE Studio AI-safety researcher; early-career.
+1445,President Biden,Executive,1,DUPLICATE of [1376] Joe Biden — same person; merge candidate.
+1460,Brian Long,Executive,1,Adaptive Security CEO (AI deepfake defense); specialized startup.
+1320,Jean-François Gagné,Executive,1,"Ex-Element AI CEO (sold to ServiceNow ~$500M, 2020); since ServiceNow exec."
+1205,Daniel Barcay,Executive,1,CHT Senior Fellow; ex-CHT ED; behind-scenes.
+1212,Pierre Boivin,Executive,1,Mila Board Chairman; president Claridge Inc.; admin role.
+1230,Maria Basso,Executive,1,WEF CAIE Head of AI Applications + Impact (Jan 2025); convener-type role.
+1232,Cathy Li,Executive,1,WEF CAIE Head + ExCom member; AI Governance Alliance oversight; admin.
+1298,Nimar Arora,Executive,1,Bayesian Logic Inc. co-founder; probabilistic programming specialist.
+1654,Jesse Hoogland,Executive,1,Timaeus co-founder/ED; Singular Learning Theory AI-safety org.
+1657,Max Dalton,Executive,1,"Forethought co-founder/ED (with MacAskill, Davidson, Sidhu-Brar)."
+1660,Andrea Miotti,Executive,1,ControlAI CEO/founder; 'A Narrow Path' lead author; niche advocacy nonprofit.
+1708,Judd Rosenblatt,Executive,1,AE Studio founder/CEO; 150+ person bootstrapped BCI+AI-alignment company.
+1501,Rob Jenks,Executive,1,Gray Swan AI CSO (Jan 2026); ex-Tanium SVP.
+1502,Nick Winter,Executive,1,Gray Swan AI VP Product & Growth; ex-CodeCombat (YC 2013).
+1633,Rudolf Laine,Executive,1,Workshop Labs PBC co-founder; Oxford-educated; AI-disempowerment prevention.
+1705,Nicholas Jitkoff,Executive,1,Dreamer co-founder; ex-Figma Senior Design Director; ex-Google Chrome principal designer.
+1808,Nick Frosst,Executive,2,"Cohere co-founder (2019); ex-Google Brain; behind-scenes founder, less face-forward than Gomez."
+1809,Ivan Zhang,Executive,2,Cohere co-founder (2019); engineering + infrastructure lead; behind-scenes founder.
+1103,Donald Trump,Policymaker,5,47th U.S. President; signed AI executive orders; household-level mainstream fame; shapes U.S. AI direction.
+2,Chuck Schumer,Policymaker,5,Former Senate Majority Leader; architect of bipartisan AI Insight Forums + SAFE Innovation Framework; mainstream political figure.
+96,Bernie Sanders,Policymaker,5,Iconic progressive U.S. Senator; AI Data Center Moratorium Act; mainstream household name.
+10,Alexandria Ocasio-Cortez,Policymaker,5,Mainstream-famous progressive; AI Data Center Moratorium Act (with Sanders); iconic political figure.
+1476,Elizabeth Warren,Policymaker,5,Mainstream-famous Senator; Protecting AI and Cloud Competition in Defense Act; major AI-antitrust voice.
+116,Gavin Newsom,Policymaker,5,California Governor — signs/vetoes state AI laws that set national precedent; mainstream political figure; 2028 candidate.
+1305,Mike Johnson,Policymaker,5,Speaker of the U.S. House; leading congressional AI framework implementation.
+1425,John Thune,Policymaker,5,Senate Majority Leader (since 2025); AI bill gatekeeper; bipartisan 'light-touch' AI bill co-author.
+1006,Marco Rubio,Policymaker,5,U.S. Secretary of State; ex-Senate Intelligence Vice Chair on AI; mainstream-famous policymaker.
+82,Ted Cruz,Policymaker,5,Senate Commerce Chairman; released major AI legislative framework (Sep 2025); mainstream political figure.
+1167,Ron DeSantis,Policymaker,4,Florida Governor; mainstream political figure; Florida AI Bill of Rights; 2024 GOP candidate.
+40,Pete Buttigieg,Policymaker,4,Former Transportation Secretary; historic first-openly-gay Cabinet Secretary; mainstream figure.
+1258,António Guterres,Policymaker,4,UN Secretary-General; proposed IAEA-like AI body (2023); High-Level AI Advisory Body convener.
+27,Michael Kratsios,Policymaker,4,"OSTP Director (Trump II, confirmed 74-25); AI-advisor to President — shapes current WH AI policy."
+85,Sriram Krishnan,Policymaker,4,WH OSTP Senior Policy Advisor for AI — primary working-level AI policy lead in Trump II.
+42,David Sacks,Policymaker,4,Former WH AI and Crypto Czar (Jan 2025–Mar 2026); now PCAST co-chair.
+928,Lina Khan,Policymaker,4,"Former FTC Chair (2021–2025); major AI-enforcement actions (OpenAI probe, Rite Aid facial-rec ban)."
+34,Gina Raimondo,Policymaker,4,40th Commerce Secretary (Biden); launched U.S. AISI; major AI-governance figure.
+1814,Andrew N. Ferguson,Policymaker,4,FTC Chairman (Jan 2025–); Trump's light-touch AI-enforcement shaper.
+935,Margrethe Vestager,Policymaker,4,Former EU Commissioner; EU AI Act architect; globally-known antitrust-on-Big-Tech figure.
+936,Thierry Breton,Policymaker,4,Former European Commissioner Internal Market; led 38-hour trilogue finalizing EU AI Act.
+994,Audrey Tang,Policymaker,4,Taiwan Cyber Ambassador; former Digital Minister; world's first transgender cabinet minister; global AI-governance voice.
+1422,Josh Hawley,Policymaker,4,GOP Senator; GUARD Act (AI chatbot minors ban); Decoupling America's AI from China Act; major AI-policy voice.
+80,Richard Blumenthal,Policymaker,4,Senior Senator CT; multiple AI bills including GUARD Act (AI-companion ban for children).
+11,Marsha Blackburn,Policymaker,4,Senior Senator TN; AI legislation discussion draft; first woman to represent TN in Senate.
+110,Maria Cantwell,Policymaker,4,Senior Senator WA; ranking member Senate Commerce; multiple AI bills.
+24,Cory Booker,Policymaker,4,Senator NJ; mainstream name; active AI-policy voice.
+1004,Amy Klobuchar,Policymaker,4,Senator MN; Chair Antitrust Subcommittee; 'light-touch' AI bill with Thune; mainstream political figure.
+87,Mark Warner,Policymaker,4,Senator VA; Vice Chair Senate Intelligence; Secure AI Act author; major AI-national-security voice.
+1005,Ron Wyden,Policymaker,4,Senior Senator OR; Ranking Member Finance; major tech-privacy legislator.
+83,Michael McCaul,Policymaker,4,Rep TX-10; ex-Foreign Affairs Chair; major AI export-controls voice.
+37,Ro Khanna,Policymaker,4,Rep CA-17 (Silicon Valley); Ranking Member House Select Committee on CCP; prominent AI-policy voice.
+89,Greg Abbott,Policymaker,4,Governor of Texas; mainstream figure; Texas AI-policy shaper.
+121,Kathy Hochul,Policymaker,4,Governor of New York; mainstream state executive; NY RAISE Act signed.
+91,Scott Wiener,Policymaker,4,CA State Senator; authored SB 53 Transparency in Frontier AI Act (TFAIA); central CA AI-regulation figure.
+1793,Elizabeth Kelly,Policymaker,4,Inaugural Director U.S. AISI (Feb 2024–Feb 2025); operationalized pre-deployment AI testing agreements with OpenAI/Anthropic.
+46,Jeffrey Kessler,Policymaker,4,Commerce Under Secretary for BIS; primary U.S. AI/chip-export-controls executive.
+7,Brian Schatz,Policymaker,3,Senior Senator HI; active AI policymaker.
+17,Jared Polis,Policymaker,3,Colorado Governor; signed Colorado AI Act (first comprehensive state AI law).
+1168,Spencer Cox,Policymaker,3,Utah Governor; 'pro-human AI' advocate; $10M AI workforce initiative.
+32,Cynthia Lummis,Policymaker,3,Senator WY; RISE Act of 2025 (AI liability framework for professionals).
+68,Mike Rounds,Policymaker,3,Senator SD; Senate AI Caucus co-chair; Schumer AI working-group member.
+71,Chris Coons,Policymaker,3,Senator DE; Chair Judiciary IP Subcommittee; NO FAKES Act lead.
+72,Martin Heinrich,Policymaker,3,Senator NM; founder + co-chair Senate AI Caucus; Senate Intelligence.
+73,Todd Young,Policymaker,3,Senator IN; Schumer AI working-group member; prominent AI-policy voice.
+74,Ben Ray Luján,Policymaker,3,Senator NM; Chair Commerce Subcommittee on Communications + Media + Broadband.
+75,Joni Ernst,Policymaker,3,Senator IA; Ranking Member Armed Services Emerging Threats; combat veteran; AI-defense voice.
+76,Maggie Hassan,Policymaker,3,Senator NH; former NH Governor; ranking member Joint Economic Committee.
+77,Jerry Moran,Policymaker,3,Senator KS; senior member Commerce; Chair Veterans Affairs.
+78,John Hickenlooper,Policymaker,3,Senator CO; Chair Commerce Consumer Protection Subcommittee; VET AI Act co-author.
+79,Jon Husted,Policymaker,3,Senator OH (Jan 2025–); replaced Vance; former Ohio Lt. Governor.
+81,Jacky Rosen,Policymaker,3,Senator NV; active AI-policymaker.
+1099,Tom Cotton,Policymaker,3,Senator AR; DATA Act of 2026 (AI data center electricity-deregulation); China-hawk voice.
+1100,Andy Kim,Policymaker,3,Senator NJ (Democrat); active AI-policy work on Senate Commerce.
+1101,Jim Risch,Policymaker,3,Senator ID; GOP; five major committees including Foreign Relations.
+1105,John Kennedy,Policymaker,3,Senator LA; AI Labeling Act co-introducer; vocal AI-regulation questioner.
+1119,Katie Britt,Policymaker,3,Senator AL (since 2023); AI-chatbot safety legislation for minors.
+1411,Dave McCormick,Policymaker,3,Senator PA (Jan 2025–); former Bridgewater CEO; AI-economics voice.
+1412,Roger Wicker,Policymaker,3,Senator MS; Chairman Senate Armed Services; AI-defense funding.
+1415,Peter Welch,Policymaker,3,Senator VT; most active AI-copyright/consent legislator (6 bills).
+1418,Catherine Cortez Masto,Policymaker,3,Senator NV; IOGAN Act signed — consumer-AI protection.
+1424,Shelley Moore Capito,Policymaker,3,Senator WV; VET AI Act co-author with Hickenlooper.
+1426,Bill Cassidy,Policymaker,3,"Senator LA; Chair Senate HELP Committee; major AI white paper (flexible, sector-specific)."
+1466,Thom Tillis,Policymaker,3,Senator NC; Secure AI Act co-sponsor with Warner.
+113,Ed Markey,Policymaker,3,Senator MA; AI Civil Rights Act lead Senate sponsor.
+41,Chris Murphy,Policymaker,3,Junior Senator CT; AI-policymaker on Senate Foreign Relations.
+109,Gary Peters,Policymaker,3,Senator MI; Chair Homeland Security Committee.
+1423,Jim Banks,Policymaker,3,"Senator IN (Jan 2025–, formerly House); Armed Services."
+1465,Eric Schmitt,Policymaker,3,Senator MO (Jan 2023–); Protecting AI and Cloud Competition in Defense Act co-introducer.
+1301,Ted Budd,Policymaker,3,Senator NC; Chair Subcommittee on Science Manufacturing Competitiveness.
+1302,Dick Durbin,Policymaker,3,Senator IL (1997–2027); former Judiciary Chair; AI LEAD Act co-introducer.
+1304,Pam Bondi,Policymaker,3,U.S. Attorney General (Feb 2025–); DOJ AI Litigation Task Force creator.
+1306,Steve Scalise,Policymaker,3,House Majority Leader; Republican AI-policy leader.
+84,Zoe Lofgren,Policymaker,3,Rep CA-18 (since 1995); Ranking Member House Science Committee.
+88,Suhas Subramanyam,Policymaker,3,Rep VA-10 (since 2025); former Obama WH tech-policy advisor.
+111,Frank Lucas,Policymaker,3,"Rep OK-3; Chairman House Science, Space + Technology Committee."
+112,Ted Lieu,Policymaker,3,Rep CA-36; Co-Chair Democratic Commission on AI; active AI-legislator.
+114,Don Beyer,Policymaker,3,Rep VA-8; Co-Chair Congressional AI Caucus.
+117,Jay Obernolte,Policymaker,3,Rep CA-23; only Congress member with graduate AI degree; co-chaired AI Task Force.
+98,Brian Deese,Policymaker,3,Former NEC Director (Biden); MIT Innovation Fellow; Foundry-Logic CEO; policy heavyweight.
+108,Mike Braun,Policymaker,3,Governor IN (Jan 2025–); former U.S. Senator.
+118,Lynne Parker,Policymaker,3,OSTP Principal Deputy Director; PCAST Executive Director; major WH tech-coordination role.
+119,Arati Prabhakar,Policymaker,3,Ex-OSTP Director (Biden 2022–2025); ex-DARPA Director; ex-NIST Director.
+1152,Jerry McNerney,Policymaker,3,CA State Senator SD-5 (since 2024); former U.S. Rep CA-9; AI in Government Act (2020).
+1473,Pramila Jayapal,Policymaker,3,Rep WA-7; ex-Chair Progressive Caucus; AI Civil Rights Act co-lead.
+1472,Yvette Clarke,Policymaker,3,Rep NY-9; Chair Congressional Black Caucus; Algorithmic Accountability Act.
+1475,Ayanna Pressley,Policymaker,3,Rep MA-7; 'The Squad'; AI Civil Rights Act co-lead.
+1471,Josh Gottheimer,Policymaker,3,Rep NJ-5; House Intelligence; centrist AI-policy voice.
+930,Laurie Locascio,Policymaker,3,ANSI President/CEO; ex-NIST Director (2022–2024); launched U.S. AISI.
+931,Elham Tabassi,Policymaker,3,NIST AI Chief Advisor + Chief Technologist AISI; principal architect of AI RMF.
+932,Jonathan Kanter,Policymaker,3,Ex-DOJ Antitrust AAG (2021–2024); AI-antitrust enforcement voice.
+933,Jen Easterly,Policymaker,3,Ex-CISA Director (2021–2025); AI 'most powerful weapon' national-security voice.
+929,Alan Davidson,Policymaker,3,NTIA Assistant Secretary (Biden Commerce); AI Accountability Policy Report lead.
+86,Alondra Nelson,Policymaker,3,IAS Linder Professor; ex-OSTP Acting Director (2022); AI Bill of Rights architect.
+1430,Matt Pottinger,Policymaker,3,FDD China Program Chair; ex-Deputy National Security Advisor (2019–2021); AI-China policy.
+1429,Jacob Helberg,Policymaker,3,Under Secretary of State Economic Growth (confirmed Oct 2025); ex-Palantir Senior Advisor.
+1482,Ken Buck,Policymaker,3,Former Rep CO-4 (2015–2024); rare GOP Big Tech antitrust champion; retired.
+1795,Radha Plumb,Policymaker,3,DoD CDAO (mid-2024–); AI-defense strategic lead.
+1794,Craig Martell,Policymaker,3,First DoD CDAO (2022–April 2024); stood up CDAO office + Task Force Lima.
+1796,Clare Martorana,Policymaker,3,U.S. Federal CIO (since March 2021); OMB M-24-10 AI-use implementation.
+1799,Alvaro Bedoya,Policymaker,3,FTC Commissioner (May 2022–); founded Georgetown Center on Privacy & Technology.
+1817,Tarun Chhabra,Policymaker,3,Anthropic Head of National Security Policy; ex-NSC Senior Director Technology + National Security (Biden).
+996,Marietje Schaake,Policymaker,3,Stanford HAI International Policy Director; former MEP; EU AI Act Code of Practice Working Group Chair.
+1261,Amandeep Singh Gill,Policymaker,3,UN Under-Secretary-General for Digital and Emerging Technologies (Jan 2025–).
+1776,Jess Whittlestone,Policymaker,3,CLTR Head of AI Policy; TIME 100 AI; UK extreme-AI-risk policy lead.
+1504,Luke Muehlhauser,Policymaker,3,Coefficient Giving MD AI Governance + Policy; leads $100M+/yr AI-governance grantmaking.
+1813,Douglas Matty,Policymaker,3,DoD CDAO (April–December 2025); bridging tenure between Plumb and Stanley.
+1812,Cameron Stanley,Policymaker,3,DoD CDAO (appointed Jan 2026 by Hegseth); current AI-defense lead.
+14,David Evan Harris,Policymaker,2,CAIS Senior Policy Advisor + Berkeley; AI-safety policy voice in CA.
+43,Tom Kalil,Policymaker,2,Renaissance Philanthropy CEO; ex-Obama + Clinton OSTP Deputy Director.
+44,Ben Reinhardt,Policymaker,2,Speculative Technologies founder/CEO; niche DARPA-alt research org.
+45,Bruce Reed,Policymaker,2,Common Sense Media Head of AI; ex-Biden WH Deputy COS; major AI-policy biography but now out of WH.
+97,Alex Bores,Policymaker,2,NY State Assemblymember 73rd District; AI-regulation voice.
+115,Anna Eshoo,Policymaker,2,Former Rep CA-16 (retired Jan 2025); co-chaired Congressional AI Caucus.
+1153,Thomas Umberg,Policymaker,2,CA State Senator SD-34; Chair Senate Judiciary; key CA AI-bill shepherd.
+1154,Steve Padilla,Policymaker,2,CA State Senator SD-18; authored SB 243 (nation's first chatbot safeguards law).
+1156,William Kimmitt,Policymaker,2,17th Commerce Under Secretary for International Trade (Aug 2025).
+1413,Jeanne Shaheen,Policymaker,2,Retired Senator NH (Jan 2025); secured $47.7M NIST AI funding.
+1414,Rob Portman,Policymaker,2,Retired Senator OH (2011–2023); co-founded bipartisan AI-caucus era.
+1474,Summer Lee,Policymaker,2,Rep PA-12 (since 2023); AI Civil Rights Act co-lead.
+1698,Melissa Holyoak,Policymaker,2,Former FTC Commissioner (Sep 2024–Nov 2025); ex-Utah Solicitor General.
+1815,Mark R. Meador,Policymaker,2,FTC Commissioner; aligned with Ferguson on AI enforcement.
+714,Valerie Foushee,Policymaker,2,Rep NC-4; House Science Committee; Democratic Commission on AI co-chair.
+722,Colin Allred,Policymaker,2,Rep TX-33; launched Marley (AI constituent engagement); AI-policy voice.
+723,Pete Ricketts,Policymaker,2,Senator NE; ex-TD Ameritrade CEO; SAFE Chips Act co-sponsor.
+1166,Matt Damschroder,Policymaker,2,Ohio ODJFS Director (since July 2021); state-AI-use implementation.
+1203,Casey Mock,Policymaker,2,Center for Humane Technology Chief of Policy; ex-Amazon state tax lead.
+1204,Camille Carlton,Policymaker,2,CHT Policy Director; AI 100 2023; CharacterAI/OpenAI lawsuit involvement.
+1228,Gordon M. Goldstein,Policymaker,2,CFR Adjunct Senior Fellow; AI-geopolitics researcher-practitioner.
+1775,Hamish Hobbs,Policymaker,2,CLTR AI Policy Director; ex-FHI Research Scholar.
+1777,Tommy Shaffer Shane,Policymaker,2,CLTR Interim AI Policy Director; UK extreme-AI-risk.
+1779,Megan Shahi,Policymaker,2,CAP Director of Technology Policy; AI-governance researcher.
+1780,Adam Conner,Policymaker,2,CAP VP Technology Policy; leads inaugural tech-policy team.
+1778,Nicole Alvarez,Policymaker,2,CAP Senior Policy Analyst for Tech Policy; ex-Future of Privacy Forum.
+1755,Howie Lempel,Policymaker,2,Secure AI Project Policy Director; ex-80K Hours CEO.
+1756,Scott Wisor,Policymaker,2,Secure AI Project Policy Director; ex-Minerva Academic Director.
+1758,Thomas Woodside,Policymaker,2,Secure AI Project co-founder + Senior Policy Advisor; ex-CAIS.
+1761,Andrew Doris,Policymaker,2,Secure AI Project Senior Policy Analyst; ex-Army officer.
+1263,Matt Turek,Policymaker,2,Former DARPA deputy director I2O; XAI + MediFor + Semantic Forensics program manager.
+1264,Benjamin Grosof,Policymaker,2,DARPA PM in DSO (since Sep 2023); CLARA program lead.
+1337,Joanna Rodriguez,Policymaker,2,NRSC Comms Director (Jan 2025–); AI-generated political-ad defender.
+1696,Mark Gray,Policymaker,2,FTC CIO + CDO + Chief AI Officer; oversees AI enforcement infrastructure.
+1697,Mark D Gray,Policymaker,2,DUPLICATE of [1696] Mark Gray; merge candidate.
+39,Saikat Chakrabarti,Policymaker,1,Running for CA-11 (June 2026 primary); ex-AOC COS; New Consensus founder.
+715,Jesse Jackson Jr.,Policymaker,1,2026 candidate IL-02; former Rep seeking return.
+716,Melissa Bean,Policymaker,1,2026 candidate IL-08; ex-Rep (2005–2011).
+717,Chris Gober,Policymaker,1,2026 GOP candidate TX-10; ex-America PAC counsel.
+718,Tom Sell,Policymaker,1,2026 GOP candidate TX-19 runoff; background in agriculture.
+719,Jessica Steinmann,Policymaker,1,2026 GOP candidate TX-08; Trump-endorsed.
+720,Laurie Buckhout,Policymaker,1,2026 GOP candidate NC-01; retired Army Colonel.
+721,Clay Fuller,Policymaker,1,2026 GOP candidate GA-14; former DA.
+724,Jace Yarbrough,Policymaker,1,2026 GOP candidate TX-32; attorney + Air Force Reserve.
+725,Alexandra Mealer,Policymaker,1,2026 GOP candidate TX-09.
+726,Carlos De La Cruz,Policymaker,1,2026 GOP candidate TX-35.
+934,Stefano Mazzocchi,Policymaker,1,Listed as Commerce Chief AI Officer but no public evidence found; possible data-quality issue.
+1106,Cory Gardner,Policymaker,1,Ex-Senator CO (2015–2021); now NCTA CEO (Sep 2025).
+1440,Lisa Hansmann,Policymaker,1,Former Special Assistant to Biden WH Chief of Staff; ex-IRA implementation.
+1495,Tom DiNapoli,Policymaker,1,NY State Comptroller; audited NY agencies' AI governance.
+1637,Kambar Orazbekov,Policymaker,1,ENAIS AI Policy Lead; Deep Dive curriculum developer; narrow European specialist.
