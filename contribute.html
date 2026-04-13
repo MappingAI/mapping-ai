@@ -313,11 +313,9 @@ body.forms-loading .form { visibility: hidden; }
 }
 .duplicate-item {
   padding: 0.6rem 0.75rem;
-  border-bottom: 1px solid #eee;
   cursor: pointer;
   transition: background 0.1s;
 }
-.duplicate-item:last-child { border-bottom: none; }
 .duplicate-item:hover { background: #f0f4ff; }
 .duplicate-item .dup-name {
   font-family: var(--serif); font-size: 14px;
@@ -395,21 +393,20 @@ body.forms-loading .form { visibility: hidden; }
 .org-search-results {
   position: absolute; top: 100%; left: 0; right: 0; z-index: 10;
   background: #fff;
-  border: 1px solid var(--border);
-  border-radius: 4px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
   margin-top: 0.25rem;
   max-height: 200px;
   overflow-y: auto;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 .org-search-results:empty { display: none; }
 .org-result {
   padding: 0.5rem 0.75rem;
   cursor: pointer;
   font-family: var(--serif); font-size: 14px;
-  border-bottom: 1px solid #eee;
+  background: #fff;
 }
-.org-result:last-child { border-bottom: none; }
 .org-result:hover { background: var(--bg-active); }
 .org-result { display: flex; justify-content: space-between; align-items: center; }
 .org-edit-link {
@@ -724,11 +721,9 @@ body.forms-loading .form { visibility: hidden; }
   padding: 0.5rem 0.75rem;
   cursor: pointer;
   display: flex; align-items: center; gap: 0.5rem;
-  border-bottom: 1px solid #eee;
   font-size: 13px;
   min-width: 0;
 }
-.mention-item:last-child { border-bottom: none; }
 .mention-item.active, .mention-item:hover { background: var(--bg-active); }
 .mention-type {
   font-family: var(--mono); font-size: 9px;
@@ -765,11 +760,9 @@ body.forms-loading .form { visibility: hidden; }
 .mention-rel-option {
   padding: 0.45rem 0.75rem;
   cursor: pointer;
-  border-bottom: 1px solid #eee;
   transition: background 0.1s;
   display: flex; flex-direction: column; gap: 1px;
 }
-.mention-rel-option:last-child { border-bottom: none; }
 .mention-rel-option:hover, .mention-rel-option.active { background: var(--bg-active); }
 .mention-rel-label {
   font-family: var(--serif); font-size: 13px;
