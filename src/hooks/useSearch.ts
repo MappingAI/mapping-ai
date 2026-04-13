@@ -1,0 +1,68 @@
+import { useMemo } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { useEntityCache } from './useEntityCache'
+import { searchEntities as searchAPI } from '../lib/api'
+import { fuzzySearch } from '../lib/search'
+import type { FuzzySearchResult } from '../types/api'
+
+/**
+ * Combined search: instant local fuzzy search + debounced pending API search.
+ *
+ * - Local results appear immediately (useMemo against entity cache)
+ * - Pending results fetched async from /search API (only when query is 2+ chars)
+ * - Results merged and deduplicated by entity ID
+ */
+export function useSearch(
+  query: string,
+  type?: 'person' | 'organization' | 'resource',
+  options?: { enabled?: boolean; debounceMs?: number },
+) {
+  const { cache } = useEntityCache()
+  const enabled = options?.enabled ?? true
+
+  // Local fuzzy search — synchronous, instant
+  const localResults = useMemo<FuzzySearchResult[]>(() => {
+    if (!cache || !query || !enabled) return []
+    return fuzzySearch(cache.entities, query, type)
+  }, [cache, query, type, enabled])
+
+  // Pending entity search — async, debounced via TanStack Query's staleTime
+  const pendingQuery = useQuery({
+    queryKey: ['search-pending', query, type],
+    queryFn: () => searchAPI(query, type, 'pending'),
+    enabled: enabled && !!query && query.length >= 2,
+    staleTime: 5_000,
+  })
+
+  // Merge local + pending, deduplicate by ID
+  const allResults = useMemo<FuzzySearchResult[]>(() => {
+    const seenIds = new Set(localResults.map((r) => r.id))
+    const merged = [...localResults]
+
+    if (pendingQuery.data) {
+      for (const pending of pendingQuery.data) {
+        if (!seenIds.has(pending.id)) {
+          merged.push({
+            ...pending,
+            score: 50, // default score for pending results
+            isPending: true,
+          })
+          seenIds.add(pending.id)
+        }
+      }
+    }
+
+    return merged
+  }, [localResults, pendingQuery.data])
+
+  return {
+    localResults,
+    pendingResults: (pendingQuery.data ?? []).map((r) => ({
+      ...r,
+      score: 50,
+      isPending: true as const,
+    })),
+    allResults,
+    isLoadingPending: pendingQuery.isPending && pendingQuery.fetchStatus !== 'idle',
+  }
+}
