@@ -313,7 +313,7 @@ body.forms-loading .form { visibility: hidden; }
 }
 .duplicate-item {
   padding: 0.6rem 0.75rem;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid #eee;
   cursor: pointer;
   transition: background 0.1s;
 }
@@ -407,7 +407,7 @@ body.forms-loading .form { visibility: hidden; }
   padding: 0.5rem 0.75rem;
   cursor: pointer;
   font-family: var(--serif); font-size: 14px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid #eee;
 }
 .org-result:last-child { border-bottom: none; }
 .org-result:hover { background: var(--bg-active); }
@@ -724,7 +724,7 @@ body.forms-loading .form { visibility: hidden; }
   padding: 0.5rem 0.75rem;
   cursor: pointer;
   display: flex; align-items: center; gap: 0.5rem;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid #eee;
   font-size: 13px;
   min-width: 0;
 }
@@ -765,7 +765,7 @@ body.forms-loading .form { visibility: hidden; }
 .mention-rel-option {
   padding: 0.45rem 0.75rem;
   cursor: pointer;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid #eee;
   transition: background 0.1s;
   display: flex; flex-direction: column; gap: 1px;
 }
@@ -2131,6 +2131,7 @@ document.querySelectorAll('input[name="name"], #resource-form input[name="title"
   }
 
   nameInput.addEventListener('input', checkDuplicates);
+  nameInput.addEventListener('change', checkDuplicates);
   // Dismiss duplicate results when clicking outside the name field
   nameInput.addEventListener('blur', () => setTimeout(() => removeDupContainer(), 300));
 });
@@ -2472,6 +2473,7 @@ document.querySelectorAll('.parent-org-search, .primary-org-search').forEach(inp
   function selectItem(item) {
     input.value = item.dataset.name;
     hiddenInput.value = item.dataset.id;
+    input.dataset.linkedOrgId = item.dataset.id;
     resultsDiv.innerHTML = '';
   }
 

@@ -27,20 +27,46 @@ const LinkShortcut = Extension.create({
   },
 });
 
-// Use the parent page's searchEntities if available (preloaded cache), else fall back to API
+// Use the parent page's searchEntities if available (preloaded cache), then fetch pending from API
 function searchEntitiesForMention(query) {
-  if (!query || query.length < 1) return [];
-  // Try parent page's cached search (instant)
-  if (typeof window.searchEntities === 'function') {
-    const results = window.searchEntities(query);
-    return [
+  if (!query || query.length < 1) return Promise.resolve([]);
+
+  function toMentionItems(results, pending) {
+    const items = [
       ...(results.people || []).map(p => ({ id: `person-${p.id}`, entityType: 'person', entityId: p.id, label: p.name, detail: p.title || p.category || '' })),
       ...(results.organizations || []).map(o => ({ id: `org-${o.id}`, entityType: 'organization', entityId: o.id, label: o.name, detail: o.category || '' })),
       ...(results.resources || []).map(r => ({ id: `resource-${r.id}`, entityType: 'resource', entityId: r.id, label: r.title, detail: r.resource_type || r.category || '' })),
     ];
+    if (pending) {
+      const existingIds = new Set(items.map(i => i.id));
+      for (const p of (pending.people || [])) {
+        const id = `person-${p.id}`;
+        if (!existingIds.has(id)) items.push({ id, entityType: 'person', entityId: p.id, label: p.name, detail: (p.title || p.category || '') + ' (pending)', _pending: true });
+      }
+      for (const o of (pending.organizations || [])) {
+        const id = `org-${o.id}`;
+        if (!existingIds.has(id)) items.push({ id, entityType: 'organization', entityId: o.id, label: o.name, detail: (o.category || '') + ' (pending)', _pending: true });
+      }
+      for (const r of (pending.resources || [])) {
+        const id = `resource-${r.id}`;
+        if (!existingIds.has(id)) items.push({ id, entityType: 'resource', entityId: r.id, label: r.title, detail: (r.resource_type || r.category || '') + ' (pending)', _pending: true });
+      }
+    }
+    return items;
   }
-  // Fallback: nothing available yet
-  return [];
+
+  // Get local (approved) results instantly
+  const localResults = typeof window.searchEntities === 'function' ? window.searchEntities(query) : { people: [], organizations: [], resources: [] };
+  const localItems = toMentionItems(localResults);
+
+  // Fetch pending entities from API if query is long enough
+  if (query.length < 2) return Promise.resolve(localItems);
+
+  const apiBase = window.location.hostname === 'localhost' ? '' : 'https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com';
+  return fetch(`${apiBase}/search?q=${encodeURIComponent(query)}&status=pending`)
+    .then(r => r.ok ? r.json() : null)
+    .then(pendingData => pendingData ? toMentionItems(localResults, pendingData) : localItems)
+    .catch(() => localItems);
 }
 
 // Make searchEntities globally accessible for TipTap
