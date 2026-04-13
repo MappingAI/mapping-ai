@@ -1,0 +1,392 @@
+[
+  {
+    "edge_id": 1440,
+    "edge_type": "founder",
+    "role": "Founder",
+    "evidence": "In 2010 he founded Jukedeck, one of the first AI music generation startups",
+    "source": {
+      "id": 62,
+      "name": "Ed Newton-Rex",
+      "type": "person",
+      "category": "Organizer",
+      "website": null,
+      "notes_excerpt": "Ed Newton-Rex is the CEO of Fairly Trained, a non-profit he founded in 2024 that certifies generative AI companies for fairer training data practices. He previously founded Jukedeck in 2010, one of the first AI music generation startups, which was acquired by ByteDance in 2019. He was named in TIME Magazine's list of the 100 most influential people in artificial intelligence in 2025. He organized "
+    },
+    "target": {
+      "id": 1400,
+      "name": "Jukedeck",
+      "type": "organization",
+      "category": "Deployers & Platforms",
+      "website": null,
+      "notes_excerpt": "British AI music startup (founded 2012 by Ed Newton-Rex) that built a platform for generating royalty-free music using AI. Raised $2.5M from Cambridge Innovation Capital, Parkwalk Advisors, Backed VC, Playfair Capital. Acquired by ByteDance/TikTok in July 2019; site went offline post-acquisition. Technology integrated into ByteDance's AI music capabilities. Newton-Rex became director of ByteDance ",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1447,
+    "edge_type": "founder",
+    "role": "founder",
+    "evidence": "New York-based Thrive Holdings, an offshoot of Joshua Kushner's Thrive Capital",
+    "source": {
+      "id": 63,
+      "name": "Joshua Kushner",
+      "type": "person",
+      "category": "Investor",
+      "website": null,
+      "notes_excerpt": "Joshua Kushner is the founder and managing partner of Thrive Capital, a venture capital firm. He co-founded Oscar Health, a health insurance startup that went public in 2021. Kushner's firm has been one of OpenAI's major investors, with Thrive Capital investing roughly $1 billion in OpenAI at a $285 billion valuation in December. He is married to supermodel Karlie Kloss and they have two sons toge"
+    },
+    "target": {
+      "id": 1404,
+      "name": "Thrive Holdings",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "website": null,
+      "notes_excerpt": "AI-focused holding company launched April 2025 by Joshua Kushner's Thrive Capital. Buys, owns, and runs companies positioned to benefit from AI — starting with accounting (Crete Professionals Alliance) and IT services (Shield Technology Partners). OpenAI took ownership stake in Thrive Holdings (Dec 2025) and embeds engineering/product teams within portfolio companies. Parent firm Thrive Capital ma",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1471,
+    "edge_type": "founder",
+    "role": "Co-founder of Senate Artificial Intelligence Caucus",
+    "evidence": "The bipartisan Senate Artificial Intelligence Caucus was formed in 2019 by U.S. Senators Martin Heinrich (D-NM) and Rob Portman (R-OH)",
+    "source": {
+      "id": 72,
+      "name": "Martin Heinrich",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Martin Heinrich is a U.S. Senator from New Mexico who has served since January 2013. He is the founder and co-chair of the Senate Artificial Intelligence Caucus, which he established with former Senator Rob Portman (R-Ohio) in 2019. He serves as Ranking Member on the Committee on Energy and Natural Resources and serves on the Senate Appropriations, Intelligence, and Joint Economic Committees. Hein"
+    },
+    "target": {
+      "id": 1414,
+      "name": "Rob Portman",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Rob Portman (R-OH) served as a U.S. Senator from 2011 until his retirement in January 2023, having chosen not to seek re-election in 2022. While in office he co-founded the bipartisan Senate Artificial Intelligence Caucus with Martin Heinrich (D-NM) in 2019 and co-introduced the Artificial Intelligence Initiative Act, authorizing a $2.2 billion federal investment in AI R&D and workforce developmen",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1558,
+    "edge_type": "founder",
+    "role": "Founder",
+    "evidence": "The company he founded, Advanced Machine Intelligence Labs(or AMI Labs), is run by CEO Alex LeBrun",
+    "source": {
+      "id": 92,
+      "name": "Yann LeCun",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "Yann LeCun is Chief AI Scientist at Meta and Silver Professor at New York University affiliated with the NYU Center for Data Science and the Courant Institute of Mathematical Sciences. He received the 2018 ACM Turing Award shared with Geoffrey Hinton and Yoshua Bengio for contributions to deep learning. He announced plans to leave Meta after ten years to found his own company focused on world-mode"
+    },
+    "target": {
+      "id": 1432,
+      "name": "Advanced Machine Intelligence Labs",
+      "type": "organization",
+      "category": "Frontier Lab",
+      "website": null,
+      "notes_excerpt": "Full legal name: Advanced Machine Intelligence (AMI Labs). AI startup co-founded by Yann LeCun (exec chairman) and Alex LeBrun (CEO) after LeCun left Meta (Nov 2025). Raised $1.03B seed at $3.5B pre-money valuation (Mar 2026) — one of largest seed rounds ever. Building 'world models' using JEPA architecture as alternative to LLMs. Backed by Nvidia, Samsung, Bezos Expeditions, Eric Schmidt. Key tea",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1683,
+    "edge_type": "founder",
+    "role": "Founding Director",
+    "evidence": "Founding Director of the AI Tennessee Initiative",
+    "source": {
+      "id": 118,
+      "name": "Lynne Parker",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Lynne Parker is Principal Deputy Director of the White House Office of Science and Technology Policy and Executive Director of the President's Council of Advisors on Science and Technology. In January 2025, she was appointed by President Donald Trump as Executive Director of the President's Council of Advisors on Science and Technology and Counselor to the Director of the White House Office of Sci"
+    },
+    "target": {
+      "id": 1487,
+      "name": "AI Tennessee Initiative",
+      "type": "organization",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "First statewide AI initiative in the U.S., launched by the University of Tennessee, Knoxville. Founded and directed by Lynne Parker, who served as White House Deputy CTO and founding director of the National AI Initiative Office (2018-2022) before returning to UT. Coordinates AI research, education, and workforce development across disciplines and institutions statewide. Focus areas: smart manufac",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1684,
+    "edge_type": "founder",
+    "role": "Founding Director",
+    "evidence": "She was named founding director of the National Artificial Intelligence Initiative Office in 2021",
+    "source": {
+      "id": 118,
+      "name": "Lynne Parker",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Lynne Parker is Principal Deputy Director of the White House Office of Science and Technology Policy and Executive Director of the President's Council of Advisors on Science and Technology. In January 2025, she was appointed by President Donald Trump as Executive Director of the President's Council of Advisors on Science and Technology and Counselor to the Director of the White House Office of Sci"
+    },
+    "target": {
+      "id": 1488,
+      "name": "National Artificial Intelligence Initiative Office",
+      "type": "organization",
+      "category": "Government/Agency",
+      "website": null,
+      "notes_excerpt": "Federal coordinating office established by the National AI Initiative Act of 2020, housed within the White House Office of Science and Technology Policy (OSTP). Serves as central coordination hub for AI R&D across federal agencies, industry, academia, nonprofits, and state/tribal governments. Led the National AI R&D Strategic Plan updates. Four statutory mandates: ensure continued U.S. AI R&D lead",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1694,
+    "edge_type": "founder",
+    "role": "Co-Director",
+    "evidence": "Venkatasubramanian, a professor at Brown University, also serves as the Co-Director of the newly established AI Research Institute on Interaction for AI assistants (ARIA)",
+    "source": {
+      "id": 120,
+      "name": "Suresh Venkatasubramanian",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Suresh Venkatasubramanian is a Professor of Data Science and Computer Science at Brown University who directs the Center for Technological Responsibility, Reimagination and Redesign. He served as Assistant Director for Science and Justice in the White House Office of Science and Technology Policy for the 2021-2022 academic year, where he co-authored the Blueprint for an AI Bill of Rights. His rese"
+    },
+    "target": {
+      "id": 1490,
+      "name": "AI Research Institute on Interaction for AI assistants (ARIA)",
+      "type": "organization",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "NSF-funded ($20M) AI Research Institute on Interaction for AI Assistants, headquartered at Brown University. Focuses on developing trustworthy, context-aware AI assistants with specific application to mental and behavioral health. Research themes include AI interpretability, adaptability, and participatory design. Co-directed by Ellie Pavlick and Suresh Venkatasubramanian. One of five national AI ",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1696,
+    "edge_type": "founder",
+    "role": "Governor who launched the consortium",
+    "evidence": "Governor Kathy Hochul today announced a historic agreement with the Legislature to establish Empire AI, a first-of-its-kind consortium to secure New York's place at the forefront of artificial intelligence research",
+    "source": {
+      "id": 121,
+      "name": "Kathy Hochul",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Kathy Hochul is the 57th and first female Governor of New York State. She previously served as Erie county clerk (2007–11), U.S. representative for New York's 26th congressional district (2011–13), and lieutenant governor (2015–21) to Gov. Andrew Cuomo. In her January 13, 2026, State of the State address, Governor Hochul announced a series of proposals related to AI and technology regulation that "
+    },
+    "target": {
+      "id": 1492,
+      "name": "Empire AI",
+      "type": "organization",
+      "category": "Government/Agency",
+      "website": null,
+      "notes_excerpt": "New York State AI consortium launched January 2024 by Governor Kathy Hochul. Backed by $400M+ in public and private funds ($275M state investment, expanded to $500M+ total). Building state-of-the-art AI computing center on the University at Buffalo campus. Consortium of 10 member institutions: Columbia, Cornell, NYU, RPI, SUNY, CUNY, Simons Foundation, University of Rochester, RIT, and Icahn Schoo",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 2269,
+    "edge_type": "founder",
+    "role": "Co-Founder and Chair",
+    "evidence": null,
+    "source": {
+      "id": 1785,
+      "name": "Cari Tuna",
+      "type": "person",
+      "category": "Investor",
+      "website": null,
+      "notes_excerpt": "Cari Tuna is an American philanthropist and former Wall Street Journal reporter who co-founded Good Ventures and Open Philanthropy (now Coefficient Giving) with her husband Dustin Moskovitz. Open Philanthropy was an early backer of AI safety, giving more than $580 million toward building a field of researchers studying the potential catastrophic risks of AI. She was included in TIME's 100 Most Inf"
+    },
+    "target": {
+      "id": 1583,
+      "name": "Good Ventures",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "website": null,
+      "notes_excerpt": "Philanthropic foundation co-founded by Dustin Moskovitz and Cari Tuna; primary funder of Open Philanthropy (rebranded Coefficient Giving, Nov 2025). Accounts for >50% of philanthropic AI safety funding globally; has distributed $5B+ in grants including $5.5M to launch CHAI at UC Berkeley.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 2282,
+    "edge_type": "founder",
+    "role": "Founder",
+    "evidence": "Backfilled from notes: ...Head of Strategy and co-founder of Eleos AI. Background in applied mathematics, dat",
+    "source": {
+      "id": 1355,
+      "name": "Kathleen Finlinson",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "Head of Strategy and co-founder of Eleos AI. Background in applied mathematics, data science, and AI forecasting. Researches strategic considerations for AI welfare action. Advocates balancing AI control with cooperative strategies that respect AI welfare."
+    },
+    "target": {
+      "id": 1351,
+      "name": "Eleos AI",
+      "type": "organization",
+      "category": "AI Safety/Alignment",
+      "website": null,
+      "notes_excerpt": "Nonprofit research org focused on AI welfare, consciousness, and moral patienthood. Co-founded by Kyle Fish, Robert Long, Kathleen Finlinson. Published landmark report \"Taking AI Welfare Seriously.\" Commended Anthropic's model welfare efforts. Five research priorities: welfare interventions, human-AI cooperation, leveraging AI for welfare research, standardized evaluations, credible communication.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 2291,
+    "edge_type": "founder",
+    "role": "Co-founder",
+    "evidence": "Backfilled from notes: ...CEO and Co-Founder of Adaptive Security, an AI-native cybersecurity startup sim",
+    "source": {
+      "id": 1460,
+      "name": "Brian Long",
+      "type": "person",
+      "category": "Executive",
+      "website": null,
+      "notes_excerpt": "CEO and Co-Founder of Adaptive Security, an AI-native cybersecurity startup simulating deepfake and GenAI attacks for corporate defense training. Serial entrepreneur: previously co-founded Attentive (SMS/email marketing platform, grew to $500M+ ARR, 8,000+ customers, 1,000+ employees) and TapCommerce (acquired by Twitter, where he served as Senior Director leading mobile teams for 19 months). Rais"
+    },
+    "target": {
+      "id": 1458,
+      "name": "Adaptive Security",
+      "type": "organization",
+      "category": "Deployers & Platforms",
+      "website": null,
+      "notes_excerpt": "AI-native cybersecurity startup founded by serial entrepreneurs Brian Long (CEO) and Andrew Jones. Builds platform simulating AI-powered attacks — deepfake voice/video phishing, smishing, and GenAI social engineering — to train corporate defenders. Raised $136M+ total: $43M round co-led by OpenAI and Andreessen Horowitz (OpenAI's first cybersecurity investment), plus $55M Series A (April 2025) led",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 2396,
+    "edge_type": "founder",
+    "role": "Founder",
+    "evidence": "Backfilled from org notes: ... research center founded in 2018 by Clark Barrett, David Dill, Mykel Kochenderfer, and Dorsa Sadigh, operating as an industrial affiliates p",
+    "source": {
+      "id": 1565,
+      "name": "Clark Barrett",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Professor (Research) of Computer Science at Stanford University. Director of Stanford Center for Automated Reasoning (Centaur) and co-director of Stanford Center for AI Safety. Previously Associate Professor at NYU Courant Institute. PhD from Stanford (2003) — his dissertation introduced Satisfiability Modulo Theories (SMT). ACM Fellow. Two-time CAV Award winner (2021, 2024). Pioneer in formal har"
+    },
+    "target": {
+      "id": 1128,
+      "name": "Stanford Center for AI Safety",
+      "type": "organization",
+      "category": "AI Safety/Alignment",
+      "website": null,
+      "notes_excerpt": "Stanford University research center founded in 2018 by Clark Barrett, David Dill, Mykel Kochenderfer, and Dorsa Sadigh, operating as an industrial affiliates program. Conducts research in formal verification, robust decision-making, and trustworthy AI; distinct from the independent nonprofit Center for AI Safety (safe.ai) run by Dan Hendrycks. Focus spans technical safety, fairness, accountability",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 776,
+    "edge_type": "funder",
+    "role": "investor",
+    "evidence": "And their track record is pretty spot-on: They invested in Airbnb, Coinbase, Instagram, Instacart, Pinterest, Slack, Reddit, Lyft, and Oculus [12]",
+    "source": {
+      "id": 3,
+      "name": "Marc Andreessen",
+      "type": "person",
+      "category": "Investor",
+      "website": null,
+      "notes_excerpt": "Marc Andreessen is co-founder of Netscape and co-founder of the venture capital firm Andreessen Horowitz (a16z). He is described as a founder, investor, and co-founder of Netscape, as well as co-founder of the venture capital firm Andreessen Horowitz (a16z). According to Wikipedia, he is an American businessman, venture capitalist, and former software engineer who is the co-author of Mosaic, the f"
+    },
+    "target": {
+      "id": 1104,
+      "name": "Coinbase",
+      "type": "organization",
+      "category": "Deployers & Platforms",
+      "website": null,
+      "notes_excerpt": "Coinbase is joining the x402 Foundation alongside tech titans like Amazon, Google, and Stripe. Coinbase has launched crypto wallet infrastructure that allows AI agents to spend, earn and trade crypto. The company's mission is to increase economic freedom for more than 1 billion people by providing a trusted platform for crypto assets. Coinbase delivered strong Q4 and full year 2024 results, with f",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1173,
+    "edge_type": "funder",
+    "role": null,
+    "evidence": "It was funded by the Government of Canada for CAD$5 million",
+    "source": {
+      "id": 1322,
+      "name": "Government of Canada",
+      "type": "organization",
+      "category": "Government/Agency",
+      "website": null,
+      "notes_excerpt": "Canada was the first country globally to adopt a national AI strategy, launching the Pan-Canadian AI Strategy in 2017. Phase 2 announced in 2022 with $443M+ in funding, supporting the three national AI institutes (Mila, Amii, Vector). Tabled the Artificial Intelligence and Data Act (AIDA) in June 2022 as part of Bill C-27, one of the first proposed AI-specific laws globally. AIDA focuses on respon"
+    },
+    "target": {
+      "id": 1114,
+      "name": "Element AI",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "website": null,
+      "notes_excerpt": "Element AI was a Canadian multinational artificial intelligence company based in Montreal, Quebec that was founded in October 2016. The company was funded by the Government of Canada for CAD$5 million, and raised US$102 million independently, before being acquired by ServiceNow. ServiceNow announced it has signed an agreement to acquire Element AI on November 30, 2020, with ServiceNow completing t",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1174,
+    "edge_type": "funder",
+    "role": "Lead investor",
+    "evidence": "It then raised US$102 million from US investors in a series A round led by the San Francisco venture fund Data Collective and Microsoft Ventures",
+    "source": {
+      "id": 1323,
+      "name": "Data Collective",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "website": null,
+      "notes_excerpt": "DCVC (formerly Data Collective) is a deep tech venture capital firm founded by Matt Ocko and Zachary Bogue, investing in entrepreneurs using computational approaches—especially AI—to solve large-scale real-world problems. Manages billions in AUM across 13 funds including six flagship funds. Invests at seed, Series A, and growth stages across AI, exascale computing, climate, robotics, materials sci"
+    },
+    "target": {
+      "id": 1114,
+      "name": "Element AI",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "website": null,
+      "notes_excerpt": "Element AI was a Canadian multinational artificial intelligence company based in Montreal, Quebec that was founded in October 2016. The company was funded by the Government of Canada for CAD$5 million, and raised US$102 million independently, before being acquired by ServiceNow. ServiceNow announced it has signed an agreement to acquire Element AI on November 30, 2020, with ServiceNow completing t",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  }
+]

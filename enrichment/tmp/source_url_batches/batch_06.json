@@ -1,0 +1,392 @@
+[
+  {
+    "edge_id": 1267,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor",
+    "evidence": "Today, U.S. Senators Cory Booker (D-NJ), Mike Rounds (R-SD), and Martin Heinrich (D-NM) along with Congressmen Ted Lieu (D-CA) and Jay Obernolte (R-CA), reintroduced the AI Grand Challenges Act",
+    "source": {
+      "id": 24,
+      "name": "Cory Booker",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Cory Booker is a U.S. Senator from New Jersey who was elected in 2013 and represents New Jersey as the state's first Black senator. He previously served as mayor of Newark from 2006 to 2013. In March 2025, Booker delivered the longest speech in Senate history, speaking for more than 25 hours in protest of the Trump administration's policies. He has been a leader in criminal justice reform and help"
+    },
+    "target": {
+      "id": 72,
+      "name": "Martin Heinrich",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Martin Heinrich is a U.S. Senator from New Mexico who has served since January 2013. He is the founder and co-chair of the Senate Artificial Intelligence Caucus, which he established with former Senator Rob Portman (R-Ohio) in 2019. He serves as Ranking Member on the Committee on Energy and Natural Resources and serves on the Senate Appropriations, Intelligence, and Joint Economic Committees. Hein",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1268,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor",
+    "evidence": "Today, U.S. Senators Cory Booker (D-NJ), Mike Rounds (R-SD), and Martin Heinrich (D-NM) along with Congressmen Ted Lieu (D-CA) and Jay Obernolte (R-CA), reintroduced the AI Grand Challenges Act",
+    "source": {
+      "id": 24,
+      "name": "Cory Booker",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Cory Booker is a U.S. Senator from New Jersey who was elected in 2013 and represents New Jersey as the state's first Black senator. He previously served as mayor of Newark from 2006 to 2013. In March 2025, Booker delivered the longest speech in Senate history, speaking for more than 25 hours in protest of the Trump administration's policies. He has been a leader in criminal justice reform and help"
+    },
+    "target": {
+      "id": 112,
+      "name": "Ted Lieu",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Ted Lieu represents California's 36th Congressional District and is serving his sixth term in Congress. He was elected by his colleagues to serve as Vice Chair of the Democratic Caucus, making him the highest ranking Asian American to have ever served in House Leadership. In the 118th Congress, Ted was the Co-Chair of the House's Bipartisan Taskforce on Artificial Intelligence. He is one of three ",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1269,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor",
+    "evidence": "Today, U.S. Senators Cory Booker (D-NJ), Mike Rounds (R-SD), and Martin Heinrich (D-NM) along with Congressmen Ted Lieu (D-CA) and Jay Obernolte (R-CA), reintroduced the AI Grand Challenges Act",
+    "source": {
+      "id": 24,
+      "name": "Cory Booker",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Cory Booker is a U.S. Senator from New Jersey who was elected in 2013 and represents New Jersey as the state's first Black senator. He previously served as mayor of Newark from 2006 to 2013. In March 2025, Booker delivered the longest speech in Senate history, speaking for more than 25 hours in protest of the Trump administration's policies. He has been a leader in criminal justice reform and help"
+    },
+    "target": {
+      "id": 117,
+      "name": "Jay Obernolte",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Jay Obernolte is a U.S. Congressman representing California's 23rd District since 2021 and is the only serving member of Congress with a graduate-level degree in AI. He co-chaired the bipartisan House Task Force on AI with Ted Lieu, which produced a comprehensive report in December 2024 with 66 findings and 89 recommendations. He currently serves as Chairman of the Research and Technology Subcommi",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1270,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor",
+    "evidence": "U.S. Senators Cory Booker (D-N.J.), Martin Heinrich (D-N.M.), Founder and Co-Chair of the Senate Artificial Intelligence Caucus, Todd Young (R-IN), and Mike Rounds (R-S.D.), Co-Chair of the Senate AI Caucus, introduced the bipartisan Creating Resources for Every American To Experiment with Artificial Intelligence Act of 2023 (CREATE AI Act)",
+    "source": {
+      "id": 24,
+      "name": "Cory Booker",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Cory Booker is a U.S. Senator from New Jersey who was elected in 2013 and represents New Jersey as the state's first Black senator. He previously served as mayor of Newark from 2006 to 2013. In March 2025, Booker delivered the longest speech in Senate history, speaking for more than 25 hours in protest of the Trump administration's policies. He has been a leader in criminal justice reform and help"
+    },
+    "target": {
+      "id": 73,
+      "name": "Todd Young",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Todd Christopher Young is an American politician and attorney serving as the senior United States senator from Indiana, a seat he has held since 2017. He is a member of the Republican Party and previously served as the U.S. representative for Indiana's 9th congressional district. Young currently serves on the U.S. Senate Committees on Finance; Foreign Relations; Health, Education, Labor & Pensions",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1271,
+    "edge_type": "collaborator",
+    "role": "House companion bill sponsor",
+    "evidence": "U.S. Representative Anna Eshoo (D-CA), Co-Chair of the House Artificial Intelligence Caucus, introduced the House companion bill, along with Representatives Michael McCaul (R-TX), Don Beyer (D-VA), and Jay Obernolte (R-CA)",
+    "source": {
+      "id": 24,
+      "name": "Cory Booker",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Cory Booker is a U.S. Senator from New Jersey who was elected in 2013 and represents New Jersey as the state's first Black senator. He previously served as mayor of Newark from 2006 to 2013. In March 2025, Booker delivered the longest speech in Senate history, speaking for more than 25 hours in protest of the Trump administration's policies. He has been a leader in criminal justice reform and help"
+    },
+    "target": {
+      "id": 115,
+      "name": "Anna Eshoo",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Anna Eshoo is a U.S. Representative who served California's 16th Congressional District from 1993 to 2025, retiring in January 2025. She co-chairs the Congressional Artificial Intelligence (AI) Caucus and was named one of Time magazine's 100 most influential people in AI in 2023. She served as Chair of the Health Subcommittee and was the first woman in the history of Congress to hold that position",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1274,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "he co-authored a preliminary paper titled \"Taking AI Welfare Seriously\" with an impressive list of collaborators, including David Chalmers",
+    "source": {
+      "id": 25,
+      "name": "Kyle Fish",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "Kyle Fish is Anthropic's first in-house AI welfare researcher, hired to determine whether models like Claude can have conscious experiences and how the company should respond. He is trained in neuroscience and spent years in biotech, cofounding companies that used machine learning to design drugs and vaccines for pandemic preparedness. Fish estimates a 20% chance that today's large language models"
+    },
+    "target": {
+      "id": 1352,
+      "name": "David Chalmers",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "University Professor of Philosophy and Neural Science at NYU. Co-director of Center for Mind, Brain, and Consciousness. Formulated the \"hard problem of consciousness.\" Leading voice on AI consciousness and moral status. Author of \"Reality+\" on virtual worlds. Warns against corporate control of virtual/AI worlds.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1275,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "Taking AI Welfare Seriously that I worked on with Rob Long and David Chalmers and others",
+    "source": {
+      "id": 25,
+      "name": "Kyle Fish",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "Kyle Fish is Anthropic's first in-house AI welfare researcher, hired to determine whether models like Claude can have conscious experiences and how the company should respond. He is trained in neuroscience and spent years in biotech, cofounding companies that used machine learning to design drugs and vaccines for pandemic preparedness. Fish estimates a 20% chance that today's large language models"
+    },
+    "target": {
+      "id": 1353,
+      "name": "Robert Long",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "Executive Director of Eleos AI. PhD Philosophy from NYU. Former research fellow at Future of Humanity Institute (Oxford) and CAIS Philosophy Fellow (2023). Leading researcher on AI consciousness, sentience, and moral status. Co-author of \"Consciousness in Artificial Intelligence\" with Butlin, Bengio, et al. NOTE: Same person as Rob Long (entity 1354) — \"Rob\" is informal name.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1276,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "we had Rob Long and Kathleen Finlinson from Eleos AI Research run the self-report-interview-based component of these assessments",
+    "source": {
+      "id": 25,
+      "name": "Kyle Fish",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "Kyle Fish is Anthropic's first in-house AI welfare researcher, hired to determine whether models like Claude can have conscious experiences and how the company should respond. He is trained in neuroscience and spent years in biotech, cofounding companies that used machine learning to design drugs and vaccines for pandemic preparedness. Fish estimates a 20% chance that today's large language models"
+    },
+    "target": {
+      "id": 1354,
+      "name": "Rob Long",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "DUPLICATE of entity 1353 (Robert Long). Rob Long is the informal name for Robert Long, Executive Director of Eleos AI. See entity 1353 for full enrichment.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1277,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "we had Rob Long and Kathleen Finlinson from Eleos AI Research run the self-report-interview-based component of these assessments",
+    "source": {
+      "id": 25,
+      "name": "Kyle Fish",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "Kyle Fish is Anthropic's first in-house AI welfare researcher, hired to determine whether models like Claude can have conscious experiences and how the company should respond. He is trained in neuroscience and spent years in biotech, cofounding companies that used machine learning to design drugs and vaccines for pandemic preparedness. Fish estimates a 20% chance that today's large language models"
+    },
+    "target": {
+      "id": 1355,
+      "name": "Kathleen Finlinson",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "Head of Strategy and co-founder of Eleos AI. Background in applied mathematics, data science, and AI forecasting. Researches strategic considerations for AI welfare action. Advocates balancing AI control with cooperative strategies that respect AI welfare.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1278,
+    "edge_type": "collaborator",
+    "role": "co-winner of 2024 Nobel Prize in Economic Sciences",
+    "evidence": "In 2024, Johnson received the Nobel Memorial Prize in Economic Sciences jointly with Daron Acemoglu and James A. Robinson",
+    "source": {
+      "id": 26,
+      "name": "Simon Johnson",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Simon Johnson is the Ronald A. Kurtz (1954) Professor of Entrepreneurship at the MIT Sloan School of Management and co-winner of the 2024 Nobel Prize in Economic Sciences jointly with Daron Acemoglu and James A. Robinson. He co-directs the Shaping the Future of Work initiative at MIT, focusing on the economics and politics of AI development and deployment. Johnson served as Chief Economist of the "
+    },
+    "target": {
+      "id": 52,
+      "name": "Daron Acemoglu",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Daron Acemoglu is an Institute Professor at MIT who won the 2024 Nobel Prize in Economics with Simon Johnson and James A. Robinson for studies of how institutions are formed and affect prosperity. He argues that AI is not improving productivity as much as hyped, projecting only modest GDP gains of 1.1% to 1.6% over the next decade. Acemoglu believes current AI development focuses too much on autom",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1279,
+    "edge_type": "collaborator",
+    "role": "co-director",
+    "evidence": "With my co-directors, professors Daron Acemoglu and David Autor, we look at the choices that are being made",
+    "source": {
+      "id": 26,
+      "name": "Simon Johnson",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Simon Johnson is the Ronald A. Kurtz (1954) Professor of Entrepreneurship at the MIT Sloan School of Management and co-winner of the 2024 Nobel Prize in Economic Sciences jointly with Daron Acemoglu and James A. Robinson. He co-directs the Shaping the Future of Work initiative at MIT, focusing on the economics and politics of AI development and deployment. Johnson served as Chief Economist of the "
+    },
+    "target": {
+      "id": 962,
+      "name": "David Autor",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Co-authored influential 2026 Hamilton Project report 'Building Pro-Worker Artificial Intelligence' defining framework for AI that augments rather than replaces human expertise. Served on National Academy committee for 2024 report 'Artificial Intelligence and the Future of Work.' Recognized as 'academic voice of the American worker' by Economist magazine and received 2019 Carnegie Fellowship for wo",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1286,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "He'll also work closely with AI and crypto czar David Sacks on regulation and policy",
+    "source": {
+      "id": 27,
+      "name": "Michael Kratsios",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Michael Kratsios serves as Assistant to the President and Director of the White House Office of Science and Technology Policy, confirmed by the Senate in a 74-25 vote on March 25, 2025. He previously served as the fourth Chief Technology Officer of the United States during President Trump's first term and as Under Secretary of War from January 2020 to January 2021. Prior to government service, he "
+    },
+    "target": {
+      "id": 42,
+      "name": "David Sacks",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "David Sacks stepped down from his role as White House AI and crypto czar in March 2026, having reached the end of his 130-day limit as a special government employee. He is now co-chair of the President's Council of Advisors on Science and Technology alongside Michael Kratsios. Sacks is a general partner of Craft Ventures, a venture capital fund he co-founded in late 2017. He was previously COO and",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1306,
+    "edge_type": "collaborator",
+    "role": "postdoctoral researcher",
+    "evidence": "After her PhD, she spent a year as a postdoctoral researcher at Cornell University",
+    "source": {
+      "id": 31,
+      "name": "Regina Barzilay",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Regina Barzilay is a School of Engineering Distinguished Professor of AI & Health in the Department of Computer Science and the AI Faculty Lead at MIT Jameel Clinic. She was diagnosed with breast cancer in 2014, which prompted her to conduct research in oncology. She develops machine learning methods for drug discovery and clinical AI, and her research has been recognized with the MacArthur Fellow"
+    },
+    "target": {
+      "id": 1363,
+      "name": "Cornell University",
+      "type": "organization",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Major research university with broad AI activities spanning Cornell Tech (NYC), the AI Initiative, and the MacArthur-funded AI, Policy, and Practice (AIPP) initiative focused on AI's societal impacts. In 2025 NSF awarded Cornell a $20M AI Materials Institute, and a new Vice Provost for AI Strategy was named in January 2026.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1311,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "In 2024, Hassabis and John M. Jumper were jointly awarded the Nobel Prize in Chemistry for their AI research contributions for protein structure",
+    "source": {
+      "id": 33,
+      "name": "Demis Hassabis",
+      "type": "person",
+      "category": "Executive",
+      "website": null,
+      "notes_excerpt": "Demis Hassabis is the CEO and co-founder of Google DeepMind, an artificial intelligence company that was founded in London in 2010 and acquired by Google in 2014. He shared the 2024 Nobel Prize in Chemistry with John M. Jumper for their work on AlphaFold, an AI tool that predicts protein structures. He is also the founder and CEO of Isomorphic Labs, a biotechnology company focused on drug discover"
+    },
+    "target": {
+      "id": 1366,
+      "name": "John M. Jumper",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "Director at Google DeepMind. Led development of AlphaFold (protein structure prediction). Nobel Prize in Chemistry 2024 (shared with Demis Hassabis and David Baker). PhD theoretical chemistry (U of Chicago). AI optimist — believes AI has \"unparalleled potential to improve the lives of billions.\"",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1323,
+    "edge_type": "collaborator",
+    "role": "Co-lead",
+    "evidence": "Gebru joined Google in 2018, where she co-led a team on the ethics of artificial intelligence with Margaret Mitchell.",
+    "source": {
+      "id": 35,
+      "name": "Timnit Gebru",
+      "type": "person",
+      "category": "Organizer",
+      "website": null,
+      "notes_excerpt": "Timnit Gebru is the founder and executive director of The Distributed Artificial Intelligence Research (DAIR) Institute. She was co-lead of the Ethical AI research team at Google until her firing in 2020 (along with her co-lead) for writing a paper warning about the dangers of large language models and raising issues of discrimination in the workplace. She co-founded Black in AI, a nonprofit that "
+    },
+    "target": {
+      "id": 1368,
+      "name": "Margaret Mitchell",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "Chief Ethics Scientist at Hugging Face. Previously founded and co-led Google Ethical AI group (fired 2021 alongside Timnit Gebru). Pioneered \"Model Cards\" for ML model reporting. Created \"Seeing AI\" for blind/low-vision users. ~100 papers on NLG, assistive tech, CV, AI ethics. Strong advocate for diversity in AI and regulation that centers those most harmed.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  }
+]

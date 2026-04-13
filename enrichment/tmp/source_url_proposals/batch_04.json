@@ -1,0 +1,92 @@
+[
+  {
+    "edge_id": 794,
+    "proposed_url": "https://awards.acm.org/about/2018-turing",
+    "justification": "ACM's official 2018 Turing Award page explicitly names Bengio, Hinton, and LeCun as joint recipients for foundational deep learning work.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 795,
+    "proposed_url": "https://awards.acm.org/about/2018-turing",
+    "justification": "ACM's official 2018 Turing Award page explicitly names Bengio, LeCun, and Hinton as joint recipients for foundational deep learning work.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 807,
+    "proposed_url": "https://www.murphy.senate.gov/newsroom/press-releases/murphy-schatz-introduce-legislation-to-reverse-trumps-state-ai-law-moratorium",
+    "justification": "Senator Murphy's official press release names both Murphy and Schatz as co-introducers of the GUARDRAILS Act to repeal Trump's state AI law moratorium.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 808,
+    "proposed_url": "https://www.schatz.senate.gov/news/press-releases/schatz-britt-colleagues-press-ai-companies-to-commit-to-timely-consistent-safety-disclosures-on-models",
+    "justification": "Senator Schatz's official press release names both Schatz and Britt as co-leads calling on AI companies to improve transparency and safety disclosures.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1096,
+    "proposed_url": "https://aima.cs.berkeley.edu/",
+    "justification": "The official AIMA textbook site (Berkeley) explicitly names Russell and Norvig as co-authors of 'Artificial Intelligence: A Modern Approach', the book referenced in the evidence.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1099,
+    "proposed_url": "https://phys.org/news/2011-08-stanford-ai-avalanche-sign-ups.html",
+    "justification": "Phys.org article about the Stanford AI course explicitly names Peter Norvig and Sebastian Thrun as co-teachers of the 160,000-student online class.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1110,
+    "proposed_url": "https://www.coons.senate.gov/news/press-releases/senators-coons-cotton-introduce-resolution-to-affirm-americas-artificial-intelligence-dominance",
+    "justification": "Senator Coons's official press release names both Coons and Cotton as co-introducers of the resolution affirming U.S. AI dominance.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1111,
+    "proposed_url": "https://www.budd.senate.gov/2026/03/17/budd-kim-introduce-bipartisan-bill-opening-government-data-sets-to-better-train-american-ai-models/",
+    "justification": "Senator Budd's official press release names both Budd and Kim as co-introducers of the Artificial Intelligence Ready Data Act.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1112,
+    "proposed_url": "https://www.husted.senate.gov/media/press-releases/husted-leads-bill-to-integrate-ai-talent-in-federal-workforce/",
+    "justification": "Senator Husted's official press release names both Husted and Kim as co-leads of the bipartisan AI Talent Act.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1113,
+    "proposed_url": "https://www.kim.senate.gov/press_release/senators-kim-and-ricketts-introduce-match-act-to-level-the-global-playing-field-for-u-s-tech/",
+    "justification": "Senator Kim's official press release names both Kim and Ricketts as co-introducers of the MATCH Act to tighten export controls on semiconductor manufacturing equipment.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1115,
+    "proposed_url": "https://www.risch.senate.gov/public/index.cfm/pressreleases?ID=3C095F87-9684-4464-9683-CB5BEDCDC2F3",
+    "justification": "Senator Risch's official press release names both Risch and Luján as co-introducers of the TEST AI Act of 2025.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1116,
+    "proposed_url": "https://www.blackburn.senate.gov/2023/5/blackburn-luj-n-risch-durbin-announce-new-senate-national-labs-caucus",
+    "justification": "Senator Blackburn's press release explicitly names Risch and Blackburn (along with Luján and Durbin) as co-leads of the Senate National Labs Caucus.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1117,
+    "proposed_url": "https://www.durbin.senate.gov/newsroom/press-releases/durbin-lujan-risch-and-blackburn-announce-new-senate-national-labs-caucus",
+    "justification": "Senator Durbin's press release explicitly names Risch, Blackburn, Luján, and Durbin as co-leads of the Senate National Labs Caucus, documenting the Risch–Durbin collaboration.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1125,
+    "proposed_url": "https://www.washingtonpost.com/politics/2025/01/31/elon-musk-trump-donor-2024-election/",
+    "justification": "Washington Post analysis documents Musk spending $288 million to support Trump's 2024 election campaign, directly evidencing the financial/political collaboration between Musk and Trump.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1133,
+    "proposed_url": "https://www.schatz.senate.gov/news/press-releases/schatz-kennedy-introduce-bipartisan-legislation-to-provide-more-transparency-on-ai-generated-content",
+    "justification": "Senator Schatz's official press release names both Schatz and Kennedy as co-introducers of the AI Labeling Act (S. 2691).",
+    "confidence": "high"
+  }
+]

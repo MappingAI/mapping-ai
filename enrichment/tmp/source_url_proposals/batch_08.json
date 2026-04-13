@@ -1,0 +1,92 @@
+[
+  {
+    "edge_id": 1422,
+    "proposed_url": "https://ai-2027.com/about",
+    "justification": "The AI 2027 'About' page explicitly lists Daniel Kokotajlo, Scott Alexander, Thomas Larsen, Eli Lifland, and Romeo Dean as co-authors of the scenario.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1423,
+    "proposed_url": "https://ai-2027.com/about",
+    "justification": "The AI 2027 'About' page explicitly lists Daniel Kokotajlo and Thomas Larsen together as co-authors of the scenario.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1424,
+    "proposed_url": "https://ai-2027.com/about",
+    "justification": "The AI 2027 'About' page explicitly lists Daniel Kokotajlo and Eli Lifland together as co-authors of the scenario.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1425,
+    "proposed_url": "https://ai-2027.com/about",
+    "justification": "The AI 2027 'About' page explicitly lists Daniel Kokotajlo and Romeo Dean together as co-authors of the scenario.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1455,
+    "proposed_url": "https://www.dair-institute.org/blog/milagros-miceli-time-100-ai-eng/",
+    "justification": "DAIR Institute's own blog post on Miceli's TIME100 AI recognition names her as DAIR research lead and Timnit Gebru as DAIR founder, documenting the collaboration.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1459,
+    "proposed_url": "https://www.warner.senate.gov/public/index.cfm/pressreleases?id=1D95AF09-5ED4-4D3C-BBB0-87F596C5176C",
+    "justification": "Senator Warner's official press release explicitly names both Warner and Rounds as co-introducers of the Economy of the Future Commission Act.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1461,
+    "proposed_url": "https://www.heinrich.senate.gov/newsroom/press-releases/heinrich-rounds-tillis-kim-reintroduce-legislation-supporting-ai-innovation-in-financial-services",
+    "justification": "Senator Heinrich's official press release explicitly names Heinrich and Rounds as co-sponsors of the Unleashing AI Innovation in Financial Services Act.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1463,
+    "proposed_url": "https://muckrack.com/dan-kagan-kans",
+    "justification": "Muck Rack journalist profile for Dan Kagan-Kans lists The Wall Street Journal as one of his publication outlets, documenting his writing relationship with the WSJ.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1464,
+    "proposed_url": "https://theamericanscholar.org/author/dan-kagan-kans/",
+    "justification": "The American Scholar's author page for Dan Kagan-Kans confirms his byline and published articles at the publication.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1465,
+    "proposed_url": "https://www.coons.senate.gov/news/press-releases/senators-coons-cotton-introduce-resolution-to-affirm-americas-artificial-intelligence-dominance",
+    "justification": "Senator Coons's official press release names both Coons and Cotton as co-introducers of the AI dominance resolution.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1466,
+    "proposed_url": "https://www.coons.senate.gov/news/press-releases/senators-coons-mccormick-introduce-bill-to-boost-us-ai-leadership-with-energy-efficient-liquid-cooling-technology",
+    "justification": "Senator Coons's official press release names both Coons and McCormick as co-introducers of the Liquid Cooling for AI Act.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1467,
+    "proposed_url": "https://www.coons.senate.gov/news/press-releases/senators-coons-cotton-introduce-resolution-to-affirm-americas-artificial-intelligence-dominance",
+    "justification": "Senator Coons's official press release on the AI dominance resolution names Amy Klobuchar as a co-sponsor alongside Coons.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1468,
+    "proposed_url": "https://www.coons.senate.gov/news/press-releases/senators-coons-cotton-introduce-resolution-to-affirm-americas-artificial-intelligence-dominance",
+    "justification": "Senator Coons's official press release on the AI dominance resolution names Roger Wicker as a co-sponsor alongside Coons.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1469,
+    "proposed_url": "https://www.coons.senate.gov/news/press-releases/senators-coons-cotton-introduce-resolution-to-affirm-americas-artificial-intelligence-dominance",
+    "justification": "Senator Coons's official press release on the AI dominance resolution names Jeanne Shaheen as a co-sponsor alongside Coons.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1470,
+    "proposed_url": "https://www.heinrich.senate.gov/artificial-intelligence-caucus",
+    "justification": "Senator Heinrich's Senate AI Caucus page documents his co-chair role alongside Mike Rounds in the Senate Artificial Intelligence Caucus.",
+    "confidence": "high"
+  }
+]

@@ -1,0 +1,92 @@
+[
+  {
+    "edge_id": 1290,
+    "proposed_url": "https://www.nist.gov/news-events/news/2024/04/us-commerce-secretary-gina-raimondo-announces-expansion-us-ai-safety",
+    "justification": "Official NIST press release announcing Paul Christiano's appointment as Head of AI Safety for the U.S. AI Safety Institute, explicitly naming him and the role.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1291,
+    "proposed_url": "https://www.nist.gov/people/paul-christiano",
+    "justification": "Official NIST profile page for Paul Christiano listing his position as Head of Safety at the Center for AI Safety and Innovation (CAISI) within NIST.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1302,
+    "proposed_url": "https://jclinic.mit.edu/team-member/regina-barzilay/",
+    "justification": "MIT Jameel Clinic team page explicitly lists Regina Barzilay as AI Faculty Lead at the clinic.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1304,
+    "proposed_url": "https://www.csail.mit.edu/person/regina-barzilay",
+    "justification": "MIT CSAIL official person page listing Regina Barzilay as a CSAIL member and faculty.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1320,
+    "proposed_url": "https://en.wikipedia.org/wiki/Timnit_Gebru",
+    "justification": "Wikipedia biography of Timnit Gebru explicitly describes her joining Apple as an intern from Stanford, working in the hardware division making circuitry for audio components.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1372,
+    "proposed_url": "https://en.wikipedia.org/wiki/SpaceX",
+    "justification": "Wikipedia article on SpaceX names Elon Musk as founder and CEO of SpaceX, explicitly documenting his leadership role.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1373,
+    "proposed_url": "https://en.wikipedia.org/wiki/Acquisition_of_Twitter_by_Elon_Musk",
+    "justification": "Wikipedia article on Elon Musk's acquisition of Twitter (now X) documenting his ownership and takeover of the platform in October 2022.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1395,
+    "proposed_url": "https://svl.stanford.edu/people/",
+    "justification": "Stanford Vision and Learning Lab people page listing Fei-Fei Li as co-director of SVL alongside other professors.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1404,
+    "proposed_url": "https://www.hks.harvard.edu/faculty/latanya-sweeney",
+    "justification": "Harvard Kennedy School faculty page for Latanya Sweeney listing her as Daniel Paul Professor of the Practice of Government and Technology at HKS and Harvard Faculty of Arts and Sciences.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1441,
+    "proposed_url": "https://musically.com/2019/07/23/ai-music-startup-jukedecks-ceo-now-runs-the-ai-lab-of-tiktok-owner-bytedance/",
+    "justification": "Music Ally article on the Jukedeck/ByteDance acquisition explicitly stating Newton-Rex became director of ByteDance's AI music lab after the 2019 acquisition.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1442,
+    "proposed_url": "https://www.waterandmusic.com/ed-newton-rex-vp-audio-stability-ai-on-building-the-next-wave-of-music-ai-tools/",
+    "justification": "Water & Music interview explicitly titles Ed Newton-Rex as 'VP Audio, Stability AI' and discusses the Stable Audio product he led.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1444,
+    "proposed_url": "https://musically.com/2019/07/23/ai-music-startup-jukedecks-ceo-now-runs-the-ai-lab-of-tiktok-owner-bytedance/",
+    "justification": "Music Ally article on Newton-Rex's role at ByteDance/TikTok covers both his AI music lab role and his subsequent product lead role for TikTok in Europe.",
+    "confidence": "medium"
+  },
+  {
+    "edge_id": 1452,
+    "proposed_url": "https://www.weizenbaum-institut.de/en/portrait/p/milagros-miceli/",
+    "justification": "Official Weizenbaum Institute portrait page for Milagros Miceli confirming her researcher role and leadership of the Data, Algorithmic Systems, and Ethics research unit there.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1454,
+    "proposed_url": "https://www.dair-institute.org/team/milagros-miceli/",
+    "justification": "DAIR Institute team page for Milagros Miceli states she is 'research lead at the DAIR Institute, head of the Data, Algorithmic Systems, and Ethics research unit at Weizenbaum-Institut, and a lecturer at TU Berlin.'",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1518,
+    "proposed_url": "https://www.commerce.senate.gov/press/rep/release/sen-cruz-unveils-ai-policy-framework-to-strengthen-american-ai-leadership/",
+    "justification": "Official U.S. Senate Commerce Committee press release from Chairman Ted Cruz, explicitly naming him as Chairman and documenting his AI framework announcement.",
+    "confidence": "high"
+  }
+]

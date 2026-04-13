@@ -1,0 +1,92 @@
+[
+  {
+    "edge_id": 1473,
+    "proposed_url": "https://www.young.senate.gov/newsroom/press-releases/young-heinrich-booker-rounds-introduce-bipartisan-bill-to-expand-access-to-artificial-intelligence-research/",
+    "justification": "Senator Young's official press release explicitly names Heinrich, Booker, and Rounds as co-introducers of the CREATE AI Act, directly evidencing the co-sponsorship relationship.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1474,
+    "proposed_url": "https://www.young.senate.gov/newsroom/press-releases/young-heinrich-booker-rounds-introduce-bipartisan-bill-to-expand-access-to-artificial-intelligence-research/",
+    "justification": "Senator Young's official press release explicitly names Heinrich, Booker, and Rounds as co-introducers of the CREATE AI Act, directly evidencing the co-sponsorship relationship between Heinrich and Booker.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1475,
+    "proposed_url": "https://www.rounds.senate.gov/newsroom/press-releases/following-historic-ai-insight-forums-over-the-past-year-senator-rounds-leader-schumer-senators-heinrich-and-young-reveal-bipartisan-roadmap-for-artificial-intelligence-policy-in-the-united-states-senate",
+    "justification": "Senator Rounds' press release names all four Bipartisan Senate AI Working Group members — Rounds, Schumer, Heinrich, and Young — confirming Young and Schumer's joint membership.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1476,
+    "proposed_url": "https://www.rounds.senate.gov/newsroom/press-releases/following-historic-ai-insight-forums-over-the-past-year-senator-rounds-leader-schumer-senators-heinrich-and-young-reveal-bipartisan-roadmap-for-artificial-intelligence-policy-in-the-united-states-senate",
+    "justification": "Senator Rounds' press release names all four Bipartisan Senate AI Working Group members — Rounds, Schumer, Heinrich, and Young — confirming Young and Rounds' joint membership.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1477,
+    "proposed_url": "https://www.rounds.senate.gov/newsroom/press-releases/following-historic-ai-insight-forums-over-the-past-year-senator-rounds-leader-schumer-senators-heinrich-and-young-reveal-bipartisan-roadmap-for-artificial-intelligence-policy-in-the-united-states-senate",
+    "justification": "Senator Rounds' press release names all four Bipartisan Senate AI Working Group members — Rounds, Schumer, Heinrich, and Young — confirming Young and Heinrich's joint membership.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1478,
+    "proposed_url": "https://www.young.senate.gov/newsroom/press-releases/young-cantwell-reintroduce-future-of-ai-innovation-act/",
+    "justification": "Senator Young's official press release directly names both Young and Cantwell as co-introducers of the Future of AI Innovation Act.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1479,
+    "proposed_url": "https://www.young.senate.gov/newsroom/press-releases/senator-young-elected-chairman-of-the-national-republican-senatorial-committee/",
+    "justification": "Senator Young's official press release announces his election as Chairman of the NRSC, directly documenting his role as chair of the organization.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1480,
+    "proposed_url": "https://www.lujan.senate.gov/newsroom/press-releases/lujan-colleagues-introduce-bipartisan-legislation-to-improve-ai-testing-and-evaluation-systems-safeguard-americans-against-risks-2/",
+    "justification": "Senator Luján's press release names all TEST AI Act co-sponsors including Blackburn, Durbin, Risch, and Welch, directly evidencing the Luján-Blackburn co-sponsorship.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1481,
+    "proposed_url": "https://www.lujan.senate.gov/newsroom/press-releases/lujan-colleagues-introduce-bipartisan-legislation-to-improve-ai-testing-and-evaluation-systems-safeguard-americans-against-risks-2/",
+    "justification": "Senator Luján's press release names all TEST AI Act co-sponsors including Blackburn, Durbin, Risch, and Welch, directly evidencing the Luján-Durbin co-sponsorship.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1482,
+    "proposed_url": "https://www.lujan.senate.gov/newsroom/press-releases/lujan-colleagues-introduce-bipartisan-legislation-to-improve-ai-testing-and-evaluation-systems-safeguard-americans-against-risks-2/",
+    "justification": "Senator Luján's press release names all TEST AI Act co-sponsors including Blackburn, Durbin, Risch, and Welch, directly evidencing the Luján-Risch co-sponsorship.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1483,
+    "proposed_url": "https://www.lujan.senate.gov/newsroom/press-releases/lujan-welch-introduce-billto-require-online-platforms-receive-consumers-consent-before-using-their-personal-data-to-train-ai-models/",
+    "justification": "Senator Luján's press release explicitly names both Luján and Welch as co-introducers of the AI CONSENT Act, directly evidencing the co-sponsorship relationship.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1484,
+    "proposed_url": "https://www.lujan.senate.gov/newsroom/press-releases/lujan-colleagues-introduce-bipartisan-legislation-to-improve-ai-testing-and-evaluation-systems-safeguard-americans-against-risks-2/",
+    "justification": "Senator Luján's TEST AI Act press release describes the bill's mandate for NIST-DOE collaboration on AI testing standards, directly evidencing Luján's role in directing this collaboration.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1485,
+    "proposed_url": "https://www.lujan.senate.gov/newsroom/press-releases/lujan-colleagues-introduce-bipartisan-legislation-to-improve-ai-testing-and-evaluation-systems-safeguard-americans-against-risks-2/",
+    "justification": "Senator Luján's TEST AI Act press release describes the bill's mandate for NIST-DOE collaboration on AI testing standards, directly evidencing Luján's role in directing the Department of Energy's involvement.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1487,
+    "proposed_url": "https://www.cortezmasto.senate.gov/news/press-releases/cortez-masto-ernst-introduce-bill-to-prepare-us-for-advances-in-artificial-intelligence-technology/",
+    "justification": "Senator Cortez Masto's press release names both Ernst and Cortez Masto as co-introducers of bipartisan AI legislation, directly evidencing their co-sponsorship relationship.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1488,
+    "proposed_url": "https://www.hassan.senate.gov/news/press-releases/senators-hassan-ernst-sound-alarm-on-chinese-ai-enabled-hackers",
+    "justification": "Senator Hassan's press release names both Hassan and Ernst as co-authors of the letter to National Cyber Director Cairncross urging action on Chinese AI-enabled cyberattacks.",
+    "confidence": "high"
+  }
+]

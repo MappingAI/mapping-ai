@@ -1,343 +1,5 @@
 [
   {
-    "edge_id": 768,
-    "edge_type": "advisor",
-    "role": "Doctoral advisor",
-    "evidence": "Doctoral advisor: Michael Genesereth [1]",
-    "source": {
-      "id": 1098,
-      "name": "Michael Genesereth",
-      "type": "person",
-      "category": "Academic",
-      "website": null,
-      "notes_excerpt": "Michael Genesereth (born 1948) is an American logician and computer scientist, who is most known for his work on computational logic and applications of that work in enterprise management, computational law, and general game playing. Genesereth is professor in the Computer Science Department at Stanford University and a professor by courtesy in the Stanford Law School. His 1987 textbook on Logical"
-    },
-    "target": {
-      "id": 1,
-      "name": "Stuart Russell",
-      "type": "person",
-      "category": "Academic",
-      "website": null,
-      "notes_excerpt": "Stuart Russell is a professor of computer science at the University of California, Berkeley and holds the Smith-Zadeh Chair in Engineering. He co-authored the textbook 'Artificial Intelligence: A Modern Approach' with Peter Norvig, which is used in over 1,500 universities in 135 countries. Russell founded the Center for Human-Compatible Artificial Intelligence at UC Berkeley in 2016 and serves as ",
-      "resource_url": null,
-      "resource_title": null,
-      "resource_author": null,
-      "resource_year": null
-    }
-  },
-  {
-    "edge_id": 774,
-    "edge_type": "advisor",
-    "role": "advisor",
-    "evidence": "In 2024 he became an advisor to Donald Trump [5]",
-    "source": {
-      "id": 3,
-      "name": "Marc Andreessen",
-      "type": "person",
-      "category": "Investor",
-      "website": null,
-      "notes_excerpt": "Marc Andreessen is co-founder of Netscape and co-founder of the venture capital firm Andreessen Horowitz (a16z). He is described as a founder, investor, and co-founder of Netscape, as well as co-founder of the venture capital firm Andreessen Horowitz (a16z). According to Wikipedia, he is an American businessman, venture capitalist, and former software engineer who is the co-author of Mosaic, the f"
-    },
-    "target": {
-      "id": 1103,
-      "name": "Donald Trump",
-      "type": "person",
-      "category": "Policymaker",
-      "website": null,
-      "notes_excerpt": "Donald Trump served as the 45th President of the United States from 2017 to 2021 and was inaugurated as the 47th president on January 20, 2025. On March 20, 2026, the Trump Administration released a National AI Legislative Framework that addresses six key objectives including protecting children, safeguarding American communities, and ensuring American AI dominance. In December 2025, President Tru",
-      "resource_url": null,
-      "resource_title": null,
-      "resource_author": null,
-      "resource_year": null
-    }
-  },
-  {
-    "edge_id": 781,
-    "edge_type": "advisor",
-    "role": "Senate Minority Leader",
-    "evidence": "Chuck Schumer brought him into the leadership fold by adding him to his team in 2017 and promoting him last year [14]",
-    "source": {
-      "id": 2,
-      "name": "Chuck Schumer",
-      "type": "person",
-      "category": "Policymaker",
-      "website": null,
-      "notes_excerpt": "Chuck Schumer is a Democratic U.S. Senator from New York who has served since 1999 and is currently Senate Majority Leader. He led a bipartisan working group that released a 31-page AI policy roadmap in May 2024, recommending at least $32 billion in government spending to accelerate AI research and development. The roadmap was developed after months of AI Insight Forums with tech companies, civil "
-    },
-    "target": {
-      "id": 7,
-      "name": "Brian Schatz",
-      "type": "person",
-      "category": "Policymaker",
-      "website": null,
-      "notes_excerpt": "Brian Schatz is Hawaii's senior United States Senator who has served since 2012 and focuses on helping workers, veterans, and families while leading key legislation on health care, climate change, and technology. He serves as Chairman of the Senate Committee on Indian Affairs and is a member of multiple committees including Appropriations, Commerce Science and Transportation, Foreign Relations, an",
-      "resource_url": null,
-      "resource_title": null,
-      "resource_author": null,
-      "resource_year": null
-    }
-  },
-  {
-    "edge_id": 797,
-    "edge_type": "advisor",
-    "role": "Mentor",
-    "evidence": "Notable students Ian Goodfellow",
-    "source": {
-      "id": 29,
-      "name": "Yoshua Bengio",
-      "type": "person",
-      "category": "Academic",
-      "website": null,
-      "notes_excerpt": "Yoshua Bengio is a Canadian computer scientist born March 5, 1964, in Paris, France, and is a full professor at Université de Montréal. He received the 2018 A.M. Turing Award together with Geoffrey Hinton and Yann LeCun for their foundational work on deep learning. In June 2025, Bengio launched a nonprofit organization called LawZero aimed at building 'honest' AI systems that can detect and block "
-    },
-    "target": {
-      "id": 1115,
-      "name": "Ian Goodfellow",
-      "type": "person",
-      "category": "Researcher",
-      "website": null,
-      "notes_excerpt": "Ian J. Goodfellow (born 1987) is an American computer scientist, engineer, and executive, most noted for his work on artificial neural networks and deep learning. He is a research scientist at Google DeepMind, was previously employed as a research scientist at Google Brain and director of machine learning at Apple as well as one of the first employees at OpenAI. He is best known for inventing gene",
-      "resource_url": null,
-      "resource_title": null,
-      "resource_author": null,
-      "resource_year": null
-    }
-  },
-  {
-    "edge_id": 1187,
-    "edge_type": "advisor",
-    "role": "supervisor",
-    "evidence": "under the supervision of Andrew Ng",
-    "source": {
-      "id": 976,
-      "name": "Andrew Ng",
-      "type": "person",
-      "category": "Academic",
-      "website": null,
-      "notes_excerpt": "Testified before U.S. Senate AI Insight Forum arguing against regulating AI technology itself while supporting application-specific regulations. Publicly opposed California's SB 1047 and the White House's Defense Production Act use for AI regulation. Coined the term 'agentic AI' in 2024 and has been vocal about dismissing AI extinction risks as implausible while supporting responsible AI developme"
-    },
-    "target": {
-      "id": 1115,
-      "name": "Ian Goodfellow",
-      "type": "person",
-      "category": "Researcher",
-      "website": null,
-      "notes_excerpt": "Ian J. Goodfellow (born 1987) is an American computer scientist, engineer, and executive, most noted for his work on artificial neural networks and deep learning. He is a research scientist at Google DeepMind, was previously employed as a research scientist at Google Brain and director of machine learning at Apple as well as one of the first employees at OpenAI. He is best known for inventing gene",
-      "resource_url": null,
-      "resource_title": null,
-      "resource_author": null,
-      "resource_year": null
-    }
-  },
-  {
-    "edge_id": 1188,
-    "edge_type": "advisor",
-    "role": "PhD supervisor",
-    "evidence": "under the supervision of pioneer of deep learning Yoshua Bengio",
-    "source": {
-      "id": 29,
-      "name": "Yoshua Bengio",
-      "type": "person",
-      "category": "Academic",
-      "website": null,
-      "notes_excerpt": "Yoshua Bengio is a Canadian computer scientist born March 5, 1964, in Paris, France, and is a full professor at Université de Montréal. He received the 2018 A.M. Turing Award together with Geoffrey Hinton and Yann LeCun for their foundational work on deep learning. In June 2025, Bengio launched a nonprofit organization called LawZero aimed at building 'honest' AI systems that can detect and block "
-    },
-    "target": {
-      "id": 1115,
-      "name": "Ian Goodfellow",
-      "type": "person",
-      "category": "Researcher",
-      "website": null,
-      "notes_excerpt": "Ian J. Goodfellow (born 1987) is an American computer scientist, engineer, and executive, most noted for his work on artificial neural networks and deep learning. He is a research scientist at Google DeepMind, was previously employed as a research scientist at Google Brain and director of machine learning at Apple as well as one of the first employees at OpenAI. He is best known for inventing gene",
-      "resource_url": null,
-      "resource_title": null,
-      "resource_author": null,
-      "resource_year": null
-    }
-  },
-  {
-    "edge_id": 1189,
-    "edge_type": "advisor",
-    "role": "PhD supervisor",
-    "evidence": "under the supervision of pioneer of deep learning Yoshua Bengio and Aaron Courville",
-    "source": {
-      "id": 1330,
-      "name": "Aaron Courville",
-      "type": "person",
-      "category": "Researcher",
-      "website": null,
-      "notes_excerpt": "Full Professor at Université de Montréal and founding core member of Mila. Co-authored the seminal Deep Learning textbook with Bengio and Goodfellow. Holds a CIFAR AI Chair. Incoming scientific director of IVADO as of 2025."
-    },
-    "target": {
-      "id": 1115,
-      "name": "Ian Goodfellow",
-      "type": "person",
-      "category": "Researcher",
-      "website": null,
-      "notes_excerpt": "Ian J. Goodfellow (born 1987) is an American computer scientist, engineer, and executive, most noted for his work on artificial neural networks and deep learning. He is a research scientist at Google DeepMind, was previously employed as a research scientist at Google Brain and director of machine learning at Apple as well as one of the first employees at OpenAI. He is best known for inventing gene",
-      "resource_url": null,
-      "resource_title": null,
-      "resource_author": null,
-      "resource_year": null
-    }
-  },
-  {
-    "edge_id": 1221,
-    "edge_type": "advisor",
-    "role": "Doctoral advisor",
-    "evidence": "Doctoral advisor: Michael J. Berry, William Bialek",
-    "source": {
-      "id": 1341,
-      "name": "Michael J. Berry",
-      "type": "person",
-      "category": "Academic",
-      "website": null,
-      "notes_excerpt": "Professor at Princeton University, Department of Molecular Biology and Princeton Neuroscience Institute. Runs the Berry Lab studying neural coding in the retina. Co-advised Dario Amodei (Anthropic CEO) during doctoral research on large-scale electrophysiology of neural circuits. Published extensively on neural population coding and information processing in biological systems."
-    },
-    "target": {
-      "id": 8,
-      "name": "Dario Amodei",
-      "type": "person",
-      "category": "Executive",
-      "website": null,
-      "notes_excerpt": "Dario Amodei (born 1983) is an American artificial intelligence researcher and entrepreneur who co-founded Anthropic in 2021 with his sister Daniela Amodei. He previously served as vice president of research at OpenAI, where he led the development of large language models like GPT-2 and GPT-3. Amodei earned his doctorate degree in biophysics from Princeton University as a Hertz Fellow, and was a p",
-      "resource_url": null,
-      "resource_title": null,
-      "resource_author": null,
-      "resource_year": null
-    }
-  },
-  {
-    "edge_id": 1222,
-    "edge_type": "advisor",
-    "role": "Doctoral advisor",
-    "evidence": "Doctoral advisor: Michael J. Berry, William Bialek",
-    "source": {
-      "id": 1342,
-      "name": "William Bialek",
-      "type": "person",
-      "category": "Academic",
-      "website": null,
-      "notes_excerpt": "Theoretical biophysicist, professor at Princeton University (Physics) and CUNY Graduate Center. Pioneer in applying information theory to neural coding and biological systems. Co-advised Dario Amodei (Anthropic CEO) on PhD dissertation \"Network-Scale Electrophysiology: Measuring and Understanding the Collective Behavior of Neural Circuits.\" Co-authored PNAS paper on thermodynamics and criticality "
-    },
-    "target": {
-      "id": 8,
-      "name": "Dario Amodei",
-      "type": "person",
-      "category": "Executive",
-      "website": null,
-      "notes_excerpt": "Dario Amodei (born 1983) is an American artificial intelligence researcher and entrepreneur who co-founded Anthropic in 2021 with his sister Daniela Amodei. He previously served as vice president of research at OpenAI, where he led the development of large language models like GPT-2 and GPT-3. Amodei earned his doctorate degree in biophysics from Princeton University as a Hertz Fellow, and was a p",
-      "resource_url": null,
-      "resource_title": null,
-      "resource_author": null,
-      "resource_year": null
-    }
-  },
-  {
-    "edge_id": 1228,
-    "edge_type": "advisor",
-    "role": "Dissertation sponsor",
-    "evidence": "Committee: Joseph E. Stiglitz (sponsor)",
-    "source": {
-      "id": 964,
-      "name": "Joseph Stiglitz",
-      "type": "person",
-      "category": "Academic",
-      "website": null,
-      "notes_excerpt": "Warns of AI bubble that could burst while simultaneously displacing workers, creating worst-case scenario without proper retraining infrastructure. Distinguishes between 'AI' (replacement) and 'IA' (intelligence assisting), advocating for latter approach. Signed Global Call for AI Red Lines in 2026. Predicts AI will primarily impact routine white-collar jobs while augmenting rather than replacing "
-    },
-    "target": {
-      "id": 12,
-      "name": "Anton Korinek",
-      "type": "person",
-      "category": "Academic",
-      "website": null,
-      "notes_excerpt": "Anton Korinek is a Professor at the University of Virginia, Department of Economics and Darden School of Business as well as the Faculty Director of the Economics of Transformative AI (EconTAI) Initiative. He was named to the 2025 TIME100 AI list of the most influential people in artificial intelligence. He is a Nonresident Senior Fellow at Brookings and the Peterson Institute, a Research Associat",
-      "resource_url": null,
-      "resource_title": null,
-      "resource_author": null,
-      "resource_year": null
-    }
-  },
-  {
-    "edge_id": 1237,
-    "edge_type": "advisor",
-    "role": "Member of the Artificial Intelligence (AI) and Election Security Advisory Committee",
-    "evidence": "Harris recently began serving as a Member of the Artificial Intelligence (AI) and Election Security Advisory Committee, convened by Arizona's Secretary of State",
-    "source": {
-      "id": 14,
-      "name": "David Evan Harris",
-      "type": "person",
-      "category": "Policymaker",
-      "website": null,
-      "notes_excerpt": "David Evan Harris is a Chancellor's Public Scholar at UC Berkeley and a continuing lecturer at the Haas School of Business. He was named one of Business Insider's top 100 people in AI in 2023. In his previous role at Meta (formerly Facebook), Harris managed teams of quantitative and qualitative researchers working on responsible AI, social impact, and civic integrity. He took a lead role in drafti"
-    },
-    "target": {
-      "id": 1343,
-      "name": "Arizona Secretary of State",
-      "type": "organization",
-      "category": "Government/Agency",
-      "website": null,
-      "notes_excerpt": "Office held by Adrian Fontes (D). Formed AI & Election Security Advisory Committee (June 2024), co-chaired by Chris Cummiskey and Gowri Ramachandran. Released final report (Feb 2025) proposing AI Elections Lab for developing guidelines and pilot programs. Deployed AI tools in 2024 election: chatbot handled 655K+ interactions, SMS system reached 281K voters. Advocates both beneficial AI use in elec",
-      "resource_url": null,
-      "resource_title": null,
-      "resource_author": null,
-      "resource_year": null
-    }
-  },
-  {
-    "edge_id": 1285,
-    "edge_type": "advisor",
-    "role": "President's Science & Technology Advisor",
-    "evidence": "Michael Kratsios is President Donald J. Trump's chief science and technology advisor",
-    "source": {
-      "id": 27,
-      "name": "Michael Kratsios",
-      "type": "person",
-      "category": "Policymaker",
-      "website": null,
-      "notes_excerpt": "Michael Kratsios serves as Assistant to the President and Director of the White House Office of Science and Technology Policy, confirmed by the Senate in a 74-25 vote on March 25, 2025. He previously served as the fourth Chief Technology Officer of the United States during President Trump's first term and as Under Secretary of War from January 2020 to January 2021. Prior to government service, he "
-    },
-    "target": {
-      "id": 1103,
-      "name": "Donald Trump",
-      "type": "person",
-      "category": "Policymaker",
-      "website": null,
-      "notes_excerpt": "Donald Trump served as the 45th President of the United States from 2017 to 2021 and was inaugurated as the 47th president on January 20, 2025. On March 20, 2026, the Trump Administration released a National AI Legislative Framework that addresses six key objectives including protecting children, safeguarding American communities, and ensuring American AI dominance. In December 2025, President Tru",
-      "resource_url": null,
-      "resource_title": null,
-      "resource_author": null,
-      "resource_year": null
-    }
-  },
-  {
-    "edge_id": 1297,
-    "edge_type": "advisor",
-    "role": "advisory board member",
-    "evidence": "In September 2023, Christiano was appointed to the UK government's Frontier AI Taskforce advisory board",
-    "source": {
-      "id": 30,
-      "name": "Paul Christiano",
-      "type": "person",
-      "category": "Researcher",
-      "website": null,
-      "notes_excerpt": "Paul Christiano is Head of AI Safety for the U.S. Artificial Intelligence Safety Institute at NIST, where he designs and conducts tests of frontier AI models focusing on capabilities of national security concern. He founded the Alignment Research Center, a nonprofit research organization that seeks to align future machine learning systems with human interests. He previously ran the language model "
-    },
-    "target": {
-      "id": 1360,
-      "name": "UK government's Frontier AI Taskforce",
-      "type": "organization",
-      "category": "Government/Agency",
-      "website": null,
-      "notes_excerpt": "UK government body established April 2023 with £100m mandate to evaluate frontier AI safety risks ahead of the Bletchley Park AI Safety Summit. Chaired by Ian Hogarth, it transitioned in November 2023 into the AI Safety Institute (later renamed AI Security Institute in 2025), which is a separate entity in this database.",
-      "resource_url": null,
-      "resource_title": null,
-      "resource_author": null,
-      "resource_year": null
-    }
-  },
-  {
     "edge_id": 1314,
     "edge_type": "advisor",
     "role": "AI Adviser",
@@ -364,25 +26,363 @@
     }
   },
   {
-    "edge_id": 1322,
+    "edge_id": 1366,
     "edge_type": "advisor",
-    "role": "Doctoral advisor",
-    "evidence": "Gebru was advised during her PhD program by Fei-Fei Li",
+    "role": "Expert",
+    "evidence": "Ben Reinhardt - Federation of American Scientists",
     "source": {
-      "id": 55,
-      "name": "Fei-Fei Li",
+      "id": 44,
+      "name": "Ben Reinhardt",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Ben Reinhardt is the founder of Speculative Technologies, a nonprofit research organization working to turn science fiction into reality. He previously worked as an Entrepreneur-in-Residence at Entrepreneur First in Singapore, where he helped people build deep tech companies from scratch. His background includes work at NASA, Magic Leap, venture capital, and starting a robotics company."
+    },
+    "target": {
+      "id": 1357,
+      "name": "Federation of American Scientists",
+      "type": "organization",
+      "category": "Think Tank/Policy Org",
+      "website": null,
+      "notes_excerpt": "DC-based science and technology policy nonprofit founded in 1945. FAS runs the Day One Project to translate scientific expertise into federal policy; active in AI governance, advocating for responsible AI innovation, NIST AISI funding, and federal AI adoption. Submitted AI Action Plan recommendations to the White House in 2025.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1412,
+    "edge_type": "advisor",
+    "role": "adviser",
+    "evidence": "said his adviser, Arvind Narayanan, professor of computer science",
+    "source": {
+      "id": 103,
+      "name": "Arvind Narayanan",
       "type": "person",
       "category": "Academic",
       "website": null,
-      "notes_excerpt": "Fei-Fei Li is a Chinese-born American computer scientist best known for establishing ImageNet, the dataset that enabled rapid advances in computer vision in the 2010s. She is a professor of computer science at Stanford University, with research expertise in artificial intelligence, machine learning, deep learning, computer vision, and cognitive neuroscience. She has been called the godmother of AI"
+      "notes_excerpt": "Arvind Narayanan is a professor of computer science at Princeton University and the director of the Center for Information Technology Policy. He is a co-author of the book AI Snake Oil and the essay AI as Normal Technology, and a newsletter of the same name which is read by over 60,000 researchers, policy makers, journalists, and AI enthusiasts. He was one of TIME's inaugural list of 100 most infl"
     },
     "target": {
-      "id": 35,
-      "name": "Timnit Gebru",
+      "id": 57,
+      "name": "Sayash Kapoor",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Sayash Kapoor is a Ph.D. candidate in computer science at Princeton University's Center for Information Technology Policy. He is co-author with Arvind Narayanan of the book \"AI Snake Oil: What Artificial Intelligence Can Do, What It Can't, and How to Tell the Difference\". He was named among TIME's 100 most influential people in AI. He won the Porter Ogden Jacobus Fellowship, Princeton's top distin",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1431,
+    "edge_type": "advisor",
+    "role": "Ph.D. supervisor",
+    "evidence": "Ph.D. in ML in the International Max-Planck Research Program (IMPRS) under the supervision of Philipp Hennig",
+    "source": {
+      "id": 1398,
+      "name": "Philipp Hennig",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Chair for Methods of Machine Learning at University of Tübingen. Co-director of Tübingen AI Center since July 2025. Pioneer of probabilistic numerics — treating numerical computation as machine learning inference. Author of 'Probabilistic Numerics: Computation as Machine Learning' (Cambridge University Press, 2022). Previously at Max Planck Institute for Intelligent Systems. Organizer of ProbNum c"
+    },
+    "target": {
+      "id": 60,
+      "name": "Marius Hobbhahn",
+      "type": "person",
+      "category": "Executive",
+      "website": null,
+      "notes_excerpt": "Marius Hobbhahn is the CEO and co-founder of Apollo Research, a nonprofit AI safety research organization that focuses on understanding AI deception and scheming behavior. In 2025, he was named to TIME100 in AI 2025. Apollo Research has collaborated with major AI companies including OpenAI to reduce scheming in models like o3, and works with government bodies like the U.K.'s AI Safety Institute. H",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1568,
+    "edge_type": "advisor",
+    "role": "PhD advisor",
+    "evidence": "I received my PhD from UC Berkeley where I was advised by Dawn Song and Jacob Steinhardt",
+    "source": {
+      "id": 838,
+      "name": "Jacob Steinhardt",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Co-authored influential \"Concrete Problems in AI Safety\" paper (2016). Founded Transluce in 2023 to create open-source tools for auditing AI systems and conducting public safety evaluations. His AI2050 project focuses on using LLMs to investigate and explain behavior of frontier models to detect failure modes before deployment. Considers himself a \"worried optimist\" about AI's societal impact."
+    },
+    "target": {
+      "id": 93,
+      "name": "Dan Hendrycks",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "Dan Hendrycks (born 1994 or 1995) is an American machine learning researcher who serves as the director of the Center for AI Safety, a nonprofit research organization based in San Francisco, California. He received a B.S. from the University of Chicago in 2018 and a Ph.D. from the University of California, Berkeley in Computer Science in 2022. He is the main author of the research paper that intro",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1572,
+    "edge_type": "advisor",
+    "role": "Senior Advisor on Responsible AI",
+    "evidence": "as Senior Advisor on Responsible AI at the U.S. Department of Labor",
+    "source": {
+      "id": 94,
+      "name": "Daniel Ho",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Daniel E. Ho is the William Benjamin Scott and Luna M. Scott Professor of Law, Professor of Political Science, Professor of Computer Science (by courtesy), Senior Fellow at Stanford's Institute for Human-Centered Artificial Intelligence, and Senior Fellow at the Stanford Institute for Economic Policy Research at Stanford University. He serves on the National Artificial Intelligence Advisory Commis"
+    },
+    "target": {
+      "id": 1438,
+      "name": "U.S. Department of Labor",
+      "type": "organization",
+      "category": "Government/Agency",
+      "website": null,
+      "notes_excerpt": "Federal cabinet department overseeing labor standards, workforce, and employment. Key AI role: published national AI Literacy Framework (Feb 2026) with 5 content areas and 7 delivery principles. Partnered with NSF on AI-ready workforce initiative (MOU for AI literacy, training pathways, labor market research). Hosts AI page at dol.gov/ai. Focus on workforce preparation for AI disruption through gu",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1581,
+    "edge_type": "advisor",
+    "role": "senior advisor on AI",
+    "evidence": "She also served as a senior advisor on AI to Chair Lina Khan at the Federal Trade Commission",
+    "source": {
+      "id": 95,
+      "name": "Meredith Whittaker",
       "type": "person",
       "category": "Organizer",
       "website": null,
-      "notes_excerpt": "Timnit Gebru is the founder and executive director of The Distributed Artificial Intelligence Research (DAIR) Institute. She was co-lead of the Ethical AI research team at Google until her firing in 2020 (along with her co-lead) for writing a paper warning about the dangers of large language models and raising issues of discrimination in the workplace. She co-founded Black in AI, a nonprofit that ",
+      "notes_excerpt": "Meredith Whittaker is the president of the Signal Foundation and serves on its board of directors. She was formerly the Minderoo Research Professor at New York University (NYU), and chief advisor and former faculty director & co founder of the AI Now Institute. She was employed at Google for 13 years, where she founded Google's Open Research group and co-founded the M-Lab. In 2018, she was a core "
+    },
+    "target": {
+      "id": 928,
+      "name": "Lina Khan",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Led FTC's AI enforcement including OpenAI investigation (July 2023), Rite Aid AI facial recognition ban (December 2023), and joint interagency AI statement with DOJ/CFPB/EEOC (April 2023). Published op-ed 'We Must Regulate A.I.' in New York Times. Estimated 15% p(doom) according to sources. Known for aggressive antitrust enforcement and authored influential 'Amazon's Antitrust Paradox' as law stud",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1604,
+    "edge_type": "advisor",
+    "role": "Professor",
+    "evidence": "At Harvard, he studied under copyright scholar Lawrence Lessig",
+    "source": {
+      "id": 21,
+      "name": "Lawrence Lessig",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Lawrence Lessig is the Roy L. Furman Professor of Law and Leadership at Harvard Law School. He is the founder of Equal Citizens and a founding board member of Creative Commons. He clerked for Judge Richard Posner on the 7th Circuit Court of Appeals and Justice Antonin Scalia on the United States Supreme Court. He has focused his work on campaign finance reform and institutional corruption, particu"
+    },
+    "target": {
+      "id": 101,
+      "name": "Tim Wu",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Tim Wu is the Julius Silver Professor of Law, Science and Technology at Columbia Law School. He served as Special Assistant to President Biden for competition and tech policy until 2023. Wu coined the term 'net neutrality' and is known for his work on antitrust and competition policy. He authored the book 'The Age of Extraction: How Tech Platforms Conquered the Economy and Threaten Our Future Pros",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1611,
+    "edge_type": "advisor",
+    "role": "doctoral advisor",
+    "evidence": "There she worked with Claire Cardie on natural language processing",
+    "source": {
+      "id": 1449,
+      "name": "Claire Cardie",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "John C. Ford Professor of Engineering in Computer Science and Information Science at Cornell University. Leading NLP researcher specializing in coreference resolution, information extraction, and opinion mining. Founding chair of Cornell's Department of Information Science and led development of its academic programs. AAAI Fellow (2024), ACM Fellow (2019, 'for contributions to NLP including corefe"
+    },
+    "target": {
+      "id": 102,
+      "name": "Yejin Choi",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Yejin Choi was born in 1977 in South Korea. She is currently the Dieter Schwarz Foundation Professor of Computer Science and Senior Fellow at Stanford's Institute for Human-Centered Artificial Intelligence (HAI). She is a MacArthur Fellow and has been recognized as one of the \"100 Most Influential People in AI 2025\" by TIME. Her research focuses on natural language processing, commonsense reasonin",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1687,
+    "edge_type": "advisor",
+    "role": "Doctoral advisor",
+    "evidence": "Her dissertation, Heterogeneous Multi-Robot Cooperation, was supervised by Rodney Brooks",
+    "source": {
+      "id": 1489,
+      "name": "Rodney Brooks",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Australian-American roboticist, MIT Professor Emeritus (Panasonic Professor of Robotics), former director of MIT CSAIL. Co-founded iRobot (1990, makers of Roomba) and Rethink Robotics (2008, Baxter/Sawyer collaborative robots). Currently CTO of Robust.AI (warehouse automation robotics). One of the most prominent AI skeptics — argues AGI and superintelligence are centuries away, that LLMs 'don't kn"
+    },
+    "target": {
+      "id": 118,
+      "name": "Lynne Parker",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Lynne Parker is Principal Deputy Director of the White House Office of Science and Technology Policy and Executive Director of the President's Council of Advisors on Science and Technology. In January 2025, she was appointed by President Donald Trump as Executive Director of the President's Council of Advisors on Science and Technology and Counselor to the Director of the White House Office of Sci",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1688,
+    "edge_type": "advisor",
+    "role": "Science and Technology Advisor to the President",
+    "evidence": "From October 3, 2022 to January 20, 2025, she served as the 12th director of the White House Office of Science and Technology Policy and the Science and Technology Advisor to the President",
+    "source": {
+      "id": 119,
+      "name": "Arati Prabhakar",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Arati Prabhakar served as the 12th director of the White House Office of Science and Technology Policy from October 3, 2022 to January 20, 2025, and was the Science and Technology Advisor to President Biden. She was the first woman and person of color to be confirmed by the U.S. Senate as the Director of the White House Office of Science and Technology Policy. She was instrumental in passing Presi"
+    },
+    "target": {
+      "id": 1376,
+      "name": "Joe Biden",
+      "type": "person",
+      "category": "Executive",
+      "website": null,
+      "notes_excerpt": "46th U.S. President (2021-2025). Issued Executive Order 14110 in October 2023, the most comprehensive U.S. AI governance action to that point, requiring safety reporting from frontier AI developers and coordinating federal agency standards. Also released the Blueprint for an AI Bill of Rights in 2022.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1140,
+    "edge_type": "affiliated",
+    "role": null,
+    "evidence": "It authorizes the U.S. Artificial Intelligence Safety Institute (AISI) at the National Institute of Standards and Technology (NIST)",
+    "source": {
+      "id": 1107,
+      "name": "Senate Commerce, Science, and Transportation Committee",
+      "type": "organization",
+      "category": "Government/Agency",
+      "website": null,
+      "notes_excerpt": "The Senate Commerce, Science, and Transportation Committee is a standing committee of the United States Senate composed of 28 Senators and led by Committee Chairman Ted Cruz (R-Texas) and Ranking Member Maria Cantwell (D-Wash.). The committee has broad jurisdiction over all matters concerning interstate commerce, science and technology policy, and transportation, and is one of the largest of the S"
+    },
+    "target": {
+      "id": 1309,
+      "name": "National Institute of Standards and Technology",
+      "type": "organization",
+      "category": "Government/Agency",
+      "website": null,
+      "notes_excerpt": "NIST develops voluntary AI standards and risk management frameworks for federal agencies and industry. Its AI Risk Management Framework (AI RMF 1.0) is widely adopted. In 2025-26 its AI Safety Institute was renamed the Center for AI Standards and Innovation (CAISI) under the Trump administration's AI Action Plan, with a mandate to revise the AI RMF.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1150,
+    "edge_type": "affiliated",
+    "role": null,
+    "evidence": "Part of the SCI Institute is the One-U Responsible Artificial Intelligence Initiative (One-U RAI), which aims to advance AI to achieve societal good, all while protecting privacy, civil rights, and civil liberties, and promoting fairness, accountability, and transparency.",
+    "source": {
+      "id": 1111,
+      "name": "Responsible AI Initiative",
+      "type": "organization",
+      "category": "AI Safety/Alignment",
+      "website": null,
+      "notes_excerpt": "Multiple organizations operate under the name \"Responsible AI Initiative\" with different scopes and affiliations. The University of Utah operates the One-U Responsible AI Initiative, which aims to advance AI to achieve societal good while protecting privacy, civil rights, and civil liberties. Emory University launched a Responsible AI website as part of their enterprise-wide Responsible AI initiat"
+    },
+    "target": {
+      "id": 1314,
+      "name": "University of Utah",
+      "type": "organization",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "University of Utah hosts the One-U Responsible AI Initiative, a $100M transdisciplinary program led by the Scientific Computing and Imaging (SCI) Institute. A $50M AI supercomputer partnership with NVIDIA and HPE is slated to come online in summer 2026. Research focuses on healthcare, societal wellness, and public services.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1151,
+    "edge_type": "affiliated",
+    "role": null,
+    "evidence": "The site represents a major milestone in the university's enterprise-wide Responsible AI initiative, a multi‑year effort led by the Emory AI Group with input from the Responsible AI Executive Governance Committee and partners across Emory University and Emory Healthcare.",
+    "source": {
+      "id": 1111,
+      "name": "Responsible AI Initiative",
+      "type": "organization",
+      "category": "AI Safety/Alignment",
+      "website": null,
+      "notes_excerpt": "Multiple organizations operate under the name \"Responsible AI Initiative\" with different scopes and affiliations. The University of Utah operates the One-U Responsible AI Initiative, which aims to advance AI to achieve societal good while protecting privacy, civil rights, and civil liberties. Emory University launched a Responsible AI website as part of their enterprise-wide Responsible AI initiat"
+    },
+    "target": {
+      "id": 1315,
+      "name": "Emory University",
+      "type": "organization",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Private research university in Atlanta, Georgia. Major AI initiative: AI.Humanity, which brings together full university resources to shape the AI revolution for better human health, economic value, and responsible applications. Key AI centers: Center for Artificial Intelligence Learning (AI literacy across campus), Empathetic AI for Health Institute (AI.Health — ML and big data for healthcare tra",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1154,
+    "edge_type": "affiliated",
+    "role": null,
+    "evidence": "Responsible AI, as it's called, is an initiative out of the Oakland-based university's Block Center for Technology and Society with support from faculty in the School of Computer Science and members of the Dean's Office staff.",
+    "source": {
+      "id": 1111,
+      "name": "Responsible AI Initiative",
+      "type": "organization",
+      "category": "AI Safety/Alignment",
+      "website": null,
+      "notes_excerpt": "Multiple organizations operate under the name \"Responsible AI Initiative\" with different scopes and affiliations. The University of Utah operates the One-U Responsible AI Initiative, which aims to advance AI to achieve societal good while protecting privacy, civil rights, and civil liberties. Emory University launched a Responsible AI website as part of their enterprise-wide Responsible AI initiat"
+    },
+    "target": {
+      "id": 1317,
+      "name": "Block Center for Technology and Society",
+      "type": "organization",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "The Block Center for Technology and Society at Carnegie Mellon University was established in 2019 to study how emerging technologies alter the future of work, how AI and analytics can be harnessed for social good, and how innovation can reduce inequality. Houses the Responsible AI Initiative (RAI), which translates AI research into actionable policy insights promoting fairness, accountability, and",
       "resource_url": null,
       "resource_title": null,
       "resource_author": null,

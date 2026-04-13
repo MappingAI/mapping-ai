@@ -1,0 +1,92 @@
+[
+  {
+    "edge_id": 1685,
+    "proposed_url": "https://eecs.utk.edu/people/lynne-parker/",
+    "justification": "UTK EECS faculty page for Lynne Parker documents her prior role as Division Director at NSF (Information and Intelligent Systems) 2015-2016, confirming the employer relationship.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1690,
+    "proposed_url": "https://en.wikipedia.org/wiki/Arati_Prabhakar",
+    "justification": "Wikipedia article on Arati Prabhakar explicitly documents her serving as the 10th Director of NIST from 1993 to 1997, the first woman to hold the position.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1692,
+    "proposed_url": "https://users.cs.utah.edu/~suresh/about.html",
+    "justification": "Suresh Venkatasubramanian's personal University of Utah page explicitly identifies him as the John and Marva Warnock Assistant Professor at the School of Computing, University of Utah.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 2281,
+    "proposed_url": "https://eleosai.org/team/",
+    "justification": "Eleos AI team page lists Robert Long as Executive Director, directly evidencing his employer relationship with Eleos AI.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 2288,
+    "proposed_url": "https://infosci.cornell.edu/people/claire-cardie",
+    "justification": "Cornell Information Science faculty page for Claire Cardie identifies her as the John C. Ford Professor of Engineering in Computer Science and Information Science at Cornell University.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 2397,
+    "proposed_url": "https://www.nyu.edu/about/news-publications/news/2024/may/korea-and-nyu-establish-global-ai-frontier-lab.html",
+    "justification": "Official NYU news release announcing the Global AI Frontier Lab explicitly names Yann LeCun as co-director alongside Kyunghyun Cho.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 2398,
+    "proposed_url": "https://techcrunch.com/2026/01/23/whos-behind-ami-labs-yann-lecuns-world-model-startup/",
+    "justification": "TechCrunch article on AMI Labs explicitly names Alex LeBrun as CEO of Advanced Machine Intelligence Labs alongside Yann LeCun as executive chairman.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 2399,
+    "proposed_url": "https://cs.brown.edu/news/2025/07/29/pavlick-venkatasubramanian-will-lead-aria-a-new-national-institute-to-develop-intuitive-trustworthy-ai-assistants/",
+    "justification": "Brown CS news page explicitly names Ellie Pavlick as co-director leading ARIA, the NSF-funded AI Research Institute on Interaction for AI Assistants.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 2400,
+    "proposed_url": "https://www.alignmentforum.org/posts/H5iGhDhQBtoDpCBZ2/announcing-the-alignment-of-complex-systems-research-group",
+    "justification": "Alignment Forum post announcing the ACS Research Group explicitly names Jan Kulveit as founder and leader of the group, which is part of Charles University's Center for Theoretical Studies.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 196,
+    "proposed_url": "https://www.hollywoodreporter.com/movies/movie-news/natasha-lyonne-ai-company-asteria-1236403144/",
+    "justification": "Hollywood Reporter article on Natasha Lyonne's AI company Asteria documents her as co-founder of Asteria Film Co.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 214,
+    "proposed_url": "https://time.com/collections/time100-ai-2025/7305811/ana-helena-ulbrich/",
+    "justification": "TIME 100 AI 2025 profile of Ana Helena Ulbrich explicitly identifies her as co-founder of NoHarm and describes its role reviewing Brazilian hospital prescriptions.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 766,
+    "proposed_url": "https://rocketreach.co/stuart-russell-email_2308115",
+    "justification": "RocketReach profile sourced from professional data identifies Stuart Russell as Founder and Vice-President of Bayesian Logic Inc., but this is a third-party aggregator rather than a primary source.",
+    "confidence": "medium"
+  },
+  {
+    "edge_id": 792,
+    "proposed_url": "https://mila.quebec/en/news/transition-in-milas-scientific-direction",
+    "justification": "Official Mila press release on leadership transition explicitly names Yoshua Bengio as founder and notes his role as Scientific Director until 2025 when he became Scientific Advisor.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 796,
+    "proposed_url": "https://en.wikipedia.org/wiki/Element_AI",
+    "justification": "Wikipedia article on Element AI lists Yoshua Bengio among the co-founders of the Montreal-based AI company founded in October 2016.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 799,
+    "proposed_url": "https://www.iaseai.org/conference/people/stuart-russell-2",
+    "justification": "IASEAI official conference page for Stuart Russell identifies him as President of the International Association for Safe and Ethical AI.",
+    "confidence": "high"
+  }
+]

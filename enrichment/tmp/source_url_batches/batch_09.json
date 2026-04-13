@@ -1,0 +1,392 @@
+[
+  {
+    "edge_id": 1473,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor of CREATE AI Act",
+    "evidence": "Heinrich's CREATE AI Act is cosponsored by U.S. Senators Todd Young (R-Ind.) Cory Booker (D-N.J.), and Mike Rounds (R-S.D.)",
+    "source": {
+      "id": 72,
+      "name": "Martin Heinrich",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Martin Heinrich is a U.S. Senator from New Mexico who has served since January 2013. He is the founder and co-chair of the Senate Artificial Intelligence Caucus, which he established with former Senator Rob Portman (R-Ohio) in 2019. He serves as Ranking Member on the Committee on Energy and Natural Resources and serves on the Senate Appropriations, Intelligence, and Joint Economic Committees. Hein"
+    },
+    "target": {
+      "id": 73,
+      "name": "Todd Young",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Todd Christopher Young is an American politician and attorney serving as the senior United States senator from Indiana, a seat he has held since 2017. He is a member of the Republican Party and previously served as the U.S. representative for Indiana's 9th congressional district. Young currently serves on the U.S. Senate Committees on Finance; Foreign Relations; Health, Education, Labor & Pensions",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1474,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor of CREATE AI Act",
+    "evidence": "Heinrich's CREATE AI Act is cosponsored by U.S. Senators Todd Young (R-Ind.) Cory Booker (D-N.J.), and Mike Rounds (R-S.D.)",
+    "source": {
+      "id": 72,
+      "name": "Martin Heinrich",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Martin Heinrich is a U.S. Senator from New Mexico who has served since January 2013. He is the founder and co-chair of the Senate Artificial Intelligence Caucus, which he established with former Senator Rob Portman (R-Ohio) in 2019. He serves as Ranking Member on the Committee on Energy and Natural Resources and serves on the Senate Appropriations, Intelligence, and Joint Economic Committees. Hein"
+    },
+    "target": {
+      "id": 24,
+      "name": "Cory Booker",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Cory Booker is a U.S. Senator from New Jersey who was elected in 2013 and represents New Jersey as the state's first Black senator. He previously served as mayor of Newark from 2006 to 2013. In March 2025, Booker delivered the longest speech in Senate history, speaking for more than 25 hours in protest of the Trump administration's policies. He has been a leader in criminal justice reform and help",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1475,
+    "edge_type": "collaborator",
+    "role": "Member of Bipartisan Senate AI Working Group",
+    "evidence": "The Bipartisan Senate AI Working Group Maj. Leader Chuck Schumer, Sen. Mike Rounds, Sen. Martin Heinrich, and Sen. Todd Young",
+    "source": {
+      "id": 73,
+      "name": "Todd Young",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Todd Christopher Young is an American politician and attorney serving as the senior United States senator from Indiana, a seat he has held since 2017. He is a member of the Republican Party and previously served as the U.S. representative for Indiana's 9th congressional district. Young currently serves on the U.S. Senate Committees on Finance; Foreign Relations; Health, Education, Labor & Pensions"
+    },
+    "target": {
+      "id": 2,
+      "name": "Chuck Schumer",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Chuck Schumer is a Democratic U.S. Senator from New York who has served since 1999 and is currently Senate Majority Leader. He led a bipartisan working group that released a 31-page AI policy roadmap in May 2024, recommending at least $32 billion in government spending to accelerate AI research and development. The roadmap was developed after months of AI Insight Forums with tech companies, civil ",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1476,
+    "edge_type": "collaborator",
+    "role": "Member of Bipartisan Senate AI Working Group",
+    "evidence": "The Bipartisan Senate AI Working Group Maj. Leader Chuck Schumer, Sen. Mike Rounds, Sen. Martin Heinrich, and Sen. Todd Young",
+    "source": {
+      "id": 73,
+      "name": "Todd Young",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Todd Christopher Young is an American politician and attorney serving as the senior United States senator from Indiana, a seat he has held since 2017. He is a member of the Republican Party and previously served as the U.S. representative for Indiana's 9th congressional district. Young currently serves on the U.S. Senate Committees on Finance; Foreign Relations; Health, Education, Labor & Pensions"
+    },
+    "target": {
+      "id": 68,
+      "name": "Mike Rounds",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Mike Rounds is a Republican U.S. Senator from South Dakota who was sworn into the United States Senate on January 6th, 2015. He serves as co-chair of the Senate AI Caucus and serves on five committees: Senate Appropriations; Armed Services; Banking, Housing and Urban Affairs; Indian Affairs; and the Select Committee on Intelligence. He previously served as the 31st governor of South Dakota from 20",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1477,
+    "edge_type": "collaborator",
+    "role": "Member of Bipartisan Senate AI Working Group",
+    "evidence": "The Bipartisan Senate AI Working Group Maj. Leader Chuck Schumer, Sen. Mike Rounds, Sen. Martin Heinrich, and Sen. Todd Young",
+    "source": {
+      "id": 73,
+      "name": "Todd Young",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Todd Christopher Young is an American politician and attorney serving as the senior United States senator from Indiana, a seat he has held since 2017. He is a member of the Republican Party and previously served as the U.S. representative for Indiana's 9th congressional district. Young currently serves on the U.S. Senate Committees on Finance; Foreign Relations; Health, Education, Labor & Pensions"
+    },
+    "target": {
+      "id": 72,
+      "name": "Martin Heinrich",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Martin Heinrich is a U.S. Senator from New Mexico who has served since January 2013. He is the founder and co-chair of the Senate Artificial Intelligence Caucus, which he established with former Senator Rob Portman (R-Ohio) in 2019. He serves as Ranking Member on the Committee on Energy and Natural Resources and serves on the Senate Appropriations, Intelligence, and Joint Economic Committees. Hein",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1478,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor of Future of AI Innovation Act",
+    "evidence": "Young, Cantwell Reintroduce Future of AI Innovation Act",
+    "source": {
+      "id": 73,
+      "name": "Todd Young",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Todd Christopher Young is an American politician and attorney serving as the senior United States senator from Indiana, a seat he has held since 2017. He is a member of the Republican Party and previously served as the U.S. representative for Indiana's 9th congressional district. Young currently serves on the U.S. Senate Committees on Finance; Foreign Relations; Health, Education, Labor & Pensions"
+    },
+    "target": {
+      "id": 110,
+      "name": "Maria Cantwell",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Maria Cantwell is a U.S. Senator from Washington State, serving as Ranking Member of the Senate Committee on Commerce, Science and Transportation. She has introduced multiple AI-related bills in 2026, including the NSF AI Education Act and the Small Business Artificial Intelligence Training Act. She previously served in the U.S. House of Representatives from 1993-95 and worked as vice president fo",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1479,
+    "edge_type": "collaborator",
+    "role": "Chair",
+    "evidence": "From 2019 to 2021, he served as the chair of the National Republican Senatorial Committee",
+    "source": {
+      "id": 73,
+      "name": "Todd Young",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Todd Christopher Young is an American politician and attorney serving as the senior United States senator from Indiana, a seat he has held since 2017. He is a member of the Republican Party and previously served as the U.S. representative for Indiana's 9th congressional district. Young currently serves on the U.S. Senate Committees on Finance; Foreign Relations; Health, Education, Labor & Pensions"
+    },
+    "target": {
+      "id": 1118,
+      "name": "National Republican Senatorial Committee",
+      "type": "organization",
+      "category": "Political Campaign/PAC",
+      "website": null,
+      "notes_excerpt": "The National Republican Senatorial Committee (NRSC) is the Republican Hill committee for the United States Senate, working to elect Republicans to the Senate. The NRSC was founded in 1916 as the Republican Senatorial Campaign Committee and was reorganized in 1948 and renamed the National Republican Senatorial Committee. It has been chaired by Senator Tim Scott from South Carolina since 2025. The N",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1480,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor",
+    "evidence": "Today, U.S. Senators Ben Ray Luján (D-N.M.), Marsha Blackburn (R-Tenn.), Dick Durbin (D-Ill.), Jim Risch (R-Idaho), and Peter Welch (D-VT) introduced the Testing and Evaluation Systems for Trusted Artificial Intelligence (TEST) AI Act of 2025",
+    "source": {
+      "id": 74,
+      "name": "Ben Ray Luján",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Ben Ray Luján has represented New Mexico in the United States Senate since January 2021 and previously served as U.S. Representative for New Mexico's Third Congressional District and House Assistant Speaker in the 116th Congress. He sits on the Committee on Commerce, Science, and Transportation; the Committee on Finance; the Committee on Agriculture, Nutrition, and Forestry; the Committee on India"
+    },
+    "target": {
+      "id": 11,
+      "name": "Marsha Blackburn",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Marsha Blackburn is the senior senator for Tennessee and the first woman to represent the Volunteer State in the United States Senate. She released a discussion draft of her legislative framework to codify President Trump's executive order to create one rulebook for artificial intelligence (AI) that protects children, creators, conservatives, and communities from harm while ensuring the United Sta",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1481,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor",
+    "evidence": "Today, U.S. Senators Ben Ray Luján (D-N.M.), Marsha Blackburn (R-Tenn.), Dick Durbin (D-Ill.), Jim Risch (R-Idaho), and Peter Welch (D-VT) introduced the Testing and Evaluation Systems for Trusted Artificial Intelligence (TEST) AI Act of 2025",
+    "source": {
+      "id": 74,
+      "name": "Ben Ray Luján",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Ben Ray Luján has represented New Mexico in the United States Senate since January 2021 and previously served as U.S. Representative for New Mexico's Third Congressional District and House Assistant Speaker in the 116th Congress. He sits on the Committee on Commerce, Science, and Transportation; the Committee on Finance; the Committee on Agriculture, Nutrition, and Forestry; the Committee on India"
+    },
+    "target": {
+      "id": 1302,
+      "name": "Dick Durbin",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Democratic Senator from Illinois (1997–2027) and former Senate Judiciary Committee chair. Co-introduced the bipartisan AI LEAD Act to enable products-liability suits against AI developers, and the TEST AI Act to strengthen federal AI testing capacity. Consistently advocated for mandatory AI oversight.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1482,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor",
+    "evidence": "Today, U.S. Senators Ben Ray Luján (D-N.M.), Marsha Blackburn (R-Tenn.), Dick Durbin (D-Ill.), Jim Risch (R-Idaho), and Peter Welch (D-VT) introduced the Testing and Evaluation Systems for Trusted Artificial Intelligence (TEST) AI Act of 2025",
+    "source": {
+      "id": 74,
+      "name": "Ben Ray Luján",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Ben Ray Luján has represented New Mexico in the United States Senate since January 2021 and previously served as U.S. Representative for New Mexico's Third Congressional District and House Assistant Speaker in the 116th Congress. He sits on the Committee on Commerce, Science, and Transportation; the Committee on Finance; the Committee on Agriculture, Nutrition, and Forestry; the Committee on India"
+    },
+    "target": {
+      "id": 1101,
+      "name": "Jim Risch",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Jim Risch is a U.S. Senator from Idaho who has served since 2009 and is a member of the Republican Party. He serves on five key committees: Energy and Natural Resources, Foreign Relations, Small Business and Entrepreneurship, Intelligence, and Ethics, and serves as Chairman of the Senate Foreign Relations Committee. He previously served as Idaho's 31st Governor in 2006 and as Lieutenant Governor, ",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1483,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor",
+    "evidence": "Today, U.S. Senators Ben Ray Luján (D-N.M.) and Peter Welch (D-Vt.) introduced the Artificial Intelligence Consumer Opt-In, Notification Standards, and Ethical Norms for Training (AI CONSENT) Act",
+    "source": {
+      "id": 74,
+      "name": "Ben Ray Luján",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Ben Ray Luján has represented New Mexico in the United States Senate since January 2021 and previously served as U.S. Representative for New Mexico's Third Congressional District and House Assistant Speaker in the 116th Congress. He sits on the Committee on Commerce, Science, and Transportation; the Committee on Finance; the Committee on Agriculture, Nutrition, and Forestry; the Committee on India"
+    },
+    "target": {
+      "id": 1415,
+      "name": "Peter Welch",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Democratic U.S. Senator from Vermont (since 2023, formerly House rep since 2007). Most active Senate voice on AI copyright/consent legislation. Introduced ~6 AI bills including: TRAIN Act (subpoena power for copyright holders to discover AI training data use), AI CONSENT Act (require consent before using personal data for AI training), Digital Platform Commission Act (new federal agency for platfo",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1484,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "The TEST AI Act would direct the collaboration between the National Institute for Standards and Technology (NIST) and the Department of Energy (DOE) to establish a testbed pilot program to develop and refine measurement standards for evaluating AI systems",
+    "source": {
+      "id": 74,
+      "name": "Ben Ray Luján",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Ben Ray Luján has represented New Mexico in the United States Senate since January 2021 and previously served as U.S. Representative for New Mexico's Third Congressional District and House Assistant Speaker in the 116th Congress. He sits on the Committee on Commerce, Science, and Transportation; the Committee on Finance; the Committee on Agriculture, Nutrition, and Forestry; the Committee on India"
+    },
+    "target": {
+      "id": 1309,
+      "name": "National Institute of Standards and Technology",
+      "type": "organization",
+      "category": "Government/Agency",
+      "website": null,
+      "notes_excerpt": "NIST develops voluntary AI standards and risk management frameworks for federal agencies and industry. Its AI Risk Management Framework (AI RMF 1.0) is widely adopted. In 2025-26 its AI Safety Institute was renamed the Center for AI Standards and Innovation (CAISI) under the Trump administration's AI Action Plan, with a mandate to revise the AI RMF.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1485,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "The TEST AI Act would direct the collaboration between the National Institute for Standards and Technology (NIST) and the Department of Energy (DOE) to establish a testbed pilot program to develop and refine measurement standards for evaluating AI systems",
+    "source": {
+      "id": 74,
+      "name": "Ben Ray Luján",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Ben Ray Luján has represented New Mexico in the United States Senate since January 2021 and previously served as U.S. Representative for New Mexico's Third Congressional District and House Assistant Speaker in the 116th Congress. He sits on the Committee on Commerce, Science, and Transportation; the Committee on Finance; the Committee on Agriculture, Nutrition, and Forestry; the Committee on India"
+    },
+    "target": {
+      "id": 1417,
+      "name": "Department of Energy",
+      "type": "organization",
+      "category": "Government/Agency",
+      "website": null,
+      "notes_excerpt": "Federal agency overseeing U.S. energy systems and nuclear infrastructure. Plays a central AI role through its 17 National Laboratories, its membership in the TRAINS Taskforce for national security AI testing, and its initiative to co-locate AI data centers with federal energy infrastructure across 16 identified sites.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1487,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor of bipartisan legislation",
+    "evidence": "U.S. Senator Joni Ernst (R-IA), Chairman of the Senate Armed Services Emerging Threats and Capabilities Subcommittee, and Senator Catherine Cortez Masto (D-NV), member of the Senate Committee on Commerce, Science and Transportation, today introduced bipartisan legislation to spur much needed attention to maintaining America's competitiveness in artificial intelligence (AI)",
+    "source": {
+      "id": 75,
+      "name": "Joni Ernst",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Joni Ernst is a U.S. Senator from Iowa who was first elected in 2014 and has served since January 6, 2015. She is a combat veteran who served as a company commander in Kuwait and Iraq during Operation Iraqi Freedom and retired as a Lieutenant Colonel in the Iowa Army National Guard after 23 years of military service. Ernst announced in September 2025 that she will not seek re-election to a third t"
+    },
+    "target": {
+      "id": 1418,
+      "name": "Catherine Cortez Masto",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Catherine Cortez Masto (D-NV) is a U.S. Senator who narrowly won re-election in 2022 and serves until January 2029. She focuses on consumer protection in AI: her IOGAN Act (signed 2020) directed NSF and NIST to research deepfake detection, and she has backed the TAKE IT DOWN Act (signed 2025) criminalizing non-consensual AI-generated intimate images. She co-sponsored legislation establishing the N",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1488,
+    "edge_type": "collaborator",
+    "role": "Co-author of letter to National Cyber Director",
+    "evidence": "U.S. Senators Maggie Hassan (D-NH) and Joni Ernst (R-IA) are urging National Cyber Director Sean Cairncross to take action after Chinese state-sponsored hackers reportedly used artificial intelligence (AI) systems to conduct cyberattacks",
+    "source": {
+      "id": 75,
+      "name": "Joni Ernst",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Joni Ernst is a U.S. Senator from Iowa who was first elected in 2014 and has served since January 6, 2015. She is a combat veteran who served as a company commander in Kuwait and Iraq during Operation Iraqi Freedom and retired as a Lieutenant Colonel in the Iowa Army National Guard after 23 years of military service. Ernst announced in September 2025 that she will not seek re-election to a third t"
+    },
+    "target": {
+      "id": 76,
+      "name": "Maggie Hassan",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Maggie Hassan is a U.S. Senator from New Hampshire serving since 2017, and previously served as the 81st Governor of New Hampshire from 2013 to 2017. She was named the most bipartisan member of Congress by the nonpartisan Common Ground Committee, becoming the first elected official to receive a perfect score on their scorecard. Hassan has recently introduced multiple AI-related bills, including th",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  }
+]

@@ -1,0 +1,392 @@
+[
+  {
+    "edge_id": 1492,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "Today, U.S. Senators Maggie Hassan (D-NH), Ranking Member of the Joint Economic Committee, and Josh Hawley (R-MO) pressed six companies operating generative artificial intelligence (AI) models to step up efforts to prevent scammers from using their platforms",
+    "source": {
+      "id": 76,
+      "name": "Maggie Hassan",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Maggie Hassan is a U.S. Senator from New Hampshire serving since 2017, and previously served as the 81st Governor of New Hampshire from 2013 to 2017. She was named the most bipartisan member of Congress by the nonpartisan Common Ground Committee, becoming the first elected official to receive a perfect score on their scorecard. Hassan has recently introduced multiple AI-related bills, including th"
+    },
+    "target": {
+      "id": 1422,
+      "name": "Josh Hawley",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Republican U.S. Senator (MO). Introduced the Decoupling America's AI Capabilities from China Act (2025) and the bipartisan GUARD Act banning AI chatbots for minors (2026). Opposes preempting state AI laws and advocates targeted consumer and child-safety regulation.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1493,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "U.S. Senators Maggie Hassan (D-NH) and Jim Banks (R-IN) introduced first-of-its-kind legislation to advance AI research that strengthens U.S. national security",
+    "source": {
+      "id": 76,
+      "name": "Maggie Hassan",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Maggie Hassan is a U.S. Senator from New Hampshire serving since 2017, and previously served as the 81st Governor of New Hampshire from 2013 to 2017. She was named the most bipartisan member of Congress by the nonpartisan Common Ground Committee, becoming the first elected official to receive a perfect score on their scorecard. Hassan has recently introduced multiple AI-related bills, including th"
+    },
+    "target": {
+      "id": 1423,
+      "name": "Jim Banks",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Republican U.S. Senator from Indiana (since Jan 2025, formerly House rep 2017-2025). Serves on Senate Armed Services Committee (subcommittees: Personnel, Seapower, Strategic Forces) and Banking, Housing, and Urban Affairs Committee. Previously ranking member of House Cyber, Innovative Technologies, and Information Systems subcommittee (117th Congress). Also served on House Select Committee on U.S.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1495,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "She serves with Jeanne Shaheen, another former governor",
+    "source": {
+      "id": 76,
+      "name": "Maggie Hassan",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Maggie Hassan is a U.S. Senator from New Hampshire serving since 2017, and previously served as the 81st Governor of New Hampshire from 2013 to 2017. She was named the most bipartisan member of Congress by the nonpartisan Common Ground Committee, becoming the first elected official to receive a perfect score on their scorecard. Hassan has recently introduced multiple AI-related bills, including th"
+    },
+    "target": {
+      "id": 1413,
+      "name": "Jeanne Shaheen",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Democratic U.S. Senator from New Hampshire (2009–January 2025) who retired after choosing not to seek re-election in 2024. Took targeted AI positions: secured $47.7M for NIST's AI Safety Institute, pushed to restrict advanced AI chip exports to China, and urged DOJ/CISA to address AI-generated deepfakes threatening elections. Consistent with a moderate, national-security-forward approach to AI gov",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1496,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor of bipartisan legislation",
+    "evidence": "U.S. Senator Maria Cantwell (D-Wash.), Ranking Member of the Senate Committee on Commerce, Science and Transportation, and U.S. Senator Jerry Moran (R-Kan.), a senior member of the Committee, reintroduced the bipartisan Small Business Artificial Intelligence Training Act of 2026",
+    "source": {
+      "id": 77,
+      "name": "Jerry Moran",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Jerry Moran is a Republican U.S. Senator from Kansas who serves as a senior member of the Senate Committee on Commerce, Science and Transportation. He has worked extensively on bipartisan artificial intelligence legislation, introducing multiple AI-related bills in 2026 with Democratic Senator Maria Cantwell. Moran serves as Chairman on the Appropriations Subcommittee on Commerce, Justice, Science"
+    },
+    "target": {
+      "id": 110,
+      "name": "Maria Cantwell",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Maria Cantwell is a U.S. Senator from Washington State, serving as Ranking Member of the Senate Committee on Commerce, Science and Transportation. She has introduced multiple AI-related bills in 2026, including the NSF AI Education Act and the Small Business Artificial Intelligence Training Act. She previously served in the U.S. House of Representatives from 1993-95 and worked as vice president fo",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1499,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor of Iran nuclear program letter",
+    "evidence": "U.S. Senator Jerry Moran (R-Kan.) joined U.S. Senator Pete Ricketts (R-Neb.) and 50 of their Republican colleagues in supporting President Trump's ongoing negotiations with Iran",
+    "source": {
+      "id": 77,
+      "name": "Jerry Moran",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Jerry Moran is a Republican U.S. Senator from Kansas who serves as a senior member of the Senate Committee on Commerce, Science and Transportation. He has worked extensively on bipartisan artificial intelligence legislation, introducing multiple AI-related bills in 2026 with Democratic Senator Maria Cantwell. Moran serves as Chairman on the Appropriations Subcommittee on Commerce, Justice, Science"
+    },
+    "target": {
+      "id": 723,
+      "name": "Pete Ricketts",
+      "type": "person",
+      "category": "Policymaker",
+      "website": "ricketts.senate.gov",
+      "notes_excerpt": "Republican U.S. Senator from Nebraska with background as former CEO of TD Ameritrade. Active in AI and technology policy, notably co-sponsoring the SAFE Chips Act to restrict AI chip exports to China. Emphasis on national security and U.S. technological leadership balanced with safety considerations.\n\nRunning in the NE Senate race, which has seen significant AI-related super PAC spending. See http",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1500,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor of VET AI Act",
+    "evidence": "U.S. Senators John Hickenlooper and Shelley Moore Capito reintroduced their bipartisan Validation and Evaluation for Trustworthy Artificial Intelligence (VET AI) Act",
+    "source": {
+      "id": 78,
+      "name": "John Hickenlooper",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "John Hickenlooper is a U.S. Senator from Colorado who serves as Ranking Member of the Senate Commerce Committee's Subcommittee on Consumer Protection, Technology, and Data Privacy. He has been actively involved in AI policy, reintroducing the bipartisan VET AI Act with Senator Shelley Moore Capito to boost AI standards and create guidelines for third-party evaluations of AI systems. Hickenlooper p"
+    },
+    "target": {
+      "id": 1424,
+      "name": "Shelley Moore Capito",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Republican U.S. Senator from West Virginia (since 2015). Key AI legislation author: VET AI Act (with Hickenlooper) directs NIST to develop voluntary guidelines for AI assurance and verification; AI Scam Prevention Act prohibits AI-generated deepfakes for fraud. Serves on Commerce, Science, and Transportation Committee. Pragmatic, bipartisan approach to AI — favors voluntary industry guidelines ove",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1501,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor of AI legislation",
+    "evidence": "Today, U.S. Senator John Hickenlooper joined Senate Commerce, Science, and Transportation Committee colleagues John Thune, Amy Klobuchar, Roger Wicker, Shelley Moore Capito, and Ben Ray Luján to introduce the Artificial Intelligence Research, Innovation, and Accountability Act",
+    "source": {
+      "id": 78,
+      "name": "John Hickenlooper",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "John Hickenlooper is a U.S. Senator from Colorado who serves as Ranking Member of the Senate Commerce Committee's Subcommittee on Consumer Protection, Technology, and Data Privacy. He has been actively involved in AI policy, reintroducing the bipartisan VET AI Act with Senator Shelley Moore Capito to boost AI standards and create guidelines for third-party evaluations of AI systems. Hickenlooper p"
+    },
+    "target": {
+      "id": 1425,
+      "name": "John Thune",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Senate Majority Leader (Jan 2025-present), senior U.S. Senator from South Dakota. Key AI legislation gatekeeper — co-authoring bipartisan 'light-touch' AI bill with Sen. Klobuchar requiring risk/impact assessments and self-certification for critical-impact AI systems. Opposed 10-year moratorium on state AI regulation authority. Supported GAIN AI Act in FY2026 NDAA to keep advanced AI chips availab",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1502,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor of AI legislation",
+    "evidence": "Today, U.S. Senator John Hickenlooper joined Senate Commerce, Science, and Transportation Committee colleagues John Thune, Amy Klobuchar, Roger Wicker, Shelley Moore Capito, and Ben Ray Luján to introduce the Artificial Intelligence Research, Innovation, and Accountability Act",
+    "source": {
+      "id": 78,
+      "name": "John Hickenlooper",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "John Hickenlooper is a U.S. Senator from Colorado who serves as Ranking Member of the Senate Commerce Committee's Subcommittee on Consumer Protection, Technology, and Data Privacy. He has been actively involved in AI policy, reintroducing the bipartisan VET AI Act with Senator Shelley Moore Capito to boost AI standards and create guidelines for third-party evaluations of AI systems. Hickenlooper p"
+    },
+    "target": {
+      "id": 1004,
+      "name": "Amy Klobuchar",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Received Ukrainian Order of Merit, First Class from President Zelenskyy (2022). Author of 'Antitrust' (New York Times Best Seller). Graduated magna cum laude from Yale University (1982) and University of Chicago Law School with high honors (1985). Led bipartisan effort that resulted in first major U.S. AI harm legislation with Take It Down Act passage. Chair of Senate Rules Committee oversaw three",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1503,
+    "edge_type": "collaborator",
+    "role": "Agency directed to develop AI guidelines",
+    "evidence": "The bill directs the National Institute of Standards and Technology (NIST) to work with federal agencies and stakeholders across industry, academia, and civil society to develop detailed specifications, guidelines, and recommendations for third-party evaluators",
+    "source": {
+      "id": 78,
+      "name": "John Hickenlooper",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "John Hickenlooper is a U.S. Senator from Colorado who serves as Ranking Member of the Senate Commerce Committee's Subcommittee on Consumer Protection, Technology, and Data Privacy. He has been actively involved in AI policy, reintroducing the bipartisan VET AI Act with Senator Shelley Moore Capito to boost AI standards and create guidelines for third-party evaluations of AI systems. Hickenlooper p"
+    },
+    "target": {
+      "id": 1309,
+      "name": "National Institute of Standards and Technology",
+      "type": "organization",
+      "category": "Government/Agency",
+      "website": null,
+      "notes_excerpt": "NIST develops voluntary AI standards and risk management frameworks for federal agencies and industry. Its AI Risk Management Framework (AI RMF 1.0) is widely adopted. In 2025-26 its AI Safety Institute was renamed the Center for AI Standards and Innovation (CAISI) under the Trump administration's AI Action Plan, with a mandate to revise the AI RMF.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1506,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor",
+    "evidence": "The Democrat has introduced the GUARD Act with Republican Senators Josh Hawley of Missouri",
+    "source": {
+      "id": 80,
+      "name": "Richard Blumenthal",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Richard Blumenthal is a Democratic U.S. Senator from Connecticut who has introduced multiple AI-related bills, including the GUARD Act to ban AI companions for children and legislation to allow lawsuits over AI data training. He serves on the Senate Judiciary Committee and other committees, and was previously Connecticut's Attorney General from 1991 to 2011. Blumenthal has worked extensively on co"
+    },
+    "target": {
+      "id": 1422,
+      "name": "Josh Hawley",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Republican U.S. Senator (MO). Introduced the Decoupling America's AI Capabilities from China Act (2025) and the bipartisan GUARD Act banning AI chatbots for minors (2026). Opposes preempting state AI laws and advocates targeted consumer and child-safety regulation.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1507,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor",
+    "evidence": "fellow Democrats Mark Warner of Virginia and Chris Murphy of Connecticut",
+    "source": {
+      "id": 80,
+      "name": "Richard Blumenthal",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Richard Blumenthal is a Democratic U.S. Senator from Connecticut who has introduced multiple AI-related bills, including the GUARD Act to ban AI companions for children and legislation to allow lawsuits over AI data training. He serves on the Senate Judiciary Committee and other committees, and was previously Connecticut's Attorney General from 1991 to 2011. Blumenthal has worked extensively on co"
+    },
+    "target": {
+      "id": 41,
+      "name": "Chris Murphy",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Chris Murphy is the junior United States Senator from Connecticut, serving since 2013. He previously served in the U.S. House of Representatives from 2007 to 2013, representing Connecticut's 5th congressional district. Murphy was reelected to a third Senate term in 2024, defeating Republican challenger Matthew Corey. He has become a prominent voice on AI regulation, arguing that unregulated artifi",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1508,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor",
+    "evidence": "Republican Senators Josh Hawley of Missouri and Katie Britt of Alabama",
+    "source": {
+      "id": 80,
+      "name": "Richard Blumenthal",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Richard Blumenthal is a Democratic U.S. Senator from Connecticut who has introduced multiple AI-related bills, including the GUARD Act to ban AI companions for children and legislation to allow lawsuits over AI data training. He serves on the Senate Judiciary Committee and other committees, and was previously Connecticut's Attorney General from 1991 to 2011. Blumenthal has worked extensively on co"
+    },
+    "target": {
+      "id": 1119,
+      "name": "Katie Britt",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Katie Britt is a U.S. Senator from Alabama serving since 2023, and is a member of the Republican Party. She is calling for guardrails on artificial intelligence chatbots because of the potential to harm minors. Britt has two teenagers, ages 15 and 16, and draws on her experience as a mother in her advocacy work. She previously served as president and CEO of the Business Council of Alabama from 201",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1509,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor",
+    "evidence": "fellow Democrats Mark Warner of Virginia and Chris Murphy of Connecticut",
+    "source": {
+      "id": 80,
+      "name": "Richard Blumenthal",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Richard Blumenthal is a Democratic U.S. Senator from Connecticut who has introduced multiple AI-related bills, including the GUARD Act to ban AI companions for children and legislation to allow lawsuits over AI data training. He serves on the Senate Judiciary Committee and other committees, and was previously Connecticut's Attorney General from 1991 to 2011. Blumenthal has worked extensively on co"
+    },
+    "target": {
+      "id": 87,
+      "name": "Mark Warner",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Mark Warner is a U.S. Senator from Virginia who serves as Vice Chairman of the Senate Select Committee on Intelligence. He has been leading efforts on AI policy, including introducing the Economy of the Future Commission Act with Senator Mike Rounds to prepare American workers for AI-driven workforce changes. Warner has expressed concern about AI's impact, stating 'I am terrified' about the govern",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1511,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor",
+    "evidence": "Blumenthal, along with Senator Marsha Blackburn (R-TN), first introduced KOSA in February 2022",
+    "source": {
+      "id": 80,
+      "name": "Richard Blumenthal",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Richard Blumenthal is a Democratic U.S. Senator from Connecticut who has introduced multiple AI-related bills, including the GUARD Act to ban AI companions for children and legislation to allow lawsuits over AI data training. He serves on the Senate Judiciary Committee and other committees, and was previously Connecticut's Attorney General from 1991 to 2011. Blumenthal has worked extensively on co"
+    },
+    "target": {
+      "id": 11,
+      "name": "Marsha Blackburn",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Marsha Blackburn is the senior senator for Tennessee and the first woman to represent the Volunteer State in the United States Senate. She released a discussion draft of her legislative framework to codify President Trump's executive order to create one rulebook for artificial intelligence (AI) that protects children, creators, conservatives, and communities from harm while ensuring the United Sta",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1512,
+    "edge_type": "collaborator",
+    "role": "Senator",
+    "evidence": "Today, U.S. Senators Jacky Rosen (D-NV) and Ted Budd (R-NC) introduced bipartisan legislation to develop and coordinate an artificial intelligence (AI) initiative",
+    "source": {
+      "id": 81,
+      "name": "Jacky Rosen",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Jacky Rosen is a U.S. Senator from Nevada who serves as a member of the Democratic Party and was elected to the Senate in 2018, defeating Republican incumbent Dean Heller with 50.4% of the vote. She was reelected in 2024, defeating Republican nominee Sam Brown. She is described as the only former computer programmer in the U.S. Senate and has been a champion for strengthening the nation's cybersec"
+    },
+    "target": {
+      "id": 1301,
+      "name": "Ted Budd",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Republican Senator (NC) and Chair of the Senate Subcommittee on Science, Manufacturing, and Competitiveness. Actively shapes AI legislation through bipartisan bills on government data access, AI lab networks, and public health preparedness. Strongly opposes overregulation, favoring a light-touch, innovation-first federal framework.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  }
+]

@@ -1,0 +1,92 @@
+[
+  {
+    "edge_id": 1343,
+    "proposed_url": "https://news.nd.edu/news/former-south-bend-mayor-and-presidential-candidate-pete-buttigieg-joins-notre-dame-institute-for-advanced-study/",
+    "justification": "Notre Dame News press release explicitly announces Pete Buttigieg joining Notre Dame Institute for Advanced Study as a faculty fellow in 2020, directly evidencing his affiliation with the university.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1351,
+    "proposed_url": "https://www.murphy.senate.gov/newsroom/press-releases/murphy-in-munich-on-ai-we-need-regulation-and-international-cooperation-to-prevent-economic-and-cultural-collapse",
+    "justification": "Senator Murphy's official Senate press release explicitly describes his participation in the Munich Security Conference AI panel 'Risks and Rewards of the AI Race', naming both parties.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1362,
+    "proposed_url": "https://fas.org/expert/tom-kalil/",
+    "justification": "Federation of American Scientists expert profile page for Tom Kalil directly documents his affiliation with FAS.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1510,
+    "proposed_url": "https://fedscoop.com/energy-department-ai-risk-evaluation-bill/",
+    "justification": "FedScoop article explicitly names Blumenthal as co-sponsor of the bill to create an AI risk evaluation program within the Department of Energy, documenting the legislative oversight relationship.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 131,
+    "proposed_url": "https://digitaleconomy.stanford.edu/publication/the-digitalist-papers-volume-2-the-economics-of-transformative-ai/",
+    "justification": "Stanford Digital Economy Lab publication page for The Digitalist Papers Volume 2 lists Sandy Pentland as a contributing author and faculty lead.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 132,
+    "proposed_url": "https://www.axios.com/2026/02/12/alex-bores-ai-super-pacs-plan",
+    "justification": "Axios article explicitly attributes the Congressional AI Framework eight-point plan to Alex Bores and describes it as his authored policy agenda for Congress.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 134,
+    "proposed_url": "https://www.whitehouse.gov/presidential-actions/2025/12/eliminating-state-law-obstruction-of-national-artificial-intelligence-policy/",
+    "justification": "White House official page for the December 2025 executive order on AI federal preemption; David Sacks' authorship/orchestration is widely documented in contemporaneous coverage referencing this EO.",
+    "confidence": "medium"
+  },
+  {
+    "edge_id": 142,
+    "proposed_url": "https://knightcolumbia.org/content/ai-as-normal-technology",
+    "justification": "Knight First Amendment Institute page publishes the essay 'AI as Normal Technology' and explicitly credits Arvind Narayanan as co-author.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 144,
+    "proposed_url": "https://knightcolumbia.org/content/ai-as-normal-technology",
+    "justification": "Knight First Amendment Institute page publishes the essay 'AI as Normal Technology' and explicitly credits Sayash Kapoor as co-author alongside Narayanan.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 145,
+    "proposed_url": "https://en.wikipedia.org/wiki/The_Entrepreneurial_State",
+    "justification": "Wikipedia article on The Entrepreneurial State explicitly identifies Mariana Mazzucato as the sole author of the 2013 book.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 146,
+    "proposed_url": "https://shapingwork.mit.edu/power-and-progress/",
+    "justification": "MIT Shaping the Future of Work page for Power and Progress explicitly names Daron Acemoglu as co-author of the book.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 147,
+    "proposed_url": "https://shapingwork.mit.edu/power-and-progress/",
+    "justification": "MIT Shaping the Future of Work page for Power and Progress explicitly names Simon Johnson as co-author of the book alongside Acemoglu.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 155,
+    "proposed_url": "https://micheljusten.substack.com/p/a-guide-to-the-ai-tribes",
+    "justification": "Michel Justen's Substack page is the primary publication venue for 'A Guide to the AI Tribes', explicitly crediting him as author.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 156,
+    "proposed_url": "https://www.transformernews.ai/p/the-left-is-missing-out-on-ai-sanders-doctorow-bender-bores",
+    "justification": "Transformer newsletter page explicitly publishes 'The Left is Missing Out on AI' and credits Dan Kagan-Kans as author.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 157,
+    "proposed_url": "https://www.amazon.com/Dignity-Digital-Age-Making-Tech/dp/1982163348",
+    "justification": "Amazon listing for 'Dignity in a Digital Age' explicitly names Ro Khanna as author of the 2022 book.",
+    "confidence": "high"
+  }
+]

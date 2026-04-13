@@ -1,0 +1,392 @@
+[
+  {
+    "edge_id": 1135,
+    "edge_type": "collaborator",
+    "role": "Chair",
+    "evidence": "Gardner was chair of the National Republican Senatorial Committee from 2017 to 2019",
+    "source": {
+      "id": 1106,
+      "name": "Cory Gardner",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Cory Gardner is President & CEO of NCTA – The Internet & Television Association, beginning his tenure on September 22, 2025. He previously served as a U.S. Senator from Colorado from 2015 to 2021 and as a U.S. Representative for Colorado's 4th Congressional District from 2011 to 2015. Gardner served as chair of the National Republican Senatorial Committee from 2017 to 2019. He was consistently ran"
+    },
+    "target": {
+      "id": 1118,
+      "name": "National Republican Senatorial Committee",
+      "type": "organization",
+      "category": "Political Campaign/PAC",
+      "website": null,
+      "notes_excerpt": "The National Republican Senatorial Committee (NRSC) is the Republican Hill committee for the United States Senate, working to elect Republicans to the Senate. The NRSC was founded in 1916 as the Republican Senatorial Campaign Committee and was reorganized in 1948 and renamed the National Republican Senatorial Committee. It has been chaired by Senator Tim Scott from South Carolina since 2025. The N",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1190,
+    "edge_type": "collaborator",
+    "role": "co-author",
+    "evidence": "co-authored with his PhD supervisors Yoshua Bengio and Aaron Courville",
+    "source": {
+      "id": 1115,
+      "name": "Ian Goodfellow",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "Ian J. Goodfellow (born 1987) is an American computer scientist, engineer, and executive, most noted for his work on artificial neural networks and deep learning. He is a research scientist at Google DeepMind, was previously employed as a research scientist at Google Brain and director of machine learning at Apple as well as one of the first employees at OpenAI. He is best known for inventing gene"
+    },
+    "target": {
+      "id": 29,
+      "name": "Yoshua Bengio",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Yoshua Bengio is a Canadian computer scientist born March 5, 1964, in Paris, France, and is a full professor at Université de Montréal. He received the 2018 A.M. Turing Award together with Geoffrey Hinton and Yann LeCun for their foundational work on deep learning. In June 2025, Bengio launched a nonprofit organization called LawZero aimed at building 'honest' AI systems that can detect and block ",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1191,
+    "edge_type": "collaborator",
+    "role": "co-author",
+    "evidence": "co-authored with his PhD supervisors Yoshua Bengio and Aaron Courville",
+    "source": {
+      "id": 1115,
+      "name": "Ian Goodfellow",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "Ian J. Goodfellow (born 1987) is an American computer scientist, engineer, and executive, most noted for his work on artificial neural networks and deep learning. He is a research scientist at Google DeepMind, was previously employed as a research scientist at Google Brain and director of machine learning at Apple as well as one of the first employees at OpenAI. He is best known for inventing gene"
+    },
+    "target": {
+      "id": 1330,
+      "name": "Aaron Courville",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "Full Professor at Université de Montréal and founding core member of Mila. Co-authored the seminal Deep Learning textbook with Bengio and Goodfellow. Holds a CIFAR AI Chair. Incoming scientific director of IVADO as of 2025.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1214,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor of AI for Mainstreet Act",
+    "evidence": "Sen. Jon Husted (R-Ohio) joined Sens. Todd Young (R-Ind.) and Maria Cantwell's (D-Wash.) AI for Mainstreet Act",
+    "source": {
+      "id": 79,
+      "name": "Jon Husted",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Jon Husted is a Republican U.S. Senator from Ohio who began serving in January 2025 after being appointed to fill the vacancy created by JD Vance's resignation. He previously served as Ohio's 66th lieutenant governor from 2019 to 2025 and as Ohio's 50th secretary of state from 2011 to 2019. As lieutenant governor, he led regulatory reform efforts using artificial intelligence to remove 5 million w"
+    },
+    "target": {
+      "id": 73,
+      "name": "Todd Young",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Todd Christopher Young is an American politician and attorney serving as the senior United States senator from Indiana, a seat he has held since 2017. He is a member of the Republican Party and previously served as the U.S. representative for Indiana's 9th congressional district. Young currently serves on the U.S. Senate Committees on Finance; Foreign Relations; Health, Education, Labor & Pensions",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1215,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor of AI for Mainstreet Act",
+    "evidence": "Sen. Jon Husted (R-Ohio) joined Sens. Todd Young (R-Ind.) and Maria Cantwell's (D-Wash.) AI for Mainstreet Act",
+    "source": {
+      "id": 79,
+      "name": "Jon Husted",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Jon Husted is a Republican U.S. Senator from Ohio who began serving in January 2025 after being appointed to fill the vacancy created by JD Vance's resignation. He previously served as Ohio's 66th lieutenant governor from 2019 to 2025 and as Ohio's 50th secretary of state from 2011 to 2019. As lieutenant governor, he led regulatory reform efforts using artificial intelligence to remove 5 million w"
+    },
+    "target": {
+      "id": 110,
+      "name": "Maria Cantwell",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Maria Cantwell is a U.S. Senator from Washington State, serving as Ranking Member of the Senate Committee on Commerce, Science and Transportation. She has introduced multiple AI-related bills in 2026, including the NSF AI Education Act and the Small Business Artificial Intelligence Training Act. She previously served in the U.S. House of Representatives from 1993-95 and worked as vice president fo",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1216,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor of AI Talent Act",
+    "evidence": "Sen. Jon Husted (R-Ohio) joined Sen. Andy Kim (D-N.J.) in introducing the bipartisan AI Talent Act",
+    "source": {
+      "id": 79,
+      "name": "Jon Husted",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Jon Husted is a Republican U.S. Senator from Ohio who began serving in January 2025 after being appointed to fill the vacancy created by JD Vance's resignation. He previously served as Ohio's 66th lieutenant governor from 2019 to 2025 and as Ohio's 50th secretary of state from 2011 to 2019. As lieutenant governor, he led regulatory reform efforts using artificial intelligence to remove 5 million w"
+    },
+    "target": {
+      "id": 1100,
+      "name": "Andy Kim",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Andy Kim is a U.S. Senator from New Jersey who serves as a Democrat on multiple committees including Commerce, Science, and Transportation. He has been actively involved in AI-related legislation, co-introducing the Artificial Intelligence Ready Data Act with Senator Ted Budd to open government data sets for training American AI models. Kim also co-introduced the AI Talent Act with Senator Jon Hus",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1223,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor of AI Data Center Moratorium Act",
+    "evidence": "Sen. Bernie Sanders (I-Vt.) and Rep. Alexandria Ocasio-Cortez (D-N.Y.) today announced the Artificial Intelligence (AI) Data Center Moratorium Act",
+    "source": {
+      "id": 10,
+      "name": "Alexandria Ocasio-Cortez",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Rep. Alexandria Ocasio-Cortez (D-N.Y.) announced the Artificial Intelligence (AI) Data Center Moratorium Act on March 25, 2026, alongside Sen. Bernie Sanders. She announced on Friday that she is jumping into the race to be the top Democrat on the influential House Oversight Committee. Ocasio-Cortez was born on October 13, 1989, in the Bronx, New York, and began representing New York's 14th congres"
+    },
+    "target": {
+      "id": 96,
+      "name": "Bernie Sanders",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Bernie Sanders is an American politician serving as the senior United States senator from Vermont, a seat he has held since 2007. He is the longest-serving independent in U.S. congressional history. Sanders was reelected to a fourth Senate term in 2024, defeating Republican Gerald Malloy. He currently serves as the Ranking Member of the Senate Health, Education, Labor and Pensions Committee after ",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1241,
+    "edge_type": "collaborator",
+    "role": "chief research officer at OpenAI",
+    "evidence": "That responsibility falls to OpenAI's twin heads of research—chief research officer Mark Chen and chief scientist Jakub Pachocki.",
+    "source": {
+      "id": 16,
+      "name": "Jakub Pachocki",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "Jakub Pachocki is OpenAI's chief scientist who sets the company's long-term research goals and played key roles in the development of both GPT-4 and reasoning models. He was born in 1991 in Gdańsk, Poland, and joined OpenAI in 2017, becoming chief scientist in May 2024 after Ilya Sutskever left the company. Pachocki obtained his PhD from Carnegie Mellon University under the supervision of Gary Mil"
+    },
+    "target": {
+      "id": 1344,
+      "name": "Mark Chen",
+      "type": "person",
+      "category": "Executive",
+      "website": null,
+      "notes_excerpt": "Chief Research Officer at OpenAI. Joined 2018 after working as quantitative trader at Jane Street Capital. Led development of Codex (adapting GPT-3 for code generation), co-led vision team for GPT-4 (image recognition integration), contributed to DALL-E. Advocates focusing on \"main quest\" of AGI over short-term product competition. Views math/coding proficiency as \"bedrock for a far more general f",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1242,
+    "edge_type": "collaborator",
+    "role": "former chief scientist at OpenAI",
+    "evidence": "Pachocki left an academic career in theoretical computer science to join OpenAI in 2017 and replaced Sutskever as chief scientist in 2024.",
+    "source": {
+      "id": 16,
+      "name": "Jakub Pachocki",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "Jakub Pachocki is OpenAI's chief scientist who sets the company's long-term research goals and played key roles in the development of both GPT-4 and reasoning models. He was born in 1991 in Gdańsk, Poland, and joined OpenAI in 2017, becoming chief scientist in May 2024 after Ilya Sutskever left the company. Pachocki obtained his PhD from Carnegie Mellon University under the supervision of Gary Mil"
+    },
+    "target": {
+      "id": 835,
+      "name": "Ilya Sutskever",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "Co-invented AlexNet (2012) and made foundational contributions to transformer architecture and GPT models. Participated in November 2023 board vote to temporarily oust Sam Altman from OpenAI over safety concerns. Founded SSI in June 2024 with $1 billion initial funding, reaching $30+ billion valuation by 2025. Claims 'age of scaling is over' and that new research breakthroughs beyond current parad",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1251,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "Altman personally recruited Greg Brockman, then CTO of Stripe, and famed AI researcher Ilya Sutskever, known for his pioneering work in neural networks, to join as co-founders",
+    "source": {
+      "id": 18,
+      "name": "Sam Altman",
+      "type": "person",
+      "category": "Executive",
+      "website": null,
+      "notes_excerpt": "Sam Altman is the CEO of OpenAI, the artificial intelligence research organization that developed ChatGPT. He became CEO of OpenAI in 2019 after co-founding the organization in 2015. In November 2023, he was briefly fired by OpenAI's board of directors but was reinstated five days later. His net worth was estimated at US$3.3 billion by Forbes in March 2026."
+    },
+    "target": {
+      "id": 835,
+      "name": "Ilya Sutskever",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "Co-invented AlexNet (2012) and made foundational contributions to transformer architecture and GPT models. Participated in November 2023 board vote to temporarily oust Sam Altman from OpenAI over safety concerns. Founded SSI in June 2024 with $1 billion initial funding, reaching $30+ billion valuation by 2025. Claims 'age of scaling is over' and that new research breakthroughs beyond current parad",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1254,
+    "edge_type": "collaborator",
+    "role": "co-lead Labs team",
+    "evidence": "he'll co-lead the Labs team with Ben Mann, who has been the company's product engineering lead",
+    "source": {
+      "id": 19,
+      "name": "Mike Krieger",
+      "type": "person",
+      "category": "Executive",
+      "website": null,
+      "notes_excerpt": "Mike Krieger is the chief product officer of Anthropic. He co-founded Instagram with Kevin Systrom in 2010 and served as its Chief Technology Officer until 2018. He recently moved from his CPO role to co-lead Anthropic's internal incubator called the 'Labs' team. He previously co-founded the AI-powered news app Artifact which was sold to Yahoo."
+    },
+    "target": {
+      "id": 1349,
+      "name": "Ben Mann",
+      "type": "person",
+      "category": "Executive",
+      "website": null,
+      "notes_excerpt": "Co-founder of Anthropic. Previously architect of GPT-3 at OpenAI. Left OpenAI in 2020 with seven colleagues to found Anthropic because safety was not the top priority. Advocates layered safety approach (\"Swiss Cheese Model of Defense\"). Key contributor to Constitutional AI methodology. Estimates 50th percentile chance of superintelligence by ~2028. Describes alignment challenge as \"how do we keep ",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1257,
+    "edge_type": "collaborator",
+    "role": "former head of Google Labs",
+    "evidence": "Clay Bavor, former head of Google Labs, said Woodward's ability to move fast, break down barriers and execute 'has landed him right at the center of the most important work at Google.'",
+    "source": {
+      "id": 20,
+      "name": "Josh Woodward",
+      "type": "person",
+      "category": "Executive",
+      "website": null,
+      "notes_excerpt": "Josh Woodward is a 42-year-old Oklahoma native who started at Google by way of a product marketing internship in 2009. He is currently Vice President at Google, leading both Google Labs and the Gemini app. Woodward was promoted to run the Gemini app in April while keeping his existing job running Google Labs. Google said in October that the Gemini app's monthly active users swelled to 650 million "
+    },
+    "target": {
+      "id": 1350,
+      "name": "Clay Bavor",
+      "type": "person",
+      "category": "Executive",
+      "website": null,
+      "notes_excerpt": "Co-founder of Sierra AI (with Bret Taylor), an enterprise AI agent platform valued at $10B. Former Google VP (18 years), led Google Labs, AR/VR, Project Starline, Google Lens. Sierra hit $100M ARR in 7 quarters. AI optimist focused on applied/enterprise AI.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1261,
+    "edge_type": "collaborator",
+    "role": "co-author",
+    "evidence": "He is best known for If Anyone Builds It, Everyone Dies: Why Superhuman AI Would Kill Us All, a New York Times Best Seller he co-authored with Nate Soares",
+    "source": {
+      "id": 22,
+      "name": "Eliezer Yudkowsky",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "Eliezer Yudkowsky is an American artificial intelligence researcher and writer on decision theory and ethics, known for popularizing ideas related to friendly artificial intelligence. He is the founder of and a research fellow at the Machine Intelligence Research Institute (MIRI), a private research nonprofit based in Berkeley, California. He co-authored the New York Times Best Seller 'If Anyone B"
+    },
+    "target": {
+      "id": 999,
+      "name": "Nate Soares",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "Co-authored the 2025 New York Times bestseller 'If Anyone Builds It, Everyone Dies' arguing that superintelligent AI will cause human extinction. Has been researching AI alignment for over a decade at MIRI, founded before major AI companies existed. Previously worked at Google on Compute Engine and Microsoft on Office 2013. Argues that modern AI systems are 'grown rather than built' making them fu",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1262,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "His work on the prospect of a runaway intelligence explosion influenced philosopher Nick Bostrom's 2014 book Superintelligence: Paths, Dangers, Strategies.",
+    "source": {
+      "id": 22,
+      "name": "Eliezer Yudkowsky",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "Eliezer Yudkowsky is an American artificial intelligence researcher and writer on decision theory and ethics, known for popularizing ideas related to friendly artificial intelligence. He is the founder of and a research fellow at the Machine Intelligence Research Institute (MIRI), a private research nonprofit based in Berkeley, California. He co-authored the New York Times Best Seller 'If Anyone B"
+    },
+    "target": {
+      "id": 847,
+      "name": "Nick Bostrom",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Author of influential 2014 book 'Superintelligence' that shaped AI safety discourse. Founded Future of Humanity Institute at Oxford in 2005, closed in 2024. Recently published 'Deep Utopia: Life and Meaning in a Solved World' (2024) and 'Optimal Timing for Superintelligence' (2026). Co-authored major policy paper 'Public Policy and Superintelligent AI: A Vector Field Approach' outlining governance",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1266,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor",
+    "evidence": "Today, U.S. Senators Cory Booker (D-NJ), Mike Rounds (R-SD), and Martin Heinrich (D-NM) along with Congressmen Ted Lieu (D-CA) and Jay Obernolte (R-CA), reintroduced the AI Grand Challenges Act",
+    "source": {
+      "id": 24,
+      "name": "Cory Booker",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Cory Booker is a U.S. Senator from New Jersey who was elected in 2013 and represents New Jersey as the state's first Black senator. He previously served as mayor of Newark from 2006 to 2013. In March 2025, Booker delivered the longest speech in Senate history, speaking for more than 25 hours in protest of the Trump administration's policies. He has been a leader in criminal justice reform and help"
+    },
+    "target": {
+      "id": 68,
+      "name": "Mike Rounds",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Mike Rounds is a Republican U.S. Senator from South Dakota who was sworn into the United States Senate on January 6th, 2015. He serves as co-chair of the Senate AI Caucus and serves on five committees: Senate Appropriations; Armed Services; Banking, Housing and Urban Affairs; Indian Affairs; and the Select Committee on Intelligence. He previously served as the 31st governor of South Dakota from 20",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  }
+]

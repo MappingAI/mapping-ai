@@ -1,0 +1,92 @@
+[
+  {
+    "edge_id": 1267,
+    "proposed_url": "https://www.booker.senate.gov/news/press/booker-rounds-heinrich-lieu-and-obernolte-reintroduce-bipartisan-ai-grand-challenges-act",
+    "justification": "Official Senate press release from Booker's office explicitly names Booker, Heinrich, Lieu, and Obernolte as co-sponsors of the reintroduced AI Grand Challenges Act.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1268,
+    "proposed_url": "https://www.booker.senate.gov/news/press/booker-rounds-heinrich-lieu-and-obernolte-reintroduce-bipartisan-ai-grand-challenges-act",
+    "justification": "Same press release names Booker and Ted Lieu as co-sponsors of the reintroduced AI Grand Challenges Act.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1269,
+    "proposed_url": "https://www.booker.senate.gov/news/press/booker-rounds-heinrich-lieu-and-obernolte-reintroduce-bipartisan-ai-grand-challenges-act",
+    "justification": "Same press release names Booker and Jay Obernolte as co-sponsors of the reintroduced AI Grand Challenges Act.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1270,
+    "proposed_url": "https://www.booker.senate.gov/news/press/booker-heinrich-young-rounds-introduce-bipartisan-bicameral-bill-to-expand-access-to-artificial-intelligence-research",
+    "justification": "Booker's official Senate press release explicitly names Booker, Heinrich, Todd Young, and Rounds as co-sponsors introducing the CREATE AI Act of 2023.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1271,
+    "proposed_url": "https://eshoo.house.gov/media/press-releases/ai-caucus-leaders-introduce-bipartisan-bill-expand-access-ai-research",
+    "justification": "Eshoo's House press release names Eshoo, McCaul, Beyer, and Obernolte as introducing the House companion CREATE AI Act bill, directly evidencing Booker's Senate bill's House companion sponsorship.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1274,
+    "proposed_url": "https://arxiv.org/abs/2411.00986",
+    "justification": "arXiv page for 'Taking AI Welfare Seriously' lists Kyle Fish and David Chalmers among the co-authors, directly evidencing their collaboration on the paper.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1275,
+    "proposed_url": "https://arxiv.org/abs/2411.00986",
+    "justification": "arXiv page for 'Taking AI Welfare Seriously' lists Kyle Fish and Robert Long (Rob Long) as co-authors, directly evidencing their collaboration.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1276,
+    "proposed_url": "https://eleosai.org/post/eleos-commends-anthropic-model-welfare-efforts/",
+    "justification": "Eleos AI post describes Eleos (led by Rob Long) conducting model welfare assessments of Anthropic's Claude in collaboration with Kyle Fish's team, evidencing the Fish–Long collaboration on assessments.",
+    "confidence": "medium"
+  },
+  {
+    "edge_id": 1277,
+    "proposed_url": "https://eleosai.org/post/eleos-commends-anthropic-model-welfare-efforts/",
+    "justification": "Eleos AI post describes Eleos (co-founded by Kathleen Finlinson) conducting self-report model welfare assessments with Anthropic, evidencing the Fish–Finlinson collaboration.",
+    "confidence": "medium"
+  },
+  {
+    "edge_id": 1278,
+    "proposed_url": "https://www.nobelprize.org/prizes/economic-sciences/2024/press-release/",
+    "justification": "Official Nobel Prize press release jointly names Daron Acemoglu, Simon Johnson, and James A. Robinson as co-recipients of the 2024 Nobel Prize in Economic Sciences.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1279,
+    "proposed_url": "https://shapingwork.mit.edu/2024nobelprize/",
+    "justification": "MIT Shaping the Future of Work Initiative page names Daron Acemoglu, Simon Johnson, and David Autor as faculty co-directors, directly evidencing their co-director collaboration.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1286,
+    "proposed_url": "https://www.axios.com/pro/tech-policy/2025/03/25/michael-kratsios-confirmed-to-lead-ostp",
+    "justification": "Axios article on Kratsios's OSTP confirmation explicitly states he will work closely with AI and crypto czar David Sacks on regulation and policy.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1306,
+    "proposed_url": "https://en.wikipedia.org/wiki/Regina_Barzilay",
+    "justification": "Wikipedia biography of Regina Barzilay explicitly states she spent a year as a postdoctoral researcher at Cornell University after her PhD.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1311,
+    "proposed_url": "https://deepmind.google/blog/demis-hassabis-john-jumper-awarded-nobel-prize-in-chemistry/",
+    "justification": "Google DeepMind's official blog post announces that Demis Hassabis and John Jumper were jointly awarded the 2024 Nobel Prize in Chemistry for AlphaFold.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1323,
+    "proposed_url": "https://en.wikipedia.org/wiki/Timnit_Gebru",
+    "justification": "Wikipedia article on Timnit Gebru explicitly states she co-led Google's Ethical AI team with Margaret Mitchell before both were fired.",
+    "confidence": "high"
+  }
+]

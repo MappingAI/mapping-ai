@@ -1,0 +1,392 @@
+[
+  {
+    "edge_id": 1145,
+    "edge_type": "partner",
+    "role": null,
+    "evidence": "Clarifai, a global leader in AI orchestration and development, and pioneer of the full-stack computer vision platform, today announced its membership in the Berkeley Artificial Intelligence Research (BAIR) Lab's Open Research Commons (ORC)",
+    "source": {
+      "id": 1109,
+      "name": "Berkeley Artificial Intelligence Research",
+      "type": "organization",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "The Berkeley Artificial Intelligence Research (BAIR) Lab brings together UC Berkeley researchers across the areas of computer vision, machine learning, natural language processing, planning, and robotics. BAIR includes over two dozen faculty and more than a hundred graduate students pursuing research on fundamental advances in the above areas as well as cross-cutting themes including multi-modal d"
+    },
+    "target": {
+      "id": 1312,
+      "name": "Clarifai",
+      "type": "organization",
+      "category": "Deployers & Platforms",
+      "website": null,
+      "notes_excerpt": "Enterprise AI platform founded in 2013 by Matt Zeiler, headquartered in Washington, D.C. One of the first deep learning platforms, specializing in computer vision, NLP, and audio analysis. Core technology based on convolutional neural networks. Key government/defense work: participated in Project Maven (DoD AI program), signed R&D agreement with U.S. Army for EO/IR data labeling, created subsidiar",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1153,
+    "edge_type": "partner",
+    "role": null,
+    "evidence": "The site represents a major milestone in the university's enterprise-wide Responsible AI initiative, a multi‑year effort led by the Emory AI Group with input from the Responsible AI Executive Governance Committee and partners across Emory University and Emory Healthcare.",
+    "source": {
+      "id": 1111,
+      "name": "Responsible AI Initiative",
+      "type": "organization",
+      "category": "AI Safety/Alignment",
+      "website": null,
+      "notes_excerpt": "Multiple organizations operate under the name \"Responsible AI Initiative\" with different scopes and affiliations. The University of Utah operates the One-U Responsible AI Initiative, which aims to advance AI to achieve societal good while protecting privacy, civil rights, and civil liberties. Emory University launched a Responsible AI website as part of their enterprise-wide Responsible AI initiat"
+    },
+    "target": {
+      "id": 1316,
+      "name": "Emory AI Group",
+      "type": "organization",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Research collective within Emory University encompassing multiple AI-focused labs and faculty across the Department of Computer Science and School of Medicine. Includes the Emory NLP group, AI and Simulation Lab (geospatial AI, computer vision, foundation models), MAIX Lab (health AI), and Cardiothoracic Imaging and AI Lab. Faculty research spans natural language processing, large language models,",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1156,
+    "edge_type": "partner",
+    "role": "affiliated school",
+    "evidence": "As of 2017, the Université de Montréal has 16 faculties and two affiliated schools (Polytechnique Montréal and HEC Montréal)",
+    "source": {
+      "id": 1112,
+      "name": "Université de Montréal",
+      "type": "organization",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Université de Montréal is a French-language institution of higher learning founded in 1878, regarded as one of the most important universities in Canada in terms of research and one of the largest by enrolment. The university has 16 faculties and two affiliated schools (Polytechnique Montréal and HEC Montréal), with an enrollment of nearly 67,600 students in over 600 programs. UdeM ranked 9th glob"
+    },
+    "target": {
+      "id": 1210,
+      "name": "HEC Montréal",
+      "type": "organization",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Montreal business school and founding partner of IVADO and Mila. Established a Chair in Organizational Ethics and AI Governance in 2024-25 and, with Tech3Lab and IVADO, launched a government-funded AI professional training program in January 2026. Faculty contribute to Mila and AI governance research.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1157,
+    "edge_type": "partner",
+    "role": "affiliated school",
+    "evidence": "As of 2017, the Université de Montréal has 16 faculties and two affiliated schools (Polytechnique Montréal and HEC Montréal)",
+    "source": {
+      "id": 1112,
+      "name": "Université de Montréal",
+      "type": "organization",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Université de Montréal is a French-language institution of higher learning founded in 1878, regarded as one of the most important universities in Canada in terms of research and one of the largest by enrolment. The university has 16 faculties and two affiliated schools (Polytechnique Montréal and HEC Montréal), with an enrollment of nearly 67,600 students in over 600 programs. UdeM ranked 9th glob"
+    },
+    "target": {
+      "id": 1209,
+      "name": "Polytechnique Montréal",
+      "type": "organization",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "French-language engineering school in Montreal and a founding partner of both IVADO and Mila — Quebec's premier AI research institutes. Its researchers work on AI applications in health, transportation, and cybersecurity, supported by $20M+ in grants from CFI and the Quebec government.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1161,
+    "edge_type": "partner",
+    "role": "Partner University",
+    "evidence": "Mila is the result of a unique collaboration between Université de Montréal and McGill University, in close collaboration with Polytechnique Montréal and HEC Montréal",
+    "source": {
+      "id": 1113,
+      "name": "Mila - Quebec Artificial Intelligence Institute",
+      "type": "organization",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Mila - Quebec Artificial Intelligence Institute is the world's largest academic AI research center with over 1,400 researchers and 140+ professors. Founded in 1993 by Yoshua Bengio at Université de Montréal, it is an independent nonprofit research organization dedicated to advancing artificial intelligence through fundamental research and talent development. The institute is recognized worldwide f"
+    },
+    "target": {
+      "id": 1112,
+      "name": "Université de Montréal",
+      "type": "organization",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Université de Montréal is a French-language institution of higher learning founded in 1878, regarded as one of the most important universities in Canada in terms of research and one of the largest by enrolment. The university has 16 faculties and two affiliated schools (Polytechnique Montréal and HEC Montréal), with an enrollment of nearly 67,600 students in over 600 programs. UdeM ranked 9th glob",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1162,
+    "edge_type": "partner",
+    "role": "Partner University",
+    "evidence": "Mila is the result of a unique collaboration between Université de Montréal and McGill University, in close collaboration with Polytechnique Montréal and HEC Montréal",
+    "source": {
+      "id": 1113,
+      "name": "Mila - Quebec Artificial Intelligence Institute",
+      "type": "organization",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Mila - Quebec Artificial Intelligence Institute is the world's largest academic AI research center with over 1,400 researchers and 140+ professors. Founded in 1993 by Yoshua Bengio at Université de Montréal, it is an independent nonprofit research organization dedicated to advancing artificial intelligence through fundamental research and talent development. The institute is recognized worldwide f"
+    },
+    "target": {
+      "id": 1116,
+      "name": "McGill University",
+      "type": "organization",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "McGill University was founded in 1821 from a generous bequest by James McGill, a prominent Scottish merchant. The university offers an Applied Artificial Intelligence Minor in the Faculty of Engineering that provides foundation for applying AI techniques in various fields. McGill has several AI-related organizations including the McGill Centre for Intelligent Machines, which has been a world leade",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1163,
+    "edge_type": "partner",
+    "role": "Partner University",
+    "evidence": "Mila is the result of a unique collaboration between Université de Montréal and McGill University, in close collaboration with Polytechnique Montréal and HEC Montréal",
+    "source": {
+      "id": 1113,
+      "name": "Mila - Quebec Artificial Intelligence Institute",
+      "type": "organization",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Mila - Quebec Artificial Intelligence Institute is the world's largest academic AI research center with over 1,400 researchers and 140+ professors. Founded in 1993 by Yoshua Bengio at Université de Montréal, it is an independent nonprofit research organization dedicated to advancing artificial intelligence through fundamental research and talent development. The institute is recognized worldwide f"
+    },
+    "target": {
+      "id": 1209,
+      "name": "Polytechnique Montréal",
+      "type": "organization",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "French-language engineering school in Montreal and a founding partner of both IVADO and Mila — Quebec's premier AI research institutes. Its researchers work on AI applications in health, transportation, and cybersecurity, supported by $20M+ in grants from CFI and the Quebec government.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1164,
+    "edge_type": "partner",
+    "role": "Partner University",
+    "evidence": "Mila is the result of a unique collaboration between Université de Montréal and McGill University, in close collaboration with Polytechnique Montréal and HEC Montréal",
+    "source": {
+      "id": 1113,
+      "name": "Mila - Quebec Artificial Intelligence Institute",
+      "type": "organization",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Mila - Quebec Artificial Intelligence Institute is the world's largest academic AI research center with over 1,400 researchers and 140+ professors. Founded in 1993 by Yoshua Bengio at Université de Montréal, it is an independent nonprofit research organization dedicated to advancing artificial intelligence through fundamental research and talent development. The institute is recognized worldwide f"
+    },
+    "target": {
+      "id": 1210,
+      "name": "HEC Montréal",
+      "type": "organization",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Montreal business school and founding partner of IVADO and Mila. Established a Chair in Organizational Ethics and AI Governance in 2024-25 and, with Tech3Lab and IVADO, launched a government-funded AI professional training program in January 2026. Faculty contribute to Mila and AI governance research.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1166,
+    "edge_type": "partner",
+    "role": "Sister Institute",
+    "evidence": "Since 2017, Mila and its sister institutes, Amii(Alberta) and Vector(Ontario), play a central role in the Pan-Canadian Artificial Intelligence Strategy",
+    "source": {
+      "id": 1113,
+      "name": "Mila - Quebec Artificial Intelligence Institute",
+      "type": "organization",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Mila - Quebec Artificial Intelligence Institute is the world's largest academic AI research center with over 1,400 researchers and 140+ professors. Founded in 1993 by Yoshua Bengio at Université de Montréal, it is an independent nonprofit research organization dedicated to advancing artificial intelligence through fundamental research and talent development. The institute is recognized worldwide f"
+    },
+    "target": {
+      "id": 1319,
+      "name": "Amii",
+      "type": "organization",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "The Alberta Machine Intelligence Institute (Amii), one of Canada's three national AI institutes alongside Mila and Vector Institute, funded through the Pan-Canadian AI Strategy. Founded over 20 years ago, headquartered in Edmonton. Mandate to build technical/scientific capacity in machine learning and translate it into commercial applications across Alberta's economic sectors. Key partner in the C",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1168,
+    "edge_type": "partner",
+    "role": "Research Partner",
+    "evidence": "In December 2020, Mila teamed up with IBM to accelerate artificial intelligence (AI) and machine learning research using open-source technology",
+    "source": {
+      "id": 1113,
+      "name": "Mila - Quebec Artificial Intelligence Institute",
+      "type": "organization",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Mila - Quebec Artificial Intelligence Institute is the world's largest academic AI research center with over 1,400 researchers and 140+ professors. Founded in 1993 by Yoshua Bengio at Université de Montréal, it is an independent nonprofit research organization dedicated to advancing artificial intelligence through fundamental research and talent development. The institute is recognized worldwide f"
+    },
+    "target": {
+      "id": 1192,
+      "name": "IBM",
+      "type": "organization",
+      "category": "Deployers & Platforms",
+      "website": null,
+      "notes_excerpt": "IBM is a global enterprise technology company offering AI via its watsonx platform. It advocates 'precision regulation'—risk-based, use-case-specific rules rather than broad AI restrictions. IBM reported $12.5B in generative AI bookings as of early 2026 and positions AI governance software as a primary growth driver.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1177,
+    "edge_type": "partner",
+    "role": null,
+    "evidence": "In December 2018, Element AI also partnered with Amnesty International and released a study measuring online abuse against women in politics and journalism on Twitter",
+    "source": {
+      "id": 1114,
+      "name": "Element AI",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "website": null,
+      "notes_excerpt": "Element AI was a Canadian multinational artificial intelligence company based in Montreal, Quebec that was founded in October 2016. The company was funded by the Government of Canada for CAD$5 million, and raised US$102 million independently, before being acquired by ServiceNow. ServiceNow announced it has signed an agreement to acquire Element AI on November 30, 2020, with ServiceNow completing t"
+    },
+    "target": {
+      "id": 1325,
+      "name": "Amnesty International",
+      "type": "organization",
+      "category": "Ethics/Bias/Rights",
+      "website": null,
+      "notes_excerpt": "Major international human rights organization with strong positions on AI governance and digital rights. Calls for outright ban on facial recognition technology for mass surveillance by police and state agencies, citing racial discrimination (higher false positive rates for women and people of color) and chilling effects on peaceful assembly. Runs the 'Ban the Scan' campaign documenting FRT harms ",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1178,
+    "edge_type": "partner",
+    "role": null,
+    "evidence": "Element AI had partnerships with GIC, Singapore Management University, the Port of Montreal, LG Electronics, among others",
+    "source": {
+      "id": 1114,
+      "name": "Element AI",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "website": null,
+      "notes_excerpt": "Element AI was a Canadian multinational artificial intelligence company based in Montreal, Quebec that was founded in October 2016. The company was funded by the Government of Canada for CAD$5 million, and raised US$102 million independently, before being acquired by ServiceNow. ServiceNow announced it has signed an agreement to acquire Element AI on November 30, 2020, with ServiceNow completing t"
+    },
+    "target": {
+      "id": 1326,
+      "name": "Singapore Management University",
+      "type": "organization",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Singapore Management University (SMU) hosts the Centre for AI and Data Governance, established in 2019 at its School of Law. Received a S$4.5M grant from the National Research Foundation and Infocomm Media Development Authority for a five-year Research Programme on the Governance of AI and Data Use, structured around three streams: AI and Society, AI and Industry, and AI and Commercialisation. Pub",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1199,
+    "edge_type": "partner",
+    "role": null,
+    "evidence": "With headquarters in Geneva and regional chapters in over 40 countries, IASEAI has become a trusted advisor to the United Nations, the OECD, and the European Union on matters related to AI governance",
+    "source": {
+      "id": 1117,
+      "name": "International Association for Safe and Ethical AI",
+      "type": "organization",
+      "category": "AI Safety/Alignment",
+      "website": null,
+      "notes_excerpt": "The International Association for Safe and Ethical AI (IASEAI) is a non-profit organization founded in 2024 with headquarters in Paris, France. The organization's stated mission is to address the risks and opportunities associated with advances in artificial intelligence and to ensure that AI systems operate safely and ethically, benefiting all of humanity. IASEAI held its inaugural conference, IA"
+    },
+    "target": {
+      "id": 1336,
+      "name": "OECD",
+      "type": "organization",
+      "category": "Government/Agency",
+      "website": null,
+      "notes_excerpt": "Organisation for Economic Co-operation and Development (38 member countries). Published OECD AI Principles in 2019 (first intergovernmental AI standard), updated 2024 — now endorsed by 47 jurisdictions. Operates AI Policy Observatory (oecd.ai) tracking AI strategies, policies, and incidents globally. Integrated GPAI partnership under OECD umbrella (44 countries). Partners with UN Office of Tech En",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1661,
+    "edge_type": "partner",
+    "role": null,
+    "evidence": "Today, in partnership with the Lawyers' Committee for Civil Rights Under Law, Senator Ed Markey (D-MA)and Representatives Yvette Clarke, Summer Lee, Ayanna Pressley, and Pramila Jayapal introduced the AI Civil Rights Act",
+    "source": {
+      "id": 113,
+      "name": "Ed Markey",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Senator Edward J. Markey (D-Mass.) is a member of the Commerce, Science and Transportation Committee and has served in the U.S. Senate since 2013. He reintroduced the Artificial Intelligence Civil Rights Act on December 2, 2025, alongside Representative Yvette Clarke, to prevent companies from using biased and discriminatory AI-powered algorithms in critical decisions affecting Americans' lives. M"
+    },
+    "target": {
+      "id": 1477,
+      "name": "Lawyers' Committee for Civil Rights Under Law",
+      "type": "organization",
+      "category": "Ethics/Bias/Rights",
+      "website": null,
+      "notes_excerpt": "Nonpartisan civil rights legal organization founded in 1963 at the request of President Kennedy. Champions the AI Civil Rights Act (co-endorsed with Rep. Pressley, Sen. Markey, Rep. Clarke) requiring transparency, accountability, and anti-discrimination safeguards in AI systems used in housing, lending, healthcare, employment, education, and law enforcement. Applauded Biden's AI Executive Order an",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1675,
+    "edge_type": "partner",
+    "role": "Technology partner for AI workforce training",
+    "evidence": "Today, Governor Gavin Newsom announced California has signed agreements with four of the largest technology companies in the GenAI sector... Working with Google, Adobe, IBM, and Microsoft, the state will help train California's workforce for a wide range of jobs in AI",
+    "source": {
+      "id": 116,
+      "name": "Gavin Newsom",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Gavin Newsom is the 40th Governor of California who took office in 2019 and is currently serving his second term. He signed executive order N-5-26 on March 30, 2026 to regulate artificial intelligence implications prior to California government contracts, emphasizing public safety and misuse. California is home to 33 of the top 50 privately held AI companies around the globe and leads with 25% of "
+    },
+    "target": {
+      "id": 1192,
+      "name": "IBM",
+      "type": "organization",
+      "category": "Deployers & Platforms",
+      "website": null,
+      "notes_excerpt": "IBM is a global enterprise technology company offering AI via its watsonx platform. It advocates 'precision regulation'—risk-based, use-case-specific rules rather than broad AI restrictions. IBM reported $12.5B in generative AI bookings as of early 2026 and positions AI governance software as a primary growth driver.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  }
+]

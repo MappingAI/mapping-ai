@@ -1,0 +1,392 @@
+[
+  {
+    "edge_id": 794,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "Bengio received the 2018 ACM A.M. Turing Award, often referred to as the 'Nobel Prize of Computing', together with Geoffrey Hinton and Yann LeCun, for their foundational work on deep learning",
+    "source": {
+      "id": 29,
+      "name": "Yoshua Bengio",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Yoshua Bengio is a Canadian computer scientist born March 5, 1964, in Paris, France, and is a full professor at Université de Montréal. He received the 2018 A.M. Turing Award together with Geoffrey Hinton and Yann LeCun for their foundational work on deep learning. In June 2025, Bengio launched a nonprofit organization called LawZero aimed at building 'honest' AI systems that can detect and block "
+    },
+    "target": {
+      "id": 821,
+      "name": "Geoffrey Hinton",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Left Google in May 2023 to speak freely about AI risks after decades of pioneering neural network research. Estimates 10-20% chance of human extinction from superintelligent AI and 50% probability AI will surpass human intelligence within 20 years. Testified to Senate Judiciary Committee in December 2025 and receives funding from Good Ventures foundation ($700,000) to continue AI safety advocacy w",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 795,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "Bengio received the 2018 ACM A.M. Turing Award, often referred to as the 'Nobel Prize of Computing', together with Geoffrey Hinton and Yann LeCun, for their foundational work on deep learning",
+    "source": {
+      "id": 29,
+      "name": "Yoshua Bengio",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Yoshua Bengio is a Canadian computer scientist born March 5, 1964, in Paris, France, and is a full professor at Université de Montréal. He received the 2018 A.M. Turing Award together with Geoffrey Hinton and Yann LeCun for their foundational work on deep learning. In June 2025, Bengio launched a nonprofit organization called LawZero aimed at building 'honest' AI systems that can detect and block "
+    },
+    "target": {
+      "id": 92,
+      "name": "Yann LeCun",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "Yann LeCun is Chief AI Scientist at Meta and Silver Professor at New York University affiliated with the NYU Center for Data Science and the Courant Institute of Mathematical Sciences. He received the 2018 ACM Turing Award shared with Geoffrey Hinton and Yoshua Bengio for contributions to deep learning. He announced plans to leave Meta after ten years to found his own company focused on world-mode",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 807,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor of GUARDRAILS Act",
+    "evidence": "U.S. Senator Chris Murphy (D-Conn.) joined U.S. Senator Brian Schatz (D-Hawai'i) in introducing the Guaranteeing and Upholding Americans' Right to Decide Responsible AI Laws and Standards (GUARDRAILS) Act",
+    "source": {
+      "id": 7,
+      "name": "Brian Schatz",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Brian Schatz is Hawaii's senior United States Senator who has served since 2012 and focuses on helping workers, veterans, and families while leading key legislation on health care, climate change, and technology. He serves as Chairman of the Senate Committee on Indian Affairs and is a member of multiple committees including Appropriations, Commerce Science and Transportation, Foreign Relations, an"
+    },
+    "target": {
+      "id": 41,
+      "name": "Chris Murphy",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Chris Murphy is the junior United States Senator from Connecticut, serving since 2013. He previously served in the U.S. House of Representatives from 2007 to 2013, representing Connecticut's 5th congressional district. Murphy was reelected to a third Senate term in 2024, defeating Republican challenger Matthew Corey. He has become a prominent voice on AI regulation, arguing that unregulated artifi",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 808,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor on AI company transparency letters",
+    "evidence": "U.S. Senator Brian Schatz (D-Hawai'i), a senior member of the Senate Committee on Commerce, Science, and Transportation, and Katie Britt (R-Ala.) called on leading artificial intelligence (AI) companies to improve transparency around the capabilities of their models",
+    "source": {
+      "id": 7,
+      "name": "Brian Schatz",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Brian Schatz is Hawaii's senior United States Senator who has served since 2012 and focuses on helping workers, veterans, and families while leading key legislation on health care, climate change, and technology. He serves as Chairman of the Senate Committee on Indian Affairs and is a member of multiple committees including Appropriations, Commerce Science and Transportation, Foreign Relations, an"
+    },
+    "target": {
+      "id": 1119,
+      "name": "Katie Britt",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Katie Britt is a U.S. Senator from Alabama serving since 2023, and is a member of the Republican Party. She is calling for guardrails on artificial intelligence chatbots because of the potential to harm minors. Britt has two teenagers, ages 15 and 16, and draws on her experience as a mother in her advocacy work. She previously served as president and CEO of the Business Council of Alabama from 201",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1096,
+    "edge_type": "collaborator",
+    "role": "co-author",
+    "evidence": "Norvig is the co-author with Stuart J. Russell of the most popular textbook in the field of AI: Artificial Intelligence: A Modern Approach",
+    "source": {
+      "id": 1094,
+      "name": "Peter Norvig",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Peter Norvig is a Distinguished Education Fellow at Stanford's Human-Centered Artificial Intelligence Institute and a researcher at Google Inc. He co-authored \"Artificial Intelligence: A Modern Approach\" with Stuart Russell, which is the leading textbook in the field used in more than 1,500 universities in 135 countries. He was born on December 14, 1956, and previously served as head of NASA Ames'"
+    },
+    "target": {
+      "id": 1,
+      "name": "Stuart Russell",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Stuart Russell is a professor of computer science at the University of California, Berkeley and holds the Smith-Zadeh Chair in Engineering. He co-authored the textbook 'Artificial Intelligence: A Modern Approach' with Peter Norvig, which is used in over 1,500 universities in 135 countries. Russell founded the Center for Human-Compatible Artificial Intelligence at UC Berkeley in 2016 and serves as ",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1099,
+    "edge_type": "collaborator",
+    "role": "co-teacher",
+    "evidence": "He was co-teacher of an Artifical Intelligence class that signed up 160,000 students, helping to kick off the current round of massive open online classes",
+    "source": {
+      "id": 1094,
+      "name": "Peter Norvig",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Peter Norvig is a Distinguished Education Fellow at Stanford's Human-Centered Artificial Intelligence Institute and a researcher at Google Inc. He co-authored \"Artificial Intelligence: A Modern Approach\" with Stuart Russell, which is the leading textbook in the field used in more than 1,500 universities in 135 countries. He was born on December 14, 1956, and previously served as head of NASA Ames'"
+    },
+    "target": {
+      "id": 1297,
+      "name": "Sebastian Thrun",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Pioneering AI researcher and entrepreneur. Stanford CS professor (2003-2011), directed Stanford AI Lab (SAIL). Founded Google X, Google's self-driving car project (now Waymo), Udacity (online education), and Kitty Hawk (air taxis, now closed). Won DARPA Grand Challenge (2005). Strong AI optimist: 'AI will not replace us, it will complement us' and warns against 'prematurely declaring AI a danger a",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1110,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor of AI dominance resolution",
+    "evidence": "U.S. Senators Chris Coons (D-Del.) and Tom Cotton (R-Ark.) today led a group of colleagues to introduce a resolution affirming the importance of preserving and maintaining the United States' advantage and dominance in artificial intelligence",
+    "source": {
+      "id": 1099,
+      "name": "Tom Cotton",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Tom Cotton is a U.S. Senator representing Arkansas who introduced the DATA Act of 2026, which would allow AI data center companies to bypass federal electricity regulations by building independent energy infrastructure. Cotton stated that \"American dominance in artificial intelligence and other crucial emerging industries should not come at the expense of Arkansans paying higher energy costs\". On "
+    },
+    "target": {
+      "id": 71,
+      "name": "Chris Coons",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Chris Coons is a U.S. Senator from Delaware who serves on multiple committees including Appropriations, Foreign Relations, Judiciary, Small Business and Entrepreneurship, and Ethics committees. He is the Ranking Member of the Senate Foreign Relations Committee's Subcommittee on East Asia, The Pacific, and International Cybersecurity Policy and vice chair of the Ethics Committee. Coons has been act",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1111,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor of Artificial Intelligence Ready Data Act",
+    "evidence": "U.S. Senators Ted Budd (R-N.C.) and Andy Kim (D-N.J.), members of the Senate Commerce, Science, and Transportation Committee, recently introduced the Artificial Intelligence Ready Data Act",
+    "source": {
+      "id": 1100,
+      "name": "Andy Kim",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Andy Kim is a U.S. Senator from New Jersey who serves as a Democrat on multiple committees including Commerce, Science, and Transportation. He has been actively involved in AI-related legislation, co-introducing the Artificial Intelligence Ready Data Act with Senator Ted Budd to open government data sets for training American AI models. Kim also co-introduced the AI Talent Act with Senator Jon Hus"
+    },
+    "target": {
+      "id": 1301,
+      "name": "Ted Budd",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Republican Senator (NC) and Chair of the Senate Subcommittee on Science, Manufacturing, and Competitiveness. Actively shapes AI legislation through bipartisan bills on government data access, AI lab networks, and public health preparedness. Strongly opposes overregulation, favoring a light-touch, innovation-first federal framework.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1112,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor of AI Talent Act",
+    "evidence": "Sen. Jon Husted (R-Ohio) joined Sen. Andy Kim (D-N.J.) in introducing the bipartisan AI Talent Act",
+    "source": {
+      "id": 1100,
+      "name": "Andy Kim",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Andy Kim is a U.S. Senator from New Jersey who serves as a Democrat on multiple committees including Commerce, Science, and Transportation. He has been actively involved in AI-related legislation, co-introducing the Artificial Intelligence Ready Data Act with Senator Ted Budd to open government data sets for training American AI models. Kim also co-introduced the AI Talent Act with Senator Jon Hus"
+    },
+    "target": {
+      "id": 79,
+      "name": "Jon Husted",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Jon Husted is a Republican U.S. Senator from Ohio who began serving in January 2025 after being appointed to fill the vacancy created by JD Vance's resignation. He previously served as Ohio's 66th lieutenant governor from 2019 to 2025 and as Ohio's 50th secretary of state from 2011 to 2019. As lieutenant governor, he led regulatory reform efforts using artificial intelligence to remove 5 million w",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1113,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor of chip-making equipment export control bill",
+    "evidence": "Senators Pete Ricketts (R-NE) and Andy Kim (D-NJ), along with Representative Michael Baumgartner (R-WA), introduced a bill on April 2 intended to tighten export controls on high-end semiconductor manufacturing equipment",
+    "source": {
+      "id": 1100,
+      "name": "Andy Kim",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Andy Kim is a U.S. Senator from New Jersey who serves as a Democrat on multiple committees including Commerce, Science, and Transportation. He has been actively involved in AI-related legislation, co-introducing the Artificial Intelligence Ready Data Act with Senator Ted Budd to open government data sets for training American AI models. Kim also co-introduced the AI Talent Act with Senator Jon Hus"
+    },
+    "target": {
+      "id": 723,
+      "name": "Pete Ricketts",
+      "type": "person",
+      "category": "Policymaker",
+      "website": "ricketts.senate.gov",
+      "notes_excerpt": "Republican U.S. Senator from Nebraska with background as former CEO of TD Ameritrade. Active in AI and technology policy, notably co-sponsoring the SAFE Chips Act to restrict AI chip exports to China. Emphasis on national security and U.S. technological leadership balanced with safety considerations.\n\nRunning in the NE Senate race, which has seen significant AI-related super PAC spending. See http",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1115,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor of TEST AI Act",
+    "evidence": "U.S. Senators Jim Risch (R-Idaho) and Ben Ray Luján (D-N.M.) introduced the Testing and Evaluation Systems for Trusted Artificial Intelligence (TEST) AI Act of 2025",
+    "source": {
+      "id": 1101,
+      "name": "Jim Risch",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Jim Risch is a U.S. Senator from Idaho who has served since 2009 and is a member of the Republican Party. He serves on five key committees: Energy and Natural Resources, Foreign Relations, Small Business and Entrepreneurship, Intelligence, and Ethics, and serves as Chairman of the Senate Foreign Relations Committee. He previously served as Idaho's 31st Governor in 2006 and as Lieutenant Governor, "
+    },
+    "target": {
+      "id": 74,
+      "name": "Ben Ray Luján",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Ben Ray Luján has represented New Mexico in the United States Senate since January 2021 and previously served as U.S. Representative for New Mexico's Third Congressional District and House Assistant Speaker in the 116th Congress. He sits on the Committee on Commerce, Science, and Transportation; the Committee on Finance; the Committee on Agriculture, Nutrition, and Forestry; the Committee on India",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1116,
+    "edge_type": "collaborator",
+    "role": "Co-lead of Senate National Labs Caucus",
+    "evidence": "Senators Luján, Durbin, Blackburn, and Risch are co-leads of the Senate National Labs Caucus",
+    "source": {
+      "id": 1101,
+      "name": "Jim Risch",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Jim Risch is a U.S. Senator from Idaho who has served since 2009 and is a member of the Republican Party. He serves on five key committees: Energy and Natural Resources, Foreign Relations, Small Business and Entrepreneurship, Intelligence, and Ethics, and serves as Chairman of the Senate Foreign Relations Committee. He previously served as Idaho's 31st Governor in 2006 and as Lieutenant Governor, "
+    },
+    "target": {
+      "id": 11,
+      "name": "Marsha Blackburn",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Marsha Blackburn is the senior senator for Tennessee and the first woman to represent the Volunteer State in the United States Senate. She released a discussion draft of her legislative framework to codify President Trump's executive order to create one rulebook for artificial intelligence (AI) that protects children, creators, conservatives, and communities from harm while ensuring the United Sta",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1117,
+    "edge_type": "collaborator",
+    "role": "Co-lead of Senate National Labs Caucus",
+    "evidence": "Senators Luján, Durbin, Blackburn, and Risch are co-leads of the Senate National Labs Caucus",
+    "source": {
+      "id": 1101,
+      "name": "Jim Risch",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Jim Risch is a U.S. Senator from Idaho who has served since 2009 and is a member of the Republican Party. He serves on five key committees: Energy and Natural Resources, Foreign Relations, Small Business and Entrepreneurship, Intelligence, and Ethics, and serves as Chairman of the Senate Foreign Relations Committee. He previously served as Idaho's 31st Governor in 2006 and as Lieutenant Governor, "
+    },
+    "target": {
+      "id": 1302,
+      "name": "Dick Durbin",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Democratic Senator from Illinois (1997–2027) and former Senate Judiciary Committee chair. Co-introduced the bipartisan AI LEAD Act to enable products-liability suits against AI developers, and the TEST AI Act to strengthen federal AI testing capacity. Consistently advocated for mandatory AI oversight.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1125,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "the active engagement of the world's wealthiest man who has shown his willingness to spend money to support President Trump",
+    "source": {
+      "id": 1103,
+      "name": "Donald Trump",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Donald Trump served as the 45th President of the United States from 2017 to 2021 and was inaugurated as the 47th president on January 20, 2025. On March 20, 2026, the Trump Administration released a National AI Legislative Framework that addresses six key objectives including protecting children, safeguarding American communities, and ensuring American AI dominance. In December 2025, President Tru"
+    },
+    "target": {
+      "id": 48,
+      "name": "Elon Musk",
+      "type": "person",
+      "category": "Executive",
+      "website": null,
+      "notes_excerpt": "Elon Musk is a businessman and entrepreneur known for his leadership of Tesla, SpaceX, X, and xAI. Musk has been the wealthiest person in the world since 2025; as of April 2026, Forbes estimates his net worth to be US$809 billion. He made predictions at the World Economic Forum that artificial intelligence will be smarter than all of humanity by the end of the decade. Musk spent more than $290 mil",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1133,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor",
+    "evidence": "Sens. Brian Schatz (D-HI) and John Kennedy (R-LA) Introduce the AI Labeling Act",
+    "source": {
+      "id": 1105,
+      "name": "John Kennedy",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Sen. John Kennedy (R-LA) questioned David Evan Harris about AI regulation during a Senate Judiciary Committee hearing on September 17, 2024. Kennedy co-introduced the AI Labeling Act (S. 2691) with Sen. Brian Schatz (D-HI) on October 24, 2023, which would notify consumers when they interact with AI-generated content and require developers to disclose such content. Kennedy has introduced legislatio"
+    },
+    "target": {
+      "id": 7,
+      "name": "Brian Schatz",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Brian Schatz is Hawaii's senior United States Senator who has served since 2012 and focuses on helping workers, veterans, and families while leading key legislation on health care, climate change, and technology. He serves as Chairman of the Senate Committee on Indian Affairs and is a member of multiple committees including Appropriations, Commerce Science and Transportation, Foreign Relations, an",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  }
+]

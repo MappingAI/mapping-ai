@@ -1,0 +1,92 @@
+[
+  {
+    "edge_id": 1492,
+    "proposed_url": "https://www.jec.senate.gov/public/index.cfm/democrats/2025/12/senators-hassan-hawley-urge-major-ai-companies-to-crack-down-on-scams",
+    "justification": "Official JEC press release explicitly names both Hassan and Hawley pressing AI companies to combat scammers, matching the evidence text.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1493,
+    "proposed_url": "https://www.hassan.senate.gov/news/press-releases/senators-hassan-banks-introduce-bipartisan-legislation-to-increase-ai-security",
+    "justification": "Hassan's official press release names both Hassan and Banks introducing bipartisan AI security legislation to advance national security research.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1495,
+    "proposed_url": "https://en.wikipedia.org/wiki/Maggie_Hassan",
+    "justification": "Wikipedia article on Maggie Hassan documents that both she and Jeanne Shaheen are NH senators and former governors, but does not document a specific collaborative act between the two.",
+    "confidence": "low"
+  },
+  {
+    "edge_id": 1496,
+    "proposed_url": "https://www.commerce.senate.gov/2026/2/cantwell-moran-reintroduce-bill-to-help-small-business-leverage-ai-tools",
+    "justification": "Senate Commerce Committee press release explicitly names Cantwell and Moran reintroducing the Small Business Artificial Intelligence Training Act of 2026.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1499,
+    "proposed_url": "https://www.moran.senate.gov/public/index.cfm/2025/5/sen-moran-joins-colleagues-in-calling-for-dismantlement-of-iran-s-nuclear-program",
+    "justification": "Moran's official press release documents him joining Ricketts and other Republican colleagues in the Iran nuclear program letter, naming both senators.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1500,
+    "proposed_url": "https://www.hickenlooper.senate.gov/press_releases/hickenlooper-capito-reintroduce-bipartisan-bill-to-boost-ai-standards-create-guidelines-for-third-party-evaluations-of-ai/",
+    "justification": "Hickenlooper's official press release names both Hickenlooper and Capito reintroducing the VET AI Act directing NIST to develop AI evaluation guidelines.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1501,
+    "proposed_url": "https://www.hickenlooper.senate.gov/press_releases/hickenlooper-bipartisan-group-introduce-ai-bill-to-strengthen-accountability-boost-innovation/",
+    "justification": "Hickenlooper's press release names him and John Thune among the bipartisan group introducing the Artificial Intelligence Research, Innovation, and Accountability Act.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1502,
+    "proposed_url": "https://www.klobuchar.senate.gov/public/index.cfm/2023/11/klobuchar-thune-commerce-committee-colleagues-introduce-bipartisan-ai-bill-to-strengthen-accountability-and-boost-innovation",
+    "justification": "Klobuchar's press release names Hickenlooper and Klobuchar among the colleagues introducing the Artificial Intelligence Research, Innovation, and Accountability Act.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1503,
+    "proposed_url": "https://www.hickenlooper.senate.gov/press_releases/hickenlooper-capito-reintroduce-bipartisan-bill-to-boost-ai-standards-create-guidelines-for-third-party-evaluations-of-ai/",
+    "justification": "VET AI Act press release explicitly states the bill directs NIST to develop specifications and guidelines for third-party evaluators, documenting Hickenlooper's legislative collaboration with NIST.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1506,
+    "proposed_url": "https://www.blumenthal.senate.gov/newsroom/press/release/blumenthal-and-murphy-cosponsor-bipartisan-bill-protecting-children-from-ai-chatbots",
+    "justification": "Blumenthal's official press release names both Blumenthal and Hawley as sponsors of the GUARD Act to ban AI chatbots for children.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1507,
+    "proposed_url": "https://www.murphy.senate.gov/newsroom/press-releases/murphy-blumenthal-hawley-britt-introduce-bipartisan-bill-protecting-children-from-ai-chatbots",
+    "justification": "Murphy's press release explicitly names both Blumenthal and Murphy as co-sponsors of the GUARD Act bipartisan bill.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1508,
+    "proposed_url": "https://www.britt.senate.gov/news/press-releases/u-s-senator-katie-britt-joins-josh-hawley-richard-blumenthal-colleagues-in-introducing-bipartisan-legislation-to-protect-minors-from-ai-chatbots/",
+    "justification": "Britt's official press release names Blumenthal and Britt together as co-sponsors of the bipartisan GUARD Act protecting minors from AI chatbots.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1509,
+    "proposed_url": "https://www.warner.senate.gov/public/index.cfm/2025/10/hawley-introduces-bipartisan-bill-protecting-children-from-ai-chatbots-with-parents-colleagues",
+    "justification": "Warner's official press release names both Blumenthal and Warner as co-sponsors of the GUARD Act bipartisan legislation.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1511,
+    "proposed_url": "https://www.blumenthal.senate.gov/newsroom/press/release/blumenthal-blackburn-thune-and-schumer-introduce-the-kids-online-safety-act",
+    "justification": "Blumenthal's official press release names both Blumenthal and Blackburn as lead sponsors of the Kids Online Safety Act, first introduced in February 2022.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1512,
+    "proposed_url": "https://www.rosen.senate.gov/2024/05/10/rosen-budd-introduce-bipartisan-bill-to-increase-ai-collaboration-with-closest-intelligence-allies/",
+    "justification": "Rosen's official press release names both Rosen and Budd introducing the Five AIs Act to develop an AI initiative with U.S. intelligence allies.",
+    "confidence": "high"
+  }
+]

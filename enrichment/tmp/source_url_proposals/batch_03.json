@@ -1,0 +1,92 @@
+[
+  {
+    "edge_id": 158,
+    "proposed_url": "https://us.macmillan.com/books/9781250266774/recodingamerica/",
+    "justification": "Publisher (Macmillan/Metropolitan Books) page for 'Recoding America' explicitly lists Jennifer Pahlka as the author.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 110,
+    "proposed_url": "https://safe.ai/work/statement-on-ai-risk",
+    "justification": "CAIS Statement on AI Risk page lists both Yoshua Bengio and is directed by Dan Hendrycks, directly evidencing Bengio signing/promoting this CAIS initiative.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 111,
+    "proposed_url": "https://en.wikipedia.org/wiki/Dario_Amodei",
+    "justification": "Wikipedia article on Dario Amodei documents his role as VP of Research at OpenAI under Sam Altman before founding Anthropic, establishing the prior collaboration context.",
+    "confidence": "medium"
+  },
+  {
+    "edge_id": 750,
+    "proposed_url": "https://www.schumer.senate.gov/newsroom/press-releases/following-historic-ai-insight-forums-over-the-past-year-leader-schumer-senators-rounds-heinrich-and-young-reveal-bipartisan-roadmap-for-artificial-intelligence-policy-in-the-united-states-senate",
+    "justification": "Official Schumer Senate press release explicitly names Schumer, Rounds, Heinrich, and Young as the Bipartisan Senate AI Working Group co-founders releasing the roadmap.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 751,
+    "proposed_url": "https://www.schumer.senate.gov/newsroom/press-releases/following-historic-ai-insight-forums-over-the-past-year-leader-schumer-senators-rounds-heinrich-and-young-reveal-bipartisan-roadmap-for-artificial-intelligence-policy-in-the-united-states-senate",
+    "justification": "Same Schumer Senate press release explicitly names Schumer and Heinrich as Bipartisan Senate AI Working Group co-founders.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 752,
+    "proposed_url": "https://www.young.senate.gov/newsroom/press-releases/following-historic-ai-insight-forums-over-the-past-year-young-schumer-rounds-heinrich-reveal-bipartisan-roadmap-for-artificial-intelligence-policy-in-the-united-states-senate/",
+    "justification": "Senator Young's official press release explicitly names Young and Schumer as Bipartisan Senate AI Working Group co-founders releasing the roadmap.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 758,
+    "proposed_url": "https://www.nytimes.com/column/hard-fork",
+    "justification": "New York Times Hard Fork column/podcast page listing Casey Newton and Kevin Roose as co-hosts.",
+    "confidence": "medium"
+  },
+  {
+    "edge_id": 763,
+    "proposed_url": "https://aima.cs.berkeley.edu/",
+    "justification": "Official textbook website hosted at UC Berkeley lists Stuart Russell and Peter Norvig as co-authors of 'Artificial Intelligence: A Modern Approach'.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 769,
+    "proposed_url": "https://www.cotton.senate.gov/news/press-releases/cotton-schumer-introduce-bipartisan-bill-to-protect-americans-data-from-foreign-adversaries",
+    "justification": "Senator Cotton's official press release explicitly names Cotton and Schumer as co-introducers of bipartisan robotics security legislation (American Security Robotics Act).",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 770,
+    "proposed_url": "https://www.democrats.senate.gov/newsroom/press-releases/leader-schumer-and-senators-kim-ricketts-risch-introduce-match-act-to-level-the-global-playing-field-for-us-tech",
+    "justification": "Senate Democratic Leadership press release explicitly names Schumer and Andy Kim as co-introducers of the MATCH Act.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 771,
+    "proposed_url": "https://www.democrats.senate.gov/newsroom/press-releases/leader-schumer-and-senators-kim-ricketts-risch-introduce-match-act-to-level-the-global-playing-field-for-us-tech",
+    "justification": "Same Senate Democratic Leadership press release explicitly names Schumer and Pete Ricketts as co-introducers of the MATCH Act.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 772,
+    "proposed_url": "https://www.foreign.senate.gov/press/rep/release/risch-ricketts-kim-introduce-match-act-level-the-global-playing-field-for-us-tech",
+    "justification": "Senate Foreign Relations Committee press release explicitly names Risch as a co-introducer of the MATCH Act alongside Schumer.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 779,
+    "proposed_url": "https://www.schatz.senate.gov/news/press-releases/schatz-kennedy-introduce-bipartisan-legislation-to-provide-more-transparency-on-ai-generated-content",
+    "justification": "Senator Schatz's official press release explicitly names Schatz and Kennedy as co-introducers of the AI Labeling Act (S. 2691) on October 24, 2023.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 780,
+    "proposed_url": "https://www.schatz.senate.gov/news/press-releases/schatz-gardner-introduce-legislation-to-improve-federal-governments-use-of-artificial-intelligence",
+    "justification": "Senator Schatz's official press release explicitly names Schatz and Gardner as co-introducers of the AI in Government Act.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 783,
+    "proposed_url": "https://www.scsp.ai/2024/06/special-competitive-studies-project-announces-ai-energy-summit/",
+    "justification": "SCSP's official AI+Energy Summit announcement page; Schatz's keynote participation at this event was confirmed via search snippets but is not named on this specific announcement page — best available SCSP-hosted evidence.",
+    "confidence": "low"
+  }
+]

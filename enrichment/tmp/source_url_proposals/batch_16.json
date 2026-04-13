@@ -1,0 +1,92 @@
+[
+  {
+    "edge_id": 1139,
+    "proposed_url": "https://www.moran.senate.gov/public/index.cfm/2025/2/sen-moran-to-chair-the-senate-commerce-subcommittee-on-aviation-space-and-innovation",
+    "justification": "Senator Moran's official press release explicitly names him as Chair of the Senate Commerce Subcommittee on Aviation, Space, and Innovation.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1141,
+    "proposed_url": "https://www.scsp.ai/ylli-bajraktari/",
+    "justification": "SCSP's official page for Ylli Bajraktari explicitly identifies him as President & CEO of the Special Competitive Studies Project.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1142,
+    "proposed_url": "https://www.scsp.ai/about/who-we-are/",
+    "justification": "SCSP's official 'Who We Are' page lists Eric Schmidt as Chair of the Special Competitive Studies Project alongside other leadership.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1155,
+    "proposed_url": "https://attheu.utah.edu/science-technology/manish-parashar-appointed-inaugural-chief-ai-officer-for-u/",
+    "justification": "University of Utah's official announcement names Manish Parashar as inaugural Chief AI Officer and Director of the SCI Institute.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1159,
+    "proposed_url": "https://diro.umontreal.ca/english/departement-directory/professors/professor/in/in13599/sg/Yoshua%20Bengio/",
+    "justification": "Université de Montréal's Department of Computer Science and Operations Research (DIRO) directory explicitly lists Yoshua Bengio as a full professor.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1169,
+    "proposed_url": "https://mila.quebec/en/about/leadership-team",
+    "justification": "Mila's official leadership page lists Valérie Pisano as President and CEO of the Quebec Artificial Intelligence Institute.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1183,
+    "proposed_url": "https://www.bloomberg.com/news/articles/2022-05-17/ian-goodfellow-former-apple-director-of-machine-learning-to-join-deepmind",
+    "justification": "Bloomberg article explicitly names Ian Goodfellow as 'Former Apple Director of Machine Learning' confirming the employer relationship.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1195,
+    "proposed_url": "https://www.iaseai.org/conference/people/stuart-russell-2",
+    "justification": "IASEAI's official conference page for Stuart Russell confirms his role as President of the International Association for Safe and Ethical AI.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1196,
+    "proposed_url": "https://en.wikipedia.org/wiki/International_Association_for_Safe_and_Ethical_AI",
+    "justification": "Wikipedia article on IASEAI explicitly names Mark Nitzberg as Interim Executive Director, Secretary-Treasurer, and Board Member.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1202,
+    "proposed_url": "https://justthenews.com/politics-policy/elections/nrsc-chair-sen-tim-scott-forms-team-vice-chairs-help-grow-gop-majority",
+    "justification": "News article explicitly names Marsha Blackburn as one of five Vice Chairs of the NRSC under Chair Tim Scott.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1203,
+    "proposed_url": "https://www.npr.org/2025/10/17/nx-s1-5578279/ai-schumer-gop-attack-ad",
+    "justification": "NPR article on NRSC's AI-generated ad quotes Joanna Rodriguez by name as NRSC communications director defending the ad.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1249,
+    "proposed_url": "https://techcrunch.com/2026/03/23/sam-altman-openai-fusion-energy-board-helion/",
+    "justification": "TechCrunch article confirms Sam Altman's board chairmanship at Helion Energy and his subsequent departure from the board.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1258,
+    "proposed_url": "https://cyberlaw.stanford.edu/about/people/lawrence-lessig/",
+    "justification": "Stanford CIS page documents Lessig as a professor at Stanford Law School and founder of the Center for Internet and Society.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1287,
+    "proposed_url": "https://www.niskanencenter.org/author/jpahlka/",
+    "justification": "Niskanen Center author page for Jennifer Pahlka confirms her role as a senior fellow publishing work through the organization.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1288,
+    "proposed_url": "https://fas.org/expert/jennifer-pahlka/",
+    "justification": "Federation of American Scientists expert page for Jennifer Pahlka explicitly lists her as a senior fellow at FAS.",
+    "confidence": "high"
+  }
+]

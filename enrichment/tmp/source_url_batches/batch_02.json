@@ -1,0 +1,392 @@
+[
+  {
+    "edge_id": 1343,
+    "edge_type": "affiliated",
+    "role": null,
+    "evidence": "Former South Bend Mayor and U.S. transportation secretary Pete Buttigeg spoke at Notre Dame today (Friday), returning for the first time since he briefly joined the faculty in 2020",
+    "source": {
+      "id": 40,
+      "name": "Pete Buttigieg",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Pete Buttigieg served as U.S. Secretary of Transportation from 2021 to 2025 under President Joe Biden. He was the first openly gay Cabinet secretary in U.S. history and the youngest person ever to serve as Secretary of Transportation. He previously served as mayor of South Bend, Indiana from 2012 to 2020. He is currently a Winter-Spring 2025 Pritzker Fellow at the University of Chicago Institute o"
+    },
+    "target": {
+      "id": 1372,
+      "name": "University of Notre Dame",
+      "type": "organization",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Private Catholic research university in Indiana. Major AI initiatives: AI@ND hub, Lucy Family Institute for Data & Society, Scientific AI Initiative. Received $50.8M Lilly Endowment grant for DELTA Network expanding faith-based AI ethics framework. Won $1M Bloomberg Mayors Challenge Award for human-centered AI in public service with City of South Bend. Pete Buttigieg is an alumnus.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1351,
+    "edge_type": "affiliated",
+    "role": "Panel Participant",
+    "evidence": "U.S. Senator Chris Murphy (D-Conn.) on Friday took part in a panel at the Munich Security Conference: 'Outsmarting Ourselves? Risks and Rewards of the AI Race.'",
+    "source": {
+      "id": 41,
+      "name": "Chris Murphy",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Chris Murphy is the junior United States Senator from Connecticut, serving since 2013. He previously served in the U.S. House of Representatives from 2007 to 2013, representing Connecticut's 5th congressional district. Murphy was reelected to a third Senate term in 2024, defeating Republican challenger Matthew Corey. He has become a prominent voice on AI regulation, arguing that unregulated artifi"
+    },
+    "target": {
+      "id": 1374,
+      "name": "Munich Security Conference",
+      "type": "organization",
+      "category": "Think Tank/Policy Org",
+      "website": null,
+      "notes_excerpt": "Premier annual international security conference held in Munich, Germany (since 1963). Increasingly prominent on AI governance. Convened 'Tech Accord to Combat Deceptive Use of AI in 2024 Elections' signed by 27 tech companies. Hosts Frontier AI Safety Commitments discussions. Technology program frames AI as 'decisive factor' in systemic competition. 2025 conference marked shift from AI safety to ",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1362,
+    "edge_type": "affiliated",
+    "role": null,
+    "evidence": "Tom Kalil is the CEO of Renaissance Philanthropy. Tom served in the White House for two presidents (Obama and Clinton)",
+    "source": {
+      "id": 43,
+      "name": "Tom Kalil",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Tom Kalil is the CEO of Renaissance Philanthropy, which he launched in May 2024. He served in the White House for two presidents (Obama and Clinton) and worked with the Senate to give every federal agency the authority to support incentive prizes for up to $50 million. He designed and launched dozens of White House science and technology initiatives, including the $40 billion National Nanotechnolo"
+    },
+    "target": {
+      "id": 1357,
+      "name": "Federation of American Scientists",
+      "type": "organization",
+      "category": "Think Tank/Policy Org",
+      "website": null,
+      "notes_excerpt": "DC-based science and technology policy nonprofit founded in 1945. FAS runs the Day One Project to translate scientific expertise into federal policy; active in AI governance, advocating for responsible AI innovation, NIST AISI funding, and federal AI adoption. Submitted AI Action Plan recommendations to the White House in 2025.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1510,
+    "edge_type": "affiliated",
+    "role": "Legislative oversight",
+    "evidence": "introduced a bill to create a risk evaluation program within the Department of Energy (DOE)",
+    "source": {
+      "id": 80,
+      "name": "Richard Blumenthal",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Richard Blumenthal is a Democratic U.S. Senator from Connecticut who has introduced multiple AI-related bills, including the GUARD Act to ban AI companions for children and legislation to allow lawsuits over AI data training. He serves on the Senate Judiciary Committee and other committees, and was previously Connecticut's Attorney General from 1991 to 2011. Blumenthal has worked extensively on co"
+    },
+    "target": {
+      "id": 1417,
+      "name": "Department of Energy",
+      "type": "organization",
+      "category": "Government/Agency",
+      "website": null,
+      "notes_excerpt": "Federal agency overseeing U.S. energy systems and nuclear infrastructure. Plays a central AI role through its 17 National Laboratories, its membership in the TRAINS Taskforce for national security AI testing, and its initiative to co-locate AI data centers with federal energy infrastructure across 16 identified sites.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 131,
+    "edge_type": "author",
+    "role": null,
+    "evidence": null,
+    "source": {
+      "id": 58,
+      "name": "Sandy Pentland",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Alex Paul \"Sandy\" Pentland (born 1951) is an American computer scientist, HAI Fellow at Stanford, Toshiba Professor at MIT, and serial entrepreneur. He helped create and direct the MIT Media Lab and the Media Lab Asia in India, and is a HAI Fellow at Stanford. Pentland is one of the most cited authors in computer science, with an h-index of 155. He is a member of the U.S. National Academy of Engin"
+    },
+    "target": {
+      "id": 631,
+      "name": "Digitalist Papers Vol. 2",
+      "type": "resource",
+      "category": null,
+      "website": null,
+      "notes_excerpt": "Volume 2 of The Digitalist Papers, published by the Stanford Digital Economy Lab (December 2025), a collection of 21 essays examining the economic implications of transformative AI, including proposals for universal basic capital and adaptive safety nets.",
+      "resource_url": null,
+      "resource_title": "Digitalist Papers Vol. 2",
+      "resource_author": "Sandy Pentland et al.",
+      "resource_year": "2025"
+    }
+  },
+  {
+    "edge_id": 132,
+    "edge_type": "author",
+    "role": null,
+    "evidence": null,
+    "source": {
+      "id": 97,
+      "name": "Alex Bores",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Alex Bores is an American politician serving as a member of the New York State Assembly for the 73rd district, having assumed office on January 1, 2023. He is currently running to represent New York's 12th district in the House of Representatives after announcing his candidacy in October 2025 to succeed Jerry Nadler. He co-sponsored the Responsible AI Safety and Education Act (RAISE Act), an AI sa"
+    },
+    "target": {
+      "id": 632,
+      "name": "Alex Bores Congressional AI Framework",
+      "type": "resource",
+      "category": null,
+      "website": null,
+      "notes_excerpt": "Congressional AI policy framework released by New York Assemblyman Alex Bores (February 2026) as part of his campaign for Congress, proposing an eight-point national plan covering kids'' safety, data privacy, deepfakes, workforce impacts, and frontier AI safety testing.",
+      "resource_url": null,
+      "resource_title": "Alex Bores Congressional AI Framework",
+      "resource_author": null,
+      "resource_year": "2026"
+    }
+  },
+  {
+    "edge_id": 134,
+    "edge_type": "author",
+    "role": null,
+    "evidence": null,
+    "source": {
+      "id": 42,
+      "name": "David Sacks",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "David Sacks stepped down from his role as White House AI and crypto czar in March 2026, having reached the end of his 130-day limit as a special government employee. He is now co-chair of the President's Council of Advisors on Science and Technology alongside Michael Kratsios. Sacks is a general partner of Craft Ventures, a venture capital fund he co-founded in late 2017. He was previously COO and"
+    },
+    "target": {
+      "id": 634,
+      "name": "Sacks federal preemption EO (Dec 2025)",
+      "type": "resource",
+      "category": null,
+      "website": null,
+      "notes_excerpt": "Executive order orchestrated by AI czar David Sacks (December 2025) asserting federal preemption over state-level AI regulations, aiming to create a unified national approach and prevent a patchwork of state AI laws.",
+      "resource_url": null,
+      "resource_title": "Sacks federal preemption EO (Dec 2025)",
+      "resource_author": null,
+      "resource_year": "2025"
+    }
+  },
+  {
+    "edge_id": 142,
+    "edge_type": "author",
+    "role": null,
+    "evidence": null,
+    "source": {
+      "id": 103,
+      "name": "Arvind Narayanan",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Arvind Narayanan is a professor of computer science at Princeton University and the director of the Center for Information Technology Policy. He is a co-author of the book AI Snake Oil and the essay AI as Normal Technology, and a newsletter of the same name which is read by over 60,000 researchers, policy makers, journalists, and AI enthusiasts. He was one of TIME's inaugural list of 100 most infl"
+    },
+    "target": {
+      "id": 619,
+      "name": "AI as Normal Technology",
+      "type": "resource",
+      "category": null,
+      "website": null,
+      "notes_excerpt": "Essay by Arvind Narayanan and Sayash Kapoor arguing that AI should be understood as a transformative but ''normal'' technology — like electricity or the internet — rather than as an unprecedented existential force requiring extraordinary governance.",
+      "resource_url": null,
+      "resource_title": "AI as Normal Technology",
+      "resource_author": "Narayanan & Kapoor",
+      "resource_year": "2025"
+    }
+  },
+  {
+    "edge_id": 144,
+    "edge_type": "author",
+    "role": null,
+    "evidence": null,
+    "source": {
+      "id": 57,
+      "name": "Sayash Kapoor",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Sayash Kapoor is a Ph.D. candidate in computer science at Princeton University's Center for Information Technology Policy. He is co-author with Arvind Narayanan of the book \"AI Snake Oil: What Artificial Intelligence Can Do, What It Can't, and How to Tell the Difference\". He was named among TIME's 100 most influential people in AI. He won the Porter Ogden Jacobus Fellowship, Princeton's top distin"
+    },
+    "target": {
+      "id": 619,
+      "name": "AI as Normal Technology",
+      "type": "resource",
+      "category": null,
+      "website": null,
+      "notes_excerpt": "Essay by Arvind Narayanan and Sayash Kapoor arguing that AI should be understood as a transformative but ''normal'' technology — like electricity or the internet — rather than as an unprecedented existential force requiring extraordinary governance.",
+      "resource_url": null,
+      "resource_title": "AI as Normal Technology",
+      "resource_author": "Narayanan & Kapoor",
+      "resource_year": "2025"
+    }
+  },
+  {
+    "edge_id": 145,
+    "edge_type": "author",
+    "role": null,
+    "evidence": null,
+    "source": {
+      "id": 54,
+      "name": "Mariana Mazzucato",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Mariana Mazzucato is Professor in the Economics of Innovation and Public Value at University College London, where she is Founding Director of the UCL Institute for Innovation & Public Purpose. She is a member of the South African President's Economic Advisory Council since 2019, advising on areas such as green industrial strategy, state capacity, and reform of state-owned enterprises. In 2025, sh"
+    },
+    "target": {
+      "id": 621,
+      "name": "The Entrepreneurial State",
+      "type": "resource",
+      "category": null,
+      "website": null,
+      "notes_excerpt": "Book by Mariana Mazzucato (2013) challenging the myth that innovation comes only from the private sector, arguing that government investment has been the driving force behind transformative technologies including the internet and smartphones.",
+      "resource_url": null,
+      "resource_title": "The Entrepreneurial State",
+      "resource_author": "Mariana Mazzucato",
+      "resource_year": "2013"
+    }
+  },
+  {
+    "edge_id": 146,
+    "edge_type": "author",
+    "role": null,
+    "evidence": null,
+    "source": {
+      "id": 52,
+      "name": "Daron Acemoglu",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Daron Acemoglu is an Institute Professor at MIT who won the 2024 Nobel Prize in Economics with Simon Johnson and James A. Robinson for studies of how institutions are formed and affect prosperity. He argues that AI is not improving productivity as much as hyped, projecting only modest GDP gains of 1.1% to 1.6% over the next decade. Acemoglu believes current AI development focuses too much on autom"
+    },
+    "target": {
+      "id": 622,
+      "name": "Power and Progress",
+      "type": "resource",
+      "category": null,
+      "website": null,
+      "notes_excerpt": "Book by Daron Acemoglu and Simon Johnson (2023) examining how technological progress has historically benefited elites unless countered by deliberate institutional choices, and arguing for redirecting AI toward broadly shared prosperity.",
+      "resource_url": null,
+      "resource_title": "Power and Progress",
+      "resource_author": "Acemoglu & Johnson",
+      "resource_year": "2023"
+    }
+  },
+  {
+    "edge_id": 147,
+    "edge_type": "author",
+    "role": null,
+    "evidence": null,
+    "source": {
+      "id": 26,
+      "name": "Simon Johnson",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Simon Johnson is the Ronald A. Kurtz (1954) Professor of Entrepreneurship at the MIT Sloan School of Management and co-winner of the 2024 Nobel Prize in Economic Sciences jointly with Daron Acemoglu and James A. Robinson. He co-directs the Shaping the Future of Work initiative at MIT, focusing on the economics and politics of AI development and deployment. Johnson served as Chief Economist of the "
+    },
+    "target": {
+      "id": 622,
+      "name": "Power and Progress",
+      "type": "resource",
+      "category": null,
+      "website": null,
+      "notes_excerpt": "Book by Daron Acemoglu and Simon Johnson (2023) examining how technological progress has historically benefited elites unless countered by deliberate institutional choices, and arguing for redirecting AI toward broadly shared prosperity.",
+      "resource_url": null,
+      "resource_title": "Power and Progress",
+      "resource_author": "Acemoglu & Johnson",
+      "resource_year": "2023"
+    }
+  },
+  {
+    "edge_id": 155,
+    "edge_type": "author",
+    "role": null,
+    "evidence": null,
+    "source": {
+      "id": 23,
+      "name": "Michel Justen",
+      "type": "person",
+      "category": "Journalist",
+      "website": null,
+      "notes_excerpt": "Michel Justen works as AI Grants Lead at Tarbell Center for AI Journalism, which is funded by Coefficient Giving (formerly Open Philanthropy). He co-founded EA UW in Fall 2020 alongside his twin Lenni and graduated from UW-Madison in 2022 with degrees in Neurobiology and Psychology. He previously worked as an AI Governance Fellow at Pivotal Research and helped run events at the Centre for Effectiv"
+    },
+    "target": {
+      "id": 616,
+      "name": "A Guide to the AI Tribes",
+      "type": "resource",
+      "category": null,
+      "website": null,
+      "notes_excerpt": "Essay by Michel Justen (January 2026) mapping the major ideological factions in AI policy debate — their origins, assumptions, alliances, and conflicts over how AI should be developed and governed.",
+      "resource_url": null,
+      "resource_title": "A Guide to the AI Tribes",
+      "resource_author": "Michel Justen",
+      "resource_year": "2026"
+    }
+  },
+  {
+    "edge_id": 156,
+    "edge_type": "author",
+    "role": null,
+    "evidence": null,
+    "source": {
+      "id": 69,
+      "name": "Dan Kagan-Kans",
+      "type": "person",
+      "category": "Journalist",
+      "website": null,
+      "notes_excerpt": "Dan Kagan-Kans is described as a writer on AI, science, and ideas for publications like Transformer, the Wall Street Journal, and American Scholar. He was previously a program officer at the Tikvah Fund and lives in New York. He has written articles including \"The Left Is Missing Out on AI\" for Transformer and \"Baby Shoggoth Is Listening\" for The American Scholar."
+    },
+    "target": {
+      "id": 617,
+      "name": "The Left is Missing Out on AI",
+      "type": "resource",
+      "category": null,
+      "website": null,
+      "notes_excerpt": "Essay by Dan Kagan-Kans (February 2026) arguing that the political left has ceded the AI conversation to the right by dismissing AI as overhyped, risking inability to shape one of the most consequential technological shifts in history.",
+      "resource_url": null,
+      "resource_title": "The Left is Missing Out on AI",
+      "resource_author": "Dan Kagan-Kans",
+      "resource_year": "2026"
+    }
+  },
+  {
+    "edge_id": 157,
+    "edge_type": "author",
+    "role": null,
+    "evidence": null,
+    "source": {
+      "id": 37,
+      "name": "Ro Khanna",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Ro Khanna is a U.S. Representative from California's 17th Congressional District, representing Silicon Valley since 2017. He serves as Ranking Member of the House Select Committee on China and is a member of committees including Judiciary, Transportation & Infrastructure. Khanna authored the Epstein Files Transparency Act and led a bipartisan resolution demanding the DOJ to release the Epstein fil"
+    },
+    "target": {
+      "id": 620,
+      "name": "Dignity in a Digital Age",
+      "type": "resource",
+      "category": null,
+      "website": null,
+      "notes_excerpt": "Book by Rep. Ro Khanna (2022) advocating for policies that bring technology jobs and digital infrastructure to overlooked communities across America, bridging the gap between Silicon Valley and the rest of the country.",
+      "resource_url": null,
+      "resource_title": "Dignity in a Digital Age",
+      "resource_author": "Ro Khanna",
+      "resource_year": "2022"
+    }
+  }
+]

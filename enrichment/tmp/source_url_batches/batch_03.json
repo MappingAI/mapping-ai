@@ -1,0 +1,392 @@
+[
+  {
+    "edge_id": 158,
+    "edge_type": "author",
+    "role": null,
+    "evidence": null,
+    "source": {
+      "id": 28,
+      "name": "Jennifer Pahlka",
+      "type": "person",
+      "category": "Organizer",
+      "website": null,
+      "notes_excerpt": "Jennifer Pahlka is the founder of Code for America and author of 'Recoding America: Why Government Is Failing in the Digital Age and How We Can Do Better'. She served as U.S. Deputy Chief Technology Officer under President Obama from 2013-2014, where she helped found the United States Digital Service. She is currently a senior fellow at the Niskanen Center and the Federation of American Scientists"
+    },
+    "target": {
+      "id": 623,
+      "name": "Recoding America",
+      "type": "resource",
+      "category": null,
+      "website": null,
+      "notes_excerpt": "Book by Jennifer Pahlka (2023) diagnosing why government technology systems fail and outlining how modernizing digital infrastructure is essential for effective public services and democratic accountability.",
+      "resource_url": null,
+      "resource_title": "Recoding America",
+      "resource_author": "Jennifer Pahlka",
+      "resource_year": "2023"
+    }
+  },
+  {
+    "edge_id": 110,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "Bengio signed and promoted CAIS Statement on AI Risk",
+    "source": {
+      "id": 29,
+      "name": "Yoshua Bengio",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Yoshua Bengio is a Canadian computer scientist born March 5, 1964, in Paris, France, and is a full professor at Université de Montréal. He received the 2018 A.M. Turing Award together with Geoffrey Hinton and Yann LeCun for their foundational work on deep learning. In June 2025, Bengio launched a nonprofit organization called LawZero aimed at building 'honest' AI systems that can detect and block "
+    },
+    "target": {
+      "id": 93,
+      "name": "Dan Hendrycks",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "Dan Hendrycks (born 1994 or 1995) is an American machine learning researcher who serves as the director of the Center for AI Safety, a nonprofit research organization based in San Francisco, California. He received a B.S. from the University of Chicago in 2018 and a Ph.D. from the University of California, Berkeley in Computer Science in 2022. He is the main author of the research paper that intro",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 111,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "Amodei was VP Research at OpenAI before founding Anthropic",
+    "source": {
+      "id": 8,
+      "name": "Dario Amodei",
+      "type": "person",
+      "category": "Executive",
+      "website": null,
+      "notes_excerpt": "Dario Amodei (born 1983) is an American artificial intelligence researcher and entrepreneur who co-founded Anthropic in 2021 with his sister Daniela Amodei. He previously served as vice president of research at OpenAI, where he led the development of large language models like GPT-2 and GPT-3. Amodei earned his doctorate degree in biophysics from Princeton University as a Hertz Fellow, and was a p"
+    },
+    "target": {
+      "id": 18,
+      "name": "Sam Altman",
+      "type": "person",
+      "category": "Executive",
+      "website": null,
+      "notes_excerpt": "Sam Altman is the CEO of OpenAI, the artificial intelligence research organization that developed ChatGPT. He became CEO of OpenAI in 2019 after co-founding the organization in 2015. In November 2023, he was briefly fired by OpenAI's board of directors but was reinstated five days later. His net worth was estimated at US$3.3 billion by Forbes in March 2026.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 750,
+    "edge_type": "collaborator",
+    "role": "Co-founder of Senate AI Working Group",
+    "evidence": "our Bipartisan Senate Working Group comprised of Majority Leader Charles Schumer (D-NY), Senator Mike Rounds (R-SD), Senator Martin Heinrich (D-NM), and Senator Todd Young (R-IN) [5]",
+    "source": {
+      "id": 2,
+      "name": "Chuck Schumer",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Chuck Schumer is a Democratic U.S. Senator from New York who has served since 1999 and is currently Senate Majority Leader. He led a bipartisan working group that released a 31-page AI policy roadmap in May 2024, recommending at least $32 billion in government spending to accelerate AI research and development. The roadmap was developed after months of AI Insight Forums with tech companies, civil "
+    },
+    "target": {
+      "id": 68,
+      "name": "Mike Rounds",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Mike Rounds is a Republican U.S. Senator from South Dakota who was sworn into the United States Senate on January 6th, 2015. He serves as co-chair of the Senate AI Caucus and serves on five committees: Senate Appropriations; Armed Services; Banking, Housing and Urban Affairs; Indian Affairs; and the Select Committee on Intelligence. He previously served as the 31st governor of South Dakota from 20",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 751,
+    "edge_type": "collaborator",
+    "role": "Co-founder of Senate AI Working Group",
+    "evidence": "our Bipartisan Senate Working Group comprised of Majority Leader Charles Schumer (D-NY), Senator Mike Rounds (R-SD), Senator Martin Heinrich (D-NM), and Senator Todd Young (R-IN) [5]",
+    "source": {
+      "id": 2,
+      "name": "Chuck Schumer",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Chuck Schumer is a Democratic U.S. Senator from New York who has served since 1999 and is currently Senate Majority Leader. He led a bipartisan working group that released a 31-page AI policy roadmap in May 2024, recommending at least $32 billion in government spending to accelerate AI research and development. The roadmap was developed after months of AI Insight Forums with tech companies, civil "
+    },
+    "target": {
+      "id": 72,
+      "name": "Martin Heinrich",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Martin Heinrich is a U.S. Senator from New Mexico who has served since January 2013. He is the founder and co-chair of the Senate Artificial Intelligence Caucus, which he established with former Senator Rob Portman (R-Ohio) in 2019. He serves as Ranking Member on the Committee on Energy and Natural Resources and serves on the Senate Appropriations, Intelligence, and Joint Economic Committees. Hein",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 752,
+    "edge_type": "collaborator",
+    "role": "Co-founder of Senate AI Working Group",
+    "evidence": "our Bipartisan Senate Working Group comprised of Majority Leader Charles Schumer (D-NY), Senator Mike Rounds (R-SD), Senator Martin Heinrich (D-NM), and Senator Todd Young (R-IN) [5]",
+    "source": {
+      "id": 2,
+      "name": "Chuck Schumer",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Chuck Schumer is a Democratic U.S. Senator from New York who has served since 1999 and is currently Senate Majority Leader. He led a bipartisan working group that released a 31-page AI policy roadmap in May 2024, recommending at least $32 billion in government spending to accelerate AI research and development. The roadmap was developed after months of AI Insight Forums with tech companies, civil "
+    },
+    "target": {
+      "id": 73,
+      "name": "Todd Young",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Todd Christopher Young is an American politician and attorney serving as the senior United States senator from Indiana, a seat he has held since 2017. He is a member of the Republican Party and previously served as the U.S. representative for Indiana's 9th congressional district. Young currently serves on the U.S. Senate Committees on Finance; Foreign Relations; Health, Education, Labor & Pensions",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 758,
+    "edge_type": "collaborator",
+    "role": "Co-host",
+    "evidence": "In late 2022, Newton began a weekly technology news podcast for the New York Times, called Hard Fork, co-hosting with Kevin Roose [5]",
+    "source": {
+      "id": 4,
+      "name": "Casey Newton",
+      "type": "person",
+      "category": "Journalist",
+      "website": null,
+      "notes_excerpt": "Casey Newton is the founder and editor of Platformer, an independent publication devoted to exploring the intersection of technology and democracy. He co-hosts Hard Fork, a podcast about the future that is already here, alongside a colleague at The New York Times. Prior to founding Platformer in 2020, Casey spent 10 years covering Silicon Valley for The Verge, CNET, and the San Francisco Chronicle"
+    },
+    "target": {
+      "id": 878,
+      "name": "Kevin Roose",
+      "type": "person",
+      "category": "Journalist",
+      "website": null,
+      "notes_excerpt": "Author of 'Futureproof: 9 Rules for Humans in the Age of Automation' (2021) and upcoming 'The AGI Chronicles' (2026). Known for viral 2023 conversation with Bing's Sydney chatbot that sparked global AI safety debate. Currently documenting the 'AGI scene' in San Francisco, believing AGI arrival is imminent based on insider consensus. Previously wrote 'Young Money' (2014 NYT bestseller) and 'The Unl",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 763,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "He co-authored with Peter Norvig of the authoritative textbook of the field of AI: Artificial Intelligence: A Modern Approach [1]",
+    "source": {
+      "id": 1,
+      "name": "Stuart Russell",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Stuart Russell is a professor of computer science at the University of California, Berkeley and holds the Smith-Zadeh Chair in Engineering. He co-authored the textbook 'Artificial Intelligence: A Modern Approach' with Peter Norvig, which is used in over 1,500 universities in 135 countries. Russell founded the Center for Human-Compatible Artificial Intelligence at UC Berkeley in 2016 and serves as "
+    },
+    "target": {
+      "id": 1094,
+      "name": "Peter Norvig",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Peter Norvig is a Distinguished Education Fellow at Stanford's Human-Centered Artificial Intelligence Institute and a researcher at Google Inc. He co-authored \"Artificial Intelligence: A Modern Approach\" with Stuart Russell, which is the leading textbook in the field used in more than 1,500 universities in 135 countries. He was born on December 14, 1956, and previously served as head of NASA Ames'",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 769,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor of American Security Robotics Act",
+    "evidence": "Senate Republican Conference Chairman Tom Cotton (R-Arkansas) and Senate Democratic Leader Chuck Schumer (D-New York) today introduced bipartisan legislation to protect Americans from national security threats that are introduced by foreign-controlled robots [10]",
+    "source": {
+      "id": 2,
+      "name": "Chuck Schumer",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Chuck Schumer is a Democratic U.S. Senator from New York who has served since 1999 and is currently Senate Majority Leader. He led a bipartisan working group that released a 31-page AI policy roadmap in May 2024, recommending at least $32 billion in government spending to accelerate AI research and development. The roadmap was developed after months of AI Insight Forums with tech companies, civil "
+    },
+    "target": {
+      "id": 1099,
+      "name": "Tom Cotton",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Tom Cotton is a U.S. Senator representing Arkansas who introduced the DATA Act of 2026, which would allow AI data center companies to bypass federal electricity regulations by building independent energy infrastructure. Cotton stated that \"American dominance in artificial intelligence and other crucial emerging industries should not come at the expense of Arkansans paying higher energy costs\". On ",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 770,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor of MATCH Act",
+    "evidence": "Senate Democratic Leader Chuck Schumer (D-NY) and U.S. Senators Andy Kim (D-NJ), Ranking Member of the Subcommittee on National Security and International Trade and Finance on the Senate Committee on Banking, Housing and Urban Affairs, Pete Ricketts (R-NE), and Jim Risch (R-ID) introduced the Multilateral Alignment of Technology Controls on Hardware (MATCH) Act [11]",
+    "source": {
+      "id": 2,
+      "name": "Chuck Schumer",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Chuck Schumer is a Democratic U.S. Senator from New York who has served since 1999 and is currently Senate Majority Leader. He led a bipartisan working group that released a 31-page AI policy roadmap in May 2024, recommending at least $32 billion in government spending to accelerate AI research and development. The roadmap was developed after months of AI Insight Forums with tech companies, civil "
+    },
+    "target": {
+      "id": 1100,
+      "name": "Andy Kim",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Andy Kim is a U.S. Senator from New Jersey who serves as a Democrat on multiple committees including Commerce, Science, and Transportation. He has been actively involved in AI-related legislation, co-introducing the Artificial Intelligence Ready Data Act with Senator Ted Budd to open government data sets for training American AI models. Kim also co-introduced the AI Talent Act with Senator Jon Hus",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 771,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor of MATCH Act",
+    "evidence": "Senate Democratic Leader Chuck Schumer (D-NY) and U.S. Senators Andy Kim (D-NJ), Ranking Member of the Subcommittee on National Security and International Trade and Finance on the Senate Committee on Banking, Housing and Urban Affairs, Pete Ricketts (R-NE), and Jim Risch (R-ID) introduced the Multilateral Alignment of Technology Controls on Hardware (MATCH) Act [11]",
+    "source": {
+      "id": 2,
+      "name": "Chuck Schumer",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Chuck Schumer is a Democratic U.S. Senator from New York who has served since 1999 and is currently Senate Majority Leader. He led a bipartisan working group that released a 31-page AI policy roadmap in May 2024, recommending at least $32 billion in government spending to accelerate AI research and development. The roadmap was developed after months of AI Insight Forums with tech companies, civil "
+    },
+    "target": {
+      "id": 723,
+      "name": "Pete Ricketts",
+      "type": "person",
+      "category": "Policymaker",
+      "website": "ricketts.senate.gov",
+      "notes_excerpt": "Republican U.S. Senator from Nebraska with background as former CEO of TD Ameritrade. Active in AI and technology policy, notably co-sponsoring the SAFE Chips Act to restrict AI chip exports to China. Emphasis on national security and U.S. technological leadership balanced with safety considerations.\n\nRunning in the NE Senate race, which has seen significant AI-related super PAC spending. See http",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 772,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor of MATCH Act",
+    "evidence": "Senate Democratic Leader Chuck Schumer (D-NY) and U.S. Senators Andy Kim (D-NJ), Ranking Member of the Subcommittee on National Security and International Trade and Finance on the Senate Committee on Banking, Housing and Urban Affairs, Pete Ricketts (R-NE), and Jim Risch (R-ID) introduced the Multilateral Alignment of Technology Controls on Hardware (MATCH) Act [11]",
+    "source": {
+      "id": 2,
+      "name": "Chuck Schumer",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Chuck Schumer is a Democratic U.S. Senator from New York who has served since 1999 and is currently Senate Majority Leader. He led a bipartisan working group that released a 31-page AI policy roadmap in May 2024, recommending at least $32 billion in government spending to accelerate AI research and development. The roadmap was developed after months of AI Insight Forums with tech companies, civil "
+    },
+    "target": {
+      "id": 1101,
+      "name": "Jim Risch",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Jim Risch is a U.S. Senator from Idaho who has served since 2009 and is a member of the Republican Party. He serves on five key committees: Energy and Natural Resources, Foreign Relations, Small Business and Entrepreneurship, Intelligence, and Ethics, and serves as Chairman of the Senate Foreign Relations Committee. He previously served as Idaho's 31st Governor in 2006 and as Lieutenant Governor, ",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 779,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor",
+    "evidence": "Sens. Brian Schatz (D-HI) and John Kennedy (R-LA) introduced the AI Labeling Act (S. 2691) on October 24, 2023 [8]",
+    "source": {
+      "id": 7,
+      "name": "Brian Schatz",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Brian Schatz is Hawaii's senior United States Senator who has served since 2012 and focuses on helping workers, veterans, and families while leading key legislation on health care, climate change, and technology. He serves as Chairman of the Senate Committee on Indian Affairs and is a member of multiple committees including Appropriations, Commerce Science and Transportation, Foreign Relations, an"
+    },
+    "target": {
+      "id": 1105,
+      "name": "John Kennedy",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Sen. John Kennedy (R-LA) questioned David Evan Harris about AI regulation during a Senate Judiciary Committee hearing on September 17, 2024. Kennedy co-introduced the AI Labeling Act (S. 2691) with Sen. Brian Schatz (D-HI) on October 24, 2023, which would notify consumers when they interact with AI-generated content and require developers to disclose such content. Kennedy has introduced legislatio",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 780,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor",
+    "evidence": "U.S. Senators Brian Schatz (D-Hawai'i), Cory Gardner (R-Colo.), Rob Portman (R-Ohio), and Kamala Harris (D-Calif.) introduced the Artificial Intelligence (AI) in Government Act [3]",
+    "source": {
+      "id": 7,
+      "name": "Brian Schatz",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Brian Schatz is Hawaii's senior United States Senator who has served since 2012 and focuses on helping workers, veterans, and families while leading key legislation on health care, climate change, and technology. He serves as Chairman of the Senate Committee on Indian Affairs and is a member of multiple committees including Appropriations, Commerce Science and Transportation, Foreign Relations, an"
+    },
+    "target": {
+      "id": 1106,
+      "name": "Cory Gardner",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Cory Gardner is President & CEO of NCTA – The Internet & Television Association, beginning his tenure on September 22, 2025. He previously served as a U.S. Senator from Colorado from 2015 to 2021 and as a U.S. Representative for Colorado's 4th Congressional District from 2011 to 2015. Gardner served as chair of the National Republican Senatorial Committee from 2017 to 2019. He was consistently ran",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 783,
+    "edge_type": "collaborator",
+    "role": "Speaker",
+    "evidence": "Schatz told tech leaders gathered at the Special Competitive Studies Project's AI+Energy Summit last week [2]",
+    "source": {
+      "id": 7,
+      "name": "Brian Schatz",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Brian Schatz is Hawaii's senior United States Senator who has served since 2012 and focuses on helping workers, veterans, and families while leading key legislation on health care, climate change, and technology. He serves as Chairman of the Senate Committee on Indian Affairs and is a member of multiple committees including Appropriations, Commerce Science and Transportation, Foreign Relations, an"
+    },
+    "target": {
+      "id": 1108,
+      "name": "Special Competitive Studies Project",
+      "type": "organization",
+      "category": "Think Tank/Policy Org",
+      "website": null,
+      "notes_excerpt": "The Special Competitive Studies Project (SCSP) is a bipartisan, non-profit initiative with a mission to make recommendations to strengthen America's long-term competitiveness as artificial intelligence (AI) and other emerging technologies reshape national security, economy, and society. SCSP carries forward the vital mission of the National Security Commission on Artificial Intelligence (NSCAI), w",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  }
+]

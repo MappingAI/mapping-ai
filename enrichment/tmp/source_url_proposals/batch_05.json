@@ -1,0 +1,92 @@
+[
+  {
+    "edge_id": 1135,
+    "proposed_url": "https://en.wikipedia.org/wiki/Cory_Gardner",
+    "justification": "Wikipedia article on Cory Gardner explicitly documents his role as chair of the National Republican Senatorial Committee from 2017 to 2019.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1190,
+    "proposed_url": "https://mitpress.mit.edu/9780262035613/deep-learning/",
+    "justification": "MIT Press publisher page for the Deep Learning textbook lists Ian Goodfellow, Yoshua Bengio, and Aaron Courville as co-authors, directly evidencing the collaboration.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1191,
+    "proposed_url": "https://mitpress.mit.edu/9780262035613/deep-learning/",
+    "justification": "MIT Press publisher page for the Deep Learning textbook lists Ian Goodfellow, Yoshua Bengio, and Aaron Courville as co-authors, directly evidencing the collaboration.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1214,
+    "proposed_url": "https://www.husted.senate.gov/media/press-releases/husted-joins-bill-to-help-small-businesses-utilize-ai/",
+    "justification": "Husted's official Senate press release announces his co-sponsorship of the AI for Mainstreet Act alongside Todd Young and Maria Cantwell.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1215,
+    "proposed_url": "https://www.husted.senate.gov/media/press-releases/husted-joins-bill-to-help-small-businesses-utilize-ai/",
+    "justification": "Husted's official Senate press release announces his co-sponsorship of the AI for Mainstreet Act alongside Todd Young and Maria Cantwell.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1216,
+    "proposed_url": "https://www.husted.senate.gov/media/press-releases/husted-leads-bill-to-integrate-ai-talent-in-federal-workforce/",
+    "justification": "Husted's official Senate press release announces the bipartisan AI Talent Act introduced by Senators Husted and Andy Kim.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1223,
+    "proposed_url": "https://www.sanders.senate.gov/press-releases/news-sanders-ocasio-cortez-announce-ai-data-center-moratorium-act/",
+    "justification": "Sanders' official Senate press release announces the AI Data Center Moratorium Act jointly introduced with Rep. Alexandria Ocasio-Cortez on March 25, 2026.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1241,
+    "proposed_url": "https://www.technologyreview.com/2025/07/31/1120885/the-two-people-shaping-the-future-of-openais-research/",
+    "justification": "MIT Technology Review article explicitly names Jakub Pachocki (chief scientist) and Mark Chen (chief research officer) as OpenAI's twin heads of research.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1242,
+    "proposed_url": "https://openai.com/index/jakub-pachocki-announced-as-chief-scientist/",
+    "justification": "Official OpenAI announcement page confirms Jakub Pachocki is named chief scientist as Ilya Sutskever departs, directly evidencing the succession relationship.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1251,
+    "proposed_url": "https://fortune.com/2025/01/16/sam-altman-stalked-ilya-sutskever-openai-artificial-general-intelligence/",
+    "justification": "Fortune article recounts Sam Altman personally recruiting Ilya Sutskever as a co-founder of OpenAI, with Altman describing how he pursued Sutskever before founding the organization.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1254,
+    "proposed_url": "https://www.technobezz.com/news/anthropic-reorganizes-leadership-as-mike-krieger-moves-to-co-2026-01-14-tvd2",
+    "justification": "Article explicitly reports Mike Krieger moving to co-lead the Anthropic Labs incubator alongside Ben Mann, who had been the product engineering lead.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1257,
+    "proposed_url": "https://www.cnbc.com/2025/12/20/josh-woodward-google-gemini-ai-safety.html",
+    "justification": "CNBC article on Josh Woodward at Google Labs includes Clay Bavor's quote praising Woodward's ability to move fast and execute, naming both parties in context of Google Labs leadership.",
+    "confidence": "medium"
+  },
+  {
+    "edge_id": 1261,
+    "proposed_url": "https://www.hachettebookgroup.com/titles/eliezer-yudkowsky/if-anyone-builds-it-everyone-dies/9780316595643/",
+    "justification": "Hachette publisher page for the book lists Eliezer Yudkowsky and Nate Soares as co-authors of 'If Anyone Builds It, Everyone Dies', confirming the co-authorship relationship.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1262,
+    "proposed_url": "https://en.wikipedia.org/wiki/Eliezer_Yudkowsky",
+    "justification": "Wikipedia article on Yudkowsky documents his work on intelligence explosion and its influence on Nick Bostrom's 2014 Superintelligence book.",
+    "confidence": "medium"
+  },
+  {
+    "edge_id": 1266,
+    "proposed_url": "https://www.booker.senate.gov/news/press/booker-rounds-heinrich-lieu-and-obernolte-reintroduce-bipartisan-ai-grand-challenges-act",
+    "justification": "Booker's official Senate press release names both Cory Booker and Mike Rounds (along with Heinrich, Lieu, and Obernolte) as co-sponsors of the reintroduced AI Grand Challenges Act.",
+    "confidence": "high"
+  }
+]

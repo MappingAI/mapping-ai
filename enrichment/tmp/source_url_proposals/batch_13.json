@@ -1,0 +1,92 @@
+[
+  {
+    "edge_id": 1632,
+    "proposed_url": "https://www.texastribune.org/2025/05/19/take-it-down-act-deepfakes-digital-nudes-texas-student/",
+    "justification": "Texas Tribune article explicitly covers Elliston Berry and her mother Anna McAdams as joint advocates whose story led to the Take It Down Act signing.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1636,
+    "proposed_url": "https://pulitzercenter.org/people/karen-hao",
+    "justification": "Pulitzer Center's own page for Karen Hao documents her role as co-creator of the AI Spotlight Series at the Pulitzer Center.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1638,
+    "proposed_url": "https://www.hsgac.senate.gov/media/dems/peters-and-braun-introduce-bipartisan-legislation-to-establish-artificial-intelligence-training-programs-for-federal-workforce-leadership/",
+    "justification": "Official Senate HSGAC press release naming both Peters and Braun as co-introducers of bipartisan AI training legislation for federal supervisors.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1639,
+    "proposed_url": "https://www.peters.senate.gov/newsroom/press-releases/senator-peters-reintroduces-bipartisan-bill-to-boost-americas-ai-workforce-pipeline",
+    "justification": "Senator Peters' official press release on reintroducing the AI and Critical Technology Workforce Framework Act with Sen. Eric Schmitt.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1640,
+    "proposed_url": "https://www.hsgac.senate.gov/media/dems/peters-and-tillis-introduce-bipartisan-bill-to-ensure-the-federal-government-safely-and-responsibly-purchases-and-uses-artificial-intelligence/",
+    "justification": "Official Senate HSGAC press release naming both Peters and Tillis as co-introducers of the PREPARED for AI Act on federal AI procurement.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1642,
+    "proposed_url": "https://www.commerce.senate.gov/2026/3/cantwell-moran-introduce-bill-to-boost-ai-education",
+    "justification": "Senate Commerce Committee press release explicitly names both Cantwell and Moran as co-introducers of the NSF AI Education Act of 2026.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1643,
+    "proposed_url": "https://www.commerce.senate.gov/2026/2/cantwell-and-young-reintroduce-bill-to-ensure-u-s-leads-global-ai-innovation",
+    "justification": "Senate Commerce Committee press release explicitly names Cantwell, Young, Hickenlooper, and Blackburn as co-sponsors reintroducing the Future of AI Innovation Act.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1645,
+    "proposed_url": "https://www.cantwell.senate.gov/news/press-releases/cantwell-joins-booker-in-marathon-floor-speech-against-trump-agenda",
+    "justification": "Senator Cantwell's official press release documents her joining Senator Booker on the Senate floor to speak against the Trump agenda/budget.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1647,
+    "proposed_url": "https://science.house.gov/2024/7/committee-leaders-lofgren-and-lucas-introduce-ai-workforce-bill",
+    "justification": "House Science Committee press release names both Lofgren and Lucas as co-introducers of the Workforce for AI Trust Act (H.R. 9215) on July 30, 2024.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1652,
+    "proposed_url": "https://lieu.house.gov/media-center/press-releases/house-launches-bipartisan-task-force-artificial-intelligence",
+    "justification": "Rep. Lieu's official press release announces the House Bipartisan Task Force on AI and names Lieu and Obernolte as Co-Chairs.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1653,
+    "proposed_url": "https://lieu.house.gov/media-center/press-releases/rep-lieu-named-co-chair-new-house-democratic-commission-ai-and",
+    "justification": "Rep. Lieu's official press release names Lieu, Gottheimer, and Foushee as Co-Chairs of the new House Democratic Commission on AI and the Innovation Economy.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1654,
+    "proposed_url": "https://foushee.house.gov/media/press-releases/leader-jeffries-names-rep-foushee-as-co-chair-of-new-house-democratic-commission-on-ai-and-the-innovation-economy",
+    "justification": "Rep. Foushee's official press release explicitly names Foushee and Lieu as co-chairs of the House Democratic Commission on AI and the Innovation Economy.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1655,
+    "proposed_url": "https://www.markey.senate.gov/news/press-releases/sen-markey-rep-clarke-reintroduce-ai-civil-rights-act-to-eliminate-ai-discrimination-and-enact-guardrails-on-use-of-algorithms-in-decisions-impacting-peoples-rights-civil-liberties-livelihoods",
+    "justification": "Sen. Markey's official press release names both Markey and Rep. Clarke as co-leads of the reintroduced AI Civil Rights Act.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1656,
+    "proposed_url": "https://jayapal.house.gov/2025/12/02/jayapal-markey-clarke-lee-reintroduce-ai-civil-rights-act-to-eliminate-ai-discrimination-and-enact-guardrails-on-use-of-algorithms-in-decisions-impacting-peoples-rights-civil-li/",
+    "justification": "Rep. Jayapal's official press release names Jayapal, Markey, Clarke, and Lee as co-introducers of the AI Civil Rights Act, confirming Jayapal's House co-lead role.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1657,
+    "proposed_url": "https://summerlee.house.gov/newsroom/press-releases/rep-summer-lee-joins-colleagues-in-reintroducing-ai-civil-rights-act-to-eliminate-algorithmic-discrimination-and-protect-civil-rights",
+    "justification": "Rep. Summer Lee's official press release documents her co-lead role alongside Markey, Clarke, and Jayapal in reintroducing the AI Civil Rights Act.",
+    "confidence": "high"
+  }
+]

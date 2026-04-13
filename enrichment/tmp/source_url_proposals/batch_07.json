@@ -1,0 +1,92 @@
+[
+  {
+    "edge_id": 1324,
+    "proposed_url": "https://proceedings.mlr.press/v81/buolamwini18a.html",
+    "justification": "Official PMLR proceedings page for the Gender Shades paper co-authored by Joy Buolamwini and Timnit Gebru, directly evidencing their research collaboration.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1325,
+    "proposed_url": "https://dl.acm.org/doi/10.1145/3442188.3445922",
+    "justification": "ACM Digital Library page for 'On the Dangers of Stochastic Parrots' lists Timnit Gebru and Emily Bender as co-authors of the 2021 FAccT paper.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1326,
+    "proposed_url": "https://deadline.com/2023/05/writers-strike-fran-drescher-picket-lines-wga-west-president-comments-1235360008/",
+    "justification": "Deadline article covering Fran Drescher joining the WGA picket line alongside WGA West President Meredith Stiehm, documenting both as prominent faces of the 2023 strikes.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1327,
+    "proposed_url": "https://dailyinterlake.com/news/2023/sep/27/writers-reach-tentative-deal-and-actors-look-ahead/",
+    "justification": "Article explicitly names Fran Drescher, Meredith Stiehm, and Lisa Takeuchi Cullen as the key strike leaders and prominent faces of the 2023 Hollywood strikes.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1330,
+    "proposed_url": "https://en.wikipedia.org/wiki/Bernie_Sanders_2020_presidential_campaign",
+    "justification": "Wikipedia article on the Bernie Sanders 2020 campaign documents Ro Khanna as a national campaign co-chair alongside Ben Cohen, Nina Turner, and Carmen Yulín Cruz.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1335,
+    "proposed_url": "https://en.wikipedia.org/wiki/PayPal",
+    "justification": "Wikipedia's PayPal article documents the merger of Confinity (Thiel) and X.com (Musk), with Thiel becoming CEO after Musk's departure, evidencing their co-creation of PayPal.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1350,
+    "proposed_url": "https://www.brookings.edu/events/beyond-productivity-the-pursuit-of-purpose-in-the-age-of-ai/",
+    "justification": "Brookings event page for 'Beyond Productivity: The Pursuit of Purpose in the Age of AI' documents Sen. Chris Murphy and Brookings Senior Fellow Molly Kinder appearing together to discuss AI's impact on work and dignity.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1353,
+    "proposed_url": "https://www.whitehouse.gov/releases/2026/03/president-trump-announces-appointments-to-presidents-council-of-advisors-on-science-and-technology/",
+    "justification": "Official White House press release announcing David Sacks and Michael Kratsios as co-chairs of PCAST.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1354,
+    "proposed_url": "https://en.wikipedia.org/wiki/David_O._Sacks",
+    "justification": "Wikipedia article on David Sacks documents that he left McKinsey to join Confinity, the startup co-founded by Peter Thiel, Max Levchin, and Luke Nosek.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1355,
+    "proposed_url": "https://en.wikipedia.org/wiki/PayPal_Mafia",
+    "justification": "Wikipedia's PayPal Mafia article lists both David Sacks and Elon Musk as members of the elite group of former PayPal founders and early employees.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1363,
+    "proposed_url": "https://www.schmidtfutures.com/person/tom-kalil/",
+    "justification": "Schmidt Futures profile page for Tom Kalil documents his role as Chief Innovation Officer at Eric Schmidt's philanthropic organization.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1388,
+    "proposed_url": "https://www.hachettebookgroup.com/titles/daron-acemoglu/power-and-progress/9781541702547/?lens=publicaffairs",
+    "justification": "Publisher page for 'Power and Progress' explicitly lists Daron Acemoglu and Simon Johnson as co-authors.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1390,
+    "proposed_url": "https://yalelawandpolicy.org/antimonopoly-approach-governing-artificial-intelligence",
+    "justification": "Yale Law & Policy Review page for the article explicitly lists Ganesh Sitaraman and Tejas N. Narechania as co-authors.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1391,
+    "proposed_url": "https://www.npr.org/2019/12/03/784151111/pete-buttigieg-spent-his-younger-days-pushing-democrats-off-middle-ground",
+    "justification": "NPR article documents that Ganesh Sitaraman and Pete Buttigieg were Harvard classmates who co-founded the Democratic Renaissance Project progressive reading group.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1411,
+    "proposed_url": "https://press.princeton.edu/books/hardcover/9780691249131/ai-snake-oil",
+    "justification": "Princeton University Press page for 'AI Snake Oil' explicitly lists Arvind Narayanan and Sayash Kapoor as co-authors.",
+    "confidence": "high"
+  }
+]

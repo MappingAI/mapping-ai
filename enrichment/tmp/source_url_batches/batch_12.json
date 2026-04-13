@@ -1,0 +1,392 @@
+[
+  {
+    "edge_id": 1582,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor of AI Data Center Moratorium Act",
+    "evidence": "Sen. Bernie Sanders (I-Vt.) and Rep. Alexandria Ocasio-Cortez (D-N.Y.) today announced the Artificial Intelligence (AI) Data Center Moratorium Act",
+    "source": {
+      "id": 96,
+      "name": "Bernie Sanders",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Bernie Sanders is an American politician serving as the senior United States senator from Vermont, a seat he has held since 2007. He is the longest-serving independent in U.S. congressional history. Sanders was reelected to a fourth Senate term in 2024, defeating Republican Gerald Malloy. He currently serves as the Ranking Member of the Senate Health, Education, Labor and Pensions Committee after "
+    },
+    "target": {
+      "id": 10,
+      "name": "Alexandria Ocasio-Cortez",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Rep. Alexandria Ocasio-Cortez (D-N.Y.) announced the Artificial Intelligence (AI) Data Center Moratorium Act on March 25, 2026, alongside Sen. Bernie Sanders. She announced on Friday that she is jumping into the race to be the top Democrat on the influential House Oversight Committee. Ocasio-Cortez was born on October 13, 1989, in the Bronx, New York, and began representing New York's 14th congres",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1591,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "Brian Deese and Lisa Hansmann, who've penned an interesting proposal on regulating the energy use of AI",
+    "source": {
+      "id": 98,
+      "name": "Brian Deese",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Brian Deese serves as Institute Innovation Fellow at Massachusetts Institute of Technology and Co-Founder and CEO at Foundry-Logic. He served as Director of the National Economic Council from 2021 to 2023 under President Biden. He previously worked as Global Head of Sustainable Investing at BlackRock and held various positions in the Obama administration including Senior Advisor to the President. "
+    },
+    "target": {
+      "id": 1440,
+      "name": "Lisa Hansmann",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Former Special Assistant to the President and Senior Advisor in the Biden White House Chief of Staff office, where she drove implementation of the Inflation Reduction Act, Bipartisan Infrastructure Law, and CHIPS and Science Act. Previously Senior Policy Advisor at the White House National Economic Council (2021-2023) focusing on industrial strategy and energy market resilience. Now Director at Fo",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1592,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "Lehane has been consulting for CEO Sam Altman for more than a year, including handling his temporary ouster in November",
+    "source": {
+      "id": 99,
+      "name": "Chris Lehane",
+      "type": "person",
+      "category": "Executive",
+      "website": null,
+      "notes_excerpt": "Chris Lehane is Chief Global Affairs Officer at OpenAI, having previously served as vice president of global policy starting in early 2024. He is a veteran of the Clinton administration who famously coined the term \"vast right-wing conspiracy\" and worked during the Monica Lewinsky scandal. Before OpenAI, he served as Head of Global Policy and Public Affairs for Airbnb from 2015-2022 and was an Ope"
+    },
+    "target": {
+      "id": 18,
+      "name": "Sam Altman",
+      "type": "person",
+      "category": "Executive",
+      "website": null,
+      "notes_excerpt": "Sam Altman is the CEO of OpenAI, the artificial intelligence research organization that developed ChatGPT. He became CEO of OpenAI in 2019 after co-founding the organization in 2015. In November 2023, he was briefly fired by OpenAI's board of directors but was reinstated five days later. His net worth was estimated at US$3.3 billion by Forbes in March 2026.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1597,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "ERIK BRYNJOLFSSON, GABRIEL UNGER",
+    "source": {
+      "id": 100,
+      "name": "Erik Brynjolfsson",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Erik Brynjolfsson is the Jerry Yang and Akiko Yamazaki Professor and Senior Fellow at the Stanford Institute for Human-Centered AI (HAI), and Director of the Stanford Digital Economy Lab. He also is the Ralph Landau Senior Fellow at the Stanford Institute for Economic Policy Research (SIEPR), Professor by Courtesy at the Stanford Graduate School of Business and Stanford Department of Economics, an"
+    },
+    "target": {
+      "id": 1441,
+      "name": "Gabriel Unger",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Postdoctoral fellow at the Stanford Digital Economy Lab directed by Erik Brynjolfsson. Macroeconomist studying AI's economic impacts. Co-authored 'The Macroeconomics of Artificial Intelligence' (IMF Finance & Development, Dec 2023) with Brynjolfsson, examining whether transformative AI can fulfill its revolutionary economic potential. Research addresses three fundamental questions: shared vision f",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1598,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "best-seller The Second Machine Age: Work, Progress and Prosperity in a Time of Brilliant Technologies, and Machine, Platform, Crowd: Harnessing Our Digital Future",
+    "source": {
+      "id": 100,
+      "name": "Erik Brynjolfsson",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Erik Brynjolfsson is the Jerry Yang and Akiko Yamazaki Professor and Senior Fellow at the Stanford Institute for Human-Centered AI (HAI), and Director of the Stanford Digital Economy Lab. He also is the Ralph Landau Senior Fellow at the Stanford Institute for Economic Policy Research (SIEPR), Professor by Courtesy at the Stanford Graduate School of Business and Stanford Department of Economics, an"
+    },
+    "target": {
+      "id": 1442,
+      "name": "Andrew McAfee",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Principal Research Scientist at MIT Sloan School of Management. Co-founder and co-director of MIT's Initiative on the Digital Economy (IDE). Co-authored 'The Second Machine Age' (2014) with Erik Brynjolfsson — influential book arguing technology races ahead of skills, organizations, and economic institutions. Also authored 'More from Less' (2019). Inaugural Visiting Fellow at Google's Technology a",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1599,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "Erik Brynjolfsson, Danielle Li, and Lindsey Raymond (2025)",
+    "source": {
+      "id": 100,
+      "name": "Erik Brynjolfsson",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Erik Brynjolfsson is the Jerry Yang and Akiko Yamazaki Professor and Senior Fellow at the Stanford Institute for Human-Centered AI (HAI), and Director of the Stanford Digital Economy Lab. He also is the Ralph Landau Senior Fellow at the Stanford Institute for Economic Policy Research (SIEPR), Professor by Courtesy at the Stanford Graduate School of Business and Stanford Department of Economics, an"
+    },
+    "target": {
+      "id": 1201,
+      "name": "Danielle Li",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Danielle Li is the David Sarnoff Professor of Management of Technology at MIT Sloan, researching how AI affects worker productivity, innovation, and labor economics. She has called for policies that give workers rights over AI-generated data derived from their expertise.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1600,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "Erik Brynjolfsson, Danielle Li, and Lindsey Raymond (2025)",
+    "source": {
+      "id": 100,
+      "name": "Erik Brynjolfsson",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Erik Brynjolfsson is the Jerry Yang and Akiko Yamazaki Professor and Senior Fellow at the Stanford Institute for Human-Centered AI (HAI), and Director of the Stanford Digital Economy Lab. He also is the Ralph Landau Senior Fellow at the Stanford Institute for Economic Policy Research (SIEPR), Professor by Courtesy at the Stanford Graduate School of Business and Stanford Department of Economics, an"
+    },
+    "target": {
+      "id": 1443,
+      "name": "Lindsey Raymond",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "Economist and AI researcher. Postdoctoral fellow in Economics and Computation at Microsoft Research. Will join MIT as Assistant Professor (joint Economics and Computer Science) in summer 2026. PhD from MIT (2024), BA from Yale. Former staffer at White House Council of Economic Advisers (2021-2022). Key research: 'Generative AI at Work' (with Brynjolfsson and Li), studying 5,179 customer support ag",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1612,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "During my time at Stony Brook University, I collaborated with Jeff Hancock, Founding Director of Stanford's Social Media Lab, to create an NLP model",
+    "source": {
+      "id": 102,
+      "name": "Yejin Choi",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Yejin Choi was born in 1977 in South Korea. She is currently the Dieter Schwarz Foundation Professor of Computer Science and Senior Fellow at Stanford's Institute for Human-Centered Artificial Intelligence (HAI). She is a MacArthur Fellow and has been recognized as one of the \"100 Most Influential People in AI 2025\" by TIME. Her research focuses on natural language processing, commonsense reasonin"
+    },
+    "target": {
+      "id": 1450,
+      "name": "Jeff Hancock",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Harry and Norman Chandler Professor of Communication at Stanford University. Founding director of the Stanford Social Media Lab. Research focuses on AI's effects on trust, deception, and human communication — from AI-generated text detection to social media well-being impacts. His TED talk 'The Future of Lying' (2012) has 1M+ views. Author of 80+ journal articles. Collaborator with Yejin Choi (edg",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1613,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "Collaborating with moral philosophers like John Tasioulas at University of Oxford on AI's moral decision making sparked my interest",
+    "source": {
+      "id": 102,
+      "name": "Yejin Choi",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Yejin Choi was born in 1977 in South Korea. She is currently the Dieter Schwarz Foundation Professor of Computer Science and Senior Fellow at Stanford's Institute for Human-Centered Artificial Intelligence (HAI). She is a MacArthur Fellow and has been recognized as one of the \"100 Most Influential People in AI 2025\" by TIME. Her research focuses on natural language processing, commonsense reasonin"
+    },
+    "target": {
+      "id": 1451,
+      "name": "John Tasioulas",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Greek-Australian moral and legal philosopher. Was inaugural Director of the Institute for Ethics in AI at the University of Oxford (resigned Sep 2025 during harassment investigation). Professor of Ethics and Legal Philosophy, Senior Research Fellow at Balliol College Oxford. Rhodes Scholar. Previously held chairs at King's College London, UCL, and University of Glasgow. Schmidt Sciences AI2050 Fel",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1614,
+    "edge_type": "collaborator",
+    "role": "co-author",
+    "evidence": "He is a co-author of the book AI Snake Oil",
+    "source": {
+      "id": 103,
+      "name": "Arvind Narayanan",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Arvind Narayanan is a professor of computer science at Princeton University and the director of the Center for Information Technology Policy. He is a co-author of the book AI Snake Oil and the essay AI as Normal Technology, and a newsletter of the same name which is read by over 60,000 researchers, policy makers, journalists, and AI enthusiasts. He was one of TIME's inaugural list of 100 most infl"
+    },
+    "target": {
+      "id": 57,
+      "name": "Sayash Kapoor",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Sayash Kapoor is a Ph.D. candidate in computer science at Princeton University's Center for Information Technology Policy. He is co-author with Arvind Narayanan of the book \"AI Snake Oil: What Artificial Intelligence Can Do, What It Can't, and How to Tell the Difference\". He was named among TIME's 100 most influential people in AI. He won the Porter Ogden Jacobus Fellowship, Princeton's top distin",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1617,
+    "edge_type": "collaborator",
+    "role": "collaborator",
+    "evidence": "my ability to collaborate with experts in other disciplines, like sociologist Matt Salganik",
+    "source": {
+      "id": 103,
+      "name": "Arvind Narayanan",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Arvind Narayanan is a professor of computer science at Princeton University and the director of the Center for Information Technology Policy. He is a co-author of the book AI Snake Oil and the essay AI as Normal Technology, and a newsletter of the same name which is read by over 60,000 researchers, policy makers, journalists, and AI enthusiasts. He was one of TIME's inaugural list of 100 most infl"
+    },
+    "target": {
+      "id": 1452,
+      "name": "Matt Salganik",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Matthew J. Salganik is the Alexander Stewart 1886 Professor of Sociology at Princeton University. Leading figure in computational social science — co-founded the Summer Institute in Computational Social Science (SICSS) with Chris Bail in 2017, now a global annual program training researchers in data science methods for social research. Author of 'Bit by Bit: Social Research in the Digital Age' (20",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1627,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "OpenAI's Vice President of Global Policy Ann O'Leary sat down for a conversation with Randi Weingarten, President of the American Federation of Teachers, and Sean McGarvey, President of North America's Building Trades Union (NABTU)",
+    "source": {
+      "id": 105,
+      "name": "Randi Weingarten",
+      "type": "person",
+      "category": "Organizer",
+      "website": null,
+      "notes_excerpt": "Randi Weingarten is president of the 1.8 million-member American Federation of Teachers (AFT), which represents teachers, paraprofessionals, higher education faculty, nurses, government employees, and early childhood educators. She was elected AFT president in 2008, after serving 11 years as president of the United Federation of Teachers in New York City. She taught history at Clara Barton High Sc"
+    },
+    "target": {
+      "id": 1457,
+      "name": "Sean McGarvey",
+      "type": "person",
+      "category": "Organizer",
+      "website": null,
+      "notes_excerpt": "President of North America's Building Trades Unions (NABTU), an alliance of 14 national/international unions representing 3+ million skilled craft professionals in US and Canada. Glazier by trade — began career in 1981 with Glaziers Local Union 252 in Philadelphia, worked up through IUPAT leadership. Key figure at AI-labor intersection: partnered with Sam Altman/OpenAI (March 2026) to ensure AI da",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1628,
+    "edge_type": "collaborator",
+    "role": "Partner in creating online training course",
+    "evidence": "Berry helped to create an online training course to teach students, parents and school staff about non-consensual, explicit deepfake image abuse, in partnership with cybersecurity firm Adaptive Security and Pathos Consulting Group",
+    "source": {
+      "id": 106,
+      "name": "Elliston Berry",
+      "type": "person",
+      "category": "Organizer",
+      "website": null,
+      "notes_excerpt": "Elliston Berry was 14 years old when a classmate made and shared deepfake nude images of her, which she discovered in October 2023. She helped create an online training course to teach students, parents and school staff about non-consensual, explicit deepfake image abuse, in partnership with cybersecurity firm Adaptive Security and Pathos Consulting Group. Berry advocated for the Take It Down Act,"
+    },
+    "target": {
+      "id": 1458,
+      "name": "Adaptive Security",
+      "type": "organization",
+      "category": "Deployers & Platforms",
+      "website": null,
+      "notes_excerpt": "AI-native cybersecurity startup founded by serial entrepreneurs Brian Long (CEO) and Andrew Jones. Builds platform simulating AI-powered attacks — deepfake voice/video phishing, smishing, and GenAI social engineering — to train corporate defenders. Raised $136M+ total: $43M round co-led by OpenAI and Andreessen Horowitz (OpenAI's first cybersecurity investment), plus $55M Series A (April 2025) led",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1629,
+    "edge_type": "collaborator",
+    "role": "Partner in creating online training course",
+    "evidence": "Berry helped to create an online training course to teach students, parents and school staff about non-consensual, explicit deepfake image abuse, in partnership with cybersecurity firm Adaptive Security and Pathos Consulting Group",
+    "source": {
+      "id": 106,
+      "name": "Elliston Berry",
+      "type": "person",
+      "category": "Organizer",
+      "website": null,
+      "notes_excerpt": "Elliston Berry was 14 years old when a classmate made and shared deepfake nude images of her, which she discovered in October 2023. She helped create an online training course to teach students, parents and school staff about non-consensual, explicit deepfake image abuse, in partnership with cybersecurity firm Adaptive Security and Pathos Consulting Group. Berry advocated for the Take It Down Act,"
+    },
+    "target": {
+      "id": 1459,
+      "name": "Pathos Consulting Group",
+      "type": "organization",
+      "category": "Ethics/Bias/Rights",
+      "website": null,
+      "notes_excerpt": "AI ethics consulting firm focused on K-12 education, founded by Evan J. Harris (President). Specializes in helping independent schools integrate AI tools responsibly — staff department automation, student AI empowerment, and ethical professional development. Harris holds master's in private school leadership from Teachers College and studied tech ethics at Stanford's Human-Centered AI Institute (H",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1630,
+    "edge_type": "collaborator",
+    "role": "Adaptive Security CEO",
+    "evidence": "Elliston has teamed up with Adaptive Security CEO and founder Brian Long and the Pathos Consulting Group to launch a series of free trainings for parents and educators",
+    "source": {
+      "id": 106,
+      "name": "Elliston Berry",
+      "type": "person",
+      "category": "Organizer",
+      "website": null,
+      "notes_excerpt": "Elliston Berry was 14 years old when a classmate made and shared deepfake nude images of her, which she discovered in October 2023. She helped create an online training course to teach students, parents and school staff about non-consensual, explicit deepfake image abuse, in partnership with cybersecurity firm Adaptive Security and Pathos Consulting Group. Berry advocated for the Take It Down Act,"
+    },
+    "target": {
+      "id": 1460,
+      "name": "Brian Long",
+      "type": "person",
+      "category": "Executive",
+      "website": null,
+      "notes_excerpt": "CEO and Co-Founder of Adaptive Security, an AI-native cybersecurity startup simulating deepfake and GenAI attacks for corporate defense training. Serial entrepreneur: previously co-founded Attentive (SMS/email marketing platform, grew to $500M+ ARR, 8,000+ customers, 1,000+ employees) and TapCommerce (acquired by Twitter, where he served as Senior Director leading mobile teams for 19 months). Rais",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  }
+]

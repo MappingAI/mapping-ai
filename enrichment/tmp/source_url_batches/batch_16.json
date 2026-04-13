@@ -1,0 +1,392 @@
+[
+  {
+    "edge_id": 1139,
+    "edge_type": "employer",
+    "role": "Chairman of Subcommittee on Aviation, Space, and Innovation",
+    "evidence": "Sen. Jerry Moran (R-Kan.), Chairman",
+    "source": {
+      "id": 77,
+      "name": "Jerry Moran",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Jerry Moran is a Republican U.S. Senator from Kansas who serves as a senior member of the Senate Committee on Commerce, Science and Transportation. He has worked extensively on bipartisan artificial intelligence legislation, introducing multiple AI-related bills in 2026 with Democratic Senator Maria Cantwell. Moran serves as Chairman on the Appropriations Subcommittee on Commerce, Justice, Science"
+    },
+    "target": {
+      "id": 1107,
+      "name": "Senate Commerce, Science, and Transportation Committee",
+      "type": "organization",
+      "category": "Government/Agency",
+      "website": null,
+      "notes_excerpt": "The Senate Commerce, Science, and Transportation Committee is a standing committee of the United States Senate composed of 28 Senators and led by Committee Chairman Ted Cruz (R-Texas) and Ranking Member Maria Cantwell (D-Wash.). The committee has broad jurisdiction over all matters concerning interstate commerce, science and technology policy, and transportation, and is one of the largest of the S",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1141,
+    "edge_type": "employer",
+    "role": "President and CEO",
+    "evidence": "Ylli Bajraktari President and CEO Special Competitive Studies Project (SCSP)",
+    "source": {
+      "id": 1310,
+      "name": "Ylli Bajraktari",
+      "type": "person",
+      "category": "Executive",
+      "website": null,
+      "notes_excerpt": "President and CEO of the Special Competitive Studies Project (SCSP), founded by Eric Schmidt in 2021 to strengthen U.S. competitiveness in AI and emerging technologies. Previously served as Executive Director of the National Security Commission on Artificial Intelligence (NSCAI, 2019-2021), chaired by Eric Schmidt, where he assembled 130+ staff to produce the landmark NSCAI final report. Career na"
+    },
+    "target": {
+      "id": 1108,
+      "name": "Special Competitive Studies Project",
+      "type": "organization",
+      "category": "Think Tank/Policy Org",
+      "website": null,
+      "notes_excerpt": "The Special Competitive Studies Project (SCSP) is a bipartisan, non-profit initiative with a mission to make recommendations to strengthen America's long-term competitiveness as artificial intelligence (AI) and other emerging technologies reshape national security, economy, and society. SCSP carries forward the vital mission of the National Security Commission on Artificial Intelligence (NSCAI), w",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1142,
+    "edge_type": "employer",
+    "role": "Chair",
+    "evidence": "previous offset strategies,\" said SCSP Chair Dr. Eric Schmidt",
+    "source": {
+      "id": 855,
+      "name": "Eric Schmidt",
+      "type": "person",
+      "category": "Investor",
+      "website": null,
+      "notes_excerpt": "Testified before Congress in 2021 urging $40B AI investment and warned China poses existential threat to US tech leadership. Co-authored 'Genesis' with Henry Kissinger exploring AI's civilizational risks. Recently warned about 'superintelligence strategy' and proposed 'Mutual Assured AI Malfunction' (MAIM) deterrence framework. Led NSCAI from 2019-2021, significantly influencing US AI policy and d"
+    },
+    "target": {
+      "id": 1108,
+      "name": "Special Competitive Studies Project",
+      "type": "organization",
+      "category": "Think Tank/Policy Org",
+      "website": null,
+      "notes_excerpt": "The Special Competitive Studies Project (SCSP) is a bipartisan, non-profit initiative with a mission to make recommendations to strengthen America's long-term competitiveness as artificial intelligence (AI) and other emerging technologies reshape national security, economy, and society. SCSP carries forward the vital mission of the National Security Commission on Artificial Intelligence (NSCAI), w",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1155,
+    "edge_type": "employer",
+    "role": "Inaugural Chief Artificial Intelligence Officer, Director of the Scientific Computing and Imaging (SCI) Institute",
+    "evidence": "Manish Parashar, Ph.D. Inaugural Chief Artificial Intelligence Officer, Director of the Scientific Computing and Imaging (SCI) Institute, Chair in Computational Science and Engineering, and Presidential Professor in the Kahlert School of Computing, University of Utah",
+    "source": {
+      "id": 1318,
+      "name": "Manish Parashar",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Presidential Professor at the University of Utah's Kahlert School of Computing and Director of the Scientific Computing and Imaging (SCI) Institute. Appointed as the university's inaugural Chief AI Officer. Led the launch of the One-U Responsible AI Initiative with $100 million investment in AI research across environment, healthcare, and education. Previously served at the National Science Founda"
+    },
+    "target": {
+      "id": 1111,
+      "name": "Responsible AI Initiative",
+      "type": "organization",
+      "category": "AI Safety/Alignment",
+      "website": null,
+      "notes_excerpt": "Multiple organizations operate under the name \"Responsible AI Initiative\" with different scopes and affiliations. The University of Utah operates the One-U Responsible AI Initiative, which aims to advance AI to achieve societal good while protecting privacy, civil rights, and civil liberties. Emory University launched a Responsible AI website as part of their enterprise-wide Responsible AI initiat",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1159,
+    "edge_type": "employer",
+    "role": "full professor in the Department of Computer Science and Operations Research",
+    "evidence": "Yoshua Bengio, full professor in the Department of Computer Science and Operations Research at Université de Montréal",
+    "source": {
+      "id": 29,
+      "name": "Yoshua Bengio",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Yoshua Bengio is a Canadian computer scientist born March 5, 1964, in Paris, France, and is a full professor at Université de Montréal. He received the 2018 A.M. Turing Award together with Geoffrey Hinton and Yann LeCun for their foundational work on deep learning. In June 2025, Bengio launched a nonprofit organization called LawZero aimed at building 'honest' AI systems that can detect and block "
+    },
+    "target": {
+      "id": 1112,
+      "name": "Université de Montréal",
+      "type": "organization",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Université de Montréal is a French-language institution of higher learning founded in 1878, regarded as one of the most important universities in Canada in terms of research and one of the largest by enrolment. The university has 16 faculties and two affiliated schools (Polytechnique Montréal and HEC Montréal), with an enrollment of nearly 67,600 students in over 600 programs. UdeM ranked 9th glob",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1169,
+    "edge_type": "employer",
+    "role": "President and CEO",
+    "evidence": "Valerie Pisano, Observer, Board of Directors, President and CEO – Mila",
+    "source": {
+      "id": 1211,
+      "name": "Valérie Pisano",
+      "type": "person",
+      "category": "Executive",
+      "website": null,
+      "notes_excerpt": "Valérie Pisano is President and CEO of Mila – Quebec Artificial Intelligence Institute, leading one of the world's foremost academic AI labs. She advocates for responsible, ethics-centered AI governance and has emphasized the urgent need for international cooperation on AI regulation and safety standards."
+    },
+    "target": {
+      "id": 1113,
+      "name": "Mila - Quebec Artificial Intelligence Institute",
+      "type": "organization",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Mila - Quebec Artificial Intelligence Institute is the world's largest academic AI research center with over 1,400 researchers and 140+ professors. Founded in 1993 by Yoshua Bengio at Université de Montréal, it is an independent nonprofit research organization dedicated to advancing artificial intelligence through fundamental research and talent development. The institute is recognized worldwide f",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1183,
+    "edge_type": "employer",
+    "role": "director of machine learning",
+    "evidence": "director of machine learning at Apple",
+    "source": {
+      "id": 1115,
+      "name": "Ian Goodfellow",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "Ian J. Goodfellow (born 1987) is an American computer scientist, engineer, and executive, most noted for his work on artificial neural networks and deep learning. He is a research scientist at Google DeepMind, was previously employed as a research scientist at Google Brain and director of machine learning at Apple as well as one of the first employees at OpenAI. He is best known for inventing gene"
+    },
+    "target": {
+      "id": 1329,
+      "name": "Apple",
+      "type": "organization",
+      "category": "Deployers & Platforms",
+      "website": null,
+      "notes_excerpt": "Consumer technology company deploying AI via Apple Intelligence across its device ecosystem. Pursues an on-device, privacy-first AI strategy using Private Cloud Compute for sensitive tasks. Partnered with OpenAI (ChatGPT integration) and Google (Gemini for Siri). Avoids public regulatory advocacy but leverages privacy standards as a competitive differentiator.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1195,
+    "edge_type": "employer",
+    "role": "President",
+    "evidence": "Stuart Russell (President), Mark Nitzberg (Interim Executive Director), Amir Banifatemi (Board Member)",
+    "source": {
+      "id": 1,
+      "name": "Stuart Russell",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Stuart Russell is a professor of computer science at the University of California, Berkeley and holds the Smith-Zadeh Chair in Engineering. He co-authored the textbook 'Artificial Intelligence: A Modern Approach' with Peter Norvig, which is used in over 1,500 universities in 135 countries. Russell founded the Center for Human-Compatible Artificial Intelligence at UC Berkeley in 2016 and serves as "
+    },
+    "target": {
+      "id": 1117,
+      "name": "International Association for Safe and Ethical AI",
+      "type": "organization",
+      "category": "AI Safety/Alignment",
+      "website": null,
+      "notes_excerpt": "The International Association for Safe and Ethical AI (IASEAI) is a non-profit organization founded in 2024 with headquarters in Paris, France. The organization's stated mission is to address the risks and opportunities associated with advances in artificial intelligence and to ensure that AI systems operate safely and ethically, benefiting all of humanity. IASEAI held its inaugural conference, IA",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1196,
+    "edge_type": "employer",
+    "role": "Interim Executive Director",
+    "evidence": "Stuart Russell (President), Mark Nitzberg (Interim Executive Director), Amir Banifatemi (Board Member)",
+    "source": {
+      "id": 1334,
+      "name": "Mark Nitzberg",
+      "type": "person",
+      "category": "Executive",
+      "website": null,
+      "notes_excerpt": "Executive Director of the Center for Human-Compatible AI (CHAI) at UC Berkeley since 2016, and Interim Executive Director of IASEAI. Also head of strategic outreach for Berkeley AI Research (BAIR). Former CEO of The Blindsight Corporation (acquired by Amazon A9)."
+    },
+    "target": {
+      "id": 1117,
+      "name": "International Association for Safe and Ethical AI",
+      "type": "organization",
+      "category": "AI Safety/Alignment",
+      "website": null,
+      "notes_excerpt": "The International Association for Safe and Ethical AI (IASEAI) is a non-profit organization founded in 2024 with headquarters in Paris, France. The organization's stated mission is to address the risks and opportunities associated with advances in artificial intelligence and to ensure that AI systems operate safely and ethically, benefiting all of humanity. IASEAI held its inaugural conference, IA",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1202,
+    "edge_type": "employer",
+    "role": "Vice Chair",
+    "evidence": "Vice Chairs Katie Britt (AL), Marsha Blackburn (TN), Bernie Moreno (OH), Jim Banks (IN)",
+    "source": {
+      "id": 11,
+      "name": "Marsha Blackburn",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Marsha Blackburn is the senior senator for Tennessee and the first woman to represent the Volunteer State in the United States Senate. She released a discussion draft of her legislative framework to codify President Trump's executive order to create one rulebook for artificial intelligence (AI) that protects children, creators, conservatives, and communities from harm while ensuring the United Sta"
+    },
+    "target": {
+      "id": 1118,
+      "name": "National Republican Senatorial Committee",
+      "type": "organization",
+      "category": "Political Campaign/PAC",
+      "website": null,
+      "notes_excerpt": "The National Republican Senatorial Committee (NRSC) is the Republican Hill committee for the United States Senate, working to elect Republicans to the Senate. The NRSC was founded in 1916 as the Republican Senatorial Campaign Committee and was reorganized in 1948 and renamed the National Republican Senatorial Committee. It has been chaired by Senator Tim Scott from South Carolina since 2025. The N",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1203,
+    "edge_type": "employer",
+    "role": "Communications Director",
+    "evidence": "NRSC communications director Joanna Rodriguez asserted in an email",
+    "source": {
+      "id": 1337,
+      "name": "Joanna Rodriguez",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Communications Director at National Republican Senatorial Committee (NRSC) since Jan 2025. Championed NRSC use of AI in political campaigns, defended AI-generated campaign ads including deepfake-style ad targeting Chuck Schumer (Oct 2025). Stated \"AI is here and not going anywhere. Adapt & win or pearl clutch & lose.\" Previously worked in office of Sen. Pete Ricketts."
+    },
+    "target": {
+      "id": 1118,
+      "name": "National Republican Senatorial Committee",
+      "type": "organization",
+      "category": "Political Campaign/PAC",
+      "website": null,
+      "notes_excerpt": "The National Republican Senatorial Committee (NRSC) is the Republican Hill committee for the United States Senate, working to elect Republicans to the Senate. The NRSC was founded in 1916 as the Republican Senatorial Campaign Committee and was reorganized in 1948 and renamed the National Republican Senatorial Committee. It has been chaired by Senator Tim Scott from South Carolina since 2025. The N",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1249,
+    "edge_type": "employer",
+    "role": "Chairman",
+    "evidence": "Title: CEO of OpenAI, Chairman of Helion Energy, President of Y Combinator (until 2019)",
+    "source": {
+      "id": 18,
+      "name": "Sam Altman",
+      "type": "person",
+      "category": "Executive",
+      "website": null,
+      "notes_excerpt": "Sam Altman is the CEO of OpenAI, the artificial intelligence research organization that developed ChatGPT. He became CEO of OpenAI in 2019 after co-founding the organization in 2015. In November 2023, he was briefly fired by OpenAI's board of directors but was reinstated five days later. His net worth was estimated at US$3.3 billion by Forbes in March 2026."
+    },
+    "target": {
+      "id": 1347,
+      "name": "Helion Energy",
+      "type": "organization",
+      "category": "Infrastructure & Compute",
+      "website": null,
+      "notes_excerpt": "Private nuclear fusion company building the Orion plant in Chelan County, WA, targeting power delivery to Microsoft data centers by 2028 under the world's first fusion power purchase agreement. Backed by Sam Altman ($350M+) and SoftBank; raised $425M Series F in Jan 2025 at a $5.4B valuation. Directly tied to AI compute energy demands.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1258,
+    "edge_type": "employer",
+    "role": "Professor",
+    "evidence": "Prior to returning to Harvard, he taught at Stanford Law School, where he founded the Center for Internet and Society",
+    "source": {
+      "id": 21,
+      "name": "Lawrence Lessig",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Lawrence Lessig is the Roy L. Furman Professor of Law and Leadership at Harvard Law School. He is the founder of Equal Citizens and a founding board member of Creative Commons. He clerked for Judge Richard Posner on the 7th Circuit Court of Appeals and Justice Antonin Scalia on the United States Supreme Court. He has focused his work on campaign finance reform and institutional corruption, particu"
+    },
+    "target": {
+      "id": 1300,
+      "name": "Stanford Law School",
+      "type": "organization",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Home of CodeX (Stanford Center for Legal Informatics) and the Stanford Law AI Initiative co-directed by Prof. Nathaniel Persily. Hosts AI governance courses, the Law Policy Lab practicum on federal AI use in criminal justice, and applied research projects such as ComplianceTwin (2025–2026).",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1287,
+    "edge_type": "employer",
+    "role": "senior fellow",
+    "evidence": "Jennifer Pahlka is a senior fellow at the Niskanen Center and the Federation of American Scientists",
+    "source": {
+      "id": 28,
+      "name": "Jennifer Pahlka",
+      "type": "person",
+      "category": "Organizer",
+      "website": null,
+      "notes_excerpt": "Jennifer Pahlka is the founder of Code for America and author of 'Recoding America: Why Government Is Failing in the Digital Age and How We Can Do Better'. She served as U.S. Deputy Chief Technology Officer under President Obama from 2013-2014, where she helped found the United States Digital Service. She is currently a senior fellow at the Niskanen Center and the Federation of American Scientists"
+    },
+    "target": {
+      "id": 1356,
+      "name": "Niskanen Center",
+      "type": "organization",
+      "category": "Think Tank/Policy Org",
+      "website": null,
+      "notes_excerpt": "Centrist/center-right think tank founded 2015 by Jerry Taylor (ex-Cato). Named \"Most Interesting Think Tank\" by TIME (2023). AI policy stance: regulatory restraint, intervene only when harm is realistic. Has 501(c)(3) research arm and 501(c)(4) lobbying arm. Major funders include Hewlett Foundation, Open Philanthropy, Carnegie Corp.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1288,
+    "edge_type": "employer",
+    "role": "senior fellow",
+    "evidence": "Jennifer Pahlka is a senior fellow at the Niskanen Center and the Federation of American Scientists",
+    "source": {
+      "id": 28,
+      "name": "Jennifer Pahlka",
+      "type": "person",
+      "category": "Organizer",
+      "website": null,
+      "notes_excerpt": "Jennifer Pahlka is the founder of Code for America and author of 'Recoding America: Why Government Is Failing in the Digital Age and How We Can Do Better'. She served as U.S. Deputy Chief Technology Officer under President Obama from 2013-2014, where she helped found the United States Digital Service. She is currently a senior fellow at the Niskanen Center and the Federation of American Scientists"
+    },
+    "target": {
+      "id": 1357,
+      "name": "Federation of American Scientists",
+      "type": "organization",
+      "category": "Think Tank/Policy Org",
+      "website": null,
+      "notes_excerpt": "DC-based science and technology policy nonprofit founded in 1945. FAS runs the Day One Project to translate scientific expertise into federal policy; active in AI governance, advocating for responsible AI innovation, NIST AISI funding, and federal AI adoption. Submitted AI Action Plan recommendations to the White House in 2025.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  }
+]

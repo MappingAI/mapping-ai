@@ -1,0 +1,392 @@
+[
+  {
+    "edge_id": 1347,
+    "edge_type": "critic",
+    "role": null,
+    "evidence": "companies like Google and Apple and OpenAI and Anthropic are in a race to deploy consumer-facing, job-killing AGI as quickly as possible, in order to beat each other to the market",
+    "source": {
+      "id": 41,
+      "name": "Chris Murphy",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Chris Murphy is the junior United States Senator from Connecticut, serving since 2013. He previously served in the U.S. House of Representatives from 2007 to 2013, representing Connecticut's 5th congressional district. Murphy was reelected to a third Senate term in 2024, defeating Republican challenger Matthew Corey. He has become a prominent voice on AI regulation, arguing that unregulated artifi"
+    },
+    "target": {
+      "id": 1329,
+      "name": "Apple",
+      "type": "organization",
+      "category": "Deployers & Platforms",
+      "website": null,
+      "notes_excerpt": "Consumer technology company deploying AI via Apple Intelligence across its device ecosystem. Pursues an on-device, privacy-first AI strategy using Private Cloud Compute for sensitive tasks. Partnered with OpenAI (ChatGPT integration) and Google (Gemini for Siri). Avoids public regulatory advocacy but leverages privacy standards as a competitive differentiator.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1489,
+    "edge_type": "critic",
+    "role": "Senate oversight of SBA AI practices",
+    "evidence": "Sen. Joni Ernst, R-Iowa, is seeking information about the Small Business Administration's IT investments and alleged undisclosed artificial intelligence use cases",
+    "source": {
+      "id": 75,
+      "name": "Joni Ernst",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Joni Ernst is a U.S. Senator from Iowa who was first elected in 2014 and has served since January 6, 2015. She is a combat veteran who served as a company commander in Kuwait and Iraq during Operation Iraqi Freedom and retired as a Lieutenant Colonel in the Iowa Army National Guard after 23 years of military service. Ernst announced in September 2025 that she will not seek re-election to a third t"
+    },
+    "target": {
+      "id": 1419,
+      "name": "Small Business Administration",
+      "type": "organization",
+      "category": "Government/Agency",
+      "website": null,
+      "notes_excerpt": "U.S. federal agency (est. 1953) supporting small businesses and entrepreneurs. Increasingly relevant to AI policy as small business AI adoption surges (58% using generative AI per 2025 Chamber survey, up from 40%). Provides AI guidance for small businesses (sba.gov/ai). Subject of the bipartisan Small Business AI Training Act (2026, Cantwell/Moran) directing Commerce Dept + SBA to create AI traini",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1490,
+    "edge_type": "critic",
+    "role": "Oversight of Pentagon funding practices",
+    "evidence": "To put a cherry on top, I'm giving my April 2024 Squeal Award to the bureaucrats at DoD who have been blindly bankrolling Beijing's AI brain trust",
+    "source": {
+      "id": 75,
+      "name": "Joni Ernst",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Joni Ernst is a U.S. Senator from Iowa who was first elected in 2014 and has served since January 6, 2015. She is a combat veteran who served as a company commander in Kuwait and Iraq during Operation Iraqi Freedom and retired as a Lieutenant Colonel in the Iowa Army National Guard after 23 years of military service. Ernst announced in September 2025 that she will not seek re-election to a third t"
+    },
+    "target": {
+      "id": 1420,
+      "name": "Department of Defense",
+      "type": "organization",
+      "category": "Government/Agency",
+      "website": null,
+      "notes_excerpt": "The Department of Defense is the largest U.S. federal agency and a major driver of AI policy and procurement. In January 2026, Secretary Hegseth released an \"AI-first\" strategy directing the department to adopt AI at wartime speed, including deploying frontier models to warfighters within 30 days of public release. The Chief Digital and AI Office (CDAO) was realigned under the Under Secretary for ",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1583,
+    "edge_type": "critic",
+    "role": null,
+    "evidence": "Sanders is a strong critic of former President Donald Trump",
+    "source": {
+      "id": 96,
+      "name": "Bernie Sanders",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Bernie Sanders is an American politician serving as the senior United States senator from Vermont, a seat he has held since 2007. He is the longest-serving independent in U.S. congressional history. Sanders was reelected to a fourth Senate term in 2024, defeating Republican Gerald Malloy. He currently serves as the Ranking Member of the Senate Health, Education, Labor and Pensions Committee after "
+    },
+    "target": {
+      "id": 1103,
+      "name": "Donald Trump",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Donald Trump served as the 45th President of the United States from 2017 to 2021 and was inaugurated as the 47th president on January 20, 2025. On March 20, 2026, the Trump Administration released a National AI Legislative Framework that addresses six key objectives including protecting children, safeguarding American communities, and ensuring American AI dominance. In December 2025, President Tru",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1587,
+    "edge_type": "critic",
+    "role": null,
+    "evidence": "The ads are funded by a super PAC called Leading the Future, which, ironically, has the backing of Palantir co-founder Joe Lonsdale, as well as OpenAI President Greg Brockman, VC firm Andreessen Horowitz, AI search startup Perplexity, and other Silicon Valley heavy-hitters... 'They have committed to spending at least $10 million against me…because they know I am their biggest threat'",
+    "source": {
+      "id": 97,
+      "name": "Alex Bores",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Alex Bores is an American politician serving as a member of the New York State Assembly for the 73rd district, having assumed office on January 1, 2023. He is currently running to represent New York's 12th district in the House of Representatives after announcing his candidacy in October 2025 to succeed Jerry Nadler. He co-sponsored the Responsible AI Safety and Education Act (RAISE Act), an AI sa"
+    },
+    "target": {
+      "id": 708,
+      "name": "Leading the Future",
+      "type": "organization",
+      "category": "Political Campaign/PAC",
+      "website": null,
+      "notes_excerpt": "Leading the Future (FEC ID: C00916114) is a bipartisan super PAC launched by a coalition of AI companies and industry leaders with the mission to ensure U.S. leadership in AI innovation and development. It engages in independent expenditures to support candidates aligned with pro-AI agendas, legislative advocacy, and grassroots efforts across federal and state levels, with operations beginning in ",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1626,
+    "edge_type": "critic",
+    "role": null,
+    "evidence": "Randi Weingarten's response was swift and unapologetic. She called Trump's comments 'every parent's nightmare,'",
+    "source": {
+      "id": 105,
+      "name": "Randi Weingarten",
+      "type": "person",
+      "category": "Organizer",
+      "website": null,
+      "notes_excerpt": "Randi Weingarten is president of the 1.8 million-member American Federation of Teachers (AFT), which represents teachers, paraprofessionals, higher education faculty, nurses, government employees, and early childhood educators. She was elected AFT president in 2008, after serving 11 years as president of the United Federation of Teachers in New York City. She taught history at Clara Barton High Sc"
+    },
+    "target": {
+      "id": 1456,
+      "name": "Melania Trump",
+      "type": "person",
+      "category": "Cultural figure",
+      "website": null,
+      "notes_excerpt": "Former and current First Lady of the United States. Emerged as unexpected AI policy voice in 2025-2026 through education and child safety lens. Launched Presidential AI Challenge — nationwide contest inviting K-12 students to develop AI projects addressing community challenges. Convened White House Task Force on Artificial Intelligence Education (September 2025) with tech CEOs and Cabinet members.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 272,
+    "edge_type": "employer",
+    "role": null,
+    "evidence": null,
+    "source": {
+      "id": 930,
+      "name": "Laurie Locascio",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "As NIST Director (2022-2024), Locascio launched the U.S. AI Safety Institute in November 2023 and oversaw release of the AI Risk Management Framework in January 2023. She participated in roundtables on AI safety and testified before Congress on NIST's AI priorities, securing $50M in FY2025 budget for AI safety work. Now leads ANSI, coordinating private sector standards development including AI sta"
+    },
+    "target": {
+      "id": 1309,
+      "name": "National Institute of Standards and Technology",
+      "type": "organization",
+      "category": "Government/Agency",
+      "website": null,
+      "notes_excerpt": "NIST develops voluntary AI standards and risk management frameworks for federal agencies and industry. Its AI Risk Management Framework (AI RMF 1.0) is widely adopted. In 2025-26 its AI Safety Institute was renamed the Center for AI Standards and Innovation (CAISI) under the Trump administration's AI Action Plan, with a mandate to revise the AI RMF.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 273,
+    "edge_type": "employer",
+    "role": null,
+    "evidence": null,
+    "source": {
+      "id": 931,
+      "name": "Elham Tabassi",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Iranian-born, joined NIST in 1999 after coming to US in 1994 for master's in electrical engineering. Principal architect of NIST Fingerprint Image Quality standard used by FBI. Led development of AI Risk Management Framework 1.0 released January 2023 that laid groundwork for Biden's AI Executive Order. Named by Time Magazine as one of 100 most influential people in AI in 2024."
+    },
+    "target": {
+      "id": 1309,
+      "name": "National Institute of Standards and Technology",
+      "type": "organization",
+      "category": "Government/Agency",
+      "website": null,
+      "notes_excerpt": "NIST develops voluntary AI standards and risk management frameworks for federal agencies and industry. Its AI Risk Management Framework (AI RMF 1.0) is widely adopted. In 2025-26 its AI Safety Institute was renamed the Center for AI Standards and Innovation (CAISI) under the Trump administration's AI Action Plan, with a mandate to revise the AI RMF.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 765,
+    "edge_type": "employer",
+    "role": "Distinguished Professor Of Computational Precision Health",
+    "evidence": "Distinguished Professor Of Computational Precision Health at University of California, San Francisco (Current) Jan 2024 - Present [2]",
+    "source": {
+      "id": 1,
+      "name": "Stuart Russell",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Stuart Russell is a professor of computer science at the University of California, Berkeley and holds the Smith-Zadeh Chair in Engineering. He co-authored the textbook 'Artificial Intelligence: A Modern Approach' with Peter Norvig, which is used in over 1,500 universities in 135 countries. Russell founded the Center for Human-Compatible Artificial Intelligence at UC Berkeley in 2016 and serves as "
+    },
+    "target": {
+      "id": 1096,
+      "name": "University of California, San Francisco",
+      "type": "organization",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "The University of California, San Francisco (UCSF or UC San Francisco) is a public land-grant research university in San Francisco, California, United States that is part of the University of California system and is dedicated entirely to health science and life science. UCSF was founded as Toland Medical College in 1864, became affiliated with the University of California as its medical departmen",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 791,
+    "edge_type": "employer",
+    "role": "Full Professor",
+    "evidence": "Bengio is a full professor at Université de Montréal",
+    "source": {
+      "id": 29,
+      "name": "Yoshua Bengio",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Yoshua Bengio is a Canadian computer scientist born March 5, 1964, in Paris, France, and is a full professor at Université de Montréal. He received the 2018 A.M. Turing Award together with Geoffrey Hinton and Yann LeCun for their foundational work on deep learning. In June 2025, Bengio launched a nonprofit organization called LawZero aimed at building 'honest' AI systems that can detect and block "
+    },
+    "target": {
+      "id": 1112,
+      "name": "Université de Montréal",
+      "type": "organization",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Université de Montréal is a French-language institution of higher learning founded in 1878, regarded as one of the most important universities in Canada in terms of research and one of the largest by enrolment. The university has 16 faculties and two affiliated schools (Polytechnique Montréal and HEC Montréal), with an enrollment of nearly 67,600 students in over 600 programs. UdeM ranked 9th glob",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1097,
+    "edge_type": "employer",
+    "role": "Division Chief, Computational Sciences",
+    "evidence": "He was head of NASA Ames's Computational Sciences Division, where he was NASA's senior computer scientist",
+    "source": {
+      "id": 1094,
+      "name": "Peter Norvig",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Peter Norvig is a Distinguished Education Fellow at Stanford's Human-Centered Artificial Intelligence Institute and a researcher at Google Inc. He co-authored \"Artificial Intelligence: A Modern Approach\" with Stuart Russell, which is the leading textbook in the field used in more than 1,500 universities in 135 countries. He was born on December 14, 1956, and previously served as head of NASA Ames'"
+    },
+    "target": {
+      "id": 1296,
+      "name": "NASA Ames Research Center",
+      "type": "organization",
+      "category": "Government/Agency",
+      "website": null,
+      "notes_excerpt": "Major NASA research center in Silicon Valley. Intelligent Systems Division comprises Autonomous Systems & Robotics, Collaborative & Assistant Systems, Discovery & Systems Health, and Robust Software Engineering. Conducts mission-driven R&D in computational sciences for NASA applications. Aviation Systems Division researches advanced air traffic management and automation. Key AI projects: Data and ",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1107,
+    "edge_type": "employer",
+    "role": "professor by courtesy",
+    "evidence": "Genesereth is professor in the Computer Science Department at Stanford University and a professor by courtesy in the Stanford Law School",
+    "source": {
+      "id": 1098,
+      "name": "Michael Genesereth",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Michael Genesereth (born 1948) is an American logician and computer scientist, who is most known for his work on computational logic and applications of that work in enterprise management, computational law, and general game playing. Genesereth is professor in the Computer Science Department at Stanford University and a professor by courtesy in the Stanford Law School. His 1987 textbook on Logical"
+    },
+    "target": {
+      "id": 1300,
+      "name": "Stanford Law School",
+      "type": "organization",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Home of CodeX (Stanford Center for Legal Informatics) and the Stanford Law AI Initiative co-directed by Prof. Nathaniel Persily. Hosts AI governance courses, the Law Policy Lab practicum on federal AI use in criminal justice, and applied research projects such as ComplianceTwin (2025–2026).",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1136,
+    "edge_type": "employer",
+    "role": "Chairman",
+    "evidence": "The U.S. Senate Committee on Commerce, Science, and Transportation is composed of 28 Senators and led by Committee Chairman Ted Cruz, R-Texas",
+    "source": {
+      "id": 82,
+      "name": "Ted Cruz",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Ted Cruz serves as U.S. Senate Commerce Committee Chairman and released a legislative framework designed to promote American leadership in artificial intelligence on September 10, 2025. He introduced the SANDBOX Act, which creates a regulatory \"sandbox\" that gives AI developers space to test and launch new AI technologies without being held back by outdated or inflexible federal rules. Cruz is wei"
+    },
+    "target": {
+      "id": 1107,
+      "name": "Senate Commerce, Science, and Transportation Committee",
+      "type": "organization",
+      "category": "Government/Agency",
+      "website": null,
+      "notes_excerpt": "The Senate Commerce, Science, and Transportation Committee is a standing committee of the United States Senate composed of 28 Senators and led by Committee Chairman Ted Cruz (R-Texas) and Ranking Member Maria Cantwell (D-Wash.). The committee has broad jurisdiction over all matters concerning interstate commerce, science and technology policy, and transportation, and is one of the largest of the S",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1137,
+    "edge_type": "employer",
+    "role": "Ranking Member",
+    "evidence": "The U.S. Senate Committee on Commerce, Science, and Transportation is composed of 28 Senators and led by Committee Chairman Ted Cruz, R-Texas and Ranking Member Maria Cantwell, D-Wash.",
+    "source": {
+      "id": 110,
+      "name": "Maria Cantwell",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Maria Cantwell is a U.S. Senator from Washington State, serving as Ranking Member of the Senate Committee on Commerce, Science and Transportation. She has introduced multiple AI-related bills in 2026, including the NSF AI Education Act and the Small Business Artificial Intelligence Training Act. She previously served in the U.S. House of Representatives from 1993-95 and worked as vice president fo"
+    },
+    "target": {
+      "id": 1107,
+      "name": "Senate Commerce, Science, and Transportation Committee",
+      "type": "organization",
+      "category": "Government/Agency",
+      "website": null,
+      "notes_excerpt": "The Senate Commerce, Science, and Transportation Committee is a standing committee of the United States Senate composed of 28 Senators and led by Committee Chairman Ted Cruz (R-Texas) and Ranking Member Maria Cantwell (D-Wash.). The committee has broad jurisdiction over all matters concerning interstate commerce, science and technology policy, and transportation, and is one of the largest of the S",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1138,
+    "edge_type": "employer",
+    "role": "Chairman of the Senate Committee on Commerce, Science, and Transportation's Subcommittee on Science, Manufacturing, and Competitiveness",
+    "evidence": "U.S. Senator Ted Budd (R-N.C.), Chairman of the Senate Committee on Commerce, Science, and Transportation's Subcommittee on Science, Manufacturing, and Competitiveness",
+    "source": {
+      "id": 1301,
+      "name": "Ted Budd",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Republican Senator (NC) and Chair of the Senate Subcommittee on Science, Manufacturing, and Competitiveness. Actively shapes AI legislation through bipartisan bills on government data access, AI lab networks, and public health preparedness. Strongly opposes overregulation, favoring a light-touch, innovation-first federal framework."
+    },
+    "target": {
+      "id": 1107,
+      "name": "Senate Commerce, Science, and Transportation Committee",
+      "type": "organization",
+      "category": "Government/Agency",
+      "website": null,
+      "notes_excerpt": "The Senate Commerce, Science, and Transportation Committee is a standing committee of the United States Senate composed of 28 Senators and led by Committee Chairman Ted Cruz (R-Texas) and Ranking Member Maria Cantwell (D-Wash.). The committee has broad jurisdiction over all matters concerning interstate commerce, science and technology policy, and transportation, and is one of the largest of the S",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  }
+]

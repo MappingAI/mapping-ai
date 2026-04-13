@@ -1,0 +1,392 @@
+[
+  {
+    "edge_id": 1422,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "The predictive timeline is authored by the AI Futures Project, in particular Daniel Kokotajlo, Scott Alexander, Thomas Larsen, Eli Lifland and Romeo Dean",
+    "source": {
+      "id": 59,
+      "name": "Daniel Kokotajlo",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "Daniel Kokotajlo is a former OpenAI researcher who resigned in 2024 and refused to sign a non-disparagement clause, costing him approximately $2 million in equity. He is the founder of the AI Futures Project and author of AI 2027, a detailed scenario showing how superintelligence might arrive by the end of the decade. His median forecast for AGI is 2029, and he believes the default trajectory coul"
+    },
+    "target": {
+      "id": 1393,
+      "name": "Scott Alexander",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "Blogger and writer behind Astral Codex Ten (formerly Slate Star Codex). Psychiatrist by training. Arguably the most influential AI forecasting voice in the rationalist/EA community. Co-authored 'AI 2027' scenario analysis (April 2025) with Daniel Kokotajlo, modeling fast intelligence explosion by 2027-2028. Supports AI safety research funding (ACX Grants). Nuanced on regulation: supports safety st",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1423,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "The predictive timeline is authored by the AI Futures Project, in particular Daniel Kokotajlo, Scott Alexander, Thomas Larsen, Eli Lifland and Romeo Dean",
+    "source": {
+      "id": 59,
+      "name": "Daniel Kokotajlo",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "Daniel Kokotajlo is a former OpenAI researcher who resigned in 2024 and refused to sign a non-disparagement clause, costing him approximately $2 million in equity. He is the founder of the AI Futures Project and author of AI 2027, a detailed scenario showing how superintelligence might arrive by the end of the decade. His median forecast for AGI is 2029, and he believes the default trajectory coul"
+    },
+    "target": {
+      "id": 1394,
+      "name": "Thomas Larsen",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "Researcher at the AI Futures Project focused on dangerous capability evaluations, AI safety measurement, and compute governance. Co-authored the AI 2027 scenario forecast with Daniel Kokotajlo and Eli Lifland. Previously founded the Center for AI Policy; also a MATS mentor.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1424,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "The predictive timeline is authored by the AI Futures Project, in particular Daniel Kokotajlo, Scott Alexander, Thomas Larsen, Eli Lifland and Romeo Dean",
+    "source": {
+      "id": 59,
+      "name": "Daniel Kokotajlo",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "Daniel Kokotajlo is a former OpenAI researcher who resigned in 2024 and refused to sign a non-disparagement clause, costing him approximately $2 million in equity. He is the founder of the AI Futures Project and author of AI 2027, a detailed scenario showing how superintelligence might arrive by the end of the decade. His median forecast for AGI is 2029, and he believes the default trajectory coul"
+    },
+    "target": {
+      "id": 1395,
+      "name": "Eli Lifland",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "Founding Researcher at AI Futures Project and leading AI forecaster; co-author of the AI 2027 scenario (April 2025) alongside Daniel Kokotajlo, Thomas Larsen, and Romeo Dean. Previously forecasted at Samotsvety and worked at Ought and SaferAI. Co-founded Sage (a forecasting platform) and has served as guest fund manager at the Long Term Future Fund. Publicly argues that short AGI timelines are und",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1425,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "The predictive timeline is authored by the AI Futures Project, in particular Daniel Kokotajlo, Scott Alexander, Thomas Larsen, Eli Lifland and Romeo Dean",
+    "source": {
+      "id": 59,
+      "name": "Daniel Kokotajlo",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "Daniel Kokotajlo is a former OpenAI researcher who resigned in 2024 and refused to sign a non-disparagement clause, costing him approximately $2 million in equity. He is the founder of the AI Futures Project and author of AI 2027, a detailed scenario showing how superintelligence might arrive by the end of the decade. His median forecast for AGI is 2029, and he believes the default trajectory coul"
+    },
+    "target": {
+      "id": 1396,
+      "name": "Romeo Dean",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "Researcher at AI Futures Project and co-author of the AI 2027 scenario forecast (April 2025). Graduated cum laude from Harvard with a concurrent AB/SM in Computer Science; previously an AI Policy Fellow at the Institute for AI Policy and Strategy (IAPS) and an Astra Fellow at Constellation. Specializes in forecasting AI chip production, government intervention, and international coordination dynam",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1455,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "In addition to heading a research group at the Weizenbaum Institute, I also work at the DAIR Institute founded by former Google Ethical AI head Timnit Gebru",
+    "source": {
+      "id": 66,
+      "name": "Milagros Miceli",
+      "type": "person",
+      "category": "Organizer",
+      "website": null,
+      "notes_excerpt": "Milagros Miceli is a sociologist and computer scientist who founded the Data Workers' Inquiry, an academic project that puts power in the hands of AI data labelers to publish research by and about themselves. She is based at the Weizenbaum Institute in Germany and was named to TIME's 2025 TIME100 AI list. Miceli is 41 years old and is described as an Argentine researcher who has lived in Berlin fo"
+    },
+    "target": {
+      "id": 35,
+      "name": "Timnit Gebru",
+      "type": "person",
+      "category": "Organizer",
+      "website": null,
+      "notes_excerpt": "Timnit Gebru is the founder and executive director of The Distributed Artificial Intelligence Research (DAIR) Institute. She was co-lead of the Ethical AI research team at Google until her firing in 2020 (along with her co-lead) for writing a paper warning about the dangers of large language models and raising issues of discrimination in the workplace. She co-founded Black in AI, a nonprofit that ",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1459,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor of Economy of the Future Commission Act",
+    "evidence": "Today, U.S. Sens. Mark R. Warner (D-VA) and Mike Rounds (R-SD) introduced the Economy of the Future Commission Act",
+    "source": {
+      "id": 68,
+      "name": "Mike Rounds",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Mike Rounds is a Republican U.S. Senator from South Dakota who was sworn into the United States Senate on January 6th, 2015. He serves as co-chair of the Senate AI Caucus and serves on five committees: Senate Appropriations; Armed Services; Banking, Housing and Urban Affairs; Indian Affairs; and the Select Committee on Intelligence. He previously served as the 31st governor of South Dakota from 20"
+    },
+    "target": {
+      "id": 87,
+      "name": "Mark Warner",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Mark Warner is a U.S. Senator from Virginia who serves as Vice Chairman of the Senate Select Committee on Intelligence. He has been leading efforts on AI policy, including introducing the Economy of the Future Commission Act with Senator Mike Rounds to prepare American workers for AI-driven workforce changes. Warner has expressed concern about AI's impact, stating 'I am terrified' about the govern",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1461,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor of Unleashing AI Innovation in Financial Services Act",
+    "evidence": "U.S. Senators Mike Rounds (R-S.D.), Martin Heinrich (D-N.M.), Thom Tillis (R-N.C.) and Andy Kim (D-N.J.) and U.S. Representatives French Hill (R-Ark.), Chairman of the House Financial Services Committee, Ritchie Torres (D-N.Y.), Bryan Steil (R-Wis.) and Josh Gottheimer (D-N.J.) today reintroduced bipartisan, bicameral legislation",
+    "source": {
+      "id": 68,
+      "name": "Mike Rounds",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Mike Rounds is a Republican U.S. Senator from South Dakota who was sworn into the United States Senate on January 6th, 2015. He serves as co-chair of the Senate AI Caucus and serves on five committees: Senate Appropriations; Armed Services; Banking, Housing and Urban Affairs; Indian Affairs; and the Select Committee on Intelligence. He previously served as the 31st governor of South Dakota from 20"
+    },
+    "target": {
+      "id": 72,
+      "name": "Martin Heinrich",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Martin Heinrich is a U.S. Senator from New Mexico who has served since January 2013. He is the founder and co-chair of the Senate Artificial Intelligence Caucus, which he established with former Senator Rob Portman (R-Ohio) in 2019. He serves as Ranking Member on the Committee on Energy and Natural Resources and serves on the Senate Appropriations, Intelligence, and Joint Economic Committees. Hein",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1463,
+    "edge_type": "collaborator",
+    "role": "writer",
+    "evidence": "writer on AI, science, ideas for publications like Transformer, the Wall Street Journal, American Scholar",
+    "source": {
+      "id": 69,
+      "name": "Dan Kagan-Kans",
+      "type": "person",
+      "category": "Journalist",
+      "website": null,
+      "notes_excerpt": "Dan Kagan-Kans is described as a writer on AI, science, and ideas for publications like Transformer, the Wall Street Journal, and American Scholar. He was previously a program officer at the Tikvah Fund and lives in New York. He has written articles including \"The Left Is Missing Out on AI\" for Transformer and \"Baby Shoggoth Is Listening\" for The American Scholar."
+    },
+    "target": {
+      "id": 1409,
+      "name": "Wall Street Journal",
+      "type": "organization",
+      "category": "Media/Journalism",
+      "website": null,
+      "notes_excerpt": "Major U.S. business newspaper owned by News Corp (Rupert Murdoch). Covers AI extensively through its tech and business desks and has employed prominent AI journalists including Karen Hao (China tech, 2022–2023). Has adopted AI-generated tools internally (Narrativa for market summaries, AI article summaries) and its editor-in-chief Emma Tucker has been openly pro-AI in newsrooms. Editorial coverage",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1464,
+    "edge_type": "collaborator",
+    "role": "writer",
+    "evidence": "writer on AI, science, ideas for publications like Transformer, the Wall Street Journal, American Scholar",
+    "source": {
+      "id": 69,
+      "name": "Dan Kagan-Kans",
+      "type": "person",
+      "category": "Journalist",
+      "website": null,
+      "notes_excerpt": "Dan Kagan-Kans is described as a writer on AI, science, and ideas for publications like Transformer, the Wall Street Journal, and American Scholar. He was previously a program officer at the Tikvah Fund and lives in New York. He has written articles including \"The Left Is Missing Out on AI\" for Transformer and \"Baby Shoggoth Is Listening\" for The American Scholar."
+    },
+    "target": {
+      "id": 1410,
+      "name": "The American Scholar",
+      "type": "organization",
+      "category": "Media/Journalism",
+      "website": null,
+      "notes_excerpt": "Quarterly magazine of public affairs, literature, science, history, and culture published by Phi Beta Kappa Society since 1932. Named after Ralph Waldo Emerson's 1837 oration. Multiple National Magazine Award winner. Publishes essays, criticism, poetry, and (since 2006) fiction. Also maintains daily website content and bimonthly e-newsletter. Relevant to AI discourse through long-form cultural and",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1465,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "U.S. Senators Chris Coons (D-Del.) and Tom Cotton (R-Ark.) today led a group of colleagues to introduce a resolution affirming the importance of preserving and maintaining the United States' advantage and dominance in artificial intelligence",
+    "source": {
+      "id": 71,
+      "name": "Chris Coons",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Chris Coons is a U.S. Senator from Delaware who serves on multiple committees including Appropriations, Foreign Relations, Judiciary, Small Business and Entrepreneurship, and Ethics committees. He is the Ranking Member of the Senate Foreign Relations Committee's Subcommittee on East Asia, The Pacific, and International Cybersecurity Policy and vice chair of the Ethics Committee. Coons has been act"
+    },
+    "target": {
+      "id": 1099,
+      "name": "Tom Cotton",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Tom Cotton is a U.S. Senator representing Arkansas who introduced the DATA Act of 2026, which would allow AI data center companies to bypass federal electricity regulations by building independent energy infrastructure. Cotton stated that \"American dominance in artificial intelligence and other crucial emerging industries should not come at the expense of Arkansans paying higher energy costs\". On ",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1466,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "U.S. Senators Chris Coons (D-Del.) and Dave McCormick (R-Pa.) today introduced the Liquid Cooling for AI Act",
+    "source": {
+      "id": 71,
+      "name": "Chris Coons",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Chris Coons is a U.S. Senator from Delaware who serves on multiple committees including Appropriations, Foreign Relations, Judiciary, Small Business and Entrepreneurship, and Ethics committees. He is the Ranking Member of the Senate Foreign Relations Committee's Subcommittee on East Asia, The Pacific, and International Cybersecurity Policy and vice chair of the Ethics Committee. Coons has been act"
+    },
+    "target": {
+      "id": 1411,
+      "name": "Dave McCormick",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Republican U.S. Senator from Pennsylvania (sworn in Jan 2025). Former CEO of Bridgewater Associates (2020-2022), world's largest hedge fund. West Point graduate, Bronze Star recipient (82nd Airborne, Gulf War). Under Secretary of Treasury for International Affairs under George W. Bush (2007-2009). Strong AI-and-energy nexus advocate — hosted inaugural Pennsylvania Energy and Innovation Summit (Jul",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1467,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "The resolution is cosponsored by Senators Amy Klobuchar (D-Minn.), Dave McCormick (R-Pa.), Roger Wicker (R-Miss.), and Jeanne Shaheen (D-N.H.)",
+    "source": {
+      "id": 71,
+      "name": "Chris Coons",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Chris Coons is a U.S. Senator from Delaware who serves on multiple committees including Appropriations, Foreign Relations, Judiciary, Small Business and Entrepreneurship, and Ethics committees. He is the Ranking Member of the Senate Foreign Relations Committee's Subcommittee on East Asia, The Pacific, and International Cybersecurity Policy and vice chair of the Ethics Committee. Coons has been act"
+    },
+    "target": {
+      "id": 1004,
+      "name": "Amy Klobuchar",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Received Ukrainian Order of Merit, First Class from President Zelenskyy (2022). Author of 'Antitrust' (New York Times Best Seller). Graduated magna cum laude from Yale University (1982) and University of Chicago Law School with high honors (1985). Led bipartisan effort that resulted in first major U.S. AI harm legislation with Take It Down Act passage. Chair of Senate Rules Committee oversaw three",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1468,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "The resolution is cosponsored by Senators Roger Wicker (R-Miss.), Jeanne Shaheen (D-N.H.), Amy Klobuchar (D-Minn.) and Dave McCormick (R-Pa.)",
+    "source": {
+      "id": 71,
+      "name": "Chris Coons",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Chris Coons is a U.S. Senator from Delaware who serves on multiple committees including Appropriations, Foreign Relations, Judiciary, Small Business and Entrepreneurship, and Ethics committees. He is the Ranking Member of the Senate Foreign Relations Committee's Subcommittee on East Asia, The Pacific, and International Cybersecurity Policy and vice chair of the Ethics Committee. Coons has been act"
+    },
+    "target": {
+      "id": 1412,
+      "name": "Roger Wicker",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Republican U.S. Senator from Mississippi (since 2007). Chairman of Senate Armed Services Committee (119th Congress). Key defense AI champion — secured AI funding in FY2025 and FY2026 NDAAs including $10M for autonomous AI data fusion C2 capability and $10M for AI-enabled Army multi-domain operations (drone swarm defense). Authored 'Restoring Freedom's Forge' plan to reform Pentagon procurement and",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1469,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "The resolution is cosponsored by Senators Roger Wicker (R-Miss.), Jeanne Shaheen (D-N.H.), Amy Klobuchar (D-Minn.) and Dave McCormick (R-Pa.)",
+    "source": {
+      "id": 71,
+      "name": "Chris Coons",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Chris Coons is a U.S. Senator from Delaware who serves on multiple committees including Appropriations, Foreign Relations, Judiciary, Small Business and Entrepreneurship, and Ethics committees. He is the Ranking Member of the Senate Foreign Relations Committee's Subcommittee on East Asia, The Pacific, and International Cybersecurity Policy and vice chair of the Ethics Committee. Coons has been act"
+    },
+    "target": {
+      "id": 1413,
+      "name": "Jeanne Shaheen",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Democratic U.S. Senator from New Hampshire (2009–January 2025) who retired after choosing not to seek re-election in 2024. Took targeted AI positions: secured $47.7M for NIST's AI Safety Institute, pushed to restrict advanced AI chip exports to China, and urged DOJ/CISA to address AI-generated deepfakes threatening elections. Consistent with a moderate, national-security-forward approach to AI gov",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1470,
+    "edge_type": "collaborator",
+    "role": "Co-chair of Senate Artificial Intelligence Caucus",
+    "evidence": "U.S. Senators Martin Heinrich (D-N.M.) and Mike Rounds (R-S.D.), co-chairs of the Senate Artificial Intelligence Caucus",
+    "source": {
+      "id": 72,
+      "name": "Martin Heinrich",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Martin Heinrich is a U.S. Senator from New Mexico who has served since January 2013. He is the founder and co-chair of the Senate Artificial Intelligence Caucus, which he established with former Senator Rob Portman (R-Ohio) in 2019. He serves as Ranking Member on the Committee on Energy and Natural Resources and serves on the Senate Appropriations, Intelligence, and Joint Economic Committees. Hein"
+    },
+    "target": {
+      "id": 68,
+      "name": "Mike Rounds",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Mike Rounds is a Republican U.S. Senator from South Dakota who was sworn into the United States Senate on January 6th, 2015. He serves as co-chair of the Senate AI Caucus and serves on five committees: Senate Appropriations; Armed Services; Banking, Housing and Urban Affairs; Indian Affairs; and the Select Committee on Intelligence. He previously served as the 31st governor of South Dakota from 20",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  }
+]

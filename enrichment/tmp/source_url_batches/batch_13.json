@@ -1,0 +1,392 @@
+[
+  {
+    "edge_id": 1632,
+    "edge_type": "collaborator",
+    "role": "Mother and co-advocate",
+    "evidence": "Berry and her mother, Anna McAdams, turned this incident into advocacy for a measure signed into law on Monday by President Donald Trump",
+    "source": {
+      "id": 106,
+      "name": "Elliston Berry",
+      "type": "person",
+      "category": "Organizer",
+      "website": null,
+      "notes_excerpt": "Elliston Berry was 14 years old when a classmate made and shared deepfake nude images of her, which she discovered in October 2023. She helped create an online training course to teach students, parents and school staff about non-consensual, explicit deepfake image abuse, in partnership with cybersecurity firm Adaptive Security and Pathos Consulting Group. Berry advocated for the Take It Down Act,"
+    },
+    "target": {
+      "id": 1461,
+      "name": "Anna McAdams",
+      "type": "person",
+      "category": "Organizer",
+      "website": null,
+      "notes_excerpt": "Mother of Elliston Berry and co-advocate for deepfake child safety legislation. After her 14-year-old daughter was targeted by a classmate who used AI to create non-consensual deepfake nude images (Aledo, Texas, fall 2023), McAdams gave emotional testimony before the Texas Senate Committee on Criminal Justice and took the story public nationally. Met with lawmakers in Washington including Sen. Ted",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1636,
+    "edge_type": "collaborator",
+    "role": "co-creator",
+    "evidence": "I also co-created the Pulitzer Center's AI Spotlight Series, a program that trains thousands of journalists around the world on how to cover AI.",
+    "source": {
+      "id": 107,
+      "name": "Karen Hao",
+      "type": "person",
+      "category": "Journalist",
+      "website": null,
+      "notes_excerpt": "Karen Hao is an American journalist who currently freelances for publications like The Atlantic and co-hosts the BBC podcast The Interface. She is the author of the 2025 bestselling book 'Empire of AI: Dreams and Nightmares in Sam Altman's OpenAI' which came out May 20, 2025 and was an instant NYT bestseller. She previously worked as a reporter for The Wall Street Journal covering American and Chi"
+    },
+    "target": {
+      "id": 1463,
+      "name": "Pulitzer Center",
+      "type": "organization",
+      "category": "Media/Journalism",
+      "website": null,
+      "notes_excerpt": "Nonprofit journalism organization (Pulitzer Center on Crisis Reporting) supporting independent journalists on underreported global issues. Major AI accountability journalism hub: runs AI Accountability Network with dedicated fellowships, reporting grants, ML reporting grants, and AI Spotlight Series (2,000+ journalists trained since 2024). AI Accountability Fellowship launched 2022, supporting 27 ",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1638,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "U.S. Senators Gary Peters (D-MI), Chairman of the Homeland Security and Governmental Affairs Committee, and Mike Braun (R-IN) introduced bipartisan legislation to create an artificial intelligence (AI) training program for federal supervisors and management officials",
+    "source": {
+      "id": 108,
+      "name": "Mike Braun",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Mike Braun is the 52nd Governor of Indiana who previously served as a U.S. Senator from 2018. He is a conservative Republican who spent his career as an entrepreneur before entering politics, building a business that grew into a national company employing thousands of Americans. Braun issued an executive order creating the Indiana Initiative for Drone Dominance Task Force to support President Trum"
+    },
+    "target": {
+      "id": 109,
+      "name": "Gary Peters",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Gary Peters is a U.S. Senator from Michigan who has served since 2015 and serves as the Ranking Member of the Senate Homeland Security and Governmental Affairs Committee. He announced on January 28, 2025, that he will not seek reelection in 2026. Peters has been rated the most effective U.S. Senator for three consecutive Congresses by the nonpartisan Center for Effective Lawmaking. He has focused ",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1639,
+    "edge_type": "collaborator",
+    "role": "U.S. Senator (R-MO)",
+    "evidence": "Peters' AI and Critical Technology Workforce Framework Act – which he reintroduced with U.S. Senator Eric Schmitt (R-MO)",
+    "source": {
+      "id": 109,
+      "name": "Gary Peters",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Gary Peters is a U.S. Senator from Michigan who has served since 2015 and serves as the Ranking Member of the Senate Homeland Security and Governmental Affairs Committee. He announced on January 28, 2025, that he will not seek reelection in 2026. Peters has been rated the most effective U.S. Senator for three consecutive Congresses by the nonpartisan Center for Effective Lawmaking. He has focused "
+    },
+    "target": {
+      "id": 1465,
+      "name": "Eric Schmitt",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Republican U.S. Senator from Missouri (sworn in Jan 2023). Former Missouri AG. Key AI legislation: co-introduced Protecting AI and Cloud Competition in Defense Act with Sen. Warren (Dec 2024, reintroduced May 2025) to prevent big tech monopolies in DoD AI/cloud procurement. Co-introduced AI and Critical Technology Workforce Framework Act with Sen. Peters to build America's AI workforce pipeline. S",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1640,
+    "edge_type": "collaborator",
+    "role": "U.S. Senator (R-NC)",
+    "evidence": "Senators Gary Peters (D-MI) and Thom Tillis (R-NC) introduced the Promoting Responsible Evaluation and Procurement to Advance Readiness for Enterprise-wide Deployment for Artificial Intelligence Act",
+    "source": {
+      "id": 109,
+      "name": "Gary Peters",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Gary Peters is a U.S. Senator from Michigan who has served since 2015 and serves as the Ranking Member of the Senate Homeland Security and Governmental Affairs Committee. He announced on January 28, 2025, that he will not seek reelection in 2026. Peters has been rated the most effective U.S. Senator for three consecutive Congresses by the nonpartisan Center for Effective Lawmaking. He has focused "
+    },
+    "target": {
+      "id": 1466,
+      "name": "Thom Tillis",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Republican U.S. Senator from North Carolina (2015-present). Key AI legislation: co-sponsored Secure Artificial Intelligence Act with Sen. Warner (2024) creating voluntary AI security incident database and NSA AI Security Center. Co-introduced federal AI procurement guardrails bill with Sen. Peters requiring agencies to assess AI risks before deployment. Co-sponsored NO FAKES Act (2024) with Sens. ",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1642,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor of AI legislation",
+    "evidence": "U.S. Senator Maria Cantwell (D-Wash.), Ranking Member of the Senate Committee on Commerce, Science and Transportation, and U.S. Senator Jerry Moran (R-Kan.), a senior member of the Commerce Committee, introduced the bipartisan NSF AI Education Act of 2026",
+    "source": {
+      "id": 110,
+      "name": "Maria Cantwell",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Maria Cantwell is a U.S. Senator from Washington State, serving as Ranking Member of the Senate Committee on Commerce, Science and Transportation. She has introduced multiple AI-related bills in 2026, including the NSF AI Education Act and the Small Business Artificial Intelligence Training Act. She previously served in the U.S. House of Representatives from 1993-95 and worked as vice president fo"
+    },
+    "target": {
+      "id": 77,
+      "name": "Jerry Moran",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Jerry Moran is a Republican U.S. Senator from Kansas who serves as a senior member of the Senate Committee on Commerce, Science and Transportation. He has worked extensively on bipartisan artificial intelligence legislation, introducing multiple AI-related bills in 2026 with Democratic Senator Maria Cantwell. Moran serves as Chairman on the Appropriations Subcommittee on Commerce, Justice, Science",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1643,
+    "edge_type": "collaborator",
+    "role": "Co-sponsor of AI legislation",
+    "evidence": "U.S. Senators Maria Cantwell (D-Wash.), Ranking Member of the Senate Committee on Commerce, Science and Transportation, Todd Young (R-Ind.), John Hickenlooper (D-Colo.) and Marsha Blackburn (R-Tenn.) today reintroduced the bipartisan Future of AI Innovation Act",
+    "source": {
+      "id": 110,
+      "name": "Maria Cantwell",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Maria Cantwell is a U.S. Senator from Washington State, serving as Ranking Member of the Senate Committee on Commerce, Science and Transportation. She has introduced multiple AI-related bills in 2026, including the NSF AI Education Act and the Small Business Artificial Intelligence Training Act. She previously served in the U.S. House of Representatives from 1993-95 and worked as vice president fo"
+    },
+    "target": {
+      "id": 73,
+      "name": "Todd Young",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Todd Christopher Young is an American politician and attorney serving as the senior United States senator from Indiana, a seat he has held since 2017. He is a member of the Republican Party and previously served as the U.S. representative for Indiana's 9th congressional district. Young currently serves on the U.S. Senate Committees on Finance; Foreign Relations; Health, Education, Labor & Pensions",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1645,
+    "edge_type": "collaborator",
+    "role": "Senate floor speech partner",
+    "evidence": "U.S. Senator Maria Cantwell (D-WA), senior member of the Senate Finance Committee and ranking member of the Senate Committee on Commerce, Science, and Transportation, joined Senator Cory Booker (D-NJ) on the Senate floor to speak out against President Trump's budget resolution",
+    "source": {
+      "id": 110,
+      "name": "Maria Cantwell",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Maria Cantwell is a U.S. Senator from Washington State, serving as Ranking Member of the Senate Committee on Commerce, Science and Transportation. She has introduced multiple AI-related bills in 2026, including the NSF AI Education Act and the Small Business Artificial Intelligence Training Act. She previously served in the U.S. House of Representatives from 1993-95 and worked as vice president fo"
+    },
+    "target": {
+      "id": 24,
+      "name": "Cory Booker",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Cory Booker is a U.S. Senator from New Jersey who was elected in 2013 and represents New Jersey as the state's first Black senator. He previously served as mayor of Newark from 2006 to 2013. In March 2025, Booker delivered the longest speech in Senate history, speaking for more than 25 hours in protest of the Trump administration's policies. He has been a leader in criminal justice reform and help",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1647,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "On July 30, 2024 Ranking Member Zoe Lofgren (D-CA) and Chairman Frank Lucas (R-OK) introduced the Workforce for AI Trust Act (H.R. 9215)",
+    "source": {
+      "id": 111,
+      "name": "Frank Lucas",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Frank Lucas is a Republican U.S. Representative from Oklahoma's 3rd congressional district who serves as Chairman of the House Science, Space, and Technology Committee. He introduced the Workforce for AI Trust Act (H.R. 9215) with Ranking Member Zoe Lofgren on July 30, 2024, aimed at promoting a multidisciplinary workforce to advance AI integration and training. Lucas chairs the House Financial Se"
+    },
+    "target": {
+      "id": 84,
+      "name": "Zoe Lofgren",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Zoe Lofgren is a Democratic member of the United States House of Representatives since 1995, representing the 18th District of California. She serves as the Ranking Member of the House Science, Space and Technology Committee and serves on the House Judiciary Committee. Lofgren chairs the 46-member California Democratic Congressional Delegation. She has been noted for her activity in tech-related p",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1652,
+    "edge_type": "collaborator",
+    "role": "Co-Chair",
+    "evidence": "Lieu was tapped, along with Rep. Jay Obernolte, a Republican from San Bernardino County, to co-chair a bipartisan Task Force on Artificial Intelligence in the U.S. House of Representatives",
+    "source": {
+      "id": 112,
+      "name": "Ted Lieu",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Ted Lieu represents California's 36th Congressional District and is serving his sixth term in Congress. He was elected by his colleagues to serve as Vice Chair of the Democratic Caucus, making him the highest ranking Asian American to have ever served in House Leadership. In the 118th Congress, Ted was the Co-Chair of the House's Bipartisan Taskforce on Artificial Intelligence. He is one of three "
+    },
+    "target": {
+      "id": 117,
+      "name": "Jay Obernolte",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Jay Obernolte is a U.S. Congressman representing California's 23rd District since 2021 and is the only serving member of Congress with a graduate-level degree in AI. He co-chaired the bipartisan House Task Force on AI with Ted Lieu, which produced a comprehensive report in December 2024 with 66 findings and 89 recommendations. He currently serves as Chairman of the Research and Technology Subcommi",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1653,
+    "edge_type": "collaborator",
+    "role": "Co-Chair",
+    "evidence": "Caucus Vice Chair Ted Lieu (CA-36), Rep. Josh Gottheimer (NJ-05) and Rep. Valerie Foushee (NC-04) will serve as Co-Chairs",
+    "source": {
+      "id": 112,
+      "name": "Ted Lieu",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Ted Lieu represents California's 36th Congressional District and is serving his sixth term in Congress. He was elected by his colleagues to serve as Vice Chair of the Democratic Caucus, making him the highest ranking Asian American to have ever served in House Leadership. In the 118th Congress, Ted was the Co-Chair of the House's Bipartisan Taskforce on Artificial Intelligence. He is one of three "
+    },
+    "target": {
+      "id": 1471,
+      "name": "Josh Gottheimer",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Democratic U.S. Representative from New Jersey's 5th district (2017-present). Centrist Democrat on House Intelligence Committee, Ranking Member of NSA & Cyber Subcommittee. Co-Chair of House Democratic Commission on AI and the Innovation Economy (Dec 2025). Key AI legislation: Unleashing AI Innovation in Financial Services Act (Innovation Labs for AI testing at financial regulators), Advanced AI S",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1654,
+    "edge_type": "collaborator",
+    "role": "Co-Chair",
+    "evidence": "Caucus Vice Chair Ted Lieu (CA-36), Rep. Josh Gottheimer (NJ-05) and Rep. Valerie Foushee (NC-04) will serve as Co-Chairs",
+    "source": {
+      "id": 112,
+      "name": "Ted Lieu",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Ted Lieu represents California's 36th Congressional District and is serving his sixth term in Congress. He was elected by his colleagues to serve as Vice Chair of the Democratic Caucus, making him the highest ranking Asian American to have ever served in House Leadership. In the 118th Congress, Ted was the Co-Chair of the House's Bipartisan Taskforce on Artificial Intelligence. He is one of three "
+    },
+    "target": {
+      "id": 714,
+      "name": "Valerie Foushee",
+      "type": "person",
+      "category": "Policymaker",
+      "website": "https://foushee.house.gov/",
+      "notes_excerpt": "Democratic U.S. Representative from North Carolina (NC-04) who serves on the House Science, Space, and Technology Committee and co-chairs the House Democratic Commission on AI and the Innovation Economy. She is actively involved in advancing AI policy through legislation like the HBCU Artificial Intelligence Research Leadership Act, focusing on inclusive access to AI research and education, partic",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1655,
+    "edge_type": "collaborator",
+    "role": "Representative, Co-sponsor of AI Civil Rights Act",
+    "evidence": "Senator Edward J. Markey (D-Mass.), member of the Commerce, Science and Transportation Committee, and Representative Yvette Clarke (NY-09), Chair of the Congressional Black Caucus, held a press conference today to reintroduce their Artificial Intelligence (AI) Civil Rights Act",
+    "source": {
+      "id": 113,
+      "name": "Ed Markey",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Senator Edward J. Markey (D-Mass.) is a member of the Commerce, Science and Transportation Committee and has served in the U.S. Senate since 2013. He reintroduced the Artificial Intelligence Civil Rights Act on December 2, 2025, alongside Representative Yvette Clarke, to prevent companies from using biased and discriminatory AI-powered algorithms in critical decisions affecting Americans' lives. M"
+    },
+    "target": {
+      "id": 1472,
+      "name": "Yvette Clarke",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Democratic U.S. Representative from New York's 9th district (2007-present). Chair of Congressional Black Caucus. Early AI regulation champion — introduced Algorithmic Accountability Act (first version 2019 with Sens. Wyden and Booker, updated 2022 and 2025) requiring companies to audit high-impact AI systems. Introduced DEEPFAKES Accountability Act (2021, 2023 with Rep. Ivey) requiring digital wat",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1656,
+    "edge_type": "collaborator",
+    "role": "Representative, Co-lead of AI Civil Rights Act",
+    "evidence": "The legislation is co-led in the House by Representatives Pramila Jayapal (WA-07), Summer Lee (PA-12), and Ayanna Pressley (MA-07)",
+    "source": {
+      "id": 113,
+      "name": "Ed Markey",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Senator Edward J. Markey (D-Mass.) is a member of the Commerce, Science and Transportation Committee and has served in the U.S. Senate since 2013. He reintroduced the Artificial Intelligence Civil Rights Act on December 2, 2025, alongside Representative Yvette Clarke, to prevent companies from using biased and discriminatory AI-powered algorithms in critical decisions affecting Americans' lives. M"
+    },
+    "target": {
+      "id": 1473,
+      "name": "Pramila Jayapal",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Democratic U.S. Representative from Washington's 7th district (2017-present). Chair of Congressional Progressive Caucus (2021-2024). Co-lead of AI Civil Rights Act (introduced Sep 2024, reintroduced Dec 2025 with Sen. Markey, Reps. Clarke, Lee, Pressley) — comprehensive legislation banning algorithmic discrimination, requiring pre- and post-deployment testing, mandating transparency of algorithms ",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1657,
+    "edge_type": "collaborator",
+    "role": "Representative, Co-lead of AI Civil Rights Act",
+    "evidence": "The legislation is co-led in the House by Representatives Pramila Jayapal (WA-07), Summer Lee (PA-12), and Ayanna Pressley (MA-07)",
+    "source": {
+      "id": 113,
+      "name": "Ed Markey",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Senator Edward J. Markey (D-Mass.) is a member of the Commerce, Science and Transportation Committee and has served in the U.S. Senate since 2013. He reintroduced the Artificial Intelligence Civil Rights Act on December 2, 2025, alongside Representative Yvette Clarke, to prevent companies from using biased and discriminatory AI-powered algorithms in critical decisions affecting Americans' lives. M"
+    },
+    "target": {
+      "id": 1474,
+      "name": "Summer Lee",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Democratic U.S. Representative from Pennsylvania's 12th district (2023-present). Co-lead of AI Civil Rights Act (reintroduced Dec 2025 with Sen. Markey, Reps. Jayapal, Clarke, Pressley) banning algorithmic discrimination in critical decisions. Co-introduced Eliminating BIAS Act with Sen. Markey mandating dedicated Office of Civil Rights in every federal agency that uses, funds, or oversees AI to c",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  }
+]

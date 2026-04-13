@@ -1,0 +1,392 @@
+[
+  {
+    "edge_id": 1324,
+    "edge_type": "collaborator",
+    "role": "Research collaborator",
+    "evidence": "worked on a paper with Joy Bulamini uh showing the um and this was part of her master's thesis basically showing the disparities and error rates",
+    "source": {
+      "id": 35,
+      "name": "Timnit Gebru",
+      "type": "person",
+      "category": "Organizer",
+      "website": null,
+      "notes_excerpt": "Timnit Gebru is the founder and executive director of The Distributed Artificial Intelligence Research (DAIR) Institute. She was co-lead of the Ethical AI research team at Google until her firing in 2020 (along with her co-lead) for writing a paper warning about the dangers of large language models and raising issues of discrimination in the workplace. She co-founded Black in AI, a nonprofit that "
+    },
+    "target": {
+      "id": 916,
+      "name": "Joy Buolamwini",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "Her Gender Shades study (2018) revealed facial recognition error rates of 34.7% for darker-skinned women vs 0.8% for lighter-skinned men, prompting IBM, Microsoft and Amazon to improve their systems. Testified before Congress multiple times and advised President Biden on his October 2023 AI Executive Order. Founded AJL in 2016 after experiencing facial recognition failing to detect her face until ",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1325,
+    "edge_type": "collaborator",
+    "role": "Research collaborator",
+    "evidence": "send a message to my collaborator Em Em Emily Bender",
+    "source": {
+      "id": 35,
+      "name": "Timnit Gebru",
+      "type": "person",
+      "category": "Organizer",
+      "website": null,
+      "notes_excerpt": "Timnit Gebru is the founder and executive director of The Distributed Artificial Intelligence Research (DAIR) Institute. She was co-lead of the Ethical AI research team at Google until her firing in 2020 (along with her co-lead) for writing a paper warning about the dangers of large language models and raising issues of discrimination in the workplace. She co-founded Black in AI, a nonprofit that "
+    },
+    "target": {
+      "id": 831,
+      "name": "Emily Bender",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Co-authored the influential 2021 'Stochastic Parrots' paper warning of LLM risks, which contributed to Google firing co-authors Timnit Gebru and Margaret Mitchell. Coined the term 'stochastic parrot' to describe LLMs as sophisticated text generators without genuine understanding. Argues that current AI systems lack meaning and true comprehension, focusing on present harms rather than hypothetical ",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1326,
+    "edge_type": "collaborator",
+    "role": "WGA West President",
+    "evidence": "she became one of its prominent faces alongside WGA West President Meredith Stiehm and WGA East President Lisa Takeuchi Cullen",
+    "source": {
+      "id": 36,
+      "name": "Fran Drescher",
+      "type": "person",
+      "category": "Organizer",
+      "website": null,
+      "notes_excerpt": "Fran Drescher is the SAG-AFTRA President who led the union during a 118-day strike and warned about AI threats to the entertainment industry. She became one of the prominent faces of the strike alongside WGA West President Meredith Stiehm and WGA East President Lisa Takeuchi Cullen. Drescher took office as president on October 15, 2021, and led the union during the five-month actors' strike that b"
+    },
+    "target": {
+      "id": 1369,
+      "name": "Meredith Stiehm",
+      "type": "person",
+      "category": "Organizer",
+      "website": null,
+      "notes_excerpt": "President of WGA West (2021-2025). TV showrunner (The Rookie, Code Black, Cold Case, NYPD Blue). Named TIME 100 Most Influential People in AI 2024. Led WGA during historic 148-day strike in 2023 that secured precedent-setting AI protections for writers. Called on studios to sue AI companies for using copyrighted work to train models. Strong advocate that AI cannot replace human creative experience",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1327,
+    "edge_type": "collaborator",
+    "role": "WGA East President",
+    "evidence": "she became one of its prominent faces alongside WGA West President Meredith Stiehm and WGA East President Lisa Takeuchi Cullen",
+    "source": {
+      "id": 36,
+      "name": "Fran Drescher",
+      "type": "person",
+      "category": "Organizer",
+      "website": null,
+      "notes_excerpt": "Fran Drescher is the SAG-AFTRA President who led the union during a 118-day strike and warned about AI threats to the entertainment industry. She became one of the prominent faces of the strike alongside WGA West President Meredith Stiehm and WGA East President Lisa Takeuchi Cullen. Drescher took office as president on October 15, 2021, and led the union during the five-month actors' strike that b"
+    },
+    "target": {
+      "id": 1370,
+      "name": "Lisa Takeuchi Cullen",
+      "type": "person",
+      "category": "Organizer",
+      "website": null,
+      "notes_excerpt": "President of WGA East (elected Sept 2023). First person of color to hold the position. TV writer/producer (Empire, Five Days at Memorial). Participated in April 2024 White House roundtable on AI and Workers Rights with Acting Secretary of Labor Julie Su. Launched WGA East AI Task Force to track AI's effect on writing professions. Strong enforcement of 2023 MBA AI protections for film/TV/streaming ",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1330,
+    "edge_type": "collaborator",
+    "role": "Co-chair of 2020 campaign",
+    "evidence": "Co-chaired bernie sanders' 2020 campaign and pushing reforms on AI, creator rights, and immigration enforcement",
+    "source": {
+      "id": 37,
+      "name": "Ro Khanna",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Ro Khanna is a U.S. Representative from California's 17th Congressional District, representing Silicon Valley since 2017. He serves as Ranking Member of the House Select Committee on China and is a member of committees including Judiciary, Transportation & Infrastructure. Khanna authored the Epstein Files Transparency Act and led a bipartisan resolution demanding the DOJ to release the Epstein fil"
+    },
+    "target": {
+      "id": 96,
+      "name": "Bernie Sanders",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Bernie Sanders is an American politician serving as the senior United States senator from Vermont, a seat he has held since 2007. He is the longest-serving independent in U.S. congressional history. Sanders was reelected to a fourth Senate term in 2024, defeating Republican Gerald Malloy. He currently serves as the Ranking Member of the Senate Health, Education, Labor and Pensions Committee after ",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1335,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "The following year it merged with Elon Musk's X.com, and PayPal was created, with Thiel becoming its CEO and chairman",
+    "source": {
+      "id": 38,
+      "name": "Peter Thiel",
+      "type": "person",
+      "category": "Investor",
+      "website": null,
+      "notes_excerpt": "Peter Thiel is the billionaire co-founder of PayPal and chairman of Palantir. He argues that artificial intelligence is targeting 'math people' - coders, engineers, quants, data scientists, and algorithmic specialists - rather than creative writers, artists, or storytellers first. In a 2019 talk, Thiel suggested AI itself might be inherently authoritarian, calling AI 'communist' and warning it cou"
+    },
+    "target": {
+      "id": 48,
+      "name": "Elon Musk",
+      "type": "person",
+      "category": "Executive",
+      "website": null,
+      "notes_excerpt": "Elon Musk is a businessman and entrepreneur known for his leadership of Tesla, SpaceX, X, and xAI. Musk has been the wealthiest person in the world since 2025; as of April 2026, Forbes estimates his net worth to be US$809 billion. He made predictions at the World Economic Forum that artificial intelligence will be smarter than all of humanity by the end of the decade. Musk spent more than $290 mil",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1350,
+    "edge_type": "collaborator",
+    "role": "Brookings Senior Fellow",
+    "evidence": "After Murphy's speech, he joined Brookings Senior Fellow Molly Kinder in a conversation to discuss the impact of AI on meaning, purpose, and the dignity of work",
+    "source": {
+      "id": 41,
+      "name": "Chris Murphy",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Chris Murphy is the junior United States Senator from Connecticut, serving since 2013. He previously served in the U.S. House of Representatives from 2007 to 2013, representing Connecticut's 5th congressional district. Murphy was reelected to a third Senate term in 2024, defeating Republican challenger Matthew Corey. He has become a prominent voice on AI regulation, arguing that unregulated artifi"
+    },
+    "target": {
+      "id": 1373,
+      "name": "Molly Kinder",
+      "type": "person",
+      "category": "Researcher",
+      "website": null,
+      "notes_excerpt": "Senior Fellow at Brookings Institution, leading multi-year project on generative AI's impact on work and workers. Nationally recognized expert on AI, economic inequality, and future of work. Advocates for worker voice in AI implementation, enhanced union protections, and public investment in workforce training. Argues U.S. lags Europe in institutional mechanisms to help workers navigate AI transit",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1353,
+    "edge_type": "collaborator",
+    "role": "co-chair",
+    "evidence": "moving on to co-chair the President's Council of Advisors on Science and Technology (PCAST) alongside senior White House technology adviser Michael Kratsios",
+    "source": {
+      "id": 42,
+      "name": "David Sacks",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "David Sacks stepped down from his role as White House AI and crypto czar in March 2026, having reached the end of his 130-day limit as a special government employee. He is now co-chair of the President's Council of Advisors on Science and Technology alongside Michael Kratsios. Sacks is a general partner of Craft Ventures, a venture capital fund he co-founded in late 2017. He was previously COO and"
+    },
+    "target": {
+      "id": 27,
+      "name": "Michael Kratsios",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Michael Kratsios serves as Assistant to the President and Director of the White House Office of Science and Technology Policy, confirmed by the Senate in a 74-25 vote on March 25, 2025. He previously served as the fourth Chief Technology Officer of the United States during President Trump's first term and as Under Secretary of War from January 2020 to January 2021. Prior to government service, he ",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1354,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "Sacks left his job as a management consultant for McKinsey & Company to join Max Levchin, Peter Thiel, and Luke Nosek's e-commerce startup Confinity",
+    "source": {
+      "id": 42,
+      "name": "David Sacks",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "David Sacks stepped down from his role as White House AI and crypto czar in March 2026, having reached the end of his 130-day limit as a special government employee. He is now co-chair of the President's Council of Advisors on Science and Technology alongside Michael Kratsios. Sacks is a general partner of Craft Ventures, a venture capital fund he co-founded in late 2017. He was previously COO and"
+    },
+    "target": {
+      "id": 38,
+      "name": "Peter Thiel",
+      "type": "person",
+      "category": "Investor",
+      "website": null,
+      "notes_excerpt": "Peter Thiel is the billionaire co-founder of PayPal and chairman of Palantir. He argues that artificial intelligence is targeting 'math people' - coders, engineers, quants, data scientists, and algorithmic specialists - rather than creative writers, artists, or storytellers first. In a 2019 talk, Thiel suggested AI itself might be inherently authoritarian, calling AI 'communist' and warning it cou",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1355,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "Now, Sacks is considered a member of the elite 'PayPal Mafia,' along with Thiel, Elon Musk, and LinkedIn co-founder Reid Hoffman",
+    "source": {
+      "id": 42,
+      "name": "David Sacks",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "David Sacks stepped down from his role as White House AI and crypto czar in March 2026, having reached the end of his 130-day limit as a special government employee. He is now co-chair of the President's Council of Advisors on Science and Technology alongside Michael Kratsios. Sacks is a general partner of Craft Ventures, a venture capital fund he co-founded in late 2017. He was previously COO and"
+    },
+    "target": {
+      "id": 48,
+      "name": "Elon Musk",
+      "type": "person",
+      "category": "Executive",
+      "website": null,
+      "notes_excerpt": "Elon Musk is a businessman and entrepreneur known for his leadership of Tesla, SpaceX, X, and xAI. Musk has been the wealthiest person in the world since 2025; as of April 2026, Forbes estimates his net worth to be US$809 billion. He made predictions at the World Economic Forum that artificial intelligence will be smarter than all of humanity by the end of the decade. Musk spent more than $290 mil",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1363,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "Until recently, he worked with multibillionaire Eric Schmidt at the science- and tech-focused Schmidt Futures philanthropic organization",
+    "source": {
+      "id": 43,
+      "name": "Tom Kalil",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Tom Kalil is the CEO of Renaissance Philanthropy, which he launched in May 2024. He served in the White House for two presidents (Obama and Clinton) and worked with the Senate to give every federal agency the authority to support incentive prizes for up to $50 million. He designed and launched dozens of White House science and technology initiatives, including the $40 billion National Nanotechnolo"
+    },
+    "target": {
+      "id": 855,
+      "name": "Eric Schmidt",
+      "type": "person",
+      "category": "Investor",
+      "website": null,
+      "notes_excerpt": "Testified before Congress in 2021 urging $40B AI investment and warned China poses existential threat to US tech leadership. Co-authored 'Genesis' with Henry Kissinger exploring AI's civilizational risks. Recently warned about 'superintelligence strategy' and proposed 'Mutual Assured AI Malfunction' (MAIM) deterrence framework. Led NSCAI from 2019-2021, significantly influencing US AI policy and d",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1388,
+    "edge_type": "collaborator",
+    "role": "co-author",
+    "evidence": "His new book, Power and Progress: Our Thousand-Year Struggle Over Technology and Prosperity (joint with Simon Johnson)",
+    "source": {
+      "id": 52,
+      "name": "Daron Acemoglu",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Daron Acemoglu is an Institute Professor at MIT who won the 2024 Nobel Prize in Economics with Simon Johnson and James A. Robinson for studies of how institutions are formed and affect prosperity. He argues that AI is not improving productivity as much as hyped, projecting only modest GDP gains of 1.1% to 1.6% over the next decade. Acemoglu believes current AI development focuses too much on autom"
+    },
+    "target": {
+      "id": 26,
+      "name": "Simon Johnson",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Simon Johnson is the Ronald A. Kurtz (1954) Professor of Entrepreneurship at the MIT Sloan School of Management and co-winner of the 2024 Nobel Prize in Economic Sciences jointly with Daron Acemoglu and James A. Robinson. He co-directs the Shaping the Future of Work initiative at MIT, focusing on the economics and politics of AI development and deployment. Johnson served as Chief Economist of the ",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1390,
+    "edge_type": "collaborator",
+    "role": "co-author",
+    "evidence": "An Antimonopoly Approach to Governing Artificial Intelligence by Ganesh Sitaraman, Tejas N. Narechania",
+    "source": {
+      "id": 53,
+      "name": "Ganesh Sitaraman",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Ganesh Sitaraman is the New York Alumni Chancellor's Chair in Law at Vanderbilt University and Director of the Program on Law and Government. He is a longtime advisor to Elizabeth Warren, serving in various capacities including as Policy Director during her 2012 Senate campaign and senior counsel in the Senate. He is the author of several books including 'The Crisis of the Middle-Class Constitutio"
+    },
+    "target": {
+      "id": 1381,
+      "name": "Tejas N. Narechania",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Professor of Law at UC Berkeley School of Law. Faculty co-director of Berkeley Center for Law & Technology. Former clerk for Justice Breyer (SCOTUS) and Judge Diane Wood (7th Circuit). Former FCC special counsel (2012-2013). Published 'An Antimonopoly Approach to Governing AI' (Yale Law & Policy Review, 2024) with Ganesh Sitaraman — argues AI infrastructure warrants regulation via structural separ",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1391,
+    "edge_type": "collaborator",
+    "role": null,
+    "evidence": "As an undergraduate at Harvard, he was friends with classmate Pete Buttigieg, a future 2020 Democratic presidential candidate and Secretary of Transportation. Together they started a progressive reading group called the Democratic Renaissance Project",
+    "source": {
+      "id": 53,
+      "name": "Ganesh Sitaraman",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Ganesh Sitaraman is the New York Alumni Chancellor's Chair in Law at Vanderbilt University and Director of the Program on Law and Government. He is a longtime advisor to Elizabeth Warren, serving in various capacities including as Policy Director during her 2012 Senate campaign and senior counsel in the Senate. He is the author of several books including 'The Crisis of the Middle-Class Constitutio"
+    },
+    "target": {
+      "id": 40,
+      "name": "Pete Buttigieg",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Pete Buttigieg served as U.S. Secretary of Transportation from 2021 to 2025 under President Joe Biden. He was the first openly gay Cabinet secretary in U.S. history and the youngest person ever to serve as Secretary of Transportation. He previously served as mayor of South Bend, Indiana from 2012 to 2020. He is currently a Winter-Spring 2025 Pritzker Fellow at the University of Chicago Institute o",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1411,
+    "edge_type": "collaborator",
+    "role": "co-author",
+    "evidence": "He is the co-author of AI Snake Oil: What Artificial Intelligence Can Do, What It Can't, and How to Tell the Difference with Arvind Narayanan",
+    "source": {
+      "id": 57,
+      "name": "Sayash Kapoor",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Sayash Kapoor is a Ph.D. candidate in computer science at Princeton University's Center for Information Technology Policy. He is co-author with Arvind Narayanan of the book \"AI Snake Oil: What Artificial Intelligence Can Do, What It Can't, and How to Tell the Difference\". He was named among TIME's 100 most influential people in AI. He won the Porter Ogden Jacobus Fellowship, Princeton's top distin"
+    },
+    "target": {
+      "id": 103,
+      "name": "Arvind Narayanan",
+      "type": "person",
+      "category": "Academic",
+      "website": null,
+      "notes_excerpt": "Arvind Narayanan is a professor of computer science at Princeton University and the director of the Center for Information Technology Policy. He is a co-author of the book AI Snake Oil and the essay AI as Normal Technology, and a newsletter of the same name which is read by over 60,000 researchers, policy makers, journalists, and AI enthusiasts. He was one of TIME's inaugural list of 100 most infl",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  }
+]
