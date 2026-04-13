@@ -32,6 +32,7 @@ cp -r assets/js/* dist/assets/js/
 cp -r assets/images/* dist/assets/images/ 2>/dev/null || true
 cp -r assets/favicon/* dist/assets/favicon/ 2>/dev/null || true
 cp robots.txt sitemap.xml dist/ 2>/dev/null || true
+cp -r workshop dist/ 2>/dev/null || true
 
 echo "✓ Preview built → dist/"
 ls -la dist/*.html
