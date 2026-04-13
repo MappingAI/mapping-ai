@@ -245,7 +245,7 @@ def seed_all(specs, live=False, output=None,
             f.write("\n".join(lines) + "\n")
         print(f"\nReport saved to {output}")
 
-    return {"results": results, "report_path": output}
+    return {"results": results, "report_path": output, "lines": lines}
 
 
 if __name__ == "__main__":
