@@ -247,5 +247,5 @@ Items found during execution that don't fit neatly into a phase above.
   - Olivier Sylvain — confirmed departed FTC; no successor in AI senior-advisor seat publicly named. Skipped.
   - Rob Reich, Margaret Martonosi (term ended; Greg Hager [1816] now NSF CISE AD), Jeff Alstott — skipped; no current confirmed AI-specific roles.
 - [x] ~~**Entity 205 (AISI/CAISI) notes update**~~ — Done in Phase 5 tail (renamed to "Center for AI Standards and Innovation (CAISI)", notes rewritten to cover the June 3 2025 rebrand + Kelly Feb 2025 departure + no confirmed successor). `logs/caisi-rebrand-20260412.md`
-- [ ] **Vinod Khosla edge coverage** — [849] has only 1 edge (`employer`→Khosla Ventures). Missing funder edges to OpenAI (Khosla Ventures was the largest outside investor pre-Microsoft) and other AI portfolio cos. Surfaced during Phase 5 tail investor audit.
-- [ ] **Reid Hoffman edge coverage** — [848] has only 1 `funder` edge (Juniper Ventures). Missing funder edges to Greylock AI portfolio (OpenAI, Inflection AI) and to orgs he co-founded beyond LinkedIn. Surfaced during Phase 5 tail investor audit.
+- [x] ~~**Vinod Khosla edge coverage**~~ — Added funder edges: Khosla [849]→OpenAI [140] + Khosla Ventures [806]→OpenAI [140] (first institutional investor, ~$50M 2019). `logs/investor-funder-edges-20260412.md`
+- [x] ~~**Reid Hoffman edge coverage**~~ — Added funder edges: Hoffman [848]→OpenAI [140] (personal investor, board 2016–2023) + Greylock [808]→Anthropic [133] (confirmed Oct 2025). `logs/investor-funder-edges-20260412.md`
