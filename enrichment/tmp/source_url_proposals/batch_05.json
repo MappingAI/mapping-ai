@@ -1,92 +1,92 @@
 [
   {
-    "edge_id": 1135,
-    "proposed_url": "https://en.wikipedia.org/wiki/Cory_Gardner",
-    "justification": "Wikipedia article on Cory Gardner explicitly documents his role as chair of the National Republican Senatorial Committee from 2017 to 2019.",
+    "edge_id": 1337,
+    "proposed_url": "https://www.bloomberg.com/news/articles/2026-03-19/billionaires-thiel-and-uihlein-pump-millions-into-republican-pac",
+    "justification": "Bloomberg article explicitly reports Peter Thiel donating $1.5 million to Club for Growth Action super PAC per FEC filings.",
     "confidence": "high"
   },
   {
-    "edge_id": 1190,
-    "proposed_url": "https://mitpress.mit.edu/9780262035613/deep-learning/",
-    "justification": "MIT Press publisher page for the Deep Learning textbook lists Ian Goodfellow, Yoshua Bengio, and Aaron Courville as co-authors, directly evidencing the collaboration.",
+    "edge_id": 1408,
+    "proposed_url": "https://news.harvard.edu/gazette/story/2021/06/at-new-harvard-lab-technology-to-serve-the-public/",
+    "justification": "Harvard Gazette article announces the 2021 launch of Latanya Sweeney's Public Interest Tech Lab at Harvard Kennedy School funded by a $3 million Ford Foundation grant.",
     "confidence": "high"
   },
   {
-    "edge_id": 1191,
-    "proposed_url": "https://mitpress.mit.edu/9780262035613/deep-learning/",
-    "justification": "MIT Press publisher page for the Deep Learning textbook lists Ian Goodfellow, Yoshua Bengio, and Aaron Courville as co-authors, directly evidencing the collaboration.",
+    "edge_id": 1449,
+    "proposed_url": "https://en.wikipedia.org/wiki/Thrive_Capital",
+    "justification": "Thrive Capital Wikipedia page confirms the firm (founded by Joshua Kushner) is a backer of SpaceX, naming both parties explicitly in the portfolio.",
     "confidence": "high"
   },
   {
-    "edge_id": 1214,
-    "proposed_url": "https://www.husted.senate.gov/media/press-releases/husted-joins-bill-to-help-small-businesses-utilize-ai/",
-    "justification": "Husted's official Senate press release announces his co-sponsorship of the AI for Mainstreet Act alongside Todd Young and Maria Cantwell.",
-    "confidence": "high"
-  },
-  {
-    "edge_id": 1215,
-    "proposed_url": "https://www.husted.senate.gov/media/press-releases/husted-joins-bill-to-help-small-businesses-utilize-ai/",
-    "justification": "Husted's official Senate press release announces his co-sponsorship of the AI for Mainstreet Act alongside Todd Young and Maria Cantwell.",
-    "confidence": "high"
-  },
-  {
-    "edge_id": 1216,
-    "proposed_url": "https://www.husted.senate.gov/media/press-releases/husted-leads-bill-to-integrate-ai-talent-in-federal-workforce/",
-    "justification": "Husted's official Senate press release announces the bipartisan AI Talent Act introduced by Senators Husted and Andy Kim.",
-    "confidence": "high"
-  },
-  {
-    "edge_id": 1223,
-    "proposed_url": "https://www.sanders.senate.gov/press-releases/news-sanders-ocasio-cortez-announce-ai-data-center-moratorium-act/",
-    "justification": "Sanders' official Senate press release announces the AI Data Center Moratorium Act jointly introduced with Rep. Alexandria Ocasio-Cortez on March 25, 2026.",
-    "confidence": "high"
-  },
-  {
-    "edge_id": 1241,
-    "proposed_url": "https://www.technologyreview.com/2025/07/31/1120885/the-two-people-shaping-the-future-of-openais-research/",
-    "justification": "MIT Technology Review article explicitly names Jakub Pachocki (chief scientist) and Mark Chen (chief research officer) as OpenAI's twin heads of research.",
-    "confidence": "high"
-  },
-  {
-    "edge_id": 1242,
-    "proposed_url": "https://openai.com/index/jakub-pachocki-announced-as-chief-scientist/",
-    "justification": "Official OpenAI announcement page confirms Jakub Pachocki is named chief scientist as Ilya Sutskever departs, directly evidencing the succession relationship.",
-    "confidence": "high"
-  },
-  {
-    "edge_id": 1251,
-    "proposed_url": "https://fortune.com/2025/01/16/sam-altman-stalked-ilya-sutskever-openai-artificial-general-intelligence/",
-    "justification": "Fortune article recounts Sam Altman personally recruiting Ilya Sutskever as a co-founder of OpenAI, with Altman describing how he pursued Sutskever before founding the organization.",
-    "confidence": "high"
-  },
-  {
-    "edge_id": 1254,
-    "proposed_url": "https://www.technobezz.com/news/anthropic-reorganizes-leadership-as-mike-krieger-moves-to-co-2026-01-14-tvd2",
-    "justification": "Article explicitly reports Mike Krieger moving to co-lead the Anthropic Labs incubator alongside Ben Mann, who had been the product engineering lead.",
-    "confidence": "high"
-  },
-  {
-    "edge_id": 1257,
-    "proposed_url": "https://www.cnbc.com/2025/12/20/josh-woodward-google-gemini-ai-safety.html",
-    "justification": "CNBC article on Josh Woodward at Google Labs includes Clay Bavor's quote praising Woodward's ability to move fast and execute, naming both parties in context of Google Labs leadership.",
+    "edge_id": 1533,
+    "proposed_url": "https://en.wikipedia.org/wiki/Sriram_Krishnan",
+    "justification": "Wikipedia article on Sriram Krishnan lists SpaceX among the companies he has been an investor/advisor in, corroborating the edge claim.",
     "confidence": "medium"
   },
   {
-    "edge_id": 1261,
-    "proposed_url": "https://www.hachettebookgroup.com/titles/eliezer-yudkowsky/if-anyone-builds-it-everyone-dies/9780316595643/",
-    "justification": "Hachette publisher page for the book lists Eliezer Yudkowsky and Nate Soares as co-authors of 'If Anyone Builds It, Everyone Dies', confirming the co-authorship relationship.",
+    "edge_id": 1553,
+    "proposed_url": "https://fusionxinvest.com/news/3478/helion-energy-raises-40m-in-series-d/",
+    "justification": "FusionXInvest news article reports Dustin Moskovitz led Helion Energy's $40 million Series D round in 2020, naming both parties.",
     "confidence": "high"
   },
   {
-    "edge_id": 1262,
-    "proposed_url": "https://en.wikipedia.org/wiki/Eliezer_Yudkowsky",
-    "justification": "Wikipedia article on Yudkowsky documents his work on intelligence explosion and its influence on Nick Bostrom's 2014 Superintelligence book.",
+    "edge_id": 782,
+    "proposed_url": "https://www.schatz.senate.gov/news/press-releases/senator-schatz-named-to-leadership-position-on-senate-commerce-science-and-transportation-committee",
+    "justification": "Official Schatz Senate press release confirms his membership and leadership role on the Senate Commerce, Science, and Transportation Committee.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 798,
+    "proposed_url": "https://amturing.acm.org/award_winners/bengio_3406375.cfm",
+    "justification": "ACM Turing Award laureate page for Yoshua Bengio explicitly states he received his PhD in computer science from McGill University in 1991.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1114,
+    "proposed_url": "https://www.kim.senate.gov/press_release/senator-kim-named-to-key-committees-to-lower-costsadvance-innovation-and-bolster-national-security/",
+    "justification": "Official Andy Kim Senate press release confirms his appointment to the Senate Commerce, Science, and Transportation Committee.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1186,
+    "proposed_url": "https://en.wikipedia.org/wiki/Ian_Goodfellow",
+    "justification": "Ian Goodfellow's Wikipedia page states he received his PhD in machine learning from Université de Montréal in February 2015 under Yoshua Bengio.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1197,
+    "proposed_url": "https://en.wikipedia.org/wiki/International_Association_for_Safe_and_Ethical_AI",
+    "justification": "Wikipedia page for IASEAI names Amir Banifatemi as a board member of the organization, confirming the claimed relationship.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1413,
+    "proposed_url": "https://voxiitk.com/tete-a-tete-with-sayash-kapoor/",
+    "justification": "IIT Kanpur student publication interview with Sayash Kapoor confirms he graduated from IIT Kanpur with a BTech in Computer Science, naming both parties.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1430,
+    "proposed_url": "https://x.com/MariusHobbhahn/status/1883473875628953765",
+    "justification": "Marius Hobbhahn's own tweet announces defending his PhD under Philipp Hennig's supervision at IMPRS (University of Tübingen), naming both supervisor and institution.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1456,
+    "proposed_url": "https://milamiceli.com/wp-content/uploads/2025/01/Mila_CV-3.pdf",
+    "justification": "Milagros Miceli's official CV confirms she studied Communication Science/Sociology at Universidad de Buenos Aires, though her formal undergraduate degree was in Communication from another institution — medium confidence for the UBA sociology claim specifically.",
     "confidence": "medium"
   },
   {
-    "edge_id": 1266,
-    "proposed_url": "https://www.booker.senate.gov/news/press/booker-rounds-heinrich-lieu-and-obernolte-reintroduce-bipartisan-ai-grand-challenges-act",
-    "justification": "Booker's official Senate press release names both Cory Booker and Mike Rounds (along with Heinrich, Lieu, and Obernolte) as co-sponsors of the reintroduced AI Grand Challenges Act.",
+    "edge_id": 1460,
+    "proposed_url": "https://riponsociety.org/events/senate-ai-caucus-co-chair-senator-mike-rounds/",
+    "justification": "Ripon Society page explicitly identifies Senator Mike Rounds as Senate AI Caucus Co-Chair, naming both parties in the role.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1491,
+    "proposed_url": "https://www.hassan.senate.gov/news/press-releases/senator-hassan-to-serve-as-ranking-member-of-the-joint-economic-committee",
+    "justification": "Official Maggie Hassan Senate press release announces her appointment as Ranking Member of the Joint Economic Committee, naming both parties.",
     "confidence": "high"
   }
 ]

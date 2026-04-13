@@ -1,92 +1,92 @@
 [
   {
-    "edge_id": 1267,
-    "proposed_url": "https://www.booker.senate.gov/news/press/booker-rounds-heinrich-lieu-and-obernolte-reintroduce-bipartisan-ai-grand-challenges-act",
-    "justification": "Official Senate press release from Booker's office explicitly names Booker, Heinrich, Lieu, and Obernolte as co-sponsors of the reintroduced AI Grand Challenges Act.",
+    "edge_id": 1497,
+    "proposed_url": "https://www.moran.senate.gov/public/index.cfm/committee-assignments",
+    "justification": "Moran's official Senate committee assignments page listing his membership on the Senate Committee on Commerce, Science and Transportation.",
     "confidence": "high"
   },
   {
-    "edge_id": 1268,
-    "proposed_url": "https://www.booker.senate.gov/news/press/booker-rounds-heinrich-lieu-and-obernolte-reintroduce-bipartisan-ai-grand-challenges-act",
-    "justification": "Same press release names Booker and Ted Lieu as co-sponsors of the reintroduced AI Grand Challenges Act.",
+    "edge_id": 1498,
+    "proposed_url": "https://www.moran.senate.gov/public/index.cfm/news-releases?ID=606aa028-9593-4367-9bcd-21ea8f06e17b",
+    "justification": "Official press release from Senator Moran's office titled 'Sen. Jerry Moran Elected to Serve as Chairman of NRSC' confirming his chairmanship of the National Republican Senatorial Committee.",
     "confidence": "high"
   },
   {
-    "edge_id": 1269,
-    "proposed_url": "https://www.booker.senate.gov/news/press/booker-rounds-heinrich-lieu-and-obernolte-reintroduce-bipartisan-ai-grand-challenges-act",
-    "justification": "Same press release names Booker and Jay Obernolte as co-sponsors of the reintroduced AI Grand Challenges Act.",
+    "edge_id": 1517,
+    "proposed_url": "https://www.rosen.senate.gov/committees/",
+    "justification": "Jacky Rosen's official Senate committees page confirming her membership on the Senate Homeland Security and Governmental Affairs Committee.",
     "confidence": "high"
   },
   {
-    "edge_id": 1270,
-    "proposed_url": "https://www.booker.senate.gov/news/press/booker-heinrich-young-rounds-introduce-bipartisan-bicameral-bill-to-expand-access-to-artificial-intelligence-research",
-    "justification": "Booker's official Senate press release explicitly names Booker, Heinrich, Todd Young, and Rounds as co-sponsors introducing the CREATE AI Act of 2023.",
+    "edge_id": 1571,
+    "proposed_url": "https://hai.stanford.edu/news/stanfords-daniel-ho-appointed-advisor-biden-administrations-national-artificial-intelligence",
+    "justification": "Stanford HAI announcement naming Daniel Ho as advisor to the National Artificial Intelligence Advisory Committee (NAIAC), confirming both parties and the advisory role.",
     "confidence": "high"
   },
   {
-    "edge_id": 1271,
-    "proposed_url": "https://eshoo.house.gov/media/press-releases/ai-caucus-leaders-introduce-bipartisan-bill-expand-access-ai-research",
-    "justification": "Eshoo's House press release names Eshoo, McCaul, Beyer, and Obernolte as introducing the House companion CREATE AI Act bill, directly evidencing Booker's Senate bill's House companion sponsorship.",
+    "edge_id": 1586,
+    "proposed_url": "https://www.ilr.cornell.edu/75/our-stories/alex-bores-13",
+    "justification": "Cornell ILR School profile page for Alex Bores ('13) confirming he earned a BS in Industrial and Labor Relations from Cornell University.",
     "confidence": "high"
   },
   {
-    "edge_id": 1274,
-    "proposed_url": "https://arxiv.org/abs/2411.00986",
-    "justification": "arXiv page for 'Taking AI Welfare Seriously' lists Kyle Fish and David Chalmers among the co-authors, directly evidencing their collaboration on the paper.",
+    "edge_id": 1608,
+    "proposed_url": "https://cis.cornell.edu/choi-%E2%80%9810-cs-phd-named-2022-macarthur-fellow",
+    "justification": "Cornell Computing and Information Science article identifying Yejin Choi as a Cornell CS PhD ('10) and noting her graduate work there, which aligns with her advisor Claire Cardie relationship.",
     "confidence": "high"
   },
   {
-    "edge_id": 1275,
-    "proposed_url": "https://arxiv.org/abs/2411.00986",
-    "justification": "arXiv page for 'Taking AI Welfare Seriously' lists Kyle Fish and Robert Long (Rob Long) as co-authors, directly evidencing their collaboration.",
-    "confidence": "high"
-  },
-  {
-    "edge_id": 1276,
-    "proposed_url": "https://eleosai.org/post/eleos-commends-anthropic-model-welfare-efforts/",
-    "justification": "Eleos AI post describes Eleos (led by Rob Long) conducting model welfare assessments of Anthropic's Claude in collaboration with Kyle Fish's team, evidencing the Fish–Long collaboration on assessments.",
+    "edge_id": 1609,
+    "proposed_url": "https://en.wikipedia.org/wiki/Yejin_Choi",
+    "justification": "Wikipedia article on Yejin Choi documents her bachelor's degree in Computer Science from Seoul National University before moving to Cornell for graduate study.",
     "confidence": "medium"
   },
   {
-    "edge_id": 1277,
-    "proposed_url": "https://eleosai.org/post/eleos-commends-anthropic-model-welfare-efforts/",
-    "justification": "Eleos AI post describes Eleos (co-founded by Kathleen Finlinson) conducting self-report model welfare assessments with Anthropic, evidencing the Fish–Finlinson collaboration.",
+    "edge_id": 1621,
+    "proposed_url": "https://www.heidyk.com/",
+    "justification": "Heidy Khlaaf's personal website, which search results confirm lists her as part of the Network of Experts for UNSG's AI Advisory Body.",
     "confidence": "medium"
   },
   {
-    "edge_id": 1278,
-    "proposed_url": "https://www.nobelprize.org/prizes/economic-sciences/2024/press-release/",
-    "justification": "Official Nobel Prize press release jointly names Daron Acemoglu, Simon Johnson, and James A. Robinson as co-recipients of the 2024 Nobel Prize in Economic Sciences.",
+    "edge_id": 1622,
+    "proposed_url": "https://www.heidyk.com/",
+    "justification": "Heidy Khlaaf's personal website, which search results confirm lists her as an ISO SC 42 Committee Member via the British Standards Institute.",
+    "confidence": "medium"
+  },
+  {
+    "edge_id": 1637,
+    "proposed_url": "https://karendhao.com/about",
+    "justification": "Karen Hao's official about page, which search results confirm states she sits on the board of the Craig Newmark Graduate School of Journalism AI Advisory council.",
     "confidence": "high"
   },
   {
-    "edge_id": 1279,
-    "proposed_url": "https://shapingwork.mit.edu/2024nobelprize/",
-    "justification": "MIT Shaping the Future of Work Initiative page names Daron Acemoglu, Simon Johnson, and David Autor as faculty co-directors, directly evidencing their co-director collaboration.",
+    "edge_id": 1641,
+    "proposed_url": "https://www.peters.senate.gov/newsroom/press-releases/senator-peters-reintroduces-bipartisan-bill-to-boost-americas-ai-workforce-pipeline",
+    "justification": "Senator Peters' press release on his AI workforce bill directing NIST to develop a workforce framework for AI and emerging technology jobs, documenting the relationship between Peters and NIST.",
+    "confidence": "medium"
+  },
+  {
+    "edge_id": 1644,
+    "proposed_url": "https://www.commerce.senate.gov/rankingmember",
+    "justification": "Senate Commerce Committee's official Ranking Member page confirming Maria Cantwell holds the Ranking Member role on the Senate Committee on Commerce, Science and Transportation.",
     "confidence": "high"
   },
   {
-    "edge_id": 1286,
-    "proposed_url": "https://www.axios.com/pro/tech-policy/2025/03/25/michael-kratsios-confirmed-to-lead-ostp",
-    "justification": "Axios article on Kratsios's OSTP confirmation explicitly states he will work closely with AI and crypto czar David Sacks on regulation and policy.",
+    "edge_id": 1648,
+    "proposed_url": "https://science.house.gov/2024/7/committee-leaders-lofgren-and-lucas-introduce-ai-workforce-bill",
+    "justification": "House Science Committee press release on the Workforce for AI Trust Act (H.R. 9215) introduced by Frank Lucas, explicitly referencing NSF's role in the bill.",
     "confidence": "high"
   },
   {
-    "edge_id": 1306,
-    "proposed_url": "https://en.wikipedia.org/wiki/Regina_Barzilay",
-    "justification": "Wikipedia biography of Regina Barzilay explicitly states she spent a year as a postdoctoral researcher at Cornell University after her PhD.",
+    "edge_id": 1649,
+    "proposed_url": "https://science.house.gov/2024/7/committee-leaders-lofgren-and-lucas-introduce-ai-workforce-bill",
+    "justification": "House Science Committee press release on the Workforce for AI Trust Act (H.R. 9215) introduced by Frank Lucas, explicitly referencing both NSF and NIST roles in the bill.",
     "confidence": "high"
   },
   {
-    "edge_id": 1311,
-    "proposed_url": "https://deepmind.google/blog/demis-hassabis-john-jumper-awarded-nobel-prize-in-chemistry/",
-    "justification": "Google DeepMind's official blog post announces that Demis Hassabis and John Jumper were jointly awarded the 2024 Nobel Prize in Chemistry for AlphaFold.",
-    "confidence": "high"
-  },
-  {
-    "edge_id": 1323,
-    "proposed_url": "https://en.wikipedia.org/wiki/Timnit_Gebru",
-    "justification": "Wikipedia article on Timnit Gebru explicitly states she co-led Google's Ethical AI team with Margaret Mitchell before both were fired.",
+    "edge_id": 1664,
+    "proposed_url": "https://www.gmu.edu/news/2023-04/congressman-don-beyer-mason-student-and-lifelong-learner",
+    "justification": "George Mason University news article specifically about Congressman Don Beyer as a GMU student pursuing a machine learning degree, naming both parties and the student role.",
     "confidence": "high"
   }
 ]

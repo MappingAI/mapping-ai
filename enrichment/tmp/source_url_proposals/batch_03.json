@@ -1,92 +1,92 @@
 [
   {
-    "edge_id": 158,
-    "proposed_url": "https://us.macmillan.com/books/9781250266774/recodingamerica/",
-    "justification": "Publisher (Macmillan/Metropolitan Books) page for 'Recoding America' explicitly lists Jennifer Pahlka as the author.",
+    "edge_id": 1102,
+    "proposed_url": "https://bayesianlogic.com/",
+    "justification": "Bayesian Logic Inc.'s own website documents the company and its NET-VISA seismic monitoring work under UN contract; Stuart Russell is listed as founder and Vice-President on the company site.",
     "confidence": "high"
   },
   {
-    "edge_id": 110,
-    "proposed_url": "https://safe.ai/work/statement-on-ai-risk",
-    "justification": "CAIS Statement on AI Risk page lists both Yoshua Bengio and is directed by Dan Hendrycks, directly evidencing Bengio signing/promoting this CAIS initiative.",
+    "edge_id": 1144,
+    "proposed_url": "https://people.eecs.berkeley.edu/~trevor/",
+    "justification": "Trevor Darrell's UC Berkeley faculty page explicitly lists him as Founding Co-Director of Berkeley Artificial Intelligence Research (BAIR).",
     "confidence": "high"
   },
   {
-    "edge_id": 111,
-    "proposed_url": "https://en.wikipedia.org/wiki/Dario_Amodei",
-    "justification": "Wikipedia article on Dario Amodei documents his role as VP of Research at OpenAI under Sam Altman before founding Anthropic, establishing the prior collaboration context.",
+    "edge_id": 1160,
+    "proposed_url": "https://mila.quebec/en/directory/yoshua-bengio",
+    "justification": "Mila's own directory page for Yoshua Bengio names him as founder and scientific advisor of Mila – Quebec Artificial Intelligence Institute, founded in 1993.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1170,
+    "proposed_url": "https://www.newswire.ca/news-releases/machine-learning-veterans-launch-element-ai---a-montreal-based-artificial-intelligence-startup-factory-598510761.html",
+    "justification": "Original October 2016 press release announcing Element AI's launch names Jean-François Gagné as CEO and co-founder alongside Yoshua Bengio and others.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1171,
+    "proposed_url": "https://www.newswire.ca/news-releases/machine-learning-veterans-launch-element-ai---a-montreal-based-artificial-intelligence-startup-factory-598510761.html",
+    "justification": "Same October 2016 Element AI launch press release names Yoshua Bengio as a co-founder of Element AI alongside Jean-François Gagné.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1243,
+    "proposed_url": "https://governorsoffice.colorado.gov/governor/news/colorado-artificial-intelligence-policy-workgroup-delivers-unanimous-support-revised-policy",
+    "justification": "Colorado Governor's official press release explicitly states the Colorado AI Policy Work Group was convened by Governor Polis and delivered its unanimous policy framework.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1273,
+    "proposed_url": "https://eleosai.org/team/",
+    "justification": "Eleos AI's own team page lists co-founders including Kyle Fish, confirming his co-founding role in the AI welfare research organization.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1289,
+    "proposed_url": "https://www.recodingamerica.fund/about",
+    "justification": "Recoding America Fund's about page documents the organization's leadership and Jennifer Pahlka's role as co-founder and board chair.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1296,
+    "proposed_url": "https://metr.org/blog/2023-09-19-spin-out-announcement/",
+    "justification": "METR's official spin-out announcement from ARC references Paul Christiano's original role in founding ARC Evals and launching the frontier model evaluation initiative now housed at METR.",
     "confidence": "medium"
   },
   {
-    "edge_id": 750,
-    "proposed_url": "https://www.schumer.senate.gov/newsroom/press-releases/following-historic-ai-insight-forums-over-the-past-year-leader-schumer-senators-rounds-heinrich-and-young-reveal-bipartisan-roadmap-for-artificial-intelligence-policy-in-the-united-states-senate",
-    "justification": "Official Schumer Senate press release explicitly names Schumer, Rounds, Heinrich, and Young as the Bipartisan Senate AI Working Group co-founders releasing the roadmap.",
+    "edge_id": 1317,
+    "proposed_url": "https://en.wikipedia.org/wiki/Black_in_AI",
+    "justification": "Wikipedia's Black in AI article names Timnit Gebru and Rediet Abebe as co-founders of the organization in 2017, sourced from multiple cited references.",
     "confidence": "high"
   },
   {
-    "edge_id": 751,
-    "proposed_url": "https://www.schumer.senate.gov/newsroom/press-releases/following-historic-ai-insight-forums-over-the-past-year-leader-schumer-senators-rounds-heinrich-and-young-reveal-bipartisan-roadmap-for-artificial-intelligence-policy-in-the-united-states-senate",
-    "justification": "Same Schumer Senate press release explicitly names Schumer and Heinrich as Bipartisan Senate AI Working Group co-founders.",
+    "edge_id": 1376,
+    "proposed_url": "https://en.wikipedia.org/wiki/Neuralink",
+    "justification": "Wikipedia's Neuralink article names Elon Musk as co-founder in 2016 alongside the founding team of eight scientists and engineers.",
     "confidence": "high"
   },
   {
-    "edge_id": 752,
-    "proposed_url": "https://www.young.senate.gov/newsroom/press-releases/following-historic-ai-insight-forums-over-the-past-year-young-schumer-rounds-heinrich-reveal-bipartisan-roadmap-for-artificial-intelligence-policy-in-the-united-states-senate/",
-    "justification": "Senator Young's official press release explicitly names Young and Schumer as Bipartisan Senate AI Working Group co-founders releasing the roadmap.",
+    "edge_id": 1379,
+    "proposed_url": "https://en.wikipedia.org/wiki/Liang_Wenfeng",
+    "justification": "Wikipedia's Liang Wenfeng article confirms he founded High-Flyer AI in 2019 as a subsidiary dedicated to AI algorithm research, prior to launching DeepSeek.",
     "confidence": "high"
   },
   {
-    "edge_id": 758,
-    "proposed_url": "https://www.nytimes.com/column/hard-fork",
-    "justification": "New York Times Hard Fork column/podcast page listing Casey Newton and Kevin Roose as co-hosts.",
-    "confidence": "medium"
-  },
-  {
-    "edge_id": 763,
-    "proposed_url": "https://aima.cs.berkeley.edu/",
-    "justification": "Official textbook website hosted at UC Berkeley lists Stuart Russell and Peter Norvig as co-authors of 'Artificial Intelligence: A Modern Approach'.",
+    "edge_id": 1397,
+    "proposed_url": "https://ai-4-all.org/about/our-story/",
+    "justification": "AI4ALL's own 'Our Story' page documents Fei-Fei Li as co-founder of the nonprofit in 2017, dedicated to increasing diversity in artificial intelligence.",
     "confidence": "high"
   },
   {
-    "edge_id": 769,
-    "proposed_url": "https://www.cotton.senate.gov/news/press-releases/cotton-schumer-introduce-bipartisan-bill-to-protect-americans-data-from-foreign-adversaries",
-    "justification": "Senator Cotton's official press release explicitly names Cotton and Schumer as co-introducers of bipartisan robotics security legislation (American Security Robotics Act).",
+    "edge_id": 1419,
+    "proposed_url": "http://trust.mit.edu/prof-alex-sandy-pentland",
+    "justification": "Trust::Data consortium's own page for Sandy Pentland confirms his role as founder and director of the Trust::Data Alliance at MIT.",
     "confidence": "high"
   },
   {
-    "edge_id": 770,
-    "proposed_url": "https://www.democrats.senate.gov/newsroom/press-releases/leader-schumer-and-senators-kim-ricketts-risch-introduce-match-act-to-level-the-global-playing-field-for-us-tech",
-    "justification": "Senate Democratic Leadership press release explicitly names Schumer and Andy Kim as co-introducers of the MATCH Act.",
+    "edge_id": 1440,
+    "proposed_url": "https://en.wikipedia.org/wiki/Jukedeck",
+    "justification": "Wikipedia's Jukedeck article names Ed Newton-Rex as founder of the AI music startup, noting the company was founded in 2012 (with work beginning in 2010) and acquired by ByteDance in 2019.",
     "confidence": "high"
-  },
-  {
-    "edge_id": 771,
-    "proposed_url": "https://www.democrats.senate.gov/newsroom/press-releases/leader-schumer-and-senators-kim-ricketts-risch-introduce-match-act-to-level-the-global-playing-field-for-us-tech",
-    "justification": "Same Senate Democratic Leadership press release explicitly names Schumer and Pete Ricketts as co-introducers of the MATCH Act.",
-    "confidence": "high"
-  },
-  {
-    "edge_id": 772,
-    "proposed_url": "https://www.foreign.senate.gov/press/rep/release/risch-ricketts-kim-introduce-match-act-level-the-global-playing-field-for-us-tech",
-    "justification": "Senate Foreign Relations Committee press release explicitly names Risch as a co-introducer of the MATCH Act alongside Schumer.",
-    "confidence": "high"
-  },
-  {
-    "edge_id": 779,
-    "proposed_url": "https://www.schatz.senate.gov/news/press-releases/schatz-kennedy-introduce-bipartisan-legislation-to-provide-more-transparency-on-ai-generated-content",
-    "justification": "Senator Schatz's official press release explicitly names Schatz and Kennedy as co-introducers of the AI Labeling Act (S. 2691) on October 24, 2023.",
-    "confidence": "high"
-  },
-  {
-    "edge_id": 780,
-    "proposed_url": "https://www.schatz.senate.gov/news/press-releases/schatz-gardner-introduce-legislation-to-improve-federal-governments-use-of-artificial-intelligence",
-    "justification": "Senator Schatz's official press release explicitly names Schatz and Gardner as co-introducers of the AI in Government Act.",
-    "confidence": "high"
-  },
-  {
-    "edge_id": 783,
-    "proposed_url": "https://www.scsp.ai/2024/06/special-competitive-studies-project-announces-ai-energy-summit/",
-    "justification": "SCSP's official AI+Energy Summit announcement page; Schatz's keynote participation at this event was confirmed via search snippets but is not named on this specific announcement page — best available SCSP-hosted evidence.",
-    "confidence": "low"
   }
 ]

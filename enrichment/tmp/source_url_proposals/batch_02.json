@@ -1,92 +1,92 @@
 [
   {
-    "edge_id": 1343,
-    "proposed_url": "https://news.nd.edu/news/former-south-bend-mayor-and-presidential-candidate-pete-buttigieg-joins-notre-dame-institute-for-advanced-study/",
-    "justification": "Notre Dame News press release explicitly announces Pete Buttigieg joining Notre Dame Institute for Advanced Study as a faculty fellow in 2020, directly evidencing his affiliation with the university.",
+    "edge_id": 1532,
+    "proposed_url": "https://www.varindia.com/news/sriram-krishnan-appointed-senior-white-house-policy-advisor-on-artificial-intelligence",
+    "justification": "Announcement page quotes Trump naming Krishnan as Senior White House Policy Advisor on AI, explicitly stating he will work 'closely with David Sacks' to shape AI policy.",
     "confidence": "high"
   },
   {
-    "edge_id": 1351,
-    "proposed_url": "https://www.murphy.senate.gov/newsroom/press-releases/murphy-in-munich-on-ai-we-need-regulation-and-international-cooperation-to-prevent-economic-and-cultural-collapse",
-    "justification": "Senator Murphy's official Senate press release explicitly describes his participation in the Munich Security Conference AI panel 'Risks and Rewards of the AI Race', naming both parties.",
+    "edge_id": 1560,
+    "proposed_url": "https://awards.acm.org/about/2018-turing",
+    "justification": "Official ACM Turing Award page naming Yoshua Bengio, Geoffrey Hinton, and Yann LeCun as joint 2018 recipients for deep learning contributions.",
     "confidence": "high"
   },
   {
-    "edge_id": 1362,
-    "proposed_url": "https://fas.org/expert/tom-kalil/",
-    "justification": "Federation of American Scientists expert profile page for Tom Kalil directly documents his affiliation with FAS.",
+    "edge_id": 1561,
+    "proposed_url": "https://awards.acm.org/about/2018-turing",
+    "justification": "Official ACM Turing Award page naming Yoshua Bengio, Geoffrey Hinton, and Yann LeCun as joint 2018 recipients for deep learning contributions.",
     "confidence": "high"
   },
   {
-    "edge_id": 1510,
-    "proposed_url": "https://fedscoop.com/energy-department-ai-risk-evaluation-bill/",
-    "justification": "FedScoop article explicitly names Blumenthal as co-sponsor of the bill to create an AI risk evaluation program within the Department of Energy, documenting the legislative oversight relationship.",
+    "edge_id": 1617,
+    "proposed_url": "https://msalganik.github.io/soc555-cos598J_s2024/",
+    "justification": "Princeton course page for SOC555/COS598J 'Limits to Prediction' co-taught by Arvind Narayanan and Matthew Salganik, directly evidencing their collaboration.",
     "confidence": "high"
   },
   {
-    "edge_id": 131,
-    "proposed_url": "https://digitaleconomy.stanford.edu/publication/the-digitalist-papers-volume-2-the-economics-of-transformative-ai/",
-    "justification": "Stanford Digital Economy Lab publication page for The Digitalist Papers Volume 2 lists Sandy Pentland as a contributing author and faculty lead.",
+    "edge_id": 1668,
+    "proposed_url": "https://eshoo.house.gov/media/press-releases/eshoo-beyer-introduce-landmark-ai-regulation-bill",
+    "justification": "Official press release from Rep. Eshoo's office announcing she and Rep. Beyer jointly introduced the AI Foundation Model Transparency Act.",
     "confidence": "high"
   },
   {
-    "edge_id": 132,
-    "proposed_url": "https://www.axios.com/2026/02/12/alex-bores-ai-super-pacs-plan",
-    "justification": "Axios article explicitly attributes the Congressional AI Framework eight-point plan to Alex Bores and describes it as his authored policy agenda for Congress.",
+    "edge_id": 803,
+    "proposed_url": "https://www.npr.org/2025/10/17/nx-s1-5578279/ai-schumer-gop-attack-ad",
+    "justification": "NPR article documenting the NRSC's AI-generated deepfake attack ad targeting Chuck Schumer, establishing Schumer as the target/critic relationship.",
     "confidence": "high"
   },
   {
-    "edge_id": 134,
-    "proposed_url": "https://www.whitehouse.gov/presidential-actions/2025/12/eliminating-state-law-obstruction-of-national-artificial-intelligence-policy/",
-    "justification": "White House official page for the December 2025 executive order on AI federal preemption; David Sacks' authorship/orchestration is widely documented in contemporaneous coverage referencing this EO.",
+    "edge_id": 1583,
+    "proposed_url": "https://www.benzinga.com/markets/tech/25/11/49049176/bernie-sanders-pushes-back-on-trump-moves-to-strip-ai-powers-from-states-it-will-make-the-oligarchs-richer-while-millions-lose-jobs",
+    "justification": "Article documenting Sanders explicitly pushing back on Trump's AI deregulation moves, naming both parties in an adversarial policy context.",
     "confidence": "medium"
   },
   {
-    "edge_id": 142,
-    "proposed_url": "https://knightcolumbia.org/content/ai-as-normal-technology",
-    "justification": "Knight First Amendment Institute page publishes the essay 'AI as Normal Technology' and explicitly credits Arvind Narayanan as co-author.",
+    "edge_id": 1159,
+    "proposed_url": "https://diro.umontreal.ca/english/departement-directory/professors/professor/in/in13599/sg/Yoshua%20Bengio/",
+    "justification": "Université de Montréal DIRO department page listing Yoshua Bengio as a professor in the Department of Computer Science and Operations Research.",
     "confidence": "high"
   },
   {
-    "edge_id": 144,
-    "proposed_url": "https://knightcolumbia.org/content/ai-as-normal-technology",
-    "justification": "Knight First Amendment Institute page publishes the essay 'AI as Normal Technology' and explicitly credits Sayash Kapoor as co-author alongside Narayanan.",
+    "edge_id": 1183,
+    "proposed_url": "https://appleinsider.com/articles/22/05/07/apples-director-of-machine-learning-exits-over-return-to-office-policy",
+    "justification": "AppleInsider article explicitly naming Ian Goodfellow as Apple's Director of Machine Learning and reporting his resignation, confirming the employer-role relationship.",
     "confidence": "high"
   },
   {
-    "edge_id": 145,
-    "proposed_url": "https://en.wikipedia.org/wiki/The_Entrepreneurial_State",
-    "justification": "Wikipedia article on The Entrepreneurial State explicitly identifies Mariana Mazzucato as the sole author of the 2013 book.",
+    "edge_id": 1203,
+    "proposed_url": "https://www.nrsc.org/press-releases/video-nrsc-uses-ai-to-show-voters-exactly-what-schumer-thinks-of-his-shutdown-2025-10-17/",
+    "justification": "Official NRSC press release about the AI Schumer video, with Joanna Rodriguez as Communications Director named in associated news coverage as the NRSC spokesperson.",
+    "confidence": "medium"
+  },
+  {
+    "edge_id": 1564,
+    "proposed_url": "https://www.college-de-france.fr/en/chair/yann-lecun-computer-sciences-and-digital-technologies-annual-chair",
+    "justification": "Official Collège de France page for Yann LeCun's Annual Chair in Computer Sciences and Digital Technologies, directly confirming the appointment.",
     "confidence": "high"
   },
   {
-    "edge_id": 146,
-    "proposed_url": "https://shapingwork.mit.edu/power-and-progress/",
-    "justification": "MIT Shaping the Future of Work page for Power and Progress explicitly names Daron Acemoglu as co-author of the book.",
+    "edge_id": 1685,
+    "proposed_url": "https://cra.org/crn/2023/03/lynne-parker-receives-the-2023-cra-distinguished-service-award/",
+    "justification": "CRA award page for Lynne Parker notes her role as NSF Division Director of Information and Intelligent Systems, confirming her prior employment at NSF.",
+    "confidence": "medium"
+  },
+  {
+    "edge_id": 2400,
+    "proposed_url": "https://www.alignmentforum.org/posts/H5iGhDhQBtoDpCBZ2/announcing-the-alignment-of-complex-systems-research-group",
+    "justification": "Alignment Forum announcement post by Jan Kulveit establishing the ACS Research Group at Charles University, naming him as co-founder and principal investigator.",
     "confidence": "high"
   },
   {
-    "edge_id": 147,
-    "proposed_url": "https://shapingwork.mit.edu/power-and-progress/",
-    "justification": "MIT Shaping the Future of Work page for Power and Progress explicitly names Simon Johnson as co-author of the book alongside Acemoglu.",
-    "confidence": "high"
+    "edge_id": 766,
+    "proposed_url": "https://rocketreach.co/stuart-russell-email_2308115",
+    "justification": "RocketReach profile listing Stuart Russell as Founder and Vice-President of Bayesian Logic Inc. since 2011; no official company page found with both parties named.",
+    "confidence": "low"
   },
   {
-    "edge_id": 155,
-    "proposed_url": "https://micheljusten.substack.com/p/a-guide-to-the-ai-tribes",
-    "justification": "Michel Justen's Substack page is the primary publication venue for 'A Guide to the AI Tribes', explicitly crediting him as author.",
-    "confidence": "high"
-  },
-  {
-    "edge_id": 156,
-    "proposed_url": "https://www.transformernews.ai/p/the-left-is-missing-out-on-ai-sanders-doctorow-bender-bores",
-    "justification": "Transformer newsletter page explicitly publishes 'The Left is Missing Out on AI' and credits Dan Kagan-Kans as author.",
-    "confidence": "high"
-  },
-  {
-    "edge_id": 157,
-    "proposed_url": "https://www.amazon.com/Dignity-Digital-Age-Making-Tech/dp/1982163348",
-    "justification": "Amazon listing for 'Dignity in a Digital Age' explicitly names Ro Khanna as author of the 2022 book.",
+    "edge_id": 1101,
+    "proposed_url": "https://nimar.github.io/cv.html",
+    "justification": "Nimar Arora's own CV page listing his co-founding of Bayesian Logic Inc., directly confirming the founder relationship.",
     "confidence": "high"
   }
 ]

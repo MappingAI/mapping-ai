@@ -1,92 +1,92 @@
 [
   {
-    "edge_id": 1422,
-    "proposed_url": "https://ai-2027.com/about",
-    "justification": "The AI 2027 'About' page explicitly lists Daniel Kokotajlo, Scott Alexander, Thomas Larsen, Eli Lifland, and Romeo Dean as co-authors of the scenario.",
+    "edge_id": 1153,
+    "proposed_url": "https://news.emory.edu/stories/2026/02/er_responsible_ai_site_2-17/story.html",
+    "justification": "Emory news article explicitly names both the Responsible AI Initiative and the Emory AI Group as the lead of the enterprise-wide effort.",
     "confidence": "high"
   },
   {
-    "edge_id": 1423,
-    "proposed_url": "https://ai-2027.com/about",
-    "justification": "The AI 2027 'About' page explicitly lists Daniel Kokotajlo and Thomas Larsen together as co-authors of the scenario.",
+    "edge_id": 1156,
+    "proposed_url": "https://www.hec.ca/en/news/2024/renewal-of-partnership-between-hec-montreal-polytechnique-montreal-universite-de-montreal.html",
+    "justification": "HEC Montréal news page documents the renewal of affiliation/partnership between HEC Montréal and Université de Montréal, naming both parties.",
     "confidence": "high"
   },
   {
-    "edge_id": 1424,
-    "proposed_url": "https://ai-2027.com/about",
-    "justification": "The AI 2027 'About' page explicitly lists Daniel Kokotajlo and Eli Lifland together as co-authors of the scenario.",
+    "edge_id": 1157,
+    "proposed_url": "https://www.hec.ca/en/news/2024/renewal-of-partnership-between-hec-montreal-polytechnique-montreal-universite-de-montreal.html",
+    "justification": "Same HEC Montréal news page documents the tripartite renewal including Polytechnique Montréal and Université de Montréal.",
     "confidence": "high"
   },
   {
-    "edge_id": 1425,
-    "proposed_url": "https://ai-2027.com/about",
-    "justification": "The AI 2027 'About' page explicitly lists Daniel Kokotajlo and Romeo Dean together as co-authors of the scenario.",
+    "edge_id": 1161,
+    "proposed_url": "https://mila.quebec/en/about/about-mila",
+    "justification": "Mila's own About page states it is 'the result of a unique collaboration between Université de Montréal and McGill University, in close collaboration with Polytechnique Montréal and HEC Montréal'.",
     "confidence": "high"
   },
   {
-    "edge_id": 1455,
-    "proposed_url": "https://www.dair-institute.org/blog/milagros-miceli-time-100-ai-eng/",
-    "justification": "DAIR Institute's own blog post on Miceli's TIME100 AI recognition names her as DAIR research lead and Timnit Gebru as DAIR founder, documenting the collaboration.",
+    "edge_id": 1162,
+    "proposed_url": "https://mila.quebec/en/about/about-mila",
+    "justification": "Mila's About page explicitly names McGill University as a founding partner university of the institute.",
     "confidence": "high"
   },
   {
-    "edge_id": 1459,
-    "proposed_url": "https://www.warner.senate.gov/public/index.cfm/pressreleases?id=1D95AF09-5ED4-4D3C-BBB0-87F596C5176C",
-    "justification": "Senator Warner's official press release explicitly names both Warner and Rounds as co-introducers of the Economy of the Future Commission Act.",
+    "edge_id": 1163,
+    "proposed_url": "https://mila.quebec/en/about/about-mila",
+    "justification": "Mila's About page explicitly names Polytechnique Montréal as a close collaboration partner in the institute's founding.",
     "confidence": "high"
   },
   {
-    "edge_id": 1461,
-    "proposed_url": "https://www.heinrich.senate.gov/newsroom/press-releases/heinrich-rounds-tillis-kim-reintroduce-legislation-supporting-ai-innovation-in-financial-services",
-    "justification": "Senator Heinrich's official press release explicitly names Heinrich and Rounds as co-sponsors of the Unleashing AI Innovation in Financial Services Act.",
+    "edge_id": 1164,
+    "proposed_url": "https://mila.quebec/en/about/about-mila",
+    "justification": "Mila's About page explicitly names HEC Montréal as a close collaboration partner in the institute's founding.",
     "confidence": "high"
   },
   {
-    "edge_id": 1463,
-    "proposed_url": "https://muckrack.com/dan-kagan-kans",
-    "justification": "Muck Rack journalist profile for Dan Kagan-Kans lists The Wall Street Journal as one of his publication outlets, documenting his writing relationship with the WSJ.",
+    "edge_id": 1166,
+    "proposed_url": "https://mila.quebec/en/about/about-mila",
+    "justification": "Mila's About page states that Mila and its sister institutes Amii (Alberta) and Vector (Ontario) play a central role in the Pan-Canadian Artificial Intelligence Strategy.",
     "confidence": "high"
   },
   {
-    "edge_id": 1464,
-    "proposed_url": "https://theamericanscholar.org/author/dan-kagan-kans/",
-    "justification": "The American Scholar's author page for Dan Kagan-Kans confirms his byline and published articles at the publication.",
+    "edge_id": 1168,
+    "proposed_url": "https://canada.newsroom.ibm.com/2020-12-10-IBM-and-Mila-AI-Institute-Announce-Collaboration-to-Advance-Artificial-Intelligence-and-Machine-Learning-Technology",
+    "justification": "IBM Canada press release announcing the December 2020 collaboration between IBM and Mila to advance AI and machine learning research using open-source technology.",
     "confidence": "high"
   },
   {
-    "edge_id": 1465,
-    "proposed_url": "https://www.coons.senate.gov/news/press-releases/senators-coons-cotton-introduce-resolution-to-affirm-americas-artificial-intelligence-dominance",
-    "justification": "Senator Coons's official press release names both Coons and Cotton as co-introducers of the AI dominance resolution.",
+    "edge_id": 1177,
+    "proposed_url": "https://www.amnesty.org/en/latest/press-release/2018/12/crowdsourced-twitter-study-reveals-shocking-scale-of-online-abuse-against-women/",
+    "justification": "Amnesty International press release on the December 2018 joint study with Element AI measuring online abuse against women on Twitter.",
     "confidence": "high"
   },
   {
-    "edge_id": 1466,
-    "proposed_url": "https://www.coons.senate.gov/news/press-releases/senators-coons-mccormick-introduce-bill-to-boost-us-ai-leadership-with-energy-efficient-liquid-cooling-technology",
-    "justification": "Senator Coons's official press release names both Coons and McCormick as co-introducers of the Liquid Cooling for AI Act.",
+    "edge_id": 1178,
+    "proposed_url": "https://news.smu.edu.sg/news/2018/11/16/element-ai-announces-strategic-partnerships-gic-sginnovate-and-singapore-management",
+    "justification": "SMU Newsroom article announcing Element AI's strategic partnership with Singapore Management University, naming both parties explicitly.",
     "confidence": "high"
   },
   {
-    "edge_id": 1467,
-    "proposed_url": "https://www.coons.senate.gov/news/press-releases/senators-coons-cotton-introduce-resolution-to-affirm-americas-artificial-intelligence-dominance",
-    "justification": "Senator Coons's official press release on the AI dominance resolution names Amy Klobuchar as a co-sponsor alongside Coons.",
+    "edge_id": 1199,
+    "proposed_url": "https://ict4peace.org/activities/ict4peace-at-the-inaugural-conference-of-the-international-association-for-safe-and-ethical-ai-in-paris/",
+    "justification": "Reports on IASEAI's inaugural conference held at OECD Headquarters in Paris, documenting the partnership between IASEAI and OECD as host.",
+    "confidence": "medium"
+  },
+  {
+    "edge_id": 1661,
+    "proposed_url": "https://www.lawyerscommittee.org/statement-from-the-lawyers-committee-for-civil-rights-under-law-on-introduction-of-the-ai-civil-rights-act/",
+    "justification": "Lawyers' Committee statement on the AI Civil Rights Act introduction names Sen. Markey and the organization's partnership in introducing the legislation.",
     "confidence": "high"
   },
   {
-    "edge_id": 1468,
-    "proposed_url": "https://www.coons.senate.gov/news/press-releases/senators-coons-cotton-introduce-resolution-to-affirm-americas-artificial-intelligence-dominance",
-    "justification": "Senator Coons's official press release on the AI dominance resolution names Roger Wicker as a co-sponsor alongside Coons.",
+    "edge_id": 1675,
+    "proposed_url": "https://www.gov.ca.gov/2025/08/07/governor-newsom-partners-with-worlds-leading-tech-companies-to-prepare-californians-for-ai-future/",
+    "justification": "Official California Governor press release naming Newsom and IBM (along with Google, Adobe, Microsoft) in a signed MOU for AI workforce training.",
     "confidence": "high"
   },
   {
-    "edge_id": 1469,
-    "proposed_url": "https://www.coons.senate.gov/news/press-releases/senators-coons-cotton-introduce-resolution-to-affirm-americas-artificial-intelligence-dominance",
-    "justification": "Senator Coons's official press release on the AI dominance resolution names Jeanne Shaheen as a co-sponsor alongside Coons.",
-    "confidence": "high"
-  },
-  {
-    "edge_id": 1470,
-    "proposed_url": "https://www.heinrich.senate.gov/artificial-intelligence-caucus",
-    "justification": "Senator Heinrich's Senate AI Caucus page documents his co-chair role alongside Mike Rounds in the Senate Artificial Intelligence Caucus.",
+    "edge_id": 1697,
+    "proposed_url": "https://www.governor.ny.gov/news/governor-hochul-launches-empire-ai-consortium-make-new-york-global-leader-artificial",
+    "justification": "Official NY Governor press release announcing Hochul's Empire AI Consortium with the $275 million investment housed at University at Buffalo.",
     "confidence": "high"
   }
 ]

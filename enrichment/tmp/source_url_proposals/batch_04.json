@@ -1,92 +1,92 @@
 [
   {
-    "edge_id": 794,
-    "proposed_url": "https://awards.acm.org/about/2018-turing",
-    "justification": "ACM's official 2018 Turing Award page explicitly names Bengio, Hinton, and LeCun as joint recipients for foundational deep learning work.",
+    "edge_id": 1447,
+    "proposed_url": "https://x.com/JoshuaKushner/status/1917217194783494258",
+    "justification": "Joshua Kushner's own announcement post on X naming Thrive Holdings as a permanent capital vehicle he is launching, directly establishing his founder role.",
     "confidence": "high"
   },
   {
-    "edge_id": 795,
-    "proposed_url": "https://awards.acm.org/about/2018-turing",
-    "justification": "ACM's official 2018 Turing Award page explicitly names Bengio, LeCun, and Hinton as joint recipients for foundational deep learning work.",
+    "edge_id": 1471,
+    "proposed_url": "https://www.heinrich.senate.gov/newsroom/press-releases/heinrich-portman-launch-bipartisan-artificial-intelligence-caucus",
+    "justification": "Official Senate press release naming both Heinrich and Portman as co-founders launching the bipartisan Senate Artificial Intelligence Caucus.",
     "confidence": "high"
   },
   {
-    "edge_id": 807,
-    "proposed_url": "https://www.murphy.senate.gov/newsroom/press-releases/murphy-schatz-introduce-legislation-to-reverse-trumps-state-ai-law-moratorium",
-    "justification": "Senator Murphy's official press release names both Murphy and Schatz as co-introducers of the GUARDRAILS Act to repeal Trump's state AI law moratorium.",
+    "edge_id": 1558,
+    "proposed_url": "https://techcrunch.com/2026/01/23/whos-behind-ami-labs-yann-lecuns-world-model-startup/",
+    "justification": "TechCrunch article naming Yann LeCun as co-founder and executive chairman of AMI Labs (Advanced Machine Intelligence).",
     "confidence": "high"
   },
   {
-    "edge_id": 808,
-    "proposed_url": "https://www.schatz.senate.gov/news/press-releases/schatz-britt-colleagues-press-ai-companies-to-commit-to-timely-consistent-safety-disclosures-on-models",
-    "justification": "Senator Schatz's official press release names both Schatz and Britt as co-leads calling on AI companies to improve transparency and safety disclosures.",
+    "edge_id": 1683,
+    "proposed_url": "https://research.utk.edu/oried/2022/09/29/qa-with-artificial-intelligence-expert-lynne-parker/",
+    "justification": "University of Tennessee Q&A page identifying Lynne Parker as founder and director of the AI Tennessee Initiative at UT Knoxville.",
     "confidence": "high"
   },
   {
-    "edge_id": 1096,
-    "proposed_url": "https://aima.cs.berkeley.edu/",
-    "justification": "The official AIMA textbook site (Berkeley) explicitly names Russell and Norvig as co-authors of 'Artificial Intelligence: A Modern Approach', the book referenced in the evidence.",
+    "edge_id": 1684,
+    "proposed_url": "https://fedscoop.com/national-ai-initiative-office-launched/",
+    "justification": "FedScoop news article covering the January 2021 White House launch of the National AI Initiative Office with Lynne Parker named as its founding director.",
     "confidence": "high"
   },
   {
-    "edge_id": 1099,
-    "proposed_url": "https://phys.org/news/2011-08-stanford-ai-avalanche-sign-ups.html",
-    "justification": "Phys.org article about the Stanford AI course explicitly names Peter Norvig and Sebastian Thrun as co-teachers of the 160,000-student online class.",
+    "edge_id": 1694,
+    "proposed_url": "https://cs.brown.edu/news/2025/07/29/pavlick-venkatasubramanian-will-lead-aria-a-new-national-institute-to-develop-intuitive-trustworthy-ai-assistants/",
+    "justification": "Brown University CS department news item naming Suresh Venkatasubramanian as co-director of ARIA alongside Ellie Pavlick, with NSF funding details.",
     "confidence": "high"
   },
   {
-    "edge_id": 1110,
-    "proposed_url": "https://www.coons.senate.gov/news/press-releases/senators-coons-cotton-introduce-resolution-to-affirm-americas-artificial-intelligence-dominance",
-    "justification": "Senator Coons's official press release names both Coons and Cotton as co-introducers of the resolution affirming U.S. AI dominance.",
+    "edge_id": 1696,
+    "proposed_url": "https://www.governor.ny.gov/news/governor-hochul-unveils-fifth-proposal-2024-state-state-empire-ai-consortium-make-new-york",
+    "justification": "Official New York State press release from Governor Hochul's office announcing the creation of the Empire AI Consortium as her 2024 State of the State proposal.",
     "confidence": "high"
   },
   {
-    "edge_id": 1111,
-    "proposed_url": "https://www.budd.senate.gov/2026/03/17/budd-kim-introduce-bipartisan-bill-opening-government-data-sets-to-better-train-american-ai-models/",
-    "justification": "Senator Budd's official press release names both Budd and Kim as co-introducers of the Artificial Intelligence Ready Data Act.",
+    "edge_id": 2269,
+    "proposed_url": "https://www.goodventures.org/about-us/",
+    "justification": "Good Ventures' own about page identifies Cari Tuna and Dustin Moskovitz as co-founders of Good Ventures.",
     "confidence": "high"
   },
   {
-    "edge_id": 1112,
-    "proposed_url": "https://www.husted.senate.gov/media/press-releases/husted-leads-bill-to-integrate-ai-talent-in-federal-workforce/",
-    "justification": "Senator Husted's official press release names both Husted and Kim as co-leads of the bipartisan AI Talent Act.",
+    "edge_id": 2282,
+    "proposed_url": "https://eleosai.org/team/",
+    "justification": "Eleos AI's official team page listing Kathleen Finlinson as a co-founder of the organization.",
     "confidence": "high"
   },
   {
-    "edge_id": 1113,
-    "proposed_url": "https://www.kim.senate.gov/press_release/senators-kim-and-ricketts-introduce-match-act-to-level-the-global-playing-field-for-u-s-tech/",
-    "justification": "Senator Kim's official press release names both Kim and Ricketts as co-introducers of the MATCH Act to tighten export controls on semiconductor manufacturing equipment.",
+    "edge_id": 2291,
+    "proposed_url": "https://www.prnewswire.com/news-releases/adaptive-security-raises-43m-from-a16z-and-openai-startup-fund-to-combat-ai-powered-cyber-attacks-including-deepfakes-vishing-and-smishing-302417695.html",
+    "justification": "PR Newswire press release naming Brian Long as CEO and co-founder of Adaptive Security alongside Andrew Jones, with funding details from a16z and OpenAI.",
     "confidence": "high"
   },
   {
-    "edge_id": 1115,
-    "proposed_url": "https://www.risch.senate.gov/public/index.cfm/pressreleases?ID=3C095F87-9684-4464-9683-CB5BEDCDC2F3",
-    "justification": "Senator Risch's official press release names both Risch and Luján as co-introducers of the TEST AI Act of 2025.",
+    "edge_id": 2396,
+    "proposed_url": "https://aisafety.stanford.edu/whitepaper.pdf",
+    "justification": "Stanford Center for AI Safety's own founding whitepaper authored by Clark Barrett, David Dill, Mykel Kochenderfer, and Dorsa Sadigh, establishing Barrett as a founder.",
     "confidence": "high"
   },
   {
-    "edge_id": 1116,
-    "proposed_url": "https://www.blackburn.senate.gov/2023/5/blackburn-luj-n-risch-durbin-announce-new-senate-national-labs-caucus",
-    "justification": "Senator Blackburn's press release explicitly names Risch and Blackburn (along with Luján and Durbin) as co-leads of the Senate National Labs Caucus.",
+    "edge_id": 776,
+    "proposed_url": "https://techcrunch.com/2013/12/12/coinbase-raises-25m-from-andreessen-horowitz-to-build-its-bitcoin-wallet-and-merchant-services/",
+    "justification": "TechCrunch article documenting Andreessen Horowitz's $25M Series B lead investment in Coinbase, naming the firm as lead investor with Marc Andreessen on the board.",
     "confidence": "high"
   },
   {
-    "edge_id": 1117,
-    "proposed_url": "https://www.durbin.senate.gov/newsroom/press-releases/durbin-lujan-risch-and-blackburn-announce-new-senate-national-labs-caucus",
-    "justification": "Senator Durbin's press release explicitly names Risch, Blackburn, Luján, and Durbin as co-leads of the Senate National Labs Caucus, documenting the Risch–Durbin collaboration.",
+    "edge_id": 1173,
+    "proposed_url": "https://betakit.com/element-ai-receives-5-million-loan-from-canadian-government/",
+    "justification": "BetaKit article specifically reporting the Government of Canada's CAD$5 million repayable contribution to Element AI.",
     "confidence": "high"
   },
   {
-    "edge_id": 1125,
-    "proposed_url": "https://www.washingtonpost.com/politics/2025/01/31/elon-musk-trump-donor-2024-election/",
-    "justification": "Washington Post analysis documents Musk spending $288 million to support Trump's 2024 election campaign, directly evidencing the financial/political collaboration between Musk and Trump.",
+    "edge_id": 1174,
+    "proposed_url": "https://www.businesswire.com/news/home/20170614005429/en/Element-AI-Raises-Historic-102M-USD-Series-A-Funding-Round-from-DCVC-and-Leading-Global-Institutions",
+    "justification": "Business Wire press release for Element AI's $102M Series A, naming DCVC (Data Collective) as the lead investor along with participating investors including Real Ventures.",
     "confidence": "high"
   },
   {
-    "edge_id": 1133,
-    "proposed_url": "https://www.schatz.senate.gov/news/press-releases/schatz-kennedy-introduce-bipartisan-legislation-to-provide-more-transparency-on-ai-generated-content",
-    "justification": "Senator Schatz's official press release names both Schatz and Kennedy as co-introducers of the AI Labeling Act (S. 2691).",
+    "edge_id": 1176,
+    "proposed_url": "https://en.wikipedia.org/wiki/Element_AI",
+    "justification": "Wikipedia's Element AI article names Jean-Sébastien Cournoyer of Real Ventures as a co-founder of Element AI, establishing Real Ventures' founding-level role.",
     "confidence": "high"
   }
 ]

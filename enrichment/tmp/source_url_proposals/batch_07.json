@@ -1,92 +1,92 @@
 [
   {
-    "edge_id": 1324,
-    "proposed_url": "https://proceedings.mlr.press/v81/buolamwini18a.html",
-    "justification": "Official PMLR proceedings page for the Gender Shades paper co-authored by Joy Buolamwini and Timnit Gebru, directly evidencing their research collaboration.",
+    "edge_id": 1665,
+    "proposed_url": "https://www.jec.senate.gov/public/index.cfm/democrats/2020/1/rep-don-beyer-elected-vice-chair-of-joint-economic-committee",
+    "justification": "JEC Senate.gov press release explicitly names Don Beyer as elected Vice Chair of the Joint Economic Committee.",
     "confidence": "high"
   },
   {
-    "edge_id": 1325,
-    "proposed_url": "https://dl.acm.org/doi/10.1145/3442188.3445922",
-    "justification": "ACM Digital Library page for 'On the Dangers of Stochastic Parrots' lists Timnit Gebru and Emily Bender as co-authors of the 2021 FAccT paper.",
+    "edge_id": 1666,
+    "proposed_url": "https://beyer.house.gov/news/documentsingle.aspx?DocumentID=8742",
+    "justification": "Beyer's official House.gov news page is titled 'AI Caucus Co-Chair Beyer Response To Trump's AI Order', directly confirming his co-chair role in the Congressional Artificial Intelligence Caucus.",
     "confidence": "high"
   },
   {
-    "edge_id": 1326,
-    "proposed_url": "https://deadline.com/2023/05/writers-strike-fran-drescher-picket-lines-wga-west-president-comments-1235360008/",
-    "justification": "Deadline article covering Fran Drescher joining the WGA picket line alongside WGA West President Meredith Stiehm, documenting both as prominent faces of the 2023 strikes.",
+    "edge_id": 1667,
+    "proposed_url": "https://beyer.house.gov/news/documentsingle.aspx?DocumentID=6082",
+    "justification": "Beyer's official House.gov press release titled 'Beyer Appointed To Bipartisan Task Force On Artificial Intelligence' directly names him as a member of the task force.",
     "confidence": "high"
   },
   {
-    "edge_id": 1327,
-    "proposed_url": "https://dailyinterlake.com/news/2023/sep/27/writers-reach-tentative-deal-and-actors-look-ahead/",
-    "justification": "Article explicitly names Fran Drescher, Meredith Stiehm, and Lisa Takeuchi Cullen as the key strike leaders and prominent faces of the 2023 Hollywood strikes.",
+    "edge_id": 1671,
+    "proposed_url": "https://eshoo.house.gov/media/press-releases/congressional-ai-caucus-co-chairs-announce-vice-chairs-and-new-core-initiative",
+    "justification": "Eshoo's official House.gov press release is issued as a Congressional AI Caucus co-chair, directly documenting her co-chair role.",
     "confidence": "high"
   },
   {
-    "edge_id": 1330,
-    "proposed_url": "https://en.wikipedia.org/wiki/Bernie_Sanders_2020_presidential_campaign",
-    "justification": "Wikipedia article on the Bernie Sanders 2020 campaign documents Ro Khanna as a national campaign co-chair alongside Ben Cohen, Nina Turner, and Carmen Yulín Cruz.",
+    "edge_id": 1679,
+    "proposed_url": "https://obernolte.house.gov/media/press-releases/house-launches-bipartisan-task-force-artificial-intelligence",
+    "justification": "Obernolte's official House.gov press release on the launch of the bipartisan AI Task Force names him as chairman alongside co-chair Ted Lieu.",
     "confidence": "high"
   },
   {
-    "edge_id": 1335,
-    "proposed_url": "https://en.wikipedia.org/wiki/PayPal",
-    "justification": "Wikipedia's PayPal article documents the merger of Confinity (Thiel) and X.com (Musk), with Thiel becoming CEO after Musk's departure, evidencing their co-creation of PayPal.",
+    "edge_id": 1680,
+    "proposed_url": "https://obernolte.house.gov/about/committees-and-caucuses",
+    "justification": "Obernolte's official committees and caucuses page on House.gov lists his vice-chair role in the Congressional AI Caucus.",
     "confidence": "high"
   },
   {
-    "edge_id": 1350,
-    "proposed_url": "https://www.brookings.edu/events/beyond-productivity-the-pursuit-of-purpose-in-the-age-of-ai/",
-    "justification": "Brookings event page for 'Beyond Productivity: The Pursuit of Purpose in the Age of AI' documents Sen. Chris Murphy and Brookings Senior Fellow Molly Kinder appearing together to discuss AI's impact on work and dignity.",
+    "edge_id": 1681,
+    "proposed_url": "https://obernolte.house.gov/about",
+    "justification": "Obernolte's official biography on House.gov states he holds a Master of Science in Artificial Intelligence from UCLA, confirming the alumnus relationship.",
     "confidence": "high"
   },
   {
-    "edge_id": 1353,
-    "proposed_url": "https://www.whitehouse.gov/releases/2026/03/president-trump-announces-appointments-to-presidents-council-of-advisors-on-science-and-technology/",
-    "justification": "Official White House press release announcing David Sacks and Michael Kratsios as co-chairs of PCAST.",
+    "edge_id": 114,
+    "proposed_url": "https://situational-awareness.ai/the-project/",
+    "justification": "The 'IV. The Project' chapter of the Situational Awareness essay on situational-awareness.ai directly quotes and mentions Sam Altman in the context of AGI.",
+    "confidence": "medium"
+  },
+  {
+    "edge_id": 1147,
+    "proposed_url": "https://bids.berkeley.edu/about",
+    "justification": "BIDS's own About page states it is an integral part of UC Berkeley's College of Computing, Data Science, and Society (CDSS), directly documenting the parent_company relationship.",
     "confidence": "high"
   },
   {
-    "edge_id": 1354,
-    "proposed_url": "https://en.wikipedia.org/wiki/David_O._Sacks",
-    "justification": "Wikipedia article on David Sacks documents that he left McKinsey to join Confinity, the startup co-founded by Peter Thiel, Max Levchin, and Luke Nosek.",
+    "edge_id": 1172,
+    "proposed_url": "https://www.servicenow.com/company/media/press-room/servicenow-to-acquire-element-ai.html",
+    "justification": "ServiceNow's official press release announces the agreement to acquire Element AI, directly naming both parties.",
     "confidence": "high"
   },
   {
-    "edge_id": 1355,
-    "proposed_url": "https://en.wikipedia.org/wiki/PayPal_Mafia",
-    "justification": "Wikipedia's PayPal Mafia article lists both David Sacks and Elon Musk as members of the elite group of former PayPal founders and early employees.",
+    "edge_id": 1192,
+    "proposed_url": "https://www.mcgill.ca/cim/",
+    "justification": "McGill University's official CIM page confirms the Centre for Intelligent Machines is a research centre within McGill, listing it under the Faculty of Engineering.",
     "confidence": "high"
   },
   {
-    "edge_id": 1363,
-    "proposed_url": "https://www.schmidtfutures.com/person/tom-kalil/",
-    "justification": "Schmidt Futures profile page for Tom Kalil documents his role as Chief Innovation Officer at Eric Schmidt's philanthropic organization.",
+    "edge_id": 1193,
+    "proposed_url": "https://www.mcgill.ca/cdsi/mccais",
+    "justification": "McGill's CDSI page for McCAIS explicitly describes it as a strategic initiative of the Computational and Data Systems Institute at McGill University.",
     "confidence": "high"
   },
   {
-    "edge_id": 1388,
-    "proposed_url": "https://www.hachettebookgroup.com/titles/daron-acemoglu/power-and-progress/9781541702547/?lens=publicaffairs",
-    "justification": "Publisher page for 'Power and Progress' explicitly lists Daron Acemoglu and Simon Johnson as co-authors.",
+    "edge_id": 1194,
+    "proposed_url": "https://www.mcgillailab.com/",
+    "justification": "The McGill AI Lab's own website describes itself as a student lab at McGill University focusing on frontier AI research, confirming the parent university relationship.",
     "confidence": "high"
   },
   {
-    "edge_id": 1390,
-    "proposed_url": "https://yalelawandpolicy.org/antimonopoly-approach-governing-artificial-intelligence",
-    "justification": "Yale Law & Policy Review page for the article explicitly lists Ganesh Sitaraman and Tejas N. Narechania as co-authors.",
-    "confidence": "high"
+    "edge_id": 1103,
+    "proposed_url": "https://link.springer.com/article/10.1007/s11600-024-01398-0",
+    "justification": "Springer journal article on NET-VISA as a Bayesian inference system deployed in CTBTO's International Data Centre bulletin production, documenting both Bayesian Logic's system and its CTBTO deployment.",
+    "confidence": "medium"
   },
   {
-    "edge_id": 1391,
-    "proposed_url": "https://www.npr.org/2019/12/03/784151111/pete-buttigieg-spent-his-younger-days-pushing-democrats-off-middle-ground",
-    "justification": "NPR article documents that Ganesh Sitaraman and Pete Buttigieg were Harvard classmates who co-founded the Democratic Renaissance Project progressive reading group.",
-    "confidence": "high"
-  },
-  {
-    "edge_id": 1411,
-    "proposed_url": "https://press.princeton.edu/books/hardcover/9780691249131/ai-snake-oil",
-    "justification": "Princeton University Press page for 'AI Snake Oil' explicitly lists Arvind Narayanan and Sayash Kapoor as co-authors.",
+    "edge_id": 1145,
+    "proposed_url": "https://www.clarifai.com/press-release/clarifai-joins-the-berkeley-artificial-intelligence-research-bair-open-research-commons-to-advance-ai-innovation",
+    "justification": "Clarifai's official press release explicitly names both Clarifai and BAIR Lab and announces Clarifai's membership in the BAIR Open Research Commons.",
     "confidence": "high"
   }
 ]

@@ -1,92 +1,92 @@
 [
   {
-    "edge_id": 1314,
-    "proposed_url": "https://en.wikipedia.org/wiki/Demis_Hassabis",
-    "justification": "Wikipedia page for Demis Hassabis explicitly states he is a UK Government AI Adviser; the GOV.UK page found (gov.uk/government/news/world-leading-expert-demis-hassabis-to-advise-new-government-office-for-artificial-intelligence) confirms his advisory role to the UK government AI office, which preceded and fed into the Frontier AI Taskforce.",
-    "confidence": "medium"
-  },
-  {
-    "edge_id": 1366,
-    "proposed_url": "https://fas.org/expert/ben-reinhardt/",
-    "justification": "Federation of American Scientists expert page for Ben Reinhardt directly documents his affiliation as an expert at FAS.",
-    "confidence": "high"
-  },
-  {
-    "edge_id": 1412,
-    "proposed_url": "https://www.cs.princeton.edu/~sayashk/",
-    "justification": "Sayash Kapoor's Princeton CS homepage lists Arvind Narayanan as his PhD advisor; search snippets from Princeton Engineering confirm Narayanan advises Kapoor.",
-    "confidence": "high"
-  },
-  {
-    "edge_id": 1431,
-    "proposed_url": "https://x.com/MariusHobbhahn/status/1883473875628953765",
-    "justification": "Marius Hobbhahn's post on X explicitly states he defended his PhD and thanks Philipp Hennig as his supervisor throughout the journey.",
-    "confidence": "high"
-  },
-  {
-    "edge_id": 1568,
-    "proposed_url": "https://people.eecs.berkeley.edu/~hendrycks/CV.pdf",
-    "justification": "Dan Hendrycks's Berkeley CV lists his PhD advisors as Dawn Song and Jacob Steinhardt at UC Berkeley, directly evidencing the relationship.",
-    "confidence": "high"
-  },
-  {
-    "edge_id": 1572,
-    "proposed_url": "https://dho.stanford.edu/about/",
-    "justification": "Daniel Ho's Stanford about page lists his service as Senior Advisor on Responsible AI at the U.S. Department of Labor, naming both Ho and the DOL role explicitly.",
-    "confidence": "high"
-  },
-  {
-    "edge_id": 1581,
-    "proposed_url": "https://www.ftc.gov/news-events/news/press-releases/2021/11/ftc-chair-lina-m-khan-announces-new-appointments-agency-leadership-positions",
-    "justification": "Official FTC press release from Chair Lina Khan announcing Meredith Whittaker's appointment as Senior Advisor on AI, naming both parties in the described role.",
-    "confidence": "high"
-  },
-  {
-    "edge_id": 1604,
-    "proposed_url": "https://en.wikipedia.org/wiki/Tim_Wu",
-    "justification": "Tim Wu's Wikipedia article states he studied under Lawrence Lessig at Harvard Law School, and search snippets confirm Lessig recognized Wu's talent and helped arrange clerkships for him.",
-    "confidence": "high"
-  },
-  {
-    "edge_id": 1611,
-    "proposed_url": "https://ecommons.cornell.edu/bitstreams/ab091269-9e69-4ac1-ab10-075740fab0ba/download",
-    "justification": "Yejin Choi's Cornell dissertation 'Fine-grained Opinion Analysis: Structure-aware Approaches' credits Claire Cardie as her advisor who introduced her to NLP, directly evidencing the advisor relationship.",
-    "confidence": "high"
-  },
-  {
-    "edge_id": 1687,
-    "proposed_url": "https://dspace.mit.edu/handle/1721.1/17335",
-    "justification": "MIT DSpace repository page for Lynne Parker's dissertation 'Heterogeneous Multi-Robot Cooperation' supervised by Rodney Brooks, directly documenting the advisor relationship.",
-    "confidence": "high"
-  },
-  {
-    "edge_id": 1688,
-    "proposed_url": "https://en.wikipedia.org/wiki/Arati_Prabhakar",
-    "justification": "Arati Prabhakar's Wikipedia article explicitly states she served as Science and Technology Advisor to President Biden and OSTP director from October 2022 to January 2025, naming both parties.",
-    "confidence": "high"
-  },
-  {
-    "edge_id": 1140,
-    "proposed_url": "https://www.commerce.senate.gov/press/dem/release/commerce-committee-passes-bipartisan-bill-to-ensure-u-s-leads-global-ai-innovation/",
-    "justification": "Senate Commerce Committee press release on the Future of AI Innovation Act, which authorizes the U.S. AI Safety Institute at NIST, documenting the legislative relationship between the committee and NIST.",
-    "confidence": "high"
-  },
-  {
-    "edge_id": 1150,
-    "proposed_url": "https://rai.utah.edu/about/",
-    "justification": "Official One-U Responsible AI Initiative page at the University of Utah documents the initiative's home in the SCI Institute, directly evidencing the affiliation between the Responsible AI Initiative and University of Utah.",
-    "confidence": "high"
-  },
-  {
-    "edge_id": 1151,
-    "proposed_url": "https://news.emory.edu/stories/2026/02/er_responsible_ai_site_2-17/story.html",
-    "justification": "Emory University news story about launching the Responsible AI website explicitly describes the enterprise-wide Responsible AI initiative led by the Emory AI Group with the Responsible AI Executive Governance Committee, naming both the initiative and Emory University.",
-    "confidence": "high"
-  },
-  {
     "edge_id": 1154,
-    "proposed_url": "https://www.cmu.edu/block-center/responsible-ai/",
-    "justification": "Carnegie Mellon Block Center's Responsible AI page directly documents the Responsible AI Initiative housed within the Block Center for Technology and Society, naming both entities.",
+    "proposed_url": "https://technical.ly/software-development/cmu-responsible-ai-initiative/",
+    "justification": "Article specifically covers the launch of CMU's Responsible AI Initiative out of the Block Center for Technology and Society, naming both entities.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 132,
+    "proposed_url": "https://www.axios.com/2026/02/12/alex-bores-ai-super-pacs-plan",
+    "justification": "Axios article directly covers Alex Bores releasing his congressional AI framework plan, attributing authorship to him.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 783,
+    "proposed_url": "https://www.scsp.ai/2024/06/special-competitive-studies-project-announces-ai-energy-summit/",
+    "justification": "SCSP's own announcement of the AI+Energy Summit lists keynote speakers including Senator Brian Schatz alongside Bill Gates and Eric Schmidt.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 794,
+    "proposed_url": "https://awards.acm.org/about/2018-turing",
+    "justification": "ACM's official 2018 Turing Award page names Yoshua Bengio, Geoffrey Hinton, and Yann LeCun as joint recipients for their deep learning work.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 795,
+    "proposed_url": "https://awards.acm.org/about/2018-turing",
+    "justification": "ACM's official 2018 Turing Award page names Yoshua Bengio, Yann LeCun, and Geoffrey Hinton as joint recipients for their deep learning work.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1115,
+    "proposed_url": "https://www.risch.senate.gov/public/index.cfm/pressreleases?ID=3C095F87-9684-4464-9683-CB5BEDCDC2F3",
+    "justification": "Senator Risch's official press release announces him and Senator Luján co-introducing the TEST AI Act of 2025.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1125,
+    "proposed_url": "https://www.npr.org/2024/11/12/g-s1-33972/trump-elon-musk-vivek-ramaswamy-doge-government-efficiency-deep-state",
+    "justification": "NPR article reports Trump appointing Musk to lead DOGE, directly documenting the Trump-Musk collaboration and Musk's financial support for Trump.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1190,
+    "proposed_url": "https://www.deeplearningbook.org/",
+    "justification": "Official Deep Learning textbook website lists Ian Goodfellow, Yoshua Bengio, and Aaron Courville as co-authors, confirming the co-authorship relationship.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1191,
+    "proposed_url": "https://www.deeplearningbook.org/",
+    "justification": "Official Deep Learning textbook website lists Ian Goodfellow, Yoshua Bengio, and Aaron Courville as co-authors, confirming the co-authorship relationship.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1271,
+    "proposed_url": "https://eshoo.house.gov/media/press-releases/ai-caucus-leaders-introduce-bipartisan-bill-expand-access-ai-research",
+    "justification": "Eshoo's official press release on the CREATE AI Act companion bill names both Booker (Senate) and Eshoo (House) in the bicameral introduction, along with McCaul, Beyer, and Obernolte.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1286,
+    "proposed_url": "https://www.whitehouse.gov/releases/2026/03/president-trump-announces-appointments-to-presidents-council-of-advisors-on-science-and-technology/",
+    "justification": "White House official release names both Michael Kratsios and David Sacks as PCAST co-chairs, documenting their close working relationship on AI policy.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1325,
+    "proposed_url": "https://www.semanticscholar.org/paper/On-the-Dangers-of-Stochastic-Parrots:-Can-Language-Bender-Gebru/ca2f1088d3e581b2c6c75cf0ebc96506d620f64d",
+    "justification": "Semantic Scholar paper record for 'Stochastic Parrots' lists both Timnit Gebru and Emily Bender as co-authors, confirming their research collaboration.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1391,
+    "proposed_url": "https://www.npr.org/2019/12/03/784151111/pete-buttigieg-spent-his-younger-days-pushing-democrats-off-middle-ground",
+    "justification": "NPR article explicitly names Ganesh Sitaraman and Pete Buttigieg as Harvard classmates who co-founded the Democratic Renaissance Project progressive reading group.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1495,
+    "proposed_url": null,
+    "justification": "The evidence is that Hassan 'serves with' Shaheen as fellow former-governor senators — no specific URL found naming both in a distinct relationship beyond their general co-service in the New Hampshire Senate delegation.",
+    "confidence": "none"
+  },
+  {
+    "edge_id": 1531,
+    "proposed_url": "https://www.thenationalnews.com/business/technology/2022/11/08/who-is-sriram-krishnan-elon-musks-helper-at-twitter/",
+    "justification": "Article specifically covers Sriram Krishnan's role helping Elon Musk run Twitter after the 2022 acquisition, naming both parties in the collaboration.",
     "confidence": "high"
   }
 ]

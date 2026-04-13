@@ -7,7 +7,7 @@ Execution tracker for the data enrichment project. Strategy and design rationale
 - Phase 1 Audit — Complete
 - Phase 2 Cleanup — Complete
 - Phase 3 Entity Enrichment — Complete
-- Phase 4 Edge Enrichment — In progress (reclassify 61%, +57 backfilled edges [48 person + 9 org], source_url 82.5%)
+- Phase 4 Edge Enrichment — In progress (reclassify 61%, +57 backfilled edges [48 person + 9 org], source_url 98.9%)
 - Phase 5 Seeding — Complete (Tiers A–G + investor/CAISI tail; test-data row [547] deleted, Industry Analysis bucket intentionally empty pending future seeding)
 - Phase 6 Importance Ratings — Not started
 
@@ -118,7 +118,8 @@ Execution tracker for the data enrichment project. Strategy and design rationale
 **Source URLs and evidence:**
 - [x] Phase 4C.1: Zero-API backfill via `backfill_source_urls.py --live` — filled **1,842 / 2,269 edges (81.2%)** using target_resource_url → target_website → source_website fallbacks — `logs/source-url-backfill-20260412.md`
 - [x] Phase 4C.2a: Re-ran zero-API backfill after Phase 5 seeding — picked up 14 new fills from org-websites added during Tier B/D/F/G (worldlabs, hai.stanford, whitehouse/OSTP, justice.gov, etc.). Coverage **1,923 / 2,331 (82.5%)** — `logs/source-url-backfill-20260413.md`
-- [ ] Phase 4C.2b: 408 remaining unfilled edges exhaust zero-cost strategies (collaborator 175, employer 60, founder 33, member 29, advisor 24, affiliated 19, partner 17, supporter 15, author 12, critic 10, funder 9, parent_company 4, mentioned 1). No URLs embedded in `evidence` text (checked 389 non-empty evidence fields — zero hits). Requires per-edge web research — deferred pending scope decision.
+- [x] Phase 4C.2b: LLM-driven evidence-URL pipeline — `source_url_llm_prepare.py` (build batch JSONs) + parallel Sonnet subagents w/ WebSearch/WebFetch (one per batch of 15, no API calls — ran on Claude Code session) + `source_url_llm_apply.py` (HEAD-validates, writes to DB, drops 4xx/5xx and below-confidence). Wave 1 (pilot + 19 batches): 270 fills. Wave 2 (9 batches after quota reset): 110 fills. **Total: 380 URLs added across 28 Sonnet agent runs.** Coverage **2,294 / 2,319 (98.9%)** — `logs/source-url-llm-20260413.md`
+- [ ] Phase 4C.2c: 25 edges still unfilled — proposals were rejected by HEAD validation (mostly publisher pages with bot blocks: 403 from Stack Overflow/research blogs, 404 from stale press releases, DNS failures). Could retry with browser-style headers or accept the 99%+ coverage gap as good enough.
 - [ ] Phase 4C.3 (stretch): Upgrade generic org-homepage URLs to specific evidence pages for high-degree entities
 
 ## Phase 5: Seeding

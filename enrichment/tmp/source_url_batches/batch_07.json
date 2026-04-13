@@ -1,24 +1,24 @@
 [
   {
-    "edge_id": 1324,
-    "edge_type": "collaborator",
-    "role": "Research collaborator",
-    "evidence": "worked on a paper with Joy Bulamini uh showing the um and this was part of her master's thesis basically showing the disparities and error rates",
+    "edge_id": 1665,
+    "edge_type": "member",
+    "role": "member",
+    "evidence": "He serves on Congress' Joint Economic Committee",
     "source": {
-      "id": 35,
-      "name": "Timnit Gebru",
+      "id": 114,
+      "name": "Don Beyer",
       "type": "person",
-      "category": "Organizer",
+      "category": "Policymaker",
       "website": null,
-      "notes_excerpt": "Timnit Gebru is the founder and executive director of The Distributed Artificial Intelligence Research (DAIR) Institute. She was co-lead of the Ethical AI research team at Google until her firing in 2020 (along with her co-lead) for writing a paper warning about the dangers of large language models and raising issues of discrimination in the workplace. She co-founded Black in AI, a nonprofit that "
+      "notes_excerpt": "Don Beyer is serving his fifth term as the U.S. Representative from Virginia's 8th District, representing Arlington, Alexandria, Falls Church, and parts of Fairfax County. He serves on Congress' Joint Economic Committee, and also serves on the House Committee on Ways and Means. He was the Lieutenant Governor of Virginia from 1990 to 1998, and was Ambassador to Switzerland and Liechtenstein under P"
     },
     "target": {
-      "id": 916,
-      "name": "Joy Buolamwini",
-      "type": "person",
-      "category": "Researcher",
+      "id": 1421,
+      "name": "Joint Economic Committee",
+      "type": "organization",
+      "category": "Government/Agency",
       "website": null,
-      "notes_excerpt": "Her Gender Shades study (2018) revealed facial recognition error rates of 34.7% for darker-skinned women vs 0.8% for lighter-skinned men, prompting IBM, Microsoft and Amazon to improve their systems. Testified before Congress multiple times and advised President Biden on his October 2023 AI Executive Order. Founded AJL in 2016 after experiencing facial recognition failing to detect her face until ",
+      "notes_excerpt": "The Joint Economic Committee (JEC) is a bicameral congressional committee that studies economic policy. In the 119th Congress (2025–2026), it is chaired by Rep. David Schweikert (R-AZ) with Sen. Maggie Hassan (D-NH) as Ranking Member. The JEC held a hearing in June 2024 on \"Artificial Intelligence and Its Potential to Fuel Economic Growth and Improve Governance,\" examining AI's productivity impact",
       "resource_url": null,
       "resource_title": null,
       "resource_author": null,
@@ -26,25 +26,155 @@
     }
   },
   {
-    "edge_id": 1325,
-    "edge_type": "collaborator",
-    "role": "Research collaborator",
-    "evidence": "send a message to my collaborator Em Em Emily Bender",
+    "edge_id": 1666,
+    "edge_type": "member",
+    "role": "co-Chair",
+    "evidence": "Rep. Don Beyer (D-VA) serves as co-Chair of the Congressional Artificial Intelligence Caucus",
     "source": {
-      "id": 35,
-      "name": "Timnit Gebru",
+      "id": 114,
+      "name": "Don Beyer",
       "type": "person",
-      "category": "Organizer",
+      "category": "Policymaker",
       "website": null,
-      "notes_excerpt": "Timnit Gebru is the founder and executive director of The Distributed Artificial Intelligence Research (DAIR) Institute. She was co-lead of the Ethical AI research team at Google until her firing in 2020 (along with her co-lead) for writing a paper warning about the dangers of large language models and raising issues of discrimination in the workplace. She co-founded Black in AI, a nonprofit that "
+      "notes_excerpt": "Don Beyer is serving his fifth term as the U.S. Representative from Virginia's 8th District, representing Arlington, Alexandria, Falls Church, and parts of Fairfax County. He serves on Congress' Joint Economic Committee, and also serves on the House Committee on Ways and Means. He was the Lieutenant Governor of Virginia from 1990 to 1998, and was Ambassador to Switzerland and Liechtenstein under P"
     },
     "target": {
-      "id": 831,
-      "name": "Emily Bender",
+      "id": 1481,
+      "name": "Congressional Artificial Intelligence Caucus",
+      "type": "organization",
+      "category": "Government/Agency",
+      "website": null,
+      "notes_excerpt": "Bipartisan House caucus promoting AI education and policy dialogue. Originally co-chaired by Reps. Anna Eshoo (D-CA) and Michael McCaul (R-TX); Don Beyer (D-VA) was an active co-chair figure. Convenes members to engage on AI legislation, coordinates with the House AI Task Force, and maintains a nonpartisan pro-innovation stance.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1667,
+    "edge_type": "member",
+    "role": "member",
+    "evidence": "He was one of a handful of members selected to serve on the bipartisan Task Force On Artificial Intelligence, convened by House Democratic Leader Hakeem Jeffries and Speaker Mike Johnson",
+    "source": {
+      "id": 114,
+      "name": "Don Beyer",
       "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Don Beyer is serving his fifth term as the U.S. Representative from Virginia's 8th District, representing Arlington, Alexandria, Falls Church, and parts of Fairfax County. He serves on Congress' Joint Economic Committee, and also serves on the House Committee on Ways and Means. He was the Lieutenant Governor of Virginia from 1990 to 1998, and was Ambassador to Switzerland and Liechtenstein under P"
+    },
+    "target": {
+      "id": 1149,
+      "name": "House Bipartisan Task Force on Artificial Intelligence",
+      "type": "organization",
+      "category": "Government/Agency",
+      "website": null,
+      "notes_excerpt": "Bipartisan U.S. House task force created in Feb 2024 by Speaker Johnson and Leader Jeffries, co-chaired by Reps. Obernolte and Lieu. Released a 273-page final report in Dec 2024 with 66 findings and 89 recommendations across 15 policy areas. Sunset at end of 118th Congress; no successor body established in the 119th Congress as of early 2025.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1671,
+    "edge_type": "member",
+    "role": "Co-Chair",
+    "evidence": "U.S. Representatives Anna Eshoo (D-CA) and Don Beyer (D-VA), who serve as Co-Chair and Vice Chair, respectively, of the Congressional Artificial Intelligence (AI) Caucus",
+    "source": {
+      "id": 115,
+      "name": "Anna Eshoo",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Anna Eshoo is a U.S. Representative who served California's 16th Congressional District from 1993 to 2025, retiring in January 2025. She co-chairs the Congressional Artificial Intelligence (AI) Caucus and was named one of Time magazine's 100 most influential people in AI in 2023. She served as Chair of the Health Subcommittee and was the first woman in the history of Congress to hold that position"
+    },
+    "target": {
+      "id": 1481,
+      "name": "Congressional Artificial Intelligence Caucus",
+      "type": "organization",
+      "category": "Government/Agency",
+      "website": null,
+      "notes_excerpt": "Bipartisan House caucus promoting AI education and policy dialogue. Originally co-chaired by Reps. Anna Eshoo (D-CA) and Michael McCaul (R-TX); Don Beyer (D-VA) was an active co-chair figure. Convenes members to engage on AI legislation, coordinates with the House AI Task Force, and maintains a nonpartisan pro-innovation stance.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1679,
+    "edge_type": "member",
+    "role": "Chairman",
+    "evidence": "was jointly led by Chairman Jay Obernolte (CA-23) and Co-Chair Ted Lieu (CA-36)",
+    "source": {
+      "id": 117,
+      "name": "Jay Obernolte",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Jay Obernolte is a U.S. Congressman representing California's 23rd District since 2021 and is the only serving member of Congress with a graduate-level degree in AI. He co-chaired the bipartisan House Task Force on AI with Ted Lieu, which produced a comprehensive report in December 2024 with 66 findings and 89 recommendations. He currently serves as Chairman of the Research and Technology Subcommi"
+    },
+    "target": {
+      "id": 1483,
+      "name": "House Task Force on Artificial Intelligence",
+      "type": "organization",
+      "category": "Government/Agency",
+      "website": null,
+      "notes_excerpt": "DUPLICATE — this is the same entity as 1149 ('House Bipartisan Task Force on Artificial Intelligence') and likely 1470 ('Bipartisan Taskforce on Artificial Intelligence'). The official name is 'Bipartisan House Task Force on Artificial Intelligence,' established Feb 2024 by Speaker Johnson and Leader Jeffries, co-chaired by Reps. Obernolte (R-CA) and Lieu (D-CA). Released 273-page final report Dec",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1680,
+    "edge_type": "member",
+    "role": "vice-chair",
+    "evidence": "He also serves as vice-chair of the Congressional AI Caucus",
+    "source": {
+      "id": 117,
+      "name": "Jay Obernolte",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Jay Obernolte is a U.S. Congressman representing California's 23rd District since 2021 and is the only serving member of Congress with a graduate-level degree in AI. He co-chaired the bipartisan House Task Force on AI with Ted Lieu, which produced a comprehensive report in December 2024 with 66 findings and 89 recommendations. He currently serves as Chairman of the Research and Technology Subcommi"
+    },
+    "target": {
+      "id": 1484,
+      "name": "Congressional AI Caucus",
+      "type": "organization",
+      "category": "Government/Agency",
+      "website": null,
+      "notes_excerpt": "DUPLICATE — this is the same entity as 1481 ('Congressional Artificial Intelligence Caucus'). 'Congressional AI Caucus' is an informal short name for the Congressional Artificial Intelligence Caucus, the bipartisan House caucus co-founded by Reps. Eshoo and McCaul to inform policymakers on AI impacts. Recommend merging edges to 1481 and soft-deleting this entity.",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1681,
+    "edge_type": "member",
+    "role": "alumnus",
+    "evidence": "an M.S. in Artificial Intelligence from the University of California, Los Angeles (UCLA)",
+    "source": {
+      "id": 117,
+      "name": "Jay Obernolte",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Jay Obernolte is a U.S. Congressman representing California's 23rd District since 2021 and is the only serving member of Congress with a graduate-level degree in AI. He co-chaired the bipartisan House Task Force on AI with Ted Lieu, which produced a comprehensive report in December 2024 with 66 findings and 89 recommendations. He currently serves as Chairman of the Research and Technology Subcommi"
+    },
+    "target": {
+      "id": 1485,
+      "name": "University of California, Los Angeles",
+      "type": "organization",
       "category": "Academic",
       "website": null,
-      "notes_excerpt": "Co-authored the influential 2021 'Stochastic Parrots' paper warning of LLM risks, which contributed to Google firing co-authors Timnit Gebru and Margaret Mitchell. Coined the term 'stochastic parrot' to describe LLMs as sophisticated text generators without genuine understanding. Argues that current AI systems lack meaning and true comprehension, focusing on present harms rather than hypothetical ",
+      "notes_excerpt": "Major public research university and UC system flagship. Launched the AI Innovation Initiative — a campus-wide effort to build AI fluency and drive responsible AI adoption. First California university to partner with OpenAI (Sept 2024), also partnered with Google. Supported 68 AI pilot projects across 27 departments. Maintains multi-layered AI governance structure for responsible, ethical adoption",
       "resource_url": null,
       "resource_title": null,
       "resource_author": null,
@@ -52,103 +182,25 @@
     }
   },
   {
-    "edge_id": 1326,
-    "edge_type": "collaborator",
-    "role": "WGA West President",
-    "evidence": "she became one of its prominent faces alongside WGA West President Meredith Stiehm and WGA East President Lisa Takeuchi Cullen",
-    "source": {
-      "id": 36,
-      "name": "Fran Drescher",
-      "type": "person",
-      "category": "Organizer",
-      "website": null,
-      "notes_excerpt": "Fran Drescher is the SAG-AFTRA President who led the union during a 118-day strike and warned about AI threats to the entertainment industry. She became one of the prominent faces of the strike alongside WGA West President Meredith Stiehm and WGA East President Lisa Takeuchi Cullen. Drescher took office as president on October 15, 2021, and led the union during the five-month actors' strike that b"
-    },
-    "target": {
-      "id": 1369,
-      "name": "Meredith Stiehm",
-      "type": "person",
-      "category": "Organizer",
-      "website": null,
-      "notes_excerpt": "President of WGA West (2021-2025). TV showrunner (The Rookie, Code Black, Cold Case, NYPD Blue). Named TIME 100 Most Influential People in AI 2024. Led WGA during historic 148-day strike in 2023 that secured precedent-setting AI protections for writers. Called on studios to sue AI companies for using copyrighted work to train models. Strong advocate that AI cannot replace human creative experience",
-      "resource_url": null,
-      "resource_title": null,
-      "resource_author": null,
-      "resource_year": null
-    }
-  },
-  {
-    "edge_id": 1327,
-    "edge_type": "collaborator",
-    "role": "WGA East President",
-    "evidence": "she became one of its prominent faces alongside WGA West President Meredith Stiehm and WGA East President Lisa Takeuchi Cullen",
-    "source": {
-      "id": 36,
-      "name": "Fran Drescher",
-      "type": "person",
-      "category": "Organizer",
-      "website": null,
-      "notes_excerpt": "Fran Drescher is the SAG-AFTRA President who led the union during a 118-day strike and warned about AI threats to the entertainment industry. She became one of the prominent faces of the strike alongside WGA West President Meredith Stiehm and WGA East President Lisa Takeuchi Cullen. Drescher took office as president on October 15, 2021, and led the union during the five-month actors' strike that b"
-    },
-    "target": {
-      "id": 1370,
-      "name": "Lisa Takeuchi Cullen",
-      "type": "person",
-      "category": "Organizer",
-      "website": null,
-      "notes_excerpt": "President of WGA East (elected Sept 2023). First person of color to hold the position. TV writer/producer (Empire, Five Days at Memorial). Participated in April 2024 White House roundtable on AI and Workers Rights with Acting Secretary of Labor Julie Su. Launched WGA East AI Task Force to track AI's effect on writing professions. Strong enforcement of 2023 MBA AI protections for film/TV/streaming ",
-      "resource_url": null,
-      "resource_title": null,
-      "resource_author": null,
-      "resource_year": null
-    }
-  },
-  {
-    "edge_id": 1330,
-    "edge_type": "collaborator",
-    "role": "Co-chair of 2020 campaign",
-    "evidence": "Co-chaired bernie sanders' 2020 campaign and pushing reforms on AI, creator rights, and immigration enforcement",
-    "source": {
-      "id": 37,
-      "name": "Ro Khanna",
-      "type": "person",
-      "category": "Policymaker",
-      "website": null,
-      "notes_excerpt": "Ro Khanna is a U.S. Representative from California's 17th Congressional District, representing Silicon Valley since 2017. He serves as Ranking Member of the House Select Committee on China and is a member of committees including Judiciary, Transportation & Infrastructure. Khanna authored the Epstein Files Transparency Act and led a bipartisan resolution demanding the DOJ to release the Epstein fil"
-    },
-    "target": {
-      "id": 96,
-      "name": "Bernie Sanders",
-      "type": "person",
-      "category": "Policymaker",
-      "website": null,
-      "notes_excerpt": "Bernie Sanders is an American politician serving as the senior United States senator from Vermont, a seat he has held since 2007. He is the longest-serving independent in U.S. congressional history. Sanders was reelected to a fourth Senate term in 2024, defeating Republican Gerald Malloy. He currently serves as the Ranking Member of the Senate Health, Education, Labor and Pensions Committee after ",
-      "resource_url": null,
-      "resource_title": null,
-      "resource_author": null,
-      "resource_year": null
-    }
-  },
-  {
-    "edge_id": 1335,
-    "edge_type": "collaborator",
+    "edge_id": 114,
+    "edge_type": "mentioned",
     "role": null,
-    "evidence": "The following year it merged with Elon Musk's X.com, and PayPal was created, with Thiel becoming its CEO and chairman",
+    "evidence": null,
     "source": {
-      "id": 38,
-      "name": "Peter Thiel",
-      "type": "person",
-      "category": "Investor",
+      "id": 544,
+      "name": "Situational Awareness",
+      "type": "resource",
+      "category": null,
       "website": null,
-      "notes_excerpt": "Peter Thiel is the billionaire co-founder of PayPal and chairman of Palantir. He argues that artificial intelligence is targeting 'math people' - coders, engineers, quants, data scientists, and algorithmic specialists - rather than creative writers, artists, or storytellers first. In a 2019 talk, Thiel suggested AI itself might be inherently authoritarian, calling AI 'communist' and warning it cou"
+      "notes_excerpt": "TEST DATA — Viral essay by former OpenAI researcher; influential in policy circles"
     },
     "target": {
-      "id": 48,
-      "name": "Elon Musk",
+      "id": 18,
+      "name": "Sam Altman",
       "type": "person",
       "category": "Executive",
       "website": null,
-      "notes_excerpt": "Elon Musk is a businessman and entrepreneur known for his leadership of Tesla, SpaceX, X, and xAI. Musk has been the wealthiest person in the world since 2025; as of April 2026, Forbes estimates his net worth to be US$809 billion. He made predictions at the World Economic Forum that artificial intelligence will be smarter than all of humanity by the end of the decade. Musk spent more than $290 mil",
+      "notes_excerpt": "Sam Altman is the CEO of OpenAI, the artificial intelligence research organization that developed ChatGPT. He became CEO of OpenAI in 2019 after co-founding the organization in 2015. In November 2023, he was briefly fired by OpenAI's board of directors but was reinstated five days later. His net worth was estimated at US$3.3 billion by Forbes in March 2026.",
       "resource_url": null,
       "resource_title": null,
       "resource_author": null,
@@ -156,77 +208,25 @@
     }
   },
   {
-    "edge_id": 1350,
-    "edge_type": "collaborator",
-    "role": "Brookings Senior Fellow",
-    "evidence": "After Murphy's speech, he joined Brookings Senior Fellow Molly Kinder in a conversation to discuss the impact of AI on meaning, purpose, and the dignity of work",
-    "source": {
-      "id": 41,
-      "name": "Chris Murphy",
-      "type": "person",
-      "category": "Policymaker",
-      "website": null,
-      "notes_excerpt": "Chris Murphy is the junior United States Senator from Connecticut, serving since 2013. He previously served in the U.S. House of Representatives from 2007 to 2013, representing Connecticut's 5th congressional district. Murphy was reelected to a third Senate term in 2024, defeating Republican challenger Matthew Corey. He has become a prominent voice on AI regulation, arguing that unregulated artifi"
-    },
-    "target": {
-      "id": 1373,
-      "name": "Molly Kinder",
-      "type": "person",
-      "category": "Researcher",
-      "website": null,
-      "notes_excerpt": "Senior Fellow at Brookings Institution, leading multi-year project on generative AI's impact on work and workers. Nationally recognized expert on AI, economic inequality, and future of work. Advocates for worker voice in AI implementation, enhanced union protections, and public investment in workforce training. Argues U.S. lags Europe in institutional mechanisms to help workers navigate AI transit",
-      "resource_url": null,
-      "resource_title": null,
-      "resource_author": null,
-      "resource_year": null
-    }
-  },
-  {
-    "edge_id": 1353,
-    "edge_type": "collaborator",
-    "role": "co-chair",
-    "evidence": "moving on to co-chair the President's Council of Advisors on Science and Technology (PCAST) alongside senior White House technology adviser Michael Kratsios",
-    "source": {
-      "id": 42,
-      "name": "David Sacks",
-      "type": "person",
-      "category": "Policymaker",
-      "website": null,
-      "notes_excerpt": "David Sacks stepped down from his role as White House AI and crypto czar in March 2026, having reached the end of his 130-day limit as a special government employee. He is now co-chair of the President's Council of Advisors on Science and Technology alongside Michael Kratsios. Sacks is a general partner of Craft Ventures, a venture capital fund he co-founded in late 2017. He was previously COO and"
-    },
-    "target": {
-      "id": 27,
-      "name": "Michael Kratsios",
-      "type": "person",
-      "category": "Policymaker",
-      "website": null,
-      "notes_excerpt": "Michael Kratsios serves as Assistant to the President and Director of the White House Office of Science and Technology Policy, confirmed by the Senate in a 74-25 vote on March 25, 2025. He previously served as the fourth Chief Technology Officer of the United States during President Trump's first term and as Under Secretary of War from January 2020 to January 2021. Prior to government service, he ",
-      "resource_url": null,
-      "resource_title": null,
-      "resource_author": null,
-      "resource_year": null
-    }
-  },
-  {
-    "edge_id": 1354,
-    "edge_type": "collaborator",
+    "edge_id": 1147,
+    "edge_type": "parent_company",
     "role": null,
-    "evidence": "Sacks left his job as a management consultant for McKinsey & Company to join Max Levchin, Peter Thiel, and Luke Nosek's e-commerce startup Confinity",
+    "evidence": "As an integral part of UC Berkeley's College of Computing, Data Science, and Society (CDSS)",
     "source": {
-      "id": 42,
-      "name": "David Sacks",
-      "type": "person",
-      "category": "Policymaker",
+      "id": 1313,
+      "name": "College of Computing, Data Science, and Society",
+      "type": "organization",
+      "category": "Academic",
       "website": null,
-      "notes_excerpt": "David Sacks stepped down from his role as White House AI and crypto czar in March 2026, having reached the end of his 130-day limit as a special government employee. He is now co-chair of the President's Council of Advisors on Science and Technology alongside Michael Kratsios. Sacks is a general partner of Craft Ventures, a venture capital fund he co-founded in late 2017. He was previously COO and"
+      "notes_excerpt": "UC Berkeley college established July 1, 2023 — the first new college at Berkeley in over 50 years. Houses three academic majors: Computer Science, Data Science, and Statistics. Includes the Berkeley Institute for Data Science, Center for Computational Biology, Bakar Institute of Digital Materials for the Planet, and shares EECS with the College of Engineering and the D-Lab with Social Sciences. Pa"
     },
     "target": {
-      "id": 38,
-      "name": "Peter Thiel",
-      "type": "person",
-      "category": "Investor",
+      "id": 1110,
+      "name": "Berkeley Institute for Data Science",
+      "type": "organization",
+      "category": "Academic",
       "website": null,
-      "notes_excerpt": "Peter Thiel is the billionaire co-founder of PayPal and chairman of Palantir. He argues that artificial intelligence is targeting 'math people' - coders, engineers, quants, data scientists, and algorithmic specialists - rather than creative writers, artists, or storytellers first. In a 2019 talk, Thiel suggested AI itself might be inherently authoritarian, calling AI 'communist' and warning it cou",
+      "notes_excerpt": "The Berkeley Institute for Data Science (BIDS) is a central hub of data-intensive research, open source software, and data science training programs at UC Berkeley that launched in 2013. BIDS is an integral part of UC Berkeley's College of Computing, Data Science, and Society (CDSS) and was made possible by grants from the Gordon and Betty Moore Foundation and the Alfred P. Sloan Foundation. The I",
       "resource_url": null,
       "resource_title": null,
       "resource_author": null,
@@ -234,25 +234,25 @@
     }
   },
   {
-    "edge_id": 1355,
-    "edge_type": "collaborator",
+    "edge_id": 1172,
+    "edge_type": "parent_company",
     "role": null,
-    "evidence": "Now, Sacks is considered a member of the elite 'PayPal Mafia,' along with Thiel, Elon Musk, and LinkedIn co-founder Reid Hoffman",
+    "evidence": "On November 30, 2020, ServiceNow, a Californian cloud-based IT services company, announced it has signed an agreement to acquire Element AI",
     "source": {
-      "id": 42,
-      "name": "David Sacks",
-      "type": "person",
-      "category": "Policymaker",
+      "id": 1321,
+      "name": "ServiceNow",
+      "type": "organization",
+      "category": "Deployers & Platforms",
       "website": null,
-      "notes_excerpt": "David Sacks stepped down from his role as White House AI and crypto czar in March 2026, having reached the end of his 130-day limit as a special government employee. He is now co-chair of the President's Council of Advisors on Science and Technology alongside Michael Kratsios. Sacks is a general partner of Craft Ventures, a venture capital fund he co-founded in late 2017. He was previously COO and"
+      "notes_excerpt": "Public enterprise software company (NYSE: NOW) specializing in workflow automation. Heavily invested in AI via 'Now Assist' and autonomous AI agents; targeting $1B AI ACV by 2026. Advocates responsible AI governance and compliance with EU AI Act and NIST AI RMF."
     },
     "target": {
-      "id": 48,
-      "name": "Elon Musk",
-      "type": "person",
-      "category": "Executive",
+      "id": 1114,
+      "name": "Element AI",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
       "website": null,
-      "notes_excerpt": "Elon Musk is a businessman and entrepreneur known for his leadership of Tesla, SpaceX, X, and xAI. Musk has been the wealthiest person in the world since 2025; as of April 2026, Forbes estimates his net worth to be US$809 billion. He made predictions at the World Economic Forum that artificial intelligence will be smarter than all of humanity by the end of the decade. Musk spent more than $290 mil",
+      "notes_excerpt": "Element AI was a Canadian multinational artificial intelligence company based in Montreal, Quebec that was founded in October 2016. The company was funded by the Government of Canada for CAD$5 million, and raised US$102 million independently, before being acquired by ServiceNow. ServiceNow announced it has signed an agreement to acquire Element AI on November 30, 2020, with ServiceNow completing t",
       "resource_url": null,
       "resource_title": null,
       "resource_author": null,
@@ -260,25 +260,25 @@
     }
   },
   {
-    "edge_id": 1363,
-    "edge_type": "collaborator",
+    "edge_id": 1192,
+    "edge_type": "parent_company",
     "role": null,
-    "evidence": "Until recently, he worked with multibillionaire Eric Schmidt at the science- and tech-focused Schmidt Futures philanthropic organization",
+    "evidence": "Centre for Intelligent Machines is a world leader in research on intelligent systems. They work in domains such as robotics, artificial intelligence, computer vision, medical imaging, haptics, systems and control, computer animation, and reinforcement learning",
     "source": {
-      "id": 43,
-      "name": "Tom Kalil",
-      "type": "person",
-      "category": "Policymaker",
+      "id": 1331,
+      "name": "McGill Centre for Intelligent Machines",
+      "type": "organization",
+      "category": "Academic",
       "website": null,
-      "notes_excerpt": "Tom Kalil is the CEO of Renaissance Philanthropy, which he launched in May 2024. He served in the White House for two presidents (Obama and Clinton) and worked with the Senate to give every federal agency the authority to support incentive prizes for up to $50 million. He designed and launched dozens of White House science and technology initiatives, including the $40 billion National Nanotechnolo"
+      "notes_excerpt": "Established in 1985 as an inter-departmental, inter-faculty research center at McGill University spanning Electrical and Computer Engineering, Mechanical Engineering, and Computer Science. One of the longest-running AI research centers in the world. Comprises ~20 professors and 150 graduate students. Research organized around five themes: Computer Vision, Robotics, Systems and Control, Human-Compu"
     },
     "target": {
-      "id": 855,
-      "name": "Eric Schmidt",
-      "type": "person",
-      "category": "Investor",
+      "id": 1116,
+      "name": "McGill University",
+      "type": "organization",
+      "category": "Academic",
       "website": null,
-      "notes_excerpt": "Testified before Congress in 2021 urging $40B AI investment and warned China poses existential threat to US tech leadership. Co-authored 'Genesis' with Henry Kissinger exploring AI's civilizational risks. Recently warned about 'superintelligence strategy' and proposed 'Mutual Assured AI Malfunction' (MAIM) deterrence framework. Led NSCAI from 2019-2021, significantly influencing US AI policy and d",
+      "notes_excerpt": "McGill University was founded in 1821 from a generous bequest by James McGill, a prominent Scottish merchant. The university offers an Applied Artificial Intelligence Minor in the Faculty of Engineering that provides foundation for applying AI techniques in various fields. McGill has several AI-related organizations including the McGill Centre for Intelligent Machines, which has been a world leade",
       "resource_url": null,
       "resource_title": null,
       "resource_author": null,
@@ -286,77 +286,25 @@
     }
   },
   {
-    "edge_id": 1388,
-    "edge_type": "collaborator",
-    "role": "co-author",
-    "evidence": "His new book, Power and Progress: Our Thousand-Year Struggle Over Technology and Prosperity (joint with Simon Johnson)",
-    "source": {
-      "id": 52,
-      "name": "Daron Acemoglu",
-      "type": "person",
-      "category": "Academic",
-      "website": null,
-      "notes_excerpt": "Daron Acemoglu is an Institute Professor at MIT who won the 2024 Nobel Prize in Economics with Simon Johnson and James A. Robinson for studies of how institutions are formed and affect prosperity. He argues that AI is not improving productivity as much as hyped, projecting only modest GDP gains of 1.1% to 1.6% over the next decade. Acemoglu believes current AI development focuses too much on autom"
-    },
-    "target": {
-      "id": 26,
-      "name": "Simon Johnson",
-      "type": "person",
-      "category": "Academic",
-      "website": null,
-      "notes_excerpt": "Simon Johnson is the Ronald A. Kurtz (1954) Professor of Entrepreneurship at the MIT Sloan School of Management and co-winner of the 2024 Nobel Prize in Economic Sciences jointly with Daron Acemoglu and James A. Robinson. He co-directs the Shaping the Future of Work initiative at MIT, focusing on the economics and politics of AI development and deployment. Johnson served as Chief Economist of the ",
-      "resource_url": null,
-      "resource_title": null,
-      "resource_author": null,
-      "resource_year": null
-    }
-  },
-  {
-    "edge_id": 1390,
-    "edge_type": "collaborator",
-    "role": "co-author",
-    "evidence": "An Antimonopoly Approach to Governing Artificial Intelligence by Ganesh Sitaraman, Tejas N. Narechania",
-    "source": {
-      "id": 53,
-      "name": "Ganesh Sitaraman",
-      "type": "person",
-      "category": "Academic",
-      "website": null,
-      "notes_excerpt": "Ganesh Sitaraman is the New York Alumni Chancellor's Chair in Law at Vanderbilt University and Director of the Program on Law and Government. He is a longtime advisor to Elizabeth Warren, serving in various capacities including as Policy Director during her 2012 Senate campaign and senior counsel in the Senate. He is the author of several books including 'The Crisis of the Middle-Class Constitutio"
-    },
-    "target": {
-      "id": 1381,
-      "name": "Tejas N. Narechania",
-      "type": "person",
-      "category": "Academic",
-      "website": null,
-      "notes_excerpt": "Professor of Law at UC Berkeley School of Law. Faculty co-director of Berkeley Center for Law & Technology. Former clerk for Justice Breyer (SCOTUS) and Judge Diane Wood (7th Circuit). Former FCC special counsel (2012-2013). Published 'An Antimonopoly Approach to Governing AI' (Yale Law & Policy Review, 2024) with Ganesh Sitaraman — argues AI infrastructure warrants regulation via structural separ",
-      "resource_url": null,
-      "resource_title": null,
-      "resource_author": null,
-      "resource_year": null
-    }
-  },
-  {
-    "edge_id": 1391,
-    "edge_type": "collaborator",
+    "edge_id": 1193,
+    "edge_type": "parent_company",
     "role": null,
-    "evidence": "As an undergraduate at Harvard, he was friends with classmate Pete Buttigieg, a future 2020 Democratic presidential candidate and Secretary of Transportation. Together they started a progressive reading group called the Democratic Renaissance Project",
+    "evidence": "The McGill Collaborative for AI and Society (McCAIS) aims to understand the impact of AI on society and develop evidence-based best practices for its responsible use. ​A strategic initiative of CDSI",
     "source": {
-      "id": 53,
-      "name": "Ganesh Sitaraman",
-      "type": "person",
+      "id": 1332,
+      "name": "McGill Collaborative for AI and Society",
+      "type": "organization",
       "category": "Academic",
       "website": null,
-      "notes_excerpt": "Ganesh Sitaraman is the New York Alumni Chancellor's Chair in Law at Vanderbilt University and Director of the Program on Law and Government. He is a longtime advisor to Elizabeth Warren, serving in various capacities including as Policy Director during her 2012 Senate campaign and senior counsel in the Senate. He is the author of several books including 'The Crisis of the Middle-Class Constitutio"
+      "notes_excerpt": "The McGill Collaborative for AI and Society (McCAIS) is a strategic initiative of the Computational and Data Systems Institute (CDSI) at McGill University. Interdisciplinary, university-wide effort bringing all faculties together to understand AI's societal impact and develop evidence-based best practices for responsible AI use. Work organized around four pillars: Thought Leadership, Research to A"
     },
     "target": {
-      "id": 40,
-      "name": "Pete Buttigieg",
-      "type": "person",
-      "category": "Policymaker",
+      "id": 1116,
+      "name": "McGill University",
+      "type": "organization",
+      "category": "Academic",
       "website": null,
-      "notes_excerpt": "Pete Buttigieg served as U.S. Secretary of Transportation from 2021 to 2025 under President Joe Biden. He was the first openly gay Cabinet secretary in U.S. history and the youngest person ever to serve as Secretary of Transportation. He previously served as mayor of South Bend, Indiana from 2012 to 2020. He is currently a Winter-Spring 2025 Pritzker Fellow at the University of Chicago Institute o",
+      "notes_excerpt": "McGill University was founded in 1821 from a generous bequest by James McGill, a prominent Scottish merchant. The university offers an Applied Artificial Intelligence Minor in the Faculty of Engineering that provides foundation for applying AI techniques in various fields. McGill has several AI-related organizations including the McGill Centre for Intelligent Machines, which has been a world leade",
       "resource_url": null,
       "resource_title": null,
       "resource_author": null,
@@ -364,25 +312,77 @@
     }
   },
   {
-    "edge_id": 1411,
-    "edge_type": "collaborator",
-    "role": "co-author",
-    "evidence": "He is the co-author of AI Snake Oil: What Artificial Intelligence Can Do, What It Can't, and How to Tell the Difference with Arvind Narayanan",
+    "edge_id": 1194,
+    "edge_type": "parent_company",
+    "role": null,
+    "evidence": "We are a student lab at McGill University focusing on frontier AI research",
     "source": {
-      "id": 57,
-      "name": "Sayash Kapoor",
-      "type": "person",
+      "id": 1116,
+      "name": "McGill University",
+      "type": "organization",
       "category": "Academic",
       "website": null,
-      "notes_excerpt": "Sayash Kapoor is a Ph.D. candidate in computer science at Princeton University's Center for Information Technology Policy. He is co-author with Arvind Narayanan of the book \"AI Snake Oil: What Artificial Intelligence Can Do, What It Can't, and How to Tell the Difference\". He was named among TIME's 100 most influential people in AI. He won the Porter Ogden Jacobus Fellowship, Princeton's top distin"
+      "notes_excerpt": "McGill University was founded in 1821 from a generous bequest by James McGill, a prominent Scottish merchant. The university offers an Applied Artificial Intelligence Minor in the Faculty of Engineering that provides foundation for applying AI techniques in various fields. McGill has several AI-related organizations including the McGill Centre for Intelligent Machines, which has been a world leade"
     },
     "target": {
-      "id": 103,
-      "name": "Arvind Narayanan",
-      "type": "person",
+      "id": 1333,
+      "name": "McGill AI Lab",
+      "type": "organization",
+      "category": "Frontier Lab",
+      "website": null,
+      "notes_excerpt": "Umbrella term for McGill University's AI research labs, most prominently the Reasoning and Learning Lab co-directed by Prakash Panangaden, Doina Precup, Joelle Pineau, Jackie Chi Kit Cheung, Siva Reddy, Reihaneh Rabbany, Siamak Ravanbakhsh, and David Rolnick. McGill is a world leader in machine learning with particular strengths in reinforcement learning and natural language processing. Connected ",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1103,
+    "edge_type": "partner",
+    "role": null,
+    "evidence": "This project has been deployed by the CTBT organization of the U.N. to aid human analysts to locate nuclear explosions.",
+    "source": {
+      "id": 1097,
+      "name": "Bayesian Logic Inc.",
+      "type": "organization",
+      "category": "AI Safety/Alignment",
+      "website": null,
+      "notes_excerpt": "Bayesian Logic Inc. is co-founded by Nimar Arora, who serves as Chief Executive Officer, Secretary, Chief Financial Officer, and Director. Stuart Russell serves as a Director and is described as founder and Vice-President of the company. The company was officially filed as a General Corporation in California on October 24, 2011, and maintains active status. Bayesian Logic Inc. developed NET-VISA, "
+    },
+    "target": {
+      "id": 1299,
+      "name": "CTBT organization",
+      "type": "organization",
+      "category": "Government/Agency",
+      "website": null,
+      "notes_excerpt": "The Comprehensive Nuclear-Test-Ban Treaty Organization (CTBTO), headquartered in Vienna, is the international body overseeing the global ban on nuclear test explosions. Operates the International Monitoring System (IMS) — 337 facilities worldwide using seismic, infrasound, hydroacoustic, and radionuclide sensors. Actively incorporates AI/ML to distinguish earthquakes from nuclear explosive tests a",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1145,
+    "edge_type": "partner",
+    "role": null,
+    "evidence": "Clarifai, a global leader in AI orchestration and development, and pioneer of the full-stack computer vision platform, today announced its membership in the Berkeley Artificial Intelligence Research (BAIR) Lab's Open Research Commons (ORC)",
+    "source": {
+      "id": 1109,
+      "name": "Berkeley Artificial Intelligence Research",
+      "type": "organization",
       "category": "Academic",
       "website": null,
-      "notes_excerpt": "Arvind Narayanan is a professor of computer science at Princeton University and the director of the Center for Information Technology Policy. He is a co-author of the book AI Snake Oil and the essay AI as Normal Technology, and a newsletter of the same name which is read by over 60,000 researchers, policy makers, journalists, and AI enthusiasts. He was one of TIME's inaugural list of 100 most infl",
+      "notes_excerpt": "The Berkeley Artificial Intelligence Research (BAIR) Lab brings together UC Berkeley researchers across the areas of computer vision, machine learning, natural language processing, planning, and robotics. BAIR includes over two dozen faculty and more than a hundred graduate students pursuing research on fundamental advances in the above areas as well as cross-cutting themes including multi-modal d"
+    },
+    "target": {
+      "id": 1312,
+      "name": "Clarifai",
+      "type": "organization",
+      "category": "Deployers & Platforms",
+      "website": null,
+      "notes_excerpt": "Enterprise AI platform founded in 2013 by Matt Zeiler, headquartered in Washington, D.C. One of the first deep learning platforms, specializing in computer vision, NLP, and audio analysis. Core technology based on convolutional neural networks. Key government/defense work: participated in Project Maven (DoD AI program), signed R&D agreement with U.S. Army for EO/IR data labeling, created subsidiar",
       "resource_url": null,
       "resource_title": null,
       "resource_author": null,

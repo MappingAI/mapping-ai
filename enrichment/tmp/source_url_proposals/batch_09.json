@@ -1,92 +1,92 @@
 [
   {
-    "edge_id": 1473,
-    "proposed_url": "https://www.young.senate.gov/newsroom/press-releases/young-heinrich-booker-rounds-introduce-bipartisan-bill-to-expand-access-to-artificial-intelligence-research/",
-    "justification": "Senator Young's official press release explicitly names Heinrich, Booker, and Rounds as co-introducers of the CREATE AI Act, directly evidencing the co-sponsorship relationship.",
+    "edge_id": 804,
+    "proposed_url": "https://fortune.com/2024/12/11/marc-andreessen-half-time-florida-trump-business-policies/",
+    "justification": "Fortune article specifically names Andreessen spending half his time advising Trump on tech and economic policy in December 2024.",
     "confidence": "high"
   },
   {
-    "edge_id": 1474,
-    "proposed_url": "https://www.young.senate.gov/newsroom/press-releases/young-heinrich-booker-rounds-introduce-bipartisan-bill-to-expand-access-to-artificial-intelligence-research/",
-    "justification": "Senator Young's official press release explicitly names Heinrich, Booker, and Rounds as co-introducers of the CREATE AI Act, directly evidencing the co-sponsorship relationship between Heinrich and Booker.",
+    "edge_id": 1118,
+    "proposed_url": "https://www.risch.senate.gov/public/index.cfm/2023/10/risch-luj-n-introduce-legislation-to-improve-ai-testing-and-evaluation-systems-safeguard-americans-against-risks",
+    "justification": "Official Risch Senate press release introducing the TEST AI Act and referencing the National Labs' role in safeguarding against AI misuse.",
     "confidence": "high"
   },
   {
-    "edge_id": 1475,
-    "proposed_url": "https://www.rounds.senate.gov/newsroom/press-releases/following-historic-ai-insight-forums-over-the-past-year-senator-rounds-leader-schumer-senators-heinrich-and-young-reveal-bipartisan-roadmap-for-artificial-intelligence-policy-in-the-united-states-senate",
-    "justification": "Senator Rounds' press release names all four Bipartisan Senate AI Working Group members — Rounds, Schumer, Heinrich, and Young — confirming Young and Schumer's joint membership.",
+    "edge_id": 1123,
+    "proposed_url": "https://mikejohnson.house.gov/news/documentsingle.aspx?DocumentID=2860",
+    "justification": "Official Mike Johnson House press release jointly signed with Scalise and others stating the Trump AI framework gives Congress a roadmap for legislation.",
     "confidence": "high"
   },
   {
-    "edge_id": 1476,
-    "proposed_url": "https://www.rounds.senate.gov/newsroom/press-releases/following-historic-ai-insight-forums-over-the-past-year-senator-rounds-leader-schumer-senators-heinrich-and-young-reveal-bipartisan-roadmap-for-artificial-intelligence-policy-in-the-united-states-senate",
-    "justification": "Senator Rounds' press release names all four Bipartisan Senate AI Working Group members — Rounds, Schumer, Heinrich, and Young — confirming Young and Rounds' joint membership.",
+    "edge_id": 1124,
+    "proposed_url": "https://scalise.house.gov/press-releases/Scalise-Johnson-Guthrie-Jordan-Babin-House-Will-Work-to-Implement-National-AI-Framework",
+    "justification": "Official Scalise House press release co-signed with Johnson committing to implement the Trump national AI framework as a legislative roadmap.",
     "confidence": "high"
   },
   {
-    "edge_id": 1477,
-    "proposed_url": "https://www.rounds.senate.gov/newsroom/press-releases/following-historic-ai-insight-forums-over-the-past-year-senator-rounds-leader-schumer-senators-heinrich-and-young-reveal-bipartisan-roadmap-for-artificial-intelligence-policy-in-the-united-states-senate",
-    "justification": "Senator Rounds' press release names all four Bipartisan Senate AI Working Group members — Rounds, Schumer, Heinrich, and Young — confirming Young and Heinrich's joint membership.",
+    "edge_id": 1134,
+    "proposed_url": "https://www.kennedy.senate.gov/public/2025/3/kennedy-reacts-to-joint-address-to-congress-president-trump-has-given-us-a-blueprint",
+    "justification": "Official Kennedy Senate press release containing the exact quote attributing the 'blueprint' language and support for Trump's agenda.",
     "confidence": "high"
   },
   {
-    "edge_id": 1478,
-    "proposed_url": "https://www.young.senate.gov/newsroom/press-releases/young-cantwell-reintroduce-future-of-ai-innovation-act/",
-    "justification": "Senator Young's official press release directly names both Young and Cantwell as co-introducers of the Future of AI Innovation Act.",
+    "edge_id": 1272,
+    "proposed_url": "https://www.booker.senate.gov/news/press/booker-rounds-heinrich-announce-bipartisan-ai-grand-challenges-act",
+    "justification": "Official Booker Senate press release announcing the AI Grand Challenges Act directing NSF to establish the program and administer prize competitions.",
     "confidence": "high"
   },
   {
-    "edge_id": 1479,
-    "proposed_url": "https://www.young.senate.gov/newsroom/press-releases/senator-young-elected-chairman-of-the-national-republican-senatorial-committee/",
-    "justification": "Senator Young's official press release announces his election as Chairman of the NRSC, directly documenting his role as chair of the organization.",
+    "edge_id": 1307,
+    "proposed_url": "https://www.washingtontimes.com/news/2020/aug/14/president-trump-endorses-cynthia-lummis-for-us-sen/",
+    "justification": "Washington Times article reporting Trump's 2020 endorsement of Cynthia Lummis for U.S. Senate in Wyoming.",
     "confidence": "high"
   },
   {
-    "edge_id": 1480,
-    "proposed_url": "https://www.lujan.senate.gov/newsroom/press-releases/lujan-colleagues-introduce-bipartisan-legislation-to-improve-ai-testing-and-evaluation-systems-safeguard-americans-against-risks-2/",
-    "justification": "Senator Luján's press release names all TEST AI Act co-sponsors including Blackburn, Durbin, Risch, and Welch, directly evidencing the Luján-Blackburn co-sponsorship.",
+    "edge_id": 1334,
+    "proposed_url": "https://fortune.com/2016/05/10/peter-thiel-trump-delegate/",
+    "justification": "Fortune article from 2016 documenting Thiel's early public support for Trump as a California delegate, making him the first Silicon Valley figure to back Trump.",
     "confidence": "high"
   },
   {
-    "edge_id": 1481,
-    "proposed_url": "https://www.lujan.senate.gov/newsroom/press-releases/lujan-colleagues-introduce-bipartisan-legislation-to-improve-ai-testing-and-evaluation-systems-safeguard-americans-against-risks-2/",
-    "justification": "Senator Luján's press release names all TEST AI Act co-sponsors including Blackburn, Durbin, Risch, and Welch, directly evidencing the Luján-Durbin co-sponsorship.",
+    "edge_id": 1375,
+    "proposed_url": "https://www.cnn.com/2025/02/01/politics/elon-musk-2024-election-spending-millions",
+    "justification": "CNN article based on federal FEC filings showing Musk spent more than $290 million on the 2024 election boosting Trump and Republicans.",
     "confidence": "high"
   },
   {
-    "edge_id": 1482,
-    "proposed_url": "https://www.lujan.senate.gov/newsroom/press-releases/lujan-colleagues-introduce-bipartisan-legislation-to-improve-ai-testing-and-evaluation-systems-safeguard-americans-against-risks-2/",
-    "justification": "Senator Luján's press release names all TEST AI Act co-sponsors including Blackburn, Durbin, Risch, and Welch, directly evidencing the Luján-Risch co-sponsorship.",
+    "edge_id": 1520,
+    "proposed_url": "https://www.texastribune.org/2024/01/16/ted-cruz-endorsement-donald-trump/",
+    "justification": "Texas Tribune article reporting Cruz's formal endorsement of Trump for the 2024 Republican presidential nomination after the Iowa caucuses.",
     "confidence": "high"
   },
   {
-    "edge_id": 1483,
-    "proposed_url": "https://www.lujan.senate.gov/newsroom/press-releases/lujan-welch-introduce-billto-require-online-platforms-receive-consumers-consent-before-using-their-personal-data-to-train-ai-models/",
-    "justification": "Senator Luján's press release explicitly names both Luján and Welch as co-introducers of the AI CONSENT Act, directly evidencing the co-sponsorship relationship.",
+    "edge_id": 1555,
+    "proposed_url": "https://sd11.senate.ca.gov/news/senator-wiener-expands-ai-bill-landmark-transparency-measure-based-recommendations-governors",
+    "justification": "Official Wiener Senate office press release on SB 53 listing Encode AI as a named sponsor of the bill.",
     "confidence": "high"
   },
   {
-    "edge_id": 1484,
-    "proposed_url": "https://www.lujan.senate.gov/newsroom/press-releases/lujan-colleagues-introduce-bipartisan-legislation-to-improve-ai-testing-and-evaluation-systems-safeguard-americans-against-risks-2/",
-    "justification": "Senator Luján's TEST AI Act press release describes the bill's mandate for NIST-DOE collaboration on AI testing standards, directly evidencing Luján's role in directing this collaboration.",
+    "edge_id": 1584,
+    "proposed_url": "https://www.npr.org/2020/04/13/833528203/bernie-sanders-endorses-joe-biden-for-president",
+    "justification": "NPR article reporting Sanders' April 2020 endorsement of Biden just five days after suspending his campaign, marking their alliance post-primaries.",
     "confidence": "high"
   },
   {
-    "edge_id": 1485,
-    "proposed_url": "https://www.lujan.senate.gov/newsroom/press-releases/lujan-colleagues-introduce-bipartisan-legislation-to-improve-ai-testing-and-evaluation-systems-safeguard-americans-against-risks-2/",
-    "justification": "Senator Luján's TEST AI Act press release describes the bill's mandate for NIST-DOE collaboration on AI testing standards, directly evidencing Luján's role in directing the Department of Energy's involvement.",
+    "edge_id": 1588,
+    "proposed_url": "https://techcrunch.com/2026/02/20/anthropic-funded-group-backs-candidate-attacked-by-rival-ai-super-pac/",
+    "justification": "TechCrunch article naming both Alex Bores and Public First Action PAC and reporting the $450,000 spending on the New York race.",
     "confidence": "high"
   },
   {
-    "edge_id": 1487,
-    "proposed_url": "https://www.cortezmasto.senate.gov/news/press-releases/cortez-masto-ernst-introduce-bill-to-prepare-us-for-advances-in-artificial-intelligence-technology/",
-    "justification": "Senator Cortez Masto's press release names both Ernst and Cortez Masto as co-introducers of bipartisan AI legislation, directly evidencing their co-sponsorship relationship.",
+    "edge_id": 1631,
+    "proposed_url": "https://www.cruz.senate.gov/newsroom/press-releases/icymi-sen-cruz-deepfake-victim-elliston-berry-urge-the-house-to-pass-bipartisan-legislation-to-criminalize-ai-generated-explicit-images",
+    "justification": "Official Cruz Senate press release naming Elliston Berry as the impetus for the Take It Down Act and documenting their joint advocacy.",
     "confidence": "high"
   },
   {
-    "edge_id": 1488,
-    "proposed_url": "https://www.hassan.senate.gov/news/press-releases/senators-hassan-ernst-sound-alarm-on-chinese-ai-enabled-hackers",
-    "justification": "Senator Hassan's press release names both Hassan and Ernst as co-authors of the letter to National Cyber Director Cairncross urging action on Chinese AI-enabled cyberattacks.",
+    "edge_id": 1662,
+    "proposed_url": "https://www.markey.senate.gov/news/press-releases/sen-markey-rep-clarke-reintroduce-ai-civil-rights-act-to-eliminate-ai-discrimination-and-enact-guardrails-on-use-of-algorithms-in-decisions-impacting-peoples-rights-civil-liberties-livelihoods",
+    "justification": "Official Markey Senate press release on the AI Civil Rights Act reintroduction, which includes Maya Wiley and The Leadership Conference among the named supporters.",
     "confidence": "high"
   }
 ]

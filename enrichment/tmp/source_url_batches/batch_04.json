@@ -1,24 +1,24 @@
 [
   {
-    "edge_id": 794,
-    "edge_type": "collaborator",
-    "role": null,
-    "evidence": "Bengio received the 2018 ACM A.M. Turing Award, often referred to as the 'Nobel Prize of Computing', together with Geoffrey Hinton and Yann LeCun, for their foundational work on deep learning",
+    "edge_id": 1447,
+    "edge_type": "founder",
+    "role": "founder",
+    "evidence": "New York-based Thrive Holdings, an offshoot of Joshua Kushner's Thrive Capital",
     "source": {
-      "id": 29,
-      "name": "Yoshua Bengio",
+      "id": 63,
+      "name": "Joshua Kushner",
       "type": "person",
-      "category": "Academic",
+      "category": "Investor",
       "website": null,
-      "notes_excerpt": "Yoshua Bengio is a Canadian computer scientist born March 5, 1964, in Paris, France, and is a full professor at Université de Montréal. He received the 2018 A.M. Turing Award together with Geoffrey Hinton and Yann LeCun for their foundational work on deep learning. In June 2025, Bengio launched a nonprofit organization called LawZero aimed at building 'honest' AI systems that can detect and block "
+      "notes_excerpt": "Joshua Kushner is the founder and managing partner of Thrive Capital, a venture capital firm. He co-founded Oscar Health, a health insurance startup that went public in 2021. Kushner's firm has been one of OpenAI's major investors, with Thrive Capital investing roughly $1 billion in OpenAI at a $285 billion valuation in December. He is married to supermodel Karlie Kloss and they have two sons toge"
     },
     "target": {
-      "id": 821,
-      "name": "Geoffrey Hinton",
-      "type": "person",
-      "category": "Academic",
+      "id": 1404,
+      "name": "Thrive Holdings",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
       "website": null,
-      "notes_excerpt": "Left Google in May 2023 to speak freely about AI risks after decades of pioneering neural network research. Estimates 10-20% chance of human extinction from superintelligent AI and 50% probability AI will surpass human intelligence within 20 years. Testified to Senate Judiciary Committee in December 2025 and receives funding from Good Ventures foundation ($700,000) to continue AI safety advocacy w",
+      "notes_excerpt": "AI-focused holding company launched April 2025 by Joshua Kushner's Thrive Capital. Buys, owns, and runs companies positioned to benefit from AI — starting with accounting (Crete Professionals Alliance) and IT services (Shield Technology Partners). OpenAI took ownership stake in Thrive Holdings (Dec 2025) and embeds engineering/product teams within portfolio companies. Parent firm Thrive Capital ma",
       "resource_url": null,
       "resource_title": null,
       "resource_author": null,
@@ -26,51 +26,51 @@
     }
   },
   {
-    "edge_id": 795,
-    "edge_type": "collaborator",
-    "role": null,
-    "evidence": "Bengio received the 2018 ACM A.M. Turing Award, often referred to as the 'Nobel Prize of Computing', together with Geoffrey Hinton and Yann LeCun, for their foundational work on deep learning",
+    "edge_id": 1471,
+    "edge_type": "founder",
+    "role": "Co-founder of Senate Artificial Intelligence Caucus",
+    "evidence": "The bipartisan Senate Artificial Intelligence Caucus was formed in 2019 by U.S. Senators Martin Heinrich (D-NM) and Rob Portman (R-OH)",
     "source": {
-      "id": 29,
-      "name": "Yoshua Bengio",
+      "id": 72,
+      "name": "Martin Heinrich",
       "type": "person",
-      "category": "Academic",
+      "category": "Policymaker",
       "website": null,
-      "notes_excerpt": "Yoshua Bengio is a Canadian computer scientist born March 5, 1964, in Paris, France, and is a full professor at Université de Montréal. He received the 2018 A.M. Turing Award together with Geoffrey Hinton and Yann LeCun for their foundational work on deep learning. In June 2025, Bengio launched a nonprofit organization called LawZero aimed at building 'honest' AI systems that can detect and block "
+      "notes_excerpt": "Martin Heinrich is a U.S. Senator from New Mexico who has served since January 2013. He is the founder and co-chair of the Senate Artificial Intelligence Caucus, which he established with former Senator Rob Portman (R-Ohio) in 2019. He serves as Ranking Member on the Committee on Energy and Natural Resources and serves on the Senate Appropriations, Intelligence, and Joint Economic Committees. Hein"
     },
     "target": {
+      "id": 1414,
+      "name": "Rob Portman",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Rob Portman (R-OH) served as a U.S. Senator from 2011 until his retirement in January 2023, having chosen not to seek re-election in 2022. While in office he co-founded the bipartisan Senate Artificial Intelligence Caucus with Martin Heinrich (D-NM) in 2019 and co-introduced the Artificial Intelligence Initiative Act, authorizing a $2.2 billion federal investment in AI R&D and workforce developmen",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1558,
+    "edge_type": "founder",
+    "role": "Founder",
+    "evidence": "The company he founded, Advanced Machine Intelligence Labs(or AMI Labs), is run by CEO Alex LeBrun",
+    "source": {
       "id": 92,
       "name": "Yann LeCun",
       "type": "person",
       "category": "Researcher",
       "website": null,
-      "notes_excerpt": "Yann LeCun is Chief AI Scientist at Meta and Silver Professor at New York University affiliated with the NYU Center for Data Science and the Courant Institute of Mathematical Sciences. He received the 2018 ACM Turing Award shared with Geoffrey Hinton and Yoshua Bengio for contributions to deep learning. He announced plans to leave Meta after ten years to found his own company focused on world-mode",
-      "resource_url": null,
-      "resource_title": null,
-      "resource_author": null,
-      "resource_year": null
-    }
-  },
-  {
-    "edge_id": 807,
-    "edge_type": "collaborator",
-    "role": "Co-sponsor of GUARDRAILS Act",
-    "evidence": "U.S. Senator Chris Murphy (D-Conn.) joined U.S. Senator Brian Schatz (D-Hawai'i) in introducing the Guaranteeing and Upholding Americans' Right to Decide Responsible AI Laws and Standards (GUARDRAILS) Act",
-    "source": {
-      "id": 7,
-      "name": "Brian Schatz",
-      "type": "person",
-      "category": "Policymaker",
-      "website": null,
-      "notes_excerpt": "Brian Schatz is Hawaii's senior United States Senator who has served since 2012 and focuses on helping workers, veterans, and families while leading key legislation on health care, climate change, and technology. He serves as Chairman of the Senate Committee on Indian Affairs and is a member of multiple committees including Appropriations, Commerce Science and Transportation, Foreign Relations, an"
+      "notes_excerpt": "Yann LeCun is Chief AI Scientist at Meta and Silver Professor at New York University affiliated with the NYU Center for Data Science and the Courant Institute of Mathematical Sciences. He received the 2018 ACM Turing Award shared with Geoffrey Hinton and Yoshua Bengio for contributions to deep learning. He announced plans to leave Meta after ten years to found his own company focused on world-mode"
     },
     "target": {
-      "id": 41,
-      "name": "Chris Murphy",
-      "type": "person",
-      "category": "Policymaker",
+      "id": 1432,
+      "name": "Advanced Machine Intelligence Labs",
+      "type": "organization",
+      "category": "Frontier Lab",
       "website": null,
-      "notes_excerpt": "Chris Murphy is the junior United States Senator from Connecticut, serving since 2013. He previously served in the U.S. House of Representatives from 2007 to 2013, representing Connecticut's 5th congressional district. Murphy was reelected to a third Senate term in 2024, defeating Republican challenger Matthew Corey. He has become a prominent voice on AI regulation, arguing that unregulated artifi",
+      "notes_excerpt": "Full legal name: Advanced Machine Intelligence (AMI Labs). AI startup co-founded by Yann LeCun (exec chairman) and Alex LeBrun (CEO) after LeCun left Meta (Nov 2025). Raised $1.03B seed at $3.5B pre-money valuation (Mar 2026) — one of largest seed rounds ever. Building 'world models' using JEPA architecture as alternative to LLMs. Backed by Nvidia, Samsung, Bezos Expeditions, Eric Schmidt. Key tea",
       "resource_url": null,
       "resource_title": null,
       "resource_author": null,
@@ -78,25 +78,25 @@
     }
   },
   {
-    "edge_id": 808,
-    "edge_type": "collaborator",
-    "role": "Co-sponsor on AI company transparency letters",
-    "evidence": "U.S. Senator Brian Schatz (D-Hawai'i), a senior member of the Senate Committee on Commerce, Science, and Transportation, and Katie Britt (R-Ala.) called on leading artificial intelligence (AI) companies to improve transparency around the capabilities of their models",
+    "edge_id": 1683,
+    "edge_type": "founder",
+    "role": "Founding Director",
+    "evidence": "Founding Director of the AI Tennessee Initiative",
     "source": {
-      "id": 7,
-      "name": "Brian Schatz",
+      "id": 118,
+      "name": "Lynne Parker",
       "type": "person",
       "category": "Policymaker",
       "website": null,
-      "notes_excerpt": "Brian Schatz is Hawaii's senior United States Senator who has served since 2012 and focuses on helping workers, veterans, and families while leading key legislation on health care, climate change, and technology. He serves as Chairman of the Senate Committee on Indian Affairs and is a member of multiple committees including Appropriations, Commerce Science and Transportation, Foreign Relations, an"
+      "notes_excerpt": "Lynne Parker is Principal Deputy Director of the White House Office of Science and Technology Policy and Executive Director of the President's Council of Advisors on Science and Technology. In January 2025, she was appointed by President Donald Trump as Executive Director of the President's Council of Advisors on Science and Technology and Counselor to the Director of the White House Office of Sci"
     },
     "target": {
-      "id": 1119,
-      "name": "Katie Britt",
-      "type": "person",
-      "category": "Policymaker",
+      "id": 1487,
+      "name": "AI Tennessee Initiative",
+      "type": "organization",
+      "category": "Academic",
       "website": null,
-      "notes_excerpt": "Katie Britt is a U.S. Senator from Alabama serving since 2023, and is a member of the Republican Party. She is calling for guardrails on artificial intelligence chatbots because of the potential to harm minors. Britt has two teenagers, ages 15 and 16, and draws on her experience as a mother in her advocacy work. She previously served as president and CEO of the Business Council of Alabama from 201",
+      "notes_excerpt": "First statewide AI initiative in the U.S., launched by the University of Tennessee, Knoxville. Founded and directed by Lynne Parker, who served as White House Deputy CTO and founding director of the National AI Initiative Office (2018-2022) before returning to UT. Coordinates AI research, education, and workforce development across disciplines and institutions statewide. Focus areas: smart manufac",
       "resource_url": null,
       "resource_title": null,
       "resource_author": null,
@@ -104,25 +104,51 @@
     }
   },
   {
-    "edge_id": 1096,
-    "edge_type": "collaborator",
-    "role": "co-author",
-    "evidence": "Norvig is the co-author with Stuart J. Russell of the most popular textbook in the field of AI: Artificial Intelligence: A Modern Approach",
+    "edge_id": 1684,
+    "edge_type": "founder",
+    "role": "Founding Director",
+    "evidence": "She was named founding director of the National Artificial Intelligence Initiative Office in 2021",
     "source": {
-      "id": 1094,
-      "name": "Peter Norvig",
+      "id": 118,
+      "name": "Lynne Parker",
+      "type": "person",
+      "category": "Policymaker",
+      "website": null,
+      "notes_excerpt": "Lynne Parker is Principal Deputy Director of the White House Office of Science and Technology Policy and Executive Director of the President's Council of Advisors on Science and Technology. In January 2025, she was appointed by President Donald Trump as Executive Director of the President's Council of Advisors on Science and Technology and Counselor to the Director of the White House Office of Sci"
+    },
+    "target": {
+      "id": 1488,
+      "name": "National Artificial Intelligence Initiative Office",
+      "type": "organization",
+      "category": "Government/Agency",
+      "website": null,
+      "notes_excerpt": "Federal coordinating office established by the National AI Initiative Act of 2020, housed within the White House Office of Science and Technology Policy (OSTP). Serves as central coordination hub for AI R&D across federal agencies, industry, academia, nonprofits, and state/tribal governments. Led the National AI R&D Strategic Plan updates. Four statutory mandates: ensure continued U.S. AI R&D lead",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1694,
+    "edge_type": "founder",
+    "role": "Co-Director",
+    "evidence": "Venkatasubramanian, a professor at Brown University, also serves as the Co-Director of the newly established AI Research Institute on Interaction for AI assistants (ARIA)",
+    "source": {
+      "id": 120,
+      "name": "Suresh Venkatasubramanian",
       "type": "person",
       "category": "Academic",
       "website": null,
-      "notes_excerpt": "Peter Norvig is a Distinguished Education Fellow at Stanford's Human-Centered Artificial Intelligence Institute and a researcher at Google Inc. He co-authored \"Artificial Intelligence: A Modern Approach\" with Stuart Russell, which is the leading textbook in the field used in more than 1,500 universities in 135 countries. He was born on December 14, 1956, and previously served as head of NASA Ames'"
+      "notes_excerpt": "Suresh Venkatasubramanian is a Professor of Data Science and Computer Science at Brown University who directs the Center for Technological Responsibility, Reimagination and Redesign. He served as Assistant Director for Science and Justice in the White House Office of Science and Technology Policy for the 2021-2022 academic year, where he co-authored the Blueprint for an AI Bill of Rights. His rese"
     },
     "target": {
-      "id": 1,
-      "name": "Stuart Russell",
-      "type": "person",
+      "id": 1490,
+      "name": "AI Research Institute on Interaction for AI assistants (ARIA)",
+      "type": "organization",
       "category": "Academic",
       "website": null,
-      "notes_excerpt": "Stuart Russell is a professor of computer science at the University of California, Berkeley and holds the Smith-Zadeh Chair in Engineering. He co-authored the textbook 'Artificial Intelligence: A Modern Approach' with Peter Norvig, which is used in over 1,500 universities in 135 countries. Russell founded the Center for Human-Compatible Artificial Intelligence at UC Berkeley in 2016 and serves as ",
+      "notes_excerpt": "NSF-funded ($20M) AI Research Institute on Interaction for AI Assistants, headquartered at Brown University. Focuses on developing trustworthy, context-aware AI assistants with specific application to mental and behavioral health. Research themes include AI interpretability, adaptability, and participatory design. Co-directed by Ellie Pavlick and Suresh Venkatasubramanian. One of five national AI ",
       "resource_url": null,
       "resource_title": null,
       "resource_author": null,
@@ -130,25 +156,25 @@
     }
   },
   {
-    "edge_id": 1099,
-    "edge_type": "collaborator",
-    "role": "co-teacher",
-    "evidence": "He was co-teacher of an Artifical Intelligence class that signed up 160,000 students, helping to kick off the current round of massive open online classes",
+    "edge_id": 1696,
+    "edge_type": "founder",
+    "role": "Governor who launched the consortium",
+    "evidence": "Governor Kathy Hochul today announced a historic agreement with the Legislature to establish Empire AI, a first-of-its-kind consortium to secure New York's place at the forefront of artificial intelligence research",
     "source": {
-      "id": 1094,
-      "name": "Peter Norvig",
+      "id": 121,
+      "name": "Kathy Hochul",
       "type": "person",
-      "category": "Academic",
+      "category": "Policymaker",
       "website": null,
-      "notes_excerpt": "Peter Norvig is a Distinguished Education Fellow at Stanford's Human-Centered Artificial Intelligence Institute and a researcher at Google Inc. He co-authored \"Artificial Intelligence: A Modern Approach\" with Stuart Russell, which is the leading textbook in the field used in more than 1,500 universities in 135 countries. He was born on December 14, 1956, and previously served as head of NASA Ames'"
+      "notes_excerpt": "Kathy Hochul is the 57th and first female Governor of New York State. She previously served as Erie county clerk (2007–11), U.S. representative for New York's 26th congressional district (2011–13), and lieutenant governor (2015–21) to Gov. Andrew Cuomo. In her January 13, 2026, State of the State address, Governor Hochul announced a series of proposals related to AI and technology regulation that "
     },
     "target": {
-      "id": 1297,
-      "name": "Sebastian Thrun",
-      "type": "person",
-      "category": "Academic",
+      "id": 1492,
+      "name": "Empire AI",
+      "type": "organization",
+      "category": "Government/Agency",
       "website": null,
-      "notes_excerpt": "Pioneering AI researcher and entrepreneur. Stanford CS professor (2003-2011), directed Stanford AI Lab (SAIL). Founded Google X, Google's self-driving car project (now Waymo), Udacity (online education), and Kitty Hawk (air taxis, now closed). Won DARPA Grand Challenge (2005). Strong AI optimist: 'AI will not replace us, it will complement us' and warns against 'prematurely declaring AI a danger a",
+      "notes_excerpt": "New York State AI consortium launched January 2024 by Governor Kathy Hochul. Backed by $400M+ in public and private funds ($275M state investment, expanded to $500M+ total). Building state-of-the-art AI computing center on the University at Buffalo campus. Consortium of 10 member institutions: Columbia, Cornell, NYU, RPI, SUNY, CUNY, Simons Foundation, University of Rochester, RIT, and Icahn Schoo",
       "resource_url": null,
       "resource_title": null,
       "resource_author": null,
@@ -156,25 +182,25 @@
     }
   },
   {
-    "edge_id": 1110,
-    "edge_type": "collaborator",
-    "role": "Co-sponsor of AI dominance resolution",
-    "evidence": "U.S. Senators Chris Coons (D-Del.) and Tom Cotton (R-Ark.) today led a group of colleagues to introduce a resolution affirming the importance of preserving and maintaining the United States' advantage and dominance in artificial intelligence",
+    "edge_id": 2269,
+    "edge_type": "founder",
+    "role": "Co-Founder and Chair",
+    "evidence": null,
     "source": {
-      "id": 1099,
-      "name": "Tom Cotton",
+      "id": 1785,
+      "name": "Cari Tuna",
       "type": "person",
-      "category": "Policymaker",
+      "category": "Investor",
       "website": null,
-      "notes_excerpt": "Tom Cotton is a U.S. Senator representing Arkansas who introduced the DATA Act of 2026, which would allow AI data center companies to bypass federal electricity regulations by building independent energy infrastructure. Cotton stated that \"American dominance in artificial intelligence and other crucial emerging industries should not come at the expense of Arkansans paying higher energy costs\". On "
+      "notes_excerpt": "Cari Tuna is an American philanthropist and former Wall Street Journal reporter who co-founded Good Ventures and Open Philanthropy (now Coefficient Giving) with her husband Dustin Moskovitz. Open Philanthropy was an early backer of AI safety, giving more than $580 million toward building a field of researchers studying the potential catastrophic risks of AI. She was included in TIME's 100 Most Inf"
     },
     "target": {
-      "id": 71,
-      "name": "Chris Coons",
-      "type": "person",
-      "category": "Policymaker",
+      "id": 1583,
+      "name": "Good Ventures",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
       "website": null,
-      "notes_excerpt": "Chris Coons is a U.S. Senator from Delaware who serves on multiple committees including Appropriations, Foreign Relations, Judiciary, Small Business and Entrepreneurship, and Ethics committees. He is the Ranking Member of the Senate Foreign Relations Committee's Subcommittee on East Asia, The Pacific, and International Cybersecurity Policy and vice chair of the Ethics Committee. Coons has been act",
+      "notes_excerpt": "Philanthropic foundation co-founded by Dustin Moskovitz and Cari Tuna; primary funder of Open Philanthropy (rebranded Coefficient Giving, Nov 2025). Accounts for >50% of philanthropic AI safety funding globally; has distributed $5B+ in grants including $5.5M to launch CHAI at UC Berkeley.",
       "resource_url": null,
       "resource_title": null,
       "resource_author": null,
@@ -182,25 +208,25 @@
     }
   },
   {
-    "edge_id": 1111,
-    "edge_type": "collaborator",
-    "role": "Co-sponsor of Artificial Intelligence Ready Data Act",
-    "evidence": "U.S. Senators Ted Budd (R-N.C.) and Andy Kim (D-N.J.), members of the Senate Commerce, Science, and Transportation Committee, recently introduced the Artificial Intelligence Ready Data Act",
+    "edge_id": 2282,
+    "edge_type": "founder",
+    "role": "Founder",
+    "evidence": "Backfilled from notes: ...Head of Strategy and co-founder of Eleos AI. Background in applied mathematics, dat",
     "source": {
-      "id": 1100,
-      "name": "Andy Kim",
+      "id": 1355,
+      "name": "Kathleen Finlinson",
       "type": "person",
-      "category": "Policymaker",
+      "category": "Researcher",
       "website": null,
-      "notes_excerpt": "Andy Kim is a U.S. Senator from New Jersey who serves as a Democrat on multiple committees including Commerce, Science, and Transportation. He has been actively involved in AI-related legislation, co-introducing the Artificial Intelligence Ready Data Act with Senator Ted Budd to open government data sets for training American AI models. Kim also co-introduced the AI Talent Act with Senator Jon Hus"
+      "notes_excerpt": "Head of Strategy and co-founder of Eleos AI. Background in applied mathematics, data science, and AI forecasting. Researches strategic considerations for AI welfare action. Advocates balancing AI control with cooperative strategies that respect AI welfare."
     },
     "target": {
-      "id": 1301,
-      "name": "Ted Budd",
-      "type": "person",
-      "category": "Policymaker",
+      "id": 1351,
+      "name": "Eleos AI",
+      "type": "organization",
+      "category": "AI Safety/Alignment",
       "website": null,
-      "notes_excerpt": "Republican Senator (NC) and Chair of the Senate Subcommittee on Science, Manufacturing, and Competitiveness. Actively shapes AI legislation through bipartisan bills on government data access, AI lab networks, and public health preparedness. Strongly opposes overregulation, favoring a light-touch, innovation-first federal framework.",
+      "notes_excerpt": "Nonprofit research org focused on AI welfare, consciousness, and moral patienthood. Co-founded by Kyle Fish, Robert Long, Kathleen Finlinson. Published landmark report \"Taking AI Welfare Seriously.\" Commended Anthropic's model welfare efforts. Five research priorities: welfare interventions, human-AI cooperation, leveraging AI for welfare research, standardized evaluations, credible communication.",
       "resource_url": null,
       "resource_title": null,
       "resource_author": null,
@@ -208,155 +234,25 @@
     }
   },
   {
-    "edge_id": 1112,
-    "edge_type": "collaborator",
-    "role": "Co-sponsor of AI Talent Act",
-    "evidence": "Sen. Jon Husted (R-Ohio) joined Sen. Andy Kim (D-N.J.) in introducing the bipartisan AI Talent Act",
+    "edge_id": 2291,
+    "edge_type": "founder",
+    "role": "Co-founder",
+    "evidence": "Backfilled from notes: ...CEO and Co-Founder of Adaptive Security, an AI-native cybersecurity startup sim",
     "source": {
-      "id": 1100,
-      "name": "Andy Kim",
-      "type": "person",
-      "category": "Policymaker",
-      "website": null,
-      "notes_excerpt": "Andy Kim is a U.S. Senator from New Jersey who serves as a Democrat on multiple committees including Commerce, Science, and Transportation. He has been actively involved in AI-related legislation, co-introducing the Artificial Intelligence Ready Data Act with Senator Ted Budd to open government data sets for training American AI models. Kim also co-introduced the AI Talent Act with Senator Jon Hus"
-    },
-    "target": {
-      "id": 79,
-      "name": "Jon Husted",
-      "type": "person",
-      "category": "Policymaker",
-      "website": null,
-      "notes_excerpt": "Jon Husted is a Republican U.S. Senator from Ohio who began serving in January 2025 after being appointed to fill the vacancy created by JD Vance's resignation. He previously served as Ohio's 66th lieutenant governor from 2019 to 2025 and as Ohio's 50th secretary of state from 2011 to 2019. As lieutenant governor, he led regulatory reform efforts using artificial intelligence to remove 5 million w",
-      "resource_url": null,
-      "resource_title": null,
-      "resource_author": null,
-      "resource_year": null
-    }
-  },
-  {
-    "edge_id": 1113,
-    "edge_type": "collaborator",
-    "role": "Co-sponsor of chip-making equipment export control bill",
-    "evidence": "Senators Pete Ricketts (R-NE) and Andy Kim (D-NJ), along with Representative Michael Baumgartner (R-WA), introduced a bill on April 2 intended to tighten export controls on high-end semiconductor manufacturing equipment",
-    "source": {
-      "id": 1100,
-      "name": "Andy Kim",
-      "type": "person",
-      "category": "Policymaker",
-      "website": null,
-      "notes_excerpt": "Andy Kim is a U.S. Senator from New Jersey who serves as a Democrat on multiple committees including Commerce, Science, and Transportation. He has been actively involved in AI-related legislation, co-introducing the Artificial Intelligence Ready Data Act with Senator Ted Budd to open government data sets for training American AI models. Kim also co-introduced the AI Talent Act with Senator Jon Hus"
-    },
-    "target": {
-      "id": 723,
-      "name": "Pete Ricketts",
-      "type": "person",
-      "category": "Policymaker",
-      "website": "ricketts.senate.gov",
-      "notes_excerpt": "Republican U.S. Senator from Nebraska with background as former CEO of TD Ameritrade. Active in AI and technology policy, notably co-sponsoring the SAFE Chips Act to restrict AI chip exports to China. Emphasis on national security and U.S. technological leadership balanced with safety considerations.\n\nRunning in the NE Senate race, which has seen significant AI-related super PAC spending. See http",
-      "resource_url": null,
-      "resource_title": null,
-      "resource_author": null,
-      "resource_year": null
-    }
-  },
-  {
-    "edge_id": 1115,
-    "edge_type": "collaborator",
-    "role": "Co-sponsor of TEST AI Act",
-    "evidence": "U.S. Senators Jim Risch (R-Idaho) and Ben Ray Luján (D-N.M.) introduced the Testing and Evaluation Systems for Trusted Artificial Intelligence (TEST) AI Act of 2025",
-    "source": {
-      "id": 1101,
-      "name": "Jim Risch",
-      "type": "person",
-      "category": "Policymaker",
-      "website": null,
-      "notes_excerpt": "Jim Risch is a U.S. Senator from Idaho who has served since 2009 and is a member of the Republican Party. He serves on five key committees: Energy and Natural Resources, Foreign Relations, Small Business and Entrepreneurship, Intelligence, and Ethics, and serves as Chairman of the Senate Foreign Relations Committee. He previously served as Idaho's 31st Governor in 2006 and as Lieutenant Governor, "
-    },
-    "target": {
-      "id": 74,
-      "name": "Ben Ray Luján",
-      "type": "person",
-      "category": "Policymaker",
-      "website": null,
-      "notes_excerpt": "Ben Ray Luján has represented New Mexico in the United States Senate since January 2021 and previously served as U.S. Representative for New Mexico's Third Congressional District and House Assistant Speaker in the 116th Congress. He sits on the Committee on Commerce, Science, and Transportation; the Committee on Finance; the Committee on Agriculture, Nutrition, and Forestry; the Committee on India",
-      "resource_url": null,
-      "resource_title": null,
-      "resource_author": null,
-      "resource_year": null
-    }
-  },
-  {
-    "edge_id": 1116,
-    "edge_type": "collaborator",
-    "role": "Co-lead of Senate National Labs Caucus",
-    "evidence": "Senators Luján, Durbin, Blackburn, and Risch are co-leads of the Senate National Labs Caucus",
-    "source": {
-      "id": 1101,
-      "name": "Jim Risch",
-      "type": "person",
-      "category": "Policymaker",
-      "website": null,
-      "notes_excerpt": "Jim Risch is a U.S. Senator from Idaho who has served since 2009 and is a member of the Republican Party. He serves on five key committees: Energy and Natural Resources, Foreign Relations, Small Business and Entrepreneurship, Intelligence, and Ethics, and serves as Chairman of the Senate Foreign Relations Committee. He previously served as Idaho's 31st Governor in 2006 and as Lieutenant Governor, "
-    },
-    "target": {
-      "id": 11,
-      "name": "Marsha Blackburn",
-      "type": "person",
-      "category": "Policymaker",
-      "website": null,
-      "notes_excerpt": "Marsha Blackburn is the senior senator for Tennessee and the first woman to represent the Volunteer State in the United States Senate. She released a discussion draft of her legislative framework to codify President Trump's executive order to create one rulebook for artificial intelligence (AI) that protects children, creators, conservatives, and communities from harm while ensuring the United Sta",
-      "resource_url": null,
-      "resource_title": null,
-      "resource_author": null,
-      "resource_year": null
-    }
-  },
-  {
-    "edge_id": 1117,
-    "edge_type": "collaborator",
-    "role": "Co-lead of Senate National Labs Caucus",
-    "evidence": "Senators Luján, Durbin, Blackburn, and Risch are co-leads of the Senate National Labs Caucus",
-    "source": {
-      "id": 1101,
-      "name": "Jim Risch",
-      "type": "person",
-      "category": "Policymaker",
-      "website": null,
-      "notes_excerpt": "Jim Risch is a U.S. Senator from Idaho who has served since 2009 and is a member of the Republican Party. He serves on five key committees: Energy and Natural Resources, Foreign Relations, Small Business and Entrepreneurship, Intelligence, and Ethics, and serves as Chairman of the Senate Foreign Relations Committee. He previously served as Idaho's 31st Governor in 2006 and as Lieutenant Governor, "
-    },
-    "target": {
-      "id": 1302,
-      "name": "Dick Durbin",
-      "type": "person",
-      "category": "Policymaker",
-      "website": null,
-      "notes_excerpt": "Democratic Senator from Illinois (1997–2027) and former Senate Judiciary Committee chair. Co-introduced the bipartisan AI LEAD Act to enable products-liability suits against AI developers, and the TEST AI Act to strengthen federal AI testing capacity. Consistently advocated for mandatory AI oversight.",
-      "resource_url": null,
-      "resource_title": null,
-      "resource_author": null,
-      "resource_year": null
-    }
-  },
-  {
-    "edge_id": 1125,
-    "edge_type": "collaborator",
-    "role": null,
-    "evidence": "the active engagement of the world's wealthiest man who has shown his willingness to spend money to support President Trump",
-    "source": {
-      "id": 1103,
-      "name": "Donald Trump",
-      "type": "person",
-      "category": "Policymaker",
-      "website": null,
-      "notes_excerpt": "Donald Trump served as the 45th President of the United States from 2017 to 2021 and was inaugurated as the 47th president on January 20, 2025. On March 20, 2026, the Trump Administration released a National AI Legislative Framework that addresses six key objectives including protecting children, safeguarding American communities, and ensuring American AI dominance. In December 2025, President Tru"
-    },
-    "target": {
-      "id": 48,
-      "name": "Elon Musk",
+      "id": 1460,
+      "name": "Brian Long",
       "type": "person",
       "category": "Executive",
       "website": null,
-      "notes_excerpt": "Elon Musk is a businessman and entrepreneur known for his leadership of Tesla, SpaceX, X, and xAI. Musk has been the wealthiest person in the world since 2025; as of April 2026, Forbes estimates his net worth to be US$809 billion. He made predictions at the World Economic Forum that artificial intelligence will be smarter than all of humanity by the end of the decade. Musk spent more than $290 mil",
+      "notes_excerpt": "CEO and Co-Founder of Adaptive Security, an AI-native cybersecurity startup simulating deepfake and GenAI attacks for corporate defense training. Serial entrepreneur: previously co-founded Attentive (SMS/email marketing platform, grew to $500M+ ARR, 8,000+ customers, 1,000+ employees) and TapCommerce (acquired by Twitter, where he served as Senior Director leading mobile teams for 19 months). Rais"
+    },
+    "target": {
+      "id": 1458,
+      "name": "Adaptive Security",
+      "type": "organization",
+      "category": "Deployers & Platforms",
+      "website": null,
+      "notes_excerpt": "AI-native cybersecurity startup founded by serial entrepreneurs Brian Long (CEO) and Andrew Jones. Builds platform simulating AI-powered attacks — deepfake voice/video phishing, smishing, and GenAI social engineering — to train corporate defenders. Raised $136M+ total: $43M round co-led by OpenAI and Andreessen Horowitz (OpenAI's first cybersecurity investment), plus $55M Series A (April 2025) led",
       "resource_url": null,
       "resource_title": null,
       "resource_author": null,
@@ -364,25 +260,129 @@
     }
   },
   {
-    "edge_id": 1133,
-    "edge_type": "collaborator",
-    "role": "Co-sponsor",
-    "evidence": "Sens. Brian Schatz (D-HI) and John Kennedy (R-LA) Introduce the AI Labeling Act",
+    "edge_id": 2396,
+    "edge_type": "founder",
+    "role": "Founder",
+    "evidence": "Backfilled from org notes: ... research center founded in 2018 by Clark Barrett, David Dill, Mykel Kochenderfer, and Dorsa Sadigh, operating as an industrial affiliates p",
     "source": {
-      "id": 1105,
-      "name": "John Kennedy",
+      "id": 1565,
+      "name": "Clark Barrett",
       "type": "person",
-      "category": "Policymaker",
+      "category": "Academic",
       "website": null,
-      "notes_excerpt": "Sen. John Kennedy (R-LA) questioned David Evan Harris about AI regulation during a Senate Judiciary Committee hearing on September 17, 2024. Kennedy co-introduced the AI Labeling Act (S. 2691) with Sen. Brian Schatz (D-HI) on October 24, 2023, which would notify consumers when they interact with AI-generated content and require developers to disclose such content. Kennedy has introduced legislatio"
+      "notes_excerpt": "Professor (Research) of Computer Science at Stanford University. Director of Stanford Center for Automated Reasoning (Centaur) and co-director of Stanford Center for AI Safety. Previously Associate Professor at NYU Courant Institute. PhD from Stanford (2003) — his dissertation introduced Satisfiability Modulo Theories (SMT). ACM Fellow. Two-time CAV Award winner (2021, 2024). Pioneer in formal har"
     },
     "target": {
-      "id": 7,
-      "name": "Brian Schatz",
-      "type": "person",
-      "category": "Policymaker",
+      "id": 1128,
+      "name": "Stanford Center for AI Safety",
+      "type": "organization",
+      "category": "AI Safety/Alignment",
       "website": null,
-      "notes_excerpt": "Brian Schatz is Hawaii's senior United States Senator who has served since 2012 and focuses on helping workers, veterans, and families while leading key legislation on health care, climate change, and technology. He serves as Chairman of the Senate Committee on Indian Affairs and is a member of multiple committees including Appropriations, Commerce Science and Transportation, Foreign Relations, an",
+      "notes_excerpt": "Stanford University research center founded in 2018 by Clark Barrett, David Dill, Mykel Kochenderfer, and Dorsa Sadigh, operating as an industrial affiliates program. Conducts research in formal verification, robust decision-making, and trustworthy AI; distinct from the independent nonprofit Center for AI Safety (safe.ai) run by Dan Hendrycks. Focus spans technical safety, fairness, accountability",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 776,
+    "edge_type": "funder",
+    "role": "investor",
+    "evidence": "And their track record is pretty spot-on: They invested in Airbnb, Coinbase, Instagram, Instacart, Pinterest, Slack, Reddit, Lyft, and Oculus [12]",
+    "source": {
+      "id": 3,
+      "name": "Marc Andreessen",
+      "type": "person",
+      "category": "Investor",
+      "website": null,
+      "notes_excerpt": "Marc Andreessen is co-founder of Netscape and co-founder of the venture capital firm Andreessen Horowitz (a16z). He is described as a founder, investor, and co-founder of Netscape, as well as co-founder of the venture capital firm Andreessen Horowitz (a16z). According to Wikipedia, he is an American businessman, venture capitalist, and former software engineer who is the co-author of Mosaic, the f"
+    },
+    "target": {
+      "id": 1104,
+      "name": "Coinbase",
+      "type": "organization",
+      "category": "Deployers & Platforms",
+      "website": null,
+      "notes_excerpt": "Coinbase is joining the x402 Foundation alongside tech titans like Amazon, Google, and Stripe. Coinbase has launched crypto wallet infrastructure that allows AI agents to spend, earn and trade crypto. The company's mission is to increase economic freedom for more than 1 billion people by providing a trusted platform for crypto assets. Coinbase delivered strong Q4 and full year 2024 results, with f",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1173,
+    "edge_type": "funder",
+    "role": null,
+    "evidence": "It was funded by the Government of Canada for CAD$5 million",
+    "source": {
+      "id": 1322,
+      "name": "Government of Canada",
+      "type": "organization",
+      "category": "Government/Agency",
+      "website": null,
+      "notes_excerpt": "Canada was the first country globally to adopt a national AI strategy, launching the Pan-Canadian AI Strategy in 2017. Phase 2 announced in 2022 with $443M+ in funding, supporting the three national AI institutes (Mila, Amii, Vector). Tabled the Artificial Intelligence and Data Act (AIDA) in June 2022 as part of Bill C-27, one of the first proposed AI-specific laws globally. AIDA focuses on respon"
+    },
+    "target": {
+      "id": 1114,
+      "name": "Element AI",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "website": null,
+      "notes_excerpt": "Element AI was a Canadian multinational artificial intelligence company based in Montreal, Quebec that was founded in October 2016. The company was funded by the Government of Canada for CAD$5 million, and raised US$102 million independently, before being acquired by ServiceNow. ServiceNow announced it has signed an agreement to acquire Element AI on November 30, 2020, with ServiceNow completing t",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1174,
+    "edge_type": "funder",
+    "role": "Lead investor",
+    "evidence": "It then raised US$102 million from US investors in a series A round led by the San Francisco venture fund Data Collective and Microsoft Ventures",
+    "source": {
+      "id": 1323,
+      "name": "Data Collective",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "website": null,
+      "notes_excerpt": "DCVC (formerly Data Collective) is a deep tech venture capital firm founded by Matt Ocko and Zachary Bogue, investing in entrepreneurs using computational approaches—especially AI—to solve large-scale real-world problems. Manages billions in AUM across 13 funds including six flagship funds. Invests at seed, Series A, and growth stages across AI, exascale computing, climate, robotics, materials sci"
+    },
+    "target": {
+      "id": 1114,
+      "name": "Element AI",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "website": null,
+      "notes_excerpt": "Element AI was a Canadian multinational artificial intelligence company based in Montreal, Quebec that was founded in October 2016. The company was funded by the Government of Canada for CAD$5 million, and raised US$102 million independently, before being acquired by ServiceNow. ServiceNow announced it has signed an agreement to acquire Element AI on November 30, 2020, with ServiceNow completing t",
+      "resource_url": null,
+      "resource_title": null,
+      "resource_author": null,
+      "resource_year": null
+    }
+  },
+  {
+    "edge_id": 1176,
+    "edge_type": "funder",
+    "role": null,
+    "evidence": "Element AI was founded in October 2016 by Jean-François Gagné and co-founders Yoshua Bengio, Anne Martel, Nicolas Chapados, and Philippe Beaudoin, along with Jean-Sébastien Cournoyer of Montreal venture capital fund Real Ventures",
+    "source": {
+      "id": 1324,
+      "name": "Real Ventures",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "website": null,
+      "notes_excerpt": "Canada's leading early-stage venture capital firm, established in 2007 and headquartered in Montreal. Manages $325M across five funds with an active portfolio of 100+ companies valued at ~$10B. Has invested in 214 companies total, with portfolio unicorns including Xanadu, Blockstream, and Tenstorrent. Deeply embedded in Montreal's AI and deep tech ecosystem. Was an early investor/backer of Element"
+    },
+    "target": {
+      "id": 1114,
+      "name": "Element AI",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "website": null,
+      "notes_excerpt": "Element AI was a Canadian multinational artificial intelligence company based in Montreal, Quebec that was founded in October 2016. The company was funded by the Government of Canada for CAD$5 million, and raised US$102 million independently, before being acquired by ServiceNow. ServiceNow announced it has signed an agreement to acquire Element AI on November 30, 2020, with ServiceNow completing t",
       "resource_url": null,
       "resource_title": null,
       "resource_author": null,
