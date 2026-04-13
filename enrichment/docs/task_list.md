@@ -8,7 +8,7 @@ Execution tracker for the data enrichment project. Strategy and design rationale
 - Phase 2 Cleanup — Complete
 - Phase 3 Entity Enrichment — Complete
 - Phase 4 Edge Enrichment — In progress (reclassify 61%, +48 backfilled edges, source_url 81.2%)
-- Phase 5 Seeding — In progress (Tiers A–G done: cleanup, 9 orgs, 47 persons, 5 anchor resources; +73 structural edges)
+- Phase 5 Seeding — Tiers A–G + investor/CAISI tail complete; Industry Analysis resource bucket still open
 - Phase 6 Importance Ratings — Not started
 
 ---
@@ -200,8 +200,8 @@ Execution tracker for the data enrichment project. Strategy and design rationale
 - [x] Naomi Klein already in DB [941] — skipped; Tim Urban, Nick Bostrom, Audrey Tang, Rana Ayyub, James Bridle dropped per agent research
 
 **Phase 5F/G tail — remaining:**
-- [ ] Verify Investor tagging for Hoffman, Andreessen, Thiel, Khosla (category audit, not new seeds)
-- [ ] Update entity 205 (AISI) notes to reflect June 2025 → CAISI rebrand
+- [x] Verify Investor tagging for Hoffman, Andreessen, Thiel, Khosla — all four already `category=Investor` with `Funder/investor` leading their `influence_type`. Backfilled missing `primary_org` on Hoffman (→Greylock Partners) and Khosla (→Khosla Ventures). Edge-coverage gaps on Hoffman/Khosla logged to Discovered Work. `logs/investor-audit-20260412.md`
+- [x] Update entity 205 (AISI) notes to reflect June 3 2025 → CAISI rebrand — renamed to "Center for AI Standards and Innovation (CAISI)", notes rewritten (mission pivot, Kelly departure, no confirmed successor), notes_sources refreshed, 12 existing edges preserved. `logs/caisi-rebrand-20260412.md`
 - [ ] Fill Industry Analysis resource bucket (still thin at 1)
 
 ## Phase 6: Importance Ratings
@@ -243,4 +243,6 @@ Items found during execution that don't fit neatly into a phase above.
   - Doug Matty [1813] → DoD (historical Apr–Dec 2025)
   - Olivier Sylvain — confirmed departed FTC; no successor in AI senior-advisor seat publicly named. Skipped.
   - Rob Reich, Margaret Martonosi (term ended; Greg Hager [1816] now NSF CISE AD), Jeff Alstott — skipped; no current confirmed AI-specific roles.
-- [ ] **Entity 205 (AISI/CAISI) notes update** — website already says `/caisi`, but notes still describe it as AISI. Rebrand to CAISI happened June 2025 under Lutnick; director Elizabeth Kelly departed at the same time; no public successor.
+- [x] ~~**Entity 205 (AISI/CAISI) notes update**~~ — Done in Phase 5 tail (renamed to "Center for AI Standards and Innovation (CAISI)", notes rewritten to cover the June 3 2025 rebrand + Kelly Feb 2025 departure + no confirmed successor). `logs/caisi-rebrand-20260412.md`
+- [ ] **Vinod Khosla edge coverage** — [849] has only 1 edge (`employer`→Khosla Ventures). Missing funder edges to OpenAI (Khosla Ventures was the largest outside investor pre-Microsoft) and other AI portfolio cos. Surfaced during Phase 5 tail investor audit.
+- [ ] **Reid Hoffman edge coverage** — [848] has only 1 `funder` edge (Juniper Ventures). Missing funder edges to Greylock AI portfolio (OpenAI, Inflection AI) and to orgs he co-founded beyond LinkedIn. Surfaced during Phase 5 tail investor audit.
