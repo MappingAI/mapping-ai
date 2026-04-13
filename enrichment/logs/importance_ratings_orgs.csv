@@ -1,0 +1,800 @@
+id,name,category,importance,rationale
+708,Leading the Future,Political Campaign/PAC,5,$125M super PAC — defining pro-AI-industry political vehicle; anchors the pro-deregulation coalition in AI policy; direct decision-making power on AI elections.
+1439,Public First Action,Political Campaign/PAC,5,$20M Anthropic-funded counterforce to Leading the Future; bipartisan (Carson + Stewart) AI-safety advocacy; defines pro-regulation side of PAC war.
+1039,Republican Party,Political Campaign/PAC,4,Major national party confronting AI fracture (state GOPs vs WH); decision-making power at scale.
+1040,Democratic Party,Political Campaign/PAC,4,Major national party; launched House Democratic Commission on AI; decision-making power at scale.
+709,Think Big,Political Campaign/PAC,4,Dem-aligned sister PAC to Leading the Future; $10.5M; opposed Bores; network node.
+710,American Mission,Political Campaign/PAC,3,"LTF-aligned GOP super PAC; backed 6 TX/NC candidates; network node, narrower reach."
+711,Defending Our Values PAC,Political Campaign/PAC,3,Public First Action-affiliated GOP PAC; AI-safety-side GOP candidate support.
+712,Jobs and Democracy PAC,Political Campaign/PAC,3,"Public First Action-affiliated Dem PAC; backed Foushee, Bores, Allred."
+1118,National Republican Senatorial Committee,Political Campaign/PAC,2,Major Senate GOP committee; some AI-ad-defending posture but AI-peripheral mandate.
+1371,Club for Growth Action,Political Campaign/PAC,2,Conservative super PAC; Thiel-backed; general deregulation stance applies to AI but not AI-specific.
+249,Alex Bores campaign,Political Campaign/PAC,1,Single-candidate state assembly campaign; $234K raised; narrow footprint.
+713,Dream NYC,Political Campaign/PAC,1,"Tiny PAC ($1,332 spend); pro-safety posture but negligible scale."
+728,Nvidia,Infrastructure & Compute,5,92% GPU market share; $4.6T cap; pivotal to every frontier-lab training run; center of U.S.-China chip export debate.
+740,TSMC,Infrastructure & Compute,5,Fabricates 90%+ of advanced AI chips globally; Taiwan chokepoint defines U.S.-China AI competition; decision-making power over supply.
+1725,ASML,Infrastructure & Compute,5,Monopoly on EUV lithography (<7nm); central to U.S.-China chip export controls; single structural chokepoint for frontier chip production.
+1250,AMD,Infrastructure & Compute,4,Main Nvidia competitor in AI accelerators; multi-billion OpenAI + Meta deals; export-controls-affected.
+742,Huawei,Infrastructure & Compute,4,"China's leading AI-chip answer (Ascend, CloudMatrix); core of China's self-sufficiency push against export controls."
+1377,SpaceX,Infrastructure & Compute,4,Merged with xAI (Feb 2026) → $1.25T Orbital Intelligence; Starlink space-based AI data centers; Musk political weight.
+746,Arm,Infrastructure & Compute,3,50% hyperscaler compute (2025); edge-AI + datacenter chip IP; major AI-compute enabler.
+737,Qualcomm,Infrastructure & Compute,3,Leader in on-device/edge AI inference; major IP + partnerships; less central than Nvidia/AMD.
+727,Cloudflare,Infrastructure & Compute,3,'Pay-per-crawl' AI-content economy move; Workers AI platform; policy voice on AI bots + content.
+1347,Helion Energy,Infrastructure & Compute,3,First fusion PPA (for Microsoft AI data centers); Altman-backed; AI-energy-demand narrative anchor.
+1340,National Infrastructure Fund,Infrastructure & Compute,3,Saudi PIF-linked; $1.2B with Humain; 250MW AI datacenter financing.
+1379,Neuralink,Infrastructure & Compute,2,"BCI company, AI-adjacent; ongoing FDA trials; regulatory-gap narrative but not AI-policy-central."
+1134,Massachusetts Green High Performance Computing Center,Infrastructure & Compute,2,Multi-university HPC consortium; academic scale; regional relevance.
+1257,Yale Center for Research Computing,Infrastructure & Compute,1,Single-university HPC facility; narrow institutional scope.
+904,Electronic Frontier Foundation,Ethics/Bias/Rights,5,35-year digital-rights institution; defining voice on AI surveillance + civil-liberties-based AI regulation; tier-1 reach + track record.
+905,ACLU,Ethics/Bias/Rights,5,Major civil rights institution; Speech/Privacy/Tech Project leads AI-surveillance + facial-recognition opposition; tier-1 national decision-making influence.
+132,Partnership on AI,Ethics/Bias/Rights,4,"141 partners, 19 countries — leading multi-stakeholder AI-ethics convener."
+875,DAIR,Ethics/Bias/Rights,4,Gebru's Distributed AI Research Institute — defining AI-ethics-research activist org; coined TESCREAL critique.
+903,Algorithmic Justice League,Ethics/Bias/Rights,4,"Buolamwini's org — Gender Shades, Coded Bias; defining anti-algorithmic-bias org."
+906,Data & Society,Ethics/Bias/Rights,4,Leading independent AI-research nonprofit; NAIAC working-group chair; NY-based.
+907,Center for Democracy & Technology,Ethics/Bias/Rights,4,DC nonprofit AI Governance Lab (Bogen); major Congressional + Commerce AI-policy convener.
+1051,Center for Humane Technology,Ethics/Bias/Rights,4,Harris + Raskin; 'Social Dilemma' affiliated; major cultural-critique voice on AI harms.
+1054,Signal,Ethics/Bias/Rights,4,Signal Foundation (Whittaker); defining pro-privacy anti-surveillance AI voice; cultural-tech weight.
+873,Mozilla Foundation,Ethics/Bias/Rights,4,$1.4B reserves; 55+ AI startup investments; Common Voice; Mozilla AI/Ventures; trustworthy-AI anchor.
+1061,Common Sense Media,Ethics/Bias/Rights,4,Major kids-tech ratings org; AI in education/children advocacy (Bruce Reed Head of AI); mainstream reach.
+1325,Amnesty International,Ethics/Bias/Rights,4,Major international human-rights org; facial-recognition ban advocacy; global reach + policy weight.
+871,Human Rights Watch,Ethics/Bias/Rights,3,Major international human-rights org; Stop Killer Robots co-founder; autonomous-weapons-systems focus (narrower AI scope).
+908,ORCAA,Ethics/Bias/Rights,3,Cathy O'Neil's algorithmic-auditing firm; Congressional testimony; 'Weapons of Math Destruction' brand.
+817,Humane Intelligence,Ethics/Bias/Rights,3,"Chowdhury's 501(c)(3); red-teaming + bias bounties; 30+ evaluations, 5,250+ participants."
+1478,The Leadership Conference on Civil and Human Rights,Ethics/Bias/Rights,3,240+ member coalition; Center for Civil Rights and Technology (2023); major civil-rights AI voice.
+1477,Lawyers' Committee for Civil Rights Under Law,Ethics/Bias/Rights,3,AI Civil Rights Act co-endorser; legal civil-rights AI advocacy.
+1522,Human Rights Data Analysis Group,Ethics/Bias/Rights,3,Pioneering research on predictive policing bias amplification; statistical rigor; niche but influential.
+1459,Pathos Consulting Group,Ethics/Bias/Rights,2,K-12 AI-ethics consulting firm; narrow education-sector scope.
+767,NoHarm,Ethics/Bias/Rights,2,Medical AI safety evaluation framework; narrow healthcare focus.
+1052,DAIR Institute,Ethics/Bias/Rights,1,"DUPLICATE of [875] DAIR — same org, merge candidate."
+1632,Distributed AI Research Institute,Ethics/Bias/Rights,1,"DUPLICATE of [875] DAIR — same org, merge candidate."
+140,OpenAI,Frontier Lab,5,The defining AI company — ChatGPT reframed AI globally; policy positions + pre-deployment testing agreements anchor U.S. AI governance.
+133,Anthropic,Frontier Lab,5,Claude + Constitutional AI + RSP framework; $20M Public First Action super-PAC funder; second-pole of frontier-lab AI-safety policy voice.
+146,Google DeepMind,Frontier Lab,5,Hassabis Nobel + Gemini; third frontier pole; UK/international policy leverage via DeepMind's London base.
+204,Meta AI,Frontier Lab,5,Llama anchors the open-source frontier narrative; LeCun's policy voice; Meta's lobbying weight in DC + EU.
+1041,Google,Frontier Lab,5,Alphabet parent — controls DeepMind + Google AI; tier-1 AI-policy lobbying + compute + distribution.
+1042,Microsoft,Frontier Lab,5,Controls OpenAI partnership + Azure compute backbone; Brad Smith is top Washington AI-policy voice.
+1043,Meta,Frontier Lab,5,Parent of Meta AI + Llama; mainstream platform reach; AI-regulation battleground.
+177,xAI,Frontier Lab,5,Musk-led; SpaceX merger (Feb 2026) → $1.25T Orbital Intelligence; political weight via Musk.
+214,DeepSeek,Frontier Lab,5,Liang Wenfeng's China disruptor; V3/R1 reframed U.S.-China AI competition + export-controls debate.
+181,Safe Superintelligence Inc.,Frontier Lab,4,Sutskever's post-OpenAI lab; $32B valuation (Apr 2025); no product but narrative-shaping.
+213,Mistral AI,Frontier Lab,4,Leading European frontier lab (Mensch + Lample + Lacroix); open-weight; EU AI sovereignty narrative.
+876,Thinking Machines Lab,Frontier Lab,4,Murati + Schulman post-OpenAI; $12B valuation; high-profile new entrant.
+1432,Advanced Machine Intelligence Labs,Frontier Lab,4,LeCun's post-Meta lab; $1.03B seed at $3.5B pre-money (Mar 2026); LeCun's JEPA/world-models narrative.
+1787,Cohere,Frontier Lab,4,Enterprise-focused Canadian frontier lab; Gomez/Frosst/Zhang; legit frontier-lab tier.
+755,Humain,Frontier Lab,4,Saudi PIF-backed (MbS); $600B Saudi AI infrastructure initiative center; geopolitically important.
+769,World Labs,Frontier Lab,3,Fei-Fei Li's spatial-intelligence lab; $1.23B raised; Marble product — niche frontier scope.
+760,Sakana AI,Frontier Lab,3,Japanese frontier-adjacent lab; AI Scientist system; $302M raised; narrower global weight.
+1788,Inflection AI,Frontier Lab,3,Suleyman/Hoffman/Simonyan 2022 lab; absorbed into Microsoft 2024; historically significant.
+1402,Stability AI,Frontier Lab,3,Stable Diffusion creator; $80M from Schmidt/Coatue; narrowed scope post-Mostaque.
+1069,Microsoft Research,Frontier Lab,2,Multidisciplinary research division — 35+ years; dwarfed by Microsoft/OpenAI partnership in AI-policy discourse.
+1066,Google Research,Frontier Lab,2,Research division of Google; superseded by DeepMind as Google's AI face.
+1065,Google Brain,Frontier Lab,2,Historical — merged into Google DeepMind (2023); no longer separate entity.
+1070,Facebook AI Research (FAIR),Frontier Lab,2,Meta AI research division (founded 2015); subsumed under Meta AI branding.
+1380,High-Flyer AI,Frontier Lab,2,"Chinese hedge fund that incubated DeepSeek; funder-parent, not a frontier-lab itself."
+1333,McGill AI Lab,Frontier Lab,2,"Umbrella for McGill's AI labs (Precup, Pineau, Cheung); strong academic but not frontier-lab-tier."
+1433,AMI Labs,Frontier Lab,1,DUPLICATE of [1432] Advanced Machine Intelligence Labs — merge candidate.
+210,SAG-AFTRA,Labor/Civil Society,5,160K-member union; led 118-day AI strike (Drescher); defining AI-labor precedent template.
+874,AFL-CIO,Labor/Civil Society,5,"Nation's largest labor federation (63 unions, 15M workers); Workers First AI Initiative; tier-1 AI-labor voice."
+135,Writers Guild of America,Labor/Civil Society,4,148-day 2023 strike set AI-writing contract precedent; recently reached 2026 AI agreement with AMPTP.
+268,American Federation of Teachers,Labor/Civil Society,4,1.8M educators; $23M National Academy for AI Instruction with Microsoft/OpenAI/Anthropic; education-AI anchor.
+1528,Alliance of Motion Picture and Television Producers,Labor/Civil Society,4,Trade assoc of Disney/Netflix/WB/Sony/Paramount/Apple/Amazon — the management counterparty to SAG-AFTRA + WGA on AI.
+870,Encode Justice,Labor/Civil Society,4,"Revanur's youth-led org (1,000 members, 30 countries); passed CA SB 53, NY RAISE Act, TAKE IT DOWN Act — concrete AI-legislation wins."
+872,Campaign to Stop Killer Robots,Labor/Civil Society,3,270+ NGOs in 70+ countries; autonomous-weapons ban campaign; 120+ states supporting.
+1063,Amazon Labor Union,Labor/Civil Society,3,JFK8 Staten Island; NLRB-ordered bargaining; labor-AI warehouse focus.
+1367,Black in AI,Labor/Civil Society,3,Gebru + Abebe 2017; major AI-inclusion org; MacArthur-funded; annual conference.
+1384,AI4ALL,Labor/Civil Society,3,Fei-Fei Li 2017 co-founded; AI-diversity pipeline; College Pathways.
+270,PauseAI,Labor/Civil Society,3,"Grassroots 600+ members, 13+ countries; organized protests at Google DeepMind/OpenAI; FLI-funded."
+1016,Humans First,Labor/Civil Society,2,CAIS-incubated cross-partisan grassroots coalition; AFL-CIO + conservative groups.
+1017,Alliance for a Better Future,Labor/Civil Society,2,Founded Mar 2026 — conservative AI coalition (Heritage + 9 orgs).
+1207,Tech Justice Law Project,Labor/Civil Society,2,Impact-litigation + advocacy org (est. 2023); AI-harms legal action.
+1206,Social Media Victims Law Center,Labor/Civil Society,2,Legal-advocacy org expanding into AI litigation; AI-harm lawsuits.
+246,ControlAI,Labor/Civil Society,2,Miotti's UK-based advocacy non-profit; 150+ UK-parliament briefings on AI x-risk.
+244,Fairly Trained,Labor/Civil Society,2,Newton-Rex's training-data ethics certifier; Licensed Model certification.
+245,Data Workers' Inquiry,Labor/Civil Society,2,DAIR+Weizenbaum+TU Berlin; 25 community researchers across 9 countries; AI-labor research.
+258,High Impact Professionals,Labor/Civil Society,1,Career transition nonprofit; AI-safety-adjacent job board.
+259,Upgradable,Labor/Civil Society,1,Life-optimization coaching for AI-safety advocates; niche.
+317,Probably Good,Labor/Civil Society,1,Career guidance nonprofit; 7 employees; AI-safety job board.
+320,Successif,Labor/Civil Society,1,Mid-career AI-safety transition org; Open-Phil-funded.
+362,The AI Whistleblower Initiative (AIWI),Labor/Civil Society,1,Berlin nonprofit (2024); anonymous AI-insider consultation; early-stage.
+254,Stop AI,Labor/Civil Society,1,Civil-disobedience protest group (chained OpenAI doors); small splinter of PauseAI.
+426,Stop AGI,Labor/Civil Society,1,Public-education website on AGI risks; listed 'no longer active' on AISafety.com.
+1018,QuitGPT,Labor/Civil Society,1,Consumer-boycott campaign (Feb 2026) against OpenAI Pentagon contracts.
+1294,Court Watch NOLA,Labor/Civil Society,1,Local New Orleans court-watching program; narrow AI-justice-adjacent scope.
+862,The New York Times,Media/Journalism,5,Tier-1 U.S. paper; Zach Seward AI Initiatives team of 8; Cade Metz + Kevin Roose + Kashmir Hill anchor AI coverage; narrative-defining.
+1059,New York Times,Media/Journalism,5,DUP of [862] — same org; kept at 5; merge candidate.
+1409,Wall Street Journal,Media/Journalism,5,"Tier-1 business paper; major AI-scoops beat (Jin, ex-Hao); News Corp lawsuits vs OpenAI; business-AI discourse anchor."
+865,Bloomberg,Media/Journalism,5,"Tier-1 business wire + terminal; extensive AI coverage (Ghaffary, Olson); Bloomberg Opinion columns shape business-AI frame."
+868,The Washington Post,Media/Journalism,4,Major U.S. paper; Nitasha Tiku's AI-ethics beat; AI & Tech Brief newsletter; broken major AI-harms stories.
+866,Financial Times,Media/Journalism,4,Tier-1 UK/Europe paper; Madhumita Murgia first AI Editor; Heikkilä; Europe-UK AI policy anchor.
+863,Wired,Media/Journalism,4,Leading tech-culture mag; Will Knight's AI Lab newsletter; defined tech-consumer AI framing.
+276,TIME Magazine,Media/Journalism,4,TIME 100 AI list is definitional cultural artifact; TIME AI Agent with Scale AI; narrative-defining.
+1829,Reuters,Media/Journalism,4,Major international wire; Deepa Seetharaman + Anna Tong (historic); tier-1 AI-accountability reporting.
+867,Associated Press,Media/Journalism,4,"Pioneer of AI-journalism standards (2023); 5,000 pieces/day; OpenAI + Google content deals; global wire."
+864,MIT Technology Review,Media/Journalism,4,Leading technical-AI publication; Heaven + team; recognized as AI-policy authority.
+175,The Verge,Media/Journalism,3,Major tech pub; Nilay Patel + Hayden Field + Alex Heath legacy; Decoder podcast.
+869,Vox Media,Media/Journalism,3,Vox + Future Perfect AI coverage; OpenAI content licensing deal; major multi-outlet pub.
+1830,Semafor,Media/Journalism,3,Tech vertical with Albergotti's twice-weekly AI newsletter (30K+ exec readers); rising.
+1831,Forbes,Media/Journalism,3,AI 50 list (with Sequoia + Meritech); Anna Tong coverage; business-AI discourse.
+820,Exponential View,Media/Journalism,3,Azhar's newsletter — 200K+ subs; AI economic/societal analysis; major policy-reader reach.
+1060,Platformer,Media/Journalism,3,Casey Newton's independent newsletter; Hard Fork podcast co-production; subscriber-funded.
+136,Tarbell Center for AI Journalism,Media/Journalism,3,Grantmaker for AI journalism; $1K–$20K grants; Open Phil-funded; infrastructure role.
+1463,Pulitzer Center,Media/Journalism,3,AI Accountability Network; major AI-accountability journalism-support nonprofit.
+743,Reddit,Media/Journalism,2,Data-licensing platform ($60M Google + $70M OpenAI); Reddit Answers AI; not primarily a journalism org.
+460,Time (AI coverage),Media/Journalism,2,DUP of [276] TIME Magazine — the AI-coverage sub-entity; merge candidate.
+237,Transformer (newsletter),Media/Journalism,2,Shakeel Hashim's AI-policy weekly newsletter; Tarbell-funded; growing specialist reach.
+1462,Quartz,Media/Journalism,2,Business-news outlet; AI-integration controversy; narrower reach.
+749,Asteria Film Co.,Media/Journalism,2,Ethical-AI film studio (Mooser + Lyonne); not journalism — misclassified; narrower.
+313,Manifold Markets,Media/Journalism,2,Play-money prediction market; AI-timeline markets; not primarily journalism.
+1464,Craig Newmark Graduate School of Journalism,Media/Journalism,2,CUNY grad journalism school; $30M Newmark endowment; AI-journalism pipeline.
+1550,Canadian Journalism Foundation,Media/Journalism,2,Canadian nonprofit; journalism awards + education; AI-peripheral.
+1410,The American Scholar,Media/Journalism,2,Phi Beta Kappa quarterly; literary magazine; AI-peripheral venue.
+289,Explainable,Media/Journalism,1,Niche org translating AI for public; narrow footprint.
+335,Donations List Website,Media/Journalism,1,Vipul Naik's AI-safety donation-tracking database; niche back-office reference.
+384,An Overview of the AI Safety Funding Situation,Media/Journalism,1,"Actually a single EA Forum post, not an org — misclassified as entity."
+424,ML & AI Safety Updates,Media/Journalism,1,Listed 'no longer active' on AISafety.com; defunct.
+729,Amazon,Deployers & Platforms,5,AWS compute + Anthropic investor + Nova models; top-3 AI compute/deployment; Frontier Model Safety Framework.
+1071,Tesla,Deployers & Platforms,5,Largest-scale real-world AI deployment (FSD); Optimus; Digital Optimus with xAI; Musk political weight.
+1073,Palantir,Deployers & Platforms,5,Thiel-founded; defining defense/gov AI-analytics; pivotal in U.S. national-security AI.
+1329,Apple,Deployers & Platforms,5,Apple Intelligence + OpenAI partnership; ~2B-device deployment base; privacy-first framing defines consumer-AI policy.
+1225,Alphabet Inc.,Deployers & Platforms,5,Parent of Google + DeepMind; controls AI Principles evolution (removed weapons pledge); tier-1 deployer + lobbyist.
+1058,Anduril Industries,Deployers & Platforms,4,$20B Army AI contract (2026); defense-AI anchor; Luckey's political weight.
+738,Scale AI,Deployers & Platforms,4,$14B valuation; Meta $14.3B investment (Wang→Meta); defining AI-data-infrastructure company + DoD Thunderforge.
+1192,IBM,Deployers & Platforms,4,watsonx platform; $12.5B generative AI; major enterprise AI deployer + DC 'precision regulation' voice.
+1401,ByteDance,Deployers & Platforms,4,TikTok parent; $5.4M H1 2025 US lobbying; China-AI-geopolitics anchor.
+1403,TikTok,Deployers & Platforms,4,Subject to PAFACA ban + divestiture law; 170M U.S. users; central to U.S.-China tech tensions.
+1378,X,Deployers & Platforms,4,"Musk-owned, integrates Grok; xAI acquired X (Mar 2025); EU/UK regulatory investigations."
+745,Salesforce,Deployers & Platforms,4,$250B enterprise-AI deployer; Agentforce; Benioff's mainstream-policy voice; NAIAC seat.
+758,Adobe,Deployers & Platforms,4,"Firefly generative AI + Content Credentials (C2PA); 5,000+ member authenticity standard."
+1072,Stripe,Deployers & Platforms,3,Collison brothers; major payments AI deployer; $1.9T processed on platform in 2025.
+1170,LinkedIn,Deployers & Platforms,3,Microsoft-owned; 1B members; Hiring Assistant AI deployment; HR-AI-policy-relevant.
+1221,Perplexity AI,Deployers & Platforms,3,~$20B valuation; AI search; government partnerships; content-licensing controversies.
+731,Cassava Technologies,Deployers & Platforms,3,Masiyiwa's African tech group; Africa's first AI factory; TIME 100 AI.
+747,Unitree Robotics,Deployers & Platforms,3,"Leading humanoid-robot exporter (5,500/yr); Xi Jinping symposium participant; US-Congressional concern."
+748,Mobileye,Deployers & Platforms,3,ADAS/autonomous-driving leader; RSS framework (IEEE 2846); 230M+ vehicles.
+752,ElevenLabs,Deployers & Platforms,3,$3.3B valuation; AI voice leader; first AIUC-1 insured AI voice agents.
+753,Agility Robotics,Deployers & Platforms,3,First commercially-deployed humanoid (Digit); Amazon deployment partnership.
+750,Tools for Humanity,Deployers & Platforms,3,Altman + Blania; World ID iris Orb; $2.5B valuation; proof-of-humanity narrative.
+754,Pony.ai,Deployers & Platforms,3,"$800M IPO; 1,446-vehicle robotaxi fleet; unit-economics breakeven."
+741,Midjourney,Deployers & Platforms,3,"$300M revenue, 11 employees; Disney/NBCUniversal copyright lawsuits; defining AI-image-gen copyright cases."
+756,KoBold Metals,Deployers & Platforms,3,AI-driven mineral exploration; $1.2B raised; $2B Mingomba copper project; TIME 100 AI.
+764,Shield AI,Deployers & Platforms,3,Defense AI autonomy company; $5.3B valuation; first AI pilot deployed in combat.
+1321,ServiceNow,Deployers & Platforms,3,Now Assist + autonomous AI agents; $1B AI ACV target 2026; major enterprise deployer.
+1541,Mayo Clinic,Deployers & Platforms,3,Leading healthcare AI deployer; 200+ projects; Google Cloud AI factory.
+761,Surge AI,Deployers & Platforms,3,$1.2B revenue bootstrapped; data-labeling for OpenAI/Google/Anthropic/Meta.
+1104,Coinbase,Deployers & Platforms,3,x402 Foundation member (with Amazon/Google/Stripe); AI-agent crypto-commerce infrastructure.
+1214,Khan Academy,Deployers & Platforms,2,Khanmigo AI tutor built on GPT-4; major education-AI deployer.
+1216,Formation Bio,Deployers & Platforms,2,AI-driven drug development; acquires clinical-stage drugs.
+1179,Darktrace,Deployers & Platforms,2,UK AI cybersecurity; $5.3B Thoma Bravo acquisition; narrower public profile.
+1180,Quantexa,Deployers & Platforms,2,UK AI decision intelligence; $2.6B valuation; enterprise scope.
+1240,Cognizant,Deployers & Platforms,2,IT services + AI practice; enterprise scope; Banifatemi Chief Responsible AI Officer.
+1610,Elicit,Deployers & Platforms,2,AI research assistant; ex-Ought; academic-research niche.
+1312,Clarifai,Deployers & Platforms,2,Early deep-learning platform (2013); niche enterprise CV/NLP.
+1244,LandingAI,Deployers & Platforms,2,Andrew Ng's computer-vision industrial-AI company.
+1542,Radical AI,Deployers & Platforms,2,NYC autonomous materials-science discovery; early-stage.
+1720,EliseAI,Deployers & Platforms,2,Housing + healthcare conversational AI; specialized.
+1242,Workera,Deployers & Platforms,2,Skills-verification AI platform (Katanforoosh); niche.
+1458,Adaptive Security,Deployers & Platforms,2,AI-deepfake-defense cybersecurity startup; specialized.
+371,Arkose Labs,Deployers & Platforms,2,Fraud prevention platform; AI-bot detection; enterprise-cyber.
+1400,Jukedeck,Deployers & Platforms,2,Newton-Rex's AI-music startup; acquired by ByteDance 2019 (historical); now defunct.
+762,Tryolabs,Deployers & Platforms,2,AI consulting firm (Uruguay); CEO TIME 100 AI 2025.
+763,Splice,Deployers & Platforms,2,Music-creation platform; $100M+ revenue; AI-music tools; narrower.
+1182,Evolution AI,Deployers & Platforms,2,UK document-processing AI; niche financial-data extraction.
+1604,Piramidal,Deployers & Platforms,1,YC W24 neurotech startup; EEG foundation model; very early-stage.
+124,Brookings Institution,Think Tank/Policy Org,5,"Tier-1 DC think tank; major AI-policy research (Muro, West, Kinder); mainstream reach + decision-making influence."
+152,RAND Corporation,Think Tank/Policy Org,5,Largest nonpartisan national-security research org; RAND CAST; Heim + LaPointe; tier-1 AI-defense policy anchor.
+131,Center for Security and Emerging Technology (CSET),Think Tank/Policy Org,5,Georgetown's dedicated AI-security think tank; Helen Toner legacy; defining U.S. AI-national-security analysis source.
+349,Center for Strategic and International Studies (CSIS),Think Tank/Policy Org,5,Tier-1 bipartisan DC think tank; Wadhwani AI Center (Gregory C. Allen); chip-export-controls analysis anchor.
+1067,Council on Foreign Relations,Think Tank/Policy Org,5,Tier-1 U.S. foreign-policy institution; Foreign Affairs; AI-geopolitics policy anchor.
+224,Center for a New American Security (CNAS),Think Tank/Policy Org,4,Major defense-policy think tank; Paul Scharre's autonomous-weapons work; tier-1 AI-defense policy.
+229,Future of Life Institute,Think Tank/Policy Org,4,FLI — AI pause letter; $30K+ signatures; Max Tegmark + Aguirre; defining AI-x-risk advocacy org.
+173,AI Now Institute,Think Tank/Policy Org,4,Major NYC AI-ethics/power research; Amba Kak + Sarah Myers West co-EDs; tier-1 critical-AI analysis.
+225,Centre for the Governance of AI (GovAI),Think Tank/Policy Org,4,Oxford-linked AI-governance research; Ben Garfinkel Director; trains much of the AI-gov policy pipeline.
+1068,World Economic Forum,Think Tank/Policy Org,4,Global convener — AI Governance Alliance; Brende + Betti + Li + Basso; mainstream Davos AI discourse anchor.
+231,Center for American Progress,Think Tank/Policy Org,4,Major DC progressive think tank; dedicated Tech Policy team (Conner + Shahi + Alvarez).
+1108,Special Competitive Studies Project,Think Tank/Policy Org,4,Eric-Schmidt-founded (2021); Bajraktari; U.S.-competitiveness-in-AI anchor; ex-NSCAI continuity.
+230,Centre for Long-Term Resilience,Think Tank/Policy Org,4,London-based extreme-risks think tank; Whittlestone + Shane + Hobbs; UK AI-policy anchor.
+1454,UNSG's AI Advisory Body,Think Tank/Policy Org,4,UN High-Level AI Advisory Body (2023); 39 experts from 33 countries; global multilateral-AI-gov anchor.
+1517,Bipartisan Policy Center,Think Tank/Policy Org,4,$31M/yr DC think tank founded by ex-Senate leaders; bipartisan AI-policy convening.
+1374,Munich Security Conference,Think Tank/Policy Org,4,Premier international-security annual conference; Tech Accord on Deceptive AI; mainstream global AI-gov forum.
+351,"80,000 Hours",Think Tank/Policy Org,4,Oxford-founded career-advisory nonprofit; huge pipeline influence into AI safety/governance; major EA-AI reach.
+228,Americans for Responsible Innovation (ARI),Think Tank/Policy Org,3,Carson + Gastfriend; bipartisan AI-policy nonprofit; DC advocacy.
+226,AI Policy Institute,Think Tank/Policy Org,3,Colson's AIPI; public-opinion research shaping AI-reg narrative.
+222,Secure AI Project,Think Tank/Policy Org,3,Beckstead + Lempel + Woodside; advocates legal safety requirements for large AI labs.
+1770,Information Technology Industry Council,Think Tank/Policy Org,3,Major tech trade association; dedicated AI policy team; industry-AI-lobbying voice.
+1357,Federation of American Scientists,Think Tank/Policy Org,3,DC science-policy nonprofit (est. 1945); Day One Project; active AI-governance work.
+1356,Niskanen Center,Think Tank/Policy Org,3,Center-right think tank; AI regulatory-restraint voice; major independent thinker brand.
+956,Roosevelt Institute,Think Tank/Policy Org,3,Progressive-econ think tank; Stiglitz Chief Economist; AI-antitrust frameworks.
+1571,"RAND Center on AI, Security, and Technology",Think Tank/Policy Org,3,RAND CAST; sub-division of RAND — already 5 above; sub-entity tier.
+1618,Oxford Martin School,Think Tank/Policy Org,3,Oxford interdisciplinary research institute; houses Oxford Martin AI Gov Initiative (Trager + Osborne).
+439,Institute for AI Policy and Strategy (IAPS) AI Policy Fellowship,Think Tank/Policy Org,3,Fellowship program of IAPS; $15–22K stipends; pipeline-building for AI policy.
+392,The Future Society,Think Tank/Policy Org,3,Boston/Brussels nonprofit; Athens Roundtable; 29 staff; EU AI Act Code of Practice involvement.
+1597,Founders Pledge,Think Tank/Policy Org,3,EA entrepreneur-pledge nonprofit; publishes AI-funder research.
+296,The AI Policy Network,Think Tank/Policy Org,3,DC 501(c)(4) lobby led by Colson; ex-Pentagon AI Policy Director on team.
+381,Metaculus,Think Tank/Policy Org,3,PBC forecasting platform; 30 staff; FLI partnership; AI-policy-forecasting hub.
+1455,British Standards Institute,Think Tank/Policy Org,3,UK national standards body; first ISO/IEC 42001 AI-management-system accreditation.
+1628,SecureBio,Think Tank/Policy Org,3,Esvelt's biosecurity org; AI biosec benchmarks used by all major labs.
+1345,Colorado AI Policy Work Group,Think Tank/Policy Org,3,Polis-convened (Oct 2025); revising Colorado AI Act SB 24-205 (first comprehensive state anti-discrimination AI law).
+359,Beijing Institute of AI Safety and Governance (Beijing-AISI),Think Tank/Policy Org,3,China's AISI equivalent (Sep 2024); Yi Zeng-led; core of China AI Safety & Dev Assoc.
+361,China AI Safety & Development Association (CnAISDA),Think Tank/Policy Org,3,China's network of AI-safety institutions launched at Paris Summit 2025.
+157,Forecasting Research Institute,Think Tank/Policy Org,2,41 staff; forecasting methods for high-stakes AI decisions.
+160,Effective Institutions Project,Think Tank/Policy Org,2,Global philanthropic-advisory nonprofit; institutional-decision-making focus.
+312,Rethink Priorities,Think Tank/Policy Org,2,~46-staff cross-cause research org; AI safety + animal welfare + GHP.
+1491,ACM US Technology Policy Committee,Think Tank/Policy Org,2,ACM's USTPC; 170+ members; technical-community tech-policy voice.
+171,SaferAI,Think Tank/Policy Org,2,Campos's French nonprofit; AI risk-management for policy + industry.
+169,AI Standards Lab,Think Tank/Policy Org,2,Remote AI-safety-standards org; ISO/IEC/CEN-CENELEC/IEEE/NIST contributions.
+192,Foresight Institute,Think Tank/Policy Org,2,SF nonprofit (1986); Duettmann; AI Safety Grant Program.
+293,Centre for Future Generations,Think Tank/Policy Org,2,Brussels-based (2023); 27 staff; EU AI-governance + future-generations focus.
+223,New Consensus,Think Tank/Policy Org,2,Agile think tank; Chakrabarti-founded; economic-renewal plans.
+1596,Forward Global,Think Tank/Policy Org,2,Paris geopolitical-risk advisory; 470 staff; €100M revenue; commercial.
+958,Collective Intelligence Project,Think Tank/Policy Org,2,Siddarth + Huang; participatory AI-governance alignment assemblies.
+959,Plurality Institute,Think Tank/Policy Org,2,Plural-tech research + convening; Weyl-adjacent.
+960,RadicalxChange,Think Tank/Policy Org,2,Weyl's mechanism-design nonprofit; quadratic voting/funding.
+1762,Economic Security Action California,Think Tank/Policy Org,2,State-level CA AI-policy advocacy; SB 1047 + SB 53 co-sponsor.
+344,Public AI Network,Think Tank/Policy Org,2,Global network promoting AI as public infrastructure.
+540,Public AI,Think Tank/Policy Org,2,SF nonprofit advocating public-interest AI-infra alternative.
+957,Windfall Trust,Think Tank/Policy Org,2,Economic-redistribution-of-AI-gains research project.
+1524,The Hastings Center,Think Tank/Policy Org,2,Bioethics research institute (est. 1969); Ethics of AI in Health program.
+1062,Civic Signals,Think Tank/Policy Org,2,Pariser + Stroud research initiative; media-engagement-centered.
+1431,Encode AI,Think Tank/Policy Org,2,Revanur's youth-led DC nonprofit; CA SB 53 + NY RAISE Act sponsor.
+429,Institute for Law & AI (LawAI),Think Tank/Policy Org,2,"40+ researchers, 12 countries; Legal Priorities Project successor."
+408,Convergence Analysis,Think Tank/Policy Org,2,AI alignment + ethics + governance research; 9-person team.
+390,Simon Institute for Longterm Governance,Think Tank/Policy Org,2,Geneva 5-staff nonprofit; international AI governance + multilateral.
+277,Transformative Futures Institute,Think Tank/Policy Org,2,501(c)(3) research org; Gruetzemacher-led; CSER affiliate.
+290,AI Governance & Safety Canada,Think Tank/Policy Org,2,15-staff Canadian nonprofit; parliamentary AI-policy testimony.
+295,Future Matters,Think Tank/Policy Org,2,German nonprofit with 501(c)(3) equiv; AI-gov + biosec + climate.
+291,Center for Law & AI Risk,Think Tank/Policy Org,2,Arbel + Salib ~2-person academic research center.
+233,Berggruen Institute,Think Tank/Policy Org,2,LA-based institute with Beijing/Venice centers; 21st-c institution-shaping.
+393,Vista Institute for AI Policy,Think Tank/Policy Org,1,Rethink Priorities fiscal-sponsored project; 6 staff; virtual courses.
+370,Talos Fellowship (Talos Network),Think Tank/Policy Org,1,EU Tech Policy Fellowship; 50 fellows/yr; training pipeline.
+314,Odyssean Institute,Think Tank/Policy Org,1,UK + 4 continents; 12 researchers; 'Odyssean Process' methodology.
+294,Good Ancestors,Think Tank/Policy Org,1,Australian small charity; AI long-term-future focus.
+329,ILINA Program,Think Tank/Policy Org,1,African research program; 14 employees; Junior Research Fellowship.
+350,Association for Long Term Existence and Resilience (ALTER),Think Tank/Policy Org,1,Israeli 5-staff nonprofit; AI-safety consortium institutional member.
+472,Association for Long Term Existence and Resilience,Think Tank/Policy Org,1,DUP of [350] — same org; merge candidate.
+517,Center for Security and Emerging Technology,Think Tank/Policy Org,1,DUP of [131] — same org; merge candidate.
+518,The AI Whistleblower Initiative,Think Tank/Policy Org,1,DUP of [362] in Labor/Civil Society — AI-insider-whistleblowing org.
+477,Quantified Uncertainty Research Institute,Think Tank/Policy Org,1,Forecasting + epistemics research; small niche.
+211,Andreessen Horowitz (a16z),VC/Capital/Philanthropy,5,$15B+ raised; Andreessen + Horowitz; defining pro-AI VC anchor + political weight (Techno-Optimist Manifesto).
+744,SoftBank,VC/Capital/Philanthropy,5,$140B+ Vision Funds; $40B+ into OpenAI + Stargate lead; largest single AI-infrastructure bettor.
+807,Sequoia Capital,VC/Capital/Philanthropy,5,$85B AUM; OpenAI + Anthropic + Reflection AI; defining AI-VC investor with industry-shaping theses.
+134,Founders Fund,VC/Capital/Philanthropy,5,$17B AUM; Thiel-founded; Palantir anchor; politically consequential AI-VC.
+128,Coefficient Giving (formerly Open Philanthropy),VC/Capital/Philanthropy,5,Anchors AI-safety philanthropy; $4B+ granted; defines AI-safety funding pipeline (Moskovitz/Tuna).
+1055,Gates Foundation,VC/Capital/Philanthropy,5,Third-largest private foundation; Microsoft-adjacent; global health + AI-for-good mainstream anchor.
+1076,BlackRock,VC/Capital/Philanthropy,5,$14T AUM; AI Infrastructure Partnership; largest asset manager; Aladdin/Asimov AI deployment + Fink public voice.
+1338,Public Investment Fund,VC/Capital/Philanthropy,5,Saudi sovereign ($930B AUM); $40B AI investment + Humain; MbS's state-AI-sovereign vehicle.
+806,Khosla Ventures,VC/Capital/Philanthropy,4,Vinod Khosla; $16B AUM; earliest major OpenAI backer ($50M); AI-policy voice.
+808,Greylock,VC/Capital/Philanthropy,4,"Reid Hoffman partner; major AI investor (OpenAI, Anthropic, Inflection)."
+809,Lux Capital,VC/Capital/Philanthropy,4,$7B AUM; Anduril + Applied Intuition; defense-AI VC anchor (Josh Wolfe).
+1056,Emerson Collective,VC/Capital/Philanthropy,4,Laurene Powell Jobs; $1B+ AI startup investments; Jony Ive backer.
+243,Thrive Capital,VC/Capital/Philanthropy,4,Kushner's ~$50B AUM; ~$1B into OpenAI; Thrive X $10B latest fund.
+814,Schmidt Futures,VC/Capital/Philanthropy,4,Eric + Wendy Schmidt; transitioned to Schmidt Sciences 2024; major AI-safety + science backer.
+288,Science of Trustworthy AI (Schmidt Sciences),VC/Capital/Philanthropy,4,"Schmidt philanthropic arm; major AI-safety grants ($5M+ projects); advisory board includes Fei-Fei Li, Bengio."
+810,8VC,VC/Capital/Philanthropy,4,Joe Lonsdale's $7B AUM; 35 unicorns; Palantir-adjacent; Leading the Future super-PAC backer.
+241,Y Combinator,VC/Capital/Philanthropy,4,"World's most prolific accelerator; 5,000+ portfolio companies; AI startup discovery engine."
+1239,In-Q-Tel,VC/Capital/Philanthropy,4,CIA-affiliated independent nonprofit VC; defining US-intel AI investor.
+1246,MGX investment group,VC/Capital/Philanthropy,4,UAE state AI vehicle (Mubadala/G42); Stargate participant; $100B+ target.
+1249,Macquarie Asset Management,VC/Capital/Philanthropy,4,$17B+ AI infrastructure (data center + HPC); major institutional AI-infra backer.
+1515,William and Flora Hewlett Foundation,VC/Capital/Philanthropy,4,$13.9B foundation; major AI-governance/cyber-policy funder.
+1525,MacArthur Foundation,VC/Capital/Philanthropy,4,$7B endowment; Humanity AI $500M initiative co-founder.
+1390,Ford Foundation,VC/Capital/Philanthropy,4,"Humanity AI $200M+ coalition (with MacArthur, Omidyar, Mozilla, OSF); DAIR funder."
+1766,Effective Ventures,VC/Capital/Philanthropy,4,EA umbrella org; hosts EA Funds + Centre for Effective Altruism; defines EA-AI-safety-grant infrastructure.
+1583,Good Ventures,VC/Capital/Philanthropy,4,Moskovitz + Tuna foundation; >50% of Open Phil/Coefficient Giving funding; anchor donor.
+255,Survival and Flourishing Fund,VC/Capital/Philanthropy,3,Jaan Tallinn-funded; $152M total granted; major AI-x-risk grantmaker.
+266,The Navigation Fund,VC/Capital/Philanthropy,3,McCaleb's $1.3B endowment; grew 9x in one year.
+1222,Craig Newmark Philanthropies,VC/Capital/Philanthropy,3,Craig Newmark; $100M+ Cyber Civil Defense; AI-safety + trustworthy-journalism.
+1215,Ballmer Group,VC/Capital/Philanthropy,3,Ballmer-founded philanthropy; co-launched NextLadder Ventures (July 2025).
+1404,Thrive Holdings,VC/Capital/Philanthropy,3,Thrive Capital AI-focused holdco (Apr 2025); acquires AI-advantaged companies.
+1765,Carnegie Corporation of New York,VC/Capital/Philanthropy,3,$4.5B assets; $174M annual grants; major philanthropy.
+1243,AI Fund,VC/Capital/Philanthropy,3,Andrew Ng's venture studio; $190M Fund II (2025).
+387,Longview Philanthropy,VC/Capital/Philanthropy,3,$133M directed to AI-risk-reduction (Mar 2026); Frontier AI Fund ($20M).
+159,Macroscopic Ventures,VC/Capital/Philanthropy,3,Swiss nonprofit; $10M/yr AI-risk grants; CAIF $15M commitment.
+284,Long-Term Future Fund,VC/Capital/Philanthropy,3,"$50M+ across 1,500+ grants; foundational EA-AI-safety grantmaker."
+1057,AngelList,VC/Capital/Philanthropy,3,Naval's platform; $127M annual deal flow; infrastructure for startup economy.
+1213,Inovia Capital,VC/Capital/Philanthropy,3,$2.2B AUM Canadian VC; Cohere investor.
+1069,MSR,VC/Capital/Philanthropy,3,dup sentinel (not real)
+1540,Menlo Ventures,VC/Capital/Philanthropy,3,$1.35B AI-era fund; 25 unicorns; Anthropic investor.
+1539,B Capital,VC/Capital/Philanthropy,3,$9B AUM (Saverin-founded); 9 offices; AI investments.
+1608,Delphi Ventures,VC/Capital/Philanthropy,3,Crypto/Web3 VC; crypto-AI intersection focus.
+1640,Cisco Investments,VC/Capital/Philanthropy,3,"$1B AI fund (June 2024); Cohere, Mistral, Scale AI investments."
+1651,DST Global,VC/Capital/Philanthropy,3,Milner-founded global late-stage VC.
+1652,SV Angel,VC/Capital/Philanthropy,3,Ron Conway's iconic SV seed fund; early Google/Facebook/Twitter.
+1653,Greenoaks Capital,VC/Capital/Philanthropy,3,$2.5B Fund VI (one of largest-ever single-GP); concentrated bets.
+1688,Gigafund,VC/Capital/Philanthropy,3,Nosek (PayPal) + Oskoui; SpaceX-focused concentrated VC.
+1323,Data Collective,VC/Capital/Philanthropy,2,DCVC deep-tech VC; computational approaches; Ocko + Bogue.
+1324,Real Ventures,VC/Capital/Philanthropy,2,Canada's leading early-stage VC; $325M AUM.
+1114,Element AI,VC/Capital/Philanthropy,2,"Montreal-based Canadian AI company (Bengio, Chapados); acquired by ServiceNow 2020; historical."
+163,Lionheart Ventures,VC/Capital/Philanthropy,2,Early-stage AI + biotech VC; 6-country presence.
+167,Juniper Ventures,VC/Capital/Philanthropy,2,AI-safety-focused VC; spun out of Climate Capital.
+813,Plural,VC/Capital/Philanthropy,2,Hogarth partner; 22 staff; major UK AI-safety VC.
+811,Slow Ventures,VC/Capital/Philanthropy,2,Lessin + Colleran; $1B deployed across 500+ companies; generalist.
+812,Entrepreneur First,VC/Capital/Philanthropy,2,Matt Clifford's accelerator; $16B portfolio value; $200M raise.
+739,AI Grant,VC/Capital/Philanthropy,2,Nat Friedman's nonprofit AI-safety/interpretability grants.
+281,EA Infrastructure Fund,VC/Capital/Philanthropy,2,$18.9M+ since 2020 across 499 grants; principles-first EA.
+242,EA Long-Term Future Fund,VC/Capital/Philanthropy,2,$20M+ distributed since 2017; renamed from Far Future Fund.
+283,Giving What We Can,VC/Capital/Philanthropy,2,10K+ pledgers; Ord + MacAskill; EA-pledge community.
+280,Astralis Foundation,VC/Capital/Philanthropy,2,European multi-donor foundation; $25M/yr capacity.
+267,AI Alignment Foundation,VC/Capital/Philanthropy,2,Neglected-AI-alignment-approaches fiscal sponsor.
+278,AI Risk Mitigation Fund,VC/Capital/Philanthropy,2,$20M+ granted since 2023; Thomas Larsen led.
+286,Halcyon Futures,VC/Capital/Philanthropy,2,Dual nonprofit + VC; McCormick (ex-GPV partner).
+338,Lightspeed Grants,VC/Capital/Philanthropy,2,"Lightcone Infrastructure, Jaan Tallinn-funded; $9.6M 2023 round."
+330,AI2050 (Schmidt Sciences),VC/Capital/Philanthropy,2,$18M+ annual fellowships; Schmidt + Manyika co-chairs.
+383,AI Safety Tactical Opportunities Fund (AISTOF),VC/Capital/Philanthropy,2,$10M+ pooled multi-donor fund; Zhang-managed.
+300,Catalyze Impact,VC/Capital/Philanthropy,2,Incubated ~15 AI-safety orgs; UK-based.
+201,OpenBook,VC/Capital/Philanthropy,2,EA grants database; public grant-tracking.
+165,Mythos Ventures,VC/Capital/Philanthropy,2,$14M first fund; Maini's pro-social-AI seed VC.
+164,Meta Charity Funders,VC/Capital/Philanthropy,2,Distributed EA funding circle.
+156,Ergo Impact,VC/Capital/Philanthropy,2,Niche funder of RAND AGI-geopolitics.
+1607,Metaplanet,VC/Capital/Philanthropy,2,Jaan Tallinn's venture-philanthropy vehicle (Estonia).
+1687,Protocol Labs,VC/Capital/Philanthropy,2,IPFS + Filecoin; 600+ startup network; tech-infrastructure.
+1689,100 Plus Capital,VC/Capital/Philanthropy,2,Longevity-focused VC; AI-adjacent.
+1730,"Players Philanthropy Fund, Inc.",VC/Capital/Philanthropy,2,Fiscal sponsor for 500+ orgs + family funds.
+198,GiveWiki,VC/Capital/Philanthropy,1,Crowdsourced charity evaluator; AngelList-for-philanthropy.
+227,Manifund,VC/Capital/Philanthropy,1,Philanthropic-fundraising platform; small scale.
+339,Preamble Windfall Foundation,VC/Capital/Philanthropy,1,Now defunct; Rodriguez-founded ~2022.
+340,Superlinear Prizes,VC/Capital/Philanthropy,1,Decentralized bounty platform; listed no-longer-active.
+358,Saving Humanity from Homo Sapiens (SHfHS),VC/Capital/Philanthropy,1,Small x-risk philanthropic foundation.
+523,Saving Humanity from Homo Sapiens,VC/Capital/Philanthropy,1,DUP of [358] — merge candidate.
+479,AI2050,VC/Capital/Philanthropy,1,DUP of [330] AI2050 (Schmidt Sciences).
+481,Science of Trustworthy AI,VC/Capital/Philanthropy,1,DUP of [288] — merge candidate.
+478,AI Safety Tactical Opportunities Fund,VC/Capital/Philanthropy,1,DUP of [383] — merge candidate.
+1731,Survival & Flourishing Fund,VC/Capital/Philanthropy,1,DUP of [255] — merge candidate (note the ampersand difference).
+1569,LTFF,VC/Capital/Philanthropy,1,DUP of [284] Long-Term Future Fund — merge candidate (acronym).
+1745,Open Philanthropy Project,VC/Capital/Philanthropy,1,DUP of [128] Coefficient Giving — pre-rename entity; merge candidate.
+434,5050 AI (by Fifty Years),VC/Capital/Philanthropy,1,Free 13-week AI-safety startup accelerator; 105 companies launched; niche.
+1609,The Operating Group,VC/Capital/Philanthropy,1,BVI seed crypto VC; narrow.
+162,Cooperative AI Foundation,VC/Capital/Philanthropy,2,UK charity (Exeter); $15M commitment from Macroscopic Ventures; multi-agent AI-safety research support.
+1031,White House,Government/Agency,5,Presidential office; sets National AI Policy Framework; Trump + Biden AI EOs; anchor of executive-branch AI policy.
+1169,Trump administration,Government/Agency,5,"Current administration shaping U.S. AI policy — Day 1 revoked EO 14110, America's AI Action Plan."
+345,White House Office of Science and Technology Policy (OSTP),Government/Agency,5,Kratsios-led; coordinates federal AI policy; anchor technical-policy WH body.
+914,Department of Commerce,Government/Agency,5,Houses NIST + BIS; Commerce Secretary (Lutnick) oversees AI standards + chip exports; tier-1 AI-policy agency.
+1420,Department of Defense,Government/Agency,5,Largest U.S. federal agency; Hegseth AI strategy (Jan 2026); major AI procurer (CDAO); defense-AI anchor.
+909,Federal Trade Commission,Government/Agency,5,Lead AI-enforcement agency; Khan + Ferguson chairs; tier-1 U.S. AI regulator.
+912,Department of Justice,Government/Agency,5,AI Litigation Task Force (Jan 2026); antitrust + False Claims AI cases; tier-1 AI-enforcement.
+1027,United States Senate,Government/Agency,5,Legislative gatekeeper; AI Insight Forums origin body.
+1028,U.S. House of Representatives,Government/Agency,5,Legislative gatekeeper; passed 10-year state-AI-reg moratorium (reversed 2025).
+205,Center for AI Standards and Innovation (CAISI),Government/Agency,5,CAISI (ex-AISI) inside NIST; primary U.S. AI-safety gov body (renamed June 2025).
+1309,National Institute of Standards and Technology,Government/Agency,5,NIST — AI RMF 1.0; houses CAISI; central U.S. AI-standards body.
+915,European Commission,Government/Agency,5,EU AI Act executive; tier-1 global AI-regulator — sets global AI-compliance frame.
+234,European AI Office,Government/Agency,5,First comprehensive AI-regulatory body; 125+ staff; enforces EU AI Act.
+533,UK AI Security Institute,Government/Agency,5,UK AISI — pivotal pre-deployment model testing partner to frontier labs; UK-AI-policy anchor.
+1082,European Union,Government/Agency,5,27-state bloc; AI Act in force Aug 2024; tier-1 global AI regulator.
+1081,United Nations,Government/Agency,5,AI Advisory Body + Amandeep Gill; global AI-governance convener.
+1148,"Senate Committee on Commerce, Science and Transportation",Government/Agency,4,Cruz-chaired; primary AI legislative jurisdiction; SANDBOX Act.
+232,Senate Commerce Committee (AI jurisdiction),Government/Agency,4,DUP sentinel — same as 1148; kept at 4 until merge.
+1428,U.S. Senate Commerce Committee,Government/Agency,4,DUP sentinel — same as 1148/232.
+1479,"Commerce, Science and Transportation Committee",Government/Agency,3,DUP of 1148 — merge candidate.
+166,Senate AI Working Group,Government/Agency,4,Schumer + Rounds + Heinrich + Young; SAFE Innovation Framework + 31-page roadmap.
+1149,House Bipartisan Task Force on Artificial Intelligence,Government/Agency,4,Johnson + Jeffries-created Feb 2024; Obernolte + Lieu co-chaired; 273-page AI report.
+1150,House Committee on Science Space & Tech,Government/Agency,4,Primary AI R&D jurisdiction; 9 bipartisan AI bills passed Sep 2025.
+1033,State of California,Government/Agency,4,"CA AI-bill precedent (SB 53, SB 243); Newsom EOs; largest subnational AI regulator."
+1032,U.S. Department of Commerce,Government/Agency,4,DUP sentinel — same as 914.
+1358,U.S. Artificial Intelligence Safety Institute,Government/Agency,4,DUP of [205] CAISI (pre-rebrand name).
+1789,Bureau of Industry and Security (BIS),Government/Agency,4,Commerce sub-agency; AI chip export controls; Kessler Under Secretary.
+1790,National Security Council (NSC),Government/Agency,4,Coordinates NS + tech-AI policy across federal agencies.
+1791,President's Council of Advisors on Science and Technology (PCAST),Government/Agency,4,Federal advisory body; Sacks co-chair (post-czar).
+913,CISA,Government/Agency,4,DHS cyber-defense agency; Easterly-led; AI EO 14028 implementation.
+1437,National Artificial Intelligence Advisory Commission,Government/Agency,4,NAIAC — established by Natl AI Initiative Act 2020; advises President.
+1774,"Department for Science, Innovation and Technology",Government/Agency,4,UK dept housing AISI; pro-innovation UK AI framework.
+1083,DARPA,Government/Agency,4,DoD's emerging-tech R&D agency; AIxCC competition; historic AI-research anchor.
+910,NTIA,Government/Agency,4,Commerce telecom agency; AI Accountability Policy Report; Davidson-led.
+1185,U.S. National Science Foundation,Government/Agency,4,"NAIRR pilot (600+ research teams); primary US AI research funder (Littman, Hager)."
+1295,Office of Management and Budget,Government/Agency,4,OMB; sets federal AI policy via M-25-21 (Apr 2025); federal CIO Martorana.
+1629,US AI Safety Institute Consortium,Government/Agency,4,NIST-led 290+ member consortium; AI-safety research + standards.
+1029,California State Senate,Government/Agency,3,CA legislature upper house; Wiener's SB 53 + SB 1047 precedent-setting.
+1034,State of Texas,Government/Agency,3,"TRAIGA AI law (Jun 2025, eff Jan 2026)."
+1035,State of Colorado,Government/Agency,3,Colorado AI Act (SB 24-205) — first comprehensive state AI anti-discrimination law.
+1036,State of New York,Government/Agency,3,NYS AI acceptable-use policy; Empire AI $400M+ consortium.
+1107,"Senate Commerce, Science, and Transportation Committee",Government/Agency,3,DUP of 1148 — merge candidate.
+1417,Department of Energy,Government/Agency,3,17 national labs; AI for nuclear/grid; Manhattan Project 2.0 framing.
+1427,Senate Committee on Homeland Security and Governmental Affairs,Government/Agency,3,Peters-chaired; AI oversight hearings.
+1481,Congressional Artificial Intelligence Caucus,Government/Agency,3,House AI Caucus — Eshoo + McCaul founded; Beyer + Obernolte current co-chairs.
+1408,Senate AI Caucus,Government/Agency,3,Heinrich + Portman (2019) founding; bipartisan Senate AI forum.
+1469,House Democratic Commission on AI and the Innovation Economy,Government/Agency,3,Jeffries-launched Dec 2025; Lieu + Gottheimer + Foushee co-chaired.
+1151,Education and Workforce Committee,Government/Agency,3,House committee; 'Building an AI-Ready America' Jan 2026 hearing.
+1421,Joint Economic Committee,Government/Agency,3,Bicameral cong econ committee; Hassan ranking member.
+309,Global Partnership on AI,Government/Agency,3,GPAI — 29-country intergovernmental initiative; OECD-hosted.
+1336,OECD,Government/Agency,3,First intergov AI Principles (2019); 38-country standard-setter.
+1260,UNESCO,Government/Agency,3,First global AI ethics recommendation (2021); UN cultural agency.
+1259,International Telecommunication Union,Government/Agency,3,UN ICT agency; AI for Good Summit.
+1262,European Artificial Intelligence Board,Government/Agency,3,EU AI Act advisory body; member-state representatives.
+1322,Government of Canada,Government/Agency,3,First national AI strategy (2017); Pan-Canadian AI Strategy Phase 2 (2022).
+961,Taiwan Ministry of Digital Affairs,Government/Agency,3,MoDA (Aug 2022); Audrey Tang legacy; anchor Taiwan-tech-policy body.
+428,Advanced Research + Invention Agency (ARIA),Government/Agency,3,UK DARPA-analog; £800M over 5 yrs; Matt Clifford chair.
+1706,Department of Homeland Security,Government/Agency,3,3-year AI strategy; AI + border security.
+1266,ARPA-H,Government/Agency,3,DARPA-modeled health research agency (2022); AI-medicine grants.
+1699,General Services Administration,Government/Agency,3,Federal procurement + tech; AI-procurement standards.
+1157,U.S. Department of State,Government/Agency,3,AI diplomacy role; CDP bureau; Bureau of Cyberspace + Digital Policy.
+1792,Bureau of Cyberspace and Digital Policy (CDP),Government/Agency,3,State Dept bureau; U.S. digital-diplomacy lead.
+1488,National Artificial Intelligence Initiative Office,Government/Agency,3,NAI initiative office inside OSTP.
+1155,International Trade Administration,Government/Agency,3,Commerce trade bureau; leads American AI Exports Program (Kimmitt).
+1492,Empire AI,Government/Agency,3,NY state AI consortium; $400M+ Hochul-launched.
+1438,U.S. Department of Labor,Government/Agency,3,AI Literacy Framework Feb 2026.
+1241,U.S. Army,Government/Agency,3,$49B AI/ML Office established Dec 2025; scale of AI-procurement.
+1030,New York State Assembly,Government/Agency,2,NYS lower house; AI-legislation venue but narrower than CA.
+1037,State of Ohio,Government/Agency,2,ODJFS AI-workforce award; state-level presence.
+1038,Office of the Governor of Indiana,Government/Agency,2,Gov. Braun's executive office.
+1158,Government Operations Agency,Government/Agency,2,CA GovOps; state-level AI implementation.
+1159,California Department of General Services,Government/Agency,2,CA state procurement + AI governance role.
+1160,California Department of Technology,Government/Agency,2,CA state IT agency; AI integration for state gov.
+1161,California Department of Human Resources,Government/Agency,2,CalHR; CA state workforce + AI ODI partnership.
+1164,NYS Office of Information Technology Services,Government/Agency,2,NY state central IT; authored state AI acceptable-use policy.
+1165,Ohio Department of Job and Family Services,Government/Agency,2,Ohio DJFS; Baumgardner award-winning.
+1238,Pentagon,Government/Agency,2,DUP of [1420] Department of Defense.
+1184,Engineering and Physical Sciences Research Council,Government/Agency,2,UK EPSRC; physical-sciences research funder.
+1296,NASA Ames Research Center,Government/Agency,2,NASA's Silicon Valley center; Intelligent Systems Division.
+1299,CTBT organization,Government/Agency,2,Nuclear-test-ban body (Vienna); AI-verification-adjacent.
+1303,Idaho National Laboratory,Government/Agency,2,DOE national lab; nuclear-AI development.
+1343,Arizona Secretary of State,Government/Agency,2,Fontes; AI & Election Security Advisory Committee.
+1360,UK government's Frontier AI Taskforce,Government/Agency,2,DUP sentinel — became UK AISI; historical £100M taskforce.
+1419,Small Business Administration,Government/Agency,2,Small-business AI-adoption support.
+1093,U.S. Department of Transportation,Government/Agency,2,DOT; AI for transport safety (autonomous vehicles context).
+1707,National Institutes of Health,Government/Agency,2,NIH AI strategic plan; health-AI agency.
+1131,DAF-MIT AI Accelerator,Government/Agency,2,DAF + MIT partnership (2019); AI defense research.
+1146,Global AI Frontier Lab,Government/Agency,2,U.S.-S.Korea joint lab at NYU; LeCun + Cho co-directors.
+1147,Institute for Information & Communications Technology Planning & Evaluation,Government/Agency,2,S. Korean gov ICT R&D planner (IITP).
+1467,"House Science, Space, and Technology Committee",Government/Agency,1,DUP of [1150] — merge candidate.
+1470,Bipartisan Taskforce on Artificial Intelligence,Government/Agency,1,DUP of [1149] — merge candidate.
+1483,House Task Force on Artificial Intelligence,Government/Agency,1,DUP of [1149] — merge candidate.
+1484,Congressional AI Caucus,Government/Agency,1,DUP of [1481] — merge candidate.
+126,Gray Swan,AI Safety/Alignment,3,CMU-founded AI-security startup.
+129,Redwood Research,AI Safety/Alignment,4,Redwood Research — Thomas + Shlegeris + Greenblatt; 'Alignment Faking' paper with Anthropic; leading AI-control research.
+130,Center on Long-Term Risk,AI Safety/Alignment,3,CLR (Cook MD); s-risks.
+137,Anthropic Institute,AI Safety/Alignment,2,Anthropic's new (March 2026) institute.
+138,Existential Risk Observatory,AI Safety/Alignment,2,Barten's Amsterdam nonprofit (2021).
+139,Goodfire,AI Safety/Alignment,4,Ho-led interpretability company; mechanistic-interpretability tools.
+141,AI Safety Foundation,AI Safety/Alignment,2,Canadian charity (AISF).
+142,Cyborgism,AI Safety/Alignment,3,Human-in-the-loop alignment community.
+144,How to pursue a career in technical AI alignment,AI Safety/Alignment,1,"Rogers-Smith guide (article, not org)."
+145,Aether,AI Safety/Alignment,2,Subramani-led research group.
+147,Modeling Cooperation,AI Safety/Alignment,2,Cooperative-AI multi-agent research.
+148,Softmax,AI Safety/Alignment,2,"Shear (ex-Twitch, ex-interim-OpenAI)."
+149,Equilibria Network,AI Safety/Alignment,2,Collective-intelligence research.
+150,Beneficial AI Foundation,AI Safety/Alignment,2,BAIF — 2023 nonprofit.
+151,Cadenza Labs,AI Safety/Alignment,2,SERI-MATS alumni interpretability group.
+153,Geodesic Research,AI Safety/Alignment,2,Tice + O'Brien; compute-intensive alignment.
+154,AI Objectives Institute,AI Safety/Alignment,2,AI Objectives Institute — Eckersley's nonprofit.
+158,Epoch AI,AI Safety/Alignment,4,Sevilla-founded (2022); defining AI-compute + benchmark-forecasting research org.
+170,TruthfulAI,AI Safety/Alignment,3,Evans + Betley LLM-truthfulness research.
+172,Alignment Ecosystem Development (AED),AI Safety/Alignment,3,Alignment Ecosystem Development (AISafety.com operator).
+174,Workshop Labs,AI Safety/Alignment,2,Laine's PBC (privacy AI).
+176,European Network for AI Safety (ENAIS),AI Safety/Alignment,2,European Network for AI Safety — 13+ countries.
+178,RAISEimpact,AI Safety/Alignment,1,Successif program (2024-2025).
+179,Safe AI Forum,AI Safety/Alignment,3,SAIF — IDAIS China-West dialogues.
+180,Trajectory Labs,AI Safety/Alignment,2,Gibney Toronto coworking (also Trajectory Labs PBC — stealth).
+182,Timaeus,AI Safety/Alignment,3,Hoogland + Murfet; Singular Learning Theory alignment nonprofit (Oct 2023).
+183,Forethought (AI Safety Research Nonprofit),AI Safety/Alignment,4,MacAskill + Davidson + Sidhu-Brar; AI macrostrategy (mid-2024).
+184,Narrow Path (by ControlAI),AI Safety/Alignment,2,ControlAI policy plan.
+185,FAR.AI,AI Safety/Alignment,4,Gleave + Berzins; adversarial robustness + interpretability + alignment; Constellation neighbor.
+186,Intelligence Rising,AI Safety/Alignment,1,Andreicheva film + workshop org.
+187,AI Safety Camp,AI Safety/Alignment,2,AISC — part-time research program.
+188,"AI Safety, Ethics and Society (Center for AI Safety)",AI Safety/Alignment,2,"Dan Hendrycks's AI Safety, Ethics and Society course."
+190,Alignment of Complex Systems Research Group (ACS),AI Safety/Alignment,2,Charles University Alignment of Complex Systems.
+191,Institute for AI Policy and Strategy (IAPS),AI Safety/Alignment,3,Institute for AI Policy and Strategy.
+197,From AI to ZI,AI Safety/Alignment,1,Huben's AI-safety Substack.
+202,Machine Learning for Alignment Bootcamp (MLAB),AI Safety/Alignment,2,Redwood's Machine Learning for Alignment Bootcamp.
+203,London Initiative for Safe AI (LISA),AI Safety/Alignment,2,London Initiative for Safe AI coworking.
+206,AE Studio,AI Safety/Alignment,2,Rosenblatt's bootstrapped 150-person AI-alignment + BCI shop.
+208,AISafety.com,AI Safety/Alignment,3,AI-safety map + resource hub.
+209,Center for AI Safety (CAIS),AI Safety/Alignment,5,5-anchor
+212,AI Futures Project,AI Safety/Alignment,4,AI 2027 scenario forecast (Kokotajlo + Lifland + Larsen + Dean).
+215,Compassion in Machine Learning (CaML),AI Safety/Alignment,2,Compassion in Machine Learning — synthetic-data welfare.
+217,Apollo Research,AI Safety/Alignment,4,x
+218,Alignment Research Center (ARC),AI Safety/Alignment,4,Paul Christiano's theoretical alignment shop; Jacob Hilton President.
+220,Conjecture,AI Safety/Alignment,4,Leahy + Black + Alfour — interpretability + policy ('A Narrow Path').
+221,BlueDot Impact,AI Safety/Alignment,4,Major talent accelerator for AI-safety (AI Safety Fundamentals courses trained thousands).
+250,Evitable,AI Safety/Alignment,2,Krueger-founded nonprofit for AI advocacy (2025).
+252,Legal Advocates for Safe Science and Technology,AI Safety/Alignment,2,Whitmer (ex-Quinn Emanuel) 3-person team.
+253,Legal Safety Lab,AI Safety/Alignment,2,Litigation-focused AI-policy research.
+256,Buddhism & AI Initiative,AI Safety/Alignment,2,5-person nonprofit.
+257,Astera Neuro & AGI,AI Safety/Alignment,2,$1B+ neuro-AGI program.
+260,Arbital,AI Safety/Alignment,1,Defunct AI-alignment wiki (2015–2018).
+262,Orthogonal,AI Safety/Alignment,2,Leake's agent-foundations small group.
+263,Team Shard,AI Safety/Alignment,2,Turner + Pope MATS-mentor small group.
+264,Frontier AI Safety Research,AI Safety/Alignment,2,Argentine AI-safety nonprofit.
+265,Aligned AI,AI Safety/Alignment,2,Gorman + Armstrong (ex-FHI); ~$1.1M raised.
+269,Contramont Research,AI Safety/Alignment,2,MATS-alum small lab; 'Unelicitable Backdoors'.
+271,Transluce,AI Safety/Alignment,4,Steinhardt + Schwettmann (Oct 2024); 16 staff; interpretability/eval.
+272,Palisade Research,AI Safety/Alignment,4,Ladish (ex-Anthropic security); dangerous-capability evals.
+273,EleutherAI,AI Safety/Alignment,4,"Major open-source LLMs (GPT-NeoX, Pythia); AI-safety research; Leahy + Black + Gao origin."
+275,Harmony Intelligence,AI Safety/Alignment,2,Browne + Pour; $3M seed (March 2025).
+287,Collective Action for Existential Safety (CAES),AI Safety/Alignment,2,Collective Action for Existential Safety; Norris-led.
+297,Global AI Moratorium (GAIM),AI Safety/Alignment,1,Global AI Moratorium advocacy.
+298,Humans in Control,AI Safety/Alignment,1,AI-transparency advocacy.
+299,Atlas Computing,AI Safety/Alignment,2,Miyazono (ex-Protocol Labs); 3-staff nonprofit.
+301,The Alliance for Secure AI Action,AI Safety/Alignment,2,501(c)(3) advocacy org (May 2025).
+302,Lightcone Infrastructure,AI Safety/Alignment,3,Habryka's ~$2.7M nonprofit; LessWrong infrastructure.
+303,Mox,AI Safety/Alignment,2,SF's largest AI-safety community space (40K sq ft).
+304,The Midas Project,AI Safety/Alignment,2,Johnston's small 501(c)(3) volunteer org.
+305,Rethink Wellbeing,AI Safety/Alignment,2,Mental-health nonprofit for AI-safety researchers.
+306,Singapore AI Safety Hub,AI Safety/Alignment,2,~20 members coworking/community (Feb 2025).
+308,Global Catastrophic Risk Institute,AI Safety/Alignment,2,Global Catastrophic Risk Institute; Baum + Barrett.
+311,AI Safety Quest,AI Safety/Alignment,2,Volunteer grassroots (2023); AI-safety careers.
+318,Apart Research,AI Safety/Alignment,3,"25-staff remote org; 6,000+ sprint participants."
+319,Cambridge Boston Alignment Initiative (CBAI),AI Safety/Alignment,3,Cambridge Boston Alignment Initiative — 11-staff summer fellowships.
+324,AI Impacts,AI Safety/Alignment,2,Grace's AI-expert-survey research org (under MIRI).
+325,London AI Safety Research Labs (LASR Labs),AI Safety/Alignment,2,London 13-week AI-safety research program.
+328,Steve Byrnes's Brain-Like AGI Safety,AI Safety/Alignment,2,Individual researcher project at Astera.
+331,Formation Research,AI Safety/Alignment,2,Lock-in-risks research nonprofit.
+332,AI Safety Hub,AI Safety/Alignment,1,AISH Labs fellowship program.
+333,AI Alignment Forum,AI Safety/Alignment,2,Centralized AI-alignment research hub (~100 vetted members).
+337,Iliad,AI Safety/Alignment,2,Applied-math alignment nonprofit.
+341,Machine Intelligence Research Institute (MIRI),AI Safety/Alignment,5,Machine Intelligence Research Institute — Yudkowsky-founded oldest AI-safety org (2000); 'If Anyone Builds It' NYT bestseller; defining AI-doom anchor.
+346,Dovetail Research,AI Safety/Alignment,2,Agent-foundations math research.
+352,Heron AI Security Initiative,AI Safety/Alignment,2,Non-profit AI-security (Dec 2024).
+353,Computational Rational Agents Laboratory (CORAL),AI Safety/Alignment,2,Kosoy learning-theoretic alignment lab.
+356,Model Evaluation & Threat Research (METR),AI Safety/Alignment,4,5-anchor sentinel
+357,Quantified Uncertainty Research Institute (QURI),AI Safety/Alignment,2,Gooen's forecasting/epistemics research (2019).
+364,Constellation Institute,AI Safety/Alignment,3,35-staff Berkeley research center; mobilization + placement.
+365,Center for AI Risk Management & Alignment (CARMA),AI Safety/Alignment,2,Fiscal-sponsored AI-risk-management project.
+373,Cavendish Labs,AI Safety/Alignment,2,Rural VT 501(c)(3); fellowships.
+374,Coordinal Research,AI Safety/Alignment,2,Thibodeau + Mehta MATS-alumni nonprofit.
+375,EquiStamp,AI Safety/Alignment,2,Task-based research PBC.
+376,LawZero,AI Safety/Alignment,4,"Bengio-founded (June 2025); $60M from Gates, Schmidt; Turing-Award backing."
+377,Luthien,AI Safety/Alignment,2,Dhyani (ex-FAANG) nonprofit (2025).
+378,Meaning Alignment Institute,AI Safety/Alignment,2,Edelman 3-core/30-network nonprofit.
+379,Ought,AI Safety/Alignment,2,Stuhlmüller + Byun 10-person nonprofit; Elicit incubation.
+380,Simplex,AI Safety/Alignment,2,Shai + Riechers small research team.
+395,WhiteBox Research,AI Safety/Alignment,2,Filipino nonprofit (3 staff).
+396,Ashgro,AI Safety/Alignment,2,$2.1M/yr fiscal-sponsor 501(c)(3).
+397,Berkeley Existential Risk Initiative (BERI),AI Safety/Alignment,3,Berkeley Existential Risk Initiative (2017); university-research operational support.
+398,Good Impressions,AI Safety/Alignment,1,Marketing firm for socially-impactful projects.
+399,Impact Ops,AI Safety/Alignment,2,Operations consulting to 50+ nonprofits.
+400,Nonlinear,AI Safety/Alignment,2,EA meta-org; Woods + Spartz.
+401,Pause House,AI Safety/Alignment,1,Colbourn's free researcher accommodation (Oct 2025).
+402,PEAKS,AI Safety/Alignment,1,Zurich coworking for AI-safety-interested people.
+403,Neuronpedia,AI Safety/Alignment,2,Interpretability platform (pivoted from game).
+404,AI Lab Watch,AI Safety/Alignment,1,Stein-Perlman's AI-company scorecard.
+405,AI-Plans,AI Safety/Alignment,1,Kumar 10-country alignment-plans platform.
+406,Median Group,AI Safety/Alignment,2,2018 nonprofit (MIRI/OpenAI alumni).
+407,The Compendium,AI Safety/Alignment,2,Leahy + Alfour + Scammell + Miotti + Shimi (Oct 2024).
+409,AISafety.info,AI Safety/Alignment,2,Rob Miles-maintained volunteer hub.
+413,Impact Academy: Global AI Safety Fellowship,AI Safety/Alignment,2,3-6 month fully-funded AI-safety fellowships.
+415,ML Alignment & Theory Scholars (MATS),AI Safety/Alignment,4,ML Alignment & Theory Scholars — 146 staff across 18 countries; core AI-safety researcher pipeline.
+419,AI Alignment Awards,AI Safety/Alignment,1,$100K alignment-problem prize contest.
+420,AI Safety Communications Centre,AI Safety/Alignment,1,Journalist↔AI-safety-expert connector.
+421,AI Safety Support Newsletter,AI Safety/Alignment,1,AISS-affiliated newsletter (Australian).
+422,Campaign for AI Safety,AI Safety/Alignment,1,Merged with XRO.
+423,generative.ink,AI Safety/Alignment,1,janus's AI-safety blog.
+427,AI Safety Awareness Project (AISAP),AI Safety/Alignment,1,Volunteer-run 4-staff AI-safety awareness.
+431,International AI Governance Alliance (IAIGA),AI Safety/Alignment,2,Center for Existential Safety 2025 initiative (Geneva).
+432,International Association for Safe & Ethical AI (IASEAI),AI Safety/Alignment,3,International Association for Safe & Ethical AI.
+433,Centre pour la Sécurité de l'IA (CeSIA),AI Safety/Alignment,2,French AI-safety nonprofit (March 2024).
+435,Centre for Enabling EA Learning & Research (CEEALAR),AI Safety/Alignment,1,Colbourn's Blackpool subsidized researcher accommodation.
+436,AI Governance and Safety Institute (AIGSI),AI Safety/Alignment,2,Nonpartisan 501(c)(3) AI-governance nonprofit.
+437,AI Safety Asia (AISA),AI Safety/Alignment,2,AI Safety Asia (2024).
+438,Athena Mentorship Program for Women (AI Alignment Research),AI Safety/Alignment,1,Women in AI-alignment mentorship program.
+443,Center for AI Policy (CAIP),AI Safety/Alignment,1,Center for AI Policy — shut down Sept 2025.
+444,5050,AI Safety/Alignment,1,DUP sentinel of [434] 5050 AI.
+462,Collective Action for Existential Safety,AI Safety/Alignment,1,DUP of [287].
+470,Computational Rational Agents Laboratory,AI Safety/Alignment,1,DUP of [353].
+471,Dovetail,AI Safety/Alignment,1,DUP of [346].
+473,Computational and Biological Learning Lab,AI Safety/Alignment,1,Engineering-brain research group.
+474,Krueger AI Safety Lab,AI Safety/Alignment,2,David Krueger's lab at Mila.
+475,Model Evaluation & Threat Research,AI Safety/Alignment,4,DUP sentinel of 356
+476,NYU Alignment Research Group,AI Safety/Alignment,2,Empirical LLM AI-safety research at NYU.
+482,Centre pour la Sécurité de l'IA,AI Safety/Alignment,1,DUP of [433].
+483,Berkeley Existential Risk Initiative,AI Safety/Alignment,1,DUP of [397].
+484,Centre for Enabling EA Learning & Research (EA Hotel),AI Safety/Alignment,1,DUP of [435].
+485,Constellation,AI Safety/Alignment,3,dup
+486,European Network for AI Safety,AI Safety/Alignment,1,DUP of [176].
+487,London Initiative for Safe AI,AI Safety/Alignment,1,DUP of [203].
+489,Forethought,AI Safety/Alignment,1,DUP of [183].
+509,AI Safety Ideas,AI Safety/Alignment,1,Apart Research-run project repository.
+510,Arkose,AI Safety/Alignment,1,"AI safety field-building (programs, outreach)."
+511,AI Timeline,AI Safety/Alignment,1,Visual AI-decade overview.
+512,Global Priorities Institute,AI Safety/Alignment,2,Oxford research center; foundational decision-making research.
+513,Machine Learning for Alignment Bootcamp,AI Safety/Alignment,1,DUP of [202].
+514,AI Safety Awareness Project,AI Safety/Alignment,1,DUP of [427].
+515,Safe AI London,AI Safety/Alignment,1,London AI-safety support.
+519,Alignment Ecosystem Development,AI Safety/Alignment,1,DUP of [172].
+522,Compassion in Machine Learning,AI Safety/Alignment,1,DUP of [215].
+730,Open Machine,AI Safety/Alignment,2,CPU-first AI deployment (Miller).
+751,Samaya AI,AI Safety/Alignment,2,$43.5M Series A; AI-for-finance (misclassified?).
+757,FutureHouse,AI Safety/Alignment,2,AI-scientists nonprofit (Rodriques + White; Schmidt).
+759,Credo AI,AI Safety/Alignment,2,Enterprise AI-governance software (Singh).
+1097,Bayesian Logic Inc.,AI Safety/Alignment,2,Arora's probabilistic-programming company.
+1111,Responsible AI Initiative,AI Safety/Alignment,1,Multi-org umbrella name.
+1117,International Association for Safe and Ethical AI,AI Safety/Alignment,2,DUP of [432].
+1128,Stanford Center for AI Safety,AI Safety/Alignment,3,Stanford research center (2018).
+1351,Eleos AI,AI Safety/Alignment,3,Fish + Long + Finlinson AI welfare research nonprofit.
+1359,Model Evaluation and Threat Research,AI Safety/Alignment,4,DUP sentinel of 356
+1392,Trust::Data Alliance,AI Safety/Alignment,1,MIT consortium (Pentland).
+1453,Trail of Bits,AI Safety/Alignment,3,AI-security consulting firm (2012).
+1570,SERI-MATS,AI Safety/Alignment,3,DUP of [415] MATS.
+1638,AI Safety Dublin,AI Safety/Alignment,1,Grassroots Dublin AI-safety community.
+1639,Dutch Network for AI Safety,AI Safety/Alignment,1,ENAIS-collab Netherlands field-building.
+1691,Cambridge AI Safety Hub,AI Safety/Alignment,1,Yadav + Dollman student/research hub.
+1693,Berkeley AI Safety Initiative for Students (BASIS),AI Safety/Alignment,1,UC Berkeley student AI-safety org.
+1715,Center for AI Safety Action Fund,AI Safety/Alignment,4,CAIS 501(c)(4); AI-policy advocacy.
+1732,Electric Sheep,AI Safety/Alignment,1,501(c)(3) AI-for-animal-welfare/environment.
+143,Effective Thesis,Academic,2,Notable but narrower AI-academic presence; specialized scope.
+168,Oxford Martin AI Governance Initiative,Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+189,Cooperative AI Summer School,Academic,2,Notable but narrower AI-academic presence; specialized scope.
+193,Leaf: Dilemmas and Dangers in AI,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+194,Mentorship for Alignment Research Students (MARS),Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+196,Supervised Program for Alignment Research (SPAR),Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+216,NYU Alignment Research Group (ARG),Academic,3,Significant AI research lab/center; real AI-policy contribution.
+219,Center for Human-Compatible AI (CHAI),Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+235,MIT Algorithmic Alignment Group,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+236,Future of Humanity Institute (closed 2024),Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+238,Tsinghua University (Institute for AI International Governance & Center for AI Governance),Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+247,MIT FutureTech,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+274,Center for Long-Term Cybersecurity,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+310,Centre for the Study of Existential Risk (CSER),Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+315,AI Safety Initiative at Georgia Tech,Academic,2,Notable but narrower AI-academic presence; specialized scope.
+321,Future Impact Group: Fellowship,Academic,2,Notable but narrower AI-academic presence; specialized scope.
+322,Global Challenges Project,Academic,2,Notable but narrower AI-academic presence; specialized scope.
+323,Arcadia Impact,Academic,2,Notable but narrower AI-academic presence; specialized scope.
+354,Computational and Biological Learning Lab (University of Cambridge),Academic,2,Notable but narrower AI-academic presence; specialized scope.
+355,Krueger AI Safety Lab (KASL),Academic,3,Significant AI research lab/center; real AI-policy contribution.
+363,Meridian Cambridge,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+366,Alignment Research Engineer Accelerator (ARENA),Academic,2,Notable but narrower AI-academic presence; specialized scope.
+369,ML4Good Laboratory - New York University,Academic,2,Notable but narrower AI-academic presence; specialized scope.
+372,Global Priorities Institute (University of Oxford),Academic,3,Significant AI research lab/center; real AI-policy contribution.
+391,UChicago Existential Risk Laboratory (XLab),Academic,3,Significant AI research lab/center; real AI-policy contribution.
+410,Cambridge ERA:AI Fellowship,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+411,Human-aligned AI Summer School,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+414,Impact Research Groups,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+416,Non-Trivial,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+417,Pivotal Research Fellowship,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+418,PIBBSS Fellowship (Principles of Intelligent Behavior in Biological and Social Systems),Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+440,Orion AI Governance Initiative (Arcadia Impact),Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+441,Pathfinder Fellowship (Kairos),Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+442,Technical Alignment Research Accelerator (TARA),Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+452,Stanford HAI,Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+461,Leverhulme Centre for the Future of Intelligence,Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+465,GovAI Fellowship,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+466,Heron,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+488,Meridian,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+490,AI Safety Asia,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+491,"AI Safety, Ethics and Society",Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+492,Alignment Research Engineer Accelerator,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+493,Athena Mentorship Program for Women,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+494,Cambridge Boston Alignment Initiative,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+495,Center for Human-Compatible AI: Internship,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+496,Center on Long-Term Risk: Fellowship,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+497,Foresight Fellowship,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+498,IAPS AI Policy Fellowship,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+499,London AI Safety Research Labs,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+500,Mentorship for Alignment Research Students,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+501,ML Alignment & Theory Scholars,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+502,ML4Good,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+503,Orion AI Governance Initiative,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+504,PIBBSS Fellowship,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+505,Supervised Program for Alignment Research,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+506,Talos Fellowship,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+507,Technical Alignment Research Accelerator,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+508,UChicago Existential Risk Laboratory Fellowship,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+516,"80,000 Hours Problem Profile",Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+520,Apart Sprints,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+521,Pathfinder Fellowship,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+542,Stanford RegLab,Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+765,Wild Dolphin Project,Academic,2,Notable but narrower AI-academic presence; specialized scope.
+766,IIT Madras,Academic,2,Notable but narrower AI-academic presence; specialized scope.
+768,Fred Hutchinson Cancer Center,Academic,2,Notable but narrower AI-academic presence; specialized scope.
+819,Stanford CRFM,Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+944,Stanford Digital Economy Lab,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+945,Stanford SIEPR,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+946,MIT Shaping the Future of Work,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+947,MIT CSAIL,Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+948,MIT GOV/LAB,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+949,MIT Media Lab,Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+950,Princeton CITP,Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+951,Harvard Ash Center,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+952,Harvard Berkman Klein Center,Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+953,UW Tech Policy Lab,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+954,Creative Destruction Lab,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+955,EconTAI,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1019,Stanford University,Academic,5,Tier-1 university / anchor AI-research institution; defining 'Academic' category figure.
+1020,Massachusetts Institute of Technology,Academic,5,Tier-1 university / anchor AI-research institution; defining 'Academic' category figure.
+1021,Harvard University,Academic,5,Tier-1 university / anchor AI-research institution; defining 'Academic' category figure.
+1022,Princeton University,Academic,5,Tier-1 university / anchor AI-research institution; defining 'Academic' category figure.
+1023,University of Cambridge,Academic,5,Tier-1 university / anchor AI-research institution; defining 'Academic' category figure.
+1024,University of Oxford,Academic,5,Tier-1 university / anchor AI-research institution; defining 'Academic' category figure.
+1025,UC Berkeley,Academic,5,Tier-1 university / anchor AI-research institution; defining 'Academic' category figure.
+1026,New York University,Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+1044,University of Virginia,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1045,Vanderbilt University,Academic,2,Notable but narrower AI-academic presence; specialized scope.
+1046,University College London,Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+1047,Brown University,Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+1048,Columbia University,Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+1049,University of Washington,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1050,MIT Sloan,Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+1053,Mila,Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+1064,National Bureau of Economic Research (NBER),Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+1074,DeepLearning.AI,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1075,Coursera,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1077,University of Toronto,Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+1078,Carnegie Mellon University,Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+1079,Georgetown University,Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+1080,Yale University,Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+1084,University of Michigan,Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+1085,UCLA,Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+1086,Johns Hopkins University,Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+1087,University of Louisville,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+1088,American University,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1089,SUNY Albany,Academic,2,Notable but narrower AI-academic presence; specialized scope.
+1090,USC,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1091,Wharton School,Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+1092,Tulane University,Academic,2,Notable but narrower AI-academic presence; specialized scope.
+1096,"University of California, San Francisco",Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1109,Berkeley Artificial Intelligence Research,Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+1110,Berkeley Institute for Data Science,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1112,Université de Montréal,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1113,Mila - Quebec Artificial Intelligence Institute,Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+1116,McGill University,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1127,Stanford Artificial Intelligence Laboratory (SAIL),Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+1130,MIT Data to AI Lab,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1132,MIT Schwarzman College of Computing,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1133,Kempner Institute,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1139,The Princeton Laboratory for Artificial Intelligence,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1140,ai@cam,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1144,Saïd Business School,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+1171,Darden School of Business,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+1172,UVA Information Technology Services,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+1176,College of Connected Computing,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+1178,University of North Carolina system,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+1188,Dartmouth College,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+1190,Baylor College of Medicine,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+1191,City University of New York,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+1194,Allen Institute for AI,Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+1209,Polytechnique Montréal,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1210,HEC Montréal,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1227,People + AI Research,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1234,NYU School of Medicine,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+1252,University of Pittsburgh,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1267,Johns Hopkins Applied Physics Laboratory,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1271,Speed School of Engineering,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1278,USC Center for AI in Society,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1279,USC Suzanne Dworak-Peck School of Social Work,Academic,2,Notable but narrower AI-academic presence; specialized scope.
+1280,USC Viterbi School of Engineering,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1281,USC Marshall School of Business,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1283,USC School of Advanced Computing,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1285,University of Pennsylvania,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1292,Jurist Center for Artificial Intelligence,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+1293,Center for Community-Engaged Artificial Intelligence,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+1300,Stanford Law School,Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+1313,"College of Computing, Data Science, and Society",Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1314,University of Utah,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+1315,Emory University,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+1316,Emory AI Group,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1317,Block Center for Technology and Society,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1319,Amii,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1326,Singapore Management University,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1331,McGill Centre for Intelligent Machines,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+1332,McGill Collaborative for AI and Society,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+1361,MIT Jameel Clinic,Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+1362,MIT Computer Science & Artificial Intelligence Laboratory,Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+1363,Cornell University,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1372,University of Notre Dame,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+1383,Stanford Vision and Learning Lab,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1389,Harvard Faculty of Arts and Sciences,Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+1391,"Indian Institute of Technology, Kanpur",Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+1397,University of Tuebingen,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1405,Weizenbaum Institute,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1406,Technische Universität Berlin,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1407,Universidad de Buenos Aires,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+1434,AT&T Bell Laboratories,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1435,Collège de France,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1444,Columbia Law School,Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+1447,Stony Brook University,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1448,Seoul National University,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1480,George Mason University,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+1485,"University of California, Los Angeles",Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+1486,University of Tennessee,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1487,AI Tennessee Initiative,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1490,AI Research Institute on Interaction for AI assistants (ARIA),Academic,2,Notable but narrower AI-academic presence; specialized scope.
+1493,University at Buffalo,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+1494,SUNY,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+1516,Public Interest Technology University Network,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1520,Association for Computing Machinery,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1521,Association for the Advancement of Artificial Intelligence (AAAI),Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1532,Yale Law School,Academic,4,Major university or flagship AI research institute with defining AI-policy footprint.
+1584,Princeton AI Lab,Academic,3,Significant AI research lab/center; real AI-policy contribution.
+1656,University of Melbourne,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+1667,Wichita State University,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+1675,Charles University,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+1734,Machine Learning for Language (ML2),Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+1735,Center for Data Science,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+1736,The Department of Linguistics,Academic,1,"Narrow/small AI-academic program, course listing, or duplicate; peripheral."
+450,Vector Institute,Academic,4,Toronto-based nonprofit AI research institute (2017); Ontario + Canada federal + CIFAR backing; major Canadian AI-research anchor. [NULL category in DB — merge candidate: should be Academic]

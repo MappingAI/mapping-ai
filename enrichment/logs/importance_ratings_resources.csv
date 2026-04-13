@@ -1,0 +1,156 @@
+id,name,resource_category,importance,rationale
+652,Lex Fridman Podcast (AI episodes),AI Capabilities,2,Notable but narrower AI-resource; specialized scope.
+668,Crisp and Fuzzy Tasks,AI Capabilities,2,Notable but narrower AI-resource; specialized scope.
+1806,Scaling Laws for Neural Language Models,AI Capabilities,5,"2020 OpenAI paper (Kaplan, McCandlish + Anthropic founders) — defined the scaling-laws framework underpinning modern AI strategy."
+545,The AI Index Report 2024,AI Governance,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+546,Why AI Will Save the World,AI Governance,4,Andreessen June 2023 essay; defining pro-AI-acceleration policy argument.
+548,Governing AI: A Blueprint for the Future,AI Governance,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+550,NIST AI Risk Management Framework,AI Governance,5,AI RMF 1.0 — de facto U.S. AI-risk standard; cited in all major federal + state AI policy work.
+594,SB 53 (CA),AI Governance,4,Wiener's successor to SB 1047 — frontier-AI-shutdown requirements signed into law.
+608,RAISE Act,AI Governance,4,Hochul-signed Dec 2025 frontier-AI safety law; NY's SB 1047-equivalent.
+616,A Guide to the AI Tribes,AI Governance,2,Notable but narrower AI-resource; specialized scope.
+617,The Left is Missing Out on AI,AI Governance,2,Notable but narrower AI-resource; specialized scope.
+618,AI 2027 scenario,AI Governance,4,Kokotajlo + Lifland + Larsen AI 2027 forecast — defining AI-timeline document of 2025.
+619,AI as Normal Technology,AI Governance,4,Major counter-AI-doom essay framing AI as transformative-but-normal technology.
+620,Dignity in a Digital Age,AI Governance,3,Rep. Khanna's 2022 tech-policy book.
+621,The Entrepreneurial State,AI Governance,4,Mazzucato 2013; anchor text for state-led innovation + AI-industrial-policy.
+622,Power and Progress,AI Governance,4,Nobel-laureate book on AI-and-labor; central AI-economics policy reference.
+623,Recoding America,AI Governance,4,Pahlka 2023 — canonical gov-tech text; cited in AI-in-government discourse.
+624,Governing the Commons,AI Governance,3,Ostrom 1990 — AI-governance-analogy reference.
+626,Techno-Optimist Manifesto,AI Governance,4,Andreessen Oct 2023 manifesto; defining anti-regulation-coalition text.
+627,The Internet Con,AI Governance,4,Doctorow 2023 — interoperability-mandates argument; cited in antitrust-AI discourse.
+628,Chip War,AI Governance,4,Miller 2022 — defining AI-chip-geopolitics reference; cited in every export-controls debate.
+629,Secure AI Project bills tracker,AI Governance,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+630,"Dean Ball ""How I Approach AI Policy""",AI Governance,2,Notable but narrower AI-resource; specialized scope.
+631,Digitalist Papers Vol. 2,AI Governance,3,Stanford Digital Economy Lab Dec 2025 essay collection.
+632,Alex Bores Congressional AI Framework,AI Governance,3,Bores 2026 8-point national AI framework.
+633,Trump AI Action Plan (Jan 2025),AI Governance,5,Trump's Jan 2025 AI EO establishing current U.S. AI policy direction.
+634,Sacks federal preemption EO (Dec 2025),AI Governance,4,Sacks-orchestrated federal-preemption AI EO; defining state-vs-federal battle.
+635,EU AI Act,AI Governance,5,World's first major AI regulation; risk-based framework; defines global AI-compliance ceiling; tier-1 policy reference.
+636,New Consensus AI platform,AI Governance,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+637,Secure AI Project state bill tracker,AI Governance,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+639,Blueprint for an AI Bill of Rights,AI Governance,4,Oct 2022 WH OSTP framework — defining early Biden-admin AI-rights text.
+640,"SB 1047 (CA, vetoed)",AI Governance,4,Wiener's landmark frontier-AI-safety bill vetoed by Newsom; defining U.S. state AI-policy moment.
+641,Colorado AI anti-discrimination law,AI Governance,4,Colorado SB 24-205 — first comprehensive U.S. state algorithmic-discrimination law.
+648,Platformer,AI Governance,3,Casey Newton's major tech/AI newsletter (dup of Platformer org).
+649,AI Snake Oil,AI Governance,3,Narayanan + Kapoor book critiquing AI-hype.
+650,"Executive Order on Safe, Secure, and Trustworthy AI",AI Governance,5,Biden's Oct 2023 EO — largest U.S. AI-governance action to that point; subsequently revoked by Trump.
+655,The Adolescence of Technology,AI Governance,4,Amodei essay on current AI-development era.
+657,Trump Attempts to Preempt State AI Regulation Through Executive Order,AI Governance,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+658,Trump signs executive order blocking states from enforcing their own regulations around AI | CNN Business,AI Governance,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+659,Open Problems in Technical AI Governance,AI Governance,3,GovAI major research compilation.
+660,A Collection of AI Governance Research Ideas,AI Governance,3,GovAI research-question compilation.
+661,The Federal AI Preemption Push: President Trump signs the Executive Order titled “Ensuring a National Policy Framework for Artificial Intelligence”,AI Governance,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+667,Common Ground between AI 2027 & AI as Normal Technology,AI Governance,2,Notable but narrower AI-resource; specialized scope.
+670,Computing Power and the Governance of Artificial Intelligence,AI Governance,3,Major compute-governance academic paper.
+673,"Transcript: US Senate Subcommittee Hearing on ""Protecting Consumers from Artificial Intelligence Enabled Fraud and Scams"" | TechPolicy.Press",AI Governance,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+674,"White House Issues ""One Rule"" Executive Order To Curb State AI Regulation - New Technology - United States",AI Governance,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+679,Some Talent Needs in AI Governance,AI Governance,2,Notable but narrower AI-resource; specialized scope.
+681,Toward A National AI Framework: The Federal Strategy To Override State Regulation - New Technology - United States,AI Governance,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+682,The Annual AI Governance Report 2025,AI Governance,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+683,The Annual AI Governance Report 2025: Steering the Future of AI,AI Governance,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+684,AI Governance Profession Report 2025,AI Governance,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+692,"Transcript: US House Subcommittee Hosts Hearing on ""AI ...",AI Governance,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+693,Adam Thierer Testimony before JEC on AI & Economic Opportunity,AI Governance,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+696,"The Federal AI Preemption Push: President Trump Signs The Executive Order Titled ""Ensuring A National Policy Framework For Artificial Intelligence"" - New Technology - United States",AI Governance,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+702,Blackburn Unveils National Policy Framework for Artificial Intelligence - U.S. S...,AI Governance,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+544,Situational Awareness,AI Safety,4,Major AI-policy-relevant text with real discourse weight.
+549,Statement on AI Risk,AI Safety,5,2023 CAIS one-sentence statement signed by 500+ AI leaders + Turing winners; canonical AI-doom moment.
+552,The Alignment Problem,AI Safety,4,Christian 2020; NYT-called 'the one book to read on AI'; policymaker-accessible.
+553,AI Frontiers,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+554,AI Policy Bulletin,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+555,AI Prospects,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+556,Astral Codex Ten,AI Safety,3,Alexander's major rationalist blog; widely read in AI-policy/EA world.
+557,Bounded Regret,AI Safety,3,Steinhardt's AI-safety-risks-and-forecasting blog.
+558,ChinaTalk,AI Safety,3,Jordan Schneider's China-tech-US-China-relations substack.
+559,Cold Takes,AI Safety,3,Karnofsky's 'Most Important Century' blog; major AI-safety-policymaker reading.
+560,Daniel Paleka's Newsletter,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+561,DeepMind Safety Research,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+562,Don't Worry about the Vase,AI Safety,3,Major weekly rationalist/EA AI-policy analysis.
+563,Miles's Substack,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+564,Obsolete,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+565,Paul Christiano's Blog,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+566,Planned Obsolescence,AI Safety,3,Cotra's AI-timelines forecasting substack.
+567,Rising Tide,AI Safety,3,Helen Toner's AI-policy substack post-OpenAI-board.
+568,The Building Capacity Blog,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+569,The Power Law,AI Safety,3,Peter Wildeford's forecasting/AI substack.
+570,Threading the Needle,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+571,Victoria Krakovna's Blog,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+572,AISafety.com: Media channels,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+573,AI Safety at the Frontier,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+574,AI Safety Events & Training,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+575,AI Safety Funding,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+576,AI Safety in China,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+577,AI Safety Newsletter,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+578,Can We Secure AI With Formal Methods?,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+579,Import AI,AI Safety,3,Clark's weekly AI newsletter; Anthropic-affiliated; major policy-reader reach.
+580,ML Safety Newsletter,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+581,Transformer,AI Safety,3,Major AI-policy weekly newsletter (Shakeel Hashim).
+582,"80,000 Hours Podcast",AI Safety,3,Major AI-safety + EA long-form podcast.
+583,AI X-risk Research Podcast,AI Safety,3,Daniel Filan's AI-safety-researcher-interview podcast.
+584,Dwarkesh Podcast,AI Safety,3,Dwarkesh Patel interviews; major AI-leader-interview reach.
+585,Future of Life Institute Podcast,AI Safety,3,FLI's policy/research interview podcast.
+586,The AI Policy Podcast,AI Safety,3,CSIS's Wadhwani-AI-Center podcast (Greg Allen).
+587,The Cognitive Revolution,AI Safety,3,Nathan Labenz's AI-interview podcast.
+588,AI Alignment Slack,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+589,AI Digest,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+590,AI Risk Explorer,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+591,AI Risk: Why Care?,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+592,AI Safety for Fleshy Humans,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+593,AI Safety Map Anki Deck,AI Safety,3,Flashcards for AI-safety orgs.
+595,AI Safety Support,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+596,AI Watch,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+597,AISafety.com,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+598,Effective Altruism Domains,AI Safety,3,High-impact project domain directory.
+599,Effective Altruism Forum,AI Safety,3,Central EA-community discussion forum.
+600,LessWrong,AI Safety,3,Central AI-alignment-research discussion forum.
+601,MIT AI Risk Repository,AI Safety,3,"1,600+ AI risks database; cited reference."
+602,RiesgosIA.org,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+603,AI Explained,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+604,AI In Context,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+605,AI Safety Videos,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+606,Doom Debates,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+607,Dr Waku,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+609,FAR․AI YouTube channel,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+610,Lethal Intelligence,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+611,Rational Animations,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+612,Robert Miles,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+613,Siliconversations,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+614,Species,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+615,The AI Risk Network,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+643,Human Compatible,AI Safety,5,Russell's defining public AI-safety text; cited in every intro-to-alignment reading list.
+644,The Precipice: Existential Risk and the Future of Humanity,AI Safety,4,Ord 2020 — canonical AI-x-risk + long-termism text.
+645,The Urgency of Interpretability,AI Safety,4,Amodei essay; major frontier-lab interpretability argument.
+646,On the Responsible Scaling of AI,AI Safety,4,Anthropic's RSP framework paper — adopted + adapted by OpenAI + DeepMind.
+647,"Superintelligence: Paths, Dangers, Strategies",AI Safety,5,Bostrom's 2014 book; single most influential AI-safety-origin text; shaped AI-doom discourse.
+653,International AI Safety Report,AI Safety,5,Bengio-led 2024 international report; global-consensus document; cited in every major AI-safety briefing.
+654,Zvi Mowshowitz AI Newsletter,AI Safety,3,DUP of [562] — same author/substack.
+656,Life 3.0: Being Human in the Age of AI,AI Safety,4,Major AI-policy-relevant text with real discourse weight.
+663,Highlights of the 2023 Executive Order on Artificial ...,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+666,Foundational Challenges in Assuring Alignment and Safety of Large Language Models,AI Safety,3,Major technical-alignment academic paper.
+669,"Alignment Remains a Hard, Unsolved Problem",AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+671,US Senate Hearing On 'Examining the Harm of AI Chatbots',AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+675,Alignment Pretraining: AI Discourse Causes Self-Fulfilling (Mis)alignment,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+676,Values in the Wild,AI Safety,3,Anthropic 2025 values-in-AI research.
+677,The Persona Selection Model: Why AI Assistants Might Behave Like Humans,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+678,The Assistant Axis: Situating and Stabilizing the Character of LLMs,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+685,Gradual Disempowerment,AI Safety,3,Major 2025 paper on slow-rolling AI-disempowerment scenarios.
+686,AI Safety Index 2025: How Frontier AI Companies | Libertify,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+687,2025 AI Safety Index - Future of Life Institute,AI Safety,4,FLI 2025 benchmark of frontier-lab safety practices; widely cited.
+688,AI Safety Index Winter 2025 - Future of Life Institute,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+694,Senate Judiciary written testimony - Helen Toner 2024-09-17,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+701,Transcript: Senate Judiciary Subcommittee Hosts Hearing on Oversight of AI: Insiders’ Perspectives | TechPolicy.Press,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+703,2025 Q4 Update from our Frontier AI Risk Monitoring Platform,AI Safety,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+1802,Core Views on AI Safety,AI Safety,4,Anthropic's 2023 AI-safety strategy document; cited as frontier-lab policy position.
+1803,Constitutional AI: Harmlessness from AI Feedback,AI Safety,4,Anthropic's 2022 paper — Constitutional AI training approach underlying Claude; foundational alignment technique.
+1805,Training Language Models to Follow Instructions with Human Feedback,AI Safety,4,OpenAI 2022 — RLHF foundation for ChatGPT and all modern LLM alignment.
+651,The Simple Macroeconomics of AI,Labor & Economy,3,Acemoglu 2024 AI-macroeconomics paper.
+689,Canaries in the Coal Mine? Six Facts about the Recent Employment Effects of Artificial Intelligence,Labor & Economy,3,2025 AI-employment-effects research paper.
+690,MIT study finds AI can already replace 11.7% of U.S. ...,Labor & Economy,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+704,Labor Demand in the Age of Generative AI : Early Evidence from the U.S. Job Posting Data,Labor & Economy,3,Autor-led AI-labor-demand paper.
+664,FACT SHEET: Biden-Harris Administration Executive Order Directs DHS to Lead the Responsible Development of Artificial Intelligence | Homeland Security,National Security,3,DHS fact sheet on Biden AI EO.
+665,Biden signs U.S.' first AI executive order to create safeguards,National Security,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+551,Stochastic Parrots Paper,Philosophy/Ethics,4,Bender + Gebru 2021; controversial paper → Gebru's Google exit; foundational AI-ethics text.
+695,Machines of Loving Grace,Philosophy/Ethics,4,Amodei Oct 2024 essay; defines Anthropic's positive AI-transformation narrative.
+705,Transcript: Joint Hearing on “Artificial Intelligence and Its Potential to Fuel Economic Growth and Improve Governance” | TechPolicy.Press,Policy Proposal,1,Narrow/niche/peripheral AI resource (likely duplicate or narrow coverage).
+1804,Attention Is All You Need,Technical,5,2017 Google paper — founding text of Transformer architecture underlying every frontier LLM; most cited AI paper of the modern era.
