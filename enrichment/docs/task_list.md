@@ -106,7 +106,8 @@ Execution tracker for the data enrichment project. Strategy and design rationale
   - `critic` (6): source not person
   - `supporter` (3): source not person
 - [x] Phase 4B.1: Flipped 7 reversed `advisor` org→person edges via `fix_edge_directions.py --live` — `logs/phase4b1-4e-20260412.md`
-- [ ] Manual review: founder person→person edges, employer person→person edges, 3 org→org advisor edges, 6 `critic` org→person, 3 `supporter` org→org (see Discovered Work)
+- [x] Manual review: 3 org→org `advisor` edges → reclassified to `partner`; 9 non-person-source `critic`/`supporter` edges reviewed, all semantically valid, no change — `logs/advisor-edge-reclassify-20260412.md`
+- [ ] Manual review: founder person→person edges, employer person→person edges (see Discovered Work)
 
 **Phase 4E close-outs (completed 2026-04-12):**
 - [x] Citation artifact cleanup — 16 entities, 63 markers stripped (fixed `cleanup_citations.py` regex bug)
@@ -223,20 +224,20 @@ Execution tracker for the data enrichment project. Strategy and design rationale
 
 Items found during execution that don't fit neatly into a phase above.
 
-- [ ] 18 person→person `founder` edges — co-founder relationships stored as person→person (e.g., Altman→Brockman [co-founder]). Should each point to the shared org. Requires finding/creating the org entity.
-- [ ] 5 org→org `founder` edges — possible spin-offs (ENAIS→AI Safety Dublin) or bad data (GovAI→Yale, Element AI→Real Ventures). Real Ventures→Element AI should probably be `funder` flipped.
-- [ ] 8 person→person `employer` edges — "worked for [person]" (e.g., Bruce Reed→Joe Biden [Deputy COS]). Target should be an org (White House, etc.) not the person.
-- [ ] 8 reversed `advisor` edges where org→person — auto-fixable via fix_edge_directions.py
-- [ ] 2 org→org `advisor` edges — should be `partner` or `collaborator`
+- [x] ~~18 person→person `founder` edges~~ — 12 deleted (orgs already had correct founder edges for both parties), 4 Fei-Fei Li edges redirected to World Labs / Stanford HAI co-founders, 1 LeCun→LeBrun recoded as LeBrun→AMI Labs employer CEO, 1 Heinrich→Portman kept (Senate AI Caucus, no org entity). `logs/edge-type-fixes-20260412.md`
+- [x] ~~5 org→org `founder` edges~~ — 1176 flipped+reclassified (Real Ventures→Element AI `funder`); 1988/1989 → `partner` (ENAIS↔local chapters); 2088 → `partner` (SPAR↔BASIS affiliation); 2232 → `affiliated` (GovAI founded *at* Yale, not founder of Yale). `logs/edge-type-fixes-20260412.md`
+- [x] ~~8 person→person `employer` edges~~ — 6 redirected to correct orgs (DOJ, White House, OSTP), 2 deleted (Chakrabarti→AOC/Sanders, no org target). `logs/edge-type-fixes-20260412.md`
+- [x] ~~8 reversed `advisor` org→person edges~~ — fixed in Phase 4B.1 (`fix_edge_directions.py`)
+- [x] ~~3 org→org `advisor` edges~~ — reclassified to `partner` `logs/advisor-edge-reclassify-20260412.md`
 - [ ] **AMPTP category schema gap** — current category list in `canon.md` has no fit for trade/industry associations (studio-management bargaining groups). Currently bucketed as `Labor/Civil Society` with a note in `other_categories`. Consider adding `Trade Association/Industry`.
-- [ ] **Policymaker belief backfill (~6 entities)** — Tom Cotton (1099), Andy Kim (1100), Ben Horowitz (1102), Donald Trump (1103), John Kennedy (1105), Katie Britt (1119) have clear public positions documented in their notes but belief fields are NULL/Unknown. Audit surfaced these — fix in early Phase 4 alongside belief enrichment pass.
+- [x] ~~**Policymaker belief backfill (6 entities)**~~ — Done in Phase 4E close-outs (Tom Cotton, Andy Kim, Ben Horowitz, Donald Trump, John Kennedy, Katie Britt). `logs/audit-finish-20260411.md`
 - [x] ~~**FTC duplicate merge**~~ — Done in Phase 5A Tier A (199 merged into 909)
 - [ ] **CSIS entity rewrite** — entity 349 "CSIS AI Policy Podcast (Center for Strategic and International Studies)" has 0 edges and podcast-focused notes. Deferred to Phase 5C seeding pass (requires note rewrite, not mechanical fix).
 - [x] ~~**Non-canonical `influence_type` normalization**~~ — Done in Phase 5A Tier A (91 rows normalized, all canonical)
 - [x] ~~**Resource category normalization**~~ — Done in Phase 5A Tier A (57 rows normalized, all canonical)
-- [ ] **Mark Gray duplicate** — entities 1696 "Mark Gray" and 1697 "Mark D Gray" both claim FTC Chief AI Officer role (surfaced during FTC merge). Likely same person; merge needed.
-- [ ] **New York Times duplicate** — [862] "The New York Times" (6 edges, AI-initiatives-focused notes) and [1059] "New York Times" (12 edges, generic notes). Surfaced during Phase 5F pre-check. Merge candidate: keep [862], redirect edges from [1059], append URLs.
-- [ ] **Commerce duplicate** — [914] "Department of Commerce" and [1032] "U.S. Department of Commerce". Surfaced during Phase 5F pre-check. Merge candidate.
+- [x] ~~**Mark Gray duplicate**~~ — [1697] merged into [1696]; renamed to "Mark D. Gray", sources merged, dup edge deleted. `logs/dup-merges-20260412.md`
+- [x] ~~**New York Times duplicate**~~ — [862] merged into [1059]; [1059] renamed "The New York Times", 3 edges redirected, 3 dup edges dropped. 12→15 edges. `logs/dup-merges-20260412.md`
+- [x] ~~**Commerce duplicate**~~ — [1032] merged into [914]; 6 edges redirected, 2 dup edges dropped, edge 2110 direction fixed (CAISI→Commerce), sources merged. 6→12 edges. `logs/dup-merges-20260412.md`
 - [x] ~~**Cohere founders missing**~~ — Done in Tier D. Aidan Gomez [1807], Nick Frosst [1808], Ivan Zhang [1809] all seeded.
 - [x] ~~**Karén Simonyan missing**~~ — Done in Tier D. Seeded as [1810] with founder→Inflection + employer→Microsoft.
 - [x] ~~**Tier C deferred persons**~~ — resolved in Tiers F/G:
