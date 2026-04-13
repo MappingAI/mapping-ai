@@ -1,0 +1,92 @@
+[
+  {
+    "edge_id": 768,
+    "proposed_url": "https://www.genealogy.math.ndsu.nodak.edu/id.php?id=32943",
+    "justification": "Mathematics Genealogy Project page for Stuart Russell explicitly names Michael Robert Genesereth as his doctoral advisor at Stanford (PhD 1987, dissertation 'Analogical and Inductive reasoning').",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 774,
+    "proposed_url": "https://fortune.com/2024/12/11/marc-andreessen-half-time-florida-trump-business-policies/",
+    "justification": "Fortune article (December 2024) confirms Marc Andreessen was spending roughly half his time at Mar-a-Lago advising Donald Trump on tech, business, and economic policy heading into his second term.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 781,
+    "proposed_url": "https://www.schatz.senate.gov/news/press-releases/schatz-elevated-in-senate-democratic-leadership-to-deputy-conference-secretary",
+    "justification": "Official Schatz Senate press release confirms Schumer nominated Schatz for the new Deputy Conference Secretary position (2022) and that Schatz remained Chief Deputy Whip, both roles within Schumer's leadership structure; best available public record of Schumer-Schatz leadership relationship, though the 2017 appointment date in the evidence is not directly confirmed by this URL.",
+    "confidence": "medium"
+  },
+  {
+    "edge_id": 797,
+    "proposed_url": "https://en.wikipedia.org/wiki/Yoshua_Bengio",
+    "justification": "Wikipedia's Yoshua Bengio page lists Ian Goodfellow under 'Notable students' in the infobox, documenting the mentor-student relationship.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1187,
+    "proposed_url": "https://en.wikipedia.org/wiki/Ian_Goodfellow",
+    "justification": "Wikipedia's Ian Goodfellow page states his BSc and MSc at Stanford were supervised by Andrew Ng; the evidence says 'under the supervision of Andrew Ng' and the Wikipedia page confirms Ng supervised his pre-doctoral work, though Ng was not his PhD supervisor (Bengio and Courville were).",
+    "confidence": "medium"
+  },
+  {
+    "edge_id": 1188,
+    "proposed_url": "https://umontreal.scholaris.ca/handle/1866/11674",
+    "justification": "Université de Montréal institutional repository record for Goodfellow's PhD thesis explicitly lists Yoshua Bengio as supervisor alongside Aaron Courville.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1189,
+    "proposed_url": "https://umontreal.scholaris.ca/handle/1866/11674",
+    "justification": "Université de Montréal institutional repository record for Goodfellow's PhD thesis explicitly lists Aaron Courville as supervisor alongside Yoshua Bengio.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1221,
+    "proposed_url": "https://en.wikipedia.org/wiki/Dario_Amodei",
+    "justification": "Wikipedia's Dario Amodei infobox explicitly names Michael J. Berry and William Bialek as his doctoral advisors at Princeton.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1222,
+    "proposed_url": "https://en.wikipedia.org/wiki/Dario_Amodei",
+    "justification": "Wikipedia's Dario Amodei infobox explicitly names William Bialek and Michael J. Berry as his doctoral advisors at Princeton.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1228,
+    "proposed_url": "https://econ.columbia.edu/interview-with-anton-korinek-columbia-economics-alumni/",
+    "justification": "Columbia Economics alumni interview in which Korinek states 'My dissertation advisor, Joe Stiglitz, had the most formative influence on my development as an economist,' directly confirming Stiglitz as his PhD sponsor.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1237,
+    "proposed_url": "https://www.theethicaltechdigest.org/q-a-with-david-evan-harris/",
+    "justification": "The Ethical Tech Digest Q&A with David Evan Harris explicitly states he 'recently began serving as a Member of the Artificial Intelligence (AI) and Election Security Advisory Committee, convened by Arizona's Secretary of State'; the Arizona SOS official page (azsos.gov/news/802) returned 403 during verification.",
+    "confidence": "medium"
+  },
+  {
+    "edge_id": 1285,
+    "proposed_url": "https://www.whitehouse.gov/articles/2025/03/ostp-press-release/",
+    "justification": "Official White House press release confirms Michael Kratsios was confirmed 74-25 as the 13th Director of OSTP (the President's science and technology advisor) on March 25, 2025.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1297,
+    "proposed_url": "https://www.gov.uk/government/news/industry-and-national-security-heavyweights-to-power-uks-frontier-ai-taskforce",
+    "justification": "UK government announcement explicitly lists 'Paul Christiano – Head of the Alignment Research Centre' as one of the seven External Advisory Board members of the Frontier AI Taskforce.",
+    "confidence": "high"
+  },
+  {
+    "edge_id": 1314,
+    "proposed_url": null,
+    "justification": "No URL found confirming Demis Hassabis on the Frontier AI Taskforce advisory board specifically; the official advisory board announcement lists seven members and Hassabis is not among them. His documented UK government advisory role (gov.uk/government/news/world-leading-expert-demis-hassabis-to-advise-new-government-office-for-artificial-intelligence) relates to the 2018 Office for AI, a different body than the 2023 Frontier AI Taskforce.",
+    "confidence": "none"
+  },
+  {
+    "edge_id": 1322,
+    "proposed_url": "https://en.wikipedia.org/wiki/Timnit_Gebru",
+    "justification": "Wikipedia's Timnit Gebru infobox lists Fei-Fei Li as her doctoral advisor, and the article text states 'Gebru was advised during her PhD program by Fei-Fei Li.'",
+    "confidence": "high"
+  }
+]

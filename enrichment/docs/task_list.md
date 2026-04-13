@@ -7,7 +7,7 @@ Execution tracker for the data enrichment project. Strategy and design rationale
 - Phase 1 Audit — Complete
 - Phase 2 Cleanup — Complete
 - Phase 3 Entity Enrichment — Complete
-- Phase 4 Edge Enrichment — In progress (reclassify 61%, +57 backfilled edges [48 person + 9 org], source_url 81.2%)
+- Phase 4 Edge Enrichment — In progress (reclassify 61%, +57 backfilled edges [48 person + 9 org], source_url 82.5%)
 - Phase 5 Seeding — Complete (Tiers A–G + investor/CAISI tail; test-data row [547] deleted, Industry Analysis bucket intentionally empty pending future seeding)
 - Phase 6 Importance Ratings — Not started
 
@@ -86,7 +86,8 @@ Execution tracker for the data enrichment project. Strategy and design rationale
 **Affiliated edge reclassification (591 edges):**
 - [x] Sample affiliated edges, determine distribution — 59 party membership, 9 journalist-employer, 27 reversed org→person, 496 unresolved (see reclassify_affiliated.py report)
 - [x] Rounds 1-3: 361 reclassified via deterministic rules (commits through 38e9e94)
-- [ ] Review remaining 230 `affiliated` edges, handle edge cases manually (requires web search per edge)
+- [x] Round 4: 47 reclassified (31 employer, 3 funder, 5 member, 6 parent_company, 2 advisor) + 12 deleted (8 duplicate founders + 4 personal relationship edges) via training knowledge — `logs/affiliated-reclassify-20260412.md`
+- [ ] Round 5: 164 remaining `affiliated` edges — require web search per edge (legislators→OSTP/think tanks, persons→Tsinghua/AI Risk Mitigation Fund, suspicious role mismatches, no-evidence edges)
 
 **Backfill missing edges from notes (Phase 4A):**
 - [x] Write `backfill_employer_edges.py` — regex extraction of employment/founder/member patterns from person notes, with guards for past roles and duplicate-stub entities — `logs/backfill-employer-edges-20260412.md`
@@ -116,7 +117,8 @@ Execution tracker for the data enrichment project. Strategy and design rationale
 
 **Source URLs and evidence:**
 - [x] Phase 4C.1: Zero-API backfill via `backfill_source_urls.py --live` — filled **1,842 / 2,269 edges (81.2%)** using target_resource_url → target_website → source_website fallbacks — `logs/source-url-backfill-20260412.md`
-- [ ] Phase 4C.2: Fill 427 remaining unfilled edges (mostly collaborator 175, employer 63, founder 50 — require org-website seeding or evidence pass)
+- [x] Phase 4C.2a: Re-ran zero-API backfill after Phase 5 seeding — picked up 14 new fills from org-websites added during Tier B/D/F/G (worldlabs, hai.stanford, whitehouse/OSTP, justice.gov, etc.). Coverage **1,923 / 2,331 (82.5%)** — `logs/source-url-backfill-20260413.md`
+- [ ] Phase 4C.2b: 408 remaining unfilled edges exhaust zero-cost strategies (collaborator 175, employer 60, founder 33, member 29, advisor 24, affiliated 19, partner 17, supporter 15, author 12, critic 10, funder 9, parent_company 4, mentioned 1). No URLs embedded in `evidence` text (checked 389 non-empty evidence fields — zero hits). Requires per-edge web research — deferred pending scope decision.
 - [ ] Phase 4C.3 (stretch): Upgrade generic org-homepage URLs to specific evidence pages for high-degree entities
 
 ## Phase 5: Seeding
@@ -232,7 +234,7 @@ Items found during execution that don't fit neatly into a phase above.
 - [ ] **AMPTP category schema gap** — current category list in `canon.md` has no fit for trade/industry associations (studio-management bargaining groups). Currently bucketed as `Labor/Civil Society` with a note in `other_categories`. Consider adding `Trade Association/Industry`.
 - [x] ~~**Policymaker belief backfill (6 entities)**~~ — Done in Phase 4E close-outs (Tom Cotton, Andy Kim, Ben Horowitz, Donald Trump, John Kennedy, Katie Britt). `logs/audit-finish-20260411.md`
 - [x] ~~**FTC duplicate merge**~~ — Done in Phase 5A Tier A (199 merged into 909)
-- [ ] **CSIS entity rewrite** — entity 349 "CSIS AI Policy Podcast (Center for Strategic and International Studies)" has 0 edges and podcast-focused notes. Deferred to Phase 5C seeding pass (requires note rewrite, not mechanical fix).
+- [x] ~~**CSIS entity rewrite**~~ — Done in Phase 5D. Entity 349 renamed to "Center for Strategic and International Studies (CSIS)", category → Think Tank/Policy Org, notes rewritten, Gregory C. Allen [1811] seeded as employer (Wadhwani AI Center Director).
 - [x] ~~**Non-canonical `influence_type` normalization**~~ — Done in Phase 5A Tier A (91 rows normalized, all canonical)
 - [x] ~~**Resource category normalization**~~ — Done in Phase 5A Tier A (57 rows normalized, all canonical)
 - [x] ~~**Mark Gray duplicate**~~ — [1697] merged into [1696]; renamed to "Mark D. Gray", sources merged, dup edge deleted. `logs/dup-merges-20260412.md`
