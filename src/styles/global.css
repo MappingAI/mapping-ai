@@ -1,0 +1,56 @@
+@import "tailwindcss" layer(base);
+
+/*
+ * Tailwind CSS v4 — CSS-first configuration
+ * Design tokens extracted from existing CSS variables in contribute.html and map.html.
+ *
+ * IMPORTANT: preflight is NOT applied (we use @import ... layer(base) instead of
+ * the default @import "tailwindcss") to avoid conflicts with existing inline CSS
+ * during the coexistence period (Units 5-16). Enable full preflight at Unit 17 cutover.
+ */
+
+@theme {
+  /* Typography */
+  --font-serif: 'EB Garamond', Georgia, serif;
+  --font-mono: 'DM Mono', monospace;
+
+  /* Core colors (from contribute.html :root) */
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #555;
+  --color-text-tertiary: #888;
+  --color-border: #bbb;
+  --color-bg-secondary: #f8f7f5;
+  --color-bg-active: #edecea;
+  --color-accent: #2563eb;
+
+  /* Category colors (SELECT_COLORS from contribute.html + CATEGORY_COLORS from map.html) */
+  --color-cat-frontier-lab: #e74c3c;
+  --color-cat-ai-safety: #2ecc71;
+  --color-cat-think-tank: #3498db;
+  --color-cat-government: #8e44ad;
+  --color-cat-academic: #f39c12;
+  --color-cat-vc-capital: #e67e22;
+  --color-cat-labor-civil: #1abc9c;
+  --color-cat-ethics-rights: #d35400;
+  --color-cat-media: #c0392b;
+  --color-cat-political: #2c3e50;
+  --color-cat-infrastructure: #7f8c8d;
+  --color-cat-deployers: #16a085;
+
+  /* Person role colors */
+  --color-role-executive: #e74c3c;
+  --color-role-researcher: #3498db;
+  --color-role-policymaker: #8e44ad;
+  --color-role-investor: #e67e22;
+  --color-role-organizer: #2ecc71;
+  --color-role-journalist: #c0392b;
+  --color-role-academic: #f39c12;
+  --color-role-cultural: #1abc9c;
+
+  /* Stance colors */
+  --color-stance-accelerate: #e74c3c;
+  --color-stance-regulate: #3498db;
+  --color-stance-pause: #f39c12;
+  --color-stance-ban: #8e44ad;
+  --color-stance-mixed: #95a5a6;
+}

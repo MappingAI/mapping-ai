@@ -17,16 +17,29 @@
     "d3-timer": "^3.0.1",
     "exa-js": "^2.10.2",
     "pg": "^8.20.0",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
     "tippy.js": "^6.3.7"
   },
   "devDependencies": {
     "@aws-sdk/client-s3": "^3.1026.0",
+    "@tailwindcss/vite": "^4.2.2",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
     "artillery": "^2.0.0",
     "csv-parse": "^5.6.0",
     "dotenv": "^16.4.7",
     "esbuild": "^0.27.4",
     "express": "^5.2.1",
+    "jsdom": "^27.0.1",
     "puppeteer": "^24.40.0",
+    "tailwindcss": "^4.2.2",
+    "typescript": "^5.9.3",
+    "vite": "^8.0.8",
+    "vitest": "^3.2.4",
     "xlsx": "^0.18.5"
   },
   "scripts": {
@@ -37,7 +50,11 @@
     "db:export-map": "node scripts/export-map-data.js",
     "db:backup": "node scripts/backup-db.js",
     "db:backup:local": "node scripts/backup-db.js --local",
+    "dev": "vite",
+    "build": "vite build",
     "build:tiptap": "esbuild src/tiptap-notes.js --bundle --outfile=assets/js/tiptap-notes.js --minify --format=iife --target=es2020",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "test:load": "artillery run scripts/load-test.yml",
     "test:load:local": "API_BASE=http://localhost:3000 artillery run scripts/load-test.yml"
   }
