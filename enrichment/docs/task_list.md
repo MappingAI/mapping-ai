@@ -7,8 +7,8 @@ Execution tracker for the data enrichment project. Strategy and design rationale
 - Phase 1 Audit — Complete
 - Phase 2 Cleanup — Complete
 - Phase 3 Entity Enrichment — Complete
-- Phase 4 Edge Enrichment — In progress (reclassify 61%, +48 backfilled edges, source_url 81.2%)
-- Phase 5 Seeding — Tiers A–G + investor/CAISI tail complete; Industry Analysis resource bucket still open
+- Phase 4 Edge Enrichment — In progress (reclassify 61%, +57 backfilled edges [48 person + 9 org], source_url 81.2%)
+- Phase 5 Seeding — Complete (Tiers A–G + investor/CAISI tail; test-data row [547] deleted, Industry Analysis bucket intentionally empty pending future seeding)
 - Phase 6 Importance Ratings — Not started
 
 ---
@@ -92,7 +92,9 @@ Execution tracker for the data enrichment project. Strategy and design rationale
 - [x] Write `backfill_employer_edges.py` — regex extraction of employment/founder/member patterns from person notes, with guards for past roles and duplicate-stub entities — `logs/backfill-employer-edges-20260412.md`
 - [x] Live run: **48 edges added** (23 employer + 17 founder + 8 member) across 46 persons
 - [x] Flag delta: 271 → 249 `influence_without_edge` (−22)
-- [ ] Consider org-side backfill (120 flagged orgs still need member/employer edges pointing to them)
+- [x] Phase 4A.3: Org-side backfill via `backfill_org_edges.py` (mirror — scans ORG notes for named leadership; R1 founded-by, R2 led/run-by, R3 role-then-name, R4 name-then-paren-role). Added disambiguation guard ("distinct from…") and `affiliated` to blocking set — `logs/backfill-org-edges-20260412.md`
+- [x] Live run: **9 edges added** (2 founder + 7 employer) across 9 orgs; 20 proposals skipped (edge already exists)
+- [x] Flag delta: 338 → 334 orgs `influence_without_edge` (−4). Lower yield than person-side because most named leaders in org notes aren't yet person entities in the DB.
 
 **Edge directionality + correctness:**
 - [x] Spot-check edges against canonical direction conventions — violations found:
@@ -184,7 +186,7 @@ Execution tracker for the data enrichment project. Strategy and design rationale
   - [1805] InstructGPT/RLHF paper (Ouyang et al., 2022) — +publisher + author edges (Leike, Schulman, Christiano)
   - [1806] Scaling Laws paper (Kaplan, McCandlish et al., 2020) — +publisher + author edges (Kaplan, McCandlish, Amodei)
 - [x] "Technical" resource bucket now populated (was 0)
-- [ ] "Industry Analysis" bucket still thin (1 resource); Chip War-style reports could go here opportunistically
+- [ ] "Industry Analysis" bucket now empty (the one row was deleted as test data in Phase 5 tail — see `logs/delete-547-20260412.md`); Chip War, SemiAnalysis, Stratechery, State of AI reports are candidates for a future seeding pass
 
 **Phase 5F: Tier F — Current-admin gov leads + frontier-lab executives (complete):**
 - [x] Seeded 17 persons via `seed_tier_f.py` — `logs/tier-f-seeding-20260412.md`
@@ -202,7 +204,7 @@ Execution tracker for the data enrichment project. Strategy and design rationale
 **Phase 5F/G tail — remaining:**
 - [x] Verify Investor tagging for Hoffman, Andreessen, Thiel, Khosla — all four already `category=Investor` with `Funder/investor` leading their `influence_type`. Backfilled missing `primary_org` on Hoffman (→Greylock Partners) and Khosla (→Khosla Ventures). Edge-coverage gaps on Hoffman/Khosla logged to Discovered Work. `logs/investor-audit-20260412.md`
 - [x] Update entity 205 (AISI) notes to reflect June 3 2025 → CAISI rebrand — renamed to "Center for AI Standards and Innovation (CAISI)", notes rewritten (mission pivot, Kelly departure, no confirmed successor), notes_sources refreshed, 12 existing edges preserved. `logs/caisi-rebrand-20260412.md`
-- [ ] Fill Industry Analysis resource bucket (still thin at 1)
+- [x] Resolve Industry Analysis resource bucket — the single resource [547] "The Hard Fork Podcast" turned out to be v1-era test data (notes literally = "TEST DATA — NYT podcast…") with a malformed `employer` edge from Casey Newton→podcast. Deleted the entity + both edges. Bucket is now empty by design; a future pass can populate it with genuine industry-analysis resources (Chip War, SemiAnalysis, Stratechery archive, State of AI reports, etc.). `logs/delete-547-20260412.md`
 
 ## Phase 6: Importance Ratings
 > See plan.md Phase 6
