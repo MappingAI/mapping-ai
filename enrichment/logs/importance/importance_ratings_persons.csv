@@ -162,7 +162,6 @@ id,name,category,importance,rationale
 29,Yoshua Bengio,Academic,5,Turing Award (2018) for deep learning; defining AI academic; Mila founder; mainstream-recognized AI pioneer.
 821,Geoffrey Hinton,Academic,5,Turing Award (2018) + Nobel Prize Physics 2024; 'AI godfather' — single most mainstream-famous AI academic.
 1,Stuart Russell,Academic,5,Co-author of 'AI: A Modern Approach' (standard AI textbook); 'Human Compatible' author; defining AI-safety academic. [DUP of 1742]
-1742,Stuart J. Russell,Academic,5,Duplicate of [1] — same person; defining AI-safety academic. Flag for merge.
 55,Fei-Fei Li,Academic,5,'Godmother of AI'; ImageNet; Stanford HAI co-director; mainstream-recognized AI pioneer.
 52,Daron Acemoglu,Academic,5,2024 Nobel Prize Economics; mainstream-famous via 'Why Nations Fail'; major AI-and-labor critic.
 991,Noam Chomsky,Academic,4,Iconic global public intellectual; AI-critic voice (LLM scepticism); broad recognition but primary AI contribution is critique.
@@ -738,7 +737,6 @@ id,name,category,importance,rationale
 1264,Benjamin Grosof,Policymaker,2,DARPA PM in DSO (since Sep 2023); CLARA program lead.
 1337,Joanna Rodriguez,Policymaker,2,NRSC Comms Director (Jan 2025–); AI-generated political-ad defender.
 1696,Mark Gray,Policymaker,2,FTC CIO + CDO + Chief AI Officer; oversees AI enforcement infrastructure.
-1697,Mark D Gray,Policymaker,2,DUPLICATE of [1696] Mark Gray; merge candidate.
 39,Saikat Chakrabarti,Policymaker,1,Running for CA-11 (June 2026 primary); ex-AOC COS; New Consensus founder.
 715,Jesse Jackson Jr.,Policymaker,1,2026 candidate IL-02; former Rep seeking return.
 716,Melissa Bean,Policymaker,1,2026 candidate IL-08; ex-Rep (2005–2011).

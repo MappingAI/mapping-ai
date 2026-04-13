@@ -100,7 +100,6 @@ id,name,category,importance,rationale
 426,Stop AGI,Labor/Civil Society,1,Public-education website on AGI risks; listed 'no longer active' on AISafety.com.
 1018,QuitGPT,Labor/Civil Society,1,Consumer-boycott campaign (Feb 2026) against OpenAI Pentagon contracts.
 1294,Court Watch NOLA,Labor/Civil Society,1,Local New Orleans court-watching program; narrow AI-justice-adjacent scope.
-862,The New York Times,Media/Journalism,5,Tier-1 U.S. paper; Zach Seward AI Initiatives team of 8; Cade Metz + Kevin Roose + Kashmir Hill anchor AI coverage; narrative-defining.
 1059,New York Times,Media/Journalism,5,DUP of [862] — same org; kept at 5; merge candidate.
 1409,Wall Street Journal,Media/Journalism,5,"Tier-1 business paper; major AI-scoops beat (Jin, ex-Hao); News Corp lawsuits vs OpenAI; business-AI discourse anchor."
 865,Bloomberg,Media/Journalism,5,"Tier-1 business wire + terminal; extensive AI coverage (Ghaffary, Olson); Bloomberg Opinion columns shape business-AI frame."
@@ -367,7 +366,6 @@ id,name,category,importance,rationale
 1149,House Bipartisan Task Force on Artificial Intelligence,Government/Agency,4,Johnson + Jeffries-created Feb 2024; Obernolte + Lieu co-chaired; 273-page AI report.
 1150,House Committee on Science Space & Tech,Government/Agency,4,Primary AI R&D jurisdiction; 9 bipartisan AI bills passed Sep 2025.
 1033,State of California,Government/Agency,4,"CA AI-bill precedent (SB 53, SB 243); Newsom EOs; largest subnational AI regulator."
-1032,U.S. Department of Commerce,Government/Agency,4,DUP sentinel — same as 914.
 1358,U.S. Artificial Intelligence Safety Institute,Government/Agency,4,DUP of [205] CAISI (pre-rebrand name).
 1789,Bureau of Industry and Security (BIS),Government/Agency,4,Commerce sub-agency; AI chip export controls; Kessler Under Secretary.
 1790,National Security Council (NSC),Government/Agency,4,Coordinates NS + tech-AI policy across federal agencies.
