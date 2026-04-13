@@ -4035,6 +4035,9 @@ body.locked #see-map-btn { opacity: 0.4; pointer-events: none; }
 body.locked .info-overlay { display: none !important; }
 </style>
 <!-- PASSWORD GATE END -->
+<!-- React mount point (hidden during coexistence period, activated at Unit 17 cutover) -->
+<div id="contribute-root" style="display:none;"></div>
+<script type="module" src="/src/contribute/main.tsx"></script>
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"__CF_ANALYTICS_TOKEN__"}'></script>
 </body>
 </html>
