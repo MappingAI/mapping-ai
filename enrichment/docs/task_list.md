@@ -8,7 +8,7 @@ Execution tracker for the data enrichment project. Strategy and design rationale
 - Phase 2 Cleanup — Complete
 - Phase 3 Entity Enrichment — Complete
 - Phase 4 Edge Enrichment — In progress (reclassify 61%, +48 backfilled edges, source_url 81.2%)
-- Phase 5 Seeding — In progress (Tier A cleanup + Tier B seeding done; 6 canonical orgs seeded with structural edges)
+- Phase 5 Seeding — In progress (Tiers A–C done: mechanical cleanup, 6 canonical orgs seeded, 9 leadership persons seeded with 11 structural edges)
 - Phase 6 Importance Ratings — Not started
 
 ---
@@ -143,25 +143,36 @@ Execution tracker for the data enrichment project. Strategy and design rationale
   - [1792] Bureau of Cyberspace and Digital Policy (CDP) (+parent_company → State Dept)
 - [x] Skipped with reasoning: CAISI (uncertain post-Trump-admin status), Nancy Pelosi (doesn't pass ONBOARDING "don't add randos" bar for AI-specific policy)
 
-**Phase 5C: Tier C — Leadership edges for existing orgs (needs Exa/Claude API):**
+**Phase 5C: Tier C — Leadership persons for existing orgs (complete):**
+- [x] Extended `seed_entity.py` to handle person-specific fields (title, primary_org, influence_type, beliefs, twitter, location, etc.)
+- [x] Seeded 9 leadership persons via `seed_tier_c.py` — `logs/tier-c-seeding-20260412.md`
+  - [1793] Elizabeth Kelly (Policymaker) → AISI employer
+  - [1794] Craig Martell (Policymaker) → DoD employer (historical, 2022-2024)
+  - [1795] Radha Plumb (Policymaker) → DoD employer (current CDAO)
+  - [1796] Clare Martorana (Policymaker) → OMB employer (Federal CIO)
+  - [1797] Jason Green-Lowe (Organizer) → CAIP founder + employer
+  - [1798] Sam McCandlish (Researcher) → Anthropic founder + employer (Chief Scientist)
+  - [1799] Alvaro Bedoya (Policymaker) → FTC member (Commissioner)
+  - [1800] Michael Littman (Academic) → NSF employer (IIS Div Director)
+  - [1801] Reva Schwartz (Researcher) → NIST employer (AI RMF lead)
+- [x] Coverage improvements: AISI 0→2 leadership edges, DoD 0→2, OMB 0→1, CAIP 0→3
+- [x] Deferred from Tier C (insufficient confidence): Kevin Weil, Koray Kavukcuoglu, Doug Matty, Olivier Sylvain, Rob Reich, Margaret Martonosi, Jeff Alstott — flagged in Discovered Work
 
-**Phase 5D: Leadership edges for existing orgs (needs per-person research):**
-- [x] 3 free edges added in Tier A (Paul Christiano→AISI, Thomas Larsen→CAIP, Alan Davidson→Commerce/NTIA)
-- [ ] Link additional leaders: AISI (Elizabeth Kelly), DoD (Craig Martell, Radha Plumb), OMB (Clare Martorana), CAIP (Jason Green-Lowe)
-- [ ] Fix CSIS (349) — needs note rewrite to describe the think tank instead of just the podcast; then add Greg Allen (Wadhwani AI Center director)
+**Phase 5D: Remaining leadership + org backfill:**
+- [ ] Fix CSIS (349) — needs note rewrite to describe the think tank, not just the podcast; then add Greg Allen (Wadhwani AI Center director)
 - [ ] Revisit CAISI — confirm current status before attempting a seed
-- [ ] Tier 3 seed leaders for new orgs: Cohere founders (Aidan Gomez, Nick Frosst, Ivan Zhang); BIS/NSC/PCAST/CDP AI-specific leads
+- [ ] Seed Cohere founders: Aidan Gomez, Nick Frosst, Ivan Zhang; then link founder edges to Cohere [1787]
+- [ ] Seed Karén Simonyan; link founder edge to Inflection AI [1788]
+- [ ] BIS / NSC / PCAST / CDP AI-specific leads (Tier C-level follow-up)
+- [ ] Frontier-lab CTO/Head of Policy gaps (OpenAI CTO, xAI, Amazon AI deputies, NVIDIA policy — requires current-status check)
+- [ ] Tier-C deferred persons (see Discovered Work): Kevin Weil, Koray Kavukcuoglu, etc.
 
-**Phase 5E: Tier 3-4 — Frontier-lab + agency AI-lead backfill:**
-- [ ] Frontier labs: CTOs, Heads of Policy (OpenAI, Anthropic, DeepMind, Meta AI, xAI, Amazon, NVIDIA)
-- [ ] NIST/OSTP/FTC/NSF/Commerce AI-specific leads
-
-**Phase 5F: Resources:**
-- [ ] Normalize "AI Policy" (52) → "AI Governance" via script; re-class comma-joined values
+**Phase 5E: Resources (mostly deferred until seeding stabilizes):**
+- [x] ~~Resource category normalization~~ — done in Tier A
 - [ ] Seed anchor resources (AI 2027, Situational Awareness, Core Views on AI Safety, Andreessen "Why AI Will Save the World", Constitutional AI paper, RLHF paper)
-- [ ] Fill "Industry Analysis" + "Technical" resource buckets (currently 0 each)
+- [ ] Fill "Industry Analysis" (1) + "Technical" (0) resource buckets
 
-**Phase 5G: Person-category coverage:**
+**Phase 5F: Person-category coverage (token-heavy, defer until budget allocated):**
 - [ ] +10-15 AI-beat journalists (category is thinnest at 25)
 - [ ] +5-8 cultural figures (category is thinnest at 14)
 - [ ] Verify Investor tagging for Hoffman, Andreessen, Thiel, Khosla
@@ -197,3 +208,11 @@ Items found during execution that don't fit neatly into a phase above.
 - [ ] **Mark Gray duplicate** — entities 1696 "Mark Gray" and 1697 "Mark D Gray" both claim FTC Chief AI Officer role (surfaced during FTC merge). Likely same person; merge needed.
 - [ ] **Cohere founders missing** — Aidan Gomez, Nick Frosst, Ivan Zhang not in DB. Seed them to anchor Cohere (1787) with founder edges. Aidan Gomez is particularly notable as a co-author of "Attention Is All You Need".
 - [ ] **Karén Simonyan missing** — co-founder of Inflection AI (along with Suleyman and Hoffman, both now in DB). Former DeepMind Principal Scientist. Seed to complete Inflection founding team.
+- [ ] **Tier C deferred persons (insufficient confidence)** — each needs current-status check before seeding:
+  - Kevin Weil (OpenAI CPO vs CTO — ambiguous post-Mira-Murati)
+  - Koray Kavukcuoglu (DeepMind/Google role has changed multiple times)
+  - Doug Matty (DoD role unclear)
+  - Olivier Sylvain (was FTC senior AI advisor; may have departed)
+  - Rob Reich (Stanford — unclear if formally at OSTP or just adjacent)
+  - Margaret Martonosi (NSF CISE AD — term likely completed)
+  - Jeff Alstott (was OSTP Senior Policy Advisor on AI — current status?)

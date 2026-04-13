@@ -166,25 +166,36 @@ def seed_all(specs, live=False, output=None,
 
     # APPLY
     results = []  # (spec_name, new_id, edges_inserted)
+
+    # Columns we allow specs to set on the entity row. NULL if not supplied.
+    ALLOWED_COLS = [
+        "entity_type", "name", "category", "website", "parent_org_id",
+        "notes", "notes_sources", "other_categories",
+        "title", "primary_org", "other_orgs", "influence_type",
+        "location", "twitter", "bluesky",
+        "resource_type", "resource_category", "resource_url",
+        "resource_title", "resource_author", "resource_year",
+        "resource_key_argument",
+        "belief_regulatory_stance", "belief_regulatory_stance_detail",
+        "belief_evidence_source", "belief_agi_timeline",
+        "belief_ai_risk", "belief_threat_models",
+    ]
+
     if live:
         try:
             for s in specs:
-                cur.execute("""
-                    INSERT INTO entity (
-                        entity_type, name, category, website, parent_org_id,
-                        notes, notes_sources, other_categories,
-                        enrichment_version, status, created_at, updated_at
-                    )
-                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, 'approved',
-                            NOW(), NOW())
-                    RETURNING id
-                """, (
-                    s["entity_type"], s["name"], s.get("category"),
-                    s.get("website"), s.get("parent_org_id"),
-                    s["notes"], s.get("notes_sources", ""),
-                    s.get("other_categories"),
-                    enrichment_version,
-                ))
+                cols = list(ALLOWED_COLS)
+                vals = [s.get(c) for c in cols]
+                # Force required defaults
+                if "notes_sources" in cols and s.get("notes_sources") is None:
+                    vals[cols.index("notes_sources")] = ""
+
+                # Add enrichment_version + status + timestamps separately
+                cols += ["enrichment_version", "status", "created_at", "updated_at"]
+                placeholders = ", ".join(["%s"] * (len(vals))) + ", %s, 'approved', NOW(), NOW()"
+                sql = (f"INSERT INTO entity ({', '.join(cols)}) "
+                       f"VALUES ({placeholders}) RETURNING id")
+                cur.execute(sql, vals + [enrichment_version])
                 new_id = cur.fetchone()[0]
 
                 edge_count = 0
