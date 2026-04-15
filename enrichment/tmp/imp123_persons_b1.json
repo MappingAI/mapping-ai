@@ -1,0 +1,767 @@
+[
+ {
+  "id": 1395,
+  "name": "Eli Lifland",
+  "title": null,
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "Founding Researcher at AI Futures Project and leading AI forecaster; co-author of the AI 2027 scenario (April 2025) alongside Daniel Kokotajlo, Thomas Larsen, and Romeo Dean. Previously forecasted at Samotsvety and worked at Ought and SaferAI. Co-founded Sage (a forecasting platform) and has served as guest fund manager at the Long Term Future Fund. Publicly argues that short AGI timelines are und",
+  "imp": 2
+ },
+ {
+  "id": 1203,
+  "name": "Casey Mock",
+  "title": null,
+  "primary_org": null,
+  "category": "Organizer",
+  "notes": "Casey Mock is Chief of Policy and Public Affairs at the Center for Humane Technology. Previously spent four years at Amazon leading state and local tax policy. Strong advocate for technology regulation and corporate accountability \u2014 argues companies must be held liable for harms caused by their AI products. Compares tech industry lobbying against regulation to the tobacco industry. Advocates for l",
+  "imp": 2
+ },
+ {
+  "id": 1263,
+  "name": "Matt Turek",
+  "title": null,
+  "primary_org": null,
+  "category": "Policymaker",
+  "notes": "Former DARPA deputy director of the Information Innovation Office (I2O). Joined DARPA in 2018 as program manager; led the Explainable AI (XAI), Media Forensics (MediFor), Semantic Forensics (SemaFor), and Machine Common Sense (MCS) programs. Served as acting deputy director of I2O (June-Oct 2021), then deputy office director (May 2022-Oct 2025). DARPA tour ended Oct 2025; transitioned to Chief Sci",
+  "imp": 2
+ },
+ {
+  "id": 1276,
+  "name": "Bei Xiao",
+  "title": null,
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Provost Associate Professor, Dept of Computer Science at American University. Heads the Computational Material Perception Laboratory. Research spans human/machine vision, generative AI for graphics, multimodal perception in VR/AR, and NLP for clinical trials. PhD Neuroscience (UPenn), postdoc at MIT Brain & Cognitive Sciences/CSAIL. Funded by NIH and NSF.",
+  "imp": 1
+ },
+ {
+  "id": 1277,
+  "name": "Thenkurussi (Kesh) Kesavadas",
+  "title": null,
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Vice President for Research & Economic Development at SUNY University at Albany. Launched $200M AI initiative ($75M from NY State) and $20M Center for Emerging AI Systems with IBM. Co-chairs SUNY-wide AI research and infrastructure work group. Leads Empire AI SUNY partnerships for public-good AI. Previously founding director of Health Care Engineering Systems Center at UIUC. Inventor of RoSS robot",
+  "imp": 2
+ },
+ {
+  "id": 1465,
+  "name": "Eric Schmitt",
+  "title": null,
+  "primary_org": null,
+  "category": "Policymaker",
+  "notes": "Republican U.S. Senator from Missouri (sworn in Jan 2023). Former Missouri AG. Key AI legislation: co-introduced Protecting AI and Cloud Competition in Defense Act with Sen. Warren (Dec 2024, reintroduced May 2025) to prevent big tech monopolies in DoD AI/cloud procurement. Co-introduced AI and Critical Technology Workforce Framework Act with Sen. Peters to build America's AI workforce pipeline. S",
+  "imp": 3
+ },
+ {
+  "id": 1466,
+  "name": "Thom Tillis",
+  "title": null,
+  "primary_org": null,
+  "category": "Policymaker",
+  "notes": "Republican U.S. Senator from North Carolina (2015-present). Key AI legislation: co-sponsored Secure Artificial Intelligence Act with Sen. Warner (2024) creating voluntary AI security incident database and NSA AI Security Center. Co-introduced federal AI procurement guardrails bill with Sen. Peters requiring agencies to assess AI risks before deployment. Co-sponsored NO FAKES Act (2024) with Sens. ",
+  "imp": 3
+ },
+ {
+  "id": 1211,
+  "name": "Val\u00e9rie Pisano",
+  "title": null,
+  "primary_org": null,
+  "category": "Executive",
+  "notes": "Val\u00e9rie Pisano is President and CEO of Mila \u2013 Quebec Artificial Intelligence Institute, leading one of the world's foremost academic AI labs. She advocates for responsible, ethics-centered AI governance and has emphasized the urgent need for international cooperation on AI regulation and safety standards.",
+  "imp": 3
+ },
+ {
+  "id": 1284,
+  "name": "Carol L. Folt",
+  "title": null,
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "President of USC (2019-2025), first woman to serve as permanent president. Established Frontiers of Computing initiative and launched USC School of Advanced Computing (23rd school). Made AI a major institutional priority, embedding ethics, analytics, and AI across scholarly work. Environmental scientist by training (UNC Chapel Hill chancellor before USC). Now President Emeritus and VP for Presiden",
+  "imp": 1
+ },
+ {
+  "id": 1286,
+  "name": "Erika James",
+  "title": null,
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Dean of the Wharton School (since July 2020), first woman and first person of color in Wharton's 139-year history. Organizational psychologist specializing in crisis leadership and workplace diversity. Launched Wharton AI & Analytics Initiative, investing heavily in AI research and teaching. Introduced new undergraduate concentration and MBA major in AI for business. Emphasizes responsible AI: 'si",
+  "imp": 1
+ },
+ {
+  "id": 784,
+  "name": "Refik Anadol",
+  "title": "Media Artist and Pioneer of AI Art, Director of Refik Anadol Studio",
+  "primary_org": null,
+  "category": "Cultural figure",
+  "notes": "Turkish-American artist who coined the terms \"AI Data Painting and Sculpture\" in 2016 during his Google AMI residency. His 2022 MoMA installation \"Unsupervised\" drew 3 million visitors and was trained on the museum's entire collection. Opening DATALAND, the world's first AI art museum, in Los Angeles in 2026. Emphasizes using only ethically sourced datasets and advocates for transparency in AI art",
+  "imp": 2
+ },
+ {
+  "id": 787,
+  "name": "Rick Rubin",
+  "title": "Music Producer and Author",
+  "primary_org": null,
+  "category": "Cultural figure",
+  "notes": "Published 'The Way of Code: The Timeless Art of Vibe Coding' in 2025, an interactive book created with Claude AI that explores 'vibe coding' - giving AI directions in natural language. Called AI the 'punk rock of coding' for democratizing creation by prioritizing ideas over technical expertise. Appeared on The Ben & Marc Show podcast in May 2025 to discuss his AI philosophy and creative applicatio",
+  "imp": 3
+ },
+ {
+  "id": 824,
+  "name": "Connor Leahy",
+  "title": "CEO and Co-founder, Conjecture",
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "Co-founded EleutherAI in 2020, creating open-source large language models GPT-Neo and GPT-J. Founded Conjecture in 2022 as an AI safety company focused on interpretable and controllable AI systems. Co-authored 'The Compendium' (2024), a comprehensive document on AGI extinction risks. Testified before Canadian Parliament in December 2025 warning of superintelligence as an extinction threat. Self-ta",
+  "imp": 3
+ },
+ {
+  "id": 827,
+  "name": "Allan Dafoe",
+  "title": "Director of Frontier Safety and Governance, Google DeepMind; President, Centre for the Governance of AI; Co-Founder, Cooperative AI Foundation",
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "Leading academic-turned-industry expert who founded the Centre for the Governance of AI before joining Google DeepMind. Co-authored the Frontier Safety Framework in 2024 and leads dangerous capability evaluations for frontier AI models. Promotes 'cooperative AI' research agenda focused on AI systems' ability to cooperate with humans and each other. Academic background in technological determinism ",
+  "imp": 3
+ },
+ {
+  "id": 830,
+  "name": "Azeem Azhar",
+  "title": "Founder and Editor, Exponential View; Author, The Exponential Age",
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "Publishes influential Exponential View newsletter covering AI policy and exponential technologies. Coined the 'exponential gap' framework describing how technology advances faster than society's ability to adapt. Testified or advised on AI governance including UK AI Safety Summit discussions. Advocates strongly for open-source AI development as critical for innovation and democratic values.",
+  "imp": 3
+ },
+ {
+  "id": 1287,
+  "name": "Kartik Hosanagar",
+  "title": null,
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "John C. Hower Professor of Technology and Digital Business at Wharton. Author of 'A Human's Guide to Machine Intelligence' (2019), advocating for an 'algorithmic bill of rights' covering transparency, explainability, and user control. Favors issue-specific AI regulation (e.g., deepfakes, financial fraud) over broad-based approaches; proposes regulatory sandboxes for innovation. Research focuses on",
+  "imp": 2
+ },
+ {
+  "id": 831,
+  "name": "Emily Bender",
+  "title": "Professor of Linguistics, University of Washington; Director, Computational Linguistics Laboratory; Co-author, Stochastic Parrots Paper",
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Co-authored the influential 2021 'Stochastic Parrots' paper warning of LLM risks, which contributed to Google firing co-authors Timnit Gebru and Margaret Mitchell. Coined the term 'stochastic parrot' to describe LLMs as sophisticated text generators without genuine understanding. Argues that current AI systems lack meaning and true comprehension, focusing on present harms rather than hypothetical ",
+  "imp": 3
+ },
+ {
+  "id": 832,
+  "name": "Rediet Abebe",
+  "title": "Assistant Professor of Computer Science, UC Berkeley; Co-founder, Black in AI and Mechanism Design for Social Good",
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Ethiopian-born computer scientist who uses algorithmic approaches to address social inequality. Co-founded Black in AI in 2016 with Timnit Gebru and MD4SG research initiative. First Black woman to receive CS PhD from Cornell (2019) and first Black female professor in UC Berkeley EECS department history. Andrew Carnegie Fellow (2022) and MIT Technology Review Innovators Under 35 (2019).",
+  "imp": 3
+ },
+ {
+  "id": 833,
+  "name": "Abeba Birhane",
+  "title": "Senior Advisor in AI Accountability, Mozilla Foundation; Assistant Professor, Trinity College Dublin; Founder and Principal Investigator, AI Accountability Lab",
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "Cognitive scientist who conducted influential audits of LAION datasets revealing toxic content and bias, leading to temporary dataset removal. Developed concept of 'algorithmic colonization' and 'relational ethics' framework. Named to TIME's 100 Most Influential People in AI (2023). Her work has shifted AI ethics discourse from hypothetical existential risks to tangible present-day harms from bias",
+  "imp": 3
+ },
+ {
+  "id": 834,
+  "name": "Shakir Mohamed",
+  "title": "Staff Research Scientist, Google DeepMind; Co-author, Decolonial AI; Research on AI Safety, Ethics, and Participatory AI",
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "Co-developed the STELA methodology for community-centered AI alignment, focusing on eliciting values from historically underrepresented groups. His work emphasizes participatory AI development and has been influential in AI ethics research at major conferences. Research spans generative models, AI safety evaluation, and decolonial approaches to AI alignment with over 10,000 citations.",
+  "imp": 3
+ },
+ {
+  "id": 837,
+  "name": "Percy Liang",
+  "title": "Associate Professor of Computer Science, Stanford; Director, Stanford Center for Research on Foundation Models (CRFM); Creator, HELM",
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Co-authored The California Report on Frontier AI Policy (June 2025) as Senior Advisor, advocating for transparency and safety guardrails. Created HELM (Holistic Evaluation of Language Models) framework for evaluating foundation models. Led Stanford's Foundation Model Transparency Index showing AI companies scored only 47% on risk-related transparency. Testified at DOJ Antitrust Division workshop o",
+  "imp": 3
+ },
+ {
+  "id": 838,
+  "name": "Jacob Steinhardt",
+  "title": "Assistant Professor of Statistics and EECS at UC Berkeley; AI Safety Researcher; Co-founder and CEO of Transluce",
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Co-authored influential \"Concrete Problems in AI Safety\" paper (2016). Founded Transluce in 2023 to create open-source tools for auditing AI systems and conducting public safety evaluations. His AI2050 project focuses on using LLMs to investigate and explain behavior of frontier models to detect failure modes before deployment. Considers himself a \"worried optimist\" about AI's societal impact.",
+  "imp": 3
+ },
+ {
+  "id": 889,
+  "name": "Nathan Lambert",
+  "title": "Research Scientist, Allen Institute for AI (AI2); Author, Interconnects Newsletter; RLHF and Post-Training Expert",
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "Leading expert on RLHF and post-training methods who has worked on major open models including Tulu 3, Zephyr, and OLMo. Argues that open models will remain 6-18 months behind frontier closed models but serve as crucial infrastructure for AI research. Published extensively on AI alignment, preference learning, and model training methods.",
+  "imp": 3
+ },
+ {
+  "id": 839,
+  "name": "David Krueger",
+  "title": "Assistant Professor in Robust, Reasoning and Responsible AI, University of Montreal; Core Academic Member, Mila; Research Affiliate, CSER Cambridge",
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Co-authored ARCHES paper on existential safety with Andrew Critch (2020) and signed onto statement that AI extinction risk should be global priority alongside pandemics and nuclear war (2023). Founded Evitable in 2025 to organize public opposition to superintelligence development. Served as Research Director for UK's AI Safety Institute during first AI Safety Summit. Currently focuses on AI alignm",
+  "imp": 2
+ },
+ {
+  "id": 841,
+  "name": "Toby Ord",
+  "title": "Senior Research Fellow in Philosophy, University of Oxford; Author of 'The Precipice'",
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Author of 'The Precipice: Existential Risk and the Future of Humanity' (2020), which explores catastrophic risks including unaligned AI. Has published technical analyses on AI scaling laws, showing that current progress requires exponential resource increases for linear gains. Advises UN, WHO, and UK Prime Minister's Office on global risks. Founded Giving What We Can, mobilizing over $1.5 billion ",
+  "imp": 3
+ },
+ {
+  "id": 842,
+  "name": "Jaan Tallinn",
+  "title": "Co-founder, Skype & Kazaa; Co-founder, Centre for the Study of Existential Risk; Co-founder, Future of Life Institute",
+  "primary_org": null,
+  "category": "Investor",
+  "notes": "Co-founded Future of Life Institute which published the 6-month pause letter on frontier AI experiments. Has P(doom) estimate of 33-50% according to EA Forum survey. Early investor in DeepMind and Anthropic while simultaneously funding AI safety research, describing this as having 'street cred' in both communities to facilitate dialogue. Serves on UN Secretary General's AI Council.",
+  "imp": 3
+ },
+ {
+  "id": 845,
+  "name": "Yolanda Gil",
+  "title": "Research Professor & Director, AI & Data Science, USC Information Sciences Institute; Co-Director, Stanford AI Index; Member, National Science Board",
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Co-chairs the Stanford AI Index Report which tracks global AI developments and policy trends. Served as AAAI President (2018-2020) and co-authored influential 2019 20-Year AI Research Roadmap. Currently serves on National Science Board (2024-2030) advising on national science policy. Advocates for proactive AI safety research and responsible development practices while warning against premature re",
+  "imp": 2
+ },
+ {
+  "id": 851,
+  "name": "Anjney Midha",
+  "title": "General Partner, Andreessen Horowitz; Venture Partner (as of Oct 2024); Founder, AMP (Autonomous Machine Partners)",
+  "primary_org": null,
+  "category": "Investor",
+  "notes": "Controls access to a16z's 20,000+ GPU cluster worth over $500M through the Oxygen program, making him a critical gatekeeper for AI startup compute access. Early angel investor in Anthropic when founded by ex-OpenAI researchers. Founded AMP in October 2024 to provide 'compute and capital to frontier AI teams' after leaving his GP role at a16z. Advocates for US-allied 'sovereign AI' development and ",
+  "imp": 3
+ },
+ {
+  "id": 852,
+  "name": "Sonya Huang",
+  "title": "Partner, Sequoia Capital; Co-host, Training Data podcast; Co-author, State of AI Reports",
+  "primary_org": null,
+  "category": "Investor",
+  "notes": "Leads Sequoia's AI application layer thesis with over $1.5B invested across Harvey, Glean, LangChain, Mercury, and Gong. Co-authored 'Generative AI's Act Two' (2023) and '2026: This is AGI' defining AI investment strategy. Hosts influential Training Data podcast and annual AI Ascent conference shaping industry discourse. Self-describes as 'very AGI-pilled' and believes we've reached the 'event hor",
+  "imp": 3
+ },
+ {
+  "id": 853,
+  "name": "Seth Rosenberg",
+  "title": "Partner, Greylock Partners; Enterprise AI and Fintech Investor",
+  "primary_org": null,
+  "category": "Investor",
+  "notes": "Greylock partner specializing in AI and fintech with '80% domain/20% AI' investment thesis. Led investments in companies like Pine (AI mortgage origination), Resolve AI ($35M seed), and serves on boards of multiple AI-enabled fintech companies. Advocates for AI as business accelerant rather than replacement, focusing on companies where AI enhances existing domain expertise rather than pure AI play",
+  "imp": 2
+ },
+ {
+  "id": 856,
+  "name": "Josh Wolfe",
+  "title": "Co-founder & Managing Partner, Lux Capital; Defense Tech & National Security AI Investor",
+  "primary_org": null,
+  "category": "Investor",
+  "notes": "Warns portfolio companies about market risks and 'the bubble of AI' while remaining bullish on AI investment. Key investments include Anduril, Hugging Face, Palantir, and other defense/AI companies. Advocates for stapling visas to foreign AI graduates and tripling NSF funding. Member of bipartisan Hilland Valley Forum connecting technologists with policymakers.",
+  "imp": 3
+ },
+ {
+  "id": 857,
+  "name": "Joe Lonsdale",
+  "title": "Co-founder, Palantir & 8VC; Founding Chairman, University of Austin",
+  "primary_org": null,
+  "category": "Investor",
+  "notes": "Founded Leading the Future super PAC with $125M to elect candidates favoring lighter AI oversight, directly opposing Anthropic's pro-regulation super PAC. Published comprehensive healthcare AI policy framework in December 2025 proposing three levels of AI integration. Co-founded Palantir in 2003 and manages $6B+ through 8VC, investing in defense tech companies like Anduril and healthcare AI applic",
+  "imp": 3
+ },
+ {
+  "id": 859,
+  "name": "Matt Clifford",
+  "title": "Co-founder & CEO, Entrepreneur First; Chair, ARIA; Prime Minister's Adviser on AI Opportunities; UK AI Safety Summit Representative",
+  "primary_org": null,
+  "category": "Investor",
+  "notes": "Authored the UK's AI Opportunities Action Plan in January 2025, with all 50 recommendations accepted by the government. Has financial interests in nearly 500 tech companies through Entrepreneur First, creating potential conflicts of interest. Organized the 2023 Bletchley Park AI Safety Summit and helped establish the UK's AI Safety Institute. Awarded CBE for services to AI in 2024.",
+  "imp": 3
+ },
+ {
+  "id": 1288,
+  "name": "Kevin Werbach",
+  "title": null,
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "First Pacific Company Professor, Professor of Legal Studies & Business Ethics, and department chair at Wharton. Directs the Wharton Accountable AI Lab and the Blockchain and Digital Asset Project. Hosts 'The Road to Accountable AI' podcast. Served on Obama Presidential Transition Team; was Counsel for New Technology Policy at FCC under Clinton. Published four books including 'The Blockchain and th",
+  "imp": 2
+ },
+ {
+  "id": 1598,
+  "name": "Thore Graepel",
+  "title": null,
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "Research Lead at Google DeepMind and Professor of Machine Learning at UCL's Computer Science Department. Leading a team at DeepMind working on post-AGI futures. Champion of responsible innovation in AI, with research focused on multi-agent learning and cooperative AI. Founding member of the Cooperative AI Foundation (CAIF) Board of Trustees. Previously served on the Board of Directors at the Partn",
+  "imp": 2
+ },
+ {
+  "id": 879,
+  "name": "Will Knight",
+  "title": "Senior Writer, Wired; AI & Robotics Coverage; Author of AI Lab Newsletter",
+  "primary_org": null,
+  "category": "Journalist",
+  "notes": "Veteran AI journalist with over a decade covering the field, writing for major publications since before the current AI boom. Has extensively covered military AI applications, AI governance, and the technical development of systems like ChatGPT. Writes the weekly AI Lab newsletter for Wired and has been featured on podcasts discussing AI policy and safety issues.",
+  "imp": 3
+ },
+ {
+  "id": 880,
+  "name": "James Vincent",
+  "title": "Senior Reporter, The Verge; AI & Science Coverage; Author of 'Beyond Measure'",
+  "primary_org": null,
+  "category": "Journalist",
+  "notes": "Author of 'Beyond Measure: The Hidden History of Measurement' (New Yorker and Economist book of the year, NY Times critics' pick). Has extensively covered humanoid robotics, AI chatbots, and automation's impact on labor. Featured in Harper's December 2025 cover story on humanoid robots and wrote influential LRB piece 'Horny Robot Baby Voice' on AI companion risks. Warns specifically about billiona",
+  "imp": 2
+ },
+ {
+  "id": 882,
+  "name": "Parmy Olson",
+  "title": "Bloomberg Opinion Columnist covering technology, AI and regulation; Author of 'Supremacy: AI, ChatGPT, and the Race That Will Change the World'",
+  "primary_org": null,
+  "category": "Journalist",
+  "notes": "Won 2024 Financial Times and Schroders Business Book of the Year Award for 'Supremacy.' Previously authored 'We Are Anonymous' (2012) about hacker collective. Named Digital Journalist of the Year 2023 by PRCA and listed as Top 100 People in UK Tech 2019 by Business Insider. Covers AI development since 2016, emphasizing the need for corporate accountability and transparent governance structures.",
+  "imp": 3
+ },
+ {
+  "id": 883,
+  "name": "Madhumita Murgia",
+  "title": "AI Editor, Financial Times; Author of Code Dependent: Living in the Shadow of AI",
+  "primary_org": null,
+  "category": "Journalist",
+  "notes": "First AI Editor at Financial Times (appointed January 2023). Won UK Press Awards for Tech/Science Journalist of the Year in 2024 and 2025. Code Dependent was shortlisted for Women's Prize for Non-Fiction 2024. Has academic background in biology and science journalism from Oxford and NYU, with previous research on HIV vaccine development.",
+  "imp": 3
+ },
+ {
+  "id": 884,
+  "name": "Matt O'Brien",
+  "title": "Technology Writer, Associated Press; Covers AI policy, copyright issues, and tech regulation",
+  "primary_org": null,
+  "category": "Journalist",
+  "notes": "Leading AP technology reporter covering major AI developments including the $1.5 billion Anthropic copyright settlement, Pentagon-Anthropic disputes over military AI use, and AI's impact on software engineering jobs. His reporting frequently examines the intersection of AI advancement with legal, regulatory, and societal challenges. Covers stories from Providence, Rhode Island and has extensive by",
+  "imp": 2
+ },
+ {
+  "id": 885,
+  "name": "Nitasha Tiku",
+  "title": "Technology Culture Reporter, The Washington Post; covers AI ethics, labor impacts, and Silicon Valley culture",
+  "primary_org": null,
+  "category": "Journalist",
+  "notes": "Tiku has extensively covered AI safety movements, broke major stories about AI training data practices including Anthropic's book scanning project, and reported on AI chatbot harms to teenagers including suicide cases. Her 2022 story about Google engineer Blake Lemoine's claims of AI sentience sparked global debate about AI consciousness and corporate AI development practices.",
+  "imp": 3
+ },
+ {
+  "id": 887,
+  "name": "Ethan Mollick",
+  "title": "Associate Professor of Management, Wharton School; Co-Director, Generative AI Labs at Wharton; Author, Co-Intelligence",
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Named one of TIME Magazine's Most Influential People in AI (2024). Author of New York Times bestseller 'Co-Intelligence: Living and Working with AI' (2024). Advised President's Intelligence Advisory Board on AI in 2023. Conducts extensive research on AI's impact on work and education, publishing papers on AI agents in education and persuasion techniques affecting AI systems.",
+  "imp": 3
+ },
+ {
+  "id": 890,
+  "name": "Zvi Mowshowitz",
+  "title": "AI Policy Analyst and Author, Don't Worry About the Vase Substack",
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "Writes extensive weekly AI policy analysis covering technical developments, regulatory debates, and existential risk. Previously worked as professional trader, game designer, and startup founder. Focuses heavily on AI alignment challenges and critiques both accelerationist and overly restrictive approaches. Regularly analyzes work from major AI labs and policy developments.",
+  "imp": 3
+ },
+ {
+  "id": 894,
+  "name": "Nathaniel Whittemore",
+  "title": "Host, The AI Daily Brief Podcast; Founder and CEO, Superintelligent",
+  "primary_org": null,
+  "category": "Journalist",
+  "notes": "Hosts daily AI news analysis podcast The AI Daily Brief (formerly The AI Breakdown) since April 2023. Founded Superintelligent, an AI planning platform for enterprises that helps with agent deployment and AI transformation. Previously founded The Breakdown Network and hosted crypto podcast acquired by Blockworks. Known for analytical approach bridging technical developments with business implicati",
+  "imp": 2
+ },
+ {
+  "id": 895,
+  "name": "Sneha Revanur",
+  "title": "Founder & President, Encode Justice; Gen Z AI Policy Advocate",
+  "primary_org": null,
+  "category": "Organizer",
+  "notes": "Founded Encode Justice at age 15 in 2020, initially opposing California Proposition 25's algorithmic cash bail system. Named to TIME's inaugural list of 100 most influential people in AI (2023) as the youngest person. Served as reviewer for Future of Life Institute's AI Safety Index evaluating major AI companies. Co-sponsored California SB 53 requiring transparency and safety protocols from fronti",
+  "imp": 3
+ },
+ {
+  "id": 897,
+  "name": "Rebecca Finlay",
+  "title": "CEO, Partnership on AI",
+  "primary_org": null,
+  "category": "Organizer",
+  "notes": "Leads Partnership on AI, a nonprofit with 141 partners across 19 countries focused on responsible AI development. Previously founded CIFAR's AI & Society program, one of the first international multi-stakeholder AI initiatives. Regularly speaks at major AI policy venues including UK AI Safety Summit, OECD, and FTC. Has been featured in Financial Times, The Guardian, and Nature Machine Intelligence",
+  "imp": 3
+ },
+ {
+  "id": 898,
+  "name": "Mark Surman",
+  "title": "President & Executive Director, Mozilla Foundation",
+  "primary_org": null,
+  "category": "Organizer",
+  "notes": "Founded Mozilla AI with $30M investment in 2023 and launched Mozilla Ventures as impact venture fund. Led creation of Mozilla's 'Public AI' vision advocating for parallel public ecosystem to counter big tech dominance. Instrumental in Mozilla's pivot from web browser advocacy to AI policy leadership, emphasizing open-source as critical for innovation and competition. Co-signed 2023 letter on open-",
+  "imp": 3
+ },
+ {
+  "id": 899,
+  "name": "Veena Dubal",
+  "title": "Professor of Law, UC Irvine; General Counsel, American Association of University Professors; Gig Economy & Algorithmic Management Expert",
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Leading scholar on 'algorithmic wage discrimination' who conducted ethnographic research on SF taxi drivers pre- and post-Uber. Her research has been cited by California Supreme Court and influenced policy debates including support for Assembly Bill 5. Appointed AAUP General Counsel in 2024. Has testified to regulatory bodies and her work is cited in CFPB guidance on algorithmic employment decisio",
+  "imp": 3
+ },
+ {
+  "id": 917,
+  "name": "Cindy Cohn",
+  "title": "Executive Director, Electronic Frontier Foundation",
+  "primary_org": null,
+  "category": "Organizer",
+  "notes": "Led landmark Bernstein v. Department of Justice case establishing encryption as protected First Amendment speech. Stepping down as EFF Executive Director in mid-2026 after 25+ years with the organization. Published 'Privacy's Defender: My Thirty-Year Fight Against Digital Surveillance' (MIT Press, March 2026). Co-hosts EFF's 'How to Fix the Internet' podcast and has built EFF into a 125-person org",
+  "imp": 3
+ },
+ {
+  "id": 918,
+  "name": "Corynne McSherry",
+  "title": "Legal Director, Electronic Frontier Foundation",
+  "primary_org": null,
+  "category": "Organizer",
+  "notes": "EFF Legal Director since before 2024, specializing in AI policy, copyright, and free speech. Testified before Congress on Section 230 and DMCA issues. Co-signed Mozilla's joint statement on AI safety and openness. Consistently argues that context matters in AI regulation and warns against rushing to broad regulatory solutions that could harm beneficial uses.",
+  "imp": 2
+ },
+ {
+  "id": 919,
+  "name": "Ben Wizner",
+  "title": "Director, ACLU Speech, Privacy & Technology Project; Attorney for Edward Snowden",
+  "primary_org": null,
+  "category": "Organizer",
+  "notes": "Has been Edward Snowden's attorney and gained prominence in surveillance law. In 2017, wrote extensively about AI surveillance threats in partnership with AI Now initiative. Warns that automated surveillance systems threaten constitutional rights and could create a society where people feel watched 'all the time.' Focuses primarily on civil liberties implications rather than technical AI safety.",
+  "imp": 2
+ },
+ {
+  "id": 920,
+  "name": "Janet Haven",
+  "title": "Executive Director, Data & Society Research Institute",
+  "primary_org": null,
+  "category": "Organizer",
+  "notes": "Chaired the Rights, Trust, and Safety working group of the National AI Advisory Committee from 2022-2025. Previously spent over a decade at Open Society Foundations overseeing technology and human rights grantmaking. Co-authored op-eds criticizing industry self-regulation and advocating for stronger government oversight of AI systems. Focuses extensively on sociotechnical research approaches and w",
+  "imp": 2
+ },
+ {
+  "id": 921,
+  "name": "danah boyd",
+  "title": "Founder, Data & Society Research Institute; Partner Researcher, Microsoft Research; Incoming Professor of Communication, Cornell University",
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Founded Data & Society in 2013 to study sociotechnical systems and bias. Recently published 'We Need an Interventionist Mindset' (March 2025) arguing against deterministic AI rhetoric. Elected AAAS fellow in 2025. Currently conducting ethnographic study of US Census to understand data legitimacy. Known for critiquing both AI hype and fear cycles, advocating for probabilistic rather than determinis",
+  "imp": 3
+ },
+ {
+  "id": 922,
+  "name": "Alexandra Reeve Givens",
+  "title": "President & CEO, Center for Democracy & Technology",
+  "primary_org": null,
+  "category": "Organizer",
+  "notes": "Testified before House Education and Workforce Committee in January 2026 on 'Building an AI-Ready America.' Criticized narrow focus on long-term risks at 2023 Bletchley Park AI Safety Summit, advocating for attention to current AI harms. Daughter of actor Christopher Reeve, serves on foundation board focused on spinal cord injury research using AI technologies.",
+  "imp": 3
+ },
+ {
+  "id": 927,
+  "name": "Virginia Eubanks",
+  "title": "Associate Professor of Political Science, University at Albany, SUNY; Author of 'Automating Inequality: How High-Tech Tools Profile, Police, and Punish the Poor'",
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Eubanks' 2018 book 'Automating Inequality' investigates how AI systems in welfare, housing, and child welfare disproportionately harm poor and working-class people. She coined the term 'digital poorhouse' to describe technological systems that embed assumptions about poverty. Her work focuses on algorithmic accountability and has won multiple awards including the 2019 Lillian Smith Book Award and ",
+  "imp": 2
+ },
+ {
+  "id": 929,
+  "name": "Alan Davidson",
+  "title": "Assistant Secretary for Communications and Information, National Telecommunications and Information Administration (NTIA), U.S. Department of Commerce",
+  "primary_org": null,
+  "category": "Policymaker",
+  "notes": "Led NTIA's AI Accountability Policy Report (March 2024) calling for improved transparency, independent evaluations, and consequences for AI systems imposing unacceptable risks. Currently working on assessment of benefits and harms of open-weight AI models per Biden's AI Executive Order, with report due to White House in July 2024. Co-leads President's Task Force on Kids Online Health and Safety an",
+  "imp": 3
+ },
+ {
+  "id": 931,
+  "name": "Elham Tabassi",
+  "title": "Associate Director for Emerging Technologies, Information Technology Laboratory, NIST; Chief AI Advisor and Chief Technologist of the AI Safety Institute",
+  "primary_org": null,
+  "category": "Policymaker",
+  "notes": "Iranian-born, joined NIST in 1999 after coming to US in 1994 for master's in electrical engineering. Principal architect of NIST Fingerprint Image Quality standard used by FBI. Led development of AI Risk Management Framework 1.0 released January 2023 that laid groundwork for Biden's AI Executive Order. Named by Time Magazine as one of 100 most influential people in AI in 2024.",
+  "imp": 3
+ },
+ {
+  "id": 932,
+  "name": "Jonathan Kanter",
+  "title": "Assistant Attorney General for the Antitrust Division, Department of Justice (2021-2024); Distinguished Teaching Professor, Washington University Law School",
+  "primary_org": null,
+  "category": "Policymaker",
+  "notes": "Led DOJ Antitrust Division 2021-2024, confirmed by Senate 68-29. Delivered remarks at Stanford AI workshop stating DOJ would scrutinize AI sector 'with urgency' to prevent monopoly consolidation. Worked with FTC to divide AI oversight responsibilities - DOJ handles chip manufacturers while FTC oversees software companies. Appointed DOJ's first Chief Technologist to enhance AI expertise for investi",
+  "imp": 3
+ },
+ {
+  "id": 934,
+  "name": "Stefano Mazzocchi",
+  "title": "Chief AI Officer, Department of Commerce",
+  "primary_org": null,
+  "category": "Policymaker",
+  "notes": "No information found in search results for a Stefano Mazzocchi serving as Chief AI Officer at the Department of Commerce. Search results show other individuals with similar names in different roles.",
+  "imp": 1
+ },
+ {
+  "id": 937,
+  "name": "Ted Chiang",
+  "title": "Science Fiction Author; Stories include \"Story of Your Life\" (Arrival), \"Exhalation\"; Computer Science Background; AI Critic",
+  "primary_org": null,
+  "category": "Cultural figure",
+  "notes": "Won four Hugo Awards, four Nebula Awards, and 2024 PEN/Malamud Award for short story excellence. Named one of Time's 100 Most Influential People in AI (2023). Wrote influential New Yorker essays including \"Why A.I. Isn't Going to Make Art\" and \"ChatGPT Is a Blurry JPEG of the Web\" arguing AI cannot create true art due to lack of intentional choice-making. Studied computer science at Brown Universi",
+  "imp": 3
+ },
+ {
+  "id": 1615,
+  "name": "Fazl Barez",
+  "title": null,
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "Senior Research Fellow at the University of Oxford and Technical AI Governance Lead at the Oxford Martin AI Governance Initiative (AIGI). Leads research in AI safety, interpretability (mechanistic interpretability of LLMs), and AI governance. Research affiliations with CSER (Cambridge), Digital Trust Centre (NTU Singapore), and University of Edinburgh. Previously Research Consultant at Anthropic, ",
+  "imp": 2
+ },
+ {
+  "id": 940,
+  "name": "Cory Doctorow",
+  "title": "Science Fiction Author, Activist & Journalist; Special Advisor, Electronic Frontier Foundation; Creator of 'Enshittification'",
+  "primary_org": null,
+  "category": "Cultural figure",
+  "notes": "Coined the viral term 'enshittification' to describe platform decay. Has upcoming book 'The Reverse Centaur's Guide to Life After AI' (Farrar, Straus and Giroux / Verso, June 23 2026) \u2014 title invokes the 'reverse centaur' figure forced by technology to work at an inhuman pace. Views AI as 'a collection of moderately useful tools being billed as a supernatural being' and argues the AI bubble will c",
+  "imp": 3
+ },
+ {
+  "id": 942,
+  "name": "Brian Christian",
+  "title": "Author, The Alignment Problem, The Most Human Human, Algorithms to Live By; DPhil student at Oxford",
+  "primary_org": null,
+  "category": "Cultural figure",
+  "notes": "Won 2022 National Academies Eric and Wendy Schmidt Awards for Excellence in Science Communications. Currently pursuing DPhil at Oxford under Chris Summerfield focusing on cognitive models of human decision-making for AI alignment. His book 'The Alignment Problem' was called 'the one book to read on AI' by The New York Times and bridges technical AI safety with present-day algorithmic bias issues.",
+  "imp": 2
+ },
+ {
+  "id": 943,
+  "name": "Shalini Kantayya",
+  "title": "Documentary Filmmaker; Director, Coded Bias (Netflix) and TikTok, Boom (Sundance)",
+  "primary_org": null,
+  "category": "Cultural figure",
+  "notes": "Her 2020 Sundance documentary 'Coded Bias' follows MIT researcher Joy Buolamwini's discovery of racial bias in facial recognition systems and advocates for algorithmic justice. The film was broadcast on PBS Independent Lens and globally on Netflix, winning Best Director at Social Impact Media Awards. Her work focuses on how AI systems perpetuate inequality and erode civil rights, particularly impa",
+  "imp": 2
+ },
+ {
+  "id": 1099,
+  "name": "Tom Cotton",
+  "title": null,
+  "primary_org": null,
+  "category": "Policymaker",
+  "notes": "Tom Cotton is a U.S. Senator representing Arkansas who introduced the DATA Act of 2026, which would allow AI data center companies to bypass federal electricity regulations by building independent energy infrastructure. Cotton stated that \"American dominance in artificial intelligence and other crucial emerging industries should not come at the expense of Arkansans paying higher energy costs\". On ",
+  "imp": 3
+ },
+ {
+  "id": 1100,
+  "name": "Andy Kim",
+  "title": null,
+  "primary_org": null,
+  "category": "Policymaker",
+  "notes": "Andy Kim is a U.S. Senator from New Jersey who serves as a Democrat on multiple committees including Commerce, Science, and Transportation. He has been actively involved in AI-related legislation, co-introducing the Artificial Intelligence Ready Data Act with Senator Ted Budd to open government data sets for training American AI models. Kim also co-introduced the AI Talent Act with Senator Jon Hus",
+  "imp": 3
+ },
+ {
+  "id": 962,
+  "name": "David Autor",
+  "title": "Ford Professor of Economics, MIT; Co-Director, MIT Shaping the Future of Work Initiative; Co-Director, NBER Labor Studies Program",
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Co-authored influential 2026 Hamilton Project report 'Building Pro-Worker Artificial Intelligence' defining framework for AI that augments rather than replaces human expertise. Served on National Academy committee for 2024 report 'Artificial Intelligence and the Future of Work.' Recognized as 'academic voice of the American worker' by Economist magazine and received 2019 Carnegie Fellowship for wo",
+  "imp": 3
+ },
+ {
+  "id": 963,
+  "name": "Lawrence Katz",
+  "title": "Elisabeth Allison Professor of Economics, Harvard University; Editor, Quarterly Journal of Economics",
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Leading labor economist studying AI's impact on employment through the 'Race Between Education and Technology' framework. His research shows AI may substitute for entry-level workers while complementing experienced workers with tacit knowledge. Named 2025 Citation Laureate alongside David Autor for influential work on wages, inequality, and technological change. Co-authored influential book 'The R",
+  "imp": 3
+ },
+ {
+  "id": 965,
+  "name": "Ajay Agrawal",
+  "title": "Geoffrey Taber Chair in Entrepreneurship and Innovation and Professor of Strategic Management, Rotman School of Management, University of Toronto; Founder, Creative Destruction Lab; Co-author, Pr",
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Co-authored influential books 'Prediction Machines' (2018) and 'Power and Prediction' (2022) framing AI as primarily a prediction technology with economic implications. Founded Creative Destruction Lab, one of the world's largest seed-stage programs for science-based companies with over 600 startups admitted in 2022. Member of the Order of Canada (2022) and recipient of University of Toronto's Pre",
+  "imp": 3
+ },
+ {
+  "id": 966,
+  "name": "Joshua Gans",
+  "title": "Professor of Strategic Management, Rotman School; Jeffrey S. Skoll Chair of Technical Innovation and Entrepreneurship; Co-author, Prediction Machines and Power and Prediction",
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Published multiple NBER working papers on AI regulation including 'Can Socially-Minded Governance Control the AGI Beast?' (2024) concluding that socially-minded entities cannot minimize harm from unrestricted AGI products. Provides expert witness testimony in antitrust cases and has equity/advisory relationships with startup firms. Argues that ASI is unlikely to kill humans because we find AI econ",
+  "imp": 2
+ },
+ {
+  "id": 967,
+  "name": "Daniel Susskind",
+  "title": "Research Professor in Economics, King's College London; Senior Research Associate, Institute for Ethics in AI, Oxford University; Author of 'A World Without Work' and 'Growth: A Reckoning'",
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Co-authored 'The Future of the Professions' (2015) with father Richard Susskind examining technology's impact on professional work. His 2026 paper 'What Will Remain for People to Do?' explores which jobs might survive AGI, identifying 'general equilibrium limits', 'preference limits', and 'moral limits'. Previously worked in British government including Prime Minister's Strategy Unit and Cabinet O",
+  "imp": 2
+ },
+ {
+  "id": 1617,
+  "name": "Marta Ziosi",
+  "title": null,
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "Postdoctoral Researcher at the Oxford Martin AI Governance Initiative (AIGI), focusing on standards for frontier AI. AI policy expert with experience at DG CNECT (European Commission), Berkman Klein Centre (Harvard), CEIMIA (Montreal International Centre of Expertise in AI), and The Future Society. PhD from the Oxford Internet Institute on algorithmic bias and AI policy. Founder of AI for People, ",
+  "imp": 1
+ },
+ {
+  "id": 970,
+  "name": "Ioana Marinescu",
+  "title": "Associate Professor of Economics, University of Pennsylvania; Principal Economist, DOJ Antitrust Division (2022-2024); Member, Anthropic Economic Advisory Council",
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Testified before Congress on labor market competition (October 2019) and served as Principal Economist at DOJ Antitrust Division (2022-2024), helping integrate labor market analysis into 2023 Merger Guidelines. Published 'Resilient by Design: Dual Safety Nets for Workers in the AI Economy' (2025) proposing AI Adjustment Insurance and Digital Dividend programs. Co-authored economic modeling work on",
+  "imp": 2
+ },
+ {
+  "id": 972,
+  "name": "Neil Thompson",
+  "title": "Director, MIT FutureTech Research Project; Research Scientist, MIT CSAIL; Principal Investigator, MIT Initiative on the Digital Economy",
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Co-authored the comprehensive AI Risk Repository (August 2024) cataloguing 777 AI risks from 43 taxonomies, and developed AI Risk Mitigation Taxonomy (December 2025) organizing 831 mitigation strategies. Has advised businesses and government on Moore's Law and computing futures, previously worked at Lawrence Livermore National Laboratory, Bain & Company, UN, and World Bank. Warns that smarter AI s",
+  "imp": 2
+ },
+ {
+  "id": 975,
+  "name": "Avi Goldfarb",
+  "title": "Rotman Chair in AI and Healthcare, Professor of Marketing, University of Toronto; Co-author of Prediction Machines and Power and Prediction",
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Goldfarb testified before the U.S. Senate Judiciary Committee in May 2019 on digital advertising and data privacy, arguing that privacy regulation often creates trade-offs with innovation and competition. His research with Catherine Tucker found European privacy regulations reduced online advertising effectiveness by 65%. He co-authored influential books 'Prediction Machines' (2018) and 'Power and",
+  "imp": 2
+ },
+ {
+  "id": 977,
+  "name": "Daniela Rus",
+  "title": "Director, MIT CSAIL; Deputy Dean of Research, MIT Schwarzman College; Andrew & Erna Viterbi Professor of EECS; MacArthur Fellow",
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Co-authored 2020 MIT report concluding AI mass unemployment fears are unlikely to be realized, instead predicting new job creation. Focuses on 'physical AI' - AI systems that understand and interact with the physical world. Recently received 2025 IEEE Edison Medal for sustained leadership in modern robotics. Emphasizes AI as tool for human augmentation rather than replacement, advocating for polic",
+  "imp": 3
+ },
+ {
+  "id": 979,
+  "name": "Frank Pasquale",
+  "title": "Professor of Law, Cornell Tech and Cornell Law School; Author, The Black Box Society and New Laws of Robotics",
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Served on U.S. National AI Advisory Committee (2022-2024) and chaired National Committee on Vital and Health Statistics Subcommittee on Privacy, Confidentiality, and Security (2019-2021). Ranked third most-cited U.S. legal scholar in Law & Technology field (2016-2020). Co-authored 'Licensing High-Risk Artificial Intelligence: Toward Ex Ante Justification for a Disruptive Technology' proposing regu",
+  "imp": 3
+ },
+ {
+  "id": 980,
+  "name": "Ryan Calo",
+  "title": "Lane Powell and D. Wayne Gittinger Professor, University of Washington School of Law; Co-Director, Tech Policy Lab; Professor, Information School",
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Testified before US Senate on AI and privacy policy multiple times. Co-authored 2016 AI100 report 'Artificial Intelligence and Life in 2030.' Published influential 2017 'AI Policy Primer and Roadmap' in UC Davis Law Review. Testified July 2024 before Senate Commerce Committee on AI privacy threats, warning about the 'inference economy' where AI derives intimate information from available data.",
+  "imp": 3
+ },
+ {
+  "id": 981,
+  "name": "Woodrow Hartzog",
+  "title": "Andrew R. Randall Professor of Law at Boston University School of Law; Author, Privacy's Blueprint",
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Co-authored 'How AI Destroys Institutions' arguing AI systems erode democratic institutions through isolation, automation, and removal of human decision-making. Testified before Senate Judiciary Committee in September 2023 advocating for moving beyond 'AI half-measures.' Published extensively on privacy law including 'Privacy's Blueprint' (2018) and co-authored 'The Great Scrape' on AI data collec",
+  "imp": 3
+ },
+ {
+  "id": 982,
+  "name": "Danielle Allen",
+  "title": "James Bryant Conant University Professor, Harvard; Director, Allen Lab for Democracy Renovation",
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Co-authored 'A Roadmap for Governing AI: Technology Governance and Power-Sharing Liberalism' (2025) proposing 17 specific AI governance recommendations. Advocates for 'power-sharing liberalism' framework that prioritizes human flourishing and democratic participation over purely technocratic approaches. Has testified and advised on AI policy while directing Harvard's Allen Lab for Democracy Renova",
+  "imp": 3
+ },
+ {
+  "id": 983,
+  "name": "Nathaniel Persily",
+  "title": "James B. McClatchy Professor of Law, Stanford; Co-Director, Stanford Cyber Policy Center; Co-Director, Program on Democracy and the Internet",
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Leading scholar on AI's impact on democracy who argues that panic over AI could harm democracy more than AI itself. Co-authored 'Social Media and Democracy' (2020) and teaches 'Governing Artificial Intelligence: Law, Policy, and Institutions' at Stanford. Recently published research comparing generative AI regulation to social media regulation, advocating for transparency, trust and safety investm",
+  "imp": 3
+ },
+ {
+  "id": 984,
+  "name": "Eugene Volokh",
+  "title": "Gary T. Schwartz Distinguished Professor of Law Emeritus, UCLA; Thomas M. Siebel Senior Fellow, Hoover Institution",
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Leading First Amendment scholar who has written extensively on AI and free speech, including 'Freedom of Speech and AI Output' (2023) and 'Large Libel Models? Liability for AI Output' (2023). Argues that Section 230 protections don't apply to AI-generated content since it's created by the companies themselves, not third parties. Has testified as expert witness and provided analysis on California's",
+  "imp": 2
+ },
+ {
+  "id": 985,
+  "name": "Henry Farrell",
+  "title": "SNF Agora Professor of International Affairs, Johns Hopkins SAIS; Scholar of AI governance and democracy",
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Co-authored influential Science paper 'Large AI models are cultural and social technologies' (March 2025) arguing against AGI narratives. Published 'AI as Governance' in Annual Review of Political Science (2025) examining AI's relationship to governance structures. Frequently critiques both AI 'doomers' and 'boomers' for missing real policy challenges. Won 2019 Friedrich Schiedel Prize for Politic",
+  "imp": 3
+ },
+ {
+  "id": 986,
+  "name": "H\u00e9l\u00e8ne Landemore",
+  "title": "Damon Wells '58 Professor of Political Science, Yale University; Distinguished Research Fellow, Institute for Ethics in AI, Oxford University",
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Leading expert on democratic theory who has extended her work on citizen assemblies to AI governance. Served as advisor to OpenAI's Democratic Inputs to AI program in 2023 and received $1 million grant from Eric Schmidt Foundation for AI and democracy project with John Tasioulas. Author of 'Open Democracy' and advocates for 'politics without politicians' through sortition-based citizen rule.",
+  "imp": 3
+ },
+ {
+  "id": 988,
+  "name": "Lily Tsai",
+  "title": "Ford Professor of Political Science, MIT; Director and Founder, MIT Governance Lab (GOV/LAB)",
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Founded MIT GOV/LAB in 2014 focusing on citizen engagement and government accountability. Key contributor to The Digitalist Papers (2024) examining AI's impact on democratic societies. Research spans governance in developing contexts, particularly Asia and Africa, with emphasis on how technology can enhance rather than replace democratic participation. Advocates for 'reserved sociability' in digit",
+  "imp": 2
+ }
+]

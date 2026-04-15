@@ -1,0 +1,366 @@
+[
+ {
+  "id": 1458,
+  "name": "Adaptive Security",
+  "category": "Deployers & Platforms",
+  "notes": "AI-native cybersecurity startup founded by serial entrepreneurs Brian Long (CEO) and Andrew Jones. Builds platform simulating AI-powered attacks \u2014 deepfake voice/video phishing, smishing, and GenAI social engineering \u2014 to train corporate defenders. Raised $136M+ total: $43M round co-led by OpenAI an",
+  "imp": 2
+ },
+ {
+  "id": 1459,
+  "name": "Pathos Consulting Group",
+  "category": "Ethics/Bias/Rights",
+  "notes": "AI ethics consulting firm focused on K-12 education, founded by Evan J. Harris (President). Specializes in helping independent schools integrate AI tools responsibly \u2014 staff department automation, student AI empowerment, and ethical professional development. Harris holds master's in private school l",
+  "imp": 2
+ },
+ {
+  "id": 1146,
+  "name": "Global AI Frontier Lab",
+  "category": "Government/Agency",
+  "notes": "Joint U.S.-South Korea AI research center at NYU, established May 2024 via MOU between NYU and Korea's IITP. Co-directed by Yann LeCun and Kyunghyun Cho. Focuses on three pillars: fundamental AI research, trustworthy/responsible AI, and AI for healthcare. Korean government investing ~$34M (45B won) ",
+  "imp": 2
+ },
+ {
+  "id": 1469,
+  "name": "House Democratic Commission on AI and the Innovation Economy",
+  "category": "Government/Agency",
+  "notes": "House Democratic caucus body launched Dec 2025 by Leader Hakeem Jeffries. Co-chaired by Rep. Ted Lieu (CA-36), Rep. Josh Gottheimer (NJ-05), and Rep. Valerie Foushee (NC-04). Ex officio co-chairs: Rep. Zoe Lofgren (Ranking Member, Science, Space & Tech Committee) and Rep. Frank Pallone Jr. (Ranking ",
+  "imp": 3
+ },
+ {
+  "id": 1132,
+  "name": "MIT Schwarzman College of Computing",
+  "category": "Academic",
+  "notes": "MIT's cross-disciplinary computing college founded in 2018 with a $1B endowment anchored by a $350M gift from Stephen Schwarzman. Led by founding dean Daniel Huttenlocher, it integrates AI research across all MIT departments. Hosts the MIT AI Policy Forum and publishes governance-focused policy brie",
+  "imp": 3
+ },
+ {
+  "id": 1151,
+  "name": "Education and Workforce Committee",
+  "category": "Government/Agency",
+  "notes": "U.S. House committee with jurisdiction over labor, education, and workforce training policy as it intersects with AI. Launched \"Building an AI-Ready America\" hearing series in Jan 2026 covering AI in the workplace, workplace safety, AI in education/teaching, and employer-led AI training. Examining A",
+  "imp": 3
+ },
+ {
+  "id": 1485,
+  "name": "University of California, Los Angeles",
+  "category": "Academic",
+  "notes": "Major public research university and UC system flagship. Launched the AI Innovation Initiative \u2014 a campus-wide effort to build AI fluency and drive responsible AI adoption. First California university to partner with OpenAI (Sept 2024), also partnered with Google. Supported 68 AI pilot projects acro",
+  "imp": 1
+ },
+ {
+  "id": 1155,
+  "name": "International Trade Administration",
+  "category": "Government/Agency",
+  "notes": "Bureau within U.S. Dept of Commerce responsible for trade promotion and commercial diplomacy. Leads the American AI Exports Program (per Trump July 2025 EO) to promote export of U.S. AI technology stack globally. Establishing National AI Center as gateway for U.S. AI exports. Has a dedicated AI Team",
+  "imp": 3
+ },
+ {
+  "id": 1130,
+  "name": "MIT Data to AI Lab",
+  "category": "Academic",
+  "notes": "MIT research group within the Laboratory for Information and Decision Systems (LIDS), founded in 2015 by Principal Research Scientist Kalyan Veeramachaneni. Develops large-scale AI and ML systems that work alongside humans in applications spanning healthcare, finance, education, and energy. Notable ",
+  "imp": 3
+ },
+ {
+  "id": 1463,
+  "name": "Pulitzer Center",
+  "category": "Media/Journalism",
+  "notes": "Nonprofit journalism organization (Pulitzer Center on Crisis Reporting) supporting independent journalists on underreported global issues. Major AI accountability journalism hub: runs AI Accountability Network with dedicated fellowships, reporting grants, ML reporting grants, and AI Spotlight Series",
+  "imp": 3
+ },
+ {
+  "id": 1160,
+  "name": "California Department of Technology",
+  "category": "Government/Agency",
+  "notes": "California's central IT agency (CDT), oversees state technology policy and services. Leads AI integration for state government under Gov. Newsom's executive orders (EO N-12-23). Launched 'Poppy,' a GenAI digital assistant for state employees built on large language models, with 20+ state departments",
+  "imp": 2
+ },
+ {
+  "id": 1161,
+  "name": "California Department of Human Resources",
+  "category": "Government/Agency",
+  "notes": "CalHR manages California's state workforce (civil service rules, benefits, training). Partnered with the Office of Data and Innovation (ODI) to launch the Foundations of GenAI Certificate series, a free training pathway for state employees to develop responsible GenAI skills. Part of a multi-agency ",
+  "imp": 2
+ },
+ {
+  "id": 1164,
+  "name": "NYS Office of Information Technology Services",
+  "category": "Government/Agency",
+  "notes": "New York State's central IT agency (ITS). Authored the state's 'Acceptable Use of Artificial Intelligence Technologies' policy (Jan 2024) under Gov. Hochul's direction, requiring leadership approval for AI systems, human oversight for automated decisions, and NIST AI RMF-based risk assessments. Appo",
+  "imp": 2
+ },
+ {
+  "id": 1133,
+  "name": "Kempner Institute",
+  "category": "Academic",
+  "notes": "Harvard University-wide institute for the study of natural and artificial intelligence, founded 2022 with $500M gift from Mark Zuckerberg and Priscilla Chan (Chan Zuckerberg Initiative). Co-directed by Sham Kakade (CS) and Bernardo Sabatini (neurobiology). Operates the Kempner AI Cluster at MGHPCC (",
+  "imp": 3
+ },
+ {
+  "id": 1128,
+  "name": "Stanford Center for AI Safety",
+  "category": "AI Safety/Alignment",
+  "notes": "Stanford University research center founded in 2018 by Clark Barrett, David Dill, Mykel Kochenderfer, and Dorsa Sadigh, operating as an industrial affiliates program. Conducts research in formal verification, robust decision-making, and trustworthy AI; distinct from the independent nonprofit Center ",
+  "imp": 3
+ },
+ {
+  "id": 1380,
+  "name": "High-Flyer AI",
+  "category": "Frontier Lab",
+  "notes": "High-Flyer (Zhejiang High-Flyer Asset Management) is a Chinese quantitative hedge fund founded by Liang Wenfeng. In 2023 it incubated DeepSeek as a spin-off AI lab, funding it internally. High-Flyer posted 56.6% average returns in 2025 and manages over 70 billion yuan (~$10B USD).",
+  "imp": 2
+ },
+ {
+  "id": 1407,
+  "name": "Universidad de Buenos Aires",
+  "category": "Academic",
+  "notes": "Argentina's largest public university, accounts for ~40% of national research output. Has AI-focused labs: IALAB (Law Faculty \u2014 AI governance, judicial AI guidelines) and LIAA (Applied AI Lab in Computer Science). IALAB published guide on responsible use of generative AI for judiciary, modeled on MI",
+  "imp": 1
+ },
+ {
+  "id": 1408,
+  "name": "Senate AI Caucus",
+  "category": "Government/Agency",
+  "notes": "Bipartisan U.S. Senate caucus on artificial intelligence, launched March 2019 by Sens. Martin Heinrich (D-NM) and Rob Portman (R-OH). Original members included Schatz (D-HI), Gardner (R-CO), Peters (D-MI), Ernst (R-IA). After Portman's retirement (2023), Mike Rounds (R-SD) became co-chair. Heinrich ",
+  "imp": 3
+ },
+ {
+  "id": 1402,
+  "name": "Stability AI",
+  "category": "Frontier Lab",
+  "notes": "Open-source generative AI company (est. 2019). Creator of Stable Diffusion. Founded by Emad Mostaque, who stepped down as CEO in March 2024 citing desire to 'fix concentration of power in AI.' Current CEO: Prem Akkaraju (since June 2024). Raised $80M from Eric Schmidt, Coatue, Lightspeed. Strong ope",
+  "imp": 3
+ },
+ {
+  "id": 1404,
+  "name": "Thrive Holdings",
+  "category": "VC/Capital/Philanthropy",
+  "notes": "AI-focused holding company launched April 2025 by Joshua Kushner's Thrive Capital. Buys, owns, and runs companies positioned to benefit from AI \u2014 starting with accounting (Crete Professionals Alliance) and IT services (Shield Technology Partners). OpenAI took ownership stake in Thrive Holdings (Dec ",
+  "imp": 3
+ },
+ {
+  "id": 1448,
+  "name": "Seoul National University",
+  "category": "Academic",
+  "notes": "South Korea's top research university, located in Seoul. Major AI research hub with 100+ AI professors, 200+ AI application labs, and 2,000+ AI researchers. Houses the Artificial Intelligence Institute (AIIS), selected as core part of Korea's National Strategy AI Development Project. Established Int",
+  "imp": 3
+ },
+ {
+  "id": 1281,
+  "name": "USC Marshall School of Business",
+  "category": "Academic",
+  "notes": "USC's business school. Houses the Neely Center for Ethical Leadership and Decision Making, which in 2024 launched a five-year, $4M purpose-driven AI research initiative \u2014 $2M from the Knight Foundation matched by $2M from USC Marshall. Initiative focuses on AI and social media indices, design codes ",
+  "imp": 3
+ },
+ {
+  "id": 1453,
+  "name": "Trail of Bits",
+  "category": "AI Safety/Alignment",
+  "notes": "Leading cybersecurity research, engineering, and consulting firm founded in 2012. Pioneered AI security assurance practice combining safety and security methodologies for ML/AI risk assessment \u2014 Engineering Director of AI Assurance team is Heidy Khlaaf. Won $3M second-place prize in DARPA's AI Cyber",
+  "imp": 3
+ },
+ {
+  "id": 1488,
+  "name": "National Artificial Intelligence Initiative Office",
+  "category": "Government/Agency",
+  "notes": "Federal coordinating office established by the National AI Initiative Act of 2020, housed within the White House Office of Science and Technology Policy (OSTP). Serves as central coordination hub for AI R&D across federal agencies, industry, academia, nonprofits, and state/tribal governments. Led th",
+  "imp": 3
+ },
+ {
+  "id": 1490,
+  "name": "AI Research Institute on Interaction for AI assistants (ARIA)",
+  "category": "Academic",
+  "notes": "NSF-funded ($20M) AI Research Institute on Interaction for AI Assistants, headquartered at Brown University. Focuses on developing trustworthy, context-aware AI assistants with specific application to mental and behavioral health. Research themes include AI interpretability, adaptability, and partic",
+  "imp": 2
+ },
+ {
+  "id": 1516,
+  "name": "Public Interest Technology University Network",
+  "category": "Academic",
+  "notes": "University consortium created in 2019 by New America's Public Interest Technology program, co-convened with the Ford Foundation and Hewlett Foundation. 64 member institutions committed to training civic-minded technologists. Deployed $14M through Network Challenges and RFPs for experiential learning",
+  "imp": 3
+ },
+ {
+  "id": 1734,
+  "name": "Machine Learning for Language (ML2)",
+  "category": "Academic",
+  "notes": "NLP research group at NYU Center for Data Science, affiliated with the CILVR lab. Focuses on developing and studying state-of-the-art machine learning methods for natural language processing, especially neural network models. Faculty include He He (Asst Prof, CS & Data Science), Tal Linzen (Assoc Pr",
+  "imp": 1
+ },
+ {
+  "id": 1597,
+  "name": "Founders Pledge",
+  "category": "Think Tank/Policy Org",
+  "notes": "EA-aligned nonprofit where entrepreneurs pledge to donate a share of exit proceeds. Publishes cause-area research including advanced AI, recommending funders prioritize catastrophic-risk reduction and international coordination. Has moved over $323M in grants; funds organizations like FAR AI, CEIP, ",
+  "imp": 3
+ },
+ {
+  "id": 1618,
+  "name": "Oxford Martin School",
+  "category": "Think Tank/Policy Org",
+  "notes": "Interdisciplinary research institute at the University of Oxford, founded 2005 via \u00a370M+ endowment from James Martin. Houses the Oxford Martin AI Governance Initiative, which bridges technical AI research and global policy through research, fellowships, and engagement with the UN, EU, and US.",
+  "imp": 3
+ },
+ {
+  "id": 1434,
+  "name": "AT&T Bell Laboratories",
+  "category": "Academic",
+  "notes": "Legendary corporate research lab (est. 1925). Pioneering AI/ML contributions: Claude Shannon's learning machines (1952), neural network research (1986-1996) including handwritten digit recognition with USPS data, early deep learning work by Yann LeCun on convolutional neural networks. 11 Nobel Prize",
+  "imp": 3
+ },
+ {
+  "id": 1397,
+  "name": "University of Tuebingen",
+  "category": "Academic",
+  "notes": "German research university and major European AI hub. Home to T\u00fcbingen AI Center (co-directed by Philipp Hennig and Matthias Bethge since July 2025) and Cluster of Excellence 'Machine Learning: New Perspectives for Science' (renewed 2025). Partners with Max Planck Institute for Intelligent Systems, ",
+  "imp": 3
+ },
+ {
+  "id": 1688,
+  "name": "Gigafund",
+  "category": "VC/Capital/Philanthropy",
+  "notes": "Venture capital firm founded in 2017 by Luke Nosek (PayPal co-founder, Founders Fund) and Stephen Oskoui in Austin, TX. Runs an extremely concentrated, multi-decade strategy focused on capital-intensive physical-world technology companies (SpaceX, Neuralink, Boring Company). Funder of Foresight Inst",
+  "imp": 3
+ },
+ {
+  "id": 1735,
+  "name": "Center for Data Science",
+  "category": "Academic",
+  "notes": "NYU's Center for Data Science (CDS), established in 2013, is the university's focal point for data science research and training. Houses ~30+ interdisciplinary faculty, ~650 undergrads, 330+ MS, and ~60 PhD students. Home to the Center for Responsible AI (led by Julia Stoyanovich) and closely connec",
+  "imp": 1
+ },
+ {
+  "id": 1736,
+  "name": "The Department of Linguistics",
+  "category": "Academic",
+  "notes": "NYU's Department of Linguistics, part of the Faculty of Arts & Science. Sam Bowman held a joint appointment here as Associate Professor alongside his CDS role. The department has growing ties to computational linguistics and NLP research, with faculty contributing to AI/ML work on language understan",
+  "imp": 1
+ },
+ {
+  "id": 1604,
+  "name": "Piramidal",
+  "category": "Deployers & Platforms",
+  "notes": "AI neurotech startup building a foundation model for understanding brainwaves (EEG data). Founded in 2024 by Dimitris Fotis Sakellariou and Kris Pahuja. Y Combinator W24 batch. Raised $6.5M led by YC with participation from Adverb Ventures, Lionheart Ventures, and angel investors. Initial focus on n",
+  "imp": 1
+ },
+ {
+  "id": 1520,
+  "name": "Association for Computing Machinery",
+  "category": "Academic",
+  "notes": "World's largest educational and scientific computing society, founded 1947. Over 100,000 members across 170+ countries. Operates the US Technology Policy Committee (USTPC, 170+ members) providing nonpartisan, technology-neutral AI policy recommendations to lawmakers. Published TechBriefs on 'Trusted",
+  "imp": 3
+ },
+ {
+  "id": 1539,
+  "name": "B Capital",
+  "category": "VC/Capital/Philanthropy",
+  "notes": "Global venture capital firm co-founded in 2015 by Eduardo Saverin (Facebook co-founder) and Raj Ganguly. Over $9B in AUM across 9 offices and 100+ employees. Invests seed through late-stage in enterprise software, AI/ML, fintech, healthcare tech, and security. Led Goodfire's $150M Series B at $1.25B",
+  "imp": 3
+ },
+ {
+  "id": 1540,
+  "name": "Menlo Ventures",
+  "category": "VC/Capital/Philanthropy",
+  "notes": "Major Silicon Valley venture capital firm investing across AI, consumer, enterprise, and healthcare. Raised $1.35B for AI-era investments. Portfolio includes 466 companies, 25 unicorns, 20 IPOs (including Uber, Roku). Key AI investments: Anthropic, Pinecone, Goodfire. Led Goodfire's $50M Series A. C",
+  "imp": 3
+ },
+ {
+  "id": 1521,
+  "name": "Association for the Advancement of Artificial Intelligence (AAAI)",
+  "category": "Academic",
+  "notes": "World's premier AI scientific society, founded 1979. Promotes responsible research in and use of AI. Maintains an AI Public Policy Committee with dedicated Global AI Initiatives and Policy Chair and US Initiatives and Policy Chair positions. Organizes the AAAI Conference on Artificial Intelligence (",
+  "imp": 3
+ },
+ {
+  "id": 1522,
+  "name": "Human Rights Data Analysis Group",
+  "category": "Ethics/Bias/Rights",
+  "notes": "Nonprofit, non-partisan organization (est. 1991, founded by Patrick Ball) applying rigorous statistical science to human rights violations worldwide. Pioneered research demonstrating how predictive policing algorithms amplify racial bias \u2014 showed PredPol and similar tools learn from biased police re",
+  "imp": 3
+ },
+ {
+  "id": 1541,
+  "name": "Mayo Clinic",
+  "category": "Deployers & Platforms",
+  "notes": "World-renowned academic medical center with 200+ AI projects across clinical, research, and operational applications. Unified EHR system supports AI at scale; operates an AI factory on Google Cloud Vertex AI for 250+ projects. AI applications include early detection of cardiovascular disease, breast",
+  "imp": 3
+ },
+ {
+  "id": 1524,
+  "name": "The Hastings Center",
+  "category": "Think Tank/Policy Org",
+  "notes": "Independent, nonpartisan bioethics research institute (est. 1969) based in Garrison, NY. Conducts major research program on Ethics of AI in Health and Biomedical Research. Received $800K five-year Donaghue Foundation award for research on trustworthy AI integration in healthcare. Launched 'Hastings ",
+  "imp": 2
+ },
+ {
+  "id": 1638,
+  "name": "AI Safety Dublin",
+  "category": "AI Safety/Alignment",
+  "notes": "Grassroots AI safety community in Dublin, Ireland, working to reduce risks from advanced AI through awareness, upskilling, and community building. Part of the European Network for AI Safety (ENAIS). Runs 8-week reading/discussion groups for newcomers to AI safety, an Intro to AI Safety Governance pr",
+  "imp": 1
+ },
+ {
+  "id": 1639,
+  "name": "Dutch Network for AI Safety",
+  "category": "AI Safety/Alignment",
+  "notes": "Field-building organization launched in collaboration with ENAIS to establish a national AI safety community in the Netherlands. Builds connections and pathways to reduce catastrophic AI risk. Focuses on lowering barriers to entry, linking participants to courses, mentoring, and career opportunities",
+  "imp": 1
+ },
+ {
+  "id": 1097,
+  "name": "Bayesian Logic Inc.",
+  "category": "AI Safety/Alignment",
+  "notes": "Bayesian Logic Inc. is co-founded by Nimar Arora, who serves as Chief Executive Officer, Secretary, Chief Financial Officer, and Director. Stuart Russell serves as a Director and is described as founder and Vice-President of the company. The company was officially filed as a General Corporation in C",
+  "imp": 2
+ },
+ {
+  "id": 1640,
+  "name": "Cisco Investments",
+  "category": "VC/Capital/Philanthropy",
+  "notes": "Corporate venture investment arm of Cisco Systems, founded 1993, based in San Jose, CA. Launched a $1B AI investment fund in June 2024. Has invested in Cohere, Mistral AI, Scale AI, and World Labs among others. Over 30 years of investing in hundreds of companies across Cisco's core markets and strat",
+  "imp": 3
+ },
+ {
+  "id": 1292,
+  "name": "Jurist Center for Artificial Intelligence",
+  "category": "Academic",
+  "notes": "AI research center at Tulane University, established by the Harold L. and Heather E. Jurist NC '64 Endowed Fund. Supports research and education in AI, machine learning, and data science with a focus on applications for a healthier, more connected global community. Faculty projects span machine lear",
+  "imp": 1
+ },
+ {
+  "id": 1333,
+  "name": "McGill AI Lab",
+  "category": "Frontier Lab",
+  "notes": "Umbrella term for McGill University's AI research labs, most prominently the Reasoning and Learning Lab co-directed by Prakash Panangaden, Doina Precup, Joelle Pineau, Jackie Chi Kit Cheung, Siva Reddy, Reihaneh Rabbany, Siamak Ravanbakhsh, and David Rolnick. McGill is a world leader in machine lear",
+  "imp": 2
+ },
+ {
+  "id": 1299,
+  "name": "CTBT organization",
+  "category": "Government/Agency",
+  "notes": "The Comprehensive Nuclear-Test-Ban Treaty Organization (CTBTO), headquartered in Vienna, is the international body overseeing the global ban on nuclear test explosions. Operates the International Monitoring System (IMS) \u2014 337 facilities worldwide using seismic, infrasound, hydroacoustic, and radionu",
+  "imp": 2
+ },
+ {
+  "id": 1096,
+  "name": "University of California, San Francisco",
+  "category": "Academic",
+  "notes": "The University of California, San Francisco (UCSF or UC San Francisco) is a public land-grant research university in San Francisco, California, United States that is part of the University of California system and is dedicated entirely to health science and life science. UCSF was founded as Toland M",
+  "imp": 3
+ },
+ {
+  "id": 1104,
+  "name": "Coinbase",
+  "category": "Deployers & Platforms",
+  "notes": "Coinbase is joining the x402 Foundation alongside tech titans like Amazon, Google, and Stripe. Coinbase has launched crypto wallet infrastructure that allows AI agents to spend, earn and trade crypto. The company's mission is to increase economic freedom for more than 1 billion people by providing a",
+  "imp": 3
+ },
+ {
+  "id": 1107,
+  "name": "Senate Commerce, Science, and Transportation Committee",
+  "category": "Government/Agency",
+  "notes": "The Senate Commerce, Science, and Transportation Committee is a standing committee of the United States Senate composed of 28 Senators and led by Committee Chairman Ted Cruz (R-Texas) and Ranking Member Maria Cantwell (D-Wash.). The committee has broad jurisdiction over all matters concerning inters",
+  "imp": 3
+ }
+]

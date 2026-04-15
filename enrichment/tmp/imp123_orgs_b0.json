@@ -1,0 +1,366 @@
+[
+ {
+  "id": 1608,
+  "name": "Delphi Ventures",
+  "category": "VC/Capital/Philanthropy",
+  "notes": "Crypto and Web3-focused venture capital firm launched in 2020. Thesis-driven, high-conviction fund investing in blockchain, DeFi, and crypto-AI intersection. Notable portfolio companies include Axie Infinity, Uniswap, dYdX, Celestia, Solana, Lido, and zkSync. Has invested in 98+ companies. Co-launch",
+  "imp": 3
+ },
+ {
+  "id": 1609,
+  "name": "The Operating Group",
+  "category": "VC/Capital/Philanthropy",
+  "notes": "Small venture capital fund based in Road Town, British Virgin Islands, investing primarily in Seed-stage blockchain and crypto startups. Has invested in 5 companies including Mythos Ventures. Team of 2 partners. Limited public information available.",
+  "imp": 1
+ },
+ {
+  "id": 1730,
+  "name": "Players Philanthropy Fund, Inc.",
+  "category": "VC/Capital/Philanthropy",
+  "notes": "Nonprofit fiscal sponsor (501(c)(3)) providing tax-exempt status, back-office services, and operational support to 500+ organizations and family funds. Founded in 2010 by retired NFL player Matt Stover and nonprofit professional Seth McDonnell. Widely used within the effective altruism community as ",
+  "imp": 2
+ },
+ {
+  "id": 1731,
+  "name": "Survival & Flourishing Fund",
+  "category": "VC/Capital/Philanthropy",
+  "notes": "Major EA/longtermist grantmaker focused on long-term survival and flourishing of sentient life. Founded 2019, primarily funded by Jaan Tallinn (Skype co-founder). Distributed ~$152M since inception, $34.9M in 2025 alone \u2014 86% to AI safety. Second-largest AI safety funder after Open Philanthropy. Use",
+  "imp": 1
+ },
+ {
+  "id": 1732,
+  "name": "Electric Sheep",
+  "category": "AI Safety/Alignment",
+  "notes": "Nonprofit (501(c)(3) fiscally sponsored) dedicated to harnessing AI for animal welfare, environmental protection, and social good. Runs Futurekind Fellowship (12-week AI for Animal Protection program) and Code for Compassion Campus (in-person accelerator in Bengaluru). Founded by Ash, former Chief E",
+  "imp": 1
+ },
+ {
+  "id": 1371,
+  "name": "Club for Growth Action",
+  "category": "Political Campaign/PAC",
+  "notes": "Conservative super PAC affiliated with Club for Growth. Supports limited-government, free-market candidates. Major donors include Peter Thiel and Richard Uihlein. Focuses on tax cuts, deregulation, free trade, school choice. No specific AI policy position \u2014 general deregulatory stance would extend t",
+  "imp": 2
+ },
+ {
+  "id": 1372,
+  "name": "University of Notre Dame",
+  "category": "Academic",
+  "notes": "Private Catholic research university in Indiana. Major AI initiatives: AI@ND hub, Lucy Family Institute for Data & Society, Scientific AI Initiative. Received $50.8M Lilly Endowment grant for DELTA Network expanding faith-based AI ethics framework. Won $1M Bloomberg Mayors Challenge Award for human-",
+  "imp": 1
+ },
+ {
+  "id": 1363,
+  "name": "Cornell University",
+  "category": "Academic",
+  "notes": "Major research university with broad AI activities spanning Cornell Tech (NYC), the AI Initiative, and the MacArthur-funded AI, Policy, and Practice (AIPP) initiative focused on AI's societal impacts. In 2025 NSF awarded Cornell a $20M AI Materials Institute, and a new Vice Provost for AI Strategy w",
+  "imp": 3
+ },
+ {
+  "id": 1379,
+  "name": "Neuralink",
+  "category": "Infrastructure & Compute",
+  "notes": "Brain-computer interface company co-founded by Elon Musk (2016). Developing implantable BCI (N1 chip) for paralysis patients. FDA IDE approval May 2023; first human implant Jan 2024 (PRIME trial). FDA Breakthrough Device Designation for speech restoration tech (May 2025). Raised over $700M. Regulato",
+  "imp": 2
+ },
+ {
+  "id": 1357,
+  "name": "Federation of American Scientists",
+  "category": "Think Tank/Policy Org",
+  "notes": "DC-based science and technology policy nonprofit founded in 1945. FAS runs the Day One Project to translate scientific expertise into federal policy; active in AI governance, advocating for responsible AI innovation, NIST AISI funding, and federal AI adoption. Submitted AI Action Plan recommendation",
+  "imp": 3
+ },
+ {
+  "id": 1360,
+  "name": "UK government's Frontier AI Taskforce",
+  "category": "Government/Agency",
+  "notes": "UK government body established April 2023 with \u00a3100m mandate to evaluate frontier AI safety risks ahead of the Bletchley Park AI Safety Summit. Chaired by Ian Hogarth, it transitioned in November 2023 into the AI Safety Institute (later renamed AI Security Institute in 2025), which is a separate ent",
+  "imp": 2
+ },
+ {
+  "id": 1259,
+  "name": "International Telecommunication Union",
+  "category": "Government/Agency",
+  "notes": "UN specialized agency for information and communication technologies. Hosts annual AI for Good Global Summit. Co-organized 2025 International AI Standards Summit with ISO and IEC, issuing the Seoul Statement on AI standards. Published 170-page report on global AI standardization landscape (2025). De",
+  "imp": 3
+ },
+ {
+  "id": 1260,
+  "name": "UNESCO",
+  "category": "Government/Agency",
+  "notes": "UN agency that adopted the first global standard on AI ethics -- the Recommendation on the Ethics of Artificial Intelligence (2021), applicable to all 194 member states. Developed after 3 years of consultation with experts from 155 countries. Framework centers on human rights, transparency, fairness",
+  "imp": 3
+ },
+ {
+  "id": 1417,
+  "name": "Department of Energy",
+  "category": "Government/Agency",
+  "notes": "Federal agency overseeing U.S. energy systems and nuclear infrastructure. Plays a central AI role through its 17 National Laboratories, its membership in the TRAINS Taskforce for national security AI testing, and its initiative to co-locate AI data centers with federal energy infrastructure across 1",
+  "imp": 3
+ },
+ {
+  "id": 1384,
+  "name": "AI4ALL",
+  "category": "Labor/Civil Society",
+  "notes": "Nonprofit co-founded in 2017 by Fei-Fei Li, Olga Russakovsky, and Rick Sommer to increase diversity in AI. Grew from 2015 Stanford summer program for high school girls. 2022 strategic pivot to College Pathways \u2014 accelerating underrepresented college students into AI internships and research. Partner",
+  "imp": 3
+ },
+ {
+  "id": 1383,
+  "name": "Stanford Vision and Learning Lab",
+  "category": "Academic",
+  "notes": "Stanford Vision and Learning Lab (SVL), co-directed by Fei-Fei Li, focuses on computer vision, embodied AI, and robotics. Key projects include BEHAVIOR benchmark for household AI agents and the PAIR group for generalizable robot perception. Li has called for science-based AI governance.",
+  "imp": 3
+ },
+ {
+  "id": 1171,
+  "name": "Darden School of Business",
+  "category": "Academic",
+  "notes": "University of Virginia's graduate business school. Home to the LaCross Institute for Ethical Artificial Intelligence in Business, launched Sept 2024 with a $62M gift from the LaCross family (one of the largest AI gifts to any business school globally, from a broader $101M commitment). Academic direc",
+  "imp": 1
+ },
+ {
+  "id": 1285,
+  "name": "University of Pennsylvania",
+  "category": "Academic",
+  "notes": "Ivy League research university with major AI research infrastructure. The ASSET Center (Penn Engineering) focuses on AI safety, explainability, and trustworthiness, with NSF funding. The Warren Center for Network and Data Sciences drives interdisciplinary data science research. Penn AI was launched ",
+  "imp": 3
+ },
+ {
+  "id": 1693,
+  "name": "Berkeley AI Safety Initiative for Students (BASIS)",
+  "category": "AI Safety/Alignment",
+  "notes": "Student-run AI safety organization at UC Berkeley. Runs a DeCal course on AI safety, a research program, AI Policy Reading Group, and tech education workshops. Affiliated with SPAR (Supervised Program for Alignment Research) and the broader EA-adjacent safety community.",
+  "imp": 1
+ },
+ {
+  "id": 1691,
+  "name": "Cambridge AI Safety Hub",
+  "category": "AI Safety/Alignment",
+  "notes": "AI safety community hub at the University of Cambridge, co-directed by Gaurav Yadav and Justin Dollman. Runs MARS (Mentorship for Alignment Research Students), an AI Safety Fast-Track program, a writing programme, and regular paper reading groups with external researchers.",
+  "imp": 1
+ },
+ {
+  "id": 1234,
+  "name": "NYU School of Medicine",
+  "category": "Academic",
+  "notes": "NYU Grossman School of Medicine at NYU Langone Health, a leading academic medical center. Notable for the fastMRI project\u2014a collaboration with Facebook AI Research (FAIR) using deep learning to accelerate MRI reconstruction 10x. Also developed NYUTron, an LLM trained on clinical notes for in-hospita",
+  "imp": 1
+ },
+ {
+  "id": 1131,
+  "name": "DAF-MIT AI Accelerator",
+  "category": "Government/Agency",
+  "notes": "Joint partnership between the Department of the Air Force (DAF) and MIT to advance AI research for defense and civilian applications. Established 2019; renewed for another five years in 2024. Combines military personnel (embedded officers and enlisted Airmen) with MIT faculty, researchers, and stude",
+  "imp": 2
+ },
+ {
+  "id": 1172,
+  "name": "UVA Information Technology Services",
+  "category": "Academic",
+  "notes": "University of Virginia's central IT organization. Manages UVA's AI tools and responsible use guidelines. Provides UVA Copilot (enterprise GenAI tool operating within UVA's secure environment \u2014 data not retained or used for model training, approved for up to Sensitive data). Publishes AI guidelines i",
+  "imp": 1
+ },
+ {
+  "id": 1427,
+  "name": "Senate Committee on Homeland Security and Governmental Affairs",
+  "category": "Government/Agency",
+  "notes": "Senate's primary oversight committee for government operations and DHS. Active AI oversight role: held hearings on 'AI Risks and Opportunities' and 'AI in Government.' Key legislation includes AI LEAD Act (Chief AI Officer at every federal agency), No Adversarial AI Act (S.2177, protecting governmen",
+  "imp": 3
+ },
+ {
+  "id": 1762,
+  "name": "Economic Security Action California",
+  "category": "Think Tank/Policy Org",
+  "notes": "State-level advocacy arm of Economic Security Project focused on California AI policy. Directed by Teri Olle. Co-sponsored SB 1047 (AI safety bill vetoed by Gov. Newsom) and SB 53 (signed into law, creating CalCompute public cloud infrastructure and establishing AI transparency/safety standards). Ad",
+  "imp": 2
+ },
+ {
+  "id": 1765,
+  "name": "Carnegie Corporation of New York",
+  "category": "VC/Capital/Philanthropy",
+  "notes": "Major U.S. philanthropy founded by Andrew Carnegie in 1911. One of the largest private foundations with ~$4.5B in assets and ~$174M in annual grantmaking (FY 2023-24, 353 grants). Funds AI governance and technology policy through multiple channels: grants to CNAS (already an edge), AI-nuclear risk r",
+  "imp": 3
+ },
+ {
+  "id": 1770,
+  "name": "Information Technology Industry Council",
+  "category": "Think Tank/Policy Org",
+  "notes": "Major Washington DC-based tech industry trade association representing the world's largest technology companies. Premier global advocate for technology policy, with dedicated AI policy team. Developed an AI Accountability Framework and Global AI Policy Recommendations covering innovation, public tru",
+  "imp": 3
+ },
+ {
+  "id": 1584,
+  "name": "Princeton AI Lab",
+  "category": "Academic",
+  "notes": "Princeton Laboratory for Artificial Intelligence, launched fall 2024 under inaugural director Tom Griffiths and associate director Olga Russakovsky. Supports interdisciplinary AI research across campus including safety, ethics, natural and artificial minds, and AI for scientific discovery. Distinct ",
+  "imp": 3
+ },
+ {
+  "id": 1628,
+  "name": "SecureBio",
+  "category": "Think Tank/Policy Org",
+  "notes": "Nonprofit biosecurity organization founded in 2022 by MIT professor Kevin Esvelt. Develops AI biosecurity benchmarks and evaluations cited by all major frontier labs (Anthropic, Google DeepMind, Meta, OpenAI, xAI). Funded partly by effective altruism philanthropy.",
+  "imp": 3
+ },
+ {
+  "id": 1435,
+  "name": "Coll\u00e8ge de France",
+  "category": "Academic",
+  "notes": "Prestigious French academic institution (est. 1530) in Paris. AI relevance: Yann LeCun held the Annual Chair for Computer Science and Digital Technologies (Chaire Annuelle Informatique et Sciences Num\u00e9riques) in 2016, delivering inaugural lecture on deep learning. The institution hosts visiting prof",
+  "imp": 3
+ },
+ {
+  "id": 1165,
+  "name": "Ohio Department of Job and Family Services",
+  "category": "Government/Agency",
+  "notes": "Ohio DJFS administers unemployment insurance, workforce development, and public assistance programs. Won the 2025 Merrill Baumgardner Award from the National Association of State Workforce Agencies for AI innovation in unemployment services. Deployed four AI tools: a multilingual virtual assistant f",
+  "imp": 2
+ },
+ {
+  "id": 1170,
+  "name": "LinkedIn",
+  "category": "Deployers & Platforms",
+  "notes": "Microsoft-owned professional networking platform (~1B members). Major deployer of AI in hiring and workforce tools. Launched 'Hiring Assistant' (Oct 2024), its first AI agent product, handling job description creation, candidate sourcing, and screening \u2014 live with AMD, Canva, Siemens, Zurich Insuran",
+  "imp": 3
+ },
+ {
+  "id": 1139,
+  "name": "The Princeton Laboratory for Artificial Intelligence",
+  "category": "Academic",
+  "notes": "Princeton's AI Lab supports and expands AI research across the university with a novel organizational model. Directed by Tom Griffiths; associate director Olga Russakovsky. Supports three research initiatives: Princeton Language and Intelligence (large AI models, led by Sanjeev Arora), AI for Accele",
+  "imp": 3
+ },
+ {
+  "id": 1140,
+  "name": "ai@cam",
+  "category": "Academic",
+  "notes": "University of Cambridge flagship mission on AI, led by Neil Lawrence (DeepMind Professor of Machine Learning). Aims to develop AI-enabled innovation that benefits science, citizens, and society by leveraging Cambridge's interdisciplinary research community. Focuses on responsible AI development requ",
+  "imp": 3
+ },
+ {
+  "id": 1144,
+  "name": "Sa\u00efd Business School",
+  "category": "Academic",
+  "notes": "Business school of the University of Oxford. Offers a portfolio of AI-focused executive education programs: Oxford Artificial Intelligence Programme, Oxford Executive Diploma in AI for Business (master's-level), Oxford Leading AI Implementation Programme, and Oxford Generative and Agentic AI Program",
+  "imp": 1
+ },
+ {
+  "id": 1159,
+  "name": "California Department of General Services",
+  "category": "Government/Agency",
+  "notes": "California state department under GovOps responsible for procurement, real estate, and administrative services. Key role in AI governance: directed by March 2026 EO (N-5-26) to develop new vendor certification requirements for AI companies seeking state contracts, requiring attestations on content s",
+  "imp": 2
+ },
+ {
+  "id": 1405,
+  "name": "Weizenbaum Institute",
+  "category": "Academic",
+  "notes": "German research institute for interdisciplinary digitalization research, formally 'Weizenbaum Institute for the Networked Society.' Founded 2017, funded by German Federal Ministry of Education and Research (~\u20ac50M over 5 years). Consortium led by Berlin Social Science Center (WZB), includes TU Berlin",
+  "imp": 3
+ },
+ {
+  "id": 1438,
+  "name": "U.S. Department of Labor",
+  "category": "Government/Agency",
+  "notes": "Federal cabinet department overseeing labor standards, workforce, and employment. Key AI role: published national AI Literacy Framework (Feb 2026) with 5 content areas and 7 delivery principles. Partnered with NSF on AI-ready workforce initiative (MOU for AI literacy, training pathways, labor market",
+  "imp": 3
+ },
+ {
+  "id": 1406,
+  "name": "Technische Universit\u00e4t Berlin",
+  "category": "Academic",
+  "notes": "Major German technical university (TU9 member). ~50 academic chairs in AI and computer science. Hosts BIFOLD (Berlin Institute for Foundations of Learning and Data), one of Germany's six national AI competence centers with permanent federal funding. Co-founded Einstein Center Digital Future (ECDF) f",
+  "imp": 3
+ },
+ {
+  "id": 1180,
+  "name": "Quantexa",
+  "category": "Deployers & Platforms",
+  "notes": "UK-based AI decision intelligence company founded in 2016, headquartered in London. Raised $175M Series F (March 2025) at $2.6B valuation, led by Teachers' Venture Growth (Ontario Teachers' Pension Plan); other investors include Warburg Pincus, Dawn Capital, BNY, British Patient Capital. Specializes",
+  "imp": 2
+ },
+ {
+  "id": 1242,
+  "name": "Workera",
+  "category": "Deployers & Platforms",
+  "notes": "Workera is an AI-powered skills intelligence platform that verifies skills for any role, enabling enterprise workforce development and talent decisions. Founded by Kian Katanforoosh, who was mentored by Andrew Ng at Stanford. Andrew Ng provides strategic guidance on responsible AI in education and w",
+  "imp": 2
+ },
+ {
+  "id": 1244,
+  "name": "LandingAI",
+  "category": "Deployers & Platforms",
+  "notes": "LandingAI is an AI company founded by Andrew Ng focused on computer vision for industrial applications. Flagship product LandingLens is an end-to-end, low-code platform for labeling, training, and deploying custom vision models. Primary industries: manufacturing, automotive, electronics, medical dev",
+  "imp": 2
+ },
+ {
+  "id": 1227,
+  "name": "People + AI Research",
+  "category": "Academic",
+  "notes": "Google's People + AI Research (PAIR) team, a multidisciplinary research group exploring the human side of AI. Launched in 2017 within Google Research; now part of the Responsible AI and Human-Centered Technology team. Conducts research on explainability, interpretability, fairness, data visualizatio",
+  "imp": 3
+ },
+ {
+  "id": 1188,
+  "name": "Dartmouth College",
+  "category": "Academic",
+  "notes": "Private Ivy League research university in Hanover, NH. Birthplace of artificial intelligence \u2014 hosted the 1956 Dartmouth Summer Research Project where the term 'artificial intelligence' was coined. Expanding AI across curriculum: new AI track in Master of Engineering, undergraduate AI concentration ",
+  "imp": 1
+ },
+ {
+  "id": 1392,
+  "name": "Trust::Data Alliance",
+  "category": "AI Safety/Alignment",
+  "notes": "MIT-based consortium (Trust::Data Consortium) founded by Alex 'Sandy' Pentland. Builds open-source tools for secure, privacy-preserving data sharing using blockchain and AI. Mission: create trusted internet-based network for safe data exchange. Focus areas: data cooperatives, privacy-preserving iden",
+  "imp": 1
+ },
+ {
+  "id": 1419,
+  "name": "Small Business Administration",
+  "category": "Government/Agency",
+  "notes": "U.S. federal agency (est. 1953) supporting small businesses and entrepreneurs. Increasingly relevant to AI policy as small business AI adoption surges (58% using generative AI per 2025 Chamber survey, up from 40%). Provides AI guidance for small businesses (sba.gov/ai). Subject of the bipartisan Sma",
+  "imp": 2
+ },
+ {
+  "id": 1262,
+  "name": "European Artificial Intelligence Board",
+  "category": "Government/Agency",
+  "notes": "Advisory body established under the EU AI Act, composed of one representative from each EU Member State. Advises and assists the European Commission and Member States to facilitate consistent and effective application of the AI Act. The AI Act's phased implementation began Feb 2025 (prohibited pract",
+  "imp": 3
+ },
+ {
+  "id": 1596,
+  "name": "Forward Global",
+  "category": "Think Tank/Policy Org",
+  "notes": "International commercial and geopolitical risk advisory and public affairs firm headquartered in Paris, with ~470 staff and ~\u20ac100M in revenue. Offices in Paris, Brussels, London, Washington DC, New York, Los Angeles, and Miami, plus Africa. Specializes in public affairs, strategic communication, due",
+  "imp": 2
+ },
+ {
+  "id": 1400,
+  "name": "Jukedeck",
+  "category": "Deployers & Platforms",
+  "notes": "British AI music startup (founded 2012 by Ed Newton-Rex) that built a platform for generating royalty-free music using AI. Raised $2.5M from Cambridge Innovation Capital, Parkwalk Advisors, Backed VC, Playfair Capital. Acquired by ByteDance/TikTok in July 2019; site went offline post-acquisition. Te",
+  "imp": 2
+ },
+ {
+  "id": 1271,
+  "name": "Speed School of Engineering",
+  "category": "Academic",
+  "notes": "J.B. Speed School of Engineering at the University of Louisville. R1 research university engineering school with AI as a core research area. Houses Data Science & AI research cluster, Center for Human Systems Engineering (human-centric AI), and Autonomous Intelligent Mobile Systems Lab. Offers AI/ML",
+  "imp": 3
+ },
+ {
+  "id": 1191,
+  "name": "City University of New York",
+  "category": "Academic",
+  "notes": "CUNY is the largest urban public university system in the U.S. (25 campuses). Awarded $3M via AI Innovation Fund (part of Governor Hochul's NY AI initiative) to 113 campus-led AI projects. Strategy spans five pillars: Education, Workforce, Operations, Research & Innovation, and Partnerships. Receive",
+  "imp": 1
+ },
+ {
+  "id": 1421,
+  "name": "Joint Economic Committee",
+  "category": "Government/Agency",
+  "notes": "The Joint Economic Committee (JEC) is a bicameral congressional committee that studies economic policy. In the 119th Congress (2025\u20132026), it is chaired by Rep. David Schweikert (R-AZ) with Sen. Maggie Hassan (D-NH) as Ranking Member. The JEC held a hearing in June 2024 on \"Artificial Intelligence a",
+  "imp": 3
+ }
+]

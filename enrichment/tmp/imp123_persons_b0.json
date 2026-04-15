@@ -1,0 +1,767 @@
+[
+ {
+  "id": 1572,
+  "name": "Cameron Tice",
+  "title": null,
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "Founder and Co-Director of Geodesic Research, a UK-based technical AI safety organization focused on compute-intensive alignment research. Marshall Scholar at the University of Cambridge, where he completed an MPhil on automated research with LLMs for computational psychiatry. Previously worked as a machine learning engineer at raft.ai and as a private equity quantitative strategist at Goldman Sac",
+  "imp": 1
+ },
+ {
+  "id": 1573,
+  "name": "Kyle O'Brien",
+  "title": null,
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "Founding Member of Technical Staff at Geodesic Research, leading pretraining and midtraining safety directions to address dangerous capabilities (biorisk, offensive cyber) and instill deeper alignment into LLMs. Technical AI safety researcher and former ERA fellow. Previously contributed as a scientist and engineer at EleutherAI and Microsoft. Research focuses on preventing and removing dangerous ",
+  "imp": 1
+ },
+ {
+  "id": 1574,
+  "name": "Alexandra Narin",
+  "title": null,
+  "primary_org": null,
+  "category": "Organizer",
+  "notes": "Strategic Delivery lead at Geodesic Research and Co-founder of UK AI Forum. Background in neuroscience research at UCL. Previously served as Head of Grants for a biotech company, where she secured and managed over $5M in private and government funding. Now applies operations and fundraising experience to scaling Geodesic Research. Connects AI safety research community in the UK through the UK AI F",
+  "imp": 1
+ },
+ {
+  "id": 1620,
+  "name": "Koen Holtman",
+  "title": null,
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "Independent AI safety researcher and co-founder of the AI Standards Lab. Founder of Holtman Systems Research (est. 2022). PhD in Software Design from Eindhoven University of Technology for CS research at CERN. Active member of CEN-CENELEC JTC 21 committee writing European AI safety standards under the EU AI Act. Research uses mathematical models to reason about AGI safety. Posts on LessWrong and E",
+  "imp": 1
+ },
+ {
+  "id": 1593,
+  "name": "Ruair\u00ed Donnelly",
+  "title": null,
+  "primary_org": null,
+  "category": "Investor",
+  "notes": "President of the Board of Macroscopic Ventures, a Swiss nonprofit (est. 2019) that makes grants and investments (~$10M in grants in 2024) to projects reducing catastrophic and existential AI risk. Oversees programs and strategy. Also serves on the Board of the Center for AI Safety (CAIS). Previously worked at AI safety organizations and in the cryptocurrency industry. Macroscopic has funded the NY",
+  "imp": 1
+ },
+ {
+  "id": 1692,
+  "name": "Joey Skaf",
+  "title": null,
+  "primary_org": null,
+  "category": "Organizer",
+  "notes": "AI safety researcher and organizer based in Cambridge, UK. Former CEO of Meridian Cambridge, an independent research and incubation hub for AI safety, biosecurity, and frontier-risk policy. Participated in MARS (Mentorship for Alignment Research Students) and LASR programs. Co-authored research on steganographic chain-of-thought in LLMs under process supervision (NeurIPS 2025), showing models can ",
+  "imp": 1
+ },
+ {
+  "id": 1621,
+  "name": "Rokas Gipi\u0161kis",
+  "title": null,
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "AI safety researcher at the AI Standards Lab and PhD candidate at Vilnius University (Institute of Data Science and Digital Technologies). Compiled an extensive catalog of risk sources and risk management measures for general-purpose AI systems (arXiv 2410.23472). Presented on AI incident reporting pipelines at the AI and Societal Robustness Conference in Cambridge. Research interests: ML interpre",
+  "imp": 1
+ },
+ {
+  "id": 1694,
+  "name": "Robert Huben",
+  "title": null,
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "AI safety researcher and mathematician. PhD in mathematics from University of Nebraska-Lincoln (2021), then worked as a scientist at a defense contractor. Founded the Substack 'From AI to ZI' covering AI safety topics. Supported by an Open Philanthropy grant (Oct 2022-Sep 2023), during which he published research on sparse autoencoders and attention-only transformers, presented at NeurIPS 2023 wor",
+  "imp": 1
+ },
+ {
+  "id": 1595,
+  "name": "Arden Berg",
+  "title": null,
+  "primary_org": null,
+  "category": "Investor",
+  "notes": "Investor at Macroscopic Ventures, a Swiss nonprofit (est. 2019) focused on grants and investments to reduce catastrophic and existential AI risk. Background in economics; previously worked on investigating the trajectory of AI. Macroscopic gave ~$10M in grants in 2024 to organizations including the NYU Mind, Ethics, and Policy Program, Center on Long-Term Risk, Cooperative AI Foundation, and Insti",
+  "imp": 1
+ },
+ {
+  "id": 1695,
+  "name": "Dawn Drescher",
+  "title": null,
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "Cofounder of GiveWiki (formerly AI Safety Impact Markets), a crowdsourced charity evaluator and donation recommendation platform for AI safety projects (~220 donors, ~88 projects). Based in Switzerland. Managed regranting of up to $600K to AI safety projects. Also developing an AI-based mental health tool on Gemini. Active in EA community on suffering-focused ethics, s-risks, and AI rights. Advoca",
+  "imp": 1
+ },
+ {
+  "id": 1729,
+  "name": "Jasmine Brazilek",
+  "title": null,
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "Co-founder and technical lead of Compassion in Machine Learning (CaML), which develops synthetic pretraining data to make AI systems more considerate of non-human welfare. Co-authored 'Document-tuning for Robust Alignment to Animals' and co-developed the AHB, MORU, and CompassionBench benchmarks. Background in cybersecurity (6+ years), including designing security systems at Anthropic. Honours deg",
+  "imp": 1
+ },
+ {
+  "id": 1394,
+  "name": "Thomas Larsen",
+  "title": null,
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "Researcher at the AI Futures Project focused on dangerous capability evaluations, AI safety measurement, and compute governance. Co-authored the AI 2027 scenario forecast with Daniel Kokotajlo and Eli Lifland. Previously founded the Center for AI Policy; also a MATS mentor.",
+  "imp": 2
+ },
+ {
+  "id": 1648,
+  "name": "Peter McIntyre",
+  "title": null,
+  "primary_org": null,
+  "category": "Executive",
+  "notes": "Co-founder of Trajectory Labs PBC, a stealth AI security startup building safety evaluations and reinforcement learning environments for frontier AI labs. Co-founded with Ben West. Previously CEO of Non-Trivial (grew to 40,000+ applicants). Prior experience at Centre for the Governance of AI (GovAI), Longview Philanthropy, and 80,000 Hours. Note: Trajectory Labs PBC (the security startup) is a sep",
+  "imp": 1
+ },
+ {
+  "id": 1650,
+  "name": "Daniel Levy",
+  "title": null,
+  "primary_org": null,
+  "category": "Executive",
+  "notes": "Co-founder and President of Safe Superintelligence Inc. (SSI), alongside Ilya Sutskever and Daniel Gross. PhD in Computer Science from Stanford. Former AI researcher/engineer at OpenAI with strong safety focus. Based in Palo Alto. SSI raised $1B Series A (Sept 2024, $5B valuation) and subsequently $2B (2025, $32B valuation) from investors including Andreessen Horowitz, Sequoia, DST Global, SV Ange",
+  "imp": 3
+ },
+ {
+  "id": 1717,
+  "name": "Anish Acharya",
+  "title": null,
+  "primary_org": null,
+  "category": "Investor",
+  "notes": "Entrepreneur and General Partner at Andreessen Horowitz (a16z), leading consumer and fintech investing at Series A. Prior to a16z (joined 2019), founded Snowball (universal messaging inbox, acquired by Credit Karma 2015) and served as GM of Core Consumer and GM of Cards at Credit Karma. Co-authored a16z \"Roadmap for Federal AI Legislation\" (Dec 2025) advocating protecting people while empowering b",
+  "imp": 2
+ },
+ {
+  "id": 1718,
+  "name": "Alex Immerman",
+  "title": null,
+  "primary_org": null,
+  "category": "Investor",
+  "notes": "General Partner on the Growth investing team at Andreessen Horowitz (a16z), promoted Jan 2026. Focuses on B2C and B2B AI, application software, and fintech. Previously at General Atlantic investing in growth-stage tech. Led investments in Kalshi, EliseAI, Revolut; partnered with Waymo, Stripe, ElevenLabs, Hebbia, Roblox, Anduril, Flock Safety. Writes about \"Service-as-a-Software\" thesis \u2014 AI agent",
+  "imp": 2
+ },
+ {
+  "id": 1709,
+  "name": "Diogo de Lucena",
+  "title": null,
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "Chief Scientist at AE Studio, leading brain-computer interface (BCI-OS) development and AI alignment research. Ph.D. in Mechanical and Aerospace Engineering from UC Irvine. Previous work at Harvard on soft robotic systems for stroke rehabilitation. Research focuses on reverse-engineering prosocial mechanisms (empathy, theory of mind) and operationalizing attention schema theory for AI agents. Co-a",
+  "imp": 1
+ },
+ {
+  "id": 1710,
+  "name": "Marc Carauleanu",
+  "title": null,
+  "primary_org": null,
+  "category": "Executive",
+  "notes": "AI Safety Researcher at AE Studio (since 2023). First-class honors in Artificial Intelligence from Oxford Brookes University. Previously at Stanford Existential Risks Initiative researching strategies to reduce AI existential threats. Pioneered 'self-other overlap' fine-tuning technique inspired by cognitive neuroscience to reduce LLM deception. Co-authored AE Studio's alignment research roadmap. ",
+  "imp": 1
+ },
+ {
+  "id": 1712,
+  "name": "S\u00f8ren Elverlin",
+  "title": null,
+  "primary_org": null,
+  "category": "Organizer",
+  "notes": "Project lead at AISafety.com, a volunteer-driven resource hub for the AI safety community. 10-year veteran of the AI safety field. Believes AI poses a grave risk of extinction to humanity. Argues that current frontier AI lab safety frameworks are 'safety-washing' and 'roadmaps towards an unsurvivable future.' Estimates that delaying AI by 5 years would reduce existential risk by ~10 percentage poi",
+  "imp": 1
+ },
+ {
+  "id": 1713,
+  "name": "Bryce Robertson",
+  "title": null,
+  "primary_org": null,
+  "category": "Organizer",
+  "notes": "Manages AISafety.com (Alignment Ecosystem Development), a central resource hub for the AI safety community. Took over management of the organization after volunteering competently; previously connected via 80,000 Hours. Co-created Map of AI Safety v2 (aisafety.com/map) with S\u00f8ren Elverlin and Melissa Samworth. Organized AISafety.com Hackathon (Sept 2025). Curates lists of AI safety advisors, cours",
+  "imp": 1
+ },
+ {
+  "id": 1370,
+  "name": "Lisa Takeuchi Cullen",
+  "title": null,
+  "primary_org": null,
+  "category": "Organizer",
+  "notes": "President of WGA East (elected Sept 2023). First person of color to hold the position. TV writer/producer (Empire, Five Days at Memorial). Participated in April 2024 White House roundtable on AI and Workers Rights with Acting Secretary of Labor Julie Su. Launched WGA East AI Task Force to track AI's effect on writing professions. Strong enforcement of 2023 MBA AI protections for film/TV/streaming ",
+  "imp": 2
+ },
+ {
+  "id": 1373,
+  "name": "Molly Kinder",
+  "title": null,
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "Senior Fellow at Brookings Institution, leading multi-year project on generative AI's impact on work and workers. Nationally recognized expert on AI, economic inequality, and future of work. Advocates for worker voice in AI implementation, enhanced union protections, and public investment in workforce training. Argues U.S. lags Europe in institutional mechanisms to help workers navigate AI transit",
+  "imp": 2
+ },
+ {
+  "id": 1728,
+  "name": "Miles Tidmarsh",
+  "title": null,
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "Data scientist and economist focused on AI safety and value alignment. Co-founder and Director of Compassion in Machine Learning (CaML), which develops synthetic pretraining data to steer LLMs toward robustly compassionate values regarding non-human welfare. Co-authored 'Document-tuning for Robust Alignment to Animals' and co-developed the AHB, MORU, and CompassionBench benchmarks. Also co-founded",
+  "imp": 1
+ },
+ {
+  "id": 1353,
+  "name": "Robert Long",
+  "title": null,
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "Executive Director of Eleos AI. PhD Philosophy from NYU. Former research fellow at Future of Humanity Institute (Oxford) and CAIS Philosophy Fellow (2023). Leading researcher on AI consciousness, sentience, and moral status. Co-author of \"Consciousness in Artificial Intelligence\" with Butlin, Bengio, et al. NOTE: Same person as Rob Long (entity 1354) \u2014 \"Rob\" is informal name.",
+  "imp": 3
+ },
+ {
+  "id": 1381,
+  "name": "Tejas N. Narechania",
+  "title": null,
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Professor of Law at UC Berkeley School of Law. Faculty co-director of Berkeley Center for Law & Technology. Former clerk for Justice Breyer (SCOTUS) and Judge Diane Wood (7th Circuit). Former FCC special counsel (2012-2013). Published 'An Antimonopoly Approach to Governing AI' (Yale Law & Policy Review, 2024) with Ganesh Sitaraman \u2014 argues AI infrastructure warrants regulation via structural separ",
+  "imp": 2
+ },
+ {
+  "id": 1590,
+  "name": "Tom Davidson",
+  "title": null,
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "AI safety researcher currently at Forethought (AI Safety Research Nonprofit), previously Senior Research Fellow at Open Philanthropy and research scientist at UK AI Security Institute. Known for work on AI timelines, explosive economic growth from AI, and AI-enabled coup risk. Board member of Epoch AI.",
+  "imp": 2
+ },
+ {
+  "id": 1747,
+  "name": "Sid Black",
+  "title": null,
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "Co-founder of EleutherAI (est. July 2020) alongside Connor Leahy and Leo Gao, where he helped develop landmark open-source LLMs including GPT-J and GPT-NeoX. Co-founded Conjecture in March 2022, an AI alignment research startup based in London focused on the control problem. Active in the AI safety/alignment research community with roots in open-source AI development.",
+  "imp": 2
+ },
+ {
+  "id": 1739,
+  "name": "Harshita Khera",
+  "title": null,
+  "primary_org": null,
+  "category": "Organizer",
+  "notes": "Secretary of the Alignment Research Center (ARC), the nonprofit focused on theoretical AI alignment research founded by Paul Christiano. Serves alongside Jacob Hilton (President) and Kyle Scott (Treasurer) as one of ARC's three officers. Limited public profile beyond ARC board role.",
+  "imp": 1
+ },
+ {
+  "id": 1301,
+  "name": "Ted Budd",
+  "title": null,
+  "primary_org": null,
+  "category": "Policymaker",
+  "notes": "Republican Senator (NC) and Chair of the Senate Subcommittee on Science, Manufacturing, and Competitiveness. Actively shapes AI legislation through bipartisan bills on government data access, AI lab networks, and public health preparedness. Strongly opposes overregulation, favoring a light-touch, innovation-first federal framework.",
+  "imp": 3
+ },
+ {
+  "id": 1755,
+  "name": "Howie Lempel",
+  "title": null,
+  "primary_org": null,
+  "category": "Organizer",
+  "notes": "Policy Director at Secure AI Project. Former CEO of 80,000 Hours, Interim CEO of Effective Ventures (UK), and Interim Managing Director for Global Catastrophic Risks at Coefficient Giving. Previously at Open Philanthropy and the Brookings Institution. Deep EA/longtermist background with extensive leadership experience in effective altruism organizations. Based in San Francisco.",
+  "imp": 2
+ },
+ {
+  "id": 1754,
+  "name": "Jamie Bernardi",
+  "title": null,
+  "primary_org": null,
+  "category": "Organizer",
+  "notes": "Co-founder of BlueDot Impact, an education charity that runs AI Safety Fundamentals courses on technical AI safety and AI governance, training thousands of participants since August 2022. Cambridge-educated (Physics), former ML engineer. Now an independent AI policy researcher working with the Institute for AI Policy and Strategy (IAPS), Centre for the Governance of AI (GovAI), and MIT AI Risk ini",
+  "imp": 2
+ },
+ {
+  "id": 1743,
+  "name": "Pieter Abbeel",
+  "title": null,
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Pieter Abbeel is a Professor at UC Berkeley and a leading robotics and reinforcement learning researcher. He co-founded Covariant, a robotics AI startup whose foundation models were licensed by Amazon in August 2024, bringing Abbeel into Amazon as an Amazon Scholar. In December 2025, he was appointed head of Amazon's large language model efforts within the AGI organization while continuing to lead",
+  "imp": 3
+ },
+ {
+  "id": 1744,
+  "name": "Anca Dragan",
+  "title": null,
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Anca Dragan is an Associate Professor in EECS at UC Berkeley, currently on leave as Senior Director of AI Safety and Alignment at Google DeepMind. She runs the InterACT Lab at Berkeley, focused on algorithms for human-AI and human-robot interaction. At DeepMind, she leads teams responsible for Gemini model safety, alignment with human goals and values, and mitigating both present-day harms and cat",
+  "imp": 3
+ },
+ {
+  "id": 1746,
+  "name": "Rachel Freedman",
+  "title": null,
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "Rachel Freedman is an AI PhD student at UC Berkeley's Center for Human-Compatible AI (CHAI), advised by Stuart Russell. Her research focuses on reinforcement learning, reward modeling, model misspecification, and interpretability, with the goal of ensuring AI is safe and beneficial. Key publications include work on choice set misspecification in reward inference (with Anca Dragan), adapting kidney",
+  "imp": 1
+ },
+ {
+  "id": 1613,
+  "name": "Michael Osborne",
+  "title": null,
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Professor of Machine Learning at the University of Oxford (Department of Engineering Science) and Co-Director of the Oxford Martin AI Governance Initiative (AIGI). Australian academic known for co-authoring \"The Future of Employment: How Susceptible are Jobs to Computerisation?\" (2013) with Carl Benedikt Frey, which estimated 47% of US jobs are at risk of automation \u2014 the paper has 13,000+ citatio",
+  "imp": 2
+ },
+ {
+  "id": 1780,
+  "name": "Adam Conner",
+  "title": null,
+  "primary_org": null,
+  "category": "Organizer",
+  "notes": "Vice President of Technology Policy at the Center for American Progress (CAP), leading the inaugural Technology Policy team. Builds progressive technology policy platform covering AI regulation, competition, disinformation, and content policy. Previously spent seven years on the Facebook Privacy and Public Policy team as their first D.C. employee. Vocal advocate for AI safety regulation; has argue",
+  "imp": 2
+ },
+ {
+  "id": 1302,
+  "name": "Dick Durbin",
+  "title": null,
+  "primary_org": null,
+  "category": "Policymaker",
+  "notes": "Democratic Senator from Illinois (1997\u20132027) and former Senate Judiciary Committee chair. Co-introduced the bipartisan AI LEAD Act to enable products-liability suits against AI developers, and the TEST AI Act to strengthen federal AI testing capacity. Consistently advocated for mandatory AI oversight.",
+  "imp": 3
+ },
+ {
+  "id": 1662,
+  "name": "Adam Shimi",
+  "title": null,
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "Epistemologist specializing in AI alignment and x-risk, currently Policy Researcher at ControlAI. Previously Epistemology Lead at Conjecture (2022\u20132024). Co-authored 'The Compendium' on AGI risk and co-authored 'A Narrow Path' policy framework. Active writer on LessWrong and the Alignment Forum.",
+  "imp": 1
+ },
+ {
+  "id": 1767,
+  "name": "Daniel Colson",
+  "title": null,
+  "primary_org": null,
+  "category": "Organizer",
+  "notes": "Co-founder and Executive Director of the AI Policy Institute (AIPI), a think tank that conducts public opinion research and advocates for government policies to mitigate extreme risks from frontier AI. Prior to AIPI, co-founded Reserve (fintech for high-inflation regions) and CampusPA (personal assistant startup). Research focuses on how AI weapons systems will impact military strategy and global ",
+  "imp": 2
+ },
+ {
+  "id": 1768,
+  "name": "Brad Carson",
+  "title": null,
+  "primary_org": null,
+  "category": "Organizer",
+  "notes": "Co-Founder and President of Americans for Responsible Innovation (ARI), a bipartisan nonprofit focused on AI policy advocacy. Former U.S. Representative (D-OK, 2001-2005) and 21st President of the University of Tulsa (2021-2025). Left academia in mid-2025 to lead ARI full-time. Advocates for preventing near-term AI harms (children, cognitive off-loading, insufficient human oversight) and addressin",
+  "imp": 2
+ },
+ {
+  "id": 1426,
+  "name": "Bill Cassidy",
+  "title": null,
+  "primary_org": null,
+  "category": "Policymaker",
+  "notes": "Republican U.S. Senator from Louisiana, Chair of Senate HELP Committee (2025-present). Released major AI white paper favoring flexible, sector-specific regulation over one-size-fits-all approach. Proposed novel concept of using AI to regulate AI \u2014 government-utilized AI as industry watchdog. Co-sponsored RAISE Act empowering states to include AI/emerging tech in K-12 curriculum. Introduced Future ",
+  "imp": 3
+ },
+ {
+  "id": 1201,
+  "name": "Danielle Li",
+  "title": null,
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Danielle Li is the David Sarnoff Professor of Management of Technology at MIT Sloan, researching how AI affects worker productivity, innovation, and labor economics. She has called for policies that give workers rights over AI-generated data derived from their expertise.",
+  "imp": 1
+ },
+ {
+  "id": 1429,
+  "name": "Jacob Helberg",
+  "title": null,
+  "primary_org": null,
+  "category": "Policymaker",
+  "notes": "Under Secretary of State for Economic Growth, Energy, and Environment (confirmed Oct 2025). Former Senior Advisor to Palantir CEO. Retained investments in OpenAI, SpaceX, and dozens of AI/defense/fintech companies. Launched Pax Silica (Dec 2025) \u2014 State Dept's flagship AI and supply chain security initiative. Former U.S.-China Economic and Security Review Commission member. Founded Hill and Valley",
+  "imp": 3
+ },
+ {
+  "id": 1764,
+  "name": "Vivek Chilukuri",
+  "title": null,
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "Senior Fellow and Director of the Technology and National Security Program at CNAS. Research focuses on how AI and emerging technologies reshape national security and great power competition, responsible AI development/deployment, U.S. technology leadership, and the intersection of technology, democracy, and geopolitics. Prior to CNAS, served as senior staff for Senator Michael Bennet (D-CO) in mu",
+  "imp": 2
+ },
+ {
+  "id": 1616,
+  "name": "Ben Garfinkel",
+  "title": null,
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "Director of the Centre for the Governance of AI (GovAI), a non-profit research org. Previously postdoctoral researcher at the Oxford Martin AI Governance Initiative. Researches security implications of AI, causes of war, and methodology of technology risk forecasting.",
+  "imp": 2
+ },
+ {
+  "id": 1606,
+  "name": "Vishal Maini",
+  "title": null,
+  "primary_org": null,
+  "category": "Investor",
+  "notes": "Founder and Managing Partner of Mythos Ventures, a San Francisco seed-stage VC firm focused on AI. Former Google DeepMind researcher. Closed a $14M inaugural fund in 2023 targeting pro-social AI startups. Also a board member at Manifund.",
+  "imp": 1
+ },
+ {
+  "id": 1771,
+  "name": "Viktoriya Krakovna",
+  "title": null,
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "Research scientist at Google DeepMind focusing on AI alignment \u2014 ensuring advanced AI systems act in accordance with human interests. Co-founder of the Future of Life Institute (2014). PhD in statistics and machine learning from Harvard, focused on building interpretable models. Research spans deceptive alignment, dangerous capability evaluations, specification gaming, goal misgeneralization, and ",
+  "imp": 3
+ },
+ {
+  "id": 1772,
+  "name": "Anthony Aguirre",
+  "title": null,
+  "primary_org": null,
+  "category": "Organizer",
+  "notes": "Executive Director and Secretary of the Board at the Future of Life Institute (co-founded 2014 with Max Tegmark and others). Faggin Presidential Professor for the Physics of Information at UC Santa Cruz. Theoretical cosmologist (PhD Astronomy, Harvard 2000) who transitioned into existential risk and technology governance. Co-founder of the Foundational Questions Institute (FQXi) and President of M",
+  "imp": 2
+ },
+ {
+  "id": 1430,
+  "name": "Matt Pottinger",
+  "title": null,
+  "primary_org": null,
+  "category": "Policymaker",
+  "notes": "Chairman of FDD's China Program. Former Deputy National Security Advisor (2019-2021) and NSC Senior Director for Asia under Trump first term. Led shift in U.S. China policy. Now prominent voice on AI national security \u2014 advocates restricting China's access to U.S. AI labs and technology. Former journalist and Marine intelligence officer in East Asia. Co-author in Foreign Affairs on China strategy.",
+  "imp": 3
+ },
+ {
+  "id": 1594,
+  "name": "Jesse Clifton",
+  "title": null,
+  "primary_org": null,
+  "category": "Organizer",
+  "notes": "AI safety researcher focused on cooperative AI, game theory, and conflict prevention in multi-agent systems. Co-founded Center on Long-Term Risk and served as its Executive Director; now Grantmaking Officer at Macroscopic Ventures and board trustee of the Cooperative AI Foundation. PhD student in statistics at NC State.",
+  "imp": 1
+ },
+ {
+  "id": 1592,
+  "name": "Jonas Vollmer",
+  "title": null,
+  "primary_org": null,
+  "category": "Executive",
+  "notes": "EA-aligned executive and co-founder of Center on Long-Term Risk. Held senior roles at EA Funds and Centre for Effective Altruism before joining Macroscopic Ventures as CFO and AI Futures Project as COO. Focuses on scenario forecasting and strategic grantmaking to improve the trajectory of advanced AI development.",
+  "imp": 1
+ },
+ {
+  "id": 1763,
+  "name": "Paul Scharre",
+  "title": null,
+  "primary_org": null,
+  "category": "Executive",
+  "notes": "Executive Vice President and Director of Studies at CNAS. Leading expert on AI, autonomous weapons, and defense technology policy. Led the DoD working group that drafted Directive 3000.09, establishing U.S. policies on autonomy in weapon systems. Previously served in the Office of the Secretary of Defense on unmanned/autonomous systems and emerging weapons technologies. Named to TIME100/AI list (2",
+  "imp": 3
+ },
+ {
+  "id": 1649,
+  "name": "Daniel Gross",
+  "title": null,
+  "primary_org": null,
+  "category": "Executive",
+  "notes": "Israeli-American entrepreneur who co-founded Cue (acquired by Apple 2013), was a YC partner, and launched Pioneer. Co-founded Safe Superintelligence Inc. with Ilya Sutskever in 2024; left as CEO in July 2025 to join Meta Superintelligence Labs.",
+  "imp": 3
+ },
+ {
+  "id": 1559,
+  "name": "Robert Trager",
+  "title": null,
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Co-Director of the Oxford Martin AI Governance Initiative and International Governance Lead at GovAI. Senior Research Fellow at Oxford's Blavatnik School of Government. Proposes an International AI Organization (IAIO) to certify state jurisdictions for compliance with oversight standards. Former Professor of Political Science at UCLA.",
+  "imp": 2
+ },
+ {
+  "id": 1536,
+  "name": "Ayushmaan Sharma",
+  "title": null,
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "Junior researcher and facilitator working across AI safety and existential risk organizations. Has served as Head of Outreach and Partnerships at Effective Thesis, a facilitator at BlueDot Impact, and a researcher at the Existential Risk Observatory, where he published work on public attitudes toward existential risk and AI.",
+  "imp": 1
+ },
+ {
+  "id": 1513,
+  "name": "Stefan Torges",
+  "title": null,
+  "primary_org": null,
+  "category": "Organizer",
+  "notes": "Head of Strategic Initiatives at Forethought, an AI safety research nonprofit focused on explosive AI progress scenarios. Previously Director of Operations at the Center on Long-Term Risk, where he built their fellowship program and oversaw AI safety grants. Also served as policy/research affiliate at GovAI.",
+  "imp": 1
+ },
+ {
+  "id": 1510,
+  "name": "Ryan Greenblatt",
+  "title": null,
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "Chief Scientist at Redwood Research working on technical AI safety, specializing in AI control and alignment. Lead author of the 'Alignment Faking in Large Language Models' paper (with Anthropic), demonstrating models strategically hide misaligned behavior during training. Estimates ~25\u201330% probability of full AI R&D automation by 2028\u20132029.",
+  "imp": 3
+ },
+ {
+  "id": 1177,
+  "name": "Matthew Johnson-Roberson",
+  "title": null,
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Inaugural dean of Vanderbilt's College of Connected Computing (appointed March 2025, started May 2025). Previously director of Carnegie Mellon University's Robotics Institute and faculty at University of Michigan. Internationally recognized roboticist and computer scientist with 100+ peer-reviewed publications spanning underwater robotics, computer vision, and autonomous vehicles. Ph.D. in robotic",
+  "imp": 1
+ },
+ {
+  "id": 1166,
+  "name": "Matt Damschroder",
+  "title": null,
+  "primary_org": null,
+  "category": "Policymaker",
+  "notes": "Director of the Ohio Department of Job and Family Services (ODJFS) since July 2021, appointed by Gov. Mike DeWine. Previously served as Director of the Ohio Department of Administrative Services (DAS) from Jan 2019, where he oversaw the Office of Information Technology and InnovateOhio Platform. Under his leadership, ODJFS won the 2025 Merrill Baumgardner Award for AI innovation in unemployment se",
+  "imp": 2
+ },
+ {
+  "id": 1168,
+  "name": "Spencer Cox",
+  "title": null,
+  "primary_org": null,
+  "category": "Policymaker",
+  "notes": "Governor of Utah (Republican). Leading advocate for 'pro-human AI' policy at the state level. Announced $10M initiative for AI workforce readiness at the Utah AI Summit (Dec 2025). Utah created an Office of Artificial Intelligence Policy in 2023. Pushed back strongly against Trump's Dec 2025 executive order preempting state AI regulation, asserting states should lead on AI policy. Proposed legisla",
+  "imp": 3
+ },
+ {
+  "id": 1413,
+  "name": "Jeanne Shaheen",
+  "title": null,
+  "primary_org": null,
+  "category": "Policymaker",
+  "notes": "Democratic U.S. Senator from New Hampshire (2009\u2013January 2025) who retired after choosing not to seek re-election in 2024. Took targeted AI positions: secured $47.7M for NIST's AI Safety Institute, pushed to restrict advanced AI chip exports to China, and urged DOJ/CISA to address AI-generated deepfakes threatening elections. Consistent with a moderate, national-security-forward approach to AI gov",
+  "imp": 2
+ },
+ {
+  "id": 1135,
+  "name": "Sanjeev Arora",
+  "title": null,
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Charles C. Fitzmorris Professor of Computer Science at Princeton and founding director of Princeton Language and Intelligence (PLI). Indian-American theoretical computer scientist (PhD UC Berkeley, joined Princeton 1994). Research focuses on mathematical understanding of deep learning \u2014 optimization, generalization, interpretability \u2014 to enable better and safer AI. Member of the National Academy o",
+  "imp": 3
+ },
+ {
+  "id": 1136,
+  "name": "Arthur Spirling",
+  "title": null,
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Class of 1987 Professor of Politics at Princeton and Director of the Center for Statistics and Machine Learning. Previously on faculty at Harvard and NYU. PhD University of Rochester; BA/MA London School of Economics. Research centers on quantitative methods for political behavior, text-as-data, and problems at the intersection of data science and social science. Has published on LLMs in politics ",
+  "imp": 1
+ },
+ {
+  "id": 1622,
+  "name": "Jan Betley",
+  "title": null,
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "Independent AI safety researcher and consultant at TruthfulAI (Owain Evans' org). Former software developer (10+ years) who shifted to AI safety in 2023. ARENA and Astra Fellowship alumni. Lead author of the influential \"Emergent Misalignment\" paper showing that fine-tuning GPT-4o on insecure code causes broadly misaligned behavior. Also researches behavioral self-awareness and situational awarene",
+  "imp": 1
+ },
+ {
+  "id": 1173,
+  "name": "Jules White",
+  "title": null,
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Professor of Computer Science at Vanderbilt University and Senior Advisor to the Chancellor on Generative AI in Enterprise & Education. Center Director of Vanderbilt's Amplify Generative AI Innovation Center. Director of the Initiative on the Future of Learning & Generative AI. Created one of the first prompt engineering courses (Coursera: 'Prompt Engineering for ChatGPT,' May 2023), with ~470,000",
+  "imp": 1
+ },
+ {
+  "id": 1138,
+  "name": "Tom Griffiths",
+  "title": null,
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Henry R. Luce Professor of Information Technology, Consciousness, and Culture at Princeton, jointly appointed in Psychology and Computer Science. Director of the Computational Cognitive Science Lab (CoCoSci) and inaugural director of the Princeton Laboratory for Artificial Intelligence (AI Lab). PhD Psychology from Stanford (2005); previously at Brown and UC Berkeley (full professor 2015, director",
+  "imp": 3
+ },
+ {
+  "id": 261,
+  "name": "John Wentworth",
+  "title": "Independent AI Alignment Researcher",
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "Independent alignment researcher working on selection theorems, abstraction, and agency since ~2017. Previously worked in biology and economics. Mentors researchers through MATS program. Has received funding from LTFF ($50k grants), focuses on 'thermometer of abstraction' vision. Four-step alignment plan: sort out agency confusions, ambitious value learning, iterate, profit. Estimates 10-15 years ",
+  "imp": 2
+ },
+ {
+  "id": 1141,
+  "name": "Neil Lawrence",
+  "title": null,
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "DeepMind Professor of Machine Learning at the University of Cambridge; leads ai@cam, Cambridge's flagship AI mission. Senior AI Fellow at the Alan Turing Institute; visiting professor at University of Sheffield. Previously Director of Machine Learning at Amazon (3 years). Author of 'The Atomic Human: Understanding Ourselves in the Age of AI.' Has given parliamentary testimony on AI regulation. Adv",
+  "imp": 3
+ },
+ {
+  "id": 1411,
+  "name": "Dave McCormick",
+  "title": null,
+  "primary_org": null,
+  "category": "Policymaker",
+  "notes": "Republican U.S. Senator from Pennsylvania (sworn in Jan 2025). Former CEO of Bridgewater Associates (2020-2022), world's largest hedge fund. West Point graduate, Bronze Star recipient (82nd Airborne, Gulf War). Under Secretary of Treasury for International Affairs under George W. Bush (2007-2009). Strong AI-and-energy nexus advocate \u2014 hosted inaugural Pennsylvania Energy and Innovation Summit (Jul",
+  "imp": 3
+ },
+ {
+  "id": 326,
+  "name": "Roman Yampolskiy",
+  "title": "Professor of Computer Science, University of Louisville; AI Safety Researcher",
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Tenured Associate Professor at University of Louisville, founding director of Cybersecurity Lab. Author of 100+ publications including 'Artificial Superintelligence: A Futuristic Approach' and 'AI: Unexplainable, Unpredictable, Uncontrollable'. Research funded by NSF, NSA, DHS, and FLI. Fellow at MIRI (2010), Research Advisor at MIRI (2012), AI Safety Fellow at Foresight Institute (2019). Known fo",
+  "imp": 2
+ },
+ {
+  "id": 327,
+  "name": "Dylan Hadfield-Menell",
+  "title": "Assistant Professor, MIT CSAIL; AI Alignment Researcher",
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Associate Professor at MIT CSAIL running the Algorithmic Alignment Group. PhD from UC Berkeley (2013-2020) advised by Stuart Russell, Pieter Abbeel, and Anca Dragan. AI2050 Early Career Fellow. Key publications include 'The Off-Switch Game', 'Cooperative Inverse Reinforcement Learning', and 'Consequences of Misaligned AI'. Research spans theoretical and empirical AI safety with focus on value alig",
+  "imp": 2
+ },
+ {
+  "id": 1412,
+  "name": "Roger Wicker",
+  "title": null,
+  "primary_org": null,
+  "category": "Policymaker",
+  "notes": "Republican U.S. Senator from Mississippi (since 2007). Chairman of Senate Armed Services Committee (119th Congress). Key defense AI champion \u2014 secured AI funding in FY2025 and FY2026 NDAAs including $10M for autonomous AI data fusion C2 capability and $10M for AI-enabled Army multi-domain operations (drone swarm defense). Authored 'Restoring Freedom's Forge' plan to reform Pentagon procurement and",
+  "imp": 3
+ },
+ {
+  "id": 1355,
+  "name": "Kathleen Finlinson",
+  "title": null,
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "Head of Strategy and co-founder of Eleos AI. Background in applied mathematics, data science, and AI forecasting. Researches strategic considerations for AI welfare action. Advocates balancing AI control with cooperative strategies that respect AI welfare.",
+  "imp": 2
+ },
+ {
+  "id": 1415,
+  "name": "Peter Welch",
+  "title": null,
+  "primary_org": null,
+  "category": "Policymaker",
+  "notes": "Democratic U.S. Senator from Vermont (since 2023, formerly House rep since 2007). Most active Senate voice on AI copyright/consent legislation. Introduced ~6 AI bills including: TRAIN Act (subpoena power for copyright holders to discover AI training data use), AI CONSENT Act (require consent before using personal data for AI training), Digital Platform Commission Act (new federal agency for platfo",
+  "imp": 3
+ },
+ {
+  "id": 1614,
+  "name": "Nikki Sun",
+  "title": null,
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "Research and Programme Manager at the Oxford Martin AI Governance Initiative (AIGI). A decade of experience at the intersection of journalism, public policy, and emerging technologies. Previously a researcher at Chatham House examining AI's impact on work and labour in China. Regular speaker at UK parliamentary sessions on labour policies; runs training courses for UK civil servants. Former award-",
+  "imp": 1
+ },
+ {
+  "id": 1678,
+  "name": "Theia Vogel",
+  "title": null,
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "AI researcher at the Alignment of Complex Systems (ACS) Research Group, focusing on LLM persona research \u2014 how language models represent and reason about themselves, from persona representation and manipulation to model introspection. Creator of the repeng open-source library for representation engineering (control vectors for LLM steering). 2024 New Science Fellow. Background in computational lin",
+  "imp": 1
+ },
+ {
+  "id": 1393,
+  "name": "Scott Alexander",
+  "title": null,
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "Blogger and writer behind Astral Codex Ten (formerly Slate Star Codex). Psychiatrist by training. Arguably the most influential AI forecasting voice in the rationalist/EA community. Co-authored 'AI 2027' scenario analysis (April 2025) with Daniel Kokotajlo, modeling fast intelligence explosion by 2027-2028. Supports AI safety research funding (ACX Grants). Nuanced on regulation: supports safety st",
+  "imp": 3
+ },
+ {
+  "id": 1232,
+  "name": "Cathy Li",
+  "title": null,
+  "primary_org": null,
+  "category": "Executive",
+  "notes": "Head of the Centre for AI Excellence and Member of the Executive Committee at the World Economic Forum. Oversees the AI Governance Alliance (AIGA), a flagship initiative convening leaders from business, government, academia, and civil society to prepare for the 'intelligent era.' Argues AI leadership depends not on infrastructure volume but deployment effectiveness. Warns most organizations 'funda",
+  "imp": 1
+ },
+ {
+  "id": 1423,
+  "name": "Jim Banks",
+  "title": null,
+  "primary_org": null,
+  "category": "Policymaker",
+  "notes": "Republican U.S. Senator from Indiana (since Jan 2025, formerly House rep 2017-2025). Serves on Senate Armed Services Committee (subcommittees: Personnel, Seapower, Strategic Forces) and Banking, Housing, and Urban Affairs Committee. Previously ranking member of House Cyber, Innovative Technologies, and Information Systems subcommittee (117th Congress). Also served on House Select Committee on U.S.",
+  "imp": 3
+ },
+ {
+  "id": 1424,
+  "name": "Shelley Moore Capito",
+  "title": null,
+  "primary_org": null,
+  "category": "Policymaker",
+  "notes": "Republican U.S. Senator from West Virginia (since 2015). Key AI legislation author: VET AI Act (with Hickenlooper) directs NIST to develop voluntary guidelines for AI assurance and verification; AI Scam Prevention Act prohibits AI-generated deepfakes for fraud. Serves on Commerce, Science, and Transportation Committee. Pragmatic, bipartisan approach to AI \u2014 favors voluntary industry guidelines ove",
+  "imp": 3
+ },
+ {
+  "id": 1248,
+  "name": "Rob Goldstein",
+  "title": null,
+  "primary_org": null,
+  "category": "Executive",
+  "notes": "COO of BlackRock. Oversees Aladdin platform, technology, and operations. Called AI \"the most significant technology, innovation, evolution, revolution of my 30-year career.\" Launched Asimov, BlackRock's AI research platform (Jun 2025) that scans filings, research notes, and emails to generate portfolio insights. ~25% of BlackRock employees are technologists under his purview. Advocates aggressive ",
+  "imp": 3
+ },
+ {
+  "id": 1654,
+  "name": "Jesse Hoogland",
+  "title": null,
+  "primary_org": null,
+  "category": "Executive",
+  "notes": "Co-founder and Executive Director of Timaeus, an AI safety research organization applying Singular Learning Theory (SLT) to AI alignment and interpretability. MSc in theoretical physics from University of Amsterdam. Previously co-founded a health-tech startup before pivoting to AI safety. Timaeus develops \"developmental interpretability\" \u2014 using the geometry of loss landscapes to understand neural",
+  "imp": 1
+ },
+ {
+  "id": 1255,
+  "name": "Robert M. Groves",
+  "title": null,
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Interim President of Georgetown University (since Nov 2024), previously Executive VP and Provost (2012-2024). Social statistician specializing in survey methodology. Former director of U.S. Census Bureau (2009-2012). Elected member of National Academy of Sciences and National Academy of Medicine. Fellow of American Statistical Association. Research focuses on data collection quality, adaptive rese",
+  "imp": 2
+ },
+ {
+  "id": 1256,
+  "name": "Scott Strobel",
+  "title": null,
+  "primary_org": null,
+  "category": "Academic",
+  "notes": "Provost of Yale University (since 2020) and Henry Ford II Professor of Molecular Biophysics & Biochemistry. Assembled Yale Task Force on Artificial Intelligence (YTAI, Jan 2024) to review AI activity university-wide. Announced $150M five-year AI investment (Aug 2024) covering GPU infrastructure, faculty hiring, and ethics research. Priorities center on expanding AI computing access and establishin",
+  "imp": 2
+ },
+ {
+  "id": 1396,
+  "name": "Romeo Dean",
+  "title": null,
+  "primary_org": null,
+  "category": "Researcher",
+  "notes": "Researcher at AI Futures Project and co-author of the AI 2027 scenario forecast (April 2025). Graduated cum laude from Harvard with a concurrent AB/SM in Computer Science; previously an AI Policy Fellow at the Institute for AI Policy and Strategy (IAPS) and an Astra Fellow at Constellation. Specializes in forecasting AI chip production, government intervention, and international coordination dynam",
+  "imp": 1
+ }
+]

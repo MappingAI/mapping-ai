@@ -1,0 +1,417 @@
+[
+ {
+  "id": 1102,
+  "name": "Ben Horowitz",
+  "primary_org": "a16z"
+ },
+ {
+  "id": 92,
+  "name": "Yann LeCun",
+  "primary_org": "Advanced Machine Intelligence Labs (AMI Labs)"
+ },
+ {
+  "id": 930,
+  "name": "Laurie Locascio",
+  "primary_org": "American National Standards Institute (ANSI)"
+ },
+ {
+  "id": 850,
+  "name": "Martin Casado",
+  "primary_org": "Andreessen Horowitz"
+ },
+ {
+  "id": 70,
+  "name": "Joi Ito",
+  "primary_org": "Chiba Institute of Technology"
+ },
+ {
+  "id": 854,
+  "name": "Elad Gil",
+  "primary_org": "Cosmic"
+ },
+ {
+  "id": 1845,
+  "name": "Douglas Rushkoff",
+  "primary_org": "CUNY Queens College"
+ },
+ {
+  "id": 900,
+  "name": "Alex Hanna",
+  "primary_org": "Distributed AI Research Institute (DAIR)"
+ },
+ {
+  "id": 892,
+  "name": "Dwarkesh Patel",
+  "primary_org": "Dwarkesh Podcast"
+ },
+ {
+  "id": 1007,
+  "name": "Andrej Karpathy",
+  "primary_org": "Eureka Labs"
+ },
+ {
+  "id": 893,
+  "name": "Craig Smith",
+  "primary_org": "Eye on AI Podcast"
+ },
+ {
+  "id": 1843,
+  "name": "Garrison Lovely",
+  "primary_org": "Freelance / Independent"
+ },
+ {
+  "id": 825,
+  "name": "Helen Toner",
+  "primary_org": "Georgetown Center for Security and Emerging Technology (CSET)"
+ },
+ {
+  "id": 1339,
+  "name": "Mohammed bin Salman",
+  "primary_org": "Government of Saudi Arabia"
+ },
+ {
+  "id": 994,
+  "name": "Audrey Tang",
+  "primary_org": "Government of Taiwan"
+ },
+ {
+  "id": 848,
+  "name": "Reid Hoffman",
+  "primary_org": "Greylock Partners"
+ },
+ {
+  "id": 978,
+  "name": "Shoshana Zuboff",
+  "primary_org": "Harvard Business School"
+ },
+ {
+  "id": 974,
+  "name": "Jason Furman",
+  "primary_org": "Harvard Kennedy School"
+ },
+ {
+  "id": 21,
+  "name": "Lawrence Lessig",
+  "primary_org": "Harvard Law School"
+ },
+ {
+  "id": 828,
+  "name": "Remco Zwetsloot",
+  "primary_org": "Horizon Institute for Public Service"
+ },
+ {
+  "id": 1368,
+  "name": "Margaret Mitchell",
+  "primary_org": "Hugging Face"
+ },
+ {
+  "id": 40,
+  "name": "Pete Buttigieg",
+  "primary_org": "Independent"
+ },
+ {
+  "id": 1832,
+  "name": "Kylie Robison",
+  "primary_org": "Independent"
+ },
+ {
+  "id": 107,
+  "name": "Karen Hao",
+  "primary_org": "Independent"
+ },
+ {
+  "id": 1376,
+  "name": "Joe Biden",
+  "primary_org": "Independent"
+ },
+ {
+  "id": 1844,
+  "name": "Molly Crabapple",
+  "primary_org": "Independent"
+ },
+ {
+  "id": 936,
+  "name": "Thierry Breton",
+  "primary_org": "Independent"
+ },
+ {
+  "id": 1245,
+  "name": "Daphne Koller",
+  "primary_org": "insitro"
+ },
+ {
+  "id": 86,
+  "name": "Alondra Nelson",
+  "primary_org": "Institute for Advanced Study"
+ },
+ {
+  "id": 44,
+  "name": "Ben Reinhardt",
+  "primary_org": "Justified Priors"
+ },
+ {
+  "id": 891,
+  "name": "Lex Fridman",
+  "primary_org": "Lex Fridman Podcast"
+ },
+ {
+  "id": 1794,
+  "name": "Craig Martell",
+  "primary_org": "Lockheed Martin"
+ },
+ {
+  "id": 999,
+  "name": "Nate Soares",
+  "primary_org": "Machine Intelligence Research Institute"
+ },
+ {
+  "id": 847,
+  "name": "Nick Bostrom",
+  "primary_org": "Macrostrategy Research Initiative"
+ },
+ {
+  "id": 1847,
+  "name": "Sherry Turkle",
+  "primary_org": "Massachusetts Institute of Technology (MIT)"
+ },
+ {
+  "id": 861,
+  "name": "Ajeya Cotra",
+  "primary_org": "METR"
+ },
+ {
+  "id": 31,
+  "name": "Regina Barzilay",
+  "primary_org": "MIT"
+ },
+ {
+  "id": 798,
+  "name": "Priya Donti",
+  "primary_org": "MIT"
+ },
+ {
+  "id": 991,
+  "name": "Noam Chomsky",
+  "primary_org": "MIT"
+ },
+ {
+  "id": 67,
+  "name": "Ezra Klein",
+  "primary_org": "New York Times"
+ },
+ {
+  "id": 27,
+  "name": "Michael Kratsios",
+  "primary_org": "Office of Science and Technology Policy"
+ },
+ {
+  "id": 28,
+  "name": "Jennifer Pahlka",
+  "primary_org": "Recoding America Fund"
+ },
+ {
+  "id": 855,
+  "name": "Eric Schmidt",
+  "primary_org": "Relativity Space"
+ },
+ {
+  "id": 933,
+  "name": "Jen Easterly",
+  "primary_org": "RSAC"
+ },
+ {
+  "id": 938,
+  "name": "Yuval Noah Harari",
+  "primary_org": "Sapienship"
+ },
+ {
+  "id": 95,
+  "name": "Meredith Whittaker",
+  "primary_org": "Signal (or Center for AI Safety)"
+ },
+ {
+  "id": 888,
+  "name": "Leopold Aschenbrenner",
+  "primary_org": "Situational Awareness LP"
+ },
+ {
+  "id": 724,
+  "name": "Jace Yarbrough",
+  "primary_org": "S|L Law PLLC"
+ },
+ {
+  "id": 1836,
+  "name": "Alex Heath",
+  "primary_org": "Sources (independent publication)"
+ },
+ {
+  "id": 973,
+  "name": "Susan Athey",
+  "primary_org": "Stanford Graduate School of Business"
+ },
+ {
+  "id": 971,
+  "name": "Ramin Toloui",
+  "primary_org": "Stanford Institute for Economic Policy Research (SIEPR)"
+ },
+ {
+  "id": 1167,
+  "name": "Ron DeSantis",
+  "primary_org": "State of Florida"
+ },
+ {
+  "id": 1841,
+  "name": "Ben Thompson",
+  "primary_org": "Stratechery (independent)"
+ },
+ {
+  "id": 935,
+  "name": "Margrethe Vestager",
+  "primary_org": "Technical University of Denmark (DTU)"
+ },
+ {
+  "id": 941,
+  "name": "Naomi Klein",
+  "primary_org": "University of British Columbia"
+ },
+ {
+  "id": 1,
+  "name": "Stuart Russell",
+  "primary_org": "University of California, Berkeley"
+ },
+ {
+  "id": 1741,
+  "name": "Scott Aaronson",
+  "primary_org": "University of Texas at Austin"
+ },
+ {
+  "id": 115,
+  "name": "Anna Eshoo",
+  "primary_org": "Unknown"
+ },
+ {
+  "id": 106,
+  "name": "Elliston Berry",
+  "primary_org": "Unknown"
+ },
+ {
+  "id": 23,
+  "name": "Michel Justen",
+  "primary_org": "Unknown"
+ },
+ {
+  "id": 65,
+  "name": "Dan Wang",
+  "primary_org": "Unknown"
+ },
+ {
+  "id": 69,
+  "name": "Dan Kagan-Kans",
+  "primary_org": "Unknown"
+ },
+ {
+  "id": 1793,
+  "name": "Elizabeth Kelly",
+  "primary_org": "U.S. AI Safety Institute (NIST)"
+ },
+ {
+  "id": 939,
+  "name": "Kate Crawford",
+  "primary_org": "USC Annenberg"
+ },
+ {
+  "id": 46,
+  "name": "Jeffrey Kessler",
+  "primary_org": "U.S. Department of Commerce"
+ },
+ {
+  "id": 34,
+  "name": "Gina Raimondo",
+  "primary_org": "U.S. Department of Commerce"
+ },
+ {
+  "id": 1812,
+  "name": "Cameron Stanley",
+  "primary_org": "U.S. Department of Defense"
+ },
+ {
+  "id": 1813,
+  "name": "Douglas Matty",
+  "primary_org": "U.S. Department of Defense"
+ },
+ {
+  "id": 1795,
+  "name": "Radha Plumb",
+  "primary_org": "U.S. Department of Defense"
+ },
+ {
+  "id": 714,
+  "name": "Valerie Foushee",
+  "primary_org": "U.S. House of Representatives (Democratic Party)"
+ },
+ {
+  "id": 82,
+  "name": "Ted Cruz",
+  "primary_org": "U.S. Senate"
+ },
+ {
+  "id": 11,
+  "name": "Marsha Blackburn",
+  "primary_org": "U.S. Senate"
+ },
+ {
+  "id": 78,
+  "name": "John Hickenlooper",
+  "primary_org": "U.S. Senate"
+ },
+ {
+  "id": 79,
+  "name": "Jon Husted",
+  "primary_org": "U.S. Senate"
+ },
+ {
+  "id": 1005,
+  "name": "Ron Wyden",
+  "primary_org": "U.S. Senate"
+ },
+ {
+  "id": 1004,
+  "name": "Amy Klobuchar",
+  "primary_org": "U.S. Senate"
+ },
+ {
+  "id": 53,
+  "name": "Ganesh Sitaraman",
+  "primary_org": "Vanderbilt University Law School"
+ },
+ {
+  "id": 998,
+  "name": "Alvin Graylin",
+  "primary_org": "Virtual World Society"
+ },
+ {
+  "id": 1842,
+  "name": "Sigal Samuel",
+  "primary_org": "Vox (Future Perfect)"
+ },
+ {
+  "id": 119,
+  "name": "Arati Prabhakar",
+  "primary_org": "White House Office of Science and Technology Policy"
+ },
+ {
+  "id": 85,
+  "name": "Sriram Krishnan",
+  "primary_org": "White House Office of Science and Technology Policy"
+ },
+ {
+  "id": 43,
+  "name": "Tom Kalil",
+  "primary_org": "White House Office of Science and Technology Policy"
+ },
+ {
+  "id": 968,
+  "name": "Fiona Scott Morton",
+  "primary_org": "Yale School of Management"
+ }
+]

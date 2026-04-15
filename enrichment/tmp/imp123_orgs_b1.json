@@ -1,0 +1,366 @@
+[
+ {
+  "id": 1209,
+  "name": "Polytechnique Montr\u00e9al",
+  "category": "Academic",
+  "notes": "French-language engineering school in Montreal and a founding partner of both IVADO and Mila \u2014 Quebec's premier AI research institutes. Its researchers work on AI applications in health, transportation, and cybersecurity, supported by $20M+ in grants from CFI and the Quebec government.",
+  "imp": 3
+ },
+ {
+  "id": 1210,
+  "name": "HEC Montr\u00e9al",
+  "category": "Academic",
+  "notes": "Montreal business school and founding partner of IVADO and Mila. Established a Chair in Organizational Ethics and AI Governance in 2024-25 and, with Tech3Lab and IVADO, launched a government-funded AI professional training program in January 2026. Faculty contribute to Mila and AI governance researc",
+  "imp": 3
+ },
+ {
+  "id": 1266,
+  "name": "ARPA-H",
+  "category": "Government/Agency",
+  "notes": "Advanced Research Projects Agency for Health, established 2022 under the Biden administration within HHS. Modeled on DARPA. Funds high-risk, high-reward health research including multiple AI programs: ADVOCATE (agentic AI for cardiovascular care), PRECISE-AI (monitoring clinical AI model degradation",
+  "imp": 3
+ },
+ {
+  "id": 1267,
+  "name": "Johns Hopkins Applied Physics Laboratory",
+  "category": "Academic",
+  "notes": "Largest university-affiliated research center in the U.S., serving as a technical resource for DoD, Intelligence Community, DHS, and NASA. Over 60 years of AI R&D spanning autonomous systems, decision support, ML, and human-machine teaming. Intelligent Systems Center (ISC) has 130+ research scientis",
+  "imp": 3
+ },
+ {
+  "id": 749,
+  "name": "Asteria Film Co.",
+  "category": "Media/Journalism",
+  "notes": "Asteria Film Co. is actually an AI-powered film production studio, not a traditional media/journalism organization. Founded by Bryn Mooser and Natasha Lyonne, it focuses on creating 'ethical AI' models for film production while developing the Continuum Suite operating system for streamlined filmmaki",
+  "imp": 2
+ },
+ {
+  "id": 1221,
+  "name": "Perplexity AI",
+  "category": "Deployers & Platforms",
+  "notes": "Perplexity AI is a VC-backed AI-powered search and answer engine founded in 2022, valued at ~$20B as of late 2025. CEO Aravind Srinivas has resisted content restrictions and embraced government partnerships, including a FedRAMP-approved deal with the U.S. GSA.",
+  "imp": 3
+ },
+ {
+  "id": 767,
+  "name": "NoHarm",
+  "category": "Ethics/Bias/Rights",
+  "notes": "Search results show NOHARM as a medical AI safety evaluation framework developed by academic researchers, not a traditional ethics/rights organization. Also found #NoHarmware campaign by T\u0101hono Trust (New Zealand) focused on online safety regulation. No evidence of a US-based Ethics/Rights Organizat",
+  "imp": 2
+ },
+ {
+  "id": 1206,
+  "name": "Social Media Victims Law Center",
+  "category": "Labor/Civil Society",
+  "notes": "The Social Media Victims Law Center (SMVLC) is a legal advocacy organization supporting families harmed by predatory tech. Originally focused on social media harms to children, it has expanded into AI litigation. In November 2025, SMVLC and the Tech Justice Law Project filed seven lawsuits against O",
+  "imp": 2
+ },
+ {
+  "id": 1207,
+  "name": "Tech Justice Law Project",
+  "category": "Labor/Civil Society",
+  "notes": "The Tech Justice Law Project (TJLP) is a pioneering impact litigation and advocacy organization established in 2023 as a project of Campaign for Accountability. It works with legal experts, policy advocates, digital rights organizations, and technologists to ensure legal and policy frameworks are fi",
+  "imp": 2
+ },
+ {
+  "id": 1481,
+  "name": "Congressional Artificial Intelligence Caucus",
+  "category": "Government/Agency",
+  "notes": "Bipartisan House caucus promoting AI education and policy dialogue. Originally co-chaired by Reps. Anna Eshoo (D-CA) and Michael McCaul (R-TX); Don Beyer (D-VA) was an active co-chair figure. Convenes members to engage on AI legislation, coordinates with the House AI Task Force, and maintains a nonp",
+  "imp": 3
+ },
+ {
+  "id": 1278,
+  "name": "USC Center for AI in Society",
+  "category": "Academic",
+  "notes": "Joint research center between USC Suzanne Dworak-Peck School of Social Work and USC Viterbi School of Engineering. Mission: develop and demonstrate how AI can tackle difficult societal problems. Focuses on low-resource communities. Research areas: environment, health/wellbeing, homelessness. Partner",
+  "imp": 3
+ },
+ {
+  "id": 1252,
+  "name": "University of Pittsburgh",
+  "category": "Academic",
+  "notes": "Major public research university in Pittsburgh. Close collaboration with Carnegie Mellon University on AI initiatives. Joint NVIDIA AI Tech Community with CMU: Pitt's center focuses on AI in health sciences, clinical medicine, and biomanufacturing. Co-hosted CMU-Pitt health/AI/technology summit (Oct",
+  "imp": 3
+ },
+ {
+  "id": 1279,
+  "name": "USC Suzanne Dworak-Peck School of Social Work",
+  "category": "Academic",
+  "notes": "USC's school of social work. Co-founded the Center for AI in Society (CAIS) with Viterbi School of Engineering, applying AI to social challenges including child welfare, homelessness, behavioral health, and human trafficking. Research emphasizes responsible AI for vulnerable populations.",
+  "imp": 2
+ },
+ {
+  "id": 1280,
+  "name": "USC Viterbi School of Engineering",
+  "category": "Academic",
+  "notes": "USC's engineering school. Major AI research hub with multiple centers: CAIS (AI for social good), Amazon Center on Secure and Trusted AI, Machine Learning Center, Center for Autonomy and AI, and Robotics and Autonomous Systems Center. Launched first US MS in CS-AI track. Partnered with USC School of",
+  "imp": 3
+ },
+ {
+  "id": 1283,
+  "name": "USC School of Advanced Computing",
+  "category": "Academic",
+  "notes": "USC's 23rd school, launched in 2024 as part of President Folt's $1B+ advanced computing initiative. Led by Prof. Gaurav Sukhatme. Recruiting 30 faculty by 2025, 60 more by 2030. Co-launching BS in AI with Viterbi (Fall 2026 cohort). New Ginsburg Human-Centered Computation Hall. Ethics at its core mi",
+  "imp": 3
+ },
+ {
+  "id": 1147,
+  "name": "Institute for Information & Communications Technology Planning & Evaluation",
+  "category": "Government/Agency",
+  "notes": "South Korean government institution under the Ministry of Science and ICT (MSIT) that manages national ICT R&D policy, funding, and human resource development. Key funder of the Global AI Frontier Lab at NYU. Restructured in 2026 around \"AI Transformation (AX)\" with new teams for Physical AI, AI Fou",
+  "imp": 2
+ },
+ {
+  "id": 1157,
+  "name": "U.S. Department of State",
+  "category": "Government/Agency",
+  "notes": "U.S. foreign affairs agency with growing AI diplomacy role. Released first Enterprise AI Strategy FY 2024-2025 under Sec. Blinken. Key AI-relevant offices: Office of Special Envoy for Critical and Emerging Technology (S/TECH) for strategic tech competition and allied coordination; Bureau for Cybersp",
+  "imp": 3
+ },
+ {
+  "id": 1652,
+  "name": "SV Angel",
+  "category": "VC/Capital/Philanthropy",
+  "notes": "Iconic Silicon Valley seed-stage venture capital firm founded in 2009 by Ron Conway, known as the \"Godfather of Silicon Valley.\" Made early bets on Google, Facebook, Twitter, Airbnb. Raised six funds through 2018, then briefly returned to angel investing before raising a $269M growth equity fund in ",
+  "imp": 3
+ },
+ {
+  "id": 1158,
+  "name": "Government Operations Agency",
+  "category": "Government/Agency",
+  "notes": "California state agency (GovOps) overseeing CDT, Office of Data and Innovation, DGS, and CalHR. Leads GenAI implementation across CA state government per Newsom's 2023 executive order. Spearheading CalCompute, a public computing cluster for safe/ethical AI research. Coordinating AI procurement stand",
+  "imp": 2
+ },
+ {
+  "id": 1455,
+  "name": "British Standards Institute",
+  "category": "Think Tank/Policy Org",
+  "notes": "The British Standards Institution (BSI) is the UK's national standards body, playing a central role in shaping international AI governance standards. First certification body accredited by UKAS to certify ISO/IEC 42001 (AI Management System standard, published end of 2023) \u2014 also accredited by RvA (",
+  "imp": 3
+ },
+ {
+  "id": 1431,
+  "name": "Encode AI",
+  "category": "Think Tank/Policy Org",
+  "notes": "Youth-led DC-based nonprofit founded by Sneha Revanur advocating for responsible AI governance. Sponsored California SB 53 and New York's RAISE Act; challenged OpenAI's for-profit conversion. Funded by FLI, Heising-Simons, Survival and Flourishing Fund, and others; explicitly rejects corporate and A",
+  "imp": 2
+ },
+ {
+  "id": 1293,
+  "name": "Center for Community-Engaged Artificial Intelligence",
+  "category": "Academic",
+  "notes": "Multi-disciplinary AI center at Tulane University and one of five Tulane Centers of Excellence. Team of scientists, engineers, students, and community partners dedicated to human-centered AI. Core principle: trust must be earned by designing AI systems that are demonstrably fair, transparent, and ac",
+  "imp": 1
+ },
+ {
+  "id": 1294,
+  "name": "Court Watch NOLA",
+  "category": "Labor/Civil Society",
+  "notes": "Founded 2007, oldest court-watching program in the U.S. Recruits, trains, and supports volunteers to observe Orleans Parish Criminal Court judges, prosecutors, and public defenders for transparency, ethics, and constitutional compliance. Partnered with Tulane University on $1.5M NSF-funded project u",
+  "imp": 1
+ },
+ {
+  "id": 1296,
+  "name": "NASA Ames Research Center",
+  "category": "Government/Agency",
+  "notes": "Major NASA research center in Silicon Valley. Intelligent Systems Division comprises Autonomous Systems & Robotics, Collaborative & Assistant Systems, Discovery & Systems Health, and Robust Software Engineering. Conducts mission-driven R&D in computational sciences for NASA applications. Aviation Sy",
+  "imp": 2
+ },
+ {
+  "id": 1314,
+  "name": "University of Utah",
+  "category": "Academic",
+  "notes": "University of Utah hosts the One-U Responsible AI Initiative, a $100M transdisciplinary program led by the Scientific Computing and Imaging (SCI) Institute. A $50M AI supercomputer partnership with NVIDIA and HPE is slated to come online in summer 2026. Research focuses on healthcare, societal welln",
+  "imp": 1
+ },
+ {
+  "id": 1345,
+  "name": "Colorado AI Policy Work Group",
+  "category": "Think Tank/Policy Org",
+  "notes": "Convened by Governor Jared Polis (Oct 2025) to revise Colorado AI Act (SB 24-205), the nation's first comprehensive AI anti-discrimination law. Diverse membership: consumer groups, hospitals, school districts, tech companies large and small. Delivered unanimous support for revised policy framework (",
+  "imp": 3
+ },
+ {
+  "id": 1317,
+  "name": "Block Center for Technology and Society",
+  "category": "Academic",
+  "notes": "The Block Center for Technology and Society at Carnegie Mellon University was established in 2019 to study how emerging technologies alter the future of work, how AI and analytics can be harnessed for social good, and how innovation can reduce inequality. Houses the Responsible AI Initiative (RAI), ",
+  "imp": 3
+ },
+ {
+  "id": 1699,
+  "name": "General Services Administration",
+  "category": "Government/Agency",
+  "notes": "The General Services Administration (GSA) is a federal agency that manages government buildings, procurement, and technology services. GSA plays a central role in federal AI adoption: it launched USAi in August 2025, the government's first shared platform for AI experimentation providing chat-based ",
+  "imp": 3
+ },
+ {
+  "id": 1321,
+  "name": "ServiceNow",
+  "category": "Deployers & Platforms",
+  "notes": "Public enterprise software company (NYSE: NOW) specializing in workflow automation. Heavily invested in AI via 'Now Assist' and autonomous AI agents; targeting $1B AI ACV by 2026. Advocates responsible AI governance and compliance with EU AI Act and NIST AI RMF.",
+  "imp": 3
+ },
+ {
+  "id": 1687,
+  "name": "Protocol Labs",
+  "category": "VC/Capital/Philanthropy",
+  "notes": "Innovation network founded by Juan Benet (2014) connecting 600+ tech startups, funds, accelerators, and foundations. Created IPFS and Filecoin. Raised $204M over 5 rounds; made 86+ investments. Funds Foresight Institute's AI for Science & Safety program. Co-hosts LabWeek Field Building and Funding T",
+  "imp": 2
+ },
+ {
+  "id": 1356,
+  "name": "Niskanen Center",
+  "category": "Think Tank/Policy Org",
+  "notes": "Centrist/center-right think tank founded 2015 by Jerry Taylor (ex-Cato). Named \"Most Interesting Think Tank\" by TIME (2023). AI policy stance: regulatory restraint, intervene only when harm is realistic. Has 501(c)(3) research arm and 501(c)(4) lobbying arm. Major funders include Hewlett Foundation,",
+  "imp": 3
+ },
+ {
+  "id": 1367,
+  "name": "Black in AI",
+  "category": "Labor/Civil Society",
+  "notes": "Nonprofit founded 2017 by Timnit Gebru and Rediet Abebe. Increases presence and inclusion of Black people in AI. Four pillars: education pathways, financial barriers, visibility, and community support. Received MacArthur Foundation funding. Hosts annual workshop at NeurIPS. Aims to broaden voices in",
+  "imp": 3
+ },
+ {
+  "id": 1706,
+  "name": "Department of Homeland Security",
+  "category": "Government/Agency",
+  "notes": "Federal cabinet department responsible for border security, cybersecurity, immigration, and disaster response. Published a three-year AI strategy focused on responsible adoption across mission areas: threat detection, border surveillance (CBP edge AI), cybersecurity defense, and emergency response. ",
+  "imp": 3
+ },
+ {
+  "id": 1707,
+  "name": "National Institutes of Health",
+  "category": "Government/Agency",
+  "notes": "Primary federal agency for biomedical and public health research, part of HHS. Developing its first institute-wide AI Strategic Plan (RFI closed July 2025) covering AI in biomedical discovery, clinical decision support, and public health. AI/ML research funding grew 233% (inflation-adjusted) from FY",
+  "imp": 2
+ },
+ {
+  "id": 1651,
+  "name": "DST Global",
+  "category": "VC/Capital/Philanthropy",
+  "notes": "Global venture capital and private equity firm founded in 2009 by Yuri Milner, spun off from Russian company Digital Sky Technologies (now Mail.ru/VK). Primarily invests in late-stage internet and technology companies. Major portfolio includes Facebook, Twitter, WhatsApp, Snapchat, Spotify, Alibaba,",
+  "imp": 3
+ },
+ {
+  "id": 1319,
+  "name": "Amii",
+  "category": "Academic",
+  "notes": "The Alberta Machine Intelligence Institute (Amii), one of Canada's three national AI institutes alongside Mila and Vector Institute, funded through the Pan-Canadian AI Strategy. Founded over 20 years ago, headquartered in Edmonton. Mandate to build technical/scientific capacity in machine learning a",
+  "imp": 3
+ },
+ {
+  "id": 1322,
+  "name": "Government of Canada",
+  "category": "Government/Agency",
+  "notes": "Canada was the first country globally to adopt a national AI strategy, launching the Pan-Canadian AI Strategy in 2017. Phase 2 announced in 2022 with $443M+ in funding, supporting the three national AI institutes (Mila, Amii, Vector). Tabled the Artificial Intelligence and Data Act (AIDA) in June 20",
+  "imp": 3
+ },
+ {
+  "id": 1323,
+  "name": "Data Collective",
+  "category": "VC/Capital/Philanthropy",
+  "notes": "DCVC (formerly Data Collective) is a deep tech venture capital firm founded by Matt Ocko and Zachary Bogue, investing in entrepreneurs using computational approaches\u2014especially AI\u2014to solve large-scale real-world problems. Manages billions in AUM across 13 funds including six flagship funds. Invests ",
+  "imp": 2
+ },
+ {
+  "id": 1336,
+  "name": "OECD",
+  "category": "Government/Agency",
+  "notes": "Organisation for Economic Co-operation and Development (38 member countries). Published OECD AI Principles in 2019 (first intergovernmental AI standard), updated 2024 \u2014 now endorsed by 47 jurisdictions. Operates AI Policy Observatory (oecd.ai) tracking AI strategies, policies, and incidents globally",
+  "imp": 3
+ },
+ {
+  "id": 1347,
+  "name": "Helion Energy",
+  "category": "Infrastructure & Compute",
+  "notes": "Private nuclear fusion company building the Orion plant in Chelan County, WA, targeting power delivery to Microsoft data centers by 2028 under the world's first fusion power purchase agreement. Backed by Sam Altman ($350M+) and SoftBank; raised $425M Series F in Jan 2025 at a $5.4B valuation. Direct",
+  "imp": 3
+ },
+ {
+  "id": 1324,
+  "name": "Real Ventures",
+  "category": "VC/Capital/Philanthropy",
+  "notes": "Canada's leading early-stage venture capital firm, established in 2007 and headquartered in Montreal. Manages $325M across five funds with an active portfolio of 100+ companies valued at ~$10B. Has invested in 214 companies total, with portfolio unicorns including Xanadu, Blockstream, and Tenstorren",
+  "imp": 2
+ },
+ {
+  "id": 1326,
+  "name": "Singapore Management University",
+  "category": "Academic",
+  "notes": "Singapore Management University (SMU) hosts the Centre for AI and Data Governance, established in 2019 at its School of Law. Received a S$4.5M grant from the National Research Foundation and Infocomm Media Development Authority for a five-year Research Programme on the Governance of AI and Data Use,",
+  "imp": 3
+ },
+ {
+  "id": 1332,
+  "name": "McGill Collaborative for AI and Society",
+  "category": "Academic",
+  "notes": "The McGill Collaborative for AI and Society (McCAIS) is a strategic initiative of the Computational and Data Systems Institute (CDSI) at McGill University. Interdisciplinary, university-wide effort bringing all faculties together to understand AI's societal impact and develop evidence-based best pra",
+  "imp": 1
+ },
+ {
+  "id": 1340,
+  "name": "National Infrastructure Fund",
+  "category": "Infrastructure & Compute",
+  "notes": "Saudi Arabian infrastructure financing entity operating under the National Development Fund. Signed $1.2B financing framework with Humain (announced at Davos, Jan 2026) to develop 250MW of AI data center capacity. Exploring creation of AI data center investment platform to attract global/local insti",
+  "imp": 3
+ },
+ {
+  "id": 1343,
+  "name": "Arizona Secretary of State",
+  "category": "Government/Agency",
+  "notes": "Office held by Adrian Fontes (D). Formed AI & Election Security Advisory Committee (June 2024), co-chaired by Chris Cummiskey and Gowri Ramachandran. Released final report (Feb 2025) proposing AI Elections Lab for developing guidelines and pilot programs. Deployed AI tools in 2024 election: chatbot ",
+  "imp": 2
+ },
+ {
+  "id": 1313,
+  "name": "College of Computing, Data Science, and Society",
+  "category": "Academic",
+  "notes": "UC Berkeley college established July 1, 2023 \u2014 the first new college at Berkeley in over 50 years. Houses three academic majors: Computer Science, Data Science, and Statistics. Includes the Berkeley Institute for Data Science, Center for Computational Biology, Bakar Institute of Digital Materials fo",
+  "imp": 3
+ },
+ {
+  "id": 1315,
+  "name": "Emory University",
+  "category": "Academic",
+  "notes": "Private research university in Atlanta, Georgia. Major AI initiative: AI.Humanity, which brings together full university resources to shape the AI revolution for better human health, economic value, and responsible applications. Key AI centers: Center for Artificial Intelligence Learning (AI literac",
+  "imp": 1
+ },
+ {
+  "id": 1316,
+  "name": "Emory AI Group",
+  "category": "Academic",
+  "notes": "Research collective within Emory University encompassing multiple AI-focused labs and faculty across the Department of Computer Science and School of Medicine. Includes the Emory NLP group, AI and Simulation Lab (geospatial AI, computer vision, foundation models), MAIX Lab (health AI), and Cardiotho",
+  "imp": 3
+ },
+ {
+  "id": 1477,
+  "name": "Lawyers' Committee for Civil Rights Under Law",
+  "category": "Ethics/Bias/Rights",
+  "notes": "Nonpartisan civil rights legal organization founded in 1963 at the request of President Kennedy. Champions the AI Civil Rights Act (co-endorsed with Rep. Pressley, Sen. Markey, Rep. Clarke) requiring transparency, accountability, and anti-discrimination safeguards in AI systems used in housing, lend",
+  "imp": 3
+ },
+ {
+  "id": 1480,
+  "name": "George Mason University",
+  "category": "Academic",
+  "notes": "Virginia public research university (est. 1972) with significant AI research infrastructure. Key AI centers: Mason Autonomy and Robotics Center (MARC) for autonomous systems and responsible AI; Center for Mathematics and Artificial Intelligence (CMAI) for applied math/AI research funded by NSF, DOE,",
+  "imp": 1
+ },
+ {
+  "id": 1478,
+  "name": "The Leadership Conference on Civil and Human Rights",
+  "category": "Ethics/Bias/Rights",
+  "notes": "America's oldest and largest civil rights coalition (240+ member organizations including ACLU, NAACP LDF, Sierra Club). Launched the Center for Civil Rights and Technology in 2023 focused on AI policy impacts on civil and human rights. Published an Innovation Framework guiding responsible AI investm",
+  "imp": 3
+ },
+ {
+  "id": 1351,
+  "name": "Eleos AI",
+  "category": "AI Safety/Alignment",
+  "notes": "Nonprofit research org focused on AI welfare, consciousness, and moral patienthood. Co-founded by Kyle Fish, Robert Long, Kathleen Finlinson. Published landmark report \"Taking AI Welfare Seriously.\" Commended Anthropic's model welfare efforts. Five research priorities: welfare interventions, human-A",
+  "imp": 3
+ }
+]

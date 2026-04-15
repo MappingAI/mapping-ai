@@ -74,17 +74,17 @@ Quick reference for all valid field values. Source of truth: `ONBOARDING.md` §R
 
 Comma-separated, pick any that apply.
 
-| Value |
-|-------|
-| Decision-maker |
-| Advisor/strategist |
-| Researcher/analyst |
-| Funder/investor |
-| Builder |
-| Organizer/advocate |
-| Narrator |
-| Implementer |
-| Connector/convener |
+| Value | Description |
+|-------|-------------|
+| Decision-maker | Legislator, regulator, or other formal authority who makes binding decisions |
+| Advisor/strategist | Shapes strategy or advises decision-makers (inside or outside government) |
+| Researcher/analyst | Produces research, analysis, or evidence on AI |
+| Funder/investor | Provides capital — grants, VC, philanthropy |
+| Builder | Develops AI systems, models, or products |
+| Organizer/advocate | Organizes campaigns, advocacy, or coalitions |
+| Narrator | Journalist, author, podcaster, or commentator shaping the public story |
+| Implementer | Executes policy or deploys AI in an operational setting |
+| Connector/convener | Hosts events, facilitates networks, bridges communities |
 
 ---
 

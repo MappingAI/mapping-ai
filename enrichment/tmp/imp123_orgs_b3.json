@@ -1,0 +1,352 @@
+[
+ {
+  "id": 1607,
+  "name": "Metaplanet",
+  "category": "VC/Capital/Philanthropy",
+  "notes": "Venture capital and philanthropy vehicle founded in 2011 by Skype co-founding engineer Jaan Tallinn, based in Tallinn, Estonia. Operates as a hybrid venture-philanthropy investing on decades-to-centuries timelines in deep tech addressing existential risks, especially advanced AI. Has invested in 184",
+  "imp": 2
+ },
+ {
+  "id": 1110,
+  "name": "Berkeley Institute for Data Science",
+  "category": "Academic",
+  "notes": "The Berkeley Institute for Data Science (BIDS) is a central hub of data-intensive research, open source software, and data science training programs at UC Berkeley that launched in 2013. BIDS is an integral part of UC Berkeley's College of Computing, Data Science, and Society (CDSS) and was made pos",
+  "imp": 3
+ },
+ {
+  "id": 1111,
+  "name": "Responsible AI Initiative",
+  "category": "AI Safety/Alignment",
+  "notes": "Multiple organizations operate under the name \"Responsible AI Initiative\" with different scopes and affiliations. The University of Utah operates the One-U Responsible AI Initiative, which aims to advance AI to achieve societal good while protecting privacy, civil rights, and civil liberties. Emory ",
+  "imp": 1
+ },
+ {
+  "id": 1112,
+  "name": "Universit\u00e9 de Montr\u00e9al",
+  "category": "Academic",
+  "notes": "Universit\u00e9 de Montr\u00e9al is a French-language institution of higher learning founded in 1878, regarded as one of the most important universities in Canada in terms of research and one of the largest by enrolment. The university has 16 faculties and two affiliated schools (Polytechnique Montr\u00e9al and HE",
+  "imp": 3
+ },
+ {
+  "id": 1550,
+  "name": "Canadian Journalism Foundation",
+  "category": "Media/Journalism",
+  "notes": "Canadian non-profit organization founded in 1990 that promotes, celebrates, and facilitates excellence in journalism. Runs annual journalism awards and fosters education, training, and research opportunities. Partner of the AI Safety Foundation (AISF). Launched the CJF-Hinton Award for Excellence in",
+  "imp": 2
+ },
+ {
+  "id": 1114,
+  "name": "Element AI",
+  "category": "VC/Capital/Philanthropy",
+  "notes": "Element AI was a Canadian multinational artificial intelligence company based in Montreal, Quebec that was founded in October 2016. The company was funded by the Government of Canada for CAD$5 million, and raised US$102 million independently, before being acquired by ServiceNow. ServiceNow announced",
+  "imp": 2
+ },
+ {
+  "id": 1116,
+  "name": "McGill University",
+  "category": "Academic",
+  "notes": "McGill University was founded in 1821 from a generous bequest by James McGill, a prominent Scottish merchant. The university offers an Applied Artificial Intelligence Minor in the Faculty of Engineering that provides foundation for applying AI techniques in various fields. McGill has several AI-rela",
+  "imp": 3
+ },
+ {
+  "id": 1117,
+  "name": "International Association for Safe and Ethical AI",
+  "category": "AI Safety/Alignment",
+  "notes": "The International Association for Safe and Ethical AI (IASEAI) is a non-profit organization founded in 2024 with headquarters in Paris, France. The organization's stated mission is to address the risks and opportunities associated with advances in artificial intelligence and to ensure that AI system",
+  "imp": 2
+ },
+ {
+  "id": 1118,
+  "name": "National Republican Senatorial Committee",
+  "category": "Political Campaign/PAC",
+  "notes": "The National Republican Senatorial Committee (NRSC) is the Republican Hill committee for the United States Senate, working to elect Republicans to the Senate. The NRSC was founded in 1916 as the Republican Senatorial Campaign Committee and was reorganized in 1948 and renamed the National Republican ",
+  "imp": 2
+ },
+ {
+  "id": 1653,
+  "name": "Greenoaks Capital",
+  "category": "VC/Capital/Philanthropy",
+  "notes": "San Francisco-based growth equity investment firm founded in 2012. Known for extremely concentrated bets (~15 companies per fund, $25-75M initial checks). Closed $2.5B Fund VI (beating $2.25B target). Led SSI $2B funding round (2025, $32B valuation) alongside a16z, Lightspeed, and DST Global. Greeno",
+  "imp": 3
+ },
+ {
+  "id": 1656,
+  "name": "University of Melbourne",
+  "category": "Academic",
+  "notes": "Major Australian research university. Home to the Centre for Artificial Intelligence and Digital Ethics (CAIDE), which builds cross-disciplinary research, teaching, policy and regulatory expertise in AI. Established Generative AI Taskforce (GAIT) in 2023 to oversee institutional response to GenAI ri",
+  "imp": 1
+ },
+ {
+  "id": 1675,
+  "name": "Charles University",
+  "category": "Academic",
+  "notes": "Largest and most renowned university in the Czech Republic, founded in 1348 (oldest university in Central Europe). Ranked in top 2% of universities worldwide. Hosts the Alignment of Complex Systems (ACS) Research Group led by Jan Kulveit, focused on AI alignment and complex systems. Faculty of Mathe",
+  "imp": 1
+ },
+ {
+  "id": 1331,
+  "name": "McGill Centre for Intelligent Machines",
+  "category": "Academic",
+  "notes": "Established in 1985 as an inter-departmental, inter-faculty research center at McGill University spanning Electrical and Computer Engineering, Mechanical Engineering, and Computer Science. One of the longest-running AI research centers in the world. Comprises ~20 professors and 150 graduate students",
+  "imp": 1
+ },
+ {
+  "id": 1447,
+  "name": "Stony Brook University",
+  "category": "Academic",
+  "notes": "SUNY flagship research university on Long Island, New York. Home to the AI Innovation Institute (AI3) directed by Lav Varshney. Participates in Empire AI \u2014 SUNY's multi-campus partnership for AI research and public-good applications. Three faculty received SUNY-IBM AI Research Alliance grants (Zadok",
+  "imp": 3
+ },
+ {
+  "id": 1391,
+  "name": "Indian Institute of Technology, Kanpur",
+  "category": "Academic",
+  "notes": "Premier Indian technical university (est. 1959). Established Wadhwani School of Advanced AI and Intelligent Systems with Department of Intelligent Systems (2025), admissions starting 2026. Hosts Sustainable Cities Centre of Excellence in AI under Ministry of Education initiative. Research partnershi",
+  "imp": 1
+ },
+ {
+  "id": 1486,
+  "name": "University of Tennessee",
+  "category": "Academic",
+  "notes": "Public flagship university in Knoxville, Tennessee. Home to the AI Tennessee Initiative \u2014 the first statewide AI initiative of its kind in the U.S., founded and directed by Lynne Parker (former White House Deputy CTO and founding NAIIO director). Launched major AI cluster hiring in Foundational AI a",
+  "imp": 3
+ },
+ {
+  "id": 1689,
+  "name": "100 Plus Capital",
+  "category": "VC/Capital/Philanthropy",
+  "notes": "Longevity-focused venture capital firm founded in 2007 by Sonia Arrison in Menlo Park, CA. Invests in companies positively impacting human longevity, both directly (anti-aging) and broadly (clean food, water). Portfolio of ~15 companies concentrated in HealthTech and Life Sciences. Arrison is also a",
+  "imp": 2
+ },
+ {
+  "id": 1667,
+  "name": "Wichita State University",
+  "category": "Academic",
+  "notes": "Public research university in Wichita, Kansas. Founding member of the NSF AI Institute for Foundations of Machine Learning (IFML), receiving a renewed 20 million USD grant (WSU share: 1.27 million USD) for AI research and workforce development. School of Computing conducts research in AI, statistica",
+  "imp": 1
+ },
+ {
+  "id": 1720,
+  "name": "EliseAI",
+  "category": "Deployers & Platforms",
+  "notes": "NYC-based AI company (founded 2017) building conversational AI agents for housing and healthcare. Co-founded by CEO Minna Song (MIT CS) and Tony Stoyanov. Platform automates leasing, maintenance, and resident communications for property managers. Powers ~10% of U.S. apartment market, 600+ operators ",
+  "imp": 2
+ },
+ {
+  "id": 1257,
+  "name": "Yale Center for Research Computing",
+  "category": "Infrastructure & Compute",
+  "notes": "Yale University's central HPC and research computing facility (YCRC). Part of $150M AI investment initiative. Transitioning from Yale West Campus Data Center to MGHPCC (consortium with Harvard, MIT, BU, Northeastern, UMass). New Bouchet cluster in production (~4,000 cores), expanding with 80 NVIDIA ",
+  "imp": 1
+ },
+ {
+  "id": 1312,
+  "name": "Clarifai",
+  "category": "Deployers & Platforms",
+  "notes": "Enterprise AI platform founded in 2013 by Matt Zeiler, headquartered in Washington, D.C. One of the first deep learning platforms, specializing in computer vision, NLP, and audio analysis. Core technology based on convolutional neural networks. Key government/defense work: participated in Project Ma",
+  "imp": 2
+ },
+ {
+  "id": 1542,
+  "name": "Radical AI",
+  "category": "Deployers & Platforms",
+  "notes": "NYC-based autonomous materials science discovery company founded in 2024. Uses AI to screen billions of material compositions, predict structures and properties, then synthesize and characterize candidates in a closed-loop self-driving lab. Claims 370x acceleration over traditional 15-25 year materi",
+  "imp": 2
+ },
+ {
+  "id": 1569,
+  "name": "LTFF",
+  "category": "VC/Capital/Philanthropy",
+  "notes": "Long-Term Future Fund (LTFF) \u2014 one of four funds managed by Effective Ventures under EA Funds. Supports projects working to positively influence the long-term trajectory of civilization, with AI safety/alignment research as its largest funding category (~2/3 of grants). Granted $6.67M total in 2023 ",
+  "imp": 1
+ },
+ {
+  "id": 1570,
+  "name": "SERI-MATS",
+  "category": "AI Safety/Alignment",
+  "notes": "ML Alignment & Theory Scholars (MATS, formerly SERI MATS) \u2014 independent research and educational seminar program connecting talented researchers with top AI alignment mentors. Originally ran under the Stanford Existential Risks Initiative (SERI), now independent. Three-phase structure: remote Traini",
+  "imp": 3
+ },
+ {
+  "id": 1610,
+  "name": "Elicit",
+  "category": "Deployers & Platforms",
+  "notes": "AI research assistant that uses language models to automate parts of researchers' workflows, including finding papers, extracting data, and synthesizing findings. Originally incubated at Ought (a nonprofit ML research lab), spun off as an independent public benefit corporation in September 2023. Rai",
+  "imp": 2
+ },
+ {
+  "id": 1134,
+  "name": "Massachusetts Green High Performance Computing Center",
+  "category": "Infrastructure & Compute",
+  "notes": "Intercollegiate high-performance computing facility in Holyoke, Massachusetts, jointly operated by Boston University, Harvard, MIT, Northeastern, UMass, and Yale. LEED Platinum certified; powered by Holyoke Gas & Electric with >90% carbon-free energy (>70% local hydro and solar). Hosts hundreds of t",
+  "imp": 2
+ },
+ {
+  "id": 1410,
+  "name": "The American Scholar",
+  "category": "Media/Journalism",
+  "notes": "Quarterly magazine of public affairs, literature, science, history, and culture published by Phi Beta Kappa Society since 1932. Named after Ralph Waldo Emerson's 1837 oration. Multiple National Magazine Award winner. Publishes essays, criticism, poetry, and (since 2006) fiction. Also maintains daily",
+  "imp": 2
+ },
+ {
+  "id": 1464,
+  "name": "Craig Newmark Graduate School of Journalism",
+  "category": "Media/Journalism",
+  "notes": "Public graduate journalism school at CUNY (est. 2006), the only public graduate journalism school in the northeastern U.S. Named after Craig Newmark (craigslist founder) who donated $20M (2018) and an additional $10M endowment for ethics/security center. AI relevance: runs AI Journalism Labs (5th an",
+  "imp": 2
+ },
+ {
+  "id": 1216,
+  "name": "Formation Bio",
+  "category": "Deployers & Platforms",
+  "notes": "Formation Bio is an AI-driven pharmaceutical development company that acquires clinical-stage drugs and accelerates their development using a proprietary tech platform. Its platform integrates AI-driven drug development, a clinical trial engine, and a universal data platform to automate medical writ",
+  "imp": 2
+ },
+ {
+  "id": 1462,
+  "name": "Quartz",
+  "category": "Media/Journalism",
+  "notes": "Digitally native business news outlet founded in 2012 by Atlantic Media, now owned by Redbrick (Canadian software firm). Organized around 'obsessions' rather than traditional beats. Notable for AI integration controversy: in January 2025, drew significant attention for quietly publishing AI-generate",
+  "imp": 2
+ },
+ {
+  "id": 1179,
+  "name": "Darktrace",
+  "category": "Deployers & Platforms",
+  "notes": "UK-headquartered AI cybersecurity company founded in 2013 in Cambridge. Acquired by private equity firm Thoma Bravo in October 2024 for $5.3B (previously publicly traded on London Stock Exchange FTSE100). Uses self-learning AI to detect and respond to cyber threats in real time. Published responsibl",
+  "imp": 2
+ },
+ {
+  "id": 1240,
+  "name": "Cognizant",
+  "category": "Deployers & Platforms",
+  "notes": "Cognizant is a major IT services and consulting company (NYSE: CTSH) with a significant AI practice. Positions itself as an \"AI builder\" creating full-stack AI solutions for enterprise clients. In March 2026, launched Cognizant AI Factory \u2014 an enterprise-grade multi-tenant platform powered by Dell a",
+  "imp": 2
+ },
+ {
+  "id": 1222,
+  "name": "Craig Newmark Philanthropies",
+  "category": "VC/Capital/Philanthropy",
+  "notes": "Philanthropy founded by Craigslist creator Craig Newmark, focused on cybersecurity, trustworthy journalism, voter protection, and tech safety. Committed $100M+ to a Cyber Civil Defense network. Major funder of cybersecurity infrastructure including $3.2M to IST's UnDisruptable27 initiative protectin",
+  "imp": 3
+ },
+ {
+  "id": 1241,
+  "name": "U.S. Army",
+  "category": "Government/Agency",
+  "notes": "The U.S. Army is actively integrating AI across operations as part of DoD's broader AI-first strategy. In December 2025, established a new 49B AI/ML Officer career field \u2014 the first dedicated AI career path for Army officers, with initial selections beginning January 2026. Defense Secretary Hegseth ",
+  "imp": 3
+ },
+ {
+  "id": 1243,
+  "name": "AI Fund",
+  "category": "VC/Capital/Philanthropy",
+  "notes": "AI Fund is Andrew Ng's venture studio, launched in 2018, that co-founds AI startups from scratch. Closed an oversubscribed $190M Fund II in 2025 (following $175M Fund I). Has co-founded ~35 portfolio companies including LandingAI and Workera. Corporate LPs include AES Corporation, HP Inc., Mitsui, M",
+  "imp": 3
+ },
+ {
+  "id": 1182,
+  "name": "Evolution AI",
+  "category": "Deployers & Platforms",
+  "notes": "UK-based AI document processing company founded in 2015 by Martin Goodson and Rafal Kwasny, headquartered in London (Covent Garden). Combines computer vision and NLP to extract data from financial statements, invoices, bank statements, and other documents. Received the UK Government's largest-ever g",
+  "imp": 2
+ },
+ {
+  "id": 1190,
+  "name": "Baylor College of Medicine",
+  "category": "Academic",
+  "notes": "Baylor College of Medicine is a leading academic medical center in Houston, TX. In AI policy, BCM focuses on ethical and responsible AI in healthcare through its Center for Medical Ethics and Health Policy. Co-leads the NEH-funded Center for Humanities-based Health AI Innovation (CHHAIN) with Rice U",
+  "imp": 1
+ },
+ {
+  "id": 1178,
+  "name": "University of North Carolina system",
+  "category": "Academic",
+  "notes": "Multi-campus public university system in North Carolina comprising 16 institutions and 240,000+ students. Pursuing systemwide AI integration: partnered with Google ($1B initiative across 100+ public universities) giving all students access to Gemini 2.5 Pro and Google Career Certificates. Launched a",
+  "imp": 1
+ },
+ {
+  "id": 1184,
+  "name": "Engineering and Physical Sciences Research Council",
+  "category": "Government/Agency",
+  "notes": "The Engineering and Physical Sciences Research Council (EPSRC) is the UK's main public funder for engineering and physical sciences research, operating as part of UK Research and Innovation (UKRI). Major AI funding programs: Fundamental AI Research Lab (up to \u00a340M over 5 years for novel AI research ",
+  "imp": 2
+ },
+ {
+  "id": 1213,
+  "name": "Inovia Capital",
+  "category": "VC/Capital/Philanthropy",
+  "notes": "Inovia Capital is a leading Canadian multi-stage venture capital firm managing over US$2.2B with offices in Montreal, Toronto, Calgary, San Francisco, and London. The firm actively invests in AI-native companies, with particular focus on generative AI, security, digital health, and commerce. In part",
+  "imp": 3
+ },
+ {
+  "id": 1214,
+  "name": "Khan Academy",
+  "category": "Deployers & Platforms",
+  "notes": "Khan Academy is a major nonprofit educational technology organization that has become a prominent AI deployer through Khanmigo, its AI-powered tutoring assistant built on OpenAI's GPT-4. Launched by Sal Khan, Khanmigo reached 1.4 million users by 2025, though Khan has acknowledged that for many stud",
+  "imp": 2
+ },
+ {
+  "id": 1215,
+  "name": "Ballmer Group",
+  "category": "VC/Capital/Philanthropy",
+  "notes": "The Ballmer Group is a philanthropy founded in 2015 by Steve and Connie Ballmer (Steve is the former CEO of Microsoft). In July 2025, the Ballmer Group co-launched NextLadder Ventures, a $1 billion, 15-year initiative alongside the Gates Foundation, Stand Together, and Valhalla Foundation to develop",
+  "imp": 3
+ },
+ {
+  "id": 1491,
+  "name": "ACM US Technology Policy Committee",
+  "category": "Think Tank/Policy Org",
+  "notes": "ACM's US Technology Policy Committee (USTPC), comprising 170+ members, serves as the focal point for ACM's interaction with all branches of the US government on technology policy. Has issued influential policy statements including 'Principles for Responsible Algorithmic Systems' (nine principles: le",
+  "imp": 2
+ },
+ {
+  "id": 1492,
+  "name": "Empire AI",
+  "category": "Government/Agency",
+  "notes": "New York State AI consortium launched January 2024 by Governor Kathy Hochul. Backed by $400M+ in public and private funds ($275M state investment, expanded to $500M+ total). Building state-of-the-art AI computing center on the University at Buffalo campus. Consortium of 10 member institutions: Colum",
+  "imp": 3
+ },
+ {
+  "id": 1493,
+  "name": "University at Buffalo",
+  "category": "Academic",
+  "notes": "Major SUNY research university with extensive AI research dating back decades (early handwriting recognition system saved USPS hundreds of millions). Home to the Institute for Artificial Intelligence and Data Science (IAD, est. 2021) with 200+ faculty on AI. Hosts Empire AI supercomputing center on ",
+  "imp": 1
+ },
+ {
+  "id": 1494,
+  "name": "SUNY",
+  "category": "Academic",
+  "notes": "Largest integrated public university system in the United States. Central player in New York's AI strategy as founding member of Empire AI. Key initiatives: Center for AI Responsibility and Research at SUNY Binghamton (nation's first independent AI research center at a public university, $30M gift +",
+  "imp": 1
+ },
+ {
+  "id": 1571,
+  "name": "RAND Center on AI, Security, and Technology",
+  "category": "Think Tank/Policy Org",
+  "notes": "RAND Center on AI, Security, and Technology (RAND CAST) is a research center within the RAND Corporation focused on transformative technologies and global security. Conducts policy research at the intersection of AI, cybersecurity, biotechnology, and national security. Research areas include AI and ",
+  "imp": 3
+ },
+ {
+  "id": 1176,
+  "name": "College of Connected Computing",
+  "category": "Academic",
+  "notes": "Vanderbilt University's College of Connected Computing (CCC), established March 2024, is the university's first new college since 1981. Dedicated to computer science, AI, data science, cybersecurity, cyber-physical systems/IoT, and robotics. Inaugural dean Matthew Johnson-Roberson (appointed May 202",
+  "imp": 1
+ },
+ {
+  "id": 1303,
+  "name": "Idaho National Laboratory",
+  "category": "Government/Agency",
+  "notes": "U.S. Department of Energy national laboratory leading the adaptation of AI for the nuclear energy industry. Developing AI tools to reduce costs and timeframes of designing, licensing, building, and operating nuclear facilities. Major 2025 partnerships: AWS (AI tools for nuclear projects, digital twi",
+  "imp": 2
+ },
+ {
+  "id": 1487,
+  "name": "AI Tennessee Initiative",
+  "category": "Academic",
+  "notes": "First statewide AI initiative in the U.S., launched by the University of Tennessee, Knoxville. Founded and directed by Lynne Parker, who served as White House Deputy CTO and founding director of the National AI Initiative Office (2018-2022) before returning to UT. Coordinates AI research, education,",
+  "imp": 3
+ }
+]
