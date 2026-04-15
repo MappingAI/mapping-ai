@@ -1,0 +1,1274 @@
+[
+ {
+  "id": 225,
+  "name": "Centre for the Governance of AI (GovAI)",
+  "entity_type": "organization",
+  "notes": "The Centre for the Governance of AI (GovAI) is building a global research community dedicated to helping humanity navigate the transition to a world with advanced AI. GovAI was founded at Yale University in 2016, with Prof. Allan Dafoe as its Founding Director, became an academic center at the University of Oxford in 2018 and then spun out to become a non-profit in 2021. GovAI is now led by Ben Garfinkel. The organization draws on political science, computer science, economics, law, and philosophy in its research."
+ },
+ {
+  "id": 226,
+  "name": "AI Policy Institute",
+  "entity_type": "organization",
+  "notes": "The AI Policy Institute (AIPI) is a research and advocacy non-profit dedicated to seeking political solutions to potential catastrophic risks from emerging AI technology. The organization was founded by Daniel Colson to advocate for ethical oversight of AI for mitigating potential catastrophic risks posed by AI. AIPI's mission is to channel public concern about AI into effective governance by engaging with policymakers, media, and the public to shape a future where AI is developed responsibly and transparently. The organization conducts regular polling of US voters to assess public concern about AI and monitor support for various policy proposals."
+ },
+ {
+  "id": 227,
+  "name": "Manifund",
+  "entity_type": "organization",
+  "notes": "Manifund is a platform for funding impactful projects that helps great charities get the funding they need. Manifund is a Philanthropic Fundraising Services company and is classified as a Nonprofit. The organization employs 4 people and is registered as a 501(c)3-nonprofit with EIN 88-3668801. In 2023, Manifund allocated $2m across dozens of charitable projects, primarily in AI safety and effective altruism cause areas."
+ },
+ {
+  "id": 228,
+  "name": "Americans for Responsible Innovation (ARI)",
+  "entity_type": "organization",
+  "notes": "Americans for Responsible Innovation (ARI) is a nonprofit organization dedicated to policy advocacy in the public interest, focused on emerging technologies like artificial intelligence (AI). ARI was launched on March 6, 2024, and is headquartered in Washington, D.C.. The organization has a sister organization called Center for Responsible Innovation (CRI), which is a 501(c)(3) organization that focuses on issue promotion, policy research and development, and educational programming, while ARI is a 501(c)(4) organization that focuses on lobbying, advocacy, and political activities. ARI is funded by individuals rather than industry to avoid conflicts of interest and ensure independence."
+ },
+ {
+  "id": 229,
+  "name": "Future of Life Institute",
+  "entity_type": "organization",
+  "notes": "The Future of Life Institute (FLI) is a nonprofit organization founded in March 2014 that aims to steer transformative technology towards benefiting life and away from large-scale risks, with a focus on existential risk from advanced artificial intelligence. FLI's stated mission is to steer transformative technology towards benefiting life and away from extreme large-scale risks. The organization engages in grantmaking, policy research and advocacy, and an array of education and outreach projects. FLI is officially registered in Pennsylvania, with offices in Campbell, US, and Brussels, Belgium."
+ },
+ {
+  "id": 230,
+  "name": "Centre for Long-Term Resilience",
+  "entity_type": "organization",
+  "notes": "The Centre for Long-Term Resilience (CLTR) is an independent think tank with a mission to transform global resilience to extreme risks. CLTR was set up five years ago with a vision for a safe and flourishing world with high resilience to extreme risks. They are based in the heart of Whitehall and are independent and non-partisan, ensuring that Government receives genuinely impartial thinking. Their core focus areas are AI risk, biological risk and government risk management."
+ },
+ {
+  "id": 231,
+  "name": "Center for American Progress",
+  "entity_type": "organization",
+  "notes": "The Center for American Progress is an independent, nonpartisan policy institute that is dedicated to improving the lives of all Americans through bold, progressive ideas, as well as strong leadership and concerted action. The Center for American Progress was created in 2003 as a Democratic alternative to conservative think tanks such as The Heritage Foundation and the American Enterprise Institute. As of 2025, CAP's board of directors includes Democratic politician Julian Castro, Sandler Foundation president Steve Daetz, businessman Andrew Hauptman, former Bain Capital partner Kristin Mugford, CAP founder John Podesta, billionaire hedge fund manager Donald. The president and chief executive officer of CAP is Neera Tanden, a Democratic political consultant and former government official."
+ },
+ {
+  "id": 232,
+  "name": "Senate Commerce Committee (AI jurisdiction)",
+  "entity_type": "organization",
+  "notes": "The Senate Commerce Committee on Commerce, Science, and Transportation has primary jurisdiction over artificial intelligence policy and legislation. Senator Ted Cruz (R-Texas) serves as Chairman of the committee and has convened multiple full committee hearings on AI topics, including \"Winning the AI Race: Strengthening U.S. Capabilities in Computing and Innovation\". The committee has passed bipartisan legislation including the Future of AI Innovation Act to maintain United States leadership in the global race to develop artificial intelligence and other emerging technologies. Senator Maria Cantwell (D-Wash.) serves as Ranking Member of the committee and has been actively involved in introducing AI-related legislation."
+ },
+ {
+  "id": 233,
+  "name": "Berggruen Institute",
+  "entity_type": "organization",
+  "notes": "The Berggruen Institute's mission is to develop foundational ideas and shape political, economic, and social institutions for the 21st century. The Institute brings together some of the best minds and most authoritative voices from across cultural and political boundaries to explore fundamental questions of our time. Founded in 2010, the Berggruen Institute was established by Nicolas Berggruen and Nathan Gardels after contemplating economic and political stresses caused by the global financial crisis. The Institute has centers in Los Angeles, Beijing (at Peking University), and Venice, Italy, and is developing a new Los Angeles headquarters called Monteverdi in the Santa Monica Mountains."
+ },
+ {
+  "id": 234,
+  "name": "European AI Office",
+  "entity_type": "organization",
+  "notes": "Established February 2024 within European Commission as world's first comprehensive AI regulatory body. Employs 125+ staff including technology specialists, lawyers, and economists across 6 units. Enforces EU AI Act (entered force August 2024) with phased implementation through 2027. Led by Director Lucilla Sioli, coordinates with European AI Board representing 27 member states."
+ },
+ {
+  "id": 235,
+  "name": "MIT Algorithmic Alignment Group",
+  "entity_type": "organization",
+  "notes": "Led by Assistant Professor Dylan Hadfield-Menell at MIT CSAIL. Team includes 1 postdoc, 4 PhD students, 2 Masters students, and numerous alumni. Research spans technical AI alignment, policy, and governance. 150+ publications since 2022 covering red-teaming, robustness, AI audits, and alignment frameworks. Funded by academic grants and philanthropic sources including Open Philanthropy connections."
+ },
+ {
+  "id": 236,
+  "name": "Future of Humanity Institute (closed 2024)",
+  "entity_type": "organization",
+  "notes": "Founded 2005 by Nick Bostrom, closed April 2024 due to bureaucratic disputes with Oxford. Multidisciplinary institute focusing on long-term existential risks and AI safety. Received major funding from Open Philanthropy ($2M+ grants), Elon Musk, and other tech philanthropists. Key publications include Bostrom's 'Superintelligence' and numerous policy papers on AI governance. Staff included Toby Ord, Anders Sandberg, and other prominent longtermist researchers."
+ },
+ {
+  "id": 237,
+  "name": "Transformer (newsletter)",
+  "entity_type": "organization",
+  "notes": "Founded May 2024 by Shakeel Hashim, former Economist journalist. Weekly newsletter covering AI policy and safety. Funded by Tarbell Fellowship (supported by Open Philanthropy). Grew from 1-person to 3-person newsroom by 2025. Key team includes Managing Editor Jasper Jackson, AI Reporter Celia Ford, and Opinion Editor Jamie Condliffe. Cited by major outlets including NYT, Guardian, Politico. Focuses on AI governance, frontier lab developments, and policy analysis for decision-makers."
+ },
+ {
+  "id": 238,
+  "name": "Tsinghua University (Institute for AI International Governance & Center for AI Governance)",
+  "entity_type": "organization",
+  "notes": "Two main AI governance centers: Institute for AI International Governance (I-AIIG) founded 2018, and Center for AI Governance (2024) under School of Public Policy & Management. Led by Dean Xue Lan. Hosts major international conferences, publishes policy reports, and won UNESCO-Uzbekistan AI Ethics Prize 2024. Collaborates with UN, produces Beijing AI Principles, trains next generation of AI governance researchers."
+ },
+ {
+  "id": 241,
+  "name": "Y Combinator",
+  "entity_type": "organization",
+  "notes": "Founded 2005, world's most prolific startup accelerator with 5,000+ portfolio companies valued at $1T+ collectively. Invests $500K in every company through standardized SAFE structure. Notable AI portfolio: OpenAI, Scale AI, Anthropic (indirectly). Current leadership: Garry Tan (President/CEO), Jared Friedman, Harj Taggar (Managing Partners). 92% of Fall 2025 batch (155+ companies) incorporated AI. Pioneered 'AI-native agencies' thesis breaking traditional VC rule against services businesses."
+ },
+ {
+  "id": 242,
+  "name": "EA Long-Term Future Fund",
+  "entity_type": "organization",
+  "notes": "Philanthropic fund making grants since 2017, originally called Far Future Fund. Has distributed over $20 million across hundreds of grants. Recent payout: $5.36M to 141 grantees (May 2023-March 2024). Fund managers include Caleb Parikh, Linchuan Zhang, Lawrence Chan, Oliver Habryka, and others with technical AI safety backgrounds. Spun out from Effective Ventures and distanced from Open Philanthropy since 2023."
+ },
+ {
+  "id": 243,
+  "name": "Thrive Capital",
+  "entity_type": "organization",
+  "notes": "Founded 2010 by Joshua Kushner, managing ~$50B in assets across multiple funds. Thrive X raised $10B in 2025/2026, largest fund yet. High-conviction strategy investing in ~12 companies annually with 'ride-or-die' approach. Major AI investments include $1B+ in OpenAI, led Isomorphic Labs $600M Series A, participated in Anthropic $3.5B round. Portfolio includes Stripe, SpaceX, Databricks, Anduril. Operates Thrive Holdings for AI-enabled services acquisitions."
+ },
+ {
+  "id": 244,
+  "name": "Fairly Trained",
+  "entity_type": "organization",
+  "notes": "Founded in 2024 by Ed Newton-Rex, former VP Audio at Stability AI who resigned over ethical concerns about copyright. Operates AI model certification program with 'Licensed Model' certification for companies that only use licensed training data. Has certified 20+ AI companies including Beatoven, Boomy, LifeScore, and Rightsify. Supported by Universal Music Group, SAG-AFTRA, Authors Guild, and Association of American Publishers. Organized 1000+ UK musician protest album 'Is This What We Want?' in 2025 against proposed UK copyright changes."
+ },
+ {
+  "id": 245,
+  "name": "Data Workers' Inquiry",
+  "entity_type": "organization",
+  "notes": "Joint project of DAIR Institute, Weizenbaum Institut, and TU Berlin, led by Dr. Milagros Miceli. Engaged 25 data workers as community researchers across Venezuela, Kenya, Syria, Brazil, Germany, and France. Developed Workers' Inquiry as Research Methodology (WIRM). Supported creation of Data Labelers Association in Kenya and testified at European Parliament, directly influencing Platform Workers' Directive. Three community researchers named to TIME 100 Most Influential People in AI."
+ },
+ {
+  "id": 246,
+  "name": "ControlAI",
+  "entity_type": "organization",
+  "notes": "Non-profit founded by Andrea Miotti, structured as not-for-profit company in UK and 501(c)(4) in US. Has briefed 150+ UK parliamentarians since 2024, with 100+ supporting their campaign statement on AI extinction risks. Uses 'Direct Institutional Plan' (DIP) approach - directly contacting lawmakers about superintelligence risks rather than traditional lobbying. Team of ~14 people including policy advisors across multiple countries. Advisors include Connor Leahy (CEO of Conjecture) and Gabriel Alfour."
+ },
+ {
+  "id": 247,
+  "name": "MIT FutureTech",
+  "entity_type": "organization",
+  "notes": "Founded 2019 by Neil Thompson, grew to 110+ researchers by 2025. Housed within MIT CSAIL and Initiative on Digital Economy. Attracted $25M+ funding from Open Philanthropy, NSF, IBM, Google, Microsoft, others. Key outputs include AI Risk Repository, computational limits research, and Moore's Law studies. Director Neil Thompson advises Congress, Federal Reserve, Pentagon on AI policy."
+ },
+ {
+  "id": 249,
+  "name": "Alex Bores campaign",
+  "entity_type": "organization",
+  "notes": "New York State Assembly Member (District 73) running for Congress in NY-12. Former Palantir engineer who left in 2019 citing opposition to ICE contracts. Authored RAISE Act requiring AI companies with $500M+ revenue to publish safety plans. Named by TIME as one of 100 most influential people in AI. Campaign has raised $234,681 as of 2026. Target of $10M+ spending by industry-backed super PAC Leading the Future opposing his pro-regulation stance."
+ },
+ {
+  "id": 250,
+  "name": "Evitable",
+  "entity_type": "organization",
+  "notes": "Founded in 2025 by AI professor David Krueger (University of Montreal/Mila). Nonprofit focused on public education and advocacy to stop AI development. Krueger previously worked at UK AI Security Institute, Google DeepMind, and co-authored the CAIS Statement on AI Risk. Currently hiring for operations, communications, and chief of staff positions. Mission statement: 'AI is not inevitable' - aimed at countering industry narrative of inevitable AI progress."
+ },
+ {
+  "id": 252,
+  "name": "Legal Advocates for Safe Science and Technology",
+  "entity_type": "organization",
+  "notes": "Founded 2024 by Tyler Whitmer, former Quinn Emanuel partner. 3-person team including Vivian Dong (Harvard Law) and Cortney Busch. Funded by philanthropists including Jaan Tallinn. Key activities: AI Safety Whistleblower Legal Defense Fund, amicus briefs in pathogen research cases, policy advocacy on OpenAI restructuring. Files impact litigation and educates courts on AI/biotech risks."
+ },
+ {
+  "id": 253,
+  "name": "Legal Safety Lab",
+  "entity_type": "organization",
+  "notes": "Founded by a litigation lawyer and judge who emphasizes that effective legislation requires continuous interpretation and refinement. Operates within the European sphere using legal advocacy to address frontier technology risks. Received $101,000 from Survival and Flourishing Fund in 2025 and $29,000 in 2024. Partners with AIWI and other organizations on whistleblower policy transparency campaigns. Quotes Richard Nixon: 'Mankind already carries in its own hands too many of the seeds of its own destruction.'"
+ },
+ {
+  "id": 254,
+  "name": "Stop AI",
+  "entity_type": "organization",
+  "notes": "Founded 2024 by Sam Kirchner and Guido Reichstadter after splitting from PauseAI over tactical disagreements. Known for confrontational civil disobedience including chaining OpenAI office doors shut (February arrests) and barricading company gates. Organization expelled founder Kirchner in November 2024 after alleged violent threats against OpenAI employees. Now led by Matthew Hall ('Yakko'), shifting toward less confrontational messaging while maintaining commitment to stopping AGI development."
+ },
+ {
+  "id": 255,
+  "name": "Survival and Flourishing Fund",
+  "entity_type": "organization",
+  "notes": "Founded 2019, evolved from Berkeley Existential Risk Initiative. Distributed $152MM total, $34.33M in 2025 alone. Primary funder is Jaan Tallinn (Skype co-founder, ~$900M net worth). Uses unique 'S-process' algorithmic grant allocation with 6-12 independent recommenders. Second-largest AI safety funder after Open Philanthropy. Key programs include S-Process grants, Speculation Grants, and new Matching Pledge Program."
+ },
+ {
+  "id": 256,
+  "name": "Buddhism & AI Initiative",
+  "entity_type": "organization",
+  "notes": "Founded 2025 as nonprofit with 5-person core team. Led by Chris Scammell (former COO of Conjecture AI safety company), Peter Hershock (intercultural philosopher), Alex Sarkissian (Buddhist chaplain), and Ryan Stagg (former Mind & Life Institute). Funded by Future of Life Institute and Survival and Flourishing Fund. Has interviewed 150+ Buddhist teachers and technologists, mapping Buddhism-AI intersections across six domains including AI governance, technical alignment research inspired by Buddhist principles, and community education."
+ },
+ {
+  "id": 257,
+  "name": "Astera Neuro & AGI",
+  "entity_type": "organization",
+  "notes": "Part of Astera Institute (founded 2020), with over $1 billion committed over the coming decade to neuro-inspired AGI research. Led by Dileep George (Head of AI, ex-DeepMind) and Doris Tsao (Chief Scientist). Three complementary research programs: Neuroscience, Neuro-AI, and AI Safety including Simplex project. Committed to open science approach and alternative to transformer scaling paradigm."
+ },
+ {
+  "id": 258,
+  "name": "High Impact Professionals",
+  "entity_type": "organization",
+  "notes": "Founded as career transition organization for experienced professionals seeking high-impact roles. Runs 6-week Impact Accelerator Program and maintains Talent Directory with 4,500+ professionals. In 2024 facilitated 20+ career transitions and inspired 20 effective giving pledges, generating estimated $1M+ counterfactual impact. Executive Director Nina Friedrich, co-founder Devon Fritz. Funded by Open Philanthropy/Coefficient Giving. Current 3-person team with runway through February 2025."
+ },
+ {
+  "id": 259,
+  "name": "Upgradable",
+  "entity_type": "organization",
+  "notes": "Nonprofit organization helping existential safety advocates systematically optimize their lives and work through 'Upgrade Programs' (UPs). Offers coaching, consulting, and life optimization services specifically targeting AI safety researchers, entrepreneurs, and advocates. Team has built 25+ organizations operating 200+ years cumulatively, including Effective Altruism Global and EA Ventures (advocating AI safety since 2015). Provides startup templates, organizational support, and personal optimization across productivity, health, and effectiveness domains."
+ },
+ {
+  "id": 260,
+  "name": "Arbital",
+  "entity_type": "organization",
+  "notes": "Founded 2015 by Alexei Andreev, shut down 2017-2018. Wiki-style platform for AI alignment explanations, primarily written by Eliezer Yudkowsky and other MIRI-affiliated researchers. Funded by MIRI and other EA donors. Featured foundational concepts, open problems, and proposed solutions in AI safety. Software and IP transferred to MIRI after shutdown. Separate from Arbital Health (healthcare company founded 2023)."
+ },
+ {
+  "id": 261,
+  "name": "John Wentworth",
+  "entity_type": "person",
+  "notes": "Independent alignment researcher working on selection theorems, abstraction, and agency since ~2017. Previously worked in biology and economics. Mentors researchers through MATS program. Has received funding from LTFF ($50k grants), focuses on 'thermometer of abstraction' vision. Four-step alignment plan: sort out agency confusions, ambitious value learning, iterate, profit. Estimates 10-15 years needed for foundational work."
+ },
+ {
+  "id": 262,
+  "name": "Orthogonal",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Formal alignment organization led by Tamsin Leake, focused on agent foundations. Also has a public Discord server."
+ },
+ {
+  "id": 263,
+  "name": "Team Shard",
+  "entity_type": "organization",
+  "notes": "Small independent research group led by Alex Turner (Google DeepMind) and Quintin Pope. Operates as a MATS (Machine Learning for Alignment Theory Scholars) mentorship stream. Developed shard theory of human values and pioneered steering vectors technique for LLMs. Key technical contributions include gradient routing, unsupervised capability elicitation, and robust unlearning methods. Publishes primarily on LessWrong and Alignment Forum."
+ },
+ {
+  "id": 264,
+  "name": "Frontier AI Safety Research",
+  "entity_type": "organization",
+  "notes": "Argentine nonprofit research organization conducting theoretical and empirical research on frontier AI safety. Listed on AISafety.com map. Appears to be part of the broader AI safety research ecosystem, though limited public information is available about specific founding details, team size, or major publications."
+ },
+ {
+  "id": 265,
+  "name": "Aligned AI",
+  "entity_type": "organization",
+  "notes": "Founded 2022 by Rebecca Gorman and Dr. Stuart Armstrong (formerly Oxford's Future of Humanity Institute). 7 employees, raised $1.1M pre-seed funding in July 2022. Key innovation: Algorithm for Concept Extrapolation (ACE) that enables AI to generalize beyond training data. Published research on AI chaperones to prevent chatbot abuse and emergent misalignment in GPT-4o. Company charter includes mission-lock clause preventing capability increases without safety improvements."
+ },
+ {
+  "id": 266,
+  "name": "The Navigation Fund",
+  "entity_type": "organization",
+  "notes": "Founded 2023 by crypto billionaire Jed McCaleb ($3B net worth) and Seemay Chou (Arcadia Science CEO). $1.3 billion endowment, grew from $4.1M grants (2023) to $36.8M (2024). Owns 75% stake in Voltage Park ($883M valuation, 35,000+ Nvidia GPUs). Five focus areas: open science, farm animal welfare, criminal justice, climate, digital sentience. President David Coman-Hidy (former Humane League). Public charity structure accepts outside donations."
+ },
+ {
+  "id": 267,
+  "name": "AI Alignment Foundation",
+  "entity_type": "organization",
+  "notes": "Philanthropic foundation funding neglected approaches to AI alignment through grants and fiscal sponsorship to independent researchers, educational programs, and engineers developing mechanistic interpretability tools. Conducts original research on AI introspection and self-steering. Has published work on teaching AI to read its own mind and AI resistance to steering. Advocates to defense agencies and government leaders on AI safety policy."
+ },
+ {
+  "id": 268,
+  "name": "American Federation of Teachers",
+  "entity_type": "organization",
+  "notes": "Founded 1916, represents 1.8 million educators and public workers. Launched $23M National Academy for AI Instruction (2025) with Microsoft, OpenAI, and Anthropic. Published 'Commonsense Guardrails for Using Advanced Technology in Schools' and secured first K-12 AI contract language in St. Paul. President: Randi Weingarten."
+ },
+ {
+  "id": 269,
+  "name": "Contramont Research",
+  "entity_type": "organization",
+  "notes": "Founded by MATS alumni, small AI safety research lab focusing on empirical research. Key publication: 'Unelicitable Backdoors in Language Models via Cryptographic Transformer Circuits' presented at NeurIPS. Current projects include LM backdoors, real-world evals, and scalable oversight. Listed in academic paper as affiliated with San Francisco, CA. Part of the MATS alumni network of AI safety organizations."
+ },
+ {
+  "id": 270,
+  "name": "PauseAI",
+  "entity_type": "organization",
+  "notes": "Founded May 2023 by Joep Meindertsma in Netherlands. Global grassroots movement with 600+ members, chapters in 13+ countries including PauseAI US (501c3). Recent funding from Future of Life Institute. Organized protests at Google DeepMind, OpenAI, AI Safety Summits. Claims 80% public support for AI pause based on polling. Hiring policy directors and chapter leads as of 2025."
+ },
+ {
+  "id": 271,
+  "name": "Transluce",
+  "entity_type": "organization",
+  "notes": "Founded October 2024 as 501(c)(3) nonprofit by Jacob Steinhardt and Sarah Schwettmann. 16 employees. Seeking $11M fundraising round. Develops open-source tools including Docent agent evaluation platform, PRBO reinforcement learning method, and Predictive Concept Decoders. Used by 25+ organizations including Anthropic, DeepMind, METR. Conducted high-impact red-teaming of OpenAI's o3 model. Established AI Evaluator Forum and serves as contractor to EU AI Office."
+ },
+ {
+  "id": 272,
+  "name": "Palisade Research",
+  "entity_type": "organization",
+  "notes": "Founded 2023 by Jeffrey Ladish (former Anthropic security lead). ~10 employees across distributed global team. Funded by Survival and Flourishing Fund with $1.1M matching campaign. Notable research on shutdown resistance in OpenAI's o1/o3 models, autonomous hacking capabilities, and LLM honeypots. Work cited by members of Congress and covered in WSJ, MIT Tech Review, BBC. Regularly briefs White House, DoD, and Congressional offices on AI risks."
+ },
+ {
+  "id": 273,
+  "name": "EleutherAI",
+  "entity_type": "organization",
+  "notes": "Founded 2020 as 501(c)(3) nonprofit. 27 employees globally. Known for open-source models including GPT-NeoX and Pythia series. Evolved from general open-source AI research to focused alignment work. Leadership transitioned to full-time alignment research at Conjecture and OpenAI. Operates primarily through Discord server for research coordination. Partners with national labs and government agencies on AI applications."
+ },
+ {
+  "id": 274,
+  "name": "Center for Long-Term Cybersecurity",
+  "entity_type": "organization",
+  "notes": "Founded 2015 at UC Berkeley School of Information. Houses the AI Security Initiative (AISI) which develops risk management standards and evaluation frameworks. Key outputs include AI Risk Management Standards Profile for General-Purpose AI, Agentic AI Risk Management Profile, and research on intolerable risk thresholds. Funded by Hewlett Foundation, Open Philanthropy, Future of Life Institute, and tech companies. Runs AI Policy Hub training program for graduate students. Partners with NIST on AI risk management frameworks."
+ },
+ {
+  "id": 275,
+  "name": "Harmony Intelligence",
+  "entity_type": "organization",
+  "notes": "Founded 2023 by Alex Browne and Soroush J. Pour. Raised $3M seed funding in March 2025 led by Airtree Ventures with 30+ investors including Eric Ries. ~5 employees. Published peer-reviewed AI safety research including 'Scalable and Transferable Black-Box Jailbreaks for Language Models via Persona Modulation'. Conducts model evaluations and red-teaming for top AI labs and governments including Australian government AI safety evaluations. Building defensive cybersecurity products using AI agents."
+ },
+ {
+  "id": 276,
+  "name": "TIME Magazine",
+  "entity_type": "organization",
+  "notes": "Founded 1923. Launched TIME AI Agent in November 2025 - an AI-powered platform built with Scale AI for interactive journalism. Key AI reporters include Andrew R. Chow, Billy Perrigo, Harry Booth, and Tharin Pillay. Named 'Architects of AI' as 2025 Person of the Year. Has licensing agreement with OpenAI for archive access. Major cover stories include 'The People vs. AI' (Feb 2026) and extensive Anthropic coverage."
+ },
+ {
+  "id": 277,
+  "name": "Transformative Futures Institute",
+  "entity_type": "organization",
+  "notes": "501(c)(3) nonprofit research organization. Executive Director Ross Gruetzemacher is Assistant Professor at Wichita State University and Research Affiliate at Cambridge's Centre for the Study of Existential Risk. Specializes in underutilized foresight techniques including wargaming (Intelligence Rising simulation game), horizon scanning, and agent-based modeling. Disseminates research directly to DC policymakers and through academic publishing. Co-signed congressional letter supporting NIST AI Safety Institute funding in 2024."
+ },
+ {
+  "id": 278,
+  "name": "AI Risk Mitigation Fund",
+  "entity_type": "organization",
+  "notes": "Launched December 2023 as spinoff from Long-Term Future Fund. Led by Thomas Larsen with team of AI safety researchers and experienced grantmakers. Previously made $20+ million in grants under LTFF. Focus areas include technical AI alignment research, AI policy, and building research capacity. Past grants include $530K from SFF in 2024. Grantmaking process uses -5 to +5 scoring system with funding threshold around 2.5-3.0."
+ },
+ {
+  "id": 280,
+  "name": "Astralis Foundation",
+  "entity_type": "organization",
+  "notes": "European-based multi-donor foundation with $25M annual giving capacity. Raised >$20M from 15 donors, deployed to 14 organizations. Key initiative is $5.8M Shared Horizons Fund for international AI governance from 5 donors to 11 organizations. Leadership includes CEO Jona Glade and President Vilhelm Skoglund. Maintains strict donation acceptance policy excluding AI company leaders and government funding to preserve independence."
+ },
+ {
+  "id": 281,
+  "name": "EA Infrastructure Fund",
+  "entity_type": "organization",
+  "notes": "Founded ~2017, part of EA Funds managed by Effective Ventures. Has distributed $18.9M+ since 2020 across 499 grants. Focuses on 'principles-first EA' supporting cause prioritization research, epistemic infrastructure, and EA community building. Fund managers include Harri Besceli, Jamie Harris, with advisors like Jonas Vollmer and Catherine Low. Recent grants include $168K to Rethink Priorities for cross-cause cost-effectiveness modeling."
+ },
+ {
+  "id": 283,
+  "name": "Giving What We Can",
+  "entity_type": "organization",
+  "notes": "Founded 2009 by Toby Ord and William MacAskill. Community of 10,000+ pledgers who commit to donate 10% of income to effective charities. Annual revenue $3.2M, 36 employees. Has facilitated over $500M in total donations across causes including AI safety through recommended funds like EA Funds Long-Term Future Fund and Longview's Emerging Challenges Fund. BHAG goal: 1M pledgers donating $3B annually by 2040."
+ },
+ {
+  "id": 284,
+  "name": "Long-Term Future Fund",
+  "entity_type": "organization",
+  "notes": "Founded 2017 as part of EA Funds program. Has distributed over $50M across 1,500+ grants since inception. Recent funding: $5.36M distributed May 2023-March 2024 across 141 grants with 19.3% acceptance rate. Fund managers include Caleb Parikh (chair), Linchuan Zhang, Oliver Habryka, Lawrence Chan. Makes primarily small grants (<$100k) to individuals and early-stage projects in AI safety, biosecurity, and longtermist research."
+ },
+ {
+  "id": 286,
+  "name": "Halcyon Futures",
+  "entity_type": "organization",
+  "notes": "Founded 2023 by Mike McCormick (former GPV partner). Dual structure: Halcyon Futures (nonprofit making grants and career transition support) and Halcyon Ventures (VC arm). Recent $4.2M pre-seed raise (Jan 2026). Portfolio includes Goodfire, AIUC, Asymmetric Security, Confident Security. Has helped portfolio companies raise $300M+ in follow-on funding. Publishes quarterly AIUC-1 AI safety standard."
+ },
+ {
+  "id": 287,
+  "name": "Collective Action for Existential Safety (CAES)",
+  "entity_type": "organization",
+  "notes": "Initiative of the Center for Existential Safety, a new nonprofit being formed in the US as of February 2025. Led by James Norris who has '26+ years' of preparation and holds 'short timelines and high p(doom)' views. Offers action lists for individuals/orgs/nations, hosts coordination calls for organization leaders and frontier AI developers. Currently fundraising and recruiting co-founders, C-suite executives, and volunteers. Maintains Discord community and runs existential safety pledge campaigns."
+ },
+ {
+  "id": 288,
+  "name": "Science of Trustworthy AI (Schmidt Sciences)",
+  "entity_type": "organization",
+  "notes": "Major philanthropic program within Schmidt Sciences (founded 2024) by Eric and Wendy Schmidt. Offers grants up to $5M+ for 1-3 year projects across two tiers. Features advisory board including Percy Liang, Ajeya Cotra, and others. Provides compute resources, API credits, and engineering support. 2026 RFP deadline May 17, with emphasis on academic and nonprofit researchers addressing foundational AI safety science."
+ },
+ {
+  "id": 289,
+  "name": "Explainable",
+  "entity_type": "organization",
+  "notes": "Media organization focused on translating AI developments into accessible stories for public understanding. Mission is 'empowering organizations, researchers, and creators to translate the future of AI into stories the world understands.' Very limited public information available about team size, funding, or specific outputs. Appears to be primarily a storytelling/communication platform rather than a technical research organization."
+ },
+ {
+  "id": 290,
+  "name": "AI Governance & Safety Canada",
+  "entity_type": "organization",
+  "notes": "Founded 2022, nonpartisan nonprofit with 15 employees (+50% YoY growth). Executive Director Wyatt Tessari L'Alli\u00e9 has testified before Canadian parliamentary committees (ETHI, SRSR) on AI regulation. Key publication: 'Preparing for the AI Crisis: A Plan for Canada' (October 2025) white paper. Board member Evan R. Murphy also serves at UC Berkeley's AI Security Initiative. Produces policy recommendations, legislative submissions, and government briefings."
+ },
+ {
+  "id": 291,
+  "name": "Center for Law & AI Risk",
+  "entity_type": "organization",
+  "notes": "Academic research center co-directed by Yonathan Arbel (University of Alabama) and Peter Salib (University of Houston). Small organization with ~2 people. Publishes legal scholarship on AI safety law, including pioneering work on AI agent identification and liability ('How to Count AIs' paper). Hosts academic retreats and workshops. Focuses on building field of legal scholars working on catastrophic AI risk reduction through law."
+ },
+ {
+  "id": 293,
+  "name": "Centre for Future Generations",
+  "entity_type": "organization",
+  "notes": "Founded 2023 by tech entrepreneur Steven Schuurman and social entrepreneur Laurens de Groot. Staff of 27 people with 41.9% YoY growth. Entirely funded by philanthropy including Dreamery Foundation, Tanka Foundation, and Powoki Foundation. Key publications include 'Advanced AI: Possible Futures' scenario analysis, EU AI Act policy recommendations, and 'Strategic Innovation for European Security' project. Provides policy submissions to European Commission on AI governance and digital strategy."
+ },
+ {
+  "id": 294,
+  "name": "Good Ancestors",
+  "entity_type": "organization",
+  "notes": "Founded 2022 as Australian charity dedicated to long-term future of humanity. Small team led by CEO Greg Sadler (15 years public service experience). Funded by individual donors, US/European foundations, and government research contracts. Key outputs include AI Legislation Stress Test (2025) engaging 64 experts, Australia AI Policy White Paper 2025-2028, and parliamentary submissions. Coordinates Australians for AI Safety coalition. Testified before Senate Select Committee on AI."
+ },
+ {
+  "id": 295,
+  "name": "Future Matters",
+  "entity_type": "organization",
+  "notes": "Founded 2020. German nonprofit (HRB 251407 B) with U.S. 501(c)(3) equivalency. Think tank and capacity-building hub working on climate protection, AI governance, and biosecurity. Coordinated messaging for 20 AI safety organizations at UK AI Safety Summit 2023. Provides strategy consulting, policy prioritization research, and training services. Client rating of 8.4/10 for AI governance consulting services."
+ },
+ {
+  "id": 296,
+  "name": "The AI Policy Network",
+  "entity_type": "organization",
+  "notes": "Founded as 501(c)(4) advocacy organization led by Executive Director Daniel Colson (also founder of AI Policy Institute). Team includes former Pentagon AI Policy Director Mark Beall Jr., former congressional staff from Pelosi and Schumer offices. Submitted detailed policy recommendations to Trump administration's AI RFI in March 2025. Conducts polling research showing voter support for AI regulation in swing districts. Sister organization AI Policy Institute conducts survey research."
+ },
+ {
+  "id": 297,
+  "name": "Global AI Moratorium (GAIM)",
+  "entity_type": "organization",
+  "notes": "Advocacy organization calling for immediate global pause on frontier AI training above GPT-4 capabilities. Part of broader AI safety ecosystem alongside PauseAI and other moratorium advocates. References support from AI experts including Geoffrey Hinton, Demis Hassabis, and others. Promotes public awareness campaigns and policy advocacy for international AI restrictions."
+ },
+ {
+  "id": 298,
+  "name": "Humans in Control",
+  "entity_type": "organization",
+  "notes": "New advocacy organization listed on AISafety.com map as demanding transparency, accountability, and real safeguards against AI risks. Appears to be part of broader movement emphasizing human control over AI systems, similar to concepts being developed at institutions like TU Delft's Centre for Meaningful Human Control. Limited public information available about specific founding, team, or activities."
+ },
+ {
+  "id": 299,
+  "name": "Atlas Computing",
+  "entity_type": "organization",
+  "notes": "Founded Q4 2023 by Evan Miyazono (former Protocol Labs). Nonprofit with 3 employees, raised $935k targeting $2.5-3.5M. Operationalizes Safeguarded AI architecture, co-organizes workshops with Guaranteed Safe AI paper authors including Yoshua Bengio. Currently merging with Convergent Research while CEO remains as Metagov Research Director."
+ },
+ {
+  "id": 300,
+  "name": "Catalyze Impact",
+  "entity_type": "organization",
+  "notes": "Catalyze Impact is a non-profit organization that incubates AI safety, security, and resilience organizations. The organization has incubated approximately 15 AI safety organizations to date, with the majority raising 6 or 7 figures in funding. Catalyze operates seed funding networks including a non-profit Seed Funding Circle for donors with $15k+ annual capacity and an Investor Network for VCs and angel investors with $20k+ annual capacity."
+ },
+ {
+  "id": 301,
+  "name": "The Alliance for Secure AI Action",
+  "entity_type": "organization",
+  "notes": "Founded May 2025 as 501(c)(3) nonprofit. 8-person team led by CEO Brendan Steinhauser (former political strategist). Communications-focused organization conducting public education campaigns, hosting DC events, and media outreach to shape AI safety narrative among policymakers. Launched JobLoss.AI campaign to track AI-related unemployment and applauded Sen. Slotkin's AI Guardrails Act."
+ },
+ {
+  "id": 302,
+  "name": "Lightcone Infrastructure",
+  "entity_type": "organization",
+  "notes": "Founded ~2017 as 501c3 nonprofit. Small team of ~7 core members led by Oliver Habryka. Annual budget ~$2.7M funded by individual donors and foundations. Operates LessWrong.com (key AI safety forum), AI Alignment Forum, and Lighthaven (35,000 sq ft event campus in Berkeley). Significant influence on AI safety discourse - described as upstream of most public AI x-risk thinking. Hosts conferences, retreats, and research programs including MLAB bootcamp."
+ },
+ {
+  "id": 303,
+  "name": "Mox",
+  "entity_type": "organization",
+  "notes": "Opened February 2025 as SF's largest AI safety community space. 40,000 sq ft facility with 183 active members, 50-80 daily coworkers. Revenue ~$100k/month from memberships and offices, expenses ~$130k/month. Hosted 377 events in first year including conferences, fellowships, and policy discussions. Supported 5 major fellowships including PIBBSS, Seldon Lab accelerator batches, and self-developed Frame Fellowship. Currently fundraising $450k mainline ask, up to $1.2M stretch goal. Partners include MIRI, Redwood Research, GovAI, EPOCH. Grant funding from Craig Falls, EAIF, and Manifund totaling $800k."
+ },
+ {
+  "id": 304,
+  "name": "The Midas Project",
+  "entity_type": "organization",
+  "notes": "Founded early 2024 by Tyler Johnston as 501(c)(3) nonprofit. Small organization with mostly volunteer staff. Received $31,000 from Survival and Flourishing Fund and $35,000 Open Philanthropy grant. Key projects include The OpenAI Files investigation, Seoul Commitment Tracker monitoring AI safety promises, and Model Republic publication. Has been particularly critical of OpenAI, leading to subpoena from OpenAI alleging secret funding by Elon Musk (which Midas denies)."
+ },
+ {
+  "id": 305,
+  "name": "Rethink Wellbeing",
+  "entity_type": "organization",
+  "notes": "Founded 2022 as nonprofit mental health organization serving effective altruists and AI safety researchers. 12-person team led by Dr. Inga Grossmann. Funded by Open Philanthropy Mental Health Funding Circle and individual donors. Delivered programs to ~150 participants in 2024 including employees at AI Safety Institute, 80,000 Hours, CEA. Developing AI+ CBT Lab for Philippines deployment with $100k funding goal. Programs show 2 WELLBYs gained per participant and 6+ additional productive hours weekly."
+ },
+ {
+  "id": 306,
+  "name": "Singapore AI Safety Hub",
+  "entity_type": "organization",
+  "notes": "Founded February 2025 as a co-working, events and community space. Houses ~20 members including researchers from FAR.AI, Truthful AI, Apart Research, The Future Society, and Impact Academy. Partners with Singapore AISI on bootcamps and runs the Technical Alignment Research Accelerator (TARA) program. Published inaugural Frontier AI Trends Report evaluating 30+ frontier models. Organizes regular meetups, hackathons, and international cooperation events."
+ },
+ {
+  "id": 308,
+  "name": "Global Catastrophic Risk Institute",
+  "entity_type": "organization",
+  "notes": "Founded 2011 by Seth Baum and Tony Barrett. Currently has ~2 staff members (down from peak of 5 in 2021-2022). Cross-risk think tank working on multiple global catastrophic risks including AI, nuclear war, climate change, pandemics. Operates on 'shoestring budget', funded by individual donors like Gordon Irlam ($200k for AI work). Runs annual Advising and Collaboration Program and Fellowship Program for community building."
+ },
+ {
+  "id": 309,
+  "name": "Global Partnership on AI",
+  "entity_type": "organization",
+  "notes": "Founded June 2020 by 15 countries (now 29 members including US, EU, Japan, India). Intergovernmental initiative hosted by OECD. Four working groups: Responsible AI, Data Governance, Future of Work, Innovation & Commercialization. Produces policy guidance, safety frameworks, and coordinates international AI governance. Key projects include AI safety risk mapping, Hiroshima AI Process reporting framework, and transformative AI policy recommendations."
+ },
+ {
+  "id": 310,
+  "name": "Centre for the Study of Existential Risk (CSER)",
+  "entity_type": "organization",
+  "notes": "Founded 2012 by Lord Martin Rees, Jaan Tallinn, and Huw Price. Interdisciplinary research centre at University of Cambridge with ~38 staff. Part of Institute for Technology and Humanity. Funded by Jaan Tallinn, Matt Wage, Victoria Elenowitz, and other philanthropic sources. Key research areas include AI risks, biotechnology risks, environmental risks, and global governance. Notable publications on international AI governance and frontier model regulation."
+ },
+ {
+  "id": 311,
+  "name": "AI Safety Quest",
+  "entity_type": "organization",
+  "notes": "Founded 2023 as grassroots volunteer organization after AI Safety Support shut down. Provides 1:1 AI safety career advising calls, mentorship programs, and Quest Parties for skill development. Led by team of volunteers including Chris (IT/cybersecurity), offers navigation calls to help newcomers enter AI safety field. Organization operates entirely through volunteers and focuses on onboarding new talent to AI safety ecosystem."
+ },
+ {
+  "id": 312,
+  "name": "Rethink Priorities",
+  "entity_type": "organization",
+  "notes": "Founded 2018 by Marcus Davis and Peter Wildeford. Cross-cause research organization with ~46 employees covering AI safety, animal welfare, global health, and longtermist priorities. 2026 budget of $7.5M core/$9.3M expanded. Major funders include Open Philanthropy, Good Ventures Foundation, Silicon Valley Community Foundation. Special Projects program fiscally sponsors AI safety organizations like Apollo Research, Epoch, and Institute for AI Policy & Strategy. Launching dedicated AI Strategy team in 2026."
+ },
+ {
+  "id": 313,
+  "name": "Manifold Markets",
+  "entity_type": "organization",
+  "notes": "Founded 2021 by James Grugett and others. Raised $3M total funding including from Alameda Research. Play-money prediction market platform with 100,000+ markets covering politics, tech, AI timelines, and regulation. Uses 'mana' currency that can be donated to charity. Academic studies show play-money markets achieve accuracy within 3-5 percentage points of real-money platforms. Popular among EA/rationalist communities for forecasting practice."
+ },
+ {
+  "id": 314,
+  "name": "Odyssean Institute",
+  "entity_type": "organization",
+  "notes": "Founded 2022 by Giuseppe Dal Pra. Team of 12 researchers across 4 continents. Develops the 'Odyssean Process' combining expert horizon scanning, decision-making under deep uncertainty (DMDU), and citizen assemblies. Key projects include Global Catastrophic Risk horizon scan (2024), GRAIN resilience network, and planned AI governance citizen assembly for 2026. Collaborates with ALLFED on resilience research."
+ },
+ {
+  "id": 315,
+  "name": "AI Safety Initiative at Georgia Tech",
+  "entity_type": "organization",
+  "notes": "Founded in 2022 as student-led initiative, now employs 19 people with faculty advisors from GT's computing and engineering schools. Runs educational fellowships, technical research programs, and policy analysis. Members collaborate with major AI safety orgs including Anthropic, Center for AI Safety, METR, and RAND. Published multiple papers in top venues (ACL, ICLR) and submitted formal policy recommendations to federal agencies. Supported by Open Philanthropy and Coefficient Giving."
+ },
+ {
+  "id": 317,
+  "name": "Probably Good",
+  "entity_type": "organization",
+  "notes": "Founded as nonprofit career guidance organization, 7 employees with 57% YoY growth. Executive Director: Itamar Shatz (PhD Cambridge). Provides 1:1 career advising, job board with 1,300+ high-impact roles, fellowships, workshops. Strong focus on AI safety/governance careers, EA community connections. Revenue model through philanthropic donations."
+ },
+ {
+  "id": 318,
+  "name": "Apart Research",
+  "entity_type": "organization",
+  "notes": "Founded 2022 as remote-first AI safety organization. 25 employees globally. Runs 55+ research sprints with 6,000+ participants across 200+ locations. Programs include weekend hackathons, Studio (4-month), and Fellowship (6-month) leading to peer-reviewed publications. Notable outputs: ICLR 2025 Oral paper on AI safety evaluations, NeurIPS publications. Alumni placed at METR, Anthropic, and other AI safety organizations. Led by CEO Jaime Raldua and Research Director Jason Hoelscher-Obermaier."
+ },
+ {
+  "id": 319,
+  "name": "Cambridge Boston Alignment Initiative (CBAI)",
+  "entity_type": "organization",
+  "notes": "Founded 2022, nonprofit with 11 employees. Runs intensive 9-10 week summer and spring research fellowships with $8-10k stipends. Fiscally sponsors Harvard AISST and MIT MAIA student groups. Funded by Open Philanthropy ($475k+ grants). Director: Emre Yavuz. Mentors from Harvard, MIT, Northeastern, Anthropic, Redwood Research. Fellows have joined Goodfire, Constellation, published at NeurIPS/ICLR."
+ },
+ {
+  "id": 320,
+  "name": "Successif",
+  "entity_type": "organization",
+  "notes": "Founded by Claire Boine (formerly Pathfinder, rebranded April 2023). Career transition organization helping mid-career professionals move into AI safety and governance roles. Funded by Open Philanthropy ($778K+ in grants). Offers AI Policy Strategy Fellowship, career mentoring, and professional training. Previously supported 40+ EA and AI safety organizations. Team includes technical advisors and policy experts."
+ },
+ {
+  "id": 321,
+  "name": "Future Impact Group: Fellowship",
+  "entity_type": "organization",
+  "notes": "Founded 2023 by Suryansh Mehta and Callum Evans. 45 employees across research and operations. 12-week remote fellowship program matching postgraduate students with senior researchers. Three focus areas: AI Policy, Philosophy for Safe AI, and AI Sentience. Funded by Open Philanthropy and Longview Philanthropy. Project leads from Oxford, GovAI, DeepMind, and other leading institutions."
+ },
+ {
+  "id": 322,
+  "name": "Global Challenges Project",
+  "entity_type": "organization",
+  "notes": "Founded 2021, runs intensive 3-day residential workshops for university students exploring AI safety and biosecurity. 4-person team led by Director Liam Epstein (MA from Leverhulme Centre for Future of Intelligence). Funded by Open Philanthropy. Operates workshops globally with 20-35 attendees each. Part of Rethink Priorities Special Projects program providing operational support."
+ },
+ {
+  "id": 323,
+  "name": "Arcadia Impact",
+  "entity_type": "organization",
+  "notes": "Founded 2022 as UK charity. Runs multiple AI governance and safety programs: AI Governance Taskforce (12-week policy research program), LASR Labs (technical AI safety research), AI Safety Engineering Taskforce, and Orion AI Governance Initiative. Primary funder is Coefficient Giving (\u00a38M+ committed). Led by Joe Hardie and Erin Robertson. Partners with organizations like GovAI, UK AISI, SaferAI, and Future Society on research projects."
+ },
+ {
+  "id": 324,
+  "name": "AI Impacts",
+  "entity_type": "organization",
+  "notes": "Founded by Katja Grace, operates as research organization under MIRI umbrella. Conducted largest AI expert survey to date (2,778 researchers in 2023). Received grants from Future of Life Institute ($49,310) and Future of Humanity Institute ($8,700) in 2015. Key outputs include expert surveys on AI timelines, AI capabilities database, and empirical research on technological progress patterns. Focuses on 'answering decision-relevant questions about the future of AI' through research, wiki, and expert surveys."
+ },
+ {
+  "id": 325,
+  "name": "London AI Safety Research Labs (LASR Labs)",
+  "entity_type": "organization",
+  "notes": "13-week technical AI safety research program where participants work in teams of 3-4 supervised by experienced researchers to produce academic papers. Provides \u00a311,000 stipend. Alumni have joined UK AISI, Apollo Research, Leap Labs, and OpenAI's dangerous capabilities team. All 5 papers from Summer 2024 cohort accepted to NeurIPS workshops. Operated by Arcadia Impact charity, funded by Coefficient Giving (formerly Open Philanthropy). Supervisors from Google DeepMind, UK AISI, and top universities."
+ },
+ {
+  "id": 326,
+  "name": "Roman Yampolskiy",
+  "entity_type": "person",
+  "notes": "Tenured Associate Professor at University of Louisville, founding director of Cybersecurity Lab. Author of 100+ publications including 'Artificial Superintelligence: A Futuristic Approach' and 'AI: Unexplainable, Unpredictable, Uncontrollable'. Research funded by NSF, NSA, DHS, and FLI. Fellow at MIRI (2010), Research Advisor at MIRI (2012), AI Safety Fellow at Foresight Institute (2019). Known for extremely pessimistic AI safety positions and predicting human extinction within this century."
+ },
+ {
+  "id": 327,
+  "name": "Dylan Hadfield-Menell",
+  "entity_type": "person",
+  "notes": "Associate Professor at MIT CSAIL running the Algorithmic Alignment Group. PhD from UC Berkeley (2013-2020) advised by Stuart Russell, Pieter Abbeel, and Anca Dragan. AI2050 Early Career Fellow. Key publications include 'The Off-Switch Game', 'Cooperative Inverse Reinforcement Learning', and 'Consequences of Misaligned AI'. Research spans theoretical and empirical AI safety with focus on value alignment and human-AI interaction."
+ },
+ {
+  "id": 328,
+  "name": "Steve Byrnes's Brain-Like AGI Safety",
+  "entity_type": "organization",
+  "notes": "Individual researcher Steve Byrnes working at Astera Institute since 2021. Physics PhD turned AGI safety researcher. Published comprehensive 15-part 'Intro to Brain-Like AGI Safety' blog series. Research applies neuroscience insights to AI alignment, focusing on Learning and Steering Subsystems framework. Funded by grants and now Astera Institute. Estimates ~100-200 people globally work full-time on AGI safety."
+ },
+ {
+  "id": 329,
+  "name": "ILINA Program",
+  "entity_type": "organization",
+  "notes": "Founded 2022, African-led research program with 14 employees. Coordinates Cecil Abungu, runs Junior Research Fellowship program for talent development. Publishes research papers and policy briefs on AI governance from Global South perspectives. Recent work includes 'Assessing the Case for Africa-Centric AI Safety Evaluations' and analysis of AU Continental AI Strategy. Hosts policy engagement sessions and collaborates with international AI safety community."
+ },
+ {
+  "id": 330,
+  "name": "AI2050 (Schmidt Sciences)",
+  "entity_type": "organization",
+  "notes": "Launched in 2022 by Schmidt Sciences as a philanthropic initiative co-chaired by Eric Schmidt and James Manyika. Awards over $18M annually to researchers through fellowship program. Now has 99 fellows across 8 countries and 42 institutions in fourth cohort. Uses closed nomination process rather than open applications. Fellows have published 100+ papers in leading journals and created datasets like 'Humanity's Last Exam' AI benchmark."
+ },
+ {
+  "id": 331,
+  "name": "Formation Research",
+  "entity_type": "organization",
+  "notes": "Research organization focused on reducing lock-in risks by studying fundamental lock-in dynamics and implementing high-impact interventions. Appears to be a specialized research entity rather than a broad policy organization. Limited public information available about founding, staff size, or funding sources. Website indicates newsletter signup and mentions being 'supported by' unspecified entities."
+ },
+ {
+  "id": 332,
+  "name": "AI Safety Hub",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Supported individuals pursuing a career in AI safety by running AI Safety Hub Labs, where participants complete their first research project. Now run by LASR Labs."
+ },
+ {
+  "id": 333,
+  "name": "AI Alignment Forum",
+  "entity_type": "organization",
+  "notes": "Launched 2018 by LessWrong team as centralized hub for AI alignment research discussion. ~100 vetted members including researchers from MIRI, Anthropic, DeepMind, OpenAI, and academia. Serves as archive and library for the field with integrated karma system. Replaced MIRI's Intelligent Agent Foundations Forum. Key introductory sequences on Value Learning, Iterated Amplification, and Embedded Agency."
+ },
+ {
+  "id": 335,
+  "name": "Donations List Website",
+  "entity_type": "organization",
+  "notes": "Created 2017 by mathematician Vipul Naik with contributions from Issa Rice. Tracks $407M+ in AI safety donations (2007-2023) from major funders like Open Philanthropy ($276M), MIRI ($44M), OpenAI. Open-source database covers 875 donations across 191 organizations. Data considered preliminary until July 2026 completion target. Serves EA/rationalist communities primarily."
+ },
+ {
+  "id": 337,
+  "name": "Iliad",
+  "entity_type": "organization",
+  "notes": "Applied mathematics research nonprofit dedicated to advancing foundational alignment research. Runs research residencies (6-week programs with $6,000-$15,000 stipends), fellowships (3-month mentored research programs), and intensive courses. Partners with PIBBSS and operates at LISA in London. Funded by AISTOF. Organizes ILIAD conferences and provides research mentorship with established mathematicians and AI alignment researchers."
+ },
+ {
+  "id": 338,
+  "name": "Lightspeed Grants",
+  "entity_type": "organization",
+  "notes": "Fast-funding initiative run by Lightcone Infrastructure, primarily funded by Jaan Tallinn. Distributed $9.6M in 2023 round with grants ranging $5K-$5M. Applications processed in 14-60 days. Funded projects like Palisade Research ($401K), Center for AI Safety ($16K), and various individual researchers. Last active funding round was 2023."
+ },
+ {
+  "id": 339,
+  "name": "Preamble Windfall Foundation",
+  "entity_type": "organization",
+  "notes": "501(c)(3) founded around 2022, now defunct for unknown reasons. Founded by Jonathan Rodriguez Cefalu (Preamble Inc. founder, Stanford CS, ex-Snap). Funded research including SIMC4 wargame simulator for nuclear scenarios and AI red-teaming research. Filed Form 990-N indicating annual revenue under $50,000. Connected to broader Preamble ecosystem including commercial AI safety company Preamble Inc."
+ },
+ {
+  "id": 340,
+  "name": "Superlinear Prizes",
+  "entity_type": "organization",
+  "notes": "Decentralized bounty platform for existential risk reduction and effective altruist cause areas. Offers prize money for delivering on specific AI safety projects. Listed as no longer accepting applications as of 2026. Part of the broader effective altruism ecosystem funding AI safety research through competition-based incentives."
+ },
+ {
+  "id": 341,
+  "name": "Machine Intelligence Research Institute (MIRI)",
+  "entity_type": "organization",
+  "notes": "Founded 2000 by Eliezer Yudkowsky, 24-year history, ~20 staff. Major shift in 2023-2024 from technical research to communications and policy work. $16M reserves, historically funded by Open Philanthropy ($15.9M), Vitalik Buterin ($5.4M), Jaan Tallinn ($1.6M). Published influential works including 'AGI Ruin: A List of Lethalities.' Launched Technical Governance Team in 2024 focusing on international AI agreements and verification mechanisms. CEO Malo Bourgon took leadership in 2024."
+ },
+ {
+  "id": 344,
+  "name": "Public AI Network",
+  "entity_type": "organization",
+  "notes": "Founded 2023 as global movement and network promoting AI as public infrastructure. Maintains extensive publication database with 150+ papers, policy briefs, and research from multiple organizations. Key publications include Public AI Whitepaper (2024), policy briefs on European digital sovereignty, and proposals for public AI utilities. Affiliated researchers from institutions like Harvard, Vanderbilt, Mozilla, and various European policy organizations. Operates inference utility providing access to open-source AI models via HuggingFace."
+ },
+ {
+  "id": 345,
+  "name": "White House Office of Science and Technology Policy (OSTP)",
+  "entity_type": "organization",
+  "notes": "Led by Director Michael Kratsios under Trump administration. Coordinates AI policy across federal agencies through America's AI Action Plan (July 2025). Key initiatives include removing regulatory barriers, establishing AI procurement standards, creating federal AI framework to preempt state laws, and promoting AI adoption in government. Staff of approximately 22 people with $325M proposed budget cuts to NIST creating tension with innovation goals."
+ },
+ {
+  "id": 346,
+  "name": "Dovetail Research",
+  "entity_type": "organization",
+  "notes": "Research organization working on foundational mathematics and theory for AI safety, particularly agent foundations. Produces technical content on topics like formalizing value fragility, corrigible architectures, and how theory can contribute to AI safety through direct calculations, pointing at possibilities, providing disproofs of practicality, and qualitative behavioral descriptions. Appears to be a small, specialized theory-focused group distinct from the customer insights platform company of the same name."
+ },
+ {
+  "id": 349,
+  "name": "Center for Strategic and International Studies (CSIS)",
+  "entity_type": "organization",
+  "notes": "Center for Strategic and International Studies (CSIS) is a bipartisan Washington, D.C.-based think tank founded in 1962. One of the leading U.S. foreign-policy and national-security research institutions. On AI, CSIS houses the Wadhwani AI Center (launched 2024, directed by Gregory C. Allen) which publishes research on AI and national security, chip export controls, and U.S.-China technology competition, and produces the biweekly CSIS AI Policy Podcast."
+ },
+ {
+  "id": 350,
+  "name": "Association for Long Term Existence and Resilience (ALTER)",
+  "entity_type": "organization",
+  "notes": "Founded 2022, Israeli nonprofit with 5 staff. Funded by Open Philanthropy and Survival and Flourishing Fund. Led by David Manheim. Institutional member of US AI Safety Consortium (NIST). Key work includes AI oversight standards, biosecurity policy, and salt iodization advocacy. Publishes research on AI governance gaps and incident preparedness frameworks."
+ },
+ {
+  "id": 351,
+  "name": "80,000 Hours",
+  "entity_type": "organization",
+  "notes": "Founded 2011 by William MacAskill and Ben Todd. Career advisory nonprofit with 46 employees focusing on directing talent toward high-impact careers, especially AI safety/governance. Published extensive problem profiles on AI risks, operates job board, provides 1-on-1 career advice. Over 3,000 people report changing careers due to their guidance. Primary funder: Coefficient Giving. Part of effective altruism community."
+ },
+ {
+  "id": 352,
+  "name": "Heron AI Security Initiative",
+  "entity_type": "organization",
+  "notes": "Founded December 2024 as a non-profit AI security initiative. Team includes Ezra Hausdorff (Founder/CEO), Shanni Gurkevitch (Co-Founder), Nitzan Shulman (Head of Cyber), and advisory board with AI security experts. Funded by Coeffecient Giving. Runs events, research programs, and career guidance connecting cybersecurity professionals to high-leverage AI security opportunities. Collaborates with frontier AI companies, startups, think tanks, and policymakers to advance AI infrastructure security."
+ },
+ {
+  "id": 353,
+  "name": "Computational Rational Agents Laboratory (CORAL)",
+  "entity_type": "organization",
+  "notes": "Led by Vanessa Kosoy, fiscally sponsored by Ashgro (formerly Affiliate Learning Theoretic Employment and Resources). Works on learning theoretic research agenda for AI alignment. Received $140,000 from SFF-2025 round funded by Jaan Tallinn. Categorized as doing foundational mathematics and agent foundations work in the AI safety ecosystem."
+ },
+ {
+  "id": 354,
+  "name": "Computational and Biological Learning Lab (University of Cambridge)",
+  "entity_type": "organization",
+  "notes": "Part of University of Cambridge Department of Engineering, established research lab focused on computational neuroscience and machine learning. Contains multiple research groups including the Krueger AI Safety Lab (KASL) founded 2022. Key members include David Krueger (AI alignment researcher who worked with UK Frontier AI Taskforce), Carl Rasmussen, Adrian Weller, and other ML researchers. Conducts both biological learning research and AI safety work including alignment, interpretability, and policy engagement."
+ },
+ {
+  "id": 355,
+  "name": "Krueger AI Safety Lab (KASL)",
+  "entity_type": "organization",
+  "notes": "Founded ~2022, led by David Krueger (Assistant Professor at Cambridge). Dual affiliation with University of Cambridge and Mila (Quebec AI Institute). Team includes ~15 PhD students, postdocs, and research assistants. Key publications include 'Goal Misgeneralization in Deep Reinforcement Learning' (ICML 2022), 'Foundational Challenges in Assuring Alignment and Safety of LLMs' (2024). Runs paid AI safety internship programs. Previously based at University of Cambridge, now also affiliated with Mila."
+ },
+ {
+  "id": 356,
+  "name": "Model Evaluation & Threat Research (METR)",
+  "entity_type": "organization",
+  "notes": "Founded 2022 as ARC Evals, rebranded to METR. 36 employees including CEO Beth Barnes (named to TIME's 100 most influential people in AI 2024). Funded by The Audacious Project, Open Philanthropy, Schmidt Sciences, and other philanthropic sources - notably does not accept funding from AI companies. Partners with OpenAI, Anthropic, and other labs on pre-deployment evaluations. Key research includes 'Measuring AI Ability to Complete Long Tasks' showing exponential capability growth. Part of NIST AI Safety Institute Consortium."
+ },
+ {
+  "id": 357,
+  "name": "Quantified Uncertainty Research Institute (QURI)",
+  "entity_type": "organization",
+  "notes": "Founded 2019 as nonprofit research institute by Ozzie Gooen. Small team of ~5 full-time staff. Receives funding from Survival and Flourishing Fund ($62K in 2024), operates under Rethink Priorities fiscal sponsorship. Key projects include Squiggle probabilistic programming language, SquiggleAI, and research on AI for forecasting question resolution. Board includes AI policy experts like Abigail Olvera (Golden Gate Institute for AI)."
+ },
+ {
+  "id": 358,
+  "name": "Saving Humanity from Homo Sapiens (SHfHS)",
+  "entity_type": "organization",
+  "notes": "Small philanthropic foundation with long history in X-risk funding. Does not conduct direct research but identifies and financially supports individuals and organizations working on existential risk reduction. Part of broader AI safety funding ecosystem alongside organizations like Coefficient Giving (formerly Open Philanthropy) and Survival and Flourishing Fund. Currently not accepting applications according to multiple sources."
+ },
+ {
+  "id": 359,
+  "name": "Beijing Institute of AI Safety and Governance (Beijing-AISI)",
+  "entity_type": "organization",
+  "notes": "Founded September 2024 with Beijing municipal government support. Led by Yi Zeng, CAS professor and UN High-Level Advisory Body on AI member. Core contributor to China AI Safety & Development Association (CnAISDA). Published AGILE Index 2025 evaluating AI governance across 40 countries. Co-organized Beijing AI Safety International Consensus with signatures from Geoffrey Hinton, Yoshua Bengio, Stuart Russell."
+ },
+ {
+  "id": 361,
+  "name": "China AI Safety & Development Association (CnAISDA)",
+  "entity_type": "organization",
+  "notes": "Launched February 2025 at Paris AI Action Summit. Network of China's leading AI institutions including Tsinghua University, Beijing Academy of AI, Shanghai AI Lab, Chinese Academy of Sciences, and China Academy of Information and Communications Technology. Claims Chinese government backing but operates as collaborative platform rather than regulatory body. Primary function is international representation and dialogue coordination rather than domestic oversight or testing."
+ },
+ {
+  "id": 362,
+  "name": "The AI Whistleblower Initiative (AIWI)",
+  "entity_type": "organization",
+  "notes": "Founded 2024 as nonprofit hosted by Whistleblower Netzwerk e.V. Staff of 7 with 200% growth. Offers 'Third Opinion' anonymous consultation service connecting AI insiders with independent experts. Launched 'Publish Your Policies' campaign with 35+ signatories demanding AI companies publish whistleblowing policies. Documented 22 whistleblower cases (6 named, 16 anonymous) in comprehensive resource. Provides legal support connections and policy advocacy in EU and US."
+ },
+ {
+  "id": 363,
+  "name": "Meridian Cambridge",
+  "entity_type": "organization",
+  "notes": "Coworking space and field-building nonprofit based in Cambridge, UK. Houses projects like CAISH and the ERA:AI Fellowship. Runs 3-12 month Visiting Researcher Programme for AI safety and governance researchers. Partners with Cambridge AI Safety Hub. Provides workspace, community, and research support including assistance with grant applications to Open Philanthropy and other funders. Contact: visitingresearchers@meridiancambridge.org"
+ },
+ {
+  "id": 364,
+  "name": "Constellation Institute",
+  "entity_type": "organization",
+  "notes": "Founded as nonprofit research center in Berkeley with 35 employees (+266% growth). Four core strategies: mobilization (placing talent), incubation (supporting new orgs), growth (helping orgs scale), and convening (facilitating coordination). Runs Astra Fellowship (3-6 month AI safety research program), incubator for AI safety startups, and visiting fellows program. Over 80% of first Astra cohort now work full-time in AI safety at organizations like Redwood Research, METR, Anthropic, OpenAI, Google DeepMind."
+ },
+ {
+  "id": 365,
+  "name": "Center for AI Risk Management & Alignment (CARMA)",
+  "entity_type": "organization",
+  "notes": "Founded as fiscally-sponsored project of Social & Environmental Entrepreneurs (501c3). 10 employees across US, UK, Finland, Kenya, Italy. Led by Richard Mallah (also Principal AI Safety Strategist at Future of Life Institute). Conducts interdisciplinary research on risk management, policy, and technical safety. Co-authored 'Intolerable Risk Threshold Recommendations for Artificial Intelligence' and 'Open Problems in Frontier AI Risk Management' papers. Mission to lower risks to humanity and biosphere from transformative AI."
+ },
+ {
+  "id": 366,
+  "name": "Alignment Research Engineer Accelerator (ARENA)",
+  "entity_type": "organization",
+  "notes": "Founded 2022, runs 4-5 week intensive ML bootcamps 2-3 times per year. Each cohort accepts ~30 participants. Funded by Coefficient Giving and Open Philanthropy ($18,800 grant). Alumni outcomes include roles at Anthropic, OpenAI, METR, UK AISI, and MATS scholarships. Based at LISA in Shoreditch, covers all participant costs including travel, accommodation, and meals."
+ },
+ {
+  "id": 369,
+  "name": "ML4Good Laboratory - New York University",
+  "entity_type": "organization",
+  "notes": "Academic research lab at NYU's Center for Urban Science and Progress, directed by Prof. Daniel B. Neill. Faculty includes experts in biostatistics, epidemiology, and applied statistics. Research applications include disease surveillance, opioid crisis response, criminal justice fairness, and urban analytics. Funded by NSF (including $1M NSF-Amazon Fairness in AI grant), collaborates with city agencies and public health organizations. Over 100 published papers on machine learning for social good applications."
+ },
+ {
+  "id": 370,
+  "name": "Talos Fellowship (Talos Network)",
+  "entity_type": "organization",
+  "notes": "Founded 2022 as EU Tech Policy Fellowship, renamed to Talos Network. Flagship 7-month program trains ~50 fellows annually in European AI governance through 8-week online curriculum, Brussels summit, and 4-6 month paid placements. 70% alumni transition rate to AI policy roles across EU AI Office, UK AISI, OECD, think tanks. Funded primarily by Coefficient Giving/Good Ventures, seeking \u20ac200k diversification funding in 2026. Managing Director: David Conrad."
+ },
+ {
+  "id": 371,
+  "name": "Arkose Labs",
+  "entity_type": "organization",
+  "notes": "Founded 2013 by Kevin Gosschalk. 250+ employees. Raised $114M+ from SoftBank Vision Fund, Microsoft M12, PayPal, Sony Innovation Fund. Commercial cybersecurity company developing fraud prevention platform 'Arkose Titan' with specialized focus on AI agent detection and classification. This appears to be a different organization from the AI safety nonprofit 'Arkose' mentioned in the original notes that closed due to lack of funding."
+ },
+ {
+  "id": 372,
+  "name": "Global Priorities Institute (University of Oxford)",
+  "entity_type": "organization",
+  "notes": "Founded 2018, closed in 2025. Was an interdisciplinary research center at Oxford conducting foundational research on global priorities and longtermism. Received $3.3M from Open Philanthropy in 2020. Notable publications include 'AI alignment vs AI ethical treatment: Ten challenges' (2024) and research on longtermism paradigm. Staff included Leopold Aschenbrenner (former OpenAI researcher who later founded $1.5B hedge fund) and Bradford Saad who co-authored key AI ethics research."
+ },
+ {
+  "id": 373,
+  "name": "Cavendish Labs",
+  "entity_type": "organization",
+  "notes": "Founded 2023, 501(c)(3) nonprofit research organization in rural Vermont. Offers fellowships for early-career researchers with $1500/month grants plus lodging. Received $88,000 from Survival and Flourishing Fund in 2023. Research community focused on AI safety and pandemic prevention, with researchers living and working together. Key publications include work on unelicitable backdoors in language models via cryptographic transformer circuits."
+ },
+ {
+  "id": 374,
+  "name": "Coordinal Research",
+  "entity_type": "organization",
+  "notes": "Founded by MATS alumni Jacques Thibodeau and Ronak Mehta (merged with Vectis AI). Nonprofit developing research automation tools and AI systems to accelerate alignment work. Secured $110k+ in seed funding through Catalyze Impact's funding circle. Currently in alpha phase with research workflow tool called 'Seed'. Part of broader trend of AI safety organizations adopting automation to compete with capabilities research pace."
+ },
+ {
+  "id": 375,
+  "name": "EquiStamp",
+  "entity_type": "organization",
+  "notes": "Founded 2023 as Public Benefit Corporation. 18 employees across 11 countries with task-based contributor network. Revenue-generating through client contracts with METR, UK AISI, Redwood Research, and EU Commission. Specializes in evaluation implementation using frameworks like Inspect. Leadership includes CEO Chris Canal, CTO Daniel O'Connell, and AI Advisor Rob Miles. Raised $400k operating capital via Manifund SAFE agreement in 2025."
+ },
+ {
+  "id": 376,
+  "name": "LawZero",
+  "entity_type": "organization",
+  "notes": "Founded June 2025 by Turing Award winner Yoshua Bengio. Nonprofit AI-safety lab launched with ~$30M in philanthropic funding from Jaan Tallinn, Eric Schmidt, Open Philanthropy, the Future of Life Institute, and others; ~15\u201330 employees at launch. Key research focus on 'Scientist AI' \u2014 non-agentic, Bayesian-inference-based systems intended to be safe-by-design and to provide trustworthy oversight of more powerful AI. Subsequently announced major Canadian government investment of over $100M."
+ },
+ {
+  "id": 377,
+  "name": "Luthien",
+  "entity_type": "organization",
+  "notes": "Founded 2025 by Jai Dhyani, senior FAANG ML engineer with decade of experience deploying AI at billion+ user scale. Non-profit organization building on Redwood Research's AI Control research. Received seed grant from AI Safety Tactical Opportunities Fund. Part of Catalyze's Winter 2024/25 London incubation cohort. Currently seeking $500K to grow Seattle team with SDEs and PM for coordination with research labs and frontier AI companies."
+ },
+ {
+  "id": 378,
+  "name": "Meaning Alignment Institute",
+  "entity_type": "organization",
+  "notes": "Founded 2023 by Joe Edelman. 30+ researcher network with 3 core team members. Funded by ARIA, OpenAI, SFF, and others. Key research areas include democratic fine-tuning (won OpenAI Democratic Inputs grant), moral graph elicitation, and 'thick models of value.' Released WiseLLaMa-8B model trained on values-based conversations. Collaborates with major AI labs on alignment research."
+ },
+ {
+  "id": 379,
+  "name": "Ought",
+  "entity_type": "organization",
+  "notes": "Founded 2016 as nonprofit research lab. ~10 person team led by Andreas Stuhlm\u00fcller and Jungwon Byun. Raised $3.8M in 2020 from Open Philanthropy ($2.6M), Paul Christiano ($900K), and others. Built Elicit AI research assistant (spun off 2022 with $9M funding). Developed Interactive Composition Explorer (ICE) for factored cognition research. Key technical focus on supervising AI reasoning processes rather than outcomes."
+ },
+ {
+  "id": 380,
+  "name": "Simplex",
+  "entity_type": "organization",
+  "notes": "Founded 2024 by Adam Shai (neuroscientist) and Paul Riechers (theoretical physicist). Small research team funded by Astera Institute. Key research: NeurIPS 2024 paper on transformer belief-state geometry, ICML 2025 work on attention mechanisms. Develops theoretical frameworks connecting next-token prediction to geometric structures in neural networks. Mentors fellows at MATS and PIBBSS programs. Hiring research scientists in Bay Area and London with $120k-200k salaries."
+ },
+ {
+  "id": 381,
+  "name": "Metaculus",
+  "entity_type": "organization",
+  "notes": "Founded 2015 as public benefit corporation. Staff of 30. Operates forecasting platform with pro forecasters and AI policy workshops. Partnership with Future of Life Institute on AI Pathways project supporting U.S. policymakers. Open Philanthropy commissioned AI progress tournament. Board member Peter Wildeford co-founded Institute for AI Policy and Strategy."
+ },
+ {
+  "id": 383,
+  "name": "AI Safety Tactical Opportunities Fund (AISTOF)",
+  "entity_type": "organization",
+  "notes": "Pooled multi-donor charitable fund managed by JueYan Zhang, former BlackRock portfolio manager and Founders Pledge investment committee chair. Raised over $10M since 2023 and committed 70+ grants. Structured for rapid deployment to capture emerging opportunities in AI safety landscape. Notable grantees include Luthien Research and other technical safety organizations. Praised by Open Philanthropy as filling important gaps in AI safety funding before major funders scaled up."
+ },
+ {
+  "id": 384,
+  "name": "An Overview of the AI Safety Funding Situation",
+  "entity_type": "organization",
+  "notes": "Comprehensive analysis published on EA Forum mapping AI safety funding ecosystem from 2022-2025. Tracks $3.9B in total funding with Safe Superintelligence raising $3B across two rounds. Documents shift from philanthropic to venture funding in AI safety space. Referenced extensively by other funders and researchers as authoritative overview of funding landscape."
+ },
+ {
+  "id": 387,
+  "name": "Longview Philanthropy",
+  "entity_type": "organization",
+  "notes": "Founded 2018 by Natalie Cargill. 30 employees, directed over $133M toward AI risk reduction as of March 2026. Manages Frontier AI Fund ($20M raised, $11.1M disbursed to 18 orgs), Digital Sentience Fund ($2.5M), and Emerging Challenges Fund. CEO Simran Dhaliwal, serves major donors giving >$100K with bespoke philanthropy strategies."
+ },
+ {
+  "id": 390,
+  "name": "Simon Institute for Longterm Governance",
+  "entity_type": "organization",
+  "notes": "Founded 2021, nonprofit think tank with 5 staff based in Geneva. Funded by Open Philanthropy and other EA-aligned donors. Specializes in international AI governance and multilateral diplomacy. Key work includes designing frameworks for UN's Independent International Scientific Panel on AI, organizing briefings for diplomats, and publishing policy recommendations for international AI summits. Named after Herbert Simon, focusing on future-oriented policymaking tools."
+ },
+ {
+  "id": 391,
+  "name": "UChicago Existential Risk Laboratory (XLab)",
+  "entity_type": "organization",
+  "notes": "Founded at University of Chicago, directed by Daniel Holz (professor of physics, astronomy, astrophysics and chairman of Bulletin of Atomic Scientists). Runs 10-week Summer Research Fellowship producing 60+ alumni since 2022 who have gone to positions at OpenAI, RAND, Google DeepMind, congressional offices, and leading PhD programs. Funded by Open Philanthropy ($301,800 in 2024). Fellows receive $10,000 stipend plus housing and compute credits."
+ },
+ {
+  "id": 392,
+  "name": "The Future Society",
+  "entity_type": "organization",
+  "notes": "Founded 2014, nonprofit with 29 employees (72% growth YoY). Funded by Patrick J. McGovern Foundation ($170K grant 2023). Key activities include organizing The Athens Roundtable on AI and the Rule of Law, participating in EU AI Act Code of Practice development, conducting global consultations for France's 2025 AI Action Summit involving 10,000+ citizens and 200+ experts. Notable reports include comprehensive analysis of AI agents governance under EU AI Act and AI red lines governance framework."
+ },
+ {
+  "id": 393,
+  "name": "Vista Institute for AI Policy",
+  "entity_type": "organization",
+  "notes": "Founded 2024 as fiscally sponsored project of Rethink Priorities (EIN 84-3896318). Staff of 6 people with 60% YoY growth. Offers virtual courses on National Security Law and AI, AI Agents and the Law, plus in-person DC workshops. Trained 100+ law and policy students, researchers, and experts in 2025. Provides fellowships for independent research and research assistant positions. Co-Director Aishwarya Saxena acknowledged in academic papers on AI governance."
+ },
+ {
+  "id": 395,
+  "name": "WhiteBox Research",
+  "entity_type": "organization",
+  "notes": "Founded August 2023 as Filipino nonprofit. Team of 3 core staff (Clark Urzo, Brian Tan, Kyle Reynoso) plus advisors Callum McDougall (Google DeepMind) and Lee Sharkey (Apollo Research). Runs 5-month AI Interpretability Fellowship program in Manila. First cohort had 13 participants, with fellows winning hackathon prizes and gaining acceptance to programs like Apart Lab. Funded by Long-Term Future Fund and Manifund ($72,490 raised). Focuses specifically on mechanistic interpretability using curriculum from ARENA program."
+ },
+ {
+  "id": 396,
+  "name": "Ashgro",
+  "entity_type": "organization",
+  "notes": "Founded 2022, 501(c)(3) nonprofit providing fiscal sponsorship to AI safety projects. Revenue of $2.1M in 2023 from major funders including Founders Pledge ($455k), Silicon Valley Community Foundation ($388k), and Effective Ventures Foundation ($150k). Sponsors projects including Orthogonal (formal alignment research), Timaeus, and various individual researchers. Enables projects to access funding and reduces administrative burden."
+ },
+ {
+  "id": 397,
+  "name": "Berkeley Existential Risk Initiative (BERI)",
+  "entity_type": "organization",
+  "notes": "Founded 2017 as 501(c)(3) nonprofit providing operational support to university existential risk research groups. 5 employees (down from previous years). Primary funders are Open Philanthropy (84% of funding since 2017) and Jaan Tallinn. Currently supports 37+ collaborations including CHAI at UC Berkeley, CSER at Cambridge, and CLTC at UC Berkeley. Provides financial management, HR, grant administration and compliance services to enable academic researchers to focus on mission-critical work. 2024 goals include launching new programs beyond current collaborations model and diversifying funding base."
+ },
+ {
+  "id": 398,
+  "name": "Good Impressions",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Marketing firm helping socially impactful projects grow, both through consulting and running full-scale campaigns."
+ },
+ {
+  "id": 399,
+  "name": "Impact Ops",
+  "entity_type": "organization",
+  "notes": "Founded 2023, 11-person team providing operations consulting to high-impact nonprofits. Fee-based business model supporting 50+ clients including many AI safety organizations. Services include finance, recruitment, entity setup, due diligence, ops audits, and systems implementation. Co-founders have Founders Pledge to donate 50%+ of proceeds to effective charities. Supports ecosystem through SparkWell nonprofit accelerator."
+ },
+ {
+  "id": 400,
+  "name": "Nonlinear",
+  "entity_type": "organization",
+  "notes": "Founded by Kat Woods and Emerson Spartz. Operates as an EA meta-organization providing funding, coaching, and career advice to reduce existential and suffering risks. Runs incubation programs (like EA hiring agency initiative) and researches talent multiplier interventions such as personal assistants, therapy, and coaching for high-impact AI safety researchers. Means-neutral approach focused on whatever most helps reduce x-risks."
+ },
+ {
+  "id": 401,
+  "name": "Pause House",
+  "entity_type": "organization",
+  "notes": "Founded October 2025 by Greg Colbourn (also founder of Centre for Enabling EA Learning & Research, formerly EA Hotel). Provides free accommodation, vegan food, and \u00a350/week stipend for people dedicating 20+ hours weekly to AI pause advocacy. Located in Blackpool, England. Connected to PauseAI movement and broader AI safety community through effective altruism networks."
+ },
+ {
+  "id": 402,
+  "name": "PEAKS",
+  "entity_type": "organization",
+  "notes": "Coworking space located at Zeughausstrasse 31, 8004 Zurich, offering public coworking on Tuesdays and Thursdays for people interested in effective altruism or AI safety. Regularly hosts events in collaboration with Zurich AI Safety and EA Zurich, including lightning talks and discussions. Provides modern facilities, meeting rooms, and a library of EA and AI safety books. Serves as a hub for independent researchers, visiting community members, and various organizations working on EA and AI safety projects."
+ },
+ {
+  "id": 403,
+  "name": "Neuronpedia",
+  "entity_type": "organization",
+  "notes": "Founded 2023 as AI safety game, pivoted to interpretability platform in 2024. Initially funded by EA fund grant. Open-sourced March 2025 with 4TB+ of interpretability datasets. Collaborates with Anthropic, Google DeepMind, EleutherAI on circuit tracing research. Provides interactive tools for sparse autoencoders, activation steering, and semantic search. Over 7,000 attribution graphs generated on platform."
+ },
+ {
+  "id": 404,
+  "name": "AI Lab Watch",
+  "entity_type": "organization",
+  "notes": "Founded and led by Zach Stein-Perlman. Maintains comprehensive scorecard evaluating major AI companies (Anthropic, OpenAI, DeepMind, Meta, xAI, Microsoft, DeepSeek) on safety practices across risk assessment, scheming prevention, safety research, and misuse prevention. Funded by philanthropists including Jaan Tallinn. Website discontinued as of September 2025 but remains as reference. Produces detailed policy analysis and company advocacy tracking."
+ },
+ {
+  "id": 405,
+  "name": "AI-Plans",
+  "entity_type": "organization",
+  "notes": "Founded by Kabir Kumar, 10-person team across 8 countries. Operates as contributable compendium ranking alignment plans by criticism scores. Runs regular hackathons including AI Alignment Evals Hackathon (Jan 2025), Critique-a-Thon (Mar 2024), and Law-a-Thon (Feb 2024). Platform allows community to add alignment plans and criticisms with voting system similar to LessWrong. Aims to identify best alignment approaches by crowdsourcing quality criticism."
+ },
+ {
+  "id": 406,
+  "name": "Median Group",
+  "entity_type": "organization",
+  "notes": "Founded early 2018 as 501(c)(3) nonprofit dedicated to global catastrophic risk research. Small team with researchers from MIRI, OpenPhil and Numerai backgrounds. Key work includes AI timeline modeling presented at CHAI and strategic research on technological progress patterns. Spent ~$0 in 2018-2019, planned ~$170k spending in 2020. Focus on technological and geopolitical changes over next century."
+ },
+ {
+  "id": 407,
+  "name": "The Compendium",
+  "entity_type": "organization",
+  "notes": "Living document published October 2024 by Connor Leahy, Gabriel Alfour, Chris Scammell, Andrea Miotti, and Adam Shimi. Comprehensive worldview document arguing AI progress is rapidly converging on AGI driven by corporate race backed by Big Tech and nations. Estimates solving alignment requires Nobel-prize-level breakthroughs, billions/trillions in investment, and decades of work. Connected to ControlAI organization for public awareness and policy advocacy."
+ },
+ {
+  "id": 408,
+  "name": "Convergence Analysis",
+  "entity_type": "organization",
+  "notes": "Founded 2017 by David Kristoffersson and Justin Shovelain, formalized as institute in 2024. Non-profit with 9-person interdisciplinary team spanning AI alignment, ethics, governance, and policy. Funded by Future of Life Institute, Open Philanthropy, and individual donors. Key programs: AI Clarity (scenario research), Governance Recommendations, and AI Awareness. Published major reports including '2024 State of AI Regulatory Landscape' and 'Analysis of Global AI Governance Strategies'. Hosted Threshold 2030 conference on AI economics. Research has influenced US BIS dual-use AI reporting requirements and EU AI Act implementation."
+ },
+ {
+  "id": 409,
+  "name": "AISafety.info",
+  "entity_type": "organization",
+  "notes": "Founded by Rob Miles (AI safety researcher and YouTuber). Maintained by global team of volunteers from various backgrounds. Operates as comprehensive FAQ and educational resource with AI safety chatbot 'Stampy'. 501(c)(3) public charity (Ashgro Inc, EIN: 88-4232889). Part of Alignment Ecosystem Development network. Funded by Long-Term Future Fund and other EA sources including $50K+ grants for distillation fellowship program."
+ },
+ {
+  "id": 410,
+  "name": "Cambridge ERA:AI Fellowship",
+  "entity_type": "organization",
+  "notes": "Founded 2021 as ERA Cambridge, non-profit fellowship program. Runs 8-10 week fully-funded research fellowships (Winter and Summer cohorts) accepting 30-35 fellows per cohort. \u00a334,125 annual salary equivalent (pro-rated), plus accommodation, meals, visa support. 38 employees, operates across 9 countries. Alumni now work at UK AI Security Institute, RAND, Oxford Martin AI Governance Initiative, and other key AI policy institutions. Partners with University of Cambridge, provides mentorship from expert network."
+ },
+ {
+  "id": 411,
+  "name": "Human-aligned AI Summer School",
+  "entity_type": "organization",
+  "notes": "Annual 4-day educational program held in Prague since at least 2022, organized by Alignment of Complex Systems research group and Center for Theoretical Study at Charles University. Led by Jan Kulveit and team. Attracts researchers, PhD students, and practitioners interested in AI alignment. Features speakers from major AI labs like DeepMind, Anthropic, and universities. Funded through EA/longtermist community channels including past Long-Term Future Fund grants."
+ },
+ {
+  "id": 413,
+  "name": "Impact Academy: Global AI Safety Fellowship",
+  "entity_type": "organization",
+  "notes": "Founded 2023 by Vilhelm Skoglund and Sebastian Schmidt. Runs 3-6 month fully-funded research fellowships placing exceptional STEM talent at leading AI safety organizations. Placement partners include UC Berkeley CHAI, Conjecture, FAR.AI, Mila-Quebec AI Institute, and UK AISI. Funded by Open Philanthropy, Charlottes och Fredriks Stiftelse (Swedish family foundation), and US private donors. Also operates Axiom Futures program focused on Indian talent development. Provides comprehensive financial packages including salary, housing, and research costs."
+ },
+ {
+  "id": 414,
+  "name": "Impact Research Groups",
+  "entity_type": "organization",
+  "notes": "8-week mentored research program for London students run by Arcadia Impact. Operates 5 research streams: AI governance, technical AI safety, global health, biosecurity, and animal welfare. Led by Alicia Pollard. Awards \u00a32,000 prize for best project. Part of broader Arcadia Impact ecosystem including LASR Labs and AI Safety Engineering Taskforce."
+ },
+ {
+  "id": 415,
+  "name": "ML Alignment & Theory Scholars (MATS)",
+  "entity_type": "organization",
+  "notes": "Founded 2021 as independent research fellowship program. 146 employees across 18 countries, led by Co-Executive Directors Ryan Kidd and Christian Smith. Runs 12-week fully-funded research fellowships connecting scholars with mentors from Anthropic, OpenAI, Google DeepMind, UK AISI, and other leading AI safety organizations. Has supported 450+ researchers with 80% of pre-2025 alumni now working in AI safety. Alumni founded organizations like Apollo Research, Leap Labs, and joined top AI safety teams. Funded by Open Philanthropy, Survival and Flourishing Fund, and other philanthropic sources."
+ },
+ {
+  "id": 416,
+  "name": "Non-Trivial",
+  "entity_type": "organization",
+  "notes": "Founded 2022 as Effective Ventures project. 8-week online fellowship for ages 14-20 tackling global challenges. Awards up to $30,000 in scholarships annually, with over $400,000 distributed since founding. Funded primarily by Open Philanthropy. Alumni include UN speakers and winners of major science competitions. 40 employees, 1,856 LinkedIn followers."
+ },
+ {
+  "id": 417,
+  "name": "Pivotal Research Fellowship",
+  "entity_type": "organization",
+  "notes": "Founded 2021, operated by Pivotal Research organization with 16 employees. 9-week in-person fellowship program hosted at London Initiative for Safe AI (LISA). 7th cohort running 2026 Q1. Fellows receive \u00a36-8k stipend plus housing/travel. Mentors from top AI safety organizations including Redwood Research, Google DeepMind, SecureBio, FAR AI. Program rated 8.7/10 by fellows with 88 Net Promoter Score. Research outputs include papers on AI liability, interpretability, safety evaluations."
+ },
+ {
+  "id": 418,
+  "name": "PIBBSS Fellowship (Principles of Intelligent Behavior in Biological and Social Systems)",
+  "entity_type": "organization",
+  "notes": "Founded 2022, operates as 501(c)(3) nonprofit. Runs 3-month summer fellowship program with ~20 fellows annually, targeting PhD/postdoc researchers from diverse fields for AI safety career transitions. Funded by SFF, LTFF, Cooperative AI Fund, Foresight Institute. Key outcomes include fellows transitioning to AI safety labs, UK AISI, and academic positions. 2024 program produced multiple publication-ready research outputs in mechanistic interpretability, cooperative AI, and formal safety methods."
+ },
+ {
+  "id": 419,
+  "name": "AI Alignment Awards",
+  "entity_type": "organization",
+  "notes": "Founded 2022 by Olivia Jimenez and Akash Wasil. Ran research contests offering up to $100,000 in prizes for solutions to AI alignment problems. Funded by Open Philanthropy, fiscally sponsored by Player's Philanthropy Fund. Final contest deadline was May 1, 2023, with judging concluding afterward. Has Discord community for participants and maintains educational resources on alignment research."
+ },
+ {
+  "id": 420,
+  "name": "AI Safety Communications Centre",
+  "entity_type": "organization",
+  "notes": "Communications organization that connected journalists to AI safety experts and resources. Received $288,000 from Open Philanthropy in 2023 for general support. Key experts include Robert Trager, Lennart Heim, and Se\u00e1n \u00d3h\u00c9igeartaigh who co-authored proposal for International AI Organization. Listed as 'no longer active' on AISafety.com map as of 2024."
+ },
+ {
+  "id": 421,
+  "name": "AI Safety Support Newsletter",
+  "entity_type": "organization",
+  "notes": "Newsletter was part of AI Safety Support (AISS), founded 2020 by Linda Linsefors and JJ Hepburn. Australian registered charity providing fiscal sponsorship, career advice, and field-building activities. Newsletter discontinued due to lack of maintainer, but parent organization continues other AI safety support activities including managing Alignment Slack and running events like Virtual AI Safety Unconference."
+ },
+ {
+  "id": 422,
+  "name": "Campaign for AI Safety",
+  "entity_type": "organization",
+  "notes": "Founded 2023 as Australian nonprofit, now merged with Existential Risk Observatory. Conducted message testing campaigns, billboard advertisements, and policy submissions to governments worldwide including UN, US, UK, EU, and Australia. Organized international protests and collaborated with PauseAI movement. Ran international law student competition to draft AI moratorium treaty. Small team of 2 employees with focus on public advocacy and policy submissions."
+ },
+ {
+  "id": 423,
+  "name": "generative.ink",
+  "entity_type": "organization",
+  "notes": "Personal research blog by janus, focusing on AI safety implications of large language models. Known for influential 'Simulators' post on LessWrong introducing new framework for understanding GPT-like systems. Last posted in 2023. Describes self as 'GPT cyborg' and conducts conceptual research on alignment challenges unique to generative models trained on self-supervised objectives."
+ },
+ {
+  "id": 424,
+  "name": "ML & AI Safety Updates",
+  "entity_type": "organization",
+  "notes": "Weekly podcast, YouTube channel and newsletter that provided updates on AI safety research and developments. Listed as 'no longer active' on AISafety.com map, discontinued due to organizational reprioritization. Was featured on the Alignment Forum and served as a media source for the AI safety community to stay informed about latest research and policy developments."
+ },
+ {
+  "id": 426,
+  "name": "Stop AGI",
+  "entity_type": "organization",
+  "notes": "Public education website focused on communicating AGI extinction risks to general audiences. Provides detailed policy proposals including global moratoriums, compute caps, and international AI safety institutions. Listed as 'no longer active' on AISafety.com map but website remains operational with recent content updates."
+ },
+ {
+  "id": 427,
+  "name": "AI Safety Awareness Project (AISAP)",
+  "entity_type": "organization",
+  "notes": "Volunteer-run nonprofit organization with 4 employees. Operates under AI Safety Awareness Foundation (also known as AISAP). Conducts workshops nationwide at libraries, universities, and community centers on AI basics, safety evaluations, policy analysis, and forecasting. Partners with Seattle Public Library and other institutions for public education programs. Featured in AISafety.com field map as advocacy organization."
+ },
+ {
+  "id": 428,
+  "name": "Advanced Research + Invention Agency (ARIA)",
+  "entity_type": "organization",
+  "notes": "UK government R&D agency established 2023 by Act of Parliament, modeled after DARPA. \u00a3800M budget over 5 years (\u00a3184M allocated 2025-26). CEO Ilan Gur, 95 employees. Eight program directors with \u00a350M+ budgets each. Major programs: Safeguarded AI (\u00a369M), Scaling Compute (\u00a350M), Precision Neurotechnologies. Portfolio includes AI hardware startups like Fractile (\u00a35M) and Callosum (partnership). Operates independently from government intervention."
+ },
+ {
+  "id": 429,
+  "name": "Institute for Law & AI (LawAI)",
+  "entity_type": "organization",
+  "notes": "Founded as independent think tank, formerly Legal Priorities Project. Staff of 40+ researchers across 12 countries, led by Founding Director Christoph Winter. Publishes working paper series via SSRN, produces policy reports and research articles on AI governance. Notable recent work includes 'Legal Alignment for Safe and Ethical AI' and 'Automated Compliance and the Regulation of AI'. Hosts workshops on law-following AI and maintains research collaborations with academic institutions."
+ },
+ {
+  "id": 431,
+  "name": "International AI Governance Alliance (IAIGA)",
+  "entity_type": "organization",
+  "notes": "Founded 2025 as initiative of Center for Existential Safety. Being incorporated as nonprofit in Geneva. Launched petition calling for supranational AI governance organization, aiming for 1M signatures. Led by James Norris who has 26+ years preparing for Singularity. Expects AI 'warning shot' or catastrophe soon. Seeks to develop vetted treaty quickly as 'Plan B' to other multilateral efforts."
+ },
+ {
+  "id": 432,
+  "name": "International Association for Safe & Ethical AI (IASEAI)",
+  "entity_type": "organization",
+  "notes": "Founded in 2017 as international nonprofit coalition, significantly expanded in 2024 with 23 employees (+350% YoY growth). Received $1.85M grant from Future of Life Institute in 2025. Hosts major annual conferences (IASEAI'25 had 700+ attendees from 65 countries, IASEAI'26 had 1300+ from 99+ countries). Advises UN, OECD, EU on AI governance and helped shape EU AI Act. Develops practical tools including AI scorecards, ethical certification programs, and Safe AI Deployment Toolkit (SAIDT). Key leaders include Stuart Russell (President) and Mark Nitzberg (Interim Executive Director)."
+ },
+ {
+  "id": 433,
+  "name": "Centre pour la S\u00e9curit\u00e9 de l'IA (CeSIA)",
+  "entity_type": "organization",
+  "notes": "Founded March 2024 by Charbel-Rapha\u00ebl S\u00e9gerie and team. ~20 employees plus volunteers. Funded by Survival and Flourishing Fund, Longview Philanthropy, Swedish foundation, Effektiv Spenden. No AI company funding to avoid conflicts. Provides Europe's first university AI safety courses at ENS Ulm/Paris-Saclay. Initiated Global Call for AI Red Lines with 300+ signatories including Nobel laureates. Co-organized symposiums with Yoshua Bengio and Stuart Russell."
+ },
+ {
+  "id": 434,
+  "name": "5050 AI (by Fifty Years)",
+  "entity_type": "organization",
+  "notes": "Free 13-week startup accelerator program run by Fifty Years VC, helping scientists and engineers build AI safety/alignment companies. 445 participants to date, launched 105 companies with 96% fundraising success rate. Mentors include OpenAI co-founder Wojciech Zaremba, former OpenAI interim CEO Emmett Shear. UK program launched in partnership with ARIA in 2025. No equity taken, entirely free program focused on commercializing AI safety research."
+ },
+ {
+  "id": 435,
+  "name": "Centre for Enabling EA Learning & Research (CEEALAR)",
+  "entity_type": "organization",
+  "notes": "Founded 2018 by Greg Colbourn, registered charity in England & Wales since 2020. Provides subsidized accommodation and workspace in Blackpool for EA researchers and entrepreneurs at \u00a3750/month. Supports ~20 residents at a time with 4-6 month average stays. 66 grantees in 2025 (+36% YoY). Notable alumni include Chris Leong (Principal Organiser for AI Safety New Zealand) and Hoagy Cunningham (Stanford Existential Risks Initiative). Formerly known as 'EA Hotel', rebranded in 2020. Currently facing \u00a3330k funding gap and needs \u00a330k for urgent roof repairs."
+ },
+ {
+  "id": 436,
+  "name": "AI Governance and Safety Institute (AIGSI)",
+  "entity_type": "organization",
+  "notes": "The AI Governance and Safety Institute (AIGSI) is a nonpartisan 501(c)(3) nonprofit organization on a mission to ensure artificial intelligence and other technologies benefit humanity and are developed safely, securely, and in alignment with human values. The organization aims to improve institutional response to the risk that future AI might cause human extinction and ensure the enormous potential benefits of AI are realized. They conduct research, engage in outreach, and educate stakeholders and the general public. The organization focuses on key technical concepts including machine learning interpretability, outer alignment, inner alignment, convergent instrumental subgoals, and advanced agents."
+ },
+ {
+  "id": 437,
+  "name": "AI Safety Asia (AISA)",
+  "entity_type": "organization",
+  "notes": "Founded 2024 by Supheakmungkol Sarin (former Google AI lead and World Economic Forum Head of Data & AI) and Edward Tsoi. Team of 13 employees across 7 countries. Has engaged 2,000+ AI governance professionals across 16 Asian countries. Co-hosted sessions at India AI Impact Summit 2026 on crisis diplomacy and contributed to International AI Safety Report 2026. Focuses on building durable governance infrastructure through regional research, structured peer learning, and implementation-oriented engagement."
+ },
+ {
+  "id": 438,
+  "name": "Athena Mentorship Program for Women (AI Alignment Research)",
+  "entity_type": "organization",
+  "notes": "Founded 2023 by Claire Short. 10-week remote mentorship program with 1-week in-person retreat. Targets women transitioning into or early in AI alignment research careers. Funded through Manifund ($20k goal reached), Lightspeed grants. Requires 20+ hours/week commitment. Provides mentorship from established AI safety researchers, weekly research talks, networking opportunities, and potential placement in research groups post-program. Has run multiple cohorts with positive participant feedback."
+ },
+ {
+  "id": 439,
+  "name": "Institute for AI Policy and Strategy (IAPS) AI Policy Fellowship",
+  "entity_type": "organization",
+  "notes": "Nonpartisan think tank producing policy research on AI implications. Fellowship program runs 3 months with $15,000-$22,000 stipends, training professionals from varied backgrounds in AI policy. Alumni have secured positions at RAND, Institute for Progress, Center for Health Security, and government agencies. Recent research includes strategic visions in AI governance and policy recommendations for the AI Action Plan. Features mentorship from leading experts and produces concrete policy outputs like briefings to government officials and international conferences."
+ },
+ {
+  "id": 440,
+  "name": "Orion AI Governance Initiative (Arcadia Impact)",
+  "entity_type": "organization",
+  "notes": "Founded 2024 as part of Arcadia Impact. UK-based talent development scheme with 3 employees. Offers 9-week AI Policy Accelerator program, mentorship scheme, and internship placements. Has trained 57 participants across programs and placed 2 people into AI policy roles at think tanks. Applications for 2026 program closed January 6, 2026. Project manager is Callum Hinchcliffe, who previously worked on AI governance research and policy."
+ },
+ {
+  "id": 441,
+  "name": "Pathfinder Fellowship (Kairos)",
+  "entity_type": "organization",
+  "notes": "Launched 2025 by Kairos, replacing Open Philanthropy's University Organizer Fellowship and Kairos's prior Fieldbuilder Support Program. Supports ~70 AI safety university groups worldwide with funding, mentorship, and resources. 12 staff across 7 countries. Funded by Open Philanthropy grant, fiscally sponsored through BERI. Provides $500+ startup funding plus ongoing support and graduate student stipends."
+ },
+ {
+  "id": 442,
+  "name": "Technical Alignment Research Accelerator (TARA)",
+  "entity_type": "organization",
+  "notes": "Founded 2024 by AI Safety Australia & New Zealand (AIS ANZ), led by Yanni Kyriacos. 14-week part-time program based on ARENA curriculum with weekly in-person Saturday sessions. Inaugural cohort targeted 25 participants across Australian cities. Funded by $14,901 grant from Ryan Kidd via Manifund. Expanding to Singapore, Manila, Tokyo, and Taipei in 2026. Program aims to develop technical talent for AI Safety Institutes and demonstrate community credibility to Australian government."
+ },
+ {
+  "id": 443,
+  "name": "Center for AI Policy (CAIP)",
+  "entity_type": "organization",
+  "notes": "Founded 2023, shut down in September 2025 due to lack of funding. Was a 501(c)(4) advocacy organization that conducted over 406 meetings with Congressional staffers, hosted 8 congressional briefings reaching 150+ staffers, and developed the 'Responsible AI Act' model legislation. Funded primarily by Survival and Flourishing Fund. Executive Director Jason Green-Lowe continues to offer legislative review services and seeks funding to revive the organization."
+ },
+ {
+  "id": 444,
+  "name": "5050",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. 12/14-week program run by Fifty Years, helping scientists and engineers build startups working on AI safety."
+ },
+ {
+  "id": 450,
+  "name": "Vector Institute",
+  "entity_type": "organization",
+  "notes": "Toronto-based nonprofit AI research institute founded in 2017, focused on machine learning and deep learning. Funded jointly by the Government of Ontario, the federal Pan-Canadian AI Strategy (CIFAR), and industry sponsors. New President & CEO Glenda Crisp appointed April 2025."
+ },
+ {
+  "id": 452,
+  "name": "Stanford HAI",
+  "entity_type": "organization",
+  "notes": "Stanford HAI (Stanford Institute for Human-Centered Artificial Intelligence) is an interdisciplinary research institute at Stanford University, founded in 2019 by Fei-Fei Li and John Etchemendy, along with James Landay and Chris Manning. The institute advances AI research, education, policy, and practice with the goal of ensuring AI benefits humanity. HAI publishes the annual AI Index Report \u2014 the most widely cited benchmark of global AI progress, tracking technical capability, industry investment, policy activity, and public opinion. It has invested over $40 million across 300+ Stanford researchers spanning computer science, social sciences, law, and medicine. In the U.S. AI policy ecosystem, HAI occupies an influential centrist position: its co-directors, fellows, and researchers regularly advise Congress, federal agencies, and international governance bodies. The institute advocates for AI that augments rather than replaces humans, and for targeted federal oversight rather than either blanket restriction or unchecked acceleration."
+ },
+ {
+  "id": 460,
+  "name": "Time (AI coverage)",
+  "entity_type": "organization",
+  "notes": "Time magazine has extensively covered AI developments, with correspondents Andrew R. Chow and Billy Perrigo leading AI coverage through their newsletter 'In the Loop'. The publication has launched TIME AI initiatives including the TIME AI Agent, developed in collaboration with Scale AI, which provides personalized, interactive journalism experiences. Time has also partnered with OpenAI to advance global AI literacy and created AI-powered features like daily audio briefs and translation services. The magazine named 'The Architects of AI' as the 2025 Person of the Year, reflecting AI's significant impact."
+ },
+ {
+  "id": 461,
+  "name": "Leverhulme Centre for the Future of Intelligence",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Interdisciplinary research center at the University of Cambridge exploring the nature, ethics, and impact of AI."
+ },
+ {
+  "id": 462,
+  "name": "Collective Action for Existential Safety",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Aiming to catalyze collective effort towards reducing existential risk, including through an extensive action list for individuals, organizations, and nations."
+ },
+ {
+  "id": 465,
+  "name": "GovAI Fellowship",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. 3-month program by the Centre for the Governance of AI, designed to help professionals transition to working on AI governance."
+ },
+ {
+  "id": 466,
+  "name": "Heron",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Working to bridge the gap between frontier AI models and the level of cybersecurity they need by connecting professionals to high-leverage opportunities in AI security."
+ },
+ {
+  "id": 470,
+  "name": "Computational Rational Agents Laboratory",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Research group studying agent foundations in order to create the mathematical tools to align the objectives of an AI with human values."
+ },
+ {
+  "id": 471,
+  "name": "Dovetail",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Research group working on foundational mathematics that provides an understanding of the nature of AI agents."
+ },
+ {
+  "id": 472,
+  "name": "Association for Long Term Existence and Resilience",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Israeli research and advocacy nonprofit working to investigate, demonstrate, and foster useful ways to safeguard and improve the future of humanity."
+ },
+ {
+  "id": 473,
+  "name": "Computational and Biological Learning Lab",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Research group using engineering approaches to understand the brain and to develop artificial learning systems."
+ },
+ {
+  "id": 474,
+  "name": "Krueger AI Safety Lab",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. AI safety research group at Mila, led by David Krueger. Previously based at the University of Cambridge."
+ },
+ {
+  "id": 475,
+  "name": "Model Evaluation & Threat Research",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Researching, developing, and running evaluations of AI capabilities, including broad autonomous capabilities and the ability of AI systems to conduct AI R&D."
+ },
+ {
+  "id": 476,
+  "name": "NYU Alignment Research Group",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Group of researchers at New York University doing empirical work with LLMs in order to address risks posed by advanced AI."
+ },
+ {
+  "id": 477,
+  "name": "Quantified Uncertainty Research Institute",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Advancing forecasting and epistemics to improve the long-term future of humanity. Conducts research and builds software."
+ },
+ {
+  "id": 478,
+  "name": "AI Safety Tactical Opportunities Fund",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Pooled multi-donor fund structured to be fast and rapidly capture emerging opportunities, including in governance, technical alignment, and evaluations. Managed by JueYan Zhang."
+ },
+ {
+  "id": 479,
+  "name": "AI2050",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Philanthropic initiative supporting researchers working on key opportunities and hard problems that are critical to get right for society to benefit from AI."
+ },
+ {
+  "id": 481,
+  "name": "Science of Trustworthy AI",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Funder housing the science-focused philanthropic efforts of Eric and Wendy Schmidt, moving large amounts of funding towards AI safety via its AI institute."
+ },
+ {
+  "id": 482,
+  "name": "Centre pour la S\u00e9curit\u00e9 de l'IA",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. French nonprofit dedicated to research, education, and awareness-raising about the most extreme risks of advanced AI."
+ },
+ {
+  "id": 483,
+  "name": "Berkeley Existential Risk Initiative",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Providing flexible funding and operations support to university research groups working on existential risk, enabling projects otherwise hindered by university administration."
+ }
+]

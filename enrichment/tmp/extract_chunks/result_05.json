@@ -1,0 +1,1274 @@
+[
+  {
+    "note_id": 1170,
+    "orgs": ["AMD", "Canva", "Siemens", "Zurich Insurance"],
+    "people": [],
+    "resources": ["Skills on the Rise 2026"]
+  },
+  {
+    "note_id": 1171,
+    "orgs": ["LaCross Institute for Ethical Artificial Intelligence in Business", "UVA School of Data Science"],
+    "people": ["Yael Grushka-Cockayne", "Raj Venkatesan"],
+    "resources": []
+  },
+  {
+    "note_id": 1172,
+    "orgs": ["DeepSeek"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1173,
+    "orgs": ["Vanderbilt University", "Coursera"],
+    "people": [],
+    "resources": ["Prompt Engineering for ChatGPT"]
+  },
+  {
+    "note_id": 1174,
+    "orgs": ["Vanderbilt University", "College of Connected Computing", "Meta", "Oracle", "Wells Fargo"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1175,
+    "orgs": ["College of Connected Computing", "Vanderbilt University"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1176,
+    "orgs": ["CMU Robotics Institute"],
+    "people": ["Matthew Johnson-Roberson"],
+    "resources": []
+  },
+  {
+    "note_id": 1177,
+    "orgs": ["Carnegie Mellon University", "University of Michigan", "University of Sydney", "UM Ford Center for Autonomous Vehicles", "Refraction AI"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1178,
+    "orgs": ["Google", "NC A&T"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1179,
+    "orgs": ["Thoma Bravo", "UCL"],
+    "people": [],
+    "resources": ["NIST AI RMF", "EU AI Act", "UK AI White Paper", "OECD AI Principles", "Cyber Security and Resilience Bill"]
+  },
+  {
+    "note_id": 1180,
+    "orgs": ["Teachers' Venture Growth", "Warburg Pincus", "Dawn Capital", "BNY", "British Patient Capital", "UK Cabinet Office", "Public Sector Fraud Authority"],
+    "people": ["Vishal Marria", "Rachel Reeves"],
+    "resources": []
+  },
+  {
+    "note_id": 1182,
+    "orgs": ["NatWest", "Deutsche Bank", "Dun & Bradstreet", "UCL"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1184,
+    "orgs": ["UK Research and Innovation", "Office for AI", "Alan Turing Institute", "UCL"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1185,
+    "orgs": ["NAIRR"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1186,
+    "orgs": ["DARPA", "Brown University"],
+    "people": ["Suresh Venkatasubramanian"],
+    "resources": []
+  },
+  {
+    "note_id": 1187,
+    "orgs": ["Harvard School of Engineering and Applied Sciences", "Brown University"],
+    "people": ["Michael Littman"],
+    "resources": []
+  },
+  {
+    "note_id": 1188,
+    "orgs": ["Anthropic", "AWS"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1190,
+    "orgs": ["Rice University", "Center for Humanities-based Health AI Innovation", "NEH"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1191,
+    "orgs": ["Google.org"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1192,
+    "orgs": [],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1193,
+    "orgs": ["Vector Institute", "University of Toronto", "Columbia Law School"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1194,
+    "orgs": [],
+    "people": ["Ali Farhadi", "Paul Allen"],
+    "resources": []
+  },
+  {
+    "note_id": 1195,
+    "orgs": ["University of Washington", "University of Illinois Urbana-Champaign", "Microsoft"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1196,
+    "orgs": ["Microsoft"],
+    "people": ["Kevin Scott"],
+    "resources": ["Blumenthal-Hawley AI framework"]
+  },
+  {
+    "note_id": 1197,
+    "orgs": ["MIT Sloan School of Management", "Brown University", "Apple University"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1198,
+    "orgs": ["MIT Initiative on the Digital Economy"],
+    "people": [],
+    "resources": ["The Hype Machine"]
+  },
+  {
+    "note_id": 1199,
+    "orgs": [],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1200,
+    "orgs": ["NBER"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1201,
+    "orgs": [],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1202,
+    "orgs": ["NeurIPS", "FAccT"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1203,
+    "orgs": ["Amazon", "Center for Humane Technology"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1204,
+    "orgs": ["Character.AI", "TechPolicy.Press"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1205,
+    "orgs": ["Planet Labs", "Berggruen Institute"],
+    "people": [],
+    "resources": ["Your Undivided Attention"]
+  },
+  {
+    "note_id": 1206,
+    "orgs": ["Tech Justice Law Project", "Character.AI", "OpenAI"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1207,
+    "orgs": ["Campaign for Accountability", "Social Media Victims Law Center", "OpenAI"],
+    "people": ["Melodi Dinçer"],
+    "resources": []
+  },
+  {
+    "note_id": 1208,
+    "orgs": ["DAIR Institute", "Google Research", "European Parliament", "NPR", "Stanford Social Innovation Review"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1209,
+    "orgs": ["IVADO", "Mila", "CFI"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1210,
+    "orgs": ["IVADO", "Mila", "Tech3Lab"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1211,
+    "orgs": ["Mila"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1212,
+    "orgs": ["Mila", "Claridge Inc.", "McGill University"],
+    "people": ["Yoshua Bengio"],
+    "resources": []
+  },
+  {
+    "note_id": 1213,
+    "orgs": ["Mila", "Venture Scientist Fund"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1214,
+    "orgs": ["OpenAI", "Microsoft", "Gates Foundation"],
+    "people": ["Sal Khan"],
+    "resources": ["Khanmigo"]
+  },
+  {
+    "note_id": 1215,
+    "orgs": ["NextLadder Ventures", "Gates Foundation", "Stand Together", "Valhalla Foundation", "Anthropic"],
+    "people": ["Steve Ballmer", "Connie Ballmer"],
+    "resources": []
+  },
+  {
+    "note_id": 1216,
+    "orgs": ["OpenAI", "Sanofi", "Emerson Collective"],
+    "people": [],
+    "resources": ["Muse"]
+  },
+  {
+    "note_id": 1217,
+    "orgs": ["Quartz", "The Wall Street Journal", "Harvard Nieman Journalism Lab"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1218,
+    "orgs": ["The Intercept", "The Wall Street Journal", "Columbia University", "NYU", "ONA"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1219,
+    "orgs": ["The Washington Post", "DocumentCloud", "Stanford Journalism", "Google AI", "Brown Institute"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1220,
+    "orgs": ["Brown Institute", "Columbia University"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1221,
+    "orgs": ["U.S. GSA"],
+    "people": ["Aravind Srinivas"],
+    "resources": []
+  },
+  {
+    "note_id": 1222,
+    "orgs": ["IST", "Global Cyber Alliance", "UC Berkeley Public Interest Cybersecurity Program"],
+    "people": ["Craig Newmark"],
+    "resources": []
+  },
+  {
+    "note_id": 1223,
+    "orgs": ["Google DeepMind", "Anthropic"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1224,
+    "orgs": ["Google Brain"],
+    "people": ["Andrew Ng"],
+    "resources": []
+  },
+  {
+    "note_id": 1225,
+    "orgs": ["Google DeepMind"],
+    "people": ["Demis Hassabis"],
+    "resources": []
+  },
+  {
+    "note_id": 1226,
+    "orgs": ["Tel Aviv University"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1227,
+    "orgs": ["Google Research"],
+    "people": [],
+    "resources": ["PAIR Guidebook"]
+  },
+  {
+    "note_id": 1228,
+    "orgs": ["Council on Foreign Relations", "Silver Lake", "United Nations"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1229,
+    "orgs": ["World Economic Forum", "AI Governance Alliance", "Global Regulatory Innovation Platform"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1230,
+    "orgs": ["World Economic Forum", "Politecnico di Torino", "University of Illinois", "UC Berkeley", "McKinsey"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1231,
+    "orgs": ["World Economic Forum", "PricewaterhouseCoopers", "Network of Centres for the Fourth Industrial Revolution"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1232,
+    "orgs": ["World Economic Forum", "AI Governance Alliance"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1233,
+    "orgs": ["Microsoft Research"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1234,
+    "orgs": ["Meta FAIR"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1235,
+    "orgs": ["Tesla"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1239,
+    "orgs": ["CIA", "DHS", "Palantir"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1240,
+    "orgs": ["Dell", "NVIDIA", "3Cloud", "Microsoft Azure"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1241,
+    "orgs": [],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1242,
+    "orgs": ["U.S. Air Force", "Booz Allen Hamilton", "Siemens Energy", "BCG", "Accenture", "Eli Lilly", "DeepLearning.AI"],
+    "people": ["Kian Katanforoosh", "Andrew Ng"],
+    "resources": []
+  },
+  {
+    "note_id": 1243,
+    "orgs": ["LandingAI", "Workera", "AES Corporation", "HP Inc.", "Mitsui", "Mitsubishi", "QBE", "TELUS", "Sequoia Capital", "NEA", "DeepLearning.AI"],
+    "people": ["Andrew Ng"],
+    "resources": []
+  },
+  {
+    "note_id": 1244,
+    "orgs": ["AI Fund", "DeepLearning.AI", "Workera"],
+    "people": ["Andrew Ng"],
+    "resources": []
+  },
+  {
+    "note_id": 1245,
+    "orgs": ["insitro", "Coursera", "Stanford University", "National Academy of Sciences"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1246,
+    "orgs": ["Mubadala", "G42", "Stargate Project", "SoftBank", "Oracle", "BlackRock", "Microsoft", "Anthropic", "Binance", "Aligned Data Centers"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1247,
+    "orgs": ["BlackRock", "MGX investment group", "Microsoft"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1248,
+    "orgs": ["BlackRock"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1249,
+    "orgs": ["Macquarie Group", "Applied Digital", "Aligned Data Centers", "BlackRock", "MGX investment group"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1250,
+    "orgs": ["NVIDIA", "OpenAI", "Meta"],
+    "people": ["Lisa Su"],
+    "resources": []
+  },
+  {
+    "note_id": 1252,
+    "orgs": ["Carnegie Mellon University", "NVIDIA", "Alfred P. Sloan Foundation"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1253,
+    "orgs": ["Carnegie Mellon University", "RAND Corporation"],
+    "people": ["Herbert Simon", "Cliff Shaw"],
+    "resources": []
+  },
+  {
+    "note_id": 1254,
+    "orgs": ["Carnegie Mellon University"],
+    "people": ["Allen Newell", "Cliff Shaw"],
+    "resources": []
+  },
+  {
+    "note_id": 1255,
+    "orgs": ["Georgetown University", "U.S. Census Bureau", "National Academy of Sciences", "National Academy of Medicine", "American Statistical Association"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1256,
+    "orgs": ["Yale University", "Yale Center for Research Computing"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1257,
+    "orgs": ["MGHPCC", "Harvard University", "MIT", "Boston University", "Northeastern University", "UMass"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1258,
+    "orgs": ["United Nations", "High-Level Advisory Body on AI"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1259,
+    "orgs": ["ISO", "IEC"],
+    "people": [],
+    "resources": ["Seoul Statement on AI Standards"]
+  },
+  {
+    "note_id": 1260,
+    "orgs": [],
+    "people": [],
+    "resources": ["Recommendation on the Ethics of Artificial Intelligence"]
+  },
+  {
+    "note_id": 1261,
+    "orgs": ["United Nations"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1262,
+    "orgs": ["European Commission", "European AI Office"],
+    "people": [],
+    "resources": ["EU AI Act"]
+  },
+  {
+    "note_id": 1263,
+    "orgs": ["DARPA", "STR", "Rensselaer Polytechnic Institute"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1264,
+    "orgs": ["DARPA", "Coherent Knowledge", "Stanford University"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1265,
+    "orgs": ["DARPA", "ARPA-H", "HSBC", "Johns Hopkins University"],
+    "people": [],
+    "resources": ["AI Cyber Challenge"]
+  },
+  {
+    "note_id": 1266,
+    "orgs": ["DARPA", "HHS"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1267,
+    "orgs": ["DoD", "DHS", "NASA"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1268,
+    "orgs": ["Johns Hopkins APL", "Penn State"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1269,
+    "orgs": ["Johns Hopkins University", "Accenture", "West Point Network Science Center", "CENTCOM"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1271,
+    "orgs": ["University of Louisville"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1273,
+    "orgs": ["Kogod School of Business", "American University", "Google.org", "Applied AI Institute"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1274,
+    "orgs": ["Kogod School of Business", "American University", "World Bank", "Samsung", "Institute for Applied Artificial Intelligence"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1275,
+    "orgs": ["Kogod School of Business", "American University", "Institute for Applied Artificial Intelligence"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1276,
+    "orgs": ["American University", "MIT Brain & Cognitive Sciences", "MIT CSAIL", "NIH"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1277,
+    "orgs": ["SUNY University at Albany", "IBM", "Empire AI", "University of Illinois Urbana-Champaign", "AirV Labs"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1278,
+    "orgs": ["USC Suzanne Dworak-Peck School of Social Work", "USC Viterbi School of Engineering", "Partnership on AI"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1279,
+    "orgs": ["USC Viterbi School of Engineering"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1280,
+    "orgs": ["Amazon", "USC School of Advanced Computing"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1281,
+    "orgs": ["Knight Foundation", "Neely Center for Ethical Leadership and Decision Making"],
+    "people": ["Nate Fast", "Ravi Iyer", "Geoff Garrett"],
+    "resources": []
+  },
+  {
+    "note_id": 1282,
+    "orgs": ["USC Marshall School of Business", "Knight Foundation"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1283,
+    "orgs": [],
+    "people": ["Gaurav Sukhatme"],
+    "resources": []
+  },
+  {
+    "note_id": 1284,
+    "orgs": ["USC School of Advanced Computing"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1285,
+    "orgs": ["ASSET Center", "Warren Center for Network and Data Sciences"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1286,
+    "orgs": ["Wharton School", "Wharton AI & Analytics Initiative"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1287,
+    "orgs": ["Wharton School"],
+    "people": [],
+    "resources": ["A Human's Guide to Machine Intelligence"]
+  },
+  {
+    "note_id": 1288,
+    "orgs": ["Wharton School", "Wharton Accountable AI Lab", "Blockchain and Digital Asset Project", "FCC"],
+    "people": [],
+    "resources": ["The Road to Accountable AI"]
+  },
+  {
+    "note_id": 1289,
+    "orgs": ["Wharton School", "Wharton AI & Analytics Initiative"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1290,
+    "orgs": ["Wharton School"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1291,
+    "orgs": ["Wharton School"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1292,
+    "orgs": ["Tulane University", "Connolly Alexander Institute for Data Science"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1293,
+    "orgs": ["Tulane University", "Court Watch NOLA"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1294,
+    "orgs": ["Tulane University"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1295,
+    "orgs": [],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1296,
+    "orgs": [],
+    "people": ["Peter Norvig"],
+    "resources": []
+  },
+  {
+    "note_id": 1297,
+    "orgs": ["Stanford University", "Google X", "Waymo", "Udacity", "Kitty Hawk", "Sage AI Labs"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1298,
+    "orgs": ["Bayesian Logic Inc.", "CTBTO", "UC Berkeley", "Facebook", "DevRev Inc.", "JazzX AI"],
+    "people": ["Stuart Russell"],
+    "resources": []
+  },
+  {
+    "note_id": 1299,
+    "orgs": ["Bayesian Logic Inc."],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1300,
+    "orgs": ["CodeX"],
+    "people": ["Nathaniel Persily"],
+    "resources": []
+  },
+  {
+    "note_id": 1301,
+    "orgs": [],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1302,
+    "orgs": [],
+    "people": [],
+    "resources": ["AI LEAD Act", "TEST AI Act"]
+  },
+  {
+    "note_id": 1303,
+    "orgs": ["AWS", "Microsoft", "NVIDIA", "Department of Energy"],
+    "people": [],
+    "resources": ["DOE Project Genesis"]
+  },
+  {
+    "note_id": 1304,
+    "orgs": ["DOJ AI Litigation Task Force"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1305,
+    "orgs": [],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1306,
+    "orgs": [],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1309,
+    "orgs": ["Center for AI Standards and Innovation"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1310,
+    "orgs": ["Special Competitive Studies Project", "National Security Commission on Artificial Intelligence"],
+    "people": ["Eric Schmidt", "H.R. McMaster"],
+    "resources": []
+  },
+  {
+    "note_id": 1311,
+    "orgs": ["UC Berkeley", "BAIR", "Berkeley DeepDrive", "MIT EECS"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1312,
+    "orgs": ["U.S. Army", "New Enterprise Associates"],
+    "people": ["Matt Zeiler"],
+    "resources": []
+  },
+  {
+    "note_id": 1313,
+    "orgs": ["UC Berkeley", "Berkeley Institute for Data Science"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1314,
+    "orgs": ["NVIDIA", "HPE"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1315,
+    "orgs": [],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1316,
+    "orgs": ["Emory University"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1317,
+    "orgs": ["Carnegie Mellon University", "MIT FutureTech"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1318,
+    "orgs": ["University of Utah", "National Science Foundation", "NAIRR"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1319,
+    "orgs": ["Vector Institute", "Mila", "CIFAR", "NRC", "Canadian AI Safety Institute", "Google.org"],
+    "people": [],
+    "resources": ["Pan-Canadian AI Strategy"]
+  },
+  {
+    "note_id": 1320,
+    "orgs": ["Element AI", "ServiceNow"],
+    "people": ["Nicolas Chapados", "Yoshua Bengio"],
+    "resources": []
+  },
+  {
+    "note_id": 1321,
+    "orgs": [],
+    "people": [],
+    "resources": ["EU AI Act", "NIST AI RMF"]
+  },
+  {
+    "note_id": 1322,
+    "orgs": ["Mila", "Amii", "Vector Institute", "Canadian AI Safety Institute"],
+    "people": [],
+    "resources": ["Artificial Intelligence and Data Act", "Pan-Canadian AI Strategy"]
+  },
+  {
+    "note_id": 1323,
+    "orgs": ["Element AI", "Data Collective"],
+    "people": ["Matt Ocko", "Zachary Bogue"],
+    "resources": []
+  },
+  {
+    "note_id": 1324,
+    "orgs": ["Element AI", "Xanadu", "Blockstream", "Tenstorrent"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1325,
+    "orgs": [],
+    "people": [],
+    "resources": ["EU AI Act", "Algorithmic Accountability Toolkit"]
+  },
+  {
+    "note_id": 1326,
+    "orgs": ["National Research Foundation", "Infocomm Media Development Authority"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1329,
+    "orgs": ["OpenAI", "Google"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1330,
+    "orgs": ["Université de Montréal", "Mila", "IVADO", "CIFAR"],
+    "people": ["Yoshua Bengio", "Ian Goodfellow"],
+    "resources": []
+  },
+  {
+    "note_id": 1331,
+    "orgs": ["McGill University"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1332,
+    "orgs": ["McGill University", "IVADO"],
+    "people": ["Samira A. Rahimi"],
+    "resources": []
+  },
+  {
+    "note_id": 1333,
+    "orgs": ["McGill University", "Mila", "International Laboratory on Learning Systems", "CentraleSupelec", "CNRS", "Université Paris-Saclay", "ETS Montreal"],
+    "people": ["Prakash Panangaden", "Doina Precup", "Joelle Pineau", "Jackie Chi Kit Cheung", "Siva Reddy", "Reihaneh Rabbany", "Siamak Ravanbakhsh", "David Rolnick", "Narges Armanfard"],
+    "resources": []
+  },
+  {
+    "note_id": 1334,
+    "orgs": ["UC Berkeley", "BAIR", "Center for Human-Compatible AI", "IASEAI", "Amazon"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1335,
+    "orgs": ["XPRIZE", "IBM", "AI Commons", "International Telecommunication Union", "GPAI", "European Space Agency", "Airbus", "European Commission"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1336,
+    "orgs": ["GPAI"],
+    "people": [],
+    "resources": ["OECD AI Principles"]
+  },
+  {
+    "note_id": 1337,
+    "orgs": ["National Republican Senatorial Committee"],
+    "people": ["Pete Ricketts"],
+    "resources": []
+  },
+  {
+    "note_id": 1338,
+    "orgs": ["Humain", "NVIDIA", "Google Cloud", "Saudi Aramco", "Saudi Data & AI Authority"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1339,
+    "orgs": ["Humain", "Saudi Data & AI Authority", "Public Investment Fund"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1340,
+    "orgs": ["Humain", "National Development Fund"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1341,
+    "orgs": ["Princeton University"],
+    "people": ["Dario Amodei"],
+    "resources": []
+  },
+  {
+    "note_id": 1342,
+    "orgs": ["Princeton University", "CUNY Graduate Center"],
+    "people": ["Dario Amodei"],
+    "resources": []
+  },
+  {
+    "note_id": 1343,
+    "orgs": [],
+    "people": ["Adrian Fontes", "Chris Cummiskey", "Gowri Ramachandran"],
+    "resources": []
+  },
+  {
+    "note_id": 1344,
+    "orgs": ["OpenAI", "Jane Street Capital"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1345,
+    "orgs": [],
+    "people": ["Jared Polis"],
+    "resources": ["Colorado AI Act"]
+  },
+  {
+    "note_id": 1346,
+    "orgs": ["OpenAI", "Andreessen Horowitz", "Leading the Future"],
+    "people": ["Joe Lonsdale"],
+    "resources": []
+  },
+  {
+    "note_id": 1347,
+    "orgs": ["SoftBank", "Microsoft"],
+    "people": ["Sam Altman"],
+    "resources": []
+  },
+  {
+    "note_id": 1349,
+    "orgs": ["OpenAI", "Anthropic"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1350,
+    "orgs": ["Sierra AI", "Google Labs"],
+    "people": ["Bret Taylor"],
+    "resources": []
+  },
+  {
+    "note_id": 1351,
+    "orgs": ["Anthropic"],
+    "people": ["Kyle Fish", "Robert Long", "Kathleen Finlinson"],
+    "resources": ["Taking AI Welfare Seriously"]
+  },
+  {
+    "note_id": 1352,
+    "orgs": ["NYU", "Center for Mind, Brain, and Consciousness"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1353,
+    "orgs": ["Future of Humanity Institute", "CAIS", "Eleos AI", "NYU"],
+    "people": [],
+    "resources": ["Consciousness in Artificial Intelligence"]
+  },
+  {
+    "note_id": 1355,
+    "orgs": ["Eleos AI"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1356,
+    "orgs": ["Hewlett Foundation", "Open Philanthropy", "Carnegie Corporation"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1357,
+    "orgs": ["Day One Project"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1358,
+    "orgs": ["NIST", "Center for AI Standards and Innovation", "AISIC"],
+    "people": ["Paul Christiano"],
+    "resources": []
+  },
+  {
+    "note_id": 1359,
+    "orgs": ["OpenAI", "Anthropic", "Audacious Project"],
+    "people": ["Beth Barnes", "Paul Christiano"],
+    "resources": []
+  },
+  {
+    "note_id": 1360,
+    "orgs": [],
+    "people": ["Ian Hogarth"],
+    "resources": []
+  },
+  {
+    "note_id": 1361,
+    "orgs": ["MIT", "Community Jameel"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1362,
+    "orgs": [],
+    "people": ["Daniela Rus"],
+    "resources": []
+  },
+  {
+    "note_id": 1363,
+    "orgs": ["Cornell Tech", "MacArthur Foundation"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1364,
+    "orgs": ["Google DeepMind"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1365,
+    "orgs": ["DeepMind", "Inflection AI", "Microsoft"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1366,
+    "orgs": ["Google DeepMind"],
+    "people": ["Demis Hassabis"],
+    "resources": []
+  },
+  {
+    "note_id": 1367,
+    "orgs": ["MacArthur Foundation", "NeurIPS"],
+    "people": ["Timnit Gebru", "Rediet Abebe"],
+    "resources": []
+  },
+  {
+    "note_id": 1368,
+    "orgs": ["Hugging Face", "Google"],
+    "people": ["Timnit Gebru"],
+    "resources": []
+  },
+  {
+    "note_id": 1369,
+    "orgs": ["WGA West"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1370,
+    "orgs": ["WGA East"],
+    "people": ["Julie Su"],
+    "resources": []
+  },
+  {
+    "note_id": 1371,
+    "orgs": ["Club for Growth"],
+    "people": ["Peter Thiel", "Richard Uihlein"],
+    "resources": []
+  },
+  {
+    "note_id": 1372,
+    "orgs": ["Lucy Family Institute for Data & Society", "Lilly Endowment", "Bloomberg Philanthropies"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1373,
+    "orgs": ["Brookings Institution"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1374,
+    "orgs": [],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1376,
+    "orgs": [],
+    "people": [],
+    "resources": ["Executive Order 14110", "Blueprint for an AI Bill of Rights"]
+  },
+  {
+    "note_id": 1377,
+    "orgs": ["xAI", "Starlink"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1378,
+    "orgs": ["xAI"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1379,
+    "orgs": ["Precision Neuroscience"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1380,
+    "orgs": ["DeepSeek"],
+    "people": ["Liang Wenfeng"],
+    "resources": []
+  },
+  {
+    "note_id": 1381,
+    "orgs": ["UC Berkeley School of Law", "Berkeley Center for Law & Technology"],
+    "people": ["Ganesh Sitaraman"],
+    "resources": []
+  },
+  {
+    "note_id": 1383,
+    "orgs": [],
+    "people": ["Fei-Fei Li"],
+    "resources": []
+  },
+  {
+    "note_id": 1384,
+    "orgs": ["Pivotal Ventures", "Texas A&M", "UMBC"],
+    "people": ["Fei-Fei Li", "Olga Russakovsky", "Rick Sommer"],
+    "resources": []
+  },
+  {
+    "note_id": 1385,
+    "orgs": ["World Labs", "University of Michigan"],
+    "people": ["Fei-Fei Li", "Christoph Lassner", "Ben Mildenhall"],
+    "resources": []
+  },
+  {
+    "note_id": 1386,
+    "orgs": ["World Labs", "Epic Games", "Meta Reality Labs"],
+    "people": ["Fei-Fei Li", "Justin Johnson", "Ben Mildenhall"],
+    "resources": []
+  },
+  {
+    "note_id": 1387,
+    "orgs": ["World Labs", "UC Berkeley", "Google Research"],
+    "people": ["Fei-Fei Li", "Justin Johnson", "Christoph Lassner"],
+    "resources": []
+  },
+  {
+    "note_id": 1388,
+    "orgs": ["Stanford University", "Stanford HAI"],
+    "people": ["Fei-Fei Li"],
+    "resources": []
+  },
+  {
+    "note_id": 1389,
+    "orgs": ["Kempner Institute"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1390,
+    "orgs": ["MacArthur Foundation", "Omidyar Network", "Mozilla Foundation", "Open Society Foundations", "Humanity AI", "AI Now Institute", "Current AI"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1391,
+    "orgs": ["Wadhwani School of Advanced AI", "TCS", "IBM", "AIRAWAT Foundation"],
+    "people": [],
+    "resources": []
+  },
+  {
+    "note_id": 1392,
+    "orgs": ["MIT Connection Science"],
+    "people": ["Alex 'Sandy' Pentland"],
+    "resources": []
+  },
+  {
+    "note_id": 1393,
+    "orgs": [],
+    "people": ["Daniel Kokotajlo"],
+    "resources": ["AI 2027", "Astral Codex Ten"]
+  },
+  {
+    "note_id": 1394,
+    "orgs": ["AI Futures Project", "Center for AI Policy", "MATS"],
+    "people": ["Daniel Kokotajlo", "Eli Lifland"],
+    "resources": []
+  },
+  {
+    "note_id": 1395,
+    "orgs": ["AI Futures Project", "Samotsvety", "Ought", "SaferAI", "Long Term Future Fund"],
+    "people": ["Daniel Kokotajlo", "Thomas Larsen", "Romeo Dean"],
+    "resources": ["AI 2027"]
+  },
+  {
+    "note_id": 1396,
+    "orgs": ["AI Futures Project", "Institute for AI Policy and Strategy", "Constellation", "MATS"],
+    "people": ["Daniel Kokotajlo"],
+    "resources": ["AI 2027"]
+  },
+  {
+    "note_id": 1397,
+    "orgs": ["Max Planck Institute for Intelligent Systems", "ELLIS Institute Tübingen", "Cyber Valley"],
+    "people": ["Philipp Hennig", "Matthias Bethge"],
+    "resources": []
+  },
+  {
+    "note_id": 1398,
+    "orgs": ["University of Tübingen", "Max Planck Institute for Intelligent Systems"],
+    "people": [],
+    "resources": ["Probabilistic Numerics: Computation as Machine Learning"]
+  }
+]

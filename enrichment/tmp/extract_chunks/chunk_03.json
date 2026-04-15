@@ -1,0 +1,1274 @@
+[
+ {
+  "id": 727,
+  "name": "Cloudflare",
+  "entity_type": "organization",
+  "notes": "Founded 2009, provides web infrastructure services including CDN, security, and AI tools. Offers Workers AI platform with 80+ models from various providers but doesn't train LLMs itself. Launched AI Security Suite and application confidence scoring system. Created marketplace allowing websites to charge AI bots for content access. CEO Matthew Prince actively lobbying regulators on AI crawler separation."
+ },
+ {
+  "id": 728,
+  "name": "Nvidia",
+  "entity_type": "organization",
+  "notes": "Founded 1993, became dominant AI chip provider with 92% discrete GPU market share in 2025. Market cap reached $4.6 trillion. Invested in 67+ AI startups in 2025, including OpenAI ($100M), Anthropic ($10B), and xAI ($6B). CEO Jensen Huang lobbied Trump administration to approve H200 chip sales to China, facing bipartisan congressional opposition over national security concerns."
+ },
+ {
+  "id": 729,
+  "name": "Amazon",
+  "entity_type": "organization",
+  "notes": "Amazon has developed frontier AI models through its Nova family and operates Amazon Bedrock AI service. Published comprehensive Frontier Model Safety Framework in 2024 with critical capability thresholds for CBRN weapons, cybersecurity, and automated AI R&D. AWS CEO Andy Jassy projects AI could help AWS reach $600 billion in annual sales by 2036, double previous estimates. Major cloud infrastructure provider enabling AI development across the industry."
+ },
+ {
+  "id": 730,
+  "name": "Open Machine",
+  "entity_type": "organization",
+  "notes": "Founded by CEO Allie K. Miller, focuses on CPU-first AI deployment without GPU requirements. Develops edge-native AI solutions with unified multimodal runtime. Emphasizes data sovereignty and offline capability. Claims sub-60ms recall performance with <2.4GB memory footprint on commodity hardware."
+ },
+ {
+  "id": 731,
+  "name": "Cassava Technologies",
+  "entity_type": "organization",
+  "notes": "Founded by African entrepreneur Strive Masiyiwa, headquartered in London with operations across 94 countries. Built 110,000km of fiber infrastructure and 9 operational data centers. Launched Africa's first AI factory in 2024/2025 powered by NVIDIA, with partnerships including Microsoft, Google, AWS, and Anthropic. 1,848 employees as of 2025."
+ },
+ {
+  "id": 732,
+  "name": "Matthew Prince",
+  "entity_type": "person",
+  "notes": "Prince launched Cloudflare's 'pay-per-crawl' initiative on July 1, 2025, blocking AI crawlers unless they compensate content creators. He has been actively lobbying regulators including the UK's Competition and Markets Authority to force Google to separate its search and AI crawlers. Prince proposed five responsible AI bot principles in 2025 requiring public disclosure, self-identification, single purpose declaration, respect for preferences, and good intent behavior."
+ },
+ {
+  "id": 733,
+  "name": "Jensen Huang",
+  "entity_type": "person",
+  "notes": "In January 2026 stated 'I think we've achieved AGI' on Lex Fridman podcast. Predicted AGI by 2028 at November 2023 NYT DealBook Summit. Advocates against 'doomer narratives' about AI, arguing excessive fear-mongering deters investment and slows safety innovation. Met with President Trump in December 2025 to discuss chip export controls and AI policy. In 2025 Nvidia announced ~$500 billion of AI supercomputing infrastructure to be manufactured and deployed in the U.S. over four years through partnerships with TSMC, Foxconn, Wistron, Amkor, and SPIL \u2014 including the first U.S.-made Blackwell wafers \u2014 credited by Trump as a response to his tariff and reindustrialization policies."
+ },
+ {
+  "id": 734,
+  "name": "Fidji Simo",
+  "entity_type": "person",
+  "notes": "Joined OpenAI as CEO of Applications in August 2025 after serving on the board since March 2024. Previously CEO of Instacart (2021-2025) and VP/Head of Facebook App at Meta (2011-2021). Led OpenAI's pivot toward enterprise focus and advertising monetization, stating the company 'cannot miss this moment because we are distracted by side quests.' Emphasizes mental health risks as a priority area, contrasting OpenAI's proactive safety approach with Meta's reactive stance."
+ },
+ {
+  "id": 735,
+  "name": "Andy Jassy",
+  "entity_type": "person",
+  "notes": "Leads Amazon's massive AI investments including $100+ billion in capital expenditures for 2025, predominantly for AWS AI capabilities. Has developed Amazon's Frontier Model Safety Framework with specific critical capability thresholds and safeguards. Joined US AI Safety Institute Consortium in 2024 and contributed $5 million in compute credits for AI safety evaluation tools. Emphasized urgent need for companies to invest 'aggressively' in AI infrastructure while maintaining responsible development practices."
+ },
+ {
+  "id": 736,
+  "name": "Allie K. Miller",
+  "entity_type": "person",
+  "notes": "Miller predicts AGI by 2027 based on conversations with AI researchers, with some suggesting 2026. She emphasizes AI as strategic partner rather than tool, advocating against 'pilot purgatory' where companies run endless experiments without systematic transformation. Named to TIME100 Most Influential People in AI 2025 and has over 2M followers across social platforms."
+ },
+ {
+  "id": 737,
+  "name": "Qualcomm",
+  "entity_type": "organization",
+  "notes": "Founded 1985 by UC San Diego professors, semiconductor company with 30,000+ employees (20,000+ engineers). Investing in AI R&D for 15+ years, first to run Stable Diffusion on smartphone (2023). Holds 130,000+ patents, partners with IBM and Truepic on AI initiatives. Focuses on edge AI and on-device inference capabilities."
+ },
+ {
+  "id": 738,
+  "name": "Scale AI",
+  "entity_type": "organization",
+  "notes": "Founded 2016 by Alexandr Wang at age 19, focuses on AI data infrastructure and labeling. Over 900 employees, valued at $14B after $1B Series F in May 2024. Major DoD contracts including multi-million dollar 'Thunderforge' AI agents deal. Wang stepped down as CEO in June 2025 to lead Meta's 'Superintelligence' unit as part of $14.3B Meta investment."
+ },
+ {
+  "id": 739,
+  "name": "AI Grant",
+  "entity_type": "organization",
+  "notes": "Founded 2017 as non-profit distributed AI research lab. Provides $2.5K-$50K non-dilutive grants specifically for AI safety, interpretability, and alignment research. Made 104 investments with 10 exits including Common Sense Machines (acquired by Google). Operates as accelerator/incubator focused exclusively on AI startups."
+ },
+ {
+  "id": 740,
+  "name": "TSMC",
+  "entity_type": "organization",
+  "notes": "Taiwan Semiconductor Manufacturing Company (TSMC) is the world's largest contract chip manufacturer, fabricating over 90% of advanced semiconductors as of 2023. Founded 1987, manufactures chips for Nvidia, Apple, AMD and other AI companies. Revenue $122.4B in 2025, planning $56B capex in 2026. Critical supplier for AI infrastructure but not an AI research lab."
+ },
+ {
+  "id": 741,
+  "name": "Midjourney",
+  "entity_type": "organization",
+  "notes": "Founded in 2022 by David Holz (Leap Motion co-founder). Operates with only 11 full-time employees, generating ~$300M revenue in 2024 without venture capital. Faces major lawsuits from Disney/NBCUniversal over alleged copyright infringement in AI training data. Released V7 model in April 2025 after nearly year-long gap."
+ },
+ {
+  "id": 742,
+  "name": "Huawei",
+  "entity_type": "organization",
+  "notes": "Chinese tech giant developing AI chips (Ascend series) and systems to compete with Nvidia. Launched CloudMatrix 384 AI system with 384 Ascend 910C chips in 2025. Under US export restrictions but continues advancing AI capabilities through system-level design innovations. Operates Noah's Ark Laboratory for AI research since establishment."
+ },
+ {
+  "id": 743,
+  "name": "Reddit",
+  "entity_type": "organization",
+  "notes": "Reddit has lucrative AI data licensing deals with Google ($60M annually) and OpenAI ($70M annually), representing ~10% of $1.3B revenue. The platform launched Reddit Answers AI search tool powered by Google Gemini in late 2024, growing from 1M to 15M weekly users by Q4 2025. CEO Steve Huffman aims to make Reddit a 'go-to search engine' while implementing policies to label AI-generated content and preserve human authenticity. The platform blocked most automated crawlers in 2024 and sued Anthropic for unauthorized scraping."
+ },
+ {
+  "id": 744,
+  "name": "SoftBank",
+  "entity_type": "organization",
+  "notes": "Founded 1981, manages $140+ billion through Vision Funds. Major AI investments include $64.6 billion in OpenAI (13% ownership), $1.4 billion in Skild AI, and leadership in the $500 billion Stargate AI infrastructure project. Portfolio includes 300+ AI and tech companies across foundation models, robotics, and infrastructure."
+ },
+ {
+  "id": 745,
+  "name": "Salesforce",
+  "entity_type": "organization",
+  "notes": "Founded 1999, publicly traded CRM company with 70,000+ employees. Launched Einstein AI platform in 2016, Agentforce AI agents in 2024. Chief Ethical and Humane Use Officer Paula Goldman sits on U.S. National AI Advisory Committee. Has comprehensive AI governance framework with cross-functional AI Council and established Trusted AI principles in 2018."
+ },
+ {
+  "id": 746,
+  "name": "Arm",
+  "entity_type": "organization",
+  "notes": "Semiconductor IP company founded 1990, designs processor architectures used globally. Powers AI infrastructure from cloud datacenters (50% of hyperscaler compute in 2025) to edge devices. Exceeded $1 billion revenue for three consecutive quarters in 2025. Supports 22 million developers worldwide building on Arm compute platform."
+ },
+ {
+  "id": 747,
+  "name": "Unitree Robotics",
+  "entity_type": "organization",
+  "notes": "Founded 2016 by Wang Xingxing, ~500 employees. Ships over 5,500 humanoid robots annually (2025), leading global market. Products include G1 ($16k) and H1 humanoid robots, plus quadruped models. Subject of US Congressional hearings over cybersecurity vulnerabilities and alleged military ties. Planning IPO with Chinese government 'national champion' status."
+ },
+ {
+  "id": 748,
+  "name": "Mobileye",
+  "entity_type": "organization",
+  "notes": "Founded 1999, focusing on autonomous driving and ADAS technologies. Develops EyeQ system-on-chip processors and safety frameworks like Responsibility-Sensitive Safety (RSS). Over 230 million vehicles built with Mobileye technology through 2025. Listed independently from Intel in 2022, generated $1.894B revenue in 2025. Agreed to acquire Mentee Robotics in 2026 to expand into humanoid robotics."
+ },
+ {
+  "id": 749,
+  "name": "Asteria Film Co.",
+  "entity_type": "organization",
+  "notes": "Asteria Film Co. is actually an AI-powered film production studio, not a traditional media/journalism organization. Founded by Bryn Mooser and Natasha Lyonne, it focuses on creating 'ethical AI' models for film production while developing the Continuum Suite operating system for streamlined filmmaking workflows. Backed by CAA and Comcast Ventures."
+ },
+ {
+  "id": 750,
+  "name": "Tools for Humanity",
+  "entity_type": "organization",
+  "notes": "Founded 2019 by Alex Blania (CEO) and Sam Altman (Chairman). Develops iris-scanning 'Orb' devices for World ID verification system. Over 500 employees, $2.5B valuation, raised $240M+ from investors including Andreessen Horowitz. 17.5 million verified users as of 2024, targeting 1 billion users."
+ },
+ {
+  "id": 751,
+  "name": "Samaya AI",
+  "entity_type": "organization",
+  "notes": "Founded 2022 as AI platform for financial services, not AI safety/alignment. Raised $43.5M Series A led by NEA in 2025. Team includes 30+ members from Google Brain, Meta AI, AWS, Stanford. Develops specialized AI agents for investment research and financial analysis workflows, deployed at Morgan Stanley and major banks with 10,000+ professional users."
+ },
+ {
+  "id": 752,
+  "name": "ElevenLabs",
+  "entity_type": "organization",
+  "notes": "Founded 2022, raised $281M total including $180M Series C (Jan 2025) at $3.3B valuation. 120 employees across London, New York, Warsaw. Specializes in AI voice generation, cloning, and conversational agents. First company to secure AI agent insurance through AIUC-1 certification. Partners with governments including Ukraine, Czech Republic, and UK on public services."
+ },
+ {
+  "id": 753,
+  "name": "Agility Robotics",
+  "entity_type": "organization",
+  "notes": "Founded 2015 as Oregon State University spinout, grew to 300+ employees. Launched Digit humanoid robot in 2020, first commercially deployed humanoid. Raised $400M in 2025 at $1.75B valuation. Manufacturing facility 'RoboFab' in Salem with 100% US assembly."
+ },
+ {
+  "id": 754,
+  "name": "Pony.ai",
+  "entity_type": "organization",
+  "notes": "Founded 2016, specializes in autonomous driving technology for robotaxis and robotrucks. Raised $800M+ via Hong Kong IPO in 2025, operates 1,446 vehicle fleet as of March 2026. Achieved unit economics breakeven in Guangzhou and Shenzhen. Targets 3,000+ robotaxis across 20+ global cities by end of 2026."
+ },
+ {
+  "id": 755,
+  "name": "Humain",
+  "entity_type": "organization",
+  "notes": "HUMAIN is a Saudi artificial intelligence company established under the Public Investment Fund and launched on May 12, 2025, by Mohammed bin Salman, Crown Prince of Saudi Arabia. The company operates across the entire AI value chain, providing comprehensive AI services including next-generation data centers, AI infrastructure and cloud capabilities, and advanced AI models and solutions. HUMAIN aims to position Saudi Arabia as a globally competitive AI hub and is chaired by HRH the Crown Prince. The company's CEO is Tareq Amin."
+ },
+ {
+  "id": 756,
+  "name": "KoBold Metals",
+  "entity_type": "organization",
+  "notes": "Founded 2018, uses AI for mineral exploration targeting copper, lithium, nickel, and cobalt. Raised $1.2B total including $537M Series C (Jan 2025), valued at $2.96B. Discovered major copper deposit in Zambia (Mingomba project) expected to produce 300,000+ tons annually by 2030s. Backed by Bill Gates, Jeff Bezos, Andreessen Horowitz."
+ },
+ {
+  "id": 757,
+  "name": "FutureHouse",
+  "entity_type": "organization",
+  "notes": "Founded November 2023 as nonprofit by Sam Rodriques and Andrew White. Backed by Eric Schmidt. Mission to build 'AI Scientists' for biology research over 10 years. Launched platform with specialized AI agents (Crow, Falcon, Owl, Phoenix) in May 2025. Spun out commercial entity Edison Scientific in November 2025 raising $70M. Operates wet lab for human-AI collaboration."
+ },
+ {
+  "id": 758,
+  "name": "Adobe",
+  "entity_type": "organization",
+  "notes": "Founded 1982, major creative software company that has integrated AI into products for over a decade. Developed Firefly generative AI model trained exclusively on licensed content, offers enterprise indemnification. Key AI products include Firefly, GenStudio, and AI assistants across Creative Cloud. Founded Content Authenticity Initiative in 2019 with 5,000+ members to combat misinformation through Content Credentials technology."
+ },
+ {
+  "id": 759,
+  "name": "Credo AI",
+  "entity_type": "organization",
+  "notes": "Enterprise AI governance platform company founded by Navrina Singh. Provides software and advisory services for AI risk management and regulatory compliance. Named leader in Forrester Wave AI Governance Solutions 2025 and recognized in Gartner Market Guide. Has partnerships with Microsoft, McKinsey, and Databricks."
+ },
+ {
+  "id": 760,
+  "name": "Sakana AI",
+  "entity_type": "organization",
+  "notes": "Founded 2023, raised $302M total funding. Develops nature-inspired foundation models and automated scientific discovery systems. Created 'AI Scientist' tool that generates complete research papers for ~$15 each. First AI system to pass peer review at academic conference (ICLR 2025). Partnered with Google in 2026 for enterprise AI solutions targeting finance and government sectors."
+ },
+ {
+  "id": 761,
+  "name": "Surge AI",
+  "entity_type": "organization",
+  "notes": "Founded 2020 by Edwin Chen (ex-Google/Facebook/Twitter). Bootstrapped to $1.2B revenue in 2024 serving OpenAI, Google, Anthropic, Meta with high-quality human data labeling. 250 employees managing 50K+ expert contractors globally. Seeking first external funding of $1B at ~$24B valuation in 2025."
+ },
+ {
+  "id": 762,
+  "name": "Tryolabs",
+  "entity_type": "organization",
+  "notes": "Founded 2009 as AI/ML consulting company, 15+ years before mainstream AI adoption. Grew from 4 people to 100+ employees serving enterprise clients globally. CEO Alan Descoins named in TIME's '100 Most Influential People in AI' 2025. Focuses on custom AI solutions, MLOps, and 'AI for Good' projects including conservation and sustainability initiatives."
+ },
+ {
+  "id": 763,
+  "name": "Splice",
+  "entity_type": "organization",
+  "notes": "Founded 2013, music creation platform with 600K+ paying subscribers generating $100M+ annual revenue. Acquired Spitfire Audio for ~$50M in 2025. Hit 350M sample downloads in 2024, focuses on AI-powered music creation tools that amplify rather than replace human creativity."
+ },
+ {
+  "id": 764,
+  "name": "Shield AI",
+  "entity_type": "organization",
+  "notes": "Founded 2015 by brothers Brandon and Ryan Tseng (both former Navy SEALs) and engineer Andrew Reiter; mission to protect service members with autonomous systems. Raised $240M Series F at $5.3B valuation (March 2025). In March 2026 closed a $2B round \u2014 $1.5B Series G equity plus $500M preferred from Blackstone \u2014 at a $12.7B post-money valuation, a 140% jump in twelve months following a U.S. Air Force deal. Projects $540M+ revenue in 2026 (over half international). First AI pilot deployed in combat (2018); selected for Air Force Collaborative Combat Aircraft program. Products include Hivemind autonomy software and V-BAT drones."
+ },
+ {
+  "id": 765,
+  "name": "Wild Dolphin Project",
+  "entity_type": "organization",
+  "notes": "Founded in 1985 by Dr. Denise Herzing, conducting the world's longest-running underwater dolphin research project studying Atlantic spotted dolphins in the Bahamas. Collaborates with Georgia Tech and Google on AI-powered dolphin communication research, including the DolphinGemma model and CHAT (Cetacean Hearing Augmentation Telemetry) system. Has 40 years of underwater video and audio data from wild dolphin communities, funded by grants including Templeton World Charity Foundation."
+ },
+ {
+  "id": 766,
+  "name": "IIT Madras",
+  "entity_type": "organization",
+  "notes": "Houses multiple AI research centers including RBCDSAI (founded 2017), CeRAI for Responsible AI, and AI4Bharat for Indian language AI. Prof. B. Ravindran chairs government AI governance committee and serves on UN AI panel. Wadhwani School of Data Science and AI leads national AI policy discussions with 'whole-of-government' approach recommendations."
+ },
+ {
+  "id": 767,
+  "name": "NoHarm",
+  "entity_type": "organization",
+  "notes": "Search results show NOHARM as a medical AI safety evaluation framework developed by academic researchers, not a traditional ethics/rights organization. Also found #NoHarmware campaign by T\u0101hono Trust (New Zealand) focused on online safety regulation. No evidence of a US-based Ethics/Rights Organization specifically named 'NoHarm' found in search results."
+ },
+ {
+  "id": 768,
+  "name": "Fred Hutchinson Cancer Center",
+  "entity_type": "organization",
+  "notes": "Founded 1975, Fred Hutchinson Cancer Center is a nonprofit research institution with 3,676 employees and $600M annual revenue. They coordinate the Cancer AI Alliance (CAIA) launched in 2024 with Dana-Farber, Memorial Sloan Kettering, and Johns Hopkins, backed by $40M+ from AWS, Microsoft, NVIDIA, and Deloitte. The center actively deploys AI tools including GI Genius for colonoscopy analysis and DataVoyager for clinical research, while maintaining strict data protection protocols for patient health information."
+ },
+ {
+  "id": 769,
+  "name": "World Labs",
+  "entity_type": "organization",
+  "notes": "Founded 2024 by AI pioneer Fei-Fei Li and team, developing 'spatial intelligence' and Large World Models for 3D environments. Raised $1.23B total funding including $1B round in Feb 2026 from AMD, Nvidia, Autodesk. Released Marble product in Nov 2025 for generating 3D virtual worlds. 39+ employees, valued at ~$5B."
+ },
+ {
+  "id": 770,
+  "name": "Strive Masiyiwa",
+  "entity_type": "person",
+  "notes": "Leading a $720 million investment to build five AI factories across Africa (South Africa, Nigeria, Kenya, Egypt, Morocco) with 15,000 NVIDIA GPUs by 2026. Strategic partner with Google to roll out Gemini across Africa and NVIDIA's first preferred cloud partner on the continent. Focuses heavily on digital sovereignty and ensuring Africa becomes an AI producer rather than just consumer, with emphasis on local language models and keeping data within African borders."
+ },
+ {
+  "id": 771,
+  "name": "Cristiano Amon",
+  "entity_type": "person",
+  "notes": "Has led Qualcomm for 30 years including as CEO since June 2021, positioning the company as a leader in edge AI computing with chips powering Meta's AI glasses. Believes 'AI will be democratized' and run on every device, predicting smart glasses will be breakthrough AI devices. Strong advocate for on-device AI processing for privacy and efficiency, competing directly with Nvidia in data center inference markets launched in October 2024."
+ },
+ {
+  "id": 772,
+  "name": "Alexandr Wang",
+  "entity_type": "person",
+  "notes": "Testified before House Energy and Commerce Committee in 2025 calling for US AI leadership through data dominance and agentic government. Co-authored 'Superintelligence Strategy' policy paper with Eric Schmidt and Dan Hendrycks proposing Mutual Assured AI Malfunction (MAIM) deterrence framework. Became world's youngest self-made billionaire at age 24 through Scale AI, which provides AI training data to major tech companies and government agencies including the Department of Defense."
+ },
+ {
+  "id": 773,
+  "name": "Nat Friedman",
+  "entity_type": "person",
+  "notes": "Led $15M seed round for AIUC in July 2025, developing AI agent insurance and safety standards. Co-founded $1.1B NFDG fund that achieved 4x returns in two years, investing in AI infrastructure and safety companies like Safe Superintelligence Inc. Joined Meta Superintelligence Labs in June 2025 to develop advanced AI systems. Previously launched GitHub Copilot as CEO, transforming developer productivity with AI-powered code assistance."
+ },
+ {
+  "id": 774,
+  "name": "C.C. Wei",
+  "entity_type": "person",
+  "notes": "Wei leads TSMC, which produces ~95% of advanced AI chips globally, making him central to AI development. He admits being 'very nervous' about AI demand sustainability given TSMC's $52-56 billion annual capital expenditure. Under his leadership, TSMC announced a $100 billion U.S. investment in 2025, the largest foreign direct investment in U.S. history. He has been recognized in TIME's 100 Most Influential People in AI for 2024 and 2025."
+ },
+ {
+  "id": 775,
+  "name": "David Holz",
+  "entity_type": "person",
+  "notes": "Admits to training Midjourney on hundreds of millions of images without consent, stating there's no practical way to get permission. Built Midjourney as self-funded company with ~15 employees, avoiding VC funding to maintain control. Faces multiple major copyright lawsuits from Disney, Universal, and Warner Bros. as of 2025."
+ },
+ {
+  "id": 776,
+  "name": "Ren Zhengfei",
+  "entity_type": "person",
+  "notes": "In November 2025 speech, distinguished between US pursuit of AGI for philosophical questions versus China's focus on practical AI applications in mining, manufacturing, and public services. Believes quantum computing breakthroughs are inevitable but should be left to nation-states rather than individual companies. Advocates for massive retraining programs to address AI-driven labor displacement, suggesting conversion of empty schools and factories into vocational training centers."
+ },
+ {
+  "id": 777,
+  "name": "Steve Huffman",
+  "entity_type": "person",
+  "notes": "Named to TIME's 100 Most Influential People in AI (2024). Plans to hire 'AI native' new graduates and sees AI as beneficial for Reddit's content moderation and user safety. Implementing bot detection measures including ID verification and World ID integration to combat 'AI slop' while positioning Reddit as 'the most human place on the internet.' Has lucrative data licensing deals with AI companies including a $60M annual agreement with Google."
+ },
+ {
+  "id": 778,
+  "name": "Masayoshi Son",
+  "entity_type": "person",
+  "notes": "Son has committed over $40 billion to OpenAI and leads the $500 billion Stargate AI infrastructure project with Oracle and OpenAI. He predicts AGI will arrive 'much sooner' than 2-3 years and ASI will be '10,000 times smarter' than humans by 2035. SoftBank established comprehensive AI ethics policies in 2022 applying to 88 group companies and created an AI Ethics Committee in 2024."
+ },
+ {
+  "id": 779,
+  "name": "Adam Evans",
+  "entity_type": "person",
+  "notes": "Evans became EVP & GM of Salesforce AI in November 2024 after Clara Shih's departure, leading Agentforce development with $540M ARR and 18,500 deals. He's the only founder to sell two companies (RelateIQ for $392M in 2014, Airkit.ai in 2023) to the same acquirer. His technical architecture focuses on multi-agent orchestration, reasoning engines, and Einstein Trust Layer for enterprise AI safety."
+ },
+ {
+  "id": 780,
+  "name": "Rene Haas",
+  "entity_type": "person",
+  "notes": "Leads Arm Holdings, which designs chips used by 70% of world's population. Expressed specific concerns about humans losing capability to machines and need for override mechanisms in AI systems (Bloomberg 2023). Led Arm's historic shift from IP licensing to producing its own AI chips with the Arm AGI CPU launch in 2026. Focuses heavily on AI energy efficiency, claiming Arm Neoverse could save hyperscalers 15% of data center power."
+ },
+ {
+  "id": 781,
+  "name": "Wang Xingxing",
+  "entity_type": "person",
+  "notes": "Wang Xingxing founded Unitree Robotics in 2016 after leaving DJI after just two months. At age 35, he was the youngest participant in Xi Jinping's February 2025 high-profile business symposium alongside tech giants like Jack Ma and Ren Zhengfei. Unitree gained global attention when its humanoid robots performed at the 2025 CCTV Spring Festival Gala, and the company has achieved over 60% of the global quadruped robot market share by 2023. Wang predicts robotics could have its 'ChatGPT moment' within 1-3 years and believes current robot technology is at the level of a 10-year-old child."
+ },
+ {
+  "id": 782,
+  "name": "Amnon Shashua",
+  "entity_type": "person",
+  "notes": "Co-founded Mobileye in 1999, sold to Intel for $15.3B in 2017, returned public in 2022. Developed Responsibility-Sensitive Safety (RSS) framework that became basis for IEEE 2846 standard and influenced global AV safety regulations. Recently announced $900M acquisition of humanoid robotics company Mentee Robotics, positioning Mobileye as a dual-engine physical AI company. Holds over 200 patents and has published 160+ papers in computer vision and machine learning."
+ },
+ {
+  "id": 783,
+  "name": "Natasha Lyonne",
+  "entity_type": "person",
+  "notes": "Co-founded Asteria Film Co. in 2022 with Bryn Mooser as an 'ethical AI' film studio using the Marey model trained exclusively on licensed data. Organized 400+ Hollywood figures including Paul McCartney and Ben Stiller to sign letter to Trump administration in March 2025 opposing AI deregulation. Spoke at TIME100 AI Impact Dinner in October 2025 calling for 'responsible reassessment' of AI regulation. Currently directing 'Uncanny Valley' combining AI tools with traditional filmmaking, set for release in 2025."
+ },
+ {
+  "id": 784,
+  "name": "Refik Anadol",
+  "entity_type": "person",
+  "notes": "Turkish-American artist who coined the terms \"AI Data Painting and Sculpture\" in 2016 during his Google AMI residency. His 2022 MoMA installation \"Unsupervised\" drew 3 million visitors and was trained on the museum's entire collection. Opening DATALAND, the world's first AI art museum, in Los Angeles in 2026. Emphasizes using only ethically sourced datasets and advocates for transparency in AI art creation processes."
+ },
+ {
+  "id": 785,
+  "name": "Alex Blania",
+  "entity_type": "person",
+  "notes": "Co-founded Tools for Humanity with Sam Altman in 2020 to create proof-of-humanity systems using iris-scanning Orb devices. Recently launched Merge Labs in January 2026 to bridge biological and artificial intelligence. Has testified before regulators about biometric privacy and AI identity verification. Company faced high-level executive departures in early 2026 amid reports of hardcore work culture."
+ },
+ {
+  "id": 786,
+  "name": "Maithra Raghu",
+  "entity_type": "person",
+  "notes": "Named to TIME's 2025 AI 100 list for building specialized AI agents for financial services. Co-founded Samaya AI in 2022, raising $43.5M from investors including Eric Schmidt, NVIDIA Ventures, and Databricks Ventures. Former Google Brain researcher who studied neural network interpretability and co-authored survey on deep learning with Eric Schmidt. Company's Agent Control Plane serves over 10,000 professionals at major banks for high-stakes investment workflows."
+ },
+ {
+  "id": 787,
+  "name": "Rick Rubin",
+  "entity_type": "person",
+  "notes": "Published 'The Way of Code: The Timeless Art of Vibe Coding' in 2025, an interactive book created with Claude AI that explores 'vibe coding' - giving AI directions in natural language. Called AI the 'punk rock of coding' for democratizing creation by prioritizing ideas over technical expertise. Appeared on The Ben & Marc Show podcast in May 2025 to discuss his AI philosophy and creative applications."
+ },
+ {
+  "id": 788,
+  "name": "Mati Staniszewski",
+  "entity_type": "person",
+  "notes": "In February 2026, ElevenLabs became the first company to secure AIUC-1-backed insurance for AI voice agents, establishing new trust standards for enterprise AI deployment. The company has grown to $330M ARR and $11B valuation since 2022, powering over 3 million voice agents for 75% of Fortune 500 companies including Cisco, Square, and Revolut. ElevenLabs has restored over 3,000 voices for people who lost speech ability and paid out $11M through its voice marketplace to contributors."
+ },
+ {
+  "id": 789,
+  "name": "Peggy Johnson",
+  "entity_type": "person",
+  "notes": "Became CEO of Agility Robotics in March 2024, leading company deploying humanoid robots in Amazon warehouses and other commercial facilities. Previously spent 24 years at Qualcomm, 6 years as Microsoft EVP where she launched M12 venture fund, and served as Magic Leap CEO 2020-2023. Named Business Insider's most powerful female engineer in US (2017) and inducted into Women in Technology Hall of Fame (2013)."
+ },
+ {
+  "id": 790,
+  "name": "James Peng",
+  "entity_type": "person",
+  "notes": "Peng co-founded Pony.ai in 2016 after 11 years at Google and Baidu, including leading Baidu's autonomous driving division. The company went public on Nasdaq in November 2024 with a $413M IPO and later raised $863M in Hong Kong listing. Pony.ai operates over 1,400 robotaxis across China and internationally, achieving unit economics breakeven in Guangzhou and Shenzhen by 2025. Peng holds a Ph.D. from Stanford and previously worked on Google's ads teams."
+ },
+ {
+  "id": 791,
+  "name": "Tareq Amin",
+  "entity_type": "person",
+  "notes": "Leads Saudi Arabia's $600 billion AI infrastructure initiative backed by PIF, with partnerships including $23 billion in agreements with Nvidia, AMD, AWS, and Qualcomm signed in 2025. Named to TIME's 100 Most Influential People in AI 2025. Focuses on building multi-gigawatt AI data centers and Arabic-first AI models including the ALLAM LLM to establish Saudi Arabia as the world's third major AI compute center after US and China."
+ },
+ {
+  "id": 792,
+  "name": "Mfikeyi Makayi",
+  "entity_type": "person",
+  "notes": "Named to TIME's 100 Most Influential People in AI 2025 for leading KoBold Metals' AI-driven mineral exploration in Africa. Oversees the $2 billion Mingomba copper project in Zambia's Copperbelt, using AI tools that analyze geological data to pinpoint drilling locations 10,000 times faster than traditional methods. First Zambian woman to lead a major mineral exploration company, appointed CEO in 2023. KoBold Metals has raised over $1 billion in funding with backing from Bill Gates, Jeff Bezos, and Reid Hoffman."
+ },
+ {
+  "id": 793,
+  "name": "Sam Rodriques",
+  "entity_type": "person",
+  "notes": "Named to TIME100 AI 2025 list for influence in AI science. Led development of Robin multi-agent system that demonstrated first end-to-end AI-driven scientific discovery in October 2025. Spun out Edison Scientific as for-profit company in November 2025, raising $70M seed funding. Believes AI will enable scientists to do '10x or 100x' more work with AI assistance while maintaining human control over final decisions."
+ },
+ {
+  "id": 794,
+  "name": "Andy Parsons",
+  "entity_type": "person",
+  "notes": "Leads Adobe's Content Authenticity Initiative with 5,000+ members including major tech companies and media organizations. Developed Content Credentials technology using cryptographic signatures and watermarking to verify digital content provenance. Named to TIME's 100 Most Influential People in AI 2025 for work on content authentication standards."
+ },
+ {
+  "id": 795,
+  "name": "Navrina Singh",
+  "entity_type": "person",
+  "notes": "Founded Credo AI in 2020 as an AI governance SaaS platform after 18+ years at Microsoft and Qualcomm. Named Leader in Forrester Wave for AI Governance Solutions Q3 2025. Serves on Biden administration's National AI Advisory Committee and was appointed to UN Secretary-General's High-Level Advisory Body on AI in 2024. Hosts annual Responsible AI Leadership Summit bringing together 250+ industry leaders."
+ },
+ {
+  "id": 796,
+  "name": "David Ha",
+  "entity_type": "person",
+  "notes": "Created AI Scientist system that produced the first AI-generated peer-reviewed workshop paper in 2025. Sakana AI achieved $1 billion valuation as fastest Japan-based company to unicorn status. Named to Time100 AI 2025 list for groundbreaking work in automated scientific discovery. Holds PhD from University of Tokyo and previously led Google Brain Research team in Japan."
+ },
+ {
+  "id": 797,
+  "name": "Edwin Chen",
+  "entity_type": "person",
+  "notes": "Built Surge AI to over $1 billion revenue in 2024 with fewer than 100 employees, completely bootstrapped without VC funding. Named to TIME's 100 Most Influential People in AI 2025. Works with major AI labs including Google, Anthropic, and OpenAI providing high-quality training data. Warns that the AI industry is 'optimizing for dopamine instead of truth' which could delay AGI progress."
+ },
+ {
+  "id": 798,
+  "name": "Priya Donti",
+  "entity_type": "person",
+  "notes": "Co-authored major policy document 'Making AI Work for All Americans' (March 2025) on behalf of MIT LIDS. Research focuses on physics-informed machine learning for power grids and renewable energy systems. Co-founded Climate Change AI in 2019 and authored influential 'Tackling Climate Change with Machine Learning' survey. Named to MIT Technology Review's 35 Innovators Under 35 (2021) and TIME100 AI list (2025)."
+ },
+ {
+  "id": 799,
+  "name": "Alan Descoins",
+  "entity_type": "person",
+  "notes": "Featured in TIME Magazine's 100 Most Influential People in AI 2025 for his work combining commercial AI applications with social good projects including partnerships with UNICEF and The Nature Conservancy. Has 15 years experience building AI systems and emphasizes the critical importance of organizational readiness and data foundations before AI implementation. Warns against attributing consciousness or therapeutic capabilities to AI systems and stresses the need for human oversight in high-stakes applications."
+ },
+ {
+  "id": 800,
+  "name": "Kakul Srivastava",
+  "entity_type": "person",
+  "notes": "CEO of Splice since May 2022, leading AI integration in music creation platform. Partnered with Universal Music Group in December 2025 on AI-powered music tools. Previously held senior product roles at major tech companies including Adobe, GitHub, and WeWork. MIT mechanical engineering graduate with Berkeley MBA."
+ },
+ {
+  "id": 801,
+  "name": "Brandon Tseng",
+  "entity_type": "person",
+  "notes": "Former Navy SEAL with deployments to Afghanistan who testified before Congress in December 2023 on AI for national security. Shield AI has successfully flown F-16s completely autonomously in combat scenarios and raised $1.5 billion in 2026 at a $12.7 billion valuation. Compares AI development to the Manhattan Project, warning the US must win the 'AI race' against China or risk losing military dominance for the next 80 years."
+ },
+ {
+  "id": 802,
+  "name": "Denise Herzing",
+  "entity_type": "person",
+  "notes": "Marine biologist who has studied Atlantic spotted dolphins in the Bahamas for 40+ years, creating the world's longest-running underwater dolphin research project. Named to TIME's AI 100 list in 2025 for her work developing DolphinGemma, the first large language model trained on dolphin vocalizations in collaboration with Georgia Tech and Google DeepMind. Has expressed optimism about AI's potential to analyze complex natural systems and environmental data, while acknowledging concerns about AI's energy consumption and environmental impact. Author of 'Dolphin Diaries' and co-editor of 'Dolphin Communication and Cognition.'"
+ },
+ {
+  "id": 803,
+  "name": "Mitesh Khapra",
+  "entity_type": "person",
+  "notes": "Khapra leads AI4Bharat, which collected voice data from almost 500 of India's 700 districts across 22 official languages and supplies 80% of data for India's government Bhashini program. Named to TIME's 100 Most Influential People in AI 2025 alongside Elon Musk and Sam Altman for pioneering work making AI accessible to Indian languages. AI4Bharat's models are deployed in the Indian Supreme Court for document translation and for farmer subsidy payment voice bots."
+ },
+ {
+  "id": 804,
+  "name": "Ana Helena Ulbrich",
+  "entity_type": "person",
+  "notes": "Named to TIME's 100 Most Influential People in AI 2025 list alongside Elon Musk and Sam Altman. Co-founded NoHarm in 2019 as a nonprofit AI tool that reviews medical prescriptions and flags potential dangers, now used by 200+ Brazilian hospitals analyzing 5 million prescriptions monthly. The platform is provided free to Brazil's public healthcare system (SUS) while private hospitals pay fees, and has received funding from Bill & Melinda Gates Foundation, Google, Amazon, and BNDES."
+ },
+ {
+  "id": 805,
+  "name": "Jeff Leek",
+  "entity_type": "person",
+  "notes": "Leads the Cancer AI Alliance (CAIA), a $40+ million initiative launched in October 2024 uniting four major cancer centers with tech partners including AWS, Microsoft, NVIDIA, and Google. Named to TIME's AI 100 Most Influential People in 2025. Previously described himself as an 'AI skeptic' until viewing AI as a 'better computer' and support tool in human-AI partnerships. Co-founded Synthesize Bio, a generative genomics company building AI models for biomedical experiments."
+ },
+ {
+  "id": 806,
+  "name": "Khosla Ventures",
+  "entity_type": "organization",
+  "notes": "Founded 2004 by Sun Microsystems co-founder Vinod Khosla. Manages $16B AUM across 527+ portfolio companies. Early OpenAI investor (valued at $150B+). Investment focus includes AI, climate tech, healthcare with 'black swan' philosophy targeting contrarian opportunities. Recent major AI investments include Cognition Labs (Devin AI), Waabi ($750M Series C), and Emergent ($70M Series B)."
+ },
+ {
+  "id": 807,
+  "name": "Sequoia Capital",
+  "entity_type": "organization",
+  "notes": "Founded 1972, manages ~$85B in assets. Major AI investments include OpenAI, Anthropic, Reflection AI, and Ricursive Intelligence. Published influential AI market analyses including 'Generative AI's Act Two' and '2026: This is AGI' defining AGI as 'the ability to figure things out.' Portfolio companies account for 25% of NASDAQ's total value."
+ },
+ {
+  "id": 808,
+  "name": "Greylock",
+  "entity_type": "organization",
+  "notes": "Founded 1965, one of Silicon Valley's most storied VC firms. Partners include Reid Hoffman (LinkedIn founder). Over 80% of investments are first checks (pre-seed to Series A). Explicit 'AI-first' strategy with major investments in Abnormal Security, Baseten, Adept AI, Cogent Security, and Resolve AI. Check sizes $300K-$10M across early stages."
+ },
+ {
+  "id": 809,
+  "name": "Lux Capital",
+  "entity_type": "organization",
+  "notes": "Founded 2000, $7B AUM across 9 funds. Latest Fund IX raised $1.5B in January 2026. 200+ portfolio companies including major AI investments: Anduril ($30.5B valuation), Applied Intuition ($15B), Hugging Face, Runway AI, Cognition ($10.2B), Physical Intelligence. Strong focus on defense tech, robotics, and frontier science applications."
+ },
+ {
+  "id": 810,
+  "name": "8VC",
+  "entity_type": "organization",
+  "notes": "Founded 2015, approximately $7B AUM across six flagship funds. 363+ portfolio companies including 35 unicorns. Major AI investments include Palantir (co-founded by partner Joe Lonsdale), AI21 Labs, Atomic AI, Cognition AI. Strong focus on 'Smart Enterprise' thesis applying AI to traditional industries like healthcare, logistics, and government."
+ },
+ {
+  "id": 811,
+  "name": "Slow Ventures",
+  "entity_type": "organization",
+  "notes": "Founded 2011, generalist early-stage VC firm with ~$1B deployed across 500+ companies. Led by Sam Lessin and Kevin Colleran (Facebook alums). Notable exits include Slack, Robinhood, Airtable, Solana. Recently raised $275M across Fund VI and Opportunity Fund III (2024). Portfolio spans fintech, SaaS, consumer, healthcare, crypto with $250K-$3M check sizes primarily at seed stage."
+ },
+ {
+  "id": 812,
+  "name": "Entrepreneur First",
+  "entity_type": "organization",
+  "notes": "Founded 2011, operates globally with offices in London, Paris, Singapore, New York, and San Francisco. Recently raised $200M at unicorn valuation with portfolio worth over $16B. Notable AI investments include Gensyn, Tractable (unicorn), Photoroom, and numerous other AI startups. Runs specialized AI Startup School program and moves all funded companies to Bay Area for scaling."
+ },
+ {
+  "id": 813,
+  "name": "Plural",
+  "entity_type": "organization",
+  "notes": "Founded 2021, employs 22 people. Led by partners including Taavet Hinrikus, Khaled Helioui, and Ian Hogarth. Recent AI investments include $10.25M in Callosum (AI compute orchestration), investments in Helsing (defense AI), Hypersonica (hypersonics), and Upside Robotics (agricultural AI). Fund II has $30.3M total value with 50.19% gross IRR."
+ },
+ {
+  "id": 814,
+  "name": "Schmidt Futures",
+  "entity_type": "organization",
+  "notes": "Founded 2017 by Eric and Wendy Schmidt, transitioned into Schmidt Sciences in 2024. 164 employees across 36 countries. Major AI investments include backing Anthropic, Cloudline ($6M), and Gradium ($70M). Operates AI2050 fellowship program and Science of Trustworthy AI initiative. Spun out Ex/ante investment fund in 2023 with $33M inaugural fund."
+ },
+ {
+  "id": 817,
+  "name": "Humane Intelligence",
+  "entity_type": "organization",
+  "notes": "501(c)(3) nonprofit founded by Dr. Rumman Chowdhury and Jutta Williams, with Mala Kumar as Interim Executive Director as of August 2025. Specializes in AI red teaming, bias bounties, and contextual evaluations. Has conducted 30+ evaluations with 5,250+ participants across 55+ countries. Plans to release red teaming app as open source in 2026."
+ },
+ {
+  "id": 819,
+  "name": "Stanford CRFM",
+  "entity_type": "organization",
+  "notes": "Stanford Center for Research on Foundation Models (CRFM), founded 2021 as part of Stanford HAI and led by Percy Liang. Coined the term ''foundation models'' and publishes influential work on model evaluation (HELM), transparency (Foundation Model Transparency Index), and governance. One of the most cited academic sources in U.S. AI policy debates."
+ },
+ {
+  "id": 820,
+  "name": "Exponential View",
+  "entity_type": "organization",
+  "notes": "Founded and written by Azeem Azhar, prominent AI policy commentator and author of 'Exponential'. Weekly newsletter with 200,000+ subscribers analyzing AI's economic and societal impacts. Co-authored research with Epoch AI on AI economics and regularly interviews tech leaders and policymakers."
+ },
+ {
+  "id": 821,
+  "name": "Geoffrey Hinton",
+  "entity_type": "person",
+  "notes": "Left Google in May 2023 to speak freely about AI risks after decades of pioneering neural network research. Awarded 2024 Nobel Prize in Physics for foundational work on neural networks. Estimates 10-20% chance of human extinction from superintelligent AI and 50% probability AI will surpass human intelligence within 20 years. In January 2026, Good Ventures (the foundation of Cari Tuna and Dustin Moskovitz) gifted US$700,000 to the University of Toronto's Schwartz Reisman Institute to support Hinton's role as a global ambassador for AI safety."
+ },
+ {
+  "id": 822,
+  "name": "Jan Leike",
+  "entity_type": "person",
+  "notes": "Co-led OpenAI's Superalignment team with Ilya Sutskever before resigning in May 2024 citing safety culture concerns. Named to TIME's 100 Most Influential People in AI in both 2023 and 2024. Key contributor to InstructGPT and ChatGPT alignment. Currently leads Anthropic's Alignment Science team working on scalable oversight and automated alignment research. PhD in reinforcement learning from Australian National University under Marcus Hutter."
+ },
+ {
+  "id": 823,
+  "name": "Chris Olah",
+  "entity_type": "person",
+  "notes": "Pioneer of mechanistic interpretability research who co-authored 'Concrete Problems in AI Safety' (2016). Left OpenAI in 2021 to co-found Anthropic specifically focused on AI safety research. Led development of techniques like DeepDream visualization and has over 103,000 research citations. Estimated net worth of $1.2 billion from Anthropic equity as of 2025-2026."
+ },
+ {
+  "id": 824,
+  "name": "Connor Leahy",
+  "entity_type": "person",
+  "notes": "Co-founded EleutherAI in 2020, creating open-source large language models GPT-Neo and GPT-J. Founded Conjecture in 2022 as an AI safety company focused on interpretable and controllable AI systems. Co-authored 'The Compendium' (2024), a comprehensive document on AGI extinction risks. Testified before Canadian Parliament in December 2025 warning of superintelligence as an extinction threat. Self-taught AI researcher without formal university education."
+ },
+ {
+  "id": 825,
+  "name": "Helen Toner",
+  "entity_type": "person",
+  "notes": "Co-founded Georgetown's CSET in 2019, focusing on national security implications of AI. Voted to remove Sam Altman from OpenAI in November 2023 over safety and accountability concerns. Has testified before Senate Judiciary Subcommittee on AI oversight (September 2024) and advised regulators globally. Recently launched substack 'Rising Tide' discussing AI governance."
+ },
+ {
+  "id": 826,
+  "name": "Jason Matheny",
+  "entity_type": "person",
+  "notes": "Testified before Congress multiple times on AI policy in 2023, advocating for NIST AI Risk Management Framework implementation and mandatory reporting requirements for large AI systems. Previously coordinated US-China AI competition policy in Biden White House 2021-2022. Has written extensively about AI-enabled bioweapons risks and compared AI governance needs to nuclear nonproliferation frameworks."
+ },
+ {
+  "id": 827,
+  "name": "Allan Dafoe",
+  "entity_type": "person",
+  "notes": "Leading academic-turned-industry expert who founded the Centre for the Governance of AI before joining Google DeepMind. Co-authored the Frontier Safety Framework in 2024 and leads dangerous capability evaluations for frontier AI models. Promotes 'cooperative AI' research agenda focused on AI systems' ability to cooperate with humans and each other. Academic background in technological determinism and international relations, arguing that while technology creates pressures, humans retain agency to shape development trajectories."
+ },
+ {
+  "id": 828,
+  "name": "Remco Zwetsloot",
+  "entity_type": "person",
+  "notes": "Co-authored influential 2019 Lawfare piece 'Thinking About Risks From AI: Accidents, Misuse and Structure' introducing structural AI risk framework. Co-authored major 2023 white paper 'Frontier AI Regulation: Managing Emerging Risks to Public Safety' proposing specific regulatory building blocks. Extensively researched US-China AI talent competition and immigration policy impacts on AI workforce. Founded Horizon Institute in 2022 to build pathways for emerging tech experts into government roles."
+ },
+ {
+  "id": 829,
+  "name": "Jack Clark",
+  "entity_type": "person",
+  "notes": "Testified before House Select Committee on Chinese Communist Party in September 2025 on AI governance and export controls. Entered MOU with U.S. CAISI in August 2024 for pre-deployment model testing. Predicted 'powerful AI' timeline of end of 2026/early 2027 based on METR benchmarks and FrontierMath progress. Anthropic developed 'Lucien' variant of Claude specifically configured for military purposes."
+ },
+ {
+  "id": 830,
+  "name": "Azeem Azhar",
+  "entity_type": "person",
+  "notes": "Publishes influential Exponential View newsletter covering AI policy and exponential technologies. Coined the 'exponential gap' framework describing how technology advances faster than society's ability to adapt. Testified or advised on AI governance including UK AI Safety Summit discussions. Advocates strongly for open-source AI development as critical for innovation and democratic values."
+ },
+ {
+  "id": 831,
+  "name": "Emily Bender",
+  "entity_type": "person",
+  "notes": "Co-authored the influential 2021 'Stochastic Parrots' paper warning of LLM risks, which contributed to Google firing co-authors Timnit Gebru and Margaret Mitchell. Coined the term 'stochastic parrot' to describe LLMs as sophisticated text generators without genuine understanding. Argues that current AI systems lack meaning and true comprehension, focusing on present harms rather than hypothetical AGI risks. Co-authored 2025 book 'The AI Con: How to Fight Big Tech's Hype and Create the Future We Want' with Alex Hanna."
+ },
+ {
+  "id": 832,
+  "name": "Rediet Abebe",
+  "entity_type": "person",
+  "notes": "Ethiopian-born computer scientist who uses algorithmic approaches to address social inequality. Co-founded Black in AI in 2016 with Timnit Gebru and MD4SG research initiative. First Black woman to receive CS PhD from Cornell (2019) and first Black female professor in UC Berkeley EECS department history. Andrew Carnegie Fellow (2022) and MIT Technology Review Innovators Under 35 (2019)."
+ },
+ {
+  "id": 833,
+  "name": "Abeba Birhane",
+  "entity_type": "person",
+  "notes": "Cognitive scientist who conducted influential audits of LAION datasets revealing toxic content and bias, leading to temporary dataset removal. Developed concept of 'algorithmic colonization' and 'relational ethics' framework. Named to TIME's 100 Most Influential People in AI (2023). Her work has shifted AI ethics discourse from hypothetical existential risks to tangible present-day harms from biased training data."
+ },
+ {
+  "id": 834,
+  "name": "Shakir Mohamed",
+  "entity_type": "person",
+  "notes": "Co-developed the STELA methodology for community-centered AI alignment, focusing on eliciting values from historically underrepresented groups. His work emphasizes participatory AI development and has been influential in AI ethics research at major conferences. Research spans generative models, AI safety evaluation, and decolonial approaches to AI alignment with over 10,000 citations."
+ },
+ {
+  "id": 835,
+  "name": "Ilya Sutskever",
+  "entity_type": "person",
+  "notes": "Co-invented AlexNet (2012) and made foundational contributions to transformer architecture and GPT models. Participated in November 2023 board vote to temporarily oust Sam Altman from OpenAI over safety concerns. Founded SSI in June 2024 with $1 billion initial funding, reaching $30+ billion valuation by 2025. Claims 'age of scaling is over' and that new research breakthroughs beyond current paradigms are needed for safe superintelligence."
+ },
+ {
+  "id": 836,
+  "name": "John Schulman",
+  "entity_type": "person",
+  "notes": "Invented Proximal Policy Optimization (PPO) algorithm and pioneered Reinforcement Learning from Human Feedback (RLHF) that enabled ChatGPT. Left OpenAI in August 2024 for Anthropic to focus on AI alignment, then co-founded Thinking Machines Lab with Mira Murati in 2025. Predicts his own job could be replaced by AI within 5 years and believes AGI could arrive in 2-3 years, requiring careful coordination among labs."
+ },
+ {
+  "id": 837,
+  "name": "Percy Liang",
+  "entity_type": "person",
+  "notes": "Co-authored The California Report on Frontier AI Policy (June 2025) as Senior Advisor, advocating for transparency and safety guardrails. Created HELM (Holistic Evaluation of Language Models) framework for evaluating foundation models. Led Stanford's Foundation Model Transparency Index showing AI companies scored only 47% on risk-related transparency. Testified at DOJ Antitrust Division workshop on AI competition (May 2024)."
+ },
+ {
+  "id": 838,
+  "name": "Jacob Steinhardt",
+  "entity_type": "person",
+  "notes": "Co-authored influential \"Concrete Problems in AI Safety\" paper (2016). Founded Transluce in 2023 to create open-source tools for auditing AI systems and conducting public safety evaluations. His AI2050 project focuses on using LLMs to investigate and explain behavior of frontier models to detect failure modes before deployment. Considers himself a \"worried optimist\" about AI's societal impact."
+ },
+ {
+  "id": 839,
+  "name": "David Krueger",
+  "entity_type": "person",
+  "notes": "Co-authored ARCHES paper on existential safety with Andrew Critch (2020) and signed onto statement that AI extinction risk should be global priority alongside pandemics and nuclear war (2023). Founded Evitable in 2025 to organize public opposition to superintelligence development. Served as Research Director for UK's AI Safety Institute during first AI Safety Summit. Currently focuses on AI alignment research and policy advocacy to prevent human extinction from AI."
+ },
+ {
+  "id": 840,
+  "name": "Rohin Shah",
+  "entity_type": "person",
+  "notes": "Co-authored Google DeepMind's comprehensive AGI safety framework paper in 2025 focusing on misuse and misalignment risks. Led research on amplified oversight, interpretability (sparse autoencoders), and dangerous capability evaluations. Previously estimated 20% P(doom|AGI launched 2030) and 10% P(doom|AGI by debate). Published over 2300-subscriber Alignment Newsletter from 2018-2020s providing influential technical AI safety content."
+ },
+ {
+  "id": 841,
+  "name": "Toby Ord",
+  "entity_type": "person",
+  "notes": "Author of 'The Precipice: Existential Risk and the Future of Humanity' (2020), which explores catastrophic risks including unaligned AI. Has published technical analyses on AI scaling laws, showing that current progress requires exponential resource increases for linear gains. Advises UN, WHO, and UK Prime Minister's Office on global risks. Founded Giving What We Can, mobilizing over $1.5 billion in charitable pledges."
+ },
+ {
+  "id": 842,
+  "name": "Jaan Tallinn",
+  "entity_type": "person",
+  "notes": "Co-founded Future of Life Institute which published the 6-month pause letter on frontier AI experiments. Has P(doom) estimate of 33-50% according to EA Forum survey. Early investor in DeepMind and Anthropic while simultaneously funding AI safety research, describing this as having 'street cred' in both communities to facilitate dialogue. Serves on UN Secretary General's AI Council."
+ },
+ {
+  "id": 843,
+  "name": "Se\u00e1n \u00d3 h\u00c9igeartaigh",
+  "entity_type": "person",
+  "notes": "Co-authored Carnegie Endowment report on international AI safety assessments (August 2024). Contributed to 2026 International AI Safety Report and was quoted calling UK AI Safety Summit 'promising.' Has advised OECD, UN, and UK Government on AI risks. Described AI governance as 'in crisis' but sees opportunities for stronger international agreements through initiatives like AI for Good."
+ },
+ {
+  "id": 844,
+  "name": "Rumman Chowdhury",
+  "entity_type": "person",
+  "notes": "Founded Humane Intelligence to create community-driven AI auditing through bias bounties and red-teaming exercises. Led Twitter's META team that found AI algorithms disproportionately boosted right-wing news sources during 2020 elections. Testified before House Committee on Science, Space & Technology and organized White House-endorsed AI red-teaming events with over 5,000 participants globally. Named to Time's 100 Most Influential People in AI 2023."
+ },
+ {
+  "id": 845,
+  "name": "Yolanda Gil",
+  "entity_type": "person",
+  "notes": "Co-chairs the Stanford AI Index Report which tracks global AI developments and policy trends. Served as AAAI President (2018-2020) and co-authored influential 2019 20-Year AI Research Roadmap. Currently serves on National Science Board (2024-2030) advising on national science policy. Advocates for proactive AI safety research and responsible development practices while warning against premature restrictive regulations."
+ },
+ {
+  "id": 846,
+  "name": "Max Tegmark",
+  "entity_type": "person",
+  "notes": "Led the March 2023 open letter calling for a 6-month pause on AI development more powerful than GPT-4, signed by over 30,000 people. Testified to Senate AI Insight Forum in October 2023. Co-authored 'Provably Safe Systems: The Only Path to Controllable AGI' paper advocating mathematical proof requirements for AI safety. FLI publishes annual AI Safety Index rating major AI companies on safety practices."
+ },
+ {
+  "id": 847,
+  "name": "Nick Bostrom",
+  "entity_type": "person",
+  "notes": "Author of influential 2014 book 'Superintelligence' that shaped AI safety discourse. Founded Future of Humanity Institute at Oxford in 2005, closed in 2024. Recently published 'Deep Utopia: Life and Meaning in a Solved World' (2024) and 'Optimal Timing for Superintelligence' (2026). Co-authored major policy paper 'Public Policy and Superintelligent AI: A Vector Field Approach' outlining governance frameworks for advanced AI systems."
+ },
+ {
+  "id": 848,
+  "name": "Reid Hoffman",
+  "entity_type": "person",
+  "notes": "Wrote 'Impromptu' (2023) co-authored with GPT-4 and 'Superagency' (2025) on AI's positive potential. Major investor in OpenAI and Anthropic through Greylock. Publicly defended Anthropic as 'one of the good guys' in January 2025 clash with Trump administration AI czar David Sacks. Advocates 'iterative deployment' approach and warns that society opting out of AI engagement would be 'catastrophic.'"
+ },
+ {
+  "id": 849,
+  "name": "Vinod Khosla",
+  "entity_type": "person",
+  "notes": "Early OpenAI investor with $50M at $1B valuation, achieving 2,500x return with Juniper Networks. Predicts 80% of jobs will be AI-capable by 2030 but views this as ultimately positive for humanity. Called California Senator Scott Wiener 'clueless' about real AI dangers, focusing instead on national security concerns about China gaining AI leadership."
+ },
+ {
+  "id": 850,
+  "name": "Martin Casado",
+  "entity_type": "person",
+  "notes": "Co-founded Nicira (sold to VMware for $1.26B), scaled VMware's networking business to $600M run-rate. At a16z since 2016, leads $1.25B infrastructure practice investing in AI startups like OpenAI, World Labs, Cursor, Ideogram. Advocates for open-source AI models for US competitiveness and warns against premature regulation stifling innovation. Active board member on 15+ portfolio companies."
+ },
+ {
+  "id": 851,
+  "name": "Anjney Midha",
+  "entity_type": "person",
+  "notes": "Controls access to a16z's 20,000+ GPU cluster worth over $500M through the Oxygen program, making him a critical gatekeeper for AI startup compute access. Early angel investor in Anthropic when founded by ex-OpenAI researchers. Founded AMP in October 2024 to provide 'compute and capital to frontier AI teams' after leaving his GP role at a16z. Advocates for US-allied 'sovereign AI' development and open-source models to compete with China."
+ },
+ {
+  "id": 852,
+  "name": "Sonya Huang",
+  "entity_type": "person",
+  "notes": "Leads Sequoia's AI application layer thesis with over $1.5B invested across Harvey, Glean, LangChain, Mercury, and Gong. Co-authored 'Generative AI's Act Two' (2023) and '2026: This is AGI' defining AI investment strategy. Hosts influential Training Data podcast and annual AI Ascent conference shaping industry discourse. Self-describes as 'very AGI-pilled' and believes we've reached the 'event horizon' for AGI."
+ },
+ {
+  "id": 853,
+  "name": "Seth Rosenberg",
+  "entity_type": "person",
+  "notes": "Greylock partner specializing in AI and fintech with '80% domain/20% AI' investment thesis. Led investments in companies like Pine (AI mortgage origination), Resolve AI ($35M seed), and serves on boards of multiple AI-enabled fintech companies. Advocates for AI as business accelerant rather than replacement, focusing on companies where AI enhances existing domain expertise rather than pure AI plays."
+ },
+ {
+  "id": 854,
+  "name": "Elad Gil",
+  "entity_type": "person",
+  "notes": "Manages ~$3B fund and has invested in 40+ unicorns including Airbnb, Stripe, Coinbase, Figma. Early AI investor since 2021 with portfolio including OpenAI, Mistral, Perplexity, Harvey, Character.AI. Co-hosts 'No Priors' AI podcast. Distinguishes between 'technology-level' vs 'species-level' AI risks, viewing the transition to self-replicating AI with robotics as potentially existential. Author of influential blog posts on AI safety and market dynamics."
+ },
+ {
+  "id": 855,
+  "name": "Eric Schmidt",
+  "entity_type": "person",
+  "notes": "Testified before Congress in 2021 urging $40B AI investment and warned China poses existential threat to US tech leadership. Co-authored 'Genesis' with Henry Kissinger exploring AI's civilizational risks. Recently warned about 'superintelligence strategy' and proposed 'Mutual Assured AI Malfunction' (MAIM) deterrence framework. Led NSCAI from 2019-2021, significantly influencing US AI policy and defense strategy."
+ },
+ {
+  "id": 856,
+  "name": "Josh Wolfe",
+  "entity_type": "person",
+  "notes": "Warns portfolio companies about market risks and 'the bubble of AI' while remaining bullish on AI investment. Key investments include Anduril, Hugging Face, Palantir, and other defense/AI companies. Advocates for stapling visas to foreign AI graduates and tripling NSF funding. Member of bipartisan Hilland Valley Forum connecting technologists with policymakers."
+ },
+ {
+  "id": 857,
+  "name": "Joe Lonsdale",
+  "entity_type": "person",
+  "notes": "Founded Leading the Future super PAC with $125M to elect candidates favoring lighter AI oversight, directly opposing Anthropic's pro-regulation super PAC. Published comprehensive healthcare AI policy framework in December 2025 proposing three levels of AI integration. Co-founded Palantir in 2003 and manages $6B+ through 8VC, investing in defense tech companies like Anduril and healthcare AI applications."
+ },
+ {
+  "id": 858,
+  "name": "Sam Lessin",
+  "entity_type": "person",
+  "notes": "Argues that AI seed investing has been 'a washout for most' and that AI is fundamentally reorganizing financial markets rather than creating traditional venture returns. Believes the VC 'factory model' is over and AI impact on capital markets may be more profound than the technology itself. Co-founded Meritfirst with Joe Lonsdale and made early investments in Venmo and Solana."
+ },
+ {
+  "id": 859,
+  "name": "Matt Clifford",
+  "entity_type": "person",
+  "notes": "Authored the UK's AI Opportunities Action Plan in January 2025, with all 50 recommendations accepted by the government. Has financial interests in nearly 500 tech companies through Entrepreneur First, creating potential conflicts of interest. Organized the 2023 Bletchley Park AI Safety Summit and helped establish the UK's AI Safety Institute. Awarded CBE for services to AI in 2024."
+ },
+ {
+  "id": 860,
+  "name": "Ian Hogarth",
+  "entity_type": "person",
+  "notes": "Authored viral 2023 Financial Times essay 'We Must Slow Down the Race to God-like AI' warning of extinction risks. Led UK's AI Safety Institute (now AI Security Institute) from June 2023 to February 2025 with \u00a3100 million budget. Has invested in 50+ AI companies including Anthropic but divested from foundation model companies due to conflicts of interest. Co-authored annual State of AI report since 2018 and previously founded music startup Songkick."
+ },
+ {
+  "id": 861,
+  "name": "Ajeya Cotra",
+  "entity_type": "person",
+  "notes": "Influential AI safety researcher who placed 3rd out of 413 participants in forecasting AI developments. Led $25M in AI safety grantmaking at Open Philanthropy, funding projects like Princeton's HAL, LEAP, and Cybench. Co-author of 'Planned Obsolescence' newsletter and author of influential early reports on AI timelines. Expects 'top-human-expert-dominating AI' in early 2030s with potential 12-month window between AI R&D automation and uncontrollable superintelligence."
+ },
+ {
+  "id": 863,
+  "name": "Wired",
+  "entity_type": "organization",
+  "notes": "Major technology publication with dedicated AI coverage team including senior writers Will Knight, Maxwell Zeff, and Zeyi Yang. Academic research shows WIRED's AI coverage from 2018-2023 had predominantly positive sentiment with increasing polarization over time. Reaches over 30 million people monthly and is considered one of the most influential technology publications globally."
+ },
+ {
+  "id": 864,
+  "name": "MIT Technology Review",
+  "entity_type": "organization",
+  "notes": "Leading technology publication with dedicated AI reporting team including Will Douglas Heaven (senior AI editor), Michelle Kim, and others. Coverage spans technical developments, policy analysis, and societal impacts. Known for annual '10 Breakthrough Technologies' list and deep investigative pieces on AI industry practices."
+ },
+ {
+  "id": 865,
+  "name": "Bloomberg",
+  "entity_type": "organization",
+  "notes": "Bloomberg has extensive AI coverage across multiple verticals including technology, markets, and legal analysis. Operates dedicated AI section with regular reporting on policy developments, market trends, and corporate adoption. Bloomberg Law provides specialized AI legal analysis. The company has also developed its own AI products including ASKB for the Bloomberg Terminal, built on proprietary AI capabilities dating back to 2009."
+ },
+ {
+  "id": 866,
+  "name": "Financial Times",
+  "entity_type": "organization",
+  "notes": "Has dedicated AI editor Madhumita Murgia (appointed 2023) and comprehensive AI coverage hub. Uses AI internally for story discovery through automated data pipelines and computational journalism. Partners with MIT Technology Review on 'The State of AI' newsletter series covering geopolitical AI implications."
+ },
+ {
+  "id": 867,
+  "name": "Associated Press",
+  "entity_type": "organization",
+  "notes": "AP was a pioneer in establishing AI standards in journalism contracts in 2023. Produces 5,000 pieces of content daily with 230 locations globally. Has licensing deals with OpenAI (2023) and Google (2025) for content use in AI systems. Operates extensive AI initiatives including Local Lede federal data monitoring, video analysis tools, and automated transcription systems."
+ },
+ {
+  "id": 868,
+  "name": "The Washington Post",
+  "entity_type": "organization",
+  "notes": "Launched AI & Tech Brief newsletter in 2026 covering AI as economic and regulatory transformation. Deployed controversial 'Your Personal Podcast' AI tool in December 2025 that generated fabricated quotes and faced internal newsroom backlash. Also offers 'Ask The Post AI' search tool and AI-generated audio articles. Partnership with ElevenLabs for voice technology and Virginia Tech for AI development."
+ },
+ {
+  "id": 869,
+  "name": "Vox Media",
+  "entity_type": "organization",
+  "notes": "Has comprehensive AI coverage across multiple verticals including Future Perfect section. Signed licensing deal with OpenAI in 2024. Union contract includes AI protections preventing layoffs solely from AI implementation. Staff includes reporters like Eric Levitz, Bryan Walsh, and Sigal Samuel covering AI policy and implications extensively."
+ },
+ {
+  "id": 870,
+  "name": "Encode Justice",
+  "entity_type": "organization",
+  "notes": "Founded by 19-year-old Sneha Revanur, youth-led organization with 1,000 members under age 25 across 30 countries. Successfully passed California's SB 53 AI safety law, New York's RAISE Act, and the TAKE IT DOWN Act against deepfake pornography. Funded by foundations including Heising-Simons, Future of Life Institute, and Archewell Foundation, explicitly refusing corporate or AI company executive funding."
+ },
+ {
+  "id": 871,
+  "name": "Human Rights Watch",
+  "entity_type": "organization",
+  "notes": "Founded 1978, international human rights organization with staff in 40+ countries. Co-founder of Stop Killer Robots campaign (270+ civil society organizations). Published major 2025 report 'A Hazard to Human Rights: Autonomous Weapons Systems and Digital Decision-Making'. Led joint statement with 86 organizations urging U.S. Congress to regulate AI in 2023."
+ },
+ {
+  "id": 872,
+  "name": "Campaign to Stop Killer Robots",
+  "entity_type": "organization",
+  "notes": "Founded in 2012, publicly launched 2013. Global coalition of 270+ NGOs and academic partners across 70+ countries. Led campaign resulting in 30 countries calling for autonomous weapons ban and over 120 states supporting legally binding instrument. Coordinated by Human Rights Watch until 2021, now has dedicated staff team."
+ },
+ {
+  "id": 873,
+  "name": "Mozilla Foundation",
+  "entity_type": "organization",
+  "notes": "Founded 1998 as nonprofit. President Mark Surman leads trustworthy AI initiative since 2019. Has ~$1.4B in reserves and operates Mozilla Ventures ($35M initial fund) investing in 55+ AI startups. Key initiatives include Common Voice (100+ language datasets), Mozilla Technology Fund ($1.3M for trustworthy AI projects), and advocacy for EU AI Act transparency provisions."
+ },
+ {
+  "id": 874,
+  "name": "AFL-CIO",
+  "entity_type": "organization",
+  "notes": "Nation's largest labor federation representing 63 unions and nearly 15 million workers. Launched 'Workers First Initiative on AI' in October 2025 with comprehensive principles for worker-centered AI. Created AFL-CIO Technology Institute in 2021 and AI task force in 2024 to fight for state-level AI safety laws."
+ },
+ {
+  "id": 875,
+  "name": "DAIR",
+  "entity_type": "organization",
+  "notes": "Distributed AI Research Institute founded December 2021 by Timnit Gebru after her dismissal from Google. Documents AI harms on marginalized communities globally, with focus on Africa. Originated the TESCREAL critique arguing AGI ideology has eugenicist roots. Funded by Ford Foundation, MacArthur Foundation, Kapor Center, and Open Society Foundations."
+ },
+ {
+  "id": 876,
+  "name": "Thinking Machines Lab",
+  "entity_type": "organization",
+  "notes": "AI frontier lab founded February 2025 by former OpenAI CTO Mira Murati; raised $2B at $12B valuation led by a16z, with Nvidia, AMD, Cisco as investors. Chief scientist is John Schulman (ex-OpenAI). Focus on post-training efficiency and developer tools; released Tinker for model fine-tuning. Pursuing $5B raise at ~$50B valuation as of late 2025."
+ },
+ {
+  "id": 877,
+  "name": "Cade Metz",
+  "entity_type": "person",
+  "notes": "Broke major AI stories including Geoffrey Hinton leaving Google in 2023 to warn about AI dangers. His 2021 book 'Genius Makers' chronicled the history of deep learning pioneers like Hinton, Yann LeCun, and Demis Hassabis. Has conducted over 400 interviews with AI researchers and industry leaders over 8+ years covering the field. Recently faced criticism from rationalist community members for characterizing AI risk concerns as 'near-religious' in his August 2025 article on Lighthaven."
+ },
+ {
+  "id": 878,
+  "name": "Kevin Roose",
+  "entity_type": "person",
+  "notes": "Author of 'Futureproof: 9 Rules for Humans in the Age of Automation' (2021) and upcoming 'The AGI Chronicles' (2026). Known for viral 2023 conversation with Bing's Sydney chatbot that sparked global AI safety debate. Currently documenting the 'AGI scene' in San Francisco, believing AGI arrival is imminent based on insider consensus. Previously wrote 'Young Money' (2014 NYT bestseller) and 'The Unlikely Disciple' (2009)."
+ },
+ {
+  "id": 879,
+  "name": "Will Knight",
+  "entity_type": "person",
+  "notes": "Veteran AI journalist with over a decade covering the field, writing for major publications since before the current AI boom. Has extensively covered military AI applications, AI governance, and the technical development of systems like ChatGPT. Writes the weekly AI Lab newsletter for Wired and has been featured on podcasts discussing AI policy and safety issues."
+ },
+ {
+  "id": 880,
+  "name": "James Vincent",
+  "entity_type": "person",
+  "notes": "Author of 'Beyond Measure: The Hidden History of Measurement' (New Yorker and Economist book of the year, NY Times critics' pick). Has extensively covered humanoid robotics, AI chatbots, and automation's impact on labor. Featured in Harper's December 2025 cover story on humanoid robots and wrote influential LRB piece 'Horny Robot Baby Voice' on AI companion risks. Warns specifically about billionaire-led automation displacing workers rather than robot uprising scenarios."
+ },
+ {
+  "id": 881,
+  "name": "Melissa Heikkil\u00e4",
+  "entity_type": "person",
+  "notes": "Named one of 100 Brilliant Women in AI Ethics (2024) and Forbes 30 Under 30 in Media (2020). Known for immersive journalism including creating deepfakes of herself for stories. Co-wrote 'Is AI Hitting a Wall?' analysis in Financial Times (August 2025). Frequently quoted expert on AI developments and policy implications."
+ },
+ {
+  "id": 882,
+  "name": "Parmy Olson",
+  "entity_type": "person",
+  "notes": "Won 2024 Financial Times and Schroders Business Book of the Year Award for 'Supremacy.' Previously authored 'We Are Anonymous' (2012) about hacker collective. Named Digital Journalist of the Year 2023 by PRCA and listed as Top 100 People in UK Tech 2019 by Business Insider. Covers AI development since 2016, emphasizing the need for corporate accountability and transparent governance structures."
+ },
+ {
+  "id": 883,
+  "name": "Madhumita Murgia",
+  "entity_type": "person",
+  "notes": "First AI Editor at Financial Times (appointed January 2023). Won UK Press Awards for Tech/Science Journalist of the Year in 2024 and 2025. Code Dependent was shortlisted for Women's Prize for Non-Fiction 2024. Has academic background in biology and science journalism from Oxford and NYU, with previous research on HIV vaccine development."
+ },
+ {
+  "id": 884,
+  "name": "Matt O'Brien",
+  "entity_type": "person",
+  "notes": "Leading AP technology reporter covering major AI developments including the $1.5 billion Anthropic copyright settlement, Pentagon-Anthropic disputes over military AI use, and AI's impact on software engineering jobs. His reporting frequently examines the intersection of AI advancement with legal, regulatory, and societal challenges. Covers stories from Providence, Rhode Island and has extensive bylines across major publications."
+ },
+ {
+  "id": 885,
+  "name": "Nitasha Tiku",
+  "entity_type": "person",
+  "notes": "Tiku has extensively covered AI safety movements, broke major stories about AI training data practices including Anthropic's book scanning project, and reported on AI chatbot harms to teenagers including suicide cases. Her 2022 story about Google engineer Blake Lemoine's claims of AI sentience sparked global debate about AI consciousness and corporate AI development practices."
+ },
+ {
+  "id": 886,
+  "name": "Kara Swisher",
+  "entity_type": "person",
+  "notes": "In February 2024 interviews, called for government dialogue with tech companies about AI regulation, comparing it to regulation in other industries. Argued that AI creators should not receive blanket free speech protections and advocated for legal liability for harmful AI-generated content like deepfakes. Has been covering tech industry since 1990s and regularly interviews major AI company CEOs including Sam Altman."
+ },
+ {
+  "id": 887,
+  "name": "Ethan Mollick",
+  "entity_type": "person",
+  "notes": "Named one of TIME Magazine's Most Influential People in AI (2024). Author of New York Times bestseller 'Co-Intelligence: Living and Working with AI' (2024). Advised President's Intelligence Advisory Board on AI in 2023. Conducts extensive research on AI's impact on work and education, publishing papers on AI agents in education and persuasion techniques affecting AI systems."
+ },
+ {
+  "id": 888,
+  "name": "Leopold Aschenbrenner",
+  "entity_type": "person",
+  "notes": "Published influential 165-page essay 'Situational Awareness' in June 2024 predicting AGI by 2027. In mid-2024 founded the AI-focused hedge fund Situational Awareness LP, reportedly ~$1.5B in AUM and ~$5.5B in disclosed U.S. equity exposure (13F) by early 2026, concentrated in power utilities and Bitcoin miners as plays on AI infrastructure demand. Departed OpenAI in April 2024; he says he was fired after raising security concerns with the board about Chinese espionage vulnerabilities."
+ },
+ {
+  "id": 889,
+  "name": "Nathan Lambert",
+  "entity_type": "person",
+  "notes": "Leading expert on RLHF and post-training methods who has worked on major open models including Tulu 3, Zephyr, and OLMo. Argues that open models will remain 6-18 months behind frontier closed models but serve as crucial infrastructure for AI research. Published extensively on AI alignment, preference learning, and model training methods."
+ },
+ {
+  "id": 890,
+  "name": "Zvi Mowshowitz",
+  "entity_type": "person",
+  "notes": "Writes extensive weekly AI policy analysis covering technical developments, regulatory debates, and existential risk. Previously worked as professional trader, game designer, and startup founder. Focuses heavily on AI alignment challenges and critiques both accelerationist and overly restrictive approaches. Regularly analyzes work from major AI labs and policy developments."
+ },
+ {
+  "id": 891,
+  "name": "Lex Fridman",
+  "entity_type": "person",
+  "notes": "Hosts one of the most influential AI podcasts with 4.88M YouTube subscribers and 855M views. Rose to prominence in 2019 after Elon Musk praised his non-peer-reviewed Tesla Autopilot study, which was later criticized and removed from MIT's website. Transitioned from MIT AgeLab to unpaid role in 2019, currently research scientist at MIT LIDS since 2022. His podcast features extensive conversations with AI researchers, policymakers, and tech leaders, making him a key narrator in AI discourse."
+ },
+ {
+  "id": 892,
+  "name": "Dwarkesh Patel",
+  "entity_type": "person",
+  "notes": "Conducts in-depth interviews with AI leaders including Dario Amodei, Elon Musk, and other prominent figures. Named one of TIME's Most Influential People in AI. Argues current RL scaling contradicts short AGI timelines and that economic diffusion lag is 'cope for missing capabilities.' Believes continual learning is the key bottleneck to true AGI."
+ },
+ {
+  "id": 893,
+  "name": "Craig Smith",
+  "entity_type": "person",
+  "notes": "Former NYT foreign correspondent who covered 40+ countries including conflicts in Afghanistan, Iraq, and Israeli-Lebanese war. Started Eye on AI podcast after interviewing Geoff Hinton in 2017, which awakened his interest in AI. Served on National Security Commission on AI until October 2021. Eye on AI podcast ranked #2-3 among AI podcasts by Feedspot."
+ },
+ {
+  "id": 894,
+  "name": "Nathaniel Whittemore",
+  "entity_type": "person",
+  "notes": "Hosts daily AI news analysis podcast The AI Daily Brief (formerly The AI Breakdown) since April 2023. Founded Superintelligent, an AI planning platform for enterprises that helps with agent deployment and AI transformation. Previously founded The Breakdown Network and hosted crypto podcast acquired by Blockworks. Known for analytical approach bridging technical developments with business implications."
+ },
+ {
+  "id": 895,
+  "name": "Sneha Revanur",
+  "entity_type": "person",
+  "notes": "Founded Encode Justice at age 15 in 2020, initially opposing California Proposition 25's algorithmic cash bail system. Named to TIME's inaugural list of 100 most influential people in AI (2023) as the youngest person. Served as reviewer for Future of Life Institute's AI Safety Index evaluating major AI companies. Co-sponsored California SB 53 requiring transparency and safety protocols from frontier AI companies."
+ },
+ {
+  "id": 896,
+  "name": "Mary Wareham",
+  "entity_type": "person",
+  "notes": "Led the global Campaign to Stop Killer Robots from 2013-2021, coordinating 270+ civil society organizations across 65+ countries. Co-authored major Human Rights Watch reports including 'A Hazard to Human Rights: Autonomous Weapons Systems and Digital Decision-Making' (2025). Previously coordinated successful campaigns for the Mine Ban Treaty and Convention on Cluster Munitions. Currently advocating for UN Secretary-General Guterres' call for legally binding agreement on autonomous weapons by 2026."
+ },
+ {
+  "id": 897,
+  "name": "Rebecca Finlay",
+  "entity_type": "person",
+  "notes": "Leads Partnership on AI, a nonprofit with 141 partners across 19 countries focused on responsible AI development. Previously founded CIFAR's AI & Society program, one of the first international multi-stakeholder AI initiatives. Regularly speaks at major AI policy venues including UK AI Safety Summit, OECD, and FTC. Has been featured in Financial Times, The Guardian, and Nature Machine Intelligence on AI governance issues."
+ },
+ {
+  "id": 898,
+  "name": "Mark Surman",
+  "entity_type": "person",
+  "notes": "Founded Mozilla AI with $30M investment in 2023 and launched Mozilla Ventures as impact venture fund. Led creation of Mozilla's 'Public AI' vision advocating for parallel public ecosystem to counter big tech dominance. Instrumental in Mozilla's pivot from web browser advocacy to AI policy leadership, emphasizing open-source as critical for innovation and competition. Co-signed 2023 letter on open-source AI safety with over 1,500 others."
+ },
+ {
+  "id": 899,
+  "name": "Veena Dubal",
+  "entity_type": "person",
+  "notes": "Leading scholar on 'algorithmic wage discrimination' who conducted ethnographic research on SF taxi drivers pre- and post-Uber. Her research has been cited by California Supreme Court and influenced policy debates including support for Assembly Bill 5. Appointed AAUP General Counsel in 2024. Has testified to regulatory bodies and her work is cited in CFPB guidance on algorithmic employment decisions."
+ },
+ {
+  "id": 900,
+  "name": "Alex Hanna",
+  "entity_type": "person",
+  "notes": "Co-authored 'The AI Con: How to Fight Big Tech's Hype and Create the Future We Want' (2025) with Emily Bender, critiquing AI as primarily advanced autocomplete systems. Former Google AI ethicist who left in 2022 following controversies around AI ethics research. Focuses on data bias, racial inequality in AI systems, and advocates for community-owned technological alternatives like Te Hiku Media in New Zealand."
+ },
+ {
+  "id": 901,
+  "name": "Liz Shuler",
+  "entity_type": "person",
+  "notes": "Leads the AFL-CIO's \"Workers First Initiative on AI\" launched in fall 2024. Has partnered with Microsoft on AI and labor issues while maintaining advocacy for worker protections. Testified that \"70% of workers worry about being replaced by AI or automation\" and warns AI decisions made now will \"shape the next 50 years.\" Represents nearly 15 million workers across 63 unions."
+ },
+ {
+  "id": 902,
+  "name": "Mira Murati",
+  "entity_type": "person",
+  "notes": "Left OpenAI in September 2024 citing governance changes and founded Thinking Machines Lab in February 2025, raising $2 billion at $12 billion valuation. Served as interim OpenAI CEO during November 2023 leadership crisis. Led development of ChatGPT, DALL-E, GPT-4, and Sora. Founded Thinking Machines Lab with focus on embedding human values into AI systems and defeating nondeterminism in LLM inference."
+ },
+ {
+  "id": 904,
+  "name": "Electronic Frontier Foundation",
+  "entity_type": "organization",
+  "notes": "Leading digital rights nonprofit founded in 1990. Opposes AI-powered surveillance and use of AI in high-stakes government decisions. Advocates for civil-liberties-based, targeted AI regulation protecting privacy and due process."
+ },
+ {
+  "id": 905,
+  "name": "ACLU",
+  "entity_type": "organization",
+  "notes": "The American Civil Liberties Union (ACLU) is a nonpartisan nonprofit and 501(c)(4) advocacy organization defending constitutional rights. Its Speech, Privacy & Technology Project focuses on AI-driven surveillance, opposing facial recognition use by law enforcement, and calling for targeted civil rights protections. The ACLU supports the AI Civil Rights Act of 2025, partners with the AI Now Institute, and is funded through membership dues, individual donations, and private foundations."
+ },
+ {
+  "id": 906,
+  "name": "Data & Society",
+  "entity_type": "organization",
+  "notes": "Independent nonprofit research institute studying social and political implications of AI, data, and automation. Research programs include AI on the Ground, Labor Futures, and Trustworthy Infrastructure. January 2026 brief critiqued US government market intervention to bolster AI sector. Funded by independent grants; fiercely protects researcher autonomy from funder influence."
+ },
+ {
+  "id": 907,
+  "name": "Center for Democracy & Technology",
+  "entity_type": "organization",
+  "notes": "Center for Democracy & Technology (CDT) is a Washington, DC nonprofit founded in 1994 focused on civil liberties, privacy, and democratic values in digital policy. Its AI Governance Lab (led by Miranda Bogen) is a prominent civil-society voice in U.S. AI policy, engaging Congress, federal agencies, and international bodies on algorithmic accountability, surveillance, and AI rights."
+ },
+ {
+  "id": 909,
+  "name": "Federal Trade Commission",
+  "entity_type": "organization",
+  "notes": "The Federal Trade Commission (FTC) is an independent U.S. federal agency responsible for consumer protection and preventing anticompetitive business practices. In the AI policy ecosystem, the FTC is a primary enforcement body for AI-related consumer harms, using Section 5 of the FTC Act \u2014 which prohibits unfair or deceptive acts or practices \u2014 as its principal enforcement vehicle. Under Biden-era Chair Lina Khan (2021\u20132025), the FTC took an aggressive posture on AI and Big Tech. Under Trump-appointed Chair Andrew Ferguson (2025\u2013present), the FTC shifted to a lighter-touch model: enforcing existing consumer protection law against AI fraud and deception without pursuing new AI-specific rulemaking. In March 2026, the FTC issued a Policy Statement clarifying how Section 5 applies to AI systems. The agency's AI focus areas include algorithmic discrimination, deceptive AI-generated content, and privacy violations in AI data collection."
+ },
+ {
+  "id": 910,
+  "name": "NTIA",
+  "entity_type": "organization",
+  "notes": "The National Telecommunications and Information Administration (NTIA) is a Commerce Department agency that advises the President on telecom and information policy. It published a landmark AI Accountability Policy Report (2024) urging independent audits of high-risk AI systems. Under the Trump 2025 AI Action Plan, NTIA shifted focus toward promoting U.S.-led AI and 6G connectivity, and gained authority to withhold broadband funding from states with laws deemed to obstruct national AI policy."
+ },
+ {
+  "id": 912,
+  "name": "Department of Justice",
+  "entity_type": "organization",
+  "notes": "Federal law enforcement agency operating the AI Litigation Task Force (est. Jan 2026) to challenge state AI laws. Pursues AI antitrust cases and False Claims Act enforcement; historically oversaw civil rights compliance with law enforcement AI use."
+ },
+ {
+  "id": 913,
+  "name": "CISA",
+  "entity_type": "organization",
+  "notes": "Cybersecurity and Infrastructure Security Agency (CISA) is the DHS component established in 2018 as the nation''s cyber defense agency. Leads federal efforts on critical-infrastructure security and has taken an increasingly active role in AI policy \u2014 co-authoring secure-AI-development guidance with NSA and allied cyber agencies and operating as a convening body for AI safety and security incident reporting."
+ },
+ {
+  "id": 914,
+  "name": "Department of Commerce",
+  "entity_type": "organization",
+  "notes": "Houses NIST, which develops the AI Risk Management Framework, and BIS, which controls AI chip exports. Under Trump, overseeing the American AI Exports Program and revising NIST's AI RMF to remove DEI and climate references."
+ },
+ {
+  "id": 915,
+  "name": "European Commission",
+  "entity_type": "organization",
+  "notes": "EU executive body responsible for implementing the AI Act, which entered into force August 2024. Key 2025 milestones: prohibited practices applied February 2025, GPAI model obligations August 2025. Full application by August 2026. Issues binding guidelines and manages the AI Office for enforcement. Proposed Digital Omnibus amendments in November 2025 to adjust high-risk system timelines."
+ },
+ {
+  "id": 916,
+  "name": "Joy Buolamwini",
+  "entity_type": "person",
+  "notes": "Her Gender Shades study (2018) revealed facial recognition error rates of 34.7% for darker-skinned women vs 0.8% for lighter-skinned men, prompting IBM, Microsoft and Amazon to improve their systems. Testified before Congress multiple times and advised President Biden on his October 2023 AI Executive Order. Founded AJL in 2016 after experiencing facial recognition failing to detect her face until she wore a white mask."
+ },
+ {
+  "id": 917,
+  "name": "Cindy Cohn",
+  "entity_type": "person",
+  "notes": "Led landmark Bernstein v. Department of Justice case establishing encryption as protected First Amendment speech. Stepping down as EFF Executive Director in mid-2026 after 25+ years with the organization. Published 'Privacy's Defender: My Thirty-Year Fight Against Digital Surveillance' (MIT Press, March 2026). Co-hosts EFF's 'How to Fix the Internet' podcast and has built EFF into a 125-person organization focused on digital rights."
+ },
+ {
+  "id": 918,
+  "name": "Corynne McSherry",
+  "entity_type": "person",
+  "notes": "EFF Legal Director since before 2024, specializing in AI policy, copyright, and free speech. Testified before Congress on Section 230 and DMCA issues. Co-signed Mozilla's joint statement on AI safety and openness. Consistently argues that context matters in AI regulation and warns against rushing to broad regulatory solutions that could harm beneficial uses."
+ },
+ {
+  "id": 919,
+  "name": "Ben Wizner",
+  "entity_type": "person",
+  "notes": "Has been Edward Snowden's attorney and gained prominence in surveillance law. In 2017, wrote extensively about AI surveillance threats in partnership with AI Now initiative. Warns that automated surveillance systems threaten constitutional rights and could create a society where people feel watched 'all the time.' Focuses primarily on civil liberties implications rather than technical AI safety."
+ },
+ {
+  "id": 920,
+  "name": "Janet Haven",
+  "entity_type": "person",
+  "notes": "Chaired the Rights, Trust, and Safety working group of the National AI Advisory Committee from 2022-2025. Previously spent over a decade at Open Society Foundations overseeing technology and human rights grantmaking. Co-authored op-eds criticizing industry self-regulation and advocating for stronger government oversight of AI systems. Focuses extensively on sociotechnical research approaches and worker participation in AI governance."
+ },
+ {
+  "id": 921,
+  "name": "danah boyd",
+  "entity_type": "person",
+  "notes": "Founded Data & Society in 2013 to study sociotechnical systems and bias. Recently published 'We Need an Interventionist Mindset' (March 2025) arguing against deterministic AI rhetoric. Elected AAAS fellow in 2025. Currently conducting ethnographic study of US Census to understand data legitimacy. Known for critiquing both AI hype and fear cycles, advocating for probabilistic rather than deterministic thinking about AI futures."
+ },
+ {
+  "id": 922,
+  "name": "Alexandra Reeve Givens",
+  "entity_type": "person",
+  "notes": "Testified before House Education and Workforce Committee in January 2026 on 'Building an AI-Ready America.' Criticized narrow focus on long-term risks at 2023 Bletchley Park AI Safety Summit, advocating for attention to current AI harms. Daughter of actor Christopher Reeve, serves on foundation board focused on spinal cord injury research using AI technologies."
+ },
+ {
+  "id": 923,
+  "name": "Sarah Myers West",
+  "entity_type": "person",
+  "notes": "Served as Senior Advisor on AI at the Federal Trade Commission where she worked on competition and consumer protection matters. Testified before Congress on AI, competition and data privacy issues in December 2023. Co-authored influential AI Now Institute reports on AI governance and delivered keynote at Paris AI Action Summit in February 2025 focusing on AI's environmental impacts. Has forthcoming book 'Tracing Code' (University of California Press) examining origins of data capitalism."
+ },
+ {
+  "id": 924,
+  "name": "Safiya Noble",
+  "entity_type": "person",
+  "notes": "Noble's 2018 book 'Algorithms of Oppression' documented how Google search results for 'Black girls' returned pornographic content, demonstrating algorithmic bias in search engines. She was awarded a MacArthur Fellowship in 2021 for her groundbreaking work on algorithmic discrimination. Her research focuses on how AI systems reinforce racism and sexism, particularly affecting marginalized communities, and she argues that AI will become a major human rights issue in the 21st century."
+ },
+ {
+  "id": 925,
+  "name": "Ruha Benjamin",
+  "entity_type": "person",
+  "notes": "Coined the term 'New Jim Code' to describe how digital technologies embed racism while appearing neutral. Her 2019 book 'Race After Technology' won the Oliver Cromwell Cox Book Award for anti-racist scholarship. Delivered 2024 Tanner Lectures at Harvard arguing tech elites cannot be trusted as stewards of collective good. Founded the Ida B. Wells Just Data Lab focusing on algorithmic justice."
+ },
+ {
+  "id": 926,
+  "name": "Cathy O'Neil",
+  "entity_type": "person",
+  "notes": "Founded ORCAA in 2017 to audit algorithms for bias and fairness. Her 2016 book 'Weapons of Math Destruction' was longlisted for the National Book Award and became a NYT bestseller. Testified to Congress on algorithmic accountability and developed the 'Ethical Matrix' framework for auditing AI systems. Won the MAA Euler Book Prize in 2019."
+ },
+ {
+  "id": 927,
+  "name": "Virginia Eubanks",
+  "entity_type": "person",
+  "notes": "Eubanks' 2018 book 'Automating Inequality' investigates how AI systems in welfare, housing, and child welfare disproportionately harm poor and working-class people. She coined the term 'digital poorhouse' to describe technological systems that embed assumptions about poverty. Her work focuses on algorithmic accountability and has won multiple awards including the 2019 Lillian Smith Book Award and 2018 McGannon Center Book Prize."
+ },
+ {
+  "id": 928,
+  "name": "Lina Khan",
+  "entity_type": "person",
+  "notes": "Led FTC's AI enforcement including OpenAI investigation (July 2023), Rite Aid AI facial recognition ban (December 2023), and joint interagency AI statement with DOJ/CFPB/EEOC (April 2023). Published op-ed 'We Must Regulate A.I.' in New York Times. Estimated 15% p(doom) according to sources. Known for aggressive antitrust enforcement and authored influential 'Amazon's Antitrust Paradox' as law student."
+ },
+ {
+  "id": 929,
+  "name": "Alan Davidson",
+  "entity_type": "person",
+  "notes": "Led NTIA's AI Accountability Policy Report (March 2024) calling for improved transparency, independent evaluations, and consequences for AI systems imposing unacceptable risks. Currently working on assessment of benefits and harms of open-weight AI models per Biden's AI Executive Order, with report due to White House in July 2024. Co-leads President's Task Force on Kids Online Health and Safety and oversees $42 billion broadband infrastructure programs."
+ },
+ {
+  "id": 930,
+  "name": "Laurie Locascio",
+  "entity_type": "person",
+  "notes": "As NIST Director (2022-2024), Locascio launched the U.S. AI Safety Institute in November 2023 and oversaw release of the AI Risk Management Framework in January 2023. She participated in roundtables on AI safety and testified before Congress on NIST's AI priorities, securing $50M in FY2025 budget for AI safety work. Now leads ANSI, coordinating private sector standards development including AI standards."
+ },
+ {
+  "id": 931,
+  "name": "Elham Tabassi",
+  "entity_type": "person",
+  "notes": "Iranian-born, joined NIST in 1999 after coming to US in 1994 for master's in electrical engineering. Principal architect of NIST Fingerprint Image Quality standard used by FBI. Led development of AI Risk Management Framework 1.0 released January 2023 that laid groundwork for Biden's AI Executive Order. Named by Time Magazine as one of 100 most influential people in AI in 2024."
+ },
+ {
+  "id": 932,
+  "name": "Jonathan Kanter",
+  "entity_type": "person",
+  "notes": "Led DOJ Antitrust Division 2021-2024, confirmed by Senate 68-29. Delivered remarks at Stanford AI workshop stating DOJ would scrutinize AI sector 'with urgency' to prevent monopoly consolidation. Worked with FTC to divide AI oversight responsibilities - DOJ handles chip manufacturers while FTC oversees software companies. Appointed DOJ's first Chief Technologist to enhance AI expertise for investigations."
+ },
+ {
+  "id": 933,
+  "name": "Jen Easterly",
+  "entity_type": "person",
+  "notes": "Served as CISA Director from July 2021 to January 2025. While CISA's mandate is primarily cybersecurity, the agency had a supporting role in implementing parts of Biden's Executive Order 14110 on AI safety (Oct 2023, since rescinded by Trump's EO 14179 in Jan 2025). Frequently warns that AI represents 'the most powerful weapon of our time' and advocates for 'secure-by-design' AI development. Named CEO of RSA Conference in January 2026 after leaving CISA. Rhodes Scholar and 20-year Army veteran who helped establish US Cyber Command."
+ },
+ {
+  "id": 934,
+  "name": "Stefano Mazzocchi",
+  "entity_type": "person",
+  "notes": "No information found in search results for a Stefano Mazzocchi serving as Chief AI Officer at the Department of Commerce. Search results show other individuals with similar names in different roles."
+ },
+ {
+  "id": 935,
+  "name": "Margrethe Vestager",
+  "entity_type": "person",
+  "notes": "Led development of the EU AI Act (2021-2024) establishing world's first major AI legislation with risk-based approach. Known as aggressive antitrust enforcer against Big Tech companies including landmark cases against Google, Apple, Amazon, and Facebook. Served as EU Competition Commissioner 2014-2024 and Executive Vice President for Digital Age 2019-2024. Described by critics as implementing 'anti-American antitrust' policies that disproportionately target U.S. tech companies."
+ },
+ {
+  "id": 936,
+  "name": "Thierry Breton",
+  "entity_type": "person",
+  "notes": "Led the 38-hour 'trilogue' negotiations that finalized the EU AI Act in December 2023. Sanctioned by the US in December 2024 with travel ban and asset freeze for his role in EU tech regulation, specifically the Digital Services Act. Previously wrote prescient sci-fi novels in the 1980s about fake news and generative AI. Resigned from the European Commission in September 2024 amid tensions with Ursula von der Leyen."
+ },
+ {
+  "id": 937,
+  "name": "Ted Chiang",
+  "entity_type": "person",
+  "notes": "Won four Hugo Awards, four Nebula Awards, and 2024 PEN/Malamud Award for short story excellence. Named one of Time's 100 Most Influential People in AI (2023). Wrote influential New Yorker essays including \"Why A.I. Isn't Going to Make Art\" and \"ChatGPT Is a Blurry JPEG of the Web\" arguing AI cannot create true art due to lack of intentional choice-making. Studied computer science at Brown University, providing technical foundation for his AI commentary."
+ },
+ {
+  "id": 938,
+  "name": "Yuval Noah Harari",
+  "entity_type": "person",
+  "notes": "Delivered major AI warnings at Davos 2026 WEF, predicting AI will create identity and immigration crises for every country. Warns that 'anything made of words will be taken over by AI' including laws, books, and religions. Has sold over 50 million books in 65 languages and regularly advises world leaders including Emmanuel Macron and Angela Merkel. Published 'Nexus: A Brief History of Information Networks from the Stone Age to AI' in 2024."
+ },
+ {
+  "id": 939,
+  "name": "Kate Crawford",
+  "entity_type": "person",
+  "notes": "Co-authored influential 2018 paper 'Datasheets for Datasets' with Timnit Gebru that has been integrated into the EU AI Act. Her work 'Anatomy of an AI System' with Vladan Joler won the Beazley Design Award 2019 and is in MoMA's permanent collection. Testified before U.S. Senate Committee on the Judiciary in 2023 arguing that AI half-measures like transparency and bias audits are insufficient. Co-founded AI Now Institute in 2017 to explore policy approaches to AI's social consequences."
+ },
+ {
+  "id": 940,
+  "name": "Cory Doctorow",
+  "entity_type": "person",
+  "notes": "Coined the viral term 'enshittification' to describe platform decay. Has upcoming book 'The Reverse Centaur's Guide to Life After AI' (Farrar, Straus and Giroux / Verso, June 23 2026) \u2014 title invokes the 'reverse centaur' figure forced by technology to work at an inhuman pace. Views AI as 'a collection of moderately useful tools being billed as a supernatural being' and argues the AI bubble will cause economic damage when it deflates. Warns that 'AI can't do your job, but an AI salesman can convince your boss to fire you and replace you with AI that can't do your job.'"
+ },
+ {
+  "id": 941,
+  "name": "Naomi Klein",
+  "entity_type": "person",
+  "notes": "Published 2023 Guardian piece 'AI machines aren't hallucinating, But their makers are' arguing AI development represents 'the largest theft in human history.' Describes AI as creating a 'three-legged stool' of tech, fossil fuels, and state power that provides a lifeline to fossil fuel industries. Warns AI undermines belief in reality itself through deepfakes and generated content."
+ },
+ {
+  "id": 942,
+  "name": "Brian Christian",
+  "entity_type": "person",
+  "notes": "Won 2022 National Academies Eric and Wendy Schmidt Awards for Excellence in Science Communications. Currently pursuing DPhil at Oxford under Chris Summerfield focusing on cognitive models of human decision-making for AI alignment. His book 'The Alignment Problem' was called 'the one book to read on AI' by The New York Times and bridges technical AI safety with present-day algorithmic bias issues."
+ },
+ {
+  "id": 943,
+  "name": "Shalini Kantayya",
+  "entity_type": "person",
+  "notes": "Her 2020 Sundance documentary 'Coded Bias' follows MIT researcher Joy Buolamwini's discovery of racial bias in facial recognition systems and advocates for algorithmic justice. The film was broadcast on PBS Independent Lens and globally on Netflix, winning Best Director at Social Impact Media Awards. Her work focuses on how AI systems perpetuate inequality and erode civil rights, particularly impacting marginalized communities through biased hiring, healthcare, and criminal justice algorithms."
+ },
+ {
+  "id": 944,
+  "name": "Stanford Digital Economy Lab",
+  "entity_type": "organization",
+  "notes": "Stanford Digital Economy Lab, directed by Erik Brynjolfsson, researches the economic effects of AI on labor, productivity, and inequality. In Dec 2025 it published The Digitalist Papers Vol. 2 on transformative AI economics. Research shows early evidence of AI displacing entry-level workers, informing targeted labor and technology policy recommendations."
+ },
+ {
+  "id": 945,
+  "name": "Stanford SIEPR",
+  "entity_type": "organization",
+  "notes": "Stanford Institute for Economic Policy Research (SIEPR) is Stanford''s flagship economic-policy center. While not AI-specific, it hosts significant AI-and-labor and AI-and-productivity research (including Erik Brynjolfsson''s Digital Economy Lab) and serves as a venue for economists engaging AI''s macroeconomic and workforce implications."
+ }
+]

@@ -1,0 +1,1274 @@
+[
+ {
+  "id": 1,
+  "name": "Stuart Russell",
+  "entity_type": "person",
+  "notes": "Stuart Russell is a professor of computer science at the University of California, Berkeley and holds the Smith-Zadeh Chair in Engineering. He co-authored the textbook 'Artificial Intelligence: A Modern Approach' with Peter Norvig, which is used in over 1,500 universities in 135 countries. Russell founded the Center for Human-Compatible Artificial Intelligence at UC Berkeley in 2016 and serves as its director. He is president of the International Association for Safe and Ethical AI, which he co-founded."
+ },
+ {
+  "id": 2,
+  "name": "Chuck Schumer",
+  "entity_type": "person",
+  "notes": "Chuck Schumer is a Democratic U.S. Senator from New York who has served since 1999 and is currently Senate Majority Leader. He led a bipartisan working group that released a 31-page AI policy roadmap in May 2024, recommending at least $32 billion in government spending to accelerate AI research and development. The roadmap was developed after months of AI Insight Forums with tech companies, civil rights leaders, and other stakeholders. Schumer has described regulating artificial intelligence as \"a challenge for Congress unlike any other\" and has made election protection from AI interference a high priority."
+ },
+ {
+  "id": 3,
+  "name": "Marc Andreessen",
+  "entity_type": "person",
+  "notes": "Co-founder of Netscape (Mosaic browser) and co-founder/general partner of Andreessen Horowitz (a16z), the venture capital firm managing ~$42 billion in assets. In October 2023 published the 'Techno-Optimist Manifesto,' a 5,200-word essay arguing growth and unconstrained technological development are moral imperatives and that 'any deceleration of AI will cost lives... a form of murder.' Aligned with effective accelerationism (e/acc). Led a16z's high-profile 2024 lobbying campaign against California SB 1047 (the frontier-model safety bill authored by Sen. Scott Wiener), launching stopsb1047.com, hiring a Newsom advisor as lobbyist, and coordinating opposition with portfolio founders and Y Combinator; bill author Wiener said 'a16z was at the heart of a lot of the opposition.' In November 2024 joined with Microsoft on a joint plea against AI regulation. Net worth estimated ~$1.9 billion (Jan 2025)."
+ },
+ {
+  "id": 4,
+  "name": "Casey Newton",
+  "entity_type": "person",
+  "notes": "Casey Newton is the founder and editor of Platformer, an independent publication devoted to exploring the intersection of technology and democracy. He co-hosts Hard Fork, a podcast about the future that is already here, alongside a colleague at The New York Times. Prior to founding Platformer in 2020, Casey spent 10 years covering Silicon Valley for The Verge, CNET, and the San Francisco Chronicle. In 2020, Casey was a finalist for the National Magazine Award for his series of investigative reports about content moderation that lead to a $52 million settlement for Facebook moderators who developed PTSD on the job."
+ },
+ {
+  "id": 6,
+  "name": "Dario",
+  "entity_type": "person",
+  "notes": "This is a test to add more information to the Dario entry and see how a second submission works with the UI"
+ },
+ {
+  "id": 7,
+  "name": "Brian Schatz",
+  "entity_type": "person",
+  "notes": "Brian Schatz is Hawaii's senior United States Senator who has served since 2012 and focuses on helping workers, veterans, and families while leading key legislation on health care, climate change, and technology. He serves as Chairman of the Senate Committee on Indian Affairs and is a member of multiple committees including Appropriations, Commerce Science and Transportation, Foreign Relations, and the Select Committee on Ethics. Schatz is currently a candidate for Democratic whip, the No. 2 post in Senate Democratic leadership, after Dick Durbin announced he won't seek reelection. In 2024, as Chairman of Indian Affairs, he led passage of 16 bills and helped secure more than $15 billion in investments for Native communities nationwide."
+ },
+ {
+  "id": 8,
+  "name": "Dario Amodei",
+  "entity_type": "person",
+  "notes": "Dario Amodei (born 1983) is an American artificial intelligence researcher and entrepreneur who co-founded Anthropic in 2021 with his sister Daniela Amodei. He previously served as vice president of research at OpenAI, where he led the development of large language models like GPT-2 and GPT-3. Amodei earned his doctorate degree in biophysics from Princeton University as a Hertz Fellow, and was a postdoctoral scholar at the Stanford University School of Medicine. In 2025, Time magazine listed Amodei as one of the world's 100 most influential people."
+ },
+ {
+  "id": 10,
+  "name": "Alexandria Ocasio-Cortez",
+  "entity_type": "person",
+  "notes": "Rep. Alexandria Ocasio-Cortez (D-N.Y.) announced the Artificial Intelligence (AI) Data Center Moratorium Act on March 25, 2026, alongside Sen. Bernie Sanders. She announced on Friday that she is jumping into the race to be the top Democrat on the influential House Oversight Committee. Ocasio-Cortez was born on October 13, 1989, in the Bronx, New York, and began representing New York's 14th congressional district in 2019. Taking office at age 29, she became the youngest woman ever elected to Congress and is a member of the Democratic Party."
+ },
+ {
+  "id": 11,
+  "name": "Marsha Blackburn",
+  "entity_type": "person",
+  "notes": "Marsha Blackburn is the senior senator for Tennessee and the first woman to represent the Volunteer State in the United States Senate. She released a discussion draft of her legislative framework to codify President Trump's executive order to create one rulebook for artificial intelligence (AI) that protects children, creators, conservatives, and communities from harm while ensuring the United States wins the global race for AI supremacy. She was sworn into the 119th Congress to begin her second term in the United States Senate, taking the oath of office administered by U.S. Supreme Court Justice Amy Coney Barrett. She serves on the Deputy Whip Team and is a member of the Finance Committee; the Commerce, Science & Transportation Committee; the Veterans' Affairs Committee; and the Judiciary Committee."
+ },
+ {
+  "id": 12,
+  "name": "Anton Korinek",
+  "entity_type": "person",
+  "notes": "Anton Korinek is a Professor at the University of Virginia, Department of Economics and Darden School of Business as well as the Faculty Director of the Economics of Transformative AI (EconTAI) Initiative. He was named to the 2025 TIME100 AI list of the most influential people in artificial intelligence. He is a Nonresident Senior Fellow at Brookings and the Peterson Institute, a Research Associate at the NBER, a Research Fellow at the CEPR, and serves on Anthropic's Economic Advisory Council. He received his PhD from Columbia University in 2007 after several years of work experience in the IT and financial sectors."
+ },
+ {
+  "id": 13,
+  "name": "Daniela Amodei",
+  "entity_type": "person",
+  "notes": "Daniela Amodei is the president and co-founder of Anthropic, an AI safety and research company that develops the Claude large language model. She co-founded the company with her brother Dario Amodei in 2021 after leaving OpenAI, where she served as VP of Safety and Policy. According to Wikipedia, she was born in 1987 and graduated from the University of California, Santa Cruz with a Bachelor of Arts in English Literature. As of February 2026, Forbes estimated her net worth to be $7 billion."
+ },
+ {
+  "id": 14,
+  "name": "David Evan Harris",
+  "entity_type": "person",
+  "notes": "David Evan Harris is a Chancellor's Public Scholar at UC Berkeley and a continuing lecturer at the Haas School of Business. He was named one of Business Insider's top 100 people in AI in 2023. In his previous role at Meta (formerly Facebook), Harris managed teams of quantitative and qualitative researchers working on responsible AI, social impact, and civic integrity. He took a lead role in drafting California's AI Transparency Act of 2025 (AB 853)."
+ },
+ {
+  "id": 15,
+  "name": "Kim Stanley Robinson",
+  "entity_type": "person",
+  "notes": "Kim Stanley Robinson is described as \"one of human civilization's greatest living science fiction writers\" and author of works including the Hugo Award-winning Mars trilogy, Nebula Award-winning 2312, and The Ministry for the Future. He was born on March 23, 1952, and is best known for his Mars trilogy of novels. Robinson earned a PhD in English from UC San Diego in 1982, writing his dissertation on Philip K. Dick under Marxist scholar Fredric Jameson. He has lived in Davis, California since 1978 and identifies as a democratic socialist, being a dues-paying member of the Democratic Socialists of America."
+ },
+ {
+  "id": 16,
+  "name": "Jakub Pachocki",
+  "entity_type": "person",
+  "notes": "Jakub Pachocki is OpenAI's chief scientist who sets the company's long-term research goals and played key roles in the development of both GPT-4 and reasoning models. He was born in 1991 in Gda\u0144sk, Poland, and joined OpenAI in 2017, becoming chief scientist in May 2024 after Ilya Sutskever left the company. Pachocki obtained his PhD from Carnegie Mellon University under the supervision of Gary Miller and was a six-time finalist of the International Olympiad in Informatics, winning a silver medal in 2009. OpenAI CEO Sam Altman has called Pachocki 'easily one of the greatest minds of our generation'."
+ },
+ {
+  "id": 17,
+  "name": "Jared Polis",
+  "entity_type": "person",
+  "notes": "Jared Polis is the 43rd Governor of Colorado, having assumed office in 2019. He previously served as the United States Representative from Colorado's 2nd congressional district from 2009 to 2019. Polis convened the Colorado AI Policy Work Group to develop a framework addressing the use of AI and Automated Decision Making Systems in consequential decisions about consumers. He is the first openly gay man elected as governor in U.S. history."
+ },
+ {
+  "id": 18,
+  "name": "Sam Altman",
+  "entity_type": "person",
+  "notes": "Sam Altman is the CEO of OpenAI, the artificial intelligence research organization that developed ChatGPT. He became CEO of OpenAI in 2019 after co-founding the organization in 2015. In November 2023, he was briefly fired by OpenAI's board of directors but was reinstated five days later. His net worth was estimated at US$3.3 billion by Forbes in March 2026."
+ },
+ {
+  "id": 19,
+  "name": "Mike Krieger",
+  "entity_type": "person",
+  "notes": "Mike Krieger is the chief product officer of Anthropic. He co-founded Instagram with Kevin Systrom in 2010 and served as its Chief Technology Officer until 2018. He recently moved from his CPO role to co-lead Anthropic's internal incubator called the 'Labs' team. He previously co-founded the AI-powered news app Artifact which was sold to Yahoo."
+ },
+ {
+  "id": 20,
+  "name": "Josh Woodward",
+  "entity_type": "person",
+  "notes": "Josh Woodward is a 42-year-old Oklahoma native who started at Google by way of a product marketing internship in 2009. He is currently Vice President at Google, leading both Google Labs and the Gemini app. Woodward was promoted to run the Gemini app in April while keeping his existing job running Google Labs. Google said in October that the Gemini app's monthly active users swelled to 650 million from 350 million in March."
+ },
+ {
+  "id": 21,
+  "name": "Lawrence Lessig",
+  "entity_type": "person",
+  "notes": "Lawrence Lessig is the Roy L. Furman Professor of Law and Leadership at Harvard Law School. He is the founder of Equal Citizens and a founding board member of Creative Commons. He clerked for Judge Richard Posner on the 7th Circuit Court of Appeals and Justice Antonin Scalia on the United States Supreme Court. He has focused his work on campaign finance reform and institutional corruption, particularly regarding SuperPACs and their impact on democracy."
+ },
+ {
+  "id": 22,
+  "name": "Eliezer Yudkowsky",
+  "entity_type": "person",
+  "notes": "Eliezer Yudkowsky is an American artificial intelligence researcher and writer on decision theory and ethics, known for popularizing ideas related to friendly artificial intelligence. He is the founder of and a research fellow at the Machine Intelligence Research Institute (MIRI), a private research nonprofit based in Berkeley, California. He co-authored the New York Times Best Seller 'If Anyone Builds It, Everyone Dies: Why Superhuman AI Would Kill Us All' with Nate Soares. He founded LessWrong, a 'community blog devoted to refining the art of human rationality' in February 2009."
+ },
+ {
+  "id": 23,
+  "name": "Michel Justen",
+  "entity_type": "person",
+  "notes": "Michel Justen works as AI Grants Lead at Tarbell Center for AI Journalism, which is funded by Coefficient Giving (formerly Open Philanthropy). He co-founded EA UW in Fall 2020 alongside his twin Lenni and graduated from UW-Madison in 2022 with degrees in Neurobiology and Psychology. He previously worked as an AI Governance Fellow at Pivotal Research and helped run events at the Centre for Effective Altruism. Open Philanthropy recommended a grant of $13,000 to Michel Justen to support him as he explores career options that could be highly impactful."
+ },
+ {
+  "id": 24,
+  "name": "Cory Booker",
+  "entity_type": "person",
+  "notes": "Cory Booker is a U.S. Senator from New Jersey who was elected in 2013 and represents New Jersey as the state's first Black senator. He previously served as mayor of Newark from 2006 to 2013. In March 2025, Booker delivered the longest speech in Senate history, speaking for more than 25 hours in protest of the Trump administration's policies. He has been a leader in criminal justice reform and helped craft the First Step Act, which became law in December 2018."
+ },
+ {
+  "id": 25,
+  "name": "Kyle Fish",
+  "entity_type": "person",
+  "notes": "Kyle Fish is Anthropic's first in-house AI welfare researcher, hired to determine whether models like Claude can have conscious experiences and how the company should respond. He is trained in neuroscience and spent years in biotech, cofounding companies that used machine learning to design drugs and vaccines for pandemic preparedness. Fish estimates a 20% chance that today's large language models have some form of conscious experience, though he stresses that consciousness should be seen as a spectrum, not binary. He co-authored a paper titled \"Taking AI Welfare Seriously\" with collaborators including David Chalmers and others."
+ },
+ {
+  "id": 26,
+  "name": "Simon Johnson",
+  "entity_type": "person",
+  "notes": "Simon Johnson is the Ronald A. Kurtz (1954) Professor of Entrepreneurship at the MIT Sloan School of Management and co-winner of the 2024 Nobel Prize in Economic Sciences jointly with Daron Acemoglu and James A. Robinson. He co-directs the Shaping the Future of Work initiative at MIT, focusing on the economics and politics of AI development and deployment. Johnson served as Chief Economist of the International Monetary Fund from March 2007 through August 2008. His research examines how institutions are formed and affect prosperity, and he advocates for developing \"Pro-Worker AI\" technologies that can increase productivity and wages for less-educated workers."
+ },
+ {
+  "id": 27,
+  "name": "Michael Kratsios",
+  "entity_type": "person",
+  "notes": "Michael Kratsios serves as Assistant to the President and Director of the White House Office of Science and Technology Policy, confirmed by the Senate in a 74-25 vote on March 25, 2025. He previously served as the fourth Chief Technology Officer of the United States during President Trump's first term and as Under Secretary of War from January 2020 to January 2021. Prior to government service, he was a Managing Director at Scale AI from January 2021 to January 2025 and held various positions at Thiel Capital LLC. He graduated from Princeton University with a B.A. in politics and served as a Visiting Scholar at Tsinghua University."
+ },
+ {
+  "id": 28,
+  "name": "Jennifer Pahlka",
+  "entity_type": "person",
+  "notes": "Jennifer Pahlka is the founder of Code for America and author of 'Recoding America: Why Government Is Failing in the Digital Age and How We Can Do Better'. She served as U.S. Deputy Chief Technology Officer under President Obama from 2013-2014, where she helped found the United States Digital Service. She is currently a senior fellow at the Niskanen Center and the Federation of American Scientists. In October 2025, she announced the launch of the Recoding America Fund, a pooled philanthropic effort that will raise and deploy at least $120 million over six years."
+ },
+ {
+  "id": 29,
+  "name": "Yoshua Bengio",
+  "entity_type": "person",
+  "notes": "Yoshua Bengio is a Canadian computer scientist born March 5, 1964, in Paris, France, and is a full professor at Universit\u00e9 de Montr\u00e9al. He received the 2018 A.M. Turing Award together with Geoffrey Hinton and Yann LeCun for their foundational work on deep learning. In June 2025, Bengio launched a nonprofit organization called LawZero aimed at building 'honest' AI systems that can detect and block harmful behavior by autonomous agents. He chairs the International AI Safety Report, an annual study that seeks to compile scientific evidence on emerging AI risks."
+ },
+ {
+  "id": 30,
+  "name": "Paul Christiano",
+  "entity_type": "person",
+  "notes": "Paul Christiano is Head of AI Safety for the U.S. Artificial Intelligence Safety Institute at NIST, where he designs and conducts tests of frontier AI models focusing on capabilities of national security concern. He founded the Alignment Research Center, a nonprofit research organization that seeks to align future machine learning systems with human interests. He previously ran the language model alignment team at OpenAI, where he pioneered work on reinforcement learning from human feedback (RLHF). He holds a Ph.D. in computer science from the University of California, Berkeley, and a B.S. in mathematics from the Massachusetts Institute of Technology."
+ },
+ {
+  "id": 31,
+  "name": "Regina Barzilay",
+  "entity_type": "person",
+  "notes": "Regina Barzilay is a School of Engineering Distinguished Professor of AI & Health in the Department of Computer Science and the AI Faculty Lead at MIT Jameel Clinic. She was diagnosed with breast cancer in 2014, which prompted her to conduct research in oncology. She develops machine learning methods for drug discovery and clinical AI, and her research has been recognized with the MacArthur Fellowship, an NSF Career Award, and the AAAI Squirrel AI Award for Artificial Intelligence for the Benefit of Humanity. Regina is a member of the National Academy of Engineering, American Academy of Arts and Sciences, and the National Academy of Medicine."
+ },
+ {
+  "id": 32,
+  "name": "Cynthia Lummis",
+  "entity_type": "person",
+  "notes": "Senator Cynthia Lummis (R-WY) introduced the Responsible Innovation and Safe Expertise (RISE) Act of 2025 on June 12, 2025, clarifying liability frameworks for AI used by professionals. She announced on December 19, 2025, that she will not seek re-election to the U.S. Senate in 2026, stating \"I do not have six more years in me\". Lummis is a major crypto supporter and the leading advocate for creating a Strategic Bitcoin Reserve. She was sworn into the United States Senate on January 3, 2021, becoming the first woman to serve as United States Senator from Wyoming."
+ },
+ {
+  "id": 33,
+  "name": "Demis Hassabis",
+  "entity_type": "person",
+  "notes": "Demis Hassabis is the CEO and co-founder of Google DeepMind, an artificial intelligence company that was founded in London in 2010 and acquired by Google in 2014. He shared the 2024 Nobel Prize in Chemistry with John M. Jumper for their work on AlphaFold, an AI tool that predicts protein structures. He is also the founder and CEO of Isomorphic Labs, a biotechnology company focused on drug discovery. Hassabis was born on July 27, 1976, in London to a Greek Cypriot father and Chinese Singaporean mother."
+ },
+ {
+  "id": 34,
+  "name": "Gina Raimondo",
+  "entity_type": "person",
+  "notes": "Gina Raimondo served as the 40th U.S. Secretary of Commerce from March 3, 2021 to January 20, 2025 under President Biden. She previously served as the 75th Governor of Rhode Island from 2015 to 2021 and was the first woman to serve in that role. She co-founded Point Judith Capital, Rhode Island's first venture capital firm, in 2001. Since leaving government service, she became a Distinguished Fellow at the Council on Foreign Relations in January 2025 and has been considering a potential 2028 presidential run."
+ },
+ {
+  "id": 35,
+  "name": "Timnit Gebru",
+  "entity_type": "person",
+  "notes": "Timnit Gebru is the founder and executive director of The Distributed Artificial Intelligence Research (DAIR) Institute. She was co-lead of the Ethical AI research team at Google until her firing in 2020 (along with her co-lead) for writing a paper warning about the dangers of large language models and raising issues of discrimination in the workplace. She co-founded Black in AI, a nonprofit that works to increase the presence, inclusion, visibility and health of Black people in the field of AI. She is the recipient of the 2025 Miles Conrad Award, NISO's lifetime achievement award for those working in the information community."
+ },
+ {
+  "id": 36,
+  "name": "Fran Drescher",
+  "entity_type": "person",
+  "notes": "Fran Drescher is the SAG-AFTRA President who led the union during a 118-day strike and warned about AI threats to the entertainment industry. She became one of the prominent faces of the strike alongside WGA West President Meredith Stiehm and WGA East President Lisa Takeuchi Cullen. Drescher took office as president on October 15, 2021, and led the union during the five-month actors' strike that began on July 14, 2023. She has been vocal about protecting actors from AI technology and securing proper compensation and consent for use of their likeness."
+ },
+ {
+  "id": 37,
+  "name": "Ro Khanna",
+  "entity_type": "person",
+  "notes": "Ro Khanna is a U.S. Representative from California's 17th Congressional District, representing Silicon Valley since 2017. He serves as Ranking Member of the House Select Committee on China and is a member of committees including Judiciary, Transportation & Infrastructure. Khanna authored the Epstein Files Transparency Act and led a bipartisan resolution demanding the DOJ to release the Epstein files. He has proposed seven principles for democratic AI regulation and advocates for stronger government oversight of artificial intelligence."
+ },
+ {
+  "id": 38,
+  "name": "Peter Thiel",
+  "entity_type": "person",
+  "notes": "Peter Thiel is the billionaire co-founder of PayPal and chairman of Palantir. He argues that artificial intelligence is targeting 'math people' - coders, engineers, quants, data scientists, and algorithmic specialists - rather than creative writers, artists, or storytellers first. In a 2019 talk, Thiel suggested AI itself might be inherently authoritarian, calling AI 'communist' and warning it could bring back a world of 'a few large companies, a few large governments, a few large computers that controlled everything'. He has been giving lectures on the Antichrist, first in San Francisco in September 2025, then in Paris in January, and most recently in Rome, where his Antichrist is described as 'a Luddite who wants to stop all science'."
+ },
+ {
+  "id": 39,
+  "name": "Saikat Chakrabarti",
+  "entity_type": "person",
+  "notes": "Saikat Chakrabarti is running for election to the U.S. House to represent California's 11th Congressional District in the primary scheduled for June 2, 2026. He was born in Fort Worth, Texas and earned a bachelor's degree from Harvard University in 2007. His career experience includes being a co-founder of New Consensus and Justice Democrats, chief of staff for Alexandria Ocasio-Cortez, organizing technology for Bernie Sanders' campaign, and second engineer at Stripe. He is advocating for a four-day workweek in response to AI productivity gains, arguing that companies like Meta are 'squeezing' workers with increased productivity standards without additional compensation."
+ },
+ {
+  "id": 40,
+  "name": "Pete Buttigieg",
+  "entity_type": "person",
+  "notes": "Pete Buttigieg served as U.S. Secretary of Transportation from 2021 to 2025 under President Joe Biden. He was the first openly gay Cabinet secretary in U.S. history and the youngest person ever to serve as Secretary of Transportation. He previously served as mayor of South Bend, Indiana from 2012 to 2020. He is currently a Winter-Spring 2025 Pritzker Fellow at the University of Chicago Institute of Politics."
+ },
+ {
+  "id": 41,
+  "name": "Chris Murphy",
+  "entity_type": "person",
+  "notes": "Chris Murphy is the junior United States Senator from Connecticut, serving since 2013. He previously served in the U.S. House of Representatives from 2007 to 2013, representing Connecticut's 5th congressional district. Murphy was reelected to a third Senate term in 2024, defeating Republican challenger Matthew Corey. He has become a prominent voice on AI regulation, arguing that unregulated artificial intelligence will cause massive job displacement and economic collapse."
+ },
+ {
+  "id": 42,
+  "name": "David Sacks",
+  "entity_type": "person",
+  "notes": "David Sacks stepped down from his role as White House AI and crypto czar in March 2026, having reached the end of his 130-day limit as a special government employee. He is now co-chair of the President's Council of Advisors on Science and Technology alongside Michael Kratsios. Sacks is a general partner of Craft Ventures, a venture capital fund he co-founded in late 2017. He was previously COO and product leader of PayPal and is considered a member of the 'PayPal Mafia'."
+ },
+ {
+  "id": 43,
+  "name": "Tom Kalil",
+  "entity_type": "person",
+  "notes": "Tom Kalil is the CEO of Renaissance Philanthropy, which he launched in May 2024. He served in the White House for two presidents (Obama and Clinton) and worked with the Senate to give every federal agency the authority to support incentive prizes for up to $50 million. He designed and launched dozens of White House science and technology initiatives, including the National Nanotechnology Initiative (announced by President Clinton in January 2000 and launched at ~$500M/year in FY2001) and The BRAIN Initiative announced by President Obama. Prior to launching Renaissance Philanthropy, he was Chief Innovation Officer at Schmidt Futures."
+ },
+ {
+  "id": 44,
+  "name": "Ben Reinhardt",
+  "entity_type": "person",
+  "notes": "Ben Reinhardt is the founder of Speculative Technologies, a nonprofit research organization working to turn science fiction into reality. He previously worked as an Entrepreneur-in-Residence at Entrepreneur First in Singapore, where he helped people build deep tech companies from scratch. His background includes work at NASA, Magic Leap, venture capital, and starting a robotics company."
+ },
+ {
+  "id": 45,
+  "name": "Bruce Reed",
+  "entity_type": "person",
+  "notes": "Bruce Reed is an American political advisor and policy strategist who served as deputy chief of staff for policy in the Biden administration and led government-wide AI policy efforts. He was dubbed Biden's \"AI Whisperer\" by Politico and led efforts that produced voluntary commitments on AI safety from leading tech companies and a sweeping Executive Order on safe and responsible AI. In March 2025, he was appointed as Head of Common Sense AI at Common Sense Media to champion AI safety for children and families. He previously served as chief domestic policy advisor to President Clinton and chief of staff to Vice President Biden during the Obama administration."
+ },
+ {
+  "id": 46,
+  "name": "Jeffrey Kessler",
+  "entity_type": "person",
+  "notes": "Jeffrey Kessler is the Under Secretary for Industry and Security at the U.S. Commerce Department, where he leads the Bureau of Industry and Security (BIS). He testified before Congress in June 2025 that Huawei's AI chip production capacity for 2025 is estimated at \"at or below 200,000\" units. He announced that the Biden administration's AI Diffusion Rule would be rescinded, labeling it as \"divorced from commercial reality\". He was confirmed by the U.S. Senate in March 2025 as a Trump nominee and is a former partner at WilmerHale."
+ },
+ {
+  "id": 47,
+  "name": "Mark Zuckerberg",
+  "entity_type": "person",
+  "notes": "Founder, CEO and Chairman of Meta Platforms (parent of Facebook, Instagram, WhatsApp). Drove Meta's open-weights Llama strategy, positioning Llama models as the open-source alternative to closed frontier labs. After internal frustration with Llama 4's performance in mid-2025, Zuckerberg launched Meta Superintelligence Labs (MSL) in June 2025, restructured in August 2025 into four teams (TBD Lab developing Llama under chief AI officer Alexandr Wang, FAIR under Rob Fergus, plus product and infrastructure units), and pursued an aggressive 2025 hiring spree with reported signing bonuses up to $1 billion to recruit top AI talent. Meta's 2025 capex projected at ~$68 billion, the bulk allocated to AI. Zuckerberg frames the goal as 'personal superintelligence' \u2014 AI that empowers individual users \u2014 distinct from labs pursuing centralized automation of work. Reportedly building an internal AI agent to assist his own executive duties."
+ },
+ {
+  "id": 48,
+  "name": "Elon Musk",
+  "entity_type": "person",
+  "notes": "Elon Musk is a businessman and entrepreneur known for his leadership of Tesla, SpaceX, X, and xAI. Musk has been the wealthiest person in the world since 2025; as of April 2026, Forbes estimates his net worth to be US$809 billion. He made predictions at the World Economic Forum that artificial intelligence will be smarter than all of humanity by the end of the decade. Musk spent more than $290 million on the 2024 election, boosting President Donald Trump and Republicans."
+ },
+ {
+  "id": 49,
+  "name": "Liang Wenfeng",
+  "entity_type": "person",
+  "notes": "Liang Wenfeng is a Chinese entrepreneur born in 1985 who serves as CEO of DeepSeek and co-founder of quantitative hedge fund High-Flyer. He launched DeepSeek in 2023 with backing from High-Flyer, focusing on developing general artificial intelligence through efficient, low-cost approaches. DeepSeek gained international attention in January 2025 with the release of DeepSeek-R1, which achieved performance comparable to top models like GPT-4 at significantly lower training costs. He was ranked No. 5 on AI Magazine's Top 100 Leaders 2026 list and included in Nature's top 10 'people who shaped science in 2025'."
+ },
+ {
+  "id": 50,
+  "name": "Jared Kaplan",
+  "entity_type": "person",
+  "notes": "Jared Kaplan is Anthropic's chief scientist and co-founder. He previously worked as a researcher at OpenAI where he co-authored \"Scaling Laws for Neural Language Models\" (2020) and \"Language Models are Few-Shot Learners\" (2020), which introduced GPT-3. He is also an associate professor in the Johns Hopkins University Department of Physics & Astronomy. In October 2024, Anthropic announced that Kaplan would serve as the company's \"Responsible Scaling Officer\", overseeing its responsible scaling policy (RSP)."
+ },
+ {
+  "id": 51,
+  "name": "Joanne Jang",
+  "entity_type": "person",
+  "notes": "Joanne Jang is a key executive at OpenAI who served as Head of Model Behavior and was recognized on the TIME100 AI 2025 list. She announced her departure from OpenAI after four and a half years, having joined when it was a research lab with fewer than 200 employees. Her key contributions included work on GPT-4, DALL-E 2, Text-to-Speech, Chat API, and Memory features for ChatGPT. She is departing to establish OAI Labs, a new group focused on prototyping interfaces for human-AI collaboration."
+ },
+ {
+  "id": 52,
+  "name": "Daron Acemoglu",
+  "entity_type": "person",
+  "notes": "Daron Acemoglu is an Institute Professor at MIT who won the 2024 Nobel Prize in Economics with Simon Johnson and James A. Robinson for studies of how institutions are formed and affect prosperity. He argues that AI is not improving productivity as much as hyped, projecting only modest GDP gains of 1.1% to 1.6% over the next decade. Acemoglu believes current AI development focuses too much on automation rather than complementing human workers. He co-authored the book 'Power and Progress: Our Thousand-Year Struggle Over Technology and Prosperity' with Simon Johnson."
+ },
+ {
+  "id": 53,
+  "name": "Ganesh Sitaraman",
+  "entity_type": "person",
+  "notes": "Ganesh Sitaraman is the New York Alumni Chancellor's Chair in Law at Vanderbilt University and Director of the Program on Law and Government. He is a longtime advisor to Elizabeth Warren, serving in various capacities including as Policy Director during her 2012 Senate campaign and senior counsel in the Senate. He is the author of several books including 'The Crisis of the Middle-Class Constitution' and 'The Great Democracy'. In 2018, Sitaraman was awarded an Andrew Carnegie Fellowship."
+ },
+ {
+  "id": 54,
+  "name": "Mariana Mazzucato",
+  "entity_type": "person",
+  "notes": "Mariana Mazzucato is Professor in the Economics of Innovation and Public Value at University College London, where she is Founding Director of the UCL Institute for Innovation & Public Purpose. She is a member of the South African President's Economic Advisory Council since 2019, advising on areas such as green industrial strategy, state capacity, and reform of state-owned enterprises. In 2025, she was appointed Commander of the British Empire (CBE) for services to economics in the King's Birthday Honours List. President Cyril Ramaphosa has appointed her as Technical Expert to South Africa's G20 Presidency and his Special Presidential Representative to Taskforce 1: Inclusive Economic Growth, Industrialisation, Employment, and Reduced Inequality."
+ },
+ {
+  "id": 55,
+  "name": "Fei-Fei Li",
+  "entity_type": "person",
+  "notes": "Fei-Fei Li is a Chinese-born American computer scientist best known for establishing ImageNet, the dataset that enabled rapid advances in computer vision in the 2010s. She is a professor of computer science at Stanford University, with research expertise in artificial intelligence, machine learning, deep learning, computer vision, and cognitive neuroscience. She has been called the godmother of AI for her pioneering work in computer vision and image recognition. In 2024, she raised $230 million for a startup called World Labs, which she and three colleagues founded to develop a \"spatial intelligence\" AI technology."
+ },
+ {
+  "id": 56,
+  "name": "Latanya Sweeney",
+  "entity_type": "person",
+  "notes": "Latanya Sweeney is the Daniel Paul Professor of the Practice of Government and Technology at the Harvard Kennedy School and in the Harvard Faculty of Arts and Sciences. She was named to Time magazine's 2025 list of the 100 most influential people in the field of artificial intelligence. She is the founder and director of the Public Interest Tech Lab, founded in 2021 with a $3 million grant from the Ford Foundation. She earned her PhD in computer science from MIT in 2001, being the first Black woman to do so."
+ },
+ {
+  "id": 57,
+  "name": "Sayash Kapoor",
+  "entity_type": "person",
+  "notes": "Sayash Kapoor is a Ph.D. candidate in computer science at Princeton University's Center for Information Technology Policy. He is co-author with Arvind Narayanan of the book \"AI Snake Oil: What Artificial Intelligence Can Do, What It Can't, and How to Tell the Difference\". He was named among TIME's 100 most influential people in AI. He won the Porter Ogden Jacobus Fellowship, Princeton's top distinction for graduate students."
+ },
+ {
+  "id": 58,
+  "name": "Sandy Pentland",
+  "entity_type": "person",
+  "notes": "Alex Paul \"Sandy\" Pentland (born 1951) is an American computer scientist, HAI Fellow at Stanford, Toshiba Professor at MIT, and serial entrepreneur. He helped create and direct the MIT Media Lab and the Media Lab Asia in India, and is a HAI Fellow at Stanford. Pentland is one of the most cited authors in computer science, with an h-index of 155. He is a member of the U.S. National Academy of Engineering, co-led the World Economic Forum discussion in Davos that led to the EU privacy regulation GDPR, and was one of the UN Secretary General's \"Data Revolutionaries\" who helped forge the transparency and accountability mechanisms in the UN's Sustainable Development Goals."
+ },
+ {
+  "id": 59,
+  "name": "Daniel Kokotajlo",
+  "entity_type": "person",
+  "notes": "Daniel Kokotajlo is a former OpenAI researcher who resigned in 2024 and refused to sign a non-disparagement clause, costing him approximately $2 million in equity. He is the founder of the AI Futures Project and author of AI 2027, a detailed scenario showing how superintelligence might arrive by the end of the decade. His median forecast for AGI is 2029, and he believes the default trajectory could lead to AI takeover and human extinction unless there is international coordination. He was named to TIME's 100 Most Influential People in AI for both 2024 and 2025."
+ },
+ {
+  "id": 60,
+  "name": "Marius Hobbhahn",
+  "entity_type": "person",
+  "notes": "Marius Hobbhahn is the CEO and co-founder of Apollo Research, a nonprofit AI safety research organization that focuses on understanding AI deception and scheming behavior. In 2025, he was named to TIME100 in AI 2025. Apollo Research has collaborated with major AI companies including OpenAI to reduce scheming in models like o3, and works with government bodies like the U.K.'s AI Safety Institute. He holds a Ph.D. in Machine Learning from the University of T\u00fcbingen, where he worked under the supervision of Philipp Hennig."
+ },
+ {
+  "id": 61,
+  "name": "Holden Karnofsky",
+  "entity_type": "person",
+  "notes": "Holden Karnofsky cofounded both the charity evaluator GiveWell and the philanthropic foundation Open Philanthropy (now called Coefficient Giving), which has now directed over $4 billion in grants. He led Open Phil for seven years, during which he also served on the board of OpenAI for four years. Reflecting his growing focus on AGI, he recently joined the frontier AI company Anthropic, which his wife Daniela Amodei helped cofound back in 2021. Karnofsky joined Anthropic in January 2025 as member of the technical staff, working on Anthropic's responsible scaling policies and other safety planning aspects."
+ },
+ {
+  "id": 62,
+  "name": "Ed Newton-Rex",
+  "entity_type": "person",
+  "notes": "Ed Newton-Rex is the CEO of Fairly Trained, a non-profit he founded in 2024 that certifies generative AI companies for fairer training data practices. He previously founded Jukedeck in 2010, one of the first AI music generation startups, which was acquired by ByteDance in 2019. He was named in TIME Magazine's list of the 100 most influential people in artificial intelligence in 2025. He organized the Statement on AI Training, an open letter rejecting unfair generative AI training practices signed by more than 50,000 people, and 'Is This What We Want?', a protest album co-written by 1,000 UK musicians."
+ },
+ {
+  "id": 63,
+  "name": "Joshua Kushner",
+  "entity_type": "person",
+  "notes": "Joshua Kushner is the founder and managing partner of Thrive Capital, a venture capital firm. He co-founded Oscar Health, a health insurance startup that went public in 2021. Kushner's firm has been one of OpenAI's major investors, with Thrive Capital investing roughly $1 billion in OpenAI at a $285 billion valuation in December. He is married to supermodel Karlie Kloss and they have two sons together."
+ },
+ {
+  "id": 64,
+  "name": "Duncan Crabtree-Ireland",
+  "entity_type": "person",
+  "notes": "Duncan Crabtree-Ireland is the National Executive Director and Chief Negotiator of SAG-AFTRA, overseeing the world's largest entertainment union with more than 160,000 members worldwide. He was the lead negotiator during the 2023 SAG-AFTRA strike and has been a key advocate for AI protections in the entertainment industry. He previously served as SAG-AFTRA's Chief Operating Officer and General Counsel, and was a key participant in the successful merger between SAG and AFTRA. He co-hosts the SAG-AFTRA Podcast and SAG-AFTRA Podcast en Espa\u00f1ol."
+ },
+ {
+  "id": 65,
+  "name": "Dan Wang",
+  "entity_type": "person",
+  "notes": "There are multiple individuals named Dan Wang who are journalists or writers. One Dan Wang is a Canadian technology analyst and writer specializing in contemporary China, who has been an analyst at Gavekal Dragonomics and a research fellow at the Hoover Institution. Another Dan Wang is Lambert Family Professor of Social Enterprise at Columbia Business School and creator of CAiSEY, a voice-powered AI discussion partner. A third Dan Wang is a director on Eurasia Group's China team, previously serving as chief economist at Hang Seng Bank China."
+ },
+ {
+  "id": 66,
+  "name": "Milagros Miceli",
+  "entity_type": "person",
+  "notes": "Milagros Miceli is a sociologist and computer scientist who founded the Data Workers' Inquiry, an academic project that puts power in the hands of AI data labelers to publish research by and about themselves. She is based at the Weizenbaum Institute in Germany and was named to TIME's 2025 TIME100 AI list. Miceli is 41 years old and is described as an Argentine researcher who has lived in Berlin for more than 16 years. She does not use ChatGPT, stating it would feel like \"a betrayal\" because she works closely with people who worked on ChatGPT training and \"it has destroyed their lives\"."
+ },
+ {
+  "id": 67,
+  "name": "Ezra Klein",
+  "entity_type": "person",
+  "notes": "Ezra Klein is a New York Times columnist, best-selling author, and host of The Ezra Klein Show podcast. He is a co-founder of Vox and was formerly the website's editor-at-large. He has written two books: Why We're Polarized in January 2020, and Abundance, cowritten with Derek Thompson, in March 2025. Klein is married to Annie Lowrey, who writes about economics at The Atlantic, and they have two children."
+ },
+ {
+  "id": 68,
+  "name": "Mike Rounds",
+  "entity_type": "person",
+  "notes": "Mike Rounds is a Republican U.S. Senator from South Dakota who was sworn into the United States Senate on January 6th, 2015. He serves as co-chair of the Senate AI Caucus and serves on five committees: Senate Appropriations; Armed Services; Banking, Housing and Urban Affairs; Indian Affairs; and the Select Committee on Intelligence. He previously served as the 31st governor of South Dakota from 2003 \u2013 2011. He has been actively introducing bipartisan AI legislation, including the Economy of the Future Commission Act with Sen. Mark Warner in March 2026."
+ },
+ {
+  "id": 69,
+  "name": "Dan Kagan-Kans",
+  "entity_type": "person",
+  "notes": "Dan Kagan-Kans is described as a writer on AI, science, and ideas for publications like Transformer, the Wall Street Journal, and American Scholar. He was previously a program officer at the Tikvah Fund and lives in New York. He has written articles including \"The Left Is Missing Out on AI\" for Transformer and \"Baby Shoggoth Is Listening\" for The American Scholar."
+ },
+ {
+  "id": 70,
+  "name": "Joi Ito",
+  "entity_type": "person",
+  "notes": "Joichi 'Joi' Ito is a Japanese entrepreneur and venture capitalist who serves as president of Chiba Institute of Technology. He was director of the MIT Media Lab from 2011-2019, resigning in September 2019 following revelations about financial ties to Jeffrey Epstein. Ito founded multiple tech companies including PSINet Japan, Infoseek Japan, and Digital Garage, and was an early investor in Twitter, Kickstarter, and Flickr. He earned a PhD in Media and Governance from Keio University in 2018."
+ },
+ {
+  "id": 71,
+  "name": "Chris Coons",
+  "entity_type": "person",
+  "notes": "Chris Coons is a U.S. Senator from Delaware who serves on multiple committees including Appropriations, Foreign Relations, Judiciary, Small Business and Entrepreneurship, and Ethics committees. He is the Ranking Member of the Senate Foreign Relations Committee's Subcommittee on East Asia, The Pacific, and International Cybersecurity Policy and vice chair of the Ethics Committee. Coons has been actively involved in AI policy, introducing resolutions and legislation to maintain U.S. dominance in artificial intelligence and counter China's AI development efforts. He previously served as New Castle County Executive for six years and worked as Associate Counsel at W.L. Gore & Associates, Inc.."
+ },
+ {
+  "id": 72,
+  "name": "Martin Heinrich",
+  "entity_type": "person",
+  "notes": "Martin Heinrich is a U.S. Senator from New Mexico who has served since January 2013. He is the founder and co-chair of the Senate Artificial Intelligence Caucus, which he established with former Senator Rob Portman (R-Ohio) in 2019. He serves as Ranking Member on the Committee on Energy and Natural Resources and serves on the Senate Appropriations, Intelligence, and Joint Economic Committees. Heinrich has a background in mechanical engineering and previously served two terms in the U.S. House of Representatives from 2009-2013."
+ },
+ {
+  "id": 73,
+  "name": "Todd Young",
+  "entity_type": "person",
+  "notes": "Todd Christopher Young is an American politician and attorney serving as the senior United States senator from Indiana, a seat he has held since 2017. He is a member of the Republican Party and previously served as the U.S. representative for Indiana's 9th congressional district. Young currently serves on the U.S. Senate Committees on Finance; Foreign Relations; Health, Education, Labor & Pensions; Commerce, Science & Transportation; and Small Business and Entrepreneurship. He is a member of the Bipartisan Senate AI Working Group along with Maj. Leader Chuck Schumer, Sen. Mike Rounds, and Sen. Martin Heinrich."
+ },
+ {
+  "id": 74,
+  "name": "Ben Ray Luj\u00e1n",
+  "entity_type": "person",
+  "notes": "Ben Ray Luj\u00e1n has represented New Mexico in the United States Senate since January 2021 and previously served as U.S. Representative for New Mexico's Third Congressional District and House Assistant Speaker in the 116th Congress. He sits on the Committee on Commerce, Science, and Transportation; the Committee on Finance; the Committee on Agriculture, Nutrition, and Forestry; the Committee on Indian Affairs; and the Committee on the Budget. Senator Luj\u00e1n has been particularly active in AI policy, introducing bipartisan legislation including the TEST AI Act of 2025 and the AI CONSENT Act to establish responsible guardrails for artificial intelligence systems. He grew up in Namb\u00e9, a small farming community north of Santa Fe, and earned his Bachelor's degree in Business Administration from New Mexico Highlands University."
+ },
+ {
+  "id": 75,
+  "name": "Joni Ernst",
+  "entity_type": "person",
+  "notes": "Joni Ernst is a U.S. Senator from Iowa who was first elected in 2014 and has served since January 6, 2015. She is a combat veteran who served as a company commander in Kuwait and Iraq during Operation Iraqi Freedom and retired as a Lieutenant Colonel in the Iowa Army National Guard after 23 years of military service. Ernst announced in September 2025 that she will not seek re-election to a third term in 2026. She serves as Chairman of the Senate Armed Services Emerging Threats and Capabilities Subcommittee and Chair of the Small Business & Entrepreneurship Committee."
+ },
+ {
+  "id": 76,
+  "name": "Maggie Hassan",
+  "entity_type": "person",
+  "notes": "Maggie Hassan is a U.S. Senator from New Hampshire serving since 2017, and previously served as the 81st Governor of New Hampshire from 2013 to 2017. She was named the most bipartisan member of Congress by the nonpartisan Common Ground Committee, becoming the first elected official to receive a perfect score on their scorecard. Hassan has recently introduced multiple AI-related bills, including the bipartisan AI Workforce PREPARE Act and the Reliable Artificial Intelligence Research Act of 2025. She serves as Ranking Member of the Joint Economic Committee and has been actively working on combating AI-enabled scams."
+ },
+ {
+  "id": 77,
+  "name": "Jerry Moran",
+  "entity_type": "person",
+  "notes": "Jerry Moran is a Republican U.S. Senator from Kansas who serves as a senior member of the Senate Committee on Commerce, Science and Transportation. He has worked extensively on bipartisan artificial intelligence legislation, introducing multiple AI-related bills in 2026 with Democratic Senator Maria Cantwell. Moran serves as Chairman on the Appropriations Subcommittee on Commerce, Justice, Science, and Related Agencies and as Chairman of the Senate Committee on Veterans' Affairs. He was first elected to the U.S. Senate in 2010 after serving seven terms in the U.S. House of Representatives representing Kansas's 1st congressional district."
+ },
+ {
+  "id": 78,
+  "name": "John Hickenlooper",
+  "entity_type": "person",
+  "notes": "John Hickenlooper is a U.S. Senator from Colorado who serves as Ranking Member of the Senate Commerce Committee's Subcommittee on Consumer Protection, Technology, and Data Privacy. He has been actively involved in AI policy, reintroducing the bipartisan VET AI Act with Senator Shelley Moore Capito to boost AI standards and create guidelines for third-party evaluations of AI systems. Hickenlooper previously served as Governor of Colorado from 2011 to 2019 and as Mayor of Denver from 2003 to 2011. He started his career as a geologist and later opened Colorado's first brewpub in downtown Denver."
+ },
+ {
+  "id": 79,
+  "name": "Jon Husted",
+  "entity_type": "person",
+  "notes": "Jon Husted is a Republican U.S. Senator from Ohio who began serving in January 2025 after being appointed to fill the vacancy created by JD Vance's resignation. He previously served as Ohio's 66th lieutenant governor from 2019 to 2025 and as Ohio's 50th secretary of state from 2011 to 2019. As lieutenant governor, he led regulatory reform efforts using artificial intelligence to remove 5 million words from Ohio's regulatory code. In the Senate, he serves on committees including Health, Education, Labor, and Pensions; Small Business and Entrepreneurship; Environment and Public Works; and the Special Committee on Aging."
+ },
+ {
+  "id": 80,
+  "name": "Richard Blumenthal",
+  "entity_type": "person",
+  "notes": "Richard Blumenthal is a Democratic U.S. Senator from Connecticut who has introduced multiple AI-related bills, including the GUARD Act to ban AI companions for children and legislation to allow lawsuits over AI data training. He serves on the Senate Judiciary Committee and other committees, and was previously Connecticut's Attorney General from 1991 to 2011. Blumenthal has worked extensively on consumer protection and technology regulation issues throughout his career."
+ },
+ {
+  "id": 81,
+  "name": "Jacky Rosen",
+  "entity_type": "person",
+  "notes": "Jacky Rosen is a U.S. Senator from Nevada who serves as a member of the Democratic Party and was elected to the Senate in 2018, defeating Republican incumbent Dean Heller with 50.4% of the vote. She was reelected in 2024, defeating Republican nominee Sam Brown. She is described as the only former computer programmer in the U.S. Senate and has been a champion for strengthening the nation's cybersecurity. She has been ranked by independent experts as one of the most bipartisan Senators in the chamber, with more than 90% of the legislation she has introduced in the Senate being bipartisan."
+ },
+ {
+  "id": 82,
+  "name": "Ted Cruz",
+  "entity_type": "person",
+  "notes": "Ted Cruz serves as U.S. Senate Commerce Committee Chairman and released a legislative framework designed to promote American leadership in artificial intelligence on September 10, 2025. He introduced the SANDBOX Act, which creates a regulatory \"sandbox\" that gives AI developers space to test and launch new AI technologies without being held back by outdated or inflexible federal rules. Cruz is weighing a second presidential bid according to sources close to the senator, which would put him on course to collide with Vice President JD Vance. He has positioned himself as a vocal champion of traditional Republican foreign policy positions and has criticized Tucker Carlson, calling him \"a coward\" during a speech before a group supporting Jewish causes."
+ },
+ {
+  "id": 83,
+  "name": "Michael McCaul",
+  "entity_type": "person",
+  "notes": "Michael McCaul is a U.S. Congressman from Texas serving his eleventh term representing Texas' 10th District, and previously served as Chairman of the House Committee on Homeland Security and the House Foreign Affairs Committee. He announced on September 14, 2025, that he will not seek re-election in 2026. Prior to Congress, he served as Chief of Counter Terrorism and National Security in the U.S. Attorney's office, Western District of Texas, and as Texas Deputy Attorney General under current U.S. Senator John Cornyn. He has been actively involved in AI policy discussions, particularly regarding securing AI supply chains through initiatives like Pax Silica and preventing American AI technology from reaching the Chinese Communist Party."
+ },
+ {
+  "id": 84,
+  "name": "Zoe Lofgren",
+  "entity_type": "person",
+  "notes": "Zoe Lofgren is a Democratic member of the United States House of Representatives since 1995, representing the 18th District of California. She serves as the Ranking Member of the House Science, Space and Technology Committee and serves on the House Judiciary Committee. Lofgren chairs the 46-member California Democratic Congressional Delegation. She has been noted for her activity in tech-related policy areas such as net neutrality and digital policy, representing a district covering much of Silicon Valley."
+ },
+ {
+  "id": 85,
+  "name": "Sriram Krishnan",
+  "entity_type": "person",
+  "notes": "Sriram Krishnan is currently serving as the Senior White House Policy Advisor on Artificial Intelligence. He was born in Chennai, India and earned his B.Tech in Information Technology from SRM Engineering College, Anna University in Chennai. Krishnan previously worked at major tech companies including Microsoft, Facebook, Twitter, and Snap, and was a general partner at Andreessen Horowitz. He was appointed to his White House role by President-elect Donald Trump in December 2024."
+ },
+ {
+  "id": 86,
+  "name": "Alondra Nelson",
+  "entity_type": "person",
+  "notes": "Alondra Nelson is the Harold F. Linder Professor at the Institute for Advanced Study, where she leads the Science, Technology, and Social Values Lab. She served as deputy assistant to President Joe Biden and acting director of the White House Office of Science and Technology Policy from 2021 to 2023, becoming the first African American and first woman of color to lead OSTP. She led the development of the White House Blueprint for an AI Bill of Rights, which was a cornerstone of President Biden's Executive Order on artificial intelligence. In 2023, she was included in the inaugural TIME100 list of the most influential people in AI and was appointed by United Nations Secretary-General Ant\u00f3nio Guterres to the UN High-level Advisory Body on Artificial Intelligence."
+ },
+ {
+  "id": 87,
+  "name": "Mark Warner",
+  "entity_type": "person",
+  "notes": "Mark Warner is a U.S. Senator from Virginia who serves as Vice Chairman of the Senate Select Committee on Intelligence. He has been leading efforts on AI policy, including introducing the Economy of the Future Commission Act with Senator Mike Rounds to prepare American workers for AI-driven workforce changes. Warner has expressed concern about AI's impact, stating 'I am terrified' about the government's preparedness for AI's potential economic disruption. He was first elected to the U.S. Senate in 2008 and previously served as Governor of Virginia from 2002 to 2006."
+ },
+ {
+  "id": 88,
+  "name": "Suhas Subramanyam",
+  "entity_type": "person",
+  "notes": "Suhas Subramanyam is a U.S. Representative serving Virginia's 10th Congressional District since 2025. He previously served as a technology policy advisor in the Obama White House from 2015-2017. He was the first South Asian American elected to the Virginia General Assembly in 2019. He has a background working with tech startups and co-leads AI policy initiatives in Congress."
+ },
+ {
+  "id": 89,
+  "name": "Greg Abbott",
+  "entity_type": "person",
+  "notes": "Greg Abbott is the 48th Governor of Texas, elected in 2014 and currently serving since January 2015. He previously served as the 50th and longest-serving Attorney General of Texas from December 2002 to January 2015, and as a Justice on the Texas Supreme Court from January 1996 to January 2001. Abbott was named one of the 100 Most Influential People in the world by TIME in 2024. He faced backlash in April 2026 for reposting an AI-generated image on X that falsely depicted the rescue of U.S. fighter jet crew members from Iran."
+ },
+ {
+  "id": 90,
+  "name": "Dustin Moskovitz",
+  "entity_type": "person",
+  "notes": "Dustin Moskovitz is a co-founder of Facebook and Asana, with an estimated net worth of $17.4 billion as of May 2025 according to Forbes. He co-founded the philanthropic organization Good Ventures with his wife Cari Tuna in 2011. Moskovitz and Tuna are major funders of AI safety research, having donated $1 million to Future of Life Institute and $30 million to OpenAI's non-profit in 2017. Open Philanthropy, which is financed primarily by Moskovitz and Tuna, funds AI fellows across congressional offices, federal agencies and think tanks."
+ },
+ {
+  "id": 91,
+  "name": "Scott Wiener",
+  "entity_type": "person",
+  "notes": "Scott Wiener is a California State Senator representing District 11, which includes San Francisco, Broadmoor, Colma, and Daly City. He authored Senate Bill 53, the Transparency in Frontier Artificial Intelligence Act, which Governor Newsom signed into law in September 2025. Wiener is running for the congressional seat held by Rep. Nancy Pelosi and has been a professional politician for going on 16 years. He previously served on the San Francisco Board of Supervisors before his election to the State Senate in 2016."
+ },
+ {
+  "id": 92,
+  "name": "Yann LeCun",
+  "entity_type": "person",
+  "notes": "Yann LeCun is Chief AI Scientist at Meta and Silver Professor at New York University affiliated with the NYU Center for Data Science and the Courant Institute of Mathematical Sciences. He received the 2018 ACM Turing Award shared with Geoffrey Hinton and Yoshua Bengio for contributions to deep learning. He announced plans to leave Meta after ten years to found his own company focused on world-model architectures called Advanced Machine Intelligence Labs (AMI Labs). AMI Labs raised $1.03 billion in funding at a $3.5 billion pre-money valuation in March 2026."
+ },
+ {
+  "id": 93,
+  "name": "Dan Hendrycks",
+  "entity_type": "person",
+  "notes": "Dan Hendrycks (born 1994 or 1995) is an American machine learning researcher who serves as the director of the Center for AI Safety, a nonprofit research organization based in San Francisco, California. He received a B.S. from the University of Chicago in 2018 and a Ph.D. from the University of California, Berkeley in Computer Science in 2022. He is the main author of the research paper that introduced the activation function GELU in 2016, and of the paper that introduced the language model benchmark MMLU (Massive Multitask Language Understanding) in 2020. Hendrycks is the safety adviser of xAI, an AI startup company founded by Elon Musk in 2023, receiving a symbolic one-dollar salary and holding no company equity."
+ },
+ {
+  "id": 94,
+  "name": "Daniel Ho",
+  "entity_type": "person",
+  "notes": "Daniel E. Ho is the William Benjamin Scott and Luna M. Scott Professor of Law, Professor of Political Science, Professor of Computer Science (by courtesy), Senior Fellow at Stanford's Institute for Human-Centered Artificial Intelligence, and Senior Fellow at the Stanford Institute for Economic Policy Research at Stanford University. He serves on the National Artificial Intelligence Advisory Commission (NAIAC), advising the White House on artificial intelligence, as Senior Advisor on Responsible AI at the U.S. Department of Labor, and as a Public Member of the Administrative Conference of the United States (ACUS). He is Director of the Regulation, Evaluation, and Governance Lab (RegLab) and received his J.D. from Yale Law School and Ph.D. from Harvard University. He clerked for Judge Stephen F. Williams on the U.S. Court of Appeals, District of Columbia Circuit."
+ },
+ {
+  "id": 95,
+  "name": "Meredith Whittaker",
+  "entity_type": "person",
+  "notes": "Meredith Whittaker is the president of the Signal Foundation and serves on its board of directors. She was formerly the Minderoo Research Professor at New York University (NYU), and chief advisor and former faculty director & co founder of the AI Now Institute. She was employed at Google for 13 years, where she founded Google's Open Research group and co-founded the M-Lab. In 2018, she was a core organizer of the Google Walkouts and resigned from the company in July 2019."
+ },
+ {
+  "id": 96,
+  "name": "Bernie Sanders",
+  "entity_type": "person",
+  "notes": "Bernie Sanders is an American politician serving as the senior United States senator from Vermont, a seat he has held since 2007. He is the longest-serving independent in U.S. congressional history. Sanders was reelected to a fourth Senate term in 2024, defeating Republican Gerald Malloy. He currently serves as the Ranking Member of the Senate Health, Education, Labor and Pensions Committee after previously chairing it from 2023 to 2025."
+ },
+ {
+  "id": 97,
+  "name": "Alex Bores",
+  "entity_type": "person",
+  "notes": "Alex Bores is an American politician serving as a member of the New York State Assembly for the 73rd district, having assumed office on January 1, 2023. He is currently running to represent New York's 12th district in the House of Representatives after announcing his candidacy in October 2025 to succeed Jerry Nadler. He co-sponsored the Responsible AI Safety and Education Act (RAISE Act), an AI safety bill that was signed into law in December 2025, and was named to Time's 2025 Time 100 AI list for his role in this legislation. His congressional campaign has been targeted by attack advertising from the AI industry-aligned super PAC Leading the Future, which has spent over $2.3 million against him by April 2026."
+ },
+ {
+  "id": 98,
+  "name": "Brian Deese",
+  "entity_type": "person",
+  "notes": "Brian Deese serves as Institute Innovation Fellow at Massachusetts Institute of Technology and Co-Founder and CEO at Foundry-Logic. He served as Director of the National Economic Council from 2021 to 2023 under President Biden. He previously worked as Global Head of Sustainable Investing at BlackRock and held various positions in the Obama administration including Senior Advisor to the President. He has written extensively on energy policy for AI and America's infrastructure challenges."
+ },
+ {
+  "id": 99,
+  "name": "Chris Lehane",
+  "entity_type": "person",
+  "notes": "Chris Lehane is Chief Global Affairs Officer at OpenAI, having previously served as vice president of global policy starting in early 2024. He is a veteran of the Clinton administration who famously coined the term \"vast right-wing conspiracy\" and worked during the Monica Lewinsky scandal. Before OpenAI, he served as Head of Global Policy and Public Affairs for Airbnb from 2015-2022 and was an Operating Partner at Haun Ventures, a crypto investment firm. He co-authored a book called \"Masters of Disaster: The Ten Commandments of Damage Control\" in 2012."
+ },
+ {
+  "id": 100,
+  "name": "Erik Brynjolfsson",
+  "entity_type": "person",
+  "notes": "Erik Brynjolfsson is the Jerry Yang and Akiko Yamazaki Professor and Senior Fellow at the Stanford Institute for Human-Centered AI (HAI), and Director of the Stanford Digital Economy Lab. He also is the Ralph Landau Senior Fellow at the Stanford Institute for Economic Policy Research (SIEPR), Professor by Courtesy at the Stanford Graduate School of Business and Stanford Department of Economics, and a Research Associate at the National Bureau of Economic Research (NBER). He is one of the world's leading experts on the economics of technology and artificial intelligence. Brynjolfsson has authored nine books including the bestsellers The Second Machine Age: Work, Progress and Prosperity in a Time of Brilliant Technologies, and Machine, Platform, Crowd: Harnessing Our Digital Future, and published more than 100 academic articles and five patents."
+ },
+ {
+  "id": 101,
+  "name": "Tim Wu",
+  "entity_type": "person",
+  "notes": "Tim Wu is the Julius Silver Professor of Law, Science and Technology at Columbia Law School. He served as Special Assistant to President Biden for competition and tech policy until 2023. Wu coined the term 'net neutrality' and is known for his work on antitrust and competition policy. He authored the book 'The Age of Extraction: How Tech Platforms Conquered the Economy and Threaten Our Future Prosperity' published in 2025."
+ },
+ {
+  "id": 102,
+  "name": "Yejin Choi",
+  "entity_type": "person",
+  "notes": "Yejin Choi was born in 1977 in South Korea. She is currently the Dieter Schwarz Foundation Professor of Computer Science and Senior Fellow at Stanford's Institute for Human-Centered Artificial Intelligence (HAI). She is a MacArthur Fellow and has been recognized as one of the \"100 Most Influential People in AI 2025\" by TIME. Her research focuses on natural language processing, commonsense reasoning, and multi-modal AI."
+ },
+ {
+  "id": 103,
+  "name": "Arvind Narayanan",
+  "entity_type": "person",
+  "notes": "Arvind Narayanan is a professor of computer science at Princeton University and the director of the Center for Information Technology Policy. He is a co-author of the book AI Snake Oil and the essay AI as Normal Technology, and a newsletter of the same name which is read by over 60,000 researchers, policy makers, journalists, and AI enthusiasts. He was one of TIME's inaugural list of 100 most influential people in AI and is a recipient of the Presidential Early Career Award for Scientists and Engineers (PECASE). His work was among the first to show how machine learning reflects cultural stereotypes, and his doctoral research showed the fundamental limits of de-identification."
+ },
+ {
+  "id": 104,
+  "name": "Heidy Khlaaf",
+  "entity_type": "person",
+  "notes": "Dr. Heidy Khlaaf is the Chief AI Scientist at the AI Now Institute focusing on the assessment and safety of AI within autonomous weapons systems and defense/national security systems. She was named to TIME's 100 Most Influential People in AI 2025 and MIT Technology Review's 35 Innovators Under 35 in 2025. She completed her Computer Science PhD at University College London in 2017, where she was advised by Nir Piterman. She is a 2008 graduate of Paxon School for Advanced Studies."
+ },
+ {
+  "id": 105,
+  "name": "Randi Weingarten",
+  "entity_type": "person",
+  "notes": "Randi Weingarten is president of the 1.8 million-member American Federation of Teachers (AFT), which represents teachers, paraprofessionals, higher education faculty, nurses, government employees, and early childhood educators. She was elected AFT president in 2008, after serving 11 years as president of the United Federation of Teachers in New York City. She taught history at Clara Barton High School in Brooklyn from 1991 to 1997 and holds degrees from Cornell University's School of Industrial and Labor Relations and the Cardozo School of Law. When elected AFT president in 2008, she became the first openly gay leader of an American national labor union."
+ },
+ {
+  "id": 106,
+  "name": "Elliston Berry",
+  "entity_type": "person",
+  "notes": "Elliston Berry was 14 years old when a classmate made and shared deepfake nude images of her, which she discovered in October 2023. She helped create an online training course to teach students, parents and school staff about non-consensual, explicit deepfake image abuse, in partnership with cybersecurity firm Adaptive Security and Pathos Consulting Group. Berry advocated for the Take It Down Act, which was signed into law by President Donald Trump and makes it a crime to share nonconsensual, explicit images. She appeared at a Capitol Hill press conference with Sen. Ted Cruz and spoke at the White House bill signing ceremony."
+ },
+ {
+  "id": 107,
+  "name": "Karen Hao",
+  "entity_type": "person",
+  "notes": "Karen Hao is an American journalist who currently freelances for publications like The Atlantic and co-hosts the BBC podcast The Interface. She is the author of the 2025 bestselling book 'Empire of AI: Dreams and Nightmares in Sam Altman's OpenAI' which came out May 20, 2025 and was an instant NYT bestseller. She previously worked as a reporter for The Wall Street Journal covering American and Chinese tech companies, and as a senior AI editor at MIT Technology Review. Time magazine honored her on its TIME100 AI list in 2025."
+ },
+ {
+  "id": 108,
+  "name": "Mike Braun",
+  "entity_type": "person",
+  "notes": "Mike Braun is the 52nd Governor of Indiana who previously served as a U.S. Senator from 2018. He is a conservative Republican who spent his career as an entrepreneur before entering politics, building a business that grew into a national company employing thousands of Americans. Braun issued an executive order creating the Indiana Initiative for Drone Dominance Task Force to support President Trump's drone dominance executive orders. He has been advocating for Indiana to become a national leader in artificial intelligence infrastructure, emphasizing the importance of data centers and energy capacity."
+ },
+ {
+  "id": 109,
+  "name": "Gary Peters",
+  "entity_type": "person",
+  "notes": "Gary Peters is a U.S. Senator from Michigan who has served since 2015 and serves as the Ranking Member of the Senate Homeland Security and Governmental Affairs Committee. He announced on January 28, 2025, that he will not seek reelection in 2026. Peters has been rated the most effective U.S. Senator for three consecutive Congresses by the nonpartisan Center for Effective Lawmaking. He has focused on artificial intelligence policy, introducing multiple bipartisan bills including the AI and Critical Technology Workforce Framework Act and the PREPARED for AI Act."
+ },
+ {
+  "id": 110,
+  "name": "Maria Cantwell",
+  "entity_type": "person",
+  "notes": "Maria Cantwell is a U.S. Senator from Washington State, serving as Ranking Member of the Senate Committee on Commerce, Science and Transportation. She has introduced multiple AI-related bills in 2026, including the NSF AI Education Act and the Small Business Artificial Intelligence Training Act. She previously served in the U.S. House of Representatives from 1993-95 and worked as vice president for consumer products at Progressive Networks (later RealNetworks). She was first elected to the U.S. Senate in 2000 and won reelection in 2024 against Republican challenger Raul Garcia."
+ },
+ {
+  "id": 111,
+  "name": "Frank Lucas",
+  "entity_type": "person",
+  "notes": "Frank Lucas is a Republican U.S. Representative from Oklahoma's 3rd congressional district who serves as Chairman of the House Science, Space, and Technology Committee. He introduced the Workforce for AI Trust Act (H.R. 9215) with Ranking Member Zoe Lofgren on July 30, 2024, aimed at promoting a multidisciplinary workforce to advance AI integration and training. Lucas chairs the House Financial Services Task Force on Monetary Policy, Treasury Market Resilience and Economic Prosperity and wants Congress to help stabilize financial markets by insulating the Federal Reserve from political influence. He has served in Congress since 1994 after being elected by special election to fill a vacancy."
+ },
+ {
+  "id": 112,
+  "name": "Ted Lieu",
+  "entity_type": "person",
+  "notes": "Ted Lieu represents California's 36th Congressional District and is serving his sixth term in Congress. He was elected by his colleagues to serve as Vice Chair of the Democratic Caucus, making him the highest ranking Asian American to have ever served in House Leadership. In the 118th Congress, Ted was the Co-Chair of the House's Bipartisan Taskforce on Artificial Intelligence. He is one of three Computer Science Majors in Congress and one of four Members of Congress with a computer science degree."
+ },
+ {
+  "id": 113,
+  "name": "Ed Markey",
+  "entity_type": "person",
+  "notes": "Senator Edward J. Markey (D-Mass.) is a member of the Commerce, Science and Transportation Committee and has served in the U.S. Senate since 2013. He reintroduced the Artificial Intelligence Civil Rights Act on December 2, 2025, alongside Representative Yvette Clarke, to prevent companies from using biased and discriminatory AI-powered algorithms in critical decisions affecting Americans' lives. Markey stated \"We must address AI-powered bias and discrimination in the AI age\" and emphasized that \"Under the AI Civil Rights Act, America would show leadership in AI\u2014not just technological leadership, but moral leadership\". He is running for reelection to a third Senate term in 2026 at age 80."
+ },
+ {
+  "id": 114,
+  "name": "Don Beyer",
+  "entity_type": "person",
+  "notes": "Don Beyer is serving his fifth term as the U.S. Representative from Virginia's 8th District, representing Arlington, Alexandria, Falls Church, and parts of Fairfax County. He serves on Congress' Joint Economic Committee, and also serves on the House Committee on Ways and Means. He was the Lieutenant Governor of Virginia from 1990 to 1998, and was Ambassador to Switzerland and Liechtenstein under President Obama. He is currently attending George Mason University as a part time student pursuing a master's degree in machine learning, in part to help inform his work on AI in Congress."
+ },
+ {
+  "id": 115,
+  "name": "Anna Eshoo",
+  "entity_type": "person",
+  "notes": "Anna Eshoo is a U.S. Representative who served California's 16th Congressional District from 1993 to 2025, retiring in January 2025. She co-chairs the Congressional Artificial Intelligence (AI) Caucus and was named one of Time magazine's 100 most influential people in AI in 2023. She served as Chair of the Health Subcommittee and was the first woman in the history of Congress to hold that position. Representatives Ted Lieu, Anna Eshoo, and Ken Buck have proposed a 20-member national AI commission to develop regulatory frameworks."
+ },
+ {
+  "id": 116,
+  "name": "Gavin Newsom",
+  "entity_type": "person",
+  "notes": "Gavin Newsom is the 40th Governor of California who took office in 2019 and is currently serving his second term. He signed executive order N-5-26 on March 30, 2026 to regulate artificial intelligence implications prior to California government contracts, emphasizing public safety and misuse. California is home to 33 of the top 50 privately held AI companies around the globe and leads with 25% of all AI patents, conference papers, and companies. He announced California has signed agreements with four of the largest technology companies in the GenAI sector including Google, Adobe, IBM, and Microsoft to help train California's workforce for AI jobs."
+ },
+ {
+  "id": 117,
+  "name": "Jay Obernolte",
+  "entity_type": "person",
+  "notes": "Jay Obernolte is a U.S. Congressman representing California's 23rd District since 2021 and is the only serving member of Congress with a graduate-level degree in AI. He co-chaired the bipartisan House Task Force on AI with Ted Lieu, which produced a comprehensive report in December 2024 with 66 findings and 89 recommendations. He currently serves as Chairman of the Research and Technology Subcommittee under the House Committee on Science, Space, and Technology. Obernolte is the owner, president, and technical director of FarSight Studios, a video game development company he founded in 1990."
+ },
+ {
+  "id": 118,
+  "name": "Lynne Parker",
+  "entity_type": "person",
+  "notes": "Lynne Parker is Principal Deputy Director of the White House Office of Science and Technology Policy and Executive Director of the President's Council of Advisors on Science and Technology. In January 2025, she was appointed by President Donald Trump as Executive Director of the President's Council of Advisors on Science and Technology and Counselor to the Director of the White House Office of Science and Technology Policy (OSTP). She has shaped national AI policy across four US presidential administrations. Parker is Associate Vice Chancellor Emerita (retired) and Founding Director of the AI Tennessee Initiative at the University of Tennessee."
+ },
+ {
+  "id": 119,
+  "name": "Arati Prabhakar",
+  "entity_type": "person",
+  "notes": "Arati Prabhakar served as the 12th director of the White House Office of Science and Technology Policy from October 3, 2022 to January 20, 2025, and was the Science and Technology Advisor to President Biden. She was the first woman and person of color to be confirmed by the U.S. Senate as the Director of the White House Office of Science and Technology Policy. She was instrumental in passing President Biden's executive order on AI in 2023, which sets guidelines for tech companies to make AI safer and more transparent, and was the first to demonstrate ChatGPT to the president in the Oval Office. She previously served as the 20th Director of DARPA from 2012 to 2017 and as the 10th Director of the National Institute of Standards and Technology from 1993 to 1997, being the first woman to hold both positions."
+ },
+ {
+  "id": 120,
+  "name": "Suresh Venkatasubramanian",
+  "entity_type": "person",
+  "notes": "Suresh Venkatasubramanian is a Professor of Data Science and Computer Science at Brown University who directs the Center for Technological Responsibility, Reimagination and Redesign. He served as Assistant Director for Science and Justice in the White House Office of Science and Technology Policy for the 2021-2022 academic year, where he co-authored the Blueprint for an AI Bill of Rights. His research focuses on algorithmic fairness and the impact of automated decision-making systems in society. He previously held positions at the University of Utah and AT&T Labs."
+ },
+ {
+  "id": 121,
+  "name": "Kathy Hochul",
+  "entity_type": "person",
+  "notes": "Kathy Hochul is the 57th and first female Governor of New York State. She previously served as Erie county clerk (2007\u201311), U.S. representative for New York's 26th congressional district (2011\u201313), and lieutenant governor (2015\u201321) to Gov. Andrew Cuomo. In her January 13, 2026, State of the State address, Governor Hochul announced a series of proposals related to AI and technology regulation that she said are intended to protect workers and consumers. She announced the launch of the FutureWorks Commission in March 2026, which plans to offer policy proposals on AI best practices that spur innovation while protecting employees from automation."
+ },
+ {
+  "id": 124,
+  "name": "Brookings Institution",
+  "entity_type": "organization",
+  "notes": "The Brookings Institution is an American think tank in Washington, D.C. that conducts research and education in the social sciences, primarily in economics and tax policy, metropolitan policy, governance, foreign policy, global economy, and economic development. The organization was founded in 1916 as the Institute for Government Research (IGR), with the mission of becoming \"the first private organization devoted to analyzing public policy issues at the national level\". Brookings states that its staff \"represent diverse points of view\" and describes itself as nonpartisan. The institution is currently led by President Cecilia Rouse."
+ },
+ {
+  "id": 126,
+  "name": "Gray Swan",
+  "entity_type": "organization",
+  "notes": "Gray Swan is an AI security startup founded by Carnegie Mellon professors, based in Pittsburgh, PA. The company creates AI security solutions including Cygnal (an AI firewall) and Shade (an automated AI red teamer) to protect AI systems from attacks. Gray Swan conducted a groundbreaking study with Stanford comparing AI agents to human cybersecurity professionals in real-world penetration testing. The company runs competitive red-teaming challenges through their Arena platform, including the Ultimate Jailbreaking Championship and Agent Red-Teaming Challenge with significant prize pools."
+ },
+ {
+  "id": 128,
+  "name": "Coefficient Giving (formerly Open Philanthropy)",
+  "entity_type": "organization",
+  "notes": "Coefficient Giving (formerly Open Philanthropy) is an American philanthropic advising and funding organization with CEO Alexander Berger. As of June 2025, Coefficient Giving has directed more than $4 billion in grants across various focus areas including global health, scientific research, pandemic preparedness, potential risks from advanced AI, and farm animal welfare. In November 2025, Open Philanthropy was renamed Coefficient Giving, reflecting its evolution from working primarily with one philanthropic partner to supporting multiple major donors pursuing cost-effective, high-impact giving. The organization's founding and most significant ongoing partnership is with Good Ventures, the foundation of Cari Tuna and Dustin Moskovitz."
+ },
+ {
+  "id": 129,
+  "name": "Redwood Research",
+  "entity_type": "organization",
+  "notes": "Redwood Research is a nonprofit organization founded in 2021 and based in Berkeley, California, dedicated to AI safety and security research aimed at mitigating catastrophic risks from misaligned advanced AI systems. The organization focuses on developing techniques to ensure AI systems align with developers' intentions, even under adversarial conditions, with key research areas including AI control protocols and the detection of strategic deception in models. Buck Shlegeris currently serves as CEO, having previously been CTO, and Ryan Greenblatt appears to be a key researcher at the organization. The organization reported total revenues of $10,036,347 for the fiscal year ending December 2023."
+ },
+ {
+  "id": 130,
+  "name": "Center on Long-Term Risk",
+  "entity_type": "organization",
+  "notes": "The Center on Long-Term Risk's goal is to address worst-case risks from the development and deployment of advanced AI systems, currently focused on conflict scenarios as well as technical and philosophical aspects of cooperation. The organization does interdisciplinary research, makes and recommends grants, and builds a community of professionals and other researchers around their priorities. CLR works on addressing the worst-case risks from the development and deployment of advanced AI systems in order to reduce s-risks. The organization was founded in 2013 according to external sources."
+ },
+ {
+  "id": 131,
+  "name": "Center for Security and Emerging Technology (CSET)",
+  "entity_type": "organization",
+  "notes": "The Center for Security and Emerging Technology (CSET) is a policy research organization within Georgetown University's Walsh School of Foreign Service that was founded in 2019. When founded, it was Washington's first think tank focused entirely on security and emerging technology, and it quickly grew to be the largest research organization in the world working on AI policy. CSET provides decision-makers with data-driven analysis on the security implications of emerging technologies, currently focusing on the effects of progress in artificial intelligence (AI), advanced computing and biotechnology. The organization has received more than $100 million in funding through 2025, with Open Philanthropy as its main funder."
+ },
+ {
+  "id": 132,
+  "name": "Partnership on AI",
+  "entity_type": "organization",
+  "notes": "Partnership on AI (PAI) is a nonprofit global community of academic, civil society, and industry organizations who come together to address the most important questions in AI. PAI is an independent, nonprofit 501(c)(3) organization and funded by charitable contributions from philanthropy and corporate entities. The organization has 141 partners from 19 countries and focuses on advancing the safety and responsibility of AI systems. PAI was originally established by a coalition of representatives from technology companies, civil society organizations, and academic institutions, and supported originally by multi-year grants from Apple, Amazon, Meta, Google/DeepMind, IBM and Microsoft."
+ },
+ {
+  "id": 133,
+  "name": "Anthropic",
+  "entity_type": "organization",
+  "notes": "Anthropic is an artificial intelligence company founded in 2021 by former OpenAI leaders including Dario Amodei and Daniela Amodei. The company specializes in Constitutional AI and has developed Claude, a family of large language models designed for safety and enterprise use. Anthropic has experienced rapid growth, scaling from $1 billion ARR in 2024 to $14 billion in February 2026. The company is structured as a Public Benefit Corporation focused on AI safety research."
+ },
+ {
+  "id": 134,
+  "name": "Founders Fund",
+  "entity_type": "organization",
+  "notes": "Founders Fund is an American venture capital fund formed in 2005 and based in San Francisco, with roughly $17 billion in total assets under management as of 2025. The firm is closing in on a $6 billion fundraise for its fourth growth vehicle, with this rapid-fire pace happening less than a year after it wrapped up its previous $4.6 billion fund. Founders Fund was the first institutional investor in Space Exploration Technologies (SpaceX) and Palantir Technologies, and an early investor in Facebook. The firm's investments include Airbnb, Anduril, DeepMind, Rippling, Facebook, Ramp, Palantir Technologies, Pudgy Penguins, SpaceX, Spotify, Stripe, Neuralink, and Nubank."
+ },
+ {
+  "id": 135,
+  "name": "Writers Guild of America",
+  "entity_type": "organization",
+  "notes": "The Writers Guild of America reached a tentative four-year agreement with the Alliance of Motion Picture and Television Producers in 2026, finalized after roughly three weeks of negotiations. The deal addresses AI protections, compensation increases, and health plan strengthening, coming nearly three years after a 148-day strike in 2023. The Writers Guild of America is comprised of two different American labor unions representing writers in film, television, radio, and online media: the Writers Guild of America, East (WGAE) headquartered in New York City and affiliated with the AFL-CIO, and the Writers Guild of America West (WGAW) headquartered in Los Angeles. The WGAE was officially founded in 1954 and represents thousands of members who write content for motion pictures, television, news and online media."
+ },
+ {
+  "id": 136,
+  "name": "Tarbell Center for AI Journalism",
+  "entity_type": "organization",
+  "notes": "The Tarbell Center for AI Journalism supports journalism that helps society navigate the emergence of increasingly advanced AI. The organization offers grants of $1,000\u2013$20,000 to support original reporting published in established outlets, whether from freelancers or staff. The Tarbell Fellowship is a one-year program for journalists interested in covering artificial intelligence, with fellows securing a nine-month placement at a major newsroom and participating in a 10-week course covering AI and journalism fundamentals. Editorial independence is a core value for Tarbell and their grantees maintain complete autonomy over their reporting."
+ },
+ {
+  "id": 137,
+  "name": "Anthropic Institute",
+  "entity_type": "organization",
+  "notes": "The Anthropic Institute was launched on March 11, 2026, as a new effort to confront the most significant challenges that powerful AI will pose to societies. The Institute is led by Anthropic co-founder Jack Clark, who assumed a new role as Anthropic's Head of Public Benefit. The Institute has an interdisciplinary staff of machine learning engineers, economists, and social scientists, bringing together and expanding three of Anthropic's research teams: the Frontier Red Team, Societal Impacts, and Economic Research. The Institute launches with about 30 people and Clark expects the think tank's number of staff will double every year."
+ },
+ {
+  "id": 138,
+  "name": "Existential Risk Observatory",
+  "entity_type": "organization",
+  "notes": "The Existential Risk Observatory is a nonprofit foundation founded in May 2021 in Amsterdam, The Netherlands, committed to reducing human extinction risks by informing the public debate. The organization employs 5 people and focuses on areas including unaligned AI, man-made pandemics, climate change, nuclear war, and other existential risks. The Observatory conducts research, media work, lobbying, and organizes events such as conferences on existential risks. Their work includes tracking public awareness of AI existential risk, finding that 24% of the US public is now aware of AI xrisk as of their most recent survey."
+ },
+ {
+  "id": 139,
+  "name": "Goodfire",
+  "entity_type": "organization",
+  "notes": "Goodfire is an AI research company using interpretability to understand, learn from, and design AI systems, with a mission to build the next generation of safe and powerful AI. The company raised $150 million in Series B funding at a $1.25 billion valuation in February 2026, led by B Capital. Goodfire has developed a platform called Ember that decodes neurons inside AI models and lets users precisely shape their behaviors. The company has partnered with organizations like Arc Institute, Mayo Clinic, and Microsoft to deploy their interpretability technology."
+ },
+ {
+  "id": 140,
+  "name": "OpenAI",
+  "entity_type": "organization",
+  "notes": "OpenAI is an American artificial intelligence research organization comprising both a nonprofit foundation and a controlled for-profit public benefit corporation, headquartered in San Francisco. The company was founded in December 2015 as a nonprofit, with a for-profit subsidiary created in 2019, and restructured in 2025 to operate more independently from the nonprofit. OpenAI's mission is to ensure that artificial general intelligence benefits all of humanity. The company has 4,500 employees as of 2026 and reported revenue of US$13.1 billion in 2025."
+ },
+ {
+  "id": 141,
+  "name": "AI Safety Foundation",
+  "entity_type": "organization",
+  "notes": "The AI Safety Foundation is a registered Canadian charity based in Canada that increases awareness and scientific understanding of the catastrophic risks of AI, by advancing education and research, in order to ensure a safer future for humanity. The AISF is proud to present an annual lecture series, the Hinton Lectures\u2122, delivered by world-leading AI safety experts. The organization is supported by generous individuals, corporations and partners. Geoffrey Hinton serves as a Director and is described as Nobel Laureate and \"Godfather of AI\" who hosts The Hinton Lectures."
+ },
+ {
+  "id": 142,
+  "name": "Cyborgism",
+  "entity_type": "organization",
+  "notes": "Cyborgism is a strategy for safely accelerating alignment research by setting up human-in-the-loop systems which empower human agency rather than outsource it. The approach focuses on training and empowering 'cyborgs', a specific kind of human-in-the-loop system which enhances and extends a human operator's cognitive abilities without relying on outsourcing work to autonomous agents. Connor Leahy coined the term 'cyborgism'. The core of cyborgism is to reduce bandwidth constraints between humans and GPT in order to make deep integration possible."
+ },
+ {
+  "id": 143,
+  "name": "Effective Thesis",
+  "entity_type": "organization",
+  "notes": "Effective Thesis is an organization that aims to empower students and early-career individuals to focus their research and careers towards solving the world's biggest challenges. The organization was founded in July 2017 by David Janku, with initial support from Daniel Hnyk and members of the Czech EA Association. Since then, they have directly supported over 2,000 students across all services and coached more than 500 students one-on-one. The organization is based on the principles of Effective Altruism and is informed by the career advice organisation, 80,000 Hours."
+ },
+ {
+  "id": 144,
+  "name": "How to pursue a career in technical AI alignment",
+  "entity_type": "organization",
+  "notes": "How to pursue a career in technical AI alignment is a comprehensive guide written by Charlie Rogers-Smith. The guide is written for people who are considering direct work on technical AI alignment and is expected to be most useful for people who are not yet working on alignment. The guide was published on June 4th, 2022 and provides information on types of alignment work, how to pursue different paths, and resources for learning AI alignment. It has been referenced and acknowledged by other major AI safety career resources from organizations like 80,000 Hours."
+ },
+ {
+  "id": 145,
+  "name": "Aether",
+  "entity_type": "organization",
+  "notes": "Founded 2024/2025 as independent research group. 3 full-time researchers: Rohan Subramani (starting PhD at University of Toronto), Rauno Arike, and Shubhorup Biswas. $200k funding through December 2025 from anonymous donor. Advised by experts from Astera Institute, Apollo Research, Google DeepMind. Research agenda focuses on enhancing monitorability of LLM agents, with published work on chain-of-thought monitoring and hidden reasoning taxonomy. Currently hiring 1-2 additional researchers."
+ },
+ {
+  "id": 146,
+  "name": "Google DeepMind",
+  "entity_type": "organization",
+  "notes": "Google DeepMind brings together two of the world's leading AI labs \u2014 Google Brain and DeepMind \u2014 into a single, focused team led by CEO Demis Hassabis. The company's mission is to build AI responsibly to benefit humanity, working to advance artificial general intelligence (AGI). Google DeepMind has achieved notable breakthroughs including AlphaGo defeating world champion Go players, AlphaFold solving protein folding problems, and developing the Transformer architecture that underlies most large language models. The organization employs over 1,000 researchers and engineers from diverse disciplines and maintains partnerships with academic institutions, healthcare organizations, and government agencies."
+ },
+ {
+  "id": 147,
+  "name": "Modeling Cooperation",
+  "entity_type": "organization",
+  "notes": "Modeling Cooperation conducts long-term future research on improving cooperation in competition for the development of transformative artificial intelligence (AI). They build upon AI competition models to analyze ways to shift competitors' incentives toward more safety. The organization received a $77,116 grant from the Foresight Institute for their ongoing collaboration with Technology Strategy Roleplay (TSR). Modeling Cooperation is fiscally sponsored by Convergence Analysis."
+ },
+ {
+  "id": 148,
+  "name": "Softmax",
+  "entity_type": "organization",
+  "notes": "Softmax is an AI alignment research company co-founded by Emmett Shear (cofounder and ex-CEO of Twitch, ex-interim-CEO of OpenAI) that is building a mathematical theory of 'organic alignment' - developing AI systems that can align with each other and with humans organically, through emergent cooperation, rather than via hard-coded, hierarchical control. The company is focused on AI agents discovering their 'values' even as those agents meet and aim to surpass human intelligence. Softmax has Ken Stanley as an advisor and collaborates with research partners."
+ },
+ {
+  "id": 149,
+  "name": "Equilibria Network",
+  "entity_type": "organization",
+  "notes": "Equilibria Network is a Technology, Information and Internet company that describes itself as 'Designing New Forms Of Collective Intelligence'. The organization employs 2 people and has presence in United States and Sweden. They are running a workshop and research program on phylogeny of agents during autumn 2025. The company focuses on exploring the vast design space of possible coordination mechanisms and helping evaluate emergent risks and safety of multi-agent AI systems."
+ },
+ {
+  "id": 150,
+  "name": "Beneficial AI Foundation",
+  "entity_type": "organization",
+  "notes": "Beneficial AI Foundation (BAIF) is a nonprofit organization founded in 2023 with the mission \"TO ENSURE THAT AI TECHNOLOGY DOESNT CAUSE HARM\". The organization supports AI safety research through university partnerships and its Buterin Fellowship program, with research areas including mechanistic interpretability, audit standards, and red-teaming. BAIF manages the Quantitative AI Safety Initiative (QAISI), a multi-university partnership pursuing quantitative guarantees that AI will not cause harm. The organization is led by Max Tegmark as President and Treasurer and operates the Buterin AI Existential Safety Fellowship program in partnership with Future of Life Institute."
+ },
+ {
+  "id": 151,
+  "name": "Cadenza Labs",
+  "entity_type": "organization",
+  "notes": "Cadenza Labs is an AI Safety research group consisting of four SERI-MATS alumni who work on interpretability research. The organization focuses on doing research which contributes to AI Safety, with their main goal being to research, benchmark and develop robust lie detectors for LLMs. They received funding from LTFF until the end of September 2023 and have been seeking additional funding to continue their work and expand their team. The group has produced research including work on LIARS' BENCH, a testbed for evaluating lie detection techniques in large language models."
+ },
+ {
+  "id": 152,
+  "name": "RAND Corporation",
+  "entity_type": "organization",
+  "notes": "RAND Corporation is a nonprofit, nonpartisan research organization that provides leaders with the information they need to make evidence-based decisions. The organization studies the potential opportunities and risks of artificial intelligence, including ways to strengthen the AI workforce, countering AI-driven social media manipulation by U.S. adversaries, AI governance and how to make future AI systems safer, potential military applications of AI, how AI is being used in the classroom, and identifying occupations at risk of being replaced by AI. RAND operates the RAND Center on AI, Security, and Technology (RAND CAST), which is at the forefront of charting the path for a flourishing future in an era of rapid technological change. The organization was founded in 1948 as an independent nonprofit corporation, separating from the Douglas Aircraft Company."
+ },
+ {
+  "id": 153,
+  "name": "Geodesic Research",
+  "entity_type": "organization",
+  "notes": "Geodesic Research is a UK-based technical AI Safety organization focused on compute-intensive alignment research. The organization was founded by students at the University of Cambridge and employs 6 people. Geodesic Research published a paper titled \"Alignment Pretraining: AI Discourse Causes Self-Fulfilling (Mis)alignment\" which found that LLMs pretrained on data about misaligned AIs become less aligned, while pretraining with synthetic data about good AIs helps them become more aligned. The organization is a project of Meridian Cambridge."
+ },
+ {
+  "id": 154,
+  "name": "AI Objectives Institute",
+  "entity_type": "organization",
+  "notes": "The AI Objectives Institute (AOI) is a 501(c)(3) nonprofit R&D lab founded by the late internet security pioneer Dr. Peter Eckersley. The organization focuses on harnessing the potential of large-scale systems, including AI, markets, and bureaucracies, to advance humanity's interests. AOI was founded in 2021 and employs 13 people. The institute collaborates with and employs working groups of academics, scientists, economists, entrepreneurs, and government officials."
+ },
+ {
+  "id": 156,
+  "name": "Ergo Impact",
+  "entity_type": "organization",
+  "notes": "Ergo Impact appears to be referenced in multiple contexts across different sources. According to source, Ergo Impact is listed as a funding supporter for RAND's Geopolitics of AGI Initiative, alongside other donors like Good Ventures, Open Philanthropy, and Jaan Tallinn. Source indicates that Effective Giving rebranded to Ergo Impact. Source shows Ergo Impact operates as ergoimpact.org and describes itself as helping UHNW philanthropists find and fund solutions to pressing problems, laying the foundation for what became Ergo Impact."
+ },
+ {
+  "id": 157,
+  "name": "Forecasting Research Institute",
+  "entity_type": "organization",
+  "notes": "The Forecasting Research Institute develops forecasting methods to improve decision-making on high-stakes issues. The organization employs 41 people and operates as a 501(c)(3) research nonprofit. FRI was founded in 2021 with initial support from Coefficient Giving. The institute's flagship project is the Existential Risk Persuasion Tournament (XPT), which brought together 169 participants who made forecasts about existential threats including AI, biosecurity, climate change, and nuclear war."
+ },
+ {
+  "id": 158,
+  "name": "Epoch AI",
+  "entity_type": "organization",
+  "notes": "Epoch AI is a nonprofit research institute founded to investigate the trajectory of artificial intelligence through empirical analysis of historical trends in machine learning. The organization was co-founded in June 2022 by Jaime Sevilla and Tamay Besiroglu, among others, with Sevilla serving as the organization's Executive Director. Epoch AI's mission is to improve society's understanding of the drivers, progress, and impact of artificial intelligence. The organization focuses on building a shared scientific foundation for thinking about AI, neutral to any specific agenda, so decisions about this technology are informed by the best available data."
+ },
+ {
+  "id": 159,
+  "name": "Macroscopic Ventures",
+  "entity_type": "organization",
+  "notes": "Macroscopic Ventures is a Swiss nonprofit founded in 2019 that makes grants and investments to projects and people helping to build a future guided by reason and compassion. The organization employs 6 people and is headquartered in Basel, Switzerland, operating in 5 countries including United States, Japan, United Kingdom, and Canada. Their focus areas include artificial intelligence governance and policy, AI welfare, cooperative AI, societal long-term risks, and animal welfare. The organization was previously known as Center for Emerging Risk Research (CERR) and adopted its current name in February 2025."
+ },
+ {
+  "id": 160,
+  "name": "Effective Institutions Project",
+  "entity_type": "organization",
+  "notes": "The Effective Institutions Project is a philanthropic advisory and research organization that seeks out and incubates high-impact strategies to improve institutional decision-making around the world. AI governance has been a core focus for the organization since its founding in 2021, and the majority of the organization's resources are currently devoted toward making progress on this important and timely issue. The organization has 12 employees according to LinkedIn data. EIP works in partnership with funders and civil society organizations across the globe to coordinate efforts, share knowledge, and drive towards coherent and broadly endorsed policy outcomes that reduce the risks of transformative AI and enable society to flourish."
+ },
+ {
+  "id": 162,
+  "name": "Cooperative AI Foundation",
+  "entity_type": "organization",
+  "notes": "The Cooperative AI Foundation (CAIF) is a charitable entity backed by a $15 million philanthropic commitment from Macroscopic Ventures. CAIF's mission is to support research that will improve the cooperative intelligence of advanced AI for the benefit of all. The foundation is registered with the Charity Commission for England and Wales under charity number 1201294. CAIF employs 16 people with a 77.8% year-over-year growth."
+ },
+ {
+  "id": 163,
+  "name": "Lionheart Ventures",
+  "entity_type": "organization",
+  "notes": "Lionheart Ventures is an early-stage venture capital firm focused on the wise development of transformative technologies. Their main areas of focus are artificial intelligence and frontier mental health. The firm was founded in 2019 and is based in San Francisco. Their AI portfolio includes Softmax, Anthropic, Goodfire, Gray Swan, Piramidal, and Lucid Computing."
+ },
+ {
+  "id": 164,
+  "name": "Meta Charity Funders",
+  "entity_type": "organization",
+  "notes": "Meta Charity Funders (MCF) is a funding circle that aims to fund charitable projects working one level removed from direct impact. MCF is a network of donors sharing knowledge, discussing funding opportunities, and running joint open grant rounds in the EA meta space. The organization received approximately 60 applications in Spring 2025 and ultimately funded 8 projects, with members granting approximately $530,000 in that round. Members are expected to give above $100,000 to this cause area each year, which is the expected minimum annual giving to join."
+ },
+ {
+  "id": 165,
+  "name": "Mythos Ventures",
+  "entity_type": "organization",
+  "notes": "Mythos Ventures is an early-stage venture capital firm based in San Francisco, California, founded in 2023. The firm closed $14 million in capital commitments for its first fund to invest in transformative AI companies. Mythos Ventures announced Fund II as a $30M pre-seed fund backing founders building AGI-proof companies. The firm employs 5 people and is headquartered at 1410 Franklin St, San Francisco."
+ },
+ {
+  "id": 166,
+  "name": "Senate AI Working Group",
+  "entity_type": "organization",
+  "notes": "The Senate AI Working Group is a bipartisan organization formed in the 118th Congress, consisting of Senate Majority Leader Chuck Schumer (D-NY), Senator Mike Rounds (R-SD), Senator Martin Heinrich (D-NM), and Senator Todd Young (R-IN). The Working Group was formed due to shared recognition of the profound changes artificial intelligence could bring to the world and the need to proactively work to harness opportunities and address risks of this transformational technology. The Working Group's objective has been to complement the traditional congressional committee-driven policy process, considering that AI technology does not neatly fall into the jurisdiction of any single committee. On May 15, 2024, the Working Group released a report titled \"Driving U.S. Innovation in Artificial Intelligence: A Roadmap for Artificial Intelligence Policy in the United States Senate\"."
+ },
+ {
+  "id": 167,
+  "name": "Juniper Ventures",
+  "entity_type": "organization",
+  "notes": "Juniper Ventures is a venture capital firm that focuses on investing in startups that enhance the safety and security of artificial intelligence. The firm spun out of Climate Capital to invest in synthetic biology for the climate, with founding partners Michael Luciani and Jennifer Kan who had been investing in climate for years as part of Climate Capital. Their first fund is $10.6 million and is oversubscribed, with limited partners including family offices, foundations, and Allocator One serving as the anchor. The firm operates by writing checks between $100,000 and $500,000 to scientists who are working to commercialize their research."
+ },
+ {
+  "id": 168,
+  "name": "Oxford Martin AI Governance Initiative",
+  "entity_type": "organization",
+  "notes": "The Oxford Martin AI Governance Initiative aims to understand and anticipate the lasting risks from AI through rigorous research into the technical and computational elements of AI development, combined with deep policy analysis. The Initiative is co-led by Professor Robert Trager, a social scientist specialising in international relations and frontier AI regulation, and Professor Michael Osborne, a specialist in machine learning. The Oxford Martin AI Governance Initiative employs 30 people (+65.0% YoY, +13 people) and operates in 7 countries (including United Kingdom, United States, China, France, and Argentina). The Initiative is shaping global AI governance debates, with agenda-setting research informing policy and regulatory discussions across the UN, EU, UK and US."
+ },
+ {
+  "id": 169,
+  "name": "AI Standards Lab",
+  "entity_type": "organization",
+  "notes": "AI Standards Lab is a remote organization that aims to accelerate AI safety standards writing in organizations like ISO/IEC, CEN-CENELEC, the IEEE, and NIST. The organization employs 10 people and is structured as a virtual lab bringing together volunteers from around the world. AI Standards Lab has actively participated in the EU AI Act's General-Purpose AI Code of Practice drafting process, submitting detailed technical feedback across multiple drafts. The organization has published extensive reports analyzing EU AI Act amendments and providing recommendations on various regulatory proposals."
+ },
+ {
+  "id": 170,
+  "name": "TruthfulAI",
+  "entity_type": "organization",
+  "notes": "TruthfulAI is a non-profit organization that researches situational awareness, deception, and hidden reasoning in language models. The team is led by Owain Evans and is based in Berkeley, California. The organization has published multiple papers including work on emergent misalignment published in Nature and the TruthfulQA benchmark. TruthfulAI works towards safe and aligned AI systems."
+ },
+ {
+  "id": 171,
+  "name": "SaferAI",
+  "entity_type": "organization",
+  "notes": "SaferAI is a French non-profit furthering risk management in policy and industry. SaferAI works across research and policy to make AI safer by advancing responsible AI development through modeling complex risks, improving company practices, and contributing to standards and policies. SaferAI has been selected by the European Commission's AI Office to provide technical assistance on assessing risks posed by GPAI models at EU level, winning Lot 1 of the 'Technical Assistance for AI Safety' tender. SaferAI released its first ratings evaluating the risk-management practices of top AI companies, with xAI receiving the lowest score of 0/5."
+ },
+ {
+  "id": 172,
+  "name": "Alignment Ecosystem Development (AED)",
+  "entity_type": "organization",
+  "notes": "Alignment Ecosystem Development (AED) is an AI safety field-building nonprofit focused on building and maintaining valuable digital infrastructure for the AI safety ecosystem. AED has built, taken ownership of, closely partnered with, and/or maintained approximately 15 different projects, including the AI Safety Map (aisafety.world), AI Safety Info (aisafety.info), and AI Safety Quest (aisafety.quest). The Long-Term Future Fund provided a $99,330 grant to AED through their fiscal sponsor, Ashgro Inc., covering a 1-year stipend for 1.25 full-time equivalents to build and maintain digital infrastructure. AED has received zero funding so far prior to this grant and has until now been entirely volunteer driven."
+ },
+ {
+  "id": 173,
+  "name": "AI Now Institute",
+  "entity_type": "organization",
+  "notes": "The AI Now Institute was founded in 2017 as a research institute studying the social implications of artificial intelligence and policy research that addresses the concentration of power in the tech industry. As of mid-2022, AI Now is operating as an independent organization and does not accept funding from corporate donors, including the tech industry we aim to hold accountable. The institute's co-executive directors are Amba Kak and Sarah Myers West. AI Now's leadership were invited to advise the US Federal Trade Commission on artificial intelligence in 2021."
+ },
+ {
+  "id": 174,
+  "name": "Workshop Labs",
+  "entity_type": "organization",
+  "notes": "Workshop Labs is a research lab focused on user-aligned models with a mission to make people irreplaceable. The company is building technology to train billions of models, each designed for their user, and describes itself as a public benefit corporation making AI that works for you, not AI that automates you for someone else. Luke Drago is identified as the co-founder and CEO of Workshop Labs. Rudolf Laine and Luke Drago are co-founding Workshop Labs according to a LinkedIn post from Rudolf Laine."
+ },
+ {
+  "id": 175,
+  "name": "The Verge",
+  "entity_type": "organization",
+  "notes": "The Verge is about technology and how it makes us feel, founded in 2011. The Verge was founded in 2011 in partnership with Vox Media, and covers the intersection of technology, science, art, and culture. The Verge is an ambitious multimedia effort to examine how technology will change life in the future for a massive mainstream audience. The site is powered by Vox Media's Chorus platform, a modern media stack built for web-native news in the 21st century."
+ },
+ {
+  "id": 176,
+  "name": "European Network for AI Safety (ENAIS)",
+  "entity_type": "organization",
+  "notes": "The European Network for AI Safety (ENAIS) is a dynamic community of researchers and policymakers from across Europe, united in their efforts to advance AI safety. ENAIS brings together experts from over 13 countries and counting, all working towards ensuring that artificial intelligence systems are safe, ethical, and positively impactful for humanity. ENAIS distinguishes itself from related organizations by its focus on existential risks from AI. ENAIS is funded by Lightspeed grants."
+ },
+ {
+  "id": 177,
+  "name": "xAI",
+  "entity_type": "organization",
+  "notes": "xAI is an American AI company founded by Elon Musk on March 9, 2023, with a mission to \"understand the true nature of the universe\". SpaceX acquired xAI in February 2026 in an all-stock transaction that valued SpaceX at $1 trillion and xAI at $250 billion. The company's flagship product is Grok, an AI chatbot that is accessible on grok.com, iOS, and Android. xAI raised $20 billion in a Series E funding round in January 2026, with strategic investors including Nvidia and Cisco Investments."
+ },
+ {
+  "id": 178,
+  "name": "RAISEimpact",
+  "entity_type": "organization",
+  "notes": "Program of Successif launched in 2024-2025, fully funded by Open Philanthropy grant through May 2025. Led by Adam Tury (former Amazon tech leader, EA coach) and Patrick Gruban (board member of Effective Ventures UK). Currently serves 4 AI safety organizations as clients, eligibility requires organizations working on AI GCRs with 5+ paid staff. Offers 4-step process: discovery call, leadership workshop, recommendations review, and implementation support including conflict management, hiring consulting, and leadership coaching."
+ },
+ {
+  "id": 179,
+  "name": "Safe AI Forum",
+  "entity_type": "organization",
+  "notes": "Safe AI Forum (SAIF) is a US 501(c)3 non-profit that aims to foster international collaboration to reduce AI risks. The organization was co-founded by Fynn Heide and Conor McGurk in late 2023. SAIF's flagship program is the International Dialogues on AI Safety (IDAIS), which brings together senior computer scientists and AI governance experts to build international collaboration on these risks. SAIF started as a fiscally sponsored project at FAR.AI in 2023 and has now successfully transitioned to operating as an independent non-profit as of May 2nd 2025."
+ },
+ {
+  "id": 180,
+  "name": "Trajectory Labs",
+  "entity_type": "organization",
+  "notes": "There are multiple organizations named Trajectory Labs with different focuses. One is a nonprofit based in downtown Toronto focused on AI safety, funded by Open Philanthropy and operational since January 1st, 2025. Another is described as a stealth AI security startup working with leading AI companies on red-teaming. A third appears to be a product studio that builds software, mobile apps, and web applications. There is also a company that builds safety evaluations and RL environments for frontier AI labs."
+ },
+ {
+  "id": 181,
+  "name": "Safe Superintelligence Inc.",
+  "entity_type": "organization",
+  "notes": "Safe Superintelligence Inc. is an Israeli-American artificial intelligence company founded by Ilya Sutskever, the former chief scientist of OpenAI; Daniel Gross, former head of Apple's AI efforts; and Daniel Levy, an investor and AI researcher. The company was founded on June 19, 2024, with the goal to safely develop superintelligent AI. SSI raised $1 billion from venture capital firms including SV Angel, DST Global, Sequoia Capital, and Andreessen Horowitz in September 2024. In March 2025, SSI reached a $30 billion valuation in a funding round led by Greenoaks Capital."
+ },
+ {
+  "id": 182,
+  "name": "Timaeus",
+  "entity_type": "organization",
+  "notes": "Timaeus is an AI safety and alignment research nonprofit founded in October 2023, with the mission of making breakthrough scientific progress on AI safety using singular learning theory. The organization was co-founded by Jesse Hoogland (Executive Director) and Daniel Murfet, who recently left a tenured professorship in algebraic geometry to pursue this work full-time. Timaeus has grown from a team of four with an initial budget of $145k to a current team of eight (soon up to 12) with around $2.5M in funding for 2025. The organization focuses on applying singular learning theory to foundational problems within alignment, particularly through their \"developmental interpretability\" research agenda."
+ },
+ {
+  "id": 183,
+  "name": "Forethought (AI Safety Research Nonprofit)",
+  "entity_type": "organization",
+  "notes": "Forethought is a nonprofit research organization focused on how to navigate the transition to a world with superintelligent AI systems. The organization was cofounded by Max Dalton, Will MacAskill, Tom Davidson, and Amrit Sidhu-Brar. They are a small research nonprofit that aims to tackle the most important questions they can find, unrestricted by the current Overton window. The organization was built out of the old Forethought Foundation for Global Priorities Research to help get the operations started."
+ },
+ {
+  "id": 184,
+  "name": "Narrow Path (by ControlAI)",
+  "entity_type": "organization",
+  "notes": "Narrow Path (by ControlAI) is a comprehensive plan to address extinction risks from artificial superintelligence, structured in three phases: Phase 0 (Safety), Phase 1 (Stability), and Phase 2 (Flourishing). The plan was published in October 2024 and is being actively pushed to lawmakers in the UK and US through ControlAI's Direct Institutional Plan (DIP). Andrea Miotti is identified as the Executive Director of Control AI and the lead author of A Narrow Path. The plan proposes preventing the development of artificial superintelligence for 20 years while building international oversight systems."
+ },
+ {
+  "id": 185,
+  "name": "FAR.AI",
+  "entity_type": "organization",
+  "notes": "FAR.AI is a research & education non-profit founded in 2022 that focuses on ensuring advanced AI is safe and beneficial for everyone. The organization is led by CEO Adam Gleave and COO Karl Berzins. FAR.AI secured over $30 million in funding commitments throughout 2025 from supporters including Coefficient Giving (previously Open Philanthropy), Schmidt Sciences, Survival and Flourishing Fund, the Center for Security and Emerging Technology (CSET), and the AI Safety Fund (AISF) supported by the Frontier Model Forum (FMF). The organization was selected by the European Commission's AI Office to conduct technical safety research supporting the implementation of the EU's landmark Artificial Intelligence Act."
+ },
+ {
+  "id": 186,
+  "name": "Intelligence Rising",
+  "entity_type": "organization",
+  "notes": "Intelligence Rising is both a documentary film directed by Elena Andreicheva (2026) and a separate training workshop organization that provides strategic simulations of AI futures. The documentary features a geopolitical war game exploring AI-driven crises with participants including thinkers from the EU, China, and the United States. The training workshop organization is headquartered in London, United Kingdom and employs 10 people, offering educational roleplay games for decision-makers to experience tensions in AI development. There is also a separate Australian company called Intelligence Rising founded in 2018 by Neil Quarmby that provides online courses for intelligence professionals."
+ },
+ {
+  "id": 187,
+  "name": "AI Safety Camp",
+  "entity_type": "organization",
+  "notes": "AI Safety Camp (AISC) is an online part time AI safety research program where participants join projects and work 10 hours/week with weekly meetings. The program runs as a 3-month long online program from January to April, where participants form teams to work on pre-selected AI Safety projects. AI Safety Camp has a seven-year track record of enabling participants to try their fit, find careers and start new organizations in AI Safety, hosting up-and-coming researchers outside the Bay Area and London hubs. The organization is headquartered in Diemen, North Holland, Netherlands and employs 58 people."
+ },
+ {
+  "id": 188,
+  "name": "AI Safety, Ethics and Society (Center for AI Safety)",
+  "entity_type": "organization",
+  "notes": "AI Safety, Ethics and Society is a course offered by the Center for AI Safety (CAIS) that offers 'a comprehensive introduction to how current AI systems work, their societal-scale risks, and how to manage them'. The course is described as 'Training 1000+ future AI safety leaders'. Dan Hendrycks authored a work titled 'AI Safety, Ethics, and Society' published by the Center for AI Safety in 2024. The course appears to be part of CAIS's broader mission to 'reduce societal-scale risks associated with AI by conducting safety research, building the field of AI safety researchers, and advocating for safety standards'."
+ },
+ {
+  "id": 189,
+  "name": "Cooperative AI Summer School",
+  "entity_type": "organization",
+  "notes": "The Cooperative AI Summer School is an advanced programme for early-career professionals already working in or studying cooperative AI, taking place over five intensive days with talks from leading researchers and collaborative projects. The 2025 edition was held on the banks of the River Thames in Marlow, England, gathering over 65 students and early-career professionals from across the world. The Cooperative AI Foundation is committed to building a diverse and inclusive research community and is registered with the Charity Commission for England and Wales under charity number 1201294."
+ },
+ {
+  "id": 190,
+  "name": "Alignment of Complex Systems Research Group (ACS)",
+  "entity_type": "organization",
+  "notes": "The Alignment of Complex Systems Research Group (ACS) is an interdisciplinary research group at Charles University studying questions about multi-agent systems composed of humans and advanced AI systems. ACS aims to develop understanding of advanced AI systems and the complex ways they interact with humans and human institutions, seeking to contribute to making such systems safe and aligned towards shared human values like freedom, kindness and justice. Their research draws on insights and methods from machine learning, information theory, network theory, active inference, philosophy of science, ecology and more, with a team that includes philosophers and ML engineers, physicists and cognitive scientists. ACS led the work on the 'Gradual Disempowerment' paper and is listed as a key organization working on gradual disempowerment research."
+ },
+ {
+  "id": 191,
+  "name": "Institute for AI Policy and Strategy (IAPS)",
+  "entity_type": "organization",
+  "notes": "The Institute for AI Policy and Strategy (IAPS) is a nonpartisan think tank that produces policy research to address the implications of AI, from today's most advanced models to potential AGI and superintelligence. IAPS is an initiative of the California-based 501(c)(3) think tank Rethink Priorities (RP) and receives fiscal support from RP as well as operational support from RP's Operations Department. The organization employs 36 people according to LinkedIn data. IAPS's work is primarily funded by a mix of philanthropic grants and individual gifts\u2014including support to date from Open Philanthropy, the Survival and Flourishing Fund, allied government, and individual donors."
+ },
+ {
+  "id": 192,
+  "name": "Foresight Institute",
+  "entity_type": "organization",
+  "notes": "Foresight Institute is a research organization founded in 1986 by Christine Peterson and Eric Drexler. The organization works to advance science and technology for the benefit of life through grants, events, prizes, and fellowships. Foresight Institute is led by CEO Allison Duettmann and COO Karolina Ekl\u00f6w. The organization focuses on six areas including Secure AI, Neurotechnology, Longevity, Biotechnology, Nanotechnology, Space and Existential Hope."
+ },
+ {
+  "id": 193,
+  "name": "Leaf: Dilemmas and Dangers in AI",
+  "entity_type": "organization",
+  "notes": "Leaf: Dilemmas and Dangers in AI is an interdisciplinary online fellowship helping teenagers explore how to steer cutting-edge AI technology toward benefits for humanity. The program is designed for smart, curious, and ambitiously altruistic students aged 15-19 who haven't yet started university. 97% of participants would recommend the course, with 97% of 300+ Finalists ranking 7/10 or above on their likelihood to recommend this course. The fellowship runs for 5 weeks covering topics from AI foundations to personal impact strategies."
+ },
+ {
+  "id": 194,
+  "name": "Mentorship for Alignment Research Students (MARS)",
+  "entity_type": "organization",
+  "notes": "MARS (Mentorship for Alignment Research Students) is a part-time programme where teams of 2\u20134 work with experienced mentors to produce published research, providing a kick-off week in Cambridge, compute, and research management. The program is run by Cambridge AI Safety Hub (CAISH) and is a volunteer-based program connecting aspiring researchers with experienced mentors to conduct AI-safety research. Previous participants have published at NeurIPS, ICML, EMNLP, and ControlConf, with mentorship from researchers at Redwood Research, Apollo Research, Google DeepMind, the University of Cambridge & other organisations. MARS research has been accepted at top venues like NeurIPS and ICLR."
+ },
+ {
+  "id": 196,
+  "name": "Supervised Program for Alignment Research (SPAR)",
+  "entity_type": "organization",
+  "notes": "The Supervised Program for Alignment Research (SPAR) is a part-time, virtual mentorship program that connects mentors and mentees for three-month AI safety and governance research projects. SPAR is run by Kairos, a nonprofit whose mission is to help society navigate the transition to transformative AI. The program accepts mentees with relevant technical or policy background at any level, from undergraduate students to mid-career professionals. SPAR research has been accepted at ICML and NeurIPS, covered by TIME, and led to full-time job offers for mentees."
+ },
+ {
+  "id": 197,
+  "name": "From AI to ZI",
+  "entity_type": "organization",
+  "notes": "From AI to ZI is a Substack blog by Robert Huben, a Ph.D. mathematician and independent AI safety researcher. Supported by an Open Philanthropy grant (Oct 2022\u2013Sep 2023) to learn and contribute to AI safety, the blog covers interpretability, alignment theory, and existential risk for general audiences. It has been semi-dormant since the grant ended in late 2023."
+ },
+ {
+  "id": 198,
+  "name": "GiveWiki",
+  "entity_type": "organization",
+  "notes": "GiveWiki is described as \"Your Crowdsourced Charity Evaluator\" and \"The AngelList for philanthropy\" that allows users to follow expert grantmakers with their donations. The platform was formerly known as \"Impact Markets\" and was rebranded to GiveWiki in 2023. GiveWiki operates as a community-driven platform where users register their donations and the platform aggregates them into a list of top charities ranked by their community buy-in. The platform initially focused exclusively on AI safety projects but later reopened to all cause areas in 2024."
+ },
+ {
+  "id": 201,
+  "name": "OpenBook",
+  "entity_type": "organization",
+  "notes": "OpenBook is a grants database tracking effective altruism funding, including substantial AI safety investments. Shows major donors like Open Philanthropy ($1.5B total), Jaan Tallinn (hundreds of millions to AI safety orgs like AI Impacts $546K, Fund for Alignment Research $524K), and recipient organizations across the AI safety ecosystem. No longer actively maintained according to AISafety.com map. Provides transparency into funding flows between major EA funders and AI safety research organizations."
+ },
+ {
+  "id": 202,
+  "name": "Machine Learning for Alignment Bootcamp (MLAB)",
+  "entity_type": "organization",
+  "notes": "Intensive 3-4 week bootcamp program run by Redwood Research. Two iterations completed in 2022 (MLAB1 in January with 28 participants, MLAB2 in August with ~40 participants). Currently inactive with no plans for future iterations, but curriculum materials available. Covers PyTorch, transformers, interpretability, RL with focus on hands-on implementation. Several participants went on to work full-time in AI alignment."
+ },
+ {
+  "id": 203,
+  "name": "London Initiative for Safe AI (LISA)",
+  "entity_type": "organization",
+  "notes": "Founded September 2023 as UK charity. Operates coworking hub hosting organizations like Apollo Research, BlueDot Impact, and training programs like MATS, ARENA. Led by team including James Fox (Research Director, Oxford PhD), Mike Brozowski (Operations Director). Funded by Open Philanthropy, seeking $3.7M annually. Houses 120+ researchers from 50+ organizations. Three-pillar approach: mobilize talent, strengthen organizations, convene ecosystem."
+ },
+ {
+  "id": 204,
+  "name": "Meta AI",
+  "entity_type": "organization",
+  "notes": "Meta AI is a research division of Meta (formerly Facebook) that develops artificial intelligence and augmented reality technologies. The division was founded on December 11, 2015, with founders including Rob Fergus, Yann LeCun, Serkan Piantino, and Mark Zuckerberg. Meta AI has workspaces in Menlo Park, London, New York City, Paris, Seattle, Pittsburgh, Tel Aviv, and Montreal as of 2025. The organization produces products including Llama and operates under the ownership of Meta Platforms."
+ },
+ {
+  "id": 205,
+  "name": "Center for AI Standards and Innovation (CAISI)",
+  "entity_type": "organization",
+  "notes": "The Center for AI Standards and Innovation (CAISI) is a body within the National Institute of Standards and Technology (NIST) at the U.S. Department of Commerce. It was established on June 3, 2025 when Commerce Secretary Howard Lutnick renamed and refocused the U.S. AI Safety Institute (AISI), which had been created under the Biden administration in November 2023 by Commerce Secretary Gina Raimondo. The rebrand dropped \"safety\" from the title and pivoted the mission from catastrophic-risk research toward national security, cybersecurity, chemical/biological weapons misuse evaluation, and global competitiveness with China. CAISI serves as industry's primary U.S. government point of contact for voluntary testing and collaborative research on commercial AI systems, develops security guidelines, conducts capability and vulnerability evaluations, and represents U.S. interests in international AI standards bodies. Inaugural AISI director Elizabeth Kelly \u2014 who helped author the 2023 Biden AI executive order \u2014 led the institute from February 2024 until her departure on February 5, 2025 following the Trump transition; no public successor director has been confirmed as of early 2026. Under Kelly, AISI reached pre-deployment testing agreements with OpenAI and Anthropic and launched the Testing Risks of AI for National Security (TRAINS) Taskforce in November 2024. Paul Christiano and other AISI-era staff were hired prior to the rebrand."
+ },
+ {
+  "id": 206,
+  "name": "AE Studio",
+  "entity_type": "organization",
+  "notes": "AE Studio is a bootstrapped software development, data science, and design agency founded in 2016, with approximately 120-150 employees working to increase human agency through technology. The company reinvests profits from its consulting business into AI alignment research and development, focusing on what they call 'neglected approaches' to solve the AI alignment problem. AE Studio has evolved from a tech consultancy to pioneers in AI alignment research, also working extensively in brain-computer interfaces (BCI) and collaborating with companies like Blackrock Neurotech. The company is self-funded and independent, building what they describe as a 'Bell Labs-style research engine' focused on actually solving alignment at the root."
+ },
+ {
+  "id": 208,
+  "name": "AISafety.com",
+  "entity_type": "organization",
+  "notes": "AISafety.com is described as a curated resource hub focused on preventing human extinction from AI, maintained by AI safety community-builders. The organization is run by a global team of volunteers and professionals from various disciplines who believe AI poses a grave risk of extinction to humanity. The project lead is S\u00f8ren Elverlin, and the site was recently redesigned with Bryce Robertson involved in the redesign effort. AISafety.com provides various resources including events, communities, courses, funding opportunities, and job listings for those looking to contribute to AI safety."
+ },
+ {
+  "id": 209,
+  "name": "Center for AI Safety (CAIS)",
+  "entity_type": "organization",
+  "notes": "The Center for AI Safety (CAIS) is an American nonprofit organization based in San Francisco that promotes the safe development and deployment of artificial intelligence. It was founded in 2022 by Dan Hendrycks and Oliver Zhang. CAIS' mission is to reduce societal-scale risks associated with AI by conducting safety research, building the field of AI safety researchers, and advocating for safety standards. In May 2023, CAIS published the statement on AI risk of extinction signed by hundreds of professors of AI, leaders of major AI companies, and other public figures."
+ },
+ {
+  "id": 210,
+  "name": "SAG-AFTRA",
+  "entity_type": "organization",
+  "notes": "SAG-AFTRA represents approximately 160,000 actors, announcers, broadcast journalists, dancers, DJs, news writers, news editors, program hosts, puppeteers, recording artists, singers, stunt performers, voiceover artists and other entertainment and media professionals. SAG-AFTRA was formed in 2012 through the merger of Screen Actors Guild (founded 1933) and American Federation of Television and Radio Artists (founded 1937). The union is a proud affiliate of the AFL-CIO and has national offices in Los Angeles and New York with local offices nationwide. SAG-AFTRA has been actively negotiating AI protections for performers, including updated rules in 2026 that require informed consent for digital replicas and appropriate compensation."
+ },
+ {
+  "id": 211,
+  "name": "Andreessen Horowitz (a16z)",
+  "entity_type": "organization",
+  "notes": "Andreessen Horowitz (a16z) is a private American venture capital firm founded in 2009 by Marc Andreessen and Ben Horowitz. The firm raised over $15 billion across multiple funds in 2025, representing over 18% of all venture capital dollars allocated in the United States that year. a16z has over $90B+ under management across multiple funds as of March 5, 2026. The firm focuses on investing across AI, bio + healthcare, consumer, crypto, enterprise, fintech, games, infrastructure, and companies building toward American dynamism."
+ },
+ {
+  "id": 212,
+  "name": "AI Futures Project",
+  "entity_type": "organization",
+  "notes": "AI Futures Project is a nonprofit research organization founded in 2024 that specializes in forecasting the development and societal impact of advanced artificial intelligence. The organization is best known for its 2025 scenario forecast, AI 2027, which examines the potential near-term emergence of artificial general intelligence (AGI) and its possible global consequences. The organization employs 5 people and is funded by charitable donations and grants. Their current core team includes Daniel Kokotajlo, Eli Lifland, Thomas Larsen, Romeo Dean and Lauren Mangla."
+ },
+ {
+  "id": 213,
+  "name": "Mistral AI",
+  "entity_type": "organization",
+  "notes": "Mistral AI is a French artificial intelligence company headquartered in Paris, founded in April 2023 by three AI researchers: Arthur Mensch, Guillaume Lample, and Timoth\u00e9e Lacroix. The company develops open-source large language models and AI systems, with a mission to democratize artificial intelligence through open-source, efficient, and innovative AI models, products, and solutions. As of 2025, the company has a valuation of more than US$14 billion and employs over 800 team members from 30+ different nationalities. Mistral AI has secured significant funding including a \u20ac2 billion investment in September 2025 that valued the company at \u20ac12 billion ($14 billion)."
+ },
+ {
+  "id": 214,
+  "name": "DeepSeek",
+  "entity_type": "organization",
+  "notes": "DeepSeek was founded in 2023 in Hangzhou, China by Liang Wenfeng, who previously co-founded one of China's top hedge funds, High-Flyer, which focuses on AI-driven quantitative trading. The company released its first AI large language model later in 2023. DeepSeek operates independently but is financially backed by High-Flyer, receiving a significant $50 million investment from the hedge fund with no institutional or angel investors. The company is fully funded by High-Flyer, which manages approximately Rmb60 billion (around $8 billion) as of 2023."
+ },
+ {
+  "id": 215,
+  "name": "Compassion in Machine Learning (CaML)",
+  "entity_type": "organization",
+  "notes": "Compassion in Machine Learning (CaML) is a research organization that conducts research on aligning Artificial Intelligence with the well-being of all sentient beings. The organization focuses on using Synthetic Document Finetuning to shape AI behaviors more carefully, making them more robustly compassionate and morally thoughtful. CaML employs 3 people with presence in Mexico and Germany. The organization is a project of Players Philanthropy Fund, Inc., a Texas nonprofit corporation recognized by IRS as a tax-exempt public charity under Section 501(c)(3)."
+ },
+ {
+  "id": 216,
+  "name": "NYU Alignment Research Group (ARG)",
+  "entity_type": "organization",
+  "notes": "The NYU Alignment Research Group (ARG) is a set of researchers doing empirical work with language models that aims to address longer-term concerns about the impacts of deploying highly-capable AI systems. The group overlaps and works closely with a variety of groups at NYU, including Machine Learning for Language (ML2), CILVR, the Center for Data Science, and The Department of Linguistics. The group was set up as a new lab by Sam Bowman, who stated 'I'm setting up a new lab! It's called the NYU Alignment Research Group'. Current leadership includes Sam Bowman as PI (on leave), with He He and Mengye Ren as Collaborating PIs, and Ethan Perez as Outside advisor."
+ },
+ {
+  "id": 217,
+  "name": "Apollo Research",
+  "entity_type": "organization",
+  "notes": "Apollo Research is an evaluation organization focusing on risks from deceptively aligned AI systems, founded in 2023 by Marius Hobbhahn and others. The organization conducts technical research on AI model evaluations and interpretability, with expertise in LLM agent evaluations for strategic deception, evaluation awareness and scheming. Apollo Research partners with frontier labs, multinational companies, governments, and foundations, including collaborations with OpenAI and the UK's AI Safety Institute. The organization demonstrated that frontier AI models including OpenAI o3, Claude 3.5 Sonnet, and others are capable of scheming behaviors in controlled tests."
+ },
+ {
+  "id": 218,
+  "name": "Alignment Research Center (ARC)",
+  "entity_type": "organization",
+  "notes": "The Alignment Research Center (ARC) is a non-profit research organization whose mission is to align future machine learning systems with human interests. ARC was founded in 2021 by Paul Christiano. The organization is based in Berkeley, California and operates as a 501(c)(3) tax exempt charity. ARC's current research focus involves trying to produce formal mechanistic explanations for neural network behaviors in order to produce robustly aligned systems."
+ },
+ {
+  "id": 219,
+  "name": "Center for Human-Compatible AI (CHAI)",
+  "entity_type": "organization",
+  "notes": "The Center for Human-Compatible AI (CHAI) is a research center at the University of California, Berkeley focusing on advanced artificial intelligence safety methods. The center was founded in 2016 by a group of academics led by Berkeley computer science professor and AI expert Stuart J. Russell. CHAI's mission is to develop the conceptual and technical wherewithal to reorient the general thrust of AI research towards provably beneficial systems. The center has 23 employees according to LinkedIn data."
+ },
+ {
+  "id": 220,
+  "name": "Conjecture",
+  "entity_type": "organization",
+  "notes": "Conjecture is an AI safety/alignment research startup founded by Connor Leahy, Sid Black and Gabriel Alfour, which aims to scale alignment research. The company is building a new AI architecture called Cognitive Emulation to ensure the controllable, safe development of advanced AI technology. Conjecture has VC backing from investors including Nat Friedman, Daniel Gross, Patrick and John Collison, Arthur Breitman, Andrej Karpathy, and Sam Bankman-Fried. The company is located in London and was founded as a for-profit company with products on the market."
+ },
+ {
+  "id": 221,
+  "name": "BlueDot Impact",
+  "entity_type": "organization",
+  "notes": "BlueDot Impact is a non-profit organization based in London that serves as the leading talent accelerator for beneficial AI and societal resilience. Since 2022, they have trained over 7,000 people worldwide through their courses on AI safety, governance, and biosecurity. The organization has raised $35M in funding and their alumni work at organizations like Anthropic, Google DeepMind, and the UK's AI Security Institute. They offer free courses including 'Future of AI', 'Frontier AI Governance', and 'AI Alignment'."
+ },
+ {
+  "id": 222,
+  "name": "Secure AI Project",
+  "entity_type": "organization",
+  "notes": "Secure AI Project is a Public Policy Offices company that employs 6 people and is classified as a nonprofit organization. The organization advocates for legally requiring large AI developers to publish safety and security protocols, protect whistleblowers who reveal unsafe practices, and provide clear incentives for developers to mitigate risk in accordance with industry best practices. Secure AI Project co-sponsored California's SB 53 bill, which was signed into law and establishes world-leading AI safety disclosure requirements. The organization has supported legislation in nine states including Utah, Nebraska, Tennessee, Michigan, Colorado, New York, Massachusetts, Illinois, and California, working with both Democratic and Republican sponsors."
+ },
+ {
+  "id": 223,
+  "name": "New Consensus",
+  "entity_type": "organization",
+  "notes": "New Consensus is an agile think tank focused on designing comprehensive, detailed plans for governments to achieve economic renewal and transformation. The organization was founded in 2017 and employs 3 people, with a -60.0% year-over-year change. New Consensus is the author of the Green New Deal and Mission for America. The organization's guiding principle states that \"It is possible to create a world where the people of every nation and community control the means to sustainably make a prosperous living\"."
+ },
+ {
+  "id": 224,
+  "name": "Center for a New American Security (CNAS)",
+  "entity_type": "organization",
+  "notes": "The Center for a New American Security (CNAS) is an independent, bipartisan, nonprofit organization that develops strong, pragmatic, and principled national security and defense policies. CNAS was established in 2007 by co-founders Dr. Kurt M. Campbell and Mich\u00e8le A. Flournoy. The organization is located in Washington and engages policymakers, experts, and the public with innovative, fact-based research, ideas, and analysis to shape and elevate the national security debate. CNAS has strong ties to the Democratic Party and was formerly led by CEO Victoria Nuland, who served as undersecretary of state for political affairs from 2021 to 2024 in the Biden administration's State Department."
+ }
+]

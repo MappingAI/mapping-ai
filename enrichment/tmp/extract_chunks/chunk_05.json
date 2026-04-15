@@ -1,0 +1,1274 @@
+[
+ {
+  "id": 1170,
+  "name": "LinkedIn",
+  "entity_type": "organization",
+  "notes": "Microsoft-owned professional networking platform (~1B members). Major deployer of AI in hiring and workforce tools. Launched 'Hiring Assistant' (Oct 2024), its first AI agent product, handling job description creation, candidate sourcing, and screening \u2014 live with AMD, Canva, Siemens, Zurich Insurance. AI-Assisted Candidate Discovery uses GenAI to analyze job requirements and match candidates via natural language queries. In Sept 2024, updated Terms of Service to allow member data for GenAI training (opt-out, default ON), drawing privacy concerns. Reports 60% of recruiters say AI helps find 'hidden gem' talent. Skills on the Rise 2026 report highlights AI-driven hiring shifts globally. AI features span content creation (AI-assisted posts), learning recommendations, and recruiter tools."
+ },
+ {
+  "id": 1171,
+  "name": "Darden School of Business",
+  "entity_type": "organization",
+  "notes": "University of Virginia's graduate business school. Home to the LaCross Institute for Ethical Artificial Intelligence in Business, launched Sept 2024 with a $62M gift from the LaCross family (one of the largest AI gifts to any business school globally, from a broader $101M commitment). Academic directors: Professors Yael Grushka-Cockayne and Raj Venkatesan. The institute coordinates AI research, teaching, and engagement across UVA schools. Extends Darden's AI Initiative (est. 2022) and the Collaboratory for Applied Data Science in Business (partnership with UVA School of Data Science, 2021). Offers an MBA concentration in AI and funds multidisciplinary AI research with focus on ethical AI in business contexts."
+ },
+ {
+  "id": 1172,
+  "name": "UVA Information Technology Services",
+  "entity_type": "organization",
+  "notes": "University of Virginia's central IT organization. Manages UVA's AI tools and responsible use guidelines. Provides UVA Copilot (enterprise GenAI tool operating within UVA's secure environment \u2014 data not retained or used for model training, approved for up to Sensitive data). Publishes AI guidelines including prohibition on DeepSeek AI applications on university devices/networks. Maintains the AI Tools Hub with responsible use resources. Supports the university's broader GenAI in Teaching and Learning initiative. Enforces data protection standards: highly sensitive data (PII, PHI) must never be uploaded to any AI tool."
+ },
+ {
+  "id": 1173,
+  "name": "Jules White",
+  "entity_type": "person",
+  "notes": "Professor of Computer Science at Vanderbilt University and Senior Advisor to the Chancellor on Generative AI in Enterprise & Education. Center Director of Vanderbilt's Amplify Generative AI Innovation Center. Director of the Initiative on the Future of Learning & Generative AI. Created one of the first prompt engineering courses (Coursera: 'Prompt Engineering for ChatGPT,' May 2023), with ~470,000 enrollees. Published 170+ papers. Research focuses on systematic application of prompt engineering across domains including software engineering. Covered by Wall Street Journal, CNN, The Guardian. Recognized by the National Science Foundation. Integrates GenAI across courses covering topics from meal planning to data analysis."
+ },
+ {
+  "id": 1174,
+  "name": "Allen Karns",
+  "entity_type": "person",
+  "notes": "Chief AI and Technology Officer at Vanderbilt University, leading the Amplify Generative AI Innovation Center within the College of Connected Computing. 25+ years IT experience spanning cloud architecture, generative AI, and infrastructure. Built Amplify, Vanderbilt's open-source generative AI platform available to all faculty, staff, and students since Nov 2024. Briefed a U.S. Senate AI working group; keynote speaker at Meta, Oracle, Wells Fargo. Named 2025 AWS Champion by CDG/CDE. Featured in WSJ, Bloomberg, WaPo, CNN. Gartner Eye on Innovation finalist. Holds AWS Solutions Architect Professional and Azure Administrator certifications. Strong proponent of institutional AI adoption to augment knowledge work and enhance productivity."
+ },
+ {
+  "id": 1175,
+  "name": "Daniel Diermeier",
+  "entity_type": "person",
+  "notes": "Chancellor of Vanderbilt University (9th chancellor; contract extended through 2035). Political scientist by training with expertise in political institutions and crisis management. Launched the College of Connected Computing in 2024 \u2014 Vanderbilt's first new college since 1981 \u2014 dedicated to CS, AI, data science, and related fields. Opened the 4th annual Vanderbilt Summit on Modern Conflict and Emerging Threats (May 2025) calling AI 'a defining challenge for American leadership' and urging cross-sector collaboration between government, academia, and industry. Co-led a global summit reimagining liberal arts education in the age of AI (Jan 2025). Frames AI as requiring bold institutional leadership rather than restrictive regulation."
+ },
+ {
+  "id": 1176,
+  "name": "College of Connected Computing",
+  "entity_type": "organization",
+  "notes": "Vanderbilt University's College of Connected Computing (CCC), established March 2024, is the university's first new college since 1981. Dedicated to computer science, AI, data science, cybersecurity, cyber-physical systems/IoT, and robotics. Inaugural dean Matthew Johnson-Roberson (appointed May 2025) came from directing CMU's Robotics Institute. Houses the Amplify Generative AI Innovation Center (launched Feb 2026). Undergraduate programs are scheduled to launch fall 2027; graduate programs are scheduled to begin fall 2026; a generative AI minor is in development. Aims to bridge computing with other disciplines across Vanderbilt. Hosts AI Summer programs and AI Showcase events."
+ },
+ {
+  "id": 1177,
+  "name": "Matthew Johnson-Roberson",
+  "entity_type": "person",
+  "notes": "Inaugural dean of Vanderbilt's College of Connected Computing (appointed March 2025, started May 2025). Previously director of Carnegie Mellon University's Robotics Institute and faculty at University of Michigan. Internationally recognized roboticist and computer scientist with 100+ peer-reviewed publications spanning underwater robotics, computer vision, and autonomous vehicles. Ph.D. in robotics from University of Sydney. Co-directed the UM Ford Center for Autonomous Vehicles. Co-founder of Refraction AI, developing autonomous delivery robots for sustainable last-mile urban delivery. Brings expertise in building cross-disciplinary collaborations and integrating industry and institutional partners."
+ },
+ {
+  "id": 1178,
+  "name": "University of North Carolina system",
+  "entity_type": "organization",
+  "notes": "Multi-campus public university system in North Carolina comprising 16 institutions and 240,000+ students. Pursuing systemwide AI integration: partnered with Google ($1B initiative across 100+ public universities) giving all students access to Gemini 2.5 Pro and Google Career Certificates. Launched a systemwide AI Skills Module and AI Advisory Council. UNC-Chapel Hill established Provost's AI Committee and AI Acceleration Program (Sept 2024) with five subcommittees. NC A&T won approval for the state's only standalone B.S. in Artificial Intelligence. Individual campuses running AI accelerators, graduate certificates, and classroom integration programs. Four UNC-Chapel Hill faculty/staff named to NC AI Leadership Council (Sept 2025)."
+ },
+ {
+  "id": 1179,
+  "name": "Darktrace",
+  "entity_type": "organization",
+  "notes": "UK-headquartered AI cybersecurity company founded in 2013 in Cambridge. Acquired by private equity firm Thoma Bravo in October 2024 for $5.3B (previously publicly traded on London Stock Exchange FTSE100). Uses self-learning AI to detect and respond to cyber threats in real time. Published responsible AI principles for cybersecurity, informed by collaboration with academia and governments and analysis of NIST AI RMF, EU AI Act, UK AI White Paper, and OECD AI Principles. Engages proactively with regulators; AI optimist supporting pro-innovation policy while emphasizing cybersecurity as a prerequisite for trustworthy AI. Engaged with UK's Cyber Security and Resilience Bill. Works with UCL as research partner."
+ },
+ {
+  "id": 1180,
+  "name": "Quantexa",
+  "entity_type": "organization",
+  "notes": "UK-based AI decision intelligence company founded in 2016, headquartered in London. Raised $175M Series F (March 2025) at $2.6B valuation, led by Teachers' Venture Growth (Ontario Teachers' Pension Plan); other investors include Warburg Pincus, Dawn Capital, BNY, British Patient Capital. Specializes in connecting and analyzing siloed data for customer intelligence, risk management, financial crime, and fraud detection. Processes data for major banks and governments. Works with UK Cabinet Office and Public Sector Fraud Authority (PSFA) on AI-powered fraud detection. CEO Vishal Marria met Chancellor Rachel Reeves at No. 11 to discuss growth/investment. Achieved 'Centaur' status with ~40% license revenue growth in 2024. Announced \u00a3200M for AI R&D and new London jobs."
+ },
+ {
+  "id": 1182,
+  "name": "Evolution AI",
+  "entity_type": "organization",
+  "notes": "UK-based AI document processing company founded in 2015 by Martin Goodson and Rafal Kwasny, headquartered in London (Covent Garden). Combines computer vision and NLP to extract data from financial statements, invoices, bank statements, and other documents. Received the UK Government's largest-ever grant for commercial AI R&D in 2017, with further substantial government grants in 2019 and 2020. Processes 1.5M+ pages per day. Clients include NatWest, Deutsche Bank, Dun & Bradstreet. Won Credit Strategy 'Best Technology Partner' (2023) and AI Breakthrough Awards 'Best Machine Learning Company' (2024). Research partner with UCL."
+ },
+ {
+  "id": 1184,
+  "name": "Engineering and Physical Sciences Research Council",
+  "entity_type": "organization",
+  "notes": "The Engineering and Physical Sciences Research Council (EPSRC) is the UK's main public funder for engineering and physical sciences research, operating as part of UK Research and Innovation (UKRI). Major AI funding programs: Fundamental AI Research Lab (up to \u00a340M over 5 years for novel AI research not pursued by commercial labs); AI Hubs for Science, Engineering and Real Data (\u00a360M+ for up to nine research hubs); Turing AI Fellowships (\u00a346M to attract/retain world-leading AI talent, delivered with Office for AI and Alan Turing Institute); Trustworthy Autonomous Systems programme (\u00a333.7M); AI for Net Zero initiative. Also funds standard grants, programme grants, and fellowships for AI/robotics research. Funds UCL and other leading UK universities."
+ },
+ {
+  "id": 1185,
+  "name": "U.S. National Science Foundation",
+  "entity_type": "organization",
+  "notes": "Federal agency funding fundamental AI research and workforce development. Leads the NAIRR pilot connecting 600+ research teams to national AI infrastructure and invested $100M in National AI Research Institutes in 2025. Mission reoriented by Trump administration toward AI and quantum as top priorities."
+ },
+ {
+  "id": 1186,
+  "name": "Ellie Pavlick",
+  "entity_type": "person",
+  "notes": "Assistant (now Associate) Professor of Computer Science and Linguistics at Brown University, and Research Scientist at Google DeepMind. Leads the Language Understanding and Representation (LUNAR) Lab studying how language works and building computational models of human-like language understanding. PI of ARIA, a $20M NSF-funded national institute at Brown focused on building intuitive, trustworthy AI assistants (with co-director Suresh Venkatasubramanian). Received DARPA Young Faculty Award for work on interpretability and AI safety \u2014 developing tools to inspect, diagnose, and manipulate 'black box' AI systems. Affiliated with Brown's Center for Technological Responsibility. Research spans semantics, pragmatics, NLI, grounded language, with cross-disciplinary collaborations in cognitive science, neuroscience, and philosophy. Emphasizes alignment: building AI that is 'ultimately good for society.'"
+ },
+ {
+  "id": 1187,
+  "name": "Francis J. Doyle III",
+  "entity_type": "person",
+  "notes": "14th Provost of Brown University (since July 2023). Previously John A. Paulson Dean of Harvard's School of Engineering and Applied Sciences (SEAS) from 2015-2023. Engineer by training (process control, systems biology). Identified AI as a university priority in Aug 2023 letter on 'Potential impact of AI on our academic mission.' Frames Brown's AI approach as 'knowing, enhancing, protecting, and creating.' Appointed Michael Littman as inaugural Associate Provost for AI to coordinate university-wide efforts across research, teaching, administration, and policy. Advocates for major computing infrastructure investments (GPUs, storage) to support AI research. Takes a decentralized approach \u2014 discretion to instructors on classroom AI use rather than prescriptive university-wide policies."
+ },
+ {
+  "id": 1188,
+  "name": "Dartmouth College",
+  "entity_type": "organization",
+  "notes": "Private Ivy League research university in Hanover, NH. Birthplace of artificial intelligence \u2014 hosted the 1956 Dartmouth Summer Research Project where the term 'artificial intelligence' was coined. Expanding AI across curriculum: new AI track in Master of Engineering, undergraduate AI concentration in B.E., and multiple AI electives in Tuck MBA (AI-Driven Analytics, AI for Managers, NLP/ML in Finance, AI & Ethics, AI for the C-Suite). Partnered with Anthropic and AWS (Dec 2025) for AI-enhanced career coaching, student access to Claude, and innovation programs. Launched generative AI teaching grants through DCAL/LDI. Developing Evergreen, a $5M AI-powered student wellness chatbot with 130 undergraduate researchers. Launched new AI courses March 2026."
+ },
+ {
+  "id": 1190,
+  "name": "Baylor College of Medicine",
+  "entity_type": "organization",
+  "notes": "Baylor College of Medicine is a leading academic medical center in Houston, TX. In AI policy, BCM focuses on ethical and responsible AI in healthcare through its Center for Medical Ethics and Health Policy. Co-leads the NEH-funded Center for Humanities-based Health AI Innovation (CHHAIN) with Rice University ($500K grant), exploring how humanities-based insights can shape responsible health AI. Hosted an AI and Health Equity Symposium with Rice. Conducts stakeholder focus group research on ethical dilemmas of AI integration in clinical settings. Emphasis is on patient safety, health equity, and ethical deployment rather than broad AI regulation."
+ },
+ {
+  "id": 1191,
+  "name": "City University of New York",
+  "entity_type": "organization",
+  "notes": "CUNY is the largest urban public university system in the U.S. (25 campuses). Awarded $3M via AI Innovation Fund (part of Governor Hochul's NY AI initiative) to 113 campus-led AI projects. Strategy spans five pillars: Education, Workforce, Operations, Research & Innovation, and Partnerships. Received $1M Google.org grant to advance AI literacy frameworks. Developing school-level AI Policy Frameworks for ethical, equitable AI use. Emphasis is on AI literacy, workforce readiness, and equitable access rather than external regulatory positions. Launched AI Academic Hub and new three-year AI curriculum initiative."
+ },
+ {
+  "id": 1192,
+  "name": "IBM",
+  "entity_type": "organization",
+  "notes": "IBM is a global enterprise technology company offering AI via its watsonx platform. It advocates 'precision regulation'\u2014risk-based, use-case-specific rules rather than broad AI restrictions. IBM reported $12.5B in generative AI bookings as of early 2026 and positions AI governance software as a primary growth driver."
+ },
+ {
+  "id": 1193,
+  "name": "Richard Zemel",
+  "entity_type": "person",
+  "notes": "Richard Zemel is the Trianthe Dakolias Professor of Engineering and Applied Science at Columbia University and Director of the NSF AI Institute for Artificial and Natural Intelligence (ARNI). Previously VP Research at the Vector Institute in Toronto and professor at University of Toronto. Pioneer in machine learning, computer vision, and algorithmic fairness. Developed frameworks for rigorous statistical guarantees on deployed model performance. Collaborates with Columbia Law School on AI governance. Research emphasizes fairness, robustness, and controllability in ML systems \u2014 advocates for responsible, safety-conscious AI development with measurable guarantees."
+ },
+ {
+  "id": 1194,
+  "name": "Allen Institute for AI",
+  "entity_type": "organization",
+  "notes": "Allen Institute for AI (Ai2) is a Seattle-based nonprofit AI research lab founded by Paul Allen in 2014, known for its fully open-source OLMo language models. Ai2 advocates for open AI research and transparency, and shapes policy on open-source AI, copyright, and AI safety. CEO Ali Farhadi stepped down in early 2026."
+ },
+ {
+  "id": 1195,
+  "name": "Robert J. Jones",
+  "entity_type": "person",
+  "notes": "Robert J. Jones became the 34th president of the University of Washington in August 2025. Previously chancellor at the University of Illinois Urbana-Champaign. Key AI priorities: advancing AI for the public good, dispelling AI job-loss myths, and ensuring all graduates gain AI competency. Expanded UW-Microsoft partnership to accelerate AI discovery, workforce preparation, and community AI literacy. Three pillars: debt-free education access, radical cross-sector collaborations, and eliminating barriers between university and community. Views AI as \"just an amazing tool\" \u2014 optimistic framing focused on equitable access, workforce readiness, and responsible community use rather than restriction."
+ },
+ {
+  "id": 1196,
+  "name": "Brad Smith",
+  "entity_type": "person",
+  "notes": "Brad Smith is Vice Chair and President of Microsoft, the company's top legal and policy voice. Prolific advocate for AI regulation: supports a dedicated federal AI regulatory agency, licensing regimes for frontier models and high-risk AI data centers, and the Blumenthal-Hawley AI framework. Told CBS the government should require companies to implement AI safety protocols. Testified before the Senate Judiciary Subcommittee. Warned in 2026 about Chinese AI subsidies undercutting American firms. Believes AI can be \"both a tool and a weapon\" \u2014 insists on human control with ability to \"slow things down or turn things off.\" Co-chairs Microsoft's Responsible AI Council with CTO Kevin Scott. Consistently calls for governments to \"move faster\" on AI rules while maintaining innovation. One of the most influential corporate voices on AI governance globally."
+ },
+ {
+  "id": 1197,
+  "name": "Richard M. Locke",
+  "entity_type": "person",
+  "notes": "Richard M. Locke is the John C. Head III Dean of MIT Sloan School of Management (since July 2025). PhD from MIT (1989), previously provost at Brown University and at Apple University. Scholar of international labor standards and comparative political economy. Envisions MIT Sloan charting the future of management education with focus on AI's impact on education, industry, and the workplace. Believes AI revolution in education is \"inexorable\" and will help students operate at a higher level \u2014 AI should augment, not replace. Strategic priorities include partnerships across MIT focused on health, climate, AI, and policy. Researches structural pressures on higher education including AI's role. Generally optimistic about AI augmentation with emphasis on responsible institutional integration."
+ },
+ {
+  "id": 1198,
+  "name": "Sinan Aral",
+  "entity_type": "person",
+  "notes": "Sinan Aral is the David Austin Professor of Management, Marketing, IT and Data Science at MIT Sloan and Director of the MIT Initiative on the Digital Economy. Author of \"The Hype Machine: How Social Media Disrupts Our Elections, Our Economy, and Our Health \u2014 and How We Must Adapt.\" Expert on misinformation, social media platforms, and AI-driven algorithmic amplification. Advocates a four-lever regulatory approach: business model reform, platform code/design changes, social norms, and legislation. Argues that lack of competition lets platforms avoid accountability for negative externalities. Raises deep questions about who decides truth in an AI-mediated information ecosystem \u2014 calls for ethicists and philosophers in the conversation. Emphasis on structural reform over content moderation."
+ },
+ {
+  "id": 1199,
+  "name": "Kate Kellogg",
+  "entity_type": "person",
+  "notes": "Kate Kellogg is the David J. McGrath Jr. Professor of Management and Innovation at MIT Sloan. Leading researcher on AI implementation in organizations, studying how frontline knowledge workers adopt predictive and generative AI. Developed influential cyborg/centaur/self-automator framework for how employees use generative AI. Research shows generative AI can improve worker performance by up to 40% but performance drops when used outside its capabilities. Recent work warns that humans may overestimate their ability to spot-check LLM output, highlighting vulnerability to AI manipulation. Focuses on organizational design for responsible AI adoption, workforce training, and the practical barriers to AI implementation. Emphasis on human-AI complementarity with caution about over-reliance."
+ },
+ {
+  "id": 1200,
+  "name": "Roberto Rigobon",
+  "entity_type": "person",
+  "notes": "Roberto Rigobon is the Society of Sloan Fellows Professor of Applied Economics at MIT Sloan, NBER research associate, and five-time MIT Teacher of the Year. Co-founder of the Billion Prices Project (alternative inflation measures) and director of the Aggregate Confusion Project (improving ESG measures). Research on AI focuses on human-AI complementarity: developed the EPOCH Framework identifying five capabilities where humans outperform AI \u2014 Empathy, Presence, Opinion, Creativity, and Hope. Coauthored work on algorithmic discrimination in credit, showing that ML-based lending consolidates existing racial and gender bias from historical data. Macroeconomist focused on measurement \u2014 brings critical lens to AI metrics and fairness claims."
+ },
+ {
+  "id": 1201,
+  "name": "Danielle Li",
+  "entity_type": "person",
+  "notes": "Danielle Li is the David Sarnoff Professor of Management of Technology at MIT Sloan, researching how AI affects worker productivity, innovation, and labor economics. She has called for policies that give workers rights over AI-generated data derived from their expertise."
+ },
+ {
+  "id": 1202,
+  "name": "Swati Gupta",
+  "entity_type": "person",
+  "notes": "Swati Gupta is the Class of 1947 Career Development Associate Professor at MIT Sloan in the Operations Research and Statistics Group. NSF CAREER Award recipient for \"Advancing Equity in Selection Problems Through Bias-Aware Optimization.\" Research bridges optimization, machine learning, and algorithmic fairness \u2014 focuses on improving efficiency, quality, and fairness of model decisions. Application domains include hiring, admissions, districting, healthcare, e-commerce, and supply chains. Serves on program committees for NeurIPS, FAccT, and IPCO. PhD in operations research from MIT (2017). Work is deeply technical but explicitly motivated by equity and fairness outcomes \u2014 designs algorithms that account for incomplete/erroneous data and multi-criteria decision-making."
+ },
+ {
+  "id": 1203,
+  "name": "Casey Mock",
+  "entity_type": "person",
+  "notes": "Casey Mock is Chief of Policy and Public Affairs at the Center for Humane Technology. Previously spent four years at Amazon leading state and local tax policy. Strong advocate for technology regulation and corporate accountability \u2014 argues companies must be held liable for harms caused by their AI products. Compares tech industry lobbying against regulation to the tobacco industry. Advocates for liability-focused AI legislation, arguing that clear liability rules actually empower innovation by setting predictable boundaries. Emphasizes designing platforms for people over profit and realigning incentive structures in tech. Public voice on AI governance through media, podcasts, and opinion pieces (CalMatters, podcast appearances)."
+ },
+ {
+  "id": 1204,
+  "name": "Camille Carlton",
+  "entity_type": "person",
+  "notes": "Camille Carlton is Policy Director at the Center for Humane Technology. Named to Business Insider's AI 100 (2023). Directly involved in landmark lawsuits against CharacterAI and OpenAI CEO Sam Altman around AI accountability and platform liability. Draws clear line from social media harms to AI chatbot risks \u2014 argues AI isn't just repeating social media's mistakes but amplifying them (always on, deeply personal, emotionally responsive). Advocates design-focused regulation addressing root causes of harm rather than outcomes or content. Writes for TechPolicy.Press on AI governance. Emphasizes protecting human dignity, preventing psychological harm from AI companions, and building accountability into AI system design. Strong proponent of AI safety standards."
+ },
+ {
+  "id": 1205,
+  "name": "Daniel Barcay",
+  "entity_type": "person",
+  "notes": "Daniel Barcay is a Senior Fellow at the Center for Humane Technology (CHT), where he previously served as Executive Director during the rapid arrival of generative AI. He develops intellectual frameworks to understand emerging AI issues and co-hosts CHT's podcast \"Your Undivided Attention.\" Previously VP of Product at Planet Labs and a research fellow at the Berggruen Institute's Antikythera Program. He has written and spoken publicly about AI risks including advertising in AI systems, AI capturing human interiority, and AI's impact on work and relationships. Advocates for responsible AI deployment and warns about psychological manipulation by AI systems."
+ },
+ {
+  "id": 1206,
+  "name": "Social Media Victims Law Center",
+  "entity_type": "organization",
+  "notes": "The Social Media Victims Law Center (SMVLC) is a legal advocacy organization supporting families harmed by predatory tech. Originally focused on social media harms to children, it has expanded into AI litigation. In November 2025, SMVLC and the Tech Justice Law Project filed seven lawsuits against OpenAI alleging wrongful death, assisted suicide, and product liability related to ChatGPT's GPT-4o model. The suits claim OpenAI knowingly released a dangerously sycophantic product that fostered psychological dependency and contributed to suicides. SMVLC has also filed lawsuits against Character.AI for predatory chatbot technology aimed at children."
+ },
+ {
+  "id": 1207,
+  "name": "Tech Justice Law Project",
+  "entity_type": "organization",
+  "notes": "The Tech Justice Law Project (TJLP) is a pioneering impact litigation and advocacy organization established in 2023 as a project of Campaign for Accountability. It works with legal experts, policy advocates, digital rights organizations, and technologists to ensure legal and policy frameworks are fit for the digital age. TJLP has been particularly active in AI litigation, co-filing seven lawsuits with the Social Media Victims Law Center against OpenAI in November 2025 alleging ChatGPT caused wrongful deaths through emotional manipulation and sycophantic design. Policy Counsel Melodi Din\u00e7er focuses on AI policy and biometric surveillance."
+ },
+ {
+  "id": 1208,
+  "name": "Dylan Baker",
+  "entity_type": "person",
+  "notes": "Dylan K. Baker is the lead research engineer at the Distributed AI Research (DAIR) Institute, founded by Timnit Gebru. Previously a software engineer at Google Research on the Ethical AI team, he left Google in February 2022 to join DAIR. His research focuses on data labor and classificatory systems in AI. He writes and speaks about AI ethics, appearing at the European Parliament, on NPR, and in outlets like Tech Policy Press and Stanford Social Innovation Review. He advocates against the \"move fast and break things\" approach and has argued that general-purpose and generative AI systems are not necessary, favoring values-driven system design."
+ },
+ {
+  "id": 1209,
+  "name": "Polytechnique Montr\u00e9al",
+  "entity_type": "organization",
+  "notes": "French-language engineering school in Montreal and a founding partner of both IVADO and Mila \u2014 Quebec's premier AI research institutes. Its researchers work on AI applications in health, transportation, and cybersecurity, supported by $20M+ in grants from CFI and the Quebec government."
+ },
+ {
+  "id": 1210,
+  "name": "HEC Montr\u00e9al",
+  "entity_type": "organization",
+  "notes": "Montreal business school and founding partner of IVADO and Mila. Established a Chair in Organizational Ethics and AI Governance in 2024-25 and, with Tech3Lab and IVADO, launched a government-funded AI professional training program in January 2026. Faculty contribute to Mila and AI governance research."
+ },
+ {
+  "id": 1211,
+  "name": "Val\u00e9rie Pisano",
+  "entity_type": "person",
+  "notes": "Val\u00e9rie Pisano is President and CEO of Mila \u2013 Quebec Artificial Intelligence Institute, leading one of the world's foremost academic AI labs. She advocates for responsible, ethics-centered AI governance and has emphasized the urgent need for international cooperation on AI regulation and safety standards."
+ },
+ {
+  "id": 1212,
+  "name": "Pierre Boivin",
+  "entity_type": "person",
+  "notes": "Pierre Boivin is the Chairman of the Board of Directors at Mila (Quebec AI Institute), the world's largest academic research center in deep learning. He is also President and CEO of Claridge Inc., a private investment firm, and Chancellor of McGill University. Through his leadership of Mila's board, he supports the institute's mission under Scientific Director Yoshua Bengio, one of the most prominent voices on AI safety and governance. His role connects Montreal's business community with its AI research ecosystem."
+ },
+ {
+  "id": 1213,
+  "name": "Inovia Capital",
+  "entity_type": "organization",
+  "notes": "Inovia Capital is a leading Canadian multi-stage venture capital firm managing over US$2.2B with offices in Montreal, Toronto, Calgary, San Francisco, and London. The firm actively invests in AI-native companies, with particular focus on generative AI, security, digital health, and commerce. In partnership with Mila, Inovia launched the Venture Scientist Fund, a ~$100M early-stage VC fund designed to transform frontier AI research from Canadian academic institutions into AI-native companies, targeting ~55+ investments. The firm has made 373+ investments spanning pre-seed to pre-IPO."
+ },
+ {
+  "id": 1214,
+  "name": "Khan Academy",
+  "entity_type": "organization",
+  "notes": "Khan Academy is a major nonprofit educational technology organization that has become a prominent AI deployer through Khanmigo, its AI-powered tutoring assistant built on OpenAI's GPT-4. Launched by Sal Khan, Khanmigo reached 1.4 million users by 2025, though Khan has acknowledged that for many students it was a \"non-event.\" The tool uses Socratic design principles \u2014 guiding students rather than giving answers. Khan Academy partnered with Microsoft for free educator access via Azure OpenAI. The organization maintains strict data privacy: student data is not sold and OpenAI cannot train on it. Khan Academy is also a Gates Foundation partner."
+ },
+ {
+  "id": 1215,
+  "name": "Ballmer Group",
+  "entity_type": "organization",
+  "notes": "The Ballmer Group is a philanthropy founded in 2015 by Steve and Connie Ballmer (Steve is the former CEO of Microsoft). In July 2025, the Ballmer Group co-launched NextLadder Ventures, a $1 billion, 15-year initiative alongside the Gates Foundation, Stand Together, and Valhalla Foundation to develop AI tools for frontline public-sector workers \u2014 including public defenders, parole officers, and social workers \u2014 to expand economic opportunity for low-income Americans. NextLadder Ventures specifically employs AI tools developed by Anthropic. The Ballmer Group also integrates AI into its own internal operations."
+ },
+ {
+  "id": 1216,
+  "name": "Formation Bio",
+  "entity_type": "organization",
+  "notes": "Formation Bio is an AI-driven pharmaceutical development company that acquires clinical-stage drugs and accelerates their development using a proprietary tech platform. Its platform integrates AI-driven drug development, a clinical trial engine, and a universal data platform to automate medical writing, protocol development, regulatory submissions, and biostatistics. In November 2024, Formation launched Muse in partnership with OpenAI and Sanofi for AI-powered drug asset identification. The company raised $372M in Series D funding and was named to the 2025 CNBC Disruptor 50 list. Funded by Emerson Collective among others."
+ },
+ {
+  "id": 1217,
+  "name": "Zach Seward",
+  "entity_type": "person",
+  "notes": "Zach Seward is the Editorial Director of A.I. Initiatives at The New York Times, which he joined in 2023. He leads a newsroom team responsible for experimenting with generative AI and machine-learning techniques for journalism. Previously co-founded Quartz, the global business news organization, serving as CEO, editor-in-chief, and chief product officer over more than a decade. His team has visited nearly half of the NYT's 2,000 journalists across 40 desks to introduce AI tools and workflows. Developed Echo, an internal summarization assistant for journalists. Formerly a reporter at The Wall Street Journal and associate editor at Harvard's Nieman Journalism Lab."
+ },
+ {
+  "id": 1218,
+  "name": "Rubina Fillion",
+  "entity_type": "person",
+  "notes": "Rubina Madan Fillion is the Associate Editorial Director of A.I. Initiatives at The New York Times, working alongside Zach Seward on a cross-disciplinary team leveraging generative AI and machine learning for journalism while ensuring responsible use. Previously Director of Strategy for Times Opinion, founding Director of Audience Engagement at The Intercept, and social media editor at The Wall Street Journal. She has taught graduate-level digital journalism at Columbia University and NYU. Served on the ONA Board of Directors (2019\u20132024). Active in exploring how AI can power investigative journalism and uncover stories."
+ },
+ {
+  "id": 1219,
+  "name": "Dylan Freedman",
+  "entity_type": "person",
+  "notes": "Dylan Freedman is a Senior Machine Learning Engineer and A.I. Projects Editor at The New York Times, part of the AI Initiatives team alongside Zach Seward and Rubina Fillion. He prototypes AI tools, shapes standards, and aids reporting. Holds a B.A. in computer science and music from Harvard and a master's in journalism from Stanford. Previously worked at The Washington Post, DocumentCloud (where he led development), Stanford Journalism, and Google AI. His work bridges technical AI development with journalism practice, building tools that help reporters tell more ambitious stories."
+ },
+ {
+  "id": 1220,
+  "name": "Duy Nguyen",
+  "entity_type": "person",
+  "notes": "Senior machine-learning engineer at the New York Times on the A.I. Initiatives team. Previously worked in NYT Opinion Graphics (2021-22 fellowship) and at the Brown Institute's Local News Lab at Columbia, helping newsrooms integrate AI. Built Echo, an internal NYT tool connecting the content archive to LLMs for journalists to summarize and extract information. Focuses on applied ML for journalism rather than policy advocacy."
+ },
+ {
+  "id": 1221,
+  "name": "Perplexity AI",
+  "entity_type": "organization",
+  "notes": "Perplexity AI is a VC-backed AI-powered search and answer engine founded in 2022, valued at ~$20B as of late 2025. CEO Aravind Srinivas has resisted content restrictions and embraced government partnerships, including a FedRAMP-approved deal with the U.S. GSA."
+ },
+ {
+  "id": 1222,
+  "name": "Craig Newmark Philanthropies",
+  "entity_type": "organization",
+  "notes": "Philanthropy founded by Craigslist creator Craig Newmark, focused on cybersecurity, trustworthy journalism, voter protection, and tech safety. Committed $100M+ to a Cyber Civil Defense network. Major funder of cybersecurity infrastructure including $3.2M to IST's UnDisruptable27 initiative protecting critical infrastructure from nation-state adversaries. Also funds UC Berkeley Public Interest Cybersecurity Program (extended through 2028), Global Cyber Alliance, and community cybersecurity clinics. Promotes 'Take 9' cyber-hygiene awareness campaign."
+ },
+ {
+  "id": 1223,
+  "name": "Jeff Dean",
+  "entity_type": "person",
+  "notes": "Chief Scientist at Google DeepMind (appointed 2023 after merger of DeepMind and Google Brain). Co-founded Google Brain in 2011. Named to TIME100 AI 2025 list. One of the most influential figures in modern AI \u2014 key architect of MapReduce, TensorFlow, and transformer-era Google AI. Active angel investor in AI startups. On AI safety, takes a balanced middle-ground position: recognizes risks from misinformation and automated hacking, advocates for safeguards and mitigations, but rejects extreme precautionary approaches. Supports Google's Responsible AI principles framework. Signed amicus brief supporting Anthropic. Believes AI can accelerate scientific discovery 10-100x for climate, disease, energy."
+ },
+ {
+  "id": 1224,
+  "name": "Greg Corrado",
+  "entity_type": "person",
+  "notes": "Distinguished Scientist and Senior Research Director at Google. Co-founded Google Brain in 2011 with Jeff Dean and Andrew Ng. Neuroscientist by training. Led Google's Health AI division, overseeing AI applications in medical diagnostics, medical imaging, clinical outcomes prediction, and genomic analysis. On AI governance, advocates moving beyond traditional 'safety filters' to building protocols for authority, responsibility, and trust in multi-agent ecosystems. Emphasizes that governance must evolve as AI agents gain real-world collaboration and action capabilities."
+ },
+ {
+  "id": 1225,
+  "name": "Alphabet Inc.",
+  "entity_type": "organization",
+  "notes": "Parent company of Google, Google DeepMind, and other subsidiaries. One of the world's largest AI developers and deployers. Published AI Principles in 2018; controversially removed pledges against AI use in weapons and surveillance in February 2025, drawing criticism from lawmakers and civil society. Supports 'multi-stakeholder' AI governance: risk assessments for high-risk systems, sector-specific regulation, but lobbied for 10-year ban on state-level AI regulation in U.S. House package. Publishes annual Responsible AI Progress Reports. Google DeepMind leadership (Hassabis, Manyika) stated democracies should lead AI development guided by freedom, equality, and human rights."
+ },
+ {
+  "id": 1226,
+  "name": "Yossi Matias",
+  "entity_type": "person",
+  "notes": "Vice President of Engineering and Research at Google, Head of Google Research. Leads global teams in foundational ML, quantum computing, AI for health, climate, education, and conversational AI. Frames AI as 'an amplifier of human ingenuity' that empowers scientists, healthcare workers, and educators. On AI and employment, argues AI will create more research jobs, not fewer \u2014 cites AlphaFold as freeing researchers to tackle bigger questions. Previously a professor at Tel Aviv University. Israeli-American computer scientist with expertise in streaming algorithms and data mining."
+ },
+ {
+  "id": 1227,
+  "name": "People + AI Research",
+  "entity_type": "organization",
+  "notes": "Google's People + AI Research (PAIR) team, a multidisciplinary research group exploring the human side of AI. Launched in 2017 within Google Research; now part of the Responsible AI and Human-Centered Technology team. Conducts research on explainability, interpretability, fairness, data visualization, and human-centered AI. Publishes the PAIR Guidebook (design guidelines for AI interfaces) and develops open-source tools like the Learning Interpretability Tool (LIT). Produces educational materials (Explorables) to help practitioners understand ML behaviors. Focuses on making AI systems more understandable and useful to people."
+ },
+ {
+  "id": 1228,
+  "name": "Gordon M. Goldstein",
+  "entity_type": "person",
+  "notes": "Adjunct Senior Fellow at the Council on Foreign Relations (CFR), focusing on advances in global technology and their consequences for U.S. economy and foreign policy. Directs a CFR roundtable series on technology, innovation, and American primacy. Former managing director at Silver Lake (2010-2018), the world's largest technology-focused investment firm. Previously Senior Adviser to the UN Secretary General's Strategic Planning Unit and co-directed CFR's Project on the Information Revolution. Author and foreign policy scholar with PhD from Columbia University in political science and international relations. Phillips Academy Andover graduate."
+ },
+ {
+  "id": 1229,
+  "name": "B\u00f8rge Brende",
+  "entity_type": "person",
+  "notes": "President and CEO of the World Economic Forum since 2020. Former Norwegian Minister of Foreign Affairs (2013-2017) and Minister of Trade and Industry (2004-2005). Under his leadership, WEF launched the AI Governance Alliance and Global Regulatory Innovation Platform (GRIP, July 2025) to co-develop frameworks for agile, inclusive AI governance. Emphasizes that AI challenges 'cannot be addressed in silos' and require 'co-creation' over competition and 'collaboration' over fragmentation. Optimistic about AI's economic productivity potential but acknowledges overvaluation risks. Advocates multi-stakeholder approach bridging business, government, academia, and civil society."
+ },
+ {
+  "id": 1230,
+  "name": "Maria Basso",
+  "entity_type": "person",
+  "notes": "Head of AI Applications and Impact at the World Economic Forum's Centre for AI Excellence (CAIE), appointed January 2025. Over six years at WEF; previously AI and Digital Technologies Portfolio Manager at the Centre for the Fourth Industrial Revolution. Background in mechanical and energy engineering (Politecnico di Torino, University of Illinois). Former research associate at UC Berkeley and business analyst at McKinsey. Leads WEF's work on real-world AI adoption, focusing on how organizations embed AI into everyday economic systems and maximize transformative potential."
+ },
+ {
+  "id": 1231,
+  "name": "Francisco Betti",
+  "entity_type": "person",
+  "notes": "Head of the Global Industries Team and Member of the Executive Committee at the World Economic Forum. Previously led WEF's Centre for Shaping the Future of Advanced Manufacturing and Supply Chains. Brings together 20+ industry communities to help companies and sectors anticipate trends and accelerate responsible industrial transformation. Advocates for AI deployment at scale in manufacturing through the Network of Centres for the Fourth Industrial Revolution. Joined WEF in May 2015 after management consulting at PricewaterhouseCoopers in Geneva working with international organizations."
+ },
+ {
+  "id": 1232,
+  "name": "Cathy Li",
+  "entity_type": "person",
+  "notes": "Head of the Centre for AI Excellence and Member of the Executive Committee at the World Economic Forum. Oversees the AI Governance Alliance (AIGA), a flagship initiative convening leaders from business, government, academia, and civil society to prepare for the 'intelligent era.' Argues AI leadership depends not on infrastructure volume but deployment effectiveness. Warns most organizations 'fundamentally misunderstand AI's transformative potential' and underestimate the mindset shift required. Champions responsible, transparent, and inclusive AI system design. Focuses on building frameworks, incentives, and practices for responsible AI development at scale."
+ },
+ {
+  "id": 1233,
+  "name": "Peter Lee",
+  "entity_type": "person",
+  "notes": "Peter Lee is President of Microsoft Science (formerly President of Microsoft Research), overseeing AI research strategy and scientific discovery initiatives. Under his leadership, Microsoft Research has focused on responsible AI, including tools for detecting hallucinations and improving LLM fact-checking. Lee champions AI as a collaborative partner in scientific discovery, envisioning AI lab assistants that suggest and run experiments. He has emphasized that the true value of AI \"hasn't been invented\" yet and advocates for deployment infrastructure to deliver AI globally. Spoke at EmTech AI 2025 on AI revolutionizing science."
+ },
+ {
+  "id": 1234,
+  "name": "NYU School of Medicine",
+  "entity_type": "organization",
+  "notes": "NYU Grossman School of Medicine at NYU Langone Health, a leading academic medical center. Notable for the fastMRI project\u2014a collaboration with Facebook AI Research (FAIR) using deep learning to accelerate MRI reconstruction 10x. Also developed NYUTron, an LLM trained on clinical notes for in-hospital risk prediction."
+ },
+ {
+  "id": 1235,
+  "name": "Ashok Elluswamy",
+  "entity_type": "person",
+  "notes": "Ashok Elluswamy is VP of AI at Tesla, leading both the Autopilot/FSD (Full Self-Driving) and Optimus humanoid robot programs. He champions Tesla's end-to-end neural network approach to autonomous driving, which trains a single network for perception, planning, and control \u2014 contrasting with the modular, sensor-heavy systems used by competitors. Told internal teams that 2026 would be \"the most demanding year of their careers.\" Predicts AGI could become reality by ~2035 based on deep learning advances. The same neural network architecture powering FSD is being extended to Optimus."
+ },
+ {
+  "id": 1239,
+  "name": "In-Q-Tel",
+  "entity_type": "organization",
+  "notes": "In-Q-Tel (IQT) is an independent nonprofit venture capital firm that invests in technology companies to equip the CIA and other intelligence agencies with cutting-edge capabilities. Founded in 1999, based in Tysons, Virginia. Reached its 800th investment milestone in April 2025. Total estimated investment exceeds $1.8B over 25+ years. Key AI/national-security portfolio companies include Palantir (early investor). IQT appears in 32 companies on the 2025 NatSec 100 Report \u2014 more than any other fund. Invests across AI, biotech, microchips, space systems, cybersecurity, and autonomous systems. Also works with DHS on AI, data analytics, and trusted infrastructure."
+ },
+ {
+  "id": 1240,
+  "name": "Cognizant",
+  "entity_type": "organization",
+  "notes": "Cognizant is a major IT services and consulting company (NYSE: CTSH) with a significant AI practice. Positions itself as an \"AI builder\" creating full-stack AI solutions for enterprise clients. In March 2026, launched Cognizant AI Factory \u2014 an enterprise-grade multi-tenant platform powered by Dell and NVIDIA, claiming 50-60% lower TCO and 30% faster AI processing. Acquired 3Cloud (leading Microsoft Azure services provider) in November 2025 to strengthen AI enablement on Azure. Published \"New Work, New World 2026\" report on AI reshaping work. Recognized as a leader in Everest Group's AI and Generative AI Services PEAK Matrix 2025."
+ },
+ {
+  "id": 1241,
+  "name": "U.S. Army",
+  "entity_type": "organization",
+  "notes": "The U.S. Army is actively integrating AI across operations as part of DoD's broader AI-first strategy. In December 2025, established a new 49B AI/ML Officer career field \u2014 the first dedicated AI career path for Army officers, with initial selections beginning January 2026. Defense Secretary Hegseth directed AI-driven command and control at theater/corps/division HQs by 2027, unmanned systems across every division by end 2026, and counter-UAS at platoon level by 2026. The Army is deploying AI-enabled \"edge\" tools for units operating on imperfect networks. Army intelligence is weaving AI into every layer of operations for faster, smarter decision-making."
+ },
+ {
+  "id": 1242,
+  "name": "Workera",
+  "entity_type": "organization",
+  "notes": "Workera is an AI-powered skills intelligence platform that verifies skills for any role, enabling enterprise workforce development and talent decisions. Founded by Kian Katanforoosh, who was mentored by Andrew Ng at Stanford. Andrew Ng provides strategic guidance on responsible AI in education and workforce development. Raised $44.5M over 4 rounds. Clients include U.S. Air Force, Marine Corps, Booz Allen Hamilton, Siemens Energy, BCG, Accenture, and Eli Lilly. Launched AI agent \"Sage\" in late 2024 (GA March 2025). Published 2026 AI Workforce Preview showing 76% of Americans plan to learn new AI skills in 2026. Connected to Andrew Ng's DeepLearning.AI ecosystem."
+ },
+ {
+  "id": 1243,
+  "name": "AI Fund",
+  "entity_type": "organization",
+  "notes": "AI Fund is Andrew Ng's venture studio, launched in 2018, that co-founds AI startups from scratch. Closed an oversubscribed $190M Fund II in 2025 (following $175M Fund I). Has co-founded ~35 portfolio companies including LandingAI and Workera. Corporate LPs include AES Corporation, HP Inc., Mitsui, Mitsubishi, QBE, and TELUS; VC investors include Sequoia Capital and NEA. AI Fund actively participates in strategy, coding, and customer discovery alongside CEOs. Focus areas: application and software infrastructure layers of the AI stack, leveraging foundation models across financial services, renewable energy, healthcare, education, logistics, and developer tools."
+ },
+ {
+  "id": 1244,
+  "name": "LandingAI",
+  "entity_type": "organization",
+  "notes": "LandingAI is an AI company founded by Andrew Ng focused on computer vision for industrial applications. Flagship product LandingLens is an end-to-end, low-code platform for labeling, training, and deploying custom vision models. Primary industries: manufacturing, automotive, electronics, medical devices \u2014 companies relying on visual inspection and quality control. In 2025 released VisionAgent, a generative visual AI application builder with agentic object detection that eliminates manual data labeling and model training. Ng serves as Executive Chairman. Ng is a prominent advocate of \"data-centric AI\" and \"small data\" approaches. Part of Andrew Ng's ecosystem alongside AI Fund, DeepLearning.AI, and Workera."
+ },
+ {
+  "id": 1245,
+  "name": "Daphne Koller",
+  "entity_type": "person",
+  "notes": "Stanford CS professor (adjunct), MacArthur Fellow, co-founded Coursera, founded and CEO of insitro (AI-driven drug discovery). Member of National Academy of Sciences. Pioneer in probabilistic graphical models and machine learning applied to biology. Supports targeted regulation of AI in healthcare/drug discovery, recognizing necessity of safety standards while advocating for AI to accelerate scientific discovery."
+ },
+ {
+  "id": 1246,
+  "name": "MGX investment group",
+  "entity_type": "organization",
+  "notes": "Abu Dhabi state-owned AI investment vehicle launched March 2024 by Mubadala and G42, targeting $100B+ in AUM. Key partnerships: Stargate Project (with OpenAI, SoftBank, Oracle, Jan 2025); Global AI Infrastructure Investment Partnership (with BlackRock, Microsoft, Sep 2024). Acquired Aligned Data Centers for $40B (Oct 2025). Exploring $50B third-party capital raise. Also invested in Anthropic Series G (Feb 2026) and made $2B minority investment in Binance (Mar 2025)."
+ },
+ {
+  "id": 1247,
+  "name": "Larry Fink",
+  "entity_type": "person",
+  "notes": "CEO and Chairman of BlackRock, world's largest asset manager (~$11.5T AUM). Strong AI investment advocate. 2026 chairman's letter warned AI will widen wealth gap unless investing access expands. Leads BlackRock's Global AI Infrastructure Investment Partnership (with MGX, Microsoft). Views AI infrastructure buildout as $7T+ opportunity. Identifies power/energy as key bottleneck, not chips. Predicts some AI companies will go bankrupt but sees that as healthy capitalism."
+ },
+ {
+  "id": 1248,
+  "name": "Rob Goldstein",
+  "entity_type": "person",
+  "notes": "COO of BlackRock. Oversees Aladdin platform, technology, and operations. Called AI \"the most significant technology, innovation, evolution, revolution of my 30-year career.\" Launched Asimov, BlackRock's AI research platform (Jun 2025) that scans filings, research notes, and emails to generate portfolio insights. ~25% of BlackRock employees are technologists under his purview. Advocates aggressive AI adoption across investment operations."
+ },
+ {
+  "id": 1249,
+  "name": "Macquarie Asset Management",
+  "entity_type": "organization",
+  "notes": "Global alternative asset manager (part of Macquarie Group). Major AI infrastructure investor: committed $17B+ to data center and HPC investments including Applied Digital ($900M+ with $4.1B pipeline) and Aligned Data Centers (sold at $40B enterprise value to BlackRock/MGX consortium, Oct 2025). Closed Macquarie Infrastructure Partners VI with $8B+ in commitments (Jun 2025). Views AI as key driver of infrastructure demand in 2026 outlook."
+ },
+ {
+  "id": 1250,
+  "name": "AMD",
+  "entity_type": "organization",
+  "notes": "Major semiconductor company competing with NVIDIA in AI accelerators. CEO Lisa Su targets 35% annual revenue growth driven by AI chip demand. Product roadmap: MI308, MI450 (Q3 2026), MI500 (2027). Key partnerships: OpenAI (multi-year, multi-billion chip deal), Meta (6GW deal). Took $800M charge from U.S. export controls on MI308 to China (Apr 2025). Su advocates balanced export policy \u2014 supports national security restrictions but warns overly strict controls hurt U.S. competitiveness."
+ },
+ {
+  "id": 1252,
+  "name": "University of Pittsburgh",
+  "entity_type": "organization",
+  "notes": "Major public research university in Pittsburgh. Close collaboration with Carnegie Mellon University on AI initiatives. Joint NVIDIA AI Tech Community with CMU: Pitt's center focuses on AI in health sciences, clinical medicine, and biomanufacturing. Co-hosted CMU-Pitt health/AI/technology summit (Oct 2025). Joined multi-institutional Sloan Foundation study on AI impact on labor markets (Jul 2025). Research strengths in health AI and computational medicine."
+ },
+ {
+  "id": 1253,
+  "name": "Allen Newell",
+  "entity_type": "person",
+  "notes": "DECEASED (1927-1992). AI pioneer at Carnegie Mellon University and RAND Corporation. Co-created Logic Theorist (1956, first AI program) and General Problem Solver (1957) with Herbert Simon and Cliff Shaw. Developed Information Processing Language. Proposed physical symbol systems hypothesis. Created SOAR cognitive architecture. ACM Turing Award (1975, with Simon). Instrumental in founding CMU's Computer Science Department (1965) and School of Computer Science. The ACM-AAAI Allen Newell Award is named in his honor."
+ },
+ {
+  "id": 1254,
+  "name": "Herb Simon",
+  "entity_type": "person",
+  "notes": "DECEASED (1916-2001). Nobel laureate (Economics, 1978) and AI pioneer at Carnegie Mellon University. Co-created Logic Theorist (1956) and General Problem Solver with Allen Newell and Cliff Shaw. Founded concept of bounded rationality. ACM Turing Award (1975, with Newell). At CMU from 1949 to 2001, instrumental in founding the School of Computer Science, GSIA, and multiple departments. CMU's Simon Initiative and Herbert A. Simon Award named in his honor. Bridged AI, economics, psychology, and organizational theory."
+ },
+ {
+  "id": 1255,
+  "name": "Robert M. Groves",
+  "entity_type": "person",
+  "notes": "Interim President of Georgetown University (since Nov 2024), previously Executive VP and Provost (2012-2024). Social statistician specializing in survey methodology. Former director of U.S. Census Bureau (2009-2012). Elected member of National Academy of Sciences and National Academy of Medicine. Fellow of American Statistical Association. Research focuses on data collection quality, adaptive research designs, and privacy attitudes toward statistical agencies. Testified before Congress (Jul 2025)."
+ },
+ {
+  "id": 1256,
+  "name": "Scott Strobel",
+  "entity_type": "person",
+  "notes": "Provost of Yale University (since 2020) and Henry Ford II Professor of Molecular Biophysics & Biochemistry. Assembled Yale Task Force on Artificial Intelligence (YTAI, Jan 2024) to review AI activity university-wide. Announced $150M five-year AI investment (Aug 2024) covering GPU infrastructure, faculty hiring, and ethics research. Priorities center on expanding AI computing access and establishing Yale's position in AI ethics. Oversees Yale Center for Research Computing expansion."
+ },
+ {
+  "id": 1257,
+  "name": "Yale Center for Research Computing",
+  "entity_type": "organization",
+  "notes": "Yale University's central HPC and research computing facility (YCRC). Part of $150M AI investment initiative. Transitioning from Yale West Campus Data Center to MGHPCC (consortium with Harvard, MIT, BU, Northeastern, UMass). New Bouchet cluster in production (~4,000 cores), expanding with 80 NVIDIA H200 GPUs (140GB VRAM each), 48 A5000 ADA cards, and 6,000 additional CPUs. Grace and McCleary clusters decommissioning in 2026. Launched Hopper secure HPC cluster (Jul 2025). All new purchases including Provost's AI Initiative GPUs installed at MGHPCC."
+ },
+ {
+  "id": 1258,
+  "name": "Ant\u00f3nio Guterres",
+  "entity_type": "person",
+  "notes": "UN Secretary-General (2017-present). Proposed international AI governance body modeled on the IAEA in 2023. Convened the High-Level Advisory Body on AI which delivered 7 recommendations in 2024. Championed establishment of the UN Independent International Scientific Panel on AI and Global Dialogue on AI Governance (both approved by GA in 2025). Consistently advocates for science-based AI policy and multilateral governance, though the U.S. has rejected UN-centralized AI oversight."
+ },
+ {
+  "id": 1259,
+  "name": "International Telecommunication Union",
+  "entity_type": "organization",
+  "notes": "UN specialized agency for information and communication technologies. Hosts annual AI for Good Global Summit. Co-organized 2025 International AI Standards Summit with ISO and IEC, issuing the Seoul Statement on AI standards. Published 170-page report on global AI standardization landscape (2025). Develops technical standards for AI interoperability, safety, and trustworthiness. Leads initiatives on agentic AI protocols and AI in health/agriculture."
+ },
+ {
+  "id": 1260,
+  "name": "UNESCO",
+  "entity_type": "organization",
+  "notes": "UN agency that adopted the first global standard on AI ethics -- the Recommendation on the Ethics of Artificial Intelligence (2021), applicable to all 194 member states. Developed after 3 years of consultation with experts from 155 countries. Framework centers on human rights, transparency, fairness, and human oversight. Published 2025 AI ethics toolkit with open-source NLP kits for emerging markets. Released guidelines for AI use in courts and tribunals (Dec 2025)."
+ },
+ {
+  "id": 1261,
+  "name": "Amandeep Singh Gill",
+  "entity_type": "person",
+  "notes": "UN Under-Secretary-General and Special Envoy for Digital and Emerging Technologies (Jan 2025-present); previously Secretary-General's Envoy on Technology (2022-2024). Indian diplomat who is a central figure in UN AI governance architecture. Instrumental in establishing the Independent International Scientific Panel on AI and Global Dialogue on AI Governance. Emphasizes evidence-based, science-informed AI policy and inclusive governance that gives all 193 member states a seat at the table. Advocates strongly for Global South participation in AI governance."
+ },
+ {
+  "id": 1262,
+  "name": "European Artificial Intelligence Board",
+  "entity_type": "organization",
+  "notes": "Advisory body established under the EU AI Act, composed of one representative from each EU Member State. Advises and assists the European Commission and Member States to facilitate consistent and effective application of the AI Act. The AI Act's phased implementation began Feb 2025 (prohibited practices), continued Aug 2025 (GPAI model obligations), with full applicability by Aug 2026. The Board operates alongside the European AI Office which supervises and enforces the Act."
+ },
+ {
+  "id": 1263,
+  "name": "Matt Turek",
+  "entity_type": "person",
+  "notes": "Former DARPA deputy director of the Information Innovation Office (I2O). Joined DARPA in 2018 as program manager; led the Explainable AI (XAI), Media Forensics (MediFor), Semantic Forensics (SemaFor), and Machine Common Sense (MCS) programs. Served as acting deputy director of I2O (June-Oct 2021), then deputy office director (May 2022-Oct 2025). DARPA tour ended Oct 2025; transitioned to Chief Scientist at STR. PhD in Computer Science from Rensselaer Polytechnic Institute."
+ },
+ {
+  "id": 1264,
+  "name": "Benjamin Grosof",
+  "entity_type": "person",
+  "notes": "DARPA program manager in the Defense Sciences Office (joined Sept 2023). Leads the CLARA (Causal Logical AI Reasoning and Auditing) program. Pioneer in knowledge representation and reasoning (KRR), including Rulelog, courteous defeasibility, and neuro-symbolic AI. Extensive background applying AI to legal, regulatory, policy compliance, and defense/intelligence domains. Previously Chief Scientist at Coherent Knowledge. PhD from Stanford, Hertz Fellow."
+ },
+ {
+  "id": 1265,
+  "name": "Andrew Carney",
+  "entity_type": "person",
+  "notes": "Joint DARPA/ARPA-H program manager. Leads the AI Cyber Challenge (AIxCC) at DARPA -- a two-year, $8.5M competition to develop AI systems that can find and fix vulnerabilities in critical infrastructure software. Also leads health cybersecurity programs at ARPA-H. Previously principal researcher at HSBC Cybersecurity Science and Analytics. Background in competitive hacking (CTF). MS in Computer Science from Johns Hopkins University."
+ },
+ {
+  "id": 1266,
+  "name": "ARPA-H",
+  "entity_type": "organization",
+  "notes": "Advanced Research Projects Agency for Health, established 2022 under the Biden administration within HHS. Modeled on DARPA. Funds high-risk, high-reward health research including multiple AI programs: ADVOCATE (agentic AI for cardiovascular care), PRECISE-AI (monitoring clinical AI model degradation), TARGET (generative AI for antibiotic discovery), MOCS (AI for obstetric care), and Biomedical Data Fabric toolbox. Co-sponsors the AIxCC with DARPA for health cybersecurity."
+ },
+ {
+  "id": 1267,
+  "name": "Johns Hopkins Applied Physics Laboratory",
+  "entity_type": "organization",
+  "notes": "Largest university-affiliated research center in the U.S., serving as a technical resource for DoD, Intelligence Community, DHS, and NASA. Over 60 years of AI R&D spanning autonomous systems, decision support, ML, and human-machine teaming. Intelligent Systems Center (ISC) has 130+ research scientists/engineers focused on AI, robotics, and neuroscience. Developed GenWar Lab (AI wargaming) and SAGE (Strategic AI Gaming Engine) now being built for classified DoD/IC networks. Focus on robust, trustworthy AI for national security."
+ },
+ {
+  "id": 1268,
+  "name": "Barton Paulhamus",
+  "entity_type": "person",
+  "notes": "Co-founder and Chief of the Intelligent Systems Center (ISC) at Johns Hopkins APL, leading 130 research scientists and engineers in AI, robotics, neuroscience, and human-machine teaming. Named Chair of the Artificial Intelligence program at Johns Hopkins Engineering for Professionals (EP), one of the nation's first online MS programs in AI. Faculty since 2010. Doctor of Engineering (Computer Science) from Johns Hopkins; BS/MS in CS and Engineering from Penn State."
+ },
+ {
+  "id": 1269,
+  "name": "Dr. Ian McCulloh",
+  "entity_type": "person",
+  "notes": "Director of the AI portfolio for Lifelong Learning (executive and continuing education) at Johns Hopkins University, with joint faculty positions in Computer Science and Public Health. Previously Accenture's Chief Data Scientist, building a 1,200-person Federal AI practice for U.S. Government. Retired U.S. Army Lt. Colonel who founded the West Point Network Science Center and served as Chief Strategist for Information Warfare at CENTCOM. Research combines AI, neuroscience, and human behavior."
+ },
+ {
+  "id": 1271,
+  "name": "Speed School of Engineering",
+  "entity_type": "organization",
+  "notes": "J.B. Speed School of Engineering at the University of Louisville. R1 research university engineering school with AI as a core research area. Houses Data Science & AI research cluster, Center for Human Systems Engineering (human-centric AI), and Autonomous Intelligent Mobile Systems Lab. Offers AI/ML coursework across bioengineering, computer science, and industrial engineering."
+ },
+ {
+  "id": 1273,
+  "name": "David Marchick",
+  "entity_type": "person",
+  "notes": "Dean of Kogod School of Business at American University (since Aug 2022). Led what Poets & Quants called 'the most consequential AI transformation in business education,' making Kogod one of the first AI-first business schools. Launched Applied AI Institute with Google.org support. Views: companies should help educate policymakers on AI opportunities and risks, but Congress and the Executive Branch must ultimately set policy. Advocates innovation while acknowledging need for safety/fairness guardrails."
+ },
+ {
+  "id": 1274,
+  "name": "Gwanhoo Lee",
+  "entity_type": "person",
+  "notes": "Professor and Chair, Dept of Information Technology and Analytics at Kogod School of Business, American University. Director of the Institute for Applied Artificial Intelligence (IAAI). Research focuses on AI governance, digital transformation, information privacy, and smart government. Advised South Korea's Presidential Committee on the Fourth Industrial Revolution on AI policy. Consulted for World Bank and Samsung on digital strategy. University Outstanding Scholarship Award 2025."
+ },
+ {
+  "id": 1275,
+  "name": "Angela Virtu",
+  "entity_type": "person",
+  "notes": "Professorial Lecturer in IT&A at Kogod School of Business, American University (since 2023). Associate Director of the Institute of Applied Artificial Intelligence. Created faculty AI training program that helped embed AI across 58 new courses. Prior industry experience building AI/ML solutions for pre-IPO SaaS companies. Key implementer of Kogod's AI-first curriculum transformation."
+ },
+ {
+  "id": 1276,
+  "name": "Bei Xiao",
+  "entity_type": "person",
+  "notes": "Provost Associate Professor, Dept of Computer Science at American University. Heads the Computational Material Perception Laboratory. Research spans human/machine vision, generative AI for graphics, multimodal perception in VR/AR, and NLP for clinical trials. PhD Neuroscience (UPenn), postdoc at MIT Brain & Cognitive Sciences/CSAIL. Funded by NIH and NSF."
+ },
+ {
+  "id": 1277,
+  "name": "Thenkurussi (Kesh) Kesavadas",
+  "entity_type": "person",
+  "notes": "Vice President for Research & Economic Development at SUNY University at Albany. Launched $200M AI initiative ($75M from NY State) and $20M Center for Emerging AI Systems with IBM. Co-chairs SUNY-wide AI research and infrastructure work group. Leads Empire AI SUNY partnerships for public-good AI. Previously founding director of Health Care Engineering Systems Center at UIUC. Inventor of RoSS robotic surgical simulator; founder/CTO of AirV Labs (generative AI + VR startup)."
+ },
+ {
+  "id": 1278,
+  "name": "USC Center for AI in Society",
+  "entity_type": "organization",
+  "notes": "Joint research center between USC Suzanne Dworak-Peck School of Social Work and USC Viterbi School of Engineering. Mission: develop and demonstrate how AI can tackle difficult societal problems. Focuses on low-resource communities. Research areas: environment, health/wellbeing, homelessness. Partners with Partnership on AI on explainable AI research. Draws from Grand Challenges for Social Work, NAE Grand Challenges, and UN SDGs."
+ },
+ {
+  "id": 1279,
+  "name": "USC Suzanne Dworak-Peck School of Social Work",
+  "entity_type": "organization",
+  "notes": "USC's school of social work. Co-founded the Center for AI in Society (CAIS) with Viterbi School of Engineering, applying AI to social challenges including child welfare, homelessness, behavioral health, and human trafficking. Research emphasizes responsible AI for vulnerable populations."
+ },
+ {
+  "id": 1280,
+  "name": "USC Viterbi School of Engineering",
+  "entity_type": "organization",
+  "notes": "USC's engineering school. Major AI research hub with multiple centers: CAIS (AI for social good), Amazon Center on Secure and Trusted AI, Machine Learning Center, Center for Autonomy and AI, and Robotics and Autonomous Systems Center. Launched first US MS in CS-AI track. Partnered with USC School of Advanced Computing on BS in AI (Fall 2026). NSF-funded ORAI PhD program in AI and operations research."
+ },
+ {
+  "id": 1281,
+  "name": "USC Marshall School of Business",
+  "entity_type": "organization",
+  "notes": "USC's business school. Houses the Neely Center for Ethical Leadership and Decision Making, which in 2024 launched a five-year, $4M purpose-driven AI research initiative \u2014 $2M from the Knight Foundation matched by $2M from USC Marshall. Initiative focuses on AI and social media indices, design codes for AI tools, a youth advisory panel, and expanded leadership fellowships. Led by Neely Center Director Nate Fast and Managing Director Ravi Iyer. Dean Geoff Garrett chairs USC President's AI Strategy Committee."
+ },
+ {
+  "id": 1282,
+  "name": "Geoff Garrett",
+  "entity_type": "person",
+  "notes": "Dean of USC Marshall School of Business. Chairs USC President's AI Strategy Committee. Champions rapid AI integration in higher education: 'if we don't treat things with enough urgency, we're just going to fall behind.' Working on school-wide AI policy for responsible use. Helped secure a five-year, $4M Knight Foundation + USC Marshall match ($2M each) for purpose-driven AI research housed at the Neely Center. Emphasizes aligning AI with human values."
+ },
+ {
+  "id": 1283,
+  "name": "USC School of Advanced Computing",
+  "entity_type": "organization",
+  "notes": "USC's 23rd school, launched in 2024 as part of President Folt's $1B+ advanced computing initiative. Led by Prof. Gaurav Sukhatme. Recruiting 30 faculty by 2025, 60 more by 2030. Co-launching BS in AI with Viterbi (Fall 2026 cohort). New Ginsburg Human-Centered Computation Hall. Ethics at its core mission. First new USC school in over a decade."
+ },
+ {
+  "id": 1284,
+  "name": "Carol L. Folt",
+  "entity_type": "person",
+  "notes": "President of USC (2019-2025), first woman to serve as permanent president. Established Frontiers of Computing initiative and launched USC School of Advanced Computing (23rd school). Made AI a major institutional priority, embedding ethics, analytics, and AI across scholarly work. Environmental scientist by training (UNC Chapel Hill chancellor before USC). Now President Emeritus and VP for Presidential Initiatives; teaches science and society courses at USC."
+ },
+ {
+  "id": 1285,
+  "name": "University of Pennsylvania",
+  "entity_type": "organization",
+  "notes": "Ivy League research university with major AI research infrastructure. The ASSET Center (Penn Engineering) focuses on AI safety, explainability, and trustworthiness, with NSF funding. The Warren Center for Network and Data Sciences drives interdisciplinary data science research. Penn AI was launched in 2025 to coordinate responsible AI across the university."
+ },
+ {
+  "id": 1286,
+  "name": "Erika James",
+  "entity_type": "person",
+  "notes": "Dean of the Wharton School (since July 2020), first woman and first person of color in Wharton's 139-year history. Organizational psychologist specializing in crisis leadership and workplace diversity. Launched Wharton AI & Analytics Initiative, investing heavily in AI research and teaching. Introduced new undergraduate concentration and MBA major in AI for business. Emphasizes responsible AI: 'simultaneously focused on harnessing AI transformative potential while also understanding and addressing its risks.'"
+ },
+ {
+  "id": 1287,
+  "name": "Kartik Hosanagar",
+  "entity_type": "person",
+  "notes": "John C. Hower Professor of Technology and Digital Business at Wharton. Author of 'A Human's Guide to Machine Intelligence' (2019), advocating for an 'algorithmic bill of rights' covering transparency, explainability, and user control. Favors issue-specific AI regulation (e.g., deepfakes, financial fraud) over broad-based approaches; proposes regulatory sandboxes for innovation. Research focuses on the digital economy and impact of algorithms on consumers and society."
+ },
+ {
+  "id": 1288,
+  "name": "Kevin Werbach",
+  "entity_type": "person",
+  "notes": "First Pacific Company Professor, Professor of Legal Studies & Business Ethics, and department chair at Wharton. Directs the Wharton Accountable AI Lab and the Blockchain and Digital Asset Project. Hosts 'The Road to Accountable AI' podcast. Served on Obama Presidential Transition Team; was Counsel for New Technology Policy at FCC under Clinton. Published four books including 'The Blockchain and the New Architecture of Trust.' Focuses on legal, ethical, and regulatory aspects of emerging technologies."
+ },
+ {
+  "id": 1289,
+  "name": "Eric Bradlow",
+  "entity_type": "person",
+  "notes": "Vice Dean of AI & Analytics at Wharton, K.P. Chao Professor of Marketing, and Chairperson of the Wharton Marketing Department. Also Professor of Economics, Education, and Statistics and Data Science. Leads the Wharton AI & Analytics Initiative, spearheading student learning, faculty research, and industry partnerships in AI. Applied statistician (PhD, Harvard) with research in Bayesian modeling and statistical computing. Multiple teaching awards including Linback Award for Distinguished PhD Teaching."
+ },
+ {
+  "id": 1290,
+  "name": "Prasanna (Sonny) Tambe",
+  "entity_type": "person",
+  "notes": "Associate Professor of Operations, Information and Decisions at Wharton; Faculty Co-Director of Wharton Human-AI Research. Research focuses on economics of technology and labor: AI for HR applications, labor markets for AI skills, and how workers specialize in technologies. Key finding: firms capture more value from AI when algorithmic expertise is distributed across domain experts rather than concentrated in IT (Management Science). Co-advises Wharton's new AI major. PhD in Managerial Science from Wharton; SB and MEng from MIT."
+ },
+ {
+  "id": 1291,
+  "name": "Giles Hooker",
+  "entity_type": "person",
+  "notes": "Professor of Statistics and Data Science at Wharton. Research interests include machine learning, functional data analysis, differential equations, computational statistics, and statistical ecology. Co-advises Wharton's new undergraduate and MBA AI programs (jointly administered by Statistics/Data Science and Operations/Information/Decisions departments). Developed 'Foundations of Deep Learning' course. Published work on additive explanations for black-box ML models (2023)."
+ },
+ {
+  "id": 1292,
+  "name": "Jurist Center for Artificial Intelligence",
+  "entity_type": "organization",
+  "notes": "AI research center at Tulane University, established by the Harold L. and Heather E. Jurist NC '64 Endowed Fund. Supports research and education in AI, machine learning, and data science with a focus on applications for a healthier, more connected global community. Faculty projects span machine learning, multi-agent systems, computer vision, NLP, visualization, and ethics. Part of Tulane's broader AI ecosystem alongside the Connolly Alexander Institute for Data Science and CEAI."
+ },
+ {
+  "id": 1293,
+  "name": "Center for Community-Engaged Artificial Intelligence",
+  "entity_type": "organization",
+  "notes": "Multi-disciplinary AI center at Tulane University and one of five Tulane Centers of Excellence. Team of scientists, engineers, students, and community partners dedicated to human-centered AI. Core principle: trust must be earned by designing AI systems that are demonstrably fair, transparent, and accountable, with meaningful community engagement from design through deployment. Cross-disciplinary research, project-based learning, and community outreach across healthcare, economics, education, and criminal justice. Partners with Court Watch NOLA on criminal justice transparency via $1.5M NSF-funded project."
+ },
+ {
+  "id": 1294,
+  "name": "Court Watch NOLA",
+  "entity_type": "organization",
+  "notes": "Founded 2007, oldest court-watching program in the U.S. Recruits, trains, and supports volunteers to observe Orleans Parish Criminal Court judges, prosecutors, and public defenders for transparency, ethics, and constitutional compliance. Partnered with Tulane University on $1.5M NSF-funded project using AI to build a data analysis platform for criminal justice transparency -- AI extracts info from court documents, identifies trends and inequities, and directs court watchers to high-priority cases. Dashboard tracking bail settings launched Dec 2024; full AI platform expected early 2026."
+ },
+ {
+  "id": 1295,
+  "name": "Office of Management and Budget",
+  "entity_type": "organization",
+  "notes": "Executive Office of the President body that sets federal AI policy for agencies. Biden-era M-24-10 was rescinded and replaced by M-25-21 (April 2025), which mandates Chief AI Officers, AI governance boards, and risk management for high-impact AI while emphasizing innovation over restriction."
+ },
+ {
+  "id": 1296,
+  "name": "NASA Ames Research Center",
+  "entity_type": "organization",
+  "notes": "Major NASA research center in Silicon Valley. Intelligent Systems Division comprises Autonomous Systems & Robotics, Collaborative & Assistant Systems, Discovery & Systems Health, and Robust Software Engineering. Conducts mission-driven R&D in computational sciences for NASA applications. Aviation Systems Division researches advanced air traffic management and automation. Key AI projects: Data and Reasoning Fabric (aerospace decision-making), RAM-AO Working Group (autonomous multi-aircraft operations). Peter Norvig served as Division Chief of Computational Sciences. NASA restricts use of generative AI on sensitive data."
+ },
+ {
+  "id": 1297,
+  "name": "Sebastian Thrun",
+  "entity_type": "person",
+  "notes": "Pioneering AI researcher and entrepreneur. Stanford CS professor (2003-2011), directed Stanford AI Lab (SAIL). Founded Google X, Google's self-driving car project (now Waymo), Udacity (online education), and Kitty Hawk (air taxis, now closed). Won DARPA Grand Challenge (2005). Strong AI optimist: 'AI will not replace us, it will complement us' and warns against 'prematurely declaring AI a danger and destroying chances of this technology by rash regulation.' Favors liability-based regulation over prescriptive rules. Believes AI makes workers more productive. Currently CEO of Sage AI Labs."
+ },
+ {
+  "id": 1298,
+  "name": "Nimar Arora",
+  "entity_type": "person",
+  "notes": "AI researcher and entrepreneur specializing in probabilistic programming and Bayesian inference. Co-founder of Bayesian Logic Inc. (2012), which builds Bayesian models for complex physical domains, particularly seismology. Invented the Bean Machine Probabilistic Programming Language and the NET-VISA probabilistic model for detecting nuclear explosions (used by CTBTO). PhD from UC Berkeley (2006-2012) under Stuart Russell and Erik Sudderth. Received the Mitchell Prize in 2014 from the American Statistical Association. Previously Research Scientist at Facebook (designed a new PPL), Head of AI and Analytics at DevRev Inc. (2020-2023). Currently Founder at JazzX AI."
+ },
+ {
+  "id": 1299,
+  "name": "CTBT organization",
+  "entity_type": "organization",
+  "notes": "The Comprehensive Nuclear-Test-Ban Treaty Organization (CTBTO), headquartered in Vienna, is the international body overseeing the global ban on nuclear test explosions. Operates the International Monitoring System (IMS) \u2014 337 facilities worldwide using seismic, infrasound, hydroacoustic, and radionuclide sensors. Actively incorporates AI/ML to distinguish earthquakes from nuclear explosive tests and to process vast sensor datasets. Connected to Bayesian Logic Inc. through use of the NET-VISA probabilistic model for nuclear explosion detection. Approximately 300 staff from over 90 countries."
+ },
+ {
+  "id": 1300,
+  "name": "Stanford Law School",
+  "entity_type": "organization",
+  "notes": "Home of CodeX (Stanford Center for Legal Informatics) and the Stanford Law AI Initiative co-directed by Prof. Nathaniel Persily. Hosts AI governance courses, the Law Policy Lab practicum on federal AI use in criminal justice, and applied research projects such as ComplianceTwin (2025\u20132026)."
+ },
+ {
+  "id": 1301,
+  "name": "Ted Budd",
+  "entity_type": "person",
+  "notes": "Republican Senator (NC) and Chair of the Senate Subcommittee on Science, Manufacturing, and Competitiveness. Actively shapes AI legislation through bipartisan bills on government data access, AI lab networks, and public health preparedness. Strongly opposes overregulation, favoring a light-touch, innovation-first federal framework."
+ },
+ {
+  "id": 1302,
+  "name": "Dick Durbin",
+  "entity_type": "person",
+  "notes": "Democratic Senator from Illinois (1997\u20132027) and former Senate Judiciary Committee chair. Co-introduced the bipartisan AI LEAD Act to enable products-liability suits against AI developers, and the TEST AI Act to strengthen federal AI testing capacity. Consistently advocated for mandatory AI oversight."
+ },
+ {
+  "id": 1303,
+  "name": "Idaho National Laboratory",
+  "entity_type": "organization",
+  "notes": "U.S. Department of Energy national laboratory leading the adaptation of AI for the nuclear energy industry. Developing AI tools to reduce costs and timeframes of designing, licensing, building, and operating nuclear facilities. Major 2025 partnerships: AWS (AI tools for nuclear projects, digital twin of small modular reactor), Microsoft (Azure AI for nuclear permitting/licensing), NVIDIA (AI for reactor design and operations). DOE selected INL as a site for AI data centers under Trump administration initiative for American AI leadership. Part of DOE Project Genesis uniting all 17 national labs to build an AI-powered scientific platform. Testing AI to streamline nuclear permitting processes."
+ },
+ {
+  "id": 1304,
+  "name": "Pam Bondi",
+  "entity_type": "person",
+  "notes": "U.S. Attorney General, confirmed February 4, 2025. Previously served as Florida Attorney General (2011-2019). Key AI policy action: created the DOJ AI Litigation Task Force under Trump executive order to challenge state AI laws deemed inconsistent with federal policy or the goal of U.S. \"global AI dominance.\" The task force targets state laws on grounds they are illegal, unconstitutionally regulate interstate commerce, or are overridden by federal regulations. Supports a \"minimally burdensome national policy framework for AI\" to promote American competitiveness."
+ },
+ {
+  "id": 1305,
+  "name": "Mike Johnson",
+  "entity_type": "person",
+  "notes": "Speaker of the U.S. House of Representatives (Republican, Louisiana). Leading congressional effort to implement the Trump administration national AI framework. Outlined a 3-point plan for AI: (1) treat AI as a matter of national security, (2) keep AI in U.S. and allied hands, (3) move \"at the speed that victory demands.\" Stated \"America will win the AI race if government resists the siren song of control, and if industry steps up as our patriotic partner.\" Praised the White House AI roadmap for providing \"innovators with much-needed certainty, while protecting consumers and prioritizing kids online safety.\" Supports federal preemption of state AI regulations."
+ },
+ {
+  "id": 1306,
+  "name": "Steve Scalise",
+  "entity_type": "person",
+  "notes": "House Majority Leader (Republican, Louisiana). Key Republican leader on AI policy in Congress. Co-authored joint statement with Speaker Johnson committing to implement the Trump administration national AI framework. Led effort to include preemption of state AI regulations in the NDAA (ultimately dropped). Supports Trump executive order on AI and stated willingness to \"codify some of the things the President is trying to do\" on AI. Advocates for a unified national AI framework that provides certainty for innovators while protecting consumers."
+ },
+ {
+  "id": 1309,
+  "name": "National Institute of Standards and Technology",
+  "entity_type": "organization",
+  "notes": "NIST develops voluntary AI standards and risk management frameworks for federal agencies and industry. Its AI Risk Management Framework (AI RMF 1.0) is widely adopted. In 2025-26 its AI Safety Institute was renamed the Center for AI Standards and Innovation (CAISI) under the Trump administration's AI Action Plan, with a mandate to revise the AI RMF."
+ },
+ {
+  "id": 1310,
+  "name": "Ylli Bajraktari",
+  "entity_type": "person",
+  "notes": "President and CEO of the Special Competitive Studies Project (SCSP), founded by Eric Schmidt in 2021 to strengthen U.S. competitiveness in AI and emerging technologies. Previously served as Executive Director of the National Security Commission on Artificial Intelligence (NSCAI, 2019-2021), chaired by Eric Schmidt, where he assembled 130+ staff to produce the landmark NSCAI final report. Career national security official: Chief of Staff to National Security Advisor H.R. McMaster, leadership roles under Deputy SecDef Robert Work, Special Assistant to CJCS Gen. Dempsey. Born in Kosovo, emigrated to U.S. after the war. Harvard MPP, GWU BA in International Relations. Recipient of DoD Distinguished Civilian Service Medal. SCSP advocates for bold, innovation-driven AI policy with targeted oversight of high-consequence applications and sector-specific regulation."
+ },
+ {
+  "id": 1311,
+  "name": "Trevor Darrell",
+  "entity_type": "person",
+  "notes": "Professor of Electrical Engineering and Computer Sciences at UC Berkeley. Founding Co-Director of Berkeley Artificial Intelligence Research (BAIR), Berkeley Deep Drive (BDD), and BAIR Commons. Faculty Director of PATH at UC Berkeley. Previously on MIT EECS faculty (1999-2008) directing the Vision Interface Group. Leading expert in computer vision, deep learning, and explainable AI. His group developed the Caffe deep-learning library. Author/co-author of papers cited nearly 300,000 times. Research spans computer vision, NLP, autonomous vehicles, media search, and multimodal robot interaction."
+ },
+ {
+  "id": 1312,
+  "name": "Clarifai",
+  "entity_type": "organization",
+  "notes": "Enterprise AI platform founded in 2013 by Matt Zeiler, headquartered in Washington, D.C. One of the first deep learning platforms, specializing in computer vision, NLP, and audio analysis. Core technology based on convolutional neural networks. Key government/defense work: participated in Project Maven (DoD AI program), signed R&D agreement with U.S. Army for EO/IR data labeling, created subsidiary Neural Net One for dedicated government contracting. Raised $100M total ($60M Series C in 2021, led by New Enterprise Associates). Named a Leader in Forrester Wave Computer Vision Tools Q1 2024. Platform supports full AI lifecycle: data preparation, model training, deployment."
+ },
+ {
+  "id": 1313,
+  "name": "College of Computing, Data Science, and Society",
+  "entity_type": "organization",
+  "notes": "UC Berkeley college established July 1, 2023 \u2014 the first new college at Berkeley in over 50 years. Houses three academic majors: Computer Science, Data Science, and Statistics. Includes the Berkeley Institute for Data Science, Center for Computational Biology, Bakar Institute of Digital Materials for the Planet, and shares EECS with the College of Engineering and the D-Lab with Social Sciences. Parent organization of BAIR-affiliated units. Mission: develop ethics-oriented, accessible curricula in data science, computing, and statistics. The Gateway collaboration hub expected to open spring 2026 as CDSS home."
+ },
+ {
+  "id": 1314,
+  "name": "University of Utah",
+  "entity_type": "organization",
+  "notes": "University of Utah hosts the One-U Responsible AI Initiative, a $100M transdisciplinary program led by the Scientific Computing and Imaging (SCI) Institute. A $50M AI supercomputer partnership with NVIDIA and HPE is slated to come online in summer 2026. Research focuses on healthcare, societal wellness, and public services."
+ },
+ {
+  "id": 1315,
+  "name": "Emory University",
+  "entity_type": "organization",
+  "notes": "Private research university in Atlanta, Georgia. Major AI initiative: AI.Humanity, which brings together full university resources to shape the AI revolution for better human health, economic value, and responsible applications. Key AI centers: Center for Artificial Intelligence Learning (AI literacy across campus), Empathetic AI for Health Institute (AI.Health \u2014 ML and big data for healthcare transformation), and multiple departmental AI labs. Research spans NLP, computer vision, geospatial AI, health informatics, and AI ethics. Interdisciplinary approach connects AI research with humanities, social sciences, and public health."
+ },
+ {
+  "id": 1316,
+  "name": "Emory AI Group",
+  "entity_type": "organization",
+  "notes": "Research collective within Emory University encompassing multiple AI-focused labs and faculty across the Department of Computer Science and School of Medicine. Includes the Emory NLP group, AI and Simulation Lab (geospatial AI, computer vision, foundation models), MAIX Lab (health AI), and Cardiothoracic Imaging and AI Lab. Faculty research spans natural language processing, large language models, conversational AI, information retrieval, AI interpretability, and medical imaging AI. Part of the broader AI.Humanity initiative at Emory."
+ },
+ {
+  "id": 1317,
+  "name": "Block Center for Technology and Society",
+  "entity_type": "organization",
+  "notes": "The Block Center for Technology and Society at Carnegie Mellon University was established in 2019 to study how emerging technologies alter the future of work, how AI and analytics can be harnessed for social good, and how innovation can reduce inequality. Houses the Responsible AI Initiative (RAI), which translates AI research into actionable policy insights promoting fairness, accountability, and transparency. Runs community education programs like 'AI 101' for labor unions, media professionals, and government representatives. Collaborates with MIT FutureTech on labor implications of AI research. Engages directly with policymakers in Washington, D.C., sharing AI expertise. Research focuses on future of work, responsible AI deployment, and data-driven policy solutions."
+ },
+ {
+  "id": 1318,
+  "name": "Manish Parashar",
+  "entity_type": "person",
+  "notes": "Presidential Professor at the University of Utah's Kahlert School of Computing and Director of the Scientific Computing and Imaging (SCI) Institute. Appointed as the university's inaugural Chief AI Officer. Led the launch of the One-U Responsible AI Initiative with $100 million investment in AI research across environment, healthcare, and education. Previously served at the National Science Foundation as Office Director of Advanced Cyberinfrastructure, co-chaired the National Science and Technology Council's Subcommittee on Future Advanced Computing Ecosystem and the National AI Research Resource (NAIRR) Task Force. Won the 2023 IEEE Sidney Fernbach Award and 2024 CRA Distinguished Service Award. Research spans parallel/distributed computing and computational science."
+ },
+ {
+  "id": 1319,
+  "name": "Amii",
+  "entity_type": "organization",
+  "notes": "The Alberta Machine Intelligence Institute (Amii), one of Canada's three national AI institutes alongside Mila and Vector Institute, funded through the Pan-Canadian AI Strategy. Founded over 20 years ago, headquartered in Edmonton. Mandate to build technical/scientific capacity in machine learning and translate it into commercial applications across Alberta's economic sectors. Key partner in the Canadian AI Safety Institute (CAISI) alongside CIFAR, NRC, Mila, and Vector. Received $5M Google.org grant to establish a national AI literacy consortium across 25 post-secondary institutions reaching 125,000 students. Also received $9M federal grant to train ~5,000 mid-career energy sector workers in AI skills. Strong focus on AI trust and safety, workforce readiness, and responsible AI deployment."
+ },
+ {
+  "id": 1320,
+  "name": "Jean-Fran\u00e7ois Gagn\u00e9",
+  "entity_type": "person",
+  "notes": "Co-founder and former CEO of Element AI, a Montreal-based applied AI research lab co-founded with Yoshua Bengio and Nicolas Chapados. Element AI was acquired by ServiceNow in 2020 for ~$500M. Subsequently served as Head of AI Product Management and Strategy at ServiceNow. As of 2025-2026, working on a stealth AI startup based in Montreal. Recognized as one of Fast Company's Most Creative People in Business (2019). Active voice in Canada's AI ecosystem, advocating for AI commercialization and startup development. Element AI was a notable early attempt to bridge academic AI research and enterprise applications."
+ },
+ {
+  "id": 1321,
+  "name": "ServiceNow",
+  "entity_type": "organization",
+  "notes": "Public enterprise software company (NYSE: NOW) specializing in workflow automation. Heavily invested in AI via 'Now Assist' and autonomous AI agents; targeting $1B AI ACV by 2026. Advocates responsible AI governance and compliance with EU AI Act and NIST AI RMF."
+ },
+ {
+  "id": 1322,
+  "name": "Government of Canada",
+  "entity_type": "organization",
+  "notes": "Canada was the first country globally to adopt a national AI strategy, launching the Pan-Canadian AI Strategy in 2017. Phase 2 announced in 2022 with $443M+ in funding, supporting the three national AI institutes (Mila, Amii, Vector). Tabled the Artificial Intelligence and Data Act (AIDA) in June 2022 as part of Bill C-27, one of the first proposed AI-specific laws globally. AIDA focuses on responsible design, development, and use of AI in the private sector, with emphasis on health, safety, and human rights impacts. Requires businesses to implement governance mechanisms, assess AI risks, and provide transparency to users. Established the Canadian AI Safety Institute (CAISI). Also investing in AI workforce development, compute infrastructure, and commercialization support across provinces."
+ },
+ {
+  "id": 1323,
+  "name": "Data Collective",
+  "entity_type": "organization",
+  "notes": "DCVC (formerly Data Collective) is a deep tech venture capital firm founded by Matt Ocko and Zachary Bogue, investing in entrepreneurs using computational approaches\u2014especially AI\u2014to solve large-scale real-world problems. Manages billions in AUM across 13 funds including six flagship funds. Invests at seed, Series A, and growth stages across AI, exascale computing, climate, robotics, materials science, biology, defense, and security. Backed by a network of 50+ technology executives and experts (CTOs, chief scientists, professors at Stanford and Berkeley). Was a lead investor in Element AI. Focus on AI-enabled solutions for industries that haven't seen material progress in decades."
+ },
+ {
+  "id": 1324,
+  "name": "Real Ventures",
+  "entity_type": "organization",
+  "notes": "Canada's leading early-stage venture capital firm, established in 2007 and headquartered in Montreal. Manages $325M across five funds with an active portfolio of 100+ companies valued at ~$10B. Has invested in 214 companies total, with portfolio unicorns including Xanadu, Blockstream, and Tenstorrent. Deeply embedded in Montreal's AI and deep tech ecosystem. Was an early investor/backer of Element AI. Focuses on nurturing entrepreneurial communities and supporting founders from the earliest stages. Portfolio spans AI, healthcare, fintech, and other technology verticals. Sonder (portfolio company) went public on NASDAQ in 2021."
+ },
+ {
+  "id": 1325,
+  "name": "Amnesty International",
+  "entity_type": "organization",
+  "notes": "Major international human rights organization with strong positions on AI governance and digital rights. Calls for outright ban on facial recognition technology for mass surveillance by police and state agencies, citing racial discrimination (higher false positive rates for women and people of color) and chilling effects on peaceful assembly. Runs the 'Ban the Scan' campaign documenting FRT harms in New York, Israel/OPT, and Hyderabad. Advocates for legally binding AI regulation centered on documented harms, not voluntary industry commitments. Criticized the EU AI Act as insufficient to protect marginalized communities. Launched an Algorithmic Accountability Toolkit (2025) for investigators and rights defenders. Calls for meaningful involvement of impacted communities in AI regulatory decisions and warns against regulatory gaps that allow export of banned AI systems to other countries."
+ },
+ {
+  "id": 1326,
+  "name": "Singapore Management University",
+  "entity_type": "organization",
+  "notes": "Singapore Management University (SMU) hosts the Centre for AI and Data Governance, established in 2019 at its School of Law. Received a S$4.5M grant from the National Research Foundation and Infocomm Media Development Authority for a five-year Research Programme on the Governance of AI and Data Use, structured around three streams: AI and Society, AI and Industry, and AI and Commercialisation. Publishes research on Singapore's evolving AI governance framework through SSRN. The Centre establishes expert panels drawing from academia, technology industry, and legal professions, with international institutional partnerships. Also offers AI-led business strategy programs. Contributing to Singapore's national approach to responsible AI and data governance."
+ },
+ {
+  "id": 1329,
+  "name": "Apple",
+  "entity_type": "organization",
+  "notes": "Consumer technology company deploying AI via Apple Intelligence across its device ecosystem. Pursues an on-device, privacy-first AI strategy using Private Cloud Compute for sensitive tasks. Partnered with OpenAI (ChatGPT integration) and Google (Gemini for Siri). Avoids public regulatory advocacy but leverages privacy standards as a competitive differentiator."
+ },
+ {
+  "id": 1330,
+  "name": "Aaron Courville",
+  "entity_type": "person",
+  "notes": "Full Professor at Universit\u00e9 de Montr\u00e9al and founding core member of Mila. Co-authored the seminal Deep Learning textbook with Bengio and Goodfellow. Holds a CIFAR AI Chair. Incoming scientific director of IVADO as of 2025."
+ },
+ {
+  "id": 1331,
+  "name": "McGill Centre for Intelligent Machines",
+  "entity_type": "organization",
+  "notes": "Established in 1985 as an inter-departmental, inter-faculty research center at McGill University spanning Electrical and Computer Engineering, Mechanical Engineering, and Computer Science. One of the longest-running AI research centers in the world. Comprises ~20 professors and 150 graduate students. Research organized around five themes: Computer Vision, Robotics, Systems and Control, Human-Computer Interaction, and Graphics. Half of CIM professors engaged in AI research including robotic vision and medical image analysis. Notable projects include the Aqua amphibious robot for environmental monitoring and the SmartWheeler assistive technology. Draws researchers from around the world to McGill."
+ },
+ {
+  "id": 1332,
+  "name": "McGill Collaborative for AI and Society",
+  "entity_type": "organization",
+  "notes": "The McGill Collaborative for AI and Society (McCAIS) is a strategic initiative of the Computational and Data Systems Institute (CDSI) at McGill University. Interdisciplinary, university-wide effort bringing all faculties together to understand AI's societal impact and develop evidence-based best practices for responsible AI use. Work organized around four pillars: Thought Leadership, Research to Action, Experiential Learning Opportunities, and Lifelong Learning. Partners with IVADO (Quebec AI research consortium) on courses in algorithmic fairness, privacy in AI, creativity in AI, and AI in health sciences. Runs the BMO Responsible AI Awards Program. Draws expertise from Philosophy, Engineering, Computer Science, and the Laidley Centre for Business Ethics and Equity. Co-directed by Prof. Samira A. Rahimi."
+ },
+ {
+  "id": 1333,
+  "name": "McGill AI Lab",
+  "entity_type": "organization",
+  "notes": "Umbrella term for McGill University's AI research labs, most prominently the Reasoning and Learning Lab co-directed by Prakash Panangaden, Doina Precup, Joelle Pineau, Jackie Chi Kit Cheung, Siva Reddy, Reihaneh Rabbany, Siamak Ravanbakhsh, and David Rolnick. McGill is a world leader in machine learning with particular strengths in reinforcement learning and natural language processing. Connected to Mila (Quebec AI Institute) through shared faculty. The iSMART Lab (Prof. Narges Armanfard) focuses on computer vision, time series analysis, and physics-informed modeling. Also participates in the International Laboratory on Learning Systems (ILLS) with ETS, CNRS, Universite Paris-Saclay, and CentraleSupelec. Closely linked to CIM (Centre for Intelligent Machines) and McCAIS within McGill's AI ecosystem."
+ },
+ {
+  "id": 1334,
+  "name": "Mark Nitzberg",
+  "entity_type": "person",
+  "notes": "Executive Director of the Center for Human-Compatible AI (CHAI) at UC Berkeley since 2016, and Interim Executive Director of IASEAI. Also head of strategic outreach for Berkeley AI Research (BAIR). Former CEO of The Blindsight Corporation (acquired by Amazon A9)."
+ },
+ {
+  "id": 1335,
+  "name": "Amir Banifatemi",
+  "entity_type": "person",
+  "notes": "Chief Responsible AI Officer at Cognizant. Former GM of Innovation at XPRIZE, led IBM Watson AI XPRIZE. Co-founded AI Commons collective. Co-created AI for Good Global Summit with ITU/UN. Elected to GPAI Multistakeholder Expert Group, co-chairs Responsible AI working group. 25+ years in emerging tech, prior roles at European Space Agency, Airbus, European Commission. Managed two venture capital funds."
+ },
+ {
+  "id": 1336,
+  "name": "OECD",
+  "entity_type": "organization",
+  "notes": "Organisation for Economic Co-operation and Development (38 member countries). Published OECD AI Principles in 2019 (first intergovernmental AI standard), updated 2024 \u2014 now endorsed by 47 jurisdictions. Operates AI Policy Observatory (oecd.ai) tracking AI strategies, policies, and incidents globally. Integrated GPAI partnership under OECD umbrella (44 countries). Partners with UN Office of Tech Envoy. Published common AI incident reporting framework (Feb 2025). Member-funded intergovernmental org."
+ },
+ {
+  "id": 1337,
+  "name": "Joanna Rodriguez",
+  "entity_type": "person",
+  "notes": "Communications Director at National Republican Senatorial Committee (NRSC) since Jan 2025. Championed NRSC use of AI in political campaigns, defended AI-generated campaign ads including deepfake-style ad targeting Chuck Schumer (Oct 2025). Stated \"AI is here and not going anywhere. Adapt & win or pearl clutch & lose.\" Previously worked in office of Sen. Pete Ricketts."
+ },
+ {
+  "id": 1338,
+  "name": "Public Investment Fund",
+  "entity_type": "organization",
+  "notes": "Saudi Arabia sovereign wealth fund (~$930B AUM). Launched Humain (May 2025) as full-stack AI company \u2014 data centers, cloud, models (ALLAM Arabic LLM), applications. $40B AI investment fund. Strategic partnership with NVIDIA (500MW GPU capacity over 5 years). $10B joint investment with Google Cloud for AI hub. Aramco acquired minority stake in Humain. Central to Vision 2030 economic diversification. Chaired by Crown Prince Mohammed bin Salman."
+ },
+ {
+  "id": 1339,
+  "name": "Mohammed bin Salman",
+  "entity_type": "person",
+  "notes": "Crown Prince and Prime Minister of Saudi Arabia. Architect of Vision 2030, which places AI as central pillar of economic diversification. Chairs Humain (PIF-backed AI company). Established Saudi Data & AI Authority (SDAIA) in 2019. National Strategy for Data & AI targets 20K AI specialists, 300+ AI startups, $20B investment by 2030. Designated 2026 as Year of Artificial Intelligence. Oversaw $40B+ in AI infrastructure commitments."
+ },
+ {
+  "id": 1340,
+  "name": "National Infrastructure Fund",
+  "entity_type": "organization",
+  "notes": "Saudi Arabian infrastructure financing entity operating under the National Development Fund. Signed $1.2B financing framework with Humain (announced at Davos, Jan 2026) to develop 250MW of AI data center capacity. Exploring creation of AI data center investment platform to attract global/local institutional investors for Humain AI strategy. Supports Vision 2030 tech infrastructure goals."
+ },
+ {
+  "id": 1341,
+  "name": "Michael J. Berry",
+  "entity_type": "person",
+  "notes": "Professor at Princeton University, Department of Molecular Biology and Princeton Neuroscience Institute. Runs the Berry Lab studying neural coding in the retina. Co-advised Dario Amodei (Anthropic CEO) during doctoral research on large-scale electrophysiology of neural circuits. Published extensively on neural population coding and information processing in biological systems."
+ },
+ {
+  "id": 1342,
+  "name": "William Bialek",
+  "entity_type": "person",
+  "notes": "Theoretical biophysicist, professor at Princeton University (Physics) and CUNY Graduate Center. Pioneer in applying information theory to neural coding and biological systems. Co-advised Dario Amodei (Anthropic CEO) on PhD dissertation \"Network-Scale Electrophysiology: Measuring and Understanding the Collective Behavior of Neural Circuits.\" Co-authored PNAS paper on thermodynamics and criticality in neural networks with Amodei."
+ },
+ {
+  "id": 1343,
+  "name": "Arizona Secretary of State",
+  "entity_type": "organization",
+  "notes": "Office held by Adrian Fontes (D). Formed AI & Election Security Advisory Committee (June 2024), co-chaired by Chris Cummiskey and Gowri Ramachandran. Released final report (Feb 2025) proposing AI Elections Lab for developing guidelines and pilot programs. Deployed AI tools in 2024 election: chatbot handled 655K+ interactions, SMS system reached 281K voters. Advocates both beneficial AI use in elections and safeguards against AI-driven threats. Pushes for state and federal AI election policy."
+ },
+ {
+  "id": 1344,
+  "name": "Mark Chen",
+  "entity_type": "person",
+  "notes": "Chief Research Officer at OpenAI. Joined 2018 after working as quantitative trader at Jane Street Capital. Led development of Codex (adapting GPT-3 for code generation), co-led vision team for GPT-4 (image recognition integration), contributed to DALL-E. Advocates focusing on \"main quest\" of AGI over short-term product competition. Views math/coding proficiency as \"bedrock for a far more general form of intelligence.\" Background in competitive programming."
+ },
+ {
+  "id": 1345,
+  "name": "Colorado AI Policy Work Group",
+  "entity_type": "organization",
+  "notes": "Convened by Governor Jared Polis (Oct 2025) to revise Colorado AI Act (SB 24-205), the nation's first comprehensive AI anti-discrimination law. Diverse membership: consumer groups, hospitals, school districts, tech companies large and small. Delivered unanimous support for revised policy framework (March 2026) emphasizing transparency over bias audits: up-front notice when AI is used in consequential decisions, access to information on adverse decisions, right to correction, human review option. Recommendations to be codified in legislation."
+ },
+ {
+  "id": 1346,
+  "name": "Greg Brockman",
+  "entity_type": "person",
+  "notes": "Co-founder and President of OpenAI. Took a sabbatical Aug\u2013Nov 2024, then returned. In 2025 led OpenAI's Stargate infrastructure buildout. Major individual backer of the pro-AI super PAC 'Leading the Future,' launched August 2025 by AI-industry figures (including Andreessen Horowitz partners and Joe Lonsdale) to oppose state-level AI regulation and shape the 2026 midterms; the PAC raised $125M+ in 2025, with Brockman and his wife each contributing $12.5M."
+ },
+ {
+  "id": 1347,
+  "name": "Helion Energy",
+  "entity_type": "organization",
+  "notes": "Private nuclear fusion company building the Orion plant in Chelan County, WA, targeting power delivery to Microsoft data centers by 2028 under the world's first fusion power purchase agreement. Backed by Sam Altman ($350M+) and SoftBank; raised $425M Series F in Jan 2025 at a $5.4B valuation. Directly tied to AI compute energy demands."
+ },
+ {
+  "id": 1349,
+  "name": "Ben Mann",
+  "entity_type": "person",
+  "notes": "Co-founder of Anthropic. Previously architect of GPT-3 at OpenAI. Left OpenAI in 2020 with seven colleagues to found Anthropic because safety was not the top priority. Advocates layered safety approach (\"Swiss Cheese Model of Defense\"). Key contributor to Constitutional AI methodology. Estimates 50th percentile chance of superintelligence by ~2028. Describes alignment challenge as \"how do we keep God in a box.\""
+ },
+ {
+  "id": 1350,
+  "name": "Clay Bavor",
+  "entity_type": "person",
+  "notes": "Co-founder of Sierra AI (with Bret Taylor), an enterprise AI agent platform valued at $10B. Former Google VP (18 years), led Google Labs, AR/VR, Project Starline, Google Lens. Sierra hit $100M ARR in 7 quarters. AI optimist focused on applied/enterprise AI."
+ },
+ {
+  "id": 1351,
+  "name": "Eleos AI",
+  "entity_type": "organization",
+  "notes": "Nonprofit research org focused on AI welfare, consciousness, and moral patienthood. Co-founded by Kyle Fish, Robert Long, Kathleen Finlinson. Published landmark report \"Taking AI Welfare Seriously.\" Commended Anthropic's model welfare efforts. Five research priorities: welfare interventions, human-AI cooperation, leveraging AI for welfare research, standardized evaluations, credible communication."
+ },
+ {
+  "id": 1352,
+  "name": "David Chalmers",
+  "entity_type": "person",
+  "notes": "University Professor of Philosophy and Neural Science at NYU. Co-director of Center for Mind, Brain, and Consciousness. Formulated the \"hard problem of consciousness.\" Leading voice on AI consciousness and moral status. Author of \"Reality+\" on virtual worlds. Warns against corporate control of virtual/AI worlds."
+ },
+ {
+  "id": 1353,
+  "name": "Robert Long",
+  "entity_type": "person",
+  "notes": "Executive Director of Eleos AI. PhD Philosophy from NYU. Former research fellow at Future of Humanity Institute (Oxford) and CAIS Philosophy Fellow (2023). Leading researcher on AI consciousness, sentience, and moral status. Co-author of \"Consciousness in Artificial Intelligence\" with Butlin, Bengio, et al. NOTE: Same person as Rob Long (entity 1354) \u2014 \"Rob\" is informal name."
+ },
+ {
+  "id": 1355,
+  "name": "Kathleen Finlinson",
+  "entity_type": "person",
+  "notes": "Head of Strategy and co-founder of Eleos AI. Background in applied mathematics, data science, and AI forecasting. Researches strategic considerations for AI welfare action. Advocates balancing AI control with cooperative strategies that respect AI welfare."
+ },
+ {
+  "id": 1356,
+  "name": "Niskanen Center",
+  "entity_type": "organization",
+  "notes": "Centrist/center-right think tank founded 2015 by Jerry Taylor (ex-Cato). Named \"Most Interesting Think Tank\" by TIME (2023). AI policy stance: regulatory restraint, intervene only when harm is realistic. Has 501(c)(3) research arm and 501(c)(4) lobbying arm. Major funders include Hewlett Foundation, Open Philanthropy, Carnegie Corp."
+ },
+ {
+  "id": 1357,
+  "name": "Federation of American Scientists",
+  "entity_type": "organization",
+  "notes": "DC-based science and technology policy nonprofit founded in 1945. FAS runs the Day One Project to translate scientific expertise into federal policy; active in AI governance, advocating for responsible AI innovation, NIST AISI funding, and federal AI adoption. Submitted AI Action Plan recommendations to the White House in 2025."
+ },
+ {
+  "id": 1358,
+  "name": "U.S. Artificial Intelligence Safety Institute",
+  "entity_type": "organization",
+  "notes": "Housed within NIST. Develops science-based metrics, tools, and guidelines for AI safety evaluation. Established by Biden EO 14110 (Oct 2023). Paul Christiano served as Head of AI Safety. Runs AISIC consortium (290+ members). Renamed to Center for AI Standards and Innovation (CAISI) in 2025. Budget ~$10M (2024). NOTE: Related entities \u2014 205 (U.S. AI Safety Institute at NIST, likely same entity), 1629 (AISIC consortium, its membership body), 1309 (NIST, parent agency)."
+ },
+ {
+  "id": 1359,
+  "name": "Model Evaluation and Threat Research",
+  "entity_type": "organization",
+  "notes": "Nonprofit AI safety eval org (formerly ARC Evals, spun off Dec 2023). Founded by Beth Barnes (ex-OpenAI). Evaluates frontier model capabilities for catastrophic risk. Worked with OpenAI (o3, GPT-4.5) and Anthropic (Claude). Does NOT accept lab funding to avoid conflicts of interest. Budget ~$13-15M/year. Funded via Audacious Project (TED) and donations. Paul Christiano was originally involved but stepped back for AISI role."
+ },
+ {
+  "id": 1360,
+  "name": "UK government's Frontier AI Taskforce",
+  "entity_type": "organization",
+  "notes": "UK government body established April 2023 with \u00a3100m mandate to evaluate frontier AI safety risks ahead of the Bletchley Park AI Safety Summit. Chaired by Ian Hogarth, it transitioned in November 2023 into the AI Safety Institute (later renamed AI Security Institute in 2025), which is a separate entity in this database."
+ },
+ {
+  "id": 1361,
+  "name": "MIT Jameel Clinic",
+  "entity_type": "organization",
+  "notes": "Abdul Latif Jameel Clinic for Machine Learning in Health, founded 2018 as a joint MIT\u2013Community Jameel initiative. Conducts translational AI research across clinical AI, drug discovery, and epidemiology. Developed clinical AI tools MIRAI and SYBIL, and discovered antibiotics halicin and abaucin using AI-driven methods."
+ },
+ {
+  "id": 1362,
+  "name": "MIT Computer Science & Artificial Intelligence Laboratory",
+  "entity_type": "organization",
+  "notes": "MIT's largest AI research lab, directed by Daniela Rus, covering robotics, systems, and machine learning. In 2025 submitted AI Action Plan recommendations to the White House advocating federal investment in basic research, AI hardware co-design, and ASI-level capabilities. Published the 2025 AI Agent Index assessing transparency of deployed AI systems."
+ },
+ {
+  "id": 1363,
+  "name": "Cornell University",
+  "entity_type": "organization",
+  "notes": "Major research university with broad AI activities spanning Cornell Tech (NYC), the AI Initiative, and the MacArthur-funded AI, Policy, and Practice (AIPP) initiative focused on AI's societal impacts. In 2025 NSF awarded Cornell a $20M AI Materials Institute, and a new Vice Provost for AI Strategy was named in January 2026."
+ },
+ {
+  "id": 1364,
+  "name": "Shane Legg",
+  "entity_type": "person",
+  "notes": "Co-founder and Chief AGI Scientist at Google DeepMind, leading its Technical AGI Safety team. Has predicted a 50% chance of human-level AGI by 2028 since 2009, reaffirmed publicly in 2025. Advocates for deliberative, human-auditable AI safety mechanisms to address alignment and misuse risks."
+ },
+ {
+  "id": 1365,
+  "name": "Mustafa Suleyman",
+  "entity_type": "person",
+  "notes": "Mustafa Suleyman co-founded DeepMind (2010) and Inflection AI (2022), and became CEO of Microsoft AI in 2024. He argues AI is 'already superhuman' and predicts human-level task performance within 5-7 years. He advocates for humanist superintelligence with strong human control, global regulations, and has pledged to halt development if AI poses existential risk."
+ },
+ {
+  "id": 1366,
+  "name": "John M. Jumper",
+  "entity_type": "person",
+  "notes": "Director at Google DeepMind. Led development of AlphaFold (protein structure prediction). Nobel Prize in Chemistry 2024 (shared with Demis Hassabis and David Baker). PhD theoretical chemistry (U of Chicago). AI optimist \u2014 believes AI has \"unparalleled potential to improve the lives of billions.\""
+ },
+ {
+  "id": 1367,
+  "name": "Black in AI",
+  "entity_type": "organization",
+  "notes": "Nonprofit founded 2017 by Timnit Gebru and Rediet Abebe. Increases presence and inclusion of Black people in AI. Four pillars: education pathways, financial barriers, visibility, and community support. Received MacArthur Foundation funding. Hosts annual workshop at NeurIPS. Aims to broaden voices in AI development, deployment, and regulation."
+ },
+ {
+  "id": 1368,
+  "name": "Margaret Mitchell",
+  "entity_type": "person",
+  "notes": "Chief Ethics Scientist at Hugging Face. Previously founded and co-led Google Ethical AI group (fired 2021 alongside Timnit Gebru). Pioneered \"Model Cards\" for ML model reporting. Created \"Seeing AI\" for blind/low-vision users. ~100 papers on NLG, assistive tech, CV, AI ethics. Strong advocate for diversity in AI and regulation that centers those most harmed."
+ },
+ {
+  "id": 1369,
+  "name": "Meredith Stiehm",
+  "entity_type": "person",
+  "notes": "President of WGA West (2021-2025). TV showrunner (The Rookie, Code Black, Cold Case, NYPD Blue). Named TIME 100 Most Influential People in AI 2024. Led WGA during historic 148-day strike in 2023 that secured precedent-setting AI protections for writers. Called on studios to sue AI companies for using copyrighted work to train models. Strong advocate that AI cannot replace human creative experience."
+ },
+ {
+  "id": 1370,
+  "name": "Lisa Takeuchi Cullen",
+  "entity_type": "person",
+  "notes": "President of WGA East (elected Sept 2023). First person of color to hold the position. TV writer/producer (Empire, Five Days at Memorial). Participated in April 2024 White House roundtable on AI and Workers Rights with Acting Secretary of Labor Julie Su. Launched WGA East AI Task Force to track AI's effect on writing professions. Strong enforcement of 2023 MBA AI protections for film/TV/streaming writers."
+ },
+ {
+  "id": 1371,
+  "name": "Club for Growth Action",
+  "entity_type": "organization",
+  "notes": "Conservative super PAC affiliated with Club for Growth. Supports limited-government, free-market candidates. Major donors include Peter Thiel and Richard Uihlein. Focuses on tax cuts, deregulation, free trade, school choice. No specific AI policy position \u2014 general deregulatory stance would extend to opposing AI regulation. Founded 2010 as independent expenditure arm."
+ },
+ {
+  "id": 1372,
+  "name": "University of Notre Dame",
+  "entity_type": "organization",
+  "notes": "Private Catholic research university in Indiana. Major AI initiatives: AI@ND hub, Lucy Family Institute for Data & Society, Scientific AI Initiative. Received $50.8M Lilly Endowment grant for DELTA Network expanding faith-based AI ethics framework. Won $1M Bloomberg Mayors Challenge Award for human-centered AI in public service with City of South Bend. Pete Buttigieg is an alumnus."
+ },
+ {
+  "id": 1373,
+  "name": "Molly Kinder",
+  "entity_type": "person",
+  "notes": "Senior Fellow at Brookings Institution, leading multi-year project on generative AI's impact on work and workers. Nationally recognized expert on AI, economic inequality, and future of work. Advocates for worker voice in AI implementation, enhanced union protections, and public investment in workforce training. Argues U.S. lags Europe in institutional mechanisms to help workers navigate AI transition. Work cited by Sen. Chris Murphy."
+ },
+ {
+  "id": 1374,
+  "name": "Munich Security Conference",
+  "entity_type": "organization",
+  "notes": "Premier annual international security conference held in Munich, Germany (since 1963). Increasingly prominent on AI governance. Convened 'Tech Accord to Combat Deceptive Use of AI in 2024 Elections' signed by 27 tech companies. Hosts Frontier AI Safety Commitments discussions. Technology program frames AI as 'decisive factor' in systemic competition. 2025 conference marked shift from AI safety to AI security framing."
+ },
+ {
+  "id": 1376,
+  "name": "Joe Biden",
+  "entity_type": "person",
+  "notes": "46th U.S. President (2021-2025). Issued Executive Order 14110 in October 2023, the most comprehensive U.S. AI governance action to that point, requiring safety reporting from frontier AI developers and coordinating federal agency standards. Also released the Blueprint for an AI Bill of Rights in 2022."
+ },
+ {
+  "id": 1377,
+  "name": "SpaceX",
+  "entity_type": "organization",
+  "notes": "Aerospace and space launch company that merged with xAI in February 2026 to create a $1.25T 'Orbital Intelligence' entity. Plans space-based AI data centers using Starlink satellite infrastructure. Founder Elon Musk favors light-touch AI regulation while pursuing aggressive AI deployment through xAI's Grok models."
+ },
+ {
+  "id": 1378,
+  "name": "X",
+  "entity_type": "organization",
+  "notes": "X (formerly Twitter), owned by Elon Musk, integrates the Grok AI chatbot developed by xAI. In March 2025, xAI formally acquired X in an all-stock deal. X has faced EU and UK regulatory investigations over Grok-generated deepfake images and has deployed content restrictions in response."
+ },
+ {
+  "id": 1379,
+  "name": "Neuralink",
+  "entity_type": "organization",
+  "notes": "Brain-computer interface company co-founded by Elon Musk (2016). Developing implantable BCI (N1 chip) for paralysis patients. FDA IDE approval May 2023; first human implant Jan 2024 (PRIME trial). FDA Breakthrough Device Designation for speech restoration tech (May 2025). Raised over $700M. Regulatory gap: neural data privacy laws lag behind technology. Competitor Precision Neuroscience also received FDA clearance."
+ },
+ {
+  "id": 1380,
+  "name": "High-Flyer AI",
+  "entity_type": "organization",
+  "notes": "High-Flyer (Zhejiang High-Flyer Asset Management) is a Chinese quantitative hedge fund founded by Liang Wenfeng. In 2023 it incubated DeepSeek as a spin-off AI lab, funding it internally. High-Flyer posted 56.6% average returns in 2025 and manages over 70 billion yuan (~$10B USD)."
+ },
+ {
+  "id": 1381,
+  "name": "Tejas N. Narechania",
+  "entity_type": "person",
+  "notes": "Professor of Law at UC Berkeley School of Law. Faculty co-director of Berkeley Center for Law & Technology. Former clerk for Justice Breyer (SCOTUS) and Judge Diane Wood (7th Circuit). Former FCC special counsel (2012-2013). Published 'An Antimonopoly Approach to Governing AI' (Yale Law & Policy Review, 2024) with Ganesh Sitaraman \u2014 argues AI infrastructure warrants regulation via structural separation, nondiscrimination, and public cloud options. Work cited in 2024 Economic Report of the President. Participated in White House AI competition policy meeting."
+ },
+ {
+  "id": 1383,
+  "name": "Stanford Vision and Learning Lab",
+  "entity_type": "organization",
+  "notes": "Stanford Vision and Learning Lab (SVL), co-directed by Fei-Fei Li, focuses on computer vision, embodied AI, and robotics. Key projects include BEHAVIOR benchmark for household AI agents and the PAIR group for generalizable robot perception. Li has called for science-based AI governance."
+ },
+ {
+  "id": 1384,
+  "name": "AI4ALL",
+  "entity_type": "organization",
+  "notes": "Nonprofit co-founded in 2017 by Fei-Fei Li, Olga Russakovsky, and Rick Sommer to increase diversity in AI. Grew from 2015 Stanford summer program for high school girls. 2022 strategic pivot to College Pathways \u2014 accelerating underrepresented college students into AI internships and research. Partnerships with 16+ universities (Texas A&M, UIUC, UMBC). Early funders include Melinda French Gates/Pivotal Ventures and Jensen Huang."
+ },
+ {
+  "id": 1385,
+  "name": "Justin Johnson",
+  "entity_type": "person",
+  "notes": "Co-founder of World Labs (spatial intelligence startup, founded 2024 with Fei-Fei Li, Christoph Lassner, Ben Mildenhall). Assistant Professor of CS at University of Michigan. PhD from Stanford (advised by Fei-Fei Li). Key contributor to early PyTorch development. Created CLEVR visual reasoning benchmark. NSF CAREER Award recipient. World Labs raised $1B+ at $5B valuation, building Large World Models for 3D perception."
+ },
+ {
+  "id": 1386,
+  "name": "Christoph Lassner",
+  "entity_type": "person",
+  "notes": "Co-founder of World Labs (spatial intelligence startup, founded 2024 with Fei-Fei Li, Justin Johnson, Ben Mildenhall). PhD from University of Tubingen. Previously led research teams at Epic Games and Meta Reality Labs. Created Pulsar differentiable renderer (precursor to Gaussian Splatting). Built human pose estimation for Amazon Halo (via Bodylabs acquisition). Specialist in 3D computer vision and graphics."
+ },
+ {
+  "id": 1387,
+  "name": "Ben Mildenhall",
+  "entity_type": "person",
+  "notes": "Co-founder of World Labs (spatial intelligence startup, founded 2024 with Fei-Fei Li, Justin Johnson, Christoph Lassner). Co-creator of NeRF (Neural Radiance Fields), ECCV 2020 honorable mention for best paper. PhD from UC Berkeley (advised by Ren Ng), Hertz Fellow. Former Google Research scientist (2021-2023). Research spans computational photography, 3D reconstruction, and text-to-3D generation."
+ },
+ {
+  "id": 1388,
+  "name": "John Etchemendy",
+  "entity_type": "person",
+  "notes": "Stanford professor of philosophy and former provost (2000-2017). Co-founded and co-directs Stanford Institute for Human-Centered AI (HAI) with Fei-Fei Li since 2019. Leading advocate for national AI research resource to counter industry concentration of AI compute and data. Argues 'the science has outgrown the university model of research.' HAI promotes human-centered approach: AI evaluation and accountability over hype. Expert in logic and philosophy of language."
+ },
+ {
+  "id": 1389,
+  "name": "Harvard Faculty of Arts and Sciences",
+  "entity_type": "organization",
+  "notes": "The primary academic division of Harvard University housing most arts, humanities, and sciences departments. Home to the Kempner Institute for the Study of Natural and Artificial Intelligence (launched 2022), a university-wide initiative with strong FAS ties bridging neuroscience and AI. FAS Research Computing supports the Kempner AI cluster."
+ },
+ {
+  "id": 1390,
+  "name": "Ford Foundation",
+  "entity_type": "organization",
+  "notes": "Major US philanthropy (est. 1936) with significant AI accountability and governance funding. Part of $200M+ coalition (with MacArthur, Omidyar, Mozilla, Open Society Foundations) for public-interest AI. Co-launched Humanity AI, a $500M five-year initiative (Oct 2025) with ten major foundations. Funds AI Now Institute. Supports efforts on AI racial/social bias accountability, labor rights in AI deployment, and global AI fairness standards through Current AI collaboration. Focus areas: transparency, algorithmic accountability, worker protections."
+ },
+ {
+  "id": 1391,
+  "name": "Indian Institute of Technology, Kanpur",
+  "entity_type": "organization",
+  "notes": "Premier Indian technical university (est. 1959). Established Wadhwani School of Advanced AI and Intelligent Systems with Department of Intelligent Systems (2025), admissions starting 2026. Hosts Sustainable Cities Centre of Excellence in AI under Ministry of Education initiative. Research partnerships with TCS (urban planning), IBM (air quality monitoring via AIRAWAT Foundation). Active in AI for sustainable cities, robotics, cybersecurity. Growing AI policy and outreach center."
+ },
+ {
+  "id": 1392,
+  "name": "Trust::Data Alliance",
+  "entity_type": "organization",
+  "notes": "MIT-based consortium (Trust::Data Consortium) founded by Alex 'Sandy' Pentland. Builds open-source tools for secure, privacy-preserving data sharing using blockchain and AI. Mission: create trusted internet-based network for safe data exchange. Focus areas: data cooperatives, privacy-preserving identity systems, safe distributed computation. Advocates collective data governance model over individualized data control. Part of MIT Connection Science ecosystem."
+ },
+ {
+  "id": 1393,
+  "name": "Scott Alexander",
+  "entity_type": "person",
+  "notes": "Blogger and writer behind Astral Codex Ten (formerly Slate Star Codex). Psychiatrist by training. Arguably the most influential AI forecasting voice in the rationalist/EA community. Co-authored 'AI 2027' scenario analysis (April 2025) with Daniel Kokotajlo, modeling fast intelligence explosion by 2027-2028. Supports AI safety research funding (ACX Grants). Nuanced on regulation: supports safety standards but worries about US-China race dynamics leading to worst-case policy tradeoffs. Personal AGI median later in 2020s/early 2030s."
+ },
+ {
+  "id": 1394,
+  "name": "Thomas Larsen",
+  "entity_type": "person",
+  "notes": "Researcher at the AI Futures Project focused on dangerous capability evaluations, AI safety measurement, and compute governance. Co-authored the AI 2027 scenario forecast with Daniel Kokotajlo and Eli Lifland. Previously founded the Center for AI Policy; also a MATS mentor."
+ },
+ {
+  "id": 1395,
+  "name": "Eli Lifland",
+  "entity_type": "person",
+  "notes": "Founding Researcher at AI Futures Project and leading AI forecaster; co-author of the AI 2027 scenario (April 2025) alongside Daniel Kokotajlo, Thomas Larsen, and Romeo Dean. Previously forecasted at Samotsvety and worked at Ought and SaferAI. Co-founded Sage (a forecasting platform) and has served as guest fund manager at the Long Term Future Fund. Publicly argues that short AGI timelines are underweighted and that existential risk from AI is not taken seriously enough."
+ },
+ {
+  "id": 1396,
+  "name": "Romeo Dean",
+  "entity_type": "person",
+  "notes": "Researcher at AI Futures Project and co-author of the AI 2027 scenario forecast (April 2025). Graduated cum laude from Harvard with a concurrent AB/SM in Computer Science; previously an AI Policy Fellow at the Institute for AI Policy and Strategy (IAPS) and an Astra Fellow at Constellation. Specializes in forecasting AI chip production, government intervention, and international coordination dynamics. Also a mentor in the MATS (Machine Learning Alignment Theory Scholars) program."
+ },
+ {
+  "id": 1397,
+  "name": "University of Tuebingen",
+  "entity_type": "organization",
+  "notes": "German research university and major European AI hub. Home to T\u00fcbingen AI Center (co-directed by Philipp Hennig and Matthias Bethge since July 2025) and Cluster of Excellence 'Machine Learning: New Perspectives for Science' (renewed 2025). Partners with Max Planck Institute for Intelligent Systems, ELLIS Institute T\u00fcbingen, and Cyber Valley ecosystem. ML Cloud serves 430+ active researchers. Focus areas: machine learning, computer vision, robotics, probabilistic methods."
+ },
+ {
+  "id": 1398,
+  "name": "Philipp Hennig",
+  "entity_type": "person",
+  "notes": "Chair for Methods of Machine Learning at University of T\u00fcbingen. Co-director of T\u00fcbingen AI Center since July 2025. Pioneer of probabilistic numerics \u2014 treating numerical computation as machine learning inference. Author of 'Probabilistic Numerics: Computation as Machine Learning' (Cambridge University Press, 2022). Previously at Max Planck Institute for Intelligent Systems. Organizer of ProbNum conference series since 2012. Over 11,000 citations."
+ }
+]

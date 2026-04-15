@@ -1,0 +1,1274 @@
+[
+ {
+  "id": 484,
+  "name": "Centre for Enabling EA Learning & Research (EA Hotel)",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Free or subsidised accommodation and board in Blackpool, England, for people working on/transitioning to working on global catastrophic risks."
+ },
+ {
+  "id": 485,
+  "name": "Constellation",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Center for collaborative research in AI safety, supporting promising work through fellowships, an incubator, and hosting individuals and teams."
+ },
+ {
+  "id": 486,
+  "name": "European Network for AI Safety",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Community of researchers and policymakers from over 13 countries across Europe, united in their efforts to advance AI safety."
+ },
+ {
+  "id": 487,
+  "name": "London Initiative for Safe AI",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Coworking space hosting organizations (including BlueDot Impact, Apollo Research), acceleration programs (including MATS, ARENA), and independent researchers."
+ },
+ {
+  "id": 488,
+  "name": "Meridian",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Coworking space and field-building nonprofit based in Cambridge, UK. Houses projects like CAISH and the ERA:AI Fellowship, as well as visiting AI safety researchers."
+ },
+ {
+  "id": 489,
+  "name": "Forethought",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Small research nonprofit focused on how to navigate the transition to a world with superintelligent AI systems."
+ },
+ {
+  "id": 490,
+  "name": "AI Safety Asia",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Convening stakeholders, training civil servants and civil society leaders, and conducting regional AI policy research in Asia."
+ },
+ {
+  "id": 491,
+  "name": "AI Safety, Ethics and Society",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Course from the Center for AI Safety (CAIS) covering a wide range of risks while leveraging concepts and frameworks from existing research fields to analyze AI safety."
+ },
+ {
+  "id": 492,
+  "name": "Alignment Research Engineer Accelerator",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. 4\u20135 week ML engineering upskilling program, focusing on alignment. Aims to provide individuals with the skills, community, and confidence to contribute directly to technical AI safety."
+ },
+ {
+  "id": 493,
+  "name": "Athena Mentorship Program for Women",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. 10-week remote mentorship program for women looking to strengthen their research skills and network in technical Al alignment research."
+ },
+ {
+  "id": 494,
+  "name": "Cambridge Boston Alignment Initiative",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Helping students get into AI safety research via upskilling programs and fellowships. Supports AISST and MAIA."
+ },
+ {
+  "id": 495,
+  "name": "Center for Human-Compatible AI: Internship",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Designed for students and professionals who are interested in research in human-compatible AI. Interns work on a research project supervised by a mentor."
+ },
+ {
+  "id": 496,
+  "name": "Center on Long-Term Risk: Fellowship",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. 2-3 month summer research fellowship in London working on challenging research questions relevant to reducing suffering in the long-term future."
+ },
+ {
+  "id": 497,
+  "name": "Foresight Fellowship",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. 1-year program catalyzing collaboration among young scientists, engineers, and innovators working to advance technologies for the benefit of life."
+ },
+ {
+  "id": 498,
+  "name": "IAPS AI Policy Fellowship",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Fully-funded, 3-month program by the Institute for AI Policy and Strategy (IAPS) for professionals seeking to strengthen practical policy skills for managing the challenges of advanced AI."
+ },
+ {
+  "id": 499,
+  "name": "London AI Safety Research Labs",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. 3-month program where participants work in teams of 3\u20134, supervised by an experienced AI safety researcher, to write an academic-style paper."
+ },
+ {
+  "id": 500,
+  "name": "Mentorship for Alignment Research Students",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Part-time research program run by Cambridge AI Safety Hub (CAISH), connecting aspiring researchers with experienced mentors to conduct AI safety research for 2\u20133 months."
+ },
+ {
+  "id": 501,
+  "name": "ML Alignment & Theory Scholars",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Research program connecting talented scholars with top mentors in AI safety. Involves 12 weeks onsite mentored research in Berkeley, and, if selected, 6\u201312 months extended research."
+ },
+ {
+  "id": 502,
+  "name": "ML4Good",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. 8-day intensive in-person bootcamps upskilling participants in technical AI safety research, held in various locations around the world."
+ },
+ {
+  "id": 503,
+  "name": "Orion AI Governance Initiative",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. London-based talent development scheme designed to equip outstanding students with the knowledge and skills to shape the future of AI governance."
+ },
+ {
+  "id": 504,
+  "name": "PIBBSS Fellowship",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. 3-month interdisciplinary program connecting researchers from diverse fields with AI safety mentors, in order to help them transition their career to AI safety."
+ },
+ {
+  "id": 505,
+  "name": "Supervised Program for Alignment Research",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. 3-month, part-time research program run by Kairos where mentees collaborate with researchers on impactful projects, with funding provided for compute and project expenses."
+ },
+ {
+  "id": 506,
+  "name": "Talos Fellowship",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. 7-month program for graduates to launch EU policy careers reducing risks from AI. Comprised of an online reading group, a Brussels policymaking summit, and optional paid placement."
+ },
+ {
+  "id": 507,
+  "name": "Technical Alignment Research Accelerator",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. 14-week part-time program building technical AI safety research skills through the ARENA curriculum. Consists of weekly in-person learning sessions followed by a 3-week project."
+ },
+ {
+  "id": 508,
+  "name": "UChicago Existential Risk Laboratory Fellowship",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. 10-week, in-person summer research fellowship giving students the opportunity to produce high impact research on various emerging threats, including from AI."
+ },
+ {
+  "id": 509,
+  "name": "AI Safety Ideas",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Crowdsourced repository of possible research projects and testable hypotheses, run by Apart Research."
+ },
+ {
+  "id": 510,
+  "name": "Arkose",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. AI safety field-building nonprofit. Ran support programs facilitating technical research, did outreach, and curated educational resources. Closed due to lack of funding."
+ },
+ {
+  "id": 511,
+  "name": "AI Timeline",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Visual overview of the major events in AI over the last decade, from cultural trends to technical advancements. No longer maintained."
+ },
+ {
+  "id": 512,
+  "name": "Global Priorities Institute",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. University of Oxford research center conducting foundational research to inform the decision-making of those seeking to do as much good as possible. Closed in 2025."
+ },
+ {
+  "id": 513,
+  "name": "Machine Learning for Alignment Bootcamp",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Bootcamp aimed at teaching ML relevant to doing alignment research. Run by Redwood Research for two iterations in 2022."
+ },
+ {
+  "id": 514,
+  "name": "AI Safety Awareness Project",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Raising awareness about modern AI, highlighting its benefits and risks, and letting the public know how they can help \u2013 mainly through workshops."
+ },
+ {
+  "id": 515,
+  "name": "Safe AI London",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Supported individuals in London interested in working on AI safety by raising awareness of the risks and providing high-quality resources and support."
+ },
+ {
+  "id": 516,
+  "name": "80,000 Hours Problem Profile",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Regularly-updated article with motivation and advice around pursuing a career in AI safety."
+ },
+ {
+  "id": 517,
+  "name": "Center for Security and Emerging Technology",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Georgetown University think tank providing decision-makers with data-driven analysis on the security implications of emerging technologies."
+ },
+ {
+  "id": 518,
+  "name": "The AI Whistleblower Initiative",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Helps AI insiders raise concerns about potential risks and misbehavior in AI development by providing whistleblowing services, expert guidance, and secure communication tools."
+ },
+ {
+  "id": 519,
+  "name": "Alignment Ecosystem Development",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Building and maintaining key online resources for the AI safety community, including AISafety.com and AISafety.info. Volunteers welcome."
+ },
+ {
+  "id": 520,
+  "name": "Apart Sprints",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Short hackathons and challenges, both online and in-person around the world, focused on important questions in AI safety."
+ },
+ {
+  "id": 521,
+  "name": "Pathfinder Fellowship",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Fellowship run by Kairos supporting university organizers working on AI safety groups by offering funding, 1-on-1 mentorship, resources, and ecosystem connections."
+ },
+ {
+  "id": 522,
+  "name": "Compassion in Machine Learning",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Working on research to make transformative AI more compassionate towards all sentient beings through new data generation methods."
+ },
+ {
+  "id": 523,
+  "name": "Saving Humanity from Homo Sapiens",
+  "entity_type": "organization",
+  "notes": "From AISafety.com map. Small organization with a long history of finding the people doing the best work to prevent human-created existential risks and financially supporting them."
+ },
+ {
+  "id": 533,
+  "name": "UK AI Security Institute",
+  "entity_type": "organization",
+  "notes": "The UK AI Security Institute (AISI) is a government research organisation within the UK's Department for Science, Innovation and Technology, established in 2023 as the AI Safety Institute and renamed in February 2025. AISI's mission is to equip governments with scientific understanding of advanced AI risks \u2014 particularly catastrophic risks such as AI-assisted development of chemical and biological weapons, cyberattacks, and AI-enabled crime. Under Chair Ian Hogarth and Interim Director Adam Beaumont (formerly GCHQ's Chief AI Officer), the institute employs 100+ technical staff including alumni from OpenAI, Google DeepMind, and Oxford. Key programs include the \u00a315m Alignment Project, \u00a38m Systemic Safety Grants, and \u00a35m Challenge Fund. AISI holds formal research MOUs with Anthropic, Google DeepMind, OpenAI, and Cohere, and co-led the International AI Safety Report (2024). It plays a central role in the international AI Safety Summit process and directly informs UK government AI policy."
+ },
+ {
+  "id": 540,
+  "name": "Public AI",
+  "entity_type": "organization",
+  "notes": "Public AI is a nonprofit initiative advocating for public-interest AI infrastructure as an alternative to purely commercial frontier AI development. Positions public AI as critical digital infrastructure (analogous to public broadcasting or libraries) and promotes government and civil-society funded AI projects, open models, and democratic oversight of large-scale AI systems."
+ },
+ {
+  "id": 542,
+  "name": "Stanford RegLab",
+  "entity_type": "organization",
+  "notes": "Stanford RegLab (Regulation, Evaluation, and Governance Lab) partners with government agencies to design and evaluate programs, policies, and technologies that modernize government. The organization uses machine learning and data science to improve compliance, mass adjudication, policy making, and government services. RegLab has an extensive track record working with local and national government agencies including the Environmental Protection Agency (EPA), Internal Revenue Service (IRS), Santa Clara County Public Health Department, and others. Daniel E. Ho is the Faculty Director of RegLab and William Benjamin Scott and Luna M. Scott Professor of Law at Stanford University."
+ },
+ {
+  "id": 544,
+  "name": "Situational Awareness",
+  "entity_type": "resource",
+  "notes": "165-page essay series published June 2024 by Leopold Aschenbrenner, a former researcher on OpenAI's Superalignment team who was fired in April 2024. Argues AGI is \"strikingly plausible\" by 2027 by extrapolating GPT-2 \u2192 GPT-4 capability gains in compute, algorithmic efficiency, and \"unhobbling,\" that a subsequent intelligence explosion could compress a decade of AI research into one year, and that the free world faces an existential race with the CCP over superintelligence. Became the defining national-security AI narrative in DC policy circles, heavily cited by hawks arguing for export controls, AI-lab security mandates, and a \"Manhattan Project\" posture on AI. Aschenbrenner has since launched an AGI-focused investment firm."
+ },
+ {
+  "id": 545,
+  "name": "The AI Index Report 2024",
+  "entity_type": "resource",
+  "notes": "Seventh annual AI Index Report, published April 2024 by Stanford's Institute for Human-Centered AI (HAI). The 2024 edition documented industry dominance of frontier ML research (51 notable models from industry in 2023 vs. 15 from academia), surging training costs (GPT-4 \u2248 $78M, Gemini Ultra \u2248 $191M), an ~8\u00d7 jump in generative-AI private investment to $25.2B, a proliferation of national AI regulations, and introduced a new chapter on AI in science and medicine. Widely treated as the canonical reference on the state of the AI ecosystem; cited routinely in congressional testimony, executive-branch AI policy documents, and industry research."
+ },
+ {
+  "id": 546,
+  "name": "Why AI Will Save the World",
+  "entity_type": "resource",
+  "notes": "Essay by Marc Andreessen (June 2023) arguing that AI will be a profoundly positive force for humanity, countering doomer narratives with a case for accelerating AI development."
+ },
+ {
+  "id": 548,
+  "name": "Governing AI: A Blueprint for the Future",
+  "entity_type": "resource",
+  "notes": "White paper published May 25, 2023 by Microsoft under a foreword from Vice Chair and President Brad Smith. Part 1 lays out a five-point blueprint for AI public policy: build on government AI safety frameworks (e.g. NIST AI RMF), require \"safety brakes\" on AI systems controlling critical infrastructure, adopt a layered regulatory model distinguishing the applications / model / infrastructure layers of the tech stack, pursue transparency and a broader public AI governance architecture, and leverage AI to address societal challenges. Part 2 describes Microsoft's internal responsible-AI program. One of the first major corporate AI policy statements from a frontier-model developer; cited in congressional AI Insight Forums and in international AI governance coordination discussions."
+ },
+ {
+  "id": 549,
+  "name": "Statement on AI Risk",
+  "entity_type": "resource",
+  "notes": "One-sentence open letter published May 30, 2023 by the Center for AI Safety (CAIS): \u201cMitigating the risk of extinction from AI should be a global priority alongside other societal-scale risks such as pandemics and nuclear war.\u201d Signed by 350+ AI researchers and public figures, including Sam Altman, Demis Hassabis, Dario Amodei, Geoffrey Hinton, Yoshua Bengio, Stuart Russell, and Bill Gates. A watershed moment that moved existential AI risk from a fringe concern into mainstream policy discourse."
+ },
+ {
+  "id": 550,
+  "name": "NIST AI Risk Management Framework",
+  "entity_type": "resource",
+  "notes": "Voluntary framework published January 2023 by NIST (under Dept. of Commerce) providing guidance for organizations to manage risks from AI systems across the lifecycle. Built around four core functions \u2014 Govern, Map, Measure, Manage \u2014 and accompanied by the AI RMF Playbook and Generative AI Profile (July 2024). Widely adopted as the de facto U.S. industry reference; explicitly invoked in Biden's EO 14110 and in subsequent federal agency AI policies. Under the Trump administration's July 2025 AI Action Plan, NIST was directed to revise the RMF (removing references to DEI, misinformation, and climate change)."
+ },
+ {
+  "id": 551,
+  "name": "Stochastic Parrots Paper",
+  "entity_type": "resource",
+  "notes": "\"On the Dangers of Stochastic Parrots: Can Language Models Be Too Big? \ud83e\udd9c\" \u2014 peer-reviewed paper presented at ACM FAccT 2021 by Emily M. Bender (U. Washington), Timnit Gebru, Angelina McMillan-Major, and Margaret Mitchell. Argues that ever-larger language models carry four underappreciated costs: environmental impact from compute, unaccountable bias baked into uncurated web-scale training data, research opportunity cost, and downstream harms from fluent but meaning-blind outputs (the \"stochastic parrot\" metaphor \u2014 pattern matching without understanding). Foundational text of the algorithmic-harms / AI ethics wing of the field; internal dispute over the paper precipitated Gebru's forced exit from Google in December 2020 and Mitchell's firing in February 2021, becoming a watershed moment in the politics of industry AI research."
+ },
+ {
+  "id": 552,
+  "name": "The Alignment Problem",
+  "entity_type": "resource",
+  "notes": "2020 book by journalist and researcher Brian Christian (W.W. Norton, October 2020) structured in three parts: Prophecy (fairness, bias, and transparency failures in deployed ML systems \u2014 COMPAS, facial recognition, word embeddings), Agency (reinforcement learning, reward specification, and the difficulty of encoding objectives), and Normativity (imitation learning, inverse reward design, and long-horizon alignment of advanced AI). Widely cited as the most accessible bridge between mainstream ML-ethics literature and the AI-safety / long-term alignment community; frequently assigned as an introductory text in AI governance and technology-policy courses."
+ },
+ {
+  "id": 553,
+  "name": "AI Frontiers",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Platform from the Center for AI Safety (CAIS) posting articles written by experts from a wide range of fields discussing the impacts of AI."
+ },
+ {
+  "id": 554,
+  "name": "AI Policy Bulletin",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Publishes policy-relevant perspectives on frontier AI governance, including research summaries, opinions, interviews, and explainers."
+ },
+ {
+  "id": 555,
+  "name": "AI Prospects",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Blog by Eric Drexler on AI prospects and their surprising implications for technology, economics, environmental concerns, and military affairs."
+ },
+ {
+  "id": 556,
+  "name": "Astral Codex Ten",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Blog covering many topics, including reasoning, science, psychiatry, medicine, ethics, genetics, economics, politics, and AI. Often book summaries and commentary on AI safety."
+ },
+ {
+  "id": 557,
+  "name": "Bounded Regret",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Blog on AI safety by Jacob Steinhardt, a UC Berkeley statistics professor, analysing risks, forecasting future breakthroughs, and discussing alignment strategies."
+ },
+ {
+  "id": 558,
+  "name": "ChinaTalk",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Deep, thoughtful coverage on China, technology, and US-China relations \u2013 written by Jordan Schneider."
+ },
+ {
+  "id": 559,
+  "name": "Cold Takes",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Blog about transformative AI, futurism, research, ethics, philanthropy etc. by Holden Karnofsky. Includes the \"Most Important Century\" post series. Last posted in 2024."
+ },
+ {
+  "id": 560,
+  "name": "Daniel Paleka's Newsletter",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Blog by AI safety researcher Daniel Paleka curating and succinctly analyzing the latest research and news in AI safety. Posts about every two months."
+ },
+ {
+  "id": 561,
+  "name": "DeepMind Safety Research",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Blog from the Google DeepMind safety team discussing research ideas about building AI safely."
+ },
+ {
+  "id": 562,
+  "name": "Don't Worry about the Vase",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Blog by Zvi Mowshowitz on various topics, including AI, offering detailed analysis, personal insights, and a rationalist perspective. Posts very frequently."
+ },
+ {
+  "id": 563,
+  "name": "Miles's Substack",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Blog from ex-OpenAI (now independent) AI policy researcher Miles Brundage on the rapid evolution of AI and the urgent need for thoughtful governance."
+ },
+ {
+  "id": 564,
+  "name": "Obsolete",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Reporting and analysis on capitalism, great power competition, and the race to build superintelligence by freelance journalist Garrison Lovely."
+ },
+ {
+  "id": 565,
+  "name": "Paul Christiano's Blog",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Blog on aligning prosaic AI by one of the leading AI safety researchers. No longer active but the archive is high quality."
+ },
+ {
+  "id": 566,
+  "name": "Planned Obsolescence",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Substack by Ajeya Cotra, researcher at METR, covering AI capabilities forecasting, AI agent benchmarks, timelines for automating AI R&D, and implications for AI safety."
+ },
+ {
+  "id": 567,
+  "name": "Rising Tide",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Blog by Helen Toner (director of CSET and former OpenAI board member) offering analysis on navigating the transition to advanced AI systems."
+ },
+ {
+  "id": 568,
+  "name": "The Building Capacity Blog",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Blog about building the fields of AI safety and Effective Altruism, discussing big-picture strategy and sharing personal experience from working in the space."
+ },
+ {
+  "id": 569,
+  "name": "The Power Law",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Top forecaster Peter Wildeford forecasts the future and discusses AI, national security, innovation, emerging technology, and the powers \u2013 real and metaphorical \u2013 that shape the world."
+ },
+ {
+  "id": 570,
+  "name": "Threading the Needle",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Publication by Anton Leicht on the political economy of AI progress, featuring weekly posts on how institutions and political incentives interface with fast technological change."
+ },
+ {
+  "id": 571,
+  "name": "Victoria Krakovna's Blog",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Blog by an AI safety researcher at Google DeepMind, covering alignment research, rationality, and personal productivity insights. Last AI post was 2023."
+ },
+ {
+  "id": 572,
+  "name": "AISafety.com: Media channels",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. The AI safety space is changing rapidly. This directory of key information sources can help you keep up to date with the latest developments."
+ },
+ {
+  "id": 573,
+  "name": "AI Safety at the Frontier",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Johannes Gasteiger, an alignment researcher at Anthropic, selects and summarizes the most interesting AI safety papers each month."
+ },
+ {
+  "id": 574,
+  "name": "AI Safety Events & Training",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Weekly newsletter listing newly-announced AI safety events and training programs, both online and in-person."
+ },
+ {
+  "id": 575,
+  "name": "AI Safety Funding",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Newsletter listing newly announced funding opportunities for individuals and organizations working to reduce AI existential risk."
+ },
+ {
+  "id": 576,
+  "name": "AI Safety in China",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Newsletter from Concordia AI, a Beijing-based social enterprise, providing updates on AI safety developments in China."
+ },
+ {
+  "id": 577,
+  "name": "AI Safety Newsletter",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Newsletter published every few weeks discussing recent developments in AI and AI safety. No technical background required."
+ },
+ {
+  "id": 578,
+  "name": "Can We Secure AI With Formal Methods?",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Current-events newsletter for keeping up to date with FMxAI (formal methods and AI) with a gear toward safety, doing a mix of shallow technical reviews of papers and movement updates."
+ },
+ {
+  "id": 579,
+  "name": "Import AI",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Weekly updates on the latest developments in AI research (including governance) written by Jack Clark, co-founder of Anthropic."
+ },
+ {
+  "id": 580,
+  "name": "ML Safety Newsletter",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Infrequent newsletter aiming to inform readers about recent ML safety research, focussing on areas like adversarial robustness, interpretability, and control."
+ },
+ {
+  "id": 581,
+  "name": "Transformer",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Aiming to help decision-makers understand what\u2019s happening in AI and why it matters \u2013 through news roundups, explainers, features, and opinion pieces."
+ },
+ {
+  "id": 582,
+  "name": "80,000 Hours Podcast",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. In-depth conversations about the world\u2019s most pressing problems \u2013 including AI safety \u2013 and what you can do to help solve them."
+ },
+ {
+  "id": 583,
+  "name": "AI X-risk Research Podcast",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Interviews with (mostly technical) AI safety researchers about their research, aiming to get a sense of why it was written and how it might reduce existential risk from AI."
+ },
+ {
+  "id": 584,
+  "name": "Dwarkesh Podcast",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Well-researched interviews with influential intellectuals going in-depth on AI and technology, and their broader societal implications."
+ },
+ {
+  "id": 585,
+  "name": "Future of Life Institute Podcast",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Interviews with existential risk researchers, policy experts, philosophers, and a range of other influential thinkers."
+ },
+ {
+  "id": 586,
+  "name": "The AI Policy Podcast",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Podcast from the Center for Strategic & International Studies (CSIS) discussing AI regulation, innovation, national security, and geopolitics."
+ },
+ {
+  "id": 587,
+  "name": "The Cognitive Revolution",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Biweekly podcast where host Nathan Labenz interviews AI innovators and thinkers, discussing the transformative impact AI will likely have in the near future."
+ },
+ {
+  "id": 588,
+  "name": "AI Alignment Slack",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. The biggest real-time online community of people interested in AI safety, with channels ranging from general topics to specific fields to local groups."
+ },
+ {
+  "id": 589,
+  "name": "AI Digest",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Concise visual explainers of important trends in AI, grounded in concrete examples of what AI models can do right now."
+ },
+ {
+  "id": 590,
+  "name": "AI Risk Explorer",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Online platform monitoring the emergence of large-scale AI risks, featuring curated information on evaluations, incidents, and policies."
+ },
+ {
+  "id": 591,
+  "name": "AI Risk: Why Care?",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. AI safety chatbot that excels at addressing hard questions and counterarguments about existential risk."
+ },
+ {
+  "id": 592,
+  "name": "AI Safety for Fleshy Humans",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Accessible, comic-illustrated series describing the history of AI capabilities, the alignment problem, and potential solutions."
+ },
+ {
+  "id": 593,
+  "name": "AI Safety Map Anki Deck",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Flashcards for helping to learn and memorize the main organizations, projects, and programs currently operating in the AI safety space."
+ },
+ {
+  "id": 594,
+  "name": "SB 53 (CA)",
+  "entity_type": "resource",
+  "notes": "California Senate Bill 53, an AI safety bill requiring developers of frontier AI models to implement shutdown capabilities and safety protocols for powerful AI systems."
+ },
+ {
+  "id": 595,
+  "name": "AI Safety Support",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Field-building organization now chiefly serving as the home for an extensive resources list called Lots of Links."
+ },
+ {
+  "id": 596,
+  "name": "AI Watch",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Database tracking people, organizations, and \u201cproducts\u201d in the AI safety community, serving as a reference for positions, affiliations, and related data."
+ },
+ {
+  "id": 597,
+  "name": "AISafety.com",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Hub for key resources for the AI safety community, including directories of courses, jobs, upcoming events and training programs etc. \u2013 and this map!"
+ },
+ {
+  "id": 598,
+  "name": "Effective Altruism Domains",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Directory of domains freely available to be used for high-impact projects, including those contributing to AI safety."
+ },
+ {
+  "id": 599,
+  "name": "Effective Altruism Forum",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Forum on doing good as effectively as possible, including AI safety. Also has a podcast featuring text-to-speech narrations of top posts."
+ },
+ {
+  "id": 600,
+  "name": "LessWrong",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Online forum dedicated to improving human reasoning, containing a lot of AI safety content. Also has a podcast featuring text-to-speech narrations of top posts."
+ },
+ {
+  "id": 601,
+  "name": "MIT AI Risk Repository",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Comprehensive living database of over 1600 AI risks, categorized by their cause and risk domain."
+ },
+ {
+  "id": 602,
+  "name": "RiesgosIA.org",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Spanish-language website featuring AI safety educational tools, including a daily\u2011updated monitor of AI safety research papers."
+ },
+ {
+  "id": 603,
+  "name": "AI Explained",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. YouTuber discussing the latest AI developments as they happen, offering explanations and analysis of important research and events."
+ },
+ {
+  "id": 604,
+  "name": "AI In Context",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Channel produced by 80,000 Hours presenting thoroughly researched, cinematic stories about what's happening in AI and where the trends are taking us."
+ },
+ {
+  "id": 605,
+  "name": "AI Safety Videos",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Comprehensive directory of AI safety video content, from beginner-friendly introductions to in-depth expert talks."
+ },
+ {
+  "id": 606,
+  "name": "Doom Debates",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Channel hosted by Liron Shapira featuring in-depth debates, explainers, and live Q&A sessions, focused on AI existential risk and other implications of superintelligence."
+ },
+ {
+  "id": 607,
+  "name": "Dr Waku",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Computer science PhD and AI research scientist talking about how AI will likely affect the world, along with expert interviews."
+ },
+ {
+  "id": 608,
+  "name": "RAISE Act",
+  "entity_type": "resource",
+  "notes": "The New York Responsible AI Safety and Education (RAISE) Act, signed by Governor Hochul in December 2025, requiring frontier AI developers to publish and comply with safety and security governance plans."
+ },
+ {
+  "id": 609,
+  "name": "FAR\u2024AI YouTube channel",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Talks given by AI safety experts at various events, covering topics ranging from mechanistic interpretability to evals and governance."
+ },
+ {
+  "id": 610,
+  "name": "Lethal Intelligence",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. YouTube channel raising awareness about the lethal dangers of AGI through explainer videos and podcasts."
+ },
+ {
+  "id": 611,
+  "name": "Rational Animations",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Animated videos aiming to foster good thinking, promote altruistic causes, and help ensure humanity's future goes well \u2013\u00a0particularly regarding AI safety."
+ },
+ {
+  "id": 612,
+  "name": "Robert Miles",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. The most popular AI safety education channel, explaining technical alignment concepts to general audiences through accessible explainer videos."
+ },
+ {
+  "id": 613,
+  "name": "Siliconversations",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. YouTube channel explaining (mostly) AI safety concepts through entertaining stickman videos."
+ },
+ {
+  "id": 614,
+  "name": "Species",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. Channel run by Drew Spartz educating a general audience about AI risk through high-effort mini-documentaries."
+ },
+ {
+  "id": 615,
+  "name": "The AI Risk Network",
+  "entity_type": "resource",
+  "notes": "From AISafety.com map. YouTube channel run by John Sherman, a Peabody and Emmy Award-winning former investigative journalist, aiming to make AI risk a kitchen table conversation."
+ },
+ {
+  "id": 616,
+  "name": "A Guide to the AI Tribes",
+  "entity_type": "resource",
+  "notes": "Essay by Michel Justen (January 2026) mapping the major ideological factions in AI policy debate \u2014 their origins, assumptions, alliances, and conflicts over how AI should be developed and governed."
+ },
+ {
+  "id": 617,
+  "name": "The Left is Missing Out on AI",
+  "entity_type": "resource",
+  "notes": "Essay by Dan Kagan-Kans (February 2026) arguing that the political left has ceded the AI conversation to the right by dismissing AI as overhyped, risking inability to shape one of the most consequential technological shifts in history."
+ },
+ {
+  "id": 618,
+  "name": "AI 2027 scenario",
+  "entity_type": "resource",
+  "notes": "Scenario and forecast paper by Daniel Kokotajlo et al. projecting a plausible timeline for transformative AI development through 2027, exploring rapid capability gains and their implications for safety and governance."
+ },
+ {
+  "id": 619,
+  "name": "AI as Normal Technology",
+  "entity_type": "resource",
+  "notes": "Essay by Arvind Narayanan and Sayash Kapoor arguing that AI should be understood as a transformative but ''normal'' technology \u2014 like electricity or the internet \u2014 rather than as an unprecedented existential force requiring extraordinary governance."
+ },
+ {
+  "id": 620,
+  "name": "Dignity in a Digital Age",
+  "entity_type": "resource",
+  "notes": "Book by Rep. Ro Khanna (2022) advocating for policies that bring technology jobs and digital infrastructure to overlooked communities across America, bridging the gap between Silicon Valley and the rest of the country."
+ },
+ {
+  "id": 621,
+  "name": "The Entrepreneurial State",
+  "entity_type": "resource",
+  "notes": "Book by Mariana Mazzucato (2013) challenging the myth that innovation comes only from the private sector, arguing that government investment has been the driving force behind transformative technologies including the internet and smartphones."
+ },
+ {
+  "id": 622,
+  "name": "Power and Progress",
+  "entity_type": "resource",
+  "notes": "Book by Daron Acemoglu and Simon Johnson (2023) examining how technological progress has historically benefited elites unless countered by deliberate institutional choices, and arguing for redirecting AI toward broadly shared prosperity."
+ },
+ {
+  "id": 623,
+  "name": "Recoding America",
+  "entity_type": "resource",
+  "notes": "Book by Jennifer Pahlka (2023) diagnosing why government technology systems fail and outlining how modernizing digital infrastructure is essential for effective public services and democratic accountability."
+ },
+ {
+  "id": 624,
+  "name": "Governing the Commons",
+  "entity_type": "resource",
+  "notes": "Seminal book by Elinor Ostrom (1990) demonstrating that communities can successfully manage shared resources through self-governance without requiring privatization or top-down state control."
+ },
+ {
+  "id": 626,
+  "name": "Techno-Optimist Manifesto",
+  "entity_type": "resource",
+  "notes": "Marc Andreessen''s manifesto (October 2023) published on the a16z website, making an expansive case for technological optimism and arguing against precautionary regulation of emerging technologies including AI."
+ },
+ {
+  "id": 627,
+  "name": "The Internet Con",
+  "entity_type": "resource",
+  "notes": "Book by Cory Doctorow (2023) arguing that Big Tech companies maintain dominance through lock-in and switching costs, and proposing interoperability mandates as the key to breaking their grip on users and markets."
+ },
+ {
+  "id": 628,
+  "name": "Chip War",
+  "entity_type": "resource",
+  "notes": "Book by Chris Miller (2022) tracing the geopolitical history of the global semiconductor industry and explaining how control over chip manufacturing has become a critical factor in international power dynamics and AI competition."
+ },
+ {
+  "id": 629,
+  "name": "Secure AI Project bills tracker",
+  "entity_type": "resource",
+  "notes": "Online tracking tool maintained by the Secure AI Project that monitors and catalogs AI-related legislation at the state and federal level, providing real-time status updates on bills and regulatory proposals."
+ },
+ {
+  "id": 630,
+  "name": "Dean Ball \"How I Approach AI Policy\"",
+  "entity_type": "resource",
+  "notes": "Blog post by Dean Ball outlining his analytical framework for evaluating AI policy proposals, emphasizing pragmatic governance approaches that balance innovation with risk mitigation."
+ },
+ {
+  "id": 631,
+  "name": "Digitalist Papers Vol. 2",
+  "entity_type": "resource",
+  "notes": "Volume 2 of The Digitalist Papers, published by the Stanford Digital Economy Lab (December 2025), a collection of 21 essays examining the economic implications of transformative AI, including proposals for universal basic capital and adaptive safety nets."
+ },
+ {
+  "id": 632,
+  "name": "Alex Bores Congressional AI Framework",
+  "entity_type": "resource",
+  "notes": "Congressional AI policy framework released by New York Assemblyman Alex Bores (February 2026) as part of his campaign for Congress, proposing an eight-point national plan covering kids'' safety, data privacy, deepfakes, workforce impacts, and frontier AI safety testing."
+ },
+ {
+  "id": 633,
+  "name": "Trump AI Action Plan (July 2025)",
+  "entity_type": "resource",
+  "notes": "On July 23, 2025, the White House released 'America's AI Action Plan,' a 25-page document focused on bolstering U.S. AI dominance through deregulation, ideologically neutral AI systems, infrastructure investment, and international competition. Released alongside three executive orders covering AI development, federal procurement, and infrastructure. The Action Plan was issued pursuant to Executive Order 14179 ('Removing Barriers to American Leadership in Artificial Intelligence,' signed January 23, 2025), which mandated the creation of a comprehensive AI action plan within 180 days. EO 14179 also revoked Biden's Executive Order 14110 on AI safety."
+ },
+ {
+  "id": 634,
+  "name": "Sacks federal preemption EO (Dec 2025)",
+  "entity_type": "resource",
+  "notes": "Executive order orchestrated by AI czar David Sacks (December 2025) asserting federal preemption over state-level AI regulations, aiming to create a unified national approach and prevent a patchwork of state AI laws."
+ },
+ {
+  "id": 635,
+  "name": "EU AI Act",
+  "entity_type": "resource",
+  "notes": "The European Union''s comprehensive AI regulation framework, entered into force in August 2024, establishing a risk-based classification system for AI applications with tiered requirements ranging from transparency obligations to outright bans on certain uses."
+ },
+ {
+  "id": 636,
+  "name": "New Consensus AI platform",
+  "entity_type": "resource",
+  "notes": "New Consensus is a progressive economic think tank whose AI platform advocates for public investment and democratic governance of artificial intelligence."
+ },
+ {
+  "id": 637,
+  "name": "Secure AI Project state bill tracker",
+  "entity_type": "resource",
+  "notes": "A tracking tool maintained by the Secure AI Project that monitors and catalogs state-level AI legislation across the United States."
+ },
+ {
+  "id": 639,
+  "name": "Blueprint for an AI Bill of Rights",
+  "entity_type": "resource",
+  "notes": "Published by the White House Office of Science and Technology Policy in October 2022, this non-binding framework outlines five principles to protect the public from harms caused by automated systems."
+ },
+ {
+  "id": 640,
+  "name": "SB 1047 (CA, vetoed)",
+  "entity_type": "resource",
+  "notes": "California Senate Bill 1047, authored by Senator Scott Wiener, would have imposed safety requirements on developers of frontier AI models; it was vetoed by Governor Newsom in September 2024."
+ },
+ {
+  "id": 641,
+  "name": "Colorado AI anti-discrimination law",
+  "entity_type": "resource",
+  "notes": "Colorado SB 24-205, signed into law in 2024, is the first U.S. state law specifically regulating algorithmic discrimination in high-risk AI decision-making systems."
+ },
+ {
+  "id": 643,
+  "name": "Human Compatible",
+  "entity_type": "resource",
+  "notes": "2019 book by UC Berkeley computer scientist Stuart Russell arguing that the standard model of AI \u2014 machines pursuing fixed objectives \u2014 is fundamentally unsafe as capability scales, and proposing a provably-beneficial alternative in which AI systems remain uncertain about human preferences and defer to human feedback. Widely cited in AI governance discussions of alignment, oversight, and the case for safety-focused regulation. A foundational popular-audience text alongside Bostrom's Superintelligence."
+ },
+ {
+  "id": 644,
+  "name": "The Precipice: Existential Risk and the Future of Humanity",
+  "entity_type": "resource",
+  "notes": "A 2020 book by philosopher Toby Ord arguing that safeguarding humanity''s long-term future from existential risks, including advanced AI, is among the most important moral priorities of our time."
+ },
+ {
+  "id": 645,
+  "name": "The Urgency of Interpretability",
+  "entity_type": "resource",
+  "notes": "A paper or talk making the case that understanding the internal workings of AI models (interpretability) is an urgent priority for ensuring safe and trustworthy AI systems."
+ },
+ {
+  "id": 646,
+  "name": "On the Responsible Scaling of AI",
+  "entity_type": "resource",
+  "notes": "Anthropic''s policy paper outlining its Responsible Scaling Policy, a framework for incrementally deploying more capable AI models while managing catastrophic risks through safety evaluations."
+ },
+ {
+  "id": 647,
+  "name": "Superintelligence: Paths, Dangers, Strategies",
+  "entity_type": "resource",
+  "notes": "A 2014 book by Oxford philosopher Nick Bostrom analyzing the potential trajectories, dangers, and strategic challenges posed by the development of machine superintelligence."
+ },
+ {
+  "id": 648,
+  "name": "Platformer",
+  "entity_type": "resource",
+  "notes": "A technology newsletter by journalist Casey Newton, published on Substack, covering the intersection of social media platforms, technology policy, and the tech industry."
+ },
+ {
+  "id": 649,
+  "name": "AI Snake Oil",
+  "entity_type": "resource",
+  "notes": "A book by Princeton researchers Arvind Narayanan and Sayash Kapoor critically examining exaggerated claims about AI capabilities and the harms caused by deploying unreliable AI systems."
+ },
+ {
+  "id": 650,
+  "name": "Executive Order on Safe, Secure, and Trustworthy AI",
+  "entity_type": "resource",
+  "notes": "The formal title of President Biden''s October 2023 Executive Order (EO 14110) on artificial intelligence, establishing federal standards for AI safety, security, and trustworthiness."
+ },
+ {
+  "id": 651,
+  "name": "The Simple Macroeconomics of AI",
+  "entity_type": "resource",
+  "notes": "An economics paper analyzing the macroeconomic implications of AI adoption, including effects on productivity, labor markets, and economic growth."
+ },
+ {
+  "id": 652,
+  "name": "Lex Fridman Podcast (AI episodes)",
+  "entity_type": "resource",
+  "notes": "A long-form interview podcast hosted by Lex Fridman featuring in-depth conversations with AI researchers, policymakers, and technologists about artificial intelligence and its societal implications."
+ },
+ {
+  "id": 653,
+  "name": "International AI Safety Report",
+  "entity_type": "resource",
+  "notes": "A 2024 international report led by Yoshua Bengio and a global panel of experts assessing the current state of AI safety risks and recommending governance approaches."
+ },
+ {
+  "id": 654,
+  "name": "Zvi Mowshowitz AI Newsletter",
+  "entity_type": "resource",
+  "notes": "A weekly AI analysis newsletter by Zvi Mowshowitz (also known as ''Don''t Worry About the Vase'') providing detailed commentary on AI developments, policy, and safety research."
+ },
+ {
+  "id": 655,
+  "name": "The Adolescence of Technology",
+  "entity_type": "resource",
+  "notes": "Dario Amodei''s essay conceptualizing the current era of AI development as a ''technological adolescence'' \u2014 a volatile transitional period requiring deliberate governance and safety measures."
+ },
+ {
+  "id": 656,
+  "name": "Life 3.0: Being Human in the Age of AI",
+  "entity_type": "resource",
+  "notes": "A 2017 book by MIT physicist Max Tegmark exploring how artificial intelligence will transform life on Earth and examining the future trajectory of intelligent life in the universe."
+ },
+ {
+  "id": 657,
+  "name": "Trump Attempts to Preempt State AI Regulation Through Executive Order",
+  "entity_type": "resource",
+  "notes": "A news article reporting on President Trump''s executive order attempting to preempt state-level AI regulations in favor of a unified federal approach to AI governance."
+ },
+ {
+  "id": 658,
+  "name": "Trump signs executive order blocking states from enforcing their own regulations around AI | CNN Business",
+  "entity_type": "resource",
+  "notes": "A CNN Business article covering President Trump''s executive order aimed at blocking states from enforcing their own AI regulations, centralizing AI policy at the federal level."
+ },
+ {
+  "id": 659,
+  "name": "Open Problems in Technical AI Governance",
+  "entity_type": "resource",
+  "notes": "A research paper identifying and analyzing unresolved technical challenges in AI governance, including issues of compliance verification, auditing, and enforcement of AI regulations."
+ },
+ {
+  "id": 660,
+  "name": "A Collection of AI Governance Research Ideas",
+  "entity_type": "resource",
+  "notes": "Research paper compiling a collection of open research questions and ideas in the field of AI governance, intended to guide future scholarship and policy work."
+ },
+ {
+  "id": 661,
+  "name": "The Federal AI Preemption Push: President Trump signs the Executive Order titled \u201cEnsuring a National Policy Framework for Artificial Intelligence\u201d",
+  "entity_type": "resource",
+  "notes": "Legal analysis article examining President Trump''s executive order on federal AI preemption, which aims to establish a unified national AI policy framework by overriding state-level AI regulations."
+ },
+ {
+  "id": 663,
+  "name": "Highlights of the 2023 Executive Order on Artificial ...",
+  "entity_type": "resource",
+  "notes": "Summary article highlighting the key provisions of President Biden''s 2023 executive order on artificial intelligence, which established new safety standards, equity protections, and innovation support measures for AI development."
+ },
+ {
+  "id": 664,
+  "name": "FACT SHEET: Biden-Harris Administration Executive Order Directs DHS to Lead the Responsible Development of Artificial Intelligence | Homeland Security",
+  "entity_type": "resource",
+  "notes": "Department of Homeland Security fact sheet detailing how the Biden-Harris Administration''s AI executive order directs DHS to lead responsible AI development, including safeguards for critical infrastructure and border security."
+ },
+ {
+  "id": 665,
+  "name": "Biden signs U.S.' first AI executive order to create safeguards",
+  "entity_type": "resource",
+  "notes": "News article covering President Biden''s signing of the first comprehensive U.S. executive order on artificial intelligence, which established safeguards around AI safety, security, and trustworthiness."
+ },
+ {
+  "id": 666,
+  "name": "Foundational Challenges in Assuring Alignment and Safety of Large Language Models",
+  "entity_type": "resource",
+  "notes": "Academic paper examining the foundational technical and conceptual challenges in ensuring that large language models are aligned with human values and operate safely."
+ },
+ {
+  "id": 667,
+  "name": "Common Ground between AI 2027 & AI as Normal Technology",
+  "entity_type": "resource",
+  "notes": "Essay exploring the points of agreement between the AI 2027 scenario (which envisions rapid, transformative AI progress) and the ''AI as Normal Technology'' perspective (which views AI as an incremental, manageable advance)."
+ },
+ {
+  "id": 668,
+  "name": "Crisp and Fuzzy Tasks",
+  "entity_type": "resource",
+  "notes": "Essay distinguishing between ''crisp'' tasks (well-defined, easily measurable) and ''fuzzy'' tasks (ambiguous, judgment-dependent) in the context of AI capabilities and automation."
+ },
+ {
+  "id": 669,
+  "name": "Alignment Remains a Hard, Unsolved Problem",
+  "entity_type": "resource",
+  "notes": "Essay or paper arguing that AI alignment \u2014 ensuring AI systems reliably act in accordance with human intentions and values \u2014 remains a fundamentally difficult and unsolved problem despite recent progress."
+ },
+ {
+  "id": 670,
+  "name": "Computing Power and the Governance of Artificial Intelligence",
+  "entity_type": "resource",
+  "notes": "Research paper analyzing the role of computing power as a governance lever for artificial intelligence, exploring how compute resources can be monitored, allocated, and regulated to shape AI development outcomes."
+ },
+ {
+  "id": 671,
+  "name": "US Senate Hearing On 'Examining the Harm of AI Chatbots'",
+  "entity_type": "resource",
+  "notes": "Official U.S. Senate hearing titled ''Examining the Harm of AI Chatbots,'' investigating the potential risks and harms posed by AI chatbot technologies to consumers and society."
+ },
+ {
+  "id": 673,
+  "name": "Transcript: US Senate Subcommittee Hearing on \"Protecting Consumers from Artificial Intelligence Enabled Fraud and Scams\" | TechPolicy.Press",
+  "entity_type": "resource",
+  "notes": "Transcript of a U.S. Senate subcommittee hearing focused on protecting consumers from AI-enabled fraud and scams, published by TechPolicy.Press."
+ },
+ {
+  "id": 674,
+  "name": "White House Issues \"One Rule\" Executive Order To Curb State AI Regulation - New Technology - United States",
+  "entity_type": "resource",
+  "notes": "Legal analysis article (likely from Mondaq) examining the White House''s ''one rule'' executive order aimed at curbing state-level AI regulation through federal preemption. Covers similar ground to entities 661 and 681."
+ },
+ {
+  "id": 675,
+  "name": "Alignment Pretraining: AI Discourse Causes Self-Fulfilling (Mis)alignment",
+  "entity_type": "resource",
+  "notes": "Research paper investigating how public discourse about AI alignment and safety can become self-fulfilling \u2014 shaping AI behavior during pretraining in ways that either help or hinder actual alignment outcomes."
+ },
+ {
+  "id": 676,
+  "name": "Values in the Wild",
+  "entity_type": "resource",
+  "notes": "Research paper studying human values as they manifest ''in the wild'' \u2014 examining how values are embedded in, expressed through, and shaped by real-world AI systems and their deployment contexts."
+ },
+ {
+  "id": 677,
+  "name": "The Persona Selection Model: Why AI Assistants Might Behave Like Humans",
+  "entity_type": "resource",
+  "notes": "Research paper proposing a ''persona selection model'' to explain why AI assistants may adopt human-like behavioral patterns, exploring the mechanisms by which LLMs select and enact particular personas."
+ },
+ {
+  "id": 678,
+  "name": "The Assistant Axis: Situating and Stabilizing the Character of LLMs",
+  "entity_type": "resource",
+  "notes": "Research paper on methods for situating and stabilizing the character or persona of large language models along an ''assistant axis,'' addressing consistency and reliability in LLM behavior."
+ },
+ {
+  "id": 679,
+  "name": "Some Talent Needs in AI Governance",
+  "entity_type": "resource",
+  "notes": "Essay identifying key talent gaps and workforce needs in the AI governance field, discussing what skills and roles are most urgently needed to support effective AI policy and oversight."
+ },
+ {
+  "id": 681,
+  "name": "Toward A National AI Framework: The Federal Strategy To Override State Regulation - New Technology - United States",
+  "entity_type": "resource",
+  "notes": "Legal analysis article examining the federal strategy to establish a national AI framework that would override state-level regulation, covering the same Trump AI preemption executive order discussed in entities 661 and 674."
+ },
+ {
+  "id": 682,
+  "name": "The Annual AI Governance Report 2025",
+  "entity_type": "resource",
+  "notes": "Comprehensive annual report surveying the AI governance landscape in 2025, covering policy developments, institutional activities, and emerging trends in AI regulation and oversight worldwide."
+ },
+ {
+  "id": 683,
+  "name": "The Annual AI Governance Report 2025: Steering the Future of AI",
+  "entity_type": "resource",
+  "notes": "Annual report examining the state of AI governance in 2025, covering policy frameworks, regulatory developments, and strategies for steering AI''s future trajectory."
+ },
+ {
+  "id": 684,
+  "name": "AI Governance Profession Report 2025",
+  "entity_type": "resource",
+  "notes": "Report surveying the AI governance profession landscape in 2025, including roles, skills, and career trends for practitioners working in AI policy and oversight."
+ },
+ {
+  "id": 685,
+  "name": "Gradual Disempowerment",
+  "entity_type": "resource",
+  "notes": "Research paper examining how AI systems could gradually erode human control and autonomy over time, even without a single catastrophic event."
+ },
+ {
+  "id": 686,
+  "name": "AI Safety Index 2025: How Frontier AI Companies | Libertify",
+  "entity_type": "resource",
+  "notes": "Coverage by Libertify of the Future of Life Institute''s 2025 AI Safety Index, which benchmarks how frontier AI companies manage safety practices."
+ },
+ {
+  "id": 687,
+  "name": "2025 AI Safety Index - Future of Life Institute",
+  "entity_type": "resource",
+  "notes": "The Future of Life Institute''s 2025 AI Safety Index, a benchmarking report assessing how leading AI companies address safety in their development practices."
+ },
+ {
+  "id": 688,
+  "name": "AI Safety Index Winter 2025 - Future of Life Institute",
+  "entity_type": "resource",
+  "notes": "The Winter 2025 edition of the Future of Life Institute''s AI Safety Index, evaluating frontier AI companies'' safety commitments and practices."
+ },
+ {
+  "id": 689,
+  "name": "Canaries in the Coal Mine? Six Facts about the Recent Employment Effects of Artificial Intelligence",
+  "entity_type": "resource",
+  "notes": "Economics research paper presenting six key findings on the early employment effects of artificial intelligence, framing affected workers as ''canaries in the coal mine'' for broader labor market disruption."
+ },
+ {
+  "id": 690,
+  "name": "MIT study finds AI can already replace 11.7% of U.S. ...",
+  "entity_type": "resource",
+  "notes": "News article covering an MIT study finding that AI technology is already capable of replacing approximately 11.7% of tasks in the U.S. workforce."
+ },
+ {
+  "id": 692,
+  "name": "Transcript: US House Subcommittee Hosts Hearing on \"AI ...",
+  "entity_type": "resource",
+  "notes": "Transcript of a U.S. House subcommittee hearing examining artificial intelligence policy, published by TechPolicy.Press."
+ },
+ {
+  "id": 693,
+  "name": "Adam Thierer Testimony before JEC on AI & Economic Opportunity",
+  "entity_type": "resource",
+  "notes": "Written testimony by Adam Thierer before the Joint Economic Committee on the economic opportunities presented by AI and the policy conditions needed to realize them."
+ },
+ {
+  "id": 694,
+  "name": "Senate Judiciary written testimony - Helen Toner 2024-09-17",
+  "entity_type": "resource",
+  "notes": "Written testimony by Helen Toner, former OpenAI board member, before the Senate Judiciary Committee in September 2024, offering an insider''s perspective on AI governance and safety."
+ },
+ {
+  "id": 695,
+  "name": "Machines of Loving Grace",
+  "entity_type": "resource",
+  "notes": "Essay by Anthropic CEO Dario Amodei (October 2024) exploring the potential positive impacts of advanced AI on science, health, economic development, and governance."
+ },
+ {
+  "id": 696,
+  "name": "The Federal AI Preemption Push: President Trump Signs The Executive Order Titled \"Ensuring A National Policy Framework For Artificial Intelligence\" - New Technology - United States",
+  "entity_type": "resource",
+  "notes": "Legal analysis published on Mondaq examining President Trump''s executive order on ensuring a national AI policy framework, focusing on its implications for federal preemption of state AI regulations."
+ },
+ {
+  "id": 701,
+  "name": "Transcript: Senate Judiciary Subcommittee Hosts Hearing on Oversight of AI: Insiders\u2019 Perspectives | TechPolicy.Press",
+  "entity_type": "resource",
+  "notes": "Transcript of a Senate Judiciary Subcommittee hearing featuring insider perspectives on AI oversight, published by TechPolicy.Press."
+ },
+ {
+  "id": 702,
+  "name": "Blackburn Unveils National Policy Framework for Artificial Intelligence - U.S. S...",
+  "entity_type": "resource",
+  "notes": "Announcement by Senator Marsha Blackburn of a national policy framework for artificial intelligence, outlining proposed federal AI governance principles."
+ },
+ {
+  "id": 703,
+  "name": "2025 Q4 Update from our Frontier AI Risk Monitoring Platform",
+  "entity_type": "resource",
+  "notes": "Quarterly update (Q4 2025) from a frontier AI risk monitoring platform, reporting on emerging risks and safety developments at leading AI labs."
+ },
+ {
+  "id": 704,
+  "name": "Labor Demand in the Age of Generative AI : Early Evidence from the U.S. Job Posting Data",
+  "entity_type": "resource",
+  "notes": "Economics research paper analyzing how generative AI is affecting U.S. labor demand, using job posting data to identify early shifts in employer hiring patterns."
+ },
+ {
+  "id": 705,
+  "name": "Transcript: Joint Hearing on \u201cArtificial Intelligence and Its Potential to Fuel Economic Growth and Improve Governance\u201d | TechPolicy.Press",
+  "entity_type": "resource",
+  "notes": "Transcript of a joint congressional hearing on artificial intelligence''s potential to fuel economic growth and improve governance, published by TechPolicy.Press."
+ },
+ {
+  "id": 708,
+  "name": "Leading the Future",
+  "entity_type": "organization",
+  "notes": "Leading the Future (FEC ID: C00916114) is a bipartisan super PAC launched by a coalition of AI companies and industry leaders with the mission to ensure U.S. leadership in AI innovation and development. It engages in independent expenditures to support candidates aligned with pro-AI agendas, legislative advocacy, and grassroots efforts across federal and state levels, with operations beginning in 2025 and plans to expand nationwide in 2026.\n\nRegistered as a federal super PAC (FEC ID: C00916114). Classified as a pro-innovation AI policy PAC. See https://elections.transformernews.ai/ for live spending data."
+ },
+ {
+  "id": 709,
+  "name": "Think Big",
+  "entity_type": "organization",
+  "notes": "Democratic-aligned super PAC within the Leading the Future network (pro-AI industry). Sister PAC to Republican-focused American Mission. Funded primarily by Leading the Future ($10M) plus Ron Conway ($500K) and Joe Lonsdale ($250K); raised ~$10.5M total by March 2026. Opposes candidates who support AI regulation; spent ~$2.42M against Alex Bores in NY-12."
+ },
+ {
+  "id": 710,
+  "name": "American Mission",
+  "entity_type": "organization",
+  "notes": "Supported candidates in TX and NC races. Backed Chris Gober, Tom Sell, Jessica Steinmann, Laurie Buckhout, Clay Fuller, Jace Yarbrough.\n\nRegistered as a federal super PAC (FEC ID: C00916692). Classified as a pro-innovation AI policy PAC. See https://elections.transformernews.ai/ for live spending data."
+ },
+ {
+  "id": 711,
+  "name": "Defending Our Values PAC",
+  "entity_type": "organization",
+  "notes": "Republican-aligned super PAC affiliated with Public First Action (backed by Anthropic's $20M donation). Supports GOP candidates who favor AI safety regulation and state-level AI oversight. FEC ID C00928390. Backed Alexandra Mealer, Carlos De La Cruz, and Pete Ricketts. Counterpart to Democrats-focused Jobs and Democracy PAC."
+ },
+ {
+  "id": 712,
+  "name": "Jobs and Democracy PAC",
+  "entity_type": "organization",
+  "notes": "Democratic-aligned super PAC affiliated with Public First Action, funded by Anthropic's $20M donation. Backs Democratic candidates who support AI safety regulation and state-level AI oversight. FEC ID C00928374. Major spends for Valerie Foushee (~$1.61M), Alex Bores (~$468K), and Colin Allred (~$150K)."
+ },
+ {
+  "id": 713,
+  "name": "Dream NYC",
+  "entity_type": "organization",
+  "notes": "Supported Alex Bores ($1,332).\n\nRegistered as a federal super PAC (FEC ID: C00928069). Classified as a pro-safety AI policy PAC. See https://elections.transformernews.ai/ for live spending data."
+ },
+ {
+  "id": 714,
+  "name": "Valerie Foushee",
+  "entity_type": "person",
+  "notes": "Democratic U.S. Representative from North Carolina (NC-04) who serves on the House Science, Space, and Technology Committee and co-chairs the House Democratic Commission on AI and the Innovation Economy. She is actively involved in advancing AI policy through legislation like the HBCU Artificial Intelligence Research Leadership Act, focusing on inclusive access to AI research and education, particularly for underrepresented communities and HBCUs. She is supported by pro-safety organizations like Jobs and Democracy PAC.\n\nRunning in the NC House District 04 race, which has seen significant AI-related super PAC spending. See https://elections.transformernews.ai/ for live spending data."
+ },
+ {
+  "id": 715,
+  "name": "Jesse Jackson Jr.",
+  "entity_type": "person",
+  "notes": "Jesse Jackson Jr. is a Democratic politician and former U.S. Representative from Illinois's 2nd Congressional District seeking to reclaim his seat in 2026. He emphasizes responsible AI development with equitable access and has actively welcomed AI use in his campaign, including an AI-generated ad featuring endorsements. He is supported by pro-innovation PACs focused on AI policy.\n\nRunning in the IL House District 02 race, which has seen significant AI-related super PAC spending. See https://elections.transformernews.ai/ for live spending data."
+ },
+ {
+  "id": 716,
+  "name": "Melissa Bean",
+  "entity_type": "person",
+  "notes": "Melissa Bean is a Democratic politician from Illinois who served in the U.S. House of Representatives from 2005-2011 and made a political comeback in 2026. She is supported by pro-innovation groups like Think Big and emphasizes pragmatic, results-oriented governance with a balanced stance on AI policy.\n\nRunning in the IL House District 08 race, which has seen significant AI-related super PAC spending. See https://elections.transformernews.ai/ for live spending data."
+ },
+ {
+  "id": 717,
+  "name": "Chris Gober",
+  "entity_type": "person",
+  "notes": "Republican candidate for U.S. House District 10 in Texas, seventh-generation Texan and Texas A&M graduate (2001). Former chief counsel for Elon Musk's America PAC and founder of conservative law firm Lex Politica. Endorsed by Trump and backed by pro-innovation groups, but no specific public statements on AI policy, regulation, risks, or safety were found in provided sources.\n\nRunning in the TX House District 10 race, which has seen significant AI-related super PAC spending. See https://elections.transformernews.ai/ for live spending data."
+ },
+ {
+  "id": 718,
+  "name": "Tom Sell",
+  "entity_type": "person",
+  "notes": "Republican candidate for Texas's 19th Congressional District runoff election. Fifth-generation West Texan with background in agriculture and small business. No explicit public positions on AI regulation, risks, or safety are available in provided sources.\n\nRunning in the TX House District 19 race, which has seen significant AI-related super PAC spending. See https://elections.transformernews.ai/ for live spending data."
+ },
+ {
+  "id": 719,
+  "name": "Jessica Steinmann",
+  "entity_type": "person",
+  "notes": "Republican candidate for U.S. House in Texas's 8th District with endorsement from President Trump. She has DOJ background (Director of Office of Victims of Crime, 2020-2021), holds J.D. from Baylor and B.A. from UT Austin. Supported by pro-innovation AI industry groups, though her specific AI policy positions are not publicly detailed.\n\nRunning in the TX House District 08 race, which has seen significant AI-related super PAC spending. See https://elections.transformernews.ai/ for live spending data."
+ },
+ {
+  "id": 720,
+  "name": "Laurie Buckhout",
+  "entity_type": "person",
+  "notes": "Laurie Buckhout is a Republican candidate for North Carolina's 1st Congressional District with a background as a retired U.S. Army Colonel. She is backed by AI industry-supported PACs and the pro-innovation group American Mission, positioning her as favorable to AI industry interests. Specific details about her stated positions on AI regulation, risks, and safety are not provided in available sources.\n\nRunning in the NC House District 01 race, which has seen significant AI-related super PAC spending. See https://elections.transformernews.ai/ for live spending data."
+ },
+ {
+  "id": 721,
+  "name": "Clay Fuller",
+  "entity_type": "person",
+  "notes": "Republican candidate for Georgia's 14th Congressional District with background as District Attorney for Lookout Mountain Judicial Circuit and Lieutenant Colonel in Air National Guard. Emphasizes border security, economic growth, constitutional rights, and public safety. Positions on AI are characterized as pro-innovation with safety guardrails, though specific AI policy details are limited in available sources.\n\nRunning in the GA House District 14 race, which has seen significant AI-related super PAC spending. See https://elections.transformernews.ai/ for live spending data."
+ },
+ {
+  "id": 722,
+  "name": "Colin Allred",
+  "entity_type": "person",
+  "notes": "Democratic U.S. Representative from Texas's 33rd Congressional District with background in law and civil rights. Launched Marley, an AI-powered constituent engagement tool, demonstrating commitment to responsible technology use while acknowledging AI limitations and the need for continuous improvement.\n\nRunning in the TX House District 33 race, which has seen significant AI-related super PAC spending. See https://elections.transformernews.ai/ for live spending data."
+ },
+ {
+  "id": 723,
+  "name": "Pete Ricketts",
+  "entity_type": "person",
+  "notes": "Republican U.S. Senator from Nebraska with background as former CEO of TD Ameritrade. Active in AI and technology policy, notably co-sponsoring the SAFE Chips Act to restrict AI chip exports to China. Emphasis on national security and U.S. technological leadership balanced with safety considerations.\n\nRunning in the NE Senate race, which has seen significant AI-related super PAC spending. See https://elections.transformernews.ai/ for live spending data."
+ },
+ {
+  "id": 724,
+  "name": "Jace Yarbrough",
+  "entity_type": "person",
+  "notes": "Jace Yarbrough is a Republican candidate for Texas Congressional District 32 with a background in law (JD from Stanford) and US Air Force Reserve service (since 2015). He is endorsed by Donald Trump and Gov. Greg Abbott, and receives support from the pro-innovation American Mission PAC ($129,367), positioning him as a pro-innovation candidate in the AI policy space.\n\nRunning in the TX House District 32 race, which has seen significant AI-related super PAC spending. See https://elections.transformernews.ai/ for live spending data."
+ },
+ {
+  "id": 725,
+  "name": "Alexandra Mealer",
+  "entity_type": "person",
+  "notes": "Alexandra 'Alex' Mealer is a Republican political candidate running for Texas' 9th Congressional District. She previously ran as the GOP nominee against Harris County Judge Lina Hidalgo in 2022 and advanced to a primary runoff election. No publicly available information exists regarding her specific positions on AI policy, AI regulation, or AI risk and safety.\n\nRunning in the TX House District 09 race, which has seen significant AI-related super PAC spending. See https://elections.transformernews.ai/ for live spending data."
+ },
+ {
+  "id": 726,
+  "name": "Carlos De La Cruz",
+  "entity_type": "person",
+  "notes": "Carlos De La Cruz is a 47-year-old Republican U.S. House candidate for Texas' 35th Congressional District with 20 years of U.S. Air Force service and background as a small business owner (kickboxing gym). He received a late Trump endorsement in the 2026 primary. No specific positions on AI policy, regulation, or AI risk are documented in available sources.\n\nRunning in the TX House District 35 race, which has seen significant AI-related super PAC spending. See https://elections.transformernews.ai/ for live spending data."
+ }
+]
