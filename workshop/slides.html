@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mapping AI — Intro Slides</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; overflow: hidden; background: #ffffff; }
+
+    .slide {
+      display: none;
+      width: 100vw;
+      height: 100vh;
+      padding: 6vh 8vw;
+      flex-direction: column;
+      justify-content: center;
+      font-family: 'EB Garamond', Georgia, serif;
+      color: #1a1a1a;
+    }
+    .slide.active { display: flex; }
+
+    .slide h1 {
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+      max-width: 900px;
+    }
+
+    .slide h2 {
+      font-family: 'DM Mono', monospace;
+      font-size: clamp(11px, 1.4vw, 15px);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #888;
+      margin-bottom: 1.5rem;
+    }
+
+    .slide p {
+      font-size: clamp(18px, 2.5vw, 26px);
+      line-height: 1.5;
+      max-width: 800px;
+      color: #333;
+      margin-bottom: 1rem;
+    }
+
+    .slide .stat {
+      font-size: clamp(48px, 7vw, 80px);
+      font-weight: 400;
+      color: #2563eb;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .slide .stat-label {
+      font-family: 'DM Mono', monospace;
+      font-size: clamp(12px, 1.4vw, 16px);
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .slide .stats-row {
+      display: flex;
+      gap: clamp(2rem, 5vw, 6rem);
+      margin-top: 1rem;
+    }
+
+    .slide ul {
+      font-size: clamp(16px, 2.2vw, 24px);
+      line-height: 1.6;
+      padding-left: 1.5rem;
+      max-width: 800px;
+      color: #333;
+    }
+    .slide li { margin-bottom: 0.5rem; }
+
+    .slide .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+
+    .slide .stream-item {
+      padding: 1rem 0;
+      border-bottom: 1px solid #eee;
+    }
+    .slide .stream-item strong {
+      font-family: 'DM Mono', monospace;
+      font-size: clamp(12px, 1.3vw, 15px);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #2563eb;
+    }
+    .slide .stream-item p {
+      font-size: clamp(15px, 1.8vw, 20px);
+      margin-bottom: 0;
+      color: #555;
+    }
+
+    .slide-dark {
+      background: #1a1a1a;
+      color: #e0ddd8;
+    }
+    .slide-dark h1 { color: #ffffff; }
+    .slide-dark p { color: #aaa; }
+    .slide-dark h2 { color: #666; }
+
+    .slide-cream { background: #f8f7f5; }
+
+    /* NAV */
+    .slide-nav {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      display: flex;
+      gap: 0.5rem;
+      z-index: 100;
+    }
+    .slide-nav button {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      padding: 0.5rem 1rem;
+      border: 1px solid #ddd;
+      background: rgba(255,255,255,0.9);
+      cursor: pointer;
+      border-radius: 3px;
+      color: #555;
+    }
+    .slide-nav button:hover { background: #f0eeeb; color: #1a1a1a; }
+
+    .slide-counter {
+      position: fixed;
+      bottom: 2rem;
+      left: 2rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 0.05em;
+    }
+
+    .brand-footer {
+      position: fixed;
+      top: 2rem;
+      left: 2rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #bbb;
+      z-index: 100;
+    }
+    .slide-dark ~ .brand-footer { color: #444; }
+  </style>
+</head>
+<body>
+
+<div class="brand-footer">Mapping AI</div>
+
+<!-- SLIDE 1: Title -->
+<div class="slide active">
+  <h2>Mapping Party</h2>
+  <h1>Help us map the people, organizations, and ideas shaping U.S. AI policy</h1>
+  <p>An interactive stakeholder map of the American AI landscape. Open data. Built together.</p>
+</div>
+
+<!-- SLIDE 2: The problem -->
+<div class="slide slide-cream">
+  <h2>Why this exists</h2>
+  <h1>AI policy moves fast and the landscape is hard to see</h1>
+  <p>Hundreds of people and organizations are shaping how AI gets built and governed in America. Who they are, what they believe, and how they're connected is scattered across news articles, LinkedIn profiles, congressional testimony, and institutional memory.</p>
+  <p>We're trying to put it all in one place.</p>
+</div>
+
+<!-- SLIDE 3: What it is -->
+<div class="slide">
+  <h2>What we built</h2>
+  <h1>mapping-ai.org</h1>
+  <p>An interactive force-directed graph of the U.S. AI policy ecosystem. People, organizations, and resources linked by affiliations, funding, collaboration, and authorship. Filterable by category, searchable by name, plottable by regulatory stance and AGI timeline beliefs.</p>
+</div>
+
+<!-- SLIDE 4: Numbers -->
+<div class="slide slide-dark">
+  <h2>The database</h2>
+  <div class="stats-row">
+    <div>
+      <div class="stat">709</div>
+      <div class="stat-label">People</div>
+    </div>
+    <div>
+      <div class="stat">734</div>
+      <div class="stat-label">Organizations</div>
+    </div>
+    <div>
+      <div class="stat">161</div>
+      <div class="stat-label">Resources</div>
+    </div>
+    <div>
+      <div class="stat">2,228</div>
+      <div class="stat-label">Relationships</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5: Live demo placeholder -->
+<div class="slide slide-cream">
+  <h2>Live Demo</h2>
+  <h1>Let's look at the map</h1>
+  <p>Open <strong>mapping-ai.org/map.html</strong> and walk through: search, filters, node details, plot view, contribute panel.</p>
+</div>
+
+<!-- SLIDE 6: What needs work -->
+<div class="slide">
+  <h2>Where we need help</h2>
+  <h1>The data is messy and the tool has rough edges</h1>
+  <ul>
+    <li>44% of entities have no notes at all</li>
+    <li>Some notes contain AI-generated fabrications that look plausible</li>
+    <li>The UI has bugs we haven't found yet</li>
+    <li>The map could do more (timelines, shareable links, better plots)</li>
+    <li>Nobody outside this room knows about it</li>
+    <li>The data tells stories we haven't explored</li>
+  </ul>
+</div>
+
+<!-- SLIDE 7: Streams -->
+<div class="slide slide-cream">
+  <h2>Pick a stream</h2>
+  <div class="grid-2">
+    <div class="stream-item">
+      <strong>1. Bug Hunting</strong>
+      <p>Break things. Report what's broken.</p>
+    </div>
+    <div class="stream-item">
+      <strong>2. Data Enrichment</strong>
+      <p>Add missing people, orgs, and resources.</p>
+    </div>
+    <div class="stream-item">
+      <strong>3. Data Quality</strong>
+      <p>Find and flag errors, hallucinations, stale info.</p>
+    </div>
+    <div class="stream-item">
+      <strong>4. New Features</strong>
+      <p>Write code. Shareable links, timelines, better plots.</p>
+    </div>
+    <div class="stream-item">
+      <strong>5. Outreach &amp; Strategy</strong>
+      <p>Who uses this? How do we reach them?</p>
+    </div>
+    <div class="stream-item">
+      <strong>6. Data Viz &amp; Research</strong>
+      <p>Pull insights from the data for a research blog.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8: Let's go -->
+<div class="slide slide-dark">
+  <h2>Let's go</h2>
+  <h1>Pick your stream, grab a laptop, find your group</h1>
+  <p>Detailed instructions for each stream: open <strong>index.html</strong> on this same machine, or go to the shared link.</p>
+  <p style="margin-top:2rem;color:#666;">We'll regroup in about two hours for readouts.</p>
+</div>
+
+<div class="slide-counter" id="counter"></div>
+
+<div class="slide-nav">
+  <button onclick="prev()">Prev</button>
+  <button onclick="next()">Next</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let current = 0;
+
+  function show(i) {
+    slides.forEach(s => s.classList.remove('active'));
+    slides[i].classList.add('active');
+    document.getElementById('counter').textContent = (i + 1) + ' / ' + slides.length;
+
+    // adjust brand color for dark slides
+    const brand = document.querySelector('.brand-footer');
+    if (slides[i].classList.contains('slide-dark')) {
+      brand.style.color = '#444';
+    } else {
+      brand.style.color = '#bbb';
+    }
+  }
+
+  function next() { if (current < slides.length - 1) { current++; show(current); } }
+  function prev() { if (current > 0) { current--; show(current); } }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
+  });
+
+  show(0);
+</script>
+
+</body>
+</html>
