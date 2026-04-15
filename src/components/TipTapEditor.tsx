@@ -25,7 +25,7 @@ interface MentionItem {
 interface TipTapEditorProps {
   content?: string
   placeholder?: string
-  searchEntities: (query: string) => MentionItem[]
+  searchEntities: (query: string) => MentionItem[] | Promise<MentionItem[]>
   onUpdate?: (html: string, mentions: MentionData[]) => void
   disabled?: boolean
   className?: string
@@ -51,7 +51,7 @@ function extractMentions(editor: ReturnType<typeof useEditor>): MentionData[] {
 
 /** Create the mention suggestion plugin config. */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function createSuggestion(searchFn: (query: string) => MentionItem[]): any {
+function createSuggestion(searchFn: (query: string) => MentionItem[] | Promise<MentionItem[]>): any {
   return {
     items: ({ query }: { query: string }) => searchFn(query),
     render: () => {
@@ -178,6 +178,8 @@ export function TipTapEditor({
   const [showLinkPopover, setShowLinkPopover] = useState(false)
   const onUpdateRef = useRef(onUpdate)
   onUpdateRef.current = onUpdate
+  const searchEntitiesRef = useRef(searchEntities)
+  searchEntitiesRef.current = searchEntities
 
   const editor = useEditor({
     extensions: [
@@ -186,7 +188,7 @@ export function TipTapEditor({
       Placeholder.configure({ placeholder }),
       Mention.configure({
         HTMLAttributes: { class: 'mention' },
-        suggestion: createSuggestion(searchEntities),
+        suggestion: createSuggestion((q) => searchEntitiesRef.current(q)),
       }),
     ],
     content,

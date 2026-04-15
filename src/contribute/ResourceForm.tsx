@@ -2,15 +2,19 @@ import { useCallback } from 'react'
 import { Controller, type UseFormReturn } from 'react-hook-form'
 import { CustomSelect, buildOptions } from '../components/CustomSelect'
 import { TipTapEditor, type MentionData } from '../components/TipTapEditor'
+import { DuplicateDetection } from '../components/DuplicateDetection'
+import { InfoTooltip } from '../components/InfoTooltip'
 import { OrgSearch } from './OrgSearch'
 import { useEntityCache } from '../hooks/useEntityCache'
 import { useSubmitEntity } from '../hooks/useSubmitEntity'
 import { fuzzySearch } from '../lib/search'
+import { searchEntities as searchAPI } from '../lib/api'
 import type { UpdateContext } from './ContributeForm'
 
 interface ResourceFormProps {
   form: UseFormReturn<Record<string, unknown>>
   updateContext: UpdateContext | null
+  onEnterUpdateMode?: (entityData: Record<string, unknown>) => void
 }
 
 const CATEGORY_OPTIONS = buildOptions([
@@ -45,41 +49,64 @@ const LABEL_CLASS = 'font-mono text-[11px] uppercase tracking-wider text-[#555]'
 const INPUT_CLASS =
   'w-full px-3 py-2 font-mono text-[13px] border border-[#ddd] rounded bg-white outline-none transition-colors hover:border-[#999] focus:border-[#2563eb]'
 
-export function ResourceForm({ form, updateContext }: ResourceFormProps) {
+export function ResourceForm({ form, updateContext, onEnterUpdateMode }: ResourceFormProps) {
   const { register, control, watch, handleSubmit, formState: { errors } } = form
   const { cache } = useEntityCache()
   const submitEntity = useSubmitEntity()
 
-  // TipTap @mention search
+  // TipTap @mention search — local cache + pending API
   const searchEntities = useCallback(
-    (query: string) => {
-      if (!cache) return []
-      const results = fuzzySearch(cache.entities, query, undefined, 8)
-      return results.map((r) => ({
-        id: String(r.id),
-        entityType: r.entity_type,
-        entityId: r.id,
-        label: r.name,
-        detail: r.category ?? r.primary_org ?? '',
-      }))
+    async (query: string) => {
+      if (!query) return []
+      const local = cache
+        ? fuzzySearch(cache.entities, query, undefined, 8).map((r) => ({
+            id: String(r.id),
+            entityType: r.entity_type,
+            entityId: r.id,
+            label: r.name,
+            detail: r.category ?? r.primary_org ?? '',
+          }))
+        : []
+      if (query.length >= 2) {
+        try {
+          const pending = await searchAPI(query, undefined, 'pending')
+          const seenIds = new Set(local.map((r) => r.id))
+          for (const p of pending) {
+            if (!seenIds.has(String(p.id))) {
+              local.push({
+                id: String(p.id),
+                entityType: p.entity_type,
+                entityId: p.id,
+                label: p.name,
+                detail: `${p.category ?? ''} (pending)`.trim(),
+              })
+            }
+          }
+        } catch { /* local results still work */ }
+      }
+      return local
     },
     [cache],
   )
 
   const onSubmit = handleSubmit((data) => {
+    const { _hp, ...fields } = data
     submitEntity.mutate({
       type: 'resource',
       timestamp: new Date().toISOString(),
       data: {
-        ...data,
+        ...fields,
         entityId: updateContext?.entityId ?? undefined,
       },
-      _hp: '',
+      _hp: (_hp as string) ?? '',
     })
   })
 
   return (
     <form onSubmit={onSubmit} className="grid grid-cols-2 gap-4">
+      {/* Honeypot — hidden from humans, visible to bots */}
+      <input {...register('_hp')} type="text" tabIndex={-1} autoComplete="off" className="absolute -left-[9999px]" />
+
       {/* Title */}
       <div className="col-span-2">
         <label className={LABEL_CLASS}>
@@ -95,6 +122,14 @@ export function ResourceForm({ form, updateContext }: ResourceFormProps) {
           <span className="text-[11px] font-mono text-red-500 mt-0.5">
             {errors.resourceTitle.message as string}
           </span>
+        )}
+        {!updateContext && (
+          <DuplicateDetection
+            query={(watch('resourceTitle') as string) ?? ''}
+            entityType="resource"
+            onViewExisting={() => {}}
+            onUpdateExisting={(entity) => onEnterUpdateMode?.({ id: entity.id, name: entity.name, resourceTitle: entity.name })}
+          />
         )}
       </div>
 
@@ -195,7 +230,16 @@ export function ResourceForm({ form, updateContext }: ResourceFormProps) {
 
       {/* Notes (TipTap) */}
       <div className="col-span-2">
-        <label className={LABEL_CLASS}>Notes</label>
+        <label className={LABEL_CLASS}>
+          Notes
+          <InfoTooltip width={280}>
+            <strong>What to include:</strong><br />
+            {'• Context, impact & significance'}<br />
+            {'• Related work & responses'}<br />
+            {'• Key takeaways or controversies'}<br /><br />
+            <strong>Use @mentions</strong> to link related people, orgs, and resources.
+          </InfoTooltip>
+        </label>
         <Controller
           name="notesHtml"
           control={control}
@@ -232,6 +276,9 @@ export function ResourceForm({ form, updateContext }: ResourceFormProps) {
             {errors.submitterEmail.message as string}
           </span>
         )}
+        <span className="text-[12px] font-mono text-[#888] mt-0.5 block">
+          Your email will not be displayed publicly. It&apos;s used only if we need to contact you about your submission.
+        </span>
       </div>
 
       {/* Submit */}

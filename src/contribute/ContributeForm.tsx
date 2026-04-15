@@ -1,11 +1,13 @@
-import { useState, useCallback, useRef } from 'react'
+import { useState, useCallback, useRef, useEffect } from 'react'
 import { useForm, type UseFormReturn } from 'react-hook-form'
 import { DropdownProvider } from '../contexts/DropdownContext'
+import { useAutoSave } from '../hooks/useAutoSave'
 import { PillToggle } from './PillToggle'
 import { PersonForm } from './PersonForm'
 import { OrganizationForm } from './OrganizationForm'
 import { ResourceForm } from './ResourceForm'
 import { OrgCreationPanel } from './OrgCreationPanel'
+import { ExampleSubmission } from './ExampleSubmission'
 import { SuccessMessage } from './SuccessMessage'
 import type { Entity } from '../types/entity'
 
@@ -61,6 +63,21 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
   const formsRef = useRef({ person: personForm, organization: orgForm, resource: resourceForm })
   formsRef.current = { person: personForm, organization: orgForm, resource: resourceForm }
 
+  // Auto-save to localStorage (500ms debounce)
+  const autoSaveForms = useRef({ person: personForm, organization: orgForm, resource: resourceForm })
+  const { restore, clearDraft } = useAutoSave(autoSaveForms.current, activeTab, true)
+
+  // Restore draft on mount
+  const restoredRef = useRef(false)
+  useEffect(() => {
+    if (restoredRef.current) return
+    restoredRef.current = true
+    const result = restore()
+    if (result && result.restoredCount > 0) {
+      setActiveTab(result.activeTab as FormType)
+    }
+  }, [restore])
+
   // Cross-form navigation: switch tab and enter update mode
   const switchToFormInUpdateMode = useCallback(
     (formType: FormType, entityData: Partial<Entity>) => {
@@ -89,8 +106,9 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
       formsRef.current[formType].reset({})
       setUpdateContexts((prev) => ({ ...prev, [formType]: null }))
       setSuccessType(null)
+      clearDraft(formType)
     },
-    [],
+    [clearDraft],
   )
 
   // Org creation panel state
@@ -155,6 +173,9 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
           ))}
         </div>
 
+        {/* Example submission */}
+        <ExampleSubmission activeTab={activeTab} />
+
         {/* Person Form */}
         <div style={{ display: activeTab === 'person' ? 'block' : 'none' }}>
           <FormHeader
@@ -168,6 +189,7 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
             form={personForm}
             updateContext={updateContexts.person}
             onOrgPanelOpen={openOrgPanel}
+            onEnterUpdateMode={(data) => switchToFormInUpdateMode('person', data as Partial<Entity>)}
           />
         </div>
 
@@ -183,6 +205,7 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
           <OrganizationForm
             form={orgForm}
             updateContext={updateContexts.organization}
+            onEnterUpdateMode={(data) => switchToFormInUpdateMode('organization', data as Partial<Entity>)}
           />
         </div>
 
@@ -198,6 +221,7 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
           <ResourceForm
             form={resourceForm}
             updateContext={updateContexts.resource}
+            onEnterUpdateMode={(data) => switchToFormInUpdateMode('resource', data as Partial<Entity>)}
           />
         </div>
 
