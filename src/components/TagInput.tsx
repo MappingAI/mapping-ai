@@ -59,10 +59,10 @@ export function TagInput({
   const [results, setResults] = useState<TagSearchResult[]>([])
   const [isOpen, setIsOpen] = useState(false)
   const [activeIndex, setActiveIndex] = useState(-1)
-  const [isSearching, setIsSearching] = useState(false)
+  const [, setIsSearching] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const wrapperRef = useRef<HTMLDivElement>(null)
-  const debounceRef = useRef<ReturnType<typeof setTimeout>>()
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 
   const atMax = maxTags != null && tags.length >= maxTags
 
