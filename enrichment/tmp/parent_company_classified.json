@@ -1,0 +1,1098 @@
+[
+  {
+    "edge_id": 290,
+    "source_name": "Stanford University",
+    "target_name": "Stanford CRFM",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Stanford University is parent; Stanford CRFM is a Stanford sub-lab/center."
+  },
+  {
+    "edge_id": 291,
+    "source_name": "Stanford University",
+    "target_name": "Stanford Digital Economy Lab",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Stanford University is parent; Stanford Digital Economy Lab is a Stanford sub-lab/center."
+  },
+  {
+    "edge_id": 292,
+    "source_name": "Stanford University",
+    "target_name": "Stanford SIEPR",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Stanford University is parent; Stanford SIEPR is a Stanford sub-lab/center."
+  },
+  {
+    "edge_id": 293,
+    "source_name": "Stanford University",
+    "target_name": "Stanford HAI",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Stanford University is parent; Stanford HAI is a Stanford sub-lab/center."
+  },
+  {
+    "edge_id": 294,
+    "source_name": "Stanford University",
+    "target_name": "Stanford RegLab",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Stanford University is parent; Stanford RegLab is a Stanford sub-lab/center."
+  },
+  {
+    "edge_id": 295,
+    "source_name": "Massachusetts Institute of Technology",
+    "target_name": "MIT Shaping the Future of Work",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "MIT is parent of its program/lab/school MIT Shaping the Future of Work."
+  },
+  {
+    "edge_id": 296,
+    "source_name": "Massachusetts Institute of Technology",
+    "target_name": "MIT GOV/LAB",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "MIT is parent of its program/lab/school MIT GOV/LAB."
+  },
+  {
+    "edge_id": 297,
+    "source_name": "Massachusetts Institute of Technology",
+    "target_name": "MIT CSAIL",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "MIT is parent of its program/lab/school MIT CSAIL."
+  },
+  {
+    "edge_id": 298,
+    "source_name": "Massachusetts Institute of Technology",
+    "target_name": "MIT Media Lab",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "MIT is parent of its program/lab/school MIT Media Lab."
+  },
+  {
+    "edge_id": 299,
+    "source_name": "Massachusetts Institute of Technology",
+    "target_name": "MIT Algorithmic Alignment Group",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "MIT is parent of its program/lab/school MIT Algorithmic Alignment Group."
+  },
+  {
+    "edge_id": 300,
+    "source_name": "Massachusetts Institute of Technology",
+    "target_name": "MIT FutureTech",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "MIT is parent of its program/lab/school MIT FutureTech."
+  },
+  {
+    "edge_id": 301,
+    "source_name": "Harvard University",
+    "target_name": "Harvard Ash Center",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Harvard is parent of Harvard Ash Center."
+  },
+  {
+    "edge_id": 302,
+    "source_name": "Harvard University",
+    "target_name": "Harvard Berkman Klein Center",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Harvard is parent of Berkman Klein Center."
+  },
+  {
+    "edge_id": 303,
+    "source_name": "Princeton University",
+    "target_name": "Princeton CITP",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Princeton CITP is a Princeton center."
+  },
+  {
+    "edge_id": 304,
+    "source_name": "University of Cambridge",
+    "target_name": "Computational and Biological Learning Lab (University of Cambridge)",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Computational and Biological Learning Lab is at Cambridge."
+  },
+  {
+    "edge_id": 305,
+    "source_name": "University of Cambridge",
+    "target_name": "Meridian Cambridge",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Meridian Cambridge is hosted at Cambridge."
+  },
+  {
+    "edge_id": 306,
+    "source_name": "University of Cambridge",
+    "target_name": "Cambridge ERA:AI Fellowship",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Cambridge ERA:AI Fellowship is a Cambridge program."
+  },
+  {
+    "edge_id": 307,
+    "source_name": "University of Cambridge",
+    "target_name": "Leverhulme Centre for the Future of Intelligence",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Leverhulme CFI is at Cambridge."
+  },
+  {
+    "edge_id": 308,
+    "source_name": "University of Oxford",
+    "target_name": "Oxford Martin AI Governance Initiative",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Oxford Martin AI Governance Initiative is at Oxford."
+  },
+  {
+    "edge_id": 309,
+    "source_name": "University of Oxford",
+    "target_name": "Global Priorities Institute (University of Oxford)",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Global Priorities Institute is at Oxford."
+  },
+  {
+    "edge_id": 310,
+    "source_name": "UC Berkeley",
+    "target_name": "Berkeley Existential Risk Initiative (BERI)",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "BERI is affiliated with UC Berkeley as parent."
+  },
+  {
+    "edge_id": 311,
+    "source_name": "New York University",
+    "target_name": "NYU Alignment Research Group (ARG)",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "NYU Alignment Research Group is at NYU."
+  },
+  {
+    "edge_id": 312,
+    "source_name": "New York University",
+    "target_name": "ML4Good Laboratory - New York University",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "ML4Good Laboratory at NYU is at NYU."
+  },
+  {
+    "edge_id": 313,
+    "source_name": "Anthropic",
+    "target_name": "Anthropic Institute",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Anthropic Institute is Anthropic's institute."
+  },
+  {
+    "edge_id": 314,
+    "source_name": "Schmidt Futures",
+    "target_name": "Science of Trustworthy AI (Schmidt Sciences)",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Schmidt parent of its Science of Trustworthy AI program."
+  },
+  {
+    "edge_id": 315,
+    "source_name": "Schmidt Futures",
+    "target_name": "AI2050 (Schmidt Sciences)",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Schmidt parent of AI2050."
+  },
+  {
+    "edge_id": 353,
+    "source_name": "Massachusetts Institute of Technology",
+    "target_name": "MIT Sloan",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "MIT is parent of its program/lab/school MIT Sloan."
+  },
+  {
+    "edge_id": 441,
+    "source_name": "Google",
+    "target_name": "Google Brain",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Google Brain was a Google research division."
+  },
+  {
+    "edge_id": 442,
+    "source_name": "Google",
+    "target_name": "Google Research",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Google Research is Google's research division."
+  },
+  {
+    "edge_id": 443,
+    "source_name": "Microsoft",
+    "target_name": "Microsoft Research",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Microsoft Research is Microsoft's research division."
+  },
+  {
+    "edge_id": 444,
+    "source_name": "Meta",
+    "target_name": "Facebook AI Research (FAIR)",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "FAIR is Meta's AI research division."
+  },
+  {
+    "edge_id": 784,
+    "source_name": "UC Berkeley",
+    "target_name": "Berkeley Artificial Intelligence Research",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "BAIR is a UC Berkeley research lab."
+  },
+  {
+    "edge_id": 785,
+    "source_name": "Berkeley Artificial Intelligence Research",
+    "target_name": "UC Berkeley",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "BAIR is a UC Berkeley lab; source/target reversed."
+  },
+  {
+    "edge_id": 787,
+    "source_name": "Center for Long-Term Cybersecurity",
+    "target_name": "UC Berkeley",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "Center for Long-Term Cybersecurity is a UC Berkeley center."
+  },
+  {
+    "edge_id": 788,
+    "source_name": "UC Berkeley",
+    "target_name": "Berkeley Institute for Data Science",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Berkeley Institute for Data Science is at UC Berkeley."
+  },
+  {
+    "edge_id": 789,
+    "source_name": "Berkeley Institute for Data Science",
+    "target_name": "UC Berkeley",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "BIDS is a UC Berkeley center; reversed."
+  },
+  {
+    "edge_id": 790,
+    "source_name": "Responsible AI Initiative",
+    "target_name": "UC Berkeley",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "Responsible AI Initiative appears to be at UC Berkeley; reversed."
+  },
+  {
+    "edge_id": 824,
+    "source_name": "Stanford University",
+    "target_name": "Stanford Artificial Intelligence Laboratory (SAIL)",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "SAIL is a Stanford lab."
+  },
+  {
+    "edge_id": 825,
+    "source_name": "Stanford Artificial Intelligence Laboratory (SAIL)",
+    "target_name": "Stanford University",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "SAIL is a Stanford lab; reversed."
+  },
+  {
+    "edge_id": 826,
+    "source_name": "Stanford University",
+    "target_name": "Stanford Center for AI Safety",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Stanford Center for AI Safety is at Stanford."
+  },
+  {
+    "edge_id": 827,
+    "source_name": "Stanford Center for AI Safety",
+    "target_name": "Stanford University",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "Stanford Center for AI Safety is at Stanford; reversed."
+  },
+  {
+    "edge_id": 830,
+    "source_name": "Massachusetts Institute of Technology",
+    "target_name": "MIT Data to AI Lab",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Data to AI Lab is at MIT."
+  },
+  {
+    "edge_id": 831,
+    "source_name": "MIT Data to AI Lab",
+    "target_name": "Massachusetts Institute of Technology",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "Data to AI Lab is at MIT; reversed."
+  },
+  {
+    "edge_id": 833,
+    "source_name": "Massachusetts Institute of Technology",
+    "target_name": "MIT Schwarzman College of Computing",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "MIT Schwarzman College of Computing is at MIT."
+  },
+  {
+    "edge_id": 834,
+    "source_name": "MIT Schwarzman College of Computing",
+    "target_name": "Massachusetts Institute of Technology",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "MIT Schwarzman College is at MIT; reversed."
+  },
+  {
+    "edge_id": 835,
+    "source_name": "Harvard University",
+    "target_name": "Kempner Institute",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Kempner Institute is housed at Harvard."
+  },
+  {
+    "edge_id": 837,
+    "source_name": "Harvard University",
+    "target_name": "Harvard Berkman Klein Center",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Berkman Klein Center is part of Harvard."
+  },
+  {
+    "edge_id": 842,
+    "source_name": "The Princeton Laboratory for Artificial Intelligence",
+    "target_name": "Princeton University",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "Princeton Lab for AI is a Princeton sub-unit; source/target reversed."
+  },
+  {
+    "edge_id": 843,
+    "source_name": "ai@cam",
+    "target_name": "University of Cambridge",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "ai@cam is Cambridge's AI initiative; child→parent edge."
+  },
+  {
+    "edge_id": 848,
+    "source_name": "Saïd Business School",
+    "target_name": "University of Oxford",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "Saïd Business School is part of Oxford; child→parent."
+  },
+  {
+    "edge_id": 851,
+    "source_name": "Global AI Frontier Lab",
+    "target_name": "New York University",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "Global AI Frontier Lab is hosted at NYU; reversed."
+  },
+  {
+    "edge_id": 854,
+    "source_name": "Senate Committee on Commerce, Science and Transportation",
+    "target_name": "United States Senate",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "Senate Commerce Committee is a Senate committee; reversed."
+  },
+  {
+    "edge_id": 855,
+    "source_name": "Senate AI Working Group",
+    "target_name": "United States Senate",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "Senate AI Working Group sits within the Senate; reversed."
+  },
+  {
+    "edge_id": 856,
+    "source_name": "House Bipartisan Task Force on Artificial Intelligence",
+    "target_name": "U.S. House of Representatives",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "House Bipartisan Task Force on AI is a House committee; reversed."
+  },
+  {
+    "edge_id": 857,
+    "source_name": "House Committee on Science Space & Tech",
+    "target_name": "U.S. House of Representatives",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "House Science Committee is a House committee; reversed."
+  },
+  {
+    "edge_id": 858,
+    "source_name": "Education and Workforce Committee",
+    "target_name": "U.S. House of Representatives",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "Education and Workforce Committee is a House committee; reversed."
+  },
+  {
+    "edge_id": 864,
+    "source_name": "International Trade Administration",
+    "target_name": "Department of Commerce",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "ITA is part of Department of Commerce; reversed."
+  },
+  {
+    "edge_id": 867,
+    "source_name": "Government Operations Agency",
+    "target_name": "State of California",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "Government Operations Agency is part of State of California; reversed."
+  },
+  {
+    "edge_id": 868,
+    "source_name": "California Department of General Services",
+    "target_name": "State of California",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "DGS is a California state department; reversed."
+  },
+  {
+    "edge_id": 869,
+    "source_name": "California Department of Technology",
+    "target_name": "State of California",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "California Dept of Technology is part of State of CA; reversed."
+  },
+  {
+    "edge_id": 870,
+    "source_name": "California Department of Human Resources",
+    "target_name": "State of California",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "CalHR is part of State of California; reversed."
+  },
+  {
+    "edge_id": 874,
+    "source_name": "NYS Office of Information Technology Services",
+    "target_name": "State of New York",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "NYS Office of IT Services is part of State of NY; reversed."
+  },
+  {
+    "edge_id": 876,
+    "source_name": "Ohio Department of Job and Family Services",
+    "target_name": "State of Ohio",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "Ohio Dept of Job and Family Services is part of State of Ohio; reversed."
+  },
+  {
+    "edge_id": 888,
+    "source_name": "Google",
+    "target_name": "Google DeepMind",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Google DeepMind is part of Google."
+  },
+  {
+    "edge_id": 893,
+    "source_name": "LinkedIn",
+    "target_name": "Microsoft",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "Microsoft owns LinkedIn; source/target reversed."
+  },
+  {
+    "edge_id": 895,
+    "source_name": "Darden School of Business",
+    "target_name": "University of Virginia",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "Darden School is part of UVA; reversed."
+  },
+  {
+    "edge_id": 896,
+    "source_name": "UVA Information Technology Services",
+    "target_name": "University of Virginia",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "UVA IT Services is part of UVA; reversed."
+  },
+  {
+    "edge_id": 900,
+    "source_name": "College of Connected Computing",
+    "target_name": "Vanderbilt University",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "College of Connected Computing is part of Vanderbilt; reversed."
+  },
+  {
+    "edge_id": 989,
+    "source_name": "Google DeepMind",
+    "target_name": "Google Brain",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "Google Brain was merged INTO Google DeepMind; DeepMind is parent of merged entity."
+  },
+  {
+    "edge_id": 991,
+    "source_name": "Alphabet Inc.",
+    "target_name": "Google Research",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Alphabet is parent of Google Research (via Google)."
+  },
+  {
+    "edge_id": 994,
+    "source_name": "Google Research",
+    "target_name": "People + AI Research",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "PAIR is a team at Google Research."
+  },
+  {
+    "edge_id": 1001,
+    "source_name": "New York University",
+    "target_name": "NYU School of Medicine",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "NYU School of Medicine is part of NYU."
+  },
+  {
+    "edge_id": 1009,
+    "source_name": "University of Cambridge",
+    "target_name": "Stripe",
+    "classification": "not_parent_company",
+    "confidence": "high",
+    "reasoning": "Cambridge is not parent of Stripe; evidence is unrelated (refers to Bridge stablecoin firm)."
+  },
+  {
+    "edge_id": 1024,
+    "source_name": "Stanford University",
+    "target_name": "Coursera",
+    "classification": "not_parent_company",
+    "confidence": "high",
+    "reasoning": "Stanford did not own Coursera; co-founded by Stanford professors but Coursera is a separate company."
+  },
+  {
+    "edge_id": 1047,
+    "source_name": "Yale Center for Research Computing",
+    "target_name": "Yale University",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "Yale Center for Research Computing is at Yale; reversed."
+  },
+  {
+    "edge_id": 1052,
+    "source_name": "European Commission",
+    "target_name": "European Union",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "European Commission is an institution of the EU; reversed."
+  },
+  {
+    "edge_id": 1053,
+    "source_name": "European Artificial Intelligence Board",
+    "target_name": "European Union",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "European AI Board is created by the EU AI Act; EU is parent."
+  },
+  {
+    "edge_id": 1063,
+    "source_name": "Johns Hopkins University",
+    "target_name": "Johns Hopkins Applied Physics Laboratory",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Johns Hopkins APL is part of Johns Hopkins University."
+  },
+  {
+    "edge_id": 1067,
+    "source_name": "Speed School of Engineering",
+    "target_name": "University of Louisville",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "Speed School of Engineering is at U of Louisville; reversed."
+  },
+  {
+    "edge_id": 1076,
+    "source_name": "USC Center for AI in Society",
+    "target_name": "USC",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "USC Center for AI in Society is part of USC; reversed."
+  },
+  {
+    "edge_id": 1077,
+    "source_name": "USC Suzanne Dworak-Peck School of Social Work",
+    "target_name": "USC",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "Suzanne Dworak-Peck is a USC school; reversed."
+  },
+  {
+    "edge_id": 1078,
+    "source_name": "USC Viterbi School of Engineering",
+    "target_name": "USC",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "Viterbi School is at USC; reversed."
+  },
+  {
+    "edge_id": 1079,
+    "source_name": "USC Marshall School of Business",
+    "target_name": "USC",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "USC Marshall School is at USC; reversed."
+  },
+  {
+    "edge_id": 1081,
+    "source_name": "USC School of Advanced Computing",
+    "target_name": "USC",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "USC School of Advanced Computing is at USC; reversed."
+  },
+  {
+    "edge_id": 1083,
+    "source_name": "University of Pennsylvania",
+    "target_name": "Wharton School",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Wharton is the business school of UPenn."
+  },
+  {
+    "edge_id": 1090,
+    "source_name": "Jurist Center for Artificial Intelligence",
+    "target_name": "Tulane University",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "Jurist Center for AI is at Tulane; reversed."
+  },
+  {
+    "edge_id": 1091,
+    "source_name": "Center for Community-Engaged Artificial Intelligence",
+    "target_name": "Tulane University",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "CEAI is at Tulane; reversed."
+  },
+  {
+    "edge_id": 1106,
+    "source_name": "Stanford University",
+    "target_name": "Stanford Law School",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Stanford Law School is part of Stanford."
+  },
+  {
+    "edge_id": 1147,
+    "source_name": "College of Computing, Data Science, and Society",
+    "target_name": "Berkeley Institute for Data Science",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "BIDS is part of UC Berkeley's CDSS; CDSS is parent."
+  },
+  {
+    "edge_id": 1172,
+    "source_name": "ServiceNow",
+    "target_name": "Element AI",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "ServiceNow acquired Element AI in 2020."
+  },
+  {
+    "edge_id": 1192,
+    "source_name": "McGill Centre for Intelligent Machines",
+    "target_name": "McGill University",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "McGill Centre for Intelligent Machines is at McGill; reversed."
+  },
+  {
+    "edge_id": 1193,
+    "source_name": "McGill Collaborative for AI and Society",
+    "target_name": "McGill University",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "McGill Collaborative for AI and Society is at McGill; reversed."
+  },
+  {
+    "edge_id": 1194,
+    "source_name": "McGill University",
+    "target_name": "McGill AI Lab",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "McGill AI Lab is a student lab at McGill."
+  },
+  {
+    "edge_id": 1206,
+    "source_name": "Public Investment Fund",
+    "target_name": "Humain",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "HUMAIN is a PIF company."
+  },
+  {
+    "edge_id": 1301,
+    "source_name": "Massachusetts Institute of Technology",
+    "target_name": "MIT Jameel Clinic",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "MIT is parent of its program/lab/school MIT Jameel Clinic."
+  },
+  {
+    "edge_id": 1303,
+    "source_name": "Massachusetts Institute of Technology",
+    "target_name": "MIT Computer Science & Artificial Intelligence Laboratory",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "MIT is parent of its program/lab/school MIT Computer Science & Artificial Intelligence Laboratory."
+  },
+  {
+    "edge_id": 1394,
+    "source_name": "Stanford University",
+    "target_name": "Stanford Vision and Learning Lab",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Stanford Vision and Learning Lab is at Stanford."
+  },
+  {
+    "edge_id": 1403,
+    "source_name": "Harvard University",
+    "target_name": "Harvard Faculty of Arts and Sciences",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Faculty of Arts and Sciences is a Harvard school."
+  },
+  {
+    "edge_id": 1728,
+    "source_name": "Georgetown University",
+    "target_name": "Center for Security and Emerging Technology (CSET)",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "CSET is a research org within Georgetown's Walsh School."
+  },
+  {
+    "edge_id": 1750,
+    "source_name": "OpenAI",
+    "target_name": "Anthropic",
+    "classification": "not_parent_company",
+    "confidence": "high",
+    "reasoning": "Anthropic founders came from OpenAI but Anthropic is independent; not parent_company."
+  },
+  {
+    "edge_id": 1828,
+    "source_name": "Google Brain",
+    "target_name": "Google DeepMind",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Google Brain merged INTO DeepMind; DeepMind is the resulting parent."
+  },
+  {
+    "edge_id": 1829,
+    "source_name": "Google",
+    "target_name": "Google DeepMind",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Google is parent of Google DeepMind."
+  },
+  {
+    "edge_id": 1836,
+    "source_name": "Modeling Cooperation",
+    "target_name": "Convergence Analysis",
+    "classification": "not_parent_company",
+    "confidence": "high",
+    "reasoning": "Fiscal sponsorship is not parent_company ownership."
+  },
+  {
+    "edge_id": 1858,
+    "source_name": "RAND Center on AI, Security, and Technology",
+    "target_name": "RAND Corporation",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "RAND CAST is a RAND center; reversed."
+  },
+  {
+    "edge_id": 1864,
+    "source_name": "Meridian Cambridge",
+    "target_name": "Geodesic Research",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Geodesic Research is a project of Meridian Cambridge; Meridian is parent."
+  },
+  {
+    "edge_id": 1882,
+    "source_name": "Princeton University",
+    "target_name": "Princeton AI Lab",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Princeton AI Lab is a Princeton sub-unit."
+  },
+  {
+    "edge_id": 1893,
+    "source_name": "Rethink Priorities",
+    "target_name": "Epoch AI",
+    "classification": "not_parent_company",
+    "confidence": "high",
+    "reasoning": "Fiscal sponsorship; Epoch later incorporated independently."
+  },
+  {
+    "edge_id": 1937,
+    "source_name": "U.S. Senate Commerce Committee",
+    "target_name": "Senate AI Working Group",
+    "classification": "correct",
+    "confidence": "medium",
+    "reasoning": "Senate Commerce Committee chair Schumer led the AI Working Group; Commerce is parent of the working-group effort."
+  },
+  {
+    "edge_id": 1947,
+    "source_name": "University of Oxford",
+    "target_name": "Oxford Martin School",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Oxford Martin School is part of Oxford."
+  },
+  {
+    "edge_id": 1968,
+    "source_name": "Ashgro",
+    "target_name": "Alignment Ecosystem Development (AED)",
+    "classification": "not_parent_company",
+    "confidence": "high",
+    "reasoning": "Fiscal sponsorship relationship, not ownership."
+  },
+  {
+    "edge_id": 1976,
+    "source_name": "New York University",
+    "target_name": "AI Now Institute",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "AI Now Institute was launched in partnership with NYU as host parent."
+  },
+  {
+    "edge_id": 1982,
+    "source_name": "Vox Media",
+    "target_name": "The Verge",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "The Verge was founded by Vox Media as parent."
+  },
+  {
+    "edge_id": 1991,
+    "source_name": "SpaceX",
+    "target_name": "xAI",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "SpaceX acquired xAI as wholly owned subsidiary in 2026."
+  },
+  {
+    "edge_id": 1992,
+    "source_name": "xAI",
+    "target_name": "X",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "xAI acquired X in 2025."
+  },
+  {
+    "edge_id": 1998,
+    "source_name": "FAR.AI",
+    "target_name": "Safe AI Forum",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "SAIF was incubated at FAR.AI as fiscally sponsored project; FAR.AI was parent at time."
+  },
+  {
+    "edge_id": 2008,
+    "source_name": "OpenAI",
+    "target_name": "Safe Superintelligence Inc.",
+    "classification": "not_parent_company",
+    "confidence": "high",
+    "reasoning": "SSI was founded by ex-OpenAI staff but is independent; not subsidiary."
+  },
+  {
+    "edge_id": 2022,
+    "source_name": "Ought",
+    "target_name": "Forethought (AI Safety Research Nonprofit)",
+    "classification": "not_parent_company",
+    "confidence": "medium",
+    "reasoning": "Forethought built itself out of the old Forethought Foundation; reorganization/spin, not clean parent_company."
+  },
+  {
+    "edge_id": 2042,
+    "source_name": "Safe AI Forum",
+    "target_name": "FAR.AI",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "Safe AI Forum was incubated at FAR.AI; FAR is parent (historical), source/target reversed."
+  },
+  {
+    "edge_id": 2055,
+    "source_name": "Cooperative AI Foundation",
+    "target_name": "Cooperative AI Summer School",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Cooperative AI Foundation runs the Summer School."
+  },
+  {
+    "edge_id": 2067,
+    "source_name": "Rethink Priorities",
+    "target_name": "Institute for AI Policy and Strategy (IAPS)",
+    "classification": "not_parent_company",
+    "confidence": "high",
+    "reasoning": "Fiscal sponsorship, not ownership."
+  },
+  {
+    "edge_id": 2080,
+    "source_name": "University of Cambridge",
+    "target_name": "Cambridge AI Safety Hub",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Cambridge AI Safety Hub is hosted at Cambridge."
+  },
+  {
+    "edge_id": 2081,
+    "source_name": "Cambridge AI Safety Hub",
+    "target_name": "Mentorship for Alignment Research Students (MARS)",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "MARS is a CAISH program."
+  },
+  {
+    "edge_id": 2086,
+    "source_name": "Pathfinder Fellowship (Kairos)",
+    "target_name": "Supervised Program for Alignment Research (SPAR)",
+    "classification": "not_parent_company",
+    "confidence": "medium",
+    "reasoning": "Pathfinder and SPAR are sibling programs both run by Kairos; not parent-child."
+  },
+  {
+    "edge_id": 2087,
+    "source_name": "UC Berkeley",
+    "target_name": "Berkeley AI Safety Initiative for Students (BASIS)",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "BASIS is a UC Berkeley student initiative."
+  },
+  {
+    "edge_id": 2103,
+    "source_name": "Meta",
+    "target_name": "Meta AI",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "Meta AI is owned by Meta."
+  },
+  {
+    "edge_id": 2109,
+    "source_name": "National Institute of Standards and Technology",
+    "target_name": "Center for AI Standards and Innovation (CAISI)",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "NIST is parent of CAISI (housed within NIST)."
+  },
+  {
+    "edge_id": 2110,
+    "source_name": "Center for AI Standards and Innovation (CAISI)",
+    "target_name": "Department of Commerce",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "CAISI sits under NIST under Commerce; reversed (CAISI is child)."
+  },
+  {
+    "edge_id": 2175,
+    "source_name": "Rethink Priorities",
+    "target_name": "Apollo Research",
+    "classification": "not_parent_company",
+    "confidence": "high",
+    "reasoning": "Fiscal sponsorship; Apollo is independent."
+  },
+  {
+    "edge_id": 2182,
+    "source_name": "Model Evaluation & Threat Research (METR)",
+    "target_name": "Alignment Research Center (ARC)",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "METR was spun out of ARC; ARC is parent (historical), source/target reversed."
+  },
+  {
+    "edge_id": 2187,
+    "source_name": "UC Berkeley",
+    "target_name": "Center for Human-Compatible AI (CHAI)",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "CHAI is a research center at UC Berkeley."
+  },
+  {
+    "edge_id": 2204,
+    "source_name": "EleutherAI",
+    "target_name": "Conjecture",
+    "classification": "not_parent_company",
+    "confidence": "high",
+    "reasoning": "Conjecture founders came from EleutherAI but Conjecture is independent; alumni pipeline, not subsidiary."
+  },
+  {
+    "edge_id": 2230,
+    "source_name": "Future of Humanity Institute (closed 2024)",
+    "target_name": "Centre for the Governance of AI (GovAI)",
+    "classification": "correct",
+    "confidence": "high",
+    "reasoning": "GovAI was originally part of FHI at Oxford; FHI was parent."
+  },
+  {
+    "edge_id": 2233,
+    "source_name": "Effective Ventures",
+    "target_name": "Centre for the Governance of AI (GovAI)",
+    "classification": "not_parent_company",
+    "confidence": "high",
+    "reasoning": "Fiscal sponsorship that GovAI is spinning out of; not ownership."
+  },
+  {
+    "edge_id": 2324,
+    "source_name": "Bureau of Industry and Security (BIS)",
+    "target_name": "Department of Commerce",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "BIS is an agency within Department of Commerce; reversed."
+  },
+  {
+    "edge_id": 2325,
+    "source_name": "National Security Council (NSC)",
+    "target_name": "White House",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "NSC sits within EOP/White House; reversed."
+  },
+  {
+    "edge_id": 2326,
+    "source_name": "President's Council of Advisors on Science and Technology (PCAST)",
+    "target_name": "White House",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "PCAST is a White House advisory committee; reversed."
+  },
+  {
+    "edge_id": 2327,
+    "source_name": "Bureau of Cyberspace and Digital Policy (CDP)",
+    "target_name": "U.S. Department of State",
+    "classification": "flipped",
+    "confidence": "high",
+    "reasoning": "CDP is a bureau within State Dept; reversed."
+  }
+]

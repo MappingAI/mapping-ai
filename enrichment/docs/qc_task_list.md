@@ -2,10 +2,6 @@
 
 Execution tracker for QC remediation. Source: [`logs/audits/qc-report-20260414.md`](../logs/audits/qc-report-20260414.md).
 
-**Conventions:**
-- ✓ Complete = exhaustive DB scan, just execute the fix
-- ⚠️ Sampled = examples only, fix + run additional sampling to find more
-
 ---
 
 ## Phase 1: Known Complete Issues (execute directly)
@@ -233,11 +229,33 @@ Connectivity sweep 2026-04-14: 17 edges added via `qc-connectivity-sweep`. All 1
 
 ## Phase 5: Additional QC Checks Not Yet Run
 
-- [ ] HEAD-request all `website` and `resource_url` values to catch 404s
-- [ ] Validate Twitter handles
-- [ ] Validate Bluesky handles
-- [ ] Edge directionality audit on edges added after Phase 4B
-- [ ] Person→person edges: find + review (many should route through an org)
-- [ ] Org→org edges: audit `edge_type` appropriateness
+- [x] **HEAD-request all `website` and `resource_url` values** — 2026-04-14 via `scripts/qc_url_handle_check.py`. Report: [`logs/audits/qc-urls-handles-20260414.md`](../logs/audits/qc-urls-handles-20260414.md). 952 URLs checked (797 websites + 155 resource_urls). **868 OK**, **23 genuine 404s**, **23 network errors**, **28 403s** (anti-bot false alarms on healthy sites), **8 429s** (rate-limited during check), **2 401s** (WSJ/book paywalls — expected).
+  - **23 real 404s to fix:** resources 549 (safe.ai/statement), 550 (nist.gov/ai-rmf), 645 (Anthropic interpretability), 650 (Biden EO — needs archive URL), 653 (UK intl AI safety report), 655 (darioamodei.com/technology-adolescence), 660 (governance.ai), 667 (aifutures.org), 668 (dwarkeshpatel.com crisp/fuzzy), 676 (Anthropic values-in-wild), 678 (arxiv persona-selection), 679 (EA forum talent-needs), 681 (dev.mondaq.com — use production mondaq); websites 166 (Schumer press release), 202/513 (redwoodresearch.org/mlab), 1062 (civicsignals.io), 1437 (ai.gov/naiac), 1488 (ai.gov/naiio), 1629 (nist.gov/aisi consortium), 1790 (whitehouse.gov/nsc — new admin URL), 1791 (whitehouse.gov/pcast), 1792 (state.gov cyberspace bureau).
+  - **5 clearly-dead domains to null/remove:** 153 Geodesic Research (DNS), 236 Future of Humanity Institute (closed 2024, DNS), 245 Data Workers' Inquiry (DNS timeout), 332 AI Safety Hub (DNS), 426 Stop AGI (DNS).
+  - **8 SSL cert failures on live sites** (stdlib SSL is strict — sites work fine in browsers, likely need urllib3 with different cert bundle to retest): 565 ai-alignment.com, 594/640 leginfo.legislature.ca.gov, 1028 house.gov, 1029 senate.ca.gov, 1044 virginia.edu, 1159 dgs.ca.gov, 1435 college-de-france.fr. **No action needed** — these URLs are correct.
+  - **1 URL format bug:** 723 Pete Ricketts `ricketts.senate.gov` missing `https://` prefix — add scheme.
+  - **Retry list (non-bugs):** 28 403s + 8 429s + TimeoutErrors on washingtonpost.com/amd.com/wharton.upenn.edu are protocol-level rejections; sites are live. Skip.
+- [ ] Validate Twitter handles — **deferred 2026-04-14**. Twitter syndication endpoint aggressively rate-limits our checker; attempted at 20 workers hit 167 of 208 handles with HTTP 429. Checker logic is sound (the 9 real-invalids flagged before rate-limiting — e.g., `@MeredithWhittaker`, `@neil_t` for MIT FutureTech, `@EAFunds`, `@aiwi_org`, `@WhiteHouseOSTP`, `@MidasProject`, `@mitgovlab`, `@MaboratoryIntel`, `@ExistentialSafe` — all returned the 2.2KB "not found" stub). Also surfaced suspect handles that look like paste errors (`@mit`, `@stanford`, `@princeton`, `@gmail`, `@time`, `@ai`, `@UC`, `@Berkeley`, `@protonmail`, `@kashmir`, `@Zapier`, `@Shut_downAmazon`, `@metro`, `@t`, `@csail`, `@cs`, `@gazette`, `@baselinescene`, `@strictlyvc`, `@Fred`) — these are almost certainly wrong. Recommend either (a) re-run with sequential pacing + long backoff (~30–40 min), or (b) manual review of the paste-error-looking handles since those are the highest-confidence fixes.
+- [x] **Validate Bluesky handles** — 2026-04-14 via public.api.bsky.app resolveHandle. 5 checked: 4 valid (6/8 Dario Amodei — both same handle; 716 Melissa Bean; 723 Pete Ricketts). **1 invalid: 725 Alexandra Mealer `@AlexMealer.bsky.social`** (HTTP 400, handle doesn't resolve) — fix or null.
+- [x] **Edge directionality audit on edges added after Phase 4B** — 2026-04-14. Scanned 122 edges created by `phase4-backfill`, `phase4a3-backfill`, `qc-connectivity-sweep`, `qc-orphan-resources`, `qc-orphan-orgs-primary-org` against type-directionality conventions (employer/member/founder = person→org; publisher = org→resource; funder/parent_company/partner = org→org). **0 directionality issues found.**
+- [x] **Person→person edges: find + review** — 2026-04-14. 196 total: 160 collaborator, 20 advisor, 10 supporter, 5 critic, 1 founder. Findings:
+  - **73 legislator co-sponsor pairs** (Senate 66 + House 7) — all have specific bill/legislation evidence; kept as-is (routing through "United States Senate" as shared employer would lose bill-specific context).
+  - **14 non-legislator same-org pairs** reviewed — all legitimate work products (Norvig/Thrun MOOC, AI Futures Project co-authors, Hassabis/Jumper Nobel, Yudkowsky/Soares book, Kapoor/Narayanan *AI Snake Oil*, Tuna/Moskovitz OpenPhil couple, etc.). 1 weak-evidence flag: edge 1597 Brynjolfsson→Unger evidence is just "ERIK BRYNJOLFSSON, GABRIEL UNGER" (author-list fragment).
+  - **⚠ 19 reverse-direction duplicate pairs** (A→B and B→A both exist as collaborator) — pending dedup: 763/1096 Russell↔Norvig, 795/1561 Bengio↔LeCun, 1110/1465 Cotton↔Coons, 1112/1216 Kim↔Husted, 1115/1482 Risch↔Luján, 1223/1582 AOC↔Sanders, 1286/1353 Kratsios↔Sacks, 752/1475 Schumer↔Young, 779/1133 Schatz↔Kennedy, 1267/1474 Booker↔Heinrich, plus 9 more. Also 1411/1614 Kapoor↔Narayanan (not reverse-dup but both-direction-with-different-ids near-dup).
+- [x] **Org→org edges: audit `edge_type` appropriateness** — 2026-04-14. 503 total: 196 partner, 136 parent_company, 102 funder, 58 collaborator, 6 member, 3 critic, 2 supporter. Evidence pattern scan on partner edges surfaced 3 flags:
+  - **⚠ edge 1992 xAI → X (partner)** — evidence: "xAI acquired sister company X" → should be `parent_company` (xAI now parent of X).
+  - edge 1209 Humain → Nvidia (partner) — evidence says Humain is subsidiary *of PIF*, not of Nvidia; Humain↔Nvidia itself is partnership. **Keep as-is.**
+  - edge 1906 Effective Institutions Project → Forward Global (partner) — evidence is programming-partnership, not funding. **Keep as-is** (matched "donors" keyword but context is co-programming a series *for* donors).
+  - **⚠ 1 reverse-direction duplicate**: edges 958/1158 Mila ↔ Université de Montréal (partner) — pending dedup.
+  - **Parent_company directionality is inconsistent in DB** — spot-check shows mixed conventions (USC Marshall→USC = child→parent; FAR.AI→Safe AI Forum = parent→child). **Flag for larger normalization decision** — not fixable without user-set convention.
+- [x] **Follow-up fixes applied** 2026-04-14 (ONBOARDING.md:989 settles convention as parent → child):
+  - **(a) Reverse-dup edges deleted** — 20 edges (19 person-collaborator pairs + Mila↔UdeM partner pair + Kapoor↔Narayanan dedup). Kept the edge with richer evidence per pair. Collaborator: 267→248; Partner: 206→204.
+  - **(b) Edge 1992 xAI→X reclassified** `partner` → `parent_company` (role="Acquirer"; xAI acquired X, March 2025).
+  - **(c) `parent_company` normalized to parent→child.** Agent-classified all 137 edges: 75 already correct, **49 flipped** (source↔target swap applied — e.g. USC Marshall School of Business → USC is now USC → USC Marshall School of Business; CA sub-agencies → State of California; USC schools; ITA/BIS/NSC/PCAST/CDP/CAISI → umbrella departments; LinkedIn → Microsoft; Google Brain → Google DeepMind; etc.), 13 flagged as not-really-parent_company (next bullet).
+- [ ] **Follow-up flagged by classification agent — 13 edges that aren't really `parent_company`** (kept in DB for now, pending user decision on delete vs convert):
+  - **Bad evidence (1)** — recommend DELETE: 1009 University of Cambridge → Stripe (evidence actually refers to a different "Bridge" stablecoin firm, not Stripe).
+  - **Alumni/cofounding pipelines, not current ownership (4)** — recommend DELETE: 1024 Stanford → Coursera, 1750 OpenAI → Anthropic, 2008 OpenAI → Safe Superintelligence Inc., 2204 EleutherAI → Conjecture.
+  - **Fiscal sponsorships, not ownership (6)** — recommend CONVERT to `partner` (no `fiscal_sponsor` type in canon): 1836 Modeling Cooperation → Convergence Analysis, 1893 Rethink Priorities → Epoch AI, 1968 Ashgro → AED, 2067 Rethink Priorities → IAPS, 2175 Rethink Priorities → Apollo Research, 2233 Effective Ventures → GovAI.
+  - **Reorg / sibling programs (2)** — recommend CONVERT to `partner`: 2022 Ought → Forethought (reorg spin), 2086 Pathfinder Fellowship (Kairos) → SPAR (sibling Kairos programs).
 - [ ] Extract entity names from notes → surface missing entities to seed
 - [ ] Location field consistency check (non-standard formats)

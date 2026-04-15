@@ -1,0 +1,1372 @@
+[
+ {
+  "edge_id": 290,
+  "source_id": 1019,
+  "source_name": "Stanford University",
+  "source_category": "Academic",
+  "target_id": 819,
+  "target_name": "Stanford CRFM",
+  "target_category": "Academic",
+  "evidence": ""
+ },
+ {
+  "edge_id": 291,
+  "source_id": 1019,
+  "source_name": "Stanford University",
+  "source_category": "Academic",
+  "target_id": 944,
+  "target_name": "Stanford Digital Economy Lab",
+  "target_category": "Academic",
+  "evidence": ""
+ },
+ {
+  "edge_id": 292,
+  "source_id": 1019,
+  "source_name": "Stanford University",
+  "source_category": "Academic",
+  "target_id": 945,
+  "target_name": "Stanford SIEPR",
+  "target_category": "Academic",
+  "evidence": ""
+ },
+ {
+  "edge_id": 293,
+  "source_id": 1019,
+  "source_name": "Stanford University",
+  "source_category": "Academic",
+  "target_id": 452,
+  "target_name": "Stanford HAI",
+  "target_category": "Academic",
+  "evidence": ""
+ },
+ {
+  "edge_id": 294,
+  "source_id": 1019,
+  "source_name": "Stanford University",
+  "source_category": "Academic",
+  "target_id": 542,
+  "target_name": "Stanford RegLab",
+  "target_category": "Academic",
+  "evidence": ""
+ },
+ {
+  "edge_id": 295,
+  "source_id": 1020,
+  "source_name": "Massachusetts Institute of Technology",
+  "source_category": "Academic",
+  "target_id": 946,
+  "target_name": "MIT Shaping the Future of Work",
+  "target_category": "Academic",
+  "evidence": ""
+ },
+ {
+  "edge_id": 296,
+  "source_id": 1020,
+  "source_name": "Massachusetts Institute of Technology",
+  "source_category": "Academic",
+  "target_id": 948,
+  "target_name": "MIT GOV/LAB",
+  "target_category": "Academic",
+  "evidence": ""
+ },
+ {
+  "edge_id": 297,
+  "source_id": 1020,
+  "source_name": "Massachusetts Institute of Technology",
+  "source_category": "Academic",
+  "target_id": 947,
+  "target_name": "MIT CSAIL",
+  "target_category": "Academic",
+  "evidence": ""
+ },
+ {
+  "edge_id": 298,
+  "source_id": 1020,
+  "source_name": "Massachusetts Institute of Technology",
+  "source_category": "Academic",
+  "target_id": 949,
+  "target_name": "MIT Media Lab",
+  "target_category": "Academic",
+  "evidence": ""
+ },
+ {
+  "edge_id": 299,
+  "source_id": 1020,
+  "source_name": "Massachusetts Institute of Technology",
+  "source_category": "Academic",
+  "target_id": 235,
+  "target_name": "MIT Algorithmic Alignment Group",
+  "target_category": "Academic",
+  "evidence": ""
+ },
+ {
+  "edge_id": 300,
+  "source_id": 1020,
+  "source_name": "Massachusetts Institute of Technology",
+  "source_category": "Academic",
+  "target_id": 247,
+  "target_name": "MIT FutureTech",
+  "target_category": "Academic",
+  "evidence": ""
+ },
+ {
+  "edge_id": 301,
+  "source_id": 1021,
+  "source_name": "Harvard University",
+  "source_category": "Academic",
+  "target_id": 951,
+  "target_name": "Harvard Ash Center",
+  "target_category": "Academic",
+  "evidence": ""
+ },
+ {
+  "edge_id": 302,
+  "source_id": 1021,
+  "source_name": "Harvard University",
+  "source_category": "Academic",
+  "target_id": 952,
+  "target_name": "Harvard Berkman Klein Center",
+  "target_category": "Academic",
+  "evidence": ""
+ },
+ {
+  "edge_id": 303,
+  "source_id": 1022,
+  "source_name": "Princeton University",
+  "source_category": "Academic",
+  "target_id": 950,
+  "target_name": "Princeton CITP",
+  "target_category": "Academic",
+  "evidence": ""
+ },
+ {
+  "edge_id": 304,
+  "source_id": 1023,
+  "source_name": "University of Cambridge",
+  "source_category": "Academic",
+  "target_id": 354,
+  "target_name": "Computational and Biological Learning Lab (University of Cambridge)",
+  "target_category": "Academic",
+  "evidence": ""
+ },
+ {
+  "edge_id": 305,
+  "source_id": 1023,
+  "source_name": "University of Cambridge",
+  "source_category": "Academic",
+  "target_id": 363,
+  "target_name": "Meridian Cambridge",
+  "target_category": "Academic",
+  "evidence": ""
+ },
+ {
+  "edge_id": 306,
+  "source_id": 1023,
+  "source_name": "University of Cambridge",
+  "source_category": "Academic",
+  "target_id": 410,
+  "target_name": "Cambridge ERA:AI Fellowship",
+  "target_category": "Academic",
+  "evidence": ""
+ },
+ {
+  "edge_id": 307,
+  "source_id": 1023,
+  "source_name": "University of Cambridge",
+  "source_category": "Academic",
+  "target_id": 461,
+  "target_name": "Leverhulme Centre for the Future of Intelligence",
+  "target_category": "Academic",
+  "evidence": ""
+ },
+ {
+  "edge_id": 308,
+  "source_id": 1024,
+  "source_name": "University of Oxford",
+  "source_category": "Academic",
+  "target_id": 168,
+  "target_name": "Oxford Martin AI Governance Initiative",
+  "target_category": "Academic",
+  "evidence": ""
+ },
+ {
+  "edge_id": 309,
+  "source_id": 1024,
+  "source_name": "University of Oxford",
+  "source_category": "Academic",
+  "target_id": 372,
+  "target_name": "Global Priorities Institute (University of Oxford)",
+  "target_category": "Academic",
+  "evidence": ""
+ },
+ {
+  "edge_id": 310,
+  "source_id": 1025,
+  "source_name": "UC Berkeley",
+  "source_category": "Academic",
+  "target_id": 397,
+  "target_name": "Berkeley Existential Risk Initiative (BERI)",
+  "target_category": "AI Safety/Alignment",
+  "evidence": ""
+ },
+ {
+  "edge_id": 311,
+  "source_id": 1026,
+  "source_name": "New York University",
+  "source_category": "Academic",
+  "target_id": 216,
+  "target_name": "NYU Alignment Research Group (ARG)",
+  "target_category": "Academic",
+  "evidence": ""
+ },
+ {
+  "edge_id": 312,
+  "source_id": 1026,
+  "source_name": "New York University",
+  "source_category": "Academic",
+  "target_id": 369,
+  "target_name": "ML4Good Laboratory - New York University",
+  "target_category": "Academic",
+  "evidence": ""
+ },
+ {
+  "edge_id": 313,
+  "source_id": 133,
+  "source_name": "Anthropic",
+  "source_category": "Frontier Lab",
+  "target_id": 137,
+  "target_name": "Anthropic Institute",
+  "target_category": "AI Safety/Alignment",
+  "evidence": ""
+ },
+ {
+  "edge_id": 314,
+  "source_id": 814,
+  "source_name": "Schmidt Futures",
+  "source_category": "VC/Capital/Philanthropy",
+  "target_id": 288,
+  "target_name": "Science of Trustworthy AI (Schmidt Sciences)",
+  "target_category": "VC/Capital/Philanthropy",
+  "evidence": ""
+ },
+ {
+  "edge_id": 315,
+  "source_id": 814,
+  "source_name": "Schmidt Futures",
+  "source_category": "VC/Capital/Philanthropy",
+  "target_id": 330,
+  "target_name": "AI2050 (Schmidt Sciences)",
+  "target_category": "VC/Capital/Philanthropy",
+  "evidence": ""
+ },
+ {
+  "edge_id": 353,
+  "source_id": 1020,
+  "source_name": "Massachusetts Institute of Technology",
+  "source_category": "Academic",
+  "target_id": 1050,
+  "target_name": "MIT Sloan",
+  "target_category": "Academic",
+  "evidence": ""
+ },
+ {
+  "edge_id": 441,
+  "source_id": 1041,
+  "source_name": "Google",
+  "source_category": "Deployers & Platforms",
+  "target_id": 1065,
+  "target_name": "Google Brain",
+  "target_category": "Frontier Lab",
+  "evidence": ""
+ },
+ {
+  "edge_id": 442,
+  "source_id": 1041,
+  "source_name": "Google",
+  "source_category": "Deployers & Platforms",
+  "target_id": 1066,
+  "target_name": "Google Research",
+  "target_category": "Frontier Lab",
+  "evidence": ""
+ },
+ {
+  "edge_id": 443,
+  "source_id": 1042,
+  "source_name": "Microsoft",
+  "source_category": "Deployers & Platforms",
+  "target_id": 1069,
+  "target_name": "Microsoft Research",
+  "target_category": "Frontier Lab",
+  "evidence": ""
+ },
+ {
+  "edge_id": 444,
+  "source_id": 1043,
+  "source_name": "Meta",
+  "source_category": "Deployers & Platforms",
+  "target_id": 1070,
+  "target_name": "Facebook AI Research (FAIR)",
+  "target_category": "Frontier Lab",
+  "evidence": ""
+ },
+ {
+  "edge_id": 784,
+  "source_id": 1025,
+  "source_name": "UC Berkeley",
+  "source_category": "Academic",
+  "target_id": 1109,
+  "target_name": "Berkeley Artificial Intelligence Research",
+  "target_category": "Academic",
+  "evidence": ""
+ },
+ {
+  "edge_id": 785,
+  "source_id": 1109,
+  "source_name": "Berkeley Artificial Intelligence Research",
+  "source_category": "Academic",
+  "target_id": 1025,
+  "target_name": "UC Berkeley",
+  "target_category": "Academic",
+  "evidence": "Berkeley Artificial Intelligence Research Lab is a research lab that brings together uc berkeley researchers across various areas including computer vision, machine learning, natural language processing, planning, control, and robotics [1]"
+ },
+ {
+  "edge_id": 787,
+  "source_id": 274,
+  "source_name": "Center for Long-Term Cybersecurity",
+  "source_category": "Academic",
+  "target_id": 1025,
+  "target_name": "UC Berkeley",
+  "target_category": "Academic",
+  "evidence": "UC Berkeley Center for Long-Term Cybersecurity [6,7,8,9]"
+ },
+ {
+  "edge_id": 788,
+  "source_id": 1025,
+  "source_name": "UC Berkeley",
+  "source_category": "Academic",
+  "target_id": 1110,
+  "target_name": "Berkeley Institute for Data Science",
+  "target_category": "Academic",
+  "evidence": ""
+ },
+ {
+  "edge_id": 789,
+  "source_id": 1110,
+  "source_name": "Berkeley Institute for Data Science",
+  "source_category": "Academic",
+  "target_id": 1025,
+  "target_name": "UC Berkeley",
+  "target_category": "Academic",
+  "evidence": "BIDS is a central hub of data-intensive research, open source software, and data science training programs at UC [4]"
+ },
+ {
+  "edge_id": 790,
+  "source_id": 1111,
+  "source_name": "Responsible AI Initiative",
+  "source_category": "AI Safety/Alignment",
+  "target_id": 1025,
+  "target_name": "UC Berkeley",
+  "target_category": "Academic",
+  "evidence": "Our mission is to drive critical research, innovation and collaboration towards responsible and equitable AI [2]"
+ },
+ {
+  "edge_id": 824,
+  "source_id": 1019,
+  "source_name": "Stanford University",
+  "source_category": "Academic",
+  "target_id": 1127,
+  "target_name": "Stanford Artificial Intelligence Laboratory (SAIL)",
+  "target_category": "Academic",
+  "evidence": ""
+ },
+ {
+  "edge_id": 825,
+  "source_id": 1127,
+  "source_name": "Stanford Artificial Intelligence Laboratory (SAIL)",
+  "source_category": "Academic",
+  "target_id": 1019,
+  "target_name": "Stanford University",
+  "target_category": "Academic",
+  "evidence": "The Stanford Artificial Intelligence Laboratory (SAIL) has been a center of excellence for Artificial Intelligence research, teaching, theory, and practice since its founding in 1962."
+ },
+ {
+  "edge_id": 826,
+  "source_id": 1019,
+  "source_name": "Stanford University",
+  "source_category": "Academic",
+  "target_id": 1128,
+  "target_name": "Stanford Center for AI Safety",
+  "target_category": "AI Safety/Alignment",
+  "evidence": ""
+ },
+ {
+  "edge_id": 827,
+  "source_id": 1128,
+  "source_name": "Stanford Center for AI Safety",
+  "source_category": "AI Safety/Alignment",
+  "target_id": 1019,
+  "target_name": "Stanford University",
+  "target_category": "Academic",
+  "evidence": "Stanford Center for AI Safety Stanford University"
+ },
+ {
+  "edge_id": 830,
+  "source_id": 1020,
+  "source_name": "Massachusetts Institute of Technology",
+  "source_category": "Academic",
+  "target_id": 1130,
+  "target_name": "MIT Data to AI Lab",
+  "target_category": "Academic",
+  "evidence": ""
+ },
+ {
+  "edge_id": 831,
+  "source_id": 1130,
+  "source_name": "MIT Data to AI Lab",
+  "source_category": "Academic",
+  "target_id": 1020,
+  "target_name": "Massachusetts Institute of Technology",
+  "target_category": "Academic",
+  "evidence": "Data to AI Lab is a research group within the Laboratory for Information and Decision Systems. We are part of the MIT Schwarzman College of Computing"
+ },
+ {
+  "edge_id": 833,
+  "source_id": 1020,
+  "source_name": "Massachusetts Institute of Technology",
+  "source_category": "Academic",
+  "target_id": 1132,
+  "target_name": "MIT Schwarzman College of Computing",
+  "target_category": "Academic",
+  "evidence": ""
+ },
+ {
+  "edge_id": 834,
+  "source_id": 1132,
+  "source_name": "MIT Schwarzman College of Computing",
+  "source_category": "Academic",
+  "target_id": 1020,
+  "target_name": "Massachusetts Institute of Technology",
+  "target_category": "Academic",
+  "evidence": "Jointly led by the MIT Morningside Academy for Design, MIT Schwarzman College of Computing, and the Hasso Plattner Institute in Potsdam"
+ },
+ {
+  "edge_id": 835,
+  "source_id": 1021,
+  "source_name": "Harvard University",
+  "source_category": "Academic",
+  "target_id": 1133,
+  "target_name": "Kempner Institute",
+  "target_category": "Academic",
+  "evidence": "The Kempner Institute is bringing researchers across disciplines like computational theory, AI and machine learning, neuroscience, and cognitive science together to develop next generation AI systems."
+ },
+ {
+  "edge_id": 837,
+  "source_id": 1021,
+  "source_name": "Harvard University",
+  "source_category": "Academic",
+  "target_id": 952,
+  "target_name": "Harvard Berkman Klein Center",
+  "target_category": "Academic",
+  "evidence": "Chief AI scientist at the Berkman Klein Center, Josh reflects on AI's development and what worries him as these tools"
+ },
+ {
+  "edge_id": 842,
+  "source_id": 1139,
+  "source_name": "The Princeton Laboratory for Artificial Intelligence",
+  "source_category": "Academic",
+  "target_id": 1022,
+  "target_name": "Princeton University",
+  "target_category": "Academic",
+  "evidence": "The Princeton Laboratory for Artificial Intelligence is a Higher Education company"
+ },
+ {
+  "edge_id": 843,
+  "source_id": 1140,
+  "source_name": "ai@cam",
+  "source_category": "Academic",
+  "target_id": 1023,
+  "target_name": "University of Cambridge",
+  "target_category": "Academic",
+  "evidence": "ai@cam's mission is to drive a new wave of AI innovation that serves science, citizens, and society. ### The University of Cambridge is home to a dynamic AI community"
+ },
+ {
+  "edge_id": 848,
+  "source_id": 1144,
+  "source_name": "Sa\u00efd Business School",
+  "source_category": "Academic",
+  "target_id": 1024,
+  "target_name": "University of Oxford",
+  "target_category": "Academic",
+  "evidence": "Oxford Artificial Intelligence Programme | Sa\u00efd Business School"
+ },
+ {
+  "edge_id": 851,
+  "source_id": 1146,
+  "source_name": "Global AI Frontier Lab",
+  "source_category": "Government/Agency",
+  "target_id": 1026,
+  "target_name": "New York University",
+  "target_category": "Academic",
+  "evidence": "the Global AI Frontier Lab as a strategic international hub for research and innovation, located on NYU's Brooklyn campus"
+ },
+ {
+  "edge_id": 854,
+  "source_id": 1148,
+  "source_name": "Senate Committee on Commerce, Science and Transportation",
+  "source_category": "Government/Agency",
+  "target_id": 1027,
+  "target_name": "United States Senate",
+  "target_category": "Government/Agency",
+  "evidence": "U.S. Senate Committee on Commerce, Science, & Transportation"
+ },
+ {
+  "edge_id": 855,
+  "source_id": 166,
+  "source_name": "Senate AI Working Group",
+  "source_category": "Government/Agency",
+  "target_id": 1027,
+  "target_name": "United States Senate",
+  "target_category": "Government/Agency",
+  "evidence": "The Bipartisan Senate AI Working Group, headed by Majority Leader Chuck Schumer (D-NY), Senator Mike Rounds (R-SD), Senator Martin Heinrich (D-NM), and Senator Todd Young (R-IN) released a roadmap for congressional AI policy"
+ },
+ {
+  "edge_id": 856,
+  "source_id": 1149,
+  "source_name": "House Bipartisan Task Force on Artificial Intelligence",
+  "source_category": "Government/Agency",
+  "target_id": 1028,
+  "target_name": "U.S. House of Representatives",
+  "target_category": "Government/Agency",
+  "evidence": "Today, Speaker Mike Johnson and Democratic Leader Hakeem Jeffries received the comprehensive report and key findings produced by the bipartisan House Task Force on Artificial Intelligence."
+ },
+ {
+  "edge_id": 857,
+  "source_id": 1150,
+  "source_name": "House Committee on Science Space & Tech",
+  "source_category": "Government/Agency",
+  "target_id": 1028,
+  "target_name": "U.S. House of Representatives",
+  "target_category": "Government/Agency",
+  "evidence": "Opening Statement of Chairman Jay Obernolte at Advancing America's AI Action Plan - Opening Statements - House Committee on Science Space & Tech - Republicans"
+ },
+ {
+  "edge_id": 858,
+  "source_id": 1151,
+  "source_name": "Education and Workforce Committee",
+  "source_category": "Government/Agency",
+  "target_id": 1028,
+  "target_name": "U.S. House of Representatives",
+  "target_category": "Government/Agency",
+  "evidence": "Today, the Education and Workforce Committee held the first hearing in a series examining how Artificial Intelligence (AI) is impacting the workforce, job training, and education."
+ },
+ {
+  "edge_id": 864,
+  "source_id": 1155,
+  "source_name": "International Trade Administration",
+  "source_category": "Government/Agency",
+  "target_id": 914,
+  "target_name": "Department of Commerce",
+  "target_category": "Government/Agency",
+  "evidence": "The U.S. Department of Commerce's International Trade Administration (ITA) today announced the implementation of the American AI Exports Program"
+ },
+ {
+  "edge_id": 867,
+  "source_id": 1158,
+  "source_name": "Government Operations Agency",
+  "source_category": "Government/Agency",
+  "target_id": 1033,
+  "target_name": "State of California",
+  "target_category": "Government/Agency",
+  "evidence": "The Government Operations Agency, the California Department of General Services, the"
+ },
+ {
+  "edge_id": 868,
+  "source_id": 1159,
+  "source_name": "California Department of General Services",
+  "source_category": "Government/Agency",
+  "target_id": 1033,
+  "target_name": "State of California",
+  "target_category": "Government/Agency",
+  "evidence": "The California Department of General Services (DGS) and California Department of Technology"
+ },
+ {
+  "edge_id": 869,
+  "source_id": 1160,
+  "source_name": "California Department of Technology",
+  "source_category": "Government/Agency",
+  "target_id": 1033,
+  "target_name": "State of California",
+  "target_category": "Government/Agency",
+  "evidence": "The California Department of General Services (DGS) and California Department of Technology"
+ },
+ {
+  "edge_id": 870,
+  "source_id": 1161,
+  "source_name": "California Department of Human Resources",
+  "source_category": "Government/Agency",
+  "target_id": 1033,
+  "target_name": "State of California",
+  "target_category": "Government/Agency",
+  "evidence": "Collectively, CDT, DGS, and the California Department of Human Resources (CalHR) are responsible for providing guidance, support, and training to state entities"
+ },
+ {
+  "edge_id": 874,
+  "source_id": 1164,
+  "source_name": "NYS Office of Information Technology Services",
+  "source_category": "Government/Agency",
+  "target_id": 1036,
+  "target_name": "State of New York",
+  "target_category": "Government/Agency",
+  "evidence": "IT Policy: Updated: 03/11/2025 Acceptable Use of Issued By: NYS Office of Information Technology Services"
+ },
+ {
+  "edge_id": 876,
+  "source_id": 1165,
+  "source_name": "Ohio Department of Job and Family Services",
+  "source_category": "Government/Agency",
+  "target_id": 1037,
+  "target_name": "State of Ohio",
+  "target_category": "Government/Agency",
+  "evidence": "The Ohio Department of Job and Family Services oversees a range of state programs including job training, unemployment insurance, food assistance, adult protective services and child support services."
+ },
+ {
+  "edge_id": 888,
+  "source_id": 1041,
+  "source_name": "Google",
+  "source_category": "Deployers & Platforms",
+  "target_id": 146,
+  "target_name": "Google DeepMind",
+  "target_category": "Frontier Lab",
+  "evidence": "This new era of models represents one of the biggest science and engineering efforts we've undertaken, drawing on our deepest computer science and AI research. By Demis Hassabis, CEO and Co-Founder of Google DeepMind, on behalf of the Gemini team"
+ },
+ {
+  "edge_id": 893,
+  "source_id": 1170,
+  "source_name": "LinkedIn",
+  "source_category": "Deployers & Platforms",
+  "target_id": 1042,
+  "target_name": "Microsoft",
+  "target_category": "Deployers & Platforms",
+  "evidence": "These principles steer decisions across Azure, Xbox, LinkedIn and generative AI"
+ },
+ {
+  "edge_id": 895,
+  "source_id": 1171,
+  "source_name": "Darden School of Business",
+  "source_category": "Academic",
+  "target_id": 1044,
+  "target_name": "University of Virginia",
+  "target_category": "Academic",
+  "evidence": "UVA's Board of Visitors approved the new institute's name on Friday, establishing the LaCross Institute for Ethical Artificial Intelligence in Business."
+ },
+ {
+  "edge_id": 896,
+  "source_id": 1172,
+  "source_name": "UVA Information Technology Services",
+  "source_category": "Academic",
+  "target_id": 1044,
+  "target_name": "University of Virginia",
+  "target_category": "Academic",
+  "evidence": "Research Computing is part of UVA Information Technology Services, the central service provider for information technology services across the University with over 100 services."
+ },
+ {
+  "edge_id": 900,
+  "source_id": 1176,
+  "source_name": "College of Connected Computing",
+  "source_category": "Academic",
+  "target_id": 1045,
+  "target_name": "Vanderbilt University",
+  "target_category": "Academic",
+  "evidence": "Vanderbilt University's College of Connected Computing has launched the Amplify Generative AI Innovation Center"
+ },
+ {
+  "edge_id": 989,
+  "source_id": 146,
+  "source_name": "Google DeepMind",
+  "source_category": "Frontier Lab",
+  "target_id": 1065,
+  "target_name": "Google Brain",
+  "target_category": "Frontier Lab",
+  "evidence": "It was merged into former Google sister company DeepMind to form Google DeepMind in April 2023"
+ },
+ {
+  "edge_id": 991,
+  "source_id": 1225,
+  "source_name": "Alphabet Inc.",
+  "source_category": "Deployers & Platforms",
+  "target_id": 1066,
+  "target_name": "Google Research",
+  "target_category": "Frontier Lab",
+  "evidence": "Google Research (also known as Research at Google) is the research division of Google, a subsidiary of Alphabet Inc."
+ },
+ {
+  "edge_id": 994,
+  "source_id": 1066,
+  "source_name": "Google Research",
+  "source_category": "Frontier Lab",
+  "target_id": 1227,
+  "target_name": "People + AI Research",
+  "target_category": "Academic",
+  "evidence": "People + AI Research (PAIR) is a multidisciplinary team at Google"
+ },
+ {
+  "edge_id": 1001,
+  "source_id": 1026,
+  "source_name": "New York University",
+  "source_category": "Academic",
+  "target_id": 1234,
+  "target_name": "NYU School of Medicine",
+  "target_category": "Academic",
+  "evidence": ""
+ },
+ {
+  "edge_id": 1009,
+  "source_id": 1023,
+  "source_name": "University of Cambridge",
+  "source_category": "Academic",
+  "target_id": 1072,
+  "target_name": "Stripe",
+  "target_category": "Deployers & Platforms",
+  "evidence": "Bridge, the stablecoin infrastructure firm Stripe acquired last year"
+ },
+ {
+  "edge_id": 1024,
+  "source_id": 1019,
+  "source_name": "Stanford University",
+  "source_category": "Academic",
+  "target_id": 1075,
+  "target_name": "Coursera",
+  "target_category": "Academic",
+  "evidence": "two of these professors, Daphne Koller and Andrew Ng, launched Coursera with founding partners Stanford, the University of Pennsylvania, the University of Michigan, and Princeton."
+ },
+ {
+  "edge_id": 1047,
+  "source_id": 1257,
+  "source_name": "Yale Center for Research Computing",
+  "source_category": "Infrastructure & Compute",
+  "target_id": 1080,
+  "target_name": "Yale University",
+  "target_category": "Academic",
+  "evidence": "Most of these new GPUs will be installed on clusters maintained by the Yale Center for Research Computing (YCRC)"
+ },
+ {
+  "edge_id": 1052,
+  "source_id": 915,
+  "source_name": "European Commission",
+  "source_category": "Government/Agency",
+  "target_id": 1082,
+  "target_name": "European Union",
+  "target_category": "Government/Agency",
+  "evidence": "Proposed by the European Commission on 21 April 2021, it passed the European Parliament on 13 March 2024, and was unanimously approved by the EU Council on 21 May 2024"
+ },
+ {
+  "edge_id": 1053,
+  "source_id": 1262,
+  "source_name": "European Artificial Intelligence Board",
+  "source_category": "Government/Agency",
+  "target_id": 1082,
+  "target_name": "European Union",
+  "target_category": "Government/Agency",
+  "evidence": "The Act also creates a European Artificial Intelligence Board to promote national cooperation and ensure compliance with the regulation"
+ },
+ {
+  "edge_id": 1063,
+  "source_id": 1086,
+  "source_name": "Johns Hopkins University",
+  "source_category": "Academic",
+  "target_id": 1267,
+  "target_name": "Johns Hopkins Applied Physics Laboratory",
+  "target_category": "Academic",
+  "evidence": "With the expertise of the Johns Hopkins Applied Physics Lab, we've developed one of the nation's first online artificial intelligence master's programs"
+ },
+ {
+  "edge_id": 1067,
+  "source_id": 1271,
+  "source_name": "Speed School of Engineering",
+  "source_category": "Academic",
+  "target_id": 1087,
+  "target_name": "University of Louisville",
+  "target_category": "Academic",
+  "evidence": "Unit:Speed School of Engineering(GS) Department:Bioengineering"
+ },
+ {
+  "edge_id": 1076,
+  "source_id": 1278,
+  "source_name": "USC Center for AI in Society",
+  "source_category": "Academic",
+  "target_id": 1090,
+  "target_name": "USC",
+  "target_category": "Academic",
+  "evidence": "The University of Southern California Center for AI in Society (CAIS) is a unique collaboration between USC's Suzanne Dworak-Peck School of Social Work and Viterbi School of Engineering"
+ },
+ {
+  "edge_id": 1077,
+  "source_id": 1279,
+  "source_name": "USC Suzanne Dworak-Peck School of Social Work",
+  "source_category": "Academic",
+  "target_id": 1090,
+  "target_name": "USC",
+  "target_category": "Academic",
+  "evidence": "The University of Southern California Center for AI in Society (CAIS) is a unique collaboration between USC's Suzanne Dworak-Peck School of Social Work and Viterbi School of Engineering"
+ },
+ {
+  "edge_id": 1078,
+  "source_id": 1280,
+  "source_name": "USC Viterbi School of Engineering",
+  "source_category": "Academic",
+  "target_id": 1090,
+  "target_name": "USC",
+  "target_category": "Academic",
+  "evidence": "The University of Southern California Center for AI in Society (CAIS) is a unique collaboration between USC's Suzanne Dworak-Peck School of Social Work and Viterbi School of Engineering"
+ },
+ {
+  "edge_id": 1079,
+  "source_id": 1281,
+  "source_name": "USC Marshall School of Business",
+  "source_category": "Academic",
+  "target_id": 1090,
+  "target_name": "USC",
+  "target_category": "Academic",
+  "evidence": "Geoff Garrett, Dean, USC Marshall School of Business"
+ },
+ {
+  "edge_id": 1081,
+  "source_id": 1283,
+  "source_name": "USC School of Advanced Computing",
+  "source_category": "Academic",
+  "target_id": 1090,
+  "target_name": "USC",
+  "target_category": "Academic",
+  "evidence": "USC launches computing into the next frontier USC launches $1B-plus initiative for computing including advanced computation, quantum computing, AI and ethics - The Frontiers of Computing initiative includes opening a new School of Advanced Computing"
+ },
+ {
+  "edge_id": 1083,
+  "source_id": 1285,
+  "source_name": "University of Pennsylvania",
+  "source_category": "Academic",
+  "target_id": 1091,
+  "target_name": "Wharton School",
+  "target_category": "Academic",
+  "evidence": "The Wharton School of the University of Pennsylvania"
+ },
+ {
+  "edge_id": 1090,
+  "source_id": 1292,
+  "source_name": "Jurist Center for Artificial Intelligence",
+  "source_category": "Academic",
+  "target_id": 1092,
+  "target_name": "Tulane University",
+  "target_category": "Academic",
+  "evidence": "The establishment of the Center for Community-Engaged Artificial Intelligence and the Jurist Center for Artificial Intelligence showcases Tulane's commitment to being a leader in AI research and application"
+ },
+ {
+  "edge_id": 1091,
+  "source_id": 1293,
+  "source_name": "Center for Community-Engaged Artificial Intelligence",
+  "source_category": "Academic",
+  "target_id": 1092,
+  "target_name": "Tulane University",
+  "target_category": "Academic",
+  "evidence": "CEAI is a multi-disciplinary team of scientists, engineers, students, and community partners dedicated to innovating human-centered AI to benefit society"
+ },
+ {
+  "edge_id": 1106,
+  "source_id": 1019,
+  "source_name": "Stanford University",
+  "source_category": "Academic",
+  "target_id": 1300,
+  "target_name": "Stanford Law School",
+  "target_category": "Academic",
+  "evidence": ""
+ },
+ {
+  "edge_id": 1147,
+  "source_id": 1313,
+  "source_name": "College of Computing, Data Science, and Society",
+  "source_category": "Academic",
+  "target_id": 1110,
+  "target_name": "Berkeley Institute for Data Science",
+  "target_category": "Academic",
+  "evidence": "As an integral part of UC Berkeley's College of Computing, Data Science, and Society (CDSS)"
+ },
+ {
+  "edge_id": 1172,
+  "source_id": 1321,
+  "source_name": "ServiceNow",
+  "source_category": "Deployers & Platforms",
+  "target_id": 1114,
+  "target_name": "Element AI",
+  "target_category": "VC/Capital/Philanthropy",
+  "evidence": "On November 30, 2020, ServiceNow, a Californian cloud-based IT services company, announced it has signed an agreement to acquire Element AI"
+ },
+ {
+  "edge_id": 1192,
+  "source_id": 1331,
+  "source_name": "McGill Centre for Intelligent Machines",
+  "source_category": "Academic",
+  "target_id": 1116,
+  "target_name": "McGill University",
+  "target_category": "Academic",
+  "evidence": "Centre for Intelligent Machines is a world leader in research on intelligent systems. They work in domains such as robotics, artificial intelligence, computer vision, medical imaging, haptics, systems and control, computer animation, and reinforcement learning"
+ },
+ {
+  "edge_id": 1193,
+  "source_id": 1332,
+  "source_name": "McGill Collaborative for AI and Society",
+  "source_category": "Academic",
+  "target_id": 1116,
+  "target_name": "McGill University",
+  "target_category": "Academic",
+  "evidence": "The McGill Collaborative for AI and Society (McCAIS) aims to understand the impact of AI on society and develop evidence-based best practices for its responsible use. \u200bA strategic initiative of CDSI"
+ },
+ {
+  "edge_id": 1194,
+  "source_id": 1116,
+  "source_name": "McGill University",
+  "source_category": "Academic",
+  "target_id": 1333,
+  "target_name": "McGill AI Lab",
+  "target_category": "Frontier Lab",
+  "evidence": "We are a student lab at McGill University focusing on frontier AI research"
+ },
+ {
+  "edge_id": 1206,
+  "source_id": 1338,
+  "source_name": "Public Investment Fund",
+  "source_category": "VC/Capital/Philanthropy",
+  "target_id": 755,
+  "target_name": "Humain",
+  "target_category": "Frontier Lab",
+  "evidence": "HUMAIN, a PIF company, is a global artificial intelligence company"
+ },
+ {
+  "edge_id": 1301,
+  "source_id": 1020,
+  "source_name": "Massachusetts Institute of Technology",
+  "source_category": "Academic",
+  "target_id": 1361,
+  "target_name": "MIT Jameel Clinic",
+  "target_category": "Academic",
+  "evidence": ""
+ },
+ {
+  "edge_id": 1303,
+  "source_id": 1020,
+  "source_name": "Massachusetts Institute of Technology",
+  "source_category": "Academic",
+  "target_id": 1362,
+  "target_name": "MIT Computer Science & Artificial Intelligence Laboratory",
+  "target_category": "Academic",
+  "evidence": ""
+ },
+ {
+  "edge_id": 1394,
+  "source_id": 1019,
+  "source_name": "Stanford University",
+  "source_category": "Academic",
+  "target_id": 1383,
+  "target_name": "Stanford Vision and Learning Lab",
+  "target_category": "Academic",
+  "evidence": ""
+ },
+ {
+  "edge_id": 1403,
+  "source_id": 1021,
+  "source_name": "Harvard University",
+  "source_category": "Academic",
+  "target_id": 1389,
+  "target_name": "Harvard Faculty of Arts and Sciences",
+  "target_category": "Academic",
+  "evidence": ""
+ },
+ {
+  "edge_id": 1728,
+  "source_id": 1079,
+  "source_name": "Georgetown University",
+  "source_category": "Academic",
+  "target_id": 131,
+  "target_name": "Center for Security and Emerging Technology (CSET)",
+  "target_category": "Think Tank/Policy Org",
+  "evidence": "A policy research organization within Georgetown University's Walsh School of Foreign Service, CSET provides decision-makers with data-driven analysis on the security implications of emerging technologies."
+ },
+ {
+  "edge_id": 1750,
+  "source_id": 140,
+  "source_name": "OpenAI",
+  "source_category": "Frontier Lab",
+  "target_id": 133,
+  "target_name": "Anthropic",
+  "target_category": "Frontier Lab",
+  "evidence": "Anthropic is a research-focused artificial intelligence company founded by former OpenAI leaders"
+ },
+ {
+  "edge_id": 1828,
+  "source_id": 1065,
+  "source_name": "Google Brain",
+  "source_category": "Frontier Lab",
+  "target_id": 146,
+  "target_name": "Google DeepMind",
+  "target_category": "Frontier Lab",
+  "evidence": "Google DeepMind brings together two of the world's leading AI labs \u2014 Google Brain and DeepMind \u2014 into a single, focused team"
+ },
+ {
+  "edge_id": 1829,
+  "source_id": 1041,
+  "source_name": "Google",
+  "source_category": "Deployers & Platforms",
+  "target_id": 146,
+  "target_name": "Google DeepMind",
+  "target_category": "Frontier Lab",
+  "evidence": "Parent Company: Google, LLC"
+ },
+ {
+  "edge_id": 1836,
+  "source_id": 147,
+  "source_name": "Modeling Cooperation",
+  "source_category": "AI Safety/Alignment",
+  "target_id": 408,
+  "target_name": "Convergence Analysis",
+  "target_category": "Think Tank/Policy Org",
+  "evidence": "Modeling Cooperation is fiscally sponsored by Convergence Analysis."
+ },
+ {
+  "edge_id": 1858,
+  "source_id": 1571,
+  "source_name": "RAND Center on AI, Security, and Technology",
+  "source_category": "Think Tank/Policy Org",
+  "target_id": 152,
+  "target_name": "RAND Corporation",
+  "target_category": "Think Tank/Policy Org",
+  "evidence": "RAND Center on AI, Security, and Technology (RAND CAST)"
+ },
+ {
+  "edge_id": 1864,
+  "source_id": 363,
+  "source_name": "Meridian Cambridge",
+  "source_category": "Academic",
+  "target_id": 153,
+  "target_name": "Geodesic Research",
+  "target_category": "AI Safety/Alignment",
+  "evidence": "This work was conducted by Geodesic Research, a project of Meridian Cambridge."
+ },
+ {
+  "edge_id": 1882,
+  "source_id": 1022,
+  "source_name": "Princeton University",
+  "source_category": "Academic",
+  "target_id": 1584,
+  "target_name": "Princeton AI Lab",
+  "target_category": "Academic",
+  "evidence": ""
+ },
+ {
+  "edge_id": 1893,
+  "source_id": 312,
+  "source_name": "Rethink Priorities",
+  "source_category": "Think Tank/Policy Org",
+  "target_id": 158,
+  "target_name": "Epoch AI",
+  "target_category": "AI Safety/Alignment",
+  "evidence": "Initially operated under the fiscal sponsorship of Rethink Priorities, a US-based nonprofit, Epoch AI was later incorporated as a private company limited by guarantee without share capital in the UK on October 10, 2024"
+ },
+ {
+  "edge_id": 1937,
+  "source_id": 1428,
+  "source_name": "U.S. Senate Commerce Committee",
+  "source_category": "Government/Agency",
+  "target_id": 166,
+  "target_name": "Senate AI Working Group",
+  "target_category": "Government/Agency",
+  "evidence": "A Roadmap for Artificial Intelligence Policy in the U.S. Senate"
+ },
+ {
+  "edge_id": 1947,
+  "source_id": 1024,
+  "source_name": "University of Oxford",
+  "source_category": "Academic",
+  "target_id": 1618,
+  "target_name": "Oxford Martin School",
+  "target_category": "Think Tank/Policy Org",
+  "evidence": ""
+ },
+ {
+  "edge_id": 1968,
+  "source_id": 396,
+  "source_name": "Ashgro",
+  "source_category": "AI Safety/Alignment",
+  "target_id": 172,
+  "target_name": "Alignment Ecosystem Development (AED)",
+  "target_category": "AI Safety/Alignment",
+  "evidence": "The Long-Term Future Fund provided a $99,330 grant to Alignment Ecosystem Development (AED), an AI safety field-building nonprofit, through their fiscal sponsor, Ashgro Inc."
+ },
+ {
+  "edge_id": 1976,
+  "source_id": 1026,
+  "source_name": "New York University",
+  "source_category": "Academic",
+  "target_id": 173,
+  "target_name": "AI Now Institute",
+  "target_category": "Think Tank/Policy Org",
+  "evidence": "In November 2017, AI Now held a second symposium on AI and social issues, and publicly launched the AI Now Institute in partnership with New York University"
+ },
+ {
+  "edge_id": 1982,
+  "source_id": 869,
+  "source_name": "Vox Media",
+  "source_category": "Media/Journalism",
+  "target_id": 175,
+  "target_name": "The Verge",
+  "target_category": "Media/Journalism",
+  "evidence": "The Verge was founded in 2011 in partnership with Vox Media"
+ },
+ {
+  "edge_id": 1991,
+  "source_id": 1377,
+  "source_name": "SpaceX",
+  "source_category": "Infrastructure & Compute",
+  "target_id": 177,
+  "target_name": "xAI",
+  "target_category": "Frontier Lab",
+  "evidence": "On February 2, 2026, SpaceX acquired xAI in an all-stock transaction that structured xAI as a wholly owned subsidiary of SpaceX"
+ },
+ {
+  "edge_id": 1992,
+  "source_id": 177,
+  "source_name": "xAI",
+  "source_category": "Frontier Lab",
+  "target_id": 1378,
+  "target_name": "X",
+  "target_category": "Deployers & Platforms",
+  "evidence": "On March 28, 2025, Musk announced that xAI acquired sister company X"
+ },
+ {
+  "edge_id": 1998,
+  "source_id": 185,
+  "source_name": "FAR.AI",
+  "source_category": "AI Safety/Alignment",
+  "target_id": 179,
+  "target_name": "Safe AI Forum",
+  "target_category": "AI Safety/Alignment",
+  "evidence": "SAIF started as a fiscally sponsored project of FAR.AI in 2023, benefitting from the institutional and strategic expertise of the FAR.AI team to incubate the project and build capacity"
+ },
+ {
+  "edge_id": 2008,
+  "source_id": 140,
+  "source_name": "OpenAI",
+  "source_category": "Frontier Lab",
+  "target_id": 181,
+  "target_name": "Safe Superintelligence Inc.",
+  "target_category": "Frontier Lab",
+  "evidence": "On May 15, 2024, OpenAI co-founder Ilya Sutskever left OpenAI after a board dispute where he voted to fire Sam Altman amid concerns about communication and trust. Sutskever and others additionally believed that OpenAI was neglecting its original focus on safety in favor of pursuing opportunities for commercialization"
+ },
+ {
+  "edge_id": 2022,
+  "source_id": 379,
+  "source_name": "Ought",
+  "source_category": "AI Safety/Alignment",
+  "target_id": 183,
+  "target_name": "Forethought (AI Safety Research Nonprofit)",
+  "target_category": "AI Safety/Alignment",
+  "evidence": "However, we've built ourselves out of the old Forethought Foundation for Global Priorities Research to help get the operations started"
+ },
+ {
+  "edge_id": 2042,
+  "source_id": 179,
+  "source_name": "Safe AI Forum",
+  "source_category": "AI Safety/Alignment",
+  "target_id": 185,
+  "target_name": "FAR.AI",
+  "target_category": "AI Safety/Alignment",
+  "evidence": "The Safe AI Forum team, originally incubated at FAR.AI, has successfully launched as an independent organization"
+ },
+ {
+  "edge_id": 2055,
+  "source_id": 162,
+  "source_name": "Cooperative AI Foundation",
+  "source_category": "VC/Capital/Philanthropy",
+  "target_id": 189,
+  "target_name": "Cooperative AI Summer School",
+  "target_category": "Academic",
+  "evidence": "The Cooperative AI Summer School is an advanced programme for early-career professionals already working in or studying cooperative AI"
+ },
+ {
+  "edge_id": 2067,
+  "source_id": 312,
+  "source_name": "Rethink Priorities",
+  "source_category": "Think Tank/Policy Org",
+  "target_id": 191,
+  "target_name": "Institute for AI Policy and Strategy (IAPS)",
+  "target_category": "AI Safety/Alignment",
+  "evidence": "The Institute for AI Policy and Strategy (IAPS) is an initiative of the California-based 501(c)(3) think tank Rethink Priorities(RP). As such, IAPS receives fiscal support from RP as well as operational support from RP's Operations Department"
+ },
+ {
+  "edge_id": 2080,
+  "source_id": 1023,
+  "source_name": "University of Cambridge",
+  "source_category": "Academic",
+  "target_id": 1691,
+  "target_name": "Cambridge AI Safety Hub",
+  "target_category": "AI Safety/Alignment",
+  "evidence": ""
+ },
+ {
+  "edge_id": 2081,
+  "source_id": 1691,
+  "source_name": "Cambridge AI Safety Hub",
+  "source_category": "AI Safety/Alignment",
+  "target_id": 194,
+  "target_name": "Mentorship for Alignment Research Students (MARS)",
+  "target_category": "Academic",
+  "evidence": "The Cambridge AI Safety Hub (CAISH) is now accepting applications for MARS 3.0(Mentorship for Alignment Research Students), a volunteer-based program"
+ },
+ {
+  "edge_id": 2086,
+  "source_id": 441,
+  "source_name": "Pathfinder Fellowship (Kairos)",
+  "source_category": "Academic",
+  "target_id": 196,
+  "target_name": "Supervised Program for Alignment Research (SPAR)",
+  "target_category": "Academic",
+  "evidence": "The Pathfinder Fellowship is run by Kairos, a nonprofit whose mission is to help society navigate the transition to transformative AI. In addition to Pathfinder, we run other programs such as the Supervised Program for Alignment Research (SPAR)"
+ },
+ {
+  "edge_id": 2087,
+  "source_id": 1025,
+  "source_name": "UC Berkeley",
+  "source_category": "Academic",
+  "target_id": 1693,
+  "target_name": "Berkeley AI Safety Initiative for Students (BASIS)",
+  "target_category": "AI Safety/Alignment",
+  "evidence": ""
+ },
+ {
+  "edge_id": 2103,
+  "source_id": 1043,
+  "source_name": "Meta",
+  "source_category": "Deployers & Platforms",
+  "target_id": 204,
+  "target_name": "Meta AI",
+  "target_category": "Frontier Lab",
+  "evidence": "Owner | Meta Platforms"
+ },
+ {
+  "edge_id": 2109,
+  "source_id": 1309,
+  "source_name": "National Institute of Standards and Technology",
+  "source_category": "Government/Agency",
+  "target_id": 205,
+  "target_name": "Center for AI Standards and Innovation (CAISI)",
+  "target_category": "Government/Agency",
+  "evidence": "AISI is housed within the National Institute of Standards and Technology (NIST), the federal government's premier body for developing and promoting science-based technological standards"
+ },
+ {
+  "edge_id": 2110,
+  "source_id": 205,
+  "source_name": "Center for AI Standards and Innovation (CAISI)",
+  "source_category": "Government/Agency",
+  "target_id": 914,
+  "target_name": "Department of Commerce",
+  "target_category": "Government/Agency",
+  "evidence": "the U.S. Artificial Intelligence Safety Institute at the U.S. Department of Commerce's National Institute of Standards and Technology (NIST)"
+ },
+ {
+  "edge_id": 2175,
+  "source_id": 312,
+  "source_name": "Rethink Priorities",
+  "source_category": "Think Tank/Policy Org",
+  "target_id": 217,
+  "target_name": "Apollo Research",
+  "target_category": "AI Safety/Alignment",
+  "evidence": "We are fiscally sponsored by Rethink Priorities"
+ },
+ {
+  "edge_id": 2182,
+  "source_id": 356,
+  "source_name": "Model Evaluation & Threat Research (METR)",
+  "source_category": "AI Safety/Alignment",
+  "target_id": 218,
+  "target_name": "Alignment Research Center (ARC)",
+  "target_category": "AI Safety/Alignment",
+  "evidence": "In December 2023, ARC Evals was spun out as METR, an independent nonprofit"
+ },
+ {
+  "edge_id": 2187,
+  "source_id": 1025,
+  "source_name": "UC Berkeley",
+  "source_category": "Academic",
+  "target_id": 219,
+  "target_name": "Center for Human-Compatible AI (CHAI)",
+  "target_category": "Academic",
+  "evidence": "The Center for Human-Compatible Artificial Intelligence (CHAI) is a research center at the University of California, Berkeley"
+ },
+ {
+  "edge_id": 2204,
+  "source_id": 273,
+  "source_name": "EleutherAI",
+  "source_category": "AI Safety/Alignment",
+  "target_id": 220,
+  "target_name": "Conjecture",
+  "target_category": "AI Safety/Alignment",
+  "evidence": "Our founders and early staff are mostly EleutherAI alumni and previously independent researchers like Adam Shimi"
+ },
+ {
+  "edge_id": 2230,
+  "source_id": 236,
+  "source_name": "Future of Humanity Institute (closed 2024)",
+  "source_category": "Academic",
+  "target_id": 225,
+  "target_name": "Centre for the Governance of AI (GovAI)",
+  "target_category": "Think Tank/Policy Org",
+  "evidence": "The Centre for the Governance of AI is a part of the Future of Humanity Institute at the University of Oxford"
+ },
+ {
+  "edge_id": 2233,
+  "source_id": 1766,
+  "source_name": "Effective Ventures",
+  "source_category": "VC/Capital/Philanthropy",
+  "target_id": 225,
+  "target_name": "Centre for the Governance of AI (GovAI)",
+  "target_category": "Think Tank/Policy Org",
+  "evidence": "we will navigate a significant organisational transition as we spin out from our fiscal sponsor, Effective Ventures"
+ },
+ {
+  "edge_id": 2324,
+  "source_id": 1789,
+  "source_name": "Bureau of Industry and Security (BIS)",
+  "source_category": "Government/Agency",
+  "target_id": 914,
+  "target_name": "Department of Commerce",
+  "target_category": "Government/Agency",
+  "evidence": "BIS is an agency within the U.S. Department of Commerce."
+ },
+ {
+  "edge_id": 2325,
+  "source_id": 1790,
+  "source_name": "National Security Council (NSC)",
+  "source_category": "Government/Agency",
+  "target_id": 1031,
+  "target_name": "White House",
+  "target_category": "Government/Agency",
+  "evidence": "The NSC sits within the Executive Office of the President / White House."
+ },
+ {
+  "edge_id": 2326,
+  "source_id": 1791,
+  "source_name": "President's Council of Advisors on Science and Technology (PCAST)",
+  "source_category": "Government/Agency",
+  "target_id": 1031,
+  "target_name": "White House",
+  "target_category": "Government/Agency",
+  "evidence": "PCAST is a White House advisory committee reporting to the President."
+ },
+ {
+  "edge_id": 2327,
+  "source_id": 1792,
+  "source_name": "Bureau of Cyberspace and Digital Policy (CDP)",
+  "source_category": "Government/Agency",
+  "target_id": 1157,
+  "target_name": "U.S. Department of State",
+  "target_category": "Government/Agency",
+  "evidence": "CDP is a bureau within the U.S. Department of State, established in 2022."
+ }
+]
