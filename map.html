@@ -4378,7 +4378,10 @@ function showDetail(d, allNodes) {
     : '';
 
   // Build category badges: primary + secondary
-  let categoryBadges = `<span class="detail-category" style="background:${color}33; color:${color};">${d.category}</span>`;
+  // Use _rawCategory for people (preserves actual role like "Executive" instead of clustering category like "Frontier Lab")
+  const displayCategory = d._rawCategory || d.category;
+  const displayColor = getColor(displayCategory) || color;
+  let categoryBadges = `<span class="detail-category" style="background:${displayColor}33; color:${displayColor};">${displayCategory}</span>`;
   const otherCats = d.other_categories || (d._rawOtherCategories);
   if (otherCats) {
     const extras = (typeof otherCats === 'string' ? otherCats.split(',') : []).map(s => s.trim()).filter(Boolean);

@@ -86,6 +86,25 @@ const VALID_ORG_CATEGORIES = [
   'Media/Journalism', 'Political Campaign/PAC', 'Infrastructure & Compute', 'Deployers & Platforms'
 ];
 
+// Edge type constraints by source type
+const PERSON_TO_ORG_EDGES = ['employed_by', 'founded', 'advises', 'board_member', 'invested_in', 'affiliated'];
+const PERSON_TO_PERSON_EDGES = ['co_founded_with', 'collaborator', 'mentor_of', 'mentored_by', 'former_colleague', 'critic_of', 'supporter_of'];
+const ORG_TO_ORG_EDGES = ['subsidiary_of', 'funded_by', 'partner_of', 'spun_out_from', 'affiliated'];
+
+function isValidEdgeType(sourceType, targetType, edgeType) {
+  if (sourceType === 'person' && targetType === 'organization') {
+    return PERSON_TO_ORG_EDGES.includes(edgeType);
+  }
+  if (sourceType === 'person' && targetType === 'person') {
+    return PERSON_TO_PERSON_EDGES.includes(edgeType);
+  }
+  if (sourceType === 'organization' && targetType === 'organization') {
+    return ORG_TO_ORG_EDGES.includes(edgeType);
+  }
+  // Org → Person edges are unusual; skip them (should be reversed)
+  return false;
+}
+
 // ═══════════════════════════════════════════════════════════════════════════
 // API HELPERS
 // ═══════════════════════════════════════════════════════════════════════════
@@ -137,12 +156,12 @@ ${sourceUrls.map((url, i) => `[${i + 1}] ${url}`).join('\n')}
 ═══════════════════════════════════════════════════════════════════════════════
 ## STRICT RULES - VIOLATION = FAILURE
 
-1. ONLY include information that appears VERBATIM or near-verbatim in the sources above
-2. Every sentence MUST end with a citation like [1] or [2,3]
-3. If a fact is not in the sources, DO NOT include it - even if you "know" it
-4. DO NOT infer, extrapolate, or combine facts to create new claims
-5. DO NOT use phrases like "is known for", "is famous for", "is considered" unless quoted
-6. If sources are insufficient, return "INSUFFICIENT_DATA" for that field
+1. ONLY include information that appears in the sources above
+2. If a fact is not in the sources, DO NOT include it - even if you "know" it
+3. DO NOT infer, extrapolate, or combine facts to create new claims
+4. DO NOT use phrases like "is known for", "is famous for", "is considered" unless quoted
+5. If sources are insufficient, return "INSUFFICIENT_DATA" for that field
+6. Write clean prose WITHOUT citation numbers - no [1], [2], etc.
 
 ## FORBIDDEN (will cause hallucination):
 - Specific years/dates not explicitly in sources
@@ -158,7 +177,7 @@ Return this exact JSON structure:
 {
   "status": "SUCCESS" | "INSUFFICIENT_DATA",
 
-  "notes": "<2-4 sentences. Each sentence must end with [N] citation. Use ONLY facts from sources above. If insufficient data, set to null>",
+  "notes": "<2-4 sentences of clean prose. NO citation numbers like [1] or [2]. Use ONLY facts from sources above. If insufficient data, set to null>",
 
   "notes_confidence": <1-5 | null if insufficient>,
 
@@ -189,11 +208,22 @@ Return this exact JSON structure:
 - If you cannot copy text proving the relationship, DO NOT include the edge
 - source_quote must be copy-pasted from the search results, not paraphrased
 
+## EDGE TYPE CONSTRAINTS (MUST FOLLOW):
+For ${entity.entity_type === 'person' ? 'PERSON' : 'ORGANIZATION'} → target edges:
+
+${entity.entity_type === 'person' ? `PERSON → ORGANIZATION: employed_by, founded, advises, board_member, invested_in, affiliated
+PERSON → PERSON: co_founded_with, collaborator, mentor_of, mentored_by, former_colleague, critic_of, supporter_of
+
+FORBIDDEN for person source: subsidiary_of, funded_by, partner_of, spun_out_from` : `ORGANIZATION → ORGANIZATION: subsidiary_of, funded_by, partner_of, spun_out_from, affiliated
+ORGANIZATION → PERSON: Only if person works there (reverse the direction instead)
+
+FORBIDDEN for org source: employed_by, founded, advises, board_member, invested_in, mentor_of, mentored_by`}
+
 Return ONLY valid JSON. No other text.`;
 }
 
 function buildEntityEvaluationPrompt(targetName, targetType, sourceQuote, sourceUrl) {
-  return `You are deciding whether to add an entity to an AI POLICY database.
+  return `You are deciding whether to add an entity to a database mapping the US AI POLICY ECOSYSTEM.
 
 ## CANDIDATE
 Name: ${targetName}
@@ -206,22 +236,29 @@ Source: ${sourceUrl}
 ═══════════════════════════════════════════════════════════════════════════════
 ## TASK
 Based ONLY on the quote above, determine:
-1. Is this entity real? (Does the quote confirm they exist?)
-2. Are they relevant to AI policy/research/industry?
+1. Does this entity exist? (Does the quote confirm they are real?)
+2. Do they actively SHAPE the AI ecosystem? (Not just use AI products)
 3. What category fits based on the quote?
+
+## THE KEY DISTINCTION
+SHAPES AI ECOSYSTEM = researches AI, builds AI, funds AI, regulates AI, advocates about AI, reports on AI, organizes around AI issues
+USES AI = company/person that uses AI tools as a customer (e.g., retailers using AI recommendations, hospitals using AI diagnostics)
+
+We want entities who SHAPE the ecosystem, not those who merely USE AI.
 
 ## STRICT RULES
 - Base your decision ONLY on the quote provided
 - DO NOT use any knowledge about this entity beyond the quote
-- If the quote doesn't clearly establish AI relevance, answer NO
+- If the quote only shows they USE AI (not shape it), answer NO
+- If uncertain, err toward NO - we can add later with better evidence
 ═══════════════════════════════════════════════════════════════════════════════
 
 Return this JSON:
 
 {
   "entity_exists": true | false,
-  "is_ai_relevant": true | false,
-  "ai_relevance_reasoning": "<Quote the specific words that show AI relevance, or explain why not>",
+  "shapes_ai_ecosystem": true | false,
+  "reasoning": "<Quote specific words showing they SHAPE AI, or explain why they only USE it>",
   "category": "<Category from: ${targetType === 'person' ? VALID_PERSON_CATEGORIES.join('|') : VALID_ORG_CATEGORIES.join('|')}>",
   "confidence": <1-5>,
   "should_create": true | false
@@ -229,7 +266,7 @@ Return this JSON:
 
 ## should_create = true ONLY IF:
 - entity_exists = true AND
-- is_ai_relevant = true AND
+- shapes_ai_ecosystem = true AND
 - confidence >= 4
 
 Return ONLY valid JSON.`;
@@ -338,14 +375,6 @@ async function enrichEntity(client, entity, allEntities) {
       WHERE id = $1
     `, [entity.id]);
     return null;
-  }
-
-  // Validate citations exist
-  const citationPattern = /\[\d+(?:,\s*\d+)*\]/g;
-  const citations = data.notes.match(citationPattern);
-  if (!citations || citations.length < 2) {
-    console.log(`  ⚠ Notes lack citations - reducing confidence`);
-    data.notes_confidence = Math.min(data.notes_confidence || 2, 2);
   }
 
   const confidence = Math.max(1, Math.min(5, parseInt(data.notes_confidence) || 3));
@@ -487,11 +516,11 @@ async function evaluateAndCreateEntity(client, name, type, sourceQuote, sourceUr
     return null;
   }
 
-  console.log(`      AI relevant: ${eval_.is_ai_relevant} (${eval_.confidence}/5)`);
+  console.log(`      Shapes AI ecosystem: ${eval_.shapes_ai_ecosystem} (${eval_.confidence}/5)`);
 
   if (!eval_.should_create) {
     entitiesSkippedNotAI++;
-    console.log(`      → SKIP: ${eval_.ai_relevance_reasoning?.substring(0, 50)}...`);
+    console.log(`      → SKIP: ${eval_.reasoning?.substring(0, 80)}...`);
     return null;
   }
 

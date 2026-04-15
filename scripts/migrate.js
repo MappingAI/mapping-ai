@@ -138,7 +138,11 @@ async function migrate() {
         edge_type    VARCHAR(50),
         role         VARCHAR(200),
         is_primary   BOOLEAN DEFAULT FALSE,
+        start_date   VARCHAR(20),
+        end_date     VARCHAR(20),
         evidence     TEXT,
+        source_url   VARCHAR(500),
+        confidence   SMALLINT,
         created_by   VARCHAR(50) DEFAULT 'system',
         created_at   TIMESTAMPTZ DEFAULT NOW(),
         UNIQUE(source_id, target_id, edge_type)
@@ -159,6 +163,10 @@ async function migrate() {
 
     // ── 4b. Schema migrations (safe ADD COLUMN for existing tables) ──────────
     await client.query(`ALTER TABLE submission ADD COLUMN IF NOT EXISTS parent_org_id INTEGER`);
+    await client.query(`ALTER TABLE edge ADD COLUMN IF NOT EXISTS start_date VARCHAR(20)`);
+    await client.query(`ALTER TABLE edge ADD COLUMN IF NOT EXISTS end_date VARCHAR(20)`);
+    await client.query(`ALTER TABLE edge ADD COLUMN IF NOT EXISTS confidence SMALLINT`);
+    await client.query(`ALTER TABLE edge ADD COLUMN IF NOT EXISTS source_url VARCHAR(500)`);
     console.log('  ✓ schema migrations');
 
     // ── 4c. contributor_keys table ──────────────────────────────────────────────
