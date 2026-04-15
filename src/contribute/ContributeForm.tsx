@@ -2,6 +2,11 @@ import { useState, useCallback } from 'react'
 import { useForm, type UseFormReturn } from 'react-hook-form'
 import { DropdownProvider } from '../contexts/DropdownContext'
 import { PillToggle } from './PillToggle'
+import { PersonForm } from './PersonForm'
+import { OrganizationForm } from './OrganizationForm'
+import { ResourceForm } from './ResourceForm'
+import { OrgCreationPanel } from './OrgCreationPanel'
+import { SuccessMessage } from './SuccessMessage'
 import type { Entity } from '../types/entity'
 
 export type FormType = 'person' | 'organization' | 'resource'
@@ -88,9 +93,49 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
     (formType: FormType) => {
       forms[formType].reset({})
       setUpdateContexts((prev) => ({ ...prev, [formType]: null }))
+      setSuccessType(null)
     },
     [forms],
   )
+
+  // Org creation panel state
+  const [orgPanelOpen, setOrgPanelOpen] = useState(false)
+  const [orgPanelName, setOrgPanelName] = useState('')
+  const [orgPanelTrigger, setOrgPanelTrigger] = useState<'primary' | 'parent' | 'affiliated'>('primary')
+
+  const openOrgPanel = useCallback(
+    (name: string, triggerType: 'primary' | 'parent' | 'affiliated') => {
+      setOrgPanelName(name)
+      setOrgPanelTrigger(triggerType)
+      setOrgPanelOpen(true)
+    },
+    [],
+  )
+
+  // Success state
+  const [successType, setSuccessType] = useState<FormType | null>(null)
+  const [successIsUpdate, setSuccessIsUpdate] = useState(false)
+
+  const handleSubmitSuccess = useCallback(
+    (formType: FormType) => {
+      setSuccessIsUpdate(!!updateContexts[formType])
+      setSuccessType(formType)
+      forms[formType].reset({})
+      setUpdateContexts((prev) => ({ ...prev, [formType]: null }))
+    },
+    [forms, updateContexts],
+  )
+
+  // Show success message
+  if (successType) {
+    return (
+      <SuccessMessage
+        formType={successType}
+        isUpdate={successIsUpdate}
+        onSubmitAnother={() => setSuccessType(null)}
+      />
+    )
+  }
 
   return (
     <DropdownProvider>
@@ -122,10 +167,11 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
             onCancelUpdate={() => cancelUpdate('person')}
             onClear={() => clearForm('person')}
           />
-          {/* PersonForm fields will be composed here in Unit 17 */}
-          <div className="text-[13px] font-mono text-[#888] p-4 border border-dashed border-[#ddd] rounded">
-            Person form fields (Unit 17)
-          </div>
+          <PersonForm
+            form={personForm}
+            updateContext={updateContexts.person}
+            onOrgPanelOpen={openOrgPanel}
+          />
         </div>
 
         {/* Organization Form */}
@@ -137,9 +183,10 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
             onCancelUpdate={() => cancelUpdate('organization')}
             onClear={() => clearForm('organization')}
           />
-          <div className="text-[13px] font-mono text-[#888] p-4 border border-dashed border-[#ddd] rounded">
-            Organization form fields (Unit 17)
-          </div>
+          <OrganizationForm
+            form={orgForm}
+            updateContext={updateContexts.organization}
+          />
         </div>
 
         {/* Resource Form */}
@@ -151,10 +198,22 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
             onCancelUpdate={() => cancelUpdate('resource')}
             onClear={() => clearForm('resource')}
           />
-          <div className="text-[13px] font-mono text-[#888] p-4 border border-dashed border-[#ddd] rounded">
-            Resource form fields (Unit 17)
-          </div>
+          <ResourceForm
+            form={resourceForm}
+            updateContext={updateContexts.resource}
+          />
         </div>
+
+        {/* Org Creation Panel */}
+        <OrgCreationPanel
+          isOpen={orgPanelOpen}
+          onClose={() => setOrgPanelOpen(false)}
+          onOrgCreated={() => {
+            setOrgPanelOpen(false)
+          }}
+          initialName={orgPanelName}
+          triggerType={orgPanelTrigger}
+        />
       </div>
     </DropdownProvider>
   )
