@@ -215,21 +215,19 @@ Connectivity sweep 2026-04-14: 17 edges added via `qc-connectivity-sweep`. All 1
 
 **Unclassified edges / orphans:**
 - [x] Classify 164 remaining `affiliated` edges — **done 2026-04-14**. Final count was 171 (164 `affiliated` + 7 `affiliated_with`). Rule-based classifier + manual review flagged **55 spurious** edges (deleted) and **116 legit** (reclassified). Spurious edges were biographical "affiliations" where the `role` text named an entirely different org than the `target` (e.g., "U.S. Senator, HI" → The Verge, "CSO, Anthropic" → Senate AI Working Group, "Stanford HAI" → Tsinghua, "Director" for Hendrycks → Campaign for AI Safety instead of Center for AI Safety). Reclassification distribution: 48 `member`, 38 `partner`, 21 `employer`, 7 `publisher` (source/target flipped), 2 `parent_company` (fiscal sponsor). Post-reclassification dedup removed 10 edges that collided with pre-existing canonical edges. 58 duplicate (src,tgt,type) groups pre-date this work and remain for a future dedup pass. 0 `affiliated`/`affiliated_with` edges remain in DB.
-- [ ] Address 246 orphan entities (add edges or document why standalone is OK)
-  - 105 resources (no category)
-  - 63 AI Safety/Alignment orgs
-  - 21 Think Tank/Policy orgs
-  - 14 Academic orgs
-  - 11 Labor/Civil Society orgs
-  - 11 VC/Capital/Philanthropy orgs
-  - 6 Media/Journalism orgs
-  - 5 Cultural figures, 4 Journalists, 2 Researchers, 1 Policymaker
-  - 2 Government orgs, 1 Deployer
+- [~] Address orphan entities — **partial 2026-04-14**. Orphan count initially grew to 261 (not 246) after the affiliated-edge cleanup deleted 55 spurious edges that had been artificially inflating connectivity.
+  - **Orphan resources: 103 → 60 (43 fixed, 43 edges added).** Method: (1) auto-match `resource_author` text against entity names (22 matches, dropped 1 false positive for Chris Miller/Allie K. Miller); (2) apply a known-author/publisher lookup table for newsletters/podcasts/reports (15 more hits — Astral Codex Ten → Scott Alexander, Cold Takes → Karnofsky, Import AI → Jack Clark, Zvi/Don't Worry About the Vase, ChinaTalk author not in DB, etc.); (3) publisher edges for resources hosted by orgs already in DB (FAR.AI, GovAI, CAIS×2, DeepMind, CSIS). Edge type: `author` if source is person, `publisher` if source is org. All tagged `created_by='qc-orphan-resources'`, confidence 0.9.
+  - **Orphan orgs: 191 → 187 (4 orgs fixed, 6 employer edges added).** Method: persons whose `primary_org` string exactly matches an orphan org's name — insert canonical `employer` edge (title preserved in `role`). Orgs fixed: Compassion in ML (2 employees), European Network for AI Safety (2), CSET (1), Palisade Research (1). Tagged `created_by='qc-orphan-orgs-primary-org'`.
+  - **Remaining orphan snapshot (247 total):**
+    - 60 resources — require either new person/org entities (Jordan Schneider, Samuel Marks, Dean Ball, Adam Thierer, CRS, IAPP, CNBC, CNN, Mondaq, Libertify, etc.) or research for anonymous newsletters/websites. Substacks/videos where author is a pseudonymous YouTuber (Dr Waku, Siliconversations) may stay orphan by design.
+    - 89 AI Safety/Alignment orgs, 39 Academic, 27 Think Tank/Policy, 15 VC/Capital/Philanthropy, 11 Labor/Civil Society, 6 Media/Journalism, 3 Government/Agency, 1 Deployer — each needs per-entity research for funder/partner/parent_company edges; many niche orgs may legitimately stand alone.
+    - 10 orphan persons (3 Cultural, 3 Journalist, 2 Academic, 1 Researcher, 1 uncategorized) — likely need employer/member edges or may not belong in the map.
+  - **Next-step recommendation:** user decision on (a) whether to bulk-create entities for well-known authors/publishers missing from DB (CRS, IAPP, CNBC, etc. ~15 orgs; Samuel Marks, Dean Ball, etc. ~10 persons), and (b) whether to systematically research funder edges for orphan AI Safety orgs (many funded by Open Philanthropy / Coefficient Giving / SFF — tractable via public grants DBs).
 
-**Near-duplicate importance=5 clusters (demote one per cluster):**
-- [ ] Alphabet (1225) / Google (1041) / DeepMind (146) — keep DeepMind=5, Google=4, Alphabet=3–4
-- [ ] Meta (1043) / Meta AI (204) — keep Meta AI=5, Meta corp=4
-- [ ] White House (1031) / Trump admin (1169) / OSTP (345) — keep OSTP=5 + one other
+**Near-duplicate importance=5 clusters (demote one per cluster):** ✅ Done. 4 demotions applied in `logs/importance/importance_ratings_orgs.csv` (short rationale appended to each row).
+- [x] Alphabet (1225) / Google (1041) / DeepMind (146) — **DeepMind=5 (kept), Google=5→4, Alphabet=5→3** (holding co, AI activity flows through subsidiaries)
+- [x] Meta (1043) / Meta AI (204) — **Meta AI=5 (kept), Meta=5→4** (parent corp; Meta AI holds Llama / MSL)
+- [x] White House (1031) / Trump admin (1169) / OSTP (345) — **OSTP=5 + Trump admin=5 (both kept as active AI-policy drivers), White House=5→4** (generic institutional home)
 
 ---
 

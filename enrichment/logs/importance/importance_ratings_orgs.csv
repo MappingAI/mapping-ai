@@ -51,9 +51,9 @@ id,name,category,importance,rationale
 133,Anthropic,Frontier Lab,5,Claude + Constitutional AI + RSP framework; $20M Public First Action super-PAC funder; second-pole of frontier-lab AI-safety policy voice.
 146,Google DeepMind,Frontier Lab,5,Hassabis Nobel + Gemini; third frontier pole; UK/international policy leverage via DeepMind's London base.
 204,Meta AI,Frontier Lab,5,Llama anchors the open-source frontier narrative; LeCun's policy voice; Meta's lobbying weight in DC + EU.
-1041,Google,Frontier Lab,5,Alphabet parent — controls DeepMind + Google AI; tier-1 AI-policy lobbying + compute + distribution.
+1041,Google,Frontier Lab,4,Alphabet parent — controls DeepMind + Google AI; tier-1 AI-policy lobbying + compute + distribution. AI products + Gemini distribution — demoted to 4; Google DeepMind (146) holds the 5-rating for the cluster.
 1042,Microsoft,Frontier Lab,5,Controls OpenAI partnership + Azure compute backbone; Brad Smith is top Washington AI-policy voice.
-1043,Meta,Frontier Lab,5,Parent of Meta AI + Llama; mainstream platform reach; AI-regulation battleground.
+1043,Meta,Frontier Lab,4,Parent of Meta AI + Llama; mainstream platform reach; AI-regulation battleground. Parent corp — demoted to 4; Meta AI (204) holds the 5-rating for the cluster (Llama / MSL).
 177,xAI,Frontier Lab,5,Musk-led; SpaceX merger (Feb 2026) → $1.25T Orbital Intelligence; political weight via Musk.
 214,DeepSeek,Frontier Lab,5,Liang Wenfeng's China disruptor; V3/R1 reframed U.S.-China AI competition + export-controls debate.
 181,Safe Superintelligence Inc.,Frontier Lab,4,Sutskever's post-OpenAI lab; $32B valuation (Apr 2025); no product but narrative-shaping.
@@ -135,7 +135,7 @@ id,name,category,importance,rationale
 1071,Tesla,Deployers & Platforms,5,Largest-scale real-world AI deployment (FSD); Optimus; Digital Optimus with xAI; Musk political weight.
 1073,Palantir,Deployers & Platforms,5,Thiel-founded; defining defense/gov AI-analytics; pivotal in U.S. national-security AI.
 1329,Apple,Deployers & Platforms,5,Apple Intelligence + OpenAI partnership; ~2B-device deployment base; privacy-first framing defines consumer-AI policy.
-1225,Alphabet Inc.,Deployers & Platforms,5,Parent of Google + DeepMind; controls AI Principles evolution (removed weapons pledge); tier-1 deployer + lobbyist.
+1225,Alphabet Inc.,Deployers & Platforms,3,"Parent of Google + DeepMind; controls AI Principles evolution (removed weapons pledge); tier-1 deployer + lobbyist. Holding co for Google/DeepMind; AI activity runs through subsidiaries — demoted to 3 per near-dup cluster w/ DeepMind=5, Google=4."
 1058,Anduril Industries,Deployers & Platforms,4,$20B Army AI contract (2026); defense-AI anchor; Luckey's political weight.
 738,Scale AI,Deployers & Platforms,4,$14B valuation; Meta $14.3B investment (Wang→Meta); defining AI-data-infrastructure company + DoD Thunderforge.
 1192,IBM,Deployers & Platforms,4,watsonx platform; $12.5B generative AI; major enterprise AI deployer + DC 'precision regulation' voice.
@@ -342,7 +342,7 @@ id,name,category,importance,rationale
 434,5050 AI (by Fifty Years),VC/Capital/Philanthropy,1,Free 13-week AI-safety startup accelerator; 105 companies launched; niche.
 1609,The Operating Group,VC/Capital/Philanthropy,1,BVI seed crypto VC; narrow.
 162,Cooperative AI Foundation,VC/Capital/Philanthropy,2,UK charity (Exeter); $15M commitment from Macroscopic Ventures; multi-agent AI-safety research support.
-1031,White House,Government/Agency,5,Presidential office; sets National AI Policy Framework; Trump + Biden AI EOs; anchor of executive-branch AI policy.
+1031,White House,Government/Agency,4,Presidential office; sets National AI Policy Framework; Trump + Biden AI EOs; anchor of executive-branch AI policy. Institutional home — demoted to 4; OSTP (345) + Trump administration (1169) hold the 5-ratings in the cluster.
 1169,Trump administration,Government/Agency,5,"Current administration shaping U.S. AI policy — Day 1 revoked EO 14110, America's AI Action Plan."
 345,White House Office of Science and Technology Policy (OSTP),Government/Agency,5,Kratsios-led; coordinates federal AI policy; anchor technical-policy WH body.
 914,Department of Commerce,Government/Agency,5,Houses NIST + BIS; Commerce Secretary (Lutnick) oversees AI standards + chip exports; tier-1 AI-policy agency.
