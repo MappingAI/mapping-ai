@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useRef } from 'react'
 import { useForm, type UseFormReturn } from 'react-hook-form'
 import { DropdownProvider } from '../contexts/DropdownContext'
 import { PillToggle } from './PillToggle'
@@ -57,14 +57,11 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
   const orgForm = useForm<Record<string, unknown>>({ defaultValues: {} })
   const resourceForm = useForm<Record<string, unknown>>({ defaultValues: {} })
 
-  const forms: Record<FormType, UseFormReturn<Record<string, unknown>>> = {
-    person: personForm,
-    organization: orgForm,
-    resource: resourceForm,
-  }
+  // Stable ref to avoid recreating callbacks on every render
+  const formsRef = useRef({ person: personForm, organization: orgForm, resource: resourceForm })
+  formsRef.current = { person: personForm, organization: orgForm, resource: resourceForm }
 
   // Cross-form navigation: switch tab and enter update mode
-  // Exposed to DuplicateDetection and OrgSearch "edit" links (wired in Unit 17)
   const switchToFormInUpdateMode = useCallback(
     (formType: FormType, entityData: Partial<Entity>) => {
       setActiveTab(formType)
@@ -72,30 +69,28 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
         ...prev,
         [formType]: { entityId: entityData.id!, entityData },
       }))
-      // Prefill the target form with entity data
-      const form = forms[formType]
-      form.reset(entityData as Record<string, unknown>)
+      formsRef.current[formType].reset(entityData as Record<string, unknown>)
     },
-    [forms],
+    [],
   )
 
   // Cancel update mode for a specific form
   const cancelUpdate = useCallback(
     (formType: FormType) => {
       setUpdateContexts((prev) => ({ ...prev, [formType]: null }))
-      forms[formType].reset({})
+      formsRef.current[formType].reset({})
     },
-    [forms],
+    [],
   )
 
   // Clear form and draft
   const clearForm = useCallback(
     (formType: FormType) => {
-      forms[formType].reset({})
+      formsRef.current[formType].reset({})
       setUpdateContexts((prev) => ({ ...prev, [formType]: null }))
       setSuccessType(null)
     },
-    [forms],
+    [],
   )
 
   // Org creation panel state
@@ -118,12 +113,14 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
 
   const handleSubmitSuccess = useCallback(
     (formType: FormType) => {
-      setSuccessIsUpdate(!!updateContexts[formType])
+      setUpdateContexts((prev) => {
+        setSuccessIsUpdate(!!prev[formType])
+        return { ...prev, [formType]: null }
+      })
       setSuccessType(formType)
-      forms[formType].reset({})
-      setUpdateContexts((prev) => ({ ...prev, [formType]: null }))
+      formsRef.current[formType].reset({})
     },
-    [forms, updateContexts],
+    [],
   )
 
   // Show success message
