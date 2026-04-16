@@ -33,7 +33,10 @@ export async function searchEntities(
   const params = new URLSearchParams({ q: query })
   if (type) params.set('type', type)
   if (status) params.set('status', status)
-  return fetchJSON<SearchResult[]>(`${API_BASE}/search?${params}`)
+  const data = await fetchJSON<Record<string, SearchResult[]>>(`${API_BASE}/search?${params}`)
+  // API returns { people: [], organizations: [], resources: [] } — flatten to array
+  if (Array.isArray(data)) return data
+  return [...(data.people ?? []), ...(data.organizations ?? []), ...(data.resources ?? [])]
 }
 
 export async function submitEntity(data: SubmitRequest): Promise<SubmitResponse> {
