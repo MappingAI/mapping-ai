@@ -233,6 +233,7 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
             key={`org-${clearKeys.organization}`}
             form={orgForm}
             updateContext={updateContexts.organization}
+            onOrgPanelOpen={openOrgPanel}
             onEnterUpdateMode={(data) => switchToFormInUpdateMode('organization', data as Partial<Entity>)}
             onSubmitSuccess={() => handleSubmitSuccess('organization')}
           />

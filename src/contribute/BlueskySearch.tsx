@@ -55,7 +55,7 @@ export function BlueskySearch({ value, onChange, className = '' }: BlueskySearch
         setResults([])
         setIsOpen(false)
       }
-    }, 150)
+    }, 50)
 
     return () => clearTimeout(debounceRef.current)
   }, [value])

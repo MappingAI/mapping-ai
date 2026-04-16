@@ -18,6 +18,7 @@ import type { Tag } from '../components/TagInput'
 interface OrganizationFormProps {
   form: UseFormReturn<Record<string, unknown>>
   updateContext: UpdateContext | null
+  onOrgPanelOpen?: (name: string, triggerType: 'primary' | 'affiliated') => void
   onEnterUpdateMode?: (entityData: Record<string, unknown>) => void
   onSubmitSuccess?: () => void
 }
@@ -65,7 +66,7 @@ const LABEL_CLASS = 'font-mono text-[11px] uppercase tracking-wider text-[#555]'
 const INPUT_CLASS =
   'w-full px-3 py-2 font-mono text-[13px] border border-[#ddd] rounded bg-white outline-none transition-colors hover:border-[#999] focus:border-[#2563eb]'
 
-export function OrganizationForm({ form, updateContext, onEnterUpdateMode, onSubmitSuccess }: OrganizationFormProps) {
+export function OrganizationForm({ form, updateContext, onOrgPanelOpen, onEnterUpdateMode, onSubmitSuccess }: OrganizationFormProps) {
   const { register, control, watch, handleSubmit, formState: { errors } } = form
   const { cache } = useEntityCache()
   const submitEntity = useSubmitEntity()
@@ -195,6 +196,7 @@ export function OrganizationForm({ form, updateContext, onEnterUpdateMode, onSub
                 field.onChange(name)
                 form.setValue('parentOrgId', id)
               }}
+              onCreateOrg={onOrgPanelOpen ? (name) => onOrgPanelOpen(name, 'primary') : undefined}
               placeholder="Search parent organization..."
             />
           )}

@@ -267,7 +267,10 @@ export function TipTapEditor({
       Placeholder.configure({ placeholder }),
       Mention.configure({
         HTMLAttributes: { class: 'mention' },
-        suggestion: createSuggestion((q) => searchEntitiesRef.current(q)),
+        suggestion: {
+          ...createSuggestion((q) => searchEntitiesRef.current(q)),
+          allowSpaces: true,
+        },
       }),
     ],
     content,

@@ -4,6 +4,7 @@ import { CustomSelect, buildOptions } from '../components/CustomSelect'
 import { TipTapEditor, type MentionData } from '../components/TipTapEditor'
 import { DuplicateDetection } from '../components/DuplicateDetection'
 import { InfoTooltip } from '../components/InfoTooltip'
+import { TagInput, type Tag, type TagSearchResult } from '../components/TagInput'
 import { OrgSearch } from './OrgSearch'
 import { useEntityCache } from '../hooks/useEntityCache'
 import { useSubmitEntity } from '../hooks/useSubmitEntity'
@@ -66,6 +67,33 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onEnterUpdat
                 label: p.name,
                 detail: `${p.category ?? ''} (pending)`.trim(),
               })
+            }
+          }
+        } catch { /* local results still work */ }
+      }
+      return local
+    },
+    [cache],
+  )
+
+  // Author search — searches existing people
+  const searchPeople = useCallback(
+    async (query: string): Promise<TagSearchResult[]> => {
+      if (!query) return []
+      const local: TagSearchResult[] = cache
+        ? fuzzySearch(cache.entities, query, 'person', 10).map((r) => ({
+            id: r.id,
+            label: r.name,
+            detail: r.title ?? r.category ?? undefined,
+          }))
+        : []
+      if (query.length >= 2) {
+        try {
+          const pending = await searchAPI(query, 'person', 'pending')
+          const seenIds = new Set(local.map((r) => r.id))
+          for (const p of pending) {
+            if (!seenIds.has(p.id)) {
+              local.push({ id: p.id, label: p.name, detail: p.title ?? p.category ?? undefined, isPending: true })
             }
           }
         } catch { /* local results still work */ }
@@ -139,13 +167,21 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onEnterUpdat
         />
       </div>
 
-      {/* Author */}
+      {/* Author(s) */}
       <div className="col-span-2">
-        <label className={LABEL_CLASS}>Author</label>
-        <input
-          {...register('resourceAuthor')}
-          className={INPUT_CLASS}
-          placeholder="Author name"
+        <label className={LABEL_CLASS}>Author(s)</label>
+        <Controller
+          name="resourceAuthors"
+          control={control}
+          defaultValue={[]}
+          render={({ field }) => (
+            <TagInput
+              tags={(field.value as Tag[]) ?? []}
+              onTagsChange={field.onChange}
+              searchFn={searchPeople}
+              placeholder="Search people..."
+            />
+          )}
         />
       </div>
 
