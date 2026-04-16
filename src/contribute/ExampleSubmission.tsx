@@ -1,18 +1,54 @@
-import React from 'react'
+import React, { useState, useRef, useCallback } from 'react'
+import { searchEntities } from '../lib/api'
 import type { FormType } from './ContributeForm'
 
 interface ExampleSubmissionProps {
   activeTab: FormType
 }
 
-const Mention = ({ name, type }: { name: string; type: string }) => (
-  <span
-    className="bg-[#e8f0fe] rounded px-0.5 text-[#2563eb] font-medium cursor-default"
-    title={`${type}: ${name}`}
-  >
-    @{name}
-  </span>
-)
+const TYPE_LABELS: Record<string, string> = {
+  person: 'Person',
+  organization: 'Organization',
+  resource: 'Resource',
+}
+
+/** Hoverable @mention with a tooltip card that enriches from the search API. */
+const Mention = ({ name, type }: { name: string; type: string }) => {
+  const [show, setShow] = useState(false)
+  const [detail, setDetail] = useState<string | null>(null)
+  const fetchedRef = useRef(false)
+
+  const handleEnter = useCallback(() => {
+    setShow(true)
+    if (fetchedRef.current) return
+    fetchedRef.current = true
+    searchEntities(name, type).then((results) => {
+      const match = results[0]
+      if (match) {
+        const parts = [match.category, match.title, match.primary_org ? `at ${match.primary_org}` : ''].filter(Boolean)
+        if (parts.length > 0) setDetail(parts.join(' \u00b7 '))
+      }
+    }).catch(() => {})
+  }, [name, type])
+
+  return (
+    <span
+      className="relative inline-block bg-[#e8f0fe] rounded px-0.5 text-[#2563eb] font-medium cursor-pointer hover:bg-[#d0e2fc]"
+      onMouseEnter={handleEnter}
+      onMouseLeave={() => setShow(false)}
+    >
+      @{name}
+      {show && (
+        <span className="absolute bottom-[calc(100%+6px)] left-1/2 -translate-x-1/2 bg-white text-[#1a1a1a] font-mono text-[10px] font-normal leading-snug p-[0.5rem_0.7rem] rounded border border-[#ddd] shadow-[0_4px_12px_rgba(0,0,0,0.08)] min-w-[180px] max-w-[260px] z-[100] pointer-events-none whitespace-normal normal-case tracking-normal">
+          <strong className="block">{name}</strong>
+          <span className="text-[#666]">{detail ?? TYPE_LABELS[type] ?? type}</span>
+          {/* Arrow */}
+          <span className="absolute top-full left-1/2 -translate-x-1/2 border-[5px] border-transparent border-t-[#ddd]" />
+        </span>
+      )}
+    </span>
+  )
+}
 
 function PersonExample() {
   return (
