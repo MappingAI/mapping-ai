@@ -16,6 +16,7 @@ interface ResourceFormProps {
   form: UseFormReturn<Record<string, unknown>>
   updateContext: UpdateContext | null
   onOrgPanelOpen?: (name: string, triggerType: 'primary' | 'affiliated') => void
+  onSwitchToPersonTab?: () => void
   onEnterUpdateMode?: (entityData: Record<string, unknown>) => void
   onSubmitSuccess?: () => void
 }
@@ -36,7 +37,7 @@ const LABEL_CLASS = 'font-mono text-[11px] uppercase tracking-wider text-[#555]'
 const INPUT_CLASS =
   'w-full px-3 py-2 font-mono text-[13px] border border-[#ddd] rounded bg-white outline-none transition-colors hover:border-[#999] focus:border-[#2563eb]'
 
-export function ResourceForm({ form, updateContext, onOrgPanelOpen, onEnterUpdateMode, onSubmitSuccess }: ResourceFormProps) {
+export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPersonTab, onEnterUpdateMode, onSubmitSuccess }: ResourceFormProps) {
   const { register, control, watch, handleSubmit, formState: { errors } } = form
   const { cache } = useEntityCache()
   const submitEntity = useSubmitEntity()
@@ -183,6 +184,15 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onEnterUpdat
             />
           )}
         />
+        {onSwitchToPersonTab && (
+          <button
+            type="button"
+            onClick={onSwitchToPersonTab}
+            className="mt-1 text-[11px] font-mono text-[#2563eb] hover:text-[#1d4ed8] hover:underline bg-transparent border-none cursor-pointer p-0"
+          >
+            Not found? Add this person
+          </button>
+        )}
       </div>
 
       {/* Organization */}

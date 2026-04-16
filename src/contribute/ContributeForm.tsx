@@ -253,6 +253,7 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
             form={resourceForm}
             updateContext={updateContexts.resource}
             onOrgPanelOpen={openOrgPanel}
+            onSwitchToPersonTab={() => setActiveTab('person')}
             onEnterUpdateMode={(data) => switchToFormInUpdateMode('resource', data as Partial<Entity>)}
             onSubmitSuccess={() => handleSubmitSuccess('resource')}
           />
