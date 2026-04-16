@@ -20,6 +20,7 @@ interface PersonFormProps {
   updateContext: UpdateContext | null
   onOrgPanelOpen: (name: string, triggerType: 'primary' | 'affiliated') => void
   onEnterUpdateMode?: (entityData: Record<string, unknown>) => void
+  onSubmitSuccess?: () => void
 }
 
 const ROLE_OPTIONS = buildOptions([
@@ -101,7 +102,7 @@ const LABEL_CLASS = 'font-mono text-[11px] uppercase tracking-wider text-[#555]'
 const INPUT_CLASS =
   'w-full px-3 py-2 font-mono text-[13px] border border-[#ddd] rounded bg-white outline-none transition-colors hover:border-[#999] focus:border-[#2563eb]'
 
-export function PersonForm({ form, updateContext, onOrgPanelOpen, onEnterUpdateMode }: PersonFormProps) {
+export function PersonForm({ form, updateContext, onOrgPanelOpen, onEnterUpdateMode, onSubmitSuccess }: PersonFormProps) {
   const { register, control, watch, handleSubmit, formState: { errors } } = form
   const { cache } = useEntityCache()
   const submitEntity = useSubmitEntity()
@@ -180,15 +181,18 @@ export function PersonForm({ form, updateContext, onOrgPanelOpen, onEnterUpdateM
 
   const onSubmit = handleSubmit((data) => {
     const { _hp, ...fields } = data
-    submitEntity.mutate({
-      type: 'person',
-      timestamp: new Date().toISOString(),
-      data: {
-        ...fields,
-        entityId: updateContext?.entityId ?? undefined,
+    submitEntity.mutate(
+      {
+        type: 'person',
+        timestamp: new Date().toISOString(),
+        data: {
+          ...fields,
+          entityId: updateContext?.entityId ?? undefined,
+        },
+        _hp: (_hp as string) ?? '',
       },
-      _hp: (_hp as string) ?? '',
-    })
+      { onSuccess: () => onSubmitSuccess?.() },
+    )
   })
 
   return (

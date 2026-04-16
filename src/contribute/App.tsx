@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { PasswordGate } from '../components/PasswordGate'
 import { HowItWorks } from '../components/HowItWorks'
@@ -15,10 +16,15 @@ const queryClient = new QueryClient({
 })
 
 export function App() {
+  const [showHowItWorks, setShowHowItWorks] = useState(false)
+
   return (
     <QueryClientProvider client={queryClient}>
       <PasswordGate>
-        <HowItWorks />
+        <HowItWorks
+          forceOpen={showHowItWorks}
+          onDismiss={() => setShowHowItWorks(false)}
+        />
         <Navigation />
         <main className="max-w-[800px] mx-auto px-6 pt-16 pb-12 font-serif">
           <header className="mb-8">
@@ -34,6 +40,22 @@ export function App() {
               additional context, or new perspectives.
             </p>
           </header>
+
+          {/* Disclaimer bar with How It Works button */}
+          <div className="mb-8 px-4 py-3 bg-[#f8f8f8] border border-[#e0e0e0] rounded text-[14px] leading-relaxed text-[#444]">
+            Anyone with knowledge of the U.S. AI policy landscape can contribute.
+            You can add a completely new person, organization, or resource, or
+            search for an existing entry and submit updates, corrections, or
+            additional information. All submissions are reviewed before
+            publication.{' '}
+            <button
+              type="button"
+              onClick={() => setShowHowItWorks(true)}
+              className="inline font-mono text-[11px] uppercase tracking-wider text-[#2563eb] hover:text-[#1a1a1a] cursor-pointer bg-transparent border-none p-0 ml-1"
+            >
+              How it works
+            </button>
+          </div>
 
           <ContributeForm className="mb-12" />
 

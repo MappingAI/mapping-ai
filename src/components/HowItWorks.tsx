@@ -1,18 +1,31 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { IS_IFRAME } from '../lib/iframe'
 
 const DISMISSED_KEY = 'contributeInfoDismissed'
 
-export function HowItWorks() {
+interface HowItWorksProps {
+  /** When true, forces the overlay open (e.g. from the disclaimer button). */
+  forceOpen?: boolean
+  /** Called when the overlay is dismissed after being force-opened. */
+  onDismiss?: () => void
+}
+
+export function HowItWorks({ forceOpen = false, onDismiss }: HowItWorksProps) {
   const [dismissed, setDismissed] = useState(
     () => IS_IFRAME || localStorage.getItem(DISMISSED_KEY) === '1',
   )
 
-  if (dismissed) return null
+  // Re-open when forceOpen transitions to true
+  useEffect(() => {
+    if (forceOpen) setDismissed(false)
+  }, [forceOpen])
+
+  if (dismissed && !forceOpen) return null
 
   const dismiss = () => {
     localStorage.setItem(DISMISSED_KEY, '1')
     setDismissed(true)
+    onDismiss?.()
   }
 
   return (

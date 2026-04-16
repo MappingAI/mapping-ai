@@ -14,42 +14,28 @@ import type { UpdateContext } from './ContributeForm'
 interface ResourceFormProps {
   form: UseFormReturn<Record<string, unknown>>
   updateContext: UpdateContext | null
+  onOrgPanelOpen?: (name: string, triggerType: 'primary' | 'affiliated') => void
   onEnterUpdateMode?: (entityData: Record<string, unknown>) => void
+  onSubmitSuccess?: () => void
 }
 
-const CATEGORY_OPTIONS = buildOptions([
-  'Policy document',
-  'Academic paper',
-  'News article',
+const TYPE_OPTIONS = buildOptions([
+  'Essay',
   'Book',
   'Report',
-  'Blog post',
   'Podcast',
   'Video',
-  'Dataset',
-  'Tool/software',
-  'Other',
-])
-
-const TYPE_OPTIONS = buildOptions([
-  'Legislative',
-  'Executive order',
-  'Agency guidance',
-  'Treaty/international',
-  'Think tank report',
-  'Industry publication',
-  'Academic study',
-  'Investigative',
-  'Opinion/editorial',
-  'Transcript',
-  'Other',
+  'Website',
+  'Academic Paper',
+  'News Article',
+  'Substack/Newsletter',
 ])
 
 const LABEL_CLASS = 'font-mono text-[11px] uppercase tracking-wider text-[#555]'
 const INPUT_CLASS =
   'w-full px-3 py-2 font-mono text-[13px] border border-[#ddd] rounded bg-white outline-none transition-colors hover:border-[#999] focus:border-[#2563eb]'
 
-export function ResourceForm({ form, updateContext, onEnterUpdateMode }: ResourceFormProps) {
+export function ResourceForm({ form, updateContext, onOrgPanelOpen, onEnterUpdateMode, onSubmitSuccess }: ResourceFormProps) {
   const { register, control, watch, handleSubmit, formState: { errors } } = form
   const { cache } = useEntityCache()
   const submitEntity = useSubmitEntity()
@@ -91,15 +77,18 @@ export function ResourceForm({ form, updateContext, onEnterUpdateMode }: Resourc
 
   const onSubmit = handleSubmit((data) => {
     const { _hp, ...fields } = data
-    submitEntity.mutate({
-      type: 'resource',
-      timestamp: new Date().toISOString(),
-      data: {
-        ...fields,
-        entityId: updateContext?.entityId ?? undefined,
+    submitEntity.mutate(
+      {
+        type: 'resource',
+        timestamp: new Date().toISOString(),
+        data: {
+          ...fields,
+          entityId: updateContext?.entityId ?? undefined,
+        },
+        _hp: (_hp as string) ?? '',
       },
-      _hp: (_hp as string) ?? '',
-    })
+      { onSuccess: () => onSubmitSuccess?.() },
+    )
   })
 
   return (
@@ -133,25 +122,8 @@ export function ResourceForm({ form, updateContext, onEnterUpdateMode }: Resourc
         )}
       </div>
 
-      {/* Category */}
-      <div>
-        <label className={LABEL_CLASS}>Category</label>
-        <Controller
-          name="resourceCategory"
-          control={control}
-          render={({ field }) => (
-            <CustomSelect
-              options={CATEGORY_OPTIONS}
-              value={(field.value as string) ?? ''}
-              onChange={field.onChange}
-              placeholder="Select category..."
-            />
-          )}
-        />
-      </div>
-
       {/* Type */}
-      <div>
+      <div className="col-span-2">
         <label className={LABEL_CLASS}>Type</label>
         <Controller
           name="resourceType"
@@ -191,6 +163,7 @@ export function ResourceForm({ form, updateContext, onEnterUpdateMode }: Resourc
                 field.onChange(name)
                 form.setValue('primaryOrgId', id)
               }}
+              onCreateOrg={onOrgPanelOpen ? (name) => onOrgPanelOpen(name, 'primary') : undefined}
               placeholder="Search affiliated organization..."
             />
           )}

@@ -6,6 +6,8 @@ import { DuplicateDetection } from '../components/DuplicateDetection'
 import { InfoTooltip } from '../components/InfoTooltip'
 import { OrgSearch } from './OrgSearch'
 import { LocationSearch } from './LocationSearch'
+import { TwitterSearch } from './TwitterSearch'
+import { BlueskySearch } from './BlueskySearch'
 import { useEntityCache } from '../hooks/useEntityCache'
 import { useSubmitEntity } from '../hooks/useSubmitEntity'
 import { fuzzySearch } from '../lib/search'
@@ -17,6 +19,7 @@ interface OrganizationFormProps {
   form: UseFormReturn<Record<string, unknown>>
   updateContext: UpdateContext | null
   onEnterUpdateMode?: (entityData: Record<string, unknown>) => void
+  onSubmitSuccess?: () => void
 }
 
 const CATEGORY_OPTIONS = buildOptions([
@@ -32,6 +35,18 @@ const CATEGORY_OPTIONS = buildOptions([
   'Political Campaign/PAC',
   'AI Infrastructure & Compute',
   'Deployers & Platforms',
+])
+
+const FUNDING_MODEL_OPTIONS = buildOptions([
+  'Venture-backed',
+  'Revenue-generating',
+  'Government-funded',
+  'Philanthropic',
+  'Membership',
+  'Mixed',
+  'Public benefit',
+  'Self-funded',
+  'Other',
 ])
 
 const STANCE_OPTIONS = buildOptions([
@@ -50,7 +65,7 @@ const LABEL_CLASS = 'font-mono text-[11px] uppercase tracking-wider text-[#555]'
 const INPUT_CLASS =
   'w-full px-3 py-2 font-mono text-[13px] border border-[#ddd] rounded bg-white outline-none transition-colors hover:border-[#999] focus:border-[#2563eb]'
 
-export function OrganizationForm({ form, updateContext, onEnterUpdateMode }: OrganizationFormProps) {
+export function OrganizationForm({ form, updateContext, onEnterUpdateMode, onSubmitSuccess }: OrganizationFormProps) {
   const { register, control, watch, handleSubmit, formState: { errors } } = form
   const { cache } = useEntityCache()
   const submitEntity = useSubmitEntity()
@@ -94,15 +109,18 @@ export function OrganizationForm({ form, updateContext, onEnterUpdateMode }: Org
 
   const onSubmit = handleSubmit((data) => {
     const { _hp, ...fields } = data
-    submitEntity.mutate({
-      type: 'organization',
-      timestamp: new Date().toISOString(),
-      data: {
-        ...fields,
-        entityId: updateContext?.entityId ?? undefined,
+    submitEntity.mutate(
+      {
+        type: 'organization',
+        timestamp: new Date().toISOString(),
+        data: {
+          ...fields,
+          entityId: updateContext?.entityId ?? undefined,
+        },
+        _hp: (_hp as string) ?? '',
       },
-      _hp: (_hp as string) ?? '',
-    })
+      { onSuccess: () => onSubmitSuccess?.() },
+    )
   })
 
   return (
@@ -205,10 +223,17 @@ export function OrganizationForm({ form, updateContext, onEnterUpdateMode }: Org
       {/* Funding Model */}
       <div className="col-span-2">
         <label className={LABEL_CLASS}>Funding Model</label>
-        <input
-          {...register('fundingModel')}
-          className={INPUT_CLASS}
-          placeholder="e.g. Venture-backed, Non-profit, Government-funded"
+        <Controller
+          name="fundingModel"
+          control={control}
+          render={({ field }) => (
+            <CustomSelect
+              options={FUNDING_MODEL_OPTIONS}
+              value={(field.value as string) ?? ''}
+              onChange={field.onChange}
+              placeholder="Select funding model..."
+            />
+          )}
         />
       </div>
 
@@ -234,6 +259,36 @@ export function OrganizationForm({ form, updateContext, onEnterUpdateMode }: Org
             placeholder="Please elaborate on their regulatory stance..."
           />
         )}
+      </div>
+
+      {/* Twitter/X */}
+      <div>
+        <label className={LABEL_CLASS}>Twitter / X</label>
+        <Controller
+          name="twitter"
+          control={control}
+          render={({ field }) => (
+            <TwitterSearch
+              value={(field.value as string) ?? ''}
+              onChange={field.onChange}
+            />
+          )}
+        />
+      </div>
+
+      {/* Bluesky */}
+      <div>
+        <label className={LABEL_CLASS}>Bluesky</label>
+        <Controller
+          name="bluesky"
+          control={control}
+          render={({ field }) => (
+            <BlueskySearch
+              value={(field.value as string) ?? ''}
+              onChange={field.onChange}
+            />
+          )}
+        />
       </div>
 
       {/* Notes (TipTap) */}

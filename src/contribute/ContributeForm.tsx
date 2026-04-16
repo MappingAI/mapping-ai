@@ -19,11 +19,22 @@ const TABS: { type: FormType; label: string }[] = [
   { type: 'resource', label: 'Add a Resource' },
 ]
 
-const RELATIONSHIP_OPTIONS = [
-  { value: 'self', label: 'I am this person' },
-  { value: 'connector', label: 'I am connected' },
-  { value: 'external', label: 'Someone I know of' },
-]
+const RELATIONSHIP_OPTIONS: Record<FormType, { value: string; label: string }[]> = {
+  person: [
+    { value: 'self', label: 'I am this person' },
+    { value: 'connector', label: 'I am connected' },
+    { value: 'external', label: 'Someone I know of' },
+  ],
+  organization: [
+    { value: 'self', label: 'I am part of this org' },
+    { value: 'connector', label: 'I am connected' },
+    { value: 'external', label: 'An org I know of' },
+  ],
+  resource: [
+    { value: 'self', label: 'I am a creator' },
+    { value: 'external', label: 'A resource I found' },
+  ],
+}
 
 /** State for update mode (editing an existing entity). */
 export interface UpdateContext {
@@ -46,6 +57,13 @@ interface ContributeFormProps {
  */
 export function ContributeForm({ className = '' }: ContributeFormProps) {
   const [activeTab, setActiveTab] = useState<FormType>('person')
+
+  // Per-form clear counter — incrementing forces a remount to reset TipTap editors
+  const [clearKeys, setClearKeys] = useState<Record<FormType, number>>({
+    person: 0,
+    organization: 0,
+    resource: 0,
+  })
 
   // Per-form update mode state
   const [updateContexts, setUpdateContexts] = useState<Record<FormType, UpdateContext | null>>({
@@ -103,10 +121,14 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
   // Clear form and draft
   const clearForm = useCallback(
     (formType: FormType) => {
-      formsRef.current[formType].reset({})
+      // Suppress auto-save first so the debounce doesn't re-save cleared state
+      clearDraft(formType)
+      // Reset RHF to empty defaults
+      formsRef.current[formType].reset()
       setUpdateContexts((prev) => ({ ...prev, [formType]: null }))
       setSuccessType(null)
-      clearDraft(formType)
+      // Bump clear key to force remount TipTap editors (they only read content on init)
+      setClearKeys((prev) => ({ ...prev, [formType]: prev[formType] + 1 }))
     },
     [clearDraft],
   )
@@ -136,9 +158,12 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
         return { ...prev, [formType]: null }
       })
       setSuccessType(formType)
-      formsRef.current[formType].reset({})
+      clearDraft(formType)
+      formsRef.current[formType].reset()
+      // Bump clear key so TipTap editors reset on next render
+      setClearKeys((prev) => ({ ...prev, [formType]: prev[formType] + 1 }))
     },
-    [],
+    [clearDraft],
   )
 
   // Show success message
@@ -186,10 +211,12 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
             onClear={() => clearForm('person')}
           />
           <PersonForm
+            key={`person-${clearKeys.person}`}
             form={personForm}
             updateContext={updateContexts.person}
             onOrgPanelOpen={openOrgPanel}
             onEnterUpdateMode={(data) => switchToFormInUpdateMode('person', data as Partial<Entity>)}
+            onSubmitSuccess={() => handleSubmitSuccess('person')}
           />
         </div>
 
@@ -203,9 +230,11 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
             onClear={() => clearForm('organization')}
           />
           <OrganizationForm
+            key={`org-${clearKeys.organization}`}
             form={orgForm}
             updateContext={updateContexts.organization}
             onEnterUpdateMode={(data) => switchToFormInUpdateMode('organization', data as Partial<Entity>)}
+            onSubmitSuccess={() => handleSubmitSuccess('organization')}
           />
         </div>
 
@@ -219,9 +248,12 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
             onClear={() => clearForm('resource')}
           />
           <ResourceForm
+            key={`resource-${clearKeys.resource}`}
             form={resourceForm}
             updateContext={updateContexts.resource}
+            onOrgPanelOpen={openOrgPanel}
             onEnterUpdateMode={(data) => switchToFormInUpdateMode('resource', data as Partial<Entity>)}
+            onSubmitSuccess={() => handleSubmitSuccess('resource')}
           />
         </div>
 
@@ -254,8 +286,6 @@ function FormHeader({
   onCancelUpdate: () => void
   onClear: () => void
 }) {
-  const showPills = formType === 'person'
-
   return (
     <div className="mb-4">
       {/* Update banner */}
@@ -276,16 +306,15 @@ function FormHeader({
       )}
 
       {/* Pill toggle + clear link */}
+      <label className="font-mono text-[11px] uppercase tracking-wider text-[#555] mb-1 block">
+        Who are you adding?
+      </label>
       <div className="flex items-center justify-between gap-4">
-        {showPills ? (
-          <PillToggle
-            value={(form.watch('submitterRelationship') as string) ?? ''}
-            onChange={(v) => form.setValue('submitterRelationship', v)}
-            options={RELATIONSHIP_OPTIONS}
-          />
-        ) : (
-          <div /> // Spacer
-        )}
+        <PillToggle
+          value={(form.watch('submitterRelationship') as string) ?? ''}
+          onChange={(v) => form.setValue('submitterRelationship', v)}
+          options={RELATIONSHIP_OPTIONS[formType]}
+        />
         <button
           type="button"
           onClick={onClear}

@@ -161,6 +161,76 @@ function createSuggestion(searchFn: (query: string) => MentionItem[] | Promise<M
   }
 }
 
+/** CSS for the @mention dropdown (injected once into <head>). */
+const MENTION_DROPDOWN_STYLE_ID = 'tiptap-mention-dropdown-styles'
+const MENTION_DROPDOWN_CSS = `
+.tiptap-mention-list {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  max-height: 240px;
+  overflow-y: auto;
+  z-index: 50;
+  min-width: 360px;
+  max-width: 500px;
+  padding: 4px 0;
+}
+.mention-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.4;
+}
+.mention-item.active,
+.mention-item:hover {
+  background: #f0f0f0;
+}
+.mention-type {
+  display: inline-block;
+  text-transform: uppercase;
+  font-size: 9px;
+  letter-spacing: 0.05em;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: #e8f0fe;
+  color: #2563eb;
+  flex-shrink: 0;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.mention-label {
+  font-weight: 600;
+  color: #1a1a1a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  flex-shrink: 1;
+}
+.mention-detail {
+  color: #888;
+  font-size: 11px;
+  margin-left: auto;
+  flex-shrink: 0;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mention-empty {
+  padding: 8px 12px;
+  color: #888;
+  font-size: 12px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+`
+
 /**
  * React TipTap rich text editor with @mentions.
  * Features: bold/italic/strike/lists/blockquote, @mention entity search,
@@ -177,6 +247,15 @@ export function TipTapEditor({
   const [linkUrl, setLinkUrl] = useState('')
   const [showLinkPopover, setShowLinkPopover] = useState(false)
   const onUpdateRef = useRef(onUpdate)
+
+  // Inject mention dropdown styles into <head> once
+  useEffect(() => {
+    if (document.getElementById(MENTION_DROPDOWN_STYLE_ID)) return
+    const style = document.createElement('style')
+    style.id = MENTION_DROPDOWN_STYLE_ID
+    style.textContent = MENTION_DROPDOWN_CSS
+    document.head.appendChild(style)
+  }, [])
   onUpdateRef.current = onUpdate
   const searchEntitiesRef = useRef(searchEntities)
   searchEntitiesRef.current = searchEntities
