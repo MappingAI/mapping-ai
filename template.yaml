@@ -12,6 +12,10 @@ Globals:
         DATABASE_URL: !Ref DatabaseUrl
 
 Parameters:
+  AcmCertificateArn:
+    Type: String
+    Default: 'arn:aws:acm:us-east-1:561047280976:certificate/8a05baf0-3b6b-492f-a0bd-db625b46a5a8'
+    Description: ACM certificate ARN (us-east-1) covering mapping-ai.org + aimapping.org + wildcards
   DatabaseUrl:
     Type: String
     NoEcho: true
@@ -254,6 +258,27 @@ Resources:
         SigningBehavior: always
         SigningProtocol: sigv4
 
+  # CloudFront Function: rewrites clean URLs (/contribute → /contribute.html)
+  UrlRewriteFunction:
+    Type: AWS::CloudFront::Function
+    Properties:
+      Name: !Sub 'mapping-ai-url-rewrite-${AWS::AccountId}'
+      AutoPublish: true
+      FunctionConfig:
+        Comment: Rewrite clean URLs to .html
+        Runtime: cloudfront-js-2.0
+      FunctionCode: |
+        function handler(event) {
+            var request = event.request;
+            var uri = request.uri;
+            if (uri.endsWith('/')) {
+                request.uri += 'index.html';
+            } else if (!uri.includes('.')) {
+                request.uri += '.html';
+            }
+            return request;
+        }
+
   CloudFrontDistribution:
     Type: AWS::CloudFront::Distribution
     Properties:
@@ -263,6 +288,16 @@ Resources:
         DefaultRootObject: index.html
         HttpVersion: http2
         PriceClass: PriceClass_100
+        # Custom domains
+        Aliases:
+          - mapping-ai.org
+          - www.mapping-ai.org
+          - aimapping.org
+          - www.aimapping.org
+        ViewerCertificate:
+          AcmCertificateArn: !Ref AcmCertificateArn
+          SslSupportMethod: sni-only
+          MinimumProtocolVersion: TLSv1.2_2021
         Origins:
           - Id: S3Origin
             DomainName: !GetAtt WebsiteBucket.RegionalDomainName
@@ -282,13 +317,9 @@ Resources:
           Compress: true
           CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6  # Managed-CachingOptimized
           ResponseHeadersPolicyId: !Ref SecurityHeadersPolicy
-        CustomErrorResponses:
-          - ErrorCode: 403
-            ResponseCode: 200
-            ResponsePagePath: /index.html
-          - ErrorCode: 404
-            ResponseCode: 200
-            ResponsePagePath: /index.html
+          FunctionAssociations:
+            - EventType: viewer-request
+              FunctionARN: !GetAtt UrlRewriteFunction.FunctionARN
 
 Outputs:
   ApiUrl:
