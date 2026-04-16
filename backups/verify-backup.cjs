@@ -1,14 +1,21 @@
 const { Pool } = require('pg');
 const fs = require('fs');
+require('dotenv').config();
 
+// Staging DB credentials - password must be set via STAGING_PASSWORD env var
 const pool = new Pool({
   host: 'mapping-ai-db.c9sccou2k3xe.eu-west-2.rds.amazonaws.com',
   port: 5432,
   database: 'mapping_ai_staging',
   user: 'connor_staging',
-  password: '8b6d2db3cd7c5d393ad67a101f091f86',
+  password: process.env.STAGING_PASSWORD,
   ssl: { rejectUnauthorized: false }
 });
+
+if (!process.env.STAGING_PASSWORD) {
+  console.error('ERROR: STAGING_PASSWORD environment variable not set');
+  process.exit(1);
+}
 
 async function verify() {
   // Load backup
