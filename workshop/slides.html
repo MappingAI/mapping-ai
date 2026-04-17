@@ -191,19 +191,19 @@
   <h2>The database</h2>
   <div class="stats-row">
     <div>
-      <div class="stat">709</div>
+      <div class="stat">706</div>
       <div class="stat-label">People</div>
     </div>
     <div>
-      <div class="stat">734</div>
+      <div class="stat">717</div>
       <div class="stat-label">Organizations</div>
     </div>
     <div>
-      <div class="stat">161</div>
+      <div class="stat">149</div>
       <div class="stat-label">Resources</div>
     </div>
     <div>
-      <div class="stat">2,228</div>
+      <div class="stat">2,143</div>
       <div class="stat-label">Relationships</div>
     </div>
   </div>
@@ -213,7 +213,7 @@
 <div class="slide slide-cream">
   <h2>Live Demo</h2>
   <h1>Let's look at the map</h1>
-  <p>Open <strong>mapping-ai.org/map.html</strong> and walk through: search, filters, node details, plot view, contribute panel.</p>
+  <p>Open <strong>mapping-ai.org/map</strong> and walk through: search, filters, node details, plot view, contribute panel.</p>
 </div>
 
 <!-- SLIDE 6: What needs work -->
@@ -221,16 +221,16 @@
   <h2>Where we need help</h2>
   <h1>The data is messy and the tool has rough edges</h1>
   <ul>
-    <li>44% of entities have no notes at all</li>
-    <li>Some notes contain AI-generated fabrications that look plausible</li>
+    <li>Many notes are thin, unsourced, or out of date</li>
+    <li>Some notes contain hallucinated facts that sound plausible but are wrong</li>
+    <li>Stale info (people who changed roles, orgs that moved)</li>
     <li>The UI has bugs we haven't found yet</li>
-    <li>The map could do more (timelines, shareable links, better plots)</li>
-    <li>Nobody outside this room knows about it</li>
+    <li>The map could do more (timelines, shareable links, better search)</li>
     <li>The data tells stories we haven't explored</li>
   </ul>
 </div>
 
-<!-- SLIDE 7: Streams -->
+<!-- SLIDE 7: Streams overview -->
 <div class="slide slide-cream">
   <h2>Pick a stream</h2>
   <div class="grid-2">
@@ -261,12 +261,96 @@
   </div>
 </div>
 
-<!-- SLIDE 8: Let's go -->
+<!-- SLIDE 8: Stream 1 - Bug Hunting -->
+<div class="slide">
+  <h2>Stream 1</h2>
+  <h1>Bug Hunting</h1>
+  <p style="color:#888;font-size:clamp(14px,1.8vw,18px);margin-bottom:1.5rem;">Best for: anyone with a browser and some patience</p>
+  <ul>
+    <li><strong>The map:</strong> search, click nodes, toggle views, filters, zoom, sidebars</li>
+    <li><strong>The contribute form:</strong> fill out all three tabs, org search, @mentions, location search</li>
+    <li><strong>Mobile:</strong> test everything on your phone too</li>
+  </ul>
+  <p style="margin-top:1.5rem;">Log bugs in the shared Google Doc or Discord. Include steps to reproduce.</p>
+</div>
+
+<!-- SLIDE 9: Stream 2 - Data Enrichment -->
+<div class="slide slide-cream">
+  <h2>Stream 2</h2>
+  <h1>Data Enrichment</h1>
+  <p style="color:#888;font-size:clamp(14px,1.8vw,18px);margin-bottom:1.5rem;">Best for: people who follow AI policy or like doing research</p>
+  <ul>
+    <li><strong>Add missing entities:</strong> state policymakers, congressional staffers, civil society, journalists, trade associations</li>
+    <li><strong>Add relationships:</strong> employment, advisory roles, board seats, funding, collaborations</li>
+    <li><strong>Enrich existing entries:</strong> fill in belief fields, expand thin notes, add sources</li>
+  </ul>
+  <p style="margin-top:1.5rem;">Use the staging database directly or submit via the live form.</p>
+</div>
+
+<!-- SLIDE 10: Stream 3 - Data Quality -->
+<div class="slide">
+  <h2>Stream 3</h2>
+  <h1>Data Quality</h1>
+  <p style="color:#888;font-size:clamp(14px,1.8vw,18px);margin-bottom:1.5rem;">Best for: skeptics, fact-checkers, people who notice when something seems off</p>
+  <ul>
+    <li><strong>Hallucinated facts:</strong> suspiciously precise dates, round dollar amounts, awards that don't exist</li>
+    <li><strong>Stale info:</strong> people at orgs they've left, roles that changed after 2025 transition</li>
+    <li><strong>Wrong affiliations:</strong> primary org set to wrong entity with similar name</li>
+    <li><strong>Missing evidence:</strong> ~30% of relationships have no supporting source</li>
+  </ul>
+  <p style="margin-top:1.5rem;">Fix issues directly in the staging database.</p>
+</div>
+
+<!-- SLIDE 11: Stream 4 - New Features -->
+<div class="slide slide-cream">
+  <h2>Stream 4</h2>
+  <h1>New Features</h1>
+  <p style="color:#888;font-size:clamp(14px,1.8vw,18px);margin-bottom:1.5rem;">Best for: developers who want to write code</p>
+  <ul>
+    <li><strong>Better search:</strong> improved relevance, filters, smarter autocomplete</li>
+    <li><strong>Admin panel:</strong> bulk actions, filtering, better entity editing</li>
+    <li><strong>Shareable links:</strong> <code style="font-size:0.85em;">map?entity=123</code> auto-selects and zooms</li>
+    <li><strong>Timeline view:</strong> slider or playback showing network evolution</li>
+    <li><strong>Export/embed:</strong> PNG, SVG, embed snippets for blogs</li>
+  </ul>
+  <p style="margin-top:1.5rem;">Clone the repo, run locally, open a PR.</p>
+</div>
+
+<!-- SLIDE 12: Stream 5 - Outreach -->
+<div class="slide">
+  <h2>Stream 5</h2>
+  <h1>Outreach &amp; Strategy</h1>
+  <p style="color:#888;font-size:clamp(14px,1.8vw,18px);margin-bottom:1.5rem;">Best for: people who think about audiences and distribution</p>
+  <ul>
+    <li><strong>Who is this for?</strong> Journalists? Hill staffers? Academics? Advocacy groups?</li>
+    <li><strong>What's the pitch?</strong> One sentence that makes someone click</li>
+    <li><strong>Where do we distribute?</strong> Specific Substacks, podcasts, Slack communities, Twitter/Bluesky</li>
+    <li><strong>What partnerships make sense?</strong> Adjacent orgs, data sharing, co-branding</li>
+  </ul>
+  <p style="margin-top:1.5rem;">Write up ideas in the shared Google Doc.</p>
+</div>
+
+<!-- SLIDE 13: Stream 6 - Data Viz -->
+<div class="slide slide-cream">
+  <h2>Stream 6</h2>
+  <h1>Data Viz &amp; Research</h1>
+  <p style="color:#888;font-size:clamp(14px,1.8vw,18px);margin-bottom:1.5rem;">Best for: data people, researchers, anyone who likes poking around datasets</p>
+  <ul>
+    <li><strong>Regulatory stance by sector:</strong> How do labs vs think tanks vs researchers break down?</li>
+    <li><strong>Network structure:</strong> Most connected nodes, distinct communities, bridge entities</li>
+    <li><strong>AGI timeline vs stance:</strong> Is there a correlation?</li>
+    <li><strong>Geography:</strong> Where are AI policy actors concentrated?</li>
+    <li><strong>Funding flows:</strong> Do funders cluster around particular positions?</li>
+  </ul>
+  <p style="margin-top:1.5rem;">Use <code style="font-size:0.85em;">map-full.json</code> — full dataset in one file.</p>
+</div>
+
+<!-- SLIDE 14: Let's go -->
 <div class="slide slide-dark">
   <h2>Let's go</h2>
   <h1>Pick your stream, grab a laptop, find your group</h1>
-  <p>Detailed instructions for each stream: open <strong>index.html</strong> on this same machine, or go to the shared link.</p>
-  <p style="margin-top:2rem;color:#666;">We'll regroup in about two hours for readouts.</p>
+  <p>Detailed instructions: <strong>workshop/index.html</strong> on this machine. Coordinate on <strong>Discord</strong>.</p>
+  <p style="margin-top:2rem;color:#666;">We'll regroup at 9:30 for discussion.</p>
 </div>
 
 <div class="slide-counter" id="counter"></div>
