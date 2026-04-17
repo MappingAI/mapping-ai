@@ -1,158 +1,41 @@
-import { useState, useEffect } from 'react'
-
-const WORKSHOP_PASSWORD_HASH = '0097a985fe9f093319930d7c25ea42e46682b87b88a791d3b49c0094ba82a19d'
-
-async function hashPassword(password: string): Promise<string> {
-  const encoder = new TextEncoder()
-  const data = encoder.encode(password)
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data)
-  const hashArray = Array.from(new Uint8Array(hashBuffer))
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
-}
-
-function PasswordGate({ onSuccess }: { onSuccess: () => void }) {
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState(false)
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    const hash = await hashPassword(password)
-    if (hash === WORKSHOP_PASSWORD_HASH) {
-      localStorage.setItem('workshop-authenticated', 'true')
-      window.scrollTo(0, 0)
-      onSuccess()
-    } else {
-      setError(true)
-      setPassword('')
-    }
-  }
-
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-[#faf9f7]">
-      <div className="max-w-[400px] w-full px-8">
-        <div className="font-mono text-[11px] uppercase tracking-[0.12em] text-[#888] mb-4">
-          Mapping AI Workshop
-        </div>
-        <h1
-          className="text-[28px] font-normal italic leading-[1.2] mb-6"
-          style={{ fontFamily: "'EB Garamond', Georgia, serif" }}
-        >
-          Enter the workshop password
-        </h1>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="password"
-            value={password}
-            onChange={e => { setPassword(e.target.value); setError(false) }}
-            placeholder="Password"
-            className={`w-full px-4 py-3 border rounded-md font-mono text-[14px] outline-none transition-colors ${
-              error ? 'border-red-400 bg-red-50' : 'border-[#ccc] focus:border-[#2563eb]'
-            }`}
-            autoFocus
-          />
-          {error && (
-            <p className="text-red-500 text-[13px] mt-2 font-mono">Incorrect password</p>
-          )}
-          <button
-            type="submit"
-            className="mt-4 w-full bg-[#2563eb] text-white py-3 rounded-md font-mono text-[13px] tracking-[0.05em] hover:bg-[#1d4ed8] transition-colors"
-          >
-            Enter
-          </button>
-        </form>
-      </div>
-    </div>
-  )
-}
-
 export function App() {
-  const [authenticated, setAuthenticated] = useState(() => {
-    return localStorage.getItem('workshop-authenticated') === 'true'
-  })
-  const [activeSection, setActiveSection] = useState('overview')
-
-  useEffect(() => {
-    const sections = [
-      'overview',
-      'streams',
-      'stream-1',
-      'stream-2',
-      'stream-3',
-      'stream-4',
-      'stream-5',
-      'stream-6',
-      'setup',
-    ]
-
-    const handleScroll = () => {
-      const scrollY = window.scrollY + 80 // offset for nav
-
-      // Check if at bottom of page
-      if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 8) {
-        setActiveSection('setup')
-        return
-      }
-
-      // Find the current section
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const el = document.getElementById(sections[i])
-        if (el && el.getBoundingClientRect().top + window.scrollY <= scrollY) {
-          setActiveSection(sections[i])
-          return
-        }
-      }
-      setActiveSection('overview')
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    handleScroll() // Initial check
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  if (!authenticated) {
-    return <PasswordGate onSuccess={() => setAuthenticated(true)} />
-  }
-
   return (
     <>
-      {/* Site nav matching main site */}
-      <nav className="fixed top-0 left-0 right-0 z-[100] flex justify-between items-center bg-white/92 backdrop-blur-sm border-b border-[#bbb] px-8 py-[0.85rem]">
+      {/* Page-specific nav (NOT the standard site Navigation) */}
+      <nav className="sticky top-0 z-[100] bg-white/95 backdrop-blur-sm border-b border-[#ddd] px-8 py-[0.6rem] flex items-center gap-8 font-mono text-[11px] uppercase tracking-[0.1em] max-[600px]:px-4 max-[600px]:gap-4 max-[600px]:text-[10px]">
+        <span className="font-medium text-[12px] tracking-[0.14em] text-text-primary">
+          Mapping AI
+        </span>
+        <a
+          href="#overview"
+          className="text-text-secondary no-underline hover:text-text-primary hover:no-underline"
+        >
+          Overview
+        </a>
+        <a
+          href="#streams"
+          className="text-text-secondary no-underline hover:text-text-primary hover:no-underline"
+        >
+          Streams
+        </a>
+        <a
+          href="#setup"
+          className="text-text-secondary no-underline hover:text-text-primary hover:no-underline"
+        >
+          Setup
+        </a>
         <a
           href="https://mapping-ai.org"
-          className="font-mono text-[12px] tracking-[0.1em] uppercase text-text-primary no-underline"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-text-secondary no-underline hover:text-text-primary hover:no-underline"
         >
-          Mapping AI
+          Live Site
         </a>
-        <div className="flex gap-8">
-          <a
-            href="https://mapping-ai.org/"
-            className="font-mono text-[12px] tracking-[0.1em] uppercase text-text-secondary no-underline hover:text-text-primary"
-          >
-            Background
-          </a>
-          <a
-            href="https://mapping-ai.org/contribute"
-            className="font-mono text-[12px] tracking-[0.1em] uppercase text-text-secondary no-underline hover:text-text-primary"
-          >
-            Contribute
-          </a>
-          <a
-            href="https://mapping-ai.org/map"
-            className="font-mono text-[12px] tracking-[0.1em] uppercase text-text-secondary no-underline hover:text-text-primary"
-          >
-            Map
-          </a>
-          <a
-            href="https://mapping-ai.org/about"
-            className="font-mono text-[12px] tracking-[0.1em] uppercase text-text-secondary no-underline hover:text-text-primary"
-          >
-            About
-          </a>
-        </div>
       </nav>
 
       {/* Hero */}
-      <div className="max-w-[720px] mx-auto px-8 pt-24 pb-8 max-[600px]:px-4">
+      <div className="max-w-[720px] mx-auto px-8 pt-16 pb-8 max-[600px]:px-4">
         <div className="font-mono text-[11px] uppercase tracking-[0.12em] text-text-tertiary mb-4">
           Mapping Party
         </div>
@@ -163,111 +46,26 @@ export function App() {
           Help us map the people, organizations, and ideas shaping U.S. AI
           policy
         </h1>
-        <p
-          className="text-[19px] text-text-secondary leading-[1.55]"
-          style={{ fontFamily: "'EB Garamond', Georgia, serif" }}
-        >
-          We&rsquo;ve been building a stakeholder map of the American AI policy
-          landscape and it&rsquo;s almost ready for a public launch. Pick a
-          stream below and get started.
+        <p className="text-[19px] text-text-secondary leading-[1.55] mb-6">
+          We&rsquo;re building an open, interactive stakeholder map of the
+          American AI landscape. Today, you&rsquo;ll help us make it better.
+          Pick a stream, grab a laptop, and dig in.
         </p>
-
-        {/* Quick Links */}
-        <div className="mt-8 bg-[#f5f4f2] border border-[#e0dfdd] rounded-lg p-5">
-          <div className="font-mono text-[10px] uppercase tracking-[0.1em] text-[#888] mb-3">
-            Quick Links
-          </div>
-          <div className="flex flex-wrap gap-3 mb-4">
-            <a
-              href="/workshop/slides.html"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-[#2563eb] text-white rounded-md font-mono text-[12px] no-underline hover:bg-[#1d4ed8] transition-colors"
-            >
-              Slides
-            </a>
-            <a
-              href="https://discord.com/events/1491894381773590609/1494729391509340281"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-[#5865F2] text-white rounded-md font-mono text-[12px] no-underline hover:bg-[#4752c4] transition-colors"
-            >
-              Discord Server
-            </a>
-            <a
-              href="https://github.com/MappingAI/mapping-ai"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-[#24292e] text-white rounded-md font-mono text-[12px] no-underline hover:bg-[#1a1e22] transition-colors"
-            >
-              GitHub Repo
-            </a>
-          </div>
-          <div className="font-mono text-[10px] uppercase tracking-[0.1em] text-[#888] mb-2 mt-4">
-            Environment Files (Doppler)
-          </div>
-          <div className="space-y-2 font-mono text-[12px]">
-            <div className="flex flex-wrap items-center gap-2">
-              <a
-                href="https://share.doppler.com/s/me5nqn6qqd1ime0bwnc53sxrnaqkqzhqnlxaoqbg"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#2563eb] no-underline hover:underline"
-              >
-                .env.debugging
-              </a>
-              <code className="text-[10px] bg-[#e8e7e5] px-2 py-0.5 rounded text-[#555] select-all">
-                2bmjRVgjtZd0LWTKbqRrtUHj6XamG8L9XmIUxXYvNkKhv330TL1xZJNpUD9G52aA
-              </code>
-            </div>
-            <div className="flex flex-wrap items-center gap-2">
-              <a
-                href="https://share.doppler.com/s/tla4as7kd6w61axclos7gsfyoqlxuojnw9y4vofy"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#2563eb] no-underline hover:underline"
-              >
-                .env.enrichment
-              </a>
-              <code className="text-[10px] bg-[#e8e7e5] px-2 py-0.5 rounded text-[#555] select-all">
-                XgiIWtraTUNwHWqf3D01aKBV3nWD0y9nihjXbSXDHQ1914oofOXDWdXuxO03kaSs
-              </code>
-            </div>
-            <div className="flex flex-wrap items-center gap-2">
-              <a
-                href="https://share.doppler.com/s/pkjtfqg6ymme8uelkjcyurlmdidxbumqspt9a673"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#2563eb] no-underline hover:underline"
-              >
-                .env.seeding
-              </a>
-              <code className="text-[10px] bg-[#e8e7e5] px-2 py-0.5 rounded text-[#555] select-all">
-                oJd3coZJjT91rtXs9sep33U7D0shACS8c3kmu6yN1MeXac6cswFBpFyfKx8LsYIX
-              </code>
-            </div>
-          </div>
-        </div>
+        <a
+          href="https://discord.com/events/1491894381773590609/1494729391509340281"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 bg-[#5865F2] text-white font-mono text-[14px] font-medium uppercase tracking-[0.08em] px-6 py-3 rounded-lg no-underline hover:bg-[#4752C4] hover:text-white hover:no-underline transition-colors"
+        >
+          <svg width="20" height="16" viewBox="0 0 71 55" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M60.1 4.9A58.5 58.5 0 0045.4.2a.2.2 0 00-.2.1 40.8 40.8 0 00-1.8 3.7 54 54 0 00-16.2 0A37.3 37.3 0 0025.4.3a.2.2 0 00-.2-.1A58.4 58.4 0 0010.5 5 59.5 59.5 0 00.4 45.1a.3.3 0 00.1.2A58.7 58.7 0 0018.1 55a.2.2 0 00.3-.1 42 42 0 003.6-5.9.2.2 0 00-.1-.3 38.6 38.6 0 01-5.5-2.6.2.2 0 01 0-.4c.4-.3.7-.6 1.1-.8a.2.2 0 01.3 0 41.8 41.8 0 0035.6 0 .2.2 0 01.2 0c.3.3.7.6 1.1.9a.2.2 0 010 .3 36.3 36.3 0 01-5.5 2.6.2.2 0 00-.1.4 47.1 47.1 0 003.6 5.8.2.2 0 00.2.1A58.5 58.5 0 0070.7 45.3a.3.3 0 00.1-.2c1.8-18.6-3-34.7-12.7-49a.2.2 0 00-.1-.1zM23.7 37c-3.6 0-6.6-3.3-6.6-7.4s2.9-7.4 6.6-7.4c3.7 0 6.7 3.4 6.6 7.4 0 4.1-2.9 7.4-6.6 7.4zm24.4 0c-3.6 0-6.6-3.3-6.6-7.4s2.9-7.4 6.6-7.4c3.7 0 6.7 3.4 6.6 7.4 0 4.1-2.9 7.4-6.6 7.4z" />
+          </svg>
+          Join the Discord Server
+        </a>
       </div>
 
-      {/* Left sidebar TOC - only visible on wide screens */}
-      <nav className="hidden min-[1100px]:block fixed top-1/2 -translate-y-1/2 w-[160px] left-8">
-        <TocLink href="#overview" active={activeSection === 'overview'}>Overview</TocLink>
-        <TocLink href="#streams" active={activeSection === 'streams'}>Streams</TocLink>
-        <TocLink href="#stream-1" active={activeSection === 'stream-1'}>1. Bug Hunting</TocLink>
-        <TocLink href="#stream-2" active={activeSection === 'stream-2'}>2. Data Enrichment</TocLink>
-        <TocLink href="#stream-3" active={activeSection === 'stream-3'}>3. Data Quality</TocLink>
-        <TocLink href="#stream-4" active={activeSection === 'stream-4'}>4. New Features</TocLink>
-        <TocLink href="#stream-5" active={activeSection === 'stream-5'}>5. Outreach</TocLink>
-        <TocLink href="#stream-6" active={activeSection === 'stream-6'}>6. Data Viz</TocLink>
-        <TocLink href="#setup" active={activeSection === 'setup'}>Quick Reference</TocLink>
-      </nav>
-
       {/* Content */}
-      <div
-        className="max-w-[720px] mx-auto px-8 pb-16 text-[17px] leading-[1.65] text-text-primary max-[600px]:px-4"
-        style={{ fontFamily: "'EB Garamond', Georgia, serif" }}
-      >
+      <div className="max-w-[720px] mx-auto px-8 pb-16 font-serif text-[17px] leading-[1.65] text-text-primary max-[600px]:px-4">
         {/* OVERVIEW */}
         <SectionHeading id="overview">What is Mapping AI?</SectionHeading>
 
@@ -288,25 +86,27 @@ export function App() {
         </p>
 
         <p className="mb-4">
-          The database currently has about <strong>706 people</strong>,{' '}
-          <strong>717 organizations</strong>, and{' '}
-          <strong>149 resources</strong>, linked by{' '}
-          <strong>2,143 relationships</strong>. These are the publicly visible
-          entities on the map. There are additional pending entries in the
-          review queue.
+          The database currently holds <strong>709 people</strong>,{' '}
+          <strong>734 organizations</strong>, and{' '}
+          <strong>161 resources</strong>, linked by{' '}
+          <strong>2,228 relationships</strong>. About 1,020 of those entities
+          are publicly visible on the map. The rest are pending review or need
+          enrichment before they&rsquo;re ready to publish.
         </p>
 
         <p className="mb-4">
-          The tech stack is simple: React + Vite for the frontend, D3.js for the
-          visualization, PostgreSQL on AWS, and a few Lambda functions for form
-          submissions and search. People submit data through a form on the site,
-          it goes into a review queue, and approved entries show up on the map.
+          The frontend is a Vite multi-page app built with React 19, TypeScript,
+          and Tailwind CSS. The interactive D3.js map remains as an inline HTML
+          page. The backend is PostgreSQL on AWS RDS with Lambda functions
+          handling form submissions and search through API Gateway.
+          Contributions go through a form on the site and get reviewed by an
+          admin before appearing on the map.
         </p>
 
         <Callout>
-          <strong>The site is in beta.</strong> We soft-launched to a small group
-          a week ago. The data is messy. The UI has rough edges. Some features
-          are half-built. That&rsquo;s why you&rsquo;re here.
+          <strong>The site is live but still evolving.</strong> The data is
+          growing, the UI has rough edges, and some features are in progress.
+          That&rsquo;s why you&rsquo;re here.
         </Callout>
 
         {/* SCHEDULE */}
@@ -325,14 +125,19 @@ export function App() {
           </thead>
           <tbody>
             {[
-              ['7:00', 'Pizza, ice cream floats, welcome/mingle'],
+              ['0:00', 'Welcome, introductions'],
               [
-                '7:30',
-                'Project walkthrough (live demo of the map, contribute form, admin panel); stream overview, pick your group',
+                '0:10',
+                'Project walkthrough (live demo of the map, contribute form, admin panel)',
               ],
-              ['7:50', 'Work session'],
-              ['9:30', 'Discussion: big picture, next steps'],
-              ['10:00', 'Wrap'],
+              ['0:25', 'Stream overview \u2014 pick your group'],
+              ['0:35', 'Break into streams, get set up'],
+              ['0:45', 'Work session 1'],
+              ['1:45', 'Break / snacks / mingle'],
+              ['2:00', 'Work session 2'],
+              ['2:45', 'Stream readouts (3 min each)'],
+              ['3:10', 'Discussion: big picture, next steps'],
+              ['3:30', 'Wrap'],
             ].map(([time, what], i) => (
               <tr key={i}>
                 <td className="p-2 border-b border-[#eee] align-top">
@@ -442,11 +247,7 @@ export function App() {
         <H4>How to report bugs</H4>
 
         <p className="mb-4">
-          Log bugs in{' '}
-          <ExtLink href="https://docs.google.com/document/d/134ZCFOo-hRDqw9ddzMhq7eHEJ3XuuikI7RoMIMDhWL4/edit?usp=sharing">
-            this shared doc
-          </ExtLink>{' '}
-          using this format:
+          Use this format in a shared doc or spreadsheet:
         </p>
 
         <Pre>{`Page: [which page]
@@ -457,9 +258,18 @@ Browser/device: [Chrome on Mac, Safari on iPhone, etc.]
 Screenshot: [paste one if you can]`}</Pre>
 
         <p className="mb-4">
-          Functional stuff takes priority over cosmetic stuff. A dropdown that
-          won&rsquo;t close matters more than a font that looks slightly off.
-          But note both if you see them.
+          Prioritize things that are broken or confusing over things that are
+          cosmetic. A dropdown that doesn&rsquo;t close is more important than a
+          font size that looks slightly off. But note both.
+        </p>
+
+        <p className="mb-4">
+          If you&rsquo;re comfortable with GitHub, you can also file issues
+          directly at{' '}
+          <ExtLink href="https://github.com/MappingAI/mapping-ai/issues">
+            github.com/MappingAI/mapping-ai/issues
+          </ExtLink>
+          .
         </p>
 
         <Divider />
@@ -473,19 +283,10 @@ Screenshot: [paste one if you can]`}</Pre>
         </StreamTag>
 
         <p className="mb-4">
-          The map is only as useful as its data. Most entities now have notes,
-          but many are thin, unsourced, or out of date. Your job today is to add
-          new entities we&rsquo;re missing and flesh out ones that are already
-          there.
-        </p>
-
-        <p className="mb-4">
-          <strong>Start by exploring the current data.</strong> Browse{' '}
-          <ExtLink href="https://mapping-ai.org/map">the map</ExtLink> to see
-          what&rsquo;s there. You also have access to the staging database (via
-          the <Code>.env</Code> file) and can query it directly or look at the
-          exported <Code>map-data.json</Code>. This will help you identify gaps
-          and avoid duplicating work.
+          The map is only as useful as its data. Right now, about 44% of
+          entities in the database have no notes at all, and many that do have
+          notes are thin or unsourced. Your job is to add new entities and flesh
+          out existing ones by submitting through the contribute form.
         </p>
 
         <H4>What to add</H4>
@@ -493,7 +294,7 @@ Screenshot: [paste one if you can]`}</Pre>
         <p className="mb-4">
           Think about who&rsquo;s missing. Search the map first (the search bar
           on{' '}
-          <ExtLink href="https://mapping-ai.org/map">map.html</ExtLink>
+          <ExtLink href="https://mapping-ai.org/map">the map page</ExtLink>
           {' '}works well for this) to make sure the person or org isn&rsquo;t
           already there. Some categories that could use more coverage:
         </p>
@@ -527,33 +328,11 @@ Screenshot: [paste one if you can]`}</Pre>
         <H4>How to submit</H4>
 
         <p className="mb-4">
-          There are two options:
-        </p>
-
-        <p className="mb-4">
-          <strong>Option 1: Direct to staging database (recommended for workshop)</strong>
-          <br />
-          You&rsquo;ll receive a <Code>.env</Code> file with credentials for the
-          staging database, which lets you read and write directly via SQL. This
-          is a complete copy of production data that you can freely modify
-          without affecting the live site. See{' '}
-          <Code>workshop/DATABASE-ORIENTATION.md</Code> for the full schema
-          reference, example queries, and quality guidelines.
-        </p>
-
-        <p className="mb-4">
-          <strong>Option 2: Live contribute form</strong>
-          <br />
-          Go directly to{' '}
+          Go to{' '}
           <ExtLink href="https://mapping-ai.org/contribute">
             mapping-ai.org/contribute
           </ExtLink>{' '}
-          and submit there. Entries go into the production database and will
-          appear on the live map after admin approval.
-        </p>
-
-        <p className="mb-4">
-          A few things worth knowing about the form:
+          and fill out the form. A few things to keep in mind:
         </p>
 
         <p className="mb-4">
@@ -585,45 +364,26 @@ Screenshot: [paste one if you can]`}</Pre>
         </p>
 
         <Callout>
-          <strong>Name:</strong> Chuck Schumer
+          <strong>Name:</strong> Elizabeth Kelly
           <br />
-          <strong>Title:</strong> U.S. Senator, NY; Senate Majority Leader
-          (2021-2025), Senate Minority Leader (2017-2021, 2025-present)
+          <strong>Title:</strong> Head of Beneficial Deployments, Anthropic
           <br />
           <strong>Category:</strong> Policymaker
           <br />
-          <strong>Primary Org:</strong> United States Senate
+          <strong>Primary Org:</strong> Anthropic
           <br />
-          <strong>Other Orgs:</strong> Bipartisan Senate AI Working Group
-          (Co-founder/Leader), Senate Finance Committee, Senate Rules Committee
-          <br />
-          <strong>Location:</strong> New York, NY
-          <br />
-          <strong>Twitter:</strong> @SenSchumer
-          <br />
-          <strong>Notes:</strong> Chuck Schumer is a Democratic U.S. Senator from
-          New York who has served since 1999 and is currently Senate Majority
-          Leader. He led a bipartisan working group that released a 31-page AI
-          policy roadmap in May 2024, recommending at least $32 billion in
-          government spending to accelerate AI research and development. The
-          roadmap was developed after months of AI Insight Forums with tech
-          companies, civil rights leaders, and other stakeholders. Schumer has
-          described regulating artificial intelligence as &ldquo;a challenge for
-          Congress unlike any other&rdquo; and has made election protection from
-          AI interference a high priority.
+          <strong>Notes:</strong> Elizabeth Kelly served as the inaugural Director
+          of the U.S. AI Safety Institute at NIST from February 2024 to February
+          2025, appointed by Commerce Secretary Gina Raimondo to lead the
+          government&rsquo;s effort to measure and mitigate risks from advanced
+          AI systems. She was a key drafter of President Biden&rsquo;s Executive
+          Order on AI. Under her leadership, the AISI reached agreements with
+          OpenAI and Anthropic to test their models prior to release and helped
+          establish the international network of AI safety institutes. She
+          departed the AISI in February 2025 after the Trump administration
+          rescinded Biden&rsquo;s AI executive order.
           <br />
           <strong>Regulatory stance:</strong> Moderate
-          <br />
-          <strong>Stance detail:</strong> Advocates for &lsquo;Safe Innovation
-          Framework&rsquo; emphasizing innovation as &lsquo;North Star&rsquo;
-          while establishing necessary guardrails.
-          <br />
-          <strong>AGI timeline:</strong> 5-10 years
-          <br />
-          <strong>AI risk level:</strong> Serious
-          <br />
-          <strong>Threat models:</strong> Labor displacement, Power concentration,
-          Democratic erosion, Misinformation
         </Callout>
 
         <H4>Quality over quantity</H4>
@@ -654,62 +414,56 @@ Screenshot: [paste one if you can]`}</Pre>
 
         <H4>Known issues to look for</H4>
 
-        <ul className="mb-4 pl-6">
-          <li className="mb-[0.35rem]">
-            <strong>Hallucinated facts.</strong> The AI-generated notes sometimes
-            include claims that sound very specific and plausible but are just
-            wrong. Suspiciously precise founding dates, round dollar amounts,
-            inflated competition results, awards that don&rsquo;t exist. If
-            something sounds weirdly specific, it&rsquo;s worth a quick check.
-          </li>
-          <li className="mb-[0.35rem]">
-            <strong>Stale information.</strong> Some entries list people at
-            organizations they&rsquo;ve since left. Government officials who
-            changed roles after the 2025 transition come up a lot.
-          </li>
-          <li className="mb-[0.35rem]">
-            <strong>Wrong org affiliations.</strong> Primary org set to a
-            completely different entity with a similar-sounding name. These are
-            especially bad because they create false connections on the map.
-          </li>
-          <li className="mb-[0.35rem]">
-            <strong>Edges missing evidence.</strong> About 30% of relationships
-            have no supporting evidence. If a relationship seems questionable,
-            check whether there&rsquo;s evidence for it.
-          </li>
-          <li className="mb-[0.35rem]">
-            <strong>Thin or missing context.</strong> Notes that are technically
-            accurate but don&rsquo;t explain why someone matters to AI policy.
-            &ldquo;John Smith is the CEO of Acme Corp&rdquo; is less useful than
-            explaining what Acme Corp does and why it&rsquo;s relevant.
-          </li>
-        </ul>
-
-        <H4>How to fix issues</H4>
-
         <p className="mb-4">
-          When you find something wrong, fix it directly:
+          <strong>Citation artifacts.</strong> About 316 entities have leftover{' '}
+          <Code>[1]</Code>, <Code>[6,7]</Code> style references in their notes
+          from the AI enrichment pipeline. These need to be flagged or cleaned.
         </p>
 
-        <ul className="mb-4 pl-6">
-          <li className="mb-[0.35rem]">
-            <strong>Option 1: Staging database.</strong> Use the <Code>.env</Code>{' '}
-            file credentials to connect to the staging DB and run UPDATE queries.
-            See <Code>workshop/DATABASE-ORIENTATION.md</Code> for examples.
-          </li>
-          <li className="mb-[0.35rem]">
-            <strong>Option 2: Contribute form.</strong> Go to{' '}
-            <ExtLink href="https://mapping-ai.org/contribute">
-              mapping-ai.org/contribute
-            </ExtLink>{' '}
-            and submit a correction. This goes into the production review queue.
-          </li>
-        </ul>
+        <p className="mb-4">
+          <strong>Hallucinated facts.</strong> AI-generated notes sometimes
+          include plausible-sounding claims that are wrong. Hyper-specific
+          founding dates, round dollar amounts, inflated competition results,
+          invented awards. If a claim sounds surprisingly specific, verify it.
+          One example we already found: an entity&rsquo;s notes claimed someone
+          was a &ldquo;six-time finalist of the International Olympiad in
+          Informatics&rdquo; when the official IOI records show they competed
+          exactly once.
+        </p>
 
         <p className="mb-4">
-          Start with well-known figures whose facts you can check from memory.
-          Then move to less-familiar entities where you&rsquo;ll need to do some
-          quick googling.
+          <strong>Stale information.</strong> Some entries list people at
+          organizations they&rsquo;ve since left. Government officials who
+          changed roles after the 2025 transition are a common case.
+        </p>
+
+        <p className="mb-4">
+          <strong>Wrong organizational affiliations.</strong> At least one entry
+          had its primary organization set to a completely different entity with
+          a similar-sounding name (an AI safety research org got confused with a
+          university policy center). These are especially damaging because they
+          create false connections on the map.
+        </p>
+
+        <H4>How to work</H4>
+
+        <p className="mb-4">
+          Browse entities on{' '}
+          <ExtLink href="https://mapping-ai.org/map">the map</ExtLink>.
+          Click on nodes to read their detail panels. When you find something
+          that looks wrong, document it in a shared spreadsheet:
+        </p>
+
+        <Pre>{`Entity name: [who/what]
+Problem: [what's wrong]
+Evidence: [how you know it's wrong, with a source link]
+Suggested fix: [what it should say instead]`}</Pre>
+
+        <p className="mb-4">
+          Spend your first few minutes on well-known figures whose facts you can
+          check from memory. Then move to less-familiar entities where
+          you&rsquo;ll need to do some quick googling. The goal is breadth:
+          finding patterns of errors is more useful than perfecting one entry.
         </p>
 
         <Divider />
@@ -719,47 +473,60 @@ Screenshot: [paste one if you can]`}</Pre>
         <StreamTag>Best for: developers who want to write code</StreamTag>
 
         <p className="mb-4">
-          It&rsquo;s a React + Vite site with a D3.js map, AWS Lambda functions
-          for the API, and a PostgreSQL database. If you can write TypeScript,
-          React, CSS, or Node.js, you can contribute.
+          The codebase is a Vite multi-page app with React 19, TypeScript, and
+          Tailwind CSS. The interactive D3.js map is an inline HTML page. The
+          backend is AWS Lambda functions behind API Gateway, with PostgreSQL on
+          AWS RDS. If you can write TypeScript, React, CSS, or Node.js, you can
+          contribute.
         </p>
 
         <H4>Getting set up</H4>
 
-        <p className="mb-4">Clone the repo and start a local server:</p>
+        <p className="mb-4">
+          The repo has moved from <Code>sophiajwang/mapping-ai</Code> to{' '}
+          <Code>MappingAI/mapping-ai</Code>. Clone it and install dependencies:
+        </p>
 
         <Pre>{`git clone https://github.com/MappingAI/mapping-ai.git
 cd mapping-ai
-npm install
-npx serve .    # runs on localhost:3000`}</Pre>
+npm ci`}</Pre>
 
         <p className="mb-4">
-          This serves static files locally. API calls (form submissions, search)
-          go directly to the production Lambda endpoints, so you don&rsquo;t need
-          AWS credentials or a local database to work on frontend stuff.
+          You&rsquo;ll need a <Code>.env</Code> file with database credentials
+          to run the API locally. These will be shared via Doppler (colead is
+          adding the link). Ask an organizer if you need access.
         </p>
+
+        <p className="mb-4">Start the Vite dev server for the React pages:</p>
+
+        <Pre>{`npx vite dev          # React pages at http://localhost:5173`}</Pre>
 
         <p className="mb-4">
-          If you want to build the TipTap rich text editor bundle (only needed
-          if you&rsquo;re touching the notes editor):
-        </p>
-        <Pre>npm run build:tiptap</Pre>
-
-        <p className="mb-4">
-          If you&rsquo;re working with the staging database (for data-related
-          features), you&rsquo;ll need the <Code>.env</Code> file — see{' '}
-          <Code>workshop/DATABASE-ORIENTATION.md</Code>.
+          For form submissions and API calls locally, you also need the API
+          proxy:
         </p>
 
-        <H4>Project structure</H4>
+        <Pre>{`node dev-server.js    # API proxy on localhost:3000`}</Pre>
 
-        <p className="mb-4">The important files:</p>
+        <H4>Architecture overview</H4>
+
+        <Callout>
+          <strong>Vite MPA</strong> with React 19 + TypeScript + Tailwind
+          <br />
+          <strong>7 React pages</strong> + 1 inline page (map.html with D3.js)
+          <br />
+          <strong>API:</strong> AWS Lambda + API Gateway
+          <br />
+          <strong>DB:</strong> PostgreSQL on AWS RDS
+        </Callout>
+
+        <H4>Key directories</H4>
 
         <table className="w-full border-collapse mb-4 text-[16px]">
           <thead>
             <tr>
               <th className="font-mono text-[11px] uppercase tracking-[0.08em] text-left p-2 border-b-2 border-text-primary text-text-secondary">
-                File
+                Path
               </th>
               <th className="font-mono text-[11px] uppercase tracking-[0.08em] text-left p-2 border-b-2 border-text-primary text-text-secondary">
                 What it does
@@ -770,24 +537,20 @@ npx serve .    # runs on localhost:3000`}</Pre>
             {(
               [
                 [
-                  'src/map/',
-                  'The D3.js map components. Loads map-data.json, a static file generated from the database.',
+                  'src/',
+                  'React pages (contribute, admin, about, workshop, etc.) with TypeScript components and shared UI.',
                 ],
                 [
-                  'src/contribute/',
-                  'The submission forms. Custom dropdowns, tag inputs, org search, location search, TipTap rich text editor, autosave.',
+                  'map.html',
+                  'The interactive D3.js map. Visualization logic is inline. Loads data from map-data.json, a static file generated from the database.',
                 ],
                 [
-                  'src/admin/',
-                  'Admin panel for reviewing submissions, editing entities, managing the approval queue.',
-                ],
-                [
-                  'src/components/',
-                  'Shared React components: CustomSelect, TagInput, TipTapEditor, Navigation, etc.',
-                ],
-                [
-                  'api/*.js',
+                  'api/',
                   'Lambda functions. submit.js handles form submissions, search.js does full-text search, admin.js handles the review queue.',
+                ],
+                [
+                  'scripts/',
+                  'Utility scripts for database migration, data export, backups, and enrichment.',
                 ],
                 [
                   'template.yaml',
@@ -848,24 +611,25 @@ npx serve .    # runs on localhost:3000`}</Pre>
         </p>
 
         <p className="mb-4">
-          Before starting on something, check the{' '}
-          <ExtLink href="https://discord.com/events/1491894381773590609/1494729391509340281">
-            Discord
+          Before starting, check the{' '}
+          <ExtLink href="https://github.com/MappingAI/mapping-ai/issues">
+            GitHub issues
           </ExtLink>{' '}
-          to see what others are working on and post what you&rsquo;re tackling.
-          When you&rsquo;re done, open a pull request against <Code>main</Code>.
+          to see if someone&rsquo;s already working on what you have in mind.
+          When you&rsquo;re done, open a pull request against{' '}
+          <Code>main</Code>.
         </p>
 
         <H4>Conventions</H4>
 
         <p className="mb-4">
           Commit messages use conventional prefixes: <Code>feat:</Code>,{' '}
-          <Code>fix:</Code>, <Code>refactor:</Code>, <Code>docs:</Code>. There
-          are no tests (yes, we know). CSS is inline per page, not in a shared
-          stylesheet. The map loads <Code>map-data.json</Code> which uses
-          different field names than the database (there&rsquo;s a mapping layer
-          in <Code>api/export-map.js</Code>). Read the <Code>CLAUDE.md</Code>{' '}
-          in the repo root for full documentation of the schema, field mappings,
+          <Code>fix:</Code>, <Code>refactor:</Code>, <Code>docs:</Code>.
+          React pages use Tailwind for styling. The map loads{' '}
+          <Code>map-data.json</Code> which uses different field names than the
+          database (there&rsquo;s a mapping layer in{' '}
+          <Code>api/export-map.js</Code>). Read the <Code>CLAUDE.md</Code> in
+          the repo root for full documentation of the schema, field mappings,
           and architecture.
         </p>
 
@@ -931,12 +695,10 @@ npx serve .    # runs on localhost:3000`}</Pre>
         <H4>Deliverable</H4>
 
         <p className="mb-4">
-          By the end of the session, write up your ideas in{' '}
-          <ExtLink href="https://docs.google.com/document/d/1WNVM22lGeCOcZHvi5KwF9Yn9be6T6V7xbsocL0SQsLQ/edit?usp=sharing">
-            this shared doc
-          </ExtLink>
-          . This could include target audiences, distribution channels, pitch
-          ideas, partnership leads, content angles — whatever feels most useful.
+          By the end of the session, write up a short strategy document: target
+          audiences (ranked by priority), 10-20 specific distribution channels
+          with links, a draft one-line pitch, and any partnership leads you
+          identified. A Google Doc is fine.
         </p>
 
         <Divider />
@@ -957,31 +719,24 @@ npx serve .    # runs on localhost:3000`}</Pre>
           drafts we could publish.
         </p>
 
-        <p className="mb-4">
-          See{' '}
-          <ExtLink href="https://mapping-ai.org/insights">
-            mapping-ai.org/insights
-          </ExtLink>{' '}
-          for examples of what this could look like.
-        </p>
-
         <H4>Getting the data</H4>
 
         <p className="mb-4">
-          The full dataset is available as a single JSON file:
+          The public map data is available as a single JSON file:
         </p>
-        <Pre>https://mapping-ai.org/map-full.json</Pre>
+        <Pre>https://mapping-ai.org/map-data.json</Pre>
 
         <p className="mb-4">
-          This includes all entities (people, organizations, resources), their
-          relationships, scores, notes, and metadata. You can fetch and work
-          with it in whatever you prefer: Python (pandas, matplotlib, seaborn),
-          R, Observable notebooks, Excel.
+          This contains all approved entities with their fields mapped to
+          frontend names. You can fetch it directly and work with it in whatever
+          tool you prefer: Python (pandas, matplotlib, seaborn), R, Observable
+          notebooks, even just Excel if that&rsquo;s your thing.
         </p>
 
         <p className="mb-4">
-          We also have the full database export (including pending and internal
-          entities) if you want it. Just ask.
+          The raw database export (with all 1,604 entities and 2,228 edges,
+          including pending/internal ones) is available from the organizers. Ask
+          if you want it.
         </p>
 
         <H4>Research questions worth exploring</H4>
@@ -1033,23 +788,12 @@ npx serve .    # runs on localhost:3000`}</Pre>
         <H4>Output format</H4>
 
         <p className="mb-4">
-          Ideally, aim for something we could turn into a blog post or Substack
-          piece. A clear finding in one sentence, a visualization that backs it
-          up, and a couple paragraphs of context. It doesn&rsquo;t need to be
-          polished. A Jupyter notebook or Observable notebook with rough charts
-          and some annotations is plenty. We&rsquo;ll clean it up later.
-        </p>
-
-        <p className="mb-4">
-          Post your research questions and findings in the{' '}
-          <ExtLink href="https://discord.com/events/1491894381773590609/1494729391509340281">
-            Discord
-          </ExtLink>{' '}
-          forum channel to discuss with others, or log them in{' '}
-          <ExtLink href="https://docs.google.com/document/d/1dl8B8SWOs5ucmzUpuC7EukPpgncxLZxeil2edVkFleI/edit?usp=sharing">
-            this shared doc
-          </ExtLink>
-          .
+          Whatever you produce, aim for something we could turn into a blog
+          post. That means: a clear finding stated in one sentence, a
+          visualization that supports it, and 2-3 paragraphs of context. You
+          don&rsquo;t need to polish it. A Jupyter notebook or Observable
+          notebook with rough charts and annotations is plenty. We&rsquo;ll
+          clean it up for publication.
         </p>
 
         <Divider />
@@ -1070,16 +814,16 @@ npx serve .    # runs on localhost:3000`}</Pre>
           </thead>
           <tbody>
             {[
+              [
+                'Discord server',
+                'https://discord.com/events/1491894381773590609/1494729391509340281',
+                'Join Discord',
+              ],
               ['Live site', 'https://mapping-ai.org', 'mapping-ai.org'],
               [
                 'Interactive map',
                 'https://mapping-ai.org/map',
                 'mapping-ai.org/map',
-              ],
-              [
-                'Insights page',
-                'https://mapping-ai.org/insights',
-                'mapping-ai.org/insights',
               ],
               [
                 'Contribute form',
@@ -1097,9 +841,9 @@ npx serve .    # runs on localhost:3000`}</Pre>
                 'mapping-ai.org/map-data.json',
               ],
               [
-                'File bugs / Coordinate',
-                'https://discord.com/events/1491894381773590609/1494729391509340281',
-                'Discord',
+                'File bugs',
+                'https://github.com/MappingAI/mapping-ai/issues',
+                'GitHub Issues',
               ],
             ].map(([label, href, text], i) => (
               <tr key={i}>
@@ -1134,7 +878,7 @@ function SectionHeading({
   return (
     <h2
       id={id}
-      className="font-mono text-[13px] font-medium uppercase tracking-[0.14em] text-text-primary mt-12 mb-4 pb-[0.4rem] border-b border-[#ddd] scroll-mt-16"
+      className="font-mono text-[13px] font-medium uppercase tracking-[0.14em] text-text-primary mt-12 mb-4 pb-[0.4rem] border-b border-[#ddd]"
     >
       {children}
     </h2>
@@ -1151,7 +895,7 @@ function StreamHeading({
   return (
     <h3
       id={id}
-      className="text-[22px] font-normal mt-8 mb-[0.6rem] scroll-mt-16"
+      className="text-[22px] font-normal mt-8 mb-[0.6rem]"
       style={{ fontFamily: "'EB Garamond', Georgia, serif" }}
     >
       {children}
@@ -1200,30 +944,7 @@ function Code({ children }: { children: React.ReactNode }) {
 }
 
 function Divider() {
-  return <hr className="border-t border-[#ddd] my-12" style={{ borderTop: '1px solid #ddd' }} />
-}
-
-function TocLink({
-  href,
-  active,
-  children,
-}: {
-  href: string
-  active?: boolean
-  children: React.ReactNode
-}) {
-  return (
-    <a
-      href={href}
-      className={`block font-mono text-[10px] tracking-[0.04em] no-underline py-[0.35rem] pl-3 border-l-2 transition-colors duration-150 leading-[1.4] hover:text-[#555] hover:no-underline ${
-        active
-          ? 'text-[#2563eb] border-[#2563eb]'
-          : 'text-[#888] border-transparent'
-      }`}
-    >
-      {children}
-    </a>
-  )
+  return <hr className="border-none border-t border-[#ddd] my-12" />
 }
 
 function ExtLink({
