@@ -29,23 +29,43 @@ See [TECH.md](TECH.md) for the full architecture reference.
 
 ## Quick Start
 
+**Prerequisites:** Node.js 20+ and npm. Install via [nvm](https://github.com/nvm-sh/nvm) or `brew install node`.
+
 ```bash
 git clone https://github.com/MappingAI/mapping-ai.git
 cd mapping-ai
 npm ci
 ```
 
-You'll need a `.env` file with database credentials (ask the team or check Doppler).
+Create a `.env` file in the project root with database credentials (shared via Doppler, or ask the team):
 
 ```bash
-# Terminal 1: React dev server (all pages except map)
-npx vite dev
-
-# Terminal 2: API proxy (for form submissions)
-node dev-server.js
+# .env
+DATABASE_URL=postgresql://...
+AWS_ACCESS_KEY_ID=...
+AWS_SECRET_ACCESS_KEY=...
 ```
 
-Visit http://localhost:5173 for React pages, http://localhost:3000 for the map.
+Run two terminals:
+
+```bash
+# Terminal 1: React dev server
+npx vite dev            # http://localhost:5173
+
+# Terminal 2: API proxy (form submissions + map)
+node dev-server.js      # http://localhost:3000
+```
+
+Visit `localhost:5173` for React pages (contribute, admin, insights, about). Visit `localhost:3000` for the map (inline HTML, not React).
+
+### Using AI coding agents
+
+If you're using Claude Code, Cursor, or similar:
+- Read `CLAUDE.md` first for full codebase context
+- Use `npx tsc --noEmit` to catch type errors after changes
+- Use `agent-browser` for visual testing (screenshots, form interaction)
+- `npx vitest run` to verify tests
+- The [compound-engineering](https://github.com/EveryInc/compound-engineering-plugin) plugin has useful skills: `/ce:review` for code review, `/ce:compound` for documentation
 
 ---
 

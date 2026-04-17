@@ -480,10 +480,29 @@ Suggested fix: [what it should say instead]`}</Pre>
           contribute.
         </p>
 
+        <H4>Prerequisites</H4>
+
+        <p className="mb-4">
+          You need <strong>Node.js 20+</strong> and <strong>npm</strong> installed.
+          If you don&rsquo;t have them:
+        </p>
+
+        <Pre>{`# macOS (with Homebrew)
+brew install node
+
+# Or use nvm (recommended for managing Node versions)
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+nvm install 20
+nvm use 20
+
+# Verify
+node --version   # should be v20+
+npm --version    # should be v10+`}</Pre>
+
         <H4>Getting set up</H4>
 
         <p className="mb-4">
-          The repo has moved from <Code>sophiajwang/mapping-ai</Code> to{' '}
+          The repo is at{' '}
           <Code>MappingAI/mapping-ai</Code>. Clone it and install dependencies:
         </p>
 
@@ -492,21 +511,42 @@ cd mapping-ai
 npm ci`}</Pre>
 
         <p className="mb-4">
-          You&rsquo;ll need a <Code>.env</Code> file with database credentials
+          You need a <Code>.env</Code> file with database credentials
           to run the API locally. These will be shared via Doppler (colead is
-          adding the link). Ask an organizer if you need access.
+          adding the link). Create the file in the project root:
         </p>
 
-        <p className="mb-4">Start the Vite dev server for the React pages:</p>
+        <Pre>{`# .env (get values from Doppler or ask an organizer)
+DATABASE_URL=postgresql://...
+AWS_ACCESS_KEY_ID=...
+AWS_SECRET_ACCESS_KEY=...`}</Pre>
 
-        <Pre>{`npx vite dev          # React pages at http://localhost:5173`}</Pre>
+        <p className="mb-4">Start the dev servers (two terminals):</p>
+
+        <Pre>{`# Terminal 1: React dev server (all pages except map)
+npx vite dev          # http://localhost:5173
+
+# Terminal 2: API proxy (for form submissions + map)
+node dev-server.js    # http://localhost:3000`}</Pre>
 
         <p className="mb-4">
-          For form submissions and API calls locally, you also need the API
-          proxy:
+          Visit <Code>localhost:5173</Code> for React pages (contribute, admin, insights, about).
+          Visit <Code>localhost:3000</Code> for the map (it&rsquo;s inline HTML, not React).
         </p>
 
-        <Pre>{`node dev-server.js    # API proxy on localhost:3000`}</Pre>
+        <H4>Tips for coding with AI agents</H4>
+
+        <p className="mb-4">
+          If you&rsquo;re using Claude Code, Cursor, or another AI coding agent:
+        </p>
+
+        <ul className="list-disc pl-6 mb-4 space-y-2 text-[16px]">
+          <li>Use <Code>agent-browser</Code> to test changes visually (screenshots, form filling, navigation testing)</li>
+          <li>Run <Code>npx tsc --noEmit</Code> after changes to catch type errors</li>
+          <li>Run <Code>npx vitest run</Code> to verify tests pass</li>
+          <li>Read <Code>CLAUDE.md</Code> for the full codebase context and conventions</li>
+          <li>The <Code>compound-engineering</Code> plugin skills like <Code>/ce:review</Code> and <Code>/ce:compound</Code> are helpful for code review and documentation</li>
+        </ul>
 
         <H4>Architecture overview</H4>
 
