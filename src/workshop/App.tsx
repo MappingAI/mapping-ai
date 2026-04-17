@@ -179,6 +179,14 @@ export function App() {
           </div>
           <div className="flex flex-wrap gap-3 mb-4">
             <a
+              href="/workshop/slides.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-[#2563eb] text-white rounded-md font-mono text-[12px] no-underline hover:bg-[#1d4ed8] transition-colors"
+            >
+              Slides
+            </a>
+            <a
               href="https://discord.com/events/1491894381773590609/1494729391509340281"
               target="_blank"
               rel="noopener noreferrer"
