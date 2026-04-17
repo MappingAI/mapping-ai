@@ -4,6 +4,7 @@ node_modules/
 .vercel/
 .vercel
 .aws-sam/
+.worktrees/
 submissions/
 exports/
 
@@ -13,7 +14,7 @@ scripts/exa-pilot.js
 scripts/extract-fields.js
 
 # Enrichment output (generated, contains raw API data)
-enriched-elections.json
+enriched-*.json
 
 # Data files (generated from DB during deploy, not tracked in git)
 map-data.json
@@ -24,8 +25,12 @@ scripts/seed-test-data.js
 scripts/calc-disagreement.js
 scripts/export-pending.js
 
+# Backups (DB dumps — stored in S3, not in git)
+backups/
+
 # External data CSVs (stored locally, not in repo)
 data/AISafety.com_map.csv
+archive/data/AISafety.com_map.csv
 
 # OS files
 .DS_Store
@@ -34,14 +39,26 @@ data/AISafety.com_map.csv
 # Claude Code local files
 .claude/
 
-# Build output (Cloudflare Pages preview)
+# Build output
 dist/
+
+# Screenshots in root (old iterations)
+/*.png
 
 # Testing output
 dogfood-output/
 test-screenshots/
+user_testing/
+trial-data/
+
+# Insights backup
+insights_backup/
 
 # Local notes
 slack-update.md
 launch-prep.md
+bluedot-grant.md
+bluedot-grant-budget.xlsx
 
+# Logs
+*.log

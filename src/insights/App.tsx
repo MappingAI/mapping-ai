@@ -185,9 +185,9 @@ function ChartFundingStance({ orgs }: { orgs: Entity[] }) {
 
     const byFunding = d3.group(orgsWithFunding, (d: Entity & { funding_normalized: string }) => d.funding_normalized)
 
-    const stats = Array.from(byFunding.entries())
-      .filter(([, items]: [string, Entity[]]) => items.length >= 5)
-      .map(([funding, items]: [string, Entity[]]) => ({
+    const stats = (Array.from(byFunding.entries()) as [string, Entity[]][])
+      .filter(([, items]) => items.length >= 5)
+      .map(([funding, items]) => ({
         funding,
         count: items.length,
         mean: d3.mean(items, (o: Entity) => o.stance_score),
@@ -254,9 +254,8 @@ function ChartFundingStance({ orgs }: { orgs: Entity[] }) {
         .node()
 
       if (circle) {
-        circle.addEventListener('mouseenter', (e) => {
-          console.log('mouseenter fired!', e)
-          showTooltip(e as MouseEvent, `<strong>${s.funding}</strong><br>Mean: ${s.mean.toFixed(2)}<br>SD: ${s.std.toFixed(2)}<br>n=${s.count}`)
+        circle.addEventListener('mouseenter', (e: MouseEvent) => {
+          showTooltip(e, `<strong>${s.funding}</strong><br>Mean: ${s.mean.toFixed(2)}<br>SD: ${s.std.toFixed(2)}<br>n=${s.count}`)
         })
         circle.addEventListener('mouseleave', () => hideTooltip())
       }

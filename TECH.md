@@ -1,4 +1,4 @@
-# Technical Reference — Mapping AI
+# Technical Reference - Mapping AI
 
 This document covers architecture, local development, deployment, and the API for contributors working on the codebase.
 
@@ -24,20 +24,23 @@ This document covers architecture, local development, deployment, and the API fo
 │  AWS CloudFront (CDN)                                   │
 │  - Global edge caching                                  │
 │  - SSL/TLS termination (ACM certificate)                │
+│  - Hashed assets: immutable, 1-year cache               │
+│  - HTML: no-cache (revalidate on every request)         │
+│  - map-data.json: 60s cache + stale-while-revalidate    │
 └────────────────────┬────────────────────────────────────┘
                      │
         ┌────────────┴────────────┐
         ▼                         ▼
 ┌───────────────────┐   ┌─────────────────────────────────┐
 │  AWS S3           │   │  AWS API Gateway (HTTP API)     │
-│  Static files:    │   │  POST /submit   → Lambda        │
-│  HTML, CSS, JS,   │   │  GET /submissions → Lambda      │
-│  map-data.json    │   │  GET /search    → Lambda        │
-│                   │   │  GET/POST /admin → Lambda       │
-│  backups/         │   │  POST /upload   → Lambda        │
-│  (DB snapshots)   │   └────────────────┬────────────────┘
-└───────────────────┘                    │ pg (node-postgres)
-                                         ▼
+│  Vite build       │   │  POST /submit   → Lambda        │
+│  output (dist/):  │   │  GET /submissions → Lambda      │
+│  HTML, CSS, JS,   │   │  GET /search    → Lambda        │
+│  map-data.json    │   │  GET/POST /admin → Lambda       │
+│                   │   │  POST /upload   → Lambda        │
+│  backups/         │   └────────────────┬────────────────┘
+│  (DB snapshots)   │                    │ pg (node-postgres)
+└───────────────────┘                    ▼
                         ┌─────────────────────────────────┐
                         │  AWS RDS Postgres 17             │
                         │  Tables: entity, submission,     │
@@ -45,7 +48,7 @@ This document covers architecture, local development, deployment, and the API fo
                         └─────────────────────────────────┘
 ```
 
-Frontend is fully static — build step only for TipTap bundle. Backend is serverless via AWS Lambda (Node.js 20), deployed with AWS SAM. Database is AWS RDS Postgres 17 (eu-west-2, db.t4g.micro). All infrastructure defined in `template.yaml`.
+Frontend is a Vite 8 MPA built with React 19, TypeScript, and Tailwind CSS v4. The one exception is `map.html` (inline D3.js, not React). Backend is serverless via AWS Lambda (Node.js 20), deployed with AWS SAM. Database is AWS RDS Postgres 17 (eu-west-2, db.t4g.micro). All infrastructure defined in `template.yaml`.
 
 ---
 
@@ -56,15 +59,20 @@ Frontend is fully static — build step only for TipTap bundle. Backend is serve
 | DNS | Cloudflare (DNS-only mode, CNAME flattening) |
 | CDN | AWS CloudFront |
 | Frontend hosting | AWS S3 |
-| Frontend | Static HTML/CSS/JS — no framework |
-| Build | esbuild (TipTap rich text bundle only) |
-| Visualization | D3.js force-directed graph + orbital clusters + plot view (map.html) |
-| Rich text | TipTap (ProseMirror-based) with @mentions (src/tiptap-notes.js) |
+| Frontend | Vite 8 MPA + React 19 + TypeScript + Tailwind CSS v4 |
+| Map page | D3.js force-directed graph + orbital clusters + plot view (map.html, inline, not React) |
+| Build | Vite (React pages), esbuild (legacy TipTap bundle for map.html) |
+| Data fetching | TanStack Query (React Query v5) |
+| Forms | React Hook Form |
+| Rich text | TipTap (ProseMirror-based) with @mentions (`src/components/TipTapEditor.tsx` for React, `src/tiptap-notes.js` for map.html) |
+| XSS sanitization | DOMPurify |
+| Visualization | D3.js (map.html inline + insights page charts) |
 | Fonts | EB Garamond (serif) + DM Mono (mono) via Google Fonts |
 | Backend | AWS Lambda (Node.js 20) + API Gateway (HTTP API) |
 | Infrastructure-as-code | AWS SAM (`template.yaml`) |
 | Database | AWS RDS Postgres 17 (eu-west-2) |
 | DB client | `pg` (node-postgres v8) |
+| Testing | Vitest + jsdom + React Testing Library |
 | CI/CD | GitHub Actions (auto-deploy on push to main) |
 | Data enrichment | Exa API (web search), Anthropic API (Claude Haiku for submission quality review) |
 | External APIs (client-side) | Google Favicons (org logos), Wikipedia (people headshots), Photon/OpenStreetMap (geocoding), Bluesky (handle search) |
@@ -73,33 +81,42 @@ Frontend is fully static — build step only for TipTap bundle. Backend is serve
 
 ## Repository Structure
 
+The frontend is a **Vite multi-page app (MPA)**. Each `.html` file in the repo root is a Vite entry point with a React root div and a `<script type="module" src="/src/.../main.tsx">` tag. Vite builds all pages into `dist/`. The only exception is `map.html` (inline D3.js, not React).
+
 ```
 mapping-ai/
-├── index.html              # Background / home page
-├── theoryofchange.html     # Theory of change (not linked in nav)
-├── contribute.html         # Rich submission forms (person, org, resource)
-│                            with TipTap notes, @mentions, duplicate detection,
-│                            org search, location search, custom dropdowns
-├── map.html                # Interactive D3.js stakeholder map
-│                            with orbital clusters, semantic search, resources view,
-│                            plot view, collapsible contribute sidebar
-├── about.html              # Team and project info
-├── admin.html              # Internal admin: dashboard, pending queue, entity editing,
-│                            submission merging, auto map refresh on approve
-├── assets/
-│   ├── css/styles.css      # Styles for index.html
-│   ├── images/             # Logo and images
-│   └── js/
-│       ├── script.js       # Form submission handler (index page)
-│       └── tiptap-notes.js # Built TipTap bundle (generated by esbuild)
+├── index.html              # Home page (React entry → src/home/)
+├── contribute.html         # Submission forms (React entry → src/contribute/)
+├── map.html                # D3.js stakeholder map - INLINE, not React
+├── about.html              # Team info (React entry → src/about/)
+├── admin.html              # Admin dashboard (React entry → src/admin/)
+├── insights.html           # Data insights with D3 charts (React entry → src/insights/)
+├── theoryofchange.html     # Theory of change (React entry → src/theoryofchange/)
+├── workshop/index.html     # Workshop page (React entry → src/workshop/)
 ├── src/
-│   └── tiptap-notes.js     # TipTap source — rich text editor with @mentions
+│   ├── contribute/         # ContributeForm, PersonForm, OrgForm, ResourceForm,
+│   │                        OrgCreationPanel, OrgSearch, LocationSearch, BlueskySearch
+│   ├── admin/              # Admin dashboard (React)
+│   ├── insights/           # Insights page with D3 charts
+│   ├── about/              # About page
+│   ├── home/               # Homepage
+│   ├── theoryofchange/     # Theory of change
+│   ├── workshop/           # Workshop/mapping party
+│   ├── map/                # React map wrapper (MapPage, components, hooks)
+│   ├── components/         # Shared: Navigation, TipTapEditor, CustomSelect, TagInput, etc.
+│   ├── hooks/              # Shared: useEntityCache, useSearch, useAutoSave, etc.
+│   ├── lib/                # API client (api.ts), search utilities (search.ts)
+│   ├── types/              # TypeScript type definitions (api.ts, entity.ts)
+│   ├── contexts/           # React contexts (DropdownContext)
+│   ├── styles/             # Global CSS with Tailwind (global.css)
+│   ├── __tests__/          # Vitest tests (components/, lib/)
+│   └── tiptap-notes.js     # Legacy TipTap source for map.html (bundled by esbuild)
 ├── api/
-│   ├── submit.js           # Lambda: POST /submit — submissions + entity insert + LLM review
-│   ├── submissions.js      # Lambda: GET /submissions — returns entities + edges
-│   ├── search.js           # Lambda: GET /search — full-text search
-│   ├── admin.js            # Lambda: GET/POST /admin — stats, pending, approve/reject/merge/update/delete, auto map refresh
-│   ├── upload.js           # Lambda: POST /upload — thumbnail image upload to S3
+│   ├── submit.js           # Lambda: POST /submit - submissions + entity insert + LLM review
+│   ├── submissions.js      # Lambda: GET /submissions - returns entities + edges
+│   ├── search.js           # Lambda: GET /search - full-text search
+│   ├── admin.js            # Lambda: GET/POST /admin - stats, pending, approve/reject/merge/update/delete, auto map refresh
+│   ├── upload.js           # Lambda: POST /upload - thumbnail image upload to S3
 │   └── export-map.js       # Shared module: generates map-data.json from DB
 ├── scripts/
 │   ├── migrate.js          # Create/update all 3 tables + triggers + indexes
@@ -107,16 +124,24 @@ mapping-ai/
 │   ├── export.js           # Export all tables to CSV
 │   ├── export-map-data.js  # Generate map-data.json from approved entries
 │   └── backup-db.js        # Backup all tables to S3 as JSON + SQL
+├── assets/
+│   ├── css/                # Legacy styles (used by map.html only)
+│   ├── images/             # Logo and images
+│   └── js/
+│       └── tiptap-notes.js # Built TipTap bundle for map.html (generated by esbuild)
+├── dist/                   # Vite build output (not tracked in git)
+├── vite.config.ts          # Vite MPA config with React, Tailwind, proxy, Vitest
+├── tsconfig.json           # TypeScript config (strict, paths: @/* → src/*)
 ├── data/                   # Airtable CSV source exports
 ├── template.yaml           # AWS SAM (5 Lambdas + API Gateway + S3 + CloudFront)
 ├── samconfig.toml          # SAM deploy config (non-sensitive)
-├── package.json            # Dependencies: pg, @tiptap/*, esbuild, exa-js
+├── package.json            # React 19, TanStack Query, React Hook Form, TipTap, Tailwind, Vite 8, Vitest
 └── .github/
     └── workflows/
-        └── deploy.yml      # CI/CD: build → export → S3 sync → CloudFront invalidate
+        └── deploy.yml      # CI/CD: Vite build → export → S3 sync → CloudFront invalidate
 ```
 
-> **Note:** All HTML pages embed their own `<style>` blocks — there is no shared stylesheet across pages. `assets/css/styles.css` applies only to `index.html`.
+> **Note:** React pages use Tailwind CSS for styling via `src/styles/global.css`. The legacy `assets/css/` and inline `<style>` blocks only apply to `map.html`.
 
 ---
 
@@ -132,13 +157,38 @@ mapping-ai/
 git clone https://github.com/sophiajwang/mapping-ai.git
 cd mapping-ai
 npm ci
-npm run build:tiptap              # build TipTap rich text bundle
-node dev-server.js                # Express server with API endpoints (port 3000)
-# OR for static-only (no API):
-npx serve .
+cp .env.example .env
+# Edit .env with your DATABASE_URL
 ```
 
-> Form submissions and search require `dev-server.js` or a running Lambda. The static server only serves files.
+Start both processes for full local development:
+
+```bash
+# Terminal 1: Vite dev server (React pages, hot reload)
+npx vite dev                      # http://localhost:5173
+
+# Terminal 2: Express API server (Lambda endpoints)
+node dev-server.js                # http://localhost:3000
+```
+
+Vite proxies `/api` requests to `localhost:3000` (configured in `vite.config.ts`), so React pages talk to the local API seamlessly. Open `http://localhost:5173` to browse the site.
+
+For `map.html` (inline D3, not React), open `http://localhost:5173/map.html` directly.
+
+### Type checking and tests
+
+```bash
+npx tsc --noEmit                  # TypeScript type check (no output)
+npx vitest run                    # Run tests (Vitest + jsdom + React Testing Library)
+npx vitest                        # Watch mode
+```
+
+### Build for production
+
+```bash
+npx vite build                    # Outputs to dist/
+npm run build:tiptap              # Legacy TipTap bundle for map.html (esbuild)
+```
 
 ### Run Lambda locally (optional)
 
@@ -250,9 +300,9 @@ The schema uses a **unified `entity` table** (migrated from the old schema that 
 
 #### Triggers
 
-1. **`before_submission_update`** — When a new-entity submission is approved (entity_id IS NULL + status→approved), auto-creates the entity row and backfills entity_id
-2. **`after_submission_update`** — Recalculates weighted belief scores on the entity when submission status changes. Weights: self=10, connector=2, external=1
-3. **`update_entity_search`** — Updates tsvector on entity INSERT/UPDATE
+1. **`before_submission_update`** - When a new-entity submission is approved (entity_id IS NULL + status→approved), auto-creates the entity row and backfills entity_id
+2. **`after_submission_update`** - Recalculates weighted belief scores on the entity when submission status changes. Weights: self=10, connector=2, external=1
+3. **`update_entity_search`** - Updates tsvector on entity INSERT/UPDATE
 
 ### Database scripts
 
@@ -299,15 +349,25 @@ source .env && sam build && sam deploy --parameter-overrides "DatabaseUrl=$DATAB
 
 On every push to `main`, `.github/workflows/deploy.yml`:
 1. `npm ci`
-2. `npm run build:tiptap` (esbuild bundles TipTap)
-3. `node scripts/export-map-data.js` (queries RDS → generates map-data.json)
-4. `aws s3 sync` (uploads HTML/CSS/JS/map-data.json to S3)
-5. `aws cloudfront create-invalidation` (purges CDN cache)
+2. `npm run build:tiptap` (esbuild bundles legacy TipTap for map.html)
+3. `npx vite build` (builds all React pages into `dist/`)
+4. DB schema smoke test (verifies entity/submission/edge tables exist)
+5. `node scripts/export-map-data.js` (queries RDS → generates map-data.json, copied into `dist/`)
+6. `aws s3 sync dist/` (uploads built HTML/CSS/JS/map-data.json to S3 with cache headers)
+7. `aws cloudfront create-invalidation` (purges CDN cache)
+8. Post-deploy smoke test (verifies /, /contribute, /map, /about, /insights, /admin all return 200)
+
+**Cache headers:**
+- HTML files: `no-cache` (always revalidate)
+- Hashed assets (JS/CSS): `immutable, max-age=31536000` (1 year)
+- `map-data.json`: `max-age=60, stale-while-revalidate=300`
 
 **GitHub Secrets required:**
 - `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`
 - `S3_BUCKET_NAME`, `CLOUDFRONT_DISTRIBUTION_ID`
-- `DATABASE_URL` — RDS connection string
+- `DATABASE_URL` - RDS connection string
+- `SITE_PASSWORD` - password gate hash (remove after public launch)
+- `CF_ANALYTICS_TOKEN` - Cloudflare Web Analytics token
 
 ### Manual S3 upload + cache invalidation
 
@@ -347,7 +407,7 @@ Submit a new or updated entry for review.
 ```
 
 - `type`: `"person"` | `"organization"` | `"resource"`
-- `_hp`: honeypot field — must be empty (bots fill this in)
+- `_hp`: honeypot field - must be empty (bots fill this in)
 - `data`: camelCase field names. `entityId` present = edit submission, absent = new entity
 - Stance/timeline/risk text labels are converted to numeric scores server-side
 
@@ -408,10 +468,10 @@ Upload thumbnail image (JPG/PNG/WebP, max 2MB). Requires admin key.
 
 ## Spam Protection
 
-- **Honeypot field** (`_hp`): hidden form field — if non-empty, server returns 200 silently without writing to DB
+- **Honeypot field** (`_hp`): hidden form field - if non-empty, server returns 200 silently without writing to DB
 - **LLM review**: Claude Haiku rates submission quality 1-5, flags spam/duplicates/offensive
 - **Field length limits**: enforced server-side (200 chars short fields, 1000 chars long fields)
-- All submissions land in `status = 'pending'` — require admin approval
+- All submissions land in `status = 'pending'` - require admin approval
 
 ---
 
