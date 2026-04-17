@@ -26,6 +26,7 @@ jobs:
         run: |
           cat > .env.production <<EOL
           VITE_API_BASE=https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com
+          VITE_SITE_PASSWORD_HASH=__SITE_PASSWORD_HASH__
           EOL
 
       - name: Build with Vite
@@ -68,7 +69,7 @@ jobs:
         run: |
           if [ -n "$SITE_PASSWORD" ]; then
             HASH=$(echo -n "$SITE_PASSWORD" | sha256sum | cut -d' ' -f1)
-            sed -i "s/__SITE_PASSWORD_HASH__/$HASH/g" dist/map.html dist/contribute.html
+            sed -i "s/__SITE_PASSWORD_HASH__/$HASH/g" dist/map.html dist/contribute.html dist/assets/*.js
             echo "✓ Password gate hash injected"
           else
             echo "⚠ No SITE_PASSWORD set — gate will auto-bypass"
@@ -110,9 +111,10 @@ jobs:
           fi
 
           # Hashed assets (JS/CSS) — immutable, long cache
+          # No --delete: S3 assets/ also has legacy static files (favicon/, images/)
+          # used by map.html. Old hashed files are harmless (never referenced).
           aws s3 sync dist/assets/ s3://${{ secrets.S3_BUCKET_NAME }}/assets/ \
-            --cache-control "public, max-age=31536000, immutable" \
-            --delete
+            --cache-control "public, max-age=31536000, immutable"
 
           # Workshop subdirectory
           if [ -d dist/workshop ]; then

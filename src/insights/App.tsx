@@ -276,8 +276,8 @@ function ChartStanceBeeswarm({ people, orgs, tooltipEl }: { people: Entity[]; or
     // Mean lines
     const pScores = people.filter(p => p.stance_score != null).map(p => p.stance_score as number)
     const oScores = orgs.filter(o => o.stance_score != null).map(o => o.stance_score as number)
-    const pMean = pScores.reduce((a, v) => a + v, 0) / pScores.length
-    const oMean = oScores.reduce((a, v) => a + v, 0) / oScores.length
+    const pMean = pScores.length > 0 ? pScores.reduce((a, v) => a + v, 0) / pScores.length : 0
+    const oMean = oScores.length > 0 ? oScores.reduce((a, v) => a + v, 0) / oScores.length : 0
 
     // People beeswarm (above line)
     const pNodes = people.filter(p => p.stance_score != null).map(p => ({
@@ -311,24 +311,28 @@ function ChartStanceBeeswarm({ people, orgs, tooltipEl }: { people: Entity[]; or
     beeswarm(pNodes, midY, -1)
     beeswarm(oNodes, midY, 1)
 
-    // Mean markers
-    svg.append('line')
-      .attr('x1', xScale(pMean)).attr('x2', xScale(pMean))
-      .attr('y1', padT).attr('y2', midY - 3)
-      .attr('stroke', '#E31A1C').attr('stroke-width', 1.5).attr('stroke-dasharray', '3,2')
-    svg.append('text')
-      .attr('x', xScale(pMean)).attr('y', padT - 5)
-      .attr('text-anchor', 'middle').attr('font-family', "'DM Mono', monospace").attr('font-size', 10).attr('fill', '#E31A1C')
-      .text('Mean ' + pMean.toFixed(1))
+    // Mean markers (skip if no data)
+    if (pScores.length > 0) {
+      svg.append('line')
+        .attr('x1', xScale(pMean)).attr('x2', xScale(pMean))
+        .attr('y1', padT).attr('y2', midY - 3)
+        .attr('stroke', '#E31A1C').attr('stroke-width', 1.5).attr('stroke-dasharray', '3,2')
+      svg.append('text')
+        .attr('x', xScale(pMean)).attr('y', padT - 5)
+        .attr('text-anchor', 'middle').attr('font-family', "'DM Mono', monospace").attr('font-size', 10).attr('fill', '#E31A1C')
+        .text('Mean ' + pMean.toFixed(1))
+    }
 
-    svg.append('line')
-      .attr('x1', xScale(oMean)).attr('x2', xScale(oMean))
-      .attr('y1', midY + 3).attr('y2', H - padB)
-      .attr('stroke', '#1F78B4').attr('stroke-width', 1.5).attr('stroke-dasharray', '3,2')
-    svg.append('text')
-      .attr('x', xScale(oMean)).attr('y', H - padB + 10)
-      .attr('text-anchor', 'middle').attr('font-family', "'DM Mono', monospace").attr('font-size', 10).attr('fill', '#1F78B4')
-      .text('Mean ' + oMean.toFixed(1))
+    if (oScores.length > 0) {
+      svg.append('line')
+        .attr('x1', xScale(oMean)).attr('x2', xScale(oMean))
+        .attr('y1', midY + 3).attr('y2', H - padB)
+        .attr('stroke', '#1F78B4').attr('stroke-width', 1.5).attr('stroke-dasharray', '3,2')
+      svg.append('text')
+        .attr('x', xScale(oMean)).attr('y', H - padB + 10)
+        .attr('text-anchor', 'middle').attr('font-family', "'DM Mono', monospace").attr('font-size', 10).attr('fill', '#1F78B4')
+        .text('Mean ' + oMean.toFixed(1))
+    }
 
     // Draw dots
     pNodes.forEach(n => {
@@ -932,7 +936,7 @@ export function App() {
   const people = data?.people || []
   const orgs = data?.organizations || []
   const resources = data?.resources || []
-  const edges = data?.edges || data?.relationships || []
+  const edges = data?.relationships || data?.edges || []
   const all = [...people, ...orgs, ...resources]
 
   const entityMap: Record<number, Entity> = {}

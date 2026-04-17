@@ -1,3 +1,4 @@
+import DOMPurify from 'dompurify'
 import { useEntityCache } from '../hooks/useEntityCache'
 import type { FuzzySearchResult } from '../types/api'
 import type { Entity } from '../types/entity'
@@ -37,7 +38,7 @@ function HtmlField({ label, html }: { label: string; html: string | null | undef
       <label className="block font-mono text-[9px] uppercase tracking-wider text-[#888] mb-0.5">{label}</label>
       <div
         className="font-serif text-[13px] text-[#1a1a1a] leading-relaxed [&_.mention]:text-[#2563eb] [&_.mention]:font-semibold [&_a]:text-[#2563eb] [&_a:hover]:underline"
-        dangerouslySetInnerHTML={{ __html: html }}
+        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(html) }}
       />
     </div>
   )

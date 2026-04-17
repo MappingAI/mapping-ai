@@ -38,10 +38,15 @@ export function useSearch(
   const pendingResults = pendingQuery.data ?? []
   const allResults = useMemo<FuzzySearchResult[]>(() => {
     const seenIds = new Set(localResults.map((r) => r.id))
+    // Also track absolute values so negative local IDs (-73) dedup against
+    // positive API IDs (73) for the same pending entity
+    for (const r of localResults) {
+      if (r.id < 0) seenIds.add(-r.id)
+    }
     const merged = [...localResults]
 
     for (const pending of pendingResults) {
-      if (!seenIds.has(pending.id)) {
+      if (!seenIds.has(pending.id) && !seenIds.has(-pending.id)) {
         merged.push({
           ...pending,
           score: 50,

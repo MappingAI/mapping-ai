@@ -6,6 +6,10 @@ import Placeholder from '@tiptap/extension-placeholder'
 import Link from '@tiptap/extension-link'
 import tippy, { type Instance as TippyInstance } from 'tippy.js'
 
+function escapeHtml(str: string): string {
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+}
+
 export interface MentionData {
   id: string
   entityType: string
@@ -83,9 +87,9 @@ function createSuggestion(searchFn: (query: string) => MentionItem[] | Promise<M
                   (item, i) => `
                 <div class="mention-item ${i === 0 ? 'active' : ''}"
                      data-index="${i}">
-                  <span class="mention-type">${TYPE_LABELS[item.entityType] ?? item.entityType}</span>
-                  <span class="mention-label">${item.label}</span>
-                  <span class="mention-detail">${item.detail}</span>
+                  <span class="mention-type">${escapeHtml(TYPE_LABELS[item.entityType] ?? item.entityType)}</span>
+                  <span class="mention-label">${escapeHtml(item.label)}</span>
+                  <span class="mention-detail">${escapeHtml(item.detail)}</span>
                 </div>`,
                 )
                 .join('')

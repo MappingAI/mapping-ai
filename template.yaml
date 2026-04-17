@@ -48,7 +48,6 @@ Resources:
           - 'https://aimapping.org'
           - 'https://www.aimapping.org'
           - 'https://mapping-ai.pages.dev'
-          - 'https://feat-react-contribute.mapping-ai.pages.dev'
           - !Sub 'https://${WebsiteBucket}.s3.${AWS::Region}.amazonaws.com'
           - !Sub 'https://${CloudFrontDistribution.DomainName}'
           - 'http://localhost:3000'

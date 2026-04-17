@@ -38,6 +38,17 @@ const RELATIONSHIP_OPTIONS: Record<FormType, { value: string; label: string }[]>
   ],
 }
 
+const EMPTY_FORM: Record<string, unknown> = {
+  name: '', category: '', title: '', primaryOrg: '', primaryOrgId: null,
+  location: [], affiliatedOrgIds: [], keyConcerns: [], influenceType: [],
+  regulatoryStance: '', evidenceSource: '', agiTimeline: '', aiRiskLevel: '',
+  regulatoryStanceDetail: '', twitter: '', bluesky: '', website: '',
+  fundingModel: '', notesHtml: '', notesMentions: [], submitterEmail: '',
+  submitterRelationship: '', resourceTitle: '', resourceType: '',
+  resourceAuthor: '', resourceAuthors: [], resourceUrl: '', resourceYear: '',
+  resourceKeyArgument: '', _hp: '',
+}
+
 /** State for update mode (editing an existing entity). */
 export interface UpdateContext {
   entityId: number
@@ -151,16 +162,6 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
   )
 
   // Clear form and draft
-  const EMPTY_FORM: Record<string, unknown> = {
-    name: '', category: '', title: '', primaryOrg: '', primaryOrgId: null,
-    location: [], affiliatedOrgIds: [], keyConcerns: [], influenceType: [],
-    regulatoryStance: '', evidenceSource: '', agiTimeline: '', aiRiskLevel: '',
-    regulatoryStanceDetail: '', twitter: '', bluesky: '', website: '',
-    fundingModel: '', notesHtml: '', notesMentions: [], submitterEmail: '',
-    submitterRelationship: '', resourceTitle: '', resourceType: '',
-    resourceAuthor: '', resourceAuthors: [], resourceUrl: '', resourceYear: '',
-    resourceKeyArgument: '', _hp: '',
-  }
   const clearForm = useCallback(
     (formType: FormType) => {
       clearDraft(formType)

@@ -116,6 +116,7 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPe
       author: Array.isArray(authors) ? authors.map((t) => t.label).join(', ') : fields.resourceAuthor ?? null,
       notesMentions: Array.isArray(fields.notesMentions) ? JSON.stringify(fields.notesMentions) : fields.notesMentions ?? null,
       // Map resource field names to what the API expects
+      name: fields.resourceTitle ?? null,
       title: fields.resourceTitle ?? null,
       category: fields.resourceType ?? null,
       url: fields.resourceUrl ?? null,
