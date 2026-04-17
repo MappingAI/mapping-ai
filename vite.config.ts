@@ -20,6 +20,7 @@ export default defineConfig({
         admin: resolve(__dirname, 'admin.html'),
         theoryofchange: resolve(__dirname, 'theoryofchange.html'),
         workshop: resolve(__dirname, 'workshop/index.html'),
+        insights: resolve(__dirname, 'insights.html'),
       },
     },
   },
