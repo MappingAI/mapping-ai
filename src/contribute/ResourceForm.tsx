@@ -122,7 +122,7 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPe
       {
         onSuccess: (result) => {
           addPendingEntity({
-            id: result.id,
+            id: result.submissionId,
             entity_type: 'resource',
             name: (fields.resourceTitle as string) ?? '',
             category: (fields.resourceType as string) ?? null,

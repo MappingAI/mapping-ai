@@ -197,7 +197,7 @@ export function PersonForm({ form, updateContext, onOrgPanelOpen, onViewExisting
       {
         onSuccess: (result) => {
           addPendingEntity({
-            id: result.id,
+            id: result.submissionId,
             entity_type: 'person',
             name: (fields.name as string) ?? '',
             category: (fields.category as string) ?? null,

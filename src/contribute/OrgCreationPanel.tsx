@@ -128,11 +128,11 @@ export function OrgCreationPanel({
       try {
         const result = await submitMutation.mutateAsync(request)
         // Optimistically add to entity cache
-        addPendingEntity({ id: result.id, entity_type: 'organization', name: values.name, category: values.category || null })
+        addPendingEntity({ id: result.submissionId, entity_type: 'organization', name: values.name, category: values.category || null })
         // Show success overlay
         setShowSuccess(true)
         setTimeout(() => {
-          onOrgCreated({ id: result.id, name: values.name, category: values.category || null })
+          onOrgCreated({ id: result.submissionId, name: values.name, category: values.category || null })
           onClose()
         }, 1500)
       } catch {

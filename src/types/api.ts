@@ -8,7 +8,8 @@ export interface SubmitRequest {
 
 /** POST /submit response */
 export interface SubmitResponse {
-  id: number
+  success: boolean
+  submissionId: number
   message: string
 }
 

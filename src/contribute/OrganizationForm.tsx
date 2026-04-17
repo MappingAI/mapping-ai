@@ -126,7 +126,7 @@ export function OrganizationForm({ form, updateContext, onOrgPanelOpen, onViewEx
       {
         onSuccess: (result) => {
           addPendingEntity({
-            id: result.id,
+            id: result.submissionId,
             entity_type: 'organization',
             name: (fields.name as string) ?? '',
             category: (fields.category as string) ?? null,
