@@ -82,29 +82,33 @@ function AuthGate({ onAuth }: { onAuth: (key: string) => void }) {
 // ── Dashboard Tab ──
 
 interface AdminStats {
-  counts: { people: number; organizations: number; resources: number; edges: number }
-  pending: number
+  approved: Record<string, number>
+  pending: Record<string, number>
+  pending_new_submissions: number
+  pending_edit_submissions: number
+  edges: number
 }
 
 function DashboardTab({ adminKey, onSwitchTab }: { adminKey: string; onSwitchTab: (tab: string) => void }) {
   const { data, isPending, error } = useQuery<AdminStats>({
     queryKey: ['admin-stats'],
-    queryFn: () => adminFetch('/admin', adminKey),
+    queryFn: () => adminFetch('/admin?action=stats', adminKey),
   })
 
   if (isPending) return <p className="text-center py-8 font-mono text-[12px] text-[#888]">Loading stats...</p>
   if (error) return <p className="text-center py-8 text-red-600 font-mono text-[12px]">Failed to load stats</p>
 
   const stats = data!
+  const totalPending = stats.pending_new_submissions + stats.pending_edit_submissions
   return (
     <div>
-      <p className={LABEL}>Overview</p>
+      <p className={LABEL}>Approved Entities</p>
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
         {[
-          { label: 'People', value: stats.counts?.people ?? '—' },
-          { label: 'Organizations', value: stats.counts?.organizations ?? '—' },
-          { label: 'Resources', value: stats.counts?.resources ?? '—' },
-          { label: 'Edges', value: stats.counts?.edges ?? '—' },
+          { label: 'People', value: stats.approved?.person ?? 0 },
+          { label: 'Organizations', value: stats.approved?.organization ?? 0 },
+          { label: 'Resources', value: stats.approved?.resource ?? 0 },
+          { label: 'Edges', value: stats.edges ?? 0 },
         ].map((s) => (
           <div key={s.label} className="bg-[#f8f7f5] rounded p-3">
             <div className="font-mono text-[10px] uppercase tracking-wider text-[#888]">{s.label}</div>
@@ -113,7 +117,9 @@ function DashboardTab({ adminKey, onSwitchTab }: { adminKey: string; onSwitchTab
         ))}
       </div>
       <div className="bg-amber-50 border border-amber-200 rounded p-3 mb-6">
-        <span className="font-mono text-[11px]">{stats.pending ?? 0} pending submissions</span>
+        <span className="font-mono text-[11px]">
+          {totalPending} pending ({stats.pending_new_submissions} new, {stats.pending_edit_submissions} edits)
+        </span>
         <button onClick={() => onSwitchTab('pending')} className="ml-3 text-[12px] font-mono text-[#2563eb] hover:underline">
           Review →
         </button>
@@ -144,7 +150,10 @@ function PendingTab({ adminKey }: { adminKey: string }) {
   const qc = useQueryClient()
   const { data: pending, isPending } = useQuery<Submission[]>({
     queryKey: ['admin-pending'],
-    queryFn: () => adminFetch('/admin?scope=pending', adminKey),
+    queryFn: async () => {
+      const res = await adminFetch<{ submissions: Submission[] }>('/admin?action=pending', adminKey)
+      return res.submissions
+    },
   })
 
   const approveMut = useMutation({
@@ -235,7 +244,10 @@ function EntitiesTab({ adminKey }: { adminKey: string }) {
 
   const { data, isPending } = useQuery<{ entities: EntityRow[] }>({
     queryKey: ['admin-entities'],
-    queryFn: () => adminFetch('/admin?scope=all', adminKey),
+    queryFn: async () => {
+      const res = await adminFetch<{ data: EntityRow[]; total: number }>('/admin?action=all', adminKey)
+      return { entities: res.data }
+    },
   })
 
   const entities = useMemo(() => {
@@ -366,7 +378,7 @@ function EditModal({ entityId, adminKey, onClose }: { entityId: number; adminKey
 
   const updateMut = useMutation({
     mutationFn: (data: Record<string, string>) =>
-      adminFetch('/admin', adminKey, { method: 'POST', body: JSON.stringify({ action: 'update', id: entityId, data }) }),
+      adminFetch('/admin', adminKey, { method: 'POST', body: JSON.stringify({ action: 'update_entity', id: entityId, data }) }),
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-entities'] }); onClose() },
   })
 
