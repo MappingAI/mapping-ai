@@ -1,41 +1,44 @@
 export function App() {
   return (
     <>
-      {/* Page-specific nav (NOT the standard site Navigation) */}
-      <nav className="sticky top-0 z-[100] bg-white/95 backdrop-blur-sm border-b border-[#ddd] px-8 py-[0.6rem] flex items-center gap-8 font-mono text-[11px] uppercase tracking-[0.1em] max-[600px]:px-4 max-[600px]:gap-4 max-[600px]:text-[10px]">
-        <span className="font-medium text-[12px] tracking-[0.14em] text-text-primary">
-          Mapping AI
-        </span>
-        <a
-          href="#overview"
-          className="text-text-secondary no-underline hover:text-text-primary hover:no-underline"
-        >
-          Overview
-        </a>
-        <a
-          href="#streams"
-          className="text-text-secondary no-underline hover:text-text-primary hover:no-underline"
-        >
-          Streams
-        </a>
-        <a
-          href="#setup"
-          className="text-text-secondary no-underline hover:text-text-primary hover:no-underline"
-        >
-          Setup
-        </a>
+      {/* Site nav matching main site */}
+      <nav className="fixed top-0 left-0 right-0 z-[100] flex justify-between items-center bg-white/92 backdrop-blur-sm border-b border-[#bbb] px-8 py-[0.85rem]">
         <a
           href="https://mapping-ai.org"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-text-secondary no-underline hover:text-text-primary hover:no-underline"
+          className="font-mono text-[12px] tracking-[0.1em] uppercase text-text-primary no-underline"
         >
-          Live Site
+          Mapping AI
         </a>
+        <div className="flex gap-8">
+          <a
+            href="https://mapping-ai.org/"
+            className="font-mono text-[12px] tracking-[0.1em] uppercase text-text-secondary no-underline hover:text-text-primary"
+          >
+            Background
+          </a>
+          <a
+            href="https://mapping-ai.org/contribute"
+            className="font-mono text-[12px] tracking-[0.1em] uppercase text-text-secondary no-underline hover:text-text-primary"
+          >
+            Contribute
+          </a>
+          <a
+            href="https://mapping-ai.org/map"
+            className="font-mono text-[12px] tracking-[0.1em] uppercase text-text-secondary no-underline hover:text-text-primary"
+          >
+            Map
+          </a>
+          <a
+            href="https://mapping-ai.org/about"
+            className="font-mono text-[12px] tracking-[0.1em] uppercase text-text-secondary no-underline hover:text-text-primary"
+          >
+            About
+          </a>
+        </div>
       </nav>
 
       {/* Hero */}
-      <div className="max-w-[720px] mx-auto px-8 pt-16 pb-8 max-[600px]:px-4">
+      <div className="max-w-[720px] mx-auto px-8 pt-24 pb-8 max-[600px]:px-4">
         <div className="font-mono text-[11px] uppercase tracking-[0.12em] text-text-tertiary mb-4">
           Mapping Party
         </div>
@@ -60,7 +63,7 @@ export function App() {
 
         <p className="mb-4">
           <a
-            href="https://mapping-ai.org/map.html"
+            href="https://mapping-ai.org/map"
             target="_blank"
             rel="noopener noreferrer"
             className="text-accent no-underline hover:text-[#1d4ed8] hover:underline"
@@ -75,19 +78,19 @@ export function App() {
         </p>
 
         <p className="mb-4">
-          The database currently holds <strong>709 people</strong>,{' '}
-          <strong>734 organizations</strong>, and{' '}
-          <strong>161 resources</strong>, linked by{' '}
-          <strong>2,228 relationships</strong>. About 1,020 of those entities
-          are publicly visible on the map. The rest are pending review or need
-          enrichment before they&rsquo;re ready to publish.
+          The database currently has about <strong>706 people</strong>,{' '}
+          <strong>717 organizations</strong>, and{' '}
+          <strong>149 resources</strong>, linked by{' '}
+          <strong>2,143 relationships</strong>. These are the publicly visible
+          entities on the map. There are additional pending entries in the
+          review queue.
         </p>
 
         <p className="mb-4">
-          The whole thing runs on static HTML, D3.js, a PostgreSQL database on
-          AWS, and a set of Lambda functions that handle form submissions and
-          search. There&rsquo;s no framework. Contributions go through a form on
-          the site and get reviewed by an admin before appearing on the map.
+          The tech stack is simple: React + Vite for the frontend, D3.js for the
+          visualization, PostgreSQL on AWS, and a few Lambda functions for form
+          submissions and search. People submit data through a form on the site,
+          it goes into a review queue, and approved entries show up on the map.
         </p>
 
         <Callout>
@@ -112,19 +115,14 @@ export function App() {
           </thead>
           <tbody>
             {[
-              ['0:00', 'Welcome, introductions'],
+              ['7:00', 'Pizza, ice cream floats, welcome/mingle'],
               [
-                '0:10',
-                'Project walkthrough (live demo of the map, contribute form, admin panel)',
+                '7:30',
+                'Project walkthrough (live demo of the map, contribute form, admin panel); stream overview, pick your group',
               ],
-              ['0:25', 'Stream overview \u2014 pick your group'],
-              ['0:35', 'Break into streams, get set up'],
-              ['0:45', 'Work session 1'],
-              ['1:45', 'Break / snacks / mingle'],
-              ['2:00', 'Work session 2'],
-              ['2:45', 'Stream readouts (3 min each)'],
-              ['3:10', 'Discussion: big picture, next steps'],
-              ['3:30', 'Wrap'],
+              ['7:50', 'Work session'],
+              ['9:30', 'Discussion: big picture, next steps'],
+              ['10:00', 'Wrap'],
             ].map(([time, what], i) => (
               <tr key={i}>
                 <td className="p-2 border-b border-[#eee] align-top">
@@ -192,7 +190,7 @@ export function App() {
 
         <p className="mb-4">
           <strong>
-            <ExtLink href="https://mapping-ai.org/map.html">The map</ExtLink>
+            <ExtLink href="https://mapping-ai.org/map">The map</ExtLink>
           </strong>{' '}
           is where most of the complexity lives. Try searching for people and
           organizations. Click nodes to see their detail panel. Toggle between
@@ -204,7 +202,7 @@ export function App() {
 
         <p className="mb-4">
           <strong>
-            <ExtLink href="https://mapping-ai.org/contribute.html">
+            <ExtLink href="https://mapping-ai.org/contribute">
               The contribute form
             </ExtLink>
           </strong>{' '}
@@ -223,7 +221,7 @@ export function App() {
           </strong>{' '}
           and{' '}
           <strong>
-            <ExtLink href="https://mapping-ai.org/about.html">
+            <ExtLink href="https://mapping-ai.org/about">
               about page
             </ExtLink>
           </strong>{' '}
@@ -234,7 +232,11 @@ export function App() {
         <H4>How to report bugs</H4>
 
         <p className="mb-4">
-          Use this format in a shared doc or spreadsheet:
+          Log bugs in{' '}
+          <ExtLink href="https://docs.google.com/document/d/134ZCFOo-hRDqw9ddzMhq7eHEJ3XuuikI7RoMIMDhWL4/edit?usp=sharing">
+            this shared doc
+          </ExtLink>{' '}
+          using this format:
         </p>
 
         <Pre>{`Page: [which page]
@@ -245,18 +247,9 @@ Browser/device: [Chrome on Mac, Safari on iPhone, etc.]
 Screenshot: [paste one if you can]`}</Pre>
 
         <p className="mb-4">
-          Prioritize things that are broken or confusing over things that are
-          cosmetic. A dropdown that doesn&rsquo;t close is more important than a
-          font size that looks slightly off. But note both.
-        </p>
-
-        <p className="mb-4">
-          If you&rsquo;re comfortable with GitHub, you can also file issues
-          directly at{' '}
-          <ExtLink href="https://github.com/sophiajwang/mapping-ai/issues">
-            github.com/sophiajwang/mapping-ai/issues
-          </ExtLink>
-          .
+          Functional stuff takes priority over cosmetic stuff. A dropdown that
+          won&rsquo;t close matters more than a font that looks slightly off.
+          But note both if you see them.
         </p>
 
         <Divider />
@@ -270,10 +263,19 @@ Screenshot: [paste one if you can]`}</Pre>
         </StreamTag>
 
         <p className="mb-4">
-          The map is only as useful as its data. Right now, about 44% of
-          entities in the database have no notes at all, and many that do have
-          notes are thin or unsourced. Your job is to add new entities and flesh
-          out existing ones by submitting through the contribute form.
+          The map is only as useful as its data. Most entities now have notes,
+          but many are thin, unsourced, or out of date. Your job today is to add
+          new entities we&rsquo;re missing and flesh out ones that are already
+          there.
+        </p>
+
+        <p className="mb-4">
+          <strong>Start by exploring the current data.</strong> Browse{' '}
+          <ExtLink href="https://mapping-ai.org/map">the map</ExtLink> to see
+          what&rsquo;s there. You also have access to the staging database (via
+          the <Code>.env</Code> file) and can query it directly or look at the
+          exported <Code>map-data.json</Code>. This will help you identify gaps
+          and avoid duplicating work.
         </p>
 
         <H4>What to add</H4>
@@ -281,7 +283,7 @@ Screenshot: [paste one if you can]`}</Pre>
         <p className="mb-4">
           Think about who&rsquo;s missing. Search the map first (the search bar
           on{' '}
-          <ExtLink href="https://mapping-ai.org/map.html">map.html</ExtLink>
+          <ExtLink href="https://mapping-ai.org/map">map.html</ExtLink>
           {' '}works well for this) to make sure the person or org isn&rsquo;t
           already there. Some categories that could use more coverage:
         </p>
@@ -315,11 +317,33 @@ Screenshot: [paste one if you can]`}</Pre>
         <H4>How to submit</H4>
 
         <p className="mb-4">
-          Go to{' '}
-          <ExtLink href="https://mapping-ai.org/contribute.html">
-            mapping-ai.org/contribute.html
+          There are two options:
+        </p>
+
+        <p className="mb-4">
+          <strong>Option 1: Direct to staging database (recommended for workshop)</strong>
+          <br />
+          You&rsquo;ll receive a <Code>.env</Code> file with credentials for the
+          staging database, which lets you read and write directly via SQL. This
+          is a complete copy of production data that you can freely modify
+          without affecting the live site. See{' '}
+          <Code>workshop/DATABASE-ORIENTATION.md</Code> for the full schema
+          reference, example queries, and quality guidelines.
+        </p>
+
+        <p className="mb-4">
+          <strong>Option 2: Live contribute form</strong>
+          <br />
+          Go directly to{' '}
+          <ExtLink href="https://mapping-ai.org/contribute">
+            mapping-ai.org/contribute
           </ExtLink>{' '}
-          and fill out the form. A few things to keep in mind:
+          and submit there. Entries go into the production database and will
+          appear on the live map after admin approval.
+        </p>
+
+        <p className="mb-4">
+          A few things worth knowing about the form:
         </p>
 
         <p className="mb-4">
@@ -351,26 +375,45 @@ Screenshot: [paste one if you can]`}</Pre>
         </p>
 
         <Callout>
-          <strong>Name:</strong> Elizabeth Kelly
+          <strong>Name:</strong> Chuck Schumer
           <br />
-          <strong>Title:</strong> Head of Beneficial Deployments, Anthropic
+          <strong>Title:</strong> U.S. Senator, NY; Senate Majority Leader
+          (2021-2025), Senate Minority Leader (2017-2021, 2025-present)
           <br />
           <strong>Category:</strong> Policymaker
           <br />
-          <strong>Primary Org:</strong> Anthropic
+          <strong>Primary Org:</strong> United States Senate
           <br />
-          <strong>Notes:</strong> Elizabeth Kelly served as the inaugural Director
-          of the U.S. AI Safety Institute at NIST from February 2024 to February
-          2025, appointed by Commerce Secretary Gina Raimondo to lead the
-          government&rsquo;s effort to measure and mitigate risks from advanced
-          AI systems. She was a key drafter of President Biden&rsquo;s Executive
-          Order on AI. Under her leadership, the AISI reached agreements with
-          OpenAI and Anthropic to test their models prior to release and helped
-          establish the international network of AI safety institutes. She
-          departed the AISI in February 2025 after the Trump administration
-          rescinded Biden&rsquo;s AI executive order.
+          <strong>Other Orgs:</strong> Bipartisan Senate AI Working Group
+          (Co-founder/Leader), Senate Finance Committee, Senate Rules Committee
+          <br />
+          <strong>Location:</strong> New York, NY
+          <br />
+          <strong>Twitter:</strong> @SenSchumer
+          <br />
+          <strong>Notes:</strong> Chuck Schumer is a Democratic U.S. Senator from
+          New York who has served since 1999 and is currently Senate Majority
+          Leader. He led a bipartisan working group that released a 31-page AI
+          policy roadmap in May 2024, recommending at least $32 billion in
+          government spending to accelerate AI research and development. The
+          roadmap was developed after months of AI Insight Forums with tech
+          companies, civil rights leaders, and other stakeholders. Schumer has
+          described regulating artificial intelligence as &ldquo;a challenge for
+          Congress unlike any other&rdquo; and has made election protection from
+          AI interference a high priority.
           <br />
           <strong>Regulatory stance:</strong> Moderate
+          <br />
+          <strong>Stance detail:</strong> Advocates for &lsquo;Safe Innovation
+          Framework&rsquo; emphasizing innovation as &lsquo;North Star&rsquo;
+          while establishing necessary guardrails.
+          <br />
+          <strong>AGI timeline:</strong> 5-10 years
+          <br />
+          <strong>AI risk level:</strong> Serious
+          <br />
+          <strong>Threat models:</strong> Labor displacement, Power concentration,
+          Democratic erosion, Misinformation
         </Callout>
 
         <H4>Quality over quantity</H4>
@@ -401,56 +444,62 @@ Screenshot: [paste one if you can]`}</Pre>
 
         <H4>Known issues to look for</H4>
 
+        <ul className="mb-4 pl-6">
+          <li className="mb-[0.35rem]">
+            <strong>Hallucinated facts.</strong> The AI-generated notes sometimes
+            include claims that sound very specific and plausible but are just
+            wrong. Suspiciously precise founding dates, round dollar amounts,
+            inflated competition results, awards that don&rsquo;t exist. If
+            something sounds weirdly specific, it&rsquo;s worth a quick check.
+          </li>
+          <li className="mb-[0.35rem]">
+            <strong>Stale information.</strong> Some entries list people at
+            organizations they&rsquo;ve since left. Government officials who
+            changed roles after the 2025 transition come up a lot.
+          </li>
+          <li className="mb-[0.35rem]">
+            <strong>Wrong org affiliations.</strong> Primary org set to a
+            completely different entity with a similar-sounding name. These are
+            especially bad because they create false connections on the map.
+          </li>
+          <li className="mb-[0.35rem]">
+            <strong>Edges missing evidence.</strong> About 30% of relationships
+            have no supporting evidence. If a relationship seems questionable,
+            check whether there&rsquo;s evidence for it.
+          </li>
+          <li className="mb-[0.35rem]">
+            <strong>Thin or missing context.</strong> Notes that are technically
+            accurate but don&rsquo;t explain why someone matters to AI policy.
+            &ldquo;John Smith is the CEO of Acme Corp&rdquo; is less useful than
+            explaining what Acme Corp does and why it&rsquo;s relevant.
+          </li>
+        </ul>
+
+        <H4>How to fix issues</H4>
+
         <p className="mb-4">
-          <strong>Citation artifacts.</strong> About 316 entities have leftover{' '}
-          <Code>[1]</Code>, <Code>[6,7]</Code> style references in their notes
-          from the AI enrichment pipeline. These need to be flagged or cleaned.
+          When you find something wrong, fix it directly:
         </p>
 
-        <p className="mb-4">
-          <strong>Hallucinated facts.</strong> AI-generated notes sometimes
-          include plausible-sounding claims that are wrong. Hyper-specific
-          founding dates, round dollar amounts, inflated competition results,
-          invented awards. If a claim sounds surprisingly specific, verify it.
-          One example we already found: an entity&rsquo;s notes claimed someone
-          was a &ldquo;six-time finalist of the International Olympiad in
-          Informatics&rdquo; when the official IOI records show they competed
-          exactly once.
-        </p>
+        <ul className="mb-4 pl-6">
+          <li className="mb-[0.35rem]">
+            <strong>Option 1: Staging database.</strong> Use the <Code>.env</Code>{' '}
+            file credentials to connect to the staging DB and run UPDATE queries.
+            See <Code>workshop/DATABASE-ORIENTATION.md</Code> for examples.
+          </li>
+          <li className="mb-[0.35rem]">
+            <strong>Option 2: Contribute form.</strong> Go to{' '}
+            <ExtLink href="https://mapping-ai.org/contribute">
+              mapping-ai.org/contribute
+            </ExtLink>{' '}
+            and submit a correction. This goes into the production review queue.
+          </li>
+        </ul>
 
         <p className="mb-4">
-          <strong>Stale information.</strong> Some entries list people at
-          organizations they&rsquo;ve since left. Government officials who
-          changed roles after the 2025 transition are a common case.
-        </p>
-
-        <p className="mb-4">
-          <strong>Wrong organizational affiliations.</strong> At least one entry
-          had its primary organization set to a completely different entity with
-          a similar-sounding name (an AI safety research org got confused with a
-          university policy center). These are especially damaging because they
-          create false connections on the map.
-        </p>
-
-        <H4>How to work</H4>
-
-        <p className="mb-4">
-          Browse entities on{' '}
-          <ExtLink href="https://mapping-ai.org/map.html">the map</ExtLink>.
-          Click on nodes to read their detail panels. When you find something
-          that looks wrong, document it in a shared spreadsheet:
-        </p>
-
-        <Pre>{`Entity name: [who/what]
-Problem: [what's wrong]
-Evidence: [how you know it's wrong, with a source link]
-Suggested fix: [what it should say instead]`}</Pre>
-
-        <p className="mb-4">
-          Spend your first few minutes on well-known figures whose facts you can
-          check from memory. Then move to less-familiar entities where
-          you&rsquo;ll need to do some quick googling. The goal is breadth:
-          finding patterns of errors is more useful than perfecting one entry.
+          Start with well-known figures whose facts you can check from memory.
+          Then move to less-familiar entities where you&rsquo;ll need to do some
+          quick googling.
         </p>
 
         <Divider />
@@ -460,25 +509,24 @@ Suggested fix: [what it should say instead]`}</Pre>
         <StreamTag>Best for: developers who want to write code</StreamTag>
 
         <p className="mb-4">
-          The codebase is a static site with a D3.js map, a set of AWS Lambda
-          API functions, and a PostgreSQL database. There&rsquo;s no framework on
-          the frontend. If you can write HTML, CSS, JavaScript, or Node.js, you
-          can contribute.
+          It&rsquo;s a React + Vite site with a D3.js map, AWS Lambda functions
+          for the API, and a PostgreSQL database. If you can write TypeScript,
+          React, CSS, or Node.js, you can contribute.
         </p>
 
         <H4>Getting set up</H4>
 
-        <p className="mb-4">Clone the repo and start the dev server:</p>
+        <p className="mb-4">Clone the repo and start a local server:</p>
 
-        <Pre>{`git clone https://github.com/sophiajwang/mapping-ai.git
+        <Pre>{`git clone https://github.com/MappingAI/mapping-ai.git
 cd mapping-ai
 npm install
-node dev-server.js    # runs on localhost:3000 with API proxy`}</Pre>
+npx serve .    # runs on localhost:3000`}</Pre>
 
         <p className="mb-4">
-          The dev server is an Express app that serves static files and proxies
-          API requests to the production Lambda endpoints. You don&rsquo;t need
-          AWS credentials or a local database to work on the frontend.
+          This serves static files locally. API calls (form submissions, search)
+          go directly to the production Lambda endpoints, so you don&rsquo;t need
+          AWS credentials or a local database to work on frontend stuff.
         </p>
 
         <p className="mb-4">
@@ -486,6 +534,12 @@ node dev-server.js    # runs on localhost:3000 with API proxy`}</Pre>
           if you&rsquo;re touching the notes editor):
         </p>
         <Pre>npm run build:tiptap</Pre>
+
+        <p className="mb-4">
+          If you&rsquo;re working with the staging database (for data-related
+          features), you&rsquo;ll need the <Code>.env</Code> file — see{' '}
+          <Code>workshop/DATABASE-ORIENTATION.md</Code>.
+        </p>
 
         <H4>Project structure</H4>
 
@@ -506,16 +560,20 @@ node dev-server.js    # runs on localhost:3000 with API proxy`}</Pre>
             {(
               [
                 [
-                  'map.html',
-                  'The interactive D3.js map. All the visualization logic is inline in a giant script block. The map loads data from map-data.json, a static file generated from the database.',
+                  'src/map/',
+                  'The D3.js map components. Loads map-data.json, a static file generated from the database.',
                 ],
                 [
-                  'contribute.html',
-                  'The submission forms. Custom dropdowns, tag inputs, org search, location search, TipTap rich text editor, autosave to localStorage.',
+                  'src/contribute/',
+                  'The submission forms. Custom dropdowns, tag inputs, org search, location search, TipTap rich text editor, autosave.',
                 ],
                 [
-                  'admin.html',
+                  'src/admin/',
                   'Admin panel for reviewing submissions, editing entities, managing the approval queue.',
+                ],
+                [
+                  'src/components/',
+                  'Shared React components: CustomSelect, TagInput, TipTapEditor, Navigation, etc.',
                 ],
                 [
                   'api/*.js',
@@ -580,13 +638,12 @@ node dev-server.js    # runs on localhost:3000 with API proxy`}</Pre>
         </p>
 
         <p className="mb-4">
-          Before starting, check the{' '}
-          <ExtLink href="https://github.com/sophiajwang/mapping-ai/issues">
-            GitHub issues
+          Before starting on something, check the{' '}
+          <ExtLink href="https://discord.com/events/1491894381773590609/1494729391509340281">
+            Discord
           </ExtLink>{' '}
-          to see if someone&rsquo;s already working on what you have in mind.
-          When you&rsquo;re done, open a pull request against{' '}
-          <Code>main</Code>.
+          to see what others are working on and post what you&rsquo;re tackling.
+          When you&rsquo;re done, open a pull request against <Code>main</Code>.
         </p>
 
         <H4>Conventions</H4>
@@ -664,10 +721,12 @@ node dev-server.js    # runs on localhost:3000 with API proxy`}</Pre>
         <H4>Deliverable</H4>
 
         <p className="mb-4">
-          By the end of the session, write up a short strategy document: target
-          audiences (ranked by priority), 10-20 specific distribution channels
-          with links, a draft one-line pitch, and any partnership leads you
-          identified. A Google Doc is fine.
+          By the end of the session, write up your ideas in{' '}
+          <ExtLink href="https://docs.google.com/document/d/1WNVM22lGeCOcZHvi5KwF9Yn9be6T6V7xbsocL0SQsLQ/edit?usp=sharing">
+            this shared doc
+          </ExtLink>
+          . This could include target audiences, distribution channels, pitch
+          ideas, partnership leads, content angles — whatever feels most useful.
         </p>
 
         <Divider />
@@ -688,24 +747,31 @@ node dev-server.js    # runs on localhost:3000 with API proxy`}</Pre>
           drafts we could publish.
         </p>
 
+        <p className="mb-4">
+          See{' '}
+          <ExtLink href="https://mapping-ai.org/insights">
+            mapping-ai.org/insights
+          </ExtLink>{' '}
+          for examples of what this could look like.
+        </p>
+
         <H4>Getting the data</H4>
 
         <p className="mb-4">
-          The public map data is available as a single JSON file:
+          The full dataset is available as a single JSON file:
         </p>
-        <Pre>https://mapping-ai.org/map-data.json</Pre>
+        <Pre>https://mapping-ai.org/map-full.json</Pre>
 
         <p className="mb-4">
-          This contains all approved entities with their fields mapped to
-          frontend names. You can fetch it directly and work with it in whatever
-          tool you prefer: Python (pandas, matplotlib, seaborn), R, Observable
-          notebooks, even just Excel if that&rsquo;s your thing.
+          This includes all entities (people, organizations, resources), their
+          relationships, scores, notes, and metadata. You can fetch and work
+          with it in whatever you prefer: Python (pandas, matplotlib, seaborn),
+          R, Observable notebooks, Excel.
         </p>
 
         <p className="mb-4">
-          The raw database export (with all 1,604 entities and 2,228 edges,
-          including pending/internal ones) is available from the organizers. Ask
-          if you want it.
+          We also have the full database export (including pending and internal
+          entities) if you want it. Just ask.
         </p>
 
         <H4>Research questions worth exploring</H4>
@@ -757,12 +823,23 @@ node dev-server.js    # runs on localhost:3000 with API proxy`}</Pre>
         <H4>Output format</H4>
 
         <p className="mb-4">
-          Whatever you produce, aim for something we could turn into a blog
-          post. That means: a clear finding stated in one sentence, a
-          visualization that supports it, and 2-3 paragraphs of context. You
-          don&rsquo;t need to polish it. A Jupyter notebook or Observable
-          notebook with rough charts and annotations is plenty. We&rsquo;ll
-          clean it up for publication.
+          Ideally, aim for something we could turn into a blog post or Substack
+          piece. A clear finding in one sentence, a visualization that backs it
+          up, and a couple paragraphs of context. It doesn&rsquo;t need to be
+          polished. A Jupyter notebook or Observable notebook with rough charts
+          and some annotations is plenty. We&rsquo;ll clean it up later.
+        </p>
+
+        <p className="mb-4">
+          Post your research questions and findings in the{' '}
+          <ExtLink href="https://discord.com/events/1491894381773590609/1494729391509340281">
+            Discord
+          </ExtLink>{' '}
+          forum channel to discuss with others, or log them in{' '}
+          <ExtLink href="https://docs.google.com/document/d/1dl8B8SWOs5ucmzUpuC7EukPpgncxLZxeil2edVkFleI/edit?usp=sharing">
+            this shared doc
+          </ExtLink>
+          .
         </p>
 
         <Divider />
@@ -786,18 +863,23 @@ node dev-server.js    # runs on localhost:3000 with API proxy`}</Pre>
               ['Live site', 'https://mapping-ai.org', 'mapping-ai.org'],
               [
                 'Interactive map',
-                'https://mapping-ai.org/map.html',
-                'mapping-ai.org/map.html',
+                'https://mapping-ai.org/map',
+                'mapping-ai.org/map',
+              ],
+              [
+                'Insights page',
+                'https://mapping-ai.org/insights',
+                'mapping-ai.org/insights',
               ],
               [
                 'Contribute form',
-                'https://mapping-ai.org/contribute.html',
-                'mapping-ai.org/contribute.html',
+                'https://mapping-ai.org/contribute',
+                'mapping-ai.org/contribute',
               ],
               [
                 'GitHub repo',
-                'https://github.com/sophiajwang/mapping-ai',
-                'github.com/sophiajwang/mapping-ai',
+                'https://github.com/MappingAI/mapping-ai',
+                'github.com/MappingAI/mapping-ai',
               ],
               [
                 'Map data (JSON)',
@@ -805,9 +887,9 @@ node dev-server.js    # runs on localhost:3000 with API proxy`}</Pre>
                 'mapping-ai.org/map-data.json',
               ],
               [
-                'File bugs',
-                'https://github.com/sophiajwang/mapping-ai/issues',
-                'GitHub Issues',
+                'File bugs / Coordinate',
+                'https://discord.com/events/1491894381773590609/1494729391509340281',
+                'Discord',
               ],
             ].map(([label, href, text], i) => (
               <tr key={i}>
