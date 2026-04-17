@@ -36,10 +36,10 @@ Every PR to `main` must include:
 
 ### 1. Local browser verification
 
-Before creating the PR, load these pages locally and confirm they work:
+Before creating the PR, load the app locally and confirm it works:
 
 ```bash
-npx serve .   # or: node dev-server.js
+npm run dev   # Vite dev server on http://localhost:5173
 ```
 
 | Page | What to check |
@@ -70,13 +70,42 @@ npx serve .   # or: node dev-server.js
 
 ### 3. CI checks pass
 
-The GitHub Actions workflow runs on push to main. It must pass before the deploy reaches production. Current checks:
+Two GitHub Actions workflows run over the PR lifecycle:
+
+**`.github/workflows/ci.yml`** — runs on every PR. Every check below must be green before merge:
+
+| Check | What it runs |
+|-------|--------------|
+| Prettier format-check | `npm run format:check` |
+| ESLint | `npm run lint` |
+| TypeScript type-check | `npm run type-check` |
+| Vitest | `npm test` |
+| Vite build | `npm run build` |
+| SAM template validate | `sam validate --lint` |
+
+These are the **required status checks** on `main` — see the Branch Protection section below.
+
+**`.github/workflows/deploy.yml`** — runs only on `push` to `main`. Performs:
 - `npm ci` succeeds
-- `npm run build:tiptap` succeeds
 - DB schema smoke test passes
-- `node scripts/export-map-data.js` generates valid map-data.json + map-detail.json
+- `node scripts/export-map-data.js` generates valid `map-data.json` + `map-detail.json`
 - S3 sync succeeds
 - CloudFront invalidation succeeds
+
+## Branch Protection
+
+`main` is protected. To enforce the CI gate, the maintainer configures these settings in GitHub → Settings → Branches → Branch protection rule for `main`:
+
+- ✅ Require a pull request before merging
+- ✅ Require status checks to pass before merging → select:
+  - `Lint, type-check, test, build`
+  - `SAM template validate`
+- ✅ Require branches to be up to date before merging
+- ✅ Do not allow bypassing the above settings (include administrators)
+- ✅ Restrict pushes that create matching branches
+- ❌ Allow force pushes (leave off)
+
+**Hotfix exception:** P0 site-down incidents may push directly to `main` with the branch protection temporarily disabled by the admin. Re-enable protection immediately afterward and file a PR for the record.
 
 ### 4. Review
 
@@ -98,14 +127,38 @@ git push origin main
 
 **What does NOT get deployed:** `api/`, `scripts/`, `template.yaml`, `node_modules/`, `.github/`
 
-### Backend (manual)
+### Backend (manual — dry-run discipline required)
+
+The 2026-04-16 CloudFront outage ([post-mortem](solutions/integration-issues/sam-deploy-overwrites-manual-cloudfront-config-2026-04-16.md)) established that every `sam deploy` must be preceded by a changeset review. **Do not run `sam deploy` without passing through these steps:**
 
 ```bash
-sam build && sam deploy --parameter-overrides \
+# 1. Drift scan — confirm the deployed stack still matches template.yaml.
+#    If anything has drifted (someone Console-edited a setting), codify the
+#    drift into template.yaml in a separate commit before deploying here.
+aws cloudformation detect-stack-drift --stack-name mapping-ai
+# Wait for completion:
+aws cloudformation describe-stack-drift-detection-status \
+  --stack-drift-detection-id <id-from-above>
+aws cloudformation describe-stack-resource-drifts \
+  --stack-name mapping-ai \
+  --stack-resource-drift-status-filters MODIFIED DELETED
+
+# 2. Dry run — build and generate a changeset without applying it.
+sam build
+sam deploy --no-execute-changeset --parameter-overrides \
   DatabaseUrl=$DATABASE_URL \
   AdminKey=$ADMIN_KEY \
   AnthropicApiKey=$ANTHROPIC_API_KEY
+
+# 3. Read the changeset in the CloudFormation console or via:
+aws cloudformation describe-change-set --change-set-name <arn-from-above>
+
+# 4. Only if the changeset is scoped as expected (no surprise CloudFront,
+#    IAM, or API Gateway changes), execute it:
+aws cloudformation execute-change-set --change-set-name <arn>
 ```
+
+Why not just `sam deploy` directly: SAM reconciles the *entire* stack on every deploy. A small template edit can trigger corrections to any resource that has drifted from the template — exactly how the 4/16 incident destroyed CloudFront's custom domain and URL-rewrite function. The dry-run makes the blast radius visible before it hits prod.
 
 **What gets deployed:** Lambda functions (api/*.js), API Gateway config (routes, throttle, CORS), CloudFront settings (security headers, cache policy)
 
@@ -149,7 +202,13 @@ sam build && sam deploy
 
 ## Pre-Push Checklist
 
-Copy this into your PR or run through it mentally before merging:
+The CI gate runs these automatically, but a pre-push local run catches most failures before you wait on CI:
+
+```bash
+npm run format:check && npm run lint && npm run type-check && npm test && npm run build
+```
+
+Plus the deploy-specific checks:
 
 ```
 [ ] Local browser test: map.html renders with data
@@ -157,9 +216,8 @@ Copy this into your PR or run through it mentally before merging:
 [ ] No console errors on affected pages
 [ ] If script tags changed: verified in browser (not just grep)
 [ ] If export pipeline changed: ran export-map-data.js locally
-[ ] If backend changed: noted that sam deploy is needed
+[ ] If backend changed: noted that sam deploy is needed (+ drift-scan + dry-run)
 [ ] PR has summary and risk assessment
-[ ] CI passes on the branch
 ```
 
 ## Known Risks by File
@@ -173,6 +231,8 @@ Copy this into your PR or run through it mentally before merging:
 | `api/admin.js` | **P1** — admin can't approve/reject | Test with admin key |
 | `template.yaml` | **P1** — API Gateway misconfigured | `sam validate` before deploy |
 | `.github/workflows/deploy.yml` | **P0** — deploy pipeline breaks | Review carefully, test on branch if possible |
+| `.github/workflows/ci.yml` | **P1** — gate misconfigured (false passes or false blocks) | Dry-run on a scratch PR; confirm all jobs still required in branch protection |
+| `eslint.config.js`, `.prettierrc.json` | **P2** — false lint/format signals waste reviewer time | Run `npm run lint` + `npm run format:check` locally before committing |
 
 ## Incident Response
 

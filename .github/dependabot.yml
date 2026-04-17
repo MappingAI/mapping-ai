@@ -1,0 +1,45 @@
+# Dependabot — weekly grouped dependency updates.
+#
+# Grouping rules balance noise against review cost: patch + minor bumps land
+# as batched PRs by scope so the maintainer sees one PR per ecosystem per
+# week instead of N PRs per week. Major bumps stay individual — the
+# breaking-change review is worth doing in isolation.
+#
+# Every PR Dependabot opens goes through the same CI gate as human PRs, so
+# we never auto-merge here — the maintainer reviews and merges manually.
+
+version: 2
+updates:
+  # npm deps (root package.json)
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '08:00'
+      timezone: America/Los_Angeles
+    open-pull-requests-limit: 5
+    labels: [dependencies, npm]
+    groups:
+      dev-dependencies-minor:
+        dependency-type: development
+        update-types: [patch, minor]
+      production-dependencies-minor:
+        dependency-type: production
+        update-types: [patch, minor]
+    ignore:
+      # Major bumps come through individually (no group override).
+
+  # GitHub Actions
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '08:00'
+      timezone: America/Los_Angeles
+    open-pull-requests-limit: 3
+    labels: [dependencies, github-actions]
+    groups:
+      actions-minor:
+        update-types: [patch, minor]

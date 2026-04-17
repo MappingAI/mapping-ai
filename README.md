@@ -36,7 +36,16 @@ Maintained by a working group of researchers, policy experts, and practitioners.
 
 ## For Developers
 
-See [TECH.md](TECH.md) for architecture, local setup, deployment instructions, and API reference.
+```bash
+git clone https://github.com/MappingAI/mapping-ai.git
+cd mapping-ai
+nvm use               # Node 20
+npm install
+npx lefthook install  # one-time: wires up pre-commit hook
+npm run dev           # Vite dev server on http://localhost:5173
+```
+
+The full contributor guide — local commands, CI expectations, pre-commit hook, coding conventions — is in [CONTRIBUTING.md](CONTRIBUTING.md). Architecture, data model, and deployment live in [TECH.md](TECH.md), [ONBOARDING.md](ONBOARDING.md), and [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
 
 ---
 
