@@ -54,11 +54,7 @@ export const DUPLICATE_GROUPS = [
     'Machine Intelligence Research Institute',
   ],
   // ARC
-  [
-    'Alignment Research Center (ARC)',
-    'Alignment Research Center',
-    'ARC',
-  ],
+  ['Alignment Research Center (ARC)', 'Alignment Research Center', 'ARC'],
   // CSET
   [
     'Center for Security and Emerging Technology (CSET)',
@@ -67,11 +63,7 @@ export const DUPLICATE_GROUPS = [
     'CSET',
   ],
   // GovAI
-  [
-    'Centre for the Governance of AI (GovAI)',
-    'Centre for the Governance of AI',
-    'GovAI',
-  ],
+  ['Centre for the Governance of AI (GovAI)', 'Centre for the Governance of AI', 'GovAI'],
   // FHI
   [
     'Future of Humanity Institute (closed 2024)',
@@ -81,11 +73,7 @@ export const DUPLICATE_GROUPS = [
     'FHI',
   ],
   // CAIS
-  [
-    'Center for AI Safety (CAIS)',
-    'Center for AI Safety',
-    'CAIS',
-  ],
+  ['Center for AI Safety (CAIS)', 'Center for AI Safety', 'CAIS'],
   // Stanford HAI
   [
     'Stanford HAI',
@@ -101,51 +89,17 @@ export const DUPLICATE_GROUPS = [
     'Brookings',
   ],
   // a16z
-  [
-    'Andreessen Horowitz (a16z)',
-    'a16z',
-    'a16z (Andreessen Horowitz)',
-    'Andreessen Horowitz',
-  ],
+  ['Andreessen Horowitz (a16z)', 'a16z', 'a16z (Andreessen Horowitz)', 'Andreessen Horowitz'],
   // Stanford RegLab
-  [
-    'Stanford RegLab',
-    'Stanford RegLab (Regulation, Evaluation, and Governance Lab)',
-    'RegLab',
-  ],
+  ['Stanford RegLab', 'Stanford RegLab (Regulation, Evaluation, and Governance Lab)', 'RegLab'],
   // Big Tech
-  [
-    'Google DeepMind',
-    'DeepMind',
-    'Google DeepMind (formerly DeepMind)',
-  ],
-  [
-    'Meta',
-    'Facebook',
-    'Facebook Inc',
-    'Meta Platforms',
-  ],
-  [
-    'OpenAI',
-    'Open AI',
-  ],
+  ['Google DeepMind', 'DeepMind', 'Google DeepMind (formerly DeepMind)'],
+  ['Meta', 'Facebook', 'Facebook Inc', 'Meta Platforms'],
+  ['OpenAI', 'Open AI'],
   // Media
-  [
-    'The New York Times',
-    'New York Times',
-    'NYT',
-    'NY Times',
-  ],
-  [
-    'The Washington Post',
-    'Washington Post',
-    'WaPo',
-  ],
-  [
-    'Financial Times',
-    'The Financial Times',
-    'FT',
-  ],
+  ['The New York Times', 'New York Times', 'NYT', 'NY Times'],
+  ['The Washington Post', 'Washington Post', 'WaPo'],
+  ['Financial Times', 'The Financial Times', 'FT'],
   // Universities
   [
     'UC Berkeley',
@@ -154,28 +108,12 @@ export const DUPLICATE_GROUPS = [
     'Berkeley',
     'Cal',
   ],
-  [
-    'MIT',
-    'Massachusetts Institute of Technology',
-  ],
-  [
-    'Stanford University',
-    'Stanford',
-  ],
-  [
-    'Harvard University',
-    'Harvard',
-  ],
-  [
-    'Princeton University',
-    'Princeton',
-  ],
-  [
-    'Carnegie Mellon University',
-    'CMU',
-    'Carnegie Mellon',
-  ],
-];
+  ['MIT', 'Massachusetts Institute of Technology'],
+  ['Stanford University', 'Stanford'],
+  ['Harvard University', 'Harvard'],
+  ['Princeton University', 'Princeton'],
+  ['Carnegie Mellon University', 'CMU', 'Carnegie Mellon'],
+]
 
 // Hierarchy patterns: parent org and regex pattern for children
 export const HIERARCHY_PATTERNS = [
@@ -239,14 +177,14 @@ export const HIERARCHY_PATTERNS = [
     childPattern: /^Anthropic /i,
     exclude: ['Anthropic'],
   },
-];
+]
 
 // Build canonical name lookup from duplicate groups
-const canonicalLookup = new Map();
+const canonicalLookup = new Map()
 for (const group of DUPLICATE_GROUPS) {
-  const canonical = group[0];
+  const canonical = group[0]
   for (const variant of group) {
-    canonicalLookup.set(variant.toLowerCase(), canonical);
+    canonicalLookup.set(variant.toLowerCase(), canonical)
   }
 }
 
@@ -254,7 +192,7 @@ for (const group of DUPLICATE_GROUPS) {
  * Normalize an organization name for matching
  */
 export function normalizeOrgName(name) {
-  if (!name) return '';
+  if (!name) return ''
   return name
     .toLowerCase()
     .replace(/^the /, '')
@@ -265,15 +203,15 @@ export function normalizeOrgName(name) {
     .replace(/ plc\.?$/i, '')
     .replace(/[''`]/g, "'")
     .replace(/\s+/g, ' ')
-    .trim();
+    .trim()
 }
 
 /**
  * Get canonical name for an org (if it's a known alias)
  */
 export function getCanonicalOrgName(name) {
-  const normalized = normalizeOrgName(name);
-  return canonicalLookup.get(normalized) || null;
+  const normalized = normalizeOrgName(name)
+  return canonicalLookup.get(normalized) || null
 }
 
 /**
@@ -281,49 +219,49 @@ export function getCanonicalOrgName(name) {
  * Returns { entity, matchType } or null
  */
 export function findEntityMatch(targetName, allEntities) {
-  const targetNorm = normalizeOrgName(targetName);
-  const targetCanonical = getCanonicalOrgName(targetName);
+  const targetNorm = normalizeOrgName(targetName)
+  const targetCanonical = getCanonicalOrgName(targetName)
 
   // 1. Exact match on normalized name
-  let match = allEntities.find(e => normalizeOrgName(e.name) === targetNorm);
-  if (match) return { entity: match, matchType: 'exact' };
+  let match = allEntities.find((e) => normalizeOrgName(e.name) === targetNorm)
+  if (match) return { entity: match, matchType: 'exact' }
 
   // 2. Canonical alias match
   if (targetCanonical) {
-    match = allEntities.find(e => e.name === targetCanonical);
-    if (match) return { entity: match, matchType: 'canonical' };
+    match = allEntities.find((e) => e.name === targetCanonical)
+    if (match) return { entity: match, matchType: 'canonical' }
 
     // Also check if entity's canonical matches
-    match = allEntities.find(e => getCanonicalOrgName(e.name) === targetCanonical);
-    if (match) return { entity: match, matchType: 'alias' };
+    match = allEntities.find((e) => getCanonicalOrgName(e.name) === targetCanonical)
+    if (match) return { entity: match, matchType: 'alias' }
   }
 
   // 3. Substring match (careful with length threshold)
-  match = allEntities.find(e => {
-    const eNorm = normalizeOrgName(e.name);
+  match = allEntities.find((e) => {
+    const eNorm = normalizeOrgName(e.name)
     return (
       (targetNorm.includes(eNorm) && eNorm.length > 4) ||
       (eNorm.includes(targetNorm) && targetNorm.length > 4)
-    );
-  });
-  if (match) return { entity: match, matchType: 'substring' };
+    )
+  })
+  if (match) return { entity: match, matchType: 'substring' }
 
   // 4. Parenthetical acronym match: "Facebook AI Research (FAIR)" should match "FAIR"
-  const parenMatch = targetName.match(/\(([^)]+)\)$/);
+  const parenMatch = targetName.match(/\(([^)]+)\)$/)
   if (parenMatch) {
-    const acronym = parenMatch[1].toLowerCase();
-    match = allEntities.find(e => normalizeOrgName(e.name) === acronym);
-    if (match) return { entity: match, matchType: 'acronym' };
+    const acronym = parenMatch[1].toLowerCase()
+    match = allEntities.find((e) => normalizeOrgName(e.name) === acronym)
+    if (match) return { entity: match, matchType: 'acronym' }
   }
 
   // Check if any entity has this as acronym
-  match = allEntities.find(e => {
-    const eParenMatch = e.name.match(/\(([^)]+)\)$/);
-    return eParenMatch && eParenMatch[1].toLowerCase() === targetNorm;
-  });
-  if (match) return { entity: match, matchType: 'acronym_reverse' };
+  match = allEntities.find((e) => {
+    const eParenMatch = e.name.match(/\(([^)]+)\)$/)
+    return eParenMatch && eParenMatch[1].toLowerCase() === targetNorm
+  })
+  if (match) return { entity: match, matchType: 'acronym_reverse' }
 
-  return null;
+  return null
 }
 
 /**
@@ -333,10 +271,10 @@ export function findEntityMatch(targetName, allEntities) {
 export function getParentOrgName(orgName) {
   for (const h of HIERARCHY_PATTERNS) {
     if (h.childPattern.test(orgName) && !h.exclude.includes(orgName)) {
-      return h.parentName;
+      return h.parentName
     }
   }
-  return null;
+  return null
 }
 
 /**
@@ -345,17 +283,21 @@ export function getParentOrgName(orgName) {
  */
 export function isProbablyPerson(name) {
   // Likely org patterns
-  if (/\b(Inc|LLC|Corp|Ltd|Foundation|Institute|University|Lab|Center|Committee|Agency|Department|Office|Council|Association|Organization|Company|Group|Fund|Project|Initiative)\b/i.test(name)) {
-    return false;
+  if (
+    /\b(Inc|LLC|Corp|Ltd|Foundation|Institute|University|Lab|Center|Committee|Agency|Department|Office|Council|Association|Organization|Company|Group|Fund|Project|Initiative)\b/i.test(
+      name,
+    )
+  ) {
+    return false
   }
 
   // Likely person patterns (2-3 words, no org keywords)
-  const words = name.trim().split(/\s+/);
+  const words = name.trim().split(/\s+/)
   if (words.length >= 2 && words.length <= 4) {
     // Check if it looks like a name (capitalized words, no weird characters)
-    const looksLikeName = words.every(w => /^[A-Z][a-z]+$/.test(w) || /^[A-Z]\.?$/.test(w));
-    if (looksLikeName) return true;
+    const looksLikeName = words.every((w) => /^[A-Z][a-z]+$/.test(w) || /^[A-Z]\.?$/.test(w))
+    if (looksLikeName) return true
   }
 
-  return false;
+  return false
 }

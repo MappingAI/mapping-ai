@@ -9,15 +9,30 @@ import { fuzzySearch } from '../lib/search'
 import type { SubmitRequest } from '../types/api'
 
 const ORG_CATEGORIES = [
-  'Frontier Lab', 'AI Safety/Alignment', 'Think Tank/Policy Org',
-  'Government/Agency', 'Academic', 'VC/Capital/Philanthropy',
-  'Labor/Civil Society', 'Ethics/Bias/Rights', 'Media/Journalism',
-  'Political Campaign/PAC', 'AI Infrastructure & Compute', 'Deployers & Platforms',
+  'Frontier Lab',
+  'AI Safety/Alignment',
+  'Think Tank/Policy Org',
+  'Government/Agency',
+  'Academic',
+  'VC/Capital/Philanthropy',
+  'Labor/Civil Society',
+  'Ethics/Bias/Rights',
+  'Media/Journalism',
+  'Political Campaign/PAC',
+  'AI Infrastructure & Compute',
+  'Deployers & Platforms',
 ]
 
 const STANCE_OPTIONS = [
-  'Accelerate', 'Light-touch', 'Targeted', 'Moderate',
-  'Restrictive', 'Precautionary', 'Nationalize', 'Mixed/unclear', 'Other',
+  'Accelerate',
+  'Light-touch',
+  'Targeted',
+  'Moderate',
+  'Restrictive',
+  'Precautionary',
+  'Nationalize',
+  'Mixed/unclear',
+  'Other',
 ]
 
 interface OrgCreationPanelProps {
@@ -82,7 +97,18 @@ export function OrgCreationPanel({
   // Reset form when panel opens with new name
   useEffect(() => {
     if (isOpen) {
-      reset({ name: initialName, category: '', website: '', location: '', fundingModel: '', regulatoryStance: '', twitter: '', bluesky: '', notesHtml: '', notesMentions: '[]' })
+      reset({
+        name: initialName,
+        category: '',
+        website: '',
+        location: '',
+        fundingModel: '',
+        regulatoryStance: '',
+        twitter: '',
+        bluesky: '',
+        notesHtml: '',
+        notesMentions: '[]',
+      })
       setShowExpanded(false)
       setShowSuccess(false)
     }
@@ -128,11 +154,20 @@ export function OrgCreationPanel({
       try {
         const result = await submitMutation.mutateAsync(request)
         // Optimistically add to entity cache
-        addPendingEntity({ id: result.submissionId, entity_type: 'organization', name: values.name, category: values.category || null })
+        addPendingEntity({
+          id: result.submissionId,
+          entity_type: 'organization',
+          name: values.name,
+          category: values.category || null,
+        })
         // Show success overlay
         setShowSuccess(true)
         setTimeout(() => {
-          onOrgCreated({ id: result.submissionId, name: values.name, category: values.category || null })
+          onOrgCreated({
+            id: result.submissionId,
+            name: values.name,
+            category: values.category || null,
+          })
           onClose()
         }, 1500)
       } catch {
@@ -147,10 +182,7 @@ export function OrgCreationPanel({
   return createPortal(
     <>
       {/* Background overlay */}
-      <div
-        className="fixed inset-0 z-[200] bg-black/20"
-        onClick={onClose}
-      />
+      <div className="fixed inset-0 z-[200] bg-black/20" onClick={onClose} />
 
       {/* Panel */}
       <div
@@ -171,9 +203,7 @@ export function OrgCreationPanel({
 
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-[#eee]">
-          <h2 className="font-mono text-[13px] uppercase tracking-wider">
-            Add New Organization
-          </h2>
+          <h2 className="font-mono text-[13px] uppercase tracking-wider">Add New Organization</h2>
           <button
             type="button"
             onClick={onClose}

@@ -36,11 +36,28 @@ const makeEntity = (overrides: Partial<Entity>): Entity => ({
 })
 
 const testEntities: Entity[] = [
-  makeEntity({ id: 1, name: 'Dario Amodei', entity_type: 'person', title: 'CEO', primary_org: 'Anthropic' }),
-  makeEntity({ id: 2, name: 'Sam Altman', entity_type: 'person', title: 'CEO', primary_org: 'OpenAI' }),
+  makeEntity({
+    id: 1,
+    name: 'Dario Amodei',
+    entity_type: 'person',
+    title: 'CEO',
+    primary_org: 'Anthropic',
+  }),
+  makeEntity({
+    id: 2,
+    name: 'Sam Altman',
+    entity_type: 'person',
+    title: 'CEO',
+    primary_org: 'OpenAI',
+  }),
   makeEntity({ id: 3, name: 'Anthropic', entity_type: 'organization', category: 'Frontier Lab' }),
   makeEntity({ id: 4, name: 'OpenAI', entity_type: 'organization', category: 'Frontier Lab' }),
-  makeEntity({ id: 5, name: 'On the Dangers of Stochastic Parrots', entity_type: 'resource', title: 'Stochastic Parrots' }),
+  makeEntity({
+    id: 5,
+    name: 'On the Dangers of Stochastic Parrots',
+    entity_type: 'resource',
+    title: 'Stochastic Parrots',
+  }),
 ]
 
 describe('fuzzySearch', () => {

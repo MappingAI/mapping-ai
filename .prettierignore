@@ -1,3 +1,9 @@
+# Markdown — Prettier's markdown formatter mangles snake_case identifiers
+# and wildcards in technical prose (e.g., `entity_type` → `entity*type`,
+# `belief_*_wavg` → `belief*\*\_wavg`). Docs in this repo carry a lot of
+# schema references, so we leave markdown to the author's own formatting.
+**/*.md
+
 # Build output
 dist/
 .aws-sam/

@@ -1,11 +1,4 @@
-import {
-  useState,
-  useRef,
-  useEffect,
-  useCallback,
-  type KeyboardEvent,
-  type ReactNode,
-} from 'react'
+import { useState, useRef, useEffect, useCallback, type KeyboardEvent, type ReactNode } from 'react'
 
 export interface Tag {
   id: string | number
@@ -75,18 +68,20 @@ export function TagInput({
     }
 
     clearTimeout(debounceRef.current)
-    debounceRef.current = setTimeout(async () => {
-      setIsSearching(true)
-      try {
-        const res = await searchFn(query)
-        // Filter out already-selected tags
-        const tagIds = new Set(tags.map((t) => t.id))
-        setResults(res.filter((r) => !tagIds.has(r.id)))
-        setIsOpen(true)
-        setActiveIndex(-1)
-      } finally {
-        setIsSearching(false)
-      }
+    debounceRef.current = setTimeout(() => {
+      void (async () => {
+        setIsSearching(true)
+        try {
+          const res = await searchFn(query)
+          // Filter out already-selected tags
+          const tagIds = new Set(tags.map((t) => t.id))
+          setResults(res.filter((r) => !tagIds.has(r.id)))
+          setIsOpen(true)
+          setActiveIndex(-1)
+        } finally {
+          setIsSearching(false)
+        }
+      })()
     }, debounceMs)
 
     return () => clearTimeout(debounceRef.current)

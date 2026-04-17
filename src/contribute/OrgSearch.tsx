@@ -62,8 +62,7 @@ export function OrgSearch({
 
   // Check if there is an exact match (case-insensitive) in results
   const hasExactMatch =
-    value.length >= 1 &&
-    results.some((r) => r.name.toLowerCase() === value.toLowerCase())
+    value.length >= 1 && results.some((r) => r.name.toLowerCase() === value.toLowerCase())
 
   // Total items: results + optional "Add new" trailing option
   const showAddOption = onCreateOrg && value.length >= 1 && !hasExactMatch

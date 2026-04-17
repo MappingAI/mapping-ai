@@ -1,28 +1,28 @@
-import { getCorsHeaders } from './cors.js';
+import { getCorsHeaders } from './cors.js'
 
 // Use dedicated key for semantic search (separate from submission review key)
-const ANTHROPIC_API_KEY = process.env.ANTHROPIC_SEMANTIC_SEARCH_KEY || process.env.ANTHROPIC_API_KEY;
-const MAP_DATA_URL = 'https://mapping-ai.org/map-data.json';
-const LLM_TIMEOUT_MS = 15000; // 15 second timeout for Haiku (100K context needs time)
+const ANTHROPIC_API_KEY = process.env.ANTHROPIC_SEMANTIC_SEARCH_KEY || process.env.ANTHROPIC_API_KEY
+const MAP_DATA_URL = 'https://mapping-ai.org/map-data.json'
+const LLM_TIMEOUT_MS = 15000 // 15 second timeout for Haiku (100K context needs time)
 
 // Cache for map data (persists across warm Lambda invocations)
-let cachedMapData = null;
-let cacheTimestamp = 0;
-const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+let cachedMapData = null
+let cacheTimestamp = 0
+const CACHE_TTL = 5 * 60 * 1000 // 5 minutes
 
 async function getMapData() {
-  const now = Date.now();
-  if (cachedMapData && (now - cacheTimestamp) < CACHE_TTL) {
-    return cachedMapData;
+  const now = Date.now()
+  if (cachedMapData && now - cacheTimestamp < CACHE_TTL) {
+    return cachedMapData
   }
 
-  const response = await fetch(MAP_DATA_URL);
+  const response = await fetch(MAP_DATA_URL)
   if (!response.ok) {
-    throw new Error(`Failed to fetch map data: ${response.status}`);
+    throw new Error(`Failed to fetch map data: ${response.status}`)
   }
-  cachedMapData = await response.json();
-  cacheTimestamp = now;
-  return cachedMapData;
+  cachedMapData = await response.json()
+  cacheTimestamp = now
+  return cachedMapData
 }
 
 /**
@@ -30,43 +30,43 @@ async function getMapData() {
  * Uses person_organizations array + organizations to map affiliations.
  */
 function buildPersonSectorsLookup(mapData) {
-  const orgById = new Map();
-  for (const org of (mapData.organizations || [])) {
-    orgById.set(org.id, org);
+  const orgById = new Map()
+  for (const org of mapData.organizations || []) {
+    orgById.set(org.id, org)
   }
 
-  const personSectors = new Map(); // personId → Set<sector>
+  const personSectors = new Map() // personId → Set<sector>
 
   // Process person_organizations affiliations
-  for (const affil of (mapData.person_organizations || [])) {
-    const org = orgById.get(affil.organization_id);
-    if (!org || !org.category) continue;
+  for (const affil of mapData.person_organizations || []) {
+    const org = orgById.get(affil.organization_id)
+    if (!org || !org.category) continue
 
     if (!personSectors.has(affil.person_id)) {
-      personSectors.set(affil.person_id, new Set());
+      personSectors.set(affil.person_id, new Set())
     }
-    personSectors.get(affil.person_id).add(org.category);
+    personSectors.get(affil.person_id).add(org.category)
   }
 
   // Also check primary_org as fallback (match by name)
-  const orgByName = new Map();
-  for (const org of (mapData.organizations || [])) {
-    orgByName.set(org.name?.toLowerCase(), org);
+  const orgByName = new Map()
+  for (const org of mapData.organizations || []) {
+    orgByName.set(org.name?.toLowerCase(), org)
   }
 
-  for (const person of (mapData.people || [])) {
+  for (const person of mapData.people || []) {
     if (person.primary_org) {
-      const org = orgByName.get(person.primary_org.toLowerCase());
+      const org = orgByName.get(person.primary_org.toLowerCase())
       if (org?.category) {
         if (!personSectors.has(person.id)) {
-          personSectors.set(person.id, new Set());
+          personSectors.set(person.id, new Set())
         }
-        personSectors.get(person.id).add(org.category);
+        personSectors.get(person.id).add(org.category)
       }
     }
   }
 
-  return personSectors;
+  return personSectors
 }
 
 /**
@@ -74,61 +74,61 @@ function buildPersonSectorsLookup(mapData) {
  * Returns a string section for the LLM context.
  */
 function buildRelationshipContext(mapData) {
-  const validEdgeTypes = new Set(['funder', 'critic', 'collaborator', 'authored_by']);
-  const entityById = new Map();
+  const validEdgeTypes = new Set(['funder', 'critic', 'collaborator', 'authored_by'])
+  const entityById = new Map()
 
-  for (const p of (mapData.people || [])) entityById.set(p.id, p.name);
-  for (const o of (mapData.organizations || [])) entityById.set(o.id, o.name);
+  for (const p of mapData.people || []) entityById.set(p.id, p.name)
+  for (const o of mapData.organizations || []) entityById.set(o.id, o.name)
 
   // Group edges by target org and edge type
-  const orgRelations = new Map(); // orgName → { funders: [], critics: [], collaborators: [] }
+  const orgRelations = new Map() // orgName → { funders: [], critics: [], collaborators: [] }
 
-  for (const rel of (mapData.relationships || [])) {
-    if (!validEdgeTypes.has(rel.relationship_type)) continue;
-    if (rel.relationship_type === 'affiliated') continue; // Skip affiliations, handled separately
+  for (const rel of mapData.relationships || []) {
+    if (!validEdgeTypes.has(rel.relationship_type)) continue
+    if (rel.relationship_type === 'affiliated') continue // Skip affiliations, handled separately
 
-    const targetName = entityById.get(rel.target_id);
-    const sourceName = entityById.get(rel.source_id);
-    if (!targetName || !sourceName) continue;
+    const targetName = entityById.get(rel.target_id)
+    const sourceName = entityById.get(rel.source_id)
+    if (!targetName || !sourceName) continue
 
     if (!orgRelations.has(targetName)) {
-      orgRelations.set(targetName, { funders: [], critics: [], collaborators: [] });
+      orgRelations.set(targetName, { funders: [], critics: [], collaborators: [] })
     }
 
-    const rels = orgRelations.get(targetName);
-    if (rel.relationship_type === 'funder') rels.funders.push(sourceName);
-    else if (rel.relationship_type === 'critic') rels.critics.push(sourceName);
-    else if (rel.relationship_type === 'collaborator') rels.collaborators.push(sourceName);
+    const rels = orgRelations.get(targetName)
+    if (rel.relationship_type === 'funder') rels.funders.push(sourceName)
+    else if (rel.relationship_type === 'critic') rels.critics.push(sourceName)
+    else if (rel.relationship_type === 'collaborator') rels.collaborators.push(sourceName)
   }
 
   // Format as context string (cap at ~15KB)
-  const lines = [];
-  let charCount = 0;
-  const MAX_CHARS = 15000;
+  const lines = []
+  let charCount = 0
+  const MAX_CHARS = 15000
 
   for (const [orgName, rels] of orgRelations) {
-    const parts = [];
-    if (rels.funders.length) parts.push(`funders: ${rels.funders.join(', ')}`);
-    if (rels.critics.length) parts.push(`critics: ${rels.critics.join(', ')}`);
-    if (rels.collaborators.length) parts.push(`collaborators: ${rels.collaborators.join(', ')}`);
+    const parts = []
+    if (rels.funders.length) parts.push(`funders: ${rels.funders.join(', ')}`)
+    if (rels.critics.length) parts.push(`critics: ${rels.critics.join(', ')}`)
+    if (rels.collaborators.length) parts.push(`collaborators: ${rels.collaborators.join(', ')}`)
 
-    if (parts.length === 0) continue;
+    if (parts.length === 0) continue
 
-    const line = `- ${orgName}: ${parts.join('; ')}`;
-    if (charCount + line.length > MAX_CHARS) break;
-    lines.push(line);
-    charCount += line.length;
+    const line = `- ${orgName}: ${parts.join('; ')}`
+    if (charCount + line.length > MAX_CHARS) break
+    lines.push(line)
+    charCount += line.length
   }
 
-  return lines.length > 0 ? lines.join('\n') : '';
+  return lines.length > 0 ? lines.join('\n') : ''
 }
 
 export const handler = async (event) => {
-  const CORS_HEADERS = getCorsHeaders(event);
-  const method = event.requestContext.http.method;
+  const CORS_HEADERS = getCorsHeaders(event)
+  const method = event.requestContext.http.method
 
   if (method === 'OPTIONS') {
-    return { statusCode: 200, headers: CORS_HEADERS, body: '' };
+    return { statusCode: 200, headers: CORS_HEADERS, body: '' }
   }
 
   if (method !== 'GET') {
@@ -136,51 +136,54 @@ export const handler = async (event) => {
       statusCode: 405,
       headers: CORS_HEADERS,
       body: JSON.stringify({ error: 'Method not allowed' }),
-    };
+    }
   }
 
   try {
-    const { q } = event.queryStringParameters || {};
+    const { q } = event.queryStringParameters || {}
 
     if (!q || q.trim().length < 3) {
       return {
         statusCode: 400,
         headers: CORS_HEADERS,
         body: JSON.stringify({ error: 'Query must be at least 3 characters' }),
-      };
+      }
     }
 
-    const query = q.trim();
+    const query = q.trim()
 
     if (!ANTHROPIC_API_KEY) {
       return {
         statusCode: 503,
         headers: CORS_HEADERS,
         body: JSON.stringify({ error: 'AI search not configured' }),
-      };
+      }
     }
 
     // Fetch cached map data from CDN
-    const mapData = await getMapData();
+    const mapData = await getMapData()
 
     // Build person-to-sectors lookup for multi-affiliation queries
-    const personSectors = buildPersonSectorsLookup(mapData);
+    const personSectors = buildPersonSectorsLookup(mapData)
 
     // Build relationship context for funder/critic queries
-    const relationshipContext = buildRelationshipContext(mapData);
+    const relationshipContext = buildRelationshipContext(mapData)
 
     // Build enriched context for LLM
-    const people = (mapData.people || []).map(r => {
-      const sectors = personSectors.get(r.id);
-      const affiliations = sectors ? `[sectors: ${[...sectors].join(', ')}]` : '';
-      return `- ${r.name} (${r.category || 'unknown role'}${r.primary_org ? ', ' + r.primary_org : ''}${r.regulatory_stance ? ', stance: ' + r.regulatory_stance : ''}) ${affiliations}`;
-    });
+    const people = (mapData.people || []).map((r) => {
+      const sectors = personSectors.get(r.id)
+      const affiliations = sectors ? `[sectors: ${[...sectors].join(', ')}]` : ''
+      return `- ${r.name} (${r.category || 'unknown role'}${r.primary_org ? ', ' + r.primary_org : ''}${r.regulatory_stance ? ', stance: ' + r.regulatory_stance : ''}) ${affiliations}`
+    })
 
-    const orgs = (mapData.organizations || [])
-      .map(r => `- ${r.name} (${r.category || 'unknown sector'}${r.regulatory_stance ? ', stance: ' + r.regulatory_stance : ''})`);
+    const orgs = (mapData.organizations || []).map(
+      (r) =>
+        `- ${r.name} (${r.category || 'unknown sector'}${r.regulatory_stance ? ', stance: ' + r.regulatory_stance : ''})`,
+    )
 
-    const resources = (mapData.resources || [])
-      .map(r => `- ${r.title || r.name} (${r.category || 'resource'})`);
+    const resources = (mapData.resources || []).map(
+      (r) => `- ${r.title || r.name} (${r.category || 'resource'})`,
+    )
 
     let entityContext = `
 PEOPLE (${people.length}):
@@ -191,21 +194,21 @@ ${orgs.join('\n')}
 
 RESOURCES (${resources.length}):
 ${resources.join('\n')}
-    `.trim();
+    `.trim()
 
     // Add relationship context if available
     if (relationshipContext) {
-      entityContext += `\n\nRELATIONSHIPS (funders, critics, collaborators):\n${relationshipContext}`;
+      entityContext += `\n\nRELATIONSHIPS (funders, critics, collaborators):\n${relationshipContext}`
     }
 
     // Log context size for monitoring
-    console.log(`Context size: ${entityContext.length} chars`);
+    console.log(`Context size: ${entityContext.length} chars`)
 
     // Call Claude Haiku with timeout
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), LLM_TIMEOUT_MS);
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), LLM_TIMEOUT_MS)
 
-    let response;
+    let response
     try {
       response = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
@@ -266,38 +269,38 @@ If no entities match ALL criteria in an intersection query, return:
 - "summary": "No entities matched all criteria. [Explain what was missing]. Try relaxing to: [suggest simpler query]"
 - "match_reasons": {}
 
-Return up to 100 matches. Respond ONLY with valid JSON, no other text.`
-            }
+Return up to 100 matches. Respond ONLY with valid JSON, no other text.`,
+            },
           ],
         }),
-      });
+      })
     } finally {
-      clearTimeout(timeoutId);
+      clearTimeout(timeoutId)
     }
 
     if (!response.ok) {
-      const errText = await response.text();
-      console.error('Anthropic API error:', response.status, errText);
+      const errText = await response.text()
+      console.error('Anthropic API error:', response.status, errText)
       return {
         statusCode: 500,
         headers: CORS_HEADERS,
         body: JSON.stringify({ error: 'AI search temporarily unavailable' }),
-      };
+      }
     }
 
-    const data = await response.json();
-    const content = data.content?.[0]?.text || '';
+    const data = await response.json()
+    const content = data.content?.[0]?.text || ''
 
     // Parse JSON from response
-    let parsed;
+    let parsed
     try {
-      const jsonMatch = content.match(/\{[\s\S]*\}/);
+      const jsonMatch = content.match(/\{[\s\S]*\}/)
       if (!jsonMatch) {
-        throw new Error('No JSON found in response');
+        throw new Error('No JSON found in response')
       }
-      parsed = JSON.parse(jsonMatch[0]);
+      parsed = JSON.parse(jsonMatch[0])
     } catch (parseErr) {
-      console.error('Failed to parse LLM response:', content);
+      console.error('Failed to parse LLM response:', content)
       return {
         statusCode: 500,
         headers: CORS_HEADERS,
@@ -305,26 +308,26 @@ Return up to 100 matches. Respond ONLY with valid JSON, no other text.`
           error: 'Failed to parse AI response',
           names: [],
           summary: '',
-          match_reasons: {}
+          match_reasons: {},
         }),
-      };
+      }
     }
 
     // Validate names against actual entity list to prevent hallucinations
     const validNames = new Set([
-      ...(mapData.people || []).map(p => p.name),
-      ...(mapData.organizations || []).map(o => o.name),
-      ...(mapData.resources || []).map(r => r.title || r.name),
-    ]);
+      ...(mapData.people || []).map((p) => p.name),
+      ...(mapData.organizations || []).map((o) => o.name),
+      ...(mapData.resources || []).map((r) => r.title || r.name),
+    ])
 
-    const filteredNames = (parsed.names || []).filter(name => validNames.has(name));
+    const filteredNames = (parsed.names || []).filter((name) => validNames.has(name))
 
     // Filter match_reasons to only include valid names
-    const filteredReasons = {};
+    const filteredReasons = {}
     if (parsed.match_reasons && typeof parsed.match_reasons === 'object') {
       for (const [name, reason] of Object.entries(parsed.match_reasons)) {
         if (validNames.has(name) && filteredNames.includes(name)) {
-          filteredReasons[name] = reason;
+          filteredReasons[name] = reason
         }
       }
     }
@@ -339,10 +342,9 @@ Return up to 100 matches. Respond ONLY with valid JSON, no other text.`
         explanation: parsed.summary || parsed.explanation || '', // backwards compat
         query: query,
       }),
-    };
-
+    }
   } catch (error) {
-    console.error('Semantic search error:', error);
+    console.error('Semantic search error:', error)
 
     // Handle timeout specifically
     if (error.name === 'AbortError') {
@@ -350,13 +352,13 @@ Return up to 100 matches. Respond ONLY with valid JSON, no other text.`
         statusCode: 504,
         headers: CORS_HEADERS,
         body: JSON.stringify({ error: 'Search timed out, please try again' }),
-      };
+      }
     }
 
     return {
       statusCode: 500,
       headers: CORS_HEADERS,
       body: JSON.stringify({ error: 'Internal server error' }),
-    };
+    }
   }
-};
+}

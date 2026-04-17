@@ -7,7 +7,11 @@ import Link from '@tiptap/extension-link'
 import tippy, { type Instance as TippyInstance } from 'tippy.js'
 
 function escapeHtml(str: string): string {
-  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
 }
 
 export interface MentionData {
@@ -53,9 +57,21 @@ function extractMentions(editor: ReturnType<typeof useEditor>): MentionData[] {
   return mentions
 }
 
-/** Create the mention suggestion plugin config. */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function createSuggestion(searchFn: (query: string) => MentionItem[] | Promise<MentionItem[]>): any {
+/**
+ * Create the mention suggestion plugin config.
+ *
+ * The returned object plugs into `Mention.configure({ suggestion })`. Its exact
+ * shape is TipTap's `SuggestionOptions<MentionItem, MentionNodeAttrs>` minus the
+ * `editor` field the extension fills in. Those generics have churned between
+ * TipTap versions, and authoring the inner props against the current `any`
+ * defaults inside SuggestionProps creates cross-version conflicts that add more
+ * friction than they prevent. Mention.configure still validates the shape at
+ * the call site — drift surfaces there, not silently.
+ */
+function createSuggestion(
+  searchFn: (query: string) => MentionItem[] | Promise<MentionItem[]>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- see function docstring
+): any {
   return {
     items: ({ query }: { query: string }) => searchFn(query),
     render: () => {
@@ -63,7 +79,13 @@ function createSuggestion(searchFn: (query: string) => MentionItem[] | Promise<M
       let component: HTMLDivElement | null = null
 
       function cleanup() {
-        popup?.forEach((p) => { try { p.destroy() } catch { /* ignore */ } })
+        popup?.forEach((p) => {
+          try {
+            p.destroy()
+          } catch {
+            /* ignore */
+          }
+        })
         popup = null
         component?.remove()
         component = null
@@ -108,14 +130,18 @@ function createSuggestion(searchFn: (query: string) => MentionItem[] | Promise<M
       }
 
       return {
-        onStart: (props: { clientRect: (() => DOMRect | null) | null | undefined; items: MentionItem[]; command: (item: Record<string, unknown>) => void }) => {
+        onStart: (props: {
+          clientRect?: (() => DOMRect | null) | null
+          items: MentionItem[]
+          command: (item: Record<string, unknown>) => void
+        }) => {
           cleanup()
           component = document.createElement('div')
           component.className = 'tiptap-mention-list'
           updateList(component, props.items, props.command)
 
           const result = tippy(document.body as Element, {
-            getReferenceClientRect: (props.clientRect as (() => DOMRect)) ?? undefined,
+            getReferenceClientRect: (props.clientRect as () => DOMRect) ?? undefined,
             appendTo: () => document.body,
             content: component,
             showOnCreate: true,
@@ -125,20 +151,29 @@ function createSuggestion(searchFn: (query: string) => MentionItem[] | Promise<M
           })
           popup = Array.isArray(result) ? result : [result]
         },
-        onUpdate: (props: { clientRect: (() => DOMRect | null) | null | undefined; items: MentionItem[]; command: (item: Record<string, unknown>) => void }) => {
+        onUpdate: (props: {
+          clientRect?: (() => DOMRect | null) | null
+          items: MentionItem[]
+          command: (item: Record<string, unknown>) => void
+        }) => {
           if (!component) return
           updateList(component, props.items, props.command)
-          popup?.[0]?.setProps({ getReferenceClientRect: (props.clientRect as (() => DOMRect)) ?? undefined })
+          popup?.[0]?.setProps({
+            getReferenceClientRect: (props.clientRect as () => DOMRect) ?? undefined,
+          })
         },
         onKeyDown: (props: { event: KeyboardEvent }) => {
           if (!component) return false
-          if (props.event.key === 'Escape') { cleanup(); return true }
+          if (props.event.key === 'Escape') {
+            cleanup()
+            return true
+          }
 
           const items = component.querySelectorAll<HTMLElement>('.mention-item')
           const active = component.querySelector<HTMLElement>('.mention-item.active')
 
           if (props.event.key === 'ArrowDown') {
-            const next = active ? active.nextElementSibling as HTMLElement | null : items[0]
+            const next = active ? (active.nextElementSibling as HTMLElement | null) : items[0]
             if (next?.classList.contains('mention-item')) {
               active?.classList.remove('active')
               next.classList.add('active')
@@ -306,7 +341,7 @@ export function TipTapEditor({
   const applyLink = useCallback(() => {
     if (!editor) return
     if (linkUrl) {
-      const url = linkUrl.match(/^https?:\/\//) ? linkUrl : `https://${linkUrl}`
+      const url = /^https?:\/\//.exec(linkUrl) ? linkUrl : `https://${linkUrl}`
       editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run()
     } else {
       editor.chain().focus().extendMarkRange('link').unsetLink().run()
@@ -368,7 +403,10 @@ export function TipTapEditor({
               type="url"
               value={linkUrl}
               onChange={(e) => setLinkUrl(e.target.value)}
-              onKeyDown={(e) => { if (e.key === 'Enter') applyLink(); if (e.key === 'Escape') setShowLinkPopover(false) }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') applyLink()
+                if (e.key === 'Escape') setShowLinkPopover(false)
+              }}
               placeholder="https://..."
               className="px-2 py-1 text-[12px] font-mono border border-[#eee] rounded w-[200px]"
               autoFocus
@@ -416,7 +454,9 @@ function ToolbarButton({
       aria-label={label}
       aria-pressed={active}
       className={`px-1.5 py-0.5 text-[12px] font-mono rounded transition-colors ${
-        active ? 'bg-[#e0e0e0] text-[#1a1a1a]' : 'text-[#888] hover:text-[#1a1a1a] hover:bg-[#f0f0f0]'
+        active
+          ? 'bg-[#e0e0e0] text-[#1a1a1a]'
+          : 'text-[#888] hover:text-[#1a1a1a] hover:bg-[#f0f0f0]'
       }`}
     >
       {children}

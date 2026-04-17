@@ -61,7 +61,7 @@ export interface MapData {
   organizations: Entity[]
   resources: Entity[]
   relationships: Edge[]
-  person_organizations?: any[]
+  person_organizations?: unknown[]
 }
 
 /** Shape of map-detail.json — keyed by entity ID */

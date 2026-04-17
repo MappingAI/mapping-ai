@@ -7,7 +7,7 @@ describe('Vitest smoke test', () => {
   })
 
   it('supports TypeScript', () => {
-    const value: number = 42
+    const value = 42
     expect(value).toBe(42)
   })
 })

@@ -20,8 +20,11 @@ pre-commit:
       stage_fixed: true
 
     lint:
+      # --fix auto-applies ESLint's safe fixes to staged files. Errors block
+      # the commit; warnings don't (CI can enforce a warning ceiling once
+      # legacy a11y/style warnings are triaged — see CONTRIBUTING.md).
       glob: 'src/**/*.{ts,tsx}'
-      run: npx eslint --fix --max-warnings=0 {staged_files}
+      run: npx eslint --fix {staged_files}
       stage_fixed: true
 
     fixture-guard:

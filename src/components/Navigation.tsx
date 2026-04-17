@@ -44,8 +44,7 @@ export function Navigation() {
       >
         {NAV_LINKS.map(({ href, label }) => {
           const isActive =
-            href === currentPath ||
-            (href === '/contribute' && currentPath === '/contribute')
+            href === currentPath || (href === '/contribute' && currentPath === '/contribute')
 
           return (
             <a

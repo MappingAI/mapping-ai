@@ -39,14 +39,36 @@ const RELATIONSHIP_OPTIONS: Record<FormType, { value: string; label: string }[]>
 }
 
 const EMPTY_FORM: Record<string, unknown> = {
-  name: '', category: '', title: '', primaryOrg: '', primaryOrgId: null,
-  location: [], affiliatedOrgIds: [], keyConcerns: [], influenceType: [],
-  regulatoryStance: '', evidenceSource: '', agiTimeline: '', aiRiskLevel: '',
-  regulatoryStanceDetail: '', twitter: '', bluesky: '', website: '',
-  fundingModel: '', notesHtml: '', notesMentions: [], submitterEmail: '',
-  submitterRelationship: '', resourceTitle: '', resourceType: '',
-  resourceAuthor: '', resourceAuthors: [], resourceUrl: '', resourceYear: '',
-  resourceKeyArgument: '', _hp: '',
+  name: '',
+  category: '',
+  title: '',
+  primaryOrg: '',
+  primaryOrgId: null,
+  location: [],
+  affiliatedOrgIds: [],
+  keyConcerns: [],
+  influenceType: [],
+  regulatoryStance: '',
+  evidenceSource: '',
+  agiTimeline: '',
+  aiRiskLevel: '',
+  regulatoryStanceDetail: '',
+  twitter: '',
+  bluesky: '',
+  website: '',
+  fundingModel: '',
+  notesHtml: '',
+  notesMentions: [],
+  submitterEmail: '',
+  submitterRelationship: '',
+  resourceTitle: '',
+  resourceType: '',
+  resourceAuthor: '',
+  resourceAuthors: [],
+  resourceUrl: '',
+  resourceYear: '',
+  resourceKeyArgument: '',
+  _hp: '',
 }
 
 /** State for update mode (editing an existing entity). */
@@ -95,7 +117,11 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
   formsRef.current = { person: personForm, organization: orgForm, resource: resourceForm }
 
   // Auto-save to localStorage (500ms debounce)
-  const autoSaveForms = useRef({ person: personForm, organization: orgForm, resource: resourceForm })
+  const autoSaveForms = useRef({
+    person: personForm,
+    organization: orgForm,
+    resource: resourceForm,
+  })
   const { restore, clearDraft } = useAutoSave(autoSaveForms.current, activeTab, true)
 
   // Restore draft on mount
@@ -122,7 +148,8 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
 
       // Map snake_case DB fields to camelCase form fields
       if (formData.regulatory_stance) formData.regulatoryStance = formData.regulatory_stance
-      if (formData.regulatory_stance_detail) formData.regulatoryStanceDetail = formData.regulatory_stance_detail
+      if (formData.regulatory_stance_detail)
+        formData.regulatoryStanceDetail = formData.regulatory_stance_detail
       if (formData.evidence_source) formData.evidenceSource = formData.evidence_source
       if (formData.agi_timeline) formData.agiTimeline = formData.agi_timeline
       if (formData.ai_risk_level) formData.aiRiskLevel = formData.ai_risk_level
@@ -153,13 +180,10 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
   )
 
   // Cancel update mode for a specific form
-  const cancelUpdate = useCallback(
-    (formType: FormType) => {
-      setUpdateContexts((prev) => ({ ...prev, [formType]: null }))
-      formsRef.current[formType].reset({})
-    },
-    [],
-  )
+  const cancelUpdate = useCallback((formType: FormType) => {
+    setUpdateContexts((prev) => ({ ...prev, [formType]: null }))
+    formsRef.current[formType].reset({})
+  }, [])
 
   // Clear form and draft
   const clearForm = useCallback(
@@ -176,7 +200,9 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
   // Org creation panel state
   const [orgPanelOpen, setOrgPanelOpen] = useState(false)
   const [orgPanelName, setOrgPanelName] = useState('')
-  const [orgPanelTrigger, setOrgPanelTrigger] = useState<'primary' | 'parent' | 'affiliated'>('primary')
+  const [orgPanelTrigger, setOrgPanelTrigger] = useState<'primary' | 'parent' | 'affiliated'>(
+    'primary',
+  )
 
   const openOrgPanel = useCallback(
     (name: string, triggerType: 'primary' | 'parent' | 'affiliated') => {
@@ -188,9 +214,16 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
   )
 
   // Existing entity sidebar state
-  const [viewEntity, setViewEntity] = useState<{ entity: FuzzySearchResult; type: FormType } | null>(null)
+  const [viewEntity, setViewEntity] = useState<{
+    entity: FuzzySearchResult
+    type: FormType
+  } | null>(null)
   // Remember last viewed entity per form so the update banner can re-open it
-  const lastViewedRef = useRef<Record<FormType, FuzzySearchResult | null>>({ person: null, organization: null, resource: null })
+  const lastViewedRef = useRef<Record<FormType, FuzzySearchResult | null>>({
+    person: null,
+    organization: null,
+    resource: null,
+  })
   const showEntitySidebar = useCallback((entity: FuzzySearchResult, type: FormType) => {
     lastViewedRef.current[type] = entity
     setViewEntity({ entity, type })
@@ -257,7 +290,11 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
             form={personForm}
             updateContext={updateContexts.person}
             onCancelUpdate={() => cancelUpdate('person')}
-            onViewExisting={updateContexts.person && lastViewedRef.current.person ? () => showEntitySidebar(lastViewedRef.current.person!, 'person') : undefined}
+            onViewExisting={
+              updateContexts.person && lastViewedRef.current.person
+                ? () => showEntitySidebar(lastViewedRef.current.person!, 'person')
+                : undefined
+            }
             onClear={() => clearForm('person')}
           />
           <PersonForm
@@ -266,7 +303,9 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
             updateContext={updateContexts.person}
             onOrgPanelOpen={openOrgPanel}
             onViewExisting={(entity) => showEntitySidebar(entity, 'person')}
-            onEnterUpdateMode={(data) => switchToFormInUpdateMode('person', data as Partial<Entity>)}
+            onEnterUpdateMode={(data) =>
+              switchToFormInUpdateMode('person', data as Partial<Entity>)
+            }
             onSubmitSuccess={() => handleSubmitSuccess('person')}
           />
         </div>
@@ -278,7 +317,11 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
             form={orgForm}
             updateContext={updateContexts.organization}
             onCancelUpdate={() => cancelUpdate('organization')}
-            onViewExisting={updateContexts.organization && lastViewedRef.current.organization ? () => showEntitySidebar(lastViewedRef.current.organization!, 'organization') : undefined}
+            onViewExisting={
+              updateContexts.organization && lastViewedRef.current.organization
+                ? () => showEntitySidebar(lastViewedRef.current.organization!, 'organization')
+                : undefined
+            }
             onClear={() => clearForm('organization')}
           />
           <OrganizationForm
@@ -287,7 +330,9 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
             updateContext={updateContexts.organization}
             onOrgPanelOpen={openOrgPanel}
             onViewExisting={(entity) => showEntitySidebar(entity, 'organization')}
-            onEnterUpdateMode={(data) => switchToFormInUpdateMode('organization', data as Partial<Entity>)}
+            onEnterUpdateMode={(data) =>
+              switchToFormInUpdateMode('organization', data as Partial<Entity>)
+            }
             onSubmitSuccess={() => handleSubmitSuccess('organization')}
           />
         </div>
@@ -299,7 +344,11 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
             form={resourceForm}
             updateContext={updateContexts.resource}
             onCancelUpdate={() => cancelUpdate('resource')}
-            onViewExisting={updateContexts.resource && lastViewedRef.current.resource ? () => showEntitySidebar(lastViewedRef.current.resource!, 'resource') : undefined}
+            onViewExisting={
+              updateContexts.resource && lastViewedRef.current.resource
+                ? () => showEntitySidebar(lastViewedRef.current.resource!, 'resource')
+                : undefined
+            }
             onClear={() => clearForm('resource')}
           />
           <ResourceForm
@@ -309,7 +358,9 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
             onOrgPanelOpen={openOrgPanel}
             onSwitchToPersonTab={() => setActiveTab('person')}
             onViewExisting={(entity) => showEntitySidebar(entity, 'resource')}
-            onEnterUpdateMode={(data) => switchToFormInUpdateMode('resource', data as Partial<Entity>)}
+            onEnterUpdateMode={(data) =>
+              switchToFormInUpdateMode('resource', data as Partial<Entity>)
+            }
             onSubmitSuccess={() => handleSubmitSuccess('resource')}
           />
         </div>
@@ -338,7 +389,11 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
               form.setValue('parentOrg', org.name)
               form.setValue('parentOrgId', org.id)
             } else if (orgPanelTrigger === 'affiliated') {
-              const current = (form.getValues('affiliatedOrgIds') as Array<{ id: number | string; label: string }>) ?? []
+              const current =
+                (form.getValues('affiliatedOrgIds') as {
+                  id: number | string
+                  label: string
+                }[]) ?? []
               form.setValue('affiliatedOrgIds', [...current, { id: org.id, label: org.name }])
             }
           }}
@@ -372,8 +427,7 @@ function FormHeader({
       {updateContext && (
         <div className="flex items-center justify-between px-4 py-2.5 mb-4 bg-amber-50 border border-amber-200 rounded text-[13px]">
           <span>
-            Updating <strong>{updateContext.entityData.name}</strong> — adjust
-            any fields and submit
+            Updating <strong>{updateContext.entityData.name}</strong> — adjust any fields and submit
           </span>
           <div className="flex items-center gap-3">
             {onViewExisting && (

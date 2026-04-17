@@ -39,8 +39,22 @@ const LABEL_CLASS = 'font-mono text-[11px] uppercase tracking-wider text-[#555]'
 const INPUT_CLASS =
   'w-full px-3 py-2 font-mono text-[13px] border border-[#ddd] rounded bg-white outline-none transition-colors hover:border-[#999] focus:border-[#2563eb]'
 
-export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPersonTab, onViewExisting, onEnterUpdateMode, onSubmitSuccess }: ResourceFormProps) {
-  const { register, control, watch, handleSubmit, formState: { errors } } = form
+export function ResourceForm({
+  form,
+  updateContext,
+  onOrgPanelOpen,
+  onSwitchToPersonTab,
+  onViewExisting,
+  onEnterUpdateMode,
+  onSubmitSuccess,
+}: ResourceFormProps) {
+  const {
+    register,
+    control,
+    watch,
+    handleSubmit,
+    formState: { errors },
+  } = form
   const { cache } = useEntityCache()
   const submitEntity = useSubmitEntity()
   const addPendingEntity = useAddPendingEntity()
@@ -73,7 +87,9 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPe
               })
             }
           }
-        } catch { /* local results still work */ }
+        } catch {
+          /* local results still work */
+        }
       }
       return local
     },
@@ -97,10 +113,17 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPe
           const seenIds = new Set(local.map((r) => r.id))
           for (const p of pending) {
             if (!seenIds.has(p.id)) {
-              local.push({ id: p.id, label: p.name, detail: p.title ?? p.category ?? undefined, isPending: true })
+              local.push({
+                id: p.id,
+                label: p.name,
+                detail: p.title ?? p.category ?? undefined,
+                isPending: true,
+              })
             }
           }
-        } catch { /* local results still work */ }
+        } catch {
+          /* local results still work */
+        }
       }
       return local
     },
@@ -110,11 +133,15 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPe
   const onSubmit = handleSubmit((data) => {
     const { _hp, ...fields } = data
     // Serialize arrays: resourceAuthors (Tag[]) → author string, notesMentions → JSON string
-    const authors = fields.resourceAuthors as Array<{ label: string }> | undefined
+    const authors = fields.resourceAuthors as { label: string }[] | undefined
     const apiData: Record<string, unknown> = {
       ...fields,
-      author: Array.isArray(authors) ? authors.map((t) => t.label).join(', ') : fields.resourceAuthor ?? null,
-      notesMentions: Array.isArray(fields.notesMentions) ? JSON.stringify(fields.notesMentions) : fields.notesMentions ?? null,
+      author: Array.isArray(authors)
+        ? authors.map((t) => t.label).join(', ')
+        : (fields.resourceAuthor ?? null),
+      notesMentions: Array.isArray(fields.notesMentions)
+        ? JSON.stringify(fields.notesMentions)
+        : (fields.notesMentions ?? null),
       // Map resource field names to what the API expects
       name: fields.resourceTitle ?? null,
       title: fields.resourceTitle ?? null,
@@ -148,7 +175,13 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPe
   return (
     <form onSubmit={onSubmit} className="grid grid-cols-2 gap-4">
       {/* Honeypot — hidden from humans, visible to bots */}
-      <input {...register('_hp')} type="text" tabIndex={-1} autoComplete="off" className="absolute -left-[9999px]" />
+      <input
+        {...register('_hp')}
+        type="text"
+        tabIndex={-1}
+        autoComplete="off"
+        className="absolute -left-[9999px]"
+      />
 
       {/* Title */}
       <div className="col-span-2">
@@ -163,7 +196,7 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPe
         />
         {errors.resourceTitle && (
           <span className="text-[11px] font-mono text-red-500 mt-0.5">
-            {errors.resourceTitle.message as string}
+            {errors.resourceTitle.message!}
           </span>
         )}
         {!updateContext && (
@@ -173,7 +206,11 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPe
             onViewExisting={(entity) => onViewExisting?.(entity)}
             onUpdateExisting={(entity) => {
               const full = entity.isPending ? null : cache?.byId.get(entity.id)
-              onEnterUpdateMode?.(full ? { ...full } : { id: entity.id, name: entity.name, resourceTitle: entity.name })
+              onEnterUpdateMode?.(
+                full
+                  ? { ...full }
+                  : { id: entity.id, name: entity.name, resourceTitle: entity.name },
+              )
               onViewExisting?.(entity)
             }}
           />
@@ -248,11 +285,7 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPe
       {/* Year */}
       <div>
         <label className={LABEL_CLASS}>Year</label>
-        <input
-          {...register('resourceYear')}
-          className={INPUT_CLASS}
-          placeholder="e.g. 2025"
-        />
+        <input {...register('resourceYear')} className={INPUT_CLASS} placeholder="e.g. 2025" />
       </div>
 
       {/* URL */}
@@ -281,10 +314,15 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPe
         <label className={LABEL_CLASS}>
           Notes
           <InfoTooltip width={280}>
-            <strong>What to include:</strong><br />
-            {'• Context, impact & significance'}<br />
-            {'• Related work & responses'}<br />
-            {'• Key takeaways or controversies'}<br /><br />
+            <strong>What to include:</strong>
+            <br />
+            {'• Context, impact & significance'}
+            <br />
+            {'• Related work & responses'}
+            <br />
+            {'• Key takeaways or controversies'}
+            <br />
+            <br />
             <strong>Use @mentions</strong> to link related people, orgs, and resources.
           </InfoTooltip>
         </label>
@@ -321,11 +359,12 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPe
         />
         {errors.submitterEmail && (
           <span className="text-[11px] font-mono text-red-500 mt-0.5">
-            {errors.submitterEmail.message as string}
+            {errors.submitterEmail.message!}
           </span>
         )}
         <span className="text-[12px] font-mono text-[#888] mt-0.5 block">
-          Your email will not be displayed publicly. It&apos;s used only if we need to contact you about your submission.
+          Your email will not be displayed publicly. It&apos;s used only if we need to contact you
+          about your submission.
         </span>
       </div>
 
@@ -344,7 +383,8 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPe
         </button>
         {submitEntity.isError && (
           <p className="text-[12px] font-mono text-red-600 mt-2">
-            {(submitEntity.error as { body?: { error?: string } })?.body?.error ?? 'Submission failed. Please try again.'}
+            {(submitEntity.error as { body?: { error?: string } })?.body?.error ??
+              'Submission failed. Please try again.'}
           </p>
         )}
       </div>

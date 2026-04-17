@@ -1,16 +1,16 @@
-import pg from 'pg';
-import 'dotenv/config';
+import pg from 'pg'
+import 'dotenv/config'
 
-const { Pool } = pg;
+const { Pool } = pg
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false },
-});
+})
 
 async function migrate() {
-  const client = await pool.connect();
+  const client = await pool.connect()
   try {
-    console.log('Running migration: 3-table schema (entity / submission / edge)\n');
+    console.log('Running migration: 3-table schema (entity / submission / edge)\n')
 
     // ── 1. entity ────────────────────────────────────────────────────────────
     await client.query(`
@@ -69,8 +69,8 @@ async function migrate() {
         updated_at                      TIMESTAMPTZ DEFAULT NOW(),
         search_vector                   tsvector
       )
-    `);
-    console.log('  ✓ entity');
+    `)
+    console.log('  ✓ entity')
 
     // ── 2. submission ─────────────────────────────────────────────────────────
     await client.query(`
@@ -126,8 +126,8 @@ async function migrate() {
         reviewed_at                      TIMESTAMPTZ,
         reviewed_by                      VARCHAR(200)
       )
-    `);
-    console.log('  ✓ submission');
+    `)
+    console.log('  ✓ submission')
 
     // ── 3. edge ───────────────────────────────────────────────────────────────
     await client.query(`
@@ -143,23 +143,23 @@ async function migrate() {
         created_at   TIMESTAMPTZ DEFAULT NOW(),
         UNIQUE(source_id, target_id, edge_type)
       )
-    `);
-    console.log('  ✓ edge');
+    `)
+    console.log('  ✓ edge')
 
     // ── 4. Indexes ────────────────────────────────────────────────────────────
-    console.log('\nCreating indexes...');
-    await client.query('CREATE INDEX IF NOT EXISTS idx_entity_type   ON entity(entity_type)');
-    await client.query('CREATE INDEX IF NOT EXISTS idx_entity_status ON entity(status)');
-    await client.query('CREATE INDEX IF NOT EXISTS idx_sub_entity    ON submission(entity_id)');
-    await client.query('CREATE INDEX IF NOT EXISTS idx_sub_status    ON submission(status)');
-    await client.query('CREATE INDEX IF NOT EXISTS idx_sub_type      ON submission(entity_type)');
-    await client.query('CREATE INDEX IF NOT EXISTS idx_edge_source   ON edge(source_id)');
-    await client.query('CREATE INDEX IF NOT EXISTS idx_edge_target   ON edge(target_id)');
-    console.log('  ✓ indexes');
+    console.log('\nCreating indexes...')
+    await client.query('CREATE INDEX IF NOT EXISTS idx_entity_type   ON entity(entity_type)')
+    await client.query('CREATE INDEX IF NOT EXISTS idx_entity_status ON entity(status)')
+    await client.query('CREATE INDEX IF NOT EXISTS idx_sub_entity    ON submission(entity_id)')
+    await client.query('CREATE INDEX IF NOT EXISTS idx_sub_status    ON submission(status)')
+    await client.query('CREATE INDEX IF NOT EXISTS idx_sub_type      ON submission(entity_type)')
+    await client.query('CREATE INDEX IF NOT EXISTS idx_edge_source   ON edge(source_id)')
+    await client.query('CREATE INDEX IF NOT EXISTS idx_edge_target   ON edge(target_id)')
+    console.log('  ✓ indexes')
 
     // ── 4b. Schema migrations (safe ADD COLUMN for existing tables) ──────────
-    await client.query(`ALTER TABLE submission ADD COLUMN IF NOT EXISTS parent_org_id INTEGER`);
-    console.log('  ✓ schema migrations');
+    await client.query(`ALTER TABLE submission ADD COLUMN IF NOT EXISTS parent_org_id INTEGER`)
+    console.log('  ✓ schema migrations')
 
     // ── 4c. contributor_keys table ──────────────────────────────────────────────
     await client.query(`
@@ -172,17 +172,21 @@ async function migrate() {
         created_at TIMESTAMPTZ DEFAULT NOW(),
         revoked_at TIMESTAMPTZ                  -- NULL = active, set = revoked
       )
-    `);
-    await client.query(`ALTER TABLE submission ADD COLUMN IF NOT EXISTS contributor_key_id INTEGER REFERENCES contributor_keys(id)`);
-    await client.query('CREATE INDEX IF NOT EXISTS idx_sub_contributor ON submission(contributor_key_id)');
-    console.log('  ✓ contributor_keys');
+    `)
+    await client.query(
+      `ALTER TABLE submission ADD COLUMN IF NOT EXISTS contributor_key_id INTEGER REFERENCES contributor_keys(id)`,
+    )
+    await client.query(
+      'CREATE INDEX IF NOT EXISTS idx_sub_contributor ON submission(contributor_key_id)',
+    )
+    console.log('  ✓ contributor_keys')
 
     // ── 5. Score recalculation function ──────────────────────────────────────
     // Weights: self=10, connector=2, external=1
     // _n counts only submissions with a non-null score for that field
     // submission_count counts all approved submissions
     // Weighted variance (one-pass): wvar = SUM(w*x^2)/SUM(w) - (SUM(w*x)/SUM(w))^2
-    console.log('\nCreating trigger functions...');
+    console.log('\nCreating trigger functions...')
     await client.query(`
       CREATE OR REPLACE FUNCTION recalculate_entity_scores(p_entity_id INTEGER) RETURNS void AS $$
       DECLARE
@@ -288,8 +292,8 @@ async function migrate() {
         WHERE id = p_entity_id;
       END;
       $$ LANGUAGE plpgsql;
-    `);
-    console.log('  ✓ recalculate_entity_scores()');
+    `)
+    console.log('  ✓ recalculate_entity_scores()')
 
     // ── 6. BEFORE trigger: entity creation on new submission approval ─────────
     // When admin sets submission.status = 'approved' for a submission with
@@ -333,14 +337,14 @@ async function migrate() {
         RETURN NEW;
       END;
       $$ LANGUAGE plpgsql;
-    `);
-    await client.query('DROP TRIGGER IF EXISTS trg_before_submission_update ON submission');
+    `)
+    await client.query('DROP TRIGGER IF EXISTS trg_before_submission_update ON submission')
     await client.query(`
       CREATE TRIGGER trg_before_submission_update
       BEFORE UPDATE OF status ON submission
       FOR EACH ROW EXECUTE FUNCTION before_submission_update()
-    `);
-    console.log('  ✓ before_submission_update (entity creation)');
+    `)
+    console.log('  ✓ before_submission_update (entity creation)')
 
     // ── 7. AFTER trigger: score recalculation on status change ────────────────
     await client.query(`
@@ -355,17 +359,17 @@ async function migrate() {
         RETURN NULL;
       END;
       $$ LANGUAGE plpgsql;
-    `);
-    await client.query('DROP TRIGGER IF EXISTS trg_after_submission_update ON submission');
+    `)
+    await client.query('DROP TRIGGER IF EXISTS trg_after_submission_update ON submission')
     await client.query(`
       CREATE TRIGGER trg_after_submission_update
       AFTER UPDATE OF status ON submission
       FOR EACH ROW EXECUTE FUNCTION after_submission_update()
-    `);
-    console.log('  ✓ after_submission_update (score recalculation)');
+    `)
+    console.log('  ✓ after_submission_update (score recalculation)')
 
     // ── 8. Full-text search on entity ─────────────────────────────────────────
-    console.log('\nSetting up full-text search on entity...');
+    console.log('\nSetting up full-text search on entity...')
     await client.query(`
       CREATE OR REPLACE FUNCTION update_entity_search() RETURNS trigger AS $$
       BEGIN
@@ -383,34 +387,38 @@ async function migrate() {
         RETURN NEW;
       END;
       $$ LANGUAGE plpgsql;
-    `);
-    await client.query('DROP TRIGGER IF EXISTS trg_entity_search ON entity');
+    `)
+    await client.query('DROP TRIGGER IF EXISTS trg_entity_search ON entity')
     await client.query(`
       CREATE TRIGGER trg_entity_search
       BEFORE INSERT OR UPDATE ON entity
       FOR EACH ROW EXECUTE FUNCTION update_entity_search()
-    `);
-    await client.query('CREATE INDEX IF NOT EXISTS idx_entity_search ON entity USING GIN(search_vector)');
-    console.log('  ✓ full-text search');
+    `)
+    await client.query(
+      'CREATE INDEX IF NOT EXISTS idx_entity_search ON entity USING GIN(search_vector)',
+    )
+    console.log('  ✓ full-text search')
 
     // ── 9. Drop old tables ────────────────────────────────────────────────────
-    console.log('\nDropping old tables...');
-    await client.query('DROP TABLE IF EXISTS person_organizations CASCADE');
-    await client.query('DROP TABLE IF EXISTS relationships CASCADE');
-    await client.query('DROP TABLE IF EXISTS submissions CASCADE');
-    await client.query('DROP TABLE IF EXISTS resources CASCADE');
-    await client.query('DROP TABLE IF EXISTS organizations CASCADE');
-    await client.query('DROP TABLE IF EXISTS people CASCADE');
-    console.log('  ✓ people, organizations, resources, submissions, relationships, person_organizations dropped');
+    console.log('\nDropping old tables...')
+    await client.query('DROP TABLE IF EXISTS person_organizations CASCADE')
+    await client.query('DROP TABLE IF EXISTS relationships CASCADE')
+    await client.query('DROP TABLE IF EXISTS submissions CASCADE')
+    await client.query('DROP TABLE IF EXISTS resources CASCADE')
+    await client.query('DROP TABLE IF EXISTS organizations CASCADE')
+    await client.query('DROP TABLE IF EXISTS people CASCADE')
+    console.log(
+      '  ✓ people, organizations, resources, submissions, relationships, person_organizations dropped',
+    )
 
-    console.log('\nMigration complete.');
+    console.log('\nMigration complete.')
   } finally {
-    client.release();
-    await pool.end();
+    client.release()
+    await pool.end()
   }
 }
 
 migrate().catch((err) => {
-  console.error('Migration failed:', err);
-  process.exit(1);
-});
+  console.error('Migration failed:', err)
+  process.exit(1)
+})

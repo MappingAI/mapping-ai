@@ -38,11 +38,7 @@ export async function searchEntities(
   if (type) params.set('type', type)
   if (status) params.set('status', status)
   const grouped = await fetchJSON<SearchResponse>(`${API_BASE}/search?${params}`)
-  return [
-    ...(grouped.people ?? []),
-    ...(grouped.organizations ?? []),
-    ...(grouped.resources ?? []),
-  ]
+  return [...(grouped.people ?? []), ...(grouped.organizations ?? []), ...(grouped.resources ?? [])]
 }
 
 export async function submitEntity(data: SubmitRequest): Promise<SubmitResponse> {

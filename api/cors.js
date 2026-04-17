@@ -17,7 +17,7 @@ const ALLOWED_ORIGINS = new Set([
   'http://127.0.0.1:5000',
   'http://127.0.0.1:5173',
   'http://127.0.0.1:5500',
-]);
+])
 
 /**
  * Build CORS response headers with origin validation.
@@ -26,15 +26,15 @@ const ALLOWED_ORIGINS = new Set([
  * Browsers enforce CORS; non-browser clients ignore it.
  */
 export function getCorsHeaders(event, { methods = 'GET, OPTIONS', headers = 'Content-Type' } = {}) {
-  const origin = event?.headers?.origin;
+  const origin = event?.headers?.origin
   const corsHeaders = {
     'Access-Control-Allow-Methods': methods,
     'Access-Control-Allow-Headers': headers,
     'X-Content-Type-Options': 'nosniff',
-  };
-  if (origin && ALLOWED_ORIGINS.has(origin)) {
-    corsHeaders['Access-Control-Allow-Origin'] = origin;
-    corsHeaders['Vary'] = 'Origin';
   }
-  return corsHeaders;
+  if (origin && ALLOWED_ORIGINS.has(origin)) {
+    corsHeaders['Access-Control-Allow-Origin'] = origin
+    corsHeaders['Vary'] = 'Origin'
+  }
+  return corsHeaders
 }

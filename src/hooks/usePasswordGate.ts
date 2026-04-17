@@ -35,24 +35,16 @@ export function usePasswordGate(): PasswordGateState {
   const [error, setError] = useState<string | null>(null)
 
   // Brute-force protection via sessionStorage
-  const attemptsRef = useRef(
-    parseInt(sessionStorage.getItem('gateAttempts') ?? '0', 10),
-  )
-  const lockedUntilRef = useRef(
-    parseInt(sessionStorage.getItem('gateLockUntil') ?? '0', 10),
-  )
-  const [isLockedOut, setIsLockedOut] = useState(
-    () => Date.now() < lockedUntilRef.current,
-  )
+  const attemptsRef = useRef(parseInt(sessionStorage.getItem('gateAttempts') ?? '0', 10))
+  const lockedUntilRef = useRef(parseInt(sessionStorage.getItem('gateLockUntil') ?? '0', 10))
+  const [isLockedOut, setIsLockedOut] = useState(() => Date.now() < lockedUntilRef.current)
   const [lockoutRemaining, setLockoutRemaining] = useState(0)
 
   // Countdown timer for lockout
   useEffect(() => {
     if (!isLockedOut) return
     const tick = () => {
-      const remaining = Math.ceil(
-        (lockedUntilRef.current - Date.now()) / 1000,
-      )
+      const remaining = Math.ceil((lockedUntilRef.current - Date.now()) / 1000)
       if (remaining <= 0) {
         setIsLockedOut(false)
         setLockoutRemaining(0)
@@ -91,16 +83,11 @@ export function usePasswordGate(): PasswordGateState {
 
       if (attemptsRef.current >= MAX_ATTEMPTS) {
         lockedUntilRef.current = Date.now() + LOCKOUT_MS
-        sessionStorage.setItem(
-          'gateLockUntil',
-          String(lockedUntilRef.current),
-        )
+        sessionStorage.setItem('gateLockUntil', String(lockedUntilRef.current))
         setIsLockedOut(true)
       } else {
         const remaining = MAX_ATTEMPTS - attemptsRef.current
-        setError(
-          `Incorrect password (${remaining} attempt${remaining === 1 ? '' : 's'} remaining)`,
-        )
+        setError(`Incorrect password (${remaining} attempt${remaining === 1 ? '' : 's'} remaining)`)
       }
       return false
     },

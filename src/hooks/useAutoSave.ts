@@ -108,44 +108,39 @@ export function useAutoSave(
       for (const [formType, values] of Object.entries(data.forms)) {
         const form = forms[formType]
         if (form && values && Object.keys(values).length > 0) {
-          form.reset(values as Record<string, unknown>)
+          form.reset(values)
           restoredCount += Object.keys(values).length
         }
       }
 
-      return restoredCount > 0
-        ? { activeTab: data.activeTab, restoredCount }
-        : null
+      return restoredCount > 0 ? { activeTab: data.activeTab, restoredCount } : null
     } catch {
       return null
     }
   }, [forms, enabled])
 
   // Clear function
-  const clearDraft = useCallback(
-    (formType?: string) => {
-      suppressRef.current = true
-      try {
-        if (formType) {
-          const raw = localStorage.getItem(STORAGE_KEY)
-          if (raw) {
-            const data: DraftData = JSON.parse(raw)
-            delete data.forms[formType]
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
-          }
-        } else {
-          localStorage.removeItem(STORAGE_KEY)
+  const clearDraft = useCallback((formType?: string) => {
+    suppressRef.current = true
+    try {
+      if (formType) {
+        const raw = localStorage.getItem(STORAGE_KEY)
+        if (raw) {
+          const data: DraftData = JSON.parse(raw)
+          delete data.forms[formType]
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
         }
-      } catch {
-        // Silent fail
+      } else {
+        localStorage.removeItem(STORAGE_KEY)
       }
-      // Re-enable saves after a tick
-      setTimeout(() => {
-        suppressRef.current = false
-      }, 100)
-    },
-    [],
-  )
+    } catch {
+      // Silent fail
+    }
+    // Re-enable saves after a tick
+    setTimeout(() => {
+      suppressRef.current = false
+    }, 100)
+  }, [])
 
   return { save, restore, clearDraft }
 }

@@ -73,7 +73,7 @@ Resources:
         ThrottlingRateLimit: 100
         ThrottlingBurstLimit: 200
       RouteSettings:
-        "GET /semantic-search":
+        'GET /semantic-search':
           ThrottlingRateLimit: 1
           ThrottlingBurstLimit: 3
 
@@ -314,7 +314,7 @@ Resources:
             - GET
             - HEAD
           Compress: true
-          CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6  # Managed-CachingOptimized
+          CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6 # Managed-CachingOptimized
           ResponseHeadersPolicyId: !Ref SecurityHeadersPolicy
           FunctionAssociations:
             - EventType: viewer-request

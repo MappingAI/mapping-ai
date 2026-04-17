@@ -2,16 +2,14 @@ import { describe, it, expect, vi } from 'vitest'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { TagInput, type Tag, type TagSearchResult } from '../../components/TagInput'
 
-const mockSearch = vi.fn(
-  (query: string): TagSearchResult[] => {
-    const all = [
-      { id: 1, label: 'Anthropic', detail: 'Frontier Lab' },
-      { id: 2, label: 'OpenAI', detail: 'Frontier Lab' },
-      { id: 3, label: 'Google DeepMind', detail: 'Frontier Lab' },
-    ]
-    return all.filter((r) => r.label.toLowerCase().includes(query.toLowerCase()))
-  },
-)
+const mockSearch = vi.fn((query: string): TagSearchResult[] => {
+  const all = [
+    { id: 1, label: 'Anthropic', detail: 'Frontier Lab' },
+    { id: 2, label: 'OpenAI', detail: 'Frontier Lab' },
+    { id: 3, label: 'Google DeepMind', detail: 'Frontier Lab' },
+  ]
+  return all.filter((r) => r.label.toLowerCase().includes(query.toLowerCase()))
+})
 
 describe('TagInput', () => {
   it('renders placeholder when no tags', () => {
@@ -47,9 +45,7 @@ describe('TagInput', () => {
   })
 
   it('searches and shows results on input', async () => {
-    render(
-      <TagInput tags={[]} onTagsChange={() => {}} searchFn={mockSearch} debounceMs={0} />,
-    )
+    render(<TagInput tags={[]} onTagsChange={() => {}} searchFn={mockSearch} debounceMs={0} />)
     const input = screen.getByRole('textbox')
     fireEvent.change(input, { target: { value: 'open' } })
     await waitFor(() => {
@@ -59,9 +55,7 @@ describe('TagInput', () => {
 
   it('adds tag on result click', async () => {
     const onChange = vi.fn()
-    render(
-      <TagInput tags={[]} onTagsChange={onChange} searchFn={mockSearch} debounceMs={0} />,
-    )
+    render(<TagInput tags={[]} onTagsChange={onChange} searchFn={mockSearch} debounceMs={0} />)
     fireEvent.change(screen.getByRole('textbox'), { target: { value: 'open' } })
     await waitFor(() => screen.getByText('OpenAI'))
     fireEvent.mouseDown(screen.getByText('OpenAI'))
@@ -70,14 +64,14 @@ describe('TagInput', () => {
 
   it('prevents duplicate tags', async () => {
     const tags: Tag[] = [{ id: 2, label: 'OpenAI' }]
-    render(
-      <TagInput tags={tags} onTagsChange={() => {}} searchFn={mockSearch} debounceMs={0} />,
-    )
+    render(<TagInput tags={tags} onTagsChange={() => {}} searchFn={mockSearch} debounceMs={0} />)
     fireEvent.change(screen.getByRole('textbox'), { target: { value: 'open' } })
     await waitFor(() => {
       // Search for "open" matches only OpenAI, but it should be filtered out since it's a tag
       // So the dropdown should either be empty or not show the OpenAI result
-      const dropdownItems = document.querySelectorAll('[class*="cursor-pointer"][class*="font-mono"]')
+      const dropdownItems = document.querySelectorAll(
+        '[class*="cursor-pointer"][class*="font-mono"]',
+      )
       const texts = Array.from(dropdownItems).map((el) => el.textContent)
       expect(texts.some((t) => t?.includes('OpenAI'))).toBe(false)
     })
@@ -85,9 +79,7 @@ describe('TagInput', () => {
 
   it('hides input when maxTags reached', () => {
     const tags: Tag[] = [{ id: 1, label: 'Anthropic' }]
-    render(
-      <TagInput tags={tags} onTagsChange={() => {}} searchFn={mockSearch} maxTags={1} />,
-    )
+    render(<TagInput tags={tags} onTagsChange={() => {}} searchFn={mockSearch} maxTags={1} />)
     expect(screen.queryByRole('textbox')).toBeNull()
   })
 })

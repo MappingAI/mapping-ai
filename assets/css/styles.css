@@ -5,7 +5,7 @@
 }
 
 ::selection {
-  background: #FDFF6E;
+  background: #fdff6e;
   color: #000;
 }
 
@@ -14,7 +14,11 @@ html {
 }
 
 body {
-  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family:
+    'Space Grotesk',
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
   font-size: 17px;
   font-weight: 400;
   line-height: 1.65;

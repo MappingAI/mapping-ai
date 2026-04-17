@@ -1,21 +1,21 @@
 /**
  * Add party affiliations for US policymakers
- * 
+ *
  * Usage:
  *   node scripts/add-party-affiliations.js --dry-run    # Show what would happen
  *   node scripts/add-party-affiliations.js --execute    # Actually do it
  */
-import pg from 'pg';
-import 'dotenv/config';
+import pg from 'pg'
+import 'dotenv/config'
 
-const { Pool } = pg;
+const { Pool } = pg
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false },
-});
+})
 
-const args = process.argv.slice(2);
-const dryRun = !args.includes('--execute');
+const args = process.argv.slice(2)
+const dryRun = !args.includes('--execute')
 
 // Verified party affiliations for US politicians
 // D = Democratic Party, R = Republican Party, I = Independent (skip)
@@ -49,7 +49,7 @@ const PARTY_MAP = {
   'Ron Wyden': 'D',
   'Ted Cruz': 'R',
   'Todd Young': 'R',
-  
+
   // US House Representatives
   'Alex Bores': 'D', // NY State Assembly
   'Don Beyer': 'D',
@@ -61,7 +61,7 @@ const PARTY_MAP = {
   'Ted Lieu': 'D',
   'Valerie Foushee': 'D',
   'Zoe Lofgren': 'D',
-  
+
   // Governors & State Officials
   'Gavin Newsom': 'D',
   'Greg Abbott': 'R',
@@ -69,7 +69,7 @@ const PARTY_MAP = {
   'Jon Husted': 'R',
   'Kathy Hochul': 'D',
   'Scott Wiener': 'D', // CA State Senator
-  
+
   // Former officials / appointees (by administration)
   'Pete Buttigieg': 'D',
   'Gina Raimondo': 'D',
@@ -82,7 +82,7 @@ const PARTY_MAP = {
   'Lynne Parker': 'R', // Trump admin
   'David Sacks': 'R', // Trump admin
   'Sriram Krishnan': 'R', // Trump admin
-  
+
   // Skip - not US partisan politicians
   // 'Audrey Tang': null, // Taiwan
   // 'Margrethe Vestager': null, // EU
@@ -99,103 +99,113 @@ const PARTY_MAP = {
   // 'Laurie Locascio': null, // NIST career
   // 'Lina Khan': null, // FTC - I'll include as D since Biden appointee
   // 'Stefano Mazzocchi': null, // Not politician
-  
+
   // Biden appointees (reasonably D-affiliated)
   'Lina Khan': 'D',
   'Jonathan Kanter': 'D',
   'Alondra Nelson': 'D',
   'Jen Easterly': 'D',
-};
+}
 
 async function main() {
-  console.log('ADD PARTY AFFILIATIONS');
-  console.log('======================');
-  console.log(`Mode: ${dryRun ? 'DRY RUN' : 'EXECUTE'}\n`);
+  console.log('ADD PARTY AFFILIATIONS')
+  console.log('======================')
+  console.log(`Mode: ${dryRun ? 'DRY RUN' : 'EXECUTE'}\n`)
 
-  const client = await pool.connect();
+  const client = await pool.connect()
 
   try {
     // Get party entity IDs
     const parties = await client.query(`
       SELECT id, name FROM entity
       WHERE name IN ('Democratic Party', 'Republican Party') AND status = 'approved'
-    `);
-    
-    const demId = parties.rows.find(r => r.name === 'Democratic Party')?.id;
-    const repId = parties.rows.find(r => r.name === 'Republican Party')?.id;
-    
-    console.log(`Democratic Party ID: ${demId}`);
-    console.log(`Republican Party ID: ${repId}\n`);
+    `)
+
+    const demId = parties.rows.find((r) => r.name === 'Democratic Party')?.id
+    const repId = parties.rows.find((r) => r.name === 'Republican Party')?.id
+
+    console.log(`Democratic Party ID: ${demId}`)
+    console.log(`Republican Party ID: ${repId}\n`)
 
     // Get policymakers without party edges
-    const policymakers = await client.query(`
+    const policymakers = await client.query(
+      `
       SELECT p.id, p.name
       FROM entity p
       LEFT JOIN edge e ON e.source_id = p.id AND e.target_id IN ($1, $2)
       WHERE p.entity_type = 'person' AND p.category = 'Policymaker' AND p.status = 'approved'
         AND e.id IS NULL
       ORDER BY p.name
-    `, [demId, repId]);
+    `,
+      [demId, repId],
+    )
 
-    let added = 0;
-    let skipped = 0;
-    let notFound = [];
+    let added = 0
+    let skipped = 0
+    let notFound = []
 
     for (const p of policymakers.rows) {
-      const party = PARTY_MAP[p.name];
-      
+      const party = PARTY_MAP[p.name]
+
       if (!party) {
-        notFound.push(p.name);
-        continue;
-      }
-      
-      if (party === 'I') {
-        console.log(`  ⊘ ${p.name} - Independent (skipping)`);
-        skipped++;
-        continue;
+        notFound.push(p.name)
+        continue
       }
 
-      const partyId = party === 'D' ? demId : repId;
-      const partyName = party === 'D' ? 'Democratic Party' : 'Republican Party';
-      
-      console.log(`  + [${p.id}] ${p.name} → ${partyName}`);
-      
+      if (party === 'I') {
+        console.log(`  ⊘ ${p.name} - Independent (skipping)`)
+        skipped++
+        continue
+      }
+
+      const partyId = party === 'D' ? demId : repId
+      const partyName = party === 'D' ? 'Democratic Party' : 'Republican Party'
+
+      console.log(`  + [${p.id}] ${p.name} → ${partyName}`)
+
       if (!dryRun) {
-        await client.query(`
+        await client.query(
+          `
           INSERT INTO edge (source_id, target_id, edge_type, is_primary, created_by)
           VALUES ($1, $2, 'affiliated', false, 'party-affiliations')
           ON CONFLICT (source_id, target_id, edge_type) DO NOTHING
-        `, [p.id, partyId]);
+        `,
+          [p.id, partyId],
+        )
       }
-      added++;
+      added++
     }
 
-    console.log(`\n${dryRun ? 'Would add' : 'Added'}: ${added} party affiliations`);
-    console.log(`Skipped (Independent): ${skipped}`);
-    console.log(`Not in mapping (${notFound.length}): ${notFound.join(', ')}`);
+    console.log(`\n${dryRun ? 'Would add' : 'Added'}: ${added} party affiliations`)
+    console.log(`Skipped (Independent): ${skipped}`)
+    console.log(`Not in mapping (${notFound.length}): ${notFound.join(', ')}`)
 
     // Verify
     if (!dryRun) {
-      const verify = await client.query(`
+      const verify = await client.query(
+        `
         SELECT COUNT(*) as cnt
         FROM edge
         WHERE target_id IN ($1, $2) AND created_by = 'party-affiliations'
-      `, [demId, repId]);
-      console.log(`\nVerification: ${verify.rows[0].cnt} party edges with created_by='party-affiliations'`);
+      `,
+        [demId, repId],
+      )
+      console.log(
+        `\nVerification: ${verify.rows[0].cnt} party edges with created_by='party-affiliations'`,
+      )
     }
 
     if (dryRun) {
-      console.log('\nTo execute, run:');
-      console.log('  node scripts/add-party-affiliations.js --execute');
+      console.log('\nTo execute, run:')
+      console.log('  node scripts/add-party-affiliations.js --execute')
     }
-
   } finally {
-    client.release();
-    await pool.end();
+    client.release()
+    await pool.end()
   }
 }
 
-main().catch(err => {
-  console.error('Failed:', err);
-  process.exit(1);
-});
+main().catch((err) => {
+  console.error('Failed:', err)
+  process.exit(1)
+})

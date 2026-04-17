@@ -183,9 +183,7 @@ export function CustomSelect({
           {/* Options list */}
           <div ref={optionsRef} className="overflow-y-auto">
             {filtered.length === 0 ? (
-              <div className="px-3 py-2 text-[12px] font-mono text-[#888]">
-                No options
-              </div>
+              <div className="px-3 py-2 text-[12px] font-mono text-[#888]">No options</div>
             ) : (
               filtered.map((option, i) => {
                 const isSelected = option.value === value
@@ -233,28 +231,28 @@ export const SELECT_COLORS: Record<string, string> = {
   'AI Safety/Alignment': '#2d8a6e',
   'Think Tank/Policy Org': '#5b82bf',
   'Government/Agency': '#7c5cbf',
-  'Academic': '#d4a44a',
+  Academic: '#d4a44a',
   'VC/Capital/Philanthropy': '#1a8a8a',
   'Labor/Civil Society': '#d4885a',
   'Media/Journalism': '#8b6914',
   'Political Campaign/PAC': '#b06a8a',
   'Ethics/Bias/Rights': '#e07020',
   // Person roles
-  'Executive': '#d4644a',
-  'Researcher': '#2d8a6e',
-  'Policymaker': '#9955cc',
-  'Investor': '#1a8a8a',
-  'Organizer': '#d4885a',
-  'Journalist': '#8b6914',
+  Executive: '#d4644a',
+  Researcher: '#2d8a6e',
+  Policymaker: '#9955cc',
+  Investor: '#1a8a8a',
+  Organizer: '#d4885a',
+  Journalist: '#8b6914',
   'Cultural figure': '#b06a8a',
   // Regulatory stance
-  'Accelerate': '#f0c050',
+  Accelerate: '#f0c050',
   'Light-touch': '#d9a840',
-  'Targeted': '#c09030',
-  'Moderate': '#a07828',
-  'Restrictive': '#806020',
-  'Precautionary': '#604818',
-  'Nationalize': '#403010',
+  Targeted: '#c09030',
+  Moderate: '#a07828',
+  Restrictive: '#806020',
+  Precautionary: '#604818',
+  Nationalize: '#403010',
 }
 
 /** Helper to build SelectOption[] from a label array with auto-colors */

@@ -460,10 +460,7 @@
     "belief_threat_models": null,
     "status": "pending",
     "llm_review": {
-      "flags": [
-        "low-quality",
-        "incomplete"
-      ],
+      "flags": ["low-quality", "incomplete"],
       "notes": "Scott Wiener is a California State Senator focused on housing/transportation policy, not AI governance. The 'AGI in 2-3 years' claim is an extreme outlier unsupported by mainstream AI research and inconsistent with his actual policy record. Missing critical fields: affiliation, specific policy positions, source/date of data, and evidence supporting timeline claim. Appears to be either misclassified, fabricated, or from unreliable source.",
       "quality": 2
     },
@@ -612,9 +609,7 @@
     "belief_threat_models": null,
     "status": "merged",
     "llm_review": {
-      "flags": [
-        "incomplete"
-      ],
+      "flags": ["incomplete"],
       "notes": "Entry identifies a real AI policy stakeholder (CA State Senator Scott Wiener, known for tech regulation work), but lacks supporting documentation, verification source, and nuance. The 'Restrictive' stance is oversimplified—Wiener's actual positions are more nuanced (e.g., supports regulation but not blanket bans). Missing: affiliation details, specific policy positions, date submitted, and evidence for AGI timeline claim. Needs citation sources and more granular stance breakdown.",
       "quality": 3
     },
@@ -665,11 +660,7 @@
     "belief_threat_models": null,
     "status": "pending",
     "llm_review": {
-      "flags": [
-        "spam",
-        "low-quality",
-        "incomplete"
-      ],
+      "flags": ["spam", "low-quality", "incomplete"],
       "notes": "Submission appears to be a test entry with generic placeholder name ('Test Debug Org 4-3') lacking substantive information. Missing critical fields: description, location, focus areas, and any policy-relevant details. Not a legitimate organization entry suitable for a policy stakeholder database.",
       "quality": 1
     },
@@ -720,10 +711,7 @@
     "belief_threat_models": null,
     "status": "pending",
     "llm_review": {
-      "flags": [
-        "incomplete",
-        "low-quality"
-      ],
+      "flags": ["incomplete", "low-quality"],
       "notes": "Submission lacks essential information for a policy stakeholder database entry. Missing: organization description/mission, location, policy focus areas, contact information, and any distinguishing details. The name 'Test Pending Org' suggests this may be a test submission rather than a legitimate stakeholder entity. Requires substantial additional data to be useful.",
       "quality": 1
     },
@@ -774,11 +762,7 @@
     "belief_threat_models": null,
     "status": "pending",
     "llm_review": {
-      "flags": [
-        "incomplete",
-        "low-quality",
-        "spam"
-      ],
+      "flags": ["incomplete", "low-quality", "spam"],
       "notes": "Submission contains only a generic placeholder name and minimal required fields. 'Test Person' appears to be sample data rather than a legitimate stakeholder entry. Missing critical information: organization, role, policy focus areas, contact details, and expertise description. Unsuitable for a policy stakeholder database.",
       "quality": 1
     },
@@ -829,11 +813,7 @@
     "belief_threat_models": null,
     "status": "pending",
     "llm_review": {
-      "flags": [
-        "spam",
-        "incomplete",
-        "low-quality"
-      ],
+      "flags": ["spam", "incomplete", "low-quality"],
       "notes": "Entry appears to be a test submission with placeholder name 'Submit Test 4-3'. Missing critical information: no description, location, focus area, or contact details. Not a genuine organization entry for a policy stakeholder database.",
       "quality": 1
     },
@@ -884,11 +864,7 @@
     "belief_threat_models": null,
     "status": "pending",
     "llm_review": {
-      "flags": [
-        "incomplete",
-        "low-quality",
-        "spam"
-      ],
+      "flags": ["incomplete", "low-quality", "spam"],
       "notes": "Entry appears to be a test submission with placeholder name 'Final Submit Test'. Missing critical information: no description, location, focus area, website, or contact details. Insufficient data to identify or verify the organization's relevance to AI policy stakeholder landscape.",
       "quality": 1
     },
@@ -1516,11 +1492,7 @@
     "belief_threat_models": null,
     "status": "pending",
     "llm_review": {
-      "flags": [
-        "incomplete",
-        "low-quality",
-        "spam"
-      ],
+      "flags": ["incomplete", "low-quality", "spam"],
       "notes": "Submission lacks substantive information. Generic name suggests test/placeholder entry. Missing critical fields: description, location, policy focus areas, contact information, and organizational details. No evidence of legitimate AI policy stakeholder engagement.",
       "quality": 1
     },
@@ -1576,10 +1548,7 @@
     "belief_threat_models": null,
     "status": "pending",
     "llm_review": {
-      "flags": [
-        "incomplete",
-        "low-quality"
-      ],
+      "flags": ["incomplete", "low-quality"],
       "notes": "Entry lacks substantive policy detail. 'Targeted' stance is vague without explanation of specific positions or concerns. The affiliation note references Chris Smalls (labor activist) but provides no context on relevance to Etsy's AI policy stance. Missing: documented policy statements, specific AI areas of concern, engagement history, or evidence supporting regulatory position. Requires expansion with credible sources.",
       "quality": 2
     },
@@ -1635,10 +1604,7 @@
     "belief_threat_models": "Labor displacement, Misinformation, Copyright/IP",
     "status": "pending",
     "llm_review": {
-      "flags": [
-        "incomplete",
-        "low-quality"
-      ],
+      "flags": ["incomplete", "low-quality"],
       "notes": "Rick Rubin is a music producer/executive, not a known AI policy stakeholder or researcher. No verifiable connection to AI policy work. The '@Dario Amodei' affiliation appears speculative and lacks context. Missing: organization affiliation, specific policy positions, sources, or explanation for inclusion. 'Already here' AGI timeline and 'Manageable' risk assessment lack substantiation. Entry needs significant verification before database inclusion.",
       "quality": 2
     },
@@ -1689,10 +1655,7 @@
     "belief_threat_models": null,
     "status": "pending",
     "llm_review": {
-      "flags": [
-        "incomplete",
-        "low-quality"
-      ],
+      "flags": ["incomplete", "low-quality"],
       "notes": "Submission lacks essential information for a policy stakeholder database. Missing: organization description, location, policy focus areas, contact information, and clarification of what 'Aaru' is (company, nonprofit, research institute, etc.). Cannot assess relevance to AI policy without additional context. Requires substantial expansion to be useful.",
       "quality": 1
     },
@@ -1743,10 +1706,7 @@
     "belief_threat_models": null,
     "status": "pending",
     "llm_review": {
-      "flags": [
-        "incomplete",
-        "low-quality"
-      ],
+      "flags": ["incomplete", "low-quality"],
       "notes": "Submission lacks critical identifying information. Missing: organization description, website/contact details, location, specific policy positions, and evidence supporting claims. 'Aaru' is ambiguous (multiple entities exist with this name). AGI timeline of '2-3 years' is extraordinary and unsupported. No source verification possible. Insufficient detail for meaningful stakeholder database entry.",
       "quality": 2
     },

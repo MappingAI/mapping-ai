@@ -3,67 +3,67 @@
 # Or directly: npx artillery run scripts/load-test.yml --target $API_BASE
 
 config:
-  target: "{{ $processEnvironment.API_BASE }}"
+  target: '{{ $processEnvironment.API_BASE }}'
   phases:
     # Phase 1: Warm-up — establish baseline
     - duration: 30
       arrivalRate: 10
-      name: "Warm-up (10 rps)"
+      name: 'Warm-up (10 rps)'
     # Phase 2: Ramp — simulate growing traffic
     - duration: 60
       arrivalRate: 10
       rampTo: 100
-      name: "Ramp (10 → 100 rps)"
+      name: 'Ramp (10 → 100 rps)'
     # Phase 3: Sustained — peak traffic simulation
     - duration: 60
       arrivalRate: 100
-      name: "Sustained (100 rps)"
+      name: 'Sustained (100 rps)'
   defaults:
     headers:
-      Origin: "https://mapping-ai.org"
+      Origin: 'https://mapping-ai.org'
   ensure:
     thresholds:
       - http.response_time.p99: 3000
       - http.codes.5xx: 0
     conditions:
-      - expression: "http.codes.429 < 50"
+      - expression: 'http.codes.429 < 50'
         strict: false
 
 scenarios:
   # 70% — Read: search queries (most common user action)
-  - name: "Search API"
+  - name: 'Search API'
     weight: 70
     flow:
       - get:
-          url: "/search?q={{ $randomString() }}"
+          url: '/search?q={{ $randomString() }}'
           expect:
             - statusCode: 200
 
   # 20% — Read: full entity list (map data fallback)
-  - name: "Submissions API"
+  - name: 'Submissions API'
     weight: 20
     flow:
       - get:
-          url: "/submissions"
+          url: '/submissions'
           expect:
             - statusCode: 200
 
   # 10% — Write: form submissions
-  - name: "Submit API"
+  - name: 'Submit API'
     weight: 10
     flow:
       - post:
-          url: "/submit"
+          url: '/submit'
           headers:
-            Content-Type: "application/json"
+            Content-Type: 'application/json'
           json:
-            type: "person"
-            timestamp: "{{ $timestamp }}"
+            type: 'person'
+            timestamp: '{{ $timestamp }}'
             data:
-              name: "Load Test Person {{ $randomString() }}"
-              category: "Researcher"
-              submitterEmail: "loadtest@example.com"
-              submitterRelationship: "external"
-            _hp: "bot"  # Honeypot field — submission silently accepted but not stored
+              name: 'Load Test Person {{ $randomString() }}'
+              category: 'Researcher'
+              submitterEmail: 'loadtest@example.com'
+              submitterRelationship: 'external'
+            _hp: 'bot' # Honeypot field — submission silently accepted but not stored
           expect:
             - statusCode: 200

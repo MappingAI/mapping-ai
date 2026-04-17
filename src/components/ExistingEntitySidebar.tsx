@@ -4,14 +4,25 @@ import type { FuzzySearchResult } from '../types/api'
 import type { Entity } from '../types/entity'
 
 const CATEGORY_COLORS: Record<string, string> = {
-  'Frontier Lab': '#d4644a', 'AI Infrastructure & Compute': '#6366F1', 'Deployers & Platforms': '#EC4899',
-  'AI Safety/Alignment': '#2d8a6e', 'AI Safety': '#2d8a6e',
-  'Think Tank/Policy Org': '#5b82bf', 'Government/Agency': '#7c5cbf',
-  'Academic': '#d4a44a', 'VC/Capital/Philanthropy': '#1a8a8a',
-  'Labor/Civil Society': '#d4885a', 'Media/Journalism': '#8b6914',
-  'Ethics/Bias/Rights': '#e07020', 'Political Campaign/PAC': '#8b5cf6',
-  'Executive': '#d4644a', 'Researcher': '#2d8a6e', 'Policymaker': '#9955cc',
-  'Investor': '#1a8a8a', 'Organizer': '#d4885a', 'Journalist': '#8b6914',
+  'Frontier Lab': '#d4644a',
+  'AI Infrastructure & Compute': '#6366F1',
+  'Deployers & Platforms': '#EC4899',
+  'AI Safety/Alignment': '#2d8a6e',
+  'AI Safety': '#2d8a6e',
+  'Think Tank/Policy Org': '#5b82bf',
+  'Government/Agency': '#7c5cbf',
+  Academic: '#d4a44a',
+  'VC/Capital/Philanthropy': '#1a8a8a',
+  'Labor/Civil Society': '#d4885a',
+  'Media/Journalism': '#8b6914',
+  'Ethics/Bias/Rights': '#e07020',
+  'Political Campaign/PAC': '#8b5cf6',
+  Executive: '#d4644a',
+  Researcher: '#2d8a6e',
+  Policymaker: '#9955cc',
+  Investor: '#1a8a8a',
+  Organizer: '#d4885a',
+  Journalist: '#8b6914',
   'Cultural figure': '#EC4899',
 }
 
@@ -25,7 +36,9 @@ function Field({ label, value }: { label: string; value: string | null | undefin
   if (!value) return null
   return (
     <div className="mb-2.5">
-      <label className="block font-mono text-[9px] uppercase tracking-wider text-[#888] mb-0.5">{label}</label>
+      <label className="block font-mono text-[9px] uppercase tracking-wider text-[#888] mb-0.5">
+        {label}
+      </label>
       <span className="font-serif text-[14px] text-[#1a1a1a]">{value}</span>
     </div>
   )
@@ -35,7 +48,9 @@ function HtmlField({ label, html }: { label: string; html: string | null | undef
   if (!html) return null
   return (
     <div className="mb-2.5">
-      <label className="block font-mono text-[9px] uppercase tracking-wider text-[#888] mb-0.5">{label}</label>
+      <label className="block font-mono text-[9px] uppercase tracking-wider text-[#888] mb-0.5">
+        {label}
+      </label>
       <div
         className="font-serif text-[13px] text-[#1a1a1a] leading-relaxed [&_.mention]:text-[#2563eb] [&_.mention]:font-semibold [&_a]:text-[#2563eb] [&_a:hover]:underline"
         dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(html) }}
@@ -122,7 +137,8 @@ export function ExistingEntitySidebar({ entity, entityType, onClose }: ExistingE
         )}
 
         <div className="font-mono text-[10px] text-[#2563eb] bg-[#f0f4ff] p-3 rounded mt-4 leading-relaxed">
-          Please review the existing info above. Your submission will add new information and any conflicting details will be stored for review.
+          Please review the existing info above. Your submission will add new information and any
+          conflicting details will be stored for review.
         </div>
       </div>
 

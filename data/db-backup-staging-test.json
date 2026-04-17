@@ -21078,10 +21078,7 @@
       "reviewed_at": null,
       "reviewed_by": null,
       "llm_review": {
-        "flags": [
-          "low-quality",
-          "incomplete"
-        ],
+        "flags": ["low-quality", "incomplete"],
         "notes": "Scott Wiener is a California State Senator focused on housing/transportation policy, not AI governance. The 'AGI in 2-3 years' claim is an extreme outlier unsupported by mainstream AI research and inconsistent with his actual policy record. Missing critical fields: affiliation, specific policy positions, source/date of data, and evidence supporting timeline claim. Appears to be either misclassified, fabricated, or from unreliable source.",
         "quality": 2
       },
@@ -21151,9 +21148,7 @@
       "reviewed_at": "2026-03-30T06:43:51.977Z",
       "reviewed_by": null,
       "llm_review": {
-        "flags": [
-          "incomplete"
-        ],
+        "flags": ["incomplete"],
         "notes": "Entry identifies a real AI policy stakeholder (CA State Senator Scott Wiener, known for tech regulation work), but lacks supporting documentation, verification source, and nuance. The 'Restrictive' stance is oversimplified—Wiener's actual positions are more nuanced (e.g., supports regulation but not blanket bans). Missing: affiliation details, specific policy positions, date submitted, and evidence for AGI timeline claim. Needs citation sources and more granular stance breakdown.",
         "quality": 3
       },
