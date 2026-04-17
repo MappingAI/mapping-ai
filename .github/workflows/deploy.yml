@@ -120,6 +120,17 @@ jobs:
               --delete
           fi
 
+          # Fixtures — committed synthetic fallback for `/map-data.json`
+          # and `/map-detail.json`. Only reached when the primary 404s; the
+          # regular CI path uploads a fresh map-data.json above that takes
+          # precedence. Kept on short cache so a fixture refresh propagates
+          # quickly without manual invalidation.
+          if [ -d dist/fixtures ]; then
+            aws s3 sync dist/fixtures/ s3://${{ secrets.S3_BUCKET_NAME }}/fixtures/ \
+              --cache-control "public, max-age=60, stale-while-revalidate=300" \
+              --delete
+          fi
+
       - name: Invalidate CloudFront cache
         run: |
           aws cloudfront create-invalidation \
