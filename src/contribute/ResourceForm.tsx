@@ -10,6 +10,7 @@ import { useEntityCache } from '../hooks/useEntityCache'
 import { useSubmitEntity } from '../hooks/useSubmitEntity'
 import { fuzzySearch } from '../lib/search'
 import { searchEntities as searchAPI } from '../lib/api'
+import type { FuzzySearchResult } from '../types/api'
 import type { UpdateContext } from './ContributeForm'
 
 interface ResourceFormProps {
@@ -17,6 +18,7 @@ interface ResourceFormProps {
   updateContext: UpdateContext | null
   onOrgPanelOpen?: (name: string, triggerType: 'primary' | 'affiliated') => void
   onSwitchToPersonTab?: () => void
+  onViewExisting?: (entity: FuzzySearchResult) => void
   onEnterUpdateMode?: (entityData: Record<string, unknown>) => void
   onSubmitSuccess?: () => void
 }
@@ -37,7 +39,7 @@ const LABEL_CLASS = 'font-mono text-[11px] uppercase tracking-wider text-[#555]'
 const INPUT_CLASS =
   'w-full px-3 py-2 font-mono text-[13px] border border-[#ddd] rounded bg-white outline-none transition-colors hover:border-[#999] focus:border-[#2563eb]'
 
-export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPersonTab, onEnterUpdateMode, onSubmitSuccess }: ResourceFormProps) {
+export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPersonTab, onViewExisting, onEnterUpdateMode, onSubmitSuccess }: ResourceFormProps) {
   const { register, control, watch, handleSubmit, formState: { errors } } = form
   const { cache } = useEntityCache()
   const submitEntity = useSubmitEntity()
@@ -145,7 +147,7 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPe
           <DuplicateDetection
             query={(watch('resourceTitle') as string) ?? ''}
             entityType="resource"
-            onViewExisting={(entity) => window.open(`/map?search=${encodeURIComponent(entity.name)}`, '_blank')}
+            onViewExisting={(entity) => onViewExisting?.(entity)}
             onUpdateExisting={(entity) => onEnterUpdateMode?.({ id: entity.id, name: entity.name, resourceTitle: entity.name })}
           />
         )}

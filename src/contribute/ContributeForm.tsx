@@ -8,8 +8,10 @@ import { OrganizationForm } from './OrganizationForm'
 import { ResourceForm } from './ResourceForm'
 import { OrgCreationPanel } from './OrgCreationPanel'
 import { ExampleSubmission } from './ExampleSubmission'
+import { ExistingEntitySidebar } from '../components/ExistingEntitySidebar'
 import { SuccessMessage } from './SuccessMessage'
 import type { Entity } from '../types/entity'
+import type { FuzzySearchResult } from '../types/api'
 
 export type FormType = 'person' | 'organization' | 'resource'
 
@@ -147,6 +149,9 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
     [],
   )
 
+  // Existing entity sidebar state
+  const [viewEntity, setViewEntity] = useState<{ entity: FuzzySearchResult; type: FormType } | null>(null)
+
   // Success state
   const [successType, setSuccessType] = useState<FormType | null>(null)
   const [successIsUpdate, setSuccessIsUpdate] = useState(false)
@@ -215,6 +220,7 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
             form={personForm}
             updateContext={updateContexts.person}
             onOrgPanelOpen={openOrgPanel}
+            onViewExisting={(entity) => setViewEntity({ entity, type: 'person' })}
             onEnterUpdateMode={(data) => switchToFormInUpdateMode('person', data as Partial<Entity>)}
             onSubmitSuccess={() => handleSubmitSuccess('person')}
           />
@@ -234,6 +240,7 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
             form={orgForm}
             updateContext={updateContexts.organization}
             onOrgPanelOpen={openOrgPanel}
+            onViewExisting={(entity) => setViewEntity({ entity, type: 'organization' })}
             onEnterUpdateMode={(data) => switchToFormInUpdateMode('organization', data as Partial<Entity>)}
             onSubmitSuccess={() => handleSubmitSuccess('organization')}
           />
@@ -254,10 +261,20 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
             updateContext={updateContexts.resource}
             onOrgPanelOpen={openOrgPanel}
             onSwitchToPersonTab={() => setActiveTab('person')}
+            onViewExisting={(entity) => setViewEntity({ entity, type: 'resource' })}
             onEnterUpdateMode={(data) => switchToFormInUpdateMode('resource', data as Partial<Entity>)}
             onSubmitSuccess={() => handleSubmitSuccess('resource')}
           />
         </div>
+
+        {/* Existing Entity Sidebar */}
+        {viewEntity && (
+          <ExistingEntitySidebar
+            entity={viewEntity.entity}
+            entityType={viewEntity.type}
+            onClose={() => setViewEntity(null)}
+          />
+        )}
 
         {/* Org Creation Panel */}
         <OrgCreationPanel

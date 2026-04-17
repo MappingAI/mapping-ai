@@ -13,12 +13,14 @@ import { useEntityCache } from '../hooks/useEntityCache'
 import { useSubmitEntity } from '../hooks/useSubmitEntity'
 import { fuzzySearch } from '../lib/search'
 import { searchEntities as searchAPI } from '../lib/api'
+import type { FuzzySearchResult } from '../types/api'
 import type { UpdateContext } from './ContributeForm'
 
 interface PersonFormProps {
   form: UseFormReturn<Record<string, unknown>>
   updateContext: UpdateContext | null
   onOrgPanelOpen: (name: string, triggerType: 'primary' | 'affiliated') => void
+  onViewExisting?: (entity: FuzzySearchResult) => void
   onEnterUpdateMode?: (entityData: Record<string, unknown>) => void
   onSubmitSuccess?: () => void
 }
@@ -102,7 +104,7 @@ const LABEL_CLASS = 'font-mono text-[11px] uppercase tracking-wider text-[#555]'
 const INPUT_CLASS =
   'w-full px-3 py-2 font-mono text-[13px] border border-[#ddd] rounded bg-white outline-none transition-colors hover:border-[#999] focus:border-[#2563eb]'
 
-export function PersonForm({ form, updateContext, onOrgPanelOpen, onEnterUpdateMode, onSubmitSuccess }: PersonFormProps) {
+export function PersonForm({ form, updateContext, onOrgPanelOpen, onViewExisting, onEnterUpdateMode, onSubmitSuccess }: PersonFormProps) {
   const { register, control, watch, handleSubmit, formState: { errors } } = form
   const { cache } = useEntityCache()
   const submitEntity = useSubmitEntity()
@@ -220,7 +222,7 @@ export function PersonForm({ form, updateContext, onOrgPanelOpen, onEnterUpdateM
           <DuplicateDetection
             query={(watch('name') as string) ?? ''}
             entityType="person"
-            onViewExisting={(entity) => window.open(`/map?search=${encodeURIComponent(entity.name)}`, '_blank')}
+            onViewExisting={(entity) => onViewExisting?.(entity)}
             onUpdateExisting={(entity) => onEnterUpdateMode?.({ id: entity.id, name: entity.name, category: entity.category, title: entity.title, primary_org: entity.primary_org })}
           />
         )}
