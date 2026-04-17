@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Insights — Mapping AI</title>
+  <title>Insights -Mapping AI</title>
   <link rel="icon" type="image/svg+xml" href="/assets/favicon/favicon.svg">
   <link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon/favicon-96x96.png">
   <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
   <link rel="manifest" href="/assets/favicon/site.webmanifest">
-  <meta name="description" content="Data-driven analysis of the U.S. AI policy landscape — network structure, belief distributions, and ecosystem dynamics.">
+  <meta name="description" content="Data-driven analysis of the U.S. AI policy landscape -network structure, belief distributions, and ecosystem dynamics.">
   <meta property="og:title" content="Mapping AI Insights">
   <meta property="og:description" content="Structural analysis of U.S. AI governance: who connects to whom, what they believe, and how the ecosystem is organized.">
   <meta property="og:image" content="https://mapping-ai.org/assets/images/og-image.png">
@@ -334,7 +334,7 @@ a:hover { text-decoration: underline; }
     </div>
   </div>
 
-  <p class="fade-in">This page presents structural analyses of the Mapping AI database. Our guiding principle: avoid selection bias by focusing on in-group comparisons rather than extrapolating to the broader population. We're interested in relational patterns — who clusters with whom, what beliefs travel together, which communities are bridged or siloed.</p>
+  <p class="fade-in">This page presents structural analyses of the Mapping AI database. Our guiding principle: avoid selection bias by focusing on in-group comparisons rather than extrapolating to the broader population. We're interested in relational patterns -who clusters with whom, what beliefs travel together, which communities are bridged or siloed.</p>
 
   <hr class="rule">
 
@@ -343,7 +343,7 @@ a:hover { text-decoration: underline; }
   <!-- ═══════════════════════════════════════════ -->
 
   <div id="belief-space">
-    <div class="section-label">Section 1</div>
+    <div class="section-label">Insight 1</div>
     <h2>The Belief Space</h2>
 
     <p class="fade-in">We track three belief dimensions for people and organizations: <strong>regulatory stance</strong> (accelerate → precautionary), <strong>AGI timeline</strong> (already here → 25+ years), and <strong>AI risk level</strong> (overstated → existential). These form a three-dimensional "belief space" where entities can be positioned.</p>
@@ -363,12 +363,12 @@ a:hover { text-decoration: underline; }
 
     <h3 style="font-size: 18px; margin-top: 2rem;">Funding model → ideology</h3>
 
-    <p class="fade-in">Does knowing how an organization is funded predict its regulatory stance? This isn't necessarily causal — funders may seek out aligned orgs, not shape them — but the correlation is structurally important.</p>
+    <p class="fade-in">Does knowing how an organization is funded predict its regulatory stance? This isn't necessarily causal -funders may seek out aligned orgs, not shape them -but the correlation is structurally important.</p>
 
     <div class="chart-container fade-in">
       <div class="chart-title">Mean regulatory stance by funding model</div>
       <div id="chart-funding-stance"></div>
-      <div class="chart-source">Scale: 1 = Accelerate ... 6 = Precautionary. Only funding models with 5+ orgs shown.</div>
+      <div class="chart-source">Scale: 1 = Accelerate, 6 = Precautionary. Only funding models with 5+ orgs shown.</div>
     </div>
 
     <div class="finding fade-in">
@@ -384,7 +384,7 @@ a:hover { text-decoration: underline; }
   <!-- ═══════════════════════════════════════════ -->
 
   <div id="threat-models">
-    <div class="section-label">Section 2</div>
+    <div class="section-label">Insight 2</div>
     <h2>Threat Models & Key Concerns</h2>
 
     <p class="fade-in">Entities identify which AI-related concerns they prioritize: loss of control, labor displacement, existential risk, democratic erosion, and more. These "threat models" reveal what problems different communities are trying to solve.</p>
@@ -397,7 +397,7 @@ a:hover { text-decoration: underline; }
 
     <h3 style="font-size: 18px; margin-top: 2rem;">Concern co-occurrence</h3>
 
-    <p class="fade-in">Which concerns travel together? If someone cites "loss of control," are they likely to also cite "existential risk"? The co-occurrence matrix reveals concern clusters — sets of worries that form coherent worldviews.</p>
+    <p class="fade-in">Which concerns travel together? If someone cites "loss of control," are they likely to also cite "existential risk"? The co-occurrence matrix reveals concern clusters -sets of worries that form coherent worldviews.</p>
 
     <div class="chart-container fade-in">
       <div class="chart-title">Threat model co-occurrence (Jaccard similarity)</div>
@@ -418,7 +418,7 @@ a:hover { text-decoration: underline; }
   <!-- ═══════════════════════════════════════════ -->
 
   <div id="network">
-    <div class="section-label">Section 3</div>
+    <div class="section-label">Insight 3</div>
     <h2>Connectivity</h2>
 
     <p class="fade-in">The database tracks <span id="edge-count">—</span> relationships between entities: affiliations, collaborations, funding, citations, and more. How connected is each stakeholder category to others? A category with high external connectivity serves as a hub or bridge; one with low connectivity may be siloed.</p>
@@ -445,6 +445,7 @@ a:hover { text-decoration: underline; }
 </div>
 
 <script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="data-cleanup.js"></script>
 <script>
 (async function() {
   // ── Tooltip helpers ──
@@ -563,7 +564,7 @@ a:hover { text-decoration: underline; }
     const maxStance = STANCE_LABELS[stanceCounts.indexOf(Math.max(...stanceCounts))];
     const minStance = STANCE_LABELS[stanceCounts.indexOf(Math.min(...stanceCounts.filter(c => c > 0)))];
     document.getElementById('finding-density').textContent =
-      `The belief space is unevenly populated. "${maxStance}" is the most common regulatory stance, while "${minStance}" is least represented. This concentration suggests either consensus or sampling bias — distinguishing between them requires external validation.`;
+      `The belief space is unevenly populated. "${maxStance}" is the most common regulatory stance, while "${minStance}" is least represented. This concentration suggests either consensus or sampling bias -distinguishing between them requires external validation.`;
   }
 
   // ══════════════════════════════════════════════════════════════
@@ -754,18 +755,17 @@ a:hover { text-decoration: underline; }
   }
 
   function renderThreatCooccurrence() {
-    // Use shorter labels for display, full names for tooltips
+    // Full labels for display
     const THREATS = [
-      { short: 'Loss of control', full: 'Loss of control' },
-      { short: 'Existential risk', full: 'Existential risk' },
-      { short: 'Power conc.', full: 'Power concentration' },
-      { short: 'Labor displ.', full: 'Labor displacement' },
-      { short: 'Econ. inequality', full: 'Economic inequality' },
-      { short: 'Dem. erosion', full: 'Democratic erosion' },
-      { short: 'Misinfo', full: 'Misinformation' },
-      { short: 'Bias/discrim.', full: 'Bias/discrimination' }
+      'Loss of control',
+      'Existential risk',
+      'Power concentration',
+      'Labor displacement',
+      'Economic inequality',
+      'Democratic erosion',
+      'Misinformation',
+      'Bias/discrimination'
     ];
-    const THREAT_NAMES = THREATS.map(t => t.full);
 
     const entitiesWithThreats = allEntities.filter(e => e.threat_models);
 
@@ -778,12 +778,12 @@ a:hover { text-decoration: underline; }
       return union === 0 ? 0 : intersection / union;
     };
 
-    const matrix = THREAT_NAMES.map(a => THREAT_NAMES.map(b => a === b ? 1 : jaccard(a, b)));
+    const matrix = THREATS.map(a => THREATS.map(b => a === b ? 1 : jaccard(a, b)));
 
     const container = document.getElementById('chart-threat-cooccurrence');
     const cellSize = 52;
-    const labelPadLeft = 130;
-    const labelPadTop = 100; // Extra space for rotated labels
+    const labelPadLeft = 160; // More space for full labels
+    const labelPadTop = 130; // More space for rotated labels
     const W = THREATS.length * cellSize + labelPadLeft;
     const H = THREATS.length * cellSize + labelPadTop;
 
@@ -794,22 +794,22 @@ a:hover { text-decoration: underline; }
     const maxVal = d3.max(matrix.flat().filter(v => v < 1));
     const colorScale = d3.scaleSequential(d3.interpolateYlOrRd).domain([0, maxVal]);
 
-    // Row labels (left side)
+    // Row labels (left side) - full names
     THREATS.forEach((t, i) => {
       svg.append('text')
         .attr('x', labelPadLeft - 8).attr('y', labelPadTop + i * cellSize + cellSize / 2)
         .attr('text-anchor', 'end').attr('dominant-baseline', 'middle')
-        .attr('font-family', 'var(--mono)').attr('font-size', 10).attr('fill', '#555')
-        .text(t.short);
+        .attr('font-family', 'var(--mono)').attr('font-size', 9).attr('fill', '#555')
+        .text(t);
     });
 
-    // Column labels (top, rotated) - position them so they don't get cut off
+    // Column labels (top, rotated) - full names
     THREATS.forEach((t, i) => {
       svg.append('text')
         .attr('transform', `translate(${labelPadLeft + i * cellSize + cellSize / 2}, ${labelPadTop - 10}) rotate(-50)`)
         .attr('text-anchor', 'start')
-        .attr('font-family', 'var(--mono)').attr('font-size', 10).attr('fill', '#555')
-        .text(t.short);
+        .attr('font-family', 'var(--mono)').attr('font-size', 9).attr('fill', '#555')
+        .text(t);
     });
 
     // Cells - TRIANGULAR (upper triangle only, excluding diagonal)
@@ -823,18 +823,17 @@ a:hover { text-decoration: underline; }
           .attr('width', cellSize - 2).attr('height', cellSize - 2)
           .attr('fill', colorScale(val))
           .attr('rx', 3)
-          .on('mousemove', ev => showTooltip(ev, `${THREATS[i].full} + ${THREATS[j].full}<br>Jaccard: <strong>${val.toFixed(2)}</strong>`))
+          .on('mousemove', ev => showTooltip(ev, `${THREATS[i]} + ${THREATS[j]}<br>Jaccard: <strong>${val.toFixed(2)}</strong>`))
           .on('mouseleave', hideTooltip);
 
-        if (val > 0.08) {
-          svg.append('text')
-            .attr('x', labelPadLeft + j * cellSize + cellSize / 2 - 1)
-            .attr('y', labelPadTop + i * cellSize + cellSize / 2)
-            .attr('text-anchor', 'middle').attr('dominant-baseline', 'middle')
-            .attr('font-family', 'var(--mono)').attr('font-size', 10)
-            .attr('fill', val > 0.25 ? '#fff' : '#333')
-            .text(val.toFixed(2));
-        }
+        // Always show the value
+        svg.append('text')
+          .attr('x', labelPadLeft + j * cellSize + cellSize / 2 - 1)
+          .attr('y', labelPadTop + i * cellSize + cellSize / 2)
+          .attr('text-anchor', 'middle').attr('dominant-baseline', 'middle')
+          .attr('font-family', 'var(--mono)').attr('font-size', 10)
+          .attr('fill', val > 0.25 ? '#fff' : '#333')
+          .text(val.toFixed(2));
       });
     });
 
@@ -842,7 +841,7 @@ a:hover { text-decoration: underline; }
     const pairs = [];
     for (let i = 0; i < THREATS.length; i++) {
       for (let j = i + 1; j < THREATS.length; j++) {
-        pairs.push({ a: THREATS[i].full, b: THREATS[j].full, sim: matrix[i][j] });
+        pairs.push({ a: THREATS[i], b: THREATS[j], sim: matrix[i][j] });
       }
     }
     pairs.sort((a, b) => b.sim - a.sim);
@@ -856,8 +855,15 @@ a:hover { text-decoration: underline; }
   // ══════════════════════════════════════════════════════════════
 
   function renderFundingStance() {
-    const orgsWithFunding = data.organizations.filter(o => o.funding_model && o.stance_score != null);
-    const byFunding = d3.group(orgsWithFunding, d => d.funding_model);
+    // Use normalized funding models
+    const orgsWithFunding = data.organizations
+      .filter(o => o.funding_model && o.stance_score != null)
+      .map(o => ({
+        ...o,
+        funding_normalized: DataCleanup.normalizeFundingModel(o.funding_model)
+      }));
+
+    const byFunding = d3.group(orgsWithFunding, d => d.funding_normalized);
 
     const stats = Array.from(byFunding.entries())
       .filter(([_, orgs]) => orgs.length >= 5)
@@ -873,11 +879,11 @@ a:hover { text-decoration: underline; }
     const W = container.clientWidth || 660;
     const barH = 28, gap = 6, padL = 180, padR = 80;
     const dataHeight = stats.length * (barH + gap) + 10; // Height for all data rows
-    const axisAreaHeight = 60; // Space for axis line and labels
+    const axisAreaHeight = 80; // Space for axis line and labels
     const H = dataHeight + axisAreaHeight;
 
-    // Readable short labels for x-axis
-    const SHORT_STANCE = ['Accel', 'Light', 'Target', 'Moderate', 'Restrict', 'Precaut'];
+    // Full labels for x-axis
+    const AXIS_LABELS = ['Accelerate', 'Light-touch', 'Targeted', 'Moderate', 'Restrictive', 'Precautionary'];
 
     const svg = d3.select(container).append('svg')
       .attr('viewBox', `0 0 ${W} ${H}`)
@@ -892,13 +898,19 @@ a:hover { text-decoration: underline; }
       .attr('y1', axisY).attr('y2', axisY)
       .attr('stroke', '#ccc');
 
-    // X-axis labels (rotated for readability) - below axis line
+    // Tick marks and labels
     [1, 2, 3, 4, 5, 6].forEach(v => {
+      // Tick mark
+      svg.append('line')
+        .attr('x1', xScale(v)).attr('x2', xScale(v))
+        .attr('y1', axisY).attr('y2', axisY + 6)
+        .attr('stroke', '#ccc');
+      // Label (rotated)
       svg.append('text')
-        .attr('transform', `translate(${xScale(v)}, ${axisY + 14}) rotate(-30)`)
+        .attr('transform', `translate(${xScale(v)}, ${axisY + 18}) rotate(-30)`)
         .attr('text-anchor', 'end')
         .attr('font-family', 'var(--mono)').attr('font-size', 9).attr('fill', '#888')
-        .text(SHORT_STANCE[v - 1]);
+        .text(AXIS_LABELS[v - 1]);
     });
 
     stats.forEach((s, i) => {
@@ -910,13 +922,15 @@ a:hover { text-decoration: underline; }
         .attr('font-family', 'var(--mono)').attr('font-size', 10).attr('fill', '#555')
         .text(s.funding);
 
-      // Error bar (std dev)
+      // Error bar (std dev) - clamped to scale range [1, 6]
+      const errLeft = Math.max(1, s.mean - s.std);
+      const errRight = Math.min(6, s.mean + s.std);
       svg.append('line')
-        .attr('x1', xScale(s.mean - s.std)).attr('x2', xScale(s.mean + s.std))
+        .attr('x1', xScale(errLeft)).attr('x2', xScale(errRight))
         .attr('y1', y + barH / 2).attr('y2', y + barH / 2)
         .attr('stroke', '#2563eb').attr('stroke-width', 2).attr('opacity', 0.3);
 
-      // Mean dot
+      // Mean dot (hover for details)
       svg.append('circle')
         .attr('cx', xScale(s.mean)).attr('cy', y + barH / 2)
         .attr('r', 8)
@@ -924,10 +938,11 @@ a:hover { text-decoration: underline; }
         .on('mousemove', ev => showTooltip(ev, `<strong>${s.funding}</strong><br>Mean: ${s.mean.toFixed(2)}<br>SD: ${s.std.toFixed(2)}<br>n=${s.count}`))
         .on('mouseleave', hideTooltip);
 
+      // Label above the line, slightly right of the dot
       svg.append('text')
-        .attr('x', xScale(s.mean) + 14).attr('y', y + barH / 2 + 1)
+        .attr('x', xScale(s.mean) + 12).attr('y', y + barH / 2 - 10)
         .attr('dominant-baseline', 'middle')
-        .attr('font-family', 'var(--mono)').attr('font-size', 10).attr('fill', '#333')
+        .attr('font-family', 'var(--mono)').attr('font-size', 9).attr('fill', '#666')
         .text(`${s.mean.toFixed(1)} (n=${s.count})`);
     });
 
@@ -935,7 +950,7 @@ a:hover { text-decoration: underline; }
     const mostRestrictive = stats[stats.length - 1];
     const leastRestrictive = stats[0];
     document.getElementById('finding-funding').textContent =
-      `${mostRestrictive.funding}-funded organizations average ${mostRestrictive.mean.toFixed(1)} on the regulatory stance scale, versus ${leastRestrictive.mean.toFixed(1)} for ${leastRestrictive.funding}. A difference of ${Math.abs(mostRestrictive.mean - leastRestrictive.mean).toFixed(1)} points suggests funding source is predictive of policy position — though causality could run in either direction.`;
+      `${mostRestrictive.funding}-funded organizations average ${mostRestrictive.mean.toFixed(1)} on the regulatory stance scale, versus ${leastRestrictive.mean.toFixed(1)} for ${leastRestrictive.funding}. A difference of ${Math.abs(mostRestrictive.mean - leastRestrictive.mean).toFixed(1)} points suggests funding source is predictive of policy position -though causality could run in either direction.`;
   }
 
   // ══════════════════════════════════════════════════════════════
