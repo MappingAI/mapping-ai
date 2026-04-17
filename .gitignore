@@ -44,3 +44,5 @@ test-screenshots/
 slack-update.md
 launch-prep.md
 
+workshop/.env*
+workshop/setup-workshop-db.sql
