@@ -13,7 +13,7 @@ Multi-page website with an interactive D3.js stakeholder map, crowdsourced data 
 All infrastructure is on AWS. No Vercel or Neon.
 
 - **Frontend**: Vite 8 MPA + React 19 + TypeScript + Tailwind CSS v4 (migrated from inline HTML/CSS/JS)
-- **map.html**: Only remaining inline page — D3.js force-directed graph with orbital cluster layout (not React)
+- **map.html**: Only remaining inline page - D3.js force-directed graph with orbital cluster layout (not React)
 - **Data fetching**: TanStack Query (React Query v5)
 - **Forms**: React Hook Form
 - **Rich text**: TipTap (ProseMirror-based) for Notes fields with @mentions (`src/components/TipTapEditor.tsx`); legacy esbuild bundle still used by map.html (`src/tiptap-notes.js`)
@@ -24,7 +24,7 @@ All infrastructure is on AWS. No Vercel or Neon.
 - **Visualization**: D3.js force-directed graph with orbital cluster layout (`map.html`); D3 also used in insights page charts
 - **API**: AWS API Gateway HTTP API + 5 Lambda functions (Node.js 20)
 - **Database**: AWS RDS PostgreSQL 17 (`mapping-ai-db.c9sccou2k3xe.eu-west-2.rds.amazonaws.com`, db.t4g.micro free tier, 20GB gp3, deletion protection enabled)
-- **Infrastructure-as-code**: AWS SAM (`template.yaml`) — defines Lambda functions, API Gateway, S3 bucket, CloudFront distribution
+- **Infrastructure-as-code**: AWS SAM (`template.yaml`) - defines Lambda functions, API Gateway, S3 bucket, CloudFront distribution
 - **CI/CD**: GitHub Actions (auto-deploy on push to `main`)
 - **Data enrichment**: Exa API (web search), Anthropic API (Claude Haiku for quality classification)
 - **External APIs (client-side)**: Google Favicons (org logos), Wikipedia (people headshots), Photon/OpenStreetMap (city geocoding), Bluesky (handle search)
@@ -79,7 +79,7 @@ The frontend is a Vite multi-page app (MPA). Each `.html` file in the repo root 
 mapping-ai/
 ├── index.html              # Home page (React entry → src/home/)
 ├── contribute.html         # Submission forms (React entry → src/contribute/)
-├── map.html                # D3.js stakeholder map — INLINE, not React
+├── map.html                # D3.js stakeholder map - INLINE, not React
 ├── about.html              # Team info (React entry → src/about/)
 ├── admin.html              # Admin dashboard (React entry → src/admin/)
 ├── insights.html           # Data insights with D3 charts (React entry → src/insights/)
@@ -106,11 +106,11 @@ mapping-ai/
 │   ├── __tests__/          # Vitest tests (components/, lib/)
 │   └── tiptap-notes.js     # Legacy TipTap source for map.html (bundled by esbuild)
 ├── api/
-│   ├── submit.js           # Lambda: POST /submit — submissions + LLM review
-│   ├── submissions.js      # Lambda: GET /submissions — returns entities + edges
-│   ├── search.js           # Lambda: GET /search — full-text search
-│   ├── admin.js            # Lambda: GET/POST /admin — stats, pending, approve/reject/merge/update/delete, auto map refresh
-│   ├── upload.js           # Lambda: POST /upload — thumbnail image upload to S3
+│   ├── submit.js           # Lambda: POST /submit - submissions + LLM review
+│   ├── submissions.js      # Lambda: GET /submissions - returns entities + edges
+│   ├── search.js           # Lambda: GET /search - full-text search
+│   ├── admin.js            # Lambda: GET/POST /admin - stats, pending, approve/reject/merge/update/delete, auto map refresh
+│   ├── upload.js           # Lambda: POST /upload - thumbnail image upload to S3
 │   └── export-map.js       # Shared module: generates map-data.json from DB (maps DB columns → frontend field names)
 ├── scripts/
 │   ├── migrate.js          # Create/update all 3 tables + triggers + indexes
@@ -139,13 +139,13 @@ mapping-ai/
 
 ## Database Schema (3 tables)
 
-The RDS schema uses a **unified `entity` table** (migrated from the old schema that had separate `people`, `organizations`, `resources` tables). Do not assume the old per-type table names — they no longer exist.
+The RDS schema uses a **unified `entity` table** (migrated from the old schema that had separate `people`, `organizations`, `resources` tables). Do not assume the old per-type table names - they no longer exist.
 
 ### `entity`
 id, entity_type (person|organization|resource), name, category, other_categories (TEXT, comma-separated secondary categories), title, primary_org, other_orgs, website, funding_model, parent_org_id (FK → entity), resource_title, resource_category, resource_author, resource_type, resource_url, resource_year, resource_key_argument, location, influence_type, twitter, bluesky, notes, notes_html (TEXT, rich text from TipTap), thumbnail_url, belief_regulatory_stance + detail, belief_evidence_source, belief_agi_timeline, belief_ai_risk, belief_threat_models, belief_*_wavg/wvar/n (trigger-maintained weighted aggregates), submission_count, search_vector (tsvector), status (approved|pending|internal)
 
 ### `submission`
-entity_type, entity_id (nullable — NULL for new entity submissions, set for edit submissions), submitter_email, submitter_relationship (self|connector|external), (all entity fields as flat columns), belief_*_score (SMALLINT — numeric scores for trigger aggregation), notes_html, notes_mentions (JSONB), llm_review (JSONB: quality 1-5, flags, notes from Claude Haiku), status (pending|approved|rejected), resolution_notes, reviewed_at, reviewed_by
+entity_type, entity_id (nullable - NULL for new entity submissions, set for edit submissions), submitter_email, submitter_relationship (self|connector|external), (all entity fields as flat columns), belief_*_score (SMALLINT - numeric scores for trigger aggregation), notes_html, notes_mentions (JSONB), llm_review (JSONB: quality 1-5, flags, notes from Claude Haiku), status (pending|approved|rejected), resolution_notes, reviewed_at, reviewed_by
 
 ### `edge` (relationships + org affiliations)
 source_id + target_id (both FK → entity, ON DELETE CASCADE), edge_type (affiliated/collaborator/funder/critic/authored_by/etc.), role, is_primary, evidence, created_by, UNIQUE(source_id, target_id, edge_type)
@@ -157,7 +157,7 @@ source_id + target_id (both FK → entity, ON DELETE CASCADE), edge_type (affili
 
 ### Field name mapping (DB → Frontend)
 
-The export layer (`api/export-map.js` → `toFrontendShape()`) maps DB column names to frontend field names. This is critical — the frontend reads different names than the DB stores:
+The export layer (`api/export-map.js` → `toFrontendShape()`) maps DB column names to frontend field names. This is critical - the frontend reads different names than the DB stores:
 
 - `belief_regulatory_stance` → `regulatory_stance`
 - `belief_agi_timeline` → `agi_timeline`
@@ -175,7 +175,7 @@ Any schema change must update this mapping or the map/plot will break silently.
 ```bash
 # Local development
 npx vite dev                    # Vite dev server (port 5173, proxies /api → localhost:3000)
-node dev-server.js              # Express API server (port 3000) — run alongside Vite for API access
+node dev-server.js              # Express API server (port 3000) - run alongside Vite for API access
 npx vite build                  # Production build (outputs to dist/)
 
 # Type checking and tests
@@ -231,15 +231,15 @@ aws cloudfront create-invalidation --distribution-id E34ZXLC7CZX7XT --paths "/*"
 
 ## Form Features (src/contribute/)
 
-- **Relationship pills**: Compact pill toggle at top of each form ("I am this person" / "I can connect you" / "Someone I know of") — click to select, click again to deselect
-- **Clear form**: Inline link on pill row — resets all fields, custom selects, tags, TipTap editors
+- **Relationship pills**: Compact pill toggle at top of each form ("I am this person" / "I can connect you" / "Someone I know of") - click to select, click again to deselect
+- **Clear form**: Inline link on pill row - resets all fields, custom selects, tags, TipTap editors
 - **Primary + secondary categories**: Primary via dropdown ("Primary Role" / "Primary Category"), additional via tag dropdown with click-to-add and × remove
 - **Duplicate detection**: Client-side search on Name/Title fields with existing entry card sidebar
-- **Org search**: Primary org, affiliated orgs, parent org — all search existing DB (approved + pending with badge) with edit/add links. Focus preload (top 5), 1-char search.
+- **Org search**: Primary org, affiliated orgs, parent org - all search existing DB (approved + pending with badge) with edit/add links. Focus preload (top 5), 1-char search.
 - **Author search**: Resource form searches existing people for author field
 - **TipTap notes**: Rich text (bold/italic/lists/links) with @mentions. Info tooltip explains what to include (policy positions, relationships, funding, career) with @mention example showing bidirectional linking. @mention dropdown shows type badge (Person/Org/Resource), name with ellipsis for long names, detail text.
 - **Custom dropdowns**: Styled selects with category/stance colors, search, arrow key nav, click-to-deselect (clicking selected option clears it)
-- **Example submissions**: Collapsible `<details>` with interactive @mentions — hover shows entity card fetched from search API
+- **Example submissions**: Collapsible `<details>` with interactive @mentions - hover shows entity card fetched from search API
 - **Location search**: Multi-city tag input via Photon geocoding API, Remote option for orgs
 - **Social search**: Bluesky handle search (free public API)
 - **Auto-save**: localStorage draft every 500ms, restored on page load, per-form clear
@@ -284,12 +284,12 @@ See `docs/DEPLOYMENT.md` for the full deployment and review process.
 - `map-data.json` and `map-detail.json` are NOT tracked in git (generated during deploy from DB)
 - `backup-*.json` and `backup-*.sql` are gitignored
 - Test/seed data scripts gitignored
-- **Push to `main` auto-deploys frontend** — test in a browser first, not just with scripts
-- **All changes to `main` must go through a PR** — no direct pushes except P0 hotfixes
-- **Backend (Lambda/API Gateway) requires separate `sam deploy`** — merging api/*.js or template.yaml to main does NOT deploy them
-- **Never add `defer` or `async` to the D3 script tag** — inline map code depends on it synchronously (see `docs/post-mortems/2026-04-09-d3-defer-map-outage.md`)
-- **Browser-test map.html before pushing any HTML/JS changes** — automated checks cannot catch rendering failures
-- **MANDATORY: Verify site loads immediately after any push to main** — check /, /contribute, /map, /insights, /admin all return 200. The deploy workflow includes an automated smoke test, but always verify manually too. A broken prod site with no one checking is the worst outcome.
+- **Push to `main` auto-deploys frontend** - test in a browser first, not just with scripts
+- **All changes to `main` must go through a PR** - no direct pushes except P0 hotfixes
+- **Backend (Lambda/API Gateway) requires separate `sam deploy`** - merging api/*.js or template.yaml to main does NOT deploy them
+- **Never add `defer` or `async` to the D3 script tag** - inline map code depends on it synchronously (see `docs/post-mortems/2026-04-09-d3-defer-map-outage.md`)
+- **Browser-test map.html before pushing any HTML/JS changes** - automated checks cannot catch rendering failures
+- **MANDATORY: Verify site loads immediately after any push to main** - check /, /contribute, /map, /insights, /admin all return 200. The deploy workflow includes an automated smoke test, but always verify manually too. A broken prod site with no one checking is the worst outcome.
 - **For preview branches**: after pushing, wait for Cloudflare Pages build, then test the pages you changed on the preview URL before reporting the work as done
 
 ## DB Safety

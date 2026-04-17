@@ -53,7 +53,7 @@ The map loads from a static `map-data.json` file on S3 -- not from the database 
 mapping-ai/
   index.html              # Home page (React entry → src/home/)
   contribute.html         # Submission forms (React entry → src/contribute/)
-  map.html                # D3.js interactive map — INLINE, not React
+  map.html                # D3.js interactive map - INLINE, not React
   about.html              # Team info (React entry → src/about/)
   admin.html              # Admin dashboard (React entry → src/admin/)
   insights.html           # Data insights with D3 charts (React entry → src/insights/)

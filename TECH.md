@@ -1,4 +1,4 @@
-# Technical Reference — Mapping AI
+# Technical Reference - Mapping AI
 
 This document covers architecture, local development, deployment, and the API for contributors working on the codebase.
 
@@ -87,7 +87,7 @@ The frontend is a **Vite multi-page app (MPA)**. Each `.html` file in the repo r
 mapping-ai/
 ├── index.html              # Home page (React entry → src/home/)
 ├── contribute.html         # Submission forms (React entry → src/contribute/)
-├── map.html                # D3.js stakeholder map — INLINE, not React
+├── map.html                # D3.js stakeholder map - INLINE, not React
 ├── about.html              # Team info (React entry → src/about/)
 ├── admin.html              # Admin dashboard (React entry → src/admin/)
 ├── insights.html           # Data insights with D3 charts (React entry → src/insights/)
@@ -112,11 +112,11 @@ mapping-ai/
 │   ├── __tests__/          # Vitest tests (components/, lib/)
 │   └── tiptap-notes.js     # Legacy TipTap source for map.html (bundled by esbuild)
 ├── api/
-│   ├── submit.js           # Lambda: POST /submit — submissions + entity insert + LLM review
-│   ├── submissions.js      # Lambda: GET /submissions — returns entities + edges
-│   ├── search.js           # Lambda: GET /search — full-text search
-│   ├── admin.js            # Lambda: GET/POST /admin — stats, pending, approve/reject/merge/update/delete, auto map refresh
-│   ├── upload.js           # Lambda: POST /upload — thumbnail image upload to S3
+│   ├── submit.js           # Lambda: POST /submit - submissions + entity insert + LLM review
+│   ├── submissions.js      # Lambda: GET /submissions - returns entities + edges
+│   ├── search.js           # Lambda: GET /search - full-text search
+│   ├── admin.js            # Lambda: GET/POST /admin - stats, pending, approve/reject/merge/update/delete, auto map refresh
+│   ├── upload.js           # Lambda: POST /upload - thumbnail image upload to S3
 │   └── export-map.js       # Shared module: generates map-data.json from DB
 ├── scripts/
 │   ├── migrate.js          # Create/update all 3 tables + triggers + indexes
@@ -300,9 +300,9 @@ The schema uses a **unified `entity` table** (migrated from the old schema that 
 
 #### Triggers
 
-1. **`before_submission_update`** — When a new-entity submission is approved (entity_id IS NULL + status→approved), auto-creates the entity row and backfills entity_id
-2. **`after_submission_update`** — Recalculates weighted belief scores on the entity when submission status changes. Weights: self=10, connector=2, external=1
-3. **`update_entity_search`** — Updates tsvector on entity INSERT/UPDATE
+1. **`before_submission_update`** - When a new-entity submission is approved (entity_id IS NULL + status→approved), auto-creates the entity row and backfills entity_id
+2. **`after_submission_update`** - Recalculates weighted belief scores on the entity when submission status changes. Weights: self=10, connector=2, external=1
+3. **`update_entity_search`** - Updates tsvector on entity INSERT/UPDATE
 
 ### Database scripts
 
@@ -365,9 +365,9 @@ On every push to `main`, `.github/workflows/deploy.yml`:
 **GitHub Secrets required:**
 - `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`
 - `S3_BUCKET_NAME`, `CLOUDFRONT_DISTRIBUTION_ID`
-- `DATABASE_URL` — RDS connection string
-- `SITE_PASSWORD` — password gate hash (remove after public launch)
-- `CF_ANALYTICS_TOKEN` — Cloudflare Web Analytics token
+- `DATABASE_URL` - RDS connection string
+- `SITE_PASSWORD` - password gate hash (remove after public launch)
+- `CF_ANALYTICS_TOKEN` - Cloudflare Web Analytics token
 
 ### Manual S3 upload + cache invalidation
 
@@ -407,7 +407,7 @@ Submit a new or updated entry for review.
 ```
 
 - `type`: `"person"` | `"organization"` | `"resource"`
-- `_hp`: honeypot field — must be empty (bots fill this in)
+- `_hp`: honeypot field - must be empty (bots fill this in)
 - `data`: camelCase field names. `entityId` present = edit submission, absent = new entity
 - Stance/timeline/risk text labels are converted to numeric scores server-side
 
@@ -468,10 +468,10 @@ Upload thumbnail image (JPG/PNG/WebP, max 2MB). Requires admin key.
 
 ## Spam Protection
 
-- **Honeypot field** (`_hp`): hidden form field — if non-empty, server returns 200 silently without writing to DB
+- **Honeypot field** (`_hp`): hidden form field - if non-empty, server returns 200 silently without writing to DB
 - **LLM review**: Claude Haiku rates submission quality 1-5, flags spam/duplicates/offensive
 - **Field length limits**: enforced server-side (200 chars short fields, 1000 chars long fields)
-- All submissions land in `status = 'pending'` — require admin approval
+- All submissions land in `status = 'pending'` - require admin approval
 
 ---
 
