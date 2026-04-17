@@ -8,6 +8,12 @@ node_modules/
 submissions/
 exports/
 
+# Stale planning docs (local only, not needed by contributors)
+bluedot-grant.md
+bluedot-grant-budget.xlsx
+launch-prep.md
+slack-update.md
+
 # Dev-only tools
 dev-server.js
 scripts/exa-pilot.js
