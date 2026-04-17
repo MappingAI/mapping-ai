@@ -259,6 +259,8 @@ See `docs/DEPLOYMENT.md` for the full deployment and review process.
 - **Backend (Lambda/API Gateway) requires separate `sam deploy`** — merging api/*.js or template.yaml to main does NOT deploy them
 - **Never add `defer` or `async` to the D3 script tag** — inline map code depends on it synchronously (see `docs/post-mortems/2026-04-09-d3-defer-map-outage.md`)
 - **Browser-test map.html before pushing any HTML/JS changes** — automated checks cannot catch rendering failures
+- **MANDATORY: Verify site loads immediately after any push to main** — check /, /contribute, /map, /insights, /admin all return 200. The deploy workflow includes an automated smoke test, but always verify manually too. A broken prod site with no one checking is the worst outcome.
+- **For preview branches**: after pushing, wait for Cloudflare Pages build, then test the pages you changed on the preview URL before reporting the work as done
 
 ## DB Safety
 
