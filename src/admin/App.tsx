@@ -158,13 +158,13 @@ function PendingTab({ adminKey }: { adminKey: string }) {
 
   const approveMut = useMutation({
     mutationFn: (id: number) =>
-      adminFetch('/admin', adminKey, { method: 'POST', body: JSON.stringify({ action: 'approve', id }) }),
+      adminFetch('/admin', adminKey, { method: 'POST', body: JSON.stringify({ action: 'approve', submission_id: id }) }),
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-pending'] }); qc.invalidateQueries({ queryKey: ['admin-stats'] }) },
   })
 
   const rejectMut = useMutation({
     mutationFn: ({ id, notes }: { id: number; notes: string }) =>
-      adminFetch('/admin', adminKey, { method: 'POST', body: JSON.stringify({ action: 'reject', id, notes }) }),
+      adminFetch('/admin', adminKey, { method: 'POST', body: JSON.stringify({ action: 'reject', submission_id: id, resolution_notes: notes }) }),
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-pending'] }); qc.invalidateQueries({ queryKey: ['admin-stats'] }) },
   })
 
@@ -383,13 +383,13 @@ function EditModal({ entityId, adminKey, onClose }: { entityId: number; adminKey
 
   const updateMut = useMutation({
     mutationFn: (data: Record<string, string>) =>
-      adminFetch('/admin', adminKey, { method: 'POST', body: JSON.stringify({ action: 'update_entity', id: entityId, data }) }),
+      adminFetch('/admin', adminKey, { method: 'POST', body: JSON.stringify({ action: 'update_entity', entity_id: entityId, data }) }),
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-entities'] }); onClose() },
   })
 
   const deleteMut = useMutation({
     mutationFn: () =>
-      adminFetch('/admin', adminKey, { method: 'POST', body: JSON.stringify({ action: 'delete', id: entityId }) }),
+      adminFetch('/admin', adminKey, { method: 'POST', body: JSON.stringify({ action: 'delete', entity_id: entityId }) }),
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-entities'] }); qc.invalidateQueries({ queryKey: ['admin-stats'] }); onClose() },
   })
 
