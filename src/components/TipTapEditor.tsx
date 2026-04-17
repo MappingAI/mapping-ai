@@ -77,7 +77,7 @@ function createSuggestion(searchFn: (query: string) => MentionItem[] | Promise<M
         }
         container.innerHTML =
           items.length === 0
-            ? '<div class="mention-empty">Keep typing to find people & orgs...</div>'
+            ? '<div class="mention-empty">Keep typing to find people, orgs & resources...<br><span style="color:#2563eb;font-size:10px;margin-top:4px;display:inline-block;">Don\'t see it? Submit a new entry first.</span></div>'
             : items
                 .map(
                   (item, i) => `

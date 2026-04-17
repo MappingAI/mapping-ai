@@ -326,8 +326,20 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
         <OrgCreationPanel
           isOpen={orgPanelOpen}
           onClose={() => setOrgPanelOpen(false)}
-          onOrgCreated={() => {
+          onOrgCreated={(org) => {
             setOrgPanelOpen(false)
+            // Auto-link the new org back to the field that triggered the panel
+            const form = formsRef.current[activeTab]
+            if (orgPanelTrigger === 'primary') {
+              form.setValue('primaryOrg', org.name)
+              form.setValue('primaryOrgId', org.id)
+            } else if (orgPanelTrigger === 'parent') {
+              form.setValue('parentOrg', org.name)
+              form.setValue('parentOrgId', org.id)
+            } else if (orgPanelTrigger === 'affiliated') {
+              const current = (form.getValues('affiliatedOrgIds') as Array<{ id: number | string; label: string }>) ?? []
+              form.setValue('affiliatedOrgIds', [...current, { id: org.id, label: org.name }])
+            }
           }}
           initialName={orgPanelName}
           triggerType={orgPanelTrigger}

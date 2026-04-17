@@ -1,5 +1,7 @@
+import { useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { fetchMapData, fetchMapDetail } from '../lib/api'
+import { useSeedCacheFromLedger } from './useSubmissionLedger'
 import type { Entity, EntityCache } from '../types/entity'
 
 /** Fetches map-data.json — the core entity data. staleTime: Infinity. */
@@ -33,6 +35,14 @@ export function useEntityCache(): {
 } {
   const mapData = useMapData()
   const mapDetail = useMapDetail()
+  const seedFromLedger = useSeedCacheFromLedger()
+
+  // Seed cache with localStorage ledger entries once data loads
+  useEffect(() => {
+    if (mapData.data && !mapData.isPending) {
+      seedFromLedger()
+    }
+  }, [mapData.data, mapData.isPending, seedFromLedger])
 
   if (mapData.isPending) {
     return { cache: null, isLoading: true, error: null }

@@ -10,7 +10,7 @@ import { TwitterSearch } from './TwitterSearch'
 import { BlueskySearch } from './BlueskySearch'
 import { DuplicateDetection } from '../components/DuplicateDetection'
 import { useEntityCache } from '../hooks/useEntityCache'
-import { useSubmitEntity } from '../hooks/useSubmitEntity'
+import { useSubmitEntity, useAddPendingEntity } from '../hooks/useSubmitEntity'
 import { fuzzySearch } from '../lib/search'
 import { searchEntities as searchAPI } from '../lib/api'
 import type { FuzzySearchResult } from '../types/api'
@@ -108,6 +108,7 @@ export function PersonForm({ form, updateContext, onOrgPanelOpen, onViewExisting
   const { register, control, watch, handleSubmit, formState: { errors } } = form
   const { cache } = useEntityCache()
   const submitEntity = useSubmitEntity()
+  const addPendingEntity = useAddPendingEntity()
 
   const primaryRole = watch('category') as string | undefined
   const regulatoryStance = watch('regulatoryStance') as string | undefined
@@ -193,7 +194,20 @@ export function PersonForm({ form, updateContext, onOrgPanelOpen, onViewExisting
         },
         _hp: (_hp as string) ?? '',
       },
-      { onSuccess: () => onSubmitSuccess?.() },
+      {
+        onSuccess: (result) => {
+          addPendingEntity({
+            id: result.id,
+            entity_type: 'person',
+            name: (fields.name as string) ?? '',
+            category: (fields.category as string) ?? null,
+            title: (fields.title as string) ?? null,
+            primary_org: (fields.primaryOrg as string) ?? null,
+            location: Array.isArray(fields.location) ? fields.location.map((t: { label: string }) => t.label).join(', ') : null,
+          })
+          onSubmitSuccess?.()
+        },
+      },
     )
   })
 

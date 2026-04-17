@@ -7,7 +7,7 @@ import { InfoTooltip } from '../components/InfoTooltip'
 import { TagInput, type Tag, type TagSearchResult } from '../components/TagInput'
 import { OrgSearch } from './OrgSearch'
 import { useEntityCache } from '../hooks/useEntityCache'
-import { useSubmitEntity } from '../hooks/useSubmitEntity'
+import { useSubmitEntity, useAddPendingEntity } from '../hooks/useSubmitEntity'
 import { fuzzySearch } from '../lib/search'
 import { searchEntities as searchAPI } from '../lib/api'
 import type { FuzzySearchResult } from '../types/api'
@@ -43,6 +43,7 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPe
   const { register, control, watch, handleSubmit, formState: { errors } } = form
   const { cache } = useEntityCache()
   const submitEntity = useSubmitEntity()
+  const addPendingEntity = useAddPendingEntity()
 
   // TipTap @mention search — local cache + pending API
   const searchEntities = useCallback(
@@ -118,7 +119,17 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPe
         },
         _hp: (_hp as string) ?? '',
       },
-      { onSuccess: () => onSubmitSuccess?.() },
+      {
+        onSuccess: (result) => {
+          addPendingEntity({
+            id: result.id,
+            entity_type: 'resource',
+            name: (fields.resourceTitle as string) ?? '',
+            category: (fields.resourceType as string) ?? null,
+          })
+          onSubmitSuccess?.()
+        },
+      },
     )
   })
 

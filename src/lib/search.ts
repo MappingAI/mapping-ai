@@ -49,6 +49,8 @@ export function fuzzySearch(
     const score = scoreEntity(entity, q, fields)
 
     if (score > 0) {
+      // Recency boost: self-submitted pending entities rank higher
+      const isPending = !!(entity as unknown as Record<string, unknown>)._pending
       results.push({
         id: entity.id,
         entity_type: entity.entity_type,
@@ -58,8 +60,8 @@ export function fuzzySearch(
         primary_org: entity.primary_org,
         location: entity.location,
         status: entity.status as 'approved' | 'pending',
-        score,
-        isPending: false,
+        score: isPending ? score + 20 : score,
+        isPending,
       })
     }
   }

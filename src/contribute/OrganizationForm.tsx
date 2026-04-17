@@ -9,7 +9,7 @@ import { LocationSearch } from './LocationSearch'
 import { TwitterSearch } from './TwitterSearch'
 import { BlueskySearch } from './BlueskySearch'
 import { useEntityCache } from '../hooks/useEntityCache'
-import { useSubmitEntity } from '../hooks/useSubmitEntity'
+import { useSubmitEntity, useAddPendingEntity } from '../hooks/useSubmitEntity'
 import { fuzzySearch } from '../lib/search'
 import { searchEntities as searchAPI } from '../lib/api'
 import type { FuzzySearchResult } from '../types/api'
@@ -72,6 +72,7 @@ export function OrganizationForm({ form, updateContext, onOrgPanelOpen, onViewEx
   const { register, control, watch, handleSubmit, formState: { errors } } = form
   const { cache } = useEntityCache()
   const submitEntity = useSubmitEntity()
+  const addPendingEntity = useAddPendingEntity()
   const regulatoryStance = watch('regulatoryStance') as string | undefined
   const showStanceDetail = regulatoryStance === 'Other' || regulatoryStance === 'Mixed/unclear' || regulatoryStance === 'Mixed/nuanced'
 
@@ -122,7 +123,18 @@ export function OrganizationForm({ form, updateContext, onOrgPanelOpen, onViewEx
         },
         _hp: (_hp as string) ?? '',
       },
-      { onSuccess: () => onSubmitSuccess?.() },
+      {
+        onSuccess: (result) => {
+          addPendingEntity({
+            id: result.id,
+            entity_type: 'organization',
+            name: (fields.name as string) ?? '',
+            category: (fields.category as string) ?? null,
+            location: Array.isArray(fields.location) ? fields.location.map((t: { label: string }) => t.label).join(', ') : null,
+          })
+          onSubmitSuccess?.()
+        },
+      },
     )
   })
 

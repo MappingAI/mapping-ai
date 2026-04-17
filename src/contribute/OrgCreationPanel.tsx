@@ -3,7 +3,7 @@ import { useForm, Controller } from 'react-hook-form'
 import { createPortal } from 'react-dom'
 import { CustomSelect, buildOptions } from '../components/CustomSelect'
 import { TipTapEditor, type MentionData } from '../components/TipTapEditor'
-import { useSubmitEntity, useAddPendingOrg } from '../hooks/useSubmitEntity'
+import { useSubmitEntity, useAddPendingEntity } from '../hooks/useSubmitEntity'
 import { useEntityCache } from '../hooks/useEntityCache'
 import { fuzzySearch } from '../lib/search'
 import type { SubmitRequest } from '../types/api'
@@ -76,7 +76,7 @@ export function OrgCreationPanel({
   })
 
   const submitMutation = useSubmitEntity()
-  const addPendingOrg = useAddPendingOrg()
+  const addPendingEntity = useAddPendingEntity()
   const { cache } = useEntityCache()
 
   // Reset form when panel opens with new name
@@ -128,7 +128,7 @@ export function OrgCreationPanel({
       try {
         const result = await submitMutation.mutateAsync(request)
         // Optimistically add to entity cache
-        addPendingOrg({ id: result.id, name: values.name, category: values.category || null })
+        addPendingEntity({ id: result.id, entity_type: 'organization', name: values.name, category: values.category || null })
         // Show success overlay
         setShowSuccess(true)
         setTimeout(() => {
@@ -139,7 +139,7 @@ export function OrgCreationPanel({
         // Error handled by mutation state
       }
     },
-    [submitMutation, addPendingOrg, onOrgCreated, onClose],
+    [submitMutation, addPendingEntity, onOrgCreated, onClose],
   )
 
   if (!isOpen) return null
