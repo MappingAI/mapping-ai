@@ -23,7 +23,8 @@ interface Entity {
 interface Edge {
   source_id: number
   target_id: number
-  edge_type: string
+  edge_type?: string
+  relationship_type?: string
   role?: string
 }
 
@@ -31,7 +32,8 @@ interface MapData {
   people: Entity[]
   organizations: Entity[]
   resources: Entity[]
-  edges: Edge[]
+  edges?: Edge[]
+  relationships?: Edge[]
   _meta?: { generated_at: string }
 }
 
@@ -528,7 +530,7 @@ function ChartPacSpending({ edges, entityMap, tooltipEl }: { edges: Edge[]; enti
     const container = ref.current
     container.innerHTML = ''
 
-    const pacEdges = edges.filter(e => e.edge_type === 'funder' && e.role && e.role.includes('$'))
+    const pacEdges = edges.filter(e => (e.edge_type === 'funder' || e.relationship_type === 'funder') && e.role && e.role.includes('$'))
     if (pacEdges.length === 0) {
       container.innerHTML = '<p style="font-family:\'DM Mono\', monospace;font-size:12px;color:#888;">No PAC spending data available.</p>'
       return
@@ -872,14 +874,23 @@ function TableOfContents({ activeId }: { activeId: string }) {
 export function App() {
   const [data, setData] = useState<MapData | null>(null)
   const [activeSection, setActiveSection] = useState('overview')
+  const activeSectionRef = useRef('overview')
   const tooltipRef = useRef<HTMLDivElement>(null)
 
-  // Fetch data
+  // Fetch data + detail (for threat_models, notes, etc.)
   useEffect(() => {
-    fetch('/map-data.json')
-      .then(r => r.json())
-      .then((d: MapData) => setData(d))
-      .catch(err => console.error('Failed to load data:', err))
+    Promise.all([
+      fetch('/map-data.json').then(r => r.json()),
+      fetch('/map-detail.json').then(r => r.json()).catch(() => ({})),
+    ]).then(([mapData, detail]: [MapData, Record<string, Partial<Entity>>]) => {
+      // Merge detail fields into entities
+      const all = [...(mapData.people || []), ...(mapData.organizations || []), ...(mapData.resources || [])]
+      for (const entity of all) {
+        const d = detail[String(entity.id)]
+        if (d) Object.assign(entity, d)
+      }
+      setData(mapData)
+    }).catch(err => console.error('Failed to load data:', err))
   }, [])
 
   // Fade-in observer
@@ -897,7 +908,7 @@ export function App() {
     return () => observer.disconnect()
   }, [data]) // re-observe after data loads and charts render
 
-  // TOC scroll tracking
+  // TOC scroll tracking — use ref to avoid re-render on every scroll
   const updateTOC = useCallback(() => {
     const scrollY = window.scrollY + 120
     let active = TOC_ITEMS[0]!.id
@@ -905,7 +916,10 @@ export function App() {
       const el = document.getElementById(item.id)
       if (el && el.offsetTop <= scrollY) active = item.id
     })
-    setActiveSection(active)
+    if (active !== activeSectionRef.current) {
+      activeSectionRef.current = active
+      setActiveSection(active)
+    }
   }, [])
 
   useEffect(() => {
@@ -918,7 +932,7 @@ export function App() {
   const people = data?.people || []
   const orgs = data?.organizations || []
   const resources = data?.resources || []
-  const edges = data?.edges || []
+  const edges = data?.edges || data?.relationships || []
   const all = [...people, ...orgs, ...resources]
 
   const entityMap: Record<number, Entity> = {}
