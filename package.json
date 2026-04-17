@@ -14,7 +14,6 @@
     "@tiptap/pm": "^3.20.5",
     "@tiptap/react": "^3.22.3",
     "@tiptap/starter-kit": "^3.20.5",
-    "@types/dompurify": "^3.0.5",
     "d3-dispatch": "^3.0.1",
     "d3-force": "^3.0.0",
     "d3-quadtree": "^3.0.1",
@@ -30,6 +29,7 @@
   "devDependencies": {
     "@aws-sdk/client-s3": "^3.1026.0",
     "@tailwindcss/vite": "^4.2.2",
+    "@types/dompurify": "^3.0.5",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@types/react": "^19.2.14",

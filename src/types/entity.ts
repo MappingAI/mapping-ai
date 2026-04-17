@@ -48,7 +48,7 @@ export interface Entity {
 export interface Edge {
   source_id: number
   target_id: number
-  edge_type: string
+  relationship_type: string
   role: string | null
   is_primary: boolean | null
   evidence: string | null
@@ -56,6 +56,7 @@ export interface Edge {
 
 /** Shape of map-data.json as served from S3/CloudFront */
 export interface MapData {
+  _meta?: { generated_at?: string }
   people: Entity[]
   organizations: Entity[]
   resources: Entity[]

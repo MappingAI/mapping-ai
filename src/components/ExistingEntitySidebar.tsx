@@ -113,7 +113,7 @@ export function ExistingEntitySidebar({ entity, entityType, onClose }: ExistingE
           </>
         )}
 
-        <HtmlField label="Notes" html={full.notes_html} />
+        <HtmlField label="Notes" html={full.notes} />
 
         {entity.isPending && (
           <div className="font-mono text-[10px] px-2 py-1 bg-amber-50 text-amber-700 border border-amber-200 rounded mt-2 mb-2">
