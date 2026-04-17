@@ -1,4 +1,117 @@
+import { useState, useEffect } from 'react'
+
+const WORKSHOP_PASSWORD_HASH = '0097a985fe9f093319930d7c25ea42e46682b87b88a791d3b49c0094ba82a19d'
+
+async function hashPassword(password: string): Promise<string> {
+  const encoder = new TextEncoder()
+  const data = encoder.encode(password)
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data)
+  const hashArray = Array.from(new Uint8Array(hashBuffer))
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
+}
+
+function PasswordGate({ onSuccess }: { onSuccess: () => void }) {
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState(false)
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    const hash = await hashPassword(password)
+    if (hash === WORKSHOP_PASSWORD_HASH) {
+      localStorage.setItem('workshop-authenticated', 'true')
+      onSuccess()
+    } else {
+      setError(true)
+      setPassword('')
+    }
+  }
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-[#faf9f7]">
+      <div className="max-w-[400px] w-full px-8">
+        <div className="font-mono text-[11px] uppercase tracking-[0.12em] text-[#888] mb-4">
+          Mapping AI Workshop
+        </div>
+        <h1
+          className="text-[28px] font-normal italic leading-[1.2] mb-6"
+          style={{ fontFamily: "'EB Garamond', Georgia, serif" }}
+        >
+          Enter the workshop password
+        </h1>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="password"
+            value={password}
+            onChange={e => { setPassword(e.target.value); setError(false) }}
+            placeholder="Password"
+            className={`w-full px-4 py-3 border rounded-md font-mono text-[14px] outline-none transition-colors ${
+              error ? 'border-red-400 bg-red-50' : 'border-[#ccc] focus:border-[#2563eb]'
+            }`}
+            autoFocus
+          />
+          {error && (
+            <p className="text-red-500 text-[13px] mt-2 font-mono">Incorrect password</p>
+          )}
+          <button
+            type="submit"
+            className="mt-4 w-full bg-[#2563eb] text-white py-3 rounded-md font-mono text-[13px] tracking-[0.05em] hover:bg-[#1d4ed8] transition-colors"
+          >
+            Enter
+          </button>
+        </form>
+      </div>
+    </div>
+  )
+}
+
 export function App() {
+  const [authenticated, setAuthenticated] = useState(() => {
+    return localStorage.getItem('workshop-authenticated') === 'true'
+  })
+  const [activeSection, setActiveSection] = useState('overview')
+
+  useEffect(() => {
+    const sections = [
+      'overview',
+      'streams',
+      'stream-1',
+      'stream-2',
+      'stream-3',
+      'stream-4',
+      'stream-5',
+      'stream-6',
+      'setup',
+    ]
+
+    const handleScroll = () => {
+      const scrollY = window.scrollY + 80 // offset for nav
+
+      // Check if at bottom of page
+      if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 8) {
+        setActiveSection('setup')
+        return
+      }
+
+      // Find the current section
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sections[i])
+        if (el && el.getBoundingClientRect().top + window.scrollY <= scrollY) {
+          setActiveSection(sections[i])
+          return
+        }
+      }
+      setActiveSection('overview')
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll() // Initial check
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  if (!authenticated) {
+    return <PasswordGate onSuccess={() => setAuthenticated(true)} />
+  }
+
   return (
     <>
       {/* Site nav matching main site */}
@@ -49,15 +162,103 @@ export function App() {
           Help us map the people, organizations, and ideas shaping U.S. AI
           policy
         </h1>
-        <p className="text-[19px] text-text-secondary leading-[1.55]">
-          We&rsquo;re building an open, interactive stakeholder map of the
-          American AI landscape. Today, you&rsquo;ll help us make it better.
-          Pick a stream, grab a laptop, and dig in.
+        <p
+          className="text-[19px] text-text-secondary leading-[1.55]"
+          style={{ fontFamily: "'EB Garamond', Georgia, serif" }}
+        >
+          We&rsquo;ve been building a stakeholder map of the American AI policy
+          landscape and it&rsquo;s almost ready for a public launch. Pick a
+          stream below and get started.
         </p>
+
+        {/* Quick Links */}
+        <div className="mt-8 bg-[#f5f4f2] border border-[#e0dfdd] rounded-lg p-5">
+          <div className="font-mono text-[10px] uppercase tracking-[0.1em] text-[#888] mb-3">
+            Quick Links
+          </div>
+          <div className="flex flex-wrap gap-3 mb-4">
+            <a
+              href="https://discord.com/events/1491894381773590609/1494729391509340281"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-[#5865F2] text-white rounded-md font-mono text-[12px] no-underline hover:bg-[#4752c4] transition-colors"
+            >
+              Discord Server
+            </a>
+            <a
+              href="https://github.com/MappingAI/mapping-ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-[#24292e] text-white rounded-md font-mono text-[12px] no-underline hover:bg-[#1a1e22] transition-colors"
+            >
+              GitHub Repo
+            </a>
+          </div>
+          <div className="font-mono text-[10px] uppercase tracking-[0.1em] text-[#888] mb-2 mt-4">
+            Environment Files (Doppler)
+          </div>
+          <div className="space-y-2 font-mono text-[12px]">
+            <div className="flex flex-wrap items-center gap-2">
+              <a
+                href="https://share.doppler.com/s/me5nqn6qqd1ime0bwnc53sxrnaqkqzhqnlxaoqbg"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#2563eb] no-underline hover:underline"
+              >
+                .env.debugging
+              </a>
+              <code className="text-[10px] bg-[#e8e7e5] px-2 py-0.5 rounded text-[#555] select-all">
+                2bmjRVgjtZd0LWTKbqRrtUHj6XamG8L9XmIUxXYvNkKhv330TL1xZJNpUD9G52aA
+              </code>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <a
+                href="https://share.doppler.com/s/tla4as7kd6w61axclos7gsfyoqlxuojnw9y4vofy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#2563eb] no-underline hover:underline"
+              >
+                .env.enrichment
+              </a>
+              <code className="text-[10px] bg-[#e8e7e5] px-2 py-0.5 rounded text-[#555] select-all">
+                XgiIWtraTUNwHWqf3D01aKBV3nWD0y9nihjXbSXDHQ1914oofOXDWdXuxO03kaSs
+              </code>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <a
+                href="https://share.doppler.com/s/pkjtfqg6ymme8uelkjcyurlmdidxbumqspt9a673"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#2563eb] no-underline hover:underline"
+              >
+                .env.seeding
+              </a>
+              <code className="text-[10px] bg-[#e8e7e5] px-2 py-0.5 rounded text-[#555] select-all">
+                oJd3coZJjT91rtXs9sep33U7D0shACS8c3kmu6yN1MeXac6cswFBpFyfKx8LsYIX
+              </code>
+            </div>
+          </div>
+        </div>
       </div>
 
+      {/* Left sidebar TOC - only visible on wide screens */}
+      <nav className="hidden min-[1100px]:block fixed top-1/2 -translate-y-1/2 w-[160px] left-8">
+        <TocLink href="#overview" active={activeSection === 'overview'}>Overview</TocLink>
+        <TocLink href="#streams" active={activeSection === 'streams'}>Streams</TocLink>
+        <TocLink href="#stream-1" active={activeSection === 'stream-1'}>1. Bug Hunting</TocLink>
+        <TocLink href="#stream-2" active={activeSection === 'stream-2'}>2. Data Enrichment</TocLink>
+        <TocLink href="#stream-3" active={activeSection === 'stream-3'}>3. Data Quality</TocLink>
+        <TocLink href="#stream-4" active={activeSection === 'stream-4'}>4. New Features</TocLink>
+        <TocLink href="#stream-5" active={activeSection === 'stream-5'}>5. Outreach</TocLink>
+        <TocLink href="#stream-6" active={activeSection === 'stream-6'}>6. Data Viz</TocLink>
+        <TocLink href="#setup" active={activeSection === 'setup'}>Quick Reference</TocLink>
+      </nav>
+
       {/* Content */}
-      <div className="max-w-[720px] mx-auto px-8 pb-16 font-serif text-[17px] leading-[1.65] text-text-primary max-[600px]:px-4">
+      <div
+        className="max-w-[720px] mx-auto px-8 pb-16 text-[17px] leading-[1.65] text-text-primary max-[600px]:px-4"
+        style={{ fontFamily: "'EB Garamond', Georgia, serif" }}
+      >
         {/* OVERVIEW */}
         <SectionHeading id="overview">What is Mapping AI?</SectionHeading>
 
@@ -924,7 +1125,7 @@ function SectionHeading({
   return (
     <h2
       id={id}
-      className="font-mono text-[13px] font-medium uppercase tracking-[0.14em] text-text-primary mt-12 mb-4 pb-[0.4rem] border-b border-[#ddd]"
+      className="font-mono text-[13px] font-medium uppercase tracking-[0.14em] text-text-primary mt-12 mb-4 pb-[0.4rem] border-b border-[#ddd] scroll-mt-16"
     >
       {children}
     </h2>
@@ -941,7 +1142,7 @@ function StreamHeading({
   return (
     <h3
       id={id}
-      className="text-[22px] font-normal mt-8 mb-[0.6rem]"
+      className="text-[22px] font-normal mt-8 mb-[0.6rem] scroll-mt-16"
       style={{ fontFamily: "'EB Garamond', Georgia, serif" }}
     >
       {children}
@@ -990,7 +1191,30 @@ function Code({ children }: { children: React.ReactNode }) {
 }
 
 function Divider() {
-  return <hr className="border-none border-t border-[#ddd] my-12" />
+  return <hr className="border-t border-[#ddd] my-12" style={{ borderTop: '1px solid #ddd' }} />
+}
+
+function TocLink({
+  href,
+  active,
+  children,
+}: {
+  href: string
+  active?: boolean
+  children: React.ReactNode
+}) {
+  return (
+    <a
+      href={href}
+      className={`block font-mono text-[10px] tracking-[0.04em] no-underline py-[0.35rem] pl-3 border-l-2 transition-colors duration-150 leading-[1.4] hover:text-[#555] hover:no-underline ${
+        active
+          ? 'text-[#2563eb] border-[#2563eb]'
+          : 'text-[#888] border-transparent'
+      }`}
+    >
+      {children}
+    </a>
+  )
 }
 
 function ExtLink({
