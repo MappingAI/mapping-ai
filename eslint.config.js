@@ -32,8 +32,6 @@ export default tseslint.config(
       'node_modules/**',
       '.aws-sam/**',
       'coverage/**',
-      // Generated bundle served as an asset; source is src/tiptap-notes.js.
-      'assets/js/tiptap-notes.js',
       // Generated data artifacts.
       'map-data.json',
       'map-detail.json',
@@ -48,7 +46,6 @@ export default tseslint.config(
       'test-handlers.mjs',
       'assets/**', // legacy vanilla JS used by index.html
       'backups/**', // one-off migration/backup scripts
-      'src/tiptap-notes.js', // migrates to TS in a subsequent PR
     ],
   },
 

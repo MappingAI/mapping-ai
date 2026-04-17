@@ -19,9 +19,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build TipTap bundle
-        run: npm run build:tiptap
-
       - name: Write .env.production
         run: |
           cat > .env.production <<EOL

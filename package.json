@@ -69,7 +69,6 @@
     "db:backup:local": "node scripts/backup-db.js --local",
     "dev": "vite",
     "build": "vite build",
-    "build:tiptap": "esbuild src/tiptap-notes.js --bundle --outfile=assets/js/tiptap-notes.js --minify --format=iife --target=es2020",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",

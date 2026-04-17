@@ -9,8 +9,7 @@ dist/
 .aws-sam/
 coverage/
 
-# Generated bundles and data artifacts
-assets/js/tiptap-notes.js
+# Generated data artifacts
 map-data.json
 map-detail.json
 backup-*.json
