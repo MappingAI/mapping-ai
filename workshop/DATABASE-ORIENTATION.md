@@ -228,6 +228,8 @@ Your facilitator will provide one of these files:
 | Data Seeding | `.env.seeding` | Staging (read/write) |
 | Debugging | `.env.debugging` | Production (read-only) |
 
+> ⚠️ **NEVER commit or push your .env file.** It contains database passwords and API keys. Do not paste its contents into commit messages, pull requests, Slack, or any shared location. The `.env` files are gitignored, but be vigilant — leaked credentials require rotating all affected passwords and keys.
+
 ### 2. Place the .env file
 
 ```bash
