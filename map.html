@@ -893,7 +893,7 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
       </button>
       <button class="mode-btn" data-mode="search">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="6" cy="6" r="4"/><line x1="9" y1="9" x2="12" y2="12"/></svg>
-        Search
+        Search <span style="font-size:9px;vertical-align:super;opacity:0.7;">✦</span>
       </button>
     </div>
     <div class="view-toggles" id="network-sub-tabs">
@@ -2168,7 +2168,7 @@ function renderMobileDirectory() {
       const primary = normalizeCategory(d.category);
       if (primary) catCounts[primary] = (catCounts[primary] || 0) + 1;
       if (d.other_categories) {
-        for (const c of d.other_categories.split(',').map(s => s.trim()).filter(Boolean)) {
+        for (const c of parseOtherCategories(d.other_categories)) {
           const norm = normalizeCategory(c);
           if (norm) catCounts[norm] = (catCounts[norm] || 0) + 1;
         }
@@ -2657,15 +2657,23 @@ function buildExplicitLinks(data) {
   return links;
 }
 
+// Parse other_categories — handles both "A, B" strings and ["A","B"] JSON arrays
+function parseOtherCategories(raw) {
+  if (!raw) return [];
+  // Detect JSON array format (starts with [)
+  if (typeof raw === 'string' && raw.startsWith('[')) {
+    try { return JSON.parse(raw).filter(Boolean); } catch { /* fall through */ }
+  }
+  return raw.split(',').map(s => s.trim()).filter(Boolean);
+}
+
 // Extract all categories (primary + other) from an entity list
 function getAllCats(entities, normalize = true) {
   const cats = [];
   for (const d of entities) {
     if (d.category) cats.push(normalize ? normalizeCategory(d.category) : d.category);
-    if (d.other_categories) {
-      for (const c of d.other_categories.split(',').map(s => s.trim()).filter(Boolean)) {
-        cats.push(normalize ? normalizeCategory(c) : c);
-      }
+    for (const c of parseOtherCategories(d.other_categories)) {
+      cats.push(normalize ? normalizeCategory(c) : c);
     }
   }
   return cats.filter(Boolean);
@@ -2709,7 +2717,7 @@ function buildFilters() {
 
   // Activate all when: first load, view/dimension switch (no overlap), or empty
   const anyOverlap = allCats.some(cat => activeCategories.has(cat));
-  const viewKey = currentView + ':' + dim;
+  const viewKey = currentView + ':' + dim + ':' + (currentView === '2d' ? axis2dEntityType : '');
   const viewChanged = window._lastFilterView !== viewKey;
   const activateAll = viewChanged || !anyOverlap || activeCategories.size === 0;
   window._lastFilterView = viewKey;
@@ -3201,7 +3209,7 @@ function getVisibleNodes() {
     if (!rawCat) return false;
     if (activeCategories.has(rawCat) || activeCategories.has(normalizeCategory(rawCat))) return true;
     if (d.other_categories) {
-      const extras = d.other_categories.split(',').map(s => s.trim()).filter(Boolean);
+      const extras = parseOtherCategories(d.other_categories);
       for (const c of extras) {
         if (activeCategories.has(c) || activeCategories.has(normalizeCategory(c))) return true;
       }
@@ -4256,6 +4264,12 @@ function hideTooltip() { tooltip.classList.remove('visible'); }
 
 // Detail panel
 function showDetail(d, allNodes) {
+  // PASSWORD GATE: prompt for password instead of showing detail when locked
+  if (document.body.classList.contains('locked')) {
+    const pwOverlay = document.getElementById('password-overlay');
+    if (pwOverlay) { pwOverlay.style.display = 'flex'; document.getElementById('gate-password').focus(); }
+    return;
+  }
   const panel = document.getElementById('detail-panel');
   const content = document.getElementById('detail-content');
 
@@ -5736,14 +5750,9 @@ themeBtn.addEventListener('click', () => {
 })();
 </script>
 <style>
-/* PASSWORD GATE—locked state styles */
-body.locked .controls { pointer-events: none; }
-body.locked #search-input { pointer-events: none; }
-body.locked .view-btn,
-body.locked .mode-btn { pointer-events: none; }
+/* PASSWORD GATE—locked state: allow browsing views/filters but block node detail */
+body.locked #detail-panel { pointer-events: none; opacity: 0.5; }
 body.locked #contribute-btn { pointer-events: none; opacity: 0.4; }
-body.locked .zoom-controls { pointer-events: none; opacity: 0.4; }
-body.locked #detail-panel { pointer-events: none; }
 body.locked #mobile-directory { pointer-events: none; }
 body.locked .mobile-search-bar { pointer-events: none; }
 body.locked .mobile-type-chips { pointer-events: none; }

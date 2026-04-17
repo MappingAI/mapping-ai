@@ -22,6 +22,16 @@ jobs:
       - name: Build TipTap bundle
         run: npm run build:tiptap
 
+      - name: Write .env.production
+        run: |
+          cat > .env.production <<EOL
+          VITE_API_BASE=https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com
+          VITE_SITE_PASSWORD_HASH=__SITE_PASSWORD_HASH__
+          EOL
+
+      - name: Build with Vite
+        run: npx vite build
+
       - name: Verify DB schema (smoke test)
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
@@ -47,7 +57,10 @@ jobs:
       - name: Generate map-data.json from database
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        run: node scripts/export-map-data.js
+        run: |
+          node scripts/export-map-data.js
+          cp map-data.json dist/map-data.json
+          if [ -f map-detail.json ]; then cp map-detail.json dist/map-detail.json; fi
 
       # PASSWORD GATE — remove after public launch
       - name: Inject password gate hash
@@ -56,8 +69,8 @@ jobs:
         run: |
           if [ -n "$SITE_PASSWORD" ]; then
             HASH=$(echo -n "$SITE_PASSWORD" | sha256sum | cut -d' ' -f1)
-            sed -i "s/__SITE_PASSWORD_HASH__/$HASH/g" map.html contribute.html
-            echo "✓ Password gate hash injected into map.html and contribute.html"
+            sed -i "s/__SITE_PASSWORD_HASH__/$HASH/g" dist/map.html dist/contribute.html dist/assets/*.js
+            echo "✓ Password gate hash injected"
           else
             echo "⚠ No SITE_PASSWORD set — gate will auto-bypass"
           fi
@@ -67,7 +80,7 @@ jobs:
           CF_ANALYTICS_TOKEN: ${{ secrets.CF_ANALYTICS_TOKEN }}
         run: |
           if [ -n "$CF_ANALYTICS_TOKEN" ]; then
-            sed -i "s/__CF_ANALYTICS_TOKEN__/$CF_ANALYTICS_TOKEN/g" *.html
+            sed -i "s/__CF_ANALYTICS_TOKEN__/$CF_ANALYTICS_TOKEN/g" dist/*.html
             echo "✓ Cloudflare Web Analytics token injected"
           else
             echo "⚠ No CF_ANALYTICS_TOKEN set — analytics beacon will not fire"
@@ -83,40 +96,32 @@ jobs:
       - name: Sync static files to S3 (with cache headers)
         run: |
           # HTML files — always revalidate so users get latest on deploy
-          aws s3 sync . s3://${{ secrets.S3_BUCKET_NAME }} \
+          aws s3 sync dist/ s3://${{ secrets.S3_BUCKET_NAME }} \
             --exclude "*" \
             --include "*.html" \
             --cache-control "no-cache" \
             --delete
 
           # map-data.json + map-detail.json — short cache, stale-while-revalidate
-          aws s3 cp map-data.json s3://${{ secrets.S3_BUCKET_NAME }}/map-data.json \
+          aws s3 cp dist/map-data.json s3://${{ secrets.S3_BUCKET_NAME }}/map-data.json \
             --cache-control "public, max-age=60, stale-while-revalidate=300"
-          aws s3 cp map-detail.json s3://${{ secrets.S3_BUCKET_NAME }}/map-detail.json \
-            --cache-control "public, max-age=60, stale-while-revalidate=300"
+          if [ -f dist/map-detail.json ]; then
+            aws s3 cp dist/map-detail.json s3://${{ secrets.S3_BUCKET_NAME }}/map-detail.json \
+              --cache-control "public, max-age=60, stale-while-revalidate=300"
+          fi
 
-          # CSS/JS/images — long cache (CloudFront invalidation handles updates)
-          aws s3 sync . s3://${{ secrets.S3_BUCKET_NAME }} \
-            --exclude ".*" \
-            --exclude "node_modules/*" \
-            --exclude "api/*" \
-            --exclude "scripts/*" \
-            --exclude "src/*" \
-            --exclude "data/*" \
-            --exclude "exports/*" \
-            --exclude ".github/*" \
-            --exclude "*.yaml" \
-            --exclude "*.toml" \
-            --exclude "*.json" \
-            --exclude "*.mjs" \
-            --exclude "*.md" \
-            --exclude "*.html" \
-            --exclude ".aws-sam/*" \
-            --exclude ".vercel/*" \
-            --exclude "test-*" \
-            --exclude "dev-server*" \
-            --cache-control "public, max-age=86400" \
-            --delete
+          # Hashed assets (JS/CSS) — immutable, long cache
+          # No --delete: S3 assets/ also has legacy static files (favicon/, images/)
+          # used by map.html. Old hashed files are harmless (never referenced).
+          aws s3 sync dist/assets/ s3://${{ secrets.S3_BUCKET_NAME }}/assets/ \
+            --cache-control "public, max-age=31536000, immutable"
+
+          # Workshop subdirectory
+          if [ -d dist/workshop ]; then
+            aws s3 sync dist/workshop/ s3://${{ secrets.S3_BUCKET_NAME }}/workshop/ \
+              --cache-control "no-cache" \
+              --delete
+          fi
 
       - name: Invalidate CloudFront cache
         run: |
