@@ -113,14 +113,18 @@ export function OrganizationForm({ form, updateContext, onOrgPanelOpen, onViewEx
 
   const onSubmit = handleSubmit((data) => {
     const { _hp, ...fields } = data
+    const locationTags = fields.location as Array<{ label: string }> | undefined
+    const apiData: Record<string, unknown> = {
+      ...fields,
+      location: Array.isArray(locationTags) ? locationTags.map((t) => t.label).join(', ') : fields.location ?? null,
+      notesMentions: Array.isArray(fields.notesMentions) ? JSON.stringify(fields.notesMentions) : fields.notesMentions ?? null,
+      entityId: updateContext?.entityId ?? undefined,
+    }
     submitEntity.mutate(
       {
         type: 'organization',
         timestamp: new Date().toISOString(),
-        data: {
-          ...fields,
-          entityId: updateContext?.entityId ?? undefined,
-        },
+        data: apiData,
         _hp: (_hp as string) ?? '',
       },
       {

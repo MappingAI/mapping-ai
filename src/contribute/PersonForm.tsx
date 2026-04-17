@@ -184,14 +184,22 @@ export function PersonForm({ form, updateContext, onOrgPanelOpen, onViewExisting
 
   const onSubmit = handleSubmit((data) => {
     const { _hp, ...fields } = data
+    // Serialize arrays to strings for the API (DB expects text columns, not JSON arrays)
+    const locationTags = fields.location as Array<{ label: string }> | undefined
+    const apiData: Record<string, unknown> = {
+      ...fields,
+      location: Array.isArray(locationTags) ? locationTags.map((t) => t.label).join(', ') : fields.location ?? null,
+      influenceType: Array.isArray(fields.influenceType) ? (fields.influenceType as string[]).join(', ') : fields.influenceType ?? null,
+      keyConcerns: Array.isArray(fields.keyConcerns) ? (fields.keyConcerns as string[]).join(', ') : fields.keyConcerns ?? null,
+      affiliatedOrgIds: Array.isArray(fields.affiliatedOrgIds) ? JSON.stringify((fields.affiliatedOrgIds as Array<{ id: number | string }>).map((t) => t.id)) : null,
+      notesMentions: Array.isArray(fields.notesMentions) ? JSON.stringify(fields.notesMentions) : fields.notesMentions ?? null,
+      entityId: updateContext?.entityId ?? undefined,
+    }
     submitEntity.mutate(
       {
         type: 'person',
         timestamp: new Date().toISOString(),
-        data: {
-          ...fields,
-          entityId: updateContext?.entityId ?? undefined,
-        },
+        data: apiData,
         _hp: (_hp as string) ?? '',
       },
       {

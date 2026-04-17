@@ -109,14 +109,25 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPe
 
   const onSubmit = handleSubmit((data) => {
     const { _hp, ...fields } = data
+    // Serialize arrays: resourceAuthors (Tag[]) → author string, notesMentions → JSON string
+    const authors = fields.resourceAuthors as Array<{ label: string }> | undefined
+    const apiData: Record<string, unknown> = {
+      ...fields,
+      author: Array.isArray(authors) ? authors.map((t) => t.label).join(', ') : fields.resourceAuthor ?? null,
+      notesMentions: Array.isArray(fields.notesMentions) ? JSON.stringify(fields.notesMentions) : fields.notesMentions ?? null,
+      // Map resource field names to what the API expects
+      title: fields.resourceTitle ?? null,
+      category: fields.resourceType ?? null,
+      url: fields.resourceUrl ?? null,
+      year: fields.resourceYear ?? null,
+      keyArgument: fields.resourceKeyArgument ?? null,
+      entityId: updateContext?.entityId ?? undefined,
+    }
     submitEntity.mutate(
       {
         type: 'resource',
         timestamp: new Date().toISOString(),
-        data: {
-          ...fields,
-          entityId: updateContext?.entityId ?? undefined,
-        },
+        data: apiData,
         _hp: (_hp as string) ?? '',
       },
       {
