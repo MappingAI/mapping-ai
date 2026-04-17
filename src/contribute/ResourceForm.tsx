@@ -330,6 +330,11 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPe
               ? 'Update Resource'
               : 'Submit Resource'}
         </button>
+        {submitEntity.isError && (
+          <p className="text-[12px] font-mono text-red-600 mt-2">
+            {(submitEntity.error as { body?: { error?: string } })?.body?.error ?? 'Submission failed. Please try again.'}
+          </p>
+        )}
       </div>
     </form>
   )

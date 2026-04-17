@@ -379,6 +379,11 @@ export function OrganizationForm({ form, updateContext, onOrgPanelOpen, onViewEx
               ? 'Update Organization'
               : 'Submit Organization'}
         </button>
+        {submitEntity.isError && (
+          <p className="text-[12px] font-mono text-red-600 mt-2">
+            {(submitEntity.error as { body?: { error?: string } })?.body?.error ?? 'Submission failed. Please try again.'}
+          </p>
+        )}
       </div>
     </form>
   )
