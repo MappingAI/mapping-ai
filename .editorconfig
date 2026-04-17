@@ -1,0 +1,20 @@
+# EditorConfig — https://editorconfig.org
+# Keeps whitespace consistent across editors. Prettier handles code formatting;
+# this file covers non-code files and editor behavior Prettier does not touch.
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.md]
+# Preserve hard line breaks in markdown (two trailing spaces).
+trim_trailing_whitespace = false
+
+[Makefile]
+indent_style = tab

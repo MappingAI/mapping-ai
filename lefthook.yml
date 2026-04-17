@@ -1,0 +1,41 @@
+# Lefthook — local git hooks, single-binary, no npm lifecycle hook required.
+# Install hooks once after cloning: `npx lefthook install`
+#
+# CI is the authoritative gate; this hook exists to give a fast local signal on
+# staged files so contributors catch formatting and obvious lint problems
+# before pushing. Any commit can be made with `git commit --no-verify` if
+# bypassing is needed for WIP; CI will still catch it.
+#
+# The `fixture-guard` command is an extra safety check: fixture files commit to
+# a public git history, so staging one requires an explicit env-var
+# acknowledgment that the fixture has been re-reviewed.
+
+pre-commit:
+  parallel: true
+  commands:
+    format:
+      # Prettier only rewrites files that don't already match its style.
+      glob: '*.{ts,tsx,js,jsx,json,md,yml,yaml,css,html}'
+      run: npx prettier --write {staged_files}
+      stage_fixed: true
+
+    lint:
+      glob: 'src/**/*.{ts,tsx}'
+      run: npx eslint --fix --max-warnings=0 {staged_files}
+      stage_fixed: true
+
+    fixture-guard:
+      # Fixture JSON lands in public git history. Block accidental commits
+      # unless the author explicitly sets FIXTURE_REVIEWED=1.
+      glob: 'fixtures/*.json'
+      run: |
+        if [ "${FIXTURE_REVIEWED:-}" != "1" ]; then
+          echo "✗ Refusing to commit fixtures/*.json without FIXTURE_REVIEWED=1."
+          echo ""
+          echo "  Fixture files commit to public git history — re-run the sanitizer"
+          echo "  and verify no PII leaked, then:"
+          echo ""
+          echo "      FIXTURE_REVIEWED=1 git commit ..."
+          echo ""
+          exit 1
+        fi

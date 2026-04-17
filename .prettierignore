@@ -1,0 +1,30 @@
+# Build output
+dist/
+.aws-sam/
+coverage/
+
+# Generated bundles and data artifacts
+assets/js/tiptap-notes.js
+map-data.json
+map-detail.json
+backup-*.json
+backup-*.sql
+enriched-elections.json
+
+# Dependencies
+node_modules/
+package-lock.json
+
+# Lockfiles and binary data
+*.min.js
+*.min.css
+
+# OS files
+.DS_Store
+
+# Don't reformat third-party notebooks or XLSX dumps
+*.xlsx
+
+# Dogfood / test output
+dogfood-output/
+test-screenshots/
