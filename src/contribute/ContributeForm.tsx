@@ -106,7 +106,28 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
         ...prev,
         [formType]: { entityId: entityData.id!, entityData },
       }))
-      formsRef.current[formType].reset(entityData as Record<string, unknown>)
+      // Transform entity fields to match form data types:
+      // - location (string) → Tag[] for LocationSearch
+      // - keyConcerns, influenceType (comma-separated string) → string[]
+      const formData: Record<string, unknown> = { ...entityData }
+      if (typeof formData.location === 'string' && formData.location) {
+        formData.location = formData.location.split(',').map((s: string) => ({
+          id: s.trim(),
+          label: s.trim(),
+        }))
+      } else if (!Array.isArray(formData.location)) {
+        formData.location = []
+      }
+      if (typeof formData.influence_type === 'string' && formData.influence_type) {
+        formData.influenceType = formData.influence_type.split(',').map((s: string) => s.trim())
+      }
+      if (typeof formData.threat_models === 'string' && formData.threat_models) {
+        formData.keyConcerns = formData.threat_models.split(',').map((s: string) => s.trim())
+      }
+      if (!Array.isArray(formData.affiliatedOrgIds)) {
+        formData.affiliatedOrgIds = []
+      }
+      formsRef.current[formType].reset(formData)
     },
     [],
   )
