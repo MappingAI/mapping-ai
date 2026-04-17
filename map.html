@@ -4272,6 +4272,18 @@ function showDetail(d, allNodes) {
   }
   const panel = document.getElementById('detail-panel');
   const content = document.getElementById('detail-content');
+
+  // Look up fresh entity data from allData to get merged detail (notes, stance_detail, etc.)
+  // The node 'd' may be a copy made before detail data was loaded
+  const sourceArray = d.entityType === 'person' ? allData.people
+    : d.entityType === 'organization' ? allData.organizations
+    : allData.resources;
+  const freshEntity = sourceArray?.find(e => e.id === d.id);
+  if (freshEntity) {
+    // Merge fresh data into d so detail fields are available
+    Object.assign(d, freshEntity);
+  }
+
   const color = getColor(d.category);
 
   let fields = '';
