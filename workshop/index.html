@@ -169,14 +169,36 @@
       margin: 3rem 0;
     }
 
-    .toc a {
-      display: block;
-      padding: 0.3rem 0;
-      color: #555;
-      font-family: 'DM Mono', monospace;
-      font-size: 13px;
+    /* Sidebar table of contents */
+    .toc {
+      display: none;
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      left: calc(50% - 360px - 3rem - 200px);
+      width: 200px;
     }
-    .toc a:hover { color: #1a1a1a; }
+    @media (min-width: 1200px) {
+      .toc { display: block; }
+    }
+    .toc-link {
+      display: block;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      color: #888;
+      text-decoration: none;
+      padding: 0.4rem 0 0.4rem 0.6rem;
+      border-left: 1px solid transparent;
+      transition: color 0.15s ease, border-color 0.15s ease;
+      line-height: 1.35;
+    }
+    .toc-link:hover { color: #555; text-decoration: none; }
+    .toc-link.active {
+      color: #1a1a1a;
+      border-left-color: #1a1a1a;
+    }
+    h2[id], h3[id] { scroll-margin-top: 64px; }
 
     table {
       width: 100%;
@@ -228,6 +250,18 @@
 </head>
 <body>
 
+<nav class="toc">
+  <a class="toc-link" href="#overview">Overview</a>
+  <a class="toc-link" href="#streams">Streams</a>
+  <a class="toc-link" href="#stream-1">1. Bug Hunting</a>
+  <a class="toc-link" href="#stream-2">2. Data Enrichment</a>
+  <a class="toc-link" href="#stream-3">3. Data Quality</a>
+  <a class="toc-link" href="#stream-4">4. New Features</a>
+  <a class="toc-link" href="#stream-5">5. Outreach</a>
+  <a class="toc-link" href="#stream-6">6. Data Viz</a>
+  <a class="toc-link" href="#setup">Quick Reference</a>
+</nav>
+
 <nav>
   <span class="brand">Mapping AI</span>
   <a href="#overview">Overview</a>
@@ -247,7 +281,7 @@
   <!-- ============ OVERVIEW ============ -->
   <h2 id="overview">What is Mapping AI?</h2>
 
-  <p><a href="https://mapping-ai.org/map.html" target="_blank">Mapping AI</a> is an interactive map of the U.S. AI policy landscape. It tracks the people, organizations, and resources involved in how AI gets governed in America: who they are, what they believe about regulation, and how they connect to each other. Policymakers, lab execs, researchers, civil society groups, investors, journalists.</p>
+  <p><a href="https://mapping-ai.org/map" target="_blank">Mapping AI</a> is an interactive map of the U.S. AI policy landscape. It tracks the people, organizations, and resources involved in how AI gets governed in America: who they are, what they believe about regulation, and how they connect to each other. Policymakers, lab execs, researchers, civil society groups, investors, journalists.</p>
 
   <p>The database currently has about <strong>709 people</strong>, <strong>734 organizations</strong>, and <strong>161 resources</strong>, linked by <strong>2,228 relationships</strong>. About 1,020 of those are publicly visible on the map. The rest are pending review or don't have enough info to publish yet.</p>
 
@@ -362,19 +396,37 @@
   <h3 id="stream-1">Stream 1: Bug Hunting</h3>
   <p class="mono" style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.1em;">Best for: anyone with a browser and some patience</p>
 
-  <p>Open the site, click around, try weird inputs, resize your window, test on your phone. If something looks off or doesn't work, write it up.</p>
+  <p><strong>This is where we need the most help.</strong> The site has a lot of interactive components that need real user testing - things that work fine for the developer who built them but break in unexpected ways when someone else tries them. Open the site, click around, try weird inputs, resize your window, test on your phone. The examples below are just starting points - the best bugs are often found by doing things we didn't think to list. If something looks off or doesn't work, write it up.</p>
 
   <h4>Where to look</h4>
 
-  <p><strong><a href="https://mapping-ai.org/map.html" target="_blank">The map</a></strong> is where most of the complexity is. Search for people and organizations. Click nodes to see their detail panel. Toggle between Network and Plot views using the buttons at the top. Try the filter chips. Zoom in and out. Collapse the controls sidebar and re-expand it. Open the contribute panel from the map page and see if it plays nicely with everything else.</p>
+  <p><strong><a href="https://mapping-ai.org/map" target="_blank">The map</a></strong> is where most of the complexity is. Some starting points, but don't limit yourself to these:</p>
+  <ul>
+    <li>Search for people and organizations</li>
+    <li>Click nodes to see their detail panel</li>
+    <li>Toggle between Network and Plot views</li>
+    <li>Try the filter chips</li>
+    <li>Zoom in and out</li>
+    <li>Collapse the controls sidebar and re-expand it</li>
+    <li>Open the contribute panel from the map page and see if it plays nicely with everything else</li>
+  </ul>
 
-  <p><strong><a href="https://mapping-ai.org/contribute.html" target="_blank">The contribute form</a></strong> has three tabs (Person, Organization, Resource), each with custom dropdowns, tag inputs, location search via Photon/OpenStreetMap, org search, and a rich text editor for notes. Try filling out a form completely and submitting. Try the org search. Try creating a new org from the inline panel that slides in. Try @mentioning someone in the notes field. See what happens with empty required fields.</p>
+  <p><strong><a href="https://mapping-ai.org/contribute" target="_blank">The contribute form</a></strong> has three tabs (Person, Organization, Resource), each with custom dropdowns, tag inputs, and a rich text editor. Some starting points:</p>
+  <ul>
+    <li>Fill out a form completely and submit it</li>
+    <li>Try the org search</li>
+    <li>Create a new org from the inline panel that slides in</li>
+    <li>@mention someone in the notes field</li>
+    <li>Try location search</li>
+    <li>See what happens with empty required fields</li>
+  </ul>
+  <p>You'll have a separate <code>.env</code> file with credentials to check the admin panel and see how your submissions are being received in the database.</p>
 
-  <p><strong><a href="https://mapping-ai.org" target="_blank">The homepage</a></strong> and <strong><a href="https://mapping-ai.org/about.html" target="_blank">about page</a></strong> are simpler but worth a quick check too, especially on mobile.</p>
+  <p><strong><a href="https://mapping-ai.org" target="_blank">The homepage</a></strong> and <strong><a href="https://mapping-ai.org/about" target="_blank">about page</a></strong> are simpler but worth a quick check too, especially on mobile.</p>
 
   <h4>How to report bugs</h4>
 
-  <p>Use this format in a shared doc or spreadsheet:</p>
+  <p>Log bugs in <a href="https://docs.google.com/document/d/134ZCFOo-hRDqw9ddzMhq7eHEJ3XuuikI7RoMIMDhWL4/edit?usp=sharing" target="_blank">this shared doc</a> using this format:</p>
   <pre>Page: [which page]
 What I did: [steps to reproduce]
 What I expected: [what should have happened]
@@ -384,19 +436,19 @@ Screenshot: [paste one if you can]</pre>
 
   <p>Functional stuff takes priority over cosmetic stuff. A dropdown that won't close matters more than a font that looks slightly off. But note both if you see them.</p>
 
-  <p>If you're comfortable with GitHub, you can also file issues directly at <a href="https://github.com/sophiajwang/mapping-ai/issues" target="_blank">github.com/sophiajwang/mapping-ai/issues</a>.</p>
-
   <hr class="divider">
 
   <!-- ==================== STREAM 2 ==================== -->
   <h3 id="stream-2">Stream 2: Data Enrichment &amp; Seeding</h3>
   <p class="mono" style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.1em;">Best for: people who follow AI policy or like doing research</p>
 
-  <p>The map is really only as useful as its data, and there are significant holes right now. About 44% of entities in the database have no notes at all, and a lot of the ones that do have notes are pretty thin or unsourced. Your job today is to add new entities we're missing and flesh out ones that are already there, using the contribute form.</p>
+  <p>The map is only as useful as its data. Most entities now have notes, but many are thin, unsourced, or out of date. Your job today is to add new entities we're missing and flesh out ones that are already there.</p>
+
+  <p><strong>Start by exploring the current data.</strong> Browse <a href="https://mapping-ai.org/map" target="_blank">the map</a> to see what's there. You also have access to the staging database (via the <code>.env</code> file) and can query it directly or look at the exported <code>map-data.json</code>. This will help you identify gaps and avoid duplicating work.</p>
 
   <h4>What to add</h4>
 
-  <p>Think about who's missing. Search the map first (the search bar on <a href="https://mapping-ai.org/map.html" target="_blank">map.html</a> is good for this) to make sure the person or org isn't already in there. Some areas that are particularly sparse right now:</p>
+  <p>Think about who's missing. Use the search bar on the map to make sure the person or org isn't already in there. Some areas that are particularly sparse right now:</p>
 
   <ul>
     <li>State-level policymakers working on AI (governors, AGs, state legislators)</li>
@@ -404,12 +456,39 @@ Screenshot: [paste one if you can]</pre>
     <li>AI companies beyond the big frontier labs (defense tech, enterprise AI, infrastructure providers)</li>
     <li>Civil society groups, labor unions, advocacy organizations</li>
     <li>International organizations with real U.S. influence (OECD AI Policy Observatory, UN AI Advisory Body, etc.)</li>
+    <li>Journalists and media figures who cover AI policy</li>
+    <li>Lawyers and legal scholars working on AI regulation</li>
+    <li>Industry trade associations and lobbying groups</li>
     <li>Recent key resources: executive orders, major reports, papers, influential essays or books from the last year or so</li>
+  </ul>
+
+  <h4>What to enrich</h4>
+
+  <p>Beyond adding new entities, you can also improve existing ones:</p>
+
+  <ul>
+    <li><strong>Add missing edges (relationships).</strong> The map is a network - connections between entities matter as much as the entities themselves. Edge types include employment, advisory roles, board memberships, funding, collaborations, founding relationships, mentorship, critics/supporters, and more - see <code>workshop/DATABASE-ORIENTATION.md</code> for the full list. About 30% of current edges lack supporting evidence, so adding sources helps too.</li>
+    <li><strong>Fill in belief fields.</strong> Many entities are missing regulatory stance, AGI timeline beliefs, or AI risk assessments. If you can find evidence (quotes, testimony, published positions), add it.</li>
+    <li><strong>Expand thin notes.</strong> Some entries have just a sentence or two. Add context about why someone matters to AI policy, what they've done, who they work with.</li>
+    <li><strong>Add sources.</strong> Notes without sources are harder to verify. If you can find primary sources for claims, add them to the <code>notes_sources</code> field.</li>
   </ul>
 
   <h4>How to submit</h4>
 
-  <p>Go to <a href="https://mapping-ai.org/contribute.html" target="_blank">mapping-ai.org/contribute.html</a> and fill out the form. A few things worth knowing:</p>
+  <p>There are two options:</p>
+
+  <p><strong>Option 1: Direct to staging database (recommended for workshop)</strong></p>
+  <p>You'll receive a <code>.env</code> file with credentials for the staging database, which lets you read and write directly via SQL. This is a complete copy of production data that you can freely modify without affecting the live site. To see your changes on the map:</p>
+  <pre>npm install
+source .env                       # load database credentials
+node scripts/export-map-data.js   # exports map-data.json from staging DB
+npx serve .                       # runs local server on localhost:3000</pre>
+  <p>After making changes to the database, re-run <code>export-map-data.js</code> and refresh your browser to see the updated map. See <code>workshop/DATABASE-ORIENTATION.md</code> for the full schema reference, example queries, and quality guidelines.</p>
+
+  <p><strong>Option 2: Live contribute form</strong></p>
+  <p>Go directly to <a href="https://mapping-ai.org/contribute" target="_blank">mapping-ai.org/contribute</a> and submit there. Entries go into the production database and will appear on the live map after admin approval.</p>
+
+  <p>A few things worth knowing about the form:</p>
 
   <p>The <strong>relationship pills</strong> at the top of each form actually matter for how data gets weighted. "I am this person" means self-reported info (weighted highest). "I can connect you" means you know them personally. "Someone I know of" means you're working from public sources.</p>
 
@@ -420,12 +499,19 @@ Screenshot: [paste one if you can]</pre>
   <p>Here's roughly what a good person entry looks like:</p>
 
   <div class="callout">
-    <strong>Name:</strong> Elizabeth Kelly<br>
-    <strong>Title:</strong> Head of Beneficial Deployments, Anthropic<br>
+    <strong>Name:</strong> Chuck Schumer<br>
+    <strong>Title:</strong> U.S. Senator, NY; Senate Majority Leader (2021-2025), Senate Minority Leader (2017-2021, 2025-present)<br>
     <strong>Category:</strong> Policymaker<br>
-    <strong>Primary Org:</strong> Anthropic<br>
-    <strong>Notes:</strong> Elizabeth Kelly served as the inaugural Director of the U.S. AI Safety Institute at NIST from February 2024 to February 2025, appointed by Commerce Secretary Gina Raimondo to lead the government's effort to measure and mitigate risks from advanced AI systems. She was a key drafter of President Biden's Executive Order on AI. Under her leadership, the AISI reached agreements with OpenAI and Anthropic to test their models prior to release and helped establish the international network of AI safety institutes. She departed the AISI in February 2025 after the Trump administration rescinded Biden's AI executive order.<br>
-    <strong>Regulatory stance:</strong> Moderate
+    <strong>Primary Org:</strong> United States Senate<br>
+    <strong>Other Orgs:</strong> Bipartisan Senate AI Working Group (Co-founder/Leader), Senate Finance Committee, Senate Rules Committee<br>
+    <strong>Location:</strong> New York, NY<br>
+    <strong>Twitter:</strong> @SenSchumer<br>
+    <strong>Notes:</strong> Chuck Schumer is a Democratic U.S. Senator from New York who has served since 1999 and is currently Senate Majority Leader. He led a bipartisan working group that released a 31-page AI policy roadmap in May 2024, recommending at least $32 billion in government spending to accelerate AI research and development. The roadmap was developed after months of AI Insight Forums with tech companies, civil rights leaders, and other stakeholders. Schumer has described regulating artificial intelligence as "a challenge for Congress unlike any other" and has made election protection from AI interference a high priority.<br>
+    <strong>Regulatory stance:</strong> Moderate<br>
+    <strong>Stance detail:</strong> Advocates for 'Safe Innovation Framework' emphasizing innovation as 'North Star' while establishing necessary guardrails. Supports targeted regulations like federal AI procurement guidelines, election deepfake protections, and the DEFIANCE Act against non-consensual AI pornography.<br>
+    <strong>AGI timeline:</strong> 5-10 years<br>
+    <strong>AI risk level:</strong> Serious<br>
+    <strong>Threat models:</strong> Labor displacement, Power concentration, Democratic erosion, Misinformation
   </div>
 
   <h4>Quality over quantity</h4>
@@ -438,28 +524,30 @@ Screenshot: [paste one if you can]</pre>
   <h3 id="stream-3">Stream 3: Data Quality &amp; Verification</h3>
   <p class="mono" style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.1em;">Best for: skeptics, fact-checkers, people who notice when something seems off</p>
 
-  <p>The database was built through a combination of manual research, web scraping, and AI-assisted enrichment, so it contains unverifiable claims, formatting artifacts from the AI pipeline, stale information, and some outright fabrications. Your job is to find and flag these.</p>
+  <p>The database was built through a combination of manual research, web scraping, and AI-assisted enrichment, so it contains unverifiable claims, stale information, and some outright fabrications. Your job is to find and flag these.</p>
+
+  <p><strong>Start by exploring the data.</strong> Browse <a href="https://mapping-ai.org/map" target="_blank">the map</a> and click on nodes to read their detail panels. You also have access to the staging database (via the <code>.env</code> file) where you can run queries to find patterns of issues, or look at the exported <code>map-data.json</code> directly.</p>
 
   <h4>Known issues to look for</h4>
 
-  <p><strong>Citation artifacts.</strong> Roughly 316 entities have leftover <code>[1]</code>, <code>[6,7]</code> style reference numbers in their notes from the AI enrichment pipeline. The references don't link to anything. These need to be flagged or cleaned out.</p>
+  <ul>
+    <li><strong>Hallucinated facts.</strong> The AI-generated notes sometimes include claims that sound very specific and plausible but are just wrong. Suspiciously precise founding dates, round dollar amounts, inflated competition results, awards that don't exist. If something sounds weirdly specific, it's worth a quick check.</li>
+    <li><strong>Stale information.</strong> Some entries list people at organizations they've since left. Government officials who changed roles after the 2025 transition come up a lot.</li>
+    <li><strong>Wrong org affiliations.</strong> Primary org set to a completely different entity with a similar-sounding name. These are especially bad because they create false connections on the map.</li>
+    <li><strong>Edges missing evidence.</strong> About 30% of relationships have no supporting evidence. If a relationship seems questionable, check whether there's evidence for it.</li>
+    <li><strong>Thin or missing context.</strong> Notes that are technically accurate but don't explain why someone matters to AI policy. "John Smith is the CEO of Acme Corp" is less useful than explaining what Acme Corp does and why it's relevant.</li>
+  </ul>
 
-  <p><strong>Hallucinated facts.</strong> The AI-generated notes sometimes include claims that sound very specific and plausible but are just... wrong. Suspiciously precise founding dates, round dollar amounts, inflated competition results, awards that don't exist. If something sounds weirdly specific, it's probably worth a quick check. One we already found: an entity's notes claimed someone was a "six-time finalist of the International Olympiad in Informatics" when the actual IOI records show they competed exactly once.</p>
+  <h4>How to fix issues</h4>
 
-  <p><strong>Stale information.</strong> Some entries list people at organizations they've since left. Government officials who changed roles after the 2025 transition come up a lot.</p>
+  <p>When you find something wrong, fix it directly:</p>
 
-  <p><strong>Wrong org affiliations.</strong> We found at least one entry where the primary org was set to a completely different entity with a similar-sounding name (an AI safety research org mixed up with a university policy center). These are especially bad because they create false connections on the map.</p>
+  <ul>
+    <li><strong>Option 1: Staging database.</strong> Use the <code>.env</code> file credentials to connect to the staging DB and run UPDATE queries. See <code>workshop/DATABASE-ORIENTATION.md</code> for examples.</li>
+    <li><strong>Option 2: Contribute form.</strong> Go to <a href="https://mapping-ai.org/contribute" target="_blank">mapping-ai.org/contribute</a> and submit a correction. This goes into the production review queue.</li>
+  </ul>
 
-  <h4>How to work</h4>
-
-  <p>Browse entities on <a href="https://mapping-ai.org/map.html" target="_blank">the map</a>. Click on nodes and read their detail panels. When you find something that looks wrong, document it in a shared spreadsheet:</p>
-
-  <pre>Entity name: [who/what]
-Problem: [what's wrong]
-Evidence: [how you know, with a source link if possible]
-Suggested fix: [what it should say instead]</pre>
-
-  <p>Start with well-known figures whose facts you can probably check from memory. Then move to less-familiar entities where you'll need to do some quick googling. Finding patterns of errors across multiple entries is probably more useful than perfecting any single one.</p>
+  <p>Start with well-known figures whose facts you can check from memory. Then move to less-familiar entities where you'll need to do some quick googling.</p>
 
   <hr class="divider">
 
@@ -471,17 +559,19 @@ Suggested fix: [what it should say instead]</pre>
 
   <h4>Getting set up</h4>
 
-  <p>Clone the repo and start the dev server:</p>
+  <p>Clone the repo and start a local server:</p>
 
-  <pre>git clone https://github.com/sophiajwang/mapping-ai.git
+  <pre>git clone https://github.com/MappingAI/mapping-ai.git
 cd mapping-ai
 npm install
-node dev-server.js    # runs on localhost:3000 with API proxy</pre>
+npx serve .    # runs on localhost:3000</pre>
 
-  <p>The dev server is an Express app that serves static files and proxies API requests to the production Lambda endpoints. You don't need AWS credentials or a local database to work on frontend stuff.</p>
+  <p>This serves static files locally. API calls (form submissions, search) go directly to the production Lambda endpoints, so you don't need AWS credentials or a local database to work on frontend stuff.</p>
 
   <p>If you want to build the TipTap rich text editor bundle (only needed if you're touching the notes editor):</p>
   <pre>npm run build:tiptap</pre>
+
+  <p>If you're working with the staging database (for data-related features), you'll need the <code>.env</code> file - see <code>workshop/DATABASE-ORIENTATION.md</code>.</p>
 
   <h4>Project structure</h4>
 
@@ -492,25 +582,27 @@ node dev-server.js    # runs on localhost:3000 with API proxy</pre>
     <tr><td><code>map.html</code></td><td>The D3.js map. All the visualization logic lives inline in one large script block. Loads <code>map-data.json</code>, a static file generated from the database.</td></tr>
     <tr><td><code>contribute.html</code></td><td>The submission forms. Custom dropdowns, tag inputs, org search, location search, TipTap rich text editor, autosave to localStorage. It's big.</td></tr>
     <tr><td><code>admin.html</code></td><td>Admin panel: review queue, entity editing, dashboard stats.</td></tr>
-    <tr><td><code>api/*.js</code></td><td>Lambda functions. <code>submit.js</code> handles form submissions, <code>search.js</code> does full-text search, <code>admin.js</code> handles the review queue and entity CRUD.</td></tr>
+    <tr><td><code>api/*.js</code></td><td>Lambda functions. <code>submit.js</code> handles form submissions, <code>search.js</code> does full-text search, <code>admin.js</code> handles the review queue and entity CRUD, <code>upload.js</code> handles image uploads, <code>export-map.js</code> generates the map JSON.</td></tr>
     <tr><td><code>template.yaml</code></td><td>AWS SAM template that defines all the infrastructure.</td></tr>
   </table>
 
   <h4>Feature ideas</h4>
 
-  <p>Roughly ordered by how much work they'd be. Pick whatever interests you, or pitch something we haven't thought of.</p>
+  <p>Roughly ordered by priority. Pick whatever interests you, or pitch something we haven't thought of.</p>
 
-  <p><strong>Shareable entity links.</strong> Clicking a node on the map doesn't update the URL right now, which means you can't link someone to a specific entity. Having <code>map.html?entity=123</code> or <code>map.html?name=OpenAI</code> auto-select and zoom to that node on load would be really useful. Good starter project.</p>
+  <ul>
+    <li><strong>Better search.</strong> The current search is basic and not very useful. Improving search relevance, adding filters, and making autocomplete smarter would have high impact.</li>
+    <li><strong>Admin panel improvements.</strong> Right now we mostly use backend SQL to approve entities because <code>admin.html</code> is limited. Better bulk actions, filtering, and entity editing UI would speed up the review process significantly.</li>
+    <li><strong>Shareable entity links.</strong> Clicking a node on the map doesn't update the URL, so you can't link someone to a specific entity. Having <code>map.html?entity=123</code> or <code>map.html?name=OpenAI</code> auto-select and zoom to that node on load would be really useful.</li>
+    <li><strong>Timeline view.</strong> The database has edge start/end dates (when someone joined or left an org, when a relationship began). A timeline slider or playback feature showing how the network evolved over time would be great.</li>
+    <li><strong>Improved Plot view.</strong> The Plot view (scatter/beeswarm) works but is bare. Better axis labels, a legend, and the ability to color by a different dimension than the axes would all help.</li>
+    <li><strong>Entity edit history.</strong> The database tracks submissions but there's no UI for seeing what changed over time for a given entity. Would be valuable for data quality work.</li>
+    <li><strong>Export/embed.</strong> Let people export a filtered view of the map as PNG or SVG, or generate an embed snippet for a blog post or report.</li>
+  </ul>
 
-  <p><strong>Timeline view.</strong> The database has edge start/end dates (when someone joined or left an org, when a relationship began). A timeline slider or playback feature showing how the network evolved over time would be great.</p>
+  <p>You'll receive a <code>.env</code> file with credentials for the staging database (read/write) and production database (read-only) so you can test features that interact with data.</p>
 
-  <p><strong>Improved Plot view.</strong> The Plot view (scatter/beeswarm) works but is kind of bare. Better axis labels, a legend, and maybe the ability to color by a different dimension than the axes would all help.</p>
-
-  <p><strong>Entity edit history.</strong> The database tracks submissions but there's no UI for seeing what changed over time for a given entity. Would be valuable for data quality work.</p>
-
-  <p><strong>Export/embed.</strong> Let people export a filtered view of the map as PNG or SVG, or generate an embed snippet for a blog post or report.</p>
-
-  <p>Before starting on something, check <a href="https://github.com/sophiajwang/mapping-ai/issues" target="_blank">GitHub issues</a> to see if anyone else is already on it. When you're done, open a pull request against <code>main</code>.</p>
+  <p>Before starting on something, check the <a href="https://discord.com/events/1491894381773590609/1494729391509340281" target="_blank">Discord</a> to see what others are working on and post what you're tackling. When you're done, open a pull request against <code>main</code>.</p>
 
   <h4>Conventions</h4>
 
@@ -583,16 +675,48 @@ node dev-server.js    # runs on localhost:3000 with API proxy</pre>
   <table>
     <tr><th>Resource</th><th>Link</th></tr>
     <tr><td>Live site</td><td><a href="https://mapping-ai.org" target="_blank">mapping-ai.org</a></td></tr>
-    <tr><td>Interactive map</td><td><a href="https://mapping-ai.org/map.html" target="_blank">mapping-ai.org/map.html</a></td></tr>
-    <tr><td>Contribute form</td><td><a href="https://mapping-ai.org/contribute.html" target="_blank">mapping-ai.org/contribute.html</a></td></tr>
-    <tr><td>GitHub repo</td><td><a href="https://github.com/sophiajwang/mapping-ai" target="_blank">github.com/sophiajwang/mapping-ai</a></td></tr>
+    <tr><td>Interactive map</td><td><a href="https://mapping-ai.org/map" target="_blank">mapping-ai.org/map</a></td></tr>
+    <tr><td>Contribute form</td><td><a href="https://mapping-ai.org/contribute" target="_blank">mapping-ai.org/contribute</a></td></tr>
+    <tr><td>GitHub repo</td><td><a href="https://github.com/MappingAI/mapping-ai" target="_blank">github.com/MappingAI/mapping-ai</a></td></tr>
     <tr><td>Map data (JSON)</td><td><a href="https://mapping-ai.org/map-data.json" target="_blank">mapping-ai.org/map-data.json</a></td></tr>
-    <tr><td>File bugs</td><td><a href="https://github.com/sophiajwang/mapping-ai/issues" target="_blank">GitHub Issues</a></td></tr>
+    <tr><td>File bugs / Coordinate</td><td><a href="https://discord.com/events/1491894381773590609/1494729391509340281" target="_blank">Discord</a></td></tr>
   </table>
 
   <p style="color:#888;font-size:14px;margin-top:3rem;font-family:'DM Mono',monospace;">mapping-ai.org</p>
 
 </div>
+
+<script>
+  // TOC active state tracking
+  const tocLinks = Array.from(document.querySelectorAll('.toc-link'));
+  const tocSections = tocLinks.map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+
+  tocLinks.forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) {
+        window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 64, behavior: 'smooth' });
+      }
+    });
+  });
+
+  function updateToc() {
+    tocLinks.forEach(l => l.classList.remove('active'));
+    if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 8) {
+      tocLinks[tocLinks.length - 1].classList.add('active');
+      return;
+    }
+    const fromTop = window.scrollY + 72;
+    let activeIdx = 0;
+    tocSections.forEach((s, i) => {
+      if (s.getBoundingClientRect().top + window.scrollY <= fromTop) activeIdx = i;
+    });
+    tocLinks[activeIdx].classList.add('active');
+  }
+  window.addEventListener('scroll', updateToc, { passive: true });
+  updateToc();
+</script>
 
 </body>
 </html>
