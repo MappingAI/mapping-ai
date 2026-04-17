@@ -357,12 +357,17 @@ function EditModal({ entityId, adminKey, onClose }: { entityId: number; adminKey
   const [formData, setFormData] = useState<Record<string, string>>({})
   const [loaded, setLoaded] = useState(false)
 
+  const qcLocal = useQueryClient()
+  // Use already-fetched entity list from cache instead of re-fetching
   const { data: entity } = useQuery<Record<string, unknown>>({
     queryKey: ['admin-entity', entityId],
-    queryFn: async () => {
-      const res = await adminFetch<{ data: Record<string, unknown>[] }>('/admin?action=all', adminKey)
-      const list = res.data ?? []
-      return list.find((e: Record<string, unknown>) => e.id === entityId) ?? {}
+    queryFn: () => {
+      const cached = qcLocal.getQueryData<{ entities: Record<string, unknown>[] }>(['admin-entities'])
+      const found = cached?.entities?.find((e) => e.id === entityId)
+      if (found) return found
+      // Fallback: if not in cache, fetch from API
+      return adminFetch<{ data: Record<string, unknown>[] }>('/admin?action=all', adminKey)
+        .then((res) => res.data?.find((e) => e.id === entityId) ?? {})
     },
   })
 
