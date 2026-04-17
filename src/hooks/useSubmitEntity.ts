@@ -68,15 +68,19 @@ export function useAddPendingEntity() {
       const data = old as Record<string, Entity[]>
       const existing = data[arrayKey] ?? []
 
+      // Use negative ID to avoid collision with entity table IDs
+      // (submission IDs and entity IDs are different auto-increment sequences)
+      const pendingId = -Math.abs(entity.id)
+
       // Avoid duplicates
-      if (existing.some((e) => e.id === entity.id)) return old
+      if (existing.some((e) => e.id === pendingId)) return old
 
       return {
         ...data,
         [arrayKey]: [
           ...existing,
           {
-            id: entity.id,
+            id: pendingId,
             entity_type: entity.entity_type,
             name: entity.name,
             category: entity.category ?? null,

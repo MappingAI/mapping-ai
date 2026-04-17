@@ -108,12 +108,13 @@ export function useSeedCacheFromLedger() {
         const arrayKey = TYPE_TO_ARRAY[entry.entity_type]
         if (!arrayKey) continue
         const existing = data[arrayKey] ?? []
-        // Skip if already in cache (by ID or name+type match)
-        if (existing.some((e) => e.id === entry.id || (e.name.toLowerCase() === entry.name.toLowerCase() && e.entity_type === entry.entity_type))) {
+        const pendingId = -Math.abs(entry.id)
+        // Skip if already in cache (by negative ID or name+type match)
+        if (existing.some((e) => e.id === pendingId || (e.name.toLowerCase() === entry.name.toLowerCase() && e.entity_type === entry.entity_type))) {
           continue
         }
         toAdd[arrayKey]!.push({
-          id: entry.id,
+          id: pendingId,
           entity_type: entry.entity_type,
           name: entry.name,
           category: entry.category,
