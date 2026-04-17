@@ -223,7 +223,11 @@ export function PersonForm({ form, updateContext, onOrgPanelOpen, onViewExisting
             query={(watch('name') as string) ?? ''}
             entityType="person"
             onViewExisting={(entity) => onViewExisting?.(entity)}
-            onUpdateExisting={(entity) => onEnterUpdateMode?.({ id: entity.id, name: entity.name, category: entity.category, title: entity.title, primary_org: entity.primary_org })}
+            onUpdateExisting={(entity) => {
+              const full = cache?.byId.get(entity.id)
+              onEnterUpdateMode?.(full ? { ...full } : { id: entity.id, name: entity.name, category: entity.category, title: entity.title, primary_org: entity.primary_org })
+              onViewExisting?.(entity)
+            }}
           />
         )}
       </div>

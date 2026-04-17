@@ -148,7 +148,11 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPe
             query={(watch('resourceTitle') as string) ?? ''}
             entityType="resource"
             onViewExisting={(entity) => onViewExisting?.(entity)}
-            onUpdateExisting={(entity) => onEnterUpdateMode?.({ id: entity.id, name: entity.name, resourceTitle: entity.name })}
+            onUpdateExisting={(entity) => {
+              const full = cache?.byId.get(entity.id)
+              onEnterUpdateMode?.(full ? { ...full } : { id: entity.id, name: entity.name, resourceTitle: entity.name })
+              onViewExisting?.(entity)
+            }}
           />
         )}
       </div>

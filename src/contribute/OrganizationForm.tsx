@@ -152,7 +152,11 @@ export function OrganizationForm({ form, updateContext, onOrgPanelOpen, onViewEx
             query={(watch('name') as string) ?? ''}
             entityType="organization"
             onViewExisting={(entity) => onViewExisting?.(entity)}
-            onUpdateExisting={(entity) => onEnterUpdateMode?.({ id: entity.id, name: entity.name, category: entity.category })}
+            onUpdateExisting={(entity) => {
+              const full = cache?.byId.get(entity.id)
+              onEnterUpdateMode?.(full ? { ...full } : { id: entity.id, name: entity.name, category: entity.category })
+              onViewExisting?.(entity)
+            }}
           />
         )}
       </div>

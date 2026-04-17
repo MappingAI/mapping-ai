@@ -151,6 +151,12 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
 
   // Existing entity sidebar state
   const [viewEntity, setViewEntity] = useState<{ entity: FuzzySearchResult; type: FormType } | null>(null)
+  // Remember last viewed entity per form so the update banner can re-open it
+  const lastViewedRef = useRef<Record<FormType, FuzzySearchResult | null>>({ person: null, organization: null, resource: null })
+  const showEntitySidebar = useCallback((entity: FuzzySearchResult, type: FormType) => {
+    lastViewedRef.current[type] = entity
+    setViewEntity({ entity, type })
+  }, [])
 
   // Success state
   const [successType, setSuccessType] = useState<FormType | null>(null)
@@ -213,6 +219,7 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
             form={personForm}
             updateContext={updateContexts.person}
             onCancelUpdate={() => cancelUpdate('person')}
+            onViewExisting={updateContexts.person && lastViewedRef.current.person ? () => showEntitySidebar(lastViewedRef.current.person!, 'person') : undefined}
             onClear={() => clearForm('person')}
           />
           <PersonForm
@@ -220,7 +227,7 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
             form={personForm}
             updateContext={updateContexts.person}
             onOrgPanelOpen={openOrgPanel}
-            onViewExisting={(entity) => setViewEntity({ entity, type: 'person' })}
+            onViewExisting={(entity) => showEntitySidebar(entity, 'person')}
             onEnterUpdateMode={(data) => switchToFormInUpdateMode('person', data as Partial<Entity>)}
             onSubmitSuccess={() => handleSubmitSuccess('person')}
           />
@@ -233,6 +240,7 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
             form={orgForm}
             updateContext={updateContexts.organization}
             onCancelUpdate={() => cancelUpdate('organization')}
+            onViewExisting={updateContexts.organization && lastViewedRef.current.organization ? () => showEntitySidebar(lastViewedRef.current.organization!, 'organization') : undefined}
             onClear={() => clearForm('organization')}
           />
           <OrganizationForm
@@ -240,7 +248,7 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
             form={orgForm}
             updateContext={updateContexts.organization}
             onOrgPanelOpen={openOrgPanel}
-            onViewExisting={(entity) => setViewEntity({ entity, type: 'organization' })}
+            onViewExisting={(entity) => showEntitySidebar(entity, 'organization')}
             onEnterUpdateMode={(data) => switchToFormInUpdateMode('organization', data as Partial<Entity>)}
             onSubmitSuccess={() => handleSubmitSuccess('organization')}
           />
@@ -253,6 +261,7 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
             form={resourceForm}
             updateContext={updateContexts.resource}
             onCancelUpdate={() => cancelUpdate('resource')}
+            onViewExisting={updateContexts.resource && lastViewedRef.current.resource ? () => showEntitySidebar(lastViewedRef.current.resource!, 'resource') : undefined}
             onClear={() => clearForm('resource')}
           />
           <ResourceForm
@@ -261,7 +270,7 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
             updateContext={updateContexts.resource}
             onOrgPanelOpen={openOrgPanel}
             onSwitchToPersonTab={() => setActiveTab('person')}
-            onViewExisting={(entity) => setViewEntity({ entity, type: 'resource' })}
+            onViewExisting={(entity) => showEntitySidebar(entity, 'resource')}
             onEnterUpdateMode={(data) => switchToFormInUpdateMode('resource', data as Partial<Entity>)}
             onSubmitSuccess={() => handleSubmitSuccess('resource')}
           />
@@ -297,12 +306,14 @@ function FormHeader({
   form,
   updateContext,
   onCancelUpdate,
+  onViewExisting,
   onClear,
 }: {
   formType: FormType
   form: UseFormReturn<Record<string, unknown>>
   updateContext: UpdateContext | null
   onCancelUpdate: () => void
+  onViewExisting?: () => void
   onClear: () => void
 }) {
   return (
@@ -314,13 +325,24 @@ function FormHeader({
             Updating <strong>{updateContext.entityData.name}</strong> — adjust
             any fields and submit
           </span>
-          <button
-            type="button"
-            onClick={onCancelUpdate}
-            className="text-[12px] font-mono text-amber-700 hover:text-amber-900 underline"
-          >
-            Cancel
-          </button>
+          <div className="flex items-center gap-3">
+            {onViewExisting && (
+              <button
+                type="button"
+                onClick={onViewExisting}
+                className="text-[12px] font-mono text-[#2563eb] hover:text-[#1d4ed8] underline"
+              >
+                View existing
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={onCancelUpdate}
+              className="text-[12px] font-mono text-amber-700 hover:text-amber-900 underline"
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       )}
 
