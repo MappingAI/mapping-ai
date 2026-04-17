@@ -169,7 +169,7 @@ export function OrganizationForm({ form, updateContext, onOrgPanelOpen, onViewEx
             entityType="organization"
             onViewExisting={(entity) => onViewExisting?.(entity)}
             onUpdateExisting={(entity) => {
-              const full = cache?.byId.get(entity.id)
+              const full = entity.isPending ? null : cache?.byId.get(entity.id)
               onEnterUpdateMode?.(full ? { ...full } : { id: entity.id, name: entity.name, category: entity.category })
               onViewExisting?.(entity)
             }}

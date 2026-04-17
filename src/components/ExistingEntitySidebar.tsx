@@ -47,8 +47,8 @@ export function ExistingEntitySidebar({ entity, entityType, onClose }: ExistingE
   const { cache } = useEntityCache()
   if (!entity) return null
 
-  // Look up full entity from cache for richer data
-  const full: Partial<Entity> = cache?.byId.get(entity.id) ?? entity
+  // Look up full entity from cache — skip for pending entities (submission IDs collide with entity IDs)
+  const full: Partial<Entity> = entity.isPending ? entity : (cache?.byId.get(entity.id) ?? entity)
   const catColor = CATEGORY_COLORS[entity.category ?? ''] ?? '#6a7080'
 
   return (

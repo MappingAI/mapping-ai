@@ -246,7 +246,9 @@ export function PersonForm({ form, updateContext, onOrgPanelOpen, onViewExisting
             entityType="person"
             onViewExisting={(entity) => onViewExisting?.(entity)}
             onUpdateExisting={(entity) => {
-              const full = cache?.byId.get(entity.id)
+              // Only look up approved entities from cache — pending entities use submission IDs
+              // which collide with the entity ID space (different tables, overlapping auto-increment)
+              const full = entity.isPending ? null : cache?.byId.get(entity.id)
               onEnterUpdateMode?.(full ? { ...full } : { id: entity.id, name: entity.name, category: entity.category, title: entity.title, primary_org: entity.primary_org })
               onViewExisting?.(entity)
             }}
