@@ -360,8 +360,8 @@ function EditModal({ entityId, adminKey, onClose }: { entityId: number; adminKey
   const { data: entity } = useQuery<Record<string, unknown>>({
     queryKey: ['admin-entity', entityId],
     queryFn: async () => {
-      const res = await adminFetch<{ entities: Record<string, unknown>[] }>('/admin?scope=all', adminKey)
-      const list = res.entities ?? (Array.isArray(res) ? res : [])
+      const res = await adminFetch<{ data: Record<string, unknown>[] }>('/admin?action=all', adminKey)
+      const list = res.data ?? []
       return list.find((e: Record<string, unknown>) => e.id === entityId) ?? {}
     },
   })
