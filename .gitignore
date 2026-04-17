@@ -15,9 +15,11 @@ scripts/extract-fields.js
 # Enrichment output (generated, contains raw API data)
 enriched-elections.json
 
-# Data files (generated from DB during deploy, not tracked in git)
-map-data.json
-map-detail.json
+# Data files generated from the live DB during deploy — only the repo-root
+# copies are gitignored. `fixtures/map-data.json` + `fixtures/map-detail.json`
+# are the committed fork-UX fallback (see fixtures/README.md).
+/map-data.json
+/map-detail.json
 backup-*.json
 backup-*.sql
 scripts/seed-test-data.js

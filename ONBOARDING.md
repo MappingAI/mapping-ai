@@ -188,28 +188,32 @@ An admin reviews pending submissions on `admin.html`.
 ### Setup
 
 ```
-git clone https://github.com/sophiajwang/mapping-ai.git
+git clone https://github.com/MappingAI/mapping-ai.git
 cd mapping-ai
-npm ci
-cp .env.example .env
-# Edit .env with your DATABASE_URL
-npm run build:tiptap
-node dev-server.js
+nvm use               # Node 20 (.nvmrc)
+npm install
+npx lefthook install  # one-time: wires up pre-commit hook
+npm run dev           # Vite on http://localhost:5173
 ```
 
-The dev server runs at `http://localhost:3000` and mimics the Lambda/API Gateway setup locally. Form submissions and search require `dev-server.js` -- a plain `npx serve .` only serves static files.
+That's it — no `.env` needed for a first look. The map loads synthetic data from `fixtures/map-data.json` so a fresh clone renders the full UI without any credentials. If you want to hit the real API or run enrichment scripts, copy `.env.example` to `.env` and fill in only the variables for the features you're touching (the example file documents which one unlocks what).
+
+Full contributor workflow — npm scripts, CI expectations, coding conventions, fixture-guard workflow — is in [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ### Available scripts
 
 | Command | What it does |
 |---------|-------------|
-| `node dev-server.js` | Local Express server with API routes (port 3000) |
-| `npm run build:tiptap` | Bundle TipTap rich text editor |
+| `npm run dev` | Vite dev server on http://localhost:5173 |
+| `npm run build` | Production build into `dist/` |
+| `npm run lint` / `lint:fix` | ESLint; `--fix` auto-resolves what it can |
+| `npm run format` / `format:check` | Prettier `--write` / `--check` |
+| `npm run type-check` | `tsc --noEmit` across `src/` |
+| `npm test` / `test:watch` | Vitest single-pass / watch |
 | `npm run db:migrate` | Create/update all tables, triggers, indexes |
 | `npm run db:seed` | Import Airtable CSV data |
 | `npm run db:export-map` | Generate `map-data.json` from approved entities |
-| `npm run db:backup` | Backup all tables to S3 |
-| `npm run db:backup:local` | Backup to local files only |
+| `npm run db:backup` / `db:backup:local` | Back up all tables to S3 / locally |
 
 Backend deploy (Lambda functions):
 

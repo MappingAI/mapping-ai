@@ -17,12 +17,28 @@ async function fetchJSON<T>(url: string, init?: RequestInit): Promise<T> {
   return res.json()
 }
 
+/**
+ * Fetch with graceful fallback for public forks. Production S3 + CloudFront
+ * serves `/map-data.json` generated from the live DB; a fresh clone with no
+ * build + no deploy won't have that file, so we fall back to the committed
+ * fixture under `/fixtures/` so the map still renders with synthetic data.
+ */
+async function fetchJSONWithFixtureFallback<T>(primary: string, fallback: string): Promise<T> {
+  try {
+    return await fetchJSON<T>(primary)
+  } catch (err) {
+    const status = (err as { status?: number }).status
+    if (status === 404) return await fetchJSON<T>(fallback)
+    throw err
+  }
+}
+
 export async function fetchMapData(): Promise<MapData> {
-  return fetchJSON<MapData>('/map-data.json')
+  return fetchJSONWithFixtureFallback<MapData>('/map-data.json', '/fixtures/map-data.json')
 }
 
 export async function fetchMapDetail(): Promise<MapDetail> {
-  return fetchJSON<MapDetail>('/map-detail.json')
+  return fetchJSONWithFixtureFallback<MapDetail>('/map-detail.json', '/fixtures/map-detail.json')
 }
 
 /**
