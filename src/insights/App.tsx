@@ -23,8 +23,7 @@ interface Entity {
 interface Edge {
   source_id: number
   target_id: number
-  edge_type?: string
-  relationship_type?: string
+  relationship_type: string
   role?: string
 }
 
@@ -534,7 +533,7 @@ function ChartPacSpending({ edges, entityMap, tooltipEl }: { edges: Edge[]; enti
     const container = ref.current
     container.innerHTML = ''
 
-    const pacEdges = edges.filter(e => (e.edge_type === 'funder' || e.relationship_type === 'funder') && e.role && e.role.includes('$'))
+    const pacEdges = edges.filter(e => e.relationship_type === 'funder' && e.role && e.role.includes('$'))
     if (pacEdges.length === 0) {
       container.innerHTML = '<p style="font-family:\'DM Mono\', monospace;font-size:12px;color:#888;">No PAC spending data available.</p>'
       return

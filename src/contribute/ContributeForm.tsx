@@ -165,7 +165,7 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
   const clearForm = useCallback(
     (formType: FormType) => {
       clearDraft(formType)
-      formsRef.current[formType].reset(EMPTY_FORM)
+      formsRef.current[formType].reset({ ...EMPTY_FORM })
       setUpdateContexts((prev) => ({ ...prev, [formType]: null }))
       setSuccessType(null)
       setClearKeys((prev) => ({ ...prev, [formType]: prev[formType] + 1 }))
@@ -208,7 +208,7 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
       })
       setSuccessType(formType)
       clearDraft(formType)
-      formsRef.current[formType].reset(EMPTY_FORM)
+      formsRef.current[formType].reset({ ...EMPTY_FORM })
       // Bump clear key so TipTap editors reset on next render
       setClearKeys((prev) => ({ ...prev, [formType]: prev[formType] + 1 }))
     },
