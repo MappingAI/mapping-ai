@@ -37,8 +37,10 @@ export function TwitterSearch({ value, onChange, className = '' }: TwitterSearch
     )
   }, [cache])
 
-  // Debounced client-side filter
+  // Debounced client-side filter — only search when input is focused
+  const isFocusedRef = useRef(false)
   useEffect(() => {
+    if (!isFocusedRef.current) return
     const q = value.trim().replace('@', '').toLowerCase()
     if (q.length < 1) {
       setResults([])
@@ -80,8 +82,10 @@ export function TwitterSearch({ value, onChange, className = '' }: TwitterSearch
     return () => document.removeEventListener('mousedown', handler)
   }, [isOpen])
 
+  const justSelectedRef = useRef(false)
   const selectHandle = useCallback(
     (handle: string) => {
+      justSelectedRef.current = true
       onChange(handle)
       setIsOpen(false)
     },
@@ -121,6 +125,8 @@ export function TwitterSearch({ value, onChange, className = '' }: TwitterSearch
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        onFocus={() => { isFocusedRef.current = true }}
+        onBlur={() => { isFocusedRef.current = false }}
         onKeyDown={handleKeyDown}
         placeholder="Search Twitter/X handles..."
         className="w-full px-3 py-2 font-mono text-[13px] border border-[#ddd] rounded bg-white outline-none transition-colors hover:border-[#999] focus:border-[#2563eb]"

@@ -106,18 +106,27 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
         ...prev,
         [formType]: { entityId: entityData.id!, entityData },
       }))
-      // Transform entity fields to match form data types:
-      // - location (string) → Tag[] for LocationSearch
-      // - keyConcerns, influenceType (comma-separated string) → string[]
+      // Transform entity fields: snake_case → camelCase, strings → arrays
       const formData: Record<string, unknown> = { ...entityData }
+
+      // Map snake_case DB fields to camelCase form fields
+      if (formData.regulatory_stance) formData.regulatoryStance = formData.regulatory_stance
+      if (formData.regulatory_stance_detail) formData.regulatoryStanceDetail = formData.regulatory_stance_detail
+      if (formData.evidence_source) formData.evidenceSource = formData.evidence_source
+      if (formData.agi_timeline) formData.agiTimeline = formData.agi_timeline
+      if (formData.ai_risk_level) formData.aiRiskLevel = formData.ai_risk_level
+      if (formData.primary_org) formData.primaryOrg = formData.primary_org
+      if (formData.funding_model) formData.fundingModel = formData.funding_model
+      if (formData.notes_html) formData.notesHtml = formData.notes_html
+
+      // Location: single string → one Tag
       if (typeof formData.location === 'string' && formData.location) {
-        formData.location = formData.location.split(',').map((s: string) => ({
-          id: s.trim(),
-          label: s.trim(),
-        }))
+        formData.location = [{ id: formData.location, label: formData.location }]
       } else if (!Array.isArray(formData.location)) {
         formData.location = []
       }
+
+      // Comma-separated strings → arrays
       if (typeof formData.influence_type === 'string' && formData.influence_type) {
         formData.influenceType = formData.influence_type.split(',').map((s: string) => s.trim())
       }

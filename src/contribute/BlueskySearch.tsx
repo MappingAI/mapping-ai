@@ -26,8 +26,10 @@ export function BlueskySearch({ value, onChange, className = '' }: BlueskySearch
   const wrapperRef = useRef<HTMLDivElement>(null)
   const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 
-  // Debounced search against Bluesky public API
+  // Debounced search against Bluesky public API — only when focused
+  const isFocusedRef = useRef(false)
   useEffect(() => {
+    if (!isFocusedRef.current) return
     const q = value.trim().replace('@', '')
     if (q.length < 2) {
       setResults([])
@@ -72,8 +74,10 @@ export function BlueskySearch({ value, onChange, className = '' }: BlueskySearch
     return () => document.removeEventListener('mousedown', handler)
   }, [isOpen])
 
+  const justSelectedRef = useRef(false)
   const selectActor = useCallback(
     (actor: BlueskyActor) => {
+      justSelectedRef.current = true
       onChange('@' + actor.handle)
       setIsOpen(false)
     },
@@ -113,6 +117,8 @@ export function BlueskySearch({ value, onChange, className = '' }: BlueskySearch
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        onFocus={() => { isFocusedRef.current = true }}
+        onBlur={() => { isFocusedRef.current = false }}
         onKeyDown={handleKeyDown}
         placeholder="Search Bluesky handles..."
         className="w-full px-3 py-2 font-mono text-[13px] border border-[#ddd] rounded bg-white outline-none transition-colors hover:border-[#999] focus:border-[#2563eb]"
