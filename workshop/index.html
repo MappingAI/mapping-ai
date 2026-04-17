@@ -23,31 +23,43 @@
     a:hover { color: #1d4ed8; text-decoration: underline; }
 
     /* NAV */
-    nav {
-      position: sticky;
-      top: 0;
+    .site-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
       z-index: 100;
-      background: rgba(255,255,255,0.95);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid #ddd;
-      padding: 0.6rem 2rem;
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 2rem;
-      font-family: 'DM Mono', monospace;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 0.5px solid #bbb;
+      padding: 0.85rem 2rem;
     }
-    nav .brand { font-weight: 500; font-size: 12px; letter-spacing: 0.14em; color: #1a1a1a; }
-    nav a { color: #555; }
-    nav a:hover { color: #1a1a1a; text-decoration: none; }
+    .nav-brand {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-links a {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #888;
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: #1a1a1a; text-decoration: none; }
 
     /* HERO */
     .hero {
       max-width: 720px;
       margin: 0 auto;
-      padding: 4rem 2rem 2rem;
+      padding: calc(4rem + 48px) 2rem 2rem;
     }
     .hero .eyebrow {
       font-family: 'DM Mono', monospace;
@@ -88,6 +100,9 @@
       margin-bottom: 1rem;
       padding-bottom: 0.4rem;
       border-bottom: 1px solid #ddd;
+    }
+    .content > h2:first-child {
+      margin-top: 0;
     }
 
     h3 {
@@ -262,12 +277,14 @@
   <a class="toc-link" href="#setup">Quick Reference</a>
 </nav>
 
-<nav>
-  <span class="brand">Mapping AI</span>
-  <a href="#overview">Overview</a>
-  <a href="#streams">Streams</a>
-  <a href="#setup">Setup</a>
-  <a href="https://mapping-ai.org" target="_blank">Live Site</a>
+<nav class="site-nav">
+  <a class="nav-brand" href="https://mapping-ai.org">Mapping AI</a>
+  <div class="nav-links">
+    <a href="https://mapping-ai.org/">Background</a>
+    <a href="https://mapping-ai.org/contribute">Contribute</a>
+    <a href="https://mapping-ai.org/map">Map</a>
+    <a href="https://mapping-ai.org/about">About</a>
+  </div>
 </nav>
 
 <div class="hero">
@@ -283,7 +300,7 @@
 
   <p><a href="https://mapping-ai.org/map" target="_blank">Mapping AI</a> is an interactive map of the U.S. AI policy landscape. It tracks the people, organizations, and resources involved in how AI gets governed in America: who they are, what they believe about regulation, and how they connect to each other. Policymakers, lab execs, researchers, civil society groups, investors, journalists.</p>
 
-  <p>The database currently has about <strong>709 people</strong>, <strong>734 organizations</strong>, and <strong>161 resources</strong>, linked by <strong>2,228 relationships</strong>. About 1,020 of those are publicly visible on the map. The rest are pending review or don't have enough info to publish yet.</p>
+  <p>The database currently has about <strong>706 people</strong>, <strong>717 organizations</strong>, and <strong>149 resources</strong>, linked by <strong>2,143 relationships</strong>. These are the publicly visible entities on the map. There are additional pending entries in the review queue.</p>
 
   <p>The tech stack is simple: static HTML pages, D3.js for the visualization, PostgreSQL on AWS, and a few Lambda functions for form submissions and search. People submit data through a form on the site, it goes into a review queue, and approved entries show up on the map.</p>
 
@@ -638,16 +655,16 @@ npx serve .    # runs on localhost:3000</pre>
   <h3 id="stream-6">Stream 6: Data Viz &amp; Research Insights</h3>
   <p class="mono" style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.1em;">Best for: data people, researchers, anyone who likes poking around datasets</p>
 
-  <p>The database has data on regulatory stances, AGI timeline beliefs, organizational networks, funding relationships, geographic clustering, and nobody has done much analysis on any of it yet. Your job is to pull out findings and sketch visualizations or rough blog post drafts we could publish.</p>
+  <p>The database has data on regulatory stances, AGI timeline beliefs, organizational networks, funding relationships, geographic clustering, and nobody has done much analysis on any of it yet. Your job is to pull out findings and sketch visualizations or rough blog post drafts we could publish. See <a href="https://mapping-ai.org/insights" target="_blank">mapping-ai.org/insights</a> for examples of what this could look like.</p>
 
   <h4>Getting the data</h4>
 
-  <p>The public map data is a single JSON file:</p>
-  <pre>https://mapping-ai.org/map-data.json</pre>
+  <p>The full dataset is available as a single JSON file:</p>
+  <pre>https://mapping-ai.org/map-full.json</pre>
 
-  <p>This has all approved entities with fields already mapped to their frontend names. You can fetch it and work with it in whatever you prefer: Python (pandas, matplotlib, seaborn), R, Observable notebooks, Excel.</p>
+  <p>This includes all entities (people, organizations, resources), their relationships, scores, notes, and metadata. You can fetch and work with it in whatever you prefer: Python (pandas, matplotlib, seaborn), R, Observable notebooks, Excel.</p>
 
-  <p>We also have the full database export (all 1,604 entities and 2,228 edges, including pending and internal ones) if you want it. Just ask.</p>
+  <p>We also have the full database export (including pending and internal entities) if you want it. Just ask.</p>
 
   <h4>Research questions worth exploring</h4>
 
@@ -667,6 +684,8 @@ npx serve .    # runs on localhost:3000</pre>
 
   <p>Ideally, aim for something we could turn into a blog post or Substack piece. A clear finding in one sentence, a visualization that backs it up, and a couple paragraphs of context. It doesn't need to be polished. A Jupyter notebook or Observable notebook with rough charts and some annotations is plenty. We'll clean it up later.</p>
 
+  <p>Post your research questions and findings in the <a href="https://discord.com/events/1491894381773590609/1494729391509340281" target="_blank">Discord</a> forum channel to discuss with others, or log them in <a href="https://docs.google.com/document/d/1dl8B8SWOs5ucmzUpuC7EukPpgncxLZxeil2edVkFleI/edit?usp=sharing" target="_blank">this shared doc</a>.</p>
+
   <hr class="divider">
 
   <!-- ============ SETUP ============ -->
@@ -676,6 +695,7 @@ npx serve .    # runs on localhost:3000</pre>
     <tr><th>Resource</th><th>Link</th></tr>
     <tr><td>Live site</td><td><a href="https://mapping-ai.org" target="_blank">mapping-ai.org</a></td></tr>
     <tr><td>Interactive map</td><td><a href="https://mapping-ai.org/map" target="_blank">mapping-ai.org/map</a></td></tr>
+    <tr><td>Insights page</td><td><a href="https://mapping-ai.org/insights" target="_blank">mapping-ai.org/insights</a></td></tr>
     <tr><td>Contribute form</td><td><a href="https://mapping-ai.org/contribute" target="_blank">mapping-ai.org/contribute</a></td></tr>
     <tr><td>GitHub repo</td><td><a href="https://github.com/MappingAI/mapping-ai" target="_blank">github.com/MappingAI/mapping-ai</a></td></tr>
     <tr><td>Map data (JSON)</td><td><a href="https://mapping-ai.org/map-data.json" target="_blank">mapping-ai.org/map-data.json</a></td></tr>

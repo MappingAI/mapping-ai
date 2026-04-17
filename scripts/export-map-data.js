@@ -48,11 +48,16 @@ async function exportMapData() {
     fs.writeFileSync('map-data.json', JSON.stringify(skeleton));
     fs.writeFileSync('map-detail.json', JSON.stringify(detail));
 
+    // Also write combined file for research/analysis use
+    fs.writeFileSync('map-full.json', JSON.stringify(data));
+
     const skeletonSize = (JSON.stringify(skeleton).length / 1024).toFixed(0);
     const detailSize = (JSON.stringify(detail).length / 1024).toFixed(0);
+    const fullSize = (JSON.stringify(data).length / 1024).toFixed(0);
     const detailCount = Object.keys(detail).length;
     console.log(`\n✓ map-data.json written (${skeletonSize} KB skeleton)`);
     console.log(`✓ map-detail.json written (${detailSize} KB detail for ${detailCount} entities)`);
+    console.log(`✓ map-full.json written (${fullSize} KB combined for research)`);
   } finally {
     client.release();
     await pool.end();
