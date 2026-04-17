@@ -142,15 +142,22 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
   )
 
   // Clear form and draft
+  const EMPTY_FORM: Record<string, unknown> = {
+    name: '', category: '', title: '', primaryOrg: '', primaryOrgId: null,
+    location: [], affiliatedOrgIds: [], keyConcerns: [], influenceType: [],
+    regulatoryStance: '', evidenceSource: '', agiTimeline: '', aiRiskLevel: '',
+    regulatoryStanceDetail: '', twitter: '', bluesky: '', website: '',
+    fundingModel: '', notesHtml: '', notesMentions: [], submitterEmail: '',
+    submitterRelationship: '', resourceTitle: '', resourceType: '',
+    resourceAuthor: '', resourceAuthors: [], resourceUrl: '', resourceYear: '',
+    resourceKeyArgument: '', _hp: '',
+  }
   const clearForm = useCallback(
     (formType: FormType) => {
-      // Suppress auto-save first so the debounce doesn't re-save cleared state
       clearDraft(formType)
-      // Reset RHF to empty defaults
-      formsRef.current[formType].reset()
+      formsRef.current[formType].reset(EMPTY_FORM)
       setUpdateContexts((prev) => ({ ...prev, [formType]: null }))
       setSuccessType(null)
-      // Bump clear key to force remount TipTap editors (they only read content on init)
       setClearKeys((prev) => ({ ...prev, [formType]: prev[formType] + 1 }))
     },
     [clearDraft],
@@ -191,7 +198,7 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
       })
       setSuccessType(formType)
       clearDraft(formType)
-      formsRef.current[formType].reset()
+      formsRef.current[formType].reset(EMPTY_FORM)
       // Bump clear key so TipTap editors reset on next render
       setClearKeys((prev) => ({ ...prev, [formType]: prev[formType] + 1 }))
     },
