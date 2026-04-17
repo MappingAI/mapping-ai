@@ -48,7 +48,7 @@ function AuthGate({ onAuth }: { onAuth: (key: string) => void }) {
     setLoading(true)
     setError('')
     try {
-      await adminFetch('/admin', key)
+      await adminFetch('/admin?action=pending', key)
       onAuth(key)
     } catch {
       setError('Invalid admin key')
