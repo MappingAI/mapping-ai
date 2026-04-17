@@ -220,7 +220,7 @@ export function PersonForm({ form, updateContext, onOrgPanelOpen, onEnterUpdateM
           <DuplicateDetection
             query={(watch('name') as string) ?? ''}
             entityType="person"
-            onViewExisting={() => {}}
+            onViewExisting={(entity) => window.open(`/map?search=${encodeURIComponent(entity.name)}`, '_blank')}
             onUpdateExisting={(entity) => onEnterUpdateMode?.({ id: entity.id, name: entity.name, category: entity.category, title: entity.title, primary_org: entity.primary_org })}
           />
         )}

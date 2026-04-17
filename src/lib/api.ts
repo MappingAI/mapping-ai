@@ -1,4 +1,4 @@
-import type { SubmitRequest, SubmitResponse, SearchResult } from '../types/api'
+import type { SubmitRequest, SubmitResponse, SearchResponse, SearchResult } from '../types/api'
 import type { MapData, MapDetail } from '../types/entity'
 
 const API_BASE = import.meta.env.PROD
@@ -25,6 +25,10 @@ export async function fetchMapDetail(): Promise<MapDetail> {
   return fetchJSON<MapDetail>('/map-detail.json')
 }
 
+/**
+ * Search entities via GET /search.
+ * API returns { people: [], organizations: [], resources: [] } — we flatten to a single array.
+ */
 export async function searchEntities(
   query: string,
   type?: string,
@@ -33,10 +37,12 @@ export async function searchEntities(
   const params = new URLSearchParams({ q: query })
   if (type) params.set('type', type)
   if (status) params.set('status', status)
-  const data = await fetchJSON<Record<string, SearchResult[]>>(`${API_BASE}/search?${params}`)
-  // API returns { people: [], organizations: [], resources: [] } — flatten to array
-  if (Array.isArray(data)) return data
-  return [...(data.people ?? []), ...(data.organizations ?? []), ...(data.resources ?? [])]
+  const grouped = await fetchJSON<SearchResponse>(`${API_BASE}/search?${params}`)
+  return [
+    ...(grouped.people ?? []),
+    ...(grouped.organizations ?? []),
+    ...(grouped.resources ?? []),
+  ]
 }
 
 export async function submitEntity(data: SubmitRequest): Promise<SubmitResponse> {

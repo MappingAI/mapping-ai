@@ -12,7 +12,14 @@ export interface SubmitResponse {
   message: string
 }
 
-/** GET /search response */
+/** GET /search — raw API response (grouped by entity type) */
+export interface SearchResponse {
+  people: SearchResult[]
+  organizations: SearchResult[]
+  resources: SearchResult[]
+}
+
+/** Individual search result row */
 export interface SearchResult {
   id: number
   entity_type: 'person' | 'organization' | 'resource'

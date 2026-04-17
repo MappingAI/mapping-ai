@@ -35,12 +35,12 @@ export function useSearch(
   })
 
   // Merge local + pending, deduplicate by ID
-  const pendingData = Array.isArray(pendingQuery.data) ? pendingQuery.data : []
+  const pendingResults = pendingQuery.data ?? []
   const allResults = useMemo<FuzzySearchResult[]>(() => {
     const seenIds = new Set(localResults.map((r) => r.id))
     const merged = [...localResults]
 
-    for (const pending of pendingData) {
+    for (const pending of pendingResults) {
       if (!seenIds.has(pending.id)) {
         merged.push({
           ...pending,
@@ -52,11 +52,11 @@ export function useSearch(
     }
 
     return merged
-  }, [localResults, pendingData])
+  }, [localResults, pendingResults])
 
   return {
     localResults,
-    pendingResults: pendingData.map((r) => ({
+    pendingResults: pendingResults.map((r) => ({
       ...r,
       score: 50,
       isPending: true as const,

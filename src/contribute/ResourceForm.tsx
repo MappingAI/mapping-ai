@@ -145,7 +145,7 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPe
           <DuplicateDetection
             query={(watch('resourceTitle') as string) ?? ''}
             entityType="resource"
-            onViewExisting={() => {}}
+            onViewExisting={(entity) => window.open(`/map?search=${encodeURIComponent(entity.name)}`, '_blank')}
             onUpdateExisting={(entity) => onEnterUpdateMode?.({ id: entity.id, name: entity.name, resourceTitle: entity.name })}
           />
         )}

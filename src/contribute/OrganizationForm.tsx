@@ -149,7 +149,7 @@ export function OrganizationForm({ form, updateContext, onOrgPanelOpen, onEnterU
           <DuplicateDetection
             query={(watch('name') as string) ?? ''}
             entityType="organization"
-            onViewExisting={() => {}}
+            onViewExisting={(entity) => window.open(`/map?search=${encodeURIComponent(entity.name)}`, '_blank')}
             onUpdateExisting={(entity) => onEnterUpdateMode?.({ id: entity.id, name: entity.name, category: entity.category })}
           />
         )}
