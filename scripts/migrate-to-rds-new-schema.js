@@ -13,9 +13,9 @@ import 'dotenv/config';
 
 const { Pool } = pg;
 
-// Connection strings
+// Connection strings - NEVER hardcode credentials, use environment variables
 const NEON_URL = process.env.DATABASE_URL; // Current .env points to Neon
-const RDS_URL = 'postgresql://mappingai:WBDMQAmcAiQdOnLSyIdIiZQhOUr1dcX@mapping-ai-db.c9sccou2k3xe.eu-west-2.rds.amazonaws.com:5432/mappingai';
+const RDS_URL = process.env.RDS_DATABASE_URL; // Set in .env, never commit
 
 const neonPool = new Pool({ connectionString: NEON_URL, ssl: { rejectUnauthorized: false } });
 const rdsPool = new Pool({ connectionString: RDS_URL, ssl: { rejectUnauthorized: false } });
