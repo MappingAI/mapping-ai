@@ -19,6 +19,7 @@ function PasswordGate({ onSuccess }: { onSuccess: () => void }) {
     const hash = await hashPassword(password)
     if (hash === WORKSHOP_PASSWORD_HASH) {
       localStorage.setItem('workshop-authenticated', 'true')
+      window.scrollTo(0, 0)
       onSuccess()
     } else {
       setError(true)
