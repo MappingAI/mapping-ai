@@ -4941,7 +4941,7 @@ document.addEventListener('click', (e) => {
   if (!e.isTrusted) return; // ignore programmatic .click() calls (e.g. view switching)
   // Don't clear search when in Search mode - that has its own Clear button
   if (viewMode === 'search') return;
-  if (!e.target.closest('.search-box')) {
+  if (!e.target.closest('.search-box') && !e.target.closest('#map-container')) {
     clearSearch();
     searchInput.value = '';
   }
