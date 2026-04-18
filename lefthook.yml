@@ -6,7 +6,7 @@ pre-commit:
       run: npx tsc --noEmit
     lint:
       glob: '*.{ts,tsx,js}'
-      run: npx eslint {staged_files} --max-warnings 0
+      run: npx eslint {staged_files} --max-warnings 0 --no-warn-ignored
       stage_fixed: true
     format:
       glob: '*.{ts,tsx,js,json,css,md}'
