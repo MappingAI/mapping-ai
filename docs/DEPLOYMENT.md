@@ -7,82 +7,90 @@ How code gets from a local branch to production, and what checks must pass at ea
 ## Architecture
 
 ```
-Feature branch → PR (review + CI) → main → GitHub Actions auto-deploy
-                                            ├── S3 sync (HTML, CSS, JS, JSON)
-                                            └── CloudFront invalidation
+Feature branch -> PR (review + CI) -> main -> GitHub Actions auto-deploy
+                                               ├── npm ci
+                                               ├── npm run build:tiptap
+                                               ├── npx vite build -> dist/
+                                               ├── node scripts/export-map-data.js
+                                               ├── Password hash + analytics injection on dist/
+                                               ├── aws s3 sync dist/ -> S3
+                                               ├── CloudFront cache invalidation
+                                               └── Post-deploy smoke test (all pages HTTP 200)
 
 Backend (Lambda + API Gateway + CloudFront config):
-Feature branch → PR (review + CI) → main → manual `sam build && sam deploy`
+Feature branch -> PR -> main -> manual `sam build && sam deploy`
 ```
 
-**Key distinction:** Pushing to `main` automatically deploys *frontend* (static files to S3/CloudFront). It does NOT deploy *backend* (Lambda functions, API Gateway, CloudFront settings). Backend requires a manual `sam deploy`.
+**Key distinction:** Pushing to `main` automatically deploys the *frontend* (Vite-built static files to S3/CloudFront). It does NOT deploy the *backend* (Lambda functions, API Gateway, CloudFront settings). Backend requires a manual `sam deploy`.
+
+**Critical: Never run `sam deploy` without checking for drift first.** See the [SAM deploy post-mortem](solutions/integration-issues/sam-deploy-overwrites-manual-cloudfront-config-2026-04-16.md) for why. Always run `aws cloudformation detect-stack-drift` before deploying.
 
 ## Branch Strategy
 
 | Branch | Purpose | Deploys to |
 |--------|---------|------------|
 | `main` | Production. Every push auto-deploys frontend. | Live site (mapping-ai.org) |
-| `feat/*` | Feature branches. Work in progress. | Nothing (local only) |
+| `feat/*` | Feature branches. Work in progress. | Cloudflare Pages preview (auto) |
 | `fix/*` | Hotfix branches. Urgent production fixes. | Nothing until merged to main |
 
 **Rules:**
 - Never push directly to `main`. Always use a PR.
 - Exception: P0 hotfixes (site is down) may push directly to main with post-hoc PR for documentation.
-- Feature branches should be rebased on main before merging to avoid complex merge commits.
+- Feature branches get automatic Cloudflare Pages preview deployments at `<branch>.mapping-ai.pages.dev`.
 
 ## Pull Request Requirements
 
 Every PR to `main` must include:
 
-### 1. Local browser verification
+### 1. Local verification
 
-Before creating the PR, load these pages locally and confirm they work:
+Before creating the PR, test locally:
 
 ```bash
-npx serve .   # or: node dev-server.js
+# Terminal 1: React pages
+npx vite dev
+
+# Terminal 2: API proxy + map
+node dev-server.js
 ```
 
-| Page | What to check |
-|------|---------------|
-| `map.html` | Map renders with nodes visible. Click a node → detail panel opens. Filters work. Search works. |
-| `contribute.html` | Form loads. Dropdowns work. Org search returns results. |
-| `admin.html` | Auth gate appears. (Full admin test requires API access.) |
-| `index.html` | Page loads, navigation works. |
+| Page | URL | What to check |
+|------|-----|---------------|
+| Contribute | localhost:5173/contribute | Form loads, dropdowns work, org search returns results |
+| Map | localhost:3000/map.html | Map renders with nodes. Click a node, detail panel opens. Filters work. |
+| Admin | localhost:5173/admin | Auth gate appears, can type password |
+| Insights | localhost:5173/insights | Charts render with data |
+| Homepage | localhost:5173/ | Page loads, navigation works |
 
-**If your PR changes `<script>` tags, CSS loading, or data fetching — browser testing is mandatory, not optional.**
+Also run:
+```bash
+npx tsc --noEmit    # Type checking
+npx vitest run      # Unit tests
+```
 
 ### 2. PR description
 
-```markdown
-## Summary
-- What changed and why
-
-## Testing
-- [ ] Verified map.html loads and renders nodes
-- [ ] Verified contribute.html form works
-- [ ] Verified no console errors on affected pages
-- [ ] Ran `node scripts/export-map-data.js` (if export/data changes)
-
-## Risk assessment
-- Frontend only / Backend only / Both
-- Requires sam deploy: yes/no
-```
+Include a summary, testing notes, and risk assessment.
 
 ### 3. CI checks pass
 
-The GitHub Actions workflow runs on push to main. It must pass before the deploy reaches production. Current checks:
-- `npm ci` succeeds
-- `npm run build:tiptap` succeeds
-- DB schema smoke test passes
-- `node scripts/export-map-data.js` generates valid map-data.json + map-detail.json
-- S3 sync succeeds
-- CloudFront invalidation succeeds
+The GitHub Actions workflow runs on push to main:
+1. `npm ci`
+2. `npm run build:tiptap` (legacy TipTap bundle for map.html)
+3. Write `.env.production` with `VITE_SITE_PASSWORD_HASH`
+4. `npx vite build` (React pages to dist/)
+5. DB schema smoke test
+6. `node scripts/export-map-data.js` generates map-data.json + map-detail.json
+7. Password hash and analytics token injection on dist/ files
+8. S3 sync (HTML with no-cache, hashed assets with immutable cache)
+9. CloudFront invalidation
+10. **Post-deploy smoke test** (curls all pages, fails build if any return non-200)
 
 ### 4. Review
 
-- At least one human (or informed AI review) must approve the PR
-- Changes to `<script>` tags, data loading, or D3 code require extra scrutiny (see [D3 defer incident](post-mortems/2026-04-09-d3-defer-map-outage.md))
-- Backend changes (api/*.js, template.yaml) should be in separate PRs from frontend changes when possible
+- At least one human or thorough AI review must approve the PR
+- Changes to map.html, D3 code, or script tags require extra scrutiny
+- Backend changes (api/*.js, template.yaml) should be in separate PRs from frontend when possible
 
 ## Deploy Process
 
@@ -90,99 +98,85 @@ The GitHub Actions workflow runs on push to main. It must pass before the deploy
 
 ```
 git push origin main
-→ GitHub Actions: npm ci → build → export map data → S3 sync → CloudFront invalidation
-→ Live in ~2-3 minutes
+-> GitHub Actions: build -> export -> inject -> sync -> invalidate -> smoke test
+-> Live in ~3-5 minutes
 ```
 
-**What gets deployed:** All `.html` files, `assets/` (CSS, JS, images), `map-data.json`, `map-detail.json`
+**What gets deployed:** All files in `dist/` (Vite-built HTML/JS/CSS), map-data.json, map-detail.json, workshop/ directory
 
-**What does NOT get deployed:** `api/`, `scripts/`, `template.yaml`, `node_modules/`, `.github/`
+**What does NOT get deployed:** `api/`, `scripts/`, `template.yaml`, `node_modules/`, `src/`
 
 ### Backend (manual)
 
 ```bash
+# ALWAYS check for drift first
+aws cloudformation detect-stack-drift --stack-name mapping-ai
+
+# Then build and deploy
 sam build && sam deploy --parameter-overrides \
   DatabaseUrl=$DATABASE_URL \
   AdminKey=$ADMIN_KEY \
   AnthropicApiKey=$ANTHROPIC_API_KEY
 ```
 
-**What gets deployed:** Lambda functions (api/*.js), API Gateway config (routes, throttle, CORS), CloudFront settings (security headers, cache policy)
+**Review the changeset before confirming.** If it shows unexpected Modify/Add on resources you didn't change (especially CloudFront), STOP and investigate.
 
-**When to deploy backend:**
-- After merging changes to `api/*.js` files
-- After merging changes to `template.yaml`
-- After merging `api/cors.js` or any shared Lambda module
+### Cloudflare Pages (automatic for branches)
 
-**Order of operations for changes that touch both frontend and backend:**
-1. Deploy backend first (`sam deploy`)
-2. Verify API endpoints work (`curl /search?q=test`)
-3. Then push frontend to main (triggers auto-deploy)
-4. Verify site works end-to-end
+Every branch push triggers a Cloudflare Pages preview build via `scripts/build-preview.sh`. Preview URLs: `<branch-name>.mapping-ai.pages.dev`
 
 ## Rollback
 
-### Frontend rollback (fast — ~2 min)
-
-If the site breaks after a push to main:
+### Frontend rollback (~2 min)
 
 ```bash
-# Option 1: Revert the commit and push
+# Option 1: Revert and push
 git revert HEAD
 git push origin main
-# Wait for CI deploy (~2 min)
 
-# Option 2: Re-deploy previous version from S3
-# CloudFront caches may serve stale content for up to 60s (map-data.json) or 24h (assets)
-# Force invalidation:
+# Option 2: Force invalidation after S3 rollback
 aws cloudfront create-invalidation --distribution-id E34ZXLC7CZX7XT --paths "/*"
 ```
 
-### Backend rollback (manual — ~5 min)
+### Backend rollback (~5 min)
 
 ```bash
-# Revert to previous Lambda deployment
-# SAM doesn't have a built-in rollback, but you can:
 git revert <commit>
 sam build && sam deploy
 ```
 
-## Pre-Push Checklist
+## Post-Push Verification (MANDATORY)
 
-Copy this into your PR or run through it mentally before merging:
+After every push to main, verify the site works:
 
+```bash
+for page in "/" "/contribute" "/map" "/about" "/insights" "/admin"; do
+  echo "$(curl -s -o /dev/null -w '%{http_code}' https://mapping-ai.org${page}) ${page}"
+done
 ```
-[ ] Local browser test: map.html renders with data
-[ ] Local browser test: contribute.html form loads
-[ ] No console errors on affected pages
-[ ] If script tags changed: verified in browser (not just grep)
-[ ] If export pipeline changed: ran export-map-data.js locally
-[ ] If backend changed: noted that sam deploy is needed
-[ ] PR has summary and risk assessment
-[ ] CI passes on the branch
-```
+
+The deploy workflow does this automatically, but always verify manually too. A broken prod site with no one checking is the worst outcome.
 
 ## Known Risks by File
 
-| File(s) | Risk if broken | Key checks |
-|---------|---------------|------------|
-| `map.html` | **P0** — primary product page, map disappears | Browser test: nodes render, D3 loads |
-| `contribute.html` | **P1** — can't collect data | Browser test: form renders, dropdowns work |
-| `api/export-map.js` | **P0** — map data malformed → empty/broken map | Run export locally, verify JSON |
-| `scripts/export-map-data.js` | **P0** — CI deploy fails or generates bad data | Run locally before pushing |
-| `api/admin.js` | **P1** — admin can't approve/reject | Test with admin key |
-| `template.yaml` | **P1** — API Gateway misconfigured | `sam validate` before deploy |
-| `.github/workflows/deploy.yml` | **P0** — deploy pipeline breaks | Review carefully, test on branch if possible |
+| File(s) | Risk | Key checks |
+|---------|------|------------|
+| `map.html` | **P0**: primary product page | Browser test: nodes render, D3 loads |
+| `src/contribute/` | **P1**: can't collect data | Form renders, dropdowns work, submission succeeds |
+| `api/export-map.js` | **P0**: map data malformed | Run export locally, verify JSON |
+| `api/admin.js` | **P1**: admin can't approve/reject | Test with admin key |
+| `template.yaml` | **P1**: API/CloudFront misconfigured | `sam validate`, check drift |
+| `.github/workflows/deploy.yml` | **P0**: deploy pipeline breaks | Review carefully |
+| `src/hooks/useSubmitEntity.ts` | **P1**: form submission broken | Test submit end-to-end |
+| `src/lib/api.ts` | **P1**: all API calls broken | Check search + submit work |
 
 ## Incident Response
 
 If the live site is broken:
 
-1. **Assess severity:** Is the map empty? Is the whole site down? Is it just a visual glitch?
-2. **Check CI:** `gh run list --limit 1` — did the last deploy succeed?
-3. **Identify the cause:** `git log --oneline -5` — what was the last change?
-4. **Fix or revert:**
-   - If the fix is obvious and small → commit fix and push
-   - If the cause is unclear → `git revert HEAD && git push` to restore previous state
-5. **Verify:** Wait for deploy (~2 min), check the site
+1. **Assess:** Is the map empty? Whole site down? Just a visual glitch?
+2. **Check CI:** `gh run list --limit 1` (did the last deploy succeed?)
+3. **Identify:** `git log --oneline -5` (what changed?)
+4. **Fix or revert:** obvious fix -> commit and push. Unclear -> `git revert HEAD && git push`
+5. **Verify:** Wait for deploy (~3 min), check all pages
 6. **Document:** Write a post-mortem in `docs/post-mortems/`
