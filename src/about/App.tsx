@@ -52,9 +52,12 @@ const TEAM: TeamMember[] = [
 function useFadeIn() {
   const refs = useRef<(HTMLElement | null)[]>([])
 
-  const setRef = useCallback((index: number) => (el: HTMLElement | null) => {
-    refs.current[index] = el
-  }, [])
+  const setRef = useCallback(
+    (index: number) => (el: HTMLElement | null) => {
+      refs.current[index] = el
+    },
+    [],
+  )
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -98,17 +101,18 @@ function BetaOverlay() {
     <div
       className="fixed inset-0 z-[9999] flex items-center justify-center"
       style={{ background: 'rgba(0,0,0,0.5)' }}
-      onClick={(e) => { if (e.target === e.currentTarget) dismiss() }}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) dismiss()
+      }}
     >
       <div
         className="bg-white rounded-lg px-8 py-6 max-w-[480px] w-[90%] shadow-2xl"
         style={{ fontFamily: "'EB Garamond', Georgia, serif" }}
       >
-        <h2 className="font-mono text-[13px] uppercase tracking-wider mb-3">
-          Pre-Launch Beta
-        </h2>
+        <h2 className="font-mono text-[13px] uppercase tracking-wider mb-3">Pre-Launch Beta</h2>
         <p className="text-[15px] leading-relaxed text-[#555] mb-4">
-          This tool is in a pre-launch beta. We are actively improving data issues and enrichment, as well as adding new features and improving the UX.
+          This tool is in a pre-launch beta. We are actively improving data issues and enrichment, as well as adding new
+          features and improving the UX.
         </p>
         <p className="text-[15px] leading-relaxed text-[#555] mb-5">
           Please email us at{' '}
@@ -165,9 +169,7 @@ function TeamCard({ member }: { member: TeamMember }) {
           +
         </button>
       </div>
-      <div className="font-mono text-[11px] text-[#888] tracking-wide">
-        {member.role}
-      </div>
+      <div className="font-mono text-[11px] text-[#888] tracking-wide">{member.role}</div>
       <div
         className={`font-serif text-[14.5px] text-[#555] leading-relaxed mt-2.5 overflow-hidden transition-all duration-500 ${
           open ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'
@@ -223,11 +225,12 @@ export function App() {
       <BetaOverlay />
       <Navigation />
 
-      <div className="max-w-[680px] mx-auto px-6 pb-16 font-serif text-[#1a1a1a] text-[17px] leading-[1.75]" style={{ paddingTop: 'calc(3rem + 48px)' }}>
+      <div
+        className="max-w-[680px] mx-auto px-6 pb-16 font-serif text-[#1a1a1a] text-[17px] leading-[1.75]"
+        style={{ paddingTop: 'calc(3rem + 48px)' }}
+      >
         {/* Eyebrow + title */}
-        <div className="font-mono text-[11px] tracking-[0.12em] uppercase text-[#555] mb-3">
-          Mapping AI—About
-        </div>
+        <div className="font-mono text-[11px] tracking-[0.12em] uppercase text-[#555] mb-3">Mapping AI—About</div>
         <h1
           className="font-serif text-[32px] font-normal italic leading-tight mb-8"
           style={{ fontFamily: "'EB Garamond', Georgia, serif" }}
@@ -236,30 +239,48 @@ export function App() {
         </h1>
 
         {/* Who we are */}
-        <div {...fadeProps(fi++)} className="font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3">
+        <div
+          {...fadeProps(fi++)}
+          className="font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3"
+        >
           Who we are
         </div>
         <p {...fadeProps(fi++)} className="mb-4 text-[16.5px]">
-          We are a working group of researchers, policy experts, and practitioners building a comprehensive map of the U.S. AI policy landscape. Our goal is to identify who is shaping AI governance, where the coalitions are forming, and where the gaps are—and to use that map as the foundation for a coordinated policy agenda ahead of 2028.
+          We are a working group of researchers, policy experts, and practitioners building a comprehensive map of the
+          U.S. AI policy landscape. Our goal is to identify who is shaping AI governance, where the coalitions are
+          forming, and where the gaps are—and to use that map as the foundation for a coordinated policy agenda ahead of
+          2028.
         </p>
 
         <hr className="border-none border-t border-[#bbb]/50 my-10" />
 
         {/* What we believe */}
-        <div {...fadeProps(fi++)} className="font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3">
+        <div
+          {...fadeProps(fi++)}
+          className="font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3"
+        >
           What we believe
         </div>
         <p {...fadeProps(fi++)} className="mb-4 text-[16.5px]">
-          We take existential risks seriously and view the work of technical safety researchers, both in and out of frontier labs, as vitally important. But if we can avoid realizing existential outcomes, good governance will be critical to ensure human flourishing. Technical safety work is the prerequisite; governance is what shapes outcomes in the world where that work succeeds.
+          We take existential risks seriously and view the work of technical safety researchers, both in and out of
+          frontier labs, as vitally important. But if we can avoid realizing existential outcomes, good governance will
+          be critical to ensure human flourishing. Technical safety work is the prerequisite; governance is what shapes
+          outcomes in the world where that work succeeds.
         </p>
         <p {...fadeProps(fi++)} className="mb-4 text-[16.5px]">
-          Our organizing principle is distribution—not as an afterthought, and not as redistribution after the fact, but as the design criterion for how AI's benefits flow. The question that unifies labor, safety, national security, and institutional design is the same: who captures value from American innovation, and on what terms?
+          Our organizing principle is distribution—not as an afterthought, and not as redistribution after the fact, but
+          as the design criterion for how AI's benefits flow. The question that unifies labor, safety, national
+          security, and institutional design is the same: who captures value from American innovation, and on what
+          terms?
         </p>
 
         <hr className="border-none border-t border-[#bbb]/50 my-10" />
 
         {/* The team */}
-        <div {...fadeProps(fi++)} className="font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3">
+        <div
+          {...fadeProps(fi++)}
+          className="font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3"
+        >
           The team
         </div>
         <div {...fadeProps(fi++)} className="grid grid-cols-2 max-[600px]:grid-cols-1 gap-3 my-5">
@@ -271,19 +292,28 @@ export function App() {
         <hr className="border-none border-t border-[#bbb]/50 my-10" />
 
         {/* Other contributors */}
-        <div {...fadeProps(fi++)} className="font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3">
+        <div
+          {...fadeProps(fi++)}
+          className="font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3"
+        >
           Other contributors
         </div>
-        <p {...fadeProps(fi++)} className="mb-4 text-[16.5px]">Connor Mack</p>
+        <p {...fadeProps(fi++)} className="mb-4 text-[16.5px]">
+          Connor Mack
+        </p>
 
         <hr className="border-none border-t border-[#bbb]/50 my-10" />
 
         {/* Get involved */}
-        <div {...fadeProps(fi++)} className="font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3">
+        <div
+          {...fadeProps(fi++)}
+          className="font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3"
+        >
           Get involved
         </div>
         <p {...fadeProps(fi++)} className="mb-4 text-[16.5px]">
-          If you work in or adjacent to AI policy, governance, safety, labor, or civil society, we welcome your contributions to the map.{' '}
+          If you work in or adjacent to AI policy, governance, safety, labor, or civil society, we welcome your
+          contributions to the map.{' '}
           <a href="/contribute" className="text-[#2563eb] no-underline hover:underline">
             Add a person, organization, or resource →
           </a>
@@ -291,7 +321,8 @@ export function App() {
 
         {/* Disclaimer */}
         <p {...fadeProps(fi++)} className="font-mono text-[11px] text-[#888] tracking-wide mt-10 leading-relaxed">
-          The views expressed on this site are our own and do not reflect the views of any of our employers or affiliated institutions.
+          The views expressed on this site are our own and do not reflect the views of any of our employers or
+          affiliated institutions.
         </p>
 
         {/* Footer */}

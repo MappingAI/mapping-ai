@@ -1,11 +1,4 @@
-import {
-  useState,
-  useRef,
-  useEffect,
-  useCallback,
-  type KeyboardEvent,
-  type ReactNode,
-} from 'react'
+import { useState, useRef, useEffect, useCallback, type KeyboardEvent, type ReactNode } from 'react'
 
 export interface Tag {
   id: string | number
@@ -219,9 +212,7 @@ export function TagInput({
               <span className="truncate">{result.label}</span>
               <span className="flex items-center gap-2">
                 {result.detail && (
-                  <span className="text-[#888] text-[11px] truncate max-w-[120px]">
-                    {result.detail}
-                  </span>
+                  <span className="text-[#888] text-[11px] truncate max-w-[120px]">{result.detail}</span>
                 )}
                 {result.isPending && (
                   <span className="text-[10px] font-mono px-1.5 py-0.5 bg-amber-100 text-amber-700 rounded">

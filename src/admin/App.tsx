@@ -1,10 +1,8 @@
-import { useState, useCallback, useMemo } from 'react'
+import { useState, useMemo } from 'react'
 import { QueryClient, QueryClientProvider, useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Navigation } from '../components/Navigation'
 
-const API_BASE = import.meta.env.PROD
-  ? 'https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com'
-  : '/api'
+const API_BASE = import.meta.env.PROD ? 'https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com' : '/api'
 
 const queryClient = new QueryClient({ defaultOptions: { queries: { retry: 1, refetchOnWindowFocus: false } } })
 
@@ -25,7 +23,8 @@ const BTN_PRIMARY = `${BTN} bg-[#1a1a1a] text-white border-[#1a1a1a] hover:bg-[#
 const BTN_OUTLINE = `${BTN} bg-white text-[#555] border-[#ccc] hover:border-[#999]`
 const BTN_GREEN = `${BTN} bg-emerald-600 text-white border-emerald-600 hover:bg-emerald-700`
 const BTN_RED = `${BTN} bg-red-600 text-white border-red-600 hover:bg-red-700`
-const BADGE_APPROVED = 'font-mono text-[10px] uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-100 text-emerald-800'
+const BADGE_APPROVED =
+  'font-mono text-[10px] uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-100 text-emerald-800'
 const BADGE_PENDING = 'font-mono text-[10px] uppercase tracking-wider px-2 py-0.5 rounded bg-amber-100 text-amber-800'
 const BADGE_REJECTED = 'font-mono text-[10px] uppercase tracking-wider px-2 py-0.5 rounded bg-red-100 text-red-800'
 
@@ -120,14 +119,21 @@ function DashboardTab({ adminKey, onSwitchTab }: { adminKey: string; onSwitchTab
         <span className="font-mono text-[11px]">
           {totalPending} pending ({stats.pending_new_submissions} new, {stats.pending_edit_submissions} edits)
         </span>
-        <button onClick={() => onSwitchTab('pending')} className="ml-3 text-[12px] font-mono text-[#2563eb] hover:underline">
+        <button
+          onClick={() => onSwitchTab('pending')}
+          className="ml-3 text-[12px] font-mono text-[#2563eb] hover:underline"
+        >
           Review →
         </button>
       </div>
       <p className={LABEL}>Quick Actions</p>
       <div className="flex gap-2 flex-wrap mt-2">
-        <button className={BTN_OUTLINE} onClick={() => onSwitchTab('pending')}>Review Pending</button>
-        <button className={BTN_OUTLINE} onClick={() => onSwitchTab('entities')}>Browse Entities</button>
+        <button className={BTN_OUTLINE} onClick={() => onSwitchTab('pending')}>
+          Review Pending
+        </button>
+        <button className={BTN_OUTLINE} onClick={() => onSwitchTab('entities')}>
+          Browse Entities
+        </button>
       </div>
     </div>
   )
@@ -158,31 +164,57 @@ function PendingTab({ adminKey }: { adminKey: string }) {
 
   const approveMut = useMutation({
     mutationFn: (id: number) =>
-      adminFetch('/admin', adminKey, { method: 'POST', body: JSON.stringify({ action: 'approve', submission_id: id }) }),
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-pending'] }); qc.invalidateQueries({ queryKey: ['admin-stats'] }) },
+      adminFetch('/admin', adminKey, {
+        method: 'POST',
+        body: JSON.stringify({ action: 'approve', submission_id: id }),
+      }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['admin-pending'] })
+      qc.invalidateQueries({ queryKey: ['admin-stats'] })
+    },
   })
 
   const rejectMut = useMutation({
     mutationFn: ({ id, notes }: { id: number; notes: string }) =>
-      adminFetch('/admin', adminKey, { method: 'POST', body: JSON.stringify({ action: 'reject', submission_id: id, resolution_notes: notes }) }),
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-pending'] }); qc.invalidateQueries({ queryKey: ['admin-stats'] }) },
+      adminFetch('/admin', adminKey, {
+        method: 'POST',
+        body: JSON.stringify({ action: 'reject', submission_id: id, resolution_notes: notes }),
+      }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['admin-pending'] })
+      qc.invalidateQueries({ queryKey: ['admin-stats'] })
+    },
   })
 
   if (isPending) return <p className="text-center py-8 font-mono text-[12px] text-[#888]">Loading pending...</p>
 
   const items = Array.isArray(pending) ? pending : []
-  if (items.length === 0) return <p className="text-center py-8 font-mono text-[12px] text-[#888]">No pending submissions.</p>
+  if (items.length === 0)
+    return <p className="text-center py-8 font-mono text-[12px] text-[#888]">No pending submissions.</p>
 
   return (
     <div className="space-y-3">
       {items.map((sub) => (
-        <PendingCard key={sub.id} submission={sub} onApprove={() => approveMut.mutate(sub.id)} onReject={(notes) => rejectMut.mutate({ id: sub.id, notes })} />
+        <PendingCard
+          key={sub.id}
+          submission={sub}
+          onApprove={() => approveMut.mutate(sub.id)}
+          onReject={(notes) => rejectMut.mutate({ id: sub.id, notes })}
+        />
       ))}
     </div>
   )
 }
 
-function PendingCard({ submission: sub, onApprove, onReject }: { submission: Submission; onApprove: () => void; onReject: (notes: string) => void }) {
+function PendingCard({
+  submission: sub,
+  onApprove,
+  onReject,
+}: {
+  submission: Submission
+  onApprove: () => void
+  onReject: (notes: string) => void
+}) {
   const [rejectNotes, setRejectNotes] = useState('')
   const [showReject, setShowReject] = useState(false)
 
@@ -201,11 +233,17 @@ function PendingCard({ submission: sub, onApprove, onReject }: { submission: Sub
         )}
       </div>
       {sub.submitter_email && (
-        <p className="font-mono text-[11px] text-[#888] mb-2">{sub.submitter_email} · {sub.submitter_relationship}</p>
+        <p className="font-mono text-[11px] text-[#888] mb-2">
+          {sub.submitter_email} · {sub.submitter_relationship}
+        </p>
       )}
       <div className="flex gap-2 items-center mt-3 pt-3 border-t border-[#eee]">
-        <button onClick={onApprove} className={BTN_GREEN + ' text-[10px]'}>Approve</button>
-        <button onClick={() => setShowReject(!showReject)} className={BTN_RED + ' text-[10px]'}>Reject</button>
+        <button onClick={onApprove} className={BTN_GREEN + ' text-[10px]'}>
+          Approve
+        </button>
+        <button onClick={() => setShowReject(!showReject)} className={BTN_RED + ' text-[10px]'}>
+          Reject
+        </button>
       </div>
       {showReject && (
         <div className="flex gap-2 mt-2">
@@ -215,7 +253,9 @@ function PendingCard({ submission: sub, onApprove, onReject }: { submission: Sub
             placeholder="Rejection reason..."
             className="flex-1 px-2 py-1 text-[13px] border border-[#ddd] rounded font-serif"
           />
-          <button onClick={() => onReject(rejectNotes)} className={BTN_RED + ' text-[10px]'}>Confirm</button>
+          <button onClick={() => onReject(rejectNotes)} className={BTN_RED + ' text-[10px]'}>
+            Confirm
+          </button>
         </div>
       )}
     </div>
@@ -251,7 +291,7 @@ function EntitiesTab({ adminKey }: { adminKey: string }) {
   })
 
   const entities = useMemo(() => {
-    let list = data?.entities ?? (Array.isArray(data) ? data as EntityRow[] : [])
+    let list = data?.entities ?? (Array.isArray(data) ? (data as EntityRow[]) : [])
 
     // Filter by type
     if (typeFilter !== 'all') list = list.filter((e) => e.entity_type === typeFilter)
@@ -274,7 +314,10 @@ function EntitiesTab({ adminKey }: { adminKey: string }) {
 
   const toggleSort = (col: string) => {
     if (sortCol === col) setSortDir(sortDir === 'asc' ? 'desc' : 'asc')
-    else { setSortCol(col); setSortDir('asc') }
+    else {
+      setSortCol(col)
+      setSortDir('asc')
+    }
   }
 
   if (isPending) return <p className="text-center py-8 font-mono text-[12px] text-[#888]">Loading...</p>
@@ -333,7 +376,9 @@ function EntitiesTab({ adminKey }: { adminKey: string }) {
                 className="cursor-pointer hover:bg-[#f8f7f5] transition-colors"
               >
                 <td className="px-3 py-2 border-b border-[#eee] font-medium">{e.name}</td>
-                <td className="px-3 py-2 border-b border-[#eee] font-mono text-[11px] text-[#888] uppercase">{e.entity_type}</td>
+                <td className="px-3 py-2 border-b border-[#eee] font-mono text-[11px] text-[#888] uppercase">
+                  {e.entity_type}
+                </td>
                 <td className="px-3 py-2 border-b border-[#eee] text-[13px] text-[#555]">{e.category}</td>
                 <td className="px-3 py-2 border-b border-[#eee]">{statusBadge(e.status)}</td>
               </tr>
@@ -343,9 +388,7 @@ function EntitiesTab({ adminKey }: { adminKey: string }) {
       </div>
 
       {/* Edit Modal */}
-      {editingId && (
-        <EditModal entityId={editingId} adminKey={adminKey} onClose={() => setEditingId(null)} />
-      )}
+      {editingId && <EditModal entityId={editingId} adminKey={adminKey} onClose={() => setEditingId(null)} />}
     </div>
   )
 }
@@ -366,8 +409,9 @@ function EditModal({ entityId, adminKey, onClose }: { entityId: number; adminKey
       const found = cached?.entities?.find((e) => e.id === entityId)
       if (found) return found
       // Fallback: if not in cache, fetch from API
-      return adminFetch<{ data: Record<string, unknown>[] }>('/admin?action=all', adminKey)
-        .then((res) => res.data?.find((e) => e.id === entityId) ?? {})
+      return adminFetch<{ data: Record<string, unknown>[] }>('/admin?action=all', adminKey).then(
+        (res) => res.data?.find((e) => e.id === entityId) ?? {},
+      )
     },
   })
 
@@ -383,14 +427,27 @@ function EditModal({ entityId, adminKey, onClose }: { entityId: number; adminKey
 
   const updateMut = useMutation({
     mutationFn: (data: Record<string, string>) =>
-      adminFetch('/admin', adminKey, { method: 'POST', body: JSON.stringify({ action: 'update_entity', entity_id: entityId, data }) }),
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-entities'] }); onClose() },
+      adminFetch('/admin', adminKey, {
+        method: 'POST',
+        body: JSON.stringify({ action: 'update_entity', entity_id: entityId, data }),
+      }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['admin-entities'] })
+      onClose()
+    },
   })
 
   const deleteMut = useMutation({
     mutationFn: () =>
-      adminFetch('/admin', adminKey, { method: 'POST', body: JSON.stringify({ action: 'delete', entity_id: entityId }) }),
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-entities'] }); qc.invalidateQueries({ queryKey: ['admin-stats'] }); onClose() },
+      adminFetch('/admin', adminKey, {
+        method: 'POST',
+        body: JSON.stringify({ action: 'delete', entity_id: entityId }),
+      }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['admin-entities'] })
+      qc.invalidateQueries({ queryKey: ['admin-stats'] })
+      onClose()
+    },
   })
 
   const handleSave = () => updateMut.mutate(formData)
@@ -401,16 +458,29 @@ function EditModal({ entityId, adminKey, onClose }: { entityId: number; adminKey
   const updateField = (key: string, value: string) => setFormData((prev) => ({ ...prev, [key]: value }))
 
   const editableFields = [
-    'name', 'category', 'title', 'primary_org', 'website', 'location',
-    'twitter', 'bluesky', 'funding_model', 'notes',
+    'name',
+    'category',
+    'title',
+    'primary_org',
+    'website',
+    'location',
+    'twitter',
+    'bluesky',
+    'funding_model',
+    'notes',
   ]
 
   return (
     <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/40 p-4" onClick={onClose}>
-      <div className="bg-white rounded-lg p-6 max-w-[600px] w-full max-h-[85vh] overflow-y-auto shadow-xl" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="bg-white rounded-lg p-6 max-w-[600px] w-full max-h-[85vh] overflow-y-auto shadow-xl"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl italic font-serif">Edit Entity #{entityId}</h2>
-          <button onClick={onClose} className="text-[#888] hover:text-[#1a1a1a] text-lg">&times;</button>
+          <button onClick={onClose} className="text-[#888] hover:text-[#1a1a1a] text-lg">
+            &times;
+          </button>
         </div>
 
         {!loaded ? (
@@ -437,8 +507,12 @@ function EditModal({ entityId, adminKey, onClose }: { entityId: number; adminKey
             ))}
 
             <div className="flex gap-2 justify-end mt-4 pt-3 border-t border-[#eee]">
-              <button onClick={handleDelete} className={BTN_RED}>Delete</button>
-              <button onClick={onClose} className={BTN_OUTLINE}>Cancel</button>
+              <button onClick={handleDelete} className={BTN_RED}>
+                Delete
+              </button>
+              <button onClick={onClose} className={BTN_OUTLINE}>
+                Cancel
+              </button>
               <button onClick={handleSave} disabled={updateMut.isPending} className={BTN_PRIMARY}>
                 {updateMut.isPending ? 'Saving...' : 'Save'}
               </button>
@@ -478,9 +552,7 @@ function AdminDashboard({ adminKey }: { adminKey: string }) {
             key={t.key}
             onClick={() => setTab(t.key)}
             className={`px-4 py-2 font-mono text-[11px] uppercase tracking-wider border-b-2 transition-colors ${
-              tab === t.key
-                ? 'border-[#1a1a1a] text-[#1a1a1a]'
-                : 'border-transparent text-[#888] hover:text-[#555]'
+              tab === t.key ? 'border-[#1a1a1a] text-[#1a1a1a]' : 'border-transparent text-[#888] hover:text-[#555]'
             }`}
           >
             {t.label}

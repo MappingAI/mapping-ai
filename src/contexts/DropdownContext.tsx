@@ -38,9 +38,7 @@ export function DropdownProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   return (
-    <DropdownContext.Provider value={{ openDropdown, closeDropdown, subscribe }}>
-      {children}
-    </DropdownContext.Provider>
+    <DropdownContext.Provider value={{ openDropdown, closeDropdown, subscribe }}>{children}</DropdownContext.Provider>
   )
 }
 

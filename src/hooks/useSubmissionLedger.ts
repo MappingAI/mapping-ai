@@ -29,9 +29,7 @@ function readLedger(): LedgerEntry[] {
     if (data.version !== 1) return []
     const now = Date.now()
     // Prune entries older than 7 days
-    return data.entries.filter(
-      (e) => now - new Date(e.submittedAt).getTime() < MAX_AGE_MS,
-    )
+    return data.entries.filter((e) => now - new Date(e.submittedAt).getTime() < MAX_AGE_MS)
   } catch {
     return []
   }
@@ -63,12 +61,8 @@ export function useSubmissionLedger() {
 
   const pruneApproved = useCallback((approvedEntities: Entity[]) => {
     const entries = readLedger()
-    const approvedNames = new Set(
-      approvedEntities.map((e) => `${e.entity_type}:${e.name.toLowerCase()}`),
-    )
-    const remaining = entries.filter(
-      (e) => !approvedNames.has(`${e.entity_type}:${e.name.toLowerCase()}`),
-    )
+    const approvedNames = new Set(approvedEntities.map((e) => `${e.entity_type}:${e.name.toLowerCase()}`))
+    const remaining = entries.filter((e) => !approvedNames.has(`${e.entity_type}:${e.name.toLowerCase()}`))
     if (remaining.length !== entries.length) {
       writeLedger(remaining)
     }
@@ -110,7 +104,13 @@ export function useSeedCacheFromLedger() {
         const existing = data[arrayKey] ?? []
         const pendingId = -Math.abs(entry.id)
         // Skip if already in cache (by negative ID or name+type match)
-        if (existing.some((e) => e.id === pendingId || (e.name.toLowerCase() === entry.name.toLowerCase() && e.entity_type === entry.entity_type))) {
+        if (
+          existing.some(
+            (e) =>
+              e.id === pendingId ||
+              (e.name.toLowerCase() === entry.name.toLowerCase() && e.entity_type === entry.entity_type),
+          )
+        ) {
           continue
         }
         toAdd[arrayKey]!.push({

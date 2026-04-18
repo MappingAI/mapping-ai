@@ -15,11 +15,7 @@ const TYPE_LABELS: Record<string, string> = {
  * Shows a thank-you message with type-specific copy and a
  * "Submit another" button to reset the form.
  */
-export function SuccessMessage({
-  formType,
-  isUpdate,
-  onSubmitAnother,
-}: SuccessMessageProps) {
+export function SuccessMessage({ formType, isUpdate, onSubmitAnother }: SuccessMessageProps) {
   const typeLabel = TYPE_LABELS[formType] || formType
 
   return (

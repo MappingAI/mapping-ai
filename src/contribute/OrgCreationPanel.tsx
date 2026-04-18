@@ -9,15 +9,30 @@ import { fuzzySearch } from '../lib/search'
 import type { SubmitRequest } from '../types/api'
 
 const ORG_CATEGORIES = [
-  'Frontier Lab', 'AI Safety/Alignment', 'Think Tank/Policy Org',
-  'Government/Agency', 'Academic', 'VC/Capital/Philanthropy',
-  'Labor/Civil Society', 'Ethics/Bias/Rights', 'Media/Journalism',
-  'Political Campaign/PAC', 'AI Infrastructure & Compute', 'Deployers & Platforms',
+  'Frontier Lab',
+  'AI Safety/Alignment',
+  'Think Tank/Policy Org',
+  'Government/Agency',
+  'Academic',
+  'VC/Capital/Philanthropy',
+  'Labor/Civil Society',
+  'Ethics/Bias/Rights',
+  'Media/Journalism',
+  'Political Campaign/PAC',
+  'AI Infrastructure & Compute',
+  'Deployers & Platforms',
 ]
 
 const STANCE_OPTIONS = [
-  'Accelerate', 'Light-touch', 'Targeted', 'Moderate',
-  'Restrictive', 'Precautionary', 'Nationalize', 'Mixed/unclear', 'Other',
+  'Accelerate',
+  'Light-touch',
+  'Targeted',
+  'Moderate',
+  'Restrictive',
+  'Precautionary',
+  'Nationalize',
+  'Mixed/unclear',
+  'Other',
 ]
 
 interface OrgCreationPanelProps {
@@ -82,7 +97,18 @@ export function OrgCreationPanel({
   // Reset form when panel opens with new name
   useEffect(() => {
     if (isOpen) {
-      reset({ name: initialName, category: '', website: '', location: '', fundingModel: '', regulatoryStance: '', twitter: '', bluesky: '', notesHtml: '', notesMentions: '[]' })
+      reset({
+        name: initialName,
+        category: '',
+        website: '',
+        location: '',
+        fundingModel: '',
+        regulatoryStance: '',
+        twitter: '',
+        bluesky: '',
+        notesHtml: '',
+        notesMentions: '[]',
+      })
       setShowExpanded(false)
       setShowSuccess(false)
     }
@@ -128,7 +154,12 @@ export function OrgCreationPanel({
       try {
         const result = await submitMutation.mutateAsync(request)
         // Optimistically add to entity cache
-        addPendingEntity({ id: result.submissionId, entity_type: 'organization', name: values.name, category: values.category || null })
+        addPendingEntity({
+          id: result.submissionId,
+          entity_type: 'organization',
+          name: values.name,
+          category: values.category || null,
+        })
         // Show success overlay
         setShowSuccess(true)
         setTimeout(() => {
@@ -147,10 +178,7 @@ export function OrgCreationPanel({
   return createPortal(
     <>
       {/* Background overlay */}
-      <div
-        className="fixed inset-0 z-[200] bg-black/20"
-        onClick={onClose}
-      />
+      <div className="fixed inset-0 z-[200] bg-black/20" onClick={onClose} />
 
       {/* Panel */}
       <div
@@ -162,23 +190,15 @@ export function OrgCreationPanel({
           <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/95">
             <div className="text-center">
               <div className="text-2xl mb-2">&#10003;</div>
-              <div className="font-mono text-sm uppercase tracking-wider">
-                Organization submitted
-              </div>
+              <div className="font-mono text-sm uppercase tracking-wider">Organization submitted</div>
             </div>
           </div>
         )}
 
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-[#eee]">
-          <h2 className="font-mono text-[13px] uppercase tracking-wider">
-            Add New Organization
-          </h2>
-          <button
-            type="button"
-            onClick={onClose}
-            className="text-[#888] hover:text-[#1a1a1a] text-lg leading-none"
-          >
+          <h2 className="font-mono text-[13px] uppercase tracking-wider">Add New Organization</h2>
+          <button type="button" onClick={onClose} className="text-[#888] hover:text-[#1a1a1a] text-lg leading-none">
             &times;
           </button>
         </div>
@@ -206,9 +226,7 @@ export function OrgCreationPanel({
 
           {/* Category */}
           <div>
-            <label className="block font-mono text-[11px] uppercase tracking-wider text-[#555] mb-1">
-              Category
-            </label>
+            <label className="block font-mono text-[11px] uppercase tracking-wider text-[#555] mb-1">Category</label>
             <Controller
               name="category"
               control={control}
@@ -225,9 +243,7 @@ export function OrgCreationPanel({
 
           {/* Website */}
           <div>
-            <label className="block font-mono text-[11px] uppercase tracking-wider text-[#555] mb-1">
-              Website
-            </label>
+            <label className="block font-mono text-[11px] uppercase tracking-wider text-[#555] mb-1">Website</label>
             <Controller
               name="website"
               control={control}
@@ -244,9 +260,7 @@ export function OrgCreationPanel({
 
           {/* Location (simple text for panel — full LocationSearch in main form) */}
           <div>
-            <label className="block font-mono text-[11px] uppercase tracking-wider text-[#555] mb-1">
-              Location
-            </label>
+            <label className="block font-mono text-[11px] uppercase tracking-wider text-[#555] mb-1">Location</label>
             <Controller
               name="location"
               control={control}
@@ -328,9 +342,7 @@ export function OrgCreationPanel({
 
               {/* Bluesky */}
               <div>
-                <label className="block font-mono text-[11px] uppercase tracking-wider text-[#555] mb-1">
-                  Bluesky
-                </label>
+                <label className="block font-mono text-[11px] uppercase tracking-wider text-[#555] mb-1">Bluesky</label>
                 <Controller
                   name="bluesky"
                   control={control}
@@ -346,9 +358,7 @@ export function OrgCreationPanel({
 
               {/* Notes with TipTap */}
               <div>
-                <label className="block font-mono text-[11px] uppercase tracking-wider text-[#555] mb-1">
-                  Notes
-                </label>
+                <label className="block font-mono text-[11px] uppercase tracking-wider text-[#555] mb-1">Notes</label>
                 <TipTapEditor
                   placeholder="Add notes about this organization..."
                   searchEntities={searchEntities}

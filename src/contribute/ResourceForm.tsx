@@ -39,8 +39,22 @@ const LABEL_CLASS = 'font-mono text-[11px] uppercase tracking-wider text-[#555]'
 const INPUT_CLASS =
   'w-full px-3 py-2 font-mono text-[13px] border border-[#ddd] rounded bg-white outline-none transition-colors hover:border-[#999] focus:border-[#2563eb]'
 
-export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPersonTab, onViewExisting, onEnterUpdateMode, onSubmitSuccess }: ResourceFormProps) {
-  const { register, control, watch, handleSubmit, formState: { errors } } = form
+export function ResourceForm({
+  form,
+  updateContext,
+  onOrgPanelOpen,
+  onSwitchToPersonTab,
+  onViewExisting,
+  onEnterUpdateMode,
+  onSubmitSuccess,
+}: ResourceFormProps) {
+  const {
+    register,
+    control,
+    watch,
+    handleSubmit,
+    formState: { errors },
+  } = form
   const { cache } = useEntityCache()
   const submitEntity = useSubmitEntity()
   const addPendingEntity = useAddPendingEntity()
@@ -73,7 +87,9 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPe
               })
             }
           }
-        } catch { /* local results still work */ }
+        } catch {
+          /* local results still work */
+        }
       }
       return local
     },
@@ -100,7 +116,9 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPe
               local.push({ id: p.id, label: p.name, detail: p.title ?? p.category ?? undefined, isPending: true })
             }
           }
-        } catch { /* local results still work */ }
+        } catch {
+          /* local results still work */
+        }
       }
       return local
     },
@@ -113,8 +131,10 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPe
     const authors = fields.resourceAuthors as Array<{ label: string }> | undefined
     const apiData: Record<string, unknown> = {
       ...fields,
-      author: Array.isArray(authors) ? authors.map((t) => t.label).join(', ') : fields.resourceAuthor ?? null,
-      notesMentions: Array.isArray(fields.notesMentions) ? JSON.stringify(fields.notesMentions) : fields.notesMentions ?? null,
+      author: Array.isArray(authors) ? authors.map((t) => t.label).join(', ') : (fields.resourceAuthor ?? null),
+      notesMentions: Array.isArray(fields.notesMentions)
+        ? JSON.stringify(fields.notesMentions)
+        : (fields.notesMentions ?? null),
       // Map resource field names to what the API expects
       name: fields.resourceTitle ?? null,
       title: fields.resourceTitle ?? null,
@@ -162,9 +182,7 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPe
           placeholder="Resource title"
         />
         {errors.resourceTitle && (
-          <span className="text-[11px] font-mono text-red-500 mt-0.5">
-            {errors.resourceTitle.message as string}
-          </span>
+          <span className="text-[11px] font-mono text-red-500 mt-0.5">{errors.resourceTitle.message as string}</span>
         )}
         {!updateContext && (
           <DuplicateDetection
@@ -248,22 +266,13 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPe
       {/* Year */}
       <div>
         <label className={LABEL_CLASS}>Year</label>
-        <input
-          {...register('resourceYear')}
-          className={INPUT_CLASS}
-          placeholder="e.g. 2025"
-        />
+        <input {...register('resourceYear')} className={INPUT_CLASS} placeholder="e.g. 2025" />
       </div>
 
       {/* URL */}
       <div>
         <label className={LABEL_CLASS}>URL</label>
-        <input
-          {...register('resourceUrl')}
-          type="url"
-          className={INPUT_CLASS}
-          placeholder="https://..."
-        />
+        <input {...register('resourceUrl')} type="url" className={INPUT_CLASS} placeholder="https://..." />
       </div>
 
       {/* Key Argument */}
@@ -281,10 +290,15 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPe
         <label className={LABEL_CLASS}>
           Notes
           <InfoTooltip width={280}>
-            <strong>What to include:</strong><br />
-            {'• Context, impact & significance'}<br />
-            {'• Related work & responses'}<br />
-            {'• Key takeaways or controversies'}<br /><br />
+            <strong>What to include:</strong>
+            <br />
+            {'• Context, impact & significance'}
+            <br />
+            {'• Related work & responses'}
+            <br />
+            {'• Key takeaways or controversies'}
+            <br />
+            <br />
             <strong>Use @mentions</strong> to link related people, orgs, and resources.
           </InfoTooltip>
         </label>
@@ -320,12 +334,11 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPe
           placeholder="your@email.com"
         />
         {errors.submitterEmail && (
-          <span className="text-[11px] font-mono text-red-500 mt-0.5">
-            {errors.submitterEmail.message as string}
-          </span>
+          <span className="text-[11px] font-mono text-red-500 mt-0.5">{errors.submitterEmail.message as string}</span>
         )}
         <span className="text-[12px] font-mono text-[#888] mt-0.5 block">
-          Your email will not be displayed publicly. It&apos;s used only if we need to contact you about your submission.
+          Your email will not be displayed publicly. It&apos;s used only if we need to contact you about your
+          submission.
         </span>
       </div>
 
@@ -336,15 +349,12 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPe
           disabled={submitEntity.isPending}
           className="w-full px-6 py-3 font-mono text-[13px] uppercase tracking-wider bg-[#1a1a1a] text-white border-none rounded cursor-pointer transition-colors hover:bg-[#333] disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {submitEntity.isPending
-            ? 'Submitting...'
-            : updateContext
-              ? 'Update Resource'
-              : 'Submit Resource'}
+          {submitEntity.isPending ? 'Submitting...' : updateContext ? 'Update Resource' : 'Submit Resource'}
         </button>
         {submitEntity.isError && (
           <p className="text-[12px] font-mono text-red-600 mt-2">
-            {(submitEntity.error as { body?: { error?: string } })?.body?.error ?? 'Submission failed. Please try again.'}
+            {(submitEntity.error as { body?: { error?: string } })?.body?.error ??
+              'Submission failed. Please try again.'}
           </p>
         )}
       </div>

@@ -66,7 +66,5 @@ export function fuzzySearch(
     }
   }
 
-  return results
-    .sort((a, b) => b.score - a.score)
-    .slice(0, limit)
+  return results.sort((a, b) => b.score - a.score).slice(0, limit)
 }

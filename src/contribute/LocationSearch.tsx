@@ -34,46 +34,39 @@ export function LocationSearch({
   onRemoteChange,
   className = '',
 }: LocationSearchProps) {
-  const searchLocations = useCallback(
-    async (query: string): Promise<TagSearchResult[]> => {
-      const q = query.trim()
-      if (q.length < 2) return []
+  const searchLocations = useCallback(async (query: string): Promise<TagSearchResult[]> => {
+    const q = query.trim()
+    if (q.length < 2) return []
 
-      try {
-        const res = await fetch(
-          `https://photon.komoot.io/api/?q=${encodeURIComponent(q)}&limit=6&layer=city&layer=state`,
-        )
-        if (!res.ok) return []
+    try {
+      const res = await fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(q)}&limit=6&layer=city&layer=state`)
+      if (!res.ok) return []
 
-        const data = await res.json()
-        const features: PhotonFeature[] = data.features || []
+      const data = await res.json()
+      const features: PhotonFeature[] = data.features || []
 
-        // Format as "City, State, Country" and deduplicate
-        const seen = new Set<string>()
-        const results: TagSearchResult[] = []
+      // Format as "City, State, Country" and deduplicate
+      const seen = new Set<string>()
+      const results: TagSearchResult[] = []
 
-        for (const f of features) {
-          const p = f.properties
-          const label = [p.city || p.name, p.state, p.country]
-            .filter(Boolean)
-            .join(', ')
+      for (const f of features) {
+        const p = f.properties
+        const label = [p.city || p.name, p.state, p.country].filter(Boolean).join(', ')
 
-          if (!label || seen.has(label)) continue
-          seen.add(label)
+        if (!label || seen.has(label)) continue
+        seen.add(label)
 
-          results.push({
-            id: label,
-            label,
-          })
-        }
-
-        return results
-      } catch {
-        return []
+        results.push({
+          id: label,
+          label,
+        })
       }
-    },
-    [],
-  )
+
+      return results
+    } catch {
+      return []
+    }
+  }, [])
 
   return (
     <div className={className}>

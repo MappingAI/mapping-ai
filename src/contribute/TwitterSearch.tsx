@@ -30,11 +30,7 @@ export function TwitterSearch({ value, onChange, className = '' }: TwitterSearch
   // Pre-filter entities that have twitter handles (people + orgs only)
   const twitterEntities = useMemo(() => {
     if (!cache) return []
-    return cache.entities.filter(
-      (e) =>
-        e.twitter &&
-        (e.entity_type === 'person' || e.entity_type === 'organization'),
-    )
+    return cache.entities.filter((e) => e.twitter && (e.entity_type === 'person' || e.entity_type === 'organization'))
   }, [cache])
 
   // Debounced client-side filter — only search when input is focused
@@ -125,8 +121,12 @@ export function TwitterSearch({ value, onChange, className = '' }: TwitterSearch
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        onFocus={() => { isFocusedRef.current = true }}
-        onBlur={() => { isFocusedRef.current = false }}
+        onFocus={() => {
+          isFocusedRef.current = true
+        }}
+        onBlur={() => {
+          isFocusedRef.current = false
+        }}
         onKeyDown={handleKeyDown}
         placeholder="Search Twitter/X handles..."
         className="w-full px-3 py-2 font-mono text-[13px] border border-[#ddd] rounded bg-white outline-none transition-colors hover:border-[#999] focus:border-[#2563eb]"
@@ -147,9 +147,7 @@ export function TwitterSearch({ value, onChange, className = '' }: TwitterSearch
               }`}
             >
               <span className="truncate font-medium">{match.name}</span>
-              <span className="text-[#888] text-[11px] truncate ml-2">
-                {match.handle}
-              </span>
+              <span className="text-[#888] text-[11px] truncate ml-2">{match.handle}</span>
             </div>
           ))}
         </div>

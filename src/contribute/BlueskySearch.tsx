@@ -117,8 +117,12 @@ export function BlueskySearch({ value, onChange, className = '' }: BlueskySearch
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        onFocus={() => { isFocusedRef.current = true }}
-        onBlur={() => { isFocusedRef.current = false }}
+        onFocus={() => {
+          isFocusedRef.current = true
+        }}
+        onBlur={() => {
+          isFocusedRef.current = false
+        }}
         onKeyDown={handleKeyDown}
         placeholder="Search Bluesky handles..."
         className="w-full px-3 py-2 font-mono text-[13px] border border-[#ddd] rounded bg-white outline-none transition-colors hover:border-[#999] focus:border-[#2563eb]"
@@ -139,20 +143,12 @@ export function BlueskySearch({ value, onChange, className = '' }: BlueskySearch
               }`}
             >
               {actor.avatar ? (
-                <img
-                  src={actor.avatar}
-                  alt=""
-                  className="w-5 h-5 rounded-full flex-shrink-0 object-cover"
-                />
+                <img src={actor.avatar} alt="" className="w-5 h-5 rounded-full flex-shrink-0 object-cover" />
               ) : (
                 <span className="w-5 h-5 rounded-full flex-shrink-0 bg-[#e0e0e0]" />
               )}
-              <span className="truncate font-medium">
-                {actor.displayName || actor.handle}
-              </span>
-              <span className="text-[#888] text-[11px] truncate ml-auto">
-                @{actor.handle}
-              </span>
+              <span className="truncate font-medium">{actor.displayName || actor.handle}</span>
+              <span className="text-[#888] text-[11px] truncate ml-auto">@{actor.handle}</span>
             </div>
           ))}
         </div>
