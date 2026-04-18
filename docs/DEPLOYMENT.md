@@ -21,19 +21,20 @@ Backend (Lambda + API Gateway + CloudFront config):
 Feature branch -> PR -> main -> manual `sam build && sam deploy`
 ```
 
-**Key distinction:** Pushing to `main` automatically deploys the *frontend* (Vite-built static files to S3/CloudFront). It does NOT deploy the *backend* (Lambda functions, API Gateway, CloudFront settings). Backend requires a manual `sam deploy`.
+**Key distinction:** Pushing to `main` automatically deploys the _frontend_ (Vite-built static files to S3/CloudFront). It does NOT deploy the _backend_ (Lambda functions, API Gateway, CloudFront settings). Backend requires a manual `sam deploy`.
 
 **Critical: Never run `sam deploy` without checking for drift first.** See the [SAM deploy post-mortem](solutions/integration-issues/sam-deploy-overwrites-manual-cloudfront-config-2026-04-16.md) for why. Always run `aws cloudformation detect-stack-drift` before deploying.
 
 ## Branch Strategy
 
-| Branch | Purpose | Deploys to |
-|--------|---------|------------|
-| `main` | Production. Every push auto-deploys frontend. | Live site (mapping-ai.org) |
-| `feat/*` | Feature branches. Work in progress. | Cloudflare Pages preview (auto) |
-| `fix/*` | Hotfix branches. Urgent production fixes. | Nothing until merged to main |
+| Branch   | Purpose                                       | Deploys to                      |
+| -------- | --------------------------------------------- | ------------------------------- |
+| `main`   | Production. Every push auto-deploys frontend. | Live site (mapping-ai.org)      |
+| `feat/*` | Feature branches. Work in progress.           | Cloudflare Pages preview (auto) |
+| `fix/*`  | Hotfix branches. Urgent production fixes.     | Nothing until merged to main    |
 
 **Rules:**
+
 - Never push directly to `main`. Always use a PR.
 - Exception: P0 hotfixes (site is down) may push directly to main with post-hoc PR for documentation.
 - Feature branches get automatic Cloudflare Pages preview deployments at `<branch>.mapping-ai.pages.dev`.
@@ -54,15 +55,16 @@ npx vite dev
 node dev-server.js
 ```
 
-| Page | URL | What to check |
-|------|-----|---------------|
-| Contribute | localhost:5173/contribute | Form loads, dropdowns work, org search returns results |
-| Map | localhost:3000/map.html | Map renders with nodes. Click a node, detail panel opens. Filters work. |
-| Admin | localhost:5173/admin | Auth gate appears, can type password |
-| Insights | localhost:5173/insights | Charts render with data |
-| Homepage | localhost:5173/ | Page loads, navigation works |
+| Page       | URL                       | What to check                                                           |
+| ---------- | ------------------------- | ----------------------------------------------------------------------- |
+| Contribute | localhost:5173/contribute | Form loads, dropdowns work, org search returns results                  |
+| Map        | localhost:3000/map.html   | Map renders with nodes. Click a node, detail panel opens. Filters work. |
+| Admin      | localhost:5173/admin      | Auth gate appears, can type password                                    |
+| Insights   | localhost:5173/insights   | Charts render with data                                                 |
+| Homepage   | localhost:5173/           | Page loads, navigation works                                            |
 
 Also run:
+
 ```bash
 npx tsc --noEmit    # Type checking
 npx vitest run      # Unit tests
@@ -75,6 +77,7 @@ Include a summary, testing notes, and risk assessment.
 ### 3. CI checks pass
 
 The GitHub Actions workflow runs on push to main:
+
 1. `npm ci`
 2. `npm run build:tiptap` (legacy TipTap bundle for map.html)
 3. Write `.env.production` with `VITE_SITE_PASSWORD_HASH`
@@ -90,7 +93,7 @@ The GitHub Actions workflow runs on push to main:
 
 - At least one human or thorough AI review must approve the PR
 - Changes to map.html, D3 code, or script tags require extra scrutiny
-- Backend changes (api/*.js, template.yaml) should be in separate PRs from frontend when possible
+- Backend changes (api/\*.js, template.yaml) should be in separate PRs from frontend when possible
 
 ## Deploy Process
 
@@ -159,16 +162,16 @@ The deploy workflow does this automatically, but always verify manually too. A b
 
 ## Known Risks by File
 
-| File(s) | Risk | Key checks |
-|---------|------|------------|
-| `map.html` | **P0**: primary product page | Browser test: nodes render, D3 loads |
-| `src/contribute/` | **P1**: can't collect data | Form renders, dropdowns work, submission succeeds |
-| `api/export-map.js` | **P0**: map data malformed | Run export locally, verify JSON |
-| `api/admin.js` | **P1**: admin can't approve/reject | Test with admin key |
-| `template.yaml` | **P1**: API/CloudFront misconfigured | `sam validate`, check drift |
-| `.github/workflows/deploy.yml` | **P0**: deploy pipeline breaks | Review carefully |
-| `src/hooks/useSubmitEntity.ts` | **P1**: form submission broken | Test submit end-to-end |
-| `src/lib/api.ts` | **P1**: all API calls broken | Check search + submit work |
+| File(s)                        | Risk                                 | Key checks                                        |
+| ------------------------------ | ------------------------------------ | ------------------------------------------------- |
+| `map.html`                     | **P0**: primary product page         | Browser test: nodes render, D3 loads              |
+| `src/contribute/`              | **P1**: can't collect data           | Form renders, dropdowns work, submission succeeds |
+| `api/export-map.js`            | **P0**: map data malformed           | Run export locally, verify JSON                   |
+| `api/admin.js`                 | **P1**: admin can't approve/reject   | Test with admin key                               |
+| `template.yaml`                | **P1**: API/CloudFront misconfigured | `sam validate`, check drift                       |
+| `.github/workflows/deploy.yml` | **P0**: deploy pipeline breaks       | Review carefully                                  |
+| `src/hooks/useSubmitEntity.ts` | **P1**: form submission broken       | Test submit end-to-end                            |
+| `src/lib/api.ts`               | **P1**: all API calls broken         | Check search + submit work                        |
 
 ## Incident Response
 

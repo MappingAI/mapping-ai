@@ -82,6 +82,7 @@ Visit `localhost:5173`. Everything works from there: map, contribute form, admin
 ### Using AI coding agents
 
 If you're using Claude Code, Cursor, or similar:
+
 - Read `CLAUDE.md` first for full codebase context
 - Use `npx tsc --noEmit` to catch type errors after changes
 - Use `agent-browser` for visual testing (screenshots, form interaction)
