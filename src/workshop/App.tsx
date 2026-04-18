@@ -999,15 +999,98 @@ npm run test          # Run tests`}</Pre>
           sake?
         </p>
 
+        <H4>Guerrilla marketing ideas</H4>
+
+        <p className="mb-4">
+          Think scrappy, high-impact, low-cost. Some starting points:
+        </p>
+
+        <ul className="list-disc pl-6 mb-4 space-y-2 text-[16px]">
+          <li>
+            <strong>Screenshot campaigns.</strong> Take a compelling screenshot from the map
+            (e.g., a cluster of orgs with surprising connections) and post it with a
+            one-line hook. People share visuals, not links.
+          </li>
+          <li>
+            <strong>Stunt data drops.</strong> Publish a single surprising stat from the
+            database as a standalone post. &ldquo;We mapped 717 AI orgs. 39% of them
+            are AI Safety groups. Here&rsquo;s what the other 61% look like.&rdquo;
+          </li>
+          <li>
+            <strong>Reply-guy strategy.</strong> When AI policy news breaks, reply with
+            a relevant map link or data point. Be genuinely useful, not spammy.
+            The map has real-time relevance every time someone asks &ldquo;who is
+            behind this?&rdquo;
+          </li>
+          <li>
+            <strong>Challenge posts.</strong> &ldquo;Can you find yourself on the map?&rdquo;
+            directed at people already in the database. People love seeing themselves
+            on things.
+          </li>
+          <li>
+            <strong>Substack cross-posts.</strong> Write a short analysis piece using
+            the data (see Stream 6) and pitch it as a guest post to AI policy
+            Substacks with large audiences.
+          </li>
+        </ul>
+
+        <H4>Viral thread ideas</H4>
+
+        <p className="mb-4">
+          Twitter/X and Bluesky threads with data visualizations get massive reach
+          in the AI policy space. Some thread concepts worth developing:
+        </p>
+
+        <ul className="list-disc pl-6 mb-4 space-y-2 text-[16px]">
+          <li>
+            <strong>&ldquo;We mapped every org in US AI governance. Here&rsquo;s what
+            we found.&rdquo;</strong> Lead with the org category chart showing AI Safety
+            dominance. Thread through funding, stance distributions, geographic
+            concentration.
+          </li>
+          <li>
+            <strong>&ldquo;The people regulating AI think very differently from
+            the orgs around them.&rdquo;</strong> Use the beeswarm chart showing the
+            gap between individual vs. organizational regulatory stances.
+          </li>
+          <li>
+            <strong>&ldquo;Follow the money in AI governance.&rdquo;</strong> Funding
+            model predicts regulatory stance almost perfectly. Show the dot plot
+            from the insights page. Name names.
+          </li>
+          <li>
+            <strong>&ldquo;5 cities control AI policy. Everyone else is
+            invisible.&rdquo;</strong> Geographic concentration chart.
+            Provocative framing that invites debate.
+          </li>
+          <li>
+            <strong>&ldquo;We asked: what are you most afraid of with AI? The
+            answers split on professional lines.&rdquo;</strong> Threat model
+            heatmap showing researchers vs. organizers vs. policymakers.
+          </li>
+          <li>
+            <strong>&ldquo;The 10 most connected people in US AI
+            policy.&rdquo;</strong> Network centrality chart. Tag the people.
+            They will share it.
+          </li>
+        </ul>
+
+        <p className="mb-4">
+          Every thread should end with a link to the map and an invite to
+          contribute. The goal is to make the data feel alive and relevant,
+          not academic.
+        </p>
+
         <H4>Deliverable</H4>
 
         <p className="mb-4">
-          By the end of the session, write up your ideas in{' '}
-          <ExtLink href="https://docs.google.com/document/d/1WNVM22lGeCOcZHvi5KwF9Yn9be6T6V7xbsocL0SQsLQ/edit?usp=sharing">
-            this shared doc
+          By the end of the session, post your ideas in the{' '}
+          <ExtLink href="https://discord.gg/2gntpaxV">
+            Discord forum channel
           </ExtLink>
           . This could include target audiences, distribution channels, pitch
-          ideas, partnership leads, content angles — whatever feels most useful.
+          ideas, partnership leads, content angles, draft thread copy, or
+          screenshots of visualizations worth sharing.
         </p>
 
         <Divider />
