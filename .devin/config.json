@@ -1,0 +1,21 @@
+{
+  "mcpServers": {
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+      }
+    }
+  },
+  "permissions": {
+    "allow": [
+      "mcp__github__list_issues",
+      "mcp__github__get_issue",
+      "mcp__github__list_pull_requests",
+      "mcp__github__get_pull_request",
+      "mcp__github__get_pull_request_diff",
+      "mcp__github__create_pull_request_review"
+    ]
+  }
+}

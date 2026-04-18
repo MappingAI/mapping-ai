@@ -1,0 +1,32 @@
+name: Devin Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  devin-review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Devin CLI
+        run: curl -fsSL https://cli.devin.ai/install.sh | bash
+
+      - name: Review PR
+        env:
+          DEVIN_API_KEY: ${{ secrets.DEVIN_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          export PATH="$HOME/.local/bin:$PATH"
+          devin -p "Review PR #${PR_NUMBER}: ${PR_TITLE}.
+          Read the diff with 'gh pr diff ${PR_NUMBER}'.
+          Check for bugs, security issues, and breaking changes.
+          Post a review comment on the PR with your findings using 'gh pr review ${PR_NUMBER} --comment --body <your review>'."
