@@ -78,7 +78,22 @@ Include a summary, testing notes, and risk assessment.
 
 ### 3. CI checks pass
 
-The GitHub Actions workflow runs on push to main:
+Two GitHub Actions workflows run over the PR lifecycle:
+
+**`.github/workflows/ci.yml`** — runs on every PR. These are the candidate required status checks on `main`:
+
+| Check                 | What it runs           |
+| --------------------- | ---------------------- |
+| Prettier format-check | `npm run format:check` |
+| ESLint                | `npm run lint`         |
+| TypeScript type-check | `npm run typecheck`    |
+| Vitest                | `npm test`             |
+| Vite build            | `npm run build`        |
+| SAM template validate | `sam validate --lint`  |
+
+See the Branch Protection section below for how to enforce these on `main`.
+
+**`.github/workflows/deploy.yml`** — runs only on push to `main`:
 
 1. `npm ci`
 2. `npm run build:tiptap` (legacy TipTap bundle for map.html)
@@ -90,6 +105,20 @@ The GitHub Actions workflow runs on push to main:
 8. S3 sync (HTML with no-cache, hashed assets with immutable cache)
 9. CloudFront invalidation
 10. **Post-deploy smoke test** (curls all pages, fails build if any return non-200)
+
+## Branch Protection
+
+Once `ci.yml` has had a green run on a real PR, configure branch protection in GitHub → Settings → Branches for `main`:
+
+- ✅ Require a pull request before merging
+- ✅ Require status checks to pass before merging → select:
+  - `Lint, type-check, test, build`
+  - `SAM template validate`
+- ✅ Require branches to be up to date before merging
+- ✅ Do not allow bypassing (include administrators)
+- ❌ Allow force pushes (leave off)
+
+**P0 hotfix exception:** site-down incidents may push directly to `main` with branch protection temporarily relaxed. Re-enable immediately afterward and file a PR for the record.
 
 ### 4. Review
 
