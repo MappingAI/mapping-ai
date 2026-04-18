@@ -2610,14 +2610,14 @@ fetch('map-data.json')
     const deepLinkTarget = document.body.classList.contains('locked') ? null : resolveDeepLink();
     if (deepLinkTarget) {
       setTimeout(() => {
-        const renderedNodes = d3.selectAll('.node').data();
+        const renderedNodes = _canvasNodes.length > 0 ? _canvasNodes : d3.selectAll('.node').data();
         const node = renderedNodes.find(n => n.name === (deepLinkTarget.name || deepLinkTarget.title));
         if (node) {
           showDetail(node, renderedNodes);
-          const svg = d3.select('#map-container svg');
+          const zoomTarget = _canvasSel || d3.select('#map-container svg');
           const mapEl = document.getElementById('map-container');
           const k = 3;
-          svg.transition().duration(500).call(
+          zoomTarget.transition().duration(500).call(
             zoomBehavior.transform,
             d3.zoomIdentity.translate(mapEl.clientWidth / 2 - k * node.x, mapEl.clientHeight / 2 - k * node.y).scale(k)
           );
@@ -3377,6 +3377,293 @@ function getVisibleNodes() {
   return nodes;
 }
 
+// ═══════════════════════════════════════════════════════════════
+// Canvas rendering state (module-level for highlight functions)
+// ═══════════════════════════════════════════════════════════════
+let _canvasNodes = [];
+let _canvasLinks = [];
+let _canvasClusterBgs = [];
+let _canvasClusterLabels = [];
+let _canvasCtx = null;
+let _canvasSel = null;
+let _canvasDpr = 1;
+let _canvasWidth = 0;
+let _canvasHeight = 0;
+let _canvasCenterX = 0;
+let _canvasCenterY = 0;
+let _hoveredNode = null;
+let _clusterDimmed = false;
+let _redrawScheduled = false;
+let _themeColors = null;
+let _dragOccurred = false;
+let _quadtree = null;
+let _monoFont = 'monospace';
+let _serifFont = 'sans-serif';
+
+// Pre-parse Path2D objects for resource icons (done once)
+const _iconPaths = {};
+for (const [type, pathStr] of Object.entries(RESOURCE_TYPE_ICONS)) {
+  _iconPaths[type] = pathStr.split(/(?= M)/).map(p => new Path2D(p.trim()));
+}
+
+function _getThemeColors() {
+  if (_themeColors) return _themeColors;
+  const cs = getComputedStyle(document.documentElement);
+  _themeColors = {
+    text3: cs.getPropertyValue('--text-3').trim() || '#888',
+    bgPage: cs.getPropertyValue('--bg-page').trim() || '#fff',
+  };
+  _monoFont = cs.getPropertyValue('--mono').trim() || 'monospace';
+  _serifFont = cs.getPropertyValue('--serif').trim() || 'sans-serif';
+  return _themeColors;
+}
+
+function _nodeAlpha(d) {
+  if (d._vs === 'hidden') return 0;
+  if (d._vs === 'dimmed') return 0.15;
+  if (d._vs === 'highlighted') return 1;
+  if (d._vs === 'one-hop') return 0.4;
+  if (d.isResource) return 1;
+  return d.entityType === 'organization' ? 0.9 : 0.7;
+}
+
+function _linkAlpha(l) {
+  if (l._vs === 'hidden') return 0;
+  if (l._vs === 'dimmed') return 0.03;
+  if (l._vs === 'highlighted') return 0.6;
+  if (l._vs === 'one-hop') return 0.25;
+  return 0.25;
+}
+
+function _getInitials(name) {
+  const parts = (name || '').split(/[\s]+/);
+  if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
+  return (name || '').slice(0, 2).toUpperCase();
+}
+
+function _requestRedraw() {
+  if (_redrawScheduled || !_canvasCtx) return;
+  _redrawScheduled = true;
+  requestAnimationFrame(() => { _redrawScheduled = false; _drawFrame(); });
+}
+
+function _rebuildQuadtree() {
+  _quadtree = d3.quadtree().x(d => d.x).y(d => d.y).addAll(_canvasNodes);
+}
+
+function _findNodeAt(mx, my) {
+  if (!_quadtree) return null;
+  const x = (mx - currentZoom.x) / currentZoom.k;
+  const y = (my - currentZoom.y) / currentZoom.k;
+  let closest = null, closestDist = Infinity;
+  const maxR = 30 / currentZoom.k;
+
+  _quadtree.visit((quad, x1, y1, x2, y2) => {
+    if (!quad.length) {
+      let scan = quad;
+      do {
+        const d = scan.data;
+        if (d && d._vs !== 'hidden') {
+          const dx = d.x - x, dy = d.y - y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          const hit = d.isResource
+            ? (Math.abs(dx) <= d.radius && Math.abs(dy) <= d.radius)
+            : (dist <= d.radius);
+          if (hit && dist < closestDist) { closest = d; closestDist = dist; }
+        }
+      } while ((scan = scan.next));
+    }
+    const cx = (x1 + x2) / 2, cy = (y1 + y2) / 2;
+    const hw = (x2 - x1) / 2;
+    return (x - cx > hw + maxR) || (cx - x > hw + maxR) ||
+           (y - cy > hw + maxR) || (cy - y > hw + maxR);
+  });
+  return closest;
+}
+
+function _drawFrame() {
+  const ctx = _canvasCtx;
+  if (!ctx) return;
+  const tc = _getThemeColors();
+  const w = _canvasWidth, h = _canvasHeight;
+
+  ctx.save();
+  ctx.setTransform(_canvasDpr, 0, 0, _canvasDpr, 0, 0);
+  ctx.clearRect(0, 0, w, h);
+  ctx.translate(currentZoom.x, currentZoom.y);
+  ctx.scale(currentZoom.k, currentZoom.k);
+
+  // Layer 1: Cluster backgrounds
+  const bgAlpha = _clusterDimmed ? 0.02 : 0.06;
+  const bgStrokeAlpha = _clusterDimmed ? 0.02 : 0.15;
+  for (const bg of _canvasClusterBgs) {
+    ctx.beginPath();
+    ctx.arc(bg.x, bg.y, bg.r, 0, Math.PI * 2);
+    ctx.globalAlpha = bgAlpha;
+    ctx.fillStyle = bg.color;
+    ctx.fill();
+    ctx.globalAlpha = bgStrokeAlpha;
+    ctx.strokeStyle = bg.color;
+    ctx.lineWidth = 0.5;
+    ctx.stroke();
+  }
+
+  // Layer 2: Edges (batched by state)
+  if (_canvasLinks.length > 0) {
+    const batches = { normal: [], dimmed: [], highlighted: [], 'one-hop': [] };
+    for (const l of _canvasLinks) {
+      if (l._vs === 'hidden') continue;
+      (batches[l._vs] || batches.normal).push(l);
+    }
+    for (const [state, links] of Object.entries(batches)) {
+      if (links.length === 0) continue;
+      ctx.globalAlpha = state === 'dimmed' ? 0.03 : state === 'highlighted' ? 0.6 : 0.25;
+      ctx.strokeStyle = tc.text3;
+      ctx.lineWidth = state === 'highlighted' ? 1.5 : 0.5;
+      ctx.setLineDash(state === 'one-hop' ? [4, 3] : []);
+      ctx.beginPath();
+      for (const l of links) {
+        ctx.moveTo(l.source.x, l.source.y);
+        ctx.lineTo(l.target.x, l.target.y);
+      }
+      ctx.stroke();
+    }
+    ctx.setLineDash([]);
+  }
+
+  // Layer 3: Nodes
+  const nodes = _canvasNodes;
+  for (let ni = 0; ni < nodes.length; ni++) {
+    const d = nodes[ni];
+    if (d._vs === 'hidden') continue;
+    const isHover = _hoveredNode === d;
+    const alpha = isHover ? 1 : _nodeAlpha(d);
+    if (alpha <= 0) continue;
+    const x = d.x, y = d.y, r = d.radius;
+
+    if (d.isResource) {
+      // Rounded rect background
+      ctx.globalAlpha = d._vs === 'dimmed' ? 0.15 : 0.15;
+      ctx.fillStyle = getColor(d._sector || d.category);
+      ctx.strokeStyle = getColor(d._sector || d.category);
+      ctx.lineWidth = 1.5;
+      if (d._vs === 'one-hop') { ctx.setLineDash([3, 2]); }
+      ctx.beginPath();
+      ctx.roundRect(x - r, y - r, r * 2, r * 2, 5);
+      ctx.fill();
+      ctx.stroke();
+      if (d._vs === 'one-hop') { ctx.setLineDash([]); }
+      // Resource icon
+      const iconP = _iconPaths[d.resource_type] || _iconPaths['Essay'];
+      if (iconP) {
+        const iSz = r * 1.1, sc = iSz / 24;
+        ctx.save();
+        ctx.translate(x - iSz / 2, y - iSz / 2);
+        ctx.scale(sc, sc);
+        ctx.globalAlpha = alpha;
+        ctx.strokeStyle = getColor(d.category);
+        ctx.lineWidth = 1.5 / sc;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        for (const p of iconP) ctx.stroke(p);
+        ctx.restore();
+      }
+    } else if (d._sprite) {
+      // Pre-rasterized image sprite
+      ctx.globalAlpha = (d._vs === 'highlighted' || isHover) ? 1 : Math.max(alpha, 0.75);
+      ctx.drawImage(d._sprite, x - r, y - r, r * 2, r * 2);
+      // Ring
+      const ringColor = d._vs === 'highlighted' ? '#fff' : getClusterColor(d);
+      ctx.globalAlpha = d._vs === 'highlighted' ? 1 : 0.8;
+      ctx.strokeStyle = ringColor;
+      ctx.lineWidth = (d._vs === 'highlighted' || isHover) ? 3 : 2;
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.stroke();
+    } else {
+      // Circle background
+      ctx.globalAlpha = isHover ? 1 : alpha;
+      ctx.fillStyle = getClusterColor(d);
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.fill();
+      if (d.entityType === 'organization') {
+        ctx.strokeStyle = d3.color(getClusterColor(d)).brighter(0.8).toString();
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+      }
+      // Ring overlay
+      if (d._vs === 'highlighted') {
+        ctx.globalAlpha = 1;
+        ctx.strokeStyle = '#fff';
+        ctx.lineWidth = 3;
+        ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.stroke();
+      } else if (isHover) {
+        ctx.globalAlpha = 0.8;
+        ctx.strokeStyle = getClusterColor(d);
+        ctx.lineWidth = 3;
+        ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.stroke();
+      }
+      // One-hop dashed ring
+      if (d._vs === 'one-hop') {
+        ctx.globalAlpha = 0.4;
+        ctx.strokeStyle = getClusterColor(d);
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([3, 2]);
+        ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.stroke();
+        ctx.setLineDash([]);
+      }
+      // Initials text
+      if (r >= 6) {
+        ctx.globalAlpha = Math.min(0.9, alpha + 0.1);
+        ctx.fillStyle = '#fff';
+        ctx.font = `${r >= 16 ? 8 : r >= 10 ? 6 : 5}px ${_monoFont}`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(_getInitials(d.name), x, y);
+      }
+    }
+    // Submission ring (gold dashed)
+    if ((d.submissionCount || 0) >= 5) {
+      ctx.globalAlpha = Math.min(0.5, alpha);
+      ctx.strokeStyle = '#fbbf24';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([2, 2]);
+      if (d.isResource) {
+        ctx.beginPath(); ctx.roundRect(x - r - 2, y - r - 2, r * 2 + 4, r * 2 + 4, 6); ctx.stroke();
+      } else {
+        ctx.beginPath(); ctx.arc(x, y, r + 2, 0, Math.PI * 2); ctx.stroke();
+      }
+      ctx.setLineDash([]);
+    }
+  }
+
+  // Layer 4: Cluster labels
+  const lblAlpha = _clusterDimmed ? 0.05 : 1;
+  const lblBgAlpha = _clusterDimmed ? 0.02 : 0.85;
+  ctx.font = `500 9px ${_serifFont}`;
+  for (const lbl of _canvasClusterLabels) {
+    const tw = ctx.measureText(lbl.text).width;
+    const pad = 8;
+    let bgX;
+    if (lbl.anchor === 'end') bgX = lbl.x - tw - pad;
+    else if (lbl.anchor === 'start') bgX = lbl.x - 4;
+    else bgX = lbl.x - tw / 2 - pad / 2;
+    ctx.globalAlpha = lblBgAlpha;
+    ctx.fillStyle = tc.bgPage;
+    ctx.beginPath();
+    ctx.roundRect(bgX, lbl.y - 10, tw + pad * 2 - 4, 16, 3);
+    ctx.fill();
+    ctx.globalAlpha = lblAlpha;
+    ctx.fillStyle = lbl.color;
+    ctx.textAlign = lbl.anchor === 'end' ? 'right' : lbl.anchor === 'start' ? 'left' : 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(lbl.text, lbl.x, lbl.y - 2);
+  }
+
+  ctx.restore();
+}
+
 function render() {
   const container = document.getElementById('map-container');
   const width = container.clientWidth;
@@ -3384,31 +3671,50 @@ function render() {
 
   d3.select('#map-container').selectAll('*').remove();
 
-  const svg = d3.select('#map-container')
-    .append('svg')
-    .attr('width', width)
-    .attr('height', height);
+  // Reset canvas state (may be switching from network to 2D)
+  _canvasCtx = null;
+  _canvasSel = null;
+  _canvasNodes = [];
+  _canvasLinks = [];
 
-  const g = svg.append('g');
-
-  // Restore zoom state
-  zoomBehavior = d3.zoom()
-    .scaleExtent([0.1, 20])
-    .on('zoom', (event) => {
+  // 2D plot view still uses SVG (render2D depends on it)
+  if (currentView === '2d') {
+    const svg = d3.select('#map-container').append('svg').attr('width', width).attr('height', height);
+    const g = svg.append('g');
+    zoomBehavior = d3.zoom().scaleExtent([0.1, 20]).on('zoom', (event) => {
       currentZoom = event.transform;
       g.attr('transform', event.transform);
     });
-  svg.call(zoomBehavior);
-  svg.call(zoomBehavior.transform, currentZoom);
+    svg.call(zoomBehavior).call(zoomBehavior.transform, currentZoom);
+    document.getElementById('zoom-in').onclick = () => svg.transition().duration(300).call(zoomBehavior.scaleBy, 1.5);
+    document.getElementById('zoom-out').onclick = () => svg.transition().duration(300).call(zoomBehavior.scaleBy, 0.67);
+    document.getElementById('zoom-reset').onclick = () => {
+      currentZoom = d3.zoomIdentity;
+      svg.transition().duration(500).call(zoomBehavior.transform, d3.zoomIdentity);
+    };
+    render2D(svg, g, width, height);
+    return;
+  }
 
-  document.getElementById('zoom-in').onclick = () => svg.transition().duration(300).call(zoomBehavior.scaleBy, 1.5);
-  document.getElementById('zoom-out').onclick = () => svg.transition().duration(300).call(zoomBehavior.scaleBy, 0.67);
-  document.getElementById('zoom-reset').onclick = () => {
-    currentZoom = d3.zoomIdentity;
-    svg.transition().duration(500).call(zoomBehavior.transform, d3.zoomIdentity);
-  };
+  // --- Network view: Canvas 2D rendering ---
+  const dpr = window.devicePixelRatio || 1;
+  const canvas = document.createElement('canvas');
+  canvas.width = width * dpr;
+  canvas.height = height * dpr;
+  canvas.style.width = width + 'px';
+  canvas.style.height = height + 'px';
+  container.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  const canvasSel = d3.select(canvas);
 
-  if (currentView === '2d') { render2D(svg, g, width, height); return; }
+  _canvasCtx = ctx;
+  _canvasSel = canvasSel;
+  _canvasDpr = dpr;
+  _canvasWidth = width;
+  _canvasHeight = height;
+  _themeColors = null;
+  _getThemeColors();
 
   const nodes = getVisibleNodes();
   document.getElementById('entity-count').textContent = `${nodes.length} entities`;
@@ -3437,9 +3743,14 @@ function render() {
   const baseOrbitFactor = clusterDimension === 'category' ? 0.035 : 0.045;
   const orbitRadius = maxDim * Math.min(0.38, Math.max(0.18, categories.length * baseOrbitFactor));
 
-  // Build node-category lookup for connection counting
+  // Build node lookups once — used repeatedly below.
+  // Replaces O(N) `nodes.find(...)` inside O(M) relationship loops (was O(N·M)).
   const nodeById = {};
-  nodes.forEach(d => { if (d.id) nodeById[`${d.entityType}-${d.id}`] = d; });
+  const nodesByName = new Map();
+  nodes.forEach(d => {
+    if (d.id) nodeById[`${d.entityType}-${d.id}`] = d;
+    if (d.name) nodesByName.set(d.name, d);
+  });
 
   // Count inter-category connections from relationships + person_organizations
   const interCatLinks = {};
@@ -3454,8 +3765,8 @@ function render() {
     if (src && tgt) addCatLink(src.clusterKey, tgt.clusterKey);
   });
   inferredLinks.forEach(l => {
-    const p = nodes.find(n => n.name === l.personName);
-    const o = nodes.find(n => n.name === l.orgName);
+    const p = nodesByName.get(l.personName);
+    const o = nodesByName.get(l.orgName);
     if (p && o) addCatLink(p.clusterKey, o.clusterKey);
   });
 
@@ -3537,63 +3848,49 @@ function render() {
     }
   });
 
-  // Cluster background circles (behind everything)
-  const bgLayer = g.append('g').attr('class', 'bg-layer');
-  bgLayer.selectAll('.cluster-bg')
-    .data(categories)
-    .join('circle')
-    .attr('class', 'cluster-bg')
-    .attr('cx', d => clusterCenters[d].x)
-    .attr('cy', d => clusterCenters[d].y)
-    .attr('r', d => {
-      const count = nodes.filter(n => n.clusterKey === d).length;
-      // Larger radius for belief dimensions (fewer clusters = more spread)
-      const multiplier = clusterDimension === 'category' ? 28 : 38;
-      return Math.max(60, Math.sqrt(count) * multiplier);
-    })
-    .attr('fill', d => getDimensionColor(clusterDimension, d))
-    .attr('opacity', 0.06)
-    .attr('stroke', d => getDimensionColor(clusterDimension, d))
-    .attr('stroke-width', 0.5)
-    .attr('stroke-opacity', 0.15);
+  // Prepare cluster background data for canvas drawFrame
+  _canvasClusterBgs = categories.map(cat => ({
+    cat,
+    x: clusterCenters[cat].x,
+    y: clusterCenters[cat].y,
+    r: Math.max(60, Math.sqrt(catCounts[cat] || 0) * (clusterDimension === 'category' ? 28 : 38)),
+    color: getDimensionColor(clusterDimension, cat),
+  }));
 
-  // Connection lines (in all view)
-  let linkElements = null;
+  // Prepare cluster label data for canvas drawFrame
+  _canvasClusterLabels = categories.map(cat => {
+    const c = clusterCenters[cat];
+    const count = catCounts[cat] || 0;
+    const clusterR = Math.max(50, Math.sqrt(count) * 28);
+    const dx = c.x - centerX, dy = c.y - centerY;
+    const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+    const labelDist = clusterR + 14;
+    return {
+      text: cat,
+      x: c.x + (dx / dist) * labelDist,
+      y: c.y + (dy / dist) * labelDist,
+      anchor: dx > 20 ? 'start' : dx < -20 ? 'end' : 'middle',
+      color: getDimensionColor(clusterDimension, cat),
+    };
+  });
+
+  // Build visible links for canvas rendering
+  _canvasLinks = [];
   if (currentView === 'all') {
-    const nodeByName = {};
-    nodes.forEach(d => { nodeByName[d.name] = d; });
-
-    // Person-org links
-    const visibleLinks = inferredLinks
-      .filter(l => nodeByName[l.personName] && nodeByName[l.orgName])
-      .map(l => ({ source: nodeByName[l.personName], target: nodeByName[l.orgName] }));
-
-    // Resource and other relationship links from DB
-    const nodeById = {};
-    nodes.forEach(d => {
-      if (d.entityType === 'organization') nodeById[`organization-${d.id}`] = d;
-      else if (d.entityType === 'person') nodeById[`person-${d.id}`] = d;
-      else if (d.entityType === 'resource') nodeById[`resource-${d.id}`] = d;
+    inferredLinks.forEach(l => {
+      const p = nodesByName.get(l.personName);
+      const o = nodesByName.get(l.orgName);
+      if (p && o) _canvasLinks.push({ source: p, target: o, _vs: 'normal' });
     });
     (allData.relationships || []).forEach(rel => {
-      if (rel.relationship_type === 'subsidiary') return; // skip, handled by hierarchy
-      const srcKey = `${rel.source_type}-${rel.source_id}`;
-      const tgtKey = `${rel.target_type}-${rel.target_id}`;
-      if (nodeById[srcKey] && nodeById[tgtKey]) {
-        visibleLinks.push({ source: nodeById[srcKey], target: nodeById[tgtKey], relType: rel.relationship_type });
-      }
+      if (rel.relationship_type === 'subsidiary') return;
+      const src = nodeById[`${rel.source_type}-${rel.source_id}`];
+      const tgt = nodeById[`${rel.target_type}-${rel.target_id}`];
+      if (src && tgt) _canvasLinks.push({ source: src, target: tgt, relType: rel.relationship_type, _vs: 'normal' });
     });
-
-    linkElements = g.selectAll('.connection-line')
-      .data(visibleLinks)
-      .join('line')
-      .attr('class', 'connection-line')
-      .attr('stroke', 'var(--text-3)')
-      .attr('stroke-width', 0.5)
-      .attr('stroke-opacity', 0.25);
   }
 
-  // Build link-based attraction: connected nodes pull toward each other
+  // Build link-based attraction (unchanged logic)
   const allLinks = [];
   (allData.relationships || []).forEach(rel => {
     if (rel.relationship_type === 'subsidiary') return;
@@ -3602,291 +3899,193 @@ function render() {
     if (src && tgt) allLinks.push({ source: src, target: tgt });
   });
   inferredLinks.forEach(l => {
-    const p = nodes.find(n => n.name === l.personName);
-    const o = nodes.find(n => n.name === l.orgName);
+    const p = nodesByName.get(l.personName);
+    const o = nodesByName.get(l.orgName);
     if (p && o) allLinks.push({ source: p, target: o });
   });
   renderedLinks = allLinks;
 
-  // Simulation
+  // Initialize per-node visual state
+  nodes.forEach(d => { d._vs = 'normal'; d._sprite = null; });
+  _canvasNodes = nodes;
+  _canvasCenterX = centerX;
+  _canvasCenterY = centerY;
+  _clusterDimmed = false;
+  _hoveredNode = null;
+
+  // Simulation (unchanged force config)
   if (simulation) simulation.stop();
   simulation = d3.forceSimulation(nodes)
-    // More repulsion for belief dimensions to spread nodes out
     .force('charge', d3.forceManyBody().strength(d => {
       const base = d.entityType === 'organization' ? -4 : -1.5;
       return clusterDimension === 'category' ? base : base * 3;
     }))
-    // More collision padding for belief dimensions
     .force('collision', d3.forceCollide().radius(d => d.radius + (clusterDimension === 'category' ? 1 : 4)).strength(0.85))
     .force('cluster', forceCluster(clusterCenters, clusterDimension === 'category' ? 0.25 : 0.3))
-    // Weaker link force for belief dimensions - some organic clustering but nodes stay in belief groups
     .force('link', d3.forceLink(allLinks).strength(clusterDimension === 'category' ? 0.08 : 0.02).distance(d => {
       const srcCluster = d.source.clusterKey || d.source.category;
       const tgtCluster = d.target.clusterKey || d.target.category;
       if (clusterDimension === 'category') {
         return srcCluster === tgtCluster ? 30 : 80;
       } else {
-        // Longer distances for belief dimensions, especially cross-cluster
         return srcCluster === tgtCluster ? 40 : 150;
       }
     }))
-    // Weaker center pull for belief dimensions to allow better cluster separation
     .force('x', d3.forceX(centerX).strength(clusterDimension === 'category' ? 0.02 : 0.01))
     .force('y', d3.forceY(centerY).strength(clusterDimension === 'category' ? 0.02 : 0.01))
     .alpha(0.5)
     .alphaDecay(0.04)
     .velocityDecay(0.6)
-    .on('tick', ticked)
-    .on('end', () => {
-      simulation.alphaDecay(0.04);
-      // Re-apply search highlighting when simulation settles
-      if (typeof reapplySearchHighlighting === 'function') {
-        reapplySearchHighlighting();
-      }
-    });
+    .stop();
 
-  // Node groups
-  const nodeGroup = g.selectAll('.node')
-    .data(nodes)
-    .join('g')
-    .attr('class', 'node')
-    .on('click', (event, d) => {
-      event.stopPropagation();
-      showDetail(d, nodes);
-      selectedNode = d;
-      // Don't dim to connections in search mode - keep search highlighting
-      if (viewMode !== 'search' && currentView === 'all') dimUnconnected(d);
-      const k = 3;
-      const t = d3.zoomIdentity.translate(width / 2 - k * d.x, height / 2 - k * d.y).scale(k);
-      svg.transition().duration(500).call(zoomBehavior.transform, t);
-    })
-    .on('mouseenter', function(event, d) {
-      d3.select(this).select('.node-bg').attr('opacity', d.isResource ? 0.3 : 1);
-      d3.select(this).select('.node-ring').attr('stroke-width', 3);
-      showTooltip(event, d);
-    })
-    .on('mousemove', (event) => moveTooltip(event))
-    .on('mouseleave', function(event, d) {
-      const baseOpacity = d.isResource ? 0.15 : (d.entityType === 'organization' ? 0.9 : 0.7);
-      d3.select(this).select('.node-bg').attr('opacity', baseOpacity);
-      d3.select(this).select('.node-ring').attr('stroke-width', 2);
-      hideTooltip();
-    })
-    .call(d3.drag()
-      .on('start', (event, d) => { if (!event.active) simulation.alphaDecay(0.04).alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
-      .on('drag', (event, d) => { d.fx = event.x; d.fy = event.y; })
-      .on('end', (event, d) => { if (!event.active) { simulation.alphaTarget(0).alphaDecay(0.15); } d.fx = null; d.fy = null; }));
-
-  // Define clip paths and image patterns in defs
-  const defs = svg.append('defs');
-
-  nodes.forEach((d, i) => {
-    const imgUrl = getImageUrl(d);
+  // Pre-rasterized image sprites (offscreen canvas, circle-clipped)
+  nodes.forEach(d => {
+    if (d.isResource) return;
     const r = d.radius;
-    const id = `clip-${i}`;
-    const patId = `img-${i}`;
+    function createSprite(url) {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.referrerPolicy = 'no-referrer';
+      img.onload = () => {
+        const size = r * 2;
+        const oc = document.createElement('canvas');
+        oc.width = size * dpr;
+        oc.height = size * dpr;
+        const octx = oc.getContext('2d');
+        octx.scale(dpr, dpr);
+        octx.beginPath();
+        octx.arc(r, r, r - (d.entityType === 'organization' ? 2 : 1), 0, Math.PI * 2);
+        octx.closePath();
+        octx.clip();
+        octx.fillStyle = d.entityType === 'organization' ? '#fff' : getClusterColor(d);
+        octx.fillRect(0, 0, size, size);
+        const iw = img.naturalWidth, ih = img.naturalHeight;
+        const sc = Math.max(size / iw, size / ih);
+        const sw = iw * sc, sh = ih * sc;
+        octx.drawImage(img, (size - sw) / 2, (size - sh) / 2, sw, sh);
+        d._sprite = oc;
+        d._imgUrl = url;
+        _requestRedraw();
+      };
+      img.src = url;
+    }
+    resolveEntityImage(d, createSprite);
+  });
 
-    // Clip path (circle)
-    defs.append('clipPath')
-      .attr('id', id)
-      .append('circle')
-      .attr('r', r);
+  // Build quadtree for hit-testing
+  _rebuildQuadtree();
 
-    d._clipId = id;
-    d._patternId = patId;
-    d._imgIndex = i;
+  // d3.zoom on canvas
+  zoomBehavior = d3.zoom()
+    .scaleExtent([0.1, 20])
+    .on('zoom', (event) => {
+      currentZoom = event.transform;
+      _requestRedraw();
+    });
 
-    // Load image—try multiple sources, add to node when one succeeds
-    function applyImage(url) {
-      d._imgUrl = url;
-      const pat = defs.append('pattern')
-        .attr('id', patId)
-        .attr('width', 1).attr('height', 1)
-        .attr('patternContentUnits', 'objectBoundingBox');
-      pat.append('rect')
-        .attr('width', 1).attr('height', 1)
-        .attr('fill', d.entityType === 'organization' ? '#fff' : getClusterColor(d));
-      pat.append('image')
-        .attr('href', url)
-        .attr('width', 1).attr('height', 1)
-        .attr('preserveAspectRatio', 'xMidYMid slice');
-      const nodeEl = d3.select(nodeGroup.nodes()[i]);
-      if (nodeEl.node()) {
-        nodeEl.select('text').remove(); // remove initials now that image loaded
-        nodeEl.insert('circle', 'text')
-          .attr('class', 'node-image')
-          .attr('r', r - (d.entityType === 'organization' ? 2 : 1))
-          .attr('fill', `url(#${patId})`)
-          .attr('clip-path', `url(#${id})`);
-        nodeEl.insert('circle', 'text')
-          .attr('class', 'node-ring')
-          .attr('r', r)
-          .attr('fill', 'none')
-          .attr('stroke', getClusterColor(d))
-          .attr('stroke-width', 2)
-          .attr('opacity', 0.8);
+  // d3.drag on canvas (applied BEFORE zoom so drag takes priority for nodes)
+  _dragOccurred = false;
+  canvasSel.call(d3.drag()
+    .container(canvas)
+    .subject(function(event) {
+      const [mx, my] = d3.pointer(event, canvas);
+      const node = _findNodeAt(mx, my);
+      if (node) {
+        return { x: currentZoom.applyX(node.x), y: currentZoom.applyY(node.y), _node: node };
       }
-    }
-
-    // Resolve image using shared function (handles person/org fallback chains)
-    if (!d.isResource) resolveEntityImage(d, applyImage);
-  });
-
-  // Background shape—circle for people/orgs, rounded rect for resources
-  nodeGroup.filter(d => !d.isResource).append('circle')
-    .attr('class', 'node-bg')
-    .attr('r', d => d.radius)
-    .attr('fill', d => getClusterColor(d))
-    .attr('stroke', d => d.entityType === 'organization'
-      ? d3.color(getClusterColor(d)).brighter(0.8) : 'none')
-    .attr('stroke-width', d => d.entityType === 'organization' ? 1.5 : 0)
-    .attr('opacity', d => d.entityType === 'organization' ? 0.9 : 0.7);
-
-  // Resource nodes: rounded squares
-  nodeGroup.filter(d => d.isResource).append('rect')
-    .attr('class', 'node-bg')
-    .attr('x', d => -d.radius)
-    .attr('y', d => -d.radius)
-    .attr('width', d => d.radius * 2)
-    .attr('height', d => d.radius * 2)
-    .attr('rx', 5).attr('ry', 5)
-    .attr('fill', d => getColor(d._sector || d.category))
-    .attr('opacity', 0.15)
-    .attr('stroke', d => getColor(d._sector || d.category))
-    .attr('stroke-width', 1.5);
-
-  // Image circles and rings are now added asynchronously via the preloader above
-
-  // Initials (only for nodes without images, or small nodes)—not for resources
-  nodeGroup.filter(d => !d._imgUrl && !d.isResource && d.radius >= 6)
-    .append('text')
-    .attr('text-anchor', 'middle')
-    .attr('dy', '0.35em')
-    .attr('font-family', 'var(--mono)')
-    .attr('font-size', d => d.radius >= 16 ? '8px' : d.radius >= 10 ? '6px' : '5px')
-    .attr('fill', '#fff')
-    .attr('opacity', 0.9)
-    .attr('pointer-events', 'none')
-    .text(d => {
-      const parts = (d.name || '').split(/[\s]+/);
-      if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
-      return (d.name || '').slice(0, 2).toUpperCase();
-    });
-
-  // Resource type icons (clean SVG paths)
-  nodeGroup.filter(d => d.isResource).each(function(d) {
-    const iconPath = RESOURCE_TYPE_ICONS[d.resource_type] || RESOURCE_TYPE_ICONS['Essay'];
-    const iconSize = d.radius * 1.1;
-    const g = d3.select(this).append('g')
-      .attr('transform', `translate(${-iconSize/2},${-iconSize/2})`)
-      .attr('pointer-events', 'none');
-    // Split multi-path strings (separated by ' M') and draw each
-    const paths = iconPath.split(/(?= M)/);
-    paths.forEach(p => {
-      g.append('path')
-        .attr('d', p.trim())
-        .attr('fill', 'none')
-        .attr('stroke', getColor(d.category))
-        .attr('stroke-width', 1.5)
-        .attr('stroke-linecap', 'round')
-        .attr('stroke-linejoin', 'round')
-        .attr('transform', `scale(${iconSize / 24})`);
-    });
-  });
-
-  // Submission count indicator—subtle gold outer ring for entities with 5+ submissions
-  nodeGroup.filter(d => (d.submissionCount || 0) >= 5 && !d.isResource)
-    .append('circle')
-    .attr('class', 'submission-ring')
-    .attr('r', d => d.radius + 2)
-    .attr('fill', 'none')
-    .attr('stroke', '#fbbf24')
-    .attr('stroke-width', 1)
-    .attr('stroke-dasharray', '2,2')
-    .attr('opacity', 0.5)
-    .attr('pointer-events', 'none');
-  nodeGroup.filter(d => (d.submissionCount || 0) >= 5 && d.isResource)
-    .append('rect')
-    .attr('class', 'submission-ring')
-    .attr('x', d => -d.radius - 2)
-    .attr('y', d => -d.radius - 2)
-    .attr('width', d => d.radius * 2 + 4)
-    .attr('height', d => d.radius * 2 + 4)
-    .attr('rx', 6).attr('ry', 6)
-    .attr('fill', 'none')
-    .attr('stroke', '#fbbf24')
-    .attr('stroke-width', 1)
-    .attr('stroke-dasharray', '2,2')
-    .attr('opacity', 0.5)
-    .attr('pointer-events', 'none');
-
-  // Cluster labels (overlay layer, rendered AFTER nodes so they're on top)
-  const labelLayer = g.append('g').attr('class', 'label-layer');
-  // Position labels on the outer edge of each cluster, radiating away from center
-  function getLabelPos(cat) {
-    const c = clusterCenters[cat];
-    const count = nodes.filter(n => n.clusterKey === cat).length;
-    const clusterR = Math.max(50, Math.sqrt(count) * 28);
-    // Direction from map center to cluster center
-    const dx = c.x - centerX;
-    const dy = c.y - centerY;
-    const dist = Math.sqrt(dx * dx + dy * dy) || 1;
-    // Place label beyond the cluster circle, in the outward direction
-    const labelDist = clusterR + 14;
-    return {
-      x: c.x + (dx / dist) * labelDist,
-      y: c.y + (dy / dist) * labelDist,
-      anchor: dx > 20 ? 'start' : dx < -20 ? 'end' : 'middle',
-    };
-  }
-
-  labelLayer.selectAll('.cluster-label-bg')
-    .data(categories)
-    .join('rect')
-    .attr('class', 'cluster-label-bg')
-    .attr('x', d => {
-      const pos = getLabelPos(d);
-      const w = d.length * 6.4 + 16;
-      return pos.anchor === 'end' ? pos.x - w : pos.anchor === 'start' ? pos.x - 4 : pos.x - w / 2;
     })
-    .attr('y', d => getLabelPos(d).y - 10)
-    .attr('width', d => d.length * 6.4 + 16)
-    .attr('height', 16)
-    .attr('rx', 3)
-    .attr('fill', 'var(--bg-page)')
-    .attr('opacity', 0.85)
-    .attr('pointer-events', 'none');
+    .on('start', (event) => {
+      _dragOccurred = false;
+      if (!event.active) simulation.alphaDecay(0.04).alphaTarget(0.3).restart();
+      event.subject._node.fx = event.subject._node.x;
+      event.subject._node.fy = event.subject._node.y;
+    })
+    .on('drag', (event) => {
+      _dragOccurred = true;
+      event.subject._node.fx = currentZoom.invertX(event.x);
+      event.subject._node.fy = currentZoom.invertY(event.y);
+    })
+    .on('end', (event) => {
+      if (!event.active) { simulation.alphaTarget(0).alphaDecay(0.15); }
+      event.subject._node.fx = null;
+      event.subject._node.fy = null;
+    }));
 
-  labelLayer.selectAll('.cluster-label')
-    .data(categories)
-    .join('text')
-    .attr('class', 'cluster-label')
-    .attr('x', d => getLabelPos(d).x)
-    .attr('y', d => getLabelPos(d).y)
-    .attr('text-anchor', d => getLabelPos(d).anchor)
-    .attr('font-size', '9px')
-    .attr('font-weight', '500')
-    .attr('fill', d => getDimensionColor(clusterDimension, d))
-    .attr('opacity', 1)
-    .attr('pointer-events', 'none')
-    .text(d => d);
+  canvasSel.call(zoomBehavior);
+  canvasSel.call(zoomBehavior.transform, currentZoom);
 
-  function ticked() {
-    nodeGroup.attr('transform', d => `translate(${d.x},${d.y})`);
-    if (linkElements) {
-      linkElements
-        .attr('x1', d => d.source.x).attr('y1', d => d.source.y)
-        .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
+  // Zoom controls
+  document.getElementById('zoom-in').onclick = () => canvasSel.transition().duration(300).call(zoomBehavior.scaleBy, 1.5);
+  document.getElementById('zoom-out').onclick = () => canvasSel.transition().duration(300).call(zoomBehavior.scaleBy, 0.67);
+  document.getElementById('zoom-reset').onclick = () => {
+    currentZoom = d3.zoomIdentity;
+    canvasSel.transition().duration(500).call(zoomBehavior.transform, d3.zoomIdentity);
+  };
+
+  // Canvas hover (tooltip)
+  canvasSel.on('mousemove.hover', function(event) {
+    const [mx, my] = d3.pointer(event, canvas);
+    const node = _findNodeAt(mx, my);
+    if (node !== _hoveredNode) {
+      _hoveredNode = node;
+      canvas.style.cursor = node ? 'pointer' : 'default';
+      if (node) showTooltip(event, node); else hideTooltip();
+      _requestRedraw();
+    } else if (node) {
+      moveTooltip(event);
     }
-  }
-
-  // Click background to close panel
-  svg.on('click', () => {
-    document.getElementById('detail-panel').classList.remove('open');
-    clearSelection();
+  });
+  canvasSel.on('mouseleave.hover', function() {
+    if (_hoveredNode) { _hoveredNode = null; hideTooltip(); _requestRedraw(); }
   });
 
-  // Re-apply search highlighting if in search mode
+  // Canvas click (detail panel + dim)
+  canvasSel.on('click.detail', function(event) {
+    if (_dragOccurred) { _dragOccurred = false; return; }
+    const [mx, my] = d3.pointer(event, canvas);
+    const node = _findNodeAt(mx, my);
+    if (node) {
+      showDetail(node, nodes);
+      selectedNode = node;
+      if (viewMode !== 'search' && currentView === 'all') dimUnconnected(node);
+      const k = 3;
+      const t = d3.zoomIdentity.translate(width / 2 - k * node.x, height / 2 - k * node.y).scale(k);
+      canvasSel.transition().duration(500).call(zoomBehavior.transform, t);
+    } else {
+      document.getElementById('detail-panel').classList.remove('open');
+      clearSelection();
+    }
+  });
+
+  // ticked → rebuild quadtree + redraw canvas
+  function ticked() {
+    _rebuildQuadtree();
+    _requestRedraw();
+  }
+
+  // Converge simulation in rAF chunks (same approach as before, now draws to canvas)
+  ticked();
+  let _ticksRemaining = Math.ceil(
+    Math.log(simulation.alphaMin() / simulation.alpha()) / Math.log(1 - simulation.alphaDecay())
+  );
+  (function preTickChunk() {
+    const batch = Math.min(25, _ticksRemaining);
+    for (let i = 0; i < batch; i++) simulation.tick();
+    _ticksRemaining -= batch;
+    ticked();
+    if (_ticksRemaining > 0) {
+      requestAnimationFrame(preTickChunk);
+    } else {
+      simulation
+        .on('tick', ticked)
+        .on('end', () => {
+          simulation.alphaDecay(0.04);
+          if (typeof reapplySearchHighlighting === 'function') reapplySearchHighlighting();
+        });
+      if (typeof reapplySearchHighlighting === 'function') reapplySearchHighlighting();
+    }
+  })();
+
   if (typeof reapplySearchHighlighting === 'function') {
     reapplySearchHighlighting();
   }
@@ -4545,14 +4744,14 @@ function showDetail(d, allNodes) {
 
       // Find and zoom to node after re-render
       setTimeout(() => {
-        const renderedNodes = d3.selectAll('.node').data();
+        const renderedNodes = _canvasNodes.length > 0 ? _canvasNodes : d3.selectAll('.node').data();
         const node = renderedNodes.find(n => n.name === (target.name || target.title));
         if (node) {
           showDetail(node, renderedNodes);
-          const svg = d3.select('#map-container svg');
+          const zoomTarget = _canvasSel || d3.select('#map-container svg');
           const mapEl = document.getElementById('map-container');
           const k = 3;
-          svg.transition().duration(500).call(
+          zoomTarget.transition().duration(500).call(
             zoomBehavior.transform,
             d3.zoomIdentity.translate(
               mapEl.clientWidth / 2 - k * node.x,
@@ -4800,14 +4999,14 @@ function doSearch() {
       }
       // Find and click the node after a short delay for re-render
       setTimeout(() => {
-        const allNodes = d3.selectAll('.node').data();
+        const allNodes = _canvasNodes.length > 0 ? _canvasNodes : d3.selectAll('.node').data();
         const target = allNodes.find(n => n.name === d.name);
         if (target) {
           showDetail(target, allNodes);
-          const svg = d3.select('#map-container svg');
+          const zoomTarget = _canvasSel || d3.select('#map-container svg');
           const mapEl = document.getElementById('map-container');
           const k = 3;
-          svg.transition().duration(500).call(
+          zoomTarget.transition().duration(500).call(
             zoomBehavior.transform,
             d3.zoomIdentity.translate(
               mapEl.clientWidth / 2 - k * target.x,
@@ -4847,48 +5046,25 @@ function doSearch() {
 
 function highlightNodes(names) {
   const nameSet = new Set(names);
-  // Only apply dimming if at least one named entity is actually rendered on screen.
-  // Prevents every visible node getting dimmed when the match is off the current view.
-  const anyVisible = names.length > 0 &&
-    d3.selectAll('.node').data().some(d => nameSet.has(d.name));
+  const anyVisible = names.length > 0 && _canvasNodes.some(d => nameSet.has(d.name));
 
-  d3.selectAll('.node').each(function(d) {
-    const el = d3.select(this);
-    if (!anyVisible) {
-      el.classed('dimmed', false).classed('highlighted', false);
-    } else if (nameSet.has(d.name)) {
-      el.classed('dimmed', false).classed('highlighted', true);
-    } else {
-      el.classed('dimmed', true).classed('highlighted', false);
-    }
-  });
-
-  // Also highlight edges connected to the highlighted nodes
-  d3.selectAll('.connection-line').each(function(d) {
-    const el = d3.select(this);
-    el.classed('dimmed', false).classed('highlighted', false).classed('one-hop', false);
-    if (!anyVisible) return;
-
-    const srcName = (d.source && d.source.name) || '';
-    const tgtName = (d.target && d.target.name) || '';
-    const isConnected = nameSet.has(srcName) || nameSet.has(tgtName);
-
-    if (isConnected) {
-      el.classed('highlighted', true);
-    } else {
-      el.classed('dimmed', true);
-    }
-  });
-
-  d3.selectAll('.cluster-bg').attr('opacity', anyVisible ? 0.02 : 0.06);
-  d3.selectAll('.cluster-label-bg').attr('opacity', anyVisible ? 0.02 : 0.85);
-  d3.selectAll('.cluster-label').attr('opacity', anyVisible ? 0.05 : 1);
+  for (const d of _canvasNodes) {
+    if (!anyVisible) d._vs = 'normal';
+    else d._vs = nameSet.has(d.name) ? 'highlighted' : 'dimmed';
+  }
+  for (const l of _canvasLinks) {
+    l._vs = 'normal';
+    if (!anyVisible) continue;
+    const srcName = (l.source && l.source.name) || '';
+    const tgtName = (l.target && l.target.name) || '';
+    l._vs = (nameSet.has(srcName) || nameSet.has(tgtName)) ? 'highlighted' : 'dimmed';
+  }
+  _clusterDimmed = anyVisible;
+  _requestRedraw();
 }
 
-// Dim all nodes/edges NOT connected to the selected node
 function dimUnconnected(node) {
   if (!node) return;
-  // Never dim in search mode - search highlighting should be preserved
   if (viewMode === 'search') return;
   const connectedNames = new Set([node.name]);
   renderedLinks.forEach(l => {
@@ -4897,34 +5073,25 @@ function dimUnconnected(node) {
     if (srcName === node.name) connectedNames.add(tgtName);
     if (tgtName === node.name) connectedNames.add(srcName);
   });
-  d3.selectAll('.node').each(function(d) {
-    const el = d3.select(this);
-    const isConnected = connectedNames.has(d.name);
-    el.classed('dimmed', !isConnected).classed('highlighted', isConnected);
-  });
-  d3.selectAll('.connection-line').each(function(d) {
-    const el = d3.select(this);
-    const srcName = (d.source && d.source.name) || '';
-    const tgtName = (d.target && d.target.name) || '';
-    const isConnected = connectedNames.has(srcName) && connectedNames.has(tgtName);
-    el.classed('dimmed', !isConnected).classed('highlighted', isConnected);
-  });
-  d3.selectAll('.cluster-bg').attr('opacity', 0.02);
-  d3.selectAll('.cluster-label-bg').attr('opacity', 0.02);
-  d3.selectAll('.cluster-label').attr('opacity', 0.05);
+  for (const d of _canvasNodes) {
+    d._vs = connectedNames.has(d.name) ? 'highlighted' : 'dimmed';
+  }
+  for (const l of _canvasLinks) {
+    const srcName = (l.source && l.source.name) || '';
+    const tgtName = (l.target && l.target.name) || '';
+    l._vs = (connectedNames.has(srcName) && connectedNames.has(tgtName)) ? 'highlighted' : 'dimmed';
+  }
+  _clusterDimmed = true;
+  _requestRedraw();
 }
 
 function clearSelection() {
   selectedNode = null;
-  // In search mode, do NOT touch highlighting at all - only Clear button should reset it
-  if (viewMode === 'search') {
-    return;
-  }
-  d3.selectAll('.node').classed('dimmed', false).classed('highlighted', false);
-  d3.selectAll('.connection-line').classed('dimmed', false).classed('highlighted', false).classed('one-hop', false);
-  d3.selectAll('.cluster-bg').attr('opacity', 0.06);
-  d3.selectAll('.cluster-label-bg').attr('opacity', 0.85);
-  d3.selectAll('.cluster-label').attr('opacity', 1);
+  if (viewMode === 'search') return;
+  for (const d of _canvasNodes) d._vs = 'normal';
+  for (const l of _canvasLinks) l._vs = 'normal';
+  _clusterDimmed = false;
+  _requestRedraw();
 }
 
 function clearSearch() {
@@ -5005,46 +5172,27 @@ showConnectionsToggle.addEventListener('change', () => {
 
 // Re-apply search highlighting after render (called from render() and simulation end)
 function reapplySearchHighlighting() {
-  // Only apply styling if we have search results - the filtering is handled in getVisibleNodes()
   if (viewMode === 'search' && searchModeMatches.length > 0 && window._searchMatchSet) {
     const matchSet = window._searchMatchSet;
     const oneHopSet = window._searchOneHopSet || new Set();
 
-    // Delay to let D3 finish rendering nodes
-    setTimeout(() => {
-      d3.selectAll('.node').each(function(d) {
-        const el = d3.select(this);
-        const isMatch = matchSet.has(d.name);
-        const isOneHop = oneHopSet.has(d.name);
-
-        el.classed('dimmed', false)
-          .classed('highlighted', isMatch)
-          .classed('filtered-hidden', false)
-          .classed('one-hop', isOneHop && !isMatch);
-      });
-
-      d3.selectAll('.connection-line').each(function(d) {
-        const el = d3.select(this);
-        const srcName = (d.source && d.source.name) || '';
-        const tgtName = (d.target && d.target.name) || '';
-
-        const srcIsMatch = matchSet.has(srcName);
-        const tgtIsMatch = matchSet.has(tgtName);
-        const srcIsOneHop = oneHopSet.has(srcName);
-        const tgtIsOneHop = oneHopSet.has(tgtName);
-
-        el.classed('dimmed', false)
-          .classed('filtered-hidden', false);
-
-        if (srcIsMatch && tgtIsMatch) {
-          el.classed('highlighted', true).classed('one-hop', false);
-        } else if ((srcIsMatch && tgtIsOneHop) || (tgtIsMatch && srcIsOneHop)) {
-          el.classed('highlighted', false).classed('one-hop', true);
-        } else {
-          el.classed('highlighted', false).classed('one-hop', false);
-        }
-      });
-    }, 150);
+    for (const d of _canvasNodes) {
+      const isMatch = matchSet.has(d.name);
+      const isOneHop = oneHopSet.has(d.name);
+      if (isMatch) d._vs = 'highlighted';
+      else if (isOneHop) d._vs = 'one-hop';
+      else d._vs = 'normal';
+    }
+    for (const l of _canvasLinks) {
+      const srcName = (l.source && l.source.name) || '';
+      const tgtName = (l.target && l.target.name) || '';
+      const srcM = matchSet.has(srcName), tgtM = matchSet.has(tgtName);
+      const srcH = oneHopSet.has(srcName), tgtH = oneHopSet.has(tgtName);
+      if (srcM && tgtM) l._vs = 'highlighted';
+      else if ((srcM && tgtH) || (tgtM && srcH)) l._vs = 'one-hop';
+      else l._vs = 'normal';
+    }
+    _requestRedraw();
   }
 }
 
@@ -5287,60 +5435,26 @@ function scoreEntityEnhanced(d, query) {
 }
 
 // Highlight matched nodes AND their connections with tiered opacity
-function highlightSearchSubgraph(matchedNames, showConnections = true, retryCount = 0) {
+function highlightSearchSubgraph(matchedNames, showConnections = true) {
   const nameSet = new Set(matchedNames);
-  const allNodes = d3.selectAll('.node').data();
+  const anyVisible = matchedNames.length > 0 && _canvasNodes.some(d => nameSet.has(d.name));
 
-  // If no nodes rendered yet, retry after a short delay (up to 3 times)
-  if (allNodes.length === 0 && retryCount < 3) {
-    setTimeout(() => highlightSearchSubgraph(matchedNames, showConnections, retryCount + 1), 100);
-    return;
+  for (const d of _canvasNodes) {
+    if (!anyVisible) d._vs = 'normal';
+    else d._vs = nameSet.has(d.name) ? 'highlighted' : 'dimmed';
   }
 
-  // Check if any matches are visible on screen
-  const anyVisible = matchedNames.length > 0 &&
-    d3.selectAll('.node').data().some(d => nameSet.has(d.name));
-
-  // Highlight matched nodes, dim non-matches
-  d3.selectAll('.node').each(function(d) {
-    const el = d3.select(this);
-    if (!anyVisible) {
-      el.classed('dimmed', false).classed('highlighted', false);
-    } else if (nameSet.has(d.name)) {
-      el.classed('dimmed', false).classed('highlighted', true);
+  for (const l of _canvasLinks) {
+    const srcName = (l.source && l.source.name) || '';
+    const tgtName = (l.target && l.target.name) || '';
+    if (showConnections && anyVisible) {
+      l._vs = (nameSet.has(srcName) || nameSet.has(tgtName)) ? 'highlighted' : 'dimmed';
     } else {
-      el.classed('dimmed', true).classed('highlighted', false);
+      l._vs = anyVisible ? 'dimmed' : 'normal';
     }
-  });
-
-  // Highlight edges connected to matched nodes (solid or dimmed, no dotted)
-  if (showConnections && anyVisible) {
-    d3.selectAll('.connection-line').each(function(d) {
-      const srcName = (d.source && d.source.name) || '';
-      const tgtName = (d.target && d.target.name) || '';
-      const isConnected = nameSet.has(srcName) || nameSet.has(tgtName);
-
-      const el = d3.select(this);
-      el.classed('dimmed', false).classed('highlighted', false).classed('one-hop', false);
-
-      if (isConnected) {
-        el.classed('highlighted', true);
-      } else {
-        el.classed('dimmed', true);
-      }
-    });
-  } else {
-    // Clear edge highlighting
-    d3.selectAll('.connection-line')
-      .classed('dimmed', anyVisible)
-      .classed('highlighted', false)
-      .classed('one-hop', false);
   }
-
-  // Dim cluster backgrounds
-  d3.selectAll('.cluster-bg').attr('opacity', anyVisible ? 0.02 : 0.06);
-  d3.selectAll('.cluster-label-bg').attr('opacity', anyVisible ? 0.02 : 0.85);
-  d3.selectAll('.cluster-label').attr('opacity', anyVisible ? 0.05 : 1);
+  _clusterDimmed = anyVisible;
+  _requestRedraw();
 }
 
 /**
@@ -5377,52 +5491,24 @@ function showFilteredSubgraph(matchedNames, includeOneHop = false) {
   // Re-render with only the filtered entities
   render();
 
-  // After render, apply highlight styling to distinguish matches from 1-hop
+  // After render, apply highlight styling via per-node state
   requestAnimationFrame(() => {
-    d3.selectAll('.node').each(function(d) {
-      const el = d3.select(this);
-      const isMatch = matchSet.has(d.name);
-      const isOneHop = oneHopSet.has(d.name);
-
-      // Clear all states first
-      el.classed('dimmed', false)
-        .classed('highlighted', false)
-        .classed('filtered-hidden', false)
-        .classed('one-hop', false);
-
-      if (isMatch) {
-        el.classed('highlighted', true);
-      } else if (isOneHop) {
-        el.classed('one-hop', true);
-      }
-    });
-
-    // Style edges
-    d3.selectAll('.connection-line').each(function(d) {
-      const el = d3.select(this);
-      const srcName = (d.source && d.source.name) || '';
-      const tgtName = (d.target && d.target.name) || '';
-
-      const srcIsMatch = matchSet.has(srcName);
-      const tgtIsMatch = matchSet.has(tgtName);
-      const srcIsOneHop = oneHopSet.has(srcName);
-      const tgtIsOneHop = oneHopSet.has(tgtName);
-
-      // Clear all states
-      el.classed('dimmed', false)
-        .classed('highlighted', false)
-        .classed('filtered-hidden', false)
-        .classed('one-hop', false);
-
-      // Style edge based on endpoint types
-      if (srcIsMatch && tgtIsMatch) {
-        el.classed('highlighted', true);
-      } else if ((srcIsMatch && tgtIsOneHop) || (tgtIsMatch && srcIsOneHop)) {
-        el.classed('one-hop', true);
-      } else if ((srcIsMatch || tgtIsMatch) && includeOneHop) {
-        el.classed('one-hop', true);
-      }
-    });
+    for (const d of _canvasNodes) {
+      if (matchSet.has(d.name)) d._vs = 'highlighted';
+      else if (oneHopSet.has(d.name)) d._vs = 'one-hop';
+      else d._vs = 'normal';
+    }
+    for (const l of _canvasLinks) {
+      const srcName = (l.source && l.source.name) || '';
+      const tgtName = (l.target && l.target.name) || '';
+      const srcM = matchSet.has(srcName), tgtM = matchSet.has(tgtName);
+      const srcH = oneHopSet.has(srcName), tgtH = oneHopSet.has(tgtName);
+      if (srcM && tgtM) l._vs = 'highlighted';
+      else if ((srcM && tgtH) || (tgtM && srcH)) l._vs = 'one-hop';
+      else if ((srcM || tgtM) && includeOneHop) l._vs = 'one-hop';
+      else l._vs = 'normal';
+    }
+    _requestRedraw();
   });
 }
 
@@ -5597,6 +5683,8 @@ themeBtn.addEventListener('click', () => {
     localStorage.setItem('map-theme', 'dark');
     themeBtn.textContent = '\u2600';
   }
+  _themeColors = null;
+  _requestRedraw();
 });
 </script>
 <!-- PASSWORD GATE START -->
