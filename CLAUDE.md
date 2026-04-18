@@ -181,8 +181,9 @@ Any schema change must update this mapping or the map/plot will break silently.
 
 ```bash
 # Local development
-npx vite dev                    # Vite dev server (port 5173, proxies /api → localhost:3000)
-node dev-server.js              # Express API server (port 3000) - run alongside Vite for API access
+npm run dev                     # Vite + Express API together (web :5173 proxies /api → :3000). Auto-generates map-data.json on first run if DATABASE_URL is set.
+npm run dev:web                 # Vite only (port 5173)
+npm run dev:api                 # Express API only (port 3000)
 npx vite build                  # Production build (outputs to dist/)
 
 # Type checking and tests

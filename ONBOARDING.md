@@ -102,56 +102,56 @@ React pages use Tailwind CSS for styling via `src/styles/global.css`. The legacy
 
 ### Key modules
 
-| Module | Responsibility |
-|--------|---------------|
-| `src/contribute/` | React contribute forms (PersonForm, OrgForm, ResourceForm) with TipTap, org search, location search |
-| `src/admin/` | React admin dashboard (pending queue, entity editing, merging) |
-| `src/insights/` | React insights page with D3 charts |
-| `src/components/` | Shared React components (Navigation, TipTapEditor, CustomSelect, TagInput, etc.) |
-| `src/hooks/` | Shared hooks (useEntityCache, useSearch, useAutoSave, useSubmitEntity, etc.) |
-| `src/lib/api.ts` | Typed API client for all Lambda endpoints |
-| `src/types/` | TypeScript type definitions for entities, API responses |
-| `api/` | Lambda handlers for submissions, search, admin, uploads |
-| `api/export-map.js` | Generates `map-data.json` from DB; maps DB column names to frontend field names |
-| `scripts/` | DB migration, seeding, export, and backup utilities |
-| `map.html` | D3.js force-directed graph with orbital clusters, plot view, semantic search (inline, not React) |
-| `template.yaml` | AWS SAM definition for all infrastructure |
+| Module              | Responsibility                                                                                      |
+| ------------------- | --------------------------------------------------------------------------------------------------- |
+| `src/contribute/`   | React contribute forms (PersonForm, OrgForm, ResourceForm) with TipTap, org search, location search |
+| `src/admin/`        | React admin dashboard (pending queue, entity editing, merging)                                      |
+| `src/insights/`     | React insights page with D3 charts                                                                  |
+| `src/components/`   | Shared React components (Navigation, TipTapEditor, CustomSelect, TagInput, etc.)                    |
+| `src/hooks/`        | Shared hooks (useEntityCache, useSearch, useAutoSave, useSubmitEntity, etc.)                        |
+| `src/lib/api.ts`    | Typed API client for all Lambda endpoints                                                           |
+| `src/types/`        | TypeScript type definitions for entities, API responses                                             |
+| `api/`              | Lambda handlers for submissions, search, admin, uploads                                             |
+| `api/export-map.js` | Generates `map-data.json` from DB; maps DB column names to frontend field names                     |
+| `scripts/`          | DB migration, seeding, export, and backup utilities                                                 |
+| `map.html`          | D3.js force-directed graph with orbital clusters, plot view, semantic search (inline, not React)    |
+| `template.yaml`     | AWS SAM definition for all infrastructure                                                           |
 
 ### External dependencies
 
-| Dependency | Purpose | Configured via |
-|-----------|---------|---------------|
-| AWS RDS Postgres 17 | Primary data store | `DATABASE_URL` |
-| AWS S3 | Static hosting + DB backups | `S3_BUCKET_NAME` |
-| AWS CloudFront | CDN + SSL termination | `CLOUDFRONT_DISTRIBUTION_ID` |
-| AWS Lambda + API Gateway | Serverless API (5 functions) | `template.yaml` |
-| Cloudflare | DNS (CNAME flattening) | External config |
-| Anthropic API | Claude Haiku submission quality review | `ANTHROPIC_API_KEY` |
-| Exa API | Web search for data enrichment | `EXA_API_KEY` |
-| Google Favicons API | Org logos on map (client-side) | None |
-| Wikipedia API | People headshots on map (client-side) | None |
-| Photon/OpenStreetMap | City geocoding in forms (client-side) | None |
-| Bluesky API | Handle search in forms (client-side) | None |
+| Dependency               | Purpose                                | Configured via               |
+| ------------------------ | -------------------------------------- | ---------------------------- |
+| AWS RDS Postgres 17      | Primary data store                     | `DATABASE_URL`               |
+| AWS S3                   | Static hosting + DB backups            | `S3_BUCKET_NAME`             |
+| AWS CloudFront           | CDN + SSL termination                  | `CLOUDFRONT_DISTRIBUTION_ID` |
+| AWS Lambda + API Gateway | Serverless API (5 functions)           | `template.yaml`              |
+| Cloudflare               | DNS (CNAME flattening)                 | External config              |
+| Anthropic API            | Claude Haiku submission quality review | `ANTHROPIC_API_KEY`          |
+| Exa API                  | Web search for data enrichment         | `EXA_API_KEY`                |
+| Google Favicons API      | Org logos on map (client-side)         | None                         |
+| Wikipedia API            | People headshots on map (client-side)  | None                         |
+| Photon/OpenStreetMap     | City geocoding in forms (client-side)  | None                         |
+| Bluesky API              | Handle search in forms (client-side)   | None                         |
 
 ---
 
 ## Key Concepts and Abstractions
 
-| Concept | What it means in this codebase |
-|---------|-------------------------------|
-| Entity | The unified database record for a person, organization, or resource. Discriminated by `entity_type`. |
-| Submission | A pending contribution from a user. Can create a new entity (`entity_id` NULL) or propose edits to an existing one. |
-| Edge | A typed relationship between two entities (affiliation, collaboration, funding, criticism, authorship). |
-| Belief fields | Stance on regulatory policy, AGI timeline, and AI risk level. Stored as text labels on `entity`, with weighted averages computed from submissions. |
-| Weighted belief scores | `belief_*_wavg` columns on `entity`, auto-maintained by DB triggers. Weights: self=10, connector=2, external=1. |
-| Field name mapping | DB columns (`belief_regulatory_stance`) map to different frontend names (`regulatory_stance`). The `toFrontendShape()` function in `api/export-map.js` handles this. Any schema change must update this mapping. |
-| `map-data.json` | Static JSON snapshot of all approved entities and edges. Generated from DB, uploaded to S3, served by CloudFront. The map never hits the database directly. |
-| Source type | How a submission relates to the entity: `self` (the person themselves), `connector` (close relation), or `external` (third party). Determines belief score weight. |
-| LLM review | Claude Haiku rates each submission 1-5 for quality, flags spam/duplicates. Non-blocking, stored in `submission.llm_review` as JSONB. |
-| Orbital cluster layout | The D3.js map groups nodes into clusters by category (org sector or person role) arranged in orbits around a center point. |
-| Plot view | Scatter or beeswarm chart plotting entities on two belief axes (stance, timeline, risk) using numeric scores. |
-| Category normalization | Frontend merges variant category names (e.g., "AI Safety/Alignment" becomes "AI Safety") for consistent clustering. |
-| Honeypot (`_hp`) | Hidden form field for spam detection. If filled, the server returns 200 but discards the submission. |
+| Concept                | What it means in this codebase                                                                                                                                                                                   |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Entity                 | The unified database record for a person, organization, or resource. Discriminated by `entity_type`.                                                                                                             |
+| Submission             | A pending contribution from a user. Can create a new entity (`entity_id` NULL) or propose edits to an existing one.                                                                                              |
+| Edge                   | A typed relationship between two entities (affiliation, collaboration, funding, criticism, authorship).                                                                                                          |
+| Belief fields          | Stance on regulatory policy, AGI timeline, and AI risk level. Stored as text labels on `entity`, with weighted averages computed from submissions.                                                               |
+| Weighted belief scores | `belief_*_wavg` columns on `entity`, auto-maintained by DB triggers. Weights: self=10, connector=2, external=1.                                                                                                  |
+| Field name mapping     | DB columns (`belief_regulatory_stance`) map to different frontend names (`regulatory_stance`). The `toFrontendShape()` function in `api/export-map.js` handles this. Any schema change must update this mapping. |
+| `map-data.json`        | Static JSON snapshot of all approved entities and edges. Generated from DB, uploaded to S3, served by CloudFront. The map never hits the database directly.                                                      |
+| Source type            | How a submission relates to the entity: `self` (the person themselves), `connector` (close relation), or `external` (third party). Determines belief score weight.                                               |
+| LLM review             | Claude Haiku rates each submission 1-5 for quality, flags spam/duplicates. Non-blocking, stored in `submission.llm_review` as JSONB.                                                                             |
+| Orbital cluster layout | The D3.js map groups nodes into clusters by category (org sector or person role) arranged in orbits around a center point.                                                                                       |
+| Plot view              | Scatter or beeswarm chart plotting entities on two belief axes (stance, timeline, risk) using numeric scores.                                                                                                    |
+| Category normalization | Frontend merges variant category names (e.g., "AI Safety/Alignment" becomes "AI Safety") for consistent clustering.                                                                                              |
+| Honeypot (`_hp`)       | Hidden form field for spam detection. If filled, the server returns 200 but discards the submission.                                                                                                             |
 
 ---
 
@@ -230,32 +230,22 @@ AWS_ACCESS_KEY_ID=...
 AWS_SECRET_ACCESS_KEY=...
 ```
 
-### Get map data
-
-The map and contribute form search need `map-data.json` to work. On a fresh clone it doesn't exist. Either download from production or generate from the database:
-
-```bash
-# Option A: Download from production (no DB credentials needed)
-curl -o map-data.json https://mapping-ai.org/map-data.json
-curl -o map-detail.json https://mapping-ai.org/map-detail.json
-
-# Option B: Generate from database (needs DATABASE_URL in .env)
-node scripts/export-map-data.js
-```
-
 ### Running locally
 
-Open two terminals:
-
 ```bash
-# Terminal 1
-npx vite dev              # http://localhost:5173
-
-# Terminal 2
-node dev-server.js        # API proxy on localhost:3000
+npm run dev
 ```
 
-Visit `localhost:5173`. Everything works from there: map, contribute form, search, admin, insights. Vite proxies `/api` requests to `localhost:3000` automatically.
+Visit `localhost:5173`. A single command runs Vite (port 5173) and the Express API server (port 3000) together; Vite proxies `/api` requests to `:3000` automatically. Everything works from there: map, contribute form, search, admin, insights.
+
+On first run, `map-data.json` is generated from the database (needs `DATABASE_URL` in `.env`). If you don't have DB credentials yet, download the production snapshot first so the map isn't empty:
+
+```bash
+curl -o map-data.json https://mapping-ai.org/map-data.json
+curl -o map-detail.json https://mapping-ai.org/map-detail.json
+```
+
+If you only want one of the two servers, `npm run dev:web` and `npm run dev:api` start them individually.
 
 ### Database access
 
@@ -272,23 +262,24 @@ npm run db:migrate
 npm run db:backup:local
 ```
 
-The Express dev server (`node dev-server.js`) connects to the same database for API calls (form submissions, search, admin actions).
+The Express dev server (started by `npm run dev` or `npm run dev:api`) connects to the same database for API calls (form submissions, search, admin actions).
 
 ### Available scripts
 
-| Command | What it does |
-|---------|-------------|
-| `npx vite dev` | Vite dev server with HMR (port 5173, proxies /api to :3000) |
-| `npx vite build` | Production build (outputs to dist/) |
-| `npx tsc --noEmit` | TypeScript type check |
-| `npx vitest run` | Run tests (Vitest + jsdom + React Testing Library) |
-| `node dev-server.js` | Local Express API server (port 3000) |
-| `npm run build:tiptap` | Legacy TipTap bundle for map.html (esbuild) |
-| `npm run db:migrate` | Create/update all tables, triggers, indexes |
-| `npm run db:seed` | Import Airtable CSV data |
-| `npm run db:export-map` | Generate `map-data.json` from approved entities |
-| `npm run db:backup` | Backup all tables to S3 |
-| `npm run db:backup:local` | Backup to local files only |
+| Command                   | What it does                                                                                                                |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `npm run dev`             | Start Vite + Express API together (Vite on 5173, API on 3000). Auto-generates `map-data.json` on first run if DB creds set. |
+| `npm run dev:web`         | Vite dev server only (port 5173, proxies /api to :3000)                                                                     |
+| `npm run dev:api`         | Local Express API server only (port 3000)                                                                                   |
+| `npx vite build`          | Production build (outputs to dist/)                                                                                         |
+| `npx tsc --noEmit`        | TypeScript type check                                                                                                       |
+| `npx vitest run`          | Run tests (Vitest + jsdom + React Testing Library)                                                                          |
+| `npm run build:tiptap`    | Legacy TipTap bundle for map.html (esbuild)                                                                                 |
+| `npm run db:migrate`      | Create/update all tables, triggers, indexes                                                                                 |
+| `npm run db:seed`         | Import Airtable CSV data                                                                                                    |
+| `npm run db:export-map`   | Generate `map-data.json` from approved entities                                                                             |
+| `npm run db:backup`       | Backup all tables to S3                                                                                                     |
+| `npm run db:backup:local` | Backup to local files only                                                                                                  |
 
 Backend deploy (Lambda functions):
 
@@ -310,20 +301,20 @@ Frontend deploys automatically on push to `main` via GitHub Actions (Vite build 
 
 ### Key files to start with
 
-| Area | File | Why |
-|------|------|-----|
-| Contribute forms | `src/contribute/` | PersonForm, OrgForm, ResourceForm with validation |
-| Shared components | `src/components/` | TipTapEditor, CustomSelect, Navigation, TagInput |
-| Shared hooks | `src/hooks/` | useEntityCache, useSearch, useAutoSave |
-| API client | `src/lib/api.ts` | Typed API client for all Lambda endpoints |
-| Type definitions | `src/types/` | Entity, submission, and API response types |
-| Map visualization | `map.html` | Inline D3.js -- clusters, search, filters (not React) |
-| Lambda handlers | `api/submit.js` | How submissions are validated and stored |
-| Data pipeline | `api/export-map.js` | DB → frontend field mapping |
-| Admin workflow | `api/admin.js` | Approve/reject/merge logic, auto map refresh |
-| DB schema | `scripts/migrate.js` | Table definitions, triggers, indexes |
-| Build config | `vite.config.ts` | MPA entry points, proxy, test config |
-| CI/CD | `.github/workflows/deploy.yml` | Vite build → export → S3 sync → CDN invalidation |
+| Area              | File                           | Why                                                   |
+| ----------------- | ------------------------------ | ----------------------------------------------------- |
+| Contribute forms  | `src/contribute/`              | PersonForm, OrgForm, ResourceForm with validation     |
+| Shared components | `src/components/`              | TipTapEditor, CustomSelect, Navigation, TagInput      |
+| Shared hooks      | `src/hooks/`                   | useEntityCache, useSearch, useAutoSave                |
+| API client        | `src/lib/api.ts`               | Typed API client for all Lambda endpoints             |
+| Type definitions  | `src/types/`                   | Entity, submission, and API response types            |
+| Map visualization | `map.html`                     | Inline D3.js -- clusters, search, filters (not React) |
+| Lambda handlers   | `api/submit.js`                | How submissions are validated and stored              |
+| Data pipeline     | `api/export-map.js`            | DB → frontend field mapping                           |
+| Admin workflow    | `api/admin.js`                 | Approve/reject/merge logic, auto map refresh          |
+| DB schema         | `scripts/migrate.js`           | Table definitions, triggers, indexes                  |
+| Build config      | `vite.config.ts`               | MPA entry points, proxy, test config                  |
+| CI/CD             | `.github/workflows/deploy.yml` | Vite build → export → S3 sync → CDN invalidation      |
 
 ### Tips
 

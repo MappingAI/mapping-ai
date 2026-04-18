@@ -7,7 +7,7 @@ async function hashPassword(password: string): Promise<string> {
   const data = encoder.encode(password)
   const hashBuffer = await crypto.subtle.digest('SHA-256', data)
   const hashArray = Array.from(new Uint8Array(hashBuffer))
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
+  return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('')
 }
 
 function PasswordGate({ onSuccess }: { onSuccess: () => void }) {
@@ -30,9 +30,7 @@ function PasswordGate({ onSuccess }: { onSuccess: () => void }) {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#faf9f7]">
       <div className="max-w-[400px] w-full px-8">
-        <div className="font-mono text-[11px] uppercase tracking-[0.12em] text-[#888] mb-4">
-          Mapping AI Workshop
-        </div>
+        <div className="font-mono text-[11px] uppercase tracking-[0.12em] text-[#888] mb-4">Mapping AI Workshop</div>
         <h1
           className="text-[28px] font-normal italic leading-[1.2] mb-6"
           style={{ fontFamily: "'EB Garamond', Georgia, serif" }}
@@ -43,16 +41,17 @@ function PasswordGate({ onSuccess }: { onSuccess: () => void }) {
           <input
             type="password"
             value={password}
-            onChange={e => { setPassword(e.target.value); setError(false) }}
+            onChange={(e) => {
+              setPassword(e.target.value)
+              setError(false)
+            }}
             placeholder="Password"
             className={`w-full px-4 py-3 border rounded-md font-mono text-[14px] outline-none transition-colors ${
               error ? 'border-red-400 bg-red-50' : 'border-[#ccc] focus:border-[#2563eb]'
             }`}
             autoFocus
           />
-          {error && (
-            <p className="text-red-500 text-[13px] mt-2 font-mono">Incorrect password</p>
-          )}
+          {error && <p className="text-red-500 text-[13px] mt-2 font-mono">Incorrect password</p>}
           <button
             type="submit"
             className="mt-4 w-full bg-[#2563eb] text-white py-3 rounded-md font-mono text-[13px] tracking-[0.05em] hover:bg-[#1d4ed8] transition-colors"
@@ -155,30 +154,24 @@ export function App() {
 
       {/* Hero */}
       <div className="max-w-[720px] mx-auto px-8 pt-24 pb-8 max-[600px]:px-4">
-        <div className="font-mono text-[11px] uppercase tracking-[0.12em] text-text-tertiary mb-4">
-          Mapping Party
-        </div>
+        <div className="font-mono text-[11px] uppercase tracking-[0.12em] text-text-tertiary mb-4">Mapping Party</div>
         <h1
           className="text-[36px] font-normal italic leading-[1.2] mb-5 max-[600px]:text-[26px]"
           style={{ fontFamily: "'EB Garamond', Georgia, serif" }}
         >
-          Help us map the people, organizations, and ideas shaping U.S. AI
-          policy
+          Help us map the people, organizations, and ideas shaping U.S. AI policy
         </h1>
         <p
           className="text-[19px] text-text-secondary leading-[1.55]"
           style={{ fontFamily: "'EB Garamond', Georgia, serif" }}
         >
-          We&rsquo;ve been building a stakeholder map of the American AI policy
-          landscape and it&rsquo;s almost ready for a public launch. Pick a
-          stream below and get started.
+          We&rsquo;ve been building a stakeholder map of the American AI policy landscape and it&rsquo;s almost ready
+          for a public launch. Pick a stream below and get started.
         </p>
 
         {/* Quick Links */}
         <div className="mt-8 bg-[#f5f4f2] border border-[#e0dfdd] rounded-lg p-5">
-          <div className="font-mono text-[10px] uppercase tracking-[0.1em] text-[#888] mb-3">
-            Quick Links
-          </div>
+          <div className="font-mono text-[10px] uppercase tracking-[0.1em] text-[#888] mb-3">Quick Links</div>
           <div className="flex flex-wrap gap-3 mb-4">
             <a
               href="/workshop/slides.html"
@@ -194,7 +187,9 @@ export function App() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-4 py-2 bg-[#5865F2] text-white rounded-md font-mono text-[12px] no-underline hover:bg-[#4752c4] transition-colors"
             >
-              <svg width="16" height="12" viewBox="0 0 71 55" fill="currentColor"><path d="M60.1 4.9A58.5 58.5 0 0045.4.2a.2.2 0 00-.2.1 40.8 40.8 0 00-1.8 3.7 54 54 0 00-16.2 0A37.3 37.3 0 0025.4.3a.2.2 0 00-.2-.1A58.4 58.4 0 0010.5 5 59.5 59.5 0 00.4 45.1a.3.3 0 00.1.2A58.7 58.7 0 0018.1 55a.2.2 0 00.3-.1 42 42 0 003.6-5.9.2.2 0 00-.1-.3 38.6 38.6 0 01-5.5-2.6.2.2 0 01 0-.4c.4-.3.7-.6 1.1-.8a.2.2 0 01.3 0 41.8 41.8 0 0035.6 0 .2.2 0 01.2 0c.3.3.7.6 1.1.9a.2.2 0 010 .3 36.3 36.3 0 01-5.5 2.6.2.2 0 00-.1.4 47.1 47.1 0 003.6 5.8.2.2 0 00.2.1A58.5 58.5 0 0070.7 45.3a.3.3 0 00.1-.2c1.8-18.6-3-34.7-12.7-49a.2.2 0 00-.1-.1zM23.7 37c-3.6 0-6.6-3.3-6.6-7.4s2.9-7.4 6.6-7.4c3.7 0 6.7 3.4 6.6 7.4 0 4.1-2.9 7.4-6.6 7.4zm24.4 0c-3.6 0-6.6-3.3-6.6-7.4s2.9-7.4 6.6-7.4c3.7 0 6.7 3.4 6.6 7.4 0 4.1-2.9 7.4-6.6 7.4z"/></svg>
+              <svg width="16" height="12" viewBox="0 0 71 55" fill="currentColor">
+                <path d="M60.1 4.9A58.5 58.5 0 0045.4.2a.2.2 0 00-.2.1 40.8 40.8 0 00-1.8 3.7 54 54 0 00-16.2 0A37.3 37.3 0 0025.4.3a.2.2 0 00-.2-.1A58.4 58.4 0 0010.5 5 59.5 59.5 0 00.4 45.1a.3.3 0 00.1.2A58.7 58.7 0 0018.1 55a.2.2 0 00.3-.1 42 42 0 003.6-5.9.2.2 0 00-.1-.3 38.6 38.6 0 01-5.5-2.6.2.2 0 01 0-.4c.4-.3.7-.6 1.1-.8a.2.2 0 01.3 0 41.8 41.8 0 0035.6 0 .2.2 0 01.2 0c.3.3.7.6 1.1.9a.2.2 0 010 .3 36.3 36.3 0 01-5.5 2.6.2.2 0 00-.1.4 47.1 47.1 0 003.6 5.8.2.2 0 00.2.1A58.5 58.5 0 0070.7 45.3a.3.3 0 00.1-.2c1.8-18.6-3-34.7-12.7-49a.2.2 0 00-.1-.1zM23.7 37c-3.6 0-6.6-3.3-6.6-7.4s2.9-7.4 6.6-7.4c3.7 0 6.7 3.4 6.6 7.4 0 4.1-2.9 7.4-6.6 7.4zm24.4 0c-3.6 0-6.6-3.3-6.6-7.4s2.9-7.4 6.6-7.4c3.7 0 6.7 3.4 6.6 7.4 0 4.1-2.9 7.4-6.6 7.4z" />
+              </svg>
               Discord Server
             </a>
             <a
@@ -212,8 +207,7 @@ export function App() {
           <div className="space-y-1.5 text-[14px] mb-4">
             <p>
               <strong>Bugs, features, ideas:</strong>{' '}
-              <ExtLink href="https://discord.gg/2gntpaxV">Discord #forum</ExtLink>{' '}
-              - reply/react to claim a thread
+              <ExtLink href="https://discord.gg/2gntpaxV">Discord #forum</ExtLink> - reply/react to claim a thread
             </p>
             <p>
               <strong>Outreach strategy:</strong>{' '}
@@ -278,15 +272,33 @@ export function App() {
 
       {/* Left sidebar TOC - only visible on wide screens */}
       <nav className="hidden min-[1100px]:block fixed top-1/2 -translate-y-1/2 w-[160px] left-8">
-        <TocLink href="#overview" active={activeSection === 'overview'}>Overview</TocLink>
-        <TocLink href="#streams" active={activeSection === 'streams'}>Streams</TocLink>
-        <TocLink href="#stream-1" active={activeSection === 'stream-1'}>1. Bug Hunting</TocLink>
-        <TocLink href="#stream-2" active={activeSection === 'stream-2'}>2. Data Enrichment</TocLink>
-        <TocLink href="#stream-3" active={activeSection === 'stream-3'}>3. Data Quality</TocLink>
-        <TocLink href="#stream-4" active={activeSection === 'stream-4'}>4. New Features</TocLink>
-        <TocLink href="#stream-5" active={activeSection === 'stream-5'}>5. Outreach</TocLink>
-        <TocLink href="#stream-6" active={activeSection === 'stream-6'}>6. Data Viz</TocLink>
-        <TocLink href="#setup" active={activeSection === 'setup'}>Quick Reference</TocLink>
+        <TocLink href="#overview" active={activeSection === 'overview'}>
+          Overview
+        </TocLink>
+        <TocLink href="#streams" active={activeSection === 'streams'}>
+          Streams
+        </TocLink>
+        <TocLink href="#stream-1" active={activeSection === 'stream-1'}>
+          1. Bug Hunting
+        </TocLink>
+        <TocLink href="#stream-2" active={activeSection === 'stream-2'}>
+          2. Data Enrichment
+        </TocLink>
+        <TocLink href="#stream-3" active={activeSection === 'stream-3'}>
+          3. Data Quality
+        </TocLink>
+        <TocLink href="#stream-4" active={activeSection === 'stream-4'}>
+          4. New Features
+        </TocLink>
+        <TocLink href="#stream-5" active={activeSection === 'stream-5'}>
+          5. Outreach
+        </TocLink>
+        <TocLink href="#stream-6" active={activeSection === 'stream-6'}>
+          6. Data Viz
+        </TocLink>
+        <TocLink href="#setup" active={activeSection === 'setup'}>
+          Quick Reference
+        </TocLink>
       </nav>
 
       {/* Content */}
@@ -306,37 +318,30 @@ export function App() {
           >
             Mapping AI
           </a>{' '}
-          is an interactive visualization of everyone who matters in U.S. AI
-          policy. Think policymakers, lab executives, researchers, civil society
-          groups, investors, journalists. The map shows who they are, what they
-          believe about AI regulation, how they&rsquo;re connected, and what
-          resources they&rsquo;ve published.
+          is an interactive visualization of everyone who matters in U.S. AI policy. Think policymakers, lab executives,
+          researchers, civil society groups, investors, journalists. The map shows who they are, what they believe about
+          AI regulation, how they&rsquo;re connected, and what resources they&rsquo;ve published.
         </p>
 
         <p className="mb-4">
-          The database currently has about <strong>706 people</strong>,{' '}
-          <strong>717 organizations</strong>, and{' '}
-          <strong>149 resources</strong>, linked by{' '}
-          <strong>2,143 relationships</strong>. These are the publicly visible
-          entities on the map. There are additional pending entries in the
-          review queue.
+          The database currently has about <strong>706 people</strong>, <strong>717 organizations</strong>, and{' '}
+          <strong>149 resources</strong>, linked by <strong>2,143 relationships</strong>. These are the publicly visible
+          entities on the map. There are additional pending entries in the review queue.
         </p>
 
         <p className="mb-4">
-          The tech stack is simple: React + Vite for the frontend, D3.js for the
-          visualization, PostgreSQL on AWS, and a few Lambda functions for form
-          submissions and search. People submit data through a form on the site,
-          it goes into a review queue, and approved entries show up on the map.
+          The tech stack is simple: React + Vite for the frontend, D3.js for the visualization, PostgreSQL on AWS, and a
+          few Lambda functions for form submissions and search. People submit data through a form on the site, it goes
+          into a review queue, and approved entries show up on the map.
         </p>
 
         <Callout>
-          <strong>The site is in beta.</strong> We soft-launched to a small group
-          a week ago. The data is messy. The UI has rough edges. Some features
-          are half-built. That&rsquo;s why you&rsquo;re here.
-          <br /><br />
-          <strong>Use the Discord forum channels</strong> to track bugs, post feature
-          requests, share research questions, viz ideas, and coordinate with others.
-          Each thread becomes a trackable item.
+          <strong>The site is in beta.</strong> We soft-launched to a small group a week ago. The data is messy. The UI
+          has rough edges. Some features are half-built. That&rsquo;s why you&rsquo;re here.
+          <br />
+          <br />
+          <strong>Use the Discord forum channels</strong> to track bugs, post feature requests, share research
+          questions, viz ideas, and coordinate with others. Each thread becomes a trackable item.
         </Callout>
 
         <div className="flex flex-wrap gap-3 mb-6">
@@ -347,7 +352,9 @@ export function App() {
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md text-white text-[14px] font-mono font-medium uppercase tracking-[0.06em] no-underline hover:no-underline hover:bg-[#4752C4] transition-colors"
             style={{ background: '#5865F2' }}
           >
-            <svg width="20" height="16" viewBox="0 0 71 55" fill="currentColor"><path d="M60.1 4.9A58.5 58.5 0 0045.4.2a.2.2 0 00-.2.1 40.8 40.8 0 00-1.8 3.7 54 54 0 00-16.2 0A37.3 37.3 0 0025.4.3a.2.2 0 00-.2-.1A58.4 58.4 0 0010.5 5 59.5 59.5 0 00.4 45.1a.3.3 0 00.1.2A58.7 58.7 0 0018.1 55a.2.2 0 00.3-.1 42 42 0 003.6-5.9.2.2 0 00-.1-.3 38.6 38.6 0 01-5.5-2.6.2.2 0 01 0-.4c.4-.3.7-.6 1.1-.8a.2.2 0 01.3 0 41.8 41.8 0 0035.6 0 .2.2 0 01.2 0c.3.3.7.6 1.1.9a.2.2 0 010 .3 36.3 36.3 0 01-5.5 2.6.2.2 0 00-.1.4 47.1 47.1 0 003.6 5.8.2.2 0 00.2.1A58.5 58.5 0 0070.7 45.3a.3.3 0 00.1-.2c1.8-18.6-3-34.7-12.7-49a.2.2 0 00-.1-.1zM23.7 37c-3.6 0-6.6-3.3-6.6-7.4s2.9-7.4 6.6-7.4c3.7 0 6.7 3.4 6.6 7.4 0 4.1-2.9 7.4-6.6 7.4zm24.4 0c-3.6 0-6.6-3.3-6.6-7.4s2.9-7.4 6.6-7.4c3.7 0 6.7 3.4 6.6 7.4 0 4.1-2.9 7.4-6.6 7.4z"/></svg>
+            <svg width="20" height="16" viewBox="0 0 71 55" fill="currentColor">
+              <path d="M60.1 4.9A58.5 58.5 0 0045.4.2a.2.2 0 00-.2.1 40.8 40.8 0 00-1.8 3.7 54 54 0 00-16.2 0A37.3 37.3 0 0025.4.3a.2.2 0 00-.2-.1A58.4 58.4 0 0010.5 5 59.5 59.5 0 00.4 45.1a.3.3 0 00.1.2A58.7 58.7 0 0018.1 55a.2.2 0 00.3-.1 42 42 0 003.6-5.9.2.2 0 00-.1-.3 38.6 38.6 0 01-5.5-2.6.2.2 0 01 0-.4c.4-.3.7-.6 1.1-.8a.2.2 0 01.3 0 41.8 41.8 0 0035.6 0 .2.2 0 01.2 0c.3.3.7.6 1.1.9a.2.2 0 010 .3 36.3 36.3 0 01-5.5 2.6.2.2 0 00-.1.4 47.1 47.1 0 003.6 5.8.2.2 0 00.2.1A58.5 58.5 0 0070.7 45.3a.3.3 0 00.1-.2c1.8-18.6-3-34.7-12.7-49a.2.2 0 00-.1-.1zM23.7 37c-3.6 0-6.6-3.3-6.6-7.4s2.9-7.4 6.6-7.4c3.7 0 6.7 3.4 6.6 7.4 0 4.1-2.9 7.4-6.6 7.4zm24.4 0c-3.6 0-6.6-3.3-6.6-7.4s2.9-7.4 6.6-7.4c3.7 0 6.7 3.4 6.6 7.4 0 4.1-2.9 7.4-6.6 7.4z" />
+            </svg>
             Join the Discord Server
           </a>
           <a
@@ -394,12 +401,8 @@ export function App() {
               ['10:00', 'Wrap'],
             ].map(([time, what], i) => (
               <tr key={i}>
-                <td className="p-2 border-b border-[#eee] align-top">
-                  {time}
-                </td>
-                <td className="p-2 border-b border-[#eee] align-top">
-                  {what}
-                </td>
+                <td className="p-2 border-b border-[#eee] align-top">{time}</td>
+                <td className="p-2 border-b border-[#eee] align-top">{what}</td>
               </tr>
             ))}
           </tbody>
@@ -409,8 +412,8 @@ export function App() {
         <SectionHeading id="streams">Streams</SectionHeading>
 
         <p className="mb-4">
-          Pick whichever stream sounds most interesting. You can switch
-          mid-session if you want. Each stream has its own instructions below.
+          Pick whichever stream sounds most interesting. You can switch mid-session if you want. Each stream has its own
+          instructions below.
         </p>
 
         <div className="mb-4">
@@ -445,14 +448,11 @@ export function App() {
 
         {/* STREAM 1 */}
         <StreamHeading id="stream-1">Stream 1: Bug Hunting</StreamHeading>
-        <StreamTag>
-          Best for: anyone with a browser and an eye for detail
-        </StreamTag>
+        <StreamTag>Best for: anyone with a browser and an eye for detail</StreamTag>
 
         <p className="mb-4">
-          Your job is to break things. Open the site, click around, try weird
-          inputs, resize your window, test on your phone. When something looks
-          off or doesn&rsquo;t work right, write it up.
+          Your job is to break things. Open the site, click around, try weird inputs, resize your window, test on your
+          phone. When something looks off or doesn&rsquo;t work right, write it up.
         </p>
 
         <H4>Where to look</H4>
@@ -461,27 +461,20 @@ export function App() {
           <strong>
             <ExtLink href="https://mapping-ai.org/map">The map</ExtLink>
           </strong>{' '}
-          is where most of the complexity lives. Try searching for people and
-          organizations. Click nodes to see their detail panel. Toggle between
-          the Network and Plot views using the buttons at the top. Try the
-          filter chips on the left. Zoom in and out. Collapse and expand the
-          controls sidebar. Open the contribute panel from the map page and see
-          if it plays nicely with the sidebar.
+          is where most of the complexity lives. Try searching for people and organizations. Click nodes to see their
+          detail panel. Toggle between the Network and Plot views using the buttons at the top. Try the filter chips on
+          the left. Zoom in and out. Collapse and expand the controls sidebar. Open the contribute panel from the map
+          page and see if it plays nicely with the sidebar.
         </p>
 
         <p className="mb-4">
           <strong>
-            <ExtLink href="https://mapping-ai.org/contribute">
-              The contribute form
-            </ExtLink>
+            <ExtLink href="https://mapping-ai.org/contribute">The contribute form</ExtLink>
           </strong>{' '}
-          has three tabs: Person, Organization, Resource. Each has custom
-          dropdowns, tag inputs, location search (powered by
-          Photon/OpenStreetMap), org search, and a rich text editor for notes.
-          Fill out a form completely and submit it. Try the org search. Try
-          creating a new org from the inline panel that slides in. Try the
-          @mention feature in the notes field. Check what happens if you leave
-          required fields blank.
+          has three tabs: Person, Organization, Resource. Each has custom dropdowns, tag inputs, location search
+          (powered by Photon/OpenStreetMap), org search, and a rich text editor for notes. Fill out a form completely
+          and submit it. Try the org search. Try creating a new org from the inline panel that slides in. Try the
+          @mention feature in the notes field. Check what happens if you leave required fields blank.
         </p>
 
         <p className="mb-4">
@@ -490,22 +483,17 @@ export function App() {
           </strong>{' '}
           and{' '}
           <strong>
-            <ExtLink href="https://mapping-ai.org/about">
-              about page
-            </ExtLink>
+            <ExtLink href="https://mapping-ai.org/about">about page</ExtLink>
           </strong>{' '}
-          are simpler but still worth checking. Test navigation between pages.
-          Check mobile responsiveness on all of them.
+          are simpler but still worth checking. Test navigation between pages. Check mobile responsiveness on all of
+          them.
         </p>
 
         <H4>How to report bugs</H4>
 
         <p className="mb-4">
-          Post bugs as threads in the{' '}
-          <ExtLink href="https://discord.gg/2gntpaxV">
-            Discord forum channel
-          </ExtLink>{' '}
-          using this format:
+          Post bugs as threads in the <ExtLink href="https://discord.gg/2gntpaxV">Discord forum channel</ExtLink> using
+          this format:
         </p>
 
         <Pre>{`Page: [which page]
@@ -516,259 +504,197 @@ Browser/device: [Chrome on Mac, Safari on iPhone, etc.]
 Screenshot: [paste one if you can]`}</Pre>
 
         <p className="mb-4">
-          Functional stuff takes priority over cosmetic stuff. A dropdown that
-          won&rsquo;t close matters more than a font that looks slightly off.
-          But note both if you see them.
+          Functional stuff takes priority over cosmetic stuff. A dropdown that won&rsquo;t close matters more than a
+          font that looks slightly off. But note both if you see them.
         </p>
 
         <Divider />
 
         {/* STREAM 2 */}
-        <StreamHeading id="stream-2">
-          Stream 2: Data Enrichment &amp; Seeding
-        </StreamHeading>
-        <StreamTag>
-          Best for: people who follow AI policy or enjoy research
-        </StreamTag>
+        <StreamHeading id="stream-2">Stream 2: Data Enrichment &amp; Seeding</StreamHeading>
+        <StreamTag>Best for: people who follow AI policy or enjoy research</StreamTag>
 
         <p className="mb-4">
-          The map is only as useful as its data. Most entities now have notes,
-          but many are thin, unsourced, or out of date. Your job today is to add
-          new entities we&rsquo;re missing and flesh out ones that are already
-          there.
+          The map is only as useful as its data. Most entities now have notes, but many are thin, unsourced, or out of
+          date. Your job today is to add new entities we&rsquo;re missing and flesh out ones that are already there.
         </p>
 
         <p className="mb-4">
           <strong>Start by exploring the current data.</strong> Browse{' '}
-          <ExtLink href="https://mapping-ai.org/map">the map</ExtLink> to see
-          what&rsquo;s there. You also have access to the staging database (via
-          the <Code>.env</Code> file) and can query it directly or look at the
-          exported <Code>map-data.json</Code>. This will help you identify gaps
-          and avoid duplicating work.
+          <ExtLink href="https://mapping-ai.org/map">the map</ExtLink> to see what&rsquo;s there. You also have access
+          to the staging database (via the <Code>.env</Code> file) and can query it directly or look at the exported{' '}
+          <Code>map-data.json</Code>. This will help you identify gaps and avoid duplicating work.
         </p>
 
         <H4>What to add</H4>
 
         <p className="mb-4">
-          Think about who&rsquo;s missing. Search the map first (the search bar
-          on{' '}
-          <ExtLink href="https://mapping-ai.org/map">map.html</ExtLink>
-          {' '}works well for this) to make sure the person or org isn&rsquo;t
-          already there. Some categories that could use more coverage:
+          Think about who&rsquo;s missing. Search the map first (the search bar on{' '}
+          <ExtLink href="https://mapping-ai.org/map">map.html</ExtLink> works well for this) to make sure the person or
+          org isn&rsquo;t already there. Some categories that could use more coverage:
         </p>
 
         <ul className="mb-4 pl-6">
+          <li className="mb-[0.35rem]">State-level policymakers working on AI (governors, AGs, state legislators)</li>
+          <li className="mb-[0.35rem]">Congressional staffers and committee staff who actually draft AI bills</li>
+          <li className="mb-[0.35rem]">AI companies beyond the big labs (defense tech, enterprise AI, AI infra)</li>
+          <li className="mb-[0.35rem]">Civil society groups, labor unions, and advocacy organizations</li>
           <li className="mb-[0.35rem]">
-            State-level policymakers working on AI (governors, AGs, state
-            legislators)
+            International organizations with significant U.S. influence (OECD AI Policy Observatory, UN AI Advisory
+            Body)
           </li>
           <li className="mb-[0.35rem]">
-            Congressional staffers and committee staff who actually draft AI
-            bills
-          </li>
-          <li className="mb-[0.35rem]">
-            AI companies beyond the big labs (defense tech, enterprise AI, AI
-            infra)
-          </li>
-          <li className="mb-[0.35rem]">
-            Civil society groups, labor unions, and advocacy organizations
-          </li>
-          <li className="mb-[0.35rem]">
-            International organizations with significant U.S. influence (OECD AI
-            Policy Observatory, UN AI Advisory Body)
-          </li>
-          <li className="mb-[0.35rem]">
-            Recent key resources: executive orders, major reports, landmark
-            papers, influential essays or books
+            Recent key resources: executive orders, major reports, landmark papers, influential essays or books
           </li>
         </ul>
 
         <H4>How to submit</H4>
 
-        <p className="mb-4">
-          There are two options:
-        </p>
+        <p className="mb-4">There are two options:</p>
 
         <p className="mb-4">
           <strong>Option 1: Direct to staging database (recommended for workshop)</strong>
           <br />
-          You&rsquo;ll receive a <Code>.env</Code> file with credentials for the
-          staging database, which lets you read and write directly via SQL. This
-          is a complete copy of production data that you can freely modify
-          without affecting the live site. See{' '}
-          <Code>workshop/DATABASE-ORIENTATION.md</Code> for the full schema
-          reference, example queries, and quality guidelines.
+          You&rsquo;ll receive a <Code>.env</Code> file with credentials for the staging database, which lets you read
+          and write directly via SQL. This is a complete copy of production data that you can freely modify without
+          affecting the live site. See <Code>workshop/DATABASE-ORIENTATION.md</Code> for the full schema reference,
+          example queries, and quality guidelines.
         </p>
 
         <p className="mb-4">
           <strong>Option 2: Live contribute form</strong>
           <br />
-          Go directly to{' '}
-          <ExtLink href="https://mapping-ai.org/contribute">
-            mapping-ai.org/contribute
-          </ExtLink>{' '}
-          and submit there. Entries go into the production database and will
-          appear on the live map after admin approval.
+          Go directly to <ExtLink href="https://mapping-ai.org/contribute">mapping-ai.org/contribute</ExtLink> and
+          submit there. Entries go into the production database and will appear on the live map after admin approval.
+        </p>
+
+        <p className="mb-4">A few things worth knowing about the form:</p>
+
+        <p className="mb-4">
+          The <strong>relationship pills</strong> at the top of each form matter. If you&rsquo;re submitting info about
+          yourself, pick &ldquo;I am this person.&rdquo; If you know the person and can introduce us, pick &ldquo;I can
+          connect you.&rdquo; Otherwise, pick &ldquo;Someone I know of.&rdquo; These affect how the data gets weighted.
         </p>
 
         <p className="mb-4">
-          A few things worth knowing about the form:
+          The <strong>notes field</strong> is the most important part. Write 2-4 sentences explaining why this person or
+          organization matters to U.S. AI policy. Don&rsquo;t just copy their bio from Wikipedia. Focus on what
+          they&rsquo;ve done, said, or funded that shapes how AI gets built or governed in America. Use the @mention
+          feature to link to other entities in the database.
         </p>
 
         <p className="mb-4">
-          The <strong>relationship pills</strong> at the top of each form
-          matter. If you&rsquo;re submitting info about yourself, pick &ldquo;I
-          am this person.&rdquo; If you know the person and can introduce us,
-          pick &ldquo;I can connect you.&rdquo; Otherwise, pick &ldquo;Someone I
-          know of.&rdquo; These affect how the data gets weighted.
+          For <strong>belief fields</strong> (regulatory stance, AGI timeline, AI risk level), only fill these in if you
+          have actual evidence. A direct quote, testimony, published position paper. Leave them blank rather than
+          guessing.
         </p>
 
-        <p className="mb-4">
-          The <strong>notes field</strong> is the most important part. Write 2-4
-          sentences explaining why this person or organization matters to U.S.
-          AI policy. Don&rsquo;t just copy their bio from Wikipedia. Focus on
-          what they&rsquo;ve done, said, or funded that shapes how AI gets built
-          or governed in America. Use the @mention feature to link to other
-          entities in the database.
-        </p>
-
-        <p className="mb-4">
-          For <strong>belief fields</strong> (regulatory stance, AGI timeline, AI
-          risk level), only fill these in if you have actual evidence. A direct
-          quote, testimony, published position paper. Leave them blank rather
-          than guessing.
-        </p>
-
-        <p className="mb-4">
-          Here&rsquo;s what a good person entry looks like:
-        </p>
+        <p className="mb-4">Here&rsquo;s what a good person entry looks like:</p>
 
         <Callout>
           <strong>Name:</strong> Chuck Schumer
           <br />
-          <strong>Title:</strong> U.S. Senator, NY; Senate Majority Leader
-          (2021-2025), Senate Minority Leader (2017-2021, 2025-present)
+          <strong>Title:</strong> U.S. Senator, NY; Senate Majority Leader (2021-2025), Senate Minority Leader
+          (2017-2021, 2025-present)
           <br />
           <strong>Category:</strong> Policymaker
           <br />
           <strong>Primary Org:</strong> United States Senate
           <br />
-          <strong>Other Orgs:</strong> Bipartisan Senate AI Working Group
-          (Co-founder/Leader), Senate Finance Committee, Senate Rules Committee
+          <strong>Other Orgs:</strong> Bipartisan Senate AI Working Group (Co-founder/Leader), Senate Finance Committee,
+          Senate Rules Committee
           <br />
           <strong>Location:</strong> New York, NY
           <br />
           <strong>Twitter:</strong> @SenSchumer
           <br />
-          <strong>Notes:</strong> Chuck Schumer is a Democratic U.S. Senator from
-          New York who has served since 1999 and is currently Senate Majority
-          Leader. He led a bipartisan working group that released a 31-page AI
-          policy roadmap in May 2024, recommending at least $32 billion in
-          government spending to accelerate AI research and development. The
-          roadmap was developed after months of AI Insight Forums with tech
-          companies, civil rights leaders, and other stakeholders. Schumer has
-          described regulating artificial intelligence as &ldquo;a challenge for
-          Congress unlike any other&rdquo; and has made election protection from
-          AI interference a high priority.
+          <strong>Notes:</strong> Chuck Schumer is a Democratic U.S. Senator from New York who has served since 1999 and
+          is currently Senate Majority Leader. He led a bipartisan working group that released a 31-page AI policy
+          roadmap in May 2024, recommending at least $32 billion in government spending to accelerate AI research and
+          development. The roadmap was developed after months of AI Insight Forums with tech companies, civil rights
+          leaders, and other stakeholders. Schumer has described regulating artificial intelligence as &ldquo;a
+          challenge for Congress unlike any other&rdquo; and has made election protection from AI interference a high
+          priority.
           <br />
           <strong>Regulatory stance:</strong> Moderate
           <br />
-          <strong>Stance detail:</strong> Advocates for &lsquo;Safe Innovation
-          Framework&rsquo; emphasizing innovation as &lsquo;North Star&rsquo;
-          while establishing necessary guardrails.
+          <strong>Stance detail:</strong> Advocates for &lsquo;Safe Innovation Framework&rsquo; emphasizing innovation
+          as &lsquo;North Star&rsquo; while establishing necessary guardrails.
           <br />
           <strong>AGI timeline:</strong> 5-10 years
           <br />
           <strong>AI risk level:</strong> Serious
           <br />
-          <strong>Threat models:</strong> Labor displacement, Power concentration,
-          Democratic erosion, Misinformation
+          <strong>Threat models:</strong> Labor displacement, Power concentration, Democratic erosion, Misinformation
         </Callout>
 
         <H4>Quality over quantity</H4>
 
         <p className="mb-4">
-          Five well-researched submissions with sourced notes are worth more than
-          twenty stubs with just a name and title. Everything goes through admin
-          review before it shows up on the map, so don&rsquo;t worry about
-          making mistakes. But do your homework.
+          Five well-researched submissions with sourced notes are worth more than twenty stubs with just a name and
+          title. Everything goes through admin review before it shows up on the map, so don&rsquo;t worry about making
+          mistakes. But do your homework.
         </p>
 
         <Divider />
 
         {/* STREAM 3 */}
-        <StreamHeading id="stream-3">
-          Stream 3: Data Quality &amp; Verification
-        </StreamHeading>
-        <StreamTag>
-          Best for: skeptics, fact-checkers, people who enjoy catching errors
-        </StreamTag>
+        <StreamHeading id="stream-3">Stream 3: Data Quality &amp; Verification</StreamHeading>
+        <StreamTag>Best for: skeptics, fact-checkers, people who enjoy catching errors</StreamTag>
 
         <p className="mb-4">
-          The database was built through a combination of manual research, web
-          scraping, and AI-assisted enrichment. That means it contains
-          unverifiable claims, formatting artifacts, stale information, and
-          outright fabrications. Your job is to find and flag these problems.
+          The database was built through a combination of manual research, web scraping, and AI-assisted enrichment.
+          That means it contains unverifiable claims, formatting artifacts, stale information, and outright
+          fabrications. Your job is to find and flag these problems.
         </p>
 
         <H4>Known issues to look for</H4>
 
         <ul className="mb-4 pl-6">
           <li className="mb-[0.35rem]">
-            <strong>Hallucinated facts.</strong> The AI-generated notes sometimes
-            include claims that sound very specific and plausible but are just
-            wrong. Suspiciously precise founding dates, round dollar amounts,
-            inflated competition results, awards that don&rsquo;t exist. If
-            something sounds weirdly specific, it&rsquo;s worth a quick check.
+            <strong>Hallucinated facts.</strong> The AI-generated notes sometimes include claims that sound very
+            specific and plausible but are just wrong. Suspiciously precise founding dates, round dollar amounts,
+            inflated competition results, awards that don&rsquo;t exist. If something sounds weirdly specific,
+            it&rsquo;s worth a quick check.
           </li>
           <li className="mb-[0.35rem]">
-            <strong>Stale information.</strong> Some entries list people at
-            organizations they&rsquo;ve since left. Government officials who
-            changed roles after the 2025 transition come up a lot.
+            <strong>Stale information.</strong> Some entries list people at organizations they&rsquo;ve since left.
+            Government officials who changed roles after the 2025 transition come up a lot.
           </li>
           <li className="mb-[0.35rem]">
-            <strong>Wrong org affiliations.</strong> Primary org set to a
-            completely different entity with a similar-sounding name. These are
-            especially bad because they create false connections on the map.
+            <strong>Wrong org affiliations.</strong> Primary org set to a completely different entity with a
+            similar-sounding name. These are especially bad because they create false connections on the map.
           </li>
           <li className="mb-[0.35rem]">
-            <strong>Edges missing evidence.</strong> About 30% of relationships
-            have no supporting evidence. If a relationship seems questionable,
-            check whether there&rsquo;s evidence for it.
+            <strong>Edges missing evidence.</strong> About 30% of relationships have no supporting evidence. If a
+            relationship seems questionable, check whether there&rsquo;s evidence for it.
           </li>
           <li className="mb-[0.35rem]">
-            <strong>Thin or missing context.</strong> Notes that are technically
-            accurate but don&rsquo;t explain why someone matters to AI policy.
-            &ldquo;John Smith is the CEO of Acme Corp&rdquo; is less useful than
+            <strong>Thin or missing context.</strong> Notes that are technically accurate but don&rsquo;t explain why
+            someone matters to AI policy. &ldquo;John Smith is the CEO of Acme Corp&rdquo; is less useful than
             explaining what Acme Corp does and why it&rsquo;s relevant.
           </li>
         </ul>
 
         <H4>How to fix issues</H4>
 
-        <p className="mb-4">
-          When you find something wrong, fix it directly:
-        </p>
+        <p className="mb-4">When you find something wrong, fix it directly:</p>
 
         <ul className="mb-4 pl-6">
           <li className="mb-[0.35rem]">
-            <strong>Option 1: Staging database.</strong> Use the <Code>.env</Code>{' '}
-            file credentials to connect to the staging DB and run UPDATE queries.
-            See <Code>workshop/DATABASE-ORIENTATION.md</Code> for examples.
+            <strong>Option 1: Staging database.</strong> Use the <Code>.env</Code> file credentials to connect to the
+            staging DB and run UPDATE queries. See <Code>workshop/DATABASE-ORIENTATION.md</Code> for examples.
           </li>
           <li className="mb-[0.35rem]">
             <strong>Option 2: Contribute form.</strong> Go to{' '}
-            <ExtLink href="https://mapping-ai.org/contribute">
-              mapping-ai.org/contribute
-            </ExtLink>{' '}
-            and submit a correction. This goes into the production review queue.
+            <ExtLink href="https://mapping-ai.org/contribute">mapping-ai.org/contribute</ExtLink> and submit a
+            correction. This goes into the production review queue.
           </li>
         </ul>
 
         <p className="mb-4">
-          Start with well-known figures whose facts you can check from memory.
-          Then move to less-familiar entities where you&rsquo;ll need to do some
-          quick googling.
+          Start with well-known figures whose facts you can check from memory. Then move to less-familiar entities where
+          you&rsquo;ll need to do some quick googling.
         </p>
 
         <Divider />
@@ -778,16 +704,14 @@ Screenshot: [paste one if you can]`}</Pre>
         <StreamTag>Best for: developers who want to write code</StreamTag>
 
         <p className="mb-4">
-          It&rsquo;s a React + Vite site with a D3.js map, AWS Lambda functions
-          for the API, and a PostgreSQL database. If you can write TypeScript,
-          React, CSS, or Node.js, you can contribute.
+          It&rsquo;s a React + Vite site with a D3.js map, AWS Lambda functions for the API, and a PostgreSQL database.
+          If you can write TypeScript, React, CSS, or Node.js, you can contribute.
         </p>
 
         <H4>Prerequisites</H4>
 
         <p className="mb-4">
-          You need <strong>Node.js 20+</strong> and <strong>npm</strong>.
-          If you don&rsquo;t have them:
+          You need <strong>Node.js 20+</strong> and <strong>npm</strong>. If you don&rsquo;t have them:
         </p>
 
         <Pre>{`# macOS (with Homebrew)
@@ -808,30 +732,26 @@ brew install lefthook
 lefthook install`}</Pre>
 
         <p className="mb-4">
-          Create a <Code>.env</Code> file with database credentials (shared via
-          Doppler, or ask an organizer). See{' '}
+          Create a <Code>.env</Code> file with database credentials (shared via Doppler, or ask an organizer). See{' '}
           <Code>workshop/DATABASE-ORIENTATION.md</Code> for details.
         </p>
 
+        <p className="mb-4">Start local dev:</p>
+
+        <Pre>{`npm run dev`}</Pre>
+
         <p className="mb-4">
-          Get map data (needed for the map and search to show anything):
+          Visit <Code>localhost:5173</Code>. This runs Vite and the Express API server together. Everything works from
+          there: map, contribute form, search, admin, insights.
+        </p>
+
+        <p className="mb-4">
+          On first run, <Code>map-data.json</Code> is auto-generated from your database. If you don&rsquo;t have DB
+          credentials yet, download the production snapshot first so the map isn&rsquo;t empty:
         </p>
 
         <Pre>{`curl -o map-data.json https://mapping-ai.org/map-data.json
 curl -o map-detail.json https://mapping-ai.org/map-detail.json`}</Pre>
-
-        <p className="mb-4">Start local dev (two terminals):</p>
-
-        <Pre>{`# Terminal 1
-npx vite dev          # http://localhost:5173
-
-# Terminal 2
-node dev-server.js    # API proxy`}</Pre>
-
-        <p className="mb-4">
-          Visit <Code>localhost:5173</Code>. Everything works from there: map,
-          contribute form, search, admin, insights.
-        </p>
 
         <H4>Useful commands</H4>
 
@@ -841,21 +761,20 @@ npm run typecheck     # TypeScript type checking
 npm run test          # Run tests`}</Pre>
 
         <p className="mb-4">
-          Pre-commit hooks run automatically via lefthook (typecheck + lint + format).
-          If a commit fails the hook, fix the issue and commit again.
+          Pre-commit hooks run automatically via lefthook (typecheck + lint + format). If a commit fails the hook, fix
+          the issue and commit again.
         </p>
 
         <p className="mb-4">
-          If you&rsquo;re working with the database directly,
-          see <Code>workshop/DATABASE-ORIENTATION.md</Code> for schema details
-          and query examples.
+          If you&rsquo;re working with the database directly, see <Code>workshop/DATABASE-ORIENTATION.md</Code> for
+          schema details and query examples.
         </p>
 
         <H4>Using Claude Code or other AI agents</H4>
 
         <p className="mb-4">
-          Most participants will be using a coding agent (Claude Code, Cursor,
-          Windsurf, etc.). Here&rsquo;s how to get the most out of it:
+          Most participants will be using a coding agent (Claude Code, Cursor, Windsurf, etc.). Here&rsquo;s how to get
+          the most out of it:
         </p>
 
         <p className="mb-4">
@@ -868,8 +787,8 @@ npm run test          # Run tests`}</Pre>
 "Read workshop/DATABASE-ORIENTATION.md for the database schema"`}</Pre>
 
         <p className="mb-4">
-          <strong>Testing with agent-browser:</strong> use it to visually verify
-          changes, fill forms, take screenshots, and test interactions.
+          <strong>Testing with agent-browser:</strong> use it to visually verify changes, fill forms, take screenshots,
+          and test interactions.
         </p>
 
         <Pre>{`# Install globally
@@ -883,17 +802,23 @@ agent-browser fill @e1 "test"      # fill a form field`}</Pre>
 
         <p className="mb-4">
           <strong>Compound Engineering plugin:</strong> if you have the{' '}
-          <ExtLink href="https://github.com/EveryInc/compound-engineering-plugin">
-            compound-engineering plugin
-          </ExtLink>
-          {' '}installed, these commands are useful:
+          <ExtLink href="https://github.com/EveryInc/compound-engineering-plugin">compound-engineering plugin</ExtLink>{' '}
+          installed, these commands are useful:
         </p>
 
         <ul className="list-disc pl-6 mb-4 space-y-1 text-[16px]">
-          <li><Code>/ce:review</Code> to review your code before creating a PR</li>
-          <li><Code>/ce:compound</Code> to document what you built or fixed</li>
-          <li><Code>/ce:plan</Code> to plan larger features before implementing</li>
-          <li><Code>/init</Code> to generate a CLAUDE.md if working on a sub-project</li>
+          <li>
+            <Code>/ce:review</Code> to review your code before creating a PR
+          </li>
+          <li>
+            <Code>/ce:compound</Code> to document what you built or fixed
+          </li>
+          <li>
+            <Code>/ce:plan</Code> to plan larger features before implementing
+          </li>
+          <li>
+            <Code>/init</Code> to generate a CLAUDE.md if working on a sub-project
+          </li>
         </ul>
 
         <p className="mb-4">
@@ -901,11 +826,21 @@ agent-browser fill @e1 "test"      # fill a form field`}</Pre>
         </p>
 
         <ul className="list-disc pl-6 mb-4 space-y-1 text-[16px]">
-          <li><Code>CLAUDE.md</Code> - full codebase context, conventions, and architecture</li>
-          <li><Code>ONBOARDING.md</Code> - setup guide and common patterns</li>
-          <li><Code>TECH.md</Code> - API reference, database schema, deployment pipeline</li>
-          <li><Code>docs/DEPLOYMENT.md</Code> - how code gets to production</li>
-          <li><Code>docs/CONTRIBUTOR.md</Code> - guide for agents helping submit data via API</li>
+          <li>
+            <Code>CLAUDE.md</Code> - full codebase context, conventions, and architecture
+          </li>
+          <li>
+            <Code>ONBOARDING.md</Code> - setup guide and common patterns
+          </li>
+          <li>
+            <Code>TECH.md</Code> - API reference, database schema, deployment pipeline
+          </li>
+          <li>
+            <Code>docs/DEPLOYMENT.md</Code> - how code gets to production
+          </li>
+          <li>
+            <Code>docs/CONTRIBUTOR.md</Code> - guide for agents helping submit data via API
+          </li>
         </ul>
 
         <H4>Project structure</H4>
@@ -934,31 +869,20 @@ agent-browser fill @e1 "test"      # fill a form field`}</Pre>
                   'src/contribute/',
                   'The submission forms. Custom dropdowns, tag inputs, org search, location search, TipTap rich text editor, autosave.',
                 ],
-                [
-                  'src/admin/',
-                  'Admin panel for reviewing submissions, editing entities, managing the approval queue.',
-                ],
-                [
-                  'src/components/',
-                  'Shared React components: CustomSelect, TagInput, TipTapEditor, Navigation, etc.',
-                ],
+                ['src/admin/', 'Admin panel for reviewing submissions, editing entities, managing the approval queue.'],
+                ['src/components/', 'Shared React components: CustomSelect, TagInput, TipTapEditor, Navigation, etc.'],
                 [
                   'api/*.js',
                   'Lambda functions. submit.js handles form submissions, search.js does full-text search, admin.js handles the review queue.',
                 ],
-                [
-                  'template.yaml',
-                  'AWS SAM template defining all the infrastructure.',
-                ],
+                ['template.yaml', 'AWS SAM template defining all the infrastructure.'],
               ] as const
             ).map(([file, desc], i) => (
               <tr key={i}>
                 <td className="p-2 border-b border-[#eee] align-top">
                   <Code>{file}</Code>
                 </td>
-                <td className="p-2 border-b border-[#eee] align-top">
-                  {desc}
-                </td>
+                <td className="p-2 border-b border-[#eee] align-top">{desc}</td>
               </tr>
             ))}
           </tbody>
@@ -967,204 +891,167 @@ agent-browser fill @e1 "test"      # fill a form field`}</Pre>
         <H4>Feature ideas</H4>
 
         <p className="mb-4">
-          These are roughly ordered by complexity. Pick whatever interests you,
-          or pitch your own idea.
+          These are roughly ordered by complexity. Pick whatever interests you, or pitch your own idea.
         </p>
 
         <p className="mb-4">
-          <strong>Shareable entity links.</strong> Right now, clicking a node on
-          the map doesn&rsquo;t update the URL. It&rsquo;d be useful to have{' '}
-          <Code>map.html?entity=123</Code> or{' '}
-          <Code>map.html?name=OpenAI</Code> that auto-selects and zooms to that
-          entity on load. Good starter project.
+          <strong>Shareable entity links.</strong> Right now, clicking a node on the map doesn&rsquo;t update the URL.
+          It&rsquo;d be useful to have <Code>map.html?entity=123</Code> or <Code>map.html?name=OpenAI</Code> that
+          auto-selects and zooms to that entity on load. Good starter project.
         </p>
 
         <p className="mb-4">
-          <strong>Timeline view.</strong> The database has edge start/end dates
-          (when someone joined or left an org, when a relationship began). A
-          timeline slider or playback feature that shows how the network evolved
-          over time would be compelling.
+          <strong>Timeline view.</strong> The database has edge start/end dates (when someone joined or left an org,
+          when a relationship began). A timeline slider or playback feature that shows how the network evolved over time
+          would be compelling.
         </p>
 
         <p className="mb-4">
-          <strong>Improved Plot view.</strong> The Plot view (scatter/beeswarm)
-          works but could use better axis labels, a legend, and maybe the
-          ability to color by a different dimension than the axes.
+          <strong>Improved Plot view.</strong> The Plot view (scatter/beeswarm) works but could use better axis labels,
+          a legend, and maybe the ability to color by a different dimension than the axes.
         </p>
 
         <p className="mb-4">
-          <strong>Entity diff / edit history.</strong> The database tracks
-          submissions but there&rsquo;s no UI for seeing what changed over time
-          for a given entity. An audit trail would help with data quality.
+          <strong>Entity diff / edit history.</strong> The database tracks submissions but there&rsquo;s no UI for
+          seeing what changed over time for a given entity. An audit trail would help with data quality.
         </p>
 
         <p className="mb-4">
-          <strong>Export / embed.</strong> Let people export a filtered view of
-          the map as a PNG or SVG, or generate an embed snippet for a specific
-          cluster or entity.
+          <strong>Export / embed.</strong> Let people export a filtered view of the map as a PNG or SVG, or generate an
+          embed snippet for a specific cluster or entity.
         </p>
 
         <p className="mb-4">
-          Before starting on something, check the{' '}
-          <ExtLink href="https://discord.gg/2gntpaxV">
-            Discord
-          </ExtLink>{' '}
-          to see what others are working on and post what you&rsquo;re tackling.
-          When you&rsquo;re done, open a pull request against <Code>main</Code>.
+          Before starting on something, check the <ExtLink href="https://discord.gg/2gntpaxV">Discord</ExtLink> to see
+          what others are working on and post what you&rsquo;re tackling. When you&rsquo;re done, open a pull request
+          against <Code>main</Code>.
         </p>
 
         <H4>Conventions</H4>
 
         <p className="mb-4">
-          Commit messages use conventional prefixes: <Code>feat:</Code>,{' '}
-          <Code>fix:</Code>, <Code>refactor:</Code>, <Code>docs:</Code>. There
-          are no tests (yes, we know). CSS is inline per page, not in a shared
-          stylesheet. The map loads <Code>map-data.json</Code> which uses
-          different field names than the database (there&rsquo;s a mapping layer
-          in <Code>api/export-map.js</Code>). Read the <Code>CLAUDE.md</Code>{' '}
-          in the repo root for full documentation of the schema, field mappings,
-          and architecture.
+          Commit messages use conventional prefixes: <Code>feat:</Code>, <Code>fix:</Code>, <Code>refactor:</Code>,{' '}
+          <Code>docs:</Code>. There are no tests (yes, we know). CSS is inline per page, not in a shared stylesheet. The
+          map loads <Code>map-data.json</Code> which uses different field names than the database (there&rsquo;s a
+          mapping layer in <Code>api/export-map.js</Code>). Read the <Code>CLAUDE.md</Code> in the repo root for full
+          documentation of the schema, field mappings, and architecture.
         </p>
 
         <Divider />
 
         {/* STREAM 5 */}
-        <StreamHeading id="stream-5">
-          Stream 5: Outreach, Policy, Big Picture
-        </StreamHeading>
-        <StreamTag>
-          Best for: people who think about audiences, distribution, and strategy
-        </StreamTag>
+        <StreamHeading id="stream-5">Stream 5: Outreach, Policy, Big Picture</StreamHeading>
+        <StreamTag>Best for: people who think about audiences, distribution, and strategy</StreamTag>
 
         <p className="mb-4">
-          The tool exists. The question now is who uses it and why. This stream
-          is about figuring out how Mapping AI fits into the broader AI policy
-          conversation and how to get it in front of the people who&rsquo;d
-          benefit from it.
+          The tool exists. The question now is who uses it and why. This stream is about figuring out how Mapping AI
+          fits into the broader AI policy conversation and how to get it in front of the people who&rsquo;d benefit from
+          it.
         </p>
 
         <H4>Questions to discuss</H4>
 
         <p className="mb-4">
-          <strong>Who is this for?</strong> Journalists covering AI? Hill
-          staffers researching a bill? Academics studying the policy landscape?
-          Advocacy groups planning campaigns? AI company employees trying to
-          understand the regulatory environment? The answer shapes everything
-          from what data we prioritize to how we describe the project.
+          <strong>Who is this for?</strong> Journalists covering AI? Hill staffers researching a bill? Academics
+          studying the policy landscape? Advocacy groups planning campaigns? AI company employees trying to understand
+          the regulatory environment? The answer shapes everything from what data we prioritize to how we describe the
+          project.
         </p>
 
         <p className="mb-4">
-          <strong>What&rsquo;s the pitch?</strong> When you tell someone about
-          Mapping AI in one sentence, what do you say? We&rsquo;ve been
-          describing it as &ldquo;an interactive map of the U.S. AI policy
-          ecosystem&rdquo; but that&rsquo;s abstract. What would make someone
-          actually click the link?
+          <strong>What&rsquo;s the pitch?</strong> When you tell someone about Mapping AI in one sentence, what do you
+          say? We&rsquo;ve been describing it as &ldquo;an interactive map of the U.S. AI policy ecosystem&rdquo; but
+          that&rsquo;s abstract. What would make someone actually click the link?
         </p>
 
         <p className="mb-4">
-          <strong>Where do we distribute?</strong> Think about specific channels.
-          Which Substacks, podcasts, Slack communities, Twitter/Bluesky accounts,
-          university departments, think tank mailing lists, or congressional
-          offices should know about this? Make a concrete list with contact info
-          or links where possible.
+          <strong>Where do we distribute?</strong> Think about specific channels. Which Substacks, podcasts, Slack
+          communities, Twitter/Bluesky accounts, university departments, think tank mailing lists, or congressional
+          offices should know about this? Make a concrete list with contact info or links where possible.
         </p>
 
         <p className="mb-4">
-          <strong>What partnerships make sense?</strong> Are there organizations
-          doing adjacent work who might want to co-brand, share data, or link to
-          the map from their own resources? Think about groups like the AI Policy
-          Institute, the Federation of American Scientists, university AI policy
-          programs, or journalism outlets that cover AI.
+          <strong>What partnerships make sense?</strong> Are there organizations doing adjacent work who might want to
+          co-brand, share data, or link to the map from their own resources? Think about groups like the AI Policy
+          Institute, the Federation of American Scientists, university AI policy programs, or journalism outlets that
+          cover AI.
         </p>
 
         <p className="mb-4">
-          <strong>What should we write about?</strong> We&rsquo;re planning to
-          publish research insights from the database (see Stream 6). What
-          angles would get attention? What would be genuinely useful to the
-          policy community vs. what would just be content for content&rsquo;s
-          sake?
+          <strong>What should we write about?</strong> We&rsquo;re planning to publish research insights from the
+          database (see Stream 6). What angles would get attention? What would be genuinely useful to the policy
+          community vs. what would just be content for content&rsquo;s sake?
         </p>
 
         <H4>Guerrilla marketing ideas</H4>
 
-        <p className="mb-4">
-          Think scrappy, high-impact, low-cost. Some starting points:
-        </p>
+        <p className="mb-4">Think scrappy, high-impact, low-cost. Some starting points:</p>
 
         <ul className="list-disc pl-6 mb-4 space-y-2 text-[16px]">
           <li>
-            <strong>Screenshot campaigns.</strong> Take a compelling screenshot from the map
-            (e.g., a cluster of orgs with surprising connections) and post it with a
-            one-line hook. People share visuals, not links.
+            <strong>Screenshot campaigns.</strong> Take a compelling screenshot from the map (e.g., a cluster of orgs
+            with surprising connections) and post it with a one-line hook. People share visuals, not links.
           </li>
           <li>
-            <strong>Stunt data drops.</strong> Publish a single surprising stat from the
-            database as a standalone post. &ldquo;We mapped 717 AI orgs. 39% of them
-            are AI Safety groups. Here&rsquo;s what the other 61% look like.&rdquo;
+            <strong>Stunt data drops.</strong> Publish a single surprising stat from the database as a standalone post.
+            &ldquo;We mapped 717 AI orgs. 39% of them are AI Safety groups. Here&rsquo;s what the other 61% look
+            like.&rdquo;
           </li>
           <li>
-            <strong>Reply-guy strategy.</strong> When AI policy news breaks, reply with
-            a relevant map link or data point. Be genuinely useful, not spammy.
-            The map has real-time relevance every time someone asks &ldquo;who is
-            behind this?&rdquo;
+            <strong>Reply-guy strategy.</strong> When AI policy news breaks, reply with a relevant map link or data
+            point. Be genuinely useful, not spammy. The map has real-time relevance every time someone asks &ldquo;who
+            is behind this?&rdquo;
           </li>
           <li>
-            <strong>Challenge posts.</strong> &ldquo;Can you find yourself on the map?&rdquo;
-            directed at people already in the database. People love seeing themselves
-            on things.
+            <strong>Challenge posts.</strong> &ldquo;Can you find yourself on the map?&rdquo; directed at people already
+            in the database. People love seeing themselves on things.
           </li>
           <li>
-            <strong>Substack cross-posts.</strong> Write a short analysis piece using
-            the data (see Stream 6) and pitch it as a guest post to AI policy
-            Substacks with large audiences.
+            <strong>Substack cross-posts.</strong> Write a short analysis piece using the data (see Stream 6) and pitch
+            it as a guest post to AI policy Substacks with large audiences.
           </li>
         </ul>
 
         <H4>Viral thread ideas</H4>
 
         <p className="mb-4">
-          Twitter/X and Bluesky threads with data visualizations get massive reach
-          in the AI policy space. Some thread concepts worth developing:
+          Twitter/X and Bluesky threads with data visualizations get massive reach in the AI policy space. Some thread
+          concepts worth developing:
         </p>
 
         <ul className="list-disc pl-6 mb-4 space-y-2 text-[16px]">
           <li>
-            <strong>&ldquo;We mapped every org in US AI governance. Here&rsquo;s what
-            we found.&rdquo;</strong> Lead with the org category chart showing AI Safety
-            dominance. Thread through funding, stance distributions, geographic
-            concentration.
+            <strong>&ldquo;We mapped every org in US AI governance. Here&rsquo;s what we found.&rdquo;</strong> Lead
+            with the org category chart showing AI Safety dominance. Thread through funding, stance distributions,
+            geographic concentration.
           </li>
           <li>
-            <strong>&ldquo;The people regulating AI think very differently from
-            the orgs around them.&rdquo;</strong> Use the beeswarm chart showing the
-            gap between individual vs. organizational regulatory stances.
+            <strong>&ldquo;The people regulating AI think very differently from the orgs around them.&rdquo;</strong>{' '}
+            Use the beeswarm chart showing the gap between individual vs. organizational regulatory stances.
           </li>
           <li>
-            <strong>&ldquo;Follow the money in AI governance.&rdquo;</strong> Funding
-            model predicts regulatory stance almost perfectly. Show the dot plot
-            from the insights page. Name names.
+            <strong>&ldquo;Follow the money in AI governance.&rdquo;</strong> Funding model predicts regulatory stance
+            almost perfectly. Show the dot plot from the insights page. Name names.
           </li>
           <li>
-            <strong>&ldquo;5 cities control AI policy. Everyone else is
-            invisible.&rdquo;</strong> Geographic concentration chart.
-            Provocative framing that invites debate.
+            <strong>&ldquo;5 cities control AI policy. Everyone else is invisible.&rdquo;</strong> Geographic
+            concentration chart. Provocative framing that invites debate.
           </li>
           <li>
-            <strong>&ldquo;We asked: what are you most afraid of with AI? The
-            answers split on professional lines.&rdquo;</strong> Threat model
-            heatmap showing researchers vs. organizers vs. policymakers.
+            <strong>
+              &ldquo;We asked: what are you most afraid of with AI? The answers split on professional lines.&rdquo;
+            </strong>{' '}
+            Threat model heatmap showing researchers vs. organizers vs. policymakers.
           </li>
           <li>
-            <strong>&ldquo;The 10 most connected people in US AI
-            policy.&rdquo;</strong> Network centrality chart. Tag the people.
-            They will share it.
+            <strong>&ldquo;The 10 most connected people in US AI policy.&rdquo;</strong> Network centrality chart. Tag
+            the people. They will share it.
           </li>
         </ul>
 
         <p className="mb-4">
-          Every thread should end with a link to the map and an invite to
-          contribute. The goal is to make the data feel alive and relevant,
-          not academic.
+          Every thread should end with a link to the map and an invite to contribute. The goal is to make the data feel
+          alive and relevant, not academic.
         </p>
 
         <H4>Deliverable</H4>
@@ -1174,59 +1061,42 @@ agent-browser fill @e1 "test"      # fill a form field`}</Pre>
           <ExtLink href="https://docs.google.com/document/d/1WNVM22lGeCOcZHvi5KwF9Yn9be6T6V7xbsocL0SQsLQ/edit?usp=sharing">
             the outreach planning doc
           </ExtLink>{' '}
-          (which already has a bunch of ideas to build on) and post highlights
-          in the{' '}
-          <ExtLink href="https://discord.gg/2gntpaxV">
-            Discord forum channel
-          </ExtLink>
-          . This could include target audiences, distribution channels, pitch
-          ideas, partnership leads, content angles, draft thread copy, or
+          (which already has a bunch of ideas to build on) and post highlights in the{' '}
+          <ExtLink href="https://discord.gg/2gntpaxV">Discord forum channel</ExtLink>. This could include target
+          audiences, distribution channels, pitch ideas, partnership leads, content angles, draft thread copy, or
           screenshots of visualizations worth sharing.
         </p>
 
         <Divider />
 
         {/* STREAM 6 */}
-        <StreamHeading id="stream-6">
-          Stream 6: Data Viz &amp; Research Insights
-        </StreamHeading>
-        <StreamTag>
-          Best for: data people, researchers, anyone curious about patterns
-        </StreamTag>
+        <StreamHeading id="stream-6">Stream 6: Data Viz &amp; Research Insights</StreamHeading>
+        <StreamTag>Best for: data people, researchers, anyone curious about patterns</StreamTag>
 
         <p className="mb-4">
-          The database is full of interesting data that nobody has really
-          explored yet. Regulatory stances, AGI timeline beliefs, organizational
-          affiliations, funding relationships, geographic clusters. Your job is
-          to pull insights out of it and sketch visualizations or blog post
-          drafts we could publish.
+          The database is full of interesting data that nobody has really explored yet. Regulatory stances, AGI timeline
+          beliefs, organizational affiliations, funding relationships, geographic clusters. Your job is to pull insights
+          out of it and sketch visualizations or blog post drafts we could publish.
         </p>
 
         <p className="mb-4">
-          See{' '}
-          <ExtLink href="https://mapping-ai.org/insights">
-            mapping-ai.org/insights
-          </ExtLink>{' '}
-          for examples of what this could look like.
+          See <ExtLink href="https://mapping-ai.org/insights">mapping-ai.org/insights</ExtLink> for examples of what
+          this could look like.
         </p>
 
         <H4>Getting the data</H4>
 
-        <p className="mb-4">
-          The full dataset is available as a single JSON file:
-        </p>
+        <p className="mb-4">The full dataset is available as a single JSON file:</p>
         <Pre>https://mapping-ai.org/map-full.json</Pre>
 
         <p className="mb-4">
-          This includes all entities (people, organizations, resources), their
-          relationships, scores, notes, and metadata. You can fetch and work
-          with it in whatever you prefer: Python (pandas, matplotlib, seaborn),
-          R, Observable notebooks, Excel.
+          This includes all entities (people, organizations, resources), their relationships, scores, notes, and
+          metadata. You can fetch and work with it in whatever you prefer: Python (pandas, matplotlib, seaborn), R,
+          Observable notebooks, Excel.
         </p>
 
         <p className="mb-4">
-          We also have the full database export (including pending and internal
-          entities) if you want it. Just ask.
+          We also have the full database export (including pending and internal entities) if you want it. Just ask.
         </p>
 
         <H4>Research questions worth exploring</H4>
@@ -1238,40 +1108,34 @@ agent-browser fill @e1 "test"      # fill a form field`}</Pre>
           </ExtLink>
         </Callout>
 
-        <p className="mb-4 font-mono text-[11px] uppercase tracking-[0.1em] text-[#2563eb]">
-          Priority Questions
+        <p className="mb-4 font-mono text-[11px] uppercase tracking-[0.1em] text-[#2563eb]">Priority Questions</p>
+
+        <p className="mb-4">
+          <strong>Outlier Stances.</strong> Which people and organizations hold the most outlier positions on AI
+          regulation, AGI timelines, and the overall level of AI risk?{' '}
+          <em>Viz: Plot view (2D plot / political compass style)</em>
         </p>
 
         <p className="mb-4">
-          <strong>Outlier Stances.</strong> Which people and organizations hold the most
-          outlier positions on AI regulation, AGI timelines, and the overall level
-          of AI risk? <em>Viz: Plot view (2D plot / political compass style)</em>
+          <strong>Funding Overlap.</strong> What is the overlap in funding sources between AI safety organizations and
+          AI accelerationist organizations? <em>Viz: Case studies illustrating graph structure (nodes and edges)</em>
         </p>
 
         <p className="mb-4">
-          <strong>Funding Overlap.</strong> What is the overlap in funding sources
-          between AI safety organizations and AI accelerationist organizations?{' '}
-          <em>Viz: Case studies illustrating graph structure (nodes and edges)</em>
-        </p>
-
-        <p className="mb-4">
-          <strong>Structural Conflicts of Interest.</strong> Which philanthropies
-          and VCs provide simultaneous funding to both frontier AI labs and the
-          think tanks that produce AI governance frameworks?{' '}
+          <strong>Structural Conflicts of Interest.</strong> Which philanthropies and VCs provide simultaneous funding
+          to both frontier AI labs and the think tanks that produce AI governance frameworks?{' '}
           <em>Viz: Graph structure (nodes and edges)</em>
         </p>
 
         <p className="mb-4">
-          <strong>Crosspartisan Convergence.</strong> Where do organizations from
-          opposite ends of the political spectrum converge on specific AI policy
-          positions, such as state preemption, open source, or compute governance?{' '}
-          <em>Viz: Mapping partisan lines (1D plot) or graph of outlier stances</em>
+          <strong>Crosspartisan Convergence.</strong> Where do organizations from opposite ends of the political
+          spectrum converge on specific AI policy positions, such as state preemption, open source, or compute
+          governance? <em>Viz: Mapping partisan lines (1D plot) or graph of outlier stances</em>
         </p>
 
         <p className="mb-4">
-          <strong>Network Centrality.</strong> Based on connection count, who are the
-          ten most structurally central individuals in US AI governance?{' '}
-          <em>Viz: Rank view</em>
+          <strong>Network Centrality.</strong> Based on connection count, who are the ten most structurally central
+          individuals in US AI governance? <em>Viz: Rank view</em>
         </p>
 
         <p className="mb-4 font-mono text-[11px] uppercase tracking-[0.1em] text-text-tertiary">
@@ -1279,65 +1143,52 @@ agent-browser fill @e1 "test"      # fill a form field`}</Pre>
         </p>
 
         <p className="mb-4">
-          <strong>The regulatory stance landscape.</strong> How do different
-          sectors break down on AI regulation? Are frontier labs more
-          &ldquo;light-touch&rdquo; than think tanks? How do researchers compare
-          to executives? A stacked bar chart or alluvial diagram showing stance
-          distribution by category would tell a clear story.
+          <strong>The regulatory stance landscape.</strong> How do different sectors break down on AI regulation? Are
+          frontier labs more &ldquo;light-touch&rdquo; than think tanks? How do researchers compare to executives? A
+          stacked bar chart or alluvial diagram showing stance distribution by category would tell a clear story.
         </p>
 
         <p className="mb-4">
-          <strong>Network structure.</strong> Who are the most connected people
-          and organizations? Are there distinct clusters or communities in the
-          network? Which entities bridge between otherwise disconnected groups?
-          Standard network analysis metrics (degree centrality, betweenness,
-          community detection) would surface this.
+          <strong>Network structure.</strong> Who are the most connected people and organizations? Are there distinct
+          clusters or communities in the network? Which entities bridge between otherwise disconnected groups? Standard
+          network analysis metrics (degree centrality, betweenness, community detection) would surface this.
         </p>
 
         <p className="mb-4">
-          <strong>The AGI timeline spectrum.</strong> How do AGI timeline beliefs
-          distribute across the landscape? Is there a correlation between
-          someone&rsquo;s timeline beliefs and their regulatory stance? A scatter
-          plot of timeline vs. stance, colored by entity type, could be
-          revealing.
+          <strong>The AGI timeline spectrum.</strong> How do AGI timeline beliefs distribute across the landscape? Is
+          there a correlation between someone&rsquo;s timeline beliefs and their regulatory stance? A scatter plot of
+          timeline vs. stance, colored by entity type, could be revealing.
         </p>
 
         <p className="mb-4">
-          <strong>Geographic patterns.</strong> Where are AI policy actors
-          concentrated? Is it all DC and SF, or is there more geographic spread
-          than people assume? A simple map or treemap of entity locations would
-          show this.
+          <strong>Geographic patterns.</strong> Where are AI policy actors concentrated? Is it all DC and SF, or is
+          there more geographic spread than people assume? A simple map or treemap of entity locations would show this.
         </p>
 
         <p className="mb-4">
-          <strong>The resource landscape.</strong> What kinds of AI policy
-          resources exist in the database? Who writes them? Which organizations
-          publish the most? A breakdown by resource type, category, and year
-          could highlight gaps and trends.
+          <strong>The resource landscape.</strong> What kinds of AI policy resources exist in the database? Who writes
+          them? Which organizations publish the most? A breakdown by resource type, category, and year could highlight
+          gaps and trends.
         </p>
 
         <p className="mb-4">
-          <strong>Funding flows.</strong> The edge data includes
-          &ldquo;funded_by&rdquo; relationships. Can you trace funding networks?
-          Which funders are connected to which policy positions?
+          <strong>Funding flows.</strong> The edge data includes &ldquo;funded_by&rdquo; relationships. Can you trace
+          funding networks? Which funders are connected to which policy positions?
         </p>
 
         <H4>Output format</H4>
 
         <p className="mb-4">
-          Ideally, aim for something we could turn into a blog post or Substack
-          piece. A clear finding in one sentence, a visualization that backs it
-          up, and a couple paragraphs of context. It doesn&rsquo;t need to be
-          polished. A Jupyter notebook or Observable notebook with rough charts
-          and some annotations is plenty. We&rsquo;ll clean it up later.
+          Ideally, aim for something we could turn into a blog post or Substack piece. A clear finding in one sentence,
+          a visualization that backs it up, and a couple paragraphs of context. It doesn&rsquo;t need to be polished. A
+          Jupyter notebook or Observable notebook with rough charts and some annotations is plenty. We&rsquo;ll clean it
+          up later.
         </p>
 
         <p className="mb-4">
           Post your research questions and findings as threads in the{' '}
-          <ExtLink href="https://discord.gg/2gntpaxV">
-            Discord forum channel
-          </ExtLink>
-          . Each thread becomes a trackable discussion that others can build on.
+          <ExtLink href="https://discord.gg/2gntpaxV">Discord forum channel</ExtLink>. Each thread becomes a trackable
+          discussion that others can build on.
         </p>
 
         <Divider />
@@ -1359,36 +1210,12 @@ agent-browser fill @e1 "test"      # fill a form field`}</Pre>
           <tbody>
             {[
               ['Live site', 'https://mapping-ai.org', 'mapping-ai.org'],
-              [
-                'Interactive map',
-                'https://mapping-ai.org/map',
-                'mapping-ai.org/map',
-              ],
-              [
-                'Insights page',
-                'https://mapping-ai.org/insights',
-                'mapping-ai.org/insights',
-              ],
-              [
-                'Contribute form',
-                'https://mapping-ai.org/contribute',
-                'mapping-ai.org/contribute',
-              ],
-              [
-                'GitHub repo',
-                'https://github.com/MappingAI/mapping-ai',
-                'github.com/MappingAI/mapping-ai',
-              ],
-              [
-                'Map data (JSON)',
-                'https://mapping-ai.org/map-data.json',
-                'mapping-ai.org/map-data.json',
-              ],
-              [
-                'Discord (bugs, features, coordination)',
-                'https://discord.gg/2gntpaxV',
-                'Discord #forum',
-              ],
+              ['Interactive map', 'https://mapping-ai.org/map', 'mapping-ai.org/map'],
+              ['Insights page', 'https://mapping-ai.org/insights', 'mapping-ai.org/insights'],
+              ['Contribute form', 'https://mapping-ai.org/contribute', 'mapping-ai.org/contribute'],
+              ['GitHub repo', 'https://github.com/MappingAI/mapping-ai', 'github.com/MappingAI/mapping-ai'],
+              ['Map data (JSON)', 'https://mapping-ai.org/map-data.json', 'mapping-ai.org/map-data.json'],
+              ['Discord (bugs, features, coordination)', 'https://discord.gg/2gntpaxV', 'Discord #forum'],
               [
                 'Outreach strategy doc',
                 'https://docs.google.com/document/d/1WNVM22lGeCOcZHvi5KwF9Yn9be6T6V7xbsocL0SQsLQ/edit?usp=sharing',
@@ -1401,9 +1228,7 @@ agent-browser fill @e1 "test"      # fill a form field`}</Pre>
               ],
             ].map(([label, href, text], i) => (
               <tr key={i}>
-                <td className="p-2 border-b border-[#eee] align-top">
-                  {label}
-                </td>
+                <td className="p-2 border-b border-[#eee] align-top">{label}</td>
                 <td className="p-2 border-b border-[#eee] align-top">
                   <ExtLink href={href!}>{text}</ExtLink>
                 </td>
@@ -1412,9 +1237,7 @@ agent-browser fill @e1 "test"      # fill a form field`}</Pre>
           </tbody>
         </table>
 
-        <p className="text-text-tertiary text-[14px] mt-12 font-mono">
-          mapping-ai.org
-        </p>
+        <p className="text-text-tertiary text-[14px] mt-12 font-mono">mapping-ai.org</p>
       </div>
     </>
   )
@@ -1422,13 +1245,7 @@ agent-browser fill @e1 "test"      # fill a form field`}</Pre>
 
 /* Shared sub-components */
 
-function SectionHeading({
-  id,
-  children,
-}: {
-  id?: string
-  children: React.ReactNode
-}) {
+function SectionHeading({ id, children }: { id?: string; children: React.ReactNode }) {
   return (
     <h2
       id={id}
@@ -1439,13 +1256,7 @@ function SectionHeading({
   )
 }
 
-function StreamHeading({
-  id,
-  children,
-}: {
-  id: string
-  children: React.ReactNode
-}) {
+function StreamHeading({ id, children }: { id: string; children: React.ReactNode }) {
   return (
     <h3
       id={id}
@@ -1458,11 +1269,7 @@ function StreamHeading({
 }
 
 function StreamTag({ children }: { children: React.ReactNode }) {
-  return (
-    <p className="font-mono text-[11px] text-text-tertiary uppercase tracking-[0.1em] mb-4">
-      {children}
-    </p>
-  )
+  return <p className="font-mono text-[11px] text-text-tertiary uppercase tracking-[0.1em] mb-4">{children}</p>
 }
 
 function H4({ children }: { children: React.ReactNode }) {
@@ -1474,11 +1281,7 @@ function H4({ children }: { children: React.ReactNode }) {
 }
 
 function Callout({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="bg-[#f0eeeb] border-l-[3px] border-accent px-5 py-4 mb-4 rounded-r">
-      {children}
-    </div>
-  )
+  return <div className="bg-[#f0eeeb] border-l-[3px] border-accent px-5 py-4 mb-4 rounded-r">{children}</div>
 }
 
 function Pre({ children }: { children: React.ReactNode }) {
@@ -1490,33 +1293,19 @@ function Pre({ children }: { children: React.ReactNode }) {
 }
 
 function Code({ children }: { children: React.ReactNode }) {
-  return (
-    <code className="font-mono text-[14px] bg-[#f0eeeb] px-[0.4em] py-[0.15em] rounded-[3px]">
-      {children}
-    </code>
-  )
+  return <code className="font-mono text-[14px] bg-[#f0eeeb] px-[0.4em] py-[0.15em] rounded-[3px]">{children}</code>
 }
 
 function Divider() {
   return <hr className="border-t border-[#ddd] my-12" style={{ borderTop: '1px solid #ddd' }} />
 }
 
-function TocLink({
-  href,
-  active,
-  children,
-}: {
-  href: string
-  active?: boolean
-  children: React.ReactNode
-}) {
+function TocLink({ href, active, children }: { href: string; active?: boolean; children: React.ReactNode }) {
   return (
     <a
       href={href}
       className={`block font-mono text-[10px] tracking-[0.04em] no-underline py-[0.35rem] pl-3 border-l-2 transition-colors duration-150 leading-[1.4] hover:text-[#555] hover:no-underline ${
-        active
-          ? 'text-[#2563eb] border-[#2563eb]'
-          : 'text-[#888] border-transparent'
+        active ? 'text-[#2563eb] border-[#2563eb]' : 'text-[#888] border-transparent'
       }`}
     >
       {children}
@@ -1524,13 +1313,7 @@ function TocLink({
   )
 }
 
-function ExtLink({
-  href,
-  children,
-}: {
-  href: string
-  children: React.ReactNode
-}) {
+function ExtLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <a
       href={href}

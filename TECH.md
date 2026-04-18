@@ -54,28 +54,28 @@ Frontend is a Vite 8 MPA built with React 19, TypeScript, and Tailwind CSS v4. T
 
 ## Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| DNS | Cloudflare (DNS-only mode, CNAME flattening) |
-| CDN | AWS CloudFront |
-| Frontend hosting | AWS S3 |
-| Frontend | Vite 8 MPA + React 19 + TypeScript + Tailwind CSS v4 |
-| Map page | D3.js force-directed graph + orbital clusters + plot view (map.html, inline, not React) |
-| Build | Vite (React pages), esbuild (legacy TipTap bundle for map.html) |
-| Data fetching | TanStack Query (React Query v5) |
-| Forms | React Hook Form |
-| Rich text | TipTap (ProseMirror-based) with @mentions (`src/components/TipTapEditor.tsx` for React, `src/tiptap-notes.js` for map.html) |
-| XSS sanitization | DOMPurify |
-| Visualization | D3.js (map.html inline + insights page charts) |
-| Fonts | EB Garamond (serif) + DM Mono (mono) via Google Fonts |
-| Backend | AWS Lambda (Node.js 20) + API Gateway (HTTP API) |
-| Infrastructure-as-code | AWS SAM (`template.yaml`) |
-| Database | AWS RDS Postgres 17 (eu-west-2) |
-| DB client | `pg` (node-postgres v8) |
-| Testing | Vitest + jsdom + React Testing Library |
-| CI/CD | GitHub Actions (auto-deploy on push to main) |
-| Data enrichment | Exa API (web search), Anthropic API (Claude Haiku for submission quality review) |
-| External APIs (client-side) | Google Favicons (org logos), Wikipedia (people headshots), Photon/OpenStreetMap (geocoding), Bluesky (handle search) |
+| Layer                       | Technology                                                                                                                  |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| DNS                         | Cloudflare (DNS-only mode, CNAME flattening)                                                                                |
+| CDN                         | AWS CloudFront                                                                                                              |
+| Frontend hosting            | AWS S3                                                                                                                      |
+| Frontend                    | Vite 8 MPA + React 19 + TypeScript + Tailwind CSS v4                                                                        |
+| Map page                    | D3.js force-directed graph + orbital clusters + plot view (map.html, inline, not React)                                     |
+| Build                       | Vite (React pages), esbuild (legacy TipTap bundle for map.html)                                                             |
+| Data fetching               | TanStack Query (React Query v5)                                                                                             |
+| Forms                       | React Hook Form                                                                                                             |
+| Rich text                   | TipTap (ProseMirror-based) with @mentions (`src/components/TipTapEditor.tsx` for React, `src/tiptap-notes.js` for map.html) |
+| XSS sanitization            | DOMPurify                                                                                                                   |
+| Visualization               | D3.js (map.html inline + insights page charts)                                                                              |
+| Fonts                       | EB Garamond (serif) + DM Mono (mono) via Google Fonts                                                                       |
+| Backend                     | AWS Lambda (Node.js 20) + API Gateway (HTTP API)                                                                            |
+| Infrastructure-as-code      | AWS SAM (`template.yaml`)                                                                                                   |
+| Database                    | AWS RDS Postgres 17 (eu-west-2)                                                                                             |
+| DB client                   | `pg` (node-postgres v8)                                                                                                     |
+| Testing                     | Vitest + jsdom + React Testing Library                                                                                      |
+| CI/CD                       | GitHub Actions (auto-deploy on push to main)                                                                                |
+| Data enrichment             | Exa API (web search), Anthropic API (Claude Haiku for submission quality review)                                            |
+| External APIs (client-side) | Google Favicons (org logos), Wikipedia (people headshots), Photon/OpenStreetMap (geocoding), Bluesky (handle search)        |
 
 ---
 
@@ -170,28 +170,22 @@ AWS_ACCESS_KEY_ID=...
 AWS_SECRET_ACCESS_KEY=...
 ```
 
-Get map data (the map and contribute form search need this to show anything):
+Start local dev:
 
 ```bash
-# Option A: Download from production (no DB needed)
+npm run dev
+```
+
+Visit `localhost:5173`. A single command runs Vite (port 5173) and the Express API server (port 3000) together; Vite proxies `/api` requests to `:3000` automatically. Everything works from there: map, contribute form, search, admin, insights.
+
+On first run, `map-data.json` is generated from the database (needs `DATABASE_URL` in `.env`). If you don't have DB credentials, download the production snapshot first so the map isn't empty:
+
+```bash
 curl -o map-data.json https://mapping-ai.org/map-data.json
 curl -o map-detail.json https://mapping-ai.org/map-detail.json
-
-# Option B: Generate from database (needs DATABASE_URL in .env)
-node scripts/export-map-data.js
 ```
 
-Start local dev (two terminals):
-
-```bash
-# Terminal 1
-npx vite dev                      # http://localhost:5173
-
-# Terminal 2
-node dev-server.js                # API proxy on localhost:3000
-```
-
-Visit `localhost:5173`. Everything works from there: map, contribute form, search, admin, insights. Vite proxies `/api` requests to `localhost:3000` automatically.
+Run servers individually with `npm run dev:web` or `npm run dev:api`.
 
 ### Type checking and tests
 
@@ -219,16 +213,16 @@ sam local start-api --parameter-overrides DatabaseUrl=$DATABASE_URL
 
 ## Environment Variables
 
-| Variable | Where set | Description |
-|----------|-----------|-------------|
-| `DATABASE_URL` | `.env` + Lambda + GitHub Secrets | RDS PostgreSQL connection string |
-| `AWS_ACCESS_KEY_ID` | `.env` + GitHub Secrets | AWS credentials |
-| `AWS_SECRET_ACCESS_KEY` | `.env` + GitHub Secrets | AWS credentials |
-| `EXA_API_KEY` | `.env` | Exa API key for data enrichment |
-| `ANTHROPIC_API_KEY` | Lambda env var | Claude Haiku for submission LLM review |
-| `ADMIN_KEY` | Lambda env var | Admin authentication key |
-| `S3_BUCKET_NAME` | GitHub Secrets | `mapping-ai-website-561047280976` |
-| `CLOUDFRONT_DISTRIBUTION_ID` | GitHub Secrets | `E34ZXLC7CZX7XT` |
+| Variable                     | Where set                        | Description                            |
+| ---------------------------- | -------------------------------- | -------------------------------------- |
+| `DATABASE_URL`               | `.env` + Lambda + GitHub Secrets | RDS PostgreSQL connection string       |
+| `AWS_ACCESS_KEY_ID`          | `.env` + GitHub Secrets          | AWS credentials                        |
+| `AWS_SECRET_ACCESS_KEY`      | `.env` + GitHub Secrets          | AWS credentials                        |
+| `EXA_API_KEY`                | `.env`                           | Exa API key for data enrichment        |
+| `ANTHROPIC_API_KEY`          | Lambda env var                   | Claude Haiku for submission LLM review |
+| `ADMIN_KEY`                  | Lambda env var                   | Admin authentication key               |
+| `S3_BUCKET_NAME`             | GitHub Secrets                   | `mapping-ai-website-561047280976`      |
+| `CLOUDFRONT_DISTRIBUTION_ID` | GitHub Secrets                   | `E34ZXLC7CZX7XT`                       |
 
 **Never commit `.env`.** It is in `.gitignore`.
 
@@ -246,75 +240,75 @@ The schema uses a **unified `entity` table** (migrated from the old schema that 
 
 #### `entity`
 
-| Column | Type | Notes |
-|--------|------|-------|
-| `id` | SERIAL PK | |
-| `entity_type` | VARCHAR(20) | `person`, `organization`, or `resource` |
-| `name` | VARCHAR(200) | Person/org name |
-| `title` | VARCHAR(300) | Job title (person) |
-| `category` | VARCHAR(200) | Role (person) or sector (org) |
-| `primary_org` | VARCHAR(200) | Person's primary org |
-| `other_orgs` | VARCHAR(200) | Person's other affiliations |
-| `website` | VARCHAR(200) | Org website |
-| `funding_model` | VARCHAR(200) | Org funding model |
-| `parent_org_id` | INTEGER FK → entity | Org parent |
-| `resource_title` | VARCHAR(300) | Resource title |
-| `resource_category` | VARCHAR(200) | Resource category |
-| `resource_author` | VARCHAR(200) | Resource author |
-| `resource_type` | VARCHAR(100) | Essay, Book, Report, etc. |
-| `resource_url` | VARCHAR(500) | Resource URL |
-| `resource_year` | VARCHAR(10) | Resource year |
-| `resource_key_argument` | TEXT | Resource key argument |
-| `location` | VARCHAR(200) | |
-| `influence_type` | TEXT | Comma-separated |
-| `twitter`, `bluesky` | VARCHAR(200) | Social handles |
-| `notes` | TEXT | |
-| `thumbnail_url` | VARCHAR(500) | |
-| `belief_regulatory_stance` | VARCHAR(200) | Display label (trigger-derived from wavg) |
-| `belief_regulatory_stance_detail` | TEXT | |
-| `belief_evidence_source` | VARCHAR(200) | |
-| `belief_agi_timeline` | VARCHAR(200) | Display label |
-| `belief_ai_risk` | VARCHAR(200) | Display label |
-| `belief_threat_models` | TEXT | |
-| `belief_*_wavg` | REAL | Weighted average score (trigger-maintained) |
-| `belief_*_wvar` | REAL | Weighted variance (trigger-maintained) |
-| `belief_*_n` | INTEGER | Count of scored submissions |
-| `submission_count` | INTEGER | Total approved submissions |
-| `status` | VARCHAR(20) | `approved`, `pending`, `internal` |
-| `search_vector` | tsvector | Full-text search (GIN indexed, auto-updated by trigger) |
+| Column                            | Type                | Notes                                                   |
+| --------------------------------- | ------------------- | ------------------------------------------------------- |
+| `id`                              | SERIAL PK           |                                                         |
+| `entity_type`                     | VARCHAR(20)         | `person`, `organization`, or `resource`                 |
+| `name`                            | VARCHAR(200)        | Person/org name                                         |
+| `title`                           | VARCHAR(300)        | Job title (person)                                      |
+| `category`                        | VARCHAR(200)        | Role (person) or sector (org)                           |
+| `primary_org`                     | VARCHAR(200)        | Person's primary org                                    |
+| `other_orgs`                      | VARCHAR(200)        | Person's other affiliations                             |
+| `website`                         | VARCHAR(200)        | Org website                                             |
+| `funding_model`                   | VARCHAR(200)        | Org funding model                                       |
+| `parent_org_id`                   | INTEGER FK → entity | Org parent                                              |
+| `resource_title`                  | VARCHAR(300)        | Resource title                                          |
+| `resource_category`               | VARCHAR(200)        | Resource category                                       |
+| `resource_author`                 | VARCHAR(200)        | Resource author                                         |
+| `resource_type`                   | VARCHAR(100)        | Essay, Book, Report, etc.                               |
+| `resource_url`                    | VARCHAR(500)        | Resource URL                                            |
+| `resource_year`                   | VARCHAR(10)         | Resource year                                           |
+| `resource_key_argument`           | TEXT                | Resource key argument                                   |
+| `location`                        | VARCHAR(200)        |                                                         |
+| `influence_type`                  | TEXT                | Comma-separated                                         |
+| `twitter`, `bluesky`              | VARCHAR(200)        | Social handles                                          |
+| `notes`                           | TEXT                |                                                         |
+| `thumbnail_url`                   | VARCHAR(500)        |                                                         |
+| `belief_regulatory_stance`        | VARCHAR(200)        | Display label (trigger-derived from wavg)               |
+| `belief_regulatory_stance_detail` | TEXT                |                                                         |
+| `belief_evidence_source`          | VARCHAR(200)        |                                                         |
+| `belief_agi_timeline`             | VARCHAR(200)        | Display label                                           |
+| `belief_ai_risk`                  | VARCHAR(200)        | Display label                                           |
+| `belief_threat_models`            | TEXT                |                                                         |
+| `belief_*_wavg`                   | REAL                | Weighted average score (trigger-maintained)             |
+| `belief_*_wvar`                   | REAL                | Weighted variance (trigger-maintained)                  |
+| `belief_*_n`                      | INTEGER             | Count of scored submissions                             |
+| `submission_count`                | INTEGER             | Total approved submissions                              |
+| `status`                          | VARCHAR(20)         | `approved`, `pending`, `internal`                       |
+| `search_vector`                   | tsvector            | Full-text search (GIN indexed, auto-updated by trigger) |
 
 #### `submission`
 
-| Column | Type | Notes |
-|--------|------|-------|
-| `id` | SERIAL PK | |
-| `entity_type` | VARCHAR(20) | `person`, `organization`, or `resource` |
-| `entity_id` | INTEGER FK → entity | NULL for new entity submissions, set for edits |
-| `submitter_email` | VARCHAR(200) | |
-| `submitter_relationship` | VARCHAR(20) | `self`, `connector`, `external` |
-| (all entity fields) | | Flat columns matching entity table |
-| `belief_*_score` | SMALLINT | Numeric score (stance 1-7, timeline 1-5, risk 1-5) |
-| `notes_html` | TEXT | Rich text notes |
-| `notes_mentions` | JSONB | @mention data |
-| `status` | VARCHAR(20) | `pending`, `approved`, `rejected` |
-| `llm_review` | JSONB | Claude Haiku quality rating (1-5), flags, notes |
-| `resolution_notes` | TEXT | Admin notes on review decision |
-| `submitted_at`, `reviewed_at` | TIMESTAMPTZ | |
-| `reviewed_by` | VARCHAR(200) | |
+| Column                        | Type                | Notes                                              |
+| ----------------------------- | ------------------- | -------------------------------------------------- |
+| `id`                          | SERIAL PK           |                                                    |
+| `entity_type`                 | VARCHAR(20)         | `person`, `organization`, or `resource`            |
+| `entity_id`                   | INTEGER FK → entity | NULL for new entity submissions, set for edits     |
+| `submitter_email`             | VARCHAR(200)        |                                                    |
+| `submitter_relationship`      | VARCHAR(20)         | `self`, `connector`, `external`                    |
+| (all entity fields)           |                     | Flat columns matching entity table                 |
+| `belief_*_score`              | SMALLINT            | Numeric score (stance 1-7, timeline 1-5, risk 1-5) |
+| `notes_html`                  | TEXT                | Rich text notes                                    |
+| `notes_mentions`              | JSONB               | @mention data                                      |
+| `status`                      | VARCHAR(20)         | `pending`, `approved`, `rejected`                  |
+| `llm_review`                  | JSONB               | Claude Haiku quality rating (1-5), flags, notes    |
+| `resolution_notes`            | TEXT                | Admin notes on review decision                     |
+| `submitted_at`, `reviewed_at` | TIMESTAMPTZ         |                                                    |
+| `reviewed_by`                 | VARCHAR(200)        |                                                    |
 
 #### `edge`
 
-| Column | Type | Notes |
-|--------|------|-------|
-| `id` | SERIAL PK | |
-| `source_id` | INTEGER FK → entity | ON DELETE CASCADE |
-| `target_id` | INTEGER FK → entity | ON DELETE CASCADE |
-| `edge_type` | VARCHAR(50) | affiliated, collaborator, funder, critic, authored_by, etc. |
-| `role` | VARCHAR(200) | Role at org (for affiliation edges) |
-| `is_primary` | BOOLEAN | Primary org affiliation |
-| `evidence` | TEXT | |
-| `created_by` | VARCHAR(50) | `system`, `admin`, etc. |
-| UNIQUE | | `(source_id, target_id, edge_type)` |
+| Column       | Type                | Notes                                                       |
+| ------------ | ------------------- | ----------------------------------------------------------- |
+| `id`         | SERIAL PK           |                                                             |
+| `source_id`  | INTEGER FK → entity | ON DELETE CASCADE                                           |
+| `target_id`  | INTEGER FK → entity | ON DELETE CASCADE                                           |
+| `edge_type`  | VARCHAR(50)         | affiliated, collaborator, funder, critic, authored_by, etc. |
+| `role`       | VARCHAR(200)        | Role at org (for affiliation edges)                         |
+| `is_primary` | BOOLEAN             | Primary org affiliation                                     |
+| `evidence`   | TEXT                |                                                             |
+| `created_by` | VARCHAR(50)         | `system`, `admin`, etc.                                     |
+| UNIQUE       |                     | `(source_id, target_id, edge_type)`                         |
 
 #### Triggers
 
@@ -336,20 +330,20 @@ npm run db:backup:local   # Backup to local files only
 
 The export layer (`api/export-map.js`) maps DB column names to what the frontend expects:
 
-| DB column | Frontend field | Notes |
-|-----------|---------------|-------|
-| `belief_regulatory_stance` | `regulatory_stance` | |
-| `belief_agi_timeline` | `agi_timeline` | |
-| `belief_ai_risk` | `ai_risk_level` | |
-| `belief_evidence_source` | `evidence_source` | |
-| `belief_threat_models` | `threat_models` | |
-| `resource_title` | `title` | Resources only |
-| `resource_category` | `category` | Resources only |
-| `resource_author` | `author` | Resources only |
-| `resource_url` | `url` | Resources only |
-| `resource_year` | `year` | Resources only |
-| `resource_key_argument` | `key_argument` | Resources only |
-| `belief_*_wavg` | `stance_score` / `timeline_score` / `risk_score` | Falls back to text label → numeric lookup |
+| DB column                  | Frontend field                                   | Notes                                     |
+| -------------------------- | ------------------------------------------------ | ----------------------------------------- |
+| `belief_regulatory_stance` | `regulatory_stance`                              |                                           |
+| `belief_agi_timeline`      | `agi_timeline`                                   |                                           |
+| `belief_ai_risk`           | `ai_risk_level`                                  |                                           |
+| `belief_evidence_source`   | `evidence_source`                                |                                           |
+| `belief_threat_models`     | `threat_models`                                  |                                           |
+| `resource_title`           | `title`                                          | Resources only                            |
+| `resource_category`        | `category`                                       | Resources only                            |
+| `resource_author`          | `author`                                         | Resources only                            |
+| `resource_url`             | `url`                                            | Resources only                            |
+| `resource_year`            | `year`                                           | Resources only                            |
+| `resource_key_argument`    | `key_argument`                                   | Resources only                            |
+| `belief_*_wavg`            | `stance_score` / `timeline_score` / `risk_score` | Falls back to text label → numeric lookup |
 
 ---
 
@@ -366,6 +360,7 @@ source .env && sam build && sam deploy --parameter-overrides "DatabaseUrl=$DATAB
 ### Frontend (auto on push to main)
 
 On every push to `main`, `.github/workflows/deploy.yml`:
+
 1. `npm ci`
 2. `npm run build:tiptap` (esbuild bundles legacy TipTap for map.html)
 3. `npx vite build` (builds all React pages into `dist/`)
@@ -376,11 +371,13 @@ On every push to `main`, `.github/workflows/deploy.yml`:
 8. Post-deploy smoke test (verifies /, /contribute, /map, /about, /insights, /admin all return 200)
 
 **Cache headers:**
+
 - HTML files: `no-cache` (always revalidate)
 - Hashed assets (JS/CSS): `immutable, max-age=31536000` (1 year)
 - `map-data.json`: `max-age=60, stale-while-revalidate=300`
 
 **GitHub Secrets required:**
+
 - `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`
 - `S3_BUCKET_NAME`, `CLOUDFRONT_DISTRIBUTION_ID`
 - `DATABASE_URL` - RDS connection string
@@ -437,10 +434,10 @@ Submit a new or updated entry for review.
 
 Returns approved entities grouped by type.
 
-| Parameter | Values | Default |
-|-----------|--------|---------|
-| `type` | `person`, `organization`, `resource` | all |
-| `status` | `approved`, `pending`, `rejected` | `approved` |
+| Parameter | Values                               | Default    |
+| --------- | ------------------------------------ | ---------- |
+| `type`    | `person`, `organization`, `resource` | all        |
+| `status`  | `approved`, `pending`, `rejected`    | `approved` |
 
 **Response:** `{ "people": [...], "organizations": [...], "resources": [...], "edges": [...] }`
 
@@ -448,33 +445,33 @@ Returns approved entities grouped by type.
 
 Full-text search across entities (tsvector + ILIKE fallback).
 
-| Parameter | Values | Notes |
-|-----------|--------|-------|
-| `q` | search string | Required, min 2 chars |
-| `type` | `person`, `organization`, `resource` | Optional filter |
-| `status` | `pending`, `all` | Optional |
+| Parameter | Values                               | Notes                 |
+| --------- | ------------------------------------ | --------------------- |
+| `q`       | search string                        | Required, min 2 chars |
+| `type`    | `person`, `organization`, `resource` | Optional filter       |
+| `status`  | `pending`, `all`                     | Optional              |
 
 ### `GET /admin`
 
-| Parameter | Returns |
-|-----------|---------|
-| `action=stats` | Counts by entity_type, pending submissions, edges |
-| `action=pending` | New entity submissions (entity_id IS NULL) |
-| `action=pending_merges` | Edit submissions for existing entities |
-| `action=all&type=entity&entity_type=person` | Browse entities with filters |
+| Parameter                                   | Returns                                           |
+| ------------------------------------------- | ------------------------------------------------- |
+| `action=stats`                              | Counts by entity_type, pending submissions, edges |
+| `action=pending`                            | New entity submissions (entity_id IS NULL)        |
+| `action=pending_merges`                     | Edit submissions for existing entities            |
+| `action=all&type=entity&entity_type=person` | Browse entities with filters                      |
 
 **Authentication:** `X-Admin-Key` header or `?key=` query param
 
 ### `POST /admin`
 
-| Action | Description |
-|--------|-------------|
-| `approve` | Approve new entity submission (optional field overrides in `data`) |
-| `reject` | Reject new entity submission |
-| `merge` | Merge edit submission into existing entity |
-| `reject_submission` | Reject edit without touching entity |
-| `update_entity` | Direct admin edit |
-| `delete` | Delete entity (cascades edges + submissions) |
+| Action              | Description                                                        |
+| ------------------- | ------------------------------------------------------------------ |
+| `approve`           | Approve new entity submission (optional field overrides in `data`) |
+| `reject`            | Reject new entity submission                                       |
+| `merge`             | Merge edit submission into existing entity                         |
+| `reject_submission` | Reject edit without touching entity                                |
+| `update_entity`     | Direct admin edit                                                  |
+| `delete`            | Delete entity (cascades edges + submissions)                       |
 
 **Side effects:** Approve/merge/delete auto-regenerate map-data.json → S3 → CloudFront invalidation
 
@@ -506,11 +503,11 @@ Upload thumbnail image (JPG/PNG/WebP, max 2MB). Requires admin key.
 
 ## Commit Conventions
 
-| Prefix | Use for |
-|--------|---------|
-| `feat:` | New feature |
-| `fix:` | Bug fix |
-| `refactor:` | Code restructure, no behavior change |
-| `docs:` | Documentation only |
-| `style:` | CSS / visual changes, no logic change |
-| `chore:` | Maintenance, dependencies, config |
+| Prefix      | Use for                               |
+| ----------- | ------------------------------------- |
+| `feat:`     | New feature                           |
+| `fix:`      | Bug fix                               |
+| `refactor:` | Code restructure, no behavior change  |
+| `docs:`     | Documentation only                    |
+| `style:`    | CSS / visual changes, no logic change |
+| `chore:`    | Maintenance, dependencies, config     |
