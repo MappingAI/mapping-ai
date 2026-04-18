@@ -345,19 +345,6 @@ export function App() {
           </a>
         </div>
 
-        {/* Discord widget */}
-        <div className="mb-8 rounded-lg overflow-hidden border border-[#e0ddd8]" style={{ maxWidth: 350 }}>
-          <iframe
-            src="https://discord.com/widget?id=1491894381773590609&theme=light"
-            width="350"
-            height="300"
-            frameBorder="0"
-            sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
-            title="Discord server"
-            className="block"
-          />
-        </div>
-
         {/* SCHEDULE */}
         <SectionHeading>Schedule</SectionHeading>
 
