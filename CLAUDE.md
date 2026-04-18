@@ -34,6 +34,7 @@ All infrastructure is on AWS. No Vercel or Neon.
 There are two data paths:
 
 ### Path 1: Static map data (read-only, fast)
+
 ```
 GitHub push to main
     → GitHub Actions workflow:
@@ -48,6 +49,7 @@ GitHub push to main
 ```
 
 ### Path 2: Live API (form submissions, search)
+
 ```
 User submits form on contribute.html
     → POST to API Gateway (https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com/submit)
@@ -65,6 +67,7 @@ Admin approves submission (via admin.html)
 ```
 
 **Key insight:** The map loads from a static JSON file on S3/CloudFront, NOT from the database. This makes the map load instantly for all users worldwide. New submissions appear on the map automatically after admin approval (no deploy needed). For manual data refresh:
+
 ```bash
 node scripts/export-map-data.js                           # regenerate from DB
 aws s3 cp map-data.json s3://mapping-ai-website-561047280976/  # upload to S3
@@ -142,15 +145,19 @@ mapping-ai/
 The RDS schema uses a **unified `entity` table** (migrated from the old schema that had separate `people`, `organizations`, `resources` tables). Do not assume the old per-type table names - they no longer exist.
 
 ### `entity`
-id, entity_type (person|organization|resource), name, category, other_categories (TEXT, comma-separated secondary categories), title, primary_org, other_orgs, website, funding_model, parent_org_id (FK → entity), resource_title, resource_category, resource_author, resource_type, resource_url, resource_year, resource_key_argument, location, influence_type, twitter, bluesky, notes, notes_html (TEXT, rich text from TipTap), thumbnail_url, belief_regulatory_stance + detail, belief_evidence_source, belief_agi_timeline, belief_ai_risk, belief_threat_models, belief_*_wavg/wvar/n (trigger-maintained weighted aggregates), submission_count, search_vector (tsvector), status (approved|pending|internal)
+
+id, entity*type (person|organization|resource), name, category, other_categories (TEXT, comma-separated secondary categories), title, primary_org, other_orgs, website, funding_model, parent_org_id (FK → entity), resource_title, resource_category, resource_author, resource_type, resource_url, resource_year, resource_key_argument, location, influence_type, twitter, bluesky, notes, notes_html (TEXT, rich text from TipTap), thumbnail_url, belief_regulatory_stance + detail, belief_evidence_source, belief_agi_timeline, belief_ai_risk, belief_threat_models, belief*\*\_wavg/wvar/n (trigger-maintained weighted aggregates), submission_count, search_vector (tsvector), status (approved|pending|internal)
 
 ### `submission`
-entity_type, entity_id (nullable - NULL for new entity submissions, set for edit submissions), submitter_email, submitter_relationship (self|connector|external), (all entity fields as flat columns), belief_*_score (SMALLINT - numeric scores for trigger aggregation), notes_html, notes_mentions (JSONB), llm_review (JSONB: quality 1-5, flags, notes from Claude Haiku), status (pending|approved|rejected), resolution_notes, reviewed_at, reviewed_by
+
+entity*type, entity_id (nullable - NULL for new entity submissions, set for edit submissions), submitter_email, submitter_relationship (self|connector|external), (all entity fields as flat columns), belief*\*\_score (SMALLINT - numeric scores for trigger aggregation), notes_html, notes_mentions (JSONB), llm_review (JSONB: quality 1-5, flags, notes from Claude Haiku), status (pending|approved|rejected), resolution_notes, reviewed_at, reviewed_by
 
 ### `edge` (relationships + org affiliations)
+
 source_id + target_id (both FK → entity, ON DELETE CASCADE), edge_type (affiliated/collaborator/funder/critic/authored_by/etc.), role, is_primary, evidence, created_by, UNIQUE(source_id, target_id, edge_type)
 
 ### Triggers
+
 - **before_submission_update**: When new-entity submission approved (entity_id IS NULL), auto-creates entity row and backfills entity_id
 - **after_submission_update**: Recalculates weighted belief scores on entity. Weights: self=10, connector=2, external=1
 - **update_entity_search**: Updates tsvector on entity INSERT/UPDATE
@@ -205,29 +212,29 @@ aws cloudfront create-invalidation --distribution-id E34ZXLC7CZX7XT --paths "/*"
 
 ## Environment Variables
 
-| Variable | Where | Description |
-|----------|-------|-------------|
-| `DATABASE_URL` | `.env` + Lambda + GitHub Secrets | RDS PostgreSQL connection string |
-| `AWS_ACCESS_KEY_ID` | `.env` + GitHub Secrets | AWS credentials |
-| `AWS_SECRET_ACCESS_KEY` | `.env` + GitHub Secrets | AWS credentials |
-| `S3_BUCKET_NAME` | GitHub Secrets | `mapping-ai-website-561047280976` |
-| `CLOUDFRONT_DISTRIBUTION_ID` | GitHub Secrets | `E34ZXLC7CZX7XT` |
-| `EXA_API_KEY` | `.env` | Exa API key for data enrichment |
-| `ANTHROPIC_API_KEY` | `.env` + Lambda (via SAM parameter) | Claude Haiku for LLM review + semantic search |
-| `ADMIN_KEY` | `.env` + Lambda (via SAM parameter) | Admin authentication (passed via --parameter-overrides, never committed) |
+| Variable                     | Where                               | Description                                                              |
+| ---------------------------- | ----------------------------------- | ------------------------------------------------------------------------ |
+| `DATABASE_URL`               | `.env` + Lambda + GitHub Secrets    | RDS PostgreSQL connection string                                         |
+| `AWS_ACCESS_KEY_ID`          | `.env` + GitHub Secrets             | AWS credentials                                                          |
+| `AWS_SECRET_ACCESS_KEY`      | `.env` + GitHub Secrets             | AWS credentials                                                          |
+| `S3_BUCKET_NAME`             | GitHub Secrets                      | `mapping-ai-website-561047280976`                                        |
+| `CLOUDFRONT_DISTRIBUTION_ID` | GitHub Secrets                      | `E34ZXLC7CZX7XT`                                                         |
+| `EXA_API_KEY`                | `.env`                              | Exa API key for data enrichment                                          |
+| `ANTHROPIC_API_KEY`          | `.env` + Lambda (via SAM parameter) | Claude Haiku for LLM review + semantic search                            |
+| `ADMIN_KEY`                  | `.env` + Lambda (via SAM parameter) | Admin authentication (passed via --parameter-overrides, never committed) |
 
 ## API Endpoints
 
 **Production:** `https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com`
 
-| Endpoint | Method | Purpose |
-|----------|--------|---------|
-| `/submit` | POST | Form submission (camelCase `data` object → submission table + LLM review) |
-| `/submissions` | GET | Query approved entities with edges |
-| `/search` | GET | Full-text search (`?q=...&type=...&status=pending\|all`) |
-| `/admin` | GET | Stats, pending queue, all entities (requires admin key) |
-| `/admin` | POST | Approve, reject, merge, update, delete entities (auto-refreshes map on approve/merge/delete) |
-| `/upload` | POST | Thumbnail image upload to S3 (requires admin key) |
+| Endpoint       | Method | Purpose                                                                                      |
+| -------------- | ------ | -------------------------------------------------------------------------------------------- |
+| `/submit`      | POST   | Form submission (camelCase `data` object → submission table + LLM review)                    |
+| `/submissions` | GET    | Query approved entities with edges                                                           |
+| `/search`      | GET    | Full-text search (`?q=...&type=...&status=pending\|all`)                                     |
+| `/admin`       | GET    | Stats, pending queue, all entities (requires admin key)                                      |
+| `/admin`       | POST   | Approve, reject, merge, update, delete entities (auto-refreshes map on approve/merge/delete) |
+| `/upload`      | POST   | Thumbnail image upload to S3 (requires admin key)                                            |
 
 ## Form Features (src/contribute/)
 
@@ -271,9 +278,11 @@ aws cloudfront create-invalidation --distribution-id E34ZXLC7CZX7XT --paths "/*"
 - **Entity count**: Inside controls sidebar (below "About this map"), not floating overlay
 
 ## Person Categories (roles)
+
 Executive, Researcher, Policymaker, Investor, Organizer, Journalist, Academic, Cultural figure
 
 ## Organization Categories (sectors)
+
 Frontier Lab, AI Safety/Alignment, Think Tank/Policy Org, Government/Agency, Academic, VC/Capital/Philanthropy, Labor/Civil Society, Ethics/Bias/Rights, Media/Journalism, Political Campaign/PAC, AI Infrastructure & Compute, AI Deployers & Platforms
 
 ## Version Control & Deployment Practices
@@ -286,11 +295,34 @@ See `docs/DEPLOYMENT.md` for the full deployment and review process.
 - Test/seed data scripts gitignored
 - **Push to `main` auto-deploys frontend** - test in a browser first, not just with scripts
 - **All changes to `main` must go through a PR** - no direct pushes except P0 hotfixes
-- **Backend (Lambda/API Gateway) requires separate `sam deploy`** - merging api/*.js or template.yaml to main does NOT deploy them
+- **Backend (Lambda/API Gateway) requires separate `sam deploy`** - merging api/\*.js or template.yaml to main does NOT deploy them
 - **Never add `defer` or `async` to the D3 script tag** - inline map code depends on it synchronously (see `docs/post-mortems/2026-04-09-d3-defer-map-outage.md`)
 - **Browser-test map.html before pushing any HTML/JS changes** - automated checks cannot catch rendering failures
 - **MANDATORY: Verify site loads immediately after any push to main** - check /, /contribute, /map, /insights, /admin all return 200. The deploy workflow includes an automated smoke test, but always verify manually too. A broken prod site with no one checking is the worst outcome.
 - **For preview branches**: after pushing, wait for Cloudflare Pages build, then test the pages you changed on the preview URL before reporting the work as done
+
+## Linting & Formatting
+
+The project uses **ESLint** + **Prettier** with **lefthook** pre-commit hooks.
+
+```bash
+npm run lint          # Check for lint errors
+npm run lint:fix      # Auto-fix lint errors
+npm run format        # Format all src/ files with Prettier
+npm run format:check  # Check formatting without writing
+npm run typecheck     # TypeScript type checking
+```
+
+Pre-commit hooks run automatically via lefthook (typecheck + lint + format check). If a commit fails the hook, fix the issue and commit again.
+
+**Never suppress errors with force flags.** If `--force`, `--no-verify`, or `eslint-disable` seem necessary, the root cause needs addressing instead. If a lint rule is genuinely wrong for the project, update `eslint.config.js` with a comment explaining why.
+
+To set up lefthook after cloning:
+
+```bash
+brew install lefthook    # macOS
+lefthook install         # sets up git hooks
+```
 
 ## DB Safety
 
