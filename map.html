@@ -3395,7 +3395,6 @@ let _hoveredNode = null;
 let _clusterDimmed = false;
 let _redrawScheduled = false;
 let _themeColors = null;
-let _dragOccurred = false;
 let _quadtree = null;
 let _quadtreeDirty = false;
 let _monoFont = 'monospace';
@@ -3991,9 +3990,11 @@ function render() {
     });
 
   // d3.drag on canvas (applied BEFORE zoom so drag takes priority for nodes)
-  _dragOccurred = false;
+  // clickDistance(4) ensures sub-pixel movements don't suppress the click event —
+  // d3-drag defers 'start' until movement exceeds 4px, so pure clicks pass through.
   canvasSel.call(d3.drag()
     .container(canvas)
+    .clickDistance(4)
     .subject(function(event) {
       const [mx, my] = d3.pointer(event, canvas);
       const node = _findNodeAt(mx, my);
@@ -4002,13 +4003,11 @@ function render() {
       }
     })
     .on('start', (event) => {
-      _dragOccurred = false;
       if (!event.active) simulation.alphaDecay(0.04).alphaTarget(0.3).restart();
       event.subject._node.fx = event.subject._node.x;
       event.subject._node.fy = event.subject._node.y;
     })
     .on('drag', (event) => {
-      _dragOccurred = true;
       event.subject._node.fx = currentZoom.invertX(event.x);
       event.subject._node.fy = currentZoom.invertY(event.y);
     })
@@ -4048,7 +4047,6 @@ function render() {
 
   // Canvas click (detail panel + dim)
   canvasSel.on('click.detail', function(event) {
-    if (_dragOccurred) { _dragOccurred = false; return; }
     const [mx, my] = d3.pointer(event, canvas);
     const node = _findNodeAt(mx, my);
     if (node) {
