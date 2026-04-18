@@ -52,32 +52,20 @@ AWS_ACCESS_KEY_ID=...
 AWS_SECRET_ACCESS_KEY=...
 ```
 
-### 3. Get map data
-
-The map and contribute form need `map-data.json` to show data. On a fresh clone this file doesn't exist. Either pull from production or generate from the database:
+### 3. Start local dev
 
 ```bash
-# Option A: Download from production (no DB credentials needed)
+npm run dev
+```
+
+Visit `localhost:5173`. This runs Vite and the Express API server together. Everything works from there: map, contribute form, admin, insights, search, form submissions.
+
+On first run, `map-data.json` is generated from your database automatically (needs `DATABASE_URL` in `.env`). If you don't have DB credentials, download the production snapshot first so the map isn't empty:
+
+```bash
 curl -o map-data.json https://mapping-ai.org/map-data.json
 curl -o map-detail.json https://mapping-ai.org/map-detail.json
-
-# Option B: Generate from database (needs DATABASE_URL in .env)
-node scripts/export-map-data.js
 ```
-
-### 4. Start local dev
-
-Open two terminals:
-
-```bash
-# Terminal 1
-npx vite dev
-
-# Terminal 2
-node dev-server.js
-```
-
-Visit `localhost:5173`. Everything works from there: map, contribute form, admin, insights, search, form submissions.
 
 ### Using AI coding agents
 

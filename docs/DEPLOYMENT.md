@@ -48,17 +48,13 @@ Every PR to `main` must include:
 Before creating the PR, test locally:
 
 ```bash
-# Terminal 1: React pages
-npx vite dev
-
-# Terminal 2: API proxy + map
-node dev-server.js
+npm run dev
 ```
 
 | Page       | URL                       | What to check                                                           |
 | ---------- | ------------------------- | ----------------------------------------------------------------------- |
 | Contribute | localhost:5173/contribute | Form loads, dropdowns work, org search returns results                  |
-| Map        | localhost:3000/map.html   | Map renders with nodes. Click a node, detail panel opens. Filters work. |
+| Map        | localhost:5173/map        | Map renders with nodes. Click a node, detail panel opens. Filters work. |
 | Admin      | localhost:5173/admin      | Auth gate appears, can type password                                    |
 | Insights   | localhost:5173/insights   | Charts render with data                                                 |
 | Homepage   | localhost:5173/           | Page loads, navigation works                                            |

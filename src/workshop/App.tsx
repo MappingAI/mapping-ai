@@ -714,22 +714,22 @@ lefthook install`}</Pre>
           <Code>workshop/DATABASE-ORIENTATION.md</Code> for details.
         </p>
 
-        <p className="mb-4">Get map data (needed for the map and search to show anything):</p>
+        <p className="mb-4">Start local dev:</p>
+
+        <Pre>{`npm run dev`}</Pre>
+
+        <p className="mb-4">
+          Visit <Code>localhost:5173</Code>. This runs Vite and the Express API server together. Everything works from
+          there: map, contribute form, search, admin, insights.
+        </p>
+
+        <p className="mb-4">
+          On first run, <Code>map-data.json</Code> is auto-generated from your database. If you don&rsquo;t have DB
+          credentials yet, download the production snapshot first so the map isn&rsquo;t empty:
+        </p>
 
         <Pre>{`curl -o map-data.json https://mapping-ai.org/map-data.json
 curl -o map-detail.json https://mapping-ai.org/map-detail.json`}</Pre>
-
-        <p className="mb-4">Start local dev (two terminals):</p>
-
-        <Pre>{`# Terminal 1
-npx vite dev          # http://localhost:5173
-
-# Terminal 2
-node dev-server.js    # API proxy`}</Pre>
-
-        <p className="mb-4">
-          Visit <Code>localhost:5173</Code>. Everything works from there: map, contribute form, search, admin, insights.
-        </p>
 
         <H4>Useful commands</H4>
 

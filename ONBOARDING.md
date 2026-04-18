@@ -230,32 +230,22 @@ AWS_ACCESS_KEY_ID=...
 AWS_SECRET_ACCESS_KEY=...
 ```
 
-### Get map data
-
-The map and contribute form search need `map-data.json` to work. On a fresh clone it doesn't exist. Either download from production or generate from the database:
-
-```bash
-# Option A: Download from production (no DB credentials needed)
-curl -o map-data.json https://mapping-ai.org/map-data.json
-curl -o map-detail.json https://mapping-ai.org/map-detail.json
-
-# Option B: Generate from database (needs DATABASE_URL in .env)
-node scripts/export-map-data.js
-```
-
 ### Running locally
 
-Open two terminals:
-
 ```bash
-# Terminal 1
-npx vite dev              # http://localhost:5173
-
-# Terminal 2
-node dev-server.js        # API proxy on localhost:3000
+npm run dev
 ```
 
-Visit `localhost:5173`. Everything works from there: map, contribute form, search, admin, insights. Vite proxies `/api` requests to `localhost:3000` automatically.
+Visit `localhost:5173`. A single command runs Vite (port 5173) and the Express API server (port 3000) together; Vite proxies `/api` requests to `:3000` automatically. Everything works from there: map, contribute form, search, admin, insights.
+
+On first run, `map-data.json` is generated from the database (needs `DATABASE_URL` in `.env`). If you don't have DB credentials yet, download the production snapshot first so the map isn't empty:
+
+```bash
+curl -o map-data.json https://mapping-ai.org/map-data.json
+curl -o map-detail.json https://mapping-ai.org/map-detail.json
+```
+
+If you only want one of the two servers, `npm run dev:web` and `npm run dev:api` start them individually.
 
 ### Database access
 
@@ -272,23 +262,24 @@ npm run db:migrate
 npm run db:backup:local
 ```
 
-The Express dev server (`node dev-server.js`) connects to the same database for API calls (form submissions, search, admin actions).
+The Express dev server (started by `npm run dev` or `npm run dev:api`) connects to the same database for API calls (form submissions, search, admin actions).
 
 ### Available scripts
 
-| Command                   | What it does                                                |
-| ------------------------- | ----------------------------------------------------------- |
-| `npx vite dev`            | Vite dev server with HMR (port 5173, proxies /api to :3000) |
-| `npx vite build`          | Production build (outputs to dist/)                         |
-| `npx tsc --noEmit`        | TypeScript type check                                       |
-| `npx vitest run`          | Run tests (Vitest + jsdom + React Testing Library)          |
-| `node dev-server.js`      | Local Express API server (port 3000)                        |
-| `npm run build:tiptap`    | Legacy TipTap bundle for map.html (esbuild)                 |
-| `npm run db:migrate`      | Create/update all tables, triggers, indexes                 |
-| `npm run db:seed`         | Import Airtable CSV data                                    |
-| `npm run db:export-map`   | Generate `map-data.json` from approved entities             |
-| `npm run db:backup`       | Backup all tables to S3                                     |
-| `npm run db:backup:local` | Backup to local files only                                  |
+| Command                   | What it does                                                                                                                |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `npm run dev`             | Start Vite + Express API together (Vite on 5173, API on 3000). Auto-generates `map-data.json` on first run if DB creds set. |
+| `npm run dev:web`         | Vite dev server only (port 5173, proxies /api to :3000)                                                                     |
+| `npm run dev:api`         | Local Express API server only (port 3000)                                                                                   |
+| `npx vite build`          | Production build (outputs to dist/)                                                                                         |
+| `npx tsc --noEmit`        | TypeScript type check                                                                                                       |
+| `npx vitest run`          | Run tests (Vitest + jsdom + React Testing Library)                                                                          |
+| `npm run build:tiptap`    | Legacy TipTap bundle for map.html (esbuild)                                                                                 |
+| `npm run db:migrate`      | Create/update all tables, triggers, indexes                                                                                 |
+| `npm run db:seed`         | Import Airtable CSV data                                                                                                    |
+| `npm run db:export-map`   | Generate `map-data.json` from approved entities                                                                             |
+| `npm run db:backup`       | Backup all tables to S3                                                                                                     |
+| `npm run db:backup:local` | Backup to local files only                                                                                                  |
 
 Backend deploy (Lambda functions):
 

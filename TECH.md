@@ -170,28 +170,22 @@ AWS_ACCESS_KEY_ID=...
 AWS_SECRET_ACCESS_KEY=...
 ```
 
-Get map data (the map and contribute form search need this to show anything):
+Start local dev:
 
 ```bash
-# Option A: Download from production (no DB needed)
+npm run dev
+```
+
+Visit `localhost:5173`. A single command runs Vite (port 5173) and the Express API server (port 3000) together; Vite proxies `/api` requests to `:3000` automatically. Everything works from there: map, contribute form, search, admin, insights.
+
+On first run, `map-data.json` is generated from the database (needs `DATABASE_URL` in `.env`). If you don't have DB credentials, download the production snapshot first so the map isn't empty:
+
+```bash
 curl -o map-data.json https://mapping-ai.org/map-data.json
 curl -o map-detail.json https://mapping-ai.org/map-detail.json
-
-# Option B: Generate from database (needs DATABASE_URL in .env)
-node scripts/export-map-data.js
 ```
 
-Start local dev (two terminals):
-
-```bash
-# Terminal 1
-npx vite dev                      # http://localhost:5173
-
-# Terminal 2
-node dev-server.js                # API proxy on localhost:3000
-```
-
-Visit `localhost:5173`. Everything works from there: map, contribute form, search, admin, insights. Vite proxies `/api` requests to `localhost:3000` automatically.
+Run servers individually with `npm run dev:web` or `npm run dev:api`.
 
 ### Type checking and tests
 
