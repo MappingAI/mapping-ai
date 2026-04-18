@@ -790,19 +790,22 @@ lefthook install`}</Pre>
           <Code>workshop/DATABASE-ORIENTATION.md</Code> for details.
         </p>
 
-        <p className="mb-4">Start two terminals for local dev:</p>
+        <p className="mb-4">Start the dev server:</p>
 
-        <Pre>{`# Terminal 1: React dev server (all pages)
-npx vite dev          # http://localhost:5173
-
-# Terminal 2: API proxy (form submissions, search, map)
-node dev-server.js    # http://localhost:3000`}</Pre>
+        <Pre>{`npx vite dev          # http://localhost:5173 — all pages`}</Pre>
 
         <p className="mb-4">
-          Visit <Code>localhost:5173</Code> for all pages. The Vite dev server
-          proxies API calls to localhost:3000 automatically. The map page at{' '}
-          <Code>localhost:3000/map.html</Code> is the only page that uses the
-          Express server directly (D3 visualization, served as static HTML).
+          This serves everything: all React pages and the map. If you need
+          form submissions or search to work locally (not just the UI), also
+          start the API proxy in a second terminal:
+        </p>
+
+        <Pre>{`node dev-server.js    # API proxy — needed for submit/search`}</Pre>
+
+        <p className="mb-4">
+          Vite automatically proxies <Code>/api</Code> requests to the Express
+          server when it&rsquo;s running. If you&rsquo;re only working on UI or
+          styling, you don&rsquo;t need the second terminal.
         </p>
 
         <H4>Useful commands</H4>
