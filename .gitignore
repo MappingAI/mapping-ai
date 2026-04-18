@@ -15,7 +15,6 @@ launch-prep.md
 slack-update.md
 
 # Dev-only tools
-dev-server.js
 scripts/exa-pilot.js
 scripts/extract-fields.js
 
