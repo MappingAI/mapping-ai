@@ -214,11 +214,20 @@ An admin reviews pending submissions on `admin.html`.
 ### Setup
 
 ```bash
-git clone https://github.com/sophiajwang/mapping-ai.git
+git clone https://github.com/MappingAI/mapping-ai.git
 cd mapping-ai
 npm ci
-cp .env.example .env
-# Edit .env with your DATABASE_URL
+brew install lefthook    # pre-commit hooks for linting/formatting
+lefthook install
+```
+
+Create a `.env` file with database credentials (shared via Doppler or ask the team):
+
+```bash
+# .env
+DATABASE_URL=postgresql://...
+AWS_ACCESS_KEY_ID=...
+AWS_SECRET_ACCESS_KEY=...
 ```
 
 ### Running locally

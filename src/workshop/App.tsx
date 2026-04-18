@@ -508,7 +508,9 @@ npm --version    # should be v10+`}</Pre>
 
         <Pre>{`git clone https://github.com/MappingAI/mapping-ai.git
 cd mapping-ai
-npm ci`}</Pre>
+npm ci
+brew install lefthook    # pre-commit hooks for linting/formatting
+lefthook install`}</Pre>
 
         <p className="mb-4">
           You need a <Code>.env</Code> file with database credentials

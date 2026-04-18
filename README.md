@@ -35,6 +35,8 @@ See [TECH.md](TECH.md) for the full architecture reference.
 git clone https://github.com/MappingAI/mapping-ai.git
 cd mapping-ai
 npm ci
+brew install lefthook    # pre-commit hooks for linting/formatting
+lefthook install
 ```
 
 Create a `.env` file in the project root with database credentials (shared via Doppler, or ask the team):
