@@ -27,6 +27,7 @@ map-data.json
 map-detail.json
 backup-*.json
 backup-*.sql
+perf-artifacts/
 scripts/seed-test-data.js
 scripts/calc-disagreement.js
 scripts/export-pending.js
