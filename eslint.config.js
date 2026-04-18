@@ -13,7 +13,6 @@ export default tseslint.config(
       '.aws-sam/',
       'assets/js/',
       'archive/',
-      'api/',
       'src/tiptap-notes.js',
       // One-off admin/analysis scripts stay out of lint. Production-critical
       // scripts (cache-thumbnails, export-map-data, migrate, seed, backup-db,
@@ -84,6 +83,8 @@ export default tseslint.config(
         crypto: 'readonly',
         TextEncoder: 'readonly',
         confirm: 'readonly',
+        AbortSignal: 'readonly',
+        AbortController: 'readonly',
         // D3 loaded via CDN
         d3: 'readonly',
       },
@@ -92,6 +93,21 @@ export default tseslint.config(
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
       'no-console': ['warn', { allow: ['warn', 'error'] }],
+    },
+  },
+  // Lambda handlers under `api/` run on Node, not the browser. `process` +
+  // `Buffer` are ambient globals there. Also: `console.log` is the standard
+  // CloudWatch logging path, so we drop the `no-console` restriction.
+  {
+    files: ['api/**/*.ts'],
+    languageOptions: {
+      globals: {
+        process: 'readonly',
+        Buffer: 'readonly',
+      },
+    },
+    rules: {
+      'no-console': 'off',
     },
   },
   {

@@ -1,6 +1,27 @@
-import pg from 'pg';
-import { getCorsHeaders } from './cors.js';
-const { Pool } = pg;
+import pg from 'pg'
+import type { APIGatewayProxyHandlerV2 } from 'aws-lambda'
+import { getCorsHeaders } from './cors.js'
+const { Pool } = pg
+
+interface SearchRow {
+  id: number
+  entity_type: 'person' | 'organization' | 'resource'
+  name: string | null
+  category: string | null
+  title: string | null
+  primary_org: string | null
+  location: string | null
+  regulatory_stance: string | null
+  status: string
+  resource_title: string | null
+  resource_type: string | null
+  resource_author: string | null
+  resource_category: string | null
+  website: string | null
+  parent_org_id: number | null
+  rank?: number
+  author?: string | null
+}
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -9,14 +30,14 @@ const pool = new Pool({
   connectionTimeoutMillis: 5000,
   idleTimeoutMillis: 30000,
   options: '-c statement_timeout=10000',
-});
+})
 
-export const handler = async (event) => {
-  const CORS_HEADERS = getCorsHeaders(event);
-  const method = event.requestContext.http.method;
+export const handler: APIGatewayProxyHandlerV2 = async (event) => {
+  const CORS_HEADERS = getCorsHeaders(event)
+  const method = event.requestContext.http.method
 
   if (method === 'OPTIONS') {
-    return { statusCode: 200, headers: CORS_HEADERS, body: '' };
+    return { statusCode: 200, headers: CORS_HEADERS, body: '' }
   }
 
   if (method !== 'GET') {
@@ -24,73 +45,77 @@ export const handler = async (event) => {
       statusCode: 405,
       headers: CORS_HEADERS,
       body: JSON.stringify({ error: 'Method not allowed' }),
-    };
+    }
   }
 
   try {
-    const { q, type, status } = event.queryStringParameters || {};
+    const { q, type, status } = event.queryStringParameters || {}
 
     if (!q || q.trim().length < 2) {
       return {
         statusCode: 400,
         headers: CORS_HEADERS,
         body: JSON.stringify({ error: 'Query must be at least 2 characters' }),
-      };
+      }
     }
 
-    const query = q.trim();
+    const query = q.trim()
 
     // Auth check: status=pending and status=all require admin key
-    const ADMIN_KEY = process.env.ADMIN_KEY;
-    const providedKey = event.headers?.['x-admin-key'] || event.queryStringParameters?.key;
-    const isAdmin = ADMIN_KEY && providedKey === ADMIN_KEY;
+    const ADMIN_KEY = process.env.ADMIN_KEY
+    const providedKey = event.headers?.['x-admin-key'] || event.queryStringParameters?.key
+    const isAdmin = ADMIN_KEY && providedKey === ADMIN_KEY
 
     // Build parameterized WHERE clauses
-    const params = [query, `%${query}%`];
-    let paramIdx = 3;
-    const clauses = [];
+    const params = [query, `%${query}%`]
+    let paramIdx = 3
+    const clauses = []
 
     // Type filter (parameterized)
-    const typeMap = { person: 'person', organization: 'organization', resource: 'resource' };
-    const entityType = typeMap[type];
+    const typeMap: Record<string, string> = {
+      person: 'person',
+      organization: 'organization',
+      resource: 'resource',
+    }
+    const entityType = type ? typeMap[type] : undefined
     if (entityType) {
-      clauses.push(`AND entity_type = $${paramIdx}`);
-      params.push(entityType);
-      paramIdx++;
+      clauses.push(`AND entity_type = $${paramIdx}`)
+      params.push(entityType)
+      paramIdx++
     }
 
     // Status filter (parameterized)
     // pending: public (needed for link-as-you-go form workflow)
     // all: admin only (exposes internal entities)
     if (status === 'pending') {
-      clauses.push(`AND status = $${paramIdx}`);
-      params.push('pending');
-      paramIdx++;
+      clauses.push(`AND status = $${paramIdx}`)
+      params.push('pending')
+      paramIdx++
     } else if (status === 'all' && isAdmin) {
       // No status filter — return all statuses
     } else {
-      clauses.push(`AND status = $${paramIdx}`);
-      params.push('approved');
-      paramIdx++;
+      clauses.push(`AND status = $${paramIdx}`)
+      params.push('approved')
+      paramIdx++
     }
 
-    const whereExtra = clauses.join(' ');
+    const whereExtra = clauses.join(' ')
 
-    const client = await pool.connect();
+    const client = await pool.connect()
     try {
-      let result;
+      let result: { rows: SearchRow[] }
 
       if (status === 'pending') {
         // Search the submission table for new pending entities (entity_id IS NULL)
-        const pendingParams = [`%${query}%`];
-        let pIdx = 2;
-        let pendingTypeClause = '';
+        const pendingParams = [`%${query}%`]
+        let pIdx = 2
+        let pendingTypeClause = ''
         if (entityType) {
-          pendingTypeClause = `AND entity_type = $${pIdx}`;
-          pendingParams.push(entityType);
-          pIdx++;
+          pendingTypeClause = `AND entity_type = $${pIdx}`
+          pendingParams.push(entityType)
+          pIdx++
         }
-        result = await client.query(
+        result = await client.query<SearchRow>(
           `SELECT id, entity_type, name, category, title, primary_org, location,
                   belief_regulatory_stance AS regulatory_stance, 'pending' AS status,
                   resource_title, resource_type, resource_author, resource_category, website, parent_org_id
@@ -99,10 +124,10 @@ export const handler = async (event) => {
              AND (name ILIKE $1 OR resource_title ILIKE $1) ${pendingTypeClause}
            ORDER BY submitted_at DESC
            LIMIT 15`,
-          pendingParams
-        );
+          pendingParams,
+        )
       } else {
-        result = await client.query(
+        result = await client.query<SearchRow>(
           `SELECT id, entity_type, name, category, title, primary_org, location,
                   belief_regulatory_stance AS regulatory_stance, status,
                   resource_title, resource_type, resource_author, resource_category, website, parent_org_id,
@@ -115,22 +140,26 @@ export const handler = async (event) => {
              CASE WHEN name ILIKE $2 OR resource_title ILIKE $2 THEN 0 ELSE 1 END,
              ts_rank(search_vector, plainto_tsquery('english', $1)) DESC
            LIMIT 30`,
-          params
-        );
+          params,
+        )
       }
 
       // Group results by entity_type for backwards compatibility
-      const results = { people: [], organizations: [], resources: [] };
+      const results: { people: SearchRow[]; organizations: SearchRow[]; resources: SearchRow[] } = {
+        people: [],
+        organizations: [],
+        resources: [],
+      }
       for (const row of result.rows) {
         if (row.entity_type === 'person') {
-          results.people.push(row);
+          results.people.push(row)
         } else if (row.entity_type === 'organization') {
-          results.organizations.push(row);
+          results.organizations.push(row)
         } else if (row.entity_type === 'resource') {
           // Map resource fields for frontend compatibility
-          row.title = row.resource_title;
-          row.author = row.resource_author;
-          results.resources.push(row);
+          row.title = row.resource_title
+          row.author = row.resource_author
+          results.resources.push(row)
         }
       }
 
@@ -138,17 +167,16 @@ export const handler = async (event) => {
         statusCode: 200,
         headers: CORS_HEADERS,
         body: JSON.stringify(results),
-      };
+      }
     } finally {
-      client.release();
+      client.release()
     }
-
   } catch (error) {
-    console.error('Search error:', error);
+    console.error('Search error:', error)
     return {
       statusCode: 500,
       headers: CORS_HEADERS,
       body: JSON.stringify({ error: 'Internal server error' }),
-    };
+    }
   }
-};
+}

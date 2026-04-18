@@ -27,6 +27,6 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist", "api", "scripts", "data", "trial-data"]
+  "include": ["src", "api"],
+  "exclude": ["node_modules", "dist", "scripts", "data", "trial-data", ".aws-sam"]
 }
