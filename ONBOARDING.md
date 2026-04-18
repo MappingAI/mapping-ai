@@ -230,21 +230,50 @@ AWS_ACCESS_KEY_ID=...
 AWS_SECRET_ACCESS_KEY=...
 ```
 
-### Running locally
+### Get map data
 
-You need two processes for full local development:
+The map and contribute form search need `map-data.json` to work. On a fresh clone it doesn't exist. Either download from production or generate from the database:
 
 ```bash
-# Terminal 1: Vite dev server (React pages, hot reload)
-npx vite dev                    # http://localhost:5173
+# Option A: Download from production (no DB credentials needed)
+curl -o map-data.json https://mapping-ai.org/map-data.json
+curl -o map-detail.json https://mapping-ai.org/map-detail.json
 
-# Terminal 2: Express API server (Lambda endpoints)
-node dev-server.js              # http://localhost:3000
+# Option B: Generate from database (needs DATABASE_URL in .env)
+node scripts/export-map-data.js
+```
+
+### Running locally
+
+```bash
+# Start the dev server (serves all pages at localhost:5173)
+npx vite dev
+```
+
+If you need form submissions or search to work locally, also start the API proxy in a second terminal:
+
+```bash
+node dev-server.js      # API proxy on localhost:3000
 ```
 
 Vite proxies `/api` requests to `localhost:3000` (configured in `vite.config.ts`), so the React pages can talk to the local API seamlessly.
 
-For **map.html only** (inline D3, not React), you can open `http://localhost:5173/map.html` directly -- Vite serves it as a static file.
+### Database access
+
+With `DATABASE_URL` in your `.env`, you can read/write directly to the staging database:
+
+```bash
+# Generate fresh map data from the database
+node scripts/export-map-data.js
+
+# Run database migrations (create/update tables)
+npm run db:migrate
+
+# Backup all tables
+npm run db:backup:local
+```
+
+The Express dev server (`node dev-server.js`) connects to the same database for API calls (form submissions, search, admin actions).
 
 ### Available scripts
 

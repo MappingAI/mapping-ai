@@ -31,13 +31,17 @@ See [TECH.md](TECH.md) for the full architecture reference.
 
 **Prerequisites:** Node.js 20+ and npm. Install via [nvm](https://github.com/nvm-sh/nvm) or `brew install node`.
 
+### 1. Clone and install
+
 ```bash
 git clone https://github.com/MappingAI/mapping-ai.git
 cd mapping-ai
 npm ci
-brew install lefthook    # pre-commit hooks for linting/formatting
+brew install lefthook
 lefthook install
 ```
+
+### 2. Environment setup
 
 Create a `.env` file in the project root with database credentials (shared via Doppler, or ask the team):
 
@@ -48,17 +52,32 @@ AWS_ACCESS_KEY_ID=...
 AWS_SECRET_ACCESS_KEY=...
 ```
 
-Run two terminals:
+### 3. Get map data
+
+The map and contribute form need `map-data.json` to show data. On a fresh clone this file doesn't exist. Either pull from production or generate from the database:
 
 ```bash
-# Terminal 1: React dev server
-npx vite dev            # http://localhost:5173
+# Option A: Download from production (no DB credentials needed)
+curl -o map-data.json https://mapping-ai.org/map-data.json
+curl -o map-detail.json https://mapping-ai.org/map-detail.json
 
-# Terminal 2: API proxy (form submissions + map)
-node dev-server.js      # http://localhost:3000
+# Option B: Generate from database (needs DATABASE_URL in .env)
+node scripts/export-map-data.js
 ```
 
-Visit `localhost:5173` for React pages (contribute, admin, insights, about). Visit `localhost:3000` for the map (inline HTML, not React).
+### 4. Start the dev server
+
+```bash
+npx vite dev            # http://localhost:5173 — all pages
+```
+
+If you need form submissions or search to work locally, also start the API proxy:
+
+```bash
+node dev-server.js      # API proxy — Vite proxies /api calls to this
+```
+
+Visit `localhost:5173` for all pages. The map, contribute form, admin, insights all work from there.
 
 ### Using AI coding agents
 

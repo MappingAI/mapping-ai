@@ -170,19 +170,32 @@ AWS_ACCESS_KEY_ID=...
 AWS_SECRET_ACCESS_KEY=...
 ```
 
-Start both processes for full local development:
+Get map data (the map and contribute form search need this to show anything):
 
 ```bash
-# Terminal 1: Vite dev server (React pages, hot reload)
-npx vite dev                      # http://localhost:5173
+# Option A: Download from production (no DB needed)
+curl -o map-data.json https://mapping-ai.org/map-data.json
+curl -o map-detail.json https://mapping-ai.org/map-detail.json
 
-# Terminal 2: Express API server (Lambda endpoints)
-node dev-server.js                # http://localhost:3000
+# Option B: Generate from database (needs DATABASE_URL in .env)
+node scripts/export-map-data.js
 ```
 
-Vite proxies `/api` requests to `localhost:3000` (configured in `vite.config.ts`), so React pages talk to the local API seamlessly. Open `http://localhost:5173` to browse the site.
+Start the dev server:
 
-For `map.html` (inline D3, not React), open `http://localhost:5173/map.html` directly.
+```bash
+npx vite dev                      # http://localhost:5173 — all pages
+```
+
+Everything works from localhost:5173 once `map-data.json` exists: the map, contribute form, admin, insights, all of it.
+
+If you need form submissions or search to work locally (read/write to the database), also start the API proxy:
+
+```bash
+node dev-server.js                # API proxy on localhost:3000
+```
+
+Vite proxies `/api` requests to `localhost:3000` automatically (configured in `vite.config.ts`).
 
 ### Type checking and tests
 
