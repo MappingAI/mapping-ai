@@ -207,6 +207,29 @@ export function App() {
             </a>
           </div>
           <div className="font-mono text-[10px] uppercase tracking-[0.1em] text-[#888] mb-2 mt-4">
+            Jump in by Stream
+          </div>
+          <div className="space-y-1.5 text-[14px] mb-4">
+            <p>
+              <strong>Bugs, features, ideas:</strong>{' '}
+              <ExtLink href="https://discord.gg/2gntpaxV">Discord #forum</ExtLink>{' '}
+              - reply/react to claim a thread
+            </p>
+            <p>
+              <strong>Outreach strategy:</strong>{' '}
+              <ExtLink href="https://docs.google.com/document/d/1WNVM22lGeCOcZHvi5KwF9Yn9be6T6V7xbsocL0SQsLQ/edit?usp=sharing">
+                Outreach planning doc
+              </ExtLink>
+            </p>
+            <p>
+              <strong>Research, analysis, viz:</strong>{' '}
+              <ExtLink href="https://docs.google.com/document/d/1DrQl909NOVmX3ZAo9pZuOuCGqhSehjjgMWDmWrDuzVo/edit?usp=sharing">
+                Research questions doc
+              </ExtLink>
+            </p>
+          </div>
+
+          <div className="font-mono text-[10px] uppercase tracking-[0.1em] text-[#888] mb-2 mt-4">
             Environment Files (Doppler)
           </div>
           <div className="space-y-2 font-mono text-[12px]">
@@ -1362,9 +1385,19 @@ agent-browser fill @e1 "test"      # fill a form field`}</Pre>
                 'mapping-ai.org/map-data.json',
               ],
               [
-                'File bugs / Coordinate',
+                'Discord (bugs, features, coordination)',
                 'https://discord.gg/2gntpaxV',
-                'Discord',
+                'Discord #forum',
+              ],
+              [
+                'Outreach strategy doc',
+                'https://docs.google.com/document/d/1WNVM22lGeCOcZHvi5KwF9Yn9be6T6V7xbsocL0SQsLQ/edit?usp=sharing',
+                'Google Doc',
+              ],
+              [
+                'Research questions doc',
+                'https://docs.google.com/document/d/1DrQl909NOVmX3ZAo9pZuOuCGqhSehjjgMWDmWrDuzVo/edit?usp=sharing',
+                'Google Doc',
               ],
             ].map(([label, href, text], i) => (
               <tr key={i}>
