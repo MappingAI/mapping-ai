@@ -181,21 +181,17 @@ curl -o map-detail.json https://mapping-ai.org/map-detail.json
 node scripts/export-map-data.js
 ```
 
-Start the dev server:
+Start local dev (two terminals):
 
 ```bash
-npx vite dev                      # http://localhost:5173 — all pages
-```
+# Terminal 1
+npx vite dev                      # http://localhost:5173
 
-Everything works from localhost:5173 once `map-data.json` exists: the map, contribute form, admin, insights, all of it.
-
-If you need form submissions or search to work locally (read/write to the database), also start the API proxy:
-
-```bash
+# Terminal 2
 node dev-server.js                # API proxy on localhost:3000
 ```
 
-Vite proxies `/api` requests to `localhost:3000` automatically (configured in `vite.config.ts`).
+Visit `localhost:5173`. Everything works from there: map, contribute form, search, admin, insights. Vite proxies `/api` requests to `localhost:3000` automatically.
 
 ### Type checking and tests
 

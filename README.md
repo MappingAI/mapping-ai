@@ -65,19 +65,19 @@ curl -o map-detail.json https://mapping-ai.org/map-detail.json
 node scripts/export-map-data.js
 ```
 
-### 4. Start the dev server
+### 4. Start local dev
+
+Open two terminals:
 
 ```bash
-npx vite dev            # http://localhost:5173 — all pages
+# Terminal 1
+npx vite dev
+
+# Terminal 2
+node dev-server.js
 ```
 
-If you need form submissions or search to work locally, also start the API proxy:
-
-```bash
-node dev-server.js      # API proxy — Vite proxies /api calls to this
-```
-
-Visit `localhost:5173` for all pages. The map, contribute form, admin, insights all work from there.
+Visit `localhost:5173`. Everything works from there: map, contribute form, admin, insights, search, form submissions.
 
 ### Using AI coding agents
 

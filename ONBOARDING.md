@@ -245,18 +245,17 @@ node scripts/export-map-data.js
 
 ### Running locally
 
-```bash
-# Start the dev server (serves all pages at localhost:5173)
-npx vite dev
-```
-
-If you need form submissions or search to work locally, also start the API proxy in a second terminal:
+Open two terminals:
 
 ```bash
-node dev-server.js      # API proxy on localhost:3000
+# Terminal 1
+npx vite dev              # http://localhost:5173
+
+# Terminal 2
+node dev-server.js        # API proxy on localhost:3000
 ```
 
-Vite proxies `/api` requests to `localhost:3000` (configured in `vite.config.ts`), so the React pages can talk to the local API seamlessly.
+Visit `localhost:5173`. Everything works from there: map, contribute form, search, admin, insights. Vite proxies `/api` requests to `localhost:3000` automatically.
 
 ### Database access
 

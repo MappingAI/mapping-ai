@@ -790,30 +790,24 @@ lefthook install`}</Pre>
           <Code>workshop/DATABASE-ORIENTATION.md</Code> for details.
         </p>
 
-        <p className="mb-4">Start the dev server:</p>
-
-        <Pre>{`npx vite dev          # http://localhost:5173 — all pages`}</Pre>
-
         <p className="mb-4">
-          The map and contribute form need <Code>map-data.json</Code> to show
-          data. On a fresh clone this file doesn&rsquo;t exist. Pull it from
-          production:
+          Get map data (needed for the map and search to show anything):
         </p>
 
         <Pre>{`curl -o map-data.json https://mapping-ai.org/map-data.json
 curl -o map-detail.json https://mapping-ai.org/map-detail.json`}</Pre>
 
-        <p className="mb-4">
-          If you need form submissions or search to work locally (not just the UI),
-          also start the API proxy in a second terminal:
-        </p>
+        <p className="mb-4">Start local dev (two terminals):</p>
 
-        <Pre>{`node dev-server.js    # API proxy — needed for submit/search`}</Pre>
+        <Pre>{`# Terminal 1
+npx vite dev          # http://localhost:5173
+
+# Terminal 2
+node dev-server.js    # API proxy`}</Pre>
 
         <p className="mb-4">
-          Vite automatically proxies <Code>/api</Code> requests to the Express
-          server when it&rsquo;s running. If you&rsquo;re only working on UI or
-          styling, you don&rsquo;t need the second terminal.
+          Visit <Code>localhost:5173</Code>. Everything works from there: map,
+          contribute form, search, admin, insights.
         </p>
 
         <H4>Useful commands</H4>
