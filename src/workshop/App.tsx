@@ -792,16 +792,17 @@ lefthook install`}</Pre>
 
         <p className="mb-4">Start two terminals for local dev:</p>
 
-        <Pre>{`# Terminal 1: React dev server (all pages except map)
+        <Pre>{`# Terminal 1: React dev server (all pages)
 npx vite dev          # http://localhost:5173
 
-# Terminal 2: API proxy + map page
+# Terminal 2: API proxy (form submissions, search, map)
 node dev-server.js    # http://localhost:3000`}</Pre>
 
         <p className="mb-4">
-          Visit <Code>localhost:5173</Code> for React pages (contribute, admin, insights, about).
-          Visit <Code>localhost:3000</Code> for the map (it&rsquo;s inline HTML, not React).
-          API calls from the Vite dev server proxy through to localhost:3000.
+          Visit <Code>localhost:5173</Code> for all pages. The Vite dev server
+          proxies API calls to localhost:3000 automatically. The map page at{' '}
+          <Code>localhost:3000/map.html</Code> is the only page that uses the
+          Express server directly (D3 visualization, served as static HTML).
         </p>
 
         <H4>Useful commands</H4>
@@ -812,15 +813,72 @@ npm run typecheck     # TypeScript type checking
 npm run test          # Run tests`}</Pre>
 
         <p className="mb-4">
-          Pre-commit hooks run automatically (typecheck + lint + format).
+          Pre-commit hooks run automatically via lefthook (typecheck + lint + format).
           If a commit fails the hook, fix the issue and commit again.
         </p>
 
         <p className="mb-4">
-          If you&rsquo;re working with the staging database (for data-related
-          features), you&rsquo;ll need the <Code>.env</Code> file - see{' '}
-          <Code>workshop/DATABASE-ORIENTATION.md</Code>.
+          If you&rsquo;re working with the database directly,
+          see <Code>workshop/DATABASE-ORIENTATION.md</Code> for schema details
+          and query examples.
         </p>
+
+        <H4>Using Claude Code or other AI agents</H4>
+
+        <p className="mb-4">
+          Most participants will be using a coding agent (Claude Code, Cursor,
+          Windsurf, etc.). Here&rsquo;s how to get the most out of it:
+        </p>
+
+        <p className="mb-4">
+          <strong>First thing to do:</strong> have your agent read the codebase docs.
+        </p>
+
+        <Pre>{`# In Claude Code, just start a conversation - it reads CLAUDE.md automatically.
+# Or explicitly ask it to read the docs:
+"Read CLAUDE.md, ONBOARDING.md, and TECH.md to understand the codebase"
+"Read workshop/DATABASE-ORIENTATION.md for the database schema"`}</Pre>
+
+        <p className="mb-4">
+          <strong>Testing with agent-browser:</strong> use it to visually verify
+          changes, fill forms, take screenshots, and test interactions.
+        </p>
+
+        <Pre>{`# Install globally
+npm i -g agent-browser
+
+# Use in your agent session
+agent-browser open http://localhost:5173/contribute
+agent-browser snapshot -i          # see interactive elements
+agent-browser screenshot out.png   # take a screenshot
+agent-browser fill @e1 "test"      # fill a form field`}</Pre>
+
+        <p className="mb-4">
+          <strong>Compound Engineering plugin:</strong> if you have the{' '}
+          <ExtLink href="https://github.com/EveryInc/compound-engineering-plugin">
+            compound-engineering plugin
+          </ExtLink>
+          {' '}installed, these commands are useful:
+        </p>
+
+        <ul className="list-disc pl-6 mb-4 space-y-1 text-[16px]">
+          <li><Code>/ce:review</Code> to review your code before creating a PR</li>
+          <li><Code>/ce:compound</Code> to document what you built or fixed</li>
+          <li><Code>/ce:plan</Code> to plan larger features before implementing</li>
+          <li><Code>/init</Code> to generate a CLAUDE.md if working on a sub-project</li>
+        </ul>
+
+        <p className="mb-4">
+          <strong>Key agent-friendly docs in the codebase:</strong>
+        </p>
+
+        <ul className="list-disc pl-6 mb-4 space-y-1 text-[16px]">
+          <li><Code>CLAUDE.md</Code> - full codebase context, conventions, and architecture</li>
+          <li><Code>ONBOARDING.md</Code> - setup guide and common patterns</li>
+          <li><Code>TECH.md</Code> - API reference, database schema, deployment pipeline</li>
+          <li><Code>docs/DEPLOYMENT.md</Code> - how code gets to production</li>
+          <li><Code>docs/CONTRIBUTOR.md</Code> - guide for agents helping submit data via API</li>
+        </ul>
 
         <H4>Project structure</H4>
 
