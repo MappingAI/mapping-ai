@@ -194,6 +194,7 @@ export function App() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-4 py-2 bg-[#5865F2] text-white rounded-md font-mono text-[12px] no-underline hover:bg-[#4752c4] transition-colors"
             >
+              <svg width="16" height="12" viewBox="0 0 71 55" fill="currentColor"><path d="M60.1 4.9A58.5 58.5 0 0045.4.2a.2.2 0 00-.2.1 40.8 40.8 0 00-1.8 3.7 54 54 0 00-16.2 0A37.3 37.3 0 0025.4.3a.2.2 0 00-.2-.1A58.4 58.4 0 0010.5 5 59.5 59.5 0 00.4 45.1a.3.3 0 00.1.2A58.7 58.7 0 0018.1 55a.2.2 0 00.3-.1 42 42 0 003.6-5.9.2.2 0 00-.1-.3 38.6 38.6 0 01-5.5-2.6.2.2 0 01 0-.4c.4-.3.7-.6 1.1-.8a.2.2 0 01.3 0 41.8 41.8 0 0035.6 0 .2.2 0 01.2 0c.3.3.7.6 1.1.9a.2.2 0 010 .3 36.3 36.3 0 01-5.5 2.6.2.2 0 00-.1.4 47.1 47.1 0 003.6 5.8.2.2 0 00.2.1A58.5 58.5 0 0070.7 45.3a.3.3 0 00.1-.2c1.8-18.6-3-34.7-12.7-49a.2.2 0 00-.1-.1zM23.7 37c-3.6 0-6.6-3.3-6.6-7.4s2.9-7.4 6.6-7.4c3.7 0 6.7 3.4 6.6 7.4 0 4.1-2.9 7.4-6.6 7.4zm24.4 0c-3.6 0-6.6-3.3-6.6-7.4s2.9-7.4 6.6-7.4c3.7 0 6.7 3.4 6.6 7.4 0 4.1-2.9 7.4-6.6 7.4z"/></svg>
               Discord Server
             </a>
             <a
@@ -320,10 +321,11 @@ export function App() {
             href="https://discord.gg/2gntpaxV"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-md text-white text-[13px] font-mono uppercase tracking-[0.06em] no-underline hover:no-underline"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md text-white text-[14px] font-mono font-medium uppercase tracking-[0.06em] no-underline hover:no-underline hover:bg-[#4752C4] transition-colors"
             style={{ background: '#5865F2' }}
           >
-            Join Discord
+            <svg width="20" height="16" viewBox="0 0 71 55" fill="currentColor"><path d="M60.1 4.9A58.5 58.5 0 0045.4.2a.2.2 0 00-.2.1 40.8 40.8 0 00-1.8 3.7 54 54 0 00-16.2 0A37.3 37.3 0 0025.4.3a.2.2 0 00-.2-.1A58.4 58.4 0 0010.5 5 59.5 59.5 0 00.4 45.1a.3.3 0 00.1.2A58.7 58.7 0 0018.1 55a.2.2 0 00.3-.1 42 42 0 003.6-5.9.2.2 0 00-.1-.3 38.6 38.6 0 01-5.5-2.6.2.2 0 01 0-.4c.4-.3.7-.6 1.1-.8a.2.2 0 01.3 0 41.8 41.8 0 0035.6 0 .2.2 0 01.2 0c.3.3.7.6 1.1.9a.2.2 0 010 .3 36.3 36.3 0 01-5.5 2.6.2.2 0 00-.1.4 47.1 47.1 0 003.6 5.8.2.2 0 00.2.1A58.5 58.5 0 0070.7 45.3a.3.3 0 00.1-.2c1.8-18.6-3-34.7-12.7-49a.2.2 0 00-.1-.1zM23.7 37c-3.6 0-6.6-3.3-6.6-7.4s2.9-7.4 6.6-7.4c3.7 0 6.7 3.4 6.6 7.4 0 4.1-2.9 7.4-6.6 7.4zm24.4 0c-3.6 0-6.6-3.3-6.6-7.4s2.9-7.4 6.6-7.4c3.7 0 6.7 3.4 6.6 7.4 0 4.1-2.9 7.4-6.6 7.4z"/></svg>
+            Join the Discord Server
           </a>
           <a
             href="https://docs.google.com/document/d/1DrQl909NOVmX3ZAo9pZuOuCGqhSehjjgMWDmWrDuzVo/edit?usp=sharing"
@@ -476,9 +478,9 @@ export function App() {
         <H4>How to report bugs</H4>
 
         <p className="mb-4">
-          Log bugs in{' '}
-          <ExtLink href="https://docs.google.com/document/d/134ZCFOo-hRDqw9ddzMhq7eHEJ3XuuikI7RoMIMDhWL4/edit?usp=sharing">
-            this shared doc
+          Post bugs as threads in the{' '}
+          <ExtLink href="https://discord.gg/2gntpaxV">
+            Discord forum channel
           </ExtLink>{' '}
           using this format:
         </p>
@@ -1157,15 +1159,11 @@ npm run test          # Run tests`}</Pre>
         </p>
 
         <p className="mb-4">
-          Post your research questions and findings in the{' '}
+          Post your research questions and findings as threads in the{' '}
           <ExtLink href="https://discord.gg/2gntpaxV">
-            Discord
-          </ExtLink>{' '}
-          forum channel to discuss with others, or log them in{' '}
-          <ExtLink href="https://docs.google.com/document/d/1dl8B8SWOs5ucmzUpuC7EukPpgncxLZxeil2edVkFleI/edit?usp=sharing">
-            this shared doc
+            Discord forum channel
           </ExtLink>
-          .
+          . Each thread becomes a trackable discussion that others can build on.
         </p>
 
         <Divider />
