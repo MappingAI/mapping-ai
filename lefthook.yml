@@ -1,0 +1,13 @@
+pre-commit:
+  parallel: true
+  commands:
+    typecheck:
+      glob: '*.{ts,tsx}'
+      run: npx tsc --noEmit
+    lint:
+      glob: '*.{ts,tsx,js}'
+      run: npx eslint {staged_files} --max-warnings 0
+      stage_fixed: true
+    format:
+      glob: '*.{ts,tsx,js,json,css,md}'
+      run: npx prettier --check {staged_files}

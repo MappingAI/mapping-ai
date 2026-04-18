@@ -1,4 +1,4 @@
-# Mapping AI — Contributor Guide
+# Mapping AI - Contributor Guide
 
 > **For the AI agent reading this:** You are helping a contributor add
 > people and organizations to the mapping-ai stakeholder map.
@@ -9,13 +9,13 @@
 > tell the contributor and ask if they want to suggest edits instead.
 > Only submit new entries after confirming they don't already exist.
 >
-> All submissions go to a pending queue for admin review — nothing is
+> All submissions go to a pending queue for admin review - nothing is
 > published immediately. Never show raw JSON to the user; confirm what
 > you submitted in plain language.
 
 ## What is Mapping AI
 
-Mapping AI is a collaborative stakeholder map of the US AI policy landscape — the people, organizations, and resources shaping AI governance.
+Mapping AI is a collaborative stakeholder map of the US AI policy landscape - the people, organizations, and resources shaping AI governance.
 
 **Live site:** https://mapping-ai.org
 
@@ -643,17 +643,17 @@ When a contributor asks you to add someone:
 
 If the contributor doesn't know where to start, offer:
 
-- **"Add [person name] to the map"** — Search first, then gather details
-- **"Add [organization] to the map"** — Search first, then gather details
-- **"Search for [name]"** — Check if someone is already in the database
-- **"What categories are available?"** — List the valid options
-- **"What does regulatory stance mean?"** — Explain the scale
+- **"Add [person name] to the map"** - Search first, then gather details
+- **"Add [organization] to the map"** - Search first, then gather details
+- **"Search for [name]"** - Check if someone is already in the database
+- **"What categories are available?"** - List the valid options
+- **"What does regulatory stance mean?"** - Explain the scale
 
 ### Best Practices for High-Quality Submissions
 
 **General:**
-- Always search before submitting — duplicates waste reviewer time
-- Fill out as many fields as possible — sparse submissions are less useful
+- Always search before submitting - duplicates waste reviewer time
+- Fill out as many fields as possible - sparse submissions are less useful
 - Separate multiple values with commas (e.g., `"Decision-maker, Narrator"`)
 
 **Evidence & Sources:**
@@ -681,7 +681,7 @@ If the contributor doesn't know where to start, offer:
 - Assess impact/influence if notable
 
 **Regulatory Stance:**
-- This is the most important field — take time to get it right
+- This is the most important field - take time to get it right
 - Use `regulatoryStanceDetail` to capture nuance
 - Note if their position has evolved or varies by issue
 - Cite specific legislation they've supported/opposed
@@ -689,7 +689,7 @@ If the contributor doesn't know where to start, offer:
 **Notes Field:**
 - This is your chance to add context reviewers need
 - Include: key quotes, career history, notable positions, controversies
-- Keep it factual and verifiable — avoid editorializing
+- Keep it factual and verifiable - avoid editorializing
 - Aim for 2-4 sentences minimum for people/orgs
 
 ---
@@ -708,7 +708,7 @@ If the contributor doesn't know where to start, offer:
 
 ## Security Notes
 
-- Your contributor key is secret — don't share it publicly
+- Your contributor key is secret - don't share it publicly
 - All submissions go through admin review before publishing
 - The key is transmitted over HTTPS only
 - If you suspect your key is compromised, contact the admin to revoke it

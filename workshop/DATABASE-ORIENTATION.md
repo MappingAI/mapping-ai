@@ -10,8 +10,8 @@ There are two databases. Most workshop participants work on **staging**, a compl
 
 | Database | Purpose | Who | Access |
 |----------|---------|-----|--------|
-| `mappingai_workshop` | Staging — experiment freely | Data Enrichment, Data Quality, Data Seeding | Read/Write |
-| `mappingai` | Production — the live site | Debugging team | Read-only |
+| `mappingai_workshop` | Staging - experiment freely | Data Enrichment, Data Quality, Data Seeding | Read/Write |
+| `mappingai` | Production - the live site | Debugging team | Read-only |
 
 **Check your .env file** to confirm which database you're connected to.
 
@@ -35,7 +35,7 @@ Notes should answer: **"Why does this person/org/resource matter to the U.S. AI 
 
 The database has **3 main tables**:
 
-### `entity` — People, Organizations, Resources
+### `entity` - People, Organizations, Resources
 
 | Column | Type | Description |
 |--------|------|-------------|
@@ -87,7 +87,7 @@ The database has **3 main tables**:
 | `resource_category` | text | AI Safety, AI Governance, etc. |
 | `resource_key_argument` | text | 1-2 sentence summary of main argument |
 
-### `edge` — Relationships
+### `edge` - Relationships
 
 Connections between entities. Each edge has a **direction**: source → target.
 
@@ -115,7 +115,7 @@ Connections between entities. Each edge has a **direction**: source → target.
 - `true` = This is the person's primary, current affiliation (their main job)
 - `false` = Secondary affiliation (advisory roles, board seats, past positions)
 
-### `submission` — Pending Contributions
+### `submission` - Pending Contributions
 
 Form submissions waiting for review. Same columns as `entity` plus `submitter_email`, `submitter_relationship`, `status`, `llm_review`.
 
@@ -228,7 +228,7 @@ Your facilitator will provide one of these files:
 | Data Seeding | `.env.seeding` | Staging (read/write) |
 | Debugging | `.env.debugging` | Production (read-only) |
 
-> ⚠️ **NEVER commit or push your .env file.** It contains database passwords and API keys. Do not paste its contents into commit messages, pull requests, Slack, or any shared location. The `.env` files are gitignored, but be vigilant — leaked credentials require rotating all affected passwords and keys.
+> ⚠️ **NEVER commit or push your .env file.** It contains database passwords and API keys. Do not paste its contents into commit messages, pull requests, Slack, or any shared location. The `.env` files are gitignored, but be vigilant - leaked credentials require rotating all affected passwords and keys.
 
 ### 2. Place the .env file
 
@@ -448,7 +448,7 @@ npx serve .
 
 ### 3. View the map
 
-Open http://localhost:3000/map.html — it loads the local `map-data.json`.
+Open http://localhost:3000/map.html - it loads the local `map-data.json`.
 
 ### 4. Refresh after changes
 
@@ -461,19 +461,19 @@ node scripts/export-map-data.js
 
 ## Reference: Field Options
 
-### Person Categories (`category`) — pick ONE
+### Person Categories (`category`) - pick ONE
 Executive, Researcher, Policymaker, Investor, Organizer, Journalist, Academic, Cultural figure
 
-### Organization Categories (`category`) — pick ONE
+### Organization Categories (`category`) - pick ONE
 Frontier Lab, AI Safety/Alignment, Think Tank/Policy Org, Government/Agency, Academic, VC/Capital/Philanthropy, Labor/Civil Society, Ethics/Bias/Rights, Media/Journalism, Political Campaign/PAC, Infrastructure & Compute, Deployers & Platforms
 
-### Resource Categories (`resource_category`) — pick ONE
+### Resource Categories (`resource_category`) - pick ONE
 AI Safety, AI Governance, AI Capabilities, Labor & Economy, National Security, Industry Analysis, Policy Proposal, Technical, Philosophy/Ethics
 
-### Resource Types (`resource_type`) — pick ONE
+### Resource Types (`resource_type`) - pick ONE
 Essay, Book, Report, Podcast, Video, Website, Academic Paper, News Article, Substack/Newsletter
 
-### Funding Model (`funding_model`) — Organizations only
+### Funding Model (`funding_model`) - Organizations only
 Venture-backed, Revenue-generating, Government-funded, Philanthropic, Membership/dues-based, Mixed, Public benefit corp, Self-funded/endowed, Other
 
 ### Regulatory Stance (`belief_regulatory_stance`)
@@ -495,10 +495,10 @@ Already here, 2-3 years, 5-10 years, 10-25 years, 25+ years or never, Unknown
 ### AI Risk Level (`belief_ai_risk`)
 Overstated, Manageable, Serious, Catastrophic, Existential, Unknown
 
-### Threat Models (`belief_threat_models`) — comma-separated, pick up to 3
+### Threat Models (`belief_threat_models`) - comma-separated, pick up to 3
 Loss of control, Power concentration, Labor displacement, Cybersecurity, Weapons, Misinformation, Economic inequality, Democratic erosion, Environmental, Existential risk, Copyright/IP
 
-### Influence Type (`influence_type`) — comma-separated
+### Influence Type (`influence_type`) - comma-separated
 Decision-maker, Researcher/analyst, Builder, Narrator, Connector/convener, Advisor/strategist, Funder/investor, Organizer/advocate, Implementer
 
 ### Evidence Source (`belief_evidence_source`)
@@ -546,34 +546,34 @@ Decision-maker, Researcher/analyst, Builder, Narrator, Connector/convener, Advis
 | `authored_by` | Resource was written/created by this person |
 | `published_by` | Resource was published by this organization |
 
-**Custom edge types:** If none of the above fit, you may propose a new edge type. Use lowercase with underscores (e.g., `acquired_by`). Document the rationale in the `evidence` field. New types should be rare — most relationships fit existing categories.
+**Custom edge types:** If none of the above fit, you may propose a new edge type. Use lowercase with underscores (e.g., `acquired_by`). Document the rationale in the `evidence` field. New types should be rare - most relationships fit existing categories.
 
-### Importance (`importance`) — 1-5 scale, relative to the U.S. AI policy stakeholder map
+### Importance (`importance`) - 1-5 scale, relative to the U.S. AI policy stakeholder map
 
 | Value | Meaning | Examples |
 |-------|---------|----------|
-| 5 | **Essential** — Cannot tell the story of U.S. AI policy without them | Sam Altman, Dario Amodei, Senators Schumer/Hawley, NIST |
-| 4 | **Major** — Significant ongoing influence, recognized across the field | CEOs of major AI companies, key congressional staff, leading researchers |
-| 3 | **Notable** — Meaningful contributions, known within AI policy circles | Mid-tier org leaders, prolific researchers, state-level policymakers |
-| 2 | **Minor** — Some relevance, limited visibility outside their niche | Junior staff, emerging voices, smaller orgs |
-| 1 | **Peripheral** — Tangential connection, included for completeness | One-time commentators, orgs with minor AI involvement |
+| 5 | **Essential** - Cannot tell the story of U.S. AI policy without them | Sam Altman, Dario Amodei, Senators Schumer/Hawley, NIST |
+| 4 | **Major** - Significant ongoing influence, recognized across the field | CEOs of major AI companies, key congressional staff, leading researchers |
+| 3 | **Notable** - Meaningful contributions, known within AI policy circles | Mid-tier org leaders, prolific researchers, state-level policymakers |
+| 2 | **Minor** - Some relevance, limited visibility outside their niche | Junior staff, emerging voices, smaller orgs |
+| 1 | **Peripheral** - Tangential connection, included for completeness | One-time commentators, orgs with minor AI involvement |
 
 **Calibration tip:** Ask "How often does this person/org come up in AI policy conversations?" Score 5 = constantly, score 1 = rarely.
 
-### Confidence (`notes_confidence`, `edge.confidence`) — 1-5 scale
+### Confidence (`notes_confidence`, `edge.confidence`) - 1-5 scale
 | Value | Meaning |
 |-------|---------|
-| 5 | Highly confident — multiple authoritative sources |
-| 4 | Confident — verified against primary source |
-| 3 | Moderate — verified but some ambiguity |
-| 2 | Low — limited sourcing, may need verification |
-| 1 | Very low — speculative, needs verification |
+| 5 | Highly confident - multiple authoritative sources |
+| 4 | Confident - verified against primary source |
+| 3 | Moderate - verified but some ambiguity |
+| 2 | Low - limited sourcing, may need verification |
+| 1 | Very low - speculative, needs verification |
 
 ---
 
 ## Tips
 
-1. **Always check your DATABASE_URL** — make sure you're on staging, not production.
+1. **Always check your DATABASE_URL** - make sure you're on staging, not production.
 
 2. **Use transactions** for multi-step changes:
    ```sql
@@ -583,11 +583,11 @@ Decision-maker, Researcher/analyst, Builder, Narrator, Connector/convener, Advis
    COMMIT;  -- or ROLLBACK if wrong
    ```
 
-3. **The staging database is yours** — don't worry about breaking things.
+3. **The staging database is yours** - don't worry about breaking things.
 
-4. **Re-export after changes** — the map reads from `map-data.json`, not the database.
+4. **Re-export after changes** - the map reads from `map-data.json`, not the database.
 
-5. **When in doubt, remove unverifiable claims** — accuracy > completeness.
+5. **When in doubt, remove unverifiable claims** - accuracy > completeness.
 
 ---
 
