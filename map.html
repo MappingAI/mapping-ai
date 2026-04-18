@@ -3397,6 +3397,7 @@ let _redrawScheduled = false;
 let _themeColors = null;
 let _dragOccurred = false;
 let _quadtree = null;
+let _quadtreeDirty = false;
 let _monoFont = 'monospace';
 let _serifFont = 'sans-serif';
 
@@ -3427,14 +3428,6 @@ function _nodeAlpha(d) {
   return d.entityType === 'organization' ? 0.9 : 0.7;
 }
 
-function _linkAlpha(l) {
-  if (l._vs === 'hidden') return 0;
-  if (l._vs === 'dimmed') return 0.03;
-  if (l._vs === 'highlighted') return 0.6;
-  if (l._vs === 'one-hop') return 0.25;
-  return 0.25;
-}
-
 function _getInitials(name) {
   const parts = (name || '').split(/[\s]+/);
   if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
@@ -3447,11 +3440,17 @@ function _requestRedraw() {
   requestAnimationFrame(() => { _redrawScheduled = false; _drawFrame(); });
 }
 
-function _rebuildQuadtree() {
-  _quadtree = d3.quadtree().x(d => d.x).y(d => d.y).addAll(_canvasNodes);
+function _markQuadtreeDirty() { _quadtreeDirty = true; }
+
+function _ensureQuadtree() {
+  if (_quadtreeDirty || !_quadtree) {
+    _quadtree = d3.quadtree().x(d => d.x).y(d => d.y).addAll(_canvasNodes);
+    _quadtreeDirty = false;
+  }
 }
 
 function _findNodeAt(mx, my) {
+  _ensureQuadtree();
   if (!_quadtree) return null;
   const x = (mx - currentZoom.x) / currentZoom.k;
   const y = (my - currentZoom.y) / currentZoom.k;
@@ -3588,7 +3587,7 @@ function _drawFrame() {
       ctx.arc(x, y, r, 0, Math.PI * 2);
       ctx.fill();
       if (d.entityType === 'organization') {
-        ctx.strokeStyle = d3.color(getClusterColor(d)).brighter(0.8).toString();
+        ctx.strokeStyle = d._brighterColor;
         ctx.lineWidth = 1.5;
         ctx.stroke();
       }
@@ -3643,7 +3642,7 @@ function _drawFrame() {
   const lblBgAlpha = _clusterDimmed ? 0.02 : 0.85;
   ctx.font = `500 9px ${_serifFont}`;
   for (const lbl of _canvasClusterLabels) {
-    const tw = ctx.measureText(lbl.text).width;
+    const tw = lbl.tw;
     const pad = 8;
     let bgX;
     if (lbl.anchor === 'end') bgX = lbl.x - tw - pad;
@@ -3705,7 +3704,6 @@ function render() {
   canvas.style.height = height + 'px';
   container.appendChild(canvas);
   const ctx = canvas.getContext('2d');
-  ctx.scale(dpr, dpr);
   const canvasSel = d3.select(canvas);
 
   _canvasCtx = ctx;
@@ -3873,6 +3871,9 @@ function render() {
       color: getDimensionColor(clusterDimension, cat),
     };
   });
+  // Pre-compute label text widths to avoid measureText per frame
+  ctx.font = `500 9px ${_serifFont}`;
+  _canvasClusterLabels.forEach(lbl => { lbl.tw = ctx.measureText(lbl.text).width; });
 
   // Build visible links for canvas rendering
   _canvasLinks = [];
@@ -3906,7 +3907,13 @@ function render() {
   renderedLinks = allLinks;
 
   // Initialize per-node visual state
-  nodes.forEach(d => { d._vs = 'normal'; d._sprite = null; });
+  nodes.forEach(d => {
+    d._vs = 'normal';
+    d._sprite = null;
+    if (d.entityType === 'organization' && !d.isResource) {
+      d._brighterColor = d3.color(getClusterColor(d)).brighter(0.8).toString();
+    }
+  });
   _canvasNodes = nodes;
   _canvasCenterX = centerX;
   _canvasCenterY = centerY;
@@ -3972,8 +3979,8 @@ function render() {
     resolveEntityImage(d, createSprite);
   });
 
-  // Build quadtree for hit-testing
-  _rebuildQuadtree();
+  // Build quadtree for hit-testing (lazy rebuild on first query)
+  _ensureQuadtree();
 
   // d3.zoom on canvas
   zoomBehavior = d3.zoom()
@@ -4057,9 +4064,9 @@ function render() {
     }
   });
 
-  // ticked → rebuild quadtree + redraw canvas
+  // ticked → mark quadtree dirty + redraw canvas
   function ticked() {
-    _rebuildQuadtree();
+    _markQuadtreeDirty();
     _requestRedraw();
   }
 
