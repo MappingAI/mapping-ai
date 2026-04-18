@@ -189,7 +189,7 @@ export function App() {
               Slides
             </a>
             <a
-              href="https://discord.com/events/1491894381773590609/1494729391509340281"
+              href="https://discord.gg/2gntpaxV"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-4 py-2 bg-[#5865F2] text-white rounded-md font-mono text-[12px] no-underline hover:bg-[#4752c4] transition-colors"
@@ -309,7 +309,39 @@ export function App() {
           <strong>The site is in beta.</strong> We soft-launched to a small group
           a week ago. The data is messy. The UI has rough edges. Some features
           are half-built. That&rsquo;s why you&rsquo;re here.
+          <br /><br />
+          <strong>Use the Discord forum channels</strong> to track bugs, post feature
+          requests, share research questions, viz ideas, and coordinate with others.
+          Each thread becomes a trackable item.
         </Callout>
+
+        <div className="flex flex-wrap gap-3 mb-6">
+          <a
+            href="https://discord.gg/2gntpaxV"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-md text-white text-[13px] font-mono uppercase tracking-[0.06em] no-underline hover:no-underline"
+            style={{ background: '#5865F2' }}
+          >
+            Join Discord
+          </a>
+          <a
+            href="https://docs.google.com/document/d/1DrQl909NOVmX3ZAo9pZuOuCGqhSehjjgMWDmWrDuzVo/edit?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-[#f8f7f5] border border-[#bbb] text-[13px] font-mono uppercase tracking-[0.06em] text-text-primary no-underline hover:no-underline hover:border-text-secondary"
+          >
+            Research Questions Doc
+          </a>
+          <a
+            href="https://mapping-ai.org/map"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-[#1a1a1a] text-white text-[13px] font-mono uppercase tracking-[0.06em] no-underline hover:no-underline hover:bg-[#333]"
+          >
+            View the Map
+          </a>
+        </div>
 
         {/* SCHEDULE */}
         <SectionHeading>Schedule</SectionHeading>
@@ -726,30 +758,65 @@ Screenshot: [paste one if you can]`}</Pre>
           React, CSS, or Node.js, you can contribute.
         </p>
 
+        <H4>Prerequisites</H4>
+
+        <p className="mb-4">
+          You need <strong>Node.js 20+</strong> and <strong>npm</strong>.
+          If you don&rsquo;t have them:
+        </p>
+
+        <Pre>{`# macOS (with Homebrew)
+brew install node
+
+# Or use nvm
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+nvm install 20 && nvm use 20`}</Pre>
+
         <H4>Getting set up</H4>
 
-        <p className="mb-4">Clone the repo and start a local server:</p>
+        <p className="mb-4">Clone the repo, install dependencies, and set up pre-commit hooks:</p>
 
         <Pre>{`git clone https://github.com/MappingAI/mapping-ai.git
 cd mapping-ai
-npm install
-npx serve .    # runs on localhost:3000`}</Pre>
+npm ci
+brew install lefthook
+lefthook install`}</Pre>
 
         <p className="mb-4">
-          This serves static files locally. API calls (form submissions, search)
-          go directly to the production Lambda endpoints, so you don&rsquo;t need
-          AWS credentials or a local database to work on frontend stuff.
+          Create a <Code>.env</Code> file with database credentials (shared via
+          Doppler, or ask an organizer). See{' '}
+          <Code>workshop/DATABASE-ORIENTATION.md</Code> for details.
         </p>
 
+        <p className="mb-4">Start two terminals for local dev:</p>
+
+        <Pre>{`# Terminal 1: React dev server (all pages except map)
+npx vite dev          # http://localhost:5173
+
+# Terminal 2: API proxy + map page
+node dev-server.js    # http://localhost:3000`}</Pre>
+
         <p className="mb-4">
-          If you want to build the TipTap rich text editor bundle (only needed
-          if you&rsquo;re touching the notes editor):
+          Visit <Code>localhost:5173</Code> for React pages (contribute, admin, insights, about).
+          Visit <Code>localhost:3000</Code> for the map (it&rsquo;s inline HTML, not React).
+          API calls from the Vite dev server proxy through to localhost:3000.
         </p>
-        <Pre>npm run build:tiptap</Pre>
+
+        <H4>Useful commands</H4>
+
+        <Pre>{`npm run lint          # Check for lint errors
+npm run format        # Auto-format with Prettier
+npm run typecheck     # TypeScript type checking
+npm run test          # Run tests`}</Pre>
+
+        <p className="mb-4">
+          Pre-commit hooks run automatically (typecheck + lint + format).
+          If a commit fails the hook, fix the issue and commit again.
+        </p>
 
         <p className="mb-4">
           If you&rsquo;re working with the staging database (for data-related
-          features), you&rsquo;ll need the <Code>.env</Code> file — see{' '}
+          features), you&rsquo;ll need the <Code>.env</Code> file - see{' '}
           <Code>workshop/DATABASE-ORIENTATION.md</Code>.
         </p>
 
@@ -851,7 +918,7 @@ npx serve .    # runs on localhost:3000`}</Pre>
 
         <p className="mb-4">
           Before starting on something, check the{' '}
-          <ExtLink href="https://discord.com/events/1491894381773590609/1494729391509340281">
+          <ExtLink href="https://discord.gg/2gntpaxV">
             Discord
           </ExtLink>{' '}
           to see what others are working on and post what you&rsquo;re tackling.
@@ -988,6 +1055,53 @@ npx serve .    # runs on localhost:3000`}</Pre>
 
         <H4>Research questions worth exploring</H4>
 
+        <Callout>
+          <strong>Full research questions doc:</strong>{' '}
+          <ExtLink href="https://docs.google.com/document/d/1DrQl909NOVmX3ZAo9pZuOuCGqhSehjjgMWDmWrDuzVo/edit?usp=sharing">
+            Research Questions (Google Doc)
+          </ExtLink>
+        </Callout>
+
+        <p className="mb-4 font-mono text-[11px] uppercase tracking-[0.1em] text-[#2563eb]">
+          Priority Questions
+        </p>
+
+        <p className="mb-4">
+          <strong>Outlier Stances.</strong> Which people and organizations hold the most
+          outlier positions on AI regulation, AGI timelines, and the overall level
+          of AI risk? <em>Viz: Plot view (2D plot / political compass style)</em>
+        </p>
+
+        <p className="mb-4">
+          <strong>Funding Overlap.</strong> What is the overlap in funding sources
+          between AI safety organizations and AI accelerationist organizations?{' '}
+          <em>Viz: Case studies illustrating graph structure (nodes and edges)</em>
+        </p>
+
+        <p className="mb-4">
+          <strong>Structural Conflicts of Interest.</strong> Which philanthropies
+          and VCs provide simultaneous funding to both frontier AI labs and the
+          think tanks that produce AI governance frameworks?{' '}
+          <em>Viz: Graph structure (nodes and edges)</em>
+        </p>
+
+        <p className="mb-4">
+          <strong>Crosspartisan Convergence.</strong> Where do organizations from
+          opposite ends of the political spectrum converge on specific AI policy
+          positions, such as state preemption, open source, or compute governance?{' '}
+          <em>Viz: Mapping partisan lines (1D plot) or graph of outlier stances</em>
+        </p>
+
+        <p className="mb-4">
+          <strong>Network Centrality.</strong> Based on connection count, who are the
+          ten most structurally central individuals in US AI governance?{' '}
+          <em>Viz: Rank view</em>
+        </p>
+
+        <p className="mb-4 font-mono text-[11px] uppercase tracking-[0.1em] text-text-tertiary">
+          More questions to explore
+        </p>
+
         <p className="mb-4">
           <strong>The regulatory stance landscape.</strong> How do different
           sectors break down on AI regulation? Are frontier labs more
@@ -1044,7 +1158,7 @@ npx serve .    # runs on localhost:3000`}</Pre>
 
         <p className="mb-4">
           Post your research questions and findings in the{' '}
-          <ExtLink href="https://discord.com/events/1491894381773590609/1494729391509340281">
+          <ExtLink href="https://discord.gg/2gntpaxV">
             Discord
           </ExtLink>{' '}
           forum channel to discuss with others, or log them in{' '}
@@ -1100,7 +1214,7 @@ npx serve .    # runs on localhost:3000`}</Pre>
               ],
               [
                 'File bugs / Coordinate',
-                'https://discord.com/events/1491894381773590609/1494729391509340281',
+                'https://discord.gg/2gntpaxV',
                 'Discord',
               ],
             ].map(([label, href, text], i) => (
