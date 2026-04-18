@@ -3455,7 +3455,7 @@ function _findNodeAt(mx, my) {
   const x = (mx - currentZoom.x) / currentZoom.k;
   const y = (my - currentZoom.y) / currentZoom.k;
   let closest = null, closestDist = Infinity;
-  const maxR = 30 / currentZoom.k;
+  const maxR = 30;
 
   _quadtree.visit((quad, x1, y1, x2, y2) => {
     if (!quad.length) {
@@ -3542,7 +3542,7 @@ function _drawFrame() {
 
     if (d.isResource) {
       // Rounded rect background
-      ctx.globalAlpha = d._vs === 'dimmed' ? 0.15 : 0.15;
+      ctx.globalAlpha = d._vs === 'dimmed' ? 0.05 : (d._vs === 'highlighted' || isHover) ? 0.3 : 0.15;
       ctx.fillStyle = getColor(d._sector || d.category);
       ctx.strokeStyle = getColor(d._sector || d.category);
       ctx.lineWidth = 1.5;
@@ -5053,21 +5053,43 @@ function doSearch() {
 
 function highlightNodes(names) {
   const nameSet = new Set(names);
-  const anyVisible = names.length > 0 && _canvasNodes.some(d => nameSet.has(d.name));
 
-  for (const d of _canvasNodes) {
-    if (!anyVisible) d._vs = 'normal';
-    else d._vs = nameSet.has(d.name) ? 'highlighted' : 'dimmed';
+  if (_canvasNodes.length > 0) {
+    const anyVisible = names.length > 0 && _canvasNodes.some(d => nameSet.has(d.name));
+    for (const d of _canvasNodes) {
+      if (!anyVisible) d._vs = 'normal';
+      else d._vs = nameSet.has(d.name) ? 'highlighted' : 'dimmed';
+    }
+    for (const l of _canvasLinks) {
+      l._vs = 'normal';
+      if (!anyVisible) continue;
+      const srcName = (l.source && l.source.name) || '';
+      const tgtName = (l.target && l.target.name) || '';
+      l._vs = (nameSet.has(srcName) || nameSet.has(tgtName)) ? 'highlighted' : 'dimmed';
+    }
+    _clusterDimmed = anyVisible;
+    _requestRedraw();
+  } else {
+    const anyVisible = names.length > 0 && d3.selectAll('.node').data().some(d => nameSet.has(d.name));
+    d3.selectAll('.node').each(function(d) {
+      const el = d3.select(this);
+      if (!anyVisible) { el.classed('dimmed', false).classed('highlighted', false); }
+      else if (nameSet.has(d.name)) { el.classed('dimmed', false).classed('highlighted', true); }
+      else { el.classed('dimmed', true).classed('highlighted', false); }
+    });
+    d3.selectAll('.connection-line').each(function(d) {
+      const el = d3.select(this);
+      el.classed('dimmed', false).classed('highlighted', false).classed('one-hop', false);
+      if (!anyVisible) return;
+      const srcName = (d.source && d.source.name) || '';
+      const tgtName = (d.target && d.target.name) || '';
+      if (nameSet.has(srcName) || nameSet.has(tgtName)) el.classed('highlighted', true);
+      else el.classed('dimmed', true);
+    });
+    d3.selectAll('.cluster-bg').attr('opacity', anyVisible ? 0.02 : 0.06);
+    d3.selectAll('.cluster-label-bg').attr('opacity', anyVisible ? 0.02 : 0.85);
+    d3.selectAll('.cluster-label').attr('opacity', anyVisible ? 0.05 : 1);
   }
-  for (const l of _canvasLinks) {
-    l._vs = 'normal';
-    if (!anyVisible) continue;
-    const srcName = (l.source && l.source.name) || '';
-    const tgtName = (l.target && l.target.name) || '';
-    l._vs = (nameSet.has(srcName) || nameSet.has(tgtName)) ? 'highlighted' : 'dimmed';
-  }
-  _clusterDimmed = anyVisible;
-  _requestRedraw();
 }
 
 function dimUnconnected(node) {
@@ -5095,10 +5117,18 @@ function dimUnconnected(node) {
 function clearSelection() {
   selectedNode = null;
   if (viewMode === 'search') return;
-  for (const d of _canvasNodes) d._vs = 'normal';
-  for (const l of _canvasLinks) l._vs = 'normal';
-  _clusterDimmed = false;
-  _requestRedraw();
+  if (_canvasNodes.length > 0) {
+    for (const d of _canvasNodes) d._vs = 'normal';
+    for (const l of _canvasLinks) l._vs = 'normal';
+    _clusterDimmed = false;
+    _requestRedraw();
+  } else {
+    d3.selectAll('.node').classed('dimmed', false).classed('highlighted', false);
+    d3.selectAll('.connection-line').classed('dimmed', false).classed('highlighted', false).classed('one-hop', false);
+    d3.selectAll('.cluster-bg').attr('opacity', 0.06);
+    d3.selectAll('.cluster-label-bg').attr('opacity', 0.85);
+    d3.selectAll('.cluster-label').attr('opacity', 1);
+  }
 }
 
 function clearSearch() {
