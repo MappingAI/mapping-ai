@@ -795,9 +795,17 @@ lefthook install`}</Pre>
         <Pre>{`npx vite dev          # http://localhost:5173 — all pages`}</Pre>
 
         <p className="mb-4">
-          This serves everything: all React pages and the map. If you need
-          form submissions or search to work locally (not just the UI), also
-          start the API proxy in a second terminal:
+          The map and contribute form need <Code>map-data.json</Code> to show
+          data. On a fresh clone this file doesn&rsquo;t exist. Pull it from
+          production:
+        </p>
+
+        <Pre>{`curl -o map-data.json https://mapping-ai.org/map-data.json
+curl -o map-detail.json https://mapping-ai.org/map-detail.json`}</Pre>
+
+        <p className="mb-4">
+          If you need form submissions or search to work locally (not just the UI),
+          also start the API proxy in a second terminal:
         </p>
 
         <Pre>{`node dev-server.js    # API proxy — needed for submit/search`}</Pre>
