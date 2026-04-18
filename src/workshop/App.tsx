@@ -1084,7 +1084,12 @@ npm run test          # Run tests`}</Pre>
         <H4>Deliverable</H4>
 
         <p className="mb-4">
-          By the end of the session, post your ideas in the{' '}
+          By the end of the session, add your ideas to{' '}
+          <ExtLink href="https://docs.google.com/document/d/1WNVM22lGeCOcZHvi5KwF9Yn9be6T6V7xbsocL0SQsLQ/edit?usp=sharing">
+            the outreach planning doc
+          </ExtLink>{' '}
+          (which already has a bunch of ideas to build on) and post highlights
+          in the{' '}
           <ExtLink href="https://discord.gg/2gntpaxV">
             Discord forum channel
           </ExtLink>
