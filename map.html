@@ -1462,24 +1462,16 @@ function getImageUrl(d) {
 function resolveEntityImage(d, onSuccess) {
   if (d.entityType === 'resource') return;
   if (d.entityType === 'person') {
+    // Only render what the cache-thumbnails script has already stored. No live
+    // Wikipedia calls on the client: they 429 under any real traffic and waste
+    // a network round-trip on every refresh. Entities without thumbnail_url
+    // fall through to the initials canvas glyph.
     const imgUrl = getImageUrl(d);
-    if (imgUrl) {
-      const img = new Image();
-      img.referrerPolicy = 'no-referrer';
-      img.onload = () => onSuccess(imgUrl);
-      img.onerror = () => {
-        if (typeof fetchWikiImage === 'function') {
-          fetchWikiImage(d.name).then(wikiUrl => {
-            if (wikiUrl) { const t = new Image(); t.referrerPolicy = 'no-referrer'; t.onload = () => onSuccess(wikiUrl); t.src = wikiUrl; }
-          });
-        }
-      };
-      img.src = imgUrl;
-    } else if (typeof fetchWikiImage === 'function') {
-      fetchWikiImage(d.name).then(wikiUrl => {
-        if (wikiUrl) { const t = new Image(); t.referrerPolicy = 'no-referrer'; t.onload = () => onSuccess(wikiUrl); t.src = wikiUrl; }
-      });
-    }
+    if (!imgUrl) return;
+    const img = new Image();
+    img.referrerPolicy = 'no-referrer';
+    img.onload = () => onSuccess(imgUrl);
+    img.src = imgUrl;
   } else if (d.entityType === 'organization') {
     // Prefer stored thumbnail_url (from scripts/cache-thumbnails.js). Fall back to
     // the static /logos/<domain>.png bucket, then to Google Favicon.
@@ -4307,20 +4299,14 @@ function render2D(svg, g, width, height) {
     }
 
     if (d.entityType === 'person') {
+      // No live Wikipedia fallback (429 storm). Use thumbnail_url if set,
+      // otherwise leave the node rendered with its initials glyph.
       const imgUrl = getImageUrl(d);
       if (imgUrl) {
         const img = new Image();
         img.referrerPolicy = 'no-referrer';
         img.onload = () => applyImage(imgUrl);
-        img.onerror = async () => {
-          const wikiUrl = await fetchWikiImage(d.name);
-          if (wikiUrl) { const img2 = new Image(); img2.referrerPolicy = 'no-referrer'; img2.onload = () => applyImage(wikiUrl); img2.src = wikiUrl; }
-        };
         img.src = imgUrl;
-      } else {
-        fetchWikiImage(d.name).then(wikiUrl => {
-          if (wikiUrl) { const img = new Image(); img.referrerPolicy = 'no-referrer'; img.onload = () => applyImage(wikiUrl); img.src = wikiUrl; }
-        });
       }
     } else if (d.entityType === 'organization') {
       let domain;
