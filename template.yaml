@@ -79,14 +79,15 @@ Resources:
 
   # Lambda handlers are TypeScript (`api/*.ts`) and get bundled via SAM's
   # esbuild BuildMethod. `Metadata.BuildMethod: esbuild` tells SAM CLI to
-  # compile + bundle at `sam build` time; the deployed artefact is JS.
+  # compile + bundle at `sam build` time; the deployed artefact is a single JS
+  # file per function.
   #
-  # `External` keeps heavy/runtime-provided packages out of the Lambda bundle:
-  #   - `pg` has native bindings; bundling breaks them.
-  #   - `@anthropic-ai/sdk` is large; leaving it external shrinks cold-start.
-  #   - `@aws-sdk/*` is pre-installed in the Lambda Node 20 runtime.
-  # Lambda still resolves them from `node_modules` at runtime because SAM
-  # installs them from `package.json` into each function's build directory.
+  # `External` only lists packages that Lambda already provides at runtime and
+  # don't need to be in the bundle — today that's the `@aws-sdk/*` family,
+  # pre-installed in the Node 20 runtime. Everything else (including `pg`) is
+  # bundled by esbuild so it's available when the handler loads; the esbuild
+  # build output is just the `.js` file, so anything not bundled and not in
+  # the Lambda runtime would fail with "Cannot find module" on cold start.
   SubmitFunction:
     Type: AWS::Serverless::Function
     Metadata:
@@ -98,8 +99,6 @@ Resources:
         EntryPoints:
           - api/submit.ts
         External:
-          - pg
-          - '@anthropic-ai/sdk'
           - '@aws-sdk/client-s3'
           - '@aws-sdk/client-cloudfront'
     Properties:
@@ -128,8 +127,6 @@ Resources:
         EntryPoints:
           - api/search.ts
         External:
-          - pg
-          - '@anthropic-ai/sdk'
           - '@aws-sdk/client-s3'
           - '@aws-sdk/client-cloudfront'
     Properties:
@@ -157,8 +154,6 @@ Resources:
         EntryPoints:
           - api/semantic-search.ts
         External:
-          - pg
-          - '@anthropic-ai/sdk'
           - '@aws-sdk/client-s3'
           - '@aws-sdk/client-cloudfront'
     Properties:
@@ -187,8 +182,6 @@ Resources:
         EntryPoints:
           - api/admin.ts
         External:
-          - pg
-          - '@anthropic-ai/sdk'
           - '@aws-sdk/client-s3'
           - '@aws-sdk/client-cloudfront'
     Properties:
@@ -232,8 +225,6 @@ Resources:
         EntryPoints:
           - api/upload.ts
         External:
-          - pg
-          - '@anthropic-ai/sdk'
           - '@aws-sdk/client-s3'
           - '@aws-sdk/client-cloudfront'
     Properties:
@@ -268,8 +259,6 @@ Resources:
         EntryPoints:
           - api/submissions.ts
         External:
-          - pg
-          - '@anthropic-ai/sdk'
           - '@aws-sdk/client-s3'
           - '@aws-sdk/client-cloudfront'
     Properties:
