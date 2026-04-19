@@ -3,7 +3,10 @@ title: 'refactor: Migrate network view from SVG to Canvas 2D rendering'
 type: refactor
 status: active
 date: 2026-04-17
+last_updated: 2026-04-19
 ---
+
+> **Post-implementation refresh (2026-04-19):** References in this plan to `resolveEntityImage()` as an active fallback chain (at `map.html:1462-1500`, and in Units describing "keep resolveEntityImage unchanged — it handles the fallback chain") are now outdated. After commit `13dc655`, `resolveEntityImage()` is a one-line pass-through: `return entity.thumbnail_url || null`. The org `tryFallback` chain and `fetchWikiImage` live calls are removed. The canvas `createSprite` path is unchanged in its own logic — it still pre-rasterizes to an offscreen canvas — but the URL it receives now comes exclusively from the DB via the cache-thumbnails pipeline. See [`docs/solutions/integration-issues/thumbnail-pipeline-dead-cloudfront-and-external-fallbacks-2026-04-19.md`](../solutions/integration-issues/thumbnail-pipeline-dead-cloudfront-and-external-fallbacks-2026-04-19.md).
 
 # refactor: Migrate network view from SVG to Canvas 2D rendering
 

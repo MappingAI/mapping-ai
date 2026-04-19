@@ -1,9 +1,12 @@
 ---
-title: "feat: Security hardening + performance optimization for Phase 2/3"
+title: 'feat: Security hardening + performance optimization for Phase 2/3'
 type: feat
 status: completed
 date: 2026-04-01
+last_updated: 2026-04-19
 ---
+
+> **Post-implementation refresh (2026-04-19):** The image-loading description in Context & Research (line ~47, "three-tier people images (thumbnail_url → hardcoded map → Wikipedia API)") is no longer accurate. After the 2026-04-19 fix, the frontend reads `entity.thumbnail_url` exclusively and renders initials when it is empty or null. All external image resolution (Wikipedia, Google Favicons) happens server-side in `scripts/cache-thumbnails.js`. The in-memory `wikiImageCache` and `PEOPLE_IMAGES` hardcoded map are no longer called. Unit 5 (localStorage image cache, skipped) stays skipped since all thumbnails are now same-origin. See [`docs/solutions/integration-issues/thumbnail-pipeline-dead-cloudfront-and-external-fallbacks-2026-04-19.md`](../solutions/integration-issues/thumbnail-pipeline-dead-cloudfront-and-external-fallbacks-2026-04-19.md).
 
 # Security Hardening + Performance Optimization
 
@@ -14,6 +17,7 @@ Harden the API layer, add load testing, implement caching for faster UX, and tun
 ## Problem Frame
 
 The site launches to trusted contacts on 4/3 and goes public on 4/9. Current issues:
+
 - **Connection exhaustion risk**: Each Lambda creates a 10-connection pool. RDS db.t4g.micro supports ~82 connections. 50 concurrent Lambda containers = 500 connections = crash.
 - **No load testing**: Zero baseline measurements. API Gateway throttle is 10 req/s — will 429 most traffic at scale.
 - **SQL injection surface**: search.js uses string interpolation for type/status clauses. Safe today via whitelist but fragile.
@@ -193,7 +197,7 @@ The site launches to trusted contacts on 4/3 and goes public on 4/9. Current iss
 
 ---
 
-- [~] **Unit 5: Image URL caching in localStorage** *(Skipped — superseded by deploy-time thumbnail caching, see ideation doc)*
+- [~] **Unit 5: Image URL caching in localStorage** _(Skipped — superseded by deploy-time thumbnail caching, see ideation doc)_
 
   **Goal:** Cache resolved image URLs to eliminate redundant 404s and Wikipedia API calls across page loads.
 
@@ -309,23 +313,25 @@ The site launches to trusted contacts on 4/3 and goes public on 4/9. Current iss
 
 ## Risks & Dependencies
 
-| Risk | Impact | Mitigation |
-|------|--------|------------|
-| RDS connection exhaustion at 80+ concurrent Lambdas | 5xx errors, data loss on writes | Pool max=1, connectionTimeout, statement_timeout. Monitor with CloudWatch RDS metrics. Escalation path: RDS Proxy. |
-| API Gateway throttle too aggressive | 429 errors for legitimate users | Increase to 100/200. Monitor 429 count in CloudWatch. |
-| localStorage cache grows unbounded | Slows page load on low-memory devices | Cap at 500 entries, 7-day TTL, LRU eviction |
-| CORS tightening breaks existing users | API calls fail from unlisted origins | Allowlist includes all known domains + localhost. Add `aimapping.org` variants. |
-| Artillery load test against production | Actual user impact during test | Run during low-traffic hours (late night ET). Or test against dev-server locally for smoke test. |
+| Risk                                                | Impact                                | Mitigation                                                                                                         |
+| --------------------------------------------------- | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| RDS connection exhaustion at 80+ concurrent Lambdas | 5xx errors, data loss on writes       | Pool max=1, connectionTimeout, statement_timeout. Monitor with CloudWatch RDS metrics. Escalation path: RDS Proxy. |
+| API Gateway throttle too aggressive                 | 429 errors for legitimate users       | Increase to 100/200. Monitor 429 count in CloudWatch.                                                              |
+| localStorage cache grows unbounded                  | Slows page load on low-memory devices | Cap at 500 entries, 7-day TTL, LRU eviction                                                                        |
+| CORS tightening breaks existing users               | API calls fail from unlisted origins  | Allowlist includes all known domains + localhost. Add `aimapping.org` variants.                                    |
+| Artillery load test against production              | Actual user impact during test        | Run during low-traffic hours (late night ET). Or test against dev-server locally for smoke test.                   |
 
 ## Sequencing
 
 **Phase A (deploy before 4/3 launch):**
+
 - Unit 1: Connection hardening (prevents crash under any load)
 - Unit 2: SQL parameterization (quick, zero-risk improvement)
 - Unit 3: Search auth for pending (security fix)
 - Unit 6: D3 damping (UX fix, client-side only)
 
 **Phase B (deploy before 4/7 Phase 2):**
+
 - Unit 4: CORS fix (coordinate with team to verify no breakage)
 - Unit 5: Image caching (client-side, low risk)
 - Unit 7: Throttle adjustment (needs Unit 1 deployed first)

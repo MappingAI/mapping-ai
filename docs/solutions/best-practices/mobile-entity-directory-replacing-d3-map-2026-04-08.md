@@ -1,15 +1,16 @@
 ---
-title: "Mobile entity directory: replacing D3 force map with card-based directory"
+title: 'Mobile entity directory: replacing D3 force map with card-based directory'
 date: 2026-04-08
+last_updated: 2026-04-19
 category: best-practices
-module: "map.html / mobile directory"
+module: 'map.html / mobile directory'
 problem_type: best_practice
 component: frontend_stimulus
 symptoms:
-  - "D3 force-directed map nodes too small to tap on mobile (<768px)"
-  - "Cluster labels illegible at 9px on small screens"
-  - "Controls sidebar and detail panel obscured entire viewport"
-  - "No deep linking or sharing for individual entities"
+  - 'D3 force-directed map nodes too small to tap on mobile (<768px)'
+  - 'Cluster labels illegible at 9px on small screens'
+  - 'Controls sidebar and detail panel obscured entire viewport'
+  - 'No deep linking or sharing for individual entities'
   - "Mobile banner said 'Best viewed on desktop' as only solution"
 root_cause: wrong_api
 resolution_type: code_fix
@@ -63,9 +64,11 @@ The D3.js force-directed stakeholder map at mapping-ai.org was unusable on mobil
 The key architectural decision was extracting shared functions used by both mobile and desktop, rather than building parallel implementations:
 
 ```javascript
-// Shared image resolver — one fallback chain for all contexts
+// Shared image resolver — single source of truth
 function resolveEntityImage(entity, onSuccess) {
-  // Handles: thumbnail_url → Wikipedia API → S3 logo → Google Favicon
+  // Returns entity.thumbnail_url (cached in S3 by scripts/cache-thumbnails.js)
+  // or null. No live Wikipedia / Google Favicon / /logos/ fallbacks since
+  // 2026-04-19 — all external resolution moved to the cache script.
   // Called by: desktop map nodes, mobile mini-graph nodes, detail panel
 }
 
@@ -83,7 +86,7 @@ function shareEntity(entity) {
 
 // XSS prevention for all innerHTML
 function escHtml(s) {
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 }
 ```
 
@@ -127,18 +130,29 @@ function initSplitDragHandle() {
 ```javascript
 function ensureD3() {
   return new Promise((resolve, reject) => {
-    if (d3Loaded || typeof d3 !== 'undefined') { resolve(); return; }
-    const script = document.createElement('script');
-    script.src = 'https://d3js.org/d3.v7.min.js';
-    script.onload = () => { d3Loaded = true; resolve(); };
-    script.onerror = () => { reject(new Error('D3 failed to load')); };
-    document.head.appendChild(script);
-  });
+    if (d3Loaded || typeof d3 !== 'undefined') {
+      resolve()
+      return
+    }
+    const script = document.createElement('script')
+    script.src = 'https://d3js.org/d3.v7.min.js'
+    script.onload = () => {
+      d3Loaded = true
+      resolve()
+    }
+    script.onerror = () => {
+      reject(new Error('D3 failed to load'))
+    }
+    document.head.appendChild(script)
+  })
 }
 
 // Caller handles failure gracefully
-ensureD3().then(() => renderMiniGraph(d, container))
-  .catch(() => { container.innerHTML = '...unavailable fallback...'; });
+ensureD3()
+  .then(() => renderMiniGraph(d, container))
+  .catch(() => {
+    container.innerHTML = '...unavailable fallback...'
+  })
 ```
 
 ## Why This Works
@@ -158,7 +172,7 @@ Shared functions ensure mobile and desktop stay in sync — a fix to `buildConne
 - **Test mobile on real devices**, not just DevTools emulation. DevTools doesn't faithfully reproduce `document.write`, `navigator.share`, or touch event timing.
 - **Pre-compute expensive lookups** (connection count maps, slug maps) once during initialization. Mobile devices have less CPU headroom.
 - **Use `name || title`** everywhere entity display names are needed. Resources use `title` as their canonical name.
-- **Restrict speculative HTTP requests** (favicons, Wikipedia images) to entities with known working domains. Check `ORG_DOMAINS` or `thumbnail_url` before making requests.
+- **Never call Wikipedia, Google Favicon, or any external image host from the client at render time.** All image resolution happens server-side in `scripts/cache-thumbnails.js`. The frontend reads `entity.thumbnail_url` only. See [`thumbnail-pipeline-dead-cloudfront-and-external-fallbacks-2026-04-19.md`](../integration-issues/thumbnail-pipeline-dead-cloudfront-and-external-fallbacks-2026-04-19.md) for why live fallback chains broke prod.
 - **Use relative sizing** in D3 mini-graphs (percentages of container dimensions, not fixed pixel values) so graphs render correctly across phone sizes.
 
 ## Related Issues

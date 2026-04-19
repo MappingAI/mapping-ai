@@ -1,5 +1,5 @@
 ---
-title: "feat: Migrate to Vite + React — Phase 1: Contribute Form"
+title: 'feat: Migrate to Vite + React — Phase 1: Contribute Form'
 type: feat
 status: active
 date: 2026-04-13
@@ -128,7 +128,7 @@ A React migration enables: component reuse, type safety, declarative state manag
 
 ## High-Level Technical Design
 
-> *This illustrates the intended approach and is directional guidance for review, not implementation specification. The implementing agent should treat it as context, not code to reproduce.*
+> _This illustrates the intended approach and is directional guidance for review, not implementation specification. The implementing agent should treat it as context, not code to reproduce._
 
 ### File Structure
 
@@ -327,7 +327,7 @@ mapping-ai/
   - **Step ordering matters:** Write `.env.production` BEFORE `npm run build` (Vite embeds `import.meta.env.VITE_*` at build time). Then run `vite build`. Then run `sed` on `dist/` output. Then S3 sync.
   - Write `.env.production` file in CI step with `VITE_SITE_PASSWORD_HASH` and `VITE_CF_ANALYTICS_TOKEN` for React-migrated pages
   - Keep the `sed` step but run it on `dist/` output using `find dist/ -name '*.html' -exec sed -i ... {} +` (not `dist/*.html`) to catch nested paths like `workshop/index.html`. Target non-migrated pages (map.html, admin.html, theoryofchange.html, etc.) that still use `__SITE_PASSWORD_HASH__` and `__CF_ANALYTICS_TOKEN__` placeholders in inline scripts. **During coexistence (Units 3-16), sed must continue to target `dist/contribute.html` for password hash.** Remove contribute.html from sed only at Unit 17 cutover. This dual mechanism is transitional tech debt.
-  - **CSP fix:** Update `template.yaml` SecurityHeadersPolicy to add `https://static.cloudflareinsights.com` to `script-src` (currently missing — analytics beacon is blocked by CSP). Requires `sam deploy`.
+  - **CSP fix:** ✅ Landed 2026-04-19. Added `https://static.cloudflareinsights.com` to `script-src` on the live CloudFront Response Headers Policy via `aws cloudfront update-response-headers-policy` (not `sam deploy` — see [2026-04-16 post-mortem](../solutions/integration-issues/sam-deploy-overwrites-manual-cloudfront-config-2026-04-16.md)). `template.yaml` updated in commit `65a5a78` to keep IaC in sync. See [`thumbnail-pipeline-dead-cloudfront-and-external-fallbacks-2026-04-19.md`](../solutions/integration-issues/thumbnail-pipeline-dead-cloudfront-and-external-fallbacks-2026-04-19.md) for the full CLI recipe (including the `XSSProtection: {}` stanza that must be stripped before UPDATE will accept the payload).
   - Copy `map-data.json` and `map-detail.json` into `dist/` after generation (post-build step, before S3 sync)
   - Cache headers: HTML `no-cache`, JSON `max-age=60,stale-while-revalidate=300`, hashed assets `max-age=31536000,immutable`
   - **S3 asset deletion race fix:** Do NOT use `--delete` on the hashed assets sync. Old hashed asset files stay in S3 until a separate cleanup job removes files older than 7 days. This prevents 404s for users with cached HTML pointing to previous build's asset filenames during the brief deploy window.
@@ -980,18 +980,23 @@ mapping-ai/
 All phases happen on a single `feat/react-contribute` branch. Nothing ships to production until the full migration is tested and ready.
 
 ### Phase 0: Build Infrastructure (Units 1-4)
+
 Vite scaffolding, Tailwind config, deploy workflow updates, preview deploys. After this phase, the branch has a working Vite build with all pages functional. **Critical gate: Unit 1 must verify Vite does not transform inline scripts in non-migrated pages (P0 finding). If it does, add a fallback: exclude non-migrated pages from rollupOptions.input and copy them raw to dist/ as a post-build step.**
 
 ### Phase 1: Shared Infrastructure (Units 5-7)
+
 React mounts on contribute.html alongside existing content. Shared hooks, API client, and Navigation component built. The old inline scripts still run the form on the branch.
 
 ### Phase 2: Form Component Library (Units 8-10)
+
 Reusable components built and tested in isolation. No user-facing change yet — components exist but aren't wired into the form.
 
 ### Phase 3: Contribute Form Migration (Units 11-17)
+
 Full assembly + cutover. Old inline code removed, React components assembled into the full form. The 4,036-line file shrinks to ~50 lines. After Unit 17, the branch is ready for thorough testing before the single merge to main.
 
 ### Future Phases (out of scope)
+
 - Phase 4: about.html, index.html, workshop migration (trivial — small pages)
 - Phase 5: admin.html migration
 - Phase 6: map.html migration (D3 useRef pattern, largest effort)
