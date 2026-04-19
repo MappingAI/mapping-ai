@@ -184,6 +184,33 @@ async function cachePersonPhoto(entity) {
 }
 
 /**
+ * Re-cache an entity whose thumbnail_url is already set to an external URL
+ * (Wikimedia Commons, Google Favicon, etc.). Downloads the existing URL and
+ * stores it under our S3 /thumbnails/ prefix so the browser stops fetching
+ * external hosts on every page load.
+ */
+async function reCacheExternalUrl(entity) {
+  const isOrg = entity.entity_type === 'organization'
+  const ext = isOrg ? 'png' : 'jpg'
+  const key = `thumbnails/${isOrg ? 'org' : 'person'}-${entity.id}.${ext}`
+
+  // If we already have an S3 copy, just point the DB at it.
+  if (await s3Exists(key)) {
+    return { status: 'exists', url: `https://${CF_DOMAIN}/${key}` }
+  }
+
+  const img = await fetchImage(entity.thumbnail_url)
+  if (!img) return { status: 'fail', reason: 'external fetch failed' }
+
+  if (DRY_RUN) {
+    return { status: 'dry-run', url: `https://${CF_DOMAIN}/${key}` }
+  }
+
+  const url = await uploadToS3(key, img.buffer, img.contentType)
+  return { status: 'cached', url }
+}
+
+/**
  * Update entity thumbnail_url in database
  */
 async function updateThumbnailUrl(entityId, url) {
@@ -198,12 +225,17 @@ async function main() {
   console.log('Caching thumbnails to S3...')
   if (DRY_RUN) console.log('  (dry run - no uploads or DB updates)\n')
 
-  // Query entities without thumbnail_url
+  // Pick up entities that either lack a thumbnail entirely OR still point at
+  // an external host (Wikimedia, Google Favicon) rather than our S3 bucket.
+  // Skip entries where thumbnail_url is '' — those are "tried and failed"
+  // markers we persist across runs.
   let query = `
-    SELECT id, entity_type, name, website
+    SELECT id, entity_type, name, website, thumbnail_url
     FROM entity
     WHERE status = 'approved'
-      AND thumbnail_url IS NULL
+      AND (thumbnail_url IS NULL
+           OR (thumbnail_url != ''
+               AND thumbnail_url NOT LIKE 'https://mapping-ai.org/thumbnails/%'))
   `
 
   if (TYPE_FILTER === 'org') {
@@ -224,7 +256,18 @@ async function main() {
 
   for (const entity of entities) {
     const isOrg = entity.entity_type === 'organization'
-    const result = isOrg ? await cacheOrgLogo(entity) : await cachePersonPhoto(entity)
+    // If the row already has an external URL, migrate that one. Otherwise run
+    // the original discovery path (Google Favicon for orgs, Wikipedia for
+    // people).
+    const hasExternal =
+      entity.thumbnail_url &&
+      entity.thumbnail_url !== '' &&
+      !entity.thumbnail_url.startsWith('https://mapping-ai.org/thumbnails/')
+    const result = hasExternal
+      ? await reCacheExternalUrl(entity)
+      : isOrg
+        ? await cacheOrgLogo(entity)
+        : await cachePersonPhoto(entity)
 
     const icon = isOrg ? '🏢' : '👤'
     const statusIcon =
@@ -240,13 +283,17 @@ async function main() {
       `${statusIcon} ${icon} ${entity.name.substring(0, 40).padEnd(40)} ${result.status}${result.reason ? ` (${result.reason})` : ''}`,
     )
 
-    // Update DB if we got a URL
+    // Update DB in all terminal cases. Successes store the CloudFront URL;
+    // skips and fails store '' so subsequent runs exclude this entity from
+    // the `thumbnail_url IS NULL` query and don't re-hammer Wikipedia or
+    // Google Favicon for known-dead entries. To force a retry later, set
+    // thumbnail_url back to NULL in the DB.
     if (result.url && (result.status === 'cached' || result.status === 'exists')) {
       await updateThumbnailUrl(entity.id, result.url)
-      stats[result.status]++
-    } else {
-      stats[result.status] = (stats[result.status] || 0) + 1
+    } else if (result.status === 'skip' || result.status === 'fail') {
+      await updateThumbnailUrl(entity.id, '')
     }
+    stats[result.status] = (stats[result.status] || 0) + 1
 
     // Small delay to avoid rate limiting
     await new Promise((r) => setTimeout(r, 100))
