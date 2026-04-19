@@ -66,6 +66,32 @@ Admin approves submission (via admin.html)
     → Map reflects changes within ~60 seconds
 ```
 
+### Path 3: Thumbnail pipeline (images in S3, not live external fetches)
+
+```
+scripts/cache-thumbnails.js (run manually or on demand)
+    → For each approved entity with thumbnail_url IS NULL or a non-S3 URL:
+        · Try Google Favicon (orgs) or Wikipedia API (people), OR
+          re-download the existing external URL (reCacheExternalUrl)
+        · Upload to s3://mapping-ai-website-.../thumbnails/<type>-<id>.{png,jpg}
+        · Write https://mapping-ai.org/thumbnails/... into entity.thumbnail_url
+    → On skip or fail: write thumbnail_url = '' (tried-and-no-image marker)
+       so the script excludes the entity on re-runs and the frontend skips
+       any live fallback
+
+Browser loads map.html → resolveEntityImage(entity) returns entity.thumbnail_url
+  or null. Non-empty values render as an <img>; '' and null render as initials
+  on the canvas. No live calls to en.wikipedia.org/api, upload.wikimedia.org,
+  or google.com/s2/favicons on page load.
+```
+
+**Thumbnail rules (see [docs/solutions/integration-issues/thumbnail-pipeline-dead-cloudfront-and-external-fallbacks-2026-04-19.md](docs/solutions/integration-issues/thumbnail-pipeline-dead-cloudfront-and-external-fallbacks-2026-04-19.md)):**
+
+- `entity.thumbnail_url` is the single source of truth. Values: `https://mapping-ai.org/thumbnails/<key>` (cached), `''` (tried, no image available), or `NULL` (never tried).
+- Never hardcode a CloudFront subdomain (e.g. `d3fo5mm9fktie3.cloudfront.net`) in `scripts/cache-thumbnails.js`. Use `mapping-ai.org` — the project owns that alias, the distribution underneath can be replaced.
+- `api/admin.js` `update_entity` must not blind-overwrite `thumbnail_url` to null when the admin form didn't change it. Otherwise routine edits wipe the cache script's work.
+- Frontend never calls Wikipedia or Google Favicon at render time. If coverage is too low, run the cache script and redeploy `map-data.json`.
+
 **Key insight:** The map loads from a static JSON file on S3/CloudFront, NOT from the database. This makes the map load instantly for all users worldwide. New submissions appear on the map automatically after admin approval (no deploy needed). For manual data refresh:
 
 ```bash
@@ -114,6 +140,7 @@ mapping-ai/
 │   ├── search.js           # Lambda: GET /search - full-text search
 │   ├── admin.js            # Lambda: GET/POST /admin - stats, pending, approve/reject/merge/update/delete, auto map refresh
 │   ├── upload.js           # Lambda: POST /upload - thumbnail image upload to S3
+│                            # (admin path; bulk caching lives in scripts/cache-thumbnails.js)
 │   └── export-map.js       # Shared module: generates map-data.json from DB (maps DB columns → frontend field names)
 ├── scripts/
 │   ├── migrate.js          # Create/update all 3 tables + triggers + indexes

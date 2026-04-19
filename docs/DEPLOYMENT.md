@@ -25,6 +25,12 @@ Feature branch -> PR -> main -> manual `sam build && sam deploy`
 
 **Critical: Never run `sam deploy` without checking for drift first.** See the [SAM deploy post-mortem](solutions/integration-issues/sam-deploy-overwrites-manual-cloudfront-config-2026-04-16.md) for why. Always run `aws cloudformation detect-stack-drift` before deploying.
 
+### Header + CSP tweaks: use the CloudFront CLI, not `sam deploy`
+
+Response-header changes (CSP, `script-src` allow-list, HSTS, Referrer-Policy) should be applied in place via `aws cloudfront update-response-headers-policy`, not by running `sam deploy`. The 2026-04-16 incident showed unattended SAM deploys can silently replace a hand-tuned CloudFront config. The 2026-04-19 fix adding `https://static.cloudflareinsights.com` to `script-src` landed via CLI with no SAM deploy. See [`thumbnail-pipeline-dead-cloudfront-and-external-fallbacks-2026-04-19.md`](solutions/integration-issues/thumbnail-pipeline-dead-cloudfront-and-external-fallbacks-2026-04-19.md) for the exact commands (including the `XSSProtection: {}` stanza that has to be stripped from the GET payload before UPDATE will accept it).
+
+After applying a header change with the CLI, mirror it into `template.yaml` in the same PR so the IaC source stays in sync for the next SAM deploy. CLI change without a matching `template.yaml` edit is a drift bomb.
+
 ## Branch Strategy
 
 | Branch   | Purpose                                       | Deploys to                      |

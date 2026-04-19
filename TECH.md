@@ -116,7 +116,8 @@ mapping-ai/
 │   ├── submissions.js      # Lambda: GET /submissions - returns entities + edges
 │   ├── search.js           # Lambda: GET /search - full-text search
 │   ├── admin.js            # Lambda: GET/POST /admin - stats, pending, approve/reject/merge/update/delete, auto map refresh
-│   ├── upload.js           # Lambda: POST /upload - thumbnail image upload to S3
+│   ├── upload.js           # Lambda: POST /upload - admin thumbnail image upload to S3
+│   │                         # (bulk caching lives in scripts/cache-thumbnails.js)
 │   └── export-map.js       # Shared module: generates map-data.json from DB
 ├── scripts/
 │   ├── migrate.js          # Create/update all 3 tables + triggers + indexes
@@ -240,42 +241,42 @@ The schema uses a **unified `entity` table** (migrated from the old schema that 
 
 #### `entity`
 
-| Column                            | Type                | Notes                                                   |
-| --------------------------------- | ------------------- | ------------------------------------------------------- |
-| `id`                              | SERIAL PK           |                                                         |
-| `entity_type`                     | VARCHAR(20)         | `person`, `organization`, or `resource`                 |
-| `name`                            | VARCHAR(200)        | Person/org name                                         |
-| `title`                           | VARCHAR(300)        | Job title (person)                                      |
-| `category`                        | VARCHAR(200)        | Role (person) or sector (org)                           |
-| `primary_org`                     | VARCHAR(200)        | Person's primary org                                    |
-| `other_orgs`                      | VARCHAR(200)        | Person's other affiliations                             |
-| `website`                         | VARCHAR(200)        | Org website                                             |
-| `funding_model`                   | VARCHAR(200)        | Org funding model                                       |
-| `parent_org_id`                   | INTEGER FK → entity | Org parent                                              |
-| `resource_title`                  | VARCHAR(300)        | Resource title                                          |
-| `resource_category`               | VARCHAR(200)        | Resource category                                       |
-| `resource_author`                 | VARCHAR(200)        | Resource author                                         |
-| `resource_type`                   | VARCHAR(100)        | Essay, Book, Report, etc.                               |
-| `resource_url`                    | VARCHAR(500)        | Resource URL                                            |
-| `resource_year`                   | VARCHAR(10)         | Resource year                                           |
-| `resource_key_argument`           | TEXT                | Resource key argument                                   |
-| `location`                        | VARCHAR(200)        |                                                         |
-| `influence_type`                  | TEXT                | Comma-separated                                         |
-| `twitter`, `bluesky`              | VARCHAR(200)        | Social handles                                          |
-| `notes`                           | TEXT                |                                                         |
-| `thumbnail_url`                   | VARCHAR(500)        |                                                         |
-| `belief_regulatory_stance`        | VARCHAR(200)        | Display label (trigger-derived from wavg)               |
-| `belief_regulatory_stance_detail` | TEXT                |                                                         |
-| `belief_evidence_source`          | VARCHAR(200)        |                                                         |
-| `belief_agi_timeline`             | VARCHAR(200)        | Display label                                           |
-| `belief_ai_risk`                  | VARCHAR(200)        | Display label                                           |
-| `belief_threat_models`            | TEXT                |                                                         |
-| `belief_*_wavg`                   | REAL                | Weighted average score (trigger-maintained)             |
-| `belief_*_wvar`                   | REAL                | Weighted variance (trigger-maintained)                  |
-| `belief_*_n`                      | INTEGER             | Count of scored submissions                             |
-| `submission_count`                | INTEGER             | Total approved submissions                              |
-| `status`                          | VARCHAR(20)         | `approved`, `pending`, `internal`                       |
-| `search_vector`                   | tsvector            | Full-text search (GIN indexed, auto-updated by trigger) |
+| Column                            | Type                | Notes                                                                                                                                      |
+| --------------------------------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `id`                              | SERIAL PK           |                                                                                                                                            |
+| `entity_type`                     | VARCHAR(20)         | `person`, `organization`, or `resource`                                                                                                    |
+| `name`                            | VARCHAR(200)        | Person/org name                                                                                                                            |
+| `title`                           | VARCHAR(300)        | Job title (person)                                                                                                                         |
+| `category`                        | VARCHAR(200)        | Role (person) or sector (org)                                                                                                              |
+| `primary_org`                     | VARCHAR(200)        | Person's primary org                                                                                                                       |
+| `other_orgs`                      | VARCHAR(200)        | Person's other affiliations                                                                                                                |
+| `website`                         | VARCHAR(200)        | Org website                                                                                                                                |
+| `funding_model`                   | VARCHAR(200)        | Org funding model                                                                                                                          |
+| `parent_org_id`                   | INTEGER FK → entity | Org parent                                                                                                                                 |
+| `resource_title`                  | VARCHAR(300)        | Resource title                                                                                                                             |
+| `resource_category`               | VARCHAR(200)        | Resource category                                                                                                                          |
+| `resource_author`                 | VARCHAR(200)        | Resource author                                                                                                                            |
+| `resource_type`                   | VARCHAR(100)        | Essay, Book, Report, etc.                                                                                                                  |
+| `resource_url`                    | VARCHAR(500)        | Resource URL                                                                                                                               |
+| `resource_year`                   | VARCHAR(10)         | Resource year                                                                                                                              |
+| `resource_key_argument`           | TEXT                | Resource key argument                                                                                                                      |
+| `location`                        | VARCHAR(200)        |                                                                                                                                            |
+| `influence_type`                  | TEXT                | Comma-separated                                                                                                                            |
+| `twitter`, `bluesky`              | VARCHAR(200)        | Social handles                                                                                                                             |
+| `notes`                           | TEXT                |                                                                                                                                            |
+| `thumbnail_url`                   | VARCHAR(500)        | `https://mapping-ai.org/thumbnails/...` = cached; `''` = tried, no image; `NULL` = never tried. Populated by `scripts/cache-thumbnails.js` |
+| `belief_regulatory_stance`        | VARCHAR(200)        | Display label (trigger-derived from wavg)                                                                                                  |
+| `belief_regulatory_stance_detail` | TEXT                |                                                                                                                                            |
+| `belief_evidence_source`          | VARCHAR(200)        |                                                                                                                                            |
+| `belief_agi_timeline`             | VARCHAR(200)        | Display label                                                                                                                              |
+| `belief_ai_risk`                  | VARCHAR(200)        | Display label                                                                                                                              |
+| `belief_threat_models`            | TEXT                |                                                                                                                                            |
+| `belief_*_wavg`                   | REAL                | Weighted average score (trigger-maintained)                                                                                                |
+| `belief_*_wvar`                   | REAL                | Weighted variance (trigger-maintained)                                                                                                     |
+| `belief_*_n`                      | INTEGER             | Count of scored submissions                                                                                                                |
+| `submission_count`                | INTEGER             | Total approved submissions                                                                                                                 |
+| `status`                          | VARCHAR(20)         | `approved`, `pending`, `internal`                                                                                                          |
+| `search_vector`                   | tsvector            | Full-text search (GIN indexed, auto-updated by trigger)                                                                                    |
 
 #### `submission`
 
