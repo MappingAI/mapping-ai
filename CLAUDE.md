@@ -256,14 +256,15 @@ aws cloudfront create-invalidation --distribution-id E34ZXLC7CZX7XT --paths "/*"
 ## Map Features (map.html)
 
 - **D3.js force simulation** with orbital cluster layout, semantic ordering
+- **Network view rendering**: Canvas 2D immediate-mode rendering (single `<canvas>` element). Per-node `_vs` visual state model (`normal`/`dimmed`/`highlighted`/`one-hop`/`hidden`) replaces SVG CSS classes. `d3.quadtree` for O(log N) hit-testing (hover/click/drag). Pre-rasterized image sprites via offscreen canvas. `_requestRedraw()` coalesces state changes into single animation frames.
 - **Two-level view system**: Top-level "Network" (with sub-tabs: All/Orgs/People/Resources) and "Plot" (scatter/beeswarm). SVG icons on buttons. Sub-view persisted to localStorage.
-- **Plot view**: 2D scatter or 1D beeswarm plotting people + orgs on any two of {regulatory_stance, agi_timeline, ai_risk_level}; uses `stance_score` / `timeline_score` / `risk_score` from map-data.json; entities with null scores excluded with count shown
+- **Plot view**: 2D scatter or 1D beeswarm plotting people + orgs on any two of {regulatory_stance, agi_timeline, ai_risk_level}; uses `stance_score` / `timeline_score` / `risk_score` from map-data.json; entities with null scores excluded with count shown. **Plot view still uses SVG** (not Canvas).
 - **AI Belief panel**: Opacity-based legend showing belief dimension values (stance, timeline, risk). Replaces the former cluster-by-dimension dropdown. Category coloring is default; belief dimensions shown via opacity encoding.
 - **Category normalization**: Merges variants ("AI Safety/Alignment" → "AI Safety")
 - **Multi-category support**: Entities can have a primary category + `other_categories`. Filtering by any category shows entities where it's primary OR secondary. Detail panel shows primary as solid badge, secondary as dashed badges.
-- **Resources**: Rounded squares with SVG type icons, clustered near related entities in All view
-- **Edges**: From edge table (affiliations + relationships); clicking any node (directly, from search, or from detail panel links) highlights connected edges and dims unconnected nodes/edges with smooth opacity transition
-- **Node selection dimming**: In "all" view, clicking a node grays out all unconnected nodes and edges. Background click clears selection. Uses `.dimmed`/`.highlighted` CSS classes with 0.3s transitions.
+- **Resources**: Rounded squares with type icons, clustered near related entities in All view
+- **Edges**: From edge table (affiliations + relationships); clicking any node (directly, from search, or from detail panel links) highlights connected edges and dims unconnected nodes/edges via `_vs` state changes
+- **Node selection dimming**: In "all" view, clicking a node sets all unconnected nodes/edges to `_vs = 'dimmed'`. Background click calls `clearSelection()` to restore `_vs = 'normal'`.
 - **Submission count**: Subtle gold dashed ring for ≥5 submissions
 - **Source type filter**: Self/connector/external
 - **Cluster labels**: Positioned on outer edge, radiating away from center

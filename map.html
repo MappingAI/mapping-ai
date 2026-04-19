@@ -1481,20 +1481,30 @@ function resolveEntityImage(d, onSuccess) {
       });
     }
   } else if (d.entityType === 'organization') {
-    // Only try image loading for orgs with known domains to avoid 404 spam
+    // Prefer stored thumbnail_url (from scripts/cache-thumbnails.js). Fall back to
+    // the static /logos/<domain>.png bucket, then to Google Favicon.
     const knownDomain = ORG_DOMAINS[d.name];
     let domain;
     try { domain = knownDomain || (d.website ? new URL(d.website).hostname.replace('www.', '') : null); } catch {}
-    if (domain) {
-      const s3Url = `https://d3fo5mm9fktie3.cloudfront.net/logos/${domain}.png`;
-      const favUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+    const s3LogosUrl = domain ? `https://d3fo5mm9fktie3.cloudfront.net/logos/${domain}.png` : null;
+    const favUrl = domain ? `https://www.google.com/s2/favicons?domain=${domain}&sz=128` : null;
+    const tryFallback = () => {
+      if (!s3LogosUrl) return;
       const img = new Image();
-      img.onload = () => onSuccess(s3Url);
+      img.onload = () => onSuccess(s3LogosUrl);
       img.onerror = () => {
-        // Only try favicon fallback for known domains (avoids 404 spam for obscure sites)
         if (knownDomain) { const f = new Image(); f.onload = () => onSuccess(favUrl); f.src = favUrl; }
       };
-      img.src = s3Url;
+      img.src = s3LogosUrl;
+    };
+    if (d.thumbnail_url) {
+      const img = new Image();
+      img.referrerPolicy = 'no-referrer';
+      img.onload = () => onSuccess(d.thumbnail_url);
+      img.onerror = tryFallback;
+      img.src = d.thumbnail_url;
+    } else {
+      tryFallback();
     }
   }
 }
@@ -2984,7 +2994,8 @@ function applyViewState() {
   selectedNode = null;
   if (zoomBehavior) {
     currentZoom = d3.zoomIdentity;
-    d3.select('#map-container svg').transition().duration(300).call(zoomBehavior.transform, d3.zoomIdentity);
+    const zoomTarget = _canvasSel || d3.select('#map-container svg');
+    if (zoomTarget.node()) zoomTarget.transition().duration(300).call(zoomBehavior.transform, d3.zoomIdentity);
   }
   render();
 }
@@ -3428,9 +3439,9 @@ function _nodeAlpha(d) {
 }
 
 function _getInitials(name) {
-  const parts = (name || '').split(/[\s]+/);
-  if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
-  return (name || '').slice(0, 2).toUpperCase();
+  const parts = (name || '').trim().split(/[\s]+/);
+  if (parts.length >= 2) return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+  return (name || '').trim().slice(0, 2).toUpperCase();
 }
 
 function _requestRedraw() {
@@ -3618,7 +3629,7 @@ function _drawFrame() {
         ctx.font = `${r >= 16 ? 8 : r >= 10 ? 6 : 5}px ${_monoFont}`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText(_getInitials(d.name), x, y);
+        ctx.fillText(d._initials, x, y);
       }
     }
     // Submission ring (gold dashed)
@@ -3669,11 +3680,18 @@ function render() {
 
   d3.select('#map-container').selectAll('*').remove();
 
+  // Stop any running simulation before tearing down state
+  if (simulation) simulation.stop();
+
   // Reset canvas state (may be switching from network to 2D)
   _canvasCtx = null;
   _canvasSel = null;
   _canvasNodes = [];
   _canvasLinks = [];
+  _canvasClusterBgs = [];
+  _canvasClusterLabels = [];
+  _quadtree = null;
+  _quadtreeDirty = false;
 
   // 2D plot view still uses SVG (render2D depends on it)
   if (currentView === '2d') {
@@ -3803,8 +3821,6 @@ function render() {
   });
 
   // Position resource nodes near their closest related entity (author/org) in "all" view
-  const entityById = {};
-  nodes.forEach(d => { if (d.id) entityById[`${d.entityType}-${d.id}`] = d; });
 
   nodes.forEach(d => {
     if (d.isResource && currentView === 'all') {
@@ -3817,8 +3833,8 @@ function render() {
         } else if (rel.target_type === 'resource' && rel.target_id === d.id) {
           relatedKey = `${rel.source_type}-${rel.source_id}`;
         }
-        if (relatedKey && entityById[relatedKey]) {
-          const related = entityById[relatedKey];
+        if (relatedKey && nodeById[relatedKey]) {
+          const related = nodeById[relatedKey];
           const relCenter = clusterCenters[related.category] || { x: centerX, y: centerY };
           d.x = relCenter.x + (Math.random() - 0.5) * 40;
           d.y = relCenter.y + (Math.random() - 0.5) * 40;
@@ -3905,10 +3921,11 @@ function render() {
   });
   renderedLinks = allLinks;
 
-  // Initialize per-node visual state
+  // Initialize per-node visual state and precompute initials for canvas text
   nodes.forEach(d => {
     d._vs = 'normal';
     d._sprite = null;
+    d._initials = _getInitials(d.name);
     if (d.entityType === 'organization' && !d.isResource) {
       d._brighterColor = d3.color(getClusterColor(d)).brighter(0.8).toString();
     }
@@ -4068,28 +4085,17 @@ function render() {
     _requestRedraw();
   }
 
-  // Converge simulation in rAF chunks (same approach as before, now draws to canvas)
-  ticked();
-  let _ticksRemaining = Math.ceil(
-    Math.log(simulation.alphaMin() / simulation.alpha()) / Math.log(1 - simulation.alphaDecay())
-  );
-  (function preTickChunk() {
-    const batch = Math.min(25, _ticksRemaining);
-    for (let i = 0; i < batch; i++) simulation.tick();
-    _ticksRemaining -= batch;
-    ticked();
-    if (_ticksRemaining > 0) {
-      requestAnimationFrame(preTickChunk);
-    } else {
-      simulation
-        .on('tick', ticked)
-        .on('end', () => {
-          simulation.alphaDecay(0.04);
-          if (typeof reapplySearchHighlighting === 'function') reapplySearchHighlighting();
-        });
+  // Draw initial frame immediately so the canvas isn't blank during convergence.
+  // Canvas doesn't have SVG's DOM-mutation cost, so we animate the simulation
+  // live instead of pre-ticking in silent batches.
+  _drawFrame();
+  simulation
+    .on('tick', ticked)
+    .on('end', () => {
+      simulation.alphaDecay(0.04);
       if (typeof reapplySearchHighlighting === 'function') reapplySearchHighlighting();
-    }
-  })();
+    })
+    .restart();
 
   if (typeof reapplySearchHighlighting === 'function') {
     reapplySearchHighlighting();
@@ -4319,13 +4325,23 @@ function render2D(svg, g, width, height) {
     } else if (d.entityType === 'organization') {
       let domain;
       try { domain = ORG_DOMAINS[d.name] || (d.website ? new URL(d.website).hostname.replace('www.', '') : null); } catch {}
-      if (domain) {
-        const s3Url = `https://d3fo5mm9fktie3.cloudfront.net/logos/${domain}.png`;
-        const fbUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+      const s3Url = domain ? `https://d3fo5mm9fktie3.cloudfront.net/logos/${domain}.png` : null;
+      const fbUrl = domain ? `https://www.google.com/s2/favicons?domain=${domain}&sz=128` : null;
+      const tryLogosFallback = () => {
+        if (!s3Url) return;
         const img = new Image();
         img.onload = () => applyImage(s3Url);
         img.onerror = () => { const fb = new Image(); fb.onload = () => applyImage(fbUrl); fb.src = fbUrl; };
         img.src = s3Url;
+      };
+      if (d.thumbnail_url) {
+        const img = new Image();
+        img.referrerPolicy = 'no-referrer';
+        img.onload = () => applyImage(d.thumbnail_url);
+        img.onerror = tryLogosFallback;
+        img.src = d.thumbnail_url;
+      } else {
+        tryLogosFallback();
       }
     }
   });
@@ -4785,9 +4801,8 @@ document.getElementById('detail-close').addEventListener('click', () => {
   document.getElementById('detail-panel').classList.remove('open');
   clearSelection(); // This will re-apply search highlighting if in search mode
   if (zoomBehavior) {
-    d3.select('#map-container').select('svg')
-      .transition().duration(500)
-      .call(zoomBehavior.transform, d3.zoomIdentity);
+    const zoomTarget = _canvasSel || d3.select('#map-container svg');
+    if (zoomTarget.node()) zoomTarget.transition().duration(500).call(zoomBehavior.transform, d3.zoomIdentity);
   }
 });
 
