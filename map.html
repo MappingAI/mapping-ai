@@ -1320,82 +1320,13 @@ const ORG_DOMAINS = {
 };
 
 // People image URLs (Wikipedia/Wikimedia thumbnails for well-known figures)
-const PEOPLE_IMAGES = {
-  'Sam Altman': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Sam_Altman_CropEdit.jpg/200px-Sam_Altman_CropEdit.jpg',
-  'Dario Amodei': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Dario_Amodei_at_the_Earthshot_Prize_2024.jpg/200px-Dario_Amodei_at_the_Earthshot_Prize_2024.jpg',
-  'Demis Hassabis': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Demis_Hassabis_Royal_Society.jpg/200px-Demis_Hassabis_Royal_Society.jpg',
-  'Mark Zuckerberg': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Mark_Zuckerberg_F8_2019_Keynote_%2832830578717%29_%28cropped%29.jpg/200px-Mark_Zuckerberg_F8_2019_Keynote_%2832830578717%29_%28cropped%29.jpg',
-  'Elon Musk': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Elon_Musk_Royal_Society_%28crop2%29.jpg/200px-Elon_Musk_Royal_Society_%28crop2%29.jpg',
-  'Daniela Amodei': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Daniela_Amodei_at_TechCrunch_Disrupt_2023.jpg/200px-Daniela_Amodei_at_TechCrunch_Disrupt_2023.jpg',
-  'Yoshua Bengio': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Yoshua_Bengio_-_2017_%28cropped%29.jpg/200px-Yoshua_Bengio_-_2017_%28cropped%29.jpg',
-  'Fei-Fei Li': 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Fei-Fei_Li_at_AI_for_Good_2017.jpg/200px-Fei-Fei_Li_at_AI_for_Good_2017.jpg',
-  'Marc Andreessen': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Marc_Andreessen-9.jpg/200px-Marc_Andreessen-9.jpg',
-  'Peter Thiel': 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Peter_Thiel_by_Gage_Skidmore_%28cropped%29.jpg/200px-Peter_Thiel_by_Gage_Skidmore_%28cropped%29.jpg',
-  'Ro Khanna': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Ro_Khanna_117th_Congress_portrait.jpg/200px-Ro_Khanna_117th_Congress_portrait.jpg',
-  'Bernie Sanders': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Bernie_Sanders.jpg/200px-Bernie_Sanders.jpg',
-  'Alexandria Ocasio-Cortez': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Alexandria_Ocasio-Cortez_Official_Portrait.jpg/200px-Alexandria_Ocasio-Cortez_Official_Portrait.jpg',
-  'Pete Buttigieg': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Secretary_Buttigieg_Official_Portrait_%28cropped%29.jpg/200px-Secretary_Buttigieg_Official_Portrait_%28cropped%29.jpg',
-  'Chuck Schumer': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Sen._Chuck_Schumer_official_photo.jpg/200px-Sen._Chuck_Schumer_official_photo.jpg',
-  'Ted Cruz': 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Ted_Cruz_official_116th_portrait.jpg/200px-Ted_Cruz_official_116th_portrait.jpg',
-  'Ezra Klein': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Ezra_Klein_by_Gage_Skidmore.jpg/200px-Ezra_Klein_by_Gage_Skidmore.jpg',
-  'Gavin Newsom': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Gavin_Newsom_official_photo.jpg/200px-Gavin_Newsom_official_photo.jpg',
-  'Daron Acemoglu': 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Daron_Acemoglu_in_2024.jpg/200px-Daron_Acemoglu_in_2024.jpg',
-  'Lawrence Lessig': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Lawrence_Lessig_May_2017.jpg/200px-Lawrence_Lessig_May_2017.jpg',
-  'Stuart Russell': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Stuart_Russell%2C_2023_%28cropped%29.jpg/200px-Stuart_Russell%2C_2023_%28cropped%29.jpg',
-  'Marsha Blackburn': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Marsha_Blackburn_official_photo.jpg/200px-Marsha_Blackburn_official_photo.jpg',
-  'Cory Booker': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Cory_Booker%2C_official_portrait%2C_114th_Congress.jpg/200px-Cory_Booker%2C_official_portrait%2C_114th_Congress.jpg',
-  'Tim Wu': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Tim_Wu_-_Annual_Meeting_of_the_New_Champions_2011.jpg/200px-Tim_Wu_-_Annual_Meeting_of_the_New_Champions_2011.jpg',
-  'Yann LeCun': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Yann_LeCun_-_2018_%28cropped%29.jpg/200px-Yann_LeCun_-_2018_%28cropped%29.jpg',
-  'Eliezer Yudkowsky': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Eliezer_Yudkowsky%2C_Stanford_2006_%28cropped%29.jpg/200px-Eliezer_Yudkowsky%2C_Stanford_2006_%28cropped%29.jpg',
-  'Timnit Gebru': 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Timnit_Gebru_crop.jpg/200px-Timnit_Gebru_crop.jpg',
-  'Meredith Whittaker': 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Meredith_Whittaker_in_2023_%28cropped%29.jpg/200px-Meredith_Whittaker_in_2023_%28cropped%29.jpg',
-  'Dan Hendrycks': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Dan_Hendrycks_headshot.jpg/200px-Dan_Hendrycks_headshot.jpg',
-  'Holden Karnofsky': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Holden_Karnofsky_2015.jpg/200px-Holden_Karnofsky_2015.jpg',
-  'Gina Raimondo': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Gina_Raimondo_official_portrait.jpg/200px-Gina_Raimondo_official_portrait.jpg',
-  'Fran Drescher': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Fran_Drescher_2012_Shankbone.JPG/200px-Fran_Drescher_2012_Shankbone.JPG',
-  'Casey Newton': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Casey_Newton_2024.jpg/200px-Casey_Newton_2024.jpg',
-  // US Senators/Congress (official portraits)
-  'Anna Eshoo': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Anna_Eshoo_official_photo.jpg/200px-Anna_Eshoo_official_photo.jpg',
-  'Maria Cantwell': 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Maria_Cantwell%2C_official_portrait%2C_110th_Congress.jpg/200px-Maria_Cantwell%2C_official_portrait%2C_110th_Congress.jpg',
-  'Brian Schatz': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Brian_Schatz%2C_official_portrait%2C_113th_Congress.jpg/200px-Brian_Schatz%2C_official_portrait%2C_113th_Congress.jpg',
-  'Chris Murphy': 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Chris_Murphy%2C_official_portrait%2C_113th_Congress.jpg/200px-Chris_Murphy%2C_official_portrait%2C_113th_Congress.jpg',
-  'Chris Coons': 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Chris_Coons%2C_official_portrait%2C_112th_Congress.jpg/200px-Chris_Coons%2C_official_portrait%2C_112th_Congress.jpg',
-  'Martin Heinrich': 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Martin_Heinrich%2C_official_portrait%2C_113th_Congress.jpg/200px-Martin_Heinrich%2C_official_portrait%2C_113th_Congress.jpg',
-  'Todd Young': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Todd_Young%2C_official_portrait%2C_115th_Congress.jpg/200px-Todd_Young%2C_official_portrait%2C_115th_Congress.jpg',
-  'Cynthia Lummis': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Cynthia_Lummis_official_portrait.jpg/200px-Cynthia_Lummis_official_portrait.jpg',
-  'Ben Ray Luján': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Ben_Ray_Luj%C3%A1n_official_portrait.jpg/200px-Ben_Ray_Luj%C3%A1n_official_portrait.jpg',
-  'Jerry Moran': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Jerry_Moran%2C_official_portrait%2C_112th_Congress.jpg/200px-Jerry_Moran%2C_official_portrait%2C_112th_Congress.jpg',
-  'Don Beyer': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Don_Beyer%2C_official_114th_Congress_photo_portrait.jpg/200px-Don_Beyer%2C_official_114th_Congress_photo_portrait.jpg',
-  'Ted Lieu': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Ted_Lieu_116th_Congress.jpg/200px-Ted_Lieu_116th_Congress.jpg',
-  'Richard Blumenthal': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Richard_Blumenthal_Official_Portrait.jpg/200px-Richard_Blumenthal_Official_Portrait.jpg',
-  'Mark Warner': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Mark_Warner_113th_Congress_photo.jpg/200px-Mark_Warner_113th_Congress_photo.jpg',
-  'Frank Lucas': 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Frank_Lucas_official_photo.jpg/200px-Frank_Lucas_official_photo.jpg',
-  'Jay Obernolte': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Jay_Obernolte_117th_Congress.jpg/200px-Jay_Obernolte_117th_Congress.jpg',
-  'Josh Hawley': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Josh_Hawley_Official_Portrait.jpg/200px-Josh_Hawley_Official_Portrait.jpg',
-  'Maggie Hassan': 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Maggie_Hassan%2C_official_portrait%2C_115th_Congress.jpg/200px-Maggie_Hassan%2C_official_portrait%2C_115th_Congress.jpg',
-  'Greg Abbott': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Greg_Abbott_2024.jpg/200px-Greg_Abbott_2024.jpg',
-  'Kathy Hochul': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Kathy_Hochul_by_Gage_Skidmore.jpg/200px-Kathy_Hochul_by_Gage_Skidmore.jpg',
-  'Scott Wiener': 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Scott_Wiener_%28cropped%29.jpg/200px-Scott_Wiener_%28cropped%29.jpg',
-  // Tech/AI leaders
-  'Satya Nadella': 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Satya_Nadella_-_World_Economic_Forum_Annual_Meeting_Davos_2024.jpg/200px-Satya_Nadella_-_World_Economic_Forum_Annual_Meeting_Davos_2024.jpg',
-  'Sundar Pichai': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Sundar_Pichai_at_the_2023_Google_for_India_event_%28cropped%29.jpg/200px-Sundar_Pichai_at_the_2023_Google_for_India_event_%28cropped%29.jpg',
-  'Eric Schmidt': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Eric_Schmidt_at_the_37th_G8_Summit_in_Deauville_037.jpg/200px-Eric_Schmidt_at_the_37th_G8_Summit_in_Deauville_037.jpg',
-  'Reid Hoffman': 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Reid_Hoffman_%28cropped%29.jpg/200px-Reid_Hoffman_%28cropped%29.jpg',
-  'Arvind Narayanan': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Arvind_Narayanan.jpg/200px-Arvind_Narayanan.jpg',
-  'Dustin Moskovitz': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Dustin_Moskovitz_TechCrunch_Disrupt_SF_2013.jpg/200px-Dustin_Moskovitz_TechCrunch_Disrupt_SF_2013.jpg',
-  'Nick Bostrom': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Nick_Bostrom_at_Summit_on_the_Future_2024.jpg/200px-Nick_Bostrom_at_Summit_on_the_Future_2024.jpg',
-  'Max Tegmark': 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Max_Tegmark_2023.jpg/200px-Max_Tegmark_2023.jpg',
-  'Geoffrey Hinton': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Geoffrey_Hinton_-_Collision_2023_-_Centre_Stage_Day_3_%2852969386998%29_%28cropped%29.jpg/200px-Geoffrey_Hinton_-_Collision_2023_-_Centre_Stage_Day_3_%2852969386998%29_%28cropped%29.jpg',
-  'Alondra Nelson': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/OSTP_Alondra_Nelson.jpg/200px-OSTP_Alondra_Nelson.jpg',
-  'Arati Prabhakar': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Arati_Prabhakar_official_photo_%28cropped%29.jpg/200px-Arati_Prabhakar_official_photo_%28cropped%29.jpg',
-  'Lina Khan': 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Lina_Khan_official_FTC_headshot.jpg/200px-Lina_Khan_official_FTC_headshot.jpg',
-  'David Sacks': 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/David_Sacks_2024.jpg/200px-David_Sacks_2024.jpg',
-  'Daron Acemoglu': 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Daron_Acemoglu_in_2024.jpg/200px-Daron_Acemoglu_in_2024.jpg',
-  'Lawrence Lessig': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Lawrence_Lessig_May_2017.jpg/200px-Lawrence_Lessig_May_2017.jpg',
-  'Erik Brynjolfsson': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Erik_Brynjolfsson_at_TechCrunch.jpg/200px-Erik_Brynjolfsson_at_TechCrunch.jpg',
-  'Joi Ito': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Joichi_Ito_20121114.jpg/200px-Joichi_Ito_20121114.jpg',
-  'Kim Stanley Robinson': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Kim_Stanley_Robinson_in_2008.jpg/200px-Kim_Stanley_Robinson_in_2008.jpg',
-};
+// Hardcoded people images used to override the DB and point at external
+// Wikimedia URLs, causing live cross-origin fetches on every page load. The
+// cache-thumbnails script now stores each valid image in S3 and writes the URL
+// into entity.thumbnail_url, which is the single source of truth. Keeping the
+// symbol as an empty object so any dead callers return undefined rather than
+// throwing.
+const PEOPLE_IMAGES = {}
 
 // Track which images loaded successfully
 const imageCache = {};
@@ -1448,57 +1379,26 @@ const RESOURCE_TYPE_LABELS = {
 };
 
 function getImageUrl(d) {
-  if (d.thumbnail_url) return d.thumbnail_url; // prefer admin-uploaded thumbnail
-  if (d.entityType === 'organization') return getOrgLogoUrl(d.name);
-  if (d.entityType === 'resource') return null; // resources use emoji icons
-  return getPersonImageUrl(d.name);
+  // entity.thumbnail_url is the single source of truth, populated by
+  // scripts/cache-thumbnails.js. A non-empty string is a usable CDN URL; '' or
+  // null means we already tried (or have not tried) and the node should render
+  // as initials instead.
+  return d.thumbnail_url || null
 }
 
 /**
- * Shared image resolver: tries all sources with test-loads and fallbacks.
- * Calls onSuccess(url) when a working image URL is found.
- * Works for persons (hardcoded → Wikipedia), orgs (S3 logo → Google Favicons).
+ * Shared image resolver. Loads entity.thumbnail_url if present and calls
+ * onSuccess(url) when the image loads. No live external fallbacks: anything
+ * not pre-cached renders as an initials glyph on canvas / a blank in SVG.
  */
 function resolveEntityImage(d, onSuccess) {
-  if (d.entityType === 'resource') return;
-  if (d.entityType === 'person') {
-    // Only render what the cache-thumbnails script has already stored. No live
-    // Wikipedia calls on the client: they 429 under any real traffic and waste
-    // a network round-trip on every refresh. Entities without thumbnail_url
-    // fall through to the initials canvas glyph.
-    const imgUrl = getImageUrl(d);
-    if (!imgUrl) return;
-    const img = new Image();
-    img.referrerPolicy = 'no-referrer';
-    img.onload = () => onSuccess(imgUrl);
-    img.src = imgUrl;
-  } else if (d.entityType === 'organization') {
-    // Prefer stored thumbnail_url (from scripts/cache-thumbnails.js). Fall back to
-    // the static /logos/<domain>.png bucket, then to Google Favicon.
-    const knownDomain = ORG_DOMAINS[d.name];
-    let domain;
-    try { domain = knownDomain || (d.website ? new URL(d.website).hostname.replace('www.', '') : null); } catch {}
-    const s3LogosUrl = domain ? `https://d3fo5mm9fktie3.cloudfront.net/logos/${domain}.png` : null;
-    const favUrl = domain ? `https://www.google.com/s2/favicons?domain=${domain}&sz=128` : null;
-    const tryFallback = () => {
-      if (!s3LogosUrl) return;
-      const img = new Image();
-      img.onload = () => onSuccess(s3LogosUrl);
-      img.onerror = () => {
-        if (knownDomain) { const f = new Image(); f.onload = () => onSuccess(favUrl); f.src = favUrl; }
-      };
-      img.src = s3LogosUrl;
-    };
-    if (d.thumbnail_url) {
-      const img = new Image();
-      img.referrerPolicy = 'no-referrer';
-      img.onload = () => onSuccess(d.thumbnail_url);
-      img.onerror = tryFallback;
-      img.src = d.thumbnail_url;
-    } else {
-      tryFallback();
-    }
-  }
+  if (d.entityType === 'resource') return
+  const url = d.thumbnail_url
+  if (!url) return
+  const img = new Image()
+  img.referrerPolicy = 'no-referrer'
+  img.onload = () => onSuccess(url)
+  img.src = url
 }
 
 /**
@@ -2259,9 +2159,6 @@ function renderMobileDirectory() {
       if (d.entityType === 'resource') {
         const icon = d.resource_type === 'Book' ? '\u{1F4D5}' : d.resource_type === 'Podcast' ? '\u{1F399}' : d.resource_type === 'Video' ? '\u{1F3AC}' : '\u{1F4C4}';
         thumbHtml = `<div class="mobile-card-thumb resource-icon">${icon}</div>`;
-      } else if (d.entityType === 'organization' && (ORG_DOMAINS[d.name] || d.website)) {
-        const domain = ORG_DOMAINS[d.name] || d.website.replace(/^https?:\/\//, '').replace(/\/.*$/, '');
-        thumbHtml = `<img class="mobile-card-thumb" src="https://www.google.com/s2/favicons?domain=${domain}&sz=64" alt="" onerror="this.outerHTML='<div class=\\'mobile-card-thumb\\' style=\\'display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-3)\\'>${escHtml((d.name||'?')[0])}</div>'">`;
       } else if (d.thumbnail_url) {
         thumbHtml = `<img class="mobile-card-thumb" src="${d.thumbnail_url}" alt="" onerror="this.outerHTML='<div class=\\'mobile-card-thumb\\' style=\\'display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-3)\\'>${(d.name||'?')[0]}</div>'">`;
       } else {
@@ -4298,37 +4195,15 @@ function render2D(svg, g, width, height) {
       }
     }
 
-    if (d.entityType === 'person') {
-      // No live Wikipedia fallback (429 storm). Use thumbnail_url if set,
-      // otherwise leave the node rendered with its initials glyph.
-      const imgUrl = getImageUrl(d);
-      if (imgUrl) {
-        const img = new Image();
-        img.referrerPolicy = 'no-referrer';
-        img.onload = () => applyImage(imgUrl);
-        img.src = imgUrl;
-      }
-    } else if (d.entityType === 'organization') {
-      let domain;
-      try { domain = ORG_DOMAINS[d.name] || (d.website ? new URL(d.website).hostname.replace('www.', '') : null); } catch {}
-      const s3Url = domain ? `https://d3fo5mm9fktie3.cloudfront.net/logos/${domain}.png` : null;
-      const fbUrl = domain ? `https://www.google.com/s2/favicons?domain=${domain}&sz=128` : null;
-      const tryLogosFallback = () => {
-        if (!s3Url) return;
-        const img = new Image();
-        img.onload = () => applyImage(s3Url);
-        img.onerror = () => { const fb = new Image(); fb.onload = () => applyImage(fbUrl); fb.src = fbUrl; };
-        img.src = s3Url;
-      };
-      if (d.thumbnail_url) {
-        const img = new Image();
-        img.referrerPolicy = 'no-referrer';
-        img.onload = () => applyImage(d.thumbnail_url);
-        img.onerror = tryLogosFallback;
-        img.src = d.thumbnail_url;
-      } else {
-        tryLogosFallback();
-      }
+    // Single image path for people + orgs: load thumbnail_url if present,
+    // otherwise leave the node as its initials/default glyph. No live external
+    // fallbacks (Wikipedia, Google Favicon, legacy /logos/ bucket) — all
+    // images are pre-cached in S3 via scripts/cache-thumbnails.js.
+    if (d.entityType !== 'resource' && d.thumbnail_url) {
+      const img = new Image()
+      img.referrerPolicy = 'no-referrer'
+      img.onload = () => applyImage(d.thumbnail_url)
+      img.src = d.thumbnail_url
     }
   });
 
