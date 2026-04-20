@@ -11,19 +11,19 @@ const TOC_SECTIONS = [
 ]
 
 function TableOfContents({ activeId }: { activeId: string }) {
-  const handleClick = useCallback(
-    (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-      e.preventDefault()
-      const el = document.getElementById(id)
-      if (!el) return
-      const targetY = el.getBoundingClientRect().top + window.scrollY - 64
-      window.scrollTo({ top: targetY, behavior: 'smooth' })
-    },
-    [],
-  )
+  const handleClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault()
+    const el = document.getElementById(id)
+    if (!el) return
+    const targetY = el.getBoundingClientRect().top + window.scrollY - 64
+    window.scrollTo({ top: targetY, behavior: 'smooth' })
+  }, [])
 
   return (
-    <nav className="hidden min-[1200px]:block fixed top-1/2 -translate-y-1/2 w-[130px]" style={{ left: 'calc(50% - 340px - 3rem - 130px)' }}>
+    <nav
+      className="hidden min-[1200px]:block fixed top-1/2 -translate-y-1/2 w-[130px]"
+      style={{ left: 'calc(50% - 340px - 3rem - 130px)' }}
+    >
       {TOC_SECTIONS.map(({ id, label }) => (
         <a
           key={id}
@@ -91,7 +91,8 @@ function BetaOverlay() {
       <div className="bg-white rounded-lg px-8 py-6 max-w-[480px] w-[90%] font-serif shadow-[0_8px_32px_rgba(0,0,0,0.2)]">
         <h2 className="font-mono text-[13px] uppercase tracking-[0.08em] mb-3">Pre-Launch Beta</h2>
         <p className="text-[15px] leading-relaxed text-text-secondary mb-4">
-          This tool is in a pre-launch beta. We are actively improving data issues and enrichment, as well as adding new features and improving the UX.
+          This tool is in a pre-launch beta. We are actively improving data issues and enrichment, as well as adding new
+          features and improving the UX.
         </p>
         <p className="text-[15px] leading-relaxed text-text-secondary mb-5">
           Please email us at{' '}
@@ -125,15 +126,9 @@ function LandscapeBox({
 }) {
   return (
     <div className="bg-bg-secondary rounded-md px-4 py-[0.9rem] border border-transparent transition-all duration-150 hover:-translate-y-0.5 hover:border-border">
-      <div className="font-mono text-[10px] text-text-tertiary tracking-[0.1em] uppercase mb-[0.35rem]">
-        {label}
-      </div>
-      <div className="font-serif text-[15.5px] font-medium mb-[0.4rem] leading-[1.3] text-text-primary">
-        {title}
-      </div>
-      <div className="font-mono text-[11.5px] text-text-secondary leading-relaxed mb-[0.6rem]">
-        {body}
-      </div>
+      <div className="font-mono text-[10px] text-text-tertiary tracking-[0.1em] uppercase mb-[0.35rem]">{label}</div>
+      <div className="font-serif text-[15.5px] font-medium mb-[0.4rem] leading-[1.3] text-text-primary">{title}</div>
+      <div className="font-mono text-[11.5px] text-text-secondary leading-relaxed mb-[0.6rem]">{body}</div>
       <div className="flex flex-col gap-1">
         {links.map((link, i) =>
           link.href ? (
@@ -272,22 +267,38 @@ export function App() {
         </FadeIn>
         <FadeIn>
           <p className="mb-[1.1rem] text-[16.5px]">
-            AI represents a step change that demands a renegotiation between government, industry, and the public. In short, a new social contract. But the conversation today is stuck in old paradigms: the US vs. China, accelerationism vs. safety, regulation vs. laissez faire. None of these address the fundamental question: on what terms is the value of American technological innovation secured for the public?
+            AI represents a step change that demands a renegotiation between government, industry, and the public. In
+            short, a new social contract. But the conversation today is stuck in old paradigms: the US vs. China,
+            accelerationism vs. safety, regulation vs. laissez faire. None of these address the fundamental question: on
+            what terms is the value of American technological innovation secured for the public?
           </p>
         </FadeIn>
         <FadeIn>
           <p className="mb-[1.1rem] text-[16.5px]">
-            The historical record offers a clear model: when a revolutionary technology arrives, societies that build new institutions to meet the moment are able to distribute that technology&rsquo;s benefits broadly. Consider American electrification. By 1935, forty years after the construction of the first power plants, 90% of urban homes had power, but only 10% of rural ones did. Rather than subsidize private utilities or wait for the markets to adapt, FDR and the New Deal coalition created the Rural Electrification Administration, Tennessee Valley Authority, and community-owned financing structures. By 1950, the rural/urban electricity gap had closed.
+            The historical record offers a clear model: when a revolutionary technology arrives, societies that build
+            new institutions to meet the moment are able to distribute that technology&rsquo;s benefits broadly.
+            Consider American electrification. By 1935, forty years after the construction of the first power plants,
+            90% of urban homes had power, but only 10% of rural ones did. Rather than subsidize private utilities or
+            wait for the markets to adapt, FDR and the New Deal coalition created the Rural Electrification
+            Administration, Tennessee Valley Authority, and community-owned financing structures. By 1950, the
+            rural/urban electricity gap had closed.
           </p>
         </FadeIn>
         <FadeIn>
           <p className="mb-[1.1rem] text-[16.5px]">
-            Our existing institutions were not designed to handle the AI transition. The question is: can we build the new institutions we desperately need?
+            Our existing institutions were not designed to handle the AI transition. The question is: can we build the
+            new institutions we desperately need?
           </p>
         </FadeIn>
         <FadeIn>
           <p className="mb-[1.1rem] text-[16.5px]">
-            Crucially, AI is different from electricity. Its adoption is faster than any other technology in history. Its risks are existential. And it&rsquo;s owned by a handful of firms, controlling not just a market or an infrastructure, but the frontier of knowledge production itself. These companies built their products upon decades of publicly funded research, open-source infrastructure, human-generated data, and combined ingenuity, yet have misaligned incentives to return value to the public&mdash;and face no real consequences if something goes terribly wrong. There is no compact governing this relationship. Our shared inheritance depends on forging a new one.
+            Crucially, AI is different from electricity. Its adoption is faster than any other technology in history.
+            Its risks are existential. And it&rsquo;s owned by a handful of firms, controlling not just a market or an
+            infrastructure, but the frontier of knowledge production itself. These companies built their products upon
+            decades of publicly funded research, open-source infrastructure, human-generated data, and combined
+            ingenuity, yet have misaligned incentives to return value to the public&mdash;and face no real consequences
+            if something goes terribly wrong. There is no compact governing this relationship. Our shared inheritance
+            depends on forging a new one.
           </p>
         </FadeIn>
 
@@ -313,8 +324,14 @@ export function App() {
               title="Competition and dominance"
               body="Deregulate, accelerate, and command the global market. The US-China frame is a prominent motivator. Distribution is an afterthought; workforce training is the concession to labor. Preempting state regulation is the active political agenda right now."
               links={[
-                { text: "\u2197 America's AI Action Plan", href: 'https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf' },
-                { text: '\u2197 Dean Ball, "How I Approach AI Policy"', href: 'https://www.hyperdimensional.co/p/how-i-approach-ai-policy' },
+                {
+                  text: "\u2197 America's AI Action Plan",
+                  href: 'https://www.whitehouse.gov/wp-content/uploads/2025/07/Americas-AI-Action-Plan.pdf',
+                },
+                {
+                  text: '\u2197 Dean Ball, "How I Approach AI Policy"',
+                  href: 'https://www.hyperdimensional.co/p/how-i-approach-ai-policy',
+                },
                 { text: '\u2197 White House, "A National Policy Framework for Artificial Intelligence"' },
               ]}
             />
@@ -323,22 +340,43 @@ export function App() {
               title="Regulation and taxation"
               body="Privacy, civil rights, job protections, and responsible deployment. Proposes taxing AI gains to fund workforce retraining, and generally frames labor issues in terms of AI deployment. Others condemn potential environmental or energy costs of data centers. Proposals have not yet cohered into a structural compact."
               links={[
-                { text: '\u2197 Kelly, AI for America', href: 'https://www.kelly.senate.gov/wp-content/uploads/2025/09/KELLY-AI-FOR-AMERICA.pdf' },
-                { text: '\u2197 Khanna, "A New Tech Social Contract"', href: 'https://www.foxnews.com/opinion/rep-ro-khanna-we-need-new-tech-social-contract-reclaim-ai-from-billionaires' },
-                { text: '\u2197 Karen Hao, Empire of AI', href: 'https://www.penguinrandomhouse.com/books/743569/empire-of-ai-by-karen-hao/' },
-                { text: '\u2197 Kagan-Kans, "The Left is Missing Out on AI"', href: 'https://www.transformernews.ai/p/the-left-is-missing-out-on-ai-sanders-doctorow-bender-bores' },
+                {
+                  text: '\u2197 Kelly, AI for America',
+                  href: 'https://www.kelly.senate.gov/wp-content/uploads/2025/09/KELLY-AI-FOR-AMERICA.pdf',
+                },
+                {
+                  text: '\u2197 Khanna, "A New Tech Social Contract"',
+                  href: 'https://www.foxnews.com/opinion/rep-ro-khanna-we-need-new-tech-social-contract-reclaim-ai-from-billionaires',
+                },
+                {
+                  text: '\u2197 Karen Hao, Empire of AI',
+                  href: 'https://www.penguinrandomhouse.com/books/743569/empire-of-ai-by-karen-hao/',
+                },
+                {
+                  text: '\u2197 Kagan-Kans, "The Left is Missing Out on AI"',
+                  href: 'https://www.transformernews.ai/p/the-left-is-missing-out-on-ai-sanders-doctorow-bender-bores',
+                },
               ]}
             />
             <LandscapeBox
               label="AI frontier"
               title="Exponential transformation"
-              body="Highly diverse views across the board, but all agree that capabilities are accelerating. Main camp holds that AGI is imminent, and the priority is ensuring the &quot;right&quot; actors in Western labs win. Preventing existential risk and institutional collapse is key—distribution and labor are largely afterthoughts. A faction argues that alignment is unsolved and building ASI risks catastrophic outcomes. Other subsets are focused on near-term harms, accountability, auditing, and institutional design, or argue that AI will diffuse slowly, giving institutions time to respond. Concentration of power is a key focus."
+              body='Highly diverse views across the board, but all agree that capabilities are accelerating. Main camp holds that AGI is imminent, and the priority is ensuring the "right" actors in Western labs win. Preventing existential risk and institutional collapse is key—distribution and labor are largely afterthoughts. A faction argues that alignment is unsolved and building ASI risks catastrophic outcomes. Other subsets are focused on near-term harms, accountability, auditing, and institutional design, or argue that AI will diffuse slowly, giving institutions time to respond. Concentration of power is a key focus.'
               links={[
                 { text: '\u2197 Aschenbrenner, "Situational Awareness"', href: 'https://situational-awareness.ai/' },
                 { text: '\u2197 AI 2027 (Kokotajlo et al.)', href: 'https://ai-2027.com/' },
-                { text: '\u2197 Dario Amodei, "Machines of Loving Grace"', href: 'https://darioamodei.com/essay/machines-of-loving-grace' },
-                { text: '\u2197 Yudkowsky & Soares, If Anyone Builds It, Everyone Dies', href: 'https://ifanyonebuildsit.com/' },
-                { text: '\u2197 Narayanan & Kapoor, "AI as Normal Technology"', href: 'https://knightcolumbia.org/content/ai-as-normal-technology' },
+                {
+                  text: '\u2197 Dario Amodei, "Machines of Loving Grace"',
+                  href: 'https://darioamodei.com/essay/machines-of-loving-grace',
+                },
+                {
+                  text: '\u2197 Yudkowsky & Soares, If Anyone Builds It, Everyone Dies',
+                  href: 'https://ifanyonebuildsit.com/',
+                },
+                {
+                  text: '\u2197 Narayanan & Kapoor, "AI as Normal Technology"',
+                  href: 'https://knightcolumbia.org/content/ai-as-normal-technology',
+                },
               ]}
             />
           </div>
@@ -355,7 +393,11 @@ export function App() {
         </FadeIn>
         <FadeIn>
           <p className="mb-[1.1rem] text-[16.5px]">
-            People First: AI for the public, building from how innovation is financed, how infrastructure is constructed, and how knowledge is maintained. The emphasis is on ensuring gains for the public by design, rather than downstream redistribution alone. Bringing together labor, safety, national security, and institutional design, our aim is to proactively ensure that the American public captures the value of American innovation. The overarching mandate is to secure public return.
+            People First: AI for the public, building from how innovation is financed, how infrastructure is
+            constructed, and how knowledge is maintained. The emphasis is on ensuring gains for the public by design,
+            rather than downstream redistribution alone. Bringing together labor, safety, national security, and
+            institutional design, our aim is to proactively ensure that the American public captures the value of
+            American innovation. The overarching mandate is to secure public return.
           </p>
         </FadeIn>
 
@@ -373,8 +415,14 @@ export function App() {
           title="01—Institutional construction"
           bodyIntro="Government must create, not just regulate or subsidize. The New Deal's REA both regulated private utilities to serve rural America and built new institutional forms that private utilities never would. A new compact for AI requires the same constructive ambition, to three new ends:"
           items={[
-            { label: 'Measurement', text: 'continuous assessment of how capabilities develop and how broadly benefits flow.' },
-            { label: 'Access', text: 'development of public compute and AI infrastructure alongside private offerings.' },
+            {
+              label: 'Measurement',
+              text: 'continuous assessment of how capabilities develop and how broadly benefits flow.',
+            },
+            {
+              label: 'Access',
+              text: 'development of public compute and AI infrastructure alongside private offerings.',
+            },
             { label: 'Steering', text: 'regulation with an affirmative mandate to build, not just bind.' },
           ]}
         />
@@ -392,9 +440,18 @@ export function App() {
           title="03—Adaptive governance"
           bodyIntro="AI is developing faster than the pace of new legislation. Sunset clauses and mandatory review periods start to address this, but they are scheduled flexibility rather than genuine adaptability. Adaptive governance operates at three layers:"
           items={[
-            { label: 'Sensing', text: 'a continuous, real-time picture of what the technology is doing and who it is affecting.' },
-            { label: 'Response', text: 'pre-committed mechanisms triggered by observable conditions rather than political calendars.' },
-            { label: 'Recalibration', text: 'a process for updating the response thresholds and mechanisms themselves as understanding evolves.' },
+            {
+              label: 'Sensing',
+              text: 'a continuous, real-time picture of what the technology is doing and who it is affecting.',
+            },
+            {
+              label: 'Response',
+              text: 'pre-committed mechanisms triggered by observable conditions rather than political calendars.',
+            },
+            {
+              label: 'Recalibration',
+              text: 'a process for updating the response thresholds and mechanisms themselves as understanding evolves.',
+            },
           ]}
           bodyOutro="The closest analogs to adaptive governance come from deliberative democratic institutions, like Taiwan's Alignment Assemblies. A broader international survey of adaptive governance experiments is part of this project's ongoing research agenda."
         />
@@ -412,9 +469,18 @@ export function App() {
           title="05—Pluralism"
           bodyIntro="The current trajectory of AI development tends toward convergence: a small number of general-purpose models, built on overlapping data and shared architectures, concentrated in the same cities and private companies. Monocultures lack resilience. When one architecture has a fundamental blind spot, models trained on it tend to share this vulnerability. A plurality of approaches, ownership structures, purposes, and scales is a property of healthy technological ecosystems. We seek pluralism in the following issue areas:"
           items={[
-            { label: 'Financing', text: 'creating markets for smaller, purpose-built models to serve communities that would otherwise be left behind.' },
-            { label: 'Supply chains', text: 'investment in open-source infrastructure that serves the public good, and hardware speciation that avoids single points of failure.' },
-            { label: 'Alignment', text: 'diversity in the teams conducting AI research and in the values they instill.' },
+            {
+              label: 'Financing',
+              text: 'creating markets for smaller, purpose-built models to serve communities that would otherwise be left behind.',
+            },
+            {
+              label: 'Supply chains',
+              text: 'investment in open-source infrastructure that serves the public good, and hardware speciation that avoids single points of failure.',
+            },
+            {
+              label: 'Alignment',
+              text: 'diversity in the teams conducting AI research and in the values they instill.',
+            },
           ]}
         />
 
@@ -436,19 +502,26 @@ export function App() {
               , working draft, team assembly. Begin outreach to first-ring contacts. This is where we are.
             </TimelineStep>
             <TimelineStep time="May – Aug 2026">
-              Expert review workshops validate the framework and convert reviewers into endorsers. Domain experts co-author or formally consult on each section. Industry participants see a positive-sum case for engagement, not a compliance burden.
+              Expert review workshops validate the framework and convert reviewers into endorsers. Domain experts
+              co-author or formally consult on each section. Industry participants see a positive-sum case for
+              engagement, not a compliance burden.
             </TimelineStep>
             <TimelineStep time="Late 2026—Midterms">
-              Launch endorsed framework with co-signatories spanning academia, former officials, industry, labor, and civil society. Set the intellectual terms of the debate before the incumbent frames harden into the default.
+              Launch endorsed framework with co-signatories spanning academia, former officials, industry, labor, and
+              civil society. Set the intellectual terms of the debate before the incumbent frames harden into the
+              default.
             </TimelineStep>
             <TimelineStep time="Early 2027">
-              Congressional champion introduces legislation in the 120th Congress, making the framework a live vehicle that 2028 candidates must engage with.
+              Congressional champion introduces legislation in the 120th Congress, making the framework a live vehicle
+              that 2028 candidates must engage with.
             </TimelineStep>
             <TimelineStep time="2028 Primary">
-              Presidential candidates adopt elements of the framework. AI governance becomes a defining issue on kitchen-table terms&mdash;who benefits from American innovation&mdash;not elite policy discourse.
+              Presidential candidates adopt elements of the framework. AI governance becomes a defining issue on
+              kitchen-table terms&mdash;who benefits from American innovation&mdash;not elite policy discourse.
             </TimelineStep>
             <TimelineStep time="2029—Day one" isLast>
-              A new administration has a specific, staffed technology-society compact ready to implement. New institutions are not drafted&mdash;they are ready to build.
+              A new administration has a specific, staffed technology-society compact ready to implement. New
+              institutions are not drafted&mdash;they are ready to build.
             </TimelineStep>
           </div>
         </FadeIn>

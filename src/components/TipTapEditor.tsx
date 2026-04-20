@@ -63,7 +63,13 @@ function createSuggestion(searchFn: (query: string) => MentionItem[] | Promise<M
       let component: HTMLDivElement | null = null
 
       function cleanup() {
-        popup?.forEach((p) => { try { p.destroy() } catch { /* ignore */ } })
+        popup?.forEach((p) => {
+          try {
+            p.destroy()
+          } catch {
+            /* ignore */
+          }
+        })
         popup = null
         component?.remove()
         component = null
@@ -108,14 +114,18 @@ function createSuggestion(searchFn: (query: string) => MentionItem[] | Promise<M
       }
 
       return {
-        onStart: (props: { clientRect: (() => DOMRect | null) | null | undefined; items: MentionItem[]; command: (item: Record<string, unknown>) => void }) => {
+        onStart: (props: {
+          clientRect: (() => DOMRect | null) | null | undefined
+          items: MentionItem[]
+          command: (item: Record<string, unknown>) => void
+        }) => {
           cleanup()
           component = document.createElement('div')
           component.className = 'tiptap-mention-list'
           updateList(component, props.items, props.command)
 
           const result = tippy(document.body as Element, {
-            getReferenceClientRect: (props.clientRect as (() => DOMRect)) ?? undefined,
+            getReferenceClientRect: (props.clientRect as () => DOMRect) ?? undefined,
             appendTo: () => document.body,
             content: component,
             showOnCreate: true,
@@ -125,20 +135,27 @@ function createSuggestion(searchFn: (query: string) => MentionItem[] | Promise<M
           })
           popup = Array.isArray(result) ? result : [result]
         },
-        onUpdate: (props: { clientRect: (() => DOMRect | null) | null | undefined; items: MentionItem[]; command: (item: Record<string, unknown>) => void }) => {
+        onUpdate: (props: {
+          clientRect: (() => DOMRect | null) | null | undefined
+          items: MentionItem[]
+          command: (item: Record<string, unknown>) => void
+        }) => {
           if (!component) return
           updateList(component, props.items, props.command)
-          popup?.[0]?.setProps({ getReferenceClientRect: (props.clientRect as (() => DOMRect)) ?? undefined })
+          popup?.[0]?.setProps({ getReferenceClientRect: (props.clientRect as () => DOMRect) ?? undefined })
         },
         onKeyDown: (props: { event: KeyboardEvent }) => {
           if (!component) return false
-          if (props.event.key === 'Escape') { cleanup(); return true }
+          if (props.event.key === 'Escape') {
+            cleanup()
+            return true
+          }
 
           const items = component.querySelectorAll<HTMLElement>('.mention-item')
           const active = component.querySelector<HTMLElement>('.mention-item.active')
 
           if (props.event.key === 'ArrowDown') {
-            const next = active ? active.nextElementSibling as HTMLElement | null : items[0]
+            const next = active ? (active.nextElementSibling as HTMLElement | null) : items[0]
             if (next?.classList.contains('mention-item')) {
               active?.classList.remove('active')
               next.classList.add('active')
@@ -368,15 +385,15 @@ export function TipTapEditor({
               type="url"
               value={linkUrl}
               onChange={(e) => setLinkUrl(e.target.value)}
-              onKeyDown={(e) => { if (e.key === 'Enter') applyLink(); if (e.key === 'Escape') setShowLinkPopover(false) }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') applyLink()
+                if (e.key === 'Escape') setShowLinkPopover(false)
+              }}
               placeholder="https://..."
               className="px-2 py-1 text-[12px] font-mono border border-[#eee] rounded w-[200px]"
               autoFocus
             />
-            <button
-              onClick={applyLink}
-              className="px-2 py-1 text-[11px] font-mono bg-[#1a1a1a] text-white rounded"
-            >
+            <button onClick={applyLink} className="px-2 py-1 text-[11px] font-mono bg-[#1a1a1a] text-white rounded">
               {linkUrl ? 'Save' : 'Remove'}
             </button>
             <button

@@ -48,11 +48,7 @@ const STANCE_OPTIONS = buildOptions([
   'Other',
 ])
 
-const EVIDENCE_OPTIONS = buildOptions([
-  'Explicitly stated',
-  'Inferred',
-  'Unknown',
-])
+const EVIDENCE_OPTIONS = buildOptions(['Explicitly stated', 'Inferred', 'Unknown'])
 
 const TIMELINE_OPTIONS = buildOptions([
   'Already here',
@@ -104,15 +100,29 @@ const LABEL_CLASS = 'font-mono text-[11px] uppercase tracking-wider text-[#555]'
 const INPUT_CLASS =
   'w-full px-3 py-2 font-mono text-[13px] border border-[#ddd] rounded bg-white outline-none transition-colors hover:border-[#999] focus:border-[#2563eb]'
 
-export function PersonForm({ form, updateContext, onOrgPanelOpen, onViewExisting, onEnterUpdateMode, onSubmitSuccess }: PersonFormProps) {
-  const { register, control, watch, handleSubmit, formState: { errors } } = form
+export function PersonForm({
+  form,
+  updateContext,
+  onOrgPanelOpen,
+  onViewExisting,
+  onEnterUpdateMode,
+  onSubmitSuccess,
+}: PersonFormProps) {
+  const {
+    register,
+    control,
+    watch,
+    handleSubmit,
+    formState: { errors },
+  } = form
   const { cache } = useEntityCache()
   const submitEntity = useSubmitEntity()
   const addPendingEntity = useAddPendingEntity()
 
   const primaryRole = watch('category') as string | undefined
   const regulatoryStance = watch('regulatoryStance') as string | undefined
-  const showStanceDetail = regulatoryStance === 'Other' || regulatoryStance === 'Mixed/unclear' || regulatoryStance === 'Mixed/nuanced'
+  const showStanceDetail =
+    regulatoryStance === 'Other' || regulatoryStance === 'Mixed/unclear' || regulatoryStance === 'Mixed/nuanced'
 
   // TipTap @mention search — local cache + pending API
   const searchEntities = useCallback(
@@ -142,7 +152,9 @@ export function PersonForm({ form, updateContext, onOrgPanelOpen, onViewExisting
               })
             }
           }
-        } catch { /* local results still work */ }
+        } catch {
+          /* local results still work */
+        }
       }
       return local
     },
@@ -175,7 +187,9 @@ export function PersonForm({ form, updateContext, onOrgPanelOpen, onViewExisting
               })
             }
           }
-        } catch { /* local results still work */ }
+        } catch {
+          /* local results still work */
+        }
       }
       return local
     },
@@ -188,11 +202,19 @@ export function PersonForm({ form, updateContext, onOrgPanelOpen, onViewExisting
     const locationTags = fields.location as Array<{ label: string }> | undefined
     const apiData: Record<string, unknown> = {
       ...fields,
-      location: Array.isArray(locationTags) ? locationTags.map((t) => t.label).join(', ') : fields.location ?? null,
-      influenceType: Array.isArray(fields.influenceType) ? (fields.influenceType as string[]).join(', ') : fields.influenceType ?? null,
-      keyConcerns: Array.isArray(fields.keyConcerns) ? (fields.keyConcerns as string[]).join(', ') : fields.keyConcerns ?? null,
-      affiliatedOrgIds: Array.isArray(fields.affiliatedOrgIds) ? JSON.stringify((fields.affiliatedOrgIds as Array<{ id: number | string }>).map((t) => t.id)) : null,
-      notesMentions: Array.isArray(fields.notesMentions) ? JSON.stringify(fields.notesMentions) : fields.notesMentions ?? null,
+      location: Array.isArray(locationTags) ? locationTags.map((t) => t.label).join(', ') : (fields.location ?? null),
+      influenceType: Array.isArray(fields.influenceType)
+        ? (fields.influenceType as string[]).join(', ')
+        : (fields.influenceType ?? null),
+      keyConcerns: Array.isArray(fields.keyConcerns)
+        ? (fields.keyConcerns as string[]).join(', ')
+        : (fields.keyConcerns ?? null),
+      affiliatedOrgIds: Array.isArray(fields.affiliatedOrgIds)
+        ? JSON.stringify((fields.affiliatedOrgIds as Array<{ id: number | string }>).map((t) => t.id))
+        : null,
+      notesMentions: Array.isArray(fields.notesMentions)
+        ? JSON.stringify(fields.notesMentions)
+        : (fields.notesMentions ?? null),
       entityId: updateContext?.entityId ?? undefined,
     }
     submitEntity.mutate(
@@ -211,7 +233,9 @@ export function PersonForm({ form, updateContext, onOrgPanelOpen, onViewExisting
             category: (fields.category as string) ?? null,
             title: (fields.title as string) ?? null,
             primary_org: (fields.primaryOrg as string) ?? null,
-            location: Array.isArray(fields.location) ? fields.location.map((t: { label: string }) => t.label).join(', ') : null,
+            location: Array.isArray(fields.location)
+              ? fields.location.map((t: { label: string }) => t.label).join(', ')
+              : null,
           })
           onSubmitSuccess?.()
         },
@@ -236,9 +260,7 @@ export function PersonForm({ form, updateContext, onOrgPanelOpen, onViewExisting
           placeholder="Full name"
         />
         {errors.name && (
-          <span className="text-[11px] font-mono text-red-500 mt-0.5">
-            {errors.name.message as string}
-          </span>
+          <span className="text-[11px] font-mono text-red-500 mt-0.5">{errors.name.message as string}</span>
         )}
         {!updateContext && (
           <DuplicateDetection
@@ -249,7 +271,17 @@ export function PersonForm({ form, updateContext, onOrgPanelOpen, onViewExisting
               // Only look up approved entities from cache — pending entities use submission IDs
               // which collide with the entity ID space (different tables, overlapping auto-increment)
               const full = entity.isPending ? null : cache?.byId.get(entity.id)
-              onEnterUpdateMode?.(full ? { ...full } : { id: entity.id, name: entity.name, category: entity.category, title: entity.title, primary_org: entity.primary_org })
+              onEnterUpdateMode?.(
+                full
+                  ? { ...full }
+                  : {
+                      id: entity.id,
+                      name: entity.name,
+                      category: entity.category,
+                      title: entity.title,
+                      primary_org: entity.primary_org,
+                    },
+              )
               onViewExisting?.(entity)
             }}
           />
@@ -277,22 +309,14 @@ export function PersonForm({ form, updateContext, onOrgPanelOpen, onViewExisting
       {primaryRole && (
         <div>
           <label className={LABEL_CLASS}>Other Roles / Tags</label>
-          <input
-            {...register('otherCategories')}
-            className={INPUT_CLASS}
-            placeholder="e.g. Researcher, Advisor"
-          />
+          <input {...register('otherCategories')} className={INPUT_CLASS} placeholder="e.g. Researcher, Advisor" />
         </div>
       )}
 
       {/* Title */}
       <div className="col-span-2">
         <label className={LABEL_CLASS}>Title</label>
-        <input
-          {...register('title')}
-          className={INPUT_CLASS}
-          placeholder="e.g. CEO, Professor of AI Policy"
-        />
+        <input {...register('title')} className={INPUT_CLASS} placeholder="e.g. CEO, Professor of AI Policy" />
       </div>
 
       {/* Primary Org */}
@@ -347,10 +371,7 @@ export function PersonForm({ form, updateContext, onOrgPanelOpen, onViewExisting
                     >
                       <path d="M6 2v8M2 6h8" />
                     </svg>
-                    <span>
-                      Add &apos;{query.length > 30 ? query.slice(0, 30) + '...' : query}&apos; as
-                      new org...
-                    </span>
+                    <span>Add &apos;{query.length > 30 ? query.slice(0, 30) + '...' : query}&apos; as new org...</span>
                   </div>
                 ) : null
               }
@@ -366,12 +387,7 @@ export function PersonForm({ form, updateContext, onOrgPanelOpen, onViewExisting
           name="location"
           control={control}
           defaultValue={[]}
-          render={({ field }) => (
-            <LocationSearch
-              tags={(field.value as Tag[]) ?? []}
-              onTagsChange={field.onChange}
-            />
-          )}
+          render={({ field }) => <LocationSearch tags={(field.value as Tag[]) ?? []} onTagsChange={field.onChange} />}
         />
       </div>
 
@@ -421,8 +437,15 @@ export function PersonForm({ form, updateContext, onOrgPanelOpen, onViewExisting
         <label className={LABEL_CLASS}>
           AGI Timeline
           <InfoTooltip>
-            Artificial General Intelligence—AI that matches or exceeds human-level reasoning across domains. Definitions vary widely.{' '}
-            <a href="https://en.wikipedia.org/wiki/Artificial_general_intelligence" target="_blank" rel="noopener noreferrer">Learn more</a>
+            Artificial General Intelligence—AI that matches or exceeds human-level reasoning across domains. Definitions
+            vary widely.{' '}
+            <a
+              href="https://en.wikipedia.org/wiki/Artificial_general_intelligence"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Learn more
+            </a>
           </InfoTooltip>
         </label>
         <Controller
@@ -552,12 +575,7 @@ export function PersonForm({ form, updateContext, onOrgPanelOpen, onViewExisting
         <Controller
           name="twitter"
           control={control}
-          render={({ field }) => (
-            <TwitterSearch
-              value={(field.value as string) ?? ''}
-              onChange={field.onChange}
-            />
-          )}
+          render={({ field }) => <TwitterSearch value={(field.value as string) ?? ''} onChange={field.onChange} />}
         />
       </div>
 
@@ -567,23 +585,14 @@ export function PersonForm({ form, updateContext, onOrgPanelOpen, onViewExisting
         <Controller
           name="bluesky"
           control={control}
-          render={({ field }) => (
-            <BlueskySearch
-              value={(field.value as string) ?? ''}
-              onChange={field.onChange}
-            />
-          )}
+          render={({ field }) => <BlueskySearch value={(field.value as string) ?? ''} onChange={field.onChange} />}
         />
       </div>
 
       {/* Website */}
       <div className="col-span-2">
         <label className={LABEL_CLASS}>Website</label>
-        <input
-          {...register('website')}
-          className={INPUT_CLASS}
-          placeholder="https://..."
-        />
+        <input {...register('website')} className={INPUT_CLASS} placeholder="https://..." />
       </div>
 
       {/* Notes (TipTap) */}
@@ -591,20 +600,30 @@ export function PersonForm({ form, updateContext, onOrgPanelOpen, onViewExisting
         <label className={LABEL_CLASS}>
           Notes
           <InfoTooltip width={300}>
-            <strong>What to include:</strong><br />
-            {'• Key policy positions & public statements'}<br />
-            {'• Relationships to other stakeholders'}<br />
-            {'• Funding sources or organizational ties'}<br />
-            {'• Career background & notable projects'}<br />
-            {'• Recent relevant activity or controversies'}<br /><br />
-            <strong>Use @mentions</strong> (like Notion or Obsidian) to create bidirectional links:<br />
+            <strong>What to include:</strong>
+            <br />
+            {'• Key policy positions & public statements'}
+            <br />
+            {'• Relationships to other stakeholders'}
+            <br />
+            {'• Funding sources or organizational ties'}
+            <br />
+            {'• Career background & notable projects'}
+            <br />
+            {'• Recent relevant activity or controversies'}
+            <br />
+            <br />
+            <strong>Use @mentions</strong> (like Notion or Obsidian) to create bidirectional links:
+            <br />
             <em>
               {'"Previously at '}
               <span className="bg-[#e8f0fe] rounded px-0.5 text-[#2563eb] font-medium">@Google DeepMind</span>
               {' before joining '}
               <span className="bg-[#e8f0fe] rounded px-0.5 text-[#2563eb] font-medium">@Anthropic</span>
               {'."'}
-            </em><br /><br />
+            </em>
+            <br />
+            <br />
             These links help us map connections between people, orgs, and resources.
           </InfoTooltip>
         </label>
@@ -640,12 +659,11 @@ export function PersonForm({ form, updateContext, onOrgPanelOpen, onViewExisting
           placeholder="your@email.com"
         />
         {errors.submitterEmail && (
-          <span className="text-[11px] font-mono text-red-500 mt-0.5">
-            {errors.submitterEmail.message as string}
-          </span>
+          <span className="text-[11px] font-mono text-red-500 mt-0.5">{errors.submitterEmail.message as string}</span>
         )}
         <span className="text-[12px] font-mono text-[#888] mt-0.5 block">
-          Your email will not be displayed publicly. It&apos;s used only if we need to contact you about your submission.
+          Your email will not be displayed publicly. It&apos;s used only if we need to contact you about your
+          submission.
         </span>
       </div>
 
@@ -656,15 +674,12 @@ export function PersonForm({ form, updateContext, onOrgPanelOpen, onViewExisting
           disabled={submitEntity.isPending}
           className="w-full px-6 py-3 font-mono text-[13px] uppercase tracking-wider bg-[#1a1a1a] text-white border-none rounded cursor-pointer transition-colors hover:bg-[#333] disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {submitEntity.isPending
-            ? 'Submitting...'
-            : updateContext
-              ? 'Update Person'
-              : 'Submit Person'}
+          {submitEntity.isPending ? 'Submitting...' : updateContext ? 'Update Person' : 'Submit Person'}
         </button>
         {submitEntity.isError && (
           <p className="text-[12px] font-mono text-red-600 mt-2">
-            {(submitEntity.error as { body?: { error?: string } })?.body?.error ?? 'Submission failed. Please try again.'}
+            {(submitEntity.error as { body?: { error?: string } })?.body?.error ??
+              'Submission failed. Please try again.'}
           </p>
         )}
       </div>

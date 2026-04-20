@@ -61,9 +61,7 @@ export function OrgSearch({
   const results = value.length >= 1 ? allResults.slice(0, 10) : preloadResults
 
   // Check if there is an exact match (case-insensitive) in results
-  const hasExactMatch =
-    value.length >= 1 &&
-    results.some((r) => r.name.toLowerCase() === value.toLowerCase())
+  const hasExactMatch = value.length >= 1 && results.some((r) => r.name.toLowerCase() === value.toLowerCase())
 
   // Total items: results + optional "Add new" trailing option
   const showAddOption = onCreateOrg && value.length >= 1 && !hasExactMatch
@@ -203,9 +201,7 @@ export function OrgSearch({
                 <span className="truncate text-[#1a1a1a]">{result.name}</span>
                 <span className="flex items-center gap-2 flex-shrink-0 ml-2">
                   {result.category && (
-                    <span className="text-[11px] text-[#888] truncate max-w-[120px]">
-                      {result.category}
-                    </span>
+                    <span className="text-[11px] text-[#888] truncate max-w-[120px]">{result.category}</span>
                   )}
                   {result.isPending && (
                     <span className="text-[10px] font-mono px-1.5 py-0.5 bg-amber-100 text-amber-700 rounded">
@@ -239,10 +235,7 @@ export function OrgSearch({
               >
                 <path d="M6 2v8M2 6h8" />
               </svg>
-              <span>
-                Add &apos;{value.length > 30 ? value.slice(0, 30) + '...' : value}&apos; as new
-                org...
-              </span>
+              <span>Add &apos;{value.length > 30 ? value.slice(0, 30) + '...' : value}&apos; as new org...</span>
             </div>
           )}
         </div>

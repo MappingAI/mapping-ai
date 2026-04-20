@@ -68,13 +68,27 @@ const LABEL_CLASS = 'font-mono text-[11px] uppercase tracking-wider text-[#555]'
 const INPUT_CLASS =
   'w-full px-3 py-2 font-mono text-[13px] border border-[#ddd] rounded bg-white outline-none transition-colors hover:border-[#999] focus:border-[#2563eb]'
 
-export function OrganizationForm({ form, updateContext, onOrgPanelOpen, onViewExisting, onEnterUpdateMode, onSubmitSuccess }: OrganizationFormProps) {
-  const { register, control, watch, handleSubmit, formState: { errors } } = form
+export function OrganizationForm({
+  form,
+  updateContext,
+  onOrgPanelOpen,
+  onViewExisting,
+  onEnterUpdateMode,
+  onSubmitSuccess,
+}: OrganizationFormProps) {
+  const {
+    register,
+    control,
+    watch,
+    handleSubmit,
+    formState: { errors },
+  } = form
   const { cache } = useEntityCache()
   const submitEntity = useSubmitEntity()
   const addPendingEntity = useAddPendingEntity()
   const regulatoryStance = watch('regulatoryStance') as string | undefined
-  const showStanceDetail = regulatoryStance === 'Other' || regulatoryStance === 'Mixed/unclear' || regulatoryStance === 'Mixed/nuanced'
+  const showStanceDetail =
+    regulatoryStance === 'Other' || regulatoryStance === 'Mixed/unclear' || regulatoryStance === 'Mixed/nuanced'
 
   // TipTap @mention search — local cache + pending API
   const searchEntities = useCallback(
@@ -104,7 +118,9 @@ export function OrganizationForm({ form, updateContext, onOrgPanelOpen, onViewEx
               })
             }
           }
-        } catch { /* local results still work */ }
+        } catch {
+          /* local results still work */
+        }
       }
       return local
     },
@@ -116,8 +132,10 @@ export function OrganizationForm({ form, updateContext, onOrgPanelOpen, onViewEx
     const locationTags = fields.location as Array<{ label: string }> | undefined
     const apiData: Record<string, unknown> = {
       ...fields,
-      location: Array.isArray(locationTags) ? locationTags.map((t) => t.label).join(', ') : fields.location ?? null,
-      notesMentions: Array.isArray(fields.notesMentions) ? JSON.stringify(fields.notesMentions) : fields.notesMentions ?? null,
+      location: Array.isArray(locationTags) ? locationTags.map((t) => t.label).join(', ') : (fields.location ?? null),
+      notesMentions: Array.isArray(fields.notesMentions)
+        ? JSON.stringify(fields.notesMentions)
+        : (fields.notesMentions ?? null),
       entityId: updateContext?.entityId ?? undefined,
     }
     submitEntity.mutate(
@@ -134,7 +152,9 @@ export function OrganizationForm({ form, updateContext, onOrgPanelOpen, onViewEx
             entity_type: 'organization',
             name: (fields.name as string) ?? '',
             category: (fields.category as string) ?? null,
-            location: Array.isArray(fields.location) ? fields.location.map((t: { label: string }) => t.label).join(', ') : null,
+            location: Array.isArray(fields.location)
+              ? fields.location.map((t: { label: string }) => t.label).join(', ')
+              : null,
           })
           onSubmitSuccess?.()
         },
@@ -159,9 +179,7 @@ export function OrganizationForm({ form, updateContext, onOrgPanelOpen, onViewEx
           placeholder="Organization name"
         />
         {errors.name && (
-          <span className="text-[11px] font-mono text-red-500 mt-0.5">
-            {errors.name.message as string}
-          </span>
+          <span className="text-[11px] font-mono text-red-500 mt-0.5">{errors.name.message as string}</span>
         )}
         {!updateContext && (
           <DuplicateDetection
@@ -197,11 +215,7 @@ export function OrganizationForm({ form, updateContext, onOrgPanelOpen, onViewEx
       {/* Website */}
       <div className="col-span-2">
         <label className={LABEL_CLASS}>Website</label>
-        <input
-          {...register('website')}
-          className={INPUT_CLASS}
-          placeholder="https://..."
-        />
+        <input {...register('website')} className={INPUT_CLASS} placeholder="https://..." />
       </div>
 
       {/* Parent Org */}
@@ -291,12 +305,7 @@ export function OrganizationForm({ form, updateContext, onOrgPanelOpen, onViewEx
         <Controller
           name="twitter"
           control={control}
-          render={({ field }) => (
-            <TwitterSearch
-              value={(field.value as string) ?? ''}
-              onChange={field.onChange}
-            />
-          )}
+          render={({ field }) => <TwitterSearch value={(field.value as string) ?? ''} onChange={field.onChange} />}
         />
       </div>
 
@@ -306,12 +315,7 @@ export function OrganizationForm({ form, updateContext, onOrgPanelOpen, onViewEx
         <Controller
           name="bluesky"
           control={control}
-          render={({ field }) => (
-            <BlueskySearch
-              value={(field.value as string) ?? ''}
-              onChange={field.onChange}
-            />
-          )}
+          render={({ field }) => <BlueskySearch value={(field.value as string) ?? ''} onChange={field.onChange} />}
         />
       </div>
 
@@ -320,12 +324,19 @@ export function OrganizationForm({ form, updateContext, onOrgPanelOpen, onViewEx
         <label className={LABEL_CLASS}>
           Notes
           <InfoTooltip width={280}>
-            <strong>What to include:</strong><br />
-            {'• Mission, strategy & key programs'}<br />
-            {'• Key people & leadership'}<br />
-            {'• Funding sources or organizational ties'}<br />
-            {'• Policy positions & public statements'}<br />
-            {'• Recent relevant activity or controversies'}<br /><br />
+            <strong>What to include:</strong>
+            <br />
+            {'• Mission, strategy & key programs'}
+            <br />
+            {'• Key people & leadership'}
+            <br />
+            {'• Funding sources or organizational ties'}
+            <br />
+            {'• Policy positions & public statements'}
+            <br />
+            {'• Recent relevant activity or controversies'}
+            <br />
+            <br />
             <strong>Use @mentions</strong> to create bidirectional links between entities.
           </InfoTooltip>
         </label>
@@ -361,12 +372,11 @@ export function OrganizationForm({ form, updateContext, onOrgPanelOpen, onViewEx
           placeholder="your@email.com"
         />
         {errors.submitterEmail && (
-          <span className="text-[11px] font-mono text-red-500 mt-0.5">
-            {errors.submitterEmail.message as string}
-          </span>
+          <span className="text-[11px] font-mono text-red-500 mt-0.5">{errors.submitterEmail.message as string}</span>
         )}
         <span className="text-[12px] font-mono text-[#888] mt-0.5 block">
-          Your email will not be displayed publicly. It&apos;s used only if we need to contact you about your submission.
+          Your email will not be displayed publicly. It&apos;s used only if we need to contact you about your
+          submission.
         </span>
       </div>
 
@@ -377,15 +387,12 @@ export function OrganizationForm({ form, updateContext, onOrgPanelOpen, onViewEx
           disabled={submitEntity.isPending}
           className="w-full px-6 py-3 font-mono text-[13px] uppercase tracking-wider bg-[#1a1a1a] text-white border-none rounded cursor-pointer transition-colors hover:bg-[#333] disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {submitEntity.isPending
-            ? 'Submitting...'
-            : updateContext
-              ? 'Update Organization'
-              : 'Submit Organization'}
+          {submitEntity.isPending ? 'Submitting...' : updateContext ? 'Update Organization' : 'Submit Organization'}
         </button>
         {submitEntity.isError && (
           <p className="text-[12px] font-mono text-red-600 mt-2">
-            {(submitEntity.error as { body?: { error?: string } })?.body?.error ?? 'Submission failed. Please try again.'}
+            {(submitEntity.error as { body?: { error?: string } })?.body?.error ??
+              'Submission failed. Please try again.'}
           </p>
         )}
       </div>

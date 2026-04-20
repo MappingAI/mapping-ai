@@ -42,12 +42,9 @@ export function PasswordGate({ children }: { children: React.ReactNode }) {
           }}
         >
           <div className="bg-white rounded-lg px-8 py-6 max-w-[380px] w-[90%] shadow-2xl">
-            <h2 className="font-mono text-[13px] uppercase tracking-wider mb-3">
-              Enter Password
-            </h2>
+            <h2 className="font-mono text-[13px] uppercase tracking-wider mb-3">Enter Password</h2>
             <p className="text-sm leading-relaxed text-[#555] mb-4">
-              This tool is in a pre-launch beta. Enter the password to access
-              the contribution form.
+              This tool is in a pre-launch beta. Enter the password to access the contribution form.
             </p>
             <input
               ref={inputRef}
@@ -59,11 +56,7 @@ export function PasswordGate({ children }: { children: React.ReactNode }) {
               disabled={gate.isLockedOut}
               className="w-full px-3 py-2.5 font-mono text-[13px] border border-[#ddd] rounded mb-2 box-border disabled:opacity-50"
             />
-            {gate.error && (
-              <div className="text-red-600 text-xs font-mono mb-2">
-                {gate.error}
-              </div>
-            )}
+            {gate.error && <div className="text-red-600 text-xs font-mono mb-2">{gate.error}</div>}
             <button
               onClick={handleSubmit}
               disabled={gate.isLockedOut}

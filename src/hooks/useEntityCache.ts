@@ -57,15 +57,15 @@ export function useEntityCache(): {
 
   // Merge detail fields into entities (immutable — never mutate cached objects)
   const allEntities: Entity[] = [
-    ...(data.people ?? []).map(e => {
+    ...(data.people ?? []).map((e) => {
       const d = detail[String(e.id)]
       return d ? { ...e, ...d } : e
     }),
-    ...(data.organizations ?? []).map(e => {
+    ...(data.organizations ?? []).map((e) => {
       const d = detail[String(e.id)]
       return d ? { ...e, ...d } : e
     }),
-    ...(data.resources ?? []).map(e => {
+    ...(data.resources ?? []).map((e) => {
       const d = detail[String(e.id)]
       return d ? { ...e, ...d } : e
     }),

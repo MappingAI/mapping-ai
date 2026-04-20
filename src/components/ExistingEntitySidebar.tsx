@@ -4,14 +4,25 @@ import type { FuzzySearchResult } from '../types/api'
 import type { Entity } from '../types/entity'
 
 const CATEGORY_COLORS: Record<string, string> = {
-  'Frontier Lab': '#d4644a', 'AI Infrastructure & Compute': '#6366F1', 'Deployers & Platforms': '#EC4899',
-  'AI Safety/Alignment': '#2d8a6e', 'AI Safety': '#2d8a6e',
-  'Think Tank/Policy Org': '#5b82bf', 'Government/Agency': '#7c5cbf',
-  'Academic': '#d4a44a', 'VC/Capital/Philanthropy': '#1a8a8a',
-  'Labor/Civil Society': '#d4885a', 'Media/Journalism': '#8b6914',
-  'Ethics/Bias/Rights': '#e07020', 'Political Campaign/PAC': '#8b5cf6',
-  'Executive': '#d4644a', 'Researcher': '#2d8a6e', 'Policymaker': '#9955cc',
-  'Investor': '#1a8a8a', 'Organizer': '#d4885a', 'Journalist': '#8b6914',
+  'Frontier Lab': '#d4644a',
+  'AI Infrastructure & Compute': '#6366F1',
+  'Deployers & Platforms': '#EC4899',
+  'AI Safety/Alignment': '#2d8a6e',
+  'AI Safety': '#2d8a6e',
+  'Think Tank/Policy Org': '#5b82bf',
+  'Government/Agency': '#7c5cbf',
+  Academic: '#d4a44a',
+  'VC/Capital/Philanthropy': '#1a8a8a',
+  'Labor/Civil Society': '#d4885a',
+  'Media/Journalism': '#8b6914',
+  'Ethics/Bias/Rights': '#e07020',
+  'Political Campaign/PAC': '#8b5cf6',
+  Executive: '#d4644a',
+  Researcher: '#2d8a6e',
+  Policymaker: '#9955cc',
+  Investor: '#1a8a8a',
+  Organizer: '#d4885a',
+  Journalist: '#8b6914',
   'Cultural figure': '#EC4899',
 }
 
@@ -122,7 +133,8 @@ export function ExistingEntitySidebar({ entity, entityType, onClose }: ExistingE
         )}
 
         <div className="font-mono text-[10px] text-[#2563eb] bg-[#f0f4ff] p-3 rounded mt-4 leading-relaxed">
-          Please review the existing info above. Your submission will add new information and any conflicting details will be stored for review.
+          Please review the existing info above. Your submission will add new information and any conflicting details
+          will be stored for review.
         </div>
       </div>
 

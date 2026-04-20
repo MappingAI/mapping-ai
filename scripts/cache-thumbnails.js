@@ -83,7 +83,7 @@ async function fetchImage(url, timeout = 10000) {
     if (buffer.length < 500) return null
 
     return { buffer, contentType }
-  } catch (e) {
+  } catch {
     clearTimeout(timeoutId)
     return null
   }

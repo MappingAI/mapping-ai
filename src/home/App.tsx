@@ -45,9 +45,12 @@ const TOC_ITEMS = [
 function useFadeIn() {
   const refs = useRef<(HTMLElement | null)[]>([])
 
-  const setRef = useCallback((index: number) => (el: HTMLElement | null) => {
-    refs.current[index] = el
-  }, [])
+  const setRef = useCallback(
+    (index: number) => (el: HTMLElement | null) => {
+      refs.current[index] = el
+    },
+    [],
+  )
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -136,16 +139,17 @@ function TableOfContents() {
   }
 
   return (
-    <nav className="hidden min-[1200px]:block fixed top-1/2 -translate-y-1/2" style={{ left: 'calc(50% - 340px - 3rem - 130px)', width: 130 }}>
+    <nav
+      className="hidden min-[1200px]:block fixed top-1/2 -translate-y-1/2"
+      style={{ left: 'calc(50% - 340px - 3rem - 130px)', width: 130 }}
+    >
       {TOC_ITEMS.map(({ id, label }) => (
         <a
           key={id}
           href={`#${id}`}
           onClick={(e) => handleClick(e, id)}
           className={`block font-mono text-[11px] tracking-wider uppercase no-underline py-1.5 pl-2.5 border-l transition-colors duration-150 leading-snug ${
-            activeId === id
-              ? 'text-[#1a1a1a] border-[#1a1a1a]'
-              : 'text-[#888] border-transparent hover:text-[#555]'
+            activeId === id ? 'text-[#1a1a1a] border-[#1a1a1a]' : 'text-[#888] border-transparent hover:text-[#555]'
           }`}
         >
           {label}
@@ -177,17 +181,18 @@ function BetaOverlay() {
     <div
       className="fixed inset-0 z-[9999] flex items-center justify-center"
       style={{ background: 'rgba(0,0,0,0.5)' }}
-      onClick={(e) => { if (e.target === e.currentTarget) dismiss() }}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) dismiss()
+      }}
     >
       <div
         className="bg-white rounded-lg px-8 py-6 max-w-[480px] w-[90%] shadow-2xl"
         style={{ fontFamily: "'EB Garamond', Georgia, serif" }}
       >
-        <h2 className="font-mono text-[13px] uppercase tracking-wider mb-3">
-          Pre-Launch Beta
-        </h2>
+        <h2 className="font-mono text-[13px] uppercase tracking-wider mb-3">Pre-Launch Beta</h2>
         <p className="text-[15px] leading-relaxed text-[#555] mb-4">
-          This tool is in a pre-launch beta. We are actively improving data issues and enrichment, as well as adding new features and improving the UX.
+          This tool is in a pre-launch beta. We are actively improving data issues and enrichment, as well as adding new
+          features and improving the UX.
         </p>
         <p className="text-[15px] leading-relaxed text-[#555] mb-5">
           Please email us at{' '}
@@ -252,7 +257,10 @@ export function App() {
       <Navigation />
       <TableOfContents />
 
-      <div className="max-w-[680px] mx-auto px-6 pb-16 font-serif text-[#1a1a1a] text-[17px] leading-[1.75]" style={{ paddingTop: 'calc(3rem + 48px)' }}>
+      <div
+        className="max-w-[680px] mx-auto px-6 pb-16 font-serif text-[#1a1a1a] text-[17px] leading-[1.75]"
+        style={{ paddingTop: 'calc(3rem + 48px)' }}
+      >
         {/* Title + CTA */}
         <h1
           className="font-serif text-[32px] font-normal italic leading-tight mb-0"
@@ -284,8 +292,11 @@ export function App() {
           What
         </div>
         <p {...fadeProps(fi++)} className="mb-4 text-[16.5px]">
-          We are building a comprehensive map of the individuals and groups with the potential to shape AI policy in the United States. The goal is to produce a structured, shareable, and dynamic resource that identifies{' '}
-          <span className="font-medium">who is working on what, where the gaps are, and which partnerships might form</span>{' '}
+          We are building a comprehensive map of the individuals and groups with the potential to shape AI policy in the
+          United States. The goal is to produce a structured, shareable, and dynamic resource that identifies{' '}
+          <span className="font-medium">
+            who is working on what, where the gaps are, and which partnerships might form
+          </span>{' '}
           across ideological and organizational lines.
         </p>
 
@@ -298,9 +309,15 @@ export function App() {
           Why Now
         </div>
         <p {...fadeProps(fi++)} className="mb-4 text-[16.5px]">
-          <span className="font-medium">The landscape of AI policy in the U.S. is fragmented.</span>{' '}
-          Safety researchers, frontier labs, legislators, civil society, and investors all have a stake in AI governance, yet there is no public resource showing where these actors stand on critical issues in AI. The 2026 midterms and 2028 presidential elections are rapidly approaching, and these groups are laying the intellectual groundwork for candidates' technology platforms. A clear layout of the competing worldviews and theories of change is a necessary step to political coordination.{' '}
-          <span className="font-medium">This work is long overdue—those who engage first will set the terms of the discussion.</span>
+          <span className="font-medium">The landscape of AI policy in the U.S. is fragmented.</span> Safety researchers,
+          frontier labs, legislators, civil society, and investors all have a stake in AI governance, yet there is no
+          public resource showing where these actors stand on critical issues in AI. The 2026 midterms and 2028
+          presidential elections are rapidly approaching, and these groups are laying the intellectual groundwork for
+          candidates' technology platforms. A clear layout of the competing worldviews and theories of change is a
+          necessary step to political coordination.{' '}
+          <span className="font-medium">
+            This work is long overdue—those who engage first will set the terms of the discussion.
+          </span>
         </p>
 
         {/* The Gap */}
@@ -331,7 +348,11 @@ export function App() {
             aisafety.com
           </a>{' '}
           visualizes the safety ecosystem.{' '}
-          <span className="font-medium">But we've yet to see anything that maps the full potential of the policy landscape</span>—civil society, industry, government—and where these actors stand on crucial governance questions, such as the technology's capabilities and the role of public policy. We aim to fill that gap.
+          <span className="font-medium">
+            But we've yet to see anything that maps the full potential of the policy landscape
+          </span>
+          —civil society, industry, government—and where these actors stand on crucial governance questions, such as the
+          technology's capabilities and the role of public policy. We aim to fill that gap.
         </p>
 
         {/* Who We're Mapping */}
@@ -348,9 +369,7 @@ export function App() {
               key={item.title}
               className="bg-[#f8f7f5] rounded-md px-4 py-3.5 font-mono text-xs text-[#555] leading-normal border border-transparent transition-all duration-150 hover:-translate-y-0.5 hover:border-[#bbb]"
             >
-              <span className="block font-serif text-[15px] font-medium text-[#1a1a1a] mb-1">
-                {item.title}
-              </span>
+              <span className="block font-serif text-[15px] font-medium text-[#1a1a1a] mb-1">{item.title}</span>
               {item.description}
             </div>
           ))}
@@ -365,8 +384,12 @@ export function App() {
           Vision
         </div>
         <p {...fadeProps(fi++)} className="mb-4 text-[16.5px]">
-          By mapping key actors, we hope to identify and fuse a new partnership for AI governance. We intend this alliance to be as transformative for technology policy as the NSF, NIH, and DARPA were in the postwar period.{' '}
-          <span className="font-medium">The goal is not just to regulate emerging technology, but to articulate a new social contract between the technological frontier and the public—and to build the institutions necessary to realize that vision.</span>
+          By mapping key actors, we hope to identify and fuse a new partnership for AI governance. We intend this
+          alliance to be as transformative for technology policy as the NSF, NIH, and DARPA were in the postwar period.{' '}
+          <span className="font-medium">
+            The goal is not just to regulate emerging technology, but to articulate a new social contract between the
+            technological frontier and the public—and to build the institutions necessary to realize that vision.
+          </span>
         </p>
 
         {/* Take Part */}
@@ -378,7 +401,8 @@ export function App() {
           Take Part
         </div>
         <p {...fadeProps(fi++)} className="mb-4 text-[16.5px]">
-          We're compiling an initial list of organizations, individuals, and influential resources. If you work in or adjacent to any of the categories above, we welcome your input on who and what should be included.{' '}
+          We're compiling an initial list of organizations, individuals, and influential resources. If you work in or
+          adjacent to any of the categories above, we welcome your input on who and what should be included.{' '}
           <a href="/contribute" className="text-[#2563eb] no-underline hover:underline">
             <span className="font-medium">Add a person, organization, or resource →</span>
           </a>

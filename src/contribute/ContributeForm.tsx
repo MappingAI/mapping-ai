@@ -39,14 +39,36 @@ const RELATIONSHIP_OPTIONS: Record<FormType, { value: string; label: string }[]>
 }
 
 const EMPTY_FORM: Record<string, unknown> = {
-  name: '', category: '', title: '', primaryOrg: '', primaryOrgId: null,
-  location: [], affiliatedOrgIds: [], keyConcerns: [], influenceType: [],
-  regulatoryStance: '', evidenceSource: '', agiTimeline: '', aiRiskLevel: '',
-  regulatoryStanceDetail: '', twitter: '', bluesky: '', website: '',
-  fundingModel: '', notesHtml: '', notesMentions: [], submitterEmail: '',
-  submitterRelationship: '', resourceTitle: '', resourceType: '',
-  resourceAuthor: '', resourceAuthors: [], resourceUrl: '', resourceYear: '',
-  resourceKeyArgument: '', _hp: '',
+  name: '',
+  category: '',
+  title: '',
+  primaryOrg: '',
+  primaryOrgId: null,
+  location: [],
+  affiliatedOrgIds: [],
+  keyConcerns: [],
+  influenceType: [],
+  regulatoryStance: '',
+  evidenceSource: '',
+  agiTimeline: '',
+  aiRiskLevel: '',
+  regulatoryStanceDetail: '',
+  twitter: '',
+  bluesky: '',
+  website: '',
+  fundingModel: '',
+  notesHtml: '',
+  notesMentions: [],
+  submitterEmail: '',
+  submitterRelationship: '',
+  resourceTitle: '',
+  resourceType: '',
+  resourceAuthor: '',
+  resourceAuthors: [],
+  resourceUrl: '',
+  resourceYear: '',
+  resourceKeyArgument: '',
+  _hp: '',
 }
 
 /** State for update mode (editing an existing entity). */
@@ -110,56 +132,50 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
   }, [restore])
 
   // Cross-form navigation: switch tab and enter update mode
-  const switchToFormInUpdateMode = useCallback(
-    (formType: FormType, entityData: Partial<Entity>) => {
-      setActiveTab(formType)
-      setUpdateContexts((prev) => ({
-        ...prev,
-        [formType]: { entityId: entityData.id!, entityData },
-      }))
-      // Transform entity fields: snake_case → camelCase, strings → arrays
-      const formData: Record<string, unknown> = { ...entityData }
+  const switchToFormInUpdateMode = useCallback((formType: FormType, entityData: Partial<Entity>) => {
+    setActiveTab(formType)
+    setUpdateContexts((prev) => ({
+      ...prev,
+      [formType]: { entityId: entityData.id!, entityData },
+    }))
+    // Transform entity fields: snake_case → camelCase, strings → arrays
+    const formData: Record<string, unknown> = { ...entityData }
 
-      // Map snake_case DB fields to camelCase form fields
-      if (formData.regulatory_stance) formData.regulatoryStance = formData.regulatory_stance
-      if (formData.regulatory_stance_detail) formData.regulatoryStanceDetail = formData.regulatory_stance_detail
-      if (formData.evidence_source) formData.evidenceSource = formData.evidence_source
-      if (formData.agi_timeline) formData.agiTimeline = formData.agi_timeline
-      if (formData.ai_risk_level) formData.aiRiskLevel = formData.ai_risk_level
-      if (formData.primary_org) formData.primaryOrg = formData.primary_org
-      if (formData.funding_model) formData.fundingModel = formData.funding_model
-      if (formData.notes_html) formData.notesHtml = formData.notes_html
+    // Map snake_case DB fields to camelCase form fields
+    if (formData.regulatory_stance) formData.regulatoryStance = formData.regulatory_stance
+    if (formData.regulatory_stance_detail) formData.regulatoryStanceDetail = formData.regulatory_stance_detail
+    if (formData.evidence_source) formData.evidenceSource = formData.evidence_source
+    if (formData.agi_timeline) formData.agiTimeline = formData.agi_timeline
+    if (formData.ai_risk_level) formData.aiRiskLevel = formData.ai_risk_level
+    if (formData.primary_org) formData.primaryOrg = formData.primary_org
+    if (formData.funding_model) formData.fundingModel = formData.funding_model
+    if (formData.notes_html) formData.notesHtml = formData.notes_html
 
-      // Location: single string → one Tag
-      if (typeof formData.location === 'string' && formData.location) {
-        formData.location = [{ id: formData.location, label: formData.location }]
-      } else if (!Array.isArray(formData.location)) {
-        formData.location = []
-      }
+    // Location: single string → one Tag
+    if (typeof formData.location === 'string' && formData.location) {
+      formData.location = [{ id: formData.location, label: formData.location }]
+    } else if (!Array.isArray(formData.location)) {
+      formData.location = []
+    }
 
-      // Comma-separated strings → arrays
-      if (typeof formData.influence_type === 'string' && formData.influence_type) {
-        formData.influenceType = formData.influence_type.split(',').map((s: string) => s.trim())
-      }
-      if (typeof formData.threat_models === 'string' && formData.threat_models) {
-        formData.keyConcerns = formData.threat_models.split(',').map((s: string) => s.trim())
-      }
-      if (!Array.isArray(formData.affiliatedOrgIds)) {
-        formData.affiliatedOrgIds = []
-      }
-      formsRef.current[formType].reset(formData)
-    },
-    [],
-  )
+    // Comma-separated strings → arrays
+    if (typeof formData.influence_type === 'string' && formData.influence_type) {
+      formData.influenceType = formData.influence_type.split(',').map((s: string) => s.trim())
+    }
+    if (typeof formData.threat_models === 'string' && formData.threat_models) {
+      formData.keyConcerns = formData.threat_models.split(',').map((s: string) => s.trim())
+    }
+    if (!Array.isArray(formData.affiliatedOrgIds)) {
+      formData.affiliatedOrgIds = []
+    }
+    formsRef.current[formType].reset(formData)
+  }, [])
 
   // Cancel update mode for a specific form
-  const cancelUpdate = useCallback(
-    (formType: FormType) => {
-      setUpdateContexts((prev) => ({ ...prev, [formType]: null }))
-      formsRef.current[formType].reset({})
-    },
-    [],
-  )
+  const cancelUpdate = useCallback((formType: FormType) => {
+    setUpdateContexts((prev) => ({ ...prev, [formType]: null }))
+    formsRef.current[formType].reset({})
+  }, [])
 
   // Clear form and draft
   const clearForm = useCallback(
@@ -178,19 +194,20 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
   const [orgPanelName, setOrgPanelName] = useState('')
   const [orgPanelTrigger, setOrgPanelTrigger] = useState<'primary' | 'parent' | 'affiliated'>('primary')
 
-  const openOrgPanel = useCallback(
-    (name: string, triggerType: 'primary' | 'parent' | 'affiliated') => {
-      setOrgPanelName(name)
-      setOrgPanelTrigger(triggerType)
-      setOrgPanelOpen(true)
-    },
-    [],
-  )
+  const openOrgPanel = useCallback((name: string, triggerType: 'primary' | 'parent' | 'affiliated') => {
+    setOrgPanelName(name)
+    setOrgPanelTrigger(triggerType)
+    setOrgPanelOpen(true)
+  }, [])
 
   // Existing entity sidebar state
   const [viewEntity, setViewEntity] = useState<{ entity: FuzzySearchResult; type: FormType } | null>(null)
   // Remember last viewed entity per form so the update banner can re-open it
-  const lastViewedRef = useRef<Record<FormType, FuzzySearchResult | null>>({ person: null, organization: null, resource: null })
+  const lastViewedRef = useRef<Record<FormType, FuzzySearchResult | null>>({
+    person: null,
+    organization: null,
+    resource: null,
+  })
   const showEntitySidebar = useCallback((entity: FuzzySearchResult, type: FormType) => {
     lastViewedRef.current[type] = entity
     setViewEntity({ entity, type })
@@ -218,11 +235,7 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
   // Show success message
   if (successType) {
     return (
-      <SuccessMessage
-        formType={successType}
-        isUpdate={successIsUpdate}
-        onSubmitAnother={() => setSuccessType(null)}
-      />
+      <SuccessMessage formType={successType} isUpdate={successIsUpdate} onSubmitAnother={() => setSuccessType(null)} />
     )
   }
 
@@ -257,7 +270,11 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
             form={personForm}
             updateContext={updateContexts.person}
             onCancelUpdate={() => cancelUpdate('person')}
-            onViewExisting={updateContexts.person && lastViewedRef.current.person ? () => showEntitySidebar(lastViewedRef.current.person!, 'person') : undefined}
+            onViewExisting={
+              updateContexts.person && lastViewedRef.current.person
+                ? () => showEntitySidebar(lastViewedRef.current.person!, 'person')
+                : undefined
+            }
             onClear={() => clearForm('person')}
           />
           <PersonForm
@@ -278,7 +295,11 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
             form={orgForm}
             updateContext={updateContexts.organization}
             onCancelUpdate={() => cancelUpdate('organization')}
-            onViewExisting={updateContexts.organization && lastViewedRef.current.organization ? () => showEntitySidebar(lastViewedRef.current.organization!, 'organization') : undefined}
+            onViewExisting={
+              updateContexts.organization && lastViewedRef.current.organization
+                ? () => showEntitySidebar(lastViewedRef.current.organization!, 'organization')
+                : undefined
+            }
             onClear={() => clearForm('organization')}
           />
           <OrganizationForm
@@ -299,7 +320,11 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
             form={resourceForm}
             updateContext={updateContexts.resource}
             onCancelUpdate={() => cancelUpdate('resource')}
-            onViewExisting={updateContexts.resource && lastViewedRef.current.resource ? () => showEntitySidebar(lastViewedRef.current.resource!, 'resource') : undefined}
+            onViewExisting={
+              updateContexts.resource && lastViewedRef.current.resource
+                ? () => showEntitySidebar(lastViewedRef.current.resource!, 'resource')
+                : undefined
+            }
             onClear={() => clearForm('resource')}
           />
           <ResourceForm
@@ -338,7 +363,8 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
               form.setValue('parentOrg', org.name)
               form.setValue('parentOrgId', org.id)
             } else if (orgPanelTrigger === 'affiliated') {
-              const current = (form.getValues('affiliatedOrgIds') as Array<{ id: number | string; label: string }>) ?? []
+              const current =
+                (form.getValues('affiliatedOrgIds') as Array<{ id: number | string; label: string }>) ?? []
               form.setValue('affiliatedOrgIds', [...current, { id: org.id, label: org.name }])
             }
           }}
@@ -372,8 +398,7 @@ function FormHeader({
       {updateContext && (
         <div className="flex items-center justify-between px-4 py-2.5 mb-4 bg-amber-50 border border-amber-200 rounded text-[13px]">
           <span>
-            Updating <strong>{updateContext.entityData.name}</strong> — adjust
-            any fields and submit
+            Updating <strong>{updateContext.entityData.name}</strong> — adjust any fields and submit
           </span>
           <div className="flex items-center gap-3">
             {onViewExisting && (
