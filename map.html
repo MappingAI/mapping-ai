@@ -3468,11 +3468,11 @@ function _drawFrame() {
       }
     } else if (d._sprite) {
       // Pre-rasterized image sprite
-      ctx.globalAlpha = (d._vs === 'highlighted' || isHover) ? 1 : Math.max(alpha, 0.75);
+      ctx.globalAlpha = alpha;
       ctx.drawImage(d._sprite, x - r, y - r, r * 2, r * 2);
       // Ring
       const ringColor = d._vs === 'highlighted' ? '#fff' : getClusterColor(d);
-      ctx.globalAlpha = d._vs === 'highlighted' ? 1 : 0.8;
+      ctx.globalAlpha = (d._vs === 'highlighted' || isHover) ? 1 : alpha;
       ctx.strokeStyle = ringColor;
       ctx.lineWidth = (d._vs === 'highlighted' || isHover) ? 3 : 2;
       ctx.beginPath();
