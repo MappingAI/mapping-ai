@@ -900,7 +900,9 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
       <button class="view-btn active" data-view="all">All</button>
       <button class="view-btn" data-view="orgs">Orgs</button>
       <button class="view-btn" data-view="people">People</button>
-      <button class="view-btn" data-view="resources">Resources</button>
+      <!-- Resources sub-tab removed in Resources Rethink Phase 1.
+           Resources now render edges-only in the All view and have
+           a dedicated /library surface for faceted search. -->
     </div>
     <div class="view-toggles" id="plot-sub-tabs" style="display:none">
       <button class="view-btn active" data-entity="all">All</button>
@@ -950,6 +952,17 @@ body { background: var(--bg-page); font-family: var(--serif); color: var(--text-
   <div class="control-group" id="secondary-category-filter" style="display:none">
     <h3 style="display:flex;justify-content:space-between;align-items:center;">Category <span class="filter-reset" id="secondary-category-reset" style="font-size:8px;text-transform:none;letter-spacing:0;color:var(--accent);cursor:pointer;font-weight:400;">select all</span></h3>
     <div class="filter-chips" id="secondary-category-chips"></div>
+  </div>
+  <div class="control-group" id="show-resources-control" style="display:none">
+    <h3 style="display:flex;align-items:center;gap:0.4rem;">
+      <label style="display:flex;align-items:center;gap:0.4rem;cursor:pointer;font-size:10px;letter-spacing:0.04em;text-transform:uppercase;font-weight:600;">
+        <input type="checkbox" id="show-resources-toggle"> Show resources
+      </label>
+    </h3>
+    <div style="font-size:10px;color:var(--text-3);line-height:1.3;">
+      Resources with connections appear in the All view.
+      Full library lives at <a href="/library" style="color:var(--accent);">/library</a>.
+    </div>
   </div>
   <div class="control-group" id="source-type-filter">
     <h3 style="display:flex;justify-content:space-between;align-items:center;">Source <span class="filter-reset" id="source-reset" style="font-size:8px;text-transform:none;letter-spacing:0;color:var(--accent);cursor:pointer;font-weight:400;">select all</span></h3>
@@ -2851,7 +2864,17 @@ document.getElementById('source-reset').addEventListener('click', () => {
 // ── View mode (Network / Plot) + sub-tabs ──
 // PASSWORD GATE: force plot view when locked (don't overwrite saved preference)
 let viewMode = localStorage.getItem('mapMode') || 'plot';
+// Resources Rethink Phase 1: the 'resources' sub-view was removed from the
+// UI. Old sessions with mapSubView='resources' in localStorage get coerced
+// to 'all' at first read and the stored value is rewritten so the
+// migration only runs once per browser.
+if (localStorage.getItem('mapSubView') === 'resources') {
+  localStorage.setItem('mapSubView', 'all');
+}
 const savedSubView = localStorage.getItem('mapSubView') || 'all';
+// Resources-in-All toggle (edges-only default, user can hide entirely).
+const showResourcesInAllInit = localStorage.getItem('showResourcesInAll');
+let showResourcesInAll = showResourcesInAllInit == null ? true : showResourcesInAllInit === 'true';
 
 function applyViewState() {
   const is2D = viewMode === 'plot';
@@ -2869,11 +2892,12 @@ function applyViewState() {
   if (smallSearchGroup) smallSearchGroup.style.display = isSearch ? 'none' : '';
   document.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === viewMode));
   document.querySelectorAll('#network-sub-tabs [data-view]').forEach(b => b.classList.toggle('active', b.dataset.view === currentView));
-  const phMap = { orgs: 'Search orgs...', people: 'Search people...', resources: 'Search resources...' };
+  const phMap = { orgs: 'Search orgs...', people: 'Search people...' };
   document.getElementById('search-input').placeholder = phMap[currentView] || 'Search entities...';
   buildFilters();
   updateSecondaryFilterVisibility();
   updateSourceTypeVisibility();
+  if (typeof updateShowResourcesControlVisibility === 'function') updateShowResourcesControlVisibility();
   // Clear search highlighting when leaving search mode
   if (!isSearch) {
     clearSearchModeHighlighting();
@@ -2889,8 +2913,9 @@ function applyViewState() {
   render();
 }
 
-// Restore saved state
-if (['orgs','people','resources','all'].includes(savedSubView)) {
+// Restore saved state. 'resources' is no longer a valid sub-view; the
+// coercion above at the first localStorage read handles any stale values.
+if (['orgs','people','all'].includes(savedSubView)) {
   currentView = viewMode === 'plot' ? '2d' : (viewMode === 'search' ? 'all' : savedSubView);
 } else {
   currentView = viewMode === 'plot' ? '2d' : 'all';
@@ -2912,7 +2937,7 @@ if (viewMode === 'search') {
   const smallSearchGroup = document.querySelector('.controls .control-group:first-child');
   if (smallSearchGroup) smallSearchGroup.style.display = 'none';
 }
-const phMap0 = { orgs: 'Search orgs...', people: 'Search people...', resources: 'Search resources...' };
+const phMap0 = { orgs: 'Search orgs...', people: 'Search people...' };
 document.getElementById('search-input').placeholder = phMap0[currentView] || 'Search entities...';
 
 // Top-level mode buttons
@@ -2931,13 +2956,32 @@ document.querySelectorAll('#network-sub-tabs [data-view]').forEach(btn => {
     btn.classList.add('active');
     currentView = btn.dataset.view;
     localStorage.setItem('mapSubView', currentView);
-    const phMap = { orgs: 'Search orgs...', people: 'Search people...', resources: 'Search resources...' };
+    const phMap = { orgs: 'Search orgs...', people: 'Search people...' };
     document.getElementById('search-input').placeholder = phMap[currentView] || 'Search entities...';
     buildFilters();
     updateSourceTypeVisibility();
+    updateShowResourcesControlVisibility();
     render();
   });
 });
+
+// Resources-in-All toggle — only visible when viewing the 'all' sub-view.
+function updateShowResourcesControlVisibility() {
+  const el = document.getElementById('show-resources-control');
+  if (!el) return;
+  el.style.display = (viewMode === 'network' && currentView === 'all') ? '' : 'none';
+}
+(function wireShowResourcesToggle() {
+  const cb = document.getElementById('show-resources-toggle');
+  if (!cb) return;
+  cb.checked = showResourcesInAll;
+  cb.addEventListener('change', () => {
+    showResourcesInAll = cb.checked;
+    localStorage.setItem('showResourcesInAll', String(showResourcesInAll));
+    render();
+  });
+  updateShowResourcesControlVisibility();
+})();
 
 // Belief dimension dropdown
 document.getElementById('belief-dim-select').addEventListener('change', (e) => {
@@ -3233,7 +3277,23 @@ function getVisibleNodes() {
     const visibleEntityIds = new Set(nodes.filter(n => !n.isResource).map(n => `${n.entityType}-${n.id}`));
     const unknownActive = document.querySelector('#stance-legend-items .stance-legend-item:last-child')?.dataset.active !== 'false';
 
+    // Resources Rethink Phase 1: the user can hide all resources in the All
+    // view via the controls sidebar toggle. When shown, only resources with
+    // at least one edge to a visible entity render — 0-edge floaters go to
+    // /library instead.
+    if (!showResourcesInAll) return nodes;
+    const resourceEdgeCounts = new Map();
+    for (const rel of allData.relationships || []) {
+      if (rel.source_type === 'resource' && visibleEntityIds.has(`${rel.target_type}-${rel.target_id}`)) {
+        resourceEdgeCounts.set(rel.source_id, (resourceEdgeCounts.get(rel.source_id) || 0) + 1);
+      } else if (rel.target_type === 'resource' && visibleEntityIds.has(`${rel.source_type}-${rel.source_id}`)) {
+        resourceEdgeCounts.set(rel.target_id, (resourceEdgeCounts.get(rel.target_id) || 0) + 1);
+      }
+    }
+
     allData.resources.forEach(d => {
+      // Edges-only rule: skip resources with no connections to a visible entity.
+      if (!resourceEdgeCounts.get(d.id)) return;
       // Search filter: when active, only show entities in searchVisibleNames (resources use title as name)
       if (searchFilterActive && !searchVisibleNames.has(d.title)) return;
       if (!passesSourceTypeFilter(d)) return;
