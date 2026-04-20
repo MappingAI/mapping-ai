@@ -73,15 +73,37 @@ Resources:
         ThrottlingRateLimit: 100
         ThrottlingBurstLimit: 200
       RouteSettings:
-        "GET /semantic-search":
+        'GET /semantic-search':
           ThrottlingRateLimit: 1
           ThrottlingBurstLimit: 3
 
+  # Lambda handlers are TypeScript (`api/*.ts`) and get bundled via SAM's
+  # esbuild BuildMethod. `Metadata.BuildMethod: esbuild` tells SAM CLI to
+  # compile + bundle at `sam build` time; the deployed artefact is a single JS
+  # file per function.
+  #
+  # `External` only lists packages that Lambda already provides at runtime and
+  # don't need to be in the bundle — today that's the `@aws-sdk/*` family,
+  # pre-installed in the Node 20 runtime. Everything else (including `pg`) is
+  # bundled by esbuild so it's available when the handler loads; the esbuild
+  # build output is just the `.js` file, so anything not bundled and not in
+  # the Lambda runtime would fail with "Cannot find module" on cold start.
   SubmitFunction:
     Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: es2020
+        Sourcemap: false
+        EntryPoints:
+          - api/submit.ts
+        External:
+          - '@aws-sdk/client-s3'
+          - '@aws-sdk/client-cloudfront'
     Properties:
       FunctionName: mapping-ai-submit
-      Handler: api/submit.handler
+      Handler: submit.handler
       Timeout: 15
       Environment:
         Variables:
@@ -96,9 +118,20 @@ Resources:
 
   SearchFunction:
     Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: es2020
+        Sourcemap: false
+        EntryPoints:
+          - api/search.ts
+        External:
+          - '@aws-sdk/client-s3'
+          - '@aws-sdk/client-cloudfront'
     Properties:
       FunctionName: mapping-ai-search
-      Handler: api/search.handler
+      Handler: search.handler
       Environment:
         Variables:
           ADMIN_KEY: !Ref AdminKey
@@ -112,9 +145,20 @@ Resources:
 
   SemanticSearchFunction:
     Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: es2020
+        Sourcemap: false
+        EntryPoints:
+          - api/semantic-search.ts
+        External:
+          - '@aws-sdk/client-s3'
+          - '@aws-sdk/client-cloudfront'
     Properties:
       FunctionName: mapping-ai-semantic-search
-      Handler: api/semantic-search.handler
+      Handler: semantic-search.handler
       Timeout: 30
       Environment:
         Variables:
@@ -129,9 +173,20 @@ Resources:
 
   AdminFunction:
     Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: es2020
+        Sourcemap: false
+        EntryPoints:
+          - api/admin.ts
+        External:
+          - '@aws-sdk/client-s3'
+          - '@aws-sdk/client-cloudfront'
     Properties:
       FunctionName: mapping-ai-admin
-      Handler: api/admin.handler
+      Handler: admin.handler
       Timeout: 30
       Environment:
         Variables:
@@ -161,9 +216,20 @@ Resources:
 
   UploadFunction:
     Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: es2020
+        Sourcemap: false
+        EntryPoints:
+          - api/upload.ts
+        External:
+          - '@aws-sdk/client-s3'
+          - '@aws-sdk/client-cloudfront'
     Properties:
       FunctionName: mapping-ai-upload
-      Handler: api/upload.handler
+      Handler: upload.handler
       Timeout: 30
       MemorySize: 512
       Environment:
@@ -184,9 +250,20 @@ Resources:
 
   SubmissionsFunction:
     Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: es2020
+        Sourcemap: false
+        EntryPoints:
+          - api/submissions.ts
+        External:
+          - '@aws-sdk/client-s3'
+          - '@aws-sdk/client-cloudfront'
     Properties:
       FunctionName: mapping-ai-submissions
-      Handler: api/submissions.handler
+      Handler: submissions.handler
       Events:
         Submissions:
           Type: HttpApi
@@ -314,7 +391,7 @@ Resources:
             - GET
             - HEAD
           Compress: true
-          CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6  # Managed-CachingOptimized
+          CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6 # Managed-CachingOptimized
           ResponseHeadersPolicyId: !Ref SecurityHeadersPolicy
           FunctionAssociations:
             - EventType: viewer-request

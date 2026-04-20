@@ -41,7 +41,7 @@ GitHub push to main
         1. npm ci
         2. npm run build:tiptap (esbuild bundles TipTap for map.html)
         3. npx vite build (builds React pages → dist/)
-        4. node scripts/export-map-data.js (queries RDS → generates map-data.json)
+        4. npx tsx scripts/export-map-data.ts (queries RDS → generates map-data.json)
         5. aws s3 sync dist/ (uploads built HTML/CSS/JS/map-data.json to S3)
         6. aws cloudfront create-invalidation (purges CDN cache)
     → Users load map.html → fetches map-data.json from CloudFront (no DB call)
@@ -53,14 +53,14 @@ GitHub push to main
 ```
 User submits form on contribute.html
     → POST to API Gateway (https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com/submit)
-    → Lambda function (api/submit.js) → INSERT into submission table (status='pending')
+    → Lambda function (api/submit.ts) → INSERT into submission table (status='pending')
     → Claude Haiku LLM review (non-blocking, rates quality 1-5)
 
 User searches in form autocomplete (if cache not loaded yet)
-    → GET /search?q=... → Lambda (api/search.js) → full-text search on RDS → results
+    → GET /search?q=... → Lambda (api/search.ts) → full-text search on RDS → results
 
 Admin approves submission (via admin.html)
-    → POST /admin { action: 'approve' } → Lambda (api/admin.js)
+    → POST /admin { action: 'approve' } → Lambda (api/admin.ts)
     → DB trigger creates entity row from submission, recalculates belief scores
     → Auto-regenerates map-data.json → uploads to S3 → invalidates CloudFront cache
     → Map reflects changes within ~60 seconds
@@ -95,7 +95,7 @@ Browser loads map.html → resolveEntityImage(entity) returns entity.thumbnail_u
 **Key insight:** The map loads from a static JSON file on S3/CloudFront, NOT from the database. This makes the map load instantly for all users worldwide. New submissions appear on the map automatically after admin approval (no deploy needed). For manual data refresh:
 
 ```bash
-node scripts/export-map-data.js                           # regenerate from DB
+npx tsx scripts/export-map-data.ts                        # regenerate from DB
 aws s3 cp map-data.json s3://mapping-ai-website-561047280976/  # upload to S3
 aws cloudfront create-invalidation --distribution-id E34ZXLC7CZX7XT --paths "/map-data.json"
 ```
@@ -134,19 +134,21 @@ mapping-ai/
 │   ├── styles/             # Global CSS with Tailwind (global.css)
 │   ├── __tests__/          # Vitest tests (components/, lib/)
 │   └── tiptap-notes.js     # Legacy TipTap source for map.html (bundled by esbuild)
-├── api/
-│   ├── submit.js           # Lambda: POST /submit - submissions + LLM review
-│   ├── submissions.js      # Lambda: GET /submissions - returns entities + edges
-│   ├── search.js           # Lambda: GET /search - full-text search
-│   ├── admin.js            # Lambda: GET/POST /admin - stats, pending, approve/reject/merge/update/delete, auto map refresh
-│   ├── upload.js           # Lambda: POST /upload - thumbnail image upload to S3
+├── api/                     # TypeScript Lambda handlers — bundled by SAM esbuild
+│   ├── submit.ts           # Lambda: POST /submit - submissions + LLM review
+│   ├── submissions.ts      # Lambda: GET /submissions - returns entities + edges
+│   ├── search.ts           # Lambda: GET /search - full-text search
+│   ├── semantic-search.ts  # Lambda: GET /semantic-search - LLM-powered search
+│   ├── admin.ts            # Lambda: GET/POST /admin - stats, pending, approve/reject/merge/update/delete, auto map refresh
+│   ├── upload.ts           # Lambda: POST /upload - thumbnail image upload to S3
 │                            # (admin path; bulk caching lives in scripts/cache-thumbnails.js)
-│   └── export-map.js       # Shared module: generates map-data.json from DB (maps DB columns → frontend field names)
+│   ├── cors.ts             # Shared: CORS headers with origin allowlist
+│   └── export-map.ts       # Shared module: generates map-data.json from DB (maps DB columns → frontend field names)
 ├── scripts/
 │   ├── migrate.js          # Create/update all 3 tables + triggers + indexes
 │   ├── seed.js             # Import Airtable CSV data
 │   ├── export.js           # Export all tables to CSV
-│   ├── export-map-data.js  # Generate map-data.json from approved entries
+│   ├── export-map-data.ts  # Generate map-data.json from approved entries (run via tsx)
 │   ├── backup-db.js        # Backup all tables to S3 as JSON + SQL
 │   ├── enrich-elections.js  # Enrich political candidates + PACs via Exa API
 │   ├── enrich-people.js    # General-purpose people enrichment via Exa API
@@ -191,7 +193,7 @@ source_id + target_id (both FK → entity, ON DELETE CASCADE), edge_type (affili
 
 ### Field name mapping (DB → Frontend)
 
-The export layer (`api/export-map.js` → `toFrontendShape()`) maps DB column names to frontend field names. This is critical - the frontend reads different names than the DB stores:
+The export layer (`api/export-map.ts` → `toFrontendShape()`) maps DB column names to frontend field names. This is critical - the frontend reads different names than the DB stores:
 
 - `belief_regulatory_stance` → `regulatory_stance`
 - `belief_agi_timeline` → `agi_timeline`
@@ -324,7 +326,7 @@ See `docs/DEPLOYMENT.md` for the full deployment and review process.
 - Test/seed data scripts gitignored
 - **Push to `main` auto-deploys frontend** - test in a browser first, not just with scripts
 - **All changes to `main` must go through a PR** - no direct pushes except P0 hotfixes
-- **Backend (Lambda/API Gateway) requires separate `sam deploy`** - merging api/\*.js or template.yaml to main does NOT deploy them
+- **Backend (Lambda/API Gateway) requires separate `sam deploy`** - merging api/\*.ts or template.yaml to main does NOT deploy them. `sam deploy` invokes SAM's `BuildMethod: esbuild` per-function to bundle each `api/<name>.ts` into a single `<name>.js` artifact.
 - **Never add `defer` or `async` to the D3 script tag** - inline map code depends on it synchronously (see `docs/post-mortems/2026-04-09-d3-defer-map-outage.md`)
 - **Browser-test map.html before pushing any HTML/JS changes** - automated checks cannot catch rendering failures
 - **MANDATORY: Verify site loads immediately after any push to main** - check /, /contribute, /map, /insights, /admin all return 200. The deploy workflow includes an automated smoke test, but always verify manually too. A broken prod site with no one checking is the worst outcome.
