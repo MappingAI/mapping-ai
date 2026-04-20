@@ -43,7 +43,9 @@ archive/data/AISafety.com_map.csv
 *.swp
 
 # Claude Code local files
-.claude/
+.claude/*
+# Track project-level skills (committed SKILL.md + references)
+!.claude/skills/
 
 # Build output
 dist/
