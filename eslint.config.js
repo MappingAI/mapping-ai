@@ -15,6 +15,7 @@ export default tseslint.config(
       'archive/',
       'scripts/',
       'api/',
+      'dev-server.js',
       'src/tiptap-notes.js',
     ],
   },

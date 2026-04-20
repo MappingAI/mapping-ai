@@ -127,6 +127,25 @@ Resources:
             Path: /semantic-search
             Method: GET
 
+  ChatFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: mapping-ai-chat
+      Handler: api/chat.handler
+      Timeout: 25
+      MemorySize: 512
+      Environment:
+        Variables:
+          ANTHROPIC_SEMANTIC_SEARCH_KEY: !Ref AnthropicSemanticSearchKey
+          ANTHROPIC_API_KEY: !Ref AnthropicApiKey
+      Events:
+        Chat:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref MappingAiApi
+            Path: /chat
+            Method: POST
+
   AdminFunction:
     Type: AWS::Serverless::Function
     Properties:

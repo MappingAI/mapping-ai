@@ -1195,6 +1195,612 @@ if (localStorage.getItem('mobileBannerDismissed') === '1') {
 })();
 </script>
 
+<!-- Chat panel -->
+<style>
+#chat-btn {
+  position: fixed; bottom: 1.5rem; right: calc(4.5rem + 140px); z-index: 60;
+  display: flex; align-items: center; gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  background: var(--bg-panel); color: var(--text-1);
+  border: 1px solid var(--line); border-radius: 20px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase;
+  cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  transition: transform 0.15s, border-color 0.15s;
+}
+#chat-btn:hover { transform: scale(1.04); border-color: var(--accent); }
+#chat-btn.hidden { display: none; }
+#chat-panel {
+  position: fixed; top: 48px; right: 0; bottom: 0;
+  width: min(420px, 48vw);
+  background: var(--bg-panel); border-left: 1px solid var(--line);
+  z-index: 70; transform: translateX(100%); transition: transform 0.3s ease;
+  display: flex; flex-direction: column;
+}
+#chat-panel.open { transform: translateX(0); }
+#chat-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--mono); font-size: 10px;
+  color: var(--text-3); letter-spacing: 0.06em; text-transform: uppercase;
+}
+#chat-header button {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.04em;
+  background: none; border: 1px solid var(--line); border-radius: 3px;
+  padding: 0.25rem 0.5rem; cursor: pointer; color: var(--text-3);
+}
+#chat-header button:hover { border-color: var(--text-2); color: var(--text-1); }
+#chat-messages {
+  flex: 1; overflow-y: auto; padding: 0.75rem;
+  display: flex; flex-direction: column; gap: 0.6rem;
+  font-family: var(--sans, inherit); font-size: 13px; line-height: 1.5;
+  color: var(--text-1);
+}
+#chat-empty {
+  color: var(--text-3); font-size: 12px; line-height: 1.6;
+  padding: 0.5rem 0.25rem;
+}
+#chat-empty .chat-prompt {
+  display: inline-block; margin: 0.2rem 0.3rem 0.2rem 0;
+  padding: 0.25rem 0.55rem;
+  background: var(--bg-soft, rgba(127,127,127,0.08));
+  border: 1px solid var(--line); border-radius: 14px;
+  color: var(--text-2); cursor: pointer; font-size: 11px;
+  transition: border-color 0.15s, color 0.15s;
+}
+#chat-empty .chat-prompt:hover { border-color: var(--accent); color: var(--text-1); }
+.chat-msg { max-width: 92%; }
+.chat-msg.user {
+  align-self: flex-end; background: var(--accent); color: #fff;
+  padding: 0.45rem 0.7rem; border-radius: 12px 12px 2px 12px;
+  white-space: pre-wrap; word-wrap: break-word;
+}
+.chat-msg.assistant {
+  align-self: flex-start;
+  padding: 0.45rem 0.7rem; border-radius: 12px 12px 12px 2px;
+  background: var(--bg-soft, rgba(127,127,127,0.06));
+  border: 1px solid var(--line);
+  white-space: pre-wrap; word-wrap: break-word;
+}
+.chat-action-chip {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  margin-top: 0.35rem;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.04em;
+  color: var(--text-3); text-transform: uppercase;
+}
+.chat-action-chip::before { content: '◆'; font-size: 9px; color: var(--accent); }
+.chat-msg.thinking {
+  font-family: var(--mono); font-size: 10px; color: var(--text-3);
+  letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 0.35rem 0.6rem;
+}
+.chat-msg.error {
+  align-self: stretch; color: #c0392b; border: 1px solid #e6a5a0;
+  background: rgba(192, 57, 43, 0.06);
+  padding: 0.45rem 0.7rem; border-radius: 4px; font-size: 12px;
+}
+#chat-input-wrap {
+  border-top: 1px solid var(--line);
+  padding: 0.5rem 0.6rem 0.6rem; display: flex; gap: 0.4rem; align-items: flex-end;
+}
+#chat-input {
+  flex: 1; resize: none; min-height: 36px; max-height: 120px;
+  background: var(--bg, transparent); color: var(--text-1);
+  border: 1px solid var(--line); border-radius: 6px;
+  padding: 0.45rem 0.6rem;
+  font-family: inherit; font-size: 13px; line-height: 1.4;
+}
+#chat-input:focus { outline: none; border-color: var(--accent); }
+#chat-send {
+  background: var(--accent); color: #fff; border: none; border-radius: 6px;
+  padding: 0.45rem 0.85rem; cursor: pointer;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase;
+}
+#chat-send:disabled { opacity: 0.5; cursor: not-allowed; }
+@media (max-width: 800px) {
+  #chat-panel { width: 100vw; }
+  #chat-btn { right: 1rem; bottom: 4.5rem; }
+}
+</style>
+
+<button id="chat-btn" aria-label="Open chat">◐ Ask the map</button>
+<div id="chat-panel" role="dialog" aria-label="Chat with the map">
+  <div id="chat-header">
+    <span>Ask the map</span>
+    <div style="display:flex;gap:0.4rem;">
+      <button id="chat-clear" title="Clear conversation">Clear</button>
+      <button id="chat-close">Close ✕</button>
+    </div>
+  </div>
+  <div id="chat-messages">
+    <div id="chat-empty">
+      Ask about anyone, any org, or any theme in the map. I'll search the data and highlight what I find.
+      <div style="margin-top:0.6rem;">
+        <span class="chat-prompt" data-q="Who are the main critics of frontier labs?">Critics of frontier labs</span>
+        <span class="chat-prompt" data-q="Show AI safety researchers">AI safety researchers</span>
+        <span class="chat-prompt" data-q="Compare OpenAI and Anthropic on regulatory stance">OpenAI vs Anthropic on stance</span>
+        <span class="chat-prompt" data-q="Who funds AI safety orgs?">Funders of AI safety</span>
+      </div>
+    </div>
+  </div>
+  <div id="chat-key-gate" style="display:none; padding:0.75rem; border-top:1px solid var(--line); font-size:12px; color:var(--text-2); line-height:1.5;">
+    <div style="font-family:var(--mono); font-size:10px; letter-spacing:0.06em; text-transform:uppercase; color:var(--text-3); margin-bottom:0.4rem;">No backend available — direct mode</div>
+    Paste an Anthropic API key to run the chat in your browser. Stored in this tab only.
+    <div style="display:flex; gap:0.4rem; margin-top:0.5rem;">
+      <input id="chat-key-input" type="password" placeholder="sk-ant-…" autocomplete="off"
+        style="flex:1; font-family:var(--mono); font-size:12px; padding:0.4rem 0.55rem; border:1px solid var(--line); border-radius:6px; background:var(--bg, transparent); color:var(--text-1);">
+      <button id="chat-key-save" style="background:var(--accent); color:#fff; border:none; border-radius:6px; padding:0.4rem 0.7rem; cursor:pointer; font-family:var(--mono); font-size:10px; letter-spacing:0.06em; text-transform:uppercase;">Save</button>
+    </div>
+    <div style="margin-top:0.4rem; font-size:11px; color:var(--text-3);">
+      Get one at <a href="https://console.anthropic.com/" target="_blank" style="color:var(--accent);">console.anthropic.com</a>
+    </div>
+  </div>
+  <div id="chat-input-wrap">
+    <textarea id="chat-input" rows="1" placeholder="Ask about a person, org, or theme…"></textarea>
+    <button id="chat-send">Send</button>
+  </div>
+</div>
+
+<script>
+(function() {
+  const chatBtn = document.getElementById('chat-btn');
+  const chatPanel = document.getElementById('chat-panel');
+  const chatClose = document.getElementById('chat-close');
+  const chatClear = document.getElementById('chat-clear');
+  const chatMessages = document.getElementById('chat-messages');
+  const chatInput = document.getElementById('chat-input');
+  const chatSend = document.getElementById('chat-send');
+  const chatEmpty = document.getElementById('chat-empty');
+
+  // Chat API endpoint — local dev uses relative path, production uses API Gateway
+  const isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+  const isProd = /mapping-ai\.org|aimapping\.org/.test(location.hostname);
+  const CHAT_URL = isLocal
+    ? '/chat'
+    : 'https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com/chat';
+
+  const keyGate = document.getElementById('chat-key-gate');
+  const keyInput = document.getElementById('chat-key-input');
+  const keySave = document.getElementById('chat-key-save');
+  let apiKey = sessionStorage.getItem('mapChatApiKey') || '';
+  // Preview/unknown-host contexts: no backend, start in client-side mode
+  let mode = isLocal || isProd ? 'backend' : 'client';
+  if (mode === 'client' && !apiKey) keyGate.style.display = 'block';
+
+  keySave.addEventListener('click', () => {
+    const v = (keyInput.value || '').trim();
+    if (!v) return;
+    apiKey = v;
+    sessionStorage.setItem('mapChatApiKey', v);
+    keyInput.value = '';
+    keyGate.style.display = 'none';
+    mode = 'client';
+    addBubble('assistant', 'Key saved for this tab. Go ahead — ask away.');
+  });
+  keyInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') keySave.click(); });
+
+  let history = []; // messages array sent to API (assistant + tool calls preserved)
+  let pending = false;
+
+  // ── Client-side tool implementations (mirror api/chat.js, operate on allData) ──
+  const CS_SYSTEM_PROMPT = `You are a research assistant embedded in an interactive map of the US AI policy stakeholder landscape. The map shows people, organizations, and resources with their categories, belief scores (regulatory stance, AGI timeline, AI risk level), and relationships (funders, critics, collaborators, affiliations).
+
+Your job is to help the user explore this landscape conversationally. Use your tools aggressively to look things up — you do NOT have the full dataset in context. Never invent entities, relationships, or scores; every specific claim must come from a tool result.
+
+Guidelines:
+- Start by searching or filtering. Don't guess names from memory.
+- When you find a useful set of entities, call highlight_on_map so the user sees them on the map. Keep highlight sets focused (under 30 entities when possible).
+- For niche questions the map doesn't directly answer, you can still synthesize insights from tool results — e.g. compare stances across a group, trace funding chains, identify gaps.
+- Be concise. 2–4 sentences of prose per turn. Follow up with a question if it would narrow the user's intent.
+- If a tool returns nothing useful, say so plainly and suggest a different angle.
+- Categories include: Frontier Lab, AI Safety/Alignment, Think Tank/Policy Org, Government/Agency, Academic, VC/Capital/Philanthropy, Labor/Civil Society, Ethics/Bias/Rights, Media/Journalism, Political Campaign/PAC, AI Infrastructure & Compute, AI Deployers & Platforms. Person roles: Executive, Researcher, Policymaker, Investor, Organizer, Journalist, Academic, Cultural figure.`;
+
+  const CS_TOOLS = [
+    { name: 'search_entities', description: 'Keyword search for people, organizations, or resources. Returns up to 20 matches with id, type, name, category.', input_schema: { type: 'object', properties: { query: { type: 'string' }, type: { type: 'string', enum: ['person', 'organization', 'resource'] }, limit: { type: 'integer', minimum: 1, maximum: 30 } }, required: ['query'] } },
+    { name: 'filter_by_category', description: 'List entities in a category (e.g. "AI Safety/Alignment", "Frontier Lab", "Think Tank/Policy Org", "Policymaker", "Investor"). Returns up to 50 matches.', input_schema: { type: 'object', properties: { category: { type: 'string' }, type: { type: 'string', enum: ['person', 'organization', 'resource'] }, limit: { type: 'integer', minimum: 1, maximum: 100 } }, required: ['category'] } },
+    { name: 'get_entity_details', description: 'Fetch full profile for up to 12 entities. Pass entity refs from previous search results.', input_schema: { type: 'object', properties: { entities: { type: 'array', items: { type: 'object', properties: { id: { type: 'integer' }, type: { type: 'string', enum: ['person', 'organization', 'resource'] } }, required: ['id', 'type'] } } }, required: ['entities'] } },
+    { name: 'get_connections', description: 'List entities connected to a given entity: funders, critics, collaborators, authors, affiliations.', input_schema: { type: 'object', properties: { entity_id: { type: 'integer' }, entity_type: { type: 'string', enum: ['person', 'organization', 'resource'] }, edge_type: { type: 'string', enum: ['affiliated', 'funder', 'critic', 'collaborator', 'authored_by'] }, limit: { type: 'integer', minimum: 1, maximum: 50 } }, required: ['entity_id', 'entity_type'] } },
+    { name: 'highlight_on_map', description: 'Highlight a set of entities on the map. Dims everything else. Use after finding relevant entities.', input_schema: { type: 'object', properties: { entities: { type: 'array', items: { type: 'object', properties: { id: { type: 'integer' }, type: { type: 'string', enum: ['person', 'organization', 'resource'] }, name: { type: 'string' } }, required: ['name'] } }, label: { type: 'string' } }, required: ['entities'] } },
+    { name: 'clear_highlight', description: 'Remove any current highlight and restore the full map view.', input_schema: { type: 'object', properties: {} } },
+  ];
+  const CS_CLIENT_TOOLS = new Set(['highlight_on_map', 'clear_highlight']);
+
+  function csLabel(e) { return e._type === 'resource' ? (e.title || e.name) : e.name; }
+  function csNorm(s) { return (s || '').toString().toLowerCase(); }
+  function csIndex() {
+    // Read from window.allData — the main map script assigns it there after fetch.
+    const data = window.allData;
+    if (!data || !data.people) return { all: [], byId: new Map(), rels: [], affil: [] };
+    const all = [], byId = new Map();
+    for (const p of data.people || []) { const e = Object.assign({}, p, { _type: 'person' }); all.push(e); byId.set('person:' + p.id, e); }
+    for (const o of data.organizations || []) { const e = Object.assign({}, o, { _type: 'organization' }); all.push(e); byId.set('organization:' + o.id, e); }
+    for (const r of data.resources || []) { const e = Object.assign({}, r, { _type: 'resource' }); all.push(e); byId.set('resource:' + r.id, e); }
+    return { all, byId, rels: data.relationships || [], affil: data.person_organizations || [] };
+  }
+  function csSearch({ query, type, limit = 20 }) {
+    const { all } = csIndex();
+    const q = csNorm(query);
+    if (!q) return { matches: [], note: 'empty query' };
+    const tokens = q.split(/\s+/).filter(Boolean);
+    const scored = [];
+    for (const e of all) {
+      if (type && e._type !== type) continue;
+      const label = csNorm(csLabel(e));
+      const haystack = [label, csNorm(e.category), csNorm(e.other_categories), csNorm(e.primary_org), csNorm(e.title), csNorm(e.location), csNorm(e.regulatory_stance), csNorm(e.agi_timeline), csNorm(e.ai_risk_level)].join(' | ');
+      let score = 0;
+      for (const t of tokens) {
+        if (!t) continue;
+        if (label === t) score += 20;
+        else if (label.startsWith(t)) score += 10;
+        else if (label.includes(t)) score += 6;
+        if (haystack.includes(t)) score += 2;
+      }
+      if (score > 0) scored.push({ e, score });
+    }
+    scored.sort((a, b) => b.score - a.score);
+    const matches = scored.slice(0, Math.max(1, Math.min(limit, 30))).map(({ e }) => ({ id: e.id, type: e._type, name: csLabel(e), category: e.category || null, primary_org: e.primary_org || null, location: e.location || null }));
+    return { matches, total: scored.length };
+  }
+  function csFilter({ category, type, limit = 50 }) {
+    const { all } = csIndex();
+    const target = csNorm(category);
+    const matches = [];
+    for (const e of all) {
+      if (type && e._type !== type) continue;
+      const primary = csNorm(e.category);
+      const others = csNorm(e.other_categories);
+      if (primary === target || primary.includes(target) || others.includes(target)) {
+        matches.push({ id: e.id, type: e._type, name: csLabel(e), category: e.category || null, primary_org: e.primary_org || null });
+        if (matches.length >= Math.min(limit, 100)) break;
+      }
+    }
+    return { matches, total: matches.length };
+  }
+  function csDetails({ entities }) {
+    const { byId } = csIndex();
+    const items = [];
+    for (const ref of (entities || []).slice(0, 12)) {
+      const e = byId.get(ref.type + ':' + ref.id);
+      if (!e) continue;
+      items.push({ id: e.id, type: e._type, name: csLabel(e), category: e.category || null, other_categories: e.other_categories || null, title: e.title || null, primary_org: e.primary_org || null, other_orgs: e.other_orgs || null, location: e.location || null, website: e.website || null, regulatory_stance: e.regulatory_stance || null, agi_timeline: e.agi_timeline || null, ai_risk_level: e.ai_risk_level || null, stance_score: e.stance_score ?? null, timeline_score: e.timeline_score ?? null, risk_score: e.risk_score ?? null, funding_model: e.funding_model || null, resource_type: e.resource_type || null, resource_url: e.resource_url || e.url || null, resource_year: e.resource_year || null, notes: (e.notes || '').slice(0, 400) || null });
+    }
+    return { entities: items };
+  }
+  function csConnections({ entity_id, entity_type, edge_type, limit = 30 }) {
+    const { byId, rels, affil } = csIndex();
+    const self = byId.get(entity_type + ':' + entity_id);
+    if (!self) return { error: 'Entity not found', connections: [] };
+    const out = [];
+    for (const r of rels) {
+      if (edge_type && r.relationship_type !== edge_type) continue;
+      const srcMatches = r.source_id === entity_id;
+      const tgtMatches = r.target_id === entity_id;
+      if (!srcMatches && !tgtMatches) continue;
+      const otherId = srcMatches ? r.target_id : r.source_id;
+      let other = null;
+      for (const t of ['person', 'organization', 'resource']) {
+        if (byId.has(t + ':' + otherId)) { other = byId.get(t + ':' + otherId); break; }
+      }
+      if (!other) continue;
+      out.push({ id: other.id, type: other._type, name: csLabel(other), category: other.category || null, relationship: r.relationship_type, direction: srcMatches ? 'outgoing' : 'incoming' });
+      if (out.length >= Math.min(limit, 50)) break;
+    }
+    if (self._type === 'person') {
+      for (const po of affil) {
+        if (po.person_id !== entity_id) continue;
+        const org = byId.get('organization:' + po.organization_id);
+        if (!org) continue;
+        out.push({ id: org.id, type: 'organization', name: csLabel(org), category: org.category || null, relationship: 'affiliated', direction: 'outgoing' });
+        if (out.length >= Math.min(limit, 50)) break;
+      }
+    }
+    return { entity: { id: self.id, type: self._type, name: csLabel(self) }, connections: out };
+  }
+  function csExecute(name, input) {
+    try {
+      if (name === 'search_entities') return csSearch(input || {});
+      if (name === 'filter_by_category') return csFilter(input || {});
+      if (name === 'get_entity_details') return csDetails(input || {});
+      if (name === 'get_connections') return csConnections(input || {});
+      return { error: 'Unknown tool: ' + name };
+    } catch (err) {
+      return { error: err.message || 'tool execution failed' };
+    }
+  }
+
+  async function runClientSideChat(userMessage, prevHistory) {
+    if (!apiKey) throw new Error('no-api-key');
+    const messages = Array.isArray(prevHistory) ? prevHistory.slice() : [];
+    if (userMessage) messages.push({ role: 'user', content: userMessage });
+    const uiActions = [];
+    let finalText = '';
+    for (let i = 0; i < 6; i++) {
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true',
+        },
+        body: JSON.stringify({ model: 'claude-haiku-4-5-20251001', max_tokens: 1024, system: CS_SYSTEM_PROMPT, tools: CS_TOOLS, messages }),
+      });
+      if (!response.ok) {
+        const bodyText = await response.text();
+        throw new Error(`anthropic ${response.status}: ${bodyText.slice(0, 300)}`);
+      }
+      const data = await response.json();
+      const content = data.content || [];
+      for (const block of content) {
+        if (block.type === 'text' && block.text) finalText += (finalText ? '\n\n' : '') + block.text;
+      }
+      if (data.stop_reason !== 'tool_use') break;
+      messages.push({ role: 'assistant', content });
+      const toolResults = [];
+      for (const block of content) {
+        if (block.type !== 'tool_use') continue;
+        if (CS_CLIENT_TOOLS.has(block.name)) {
+          uiActions.push({ action: block.name, input: block.input || {} });
+          toolResults.push({ type: 'tool_result', tool_use_id: block.id, content: JSON.stringify({ ok: true, queued_for_client: true }) });
+        } else {
+          const result = csExecute(block.name, block.input);
+          toolResults.push({ type: 'tool_result', tool_use_id: block.id, content: JSON.stringify(result) });
+        }
+      }
+      messages.push({ role: 'user', content: toolResults });
+    }
+    return { reply: finalText || "I couldn't generate a response. Try rephrasing.", messages, ui_actions: uiActions };
+  }
+
+  function escHtmlLocal(s) {
+    return (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function formatReply(text) {
+    // Minimal markdown: bold (**x**), italic (*x*), line breaks preserved via white-space: pre-wrap.
+    // Also auto-link entity names wrapped in [[Name]].
+    let out = escHtmlLocal(text);
+    out = out.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    out = out.replace(/(^|[^*])\*([^*\n]+)\*/g, '$1<em>$2</em>');
+    return out;
+  }
+
+  function addBubble(role, text, extras = {}) {
+    if (chatEmpty && chatEmpty.parentNode) chatEmpty.parentNode.removeChild(chatEmpty);
+    const div = document.createElement('div');
+    div.className = 'chat-msg ' + role;
+    if (role === 'assistant') div.innerHTML = formatReply(text);
+    else div.textContent = text;
+    if (extras.chip) {
+      const chip = document.createElement('div');
+      chip.className = 'chat-action-chip';
+      chip.textContent = extras.chip;
+      div.appendChild(chip);
+    }
+    chatMessages.appendChild(div);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    return div;
+  }
+
+  function addThinking() {
+    const div = document.createElement('div');
+    div.className = 'chat-msg thinking';
+    div.textContent = 'Thinking…';
+    chatMessages.appendChild(div);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    return div;
+  }
+
+  function addError(text) {
+    const div = document.createElement('div');
+    div.className = 'chat-msg error';
+    div.textContent = text;
+    chatMessages.appendChild(div);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  // ── Map action dispatch ──────────────────────────────────────────────────
+  function resolveEntityName(ref) {
+    if (ref && ref.name) return ref.name;
+    const d = window.allData;
+    if (!d || !ref || ref.id == null) return null;
+    const pools = ref.type === 'person' ? [d.people]
+      : ref.type === 'organization' ? [d.organizations]
+      : ref.type === 'resource' ? [d.resources]
+      : [d.people || [], d.organizations || [], d.resources || []];
+    for (const pool of pools) {
+      for (const e of (pool || [])) {
+        if (e.id === ref.id) return e.name || e.title || null;
+      }
+    }
+    return null;
+  }
+
+  function runUiAction(action) {
+    if (!action || !action.action) return null;
+
+    if (action.action === 'clear_highlight') {
+      if (typeof highlightNodes === 'function') highlightNodes([]);
+      return 'Cleared highlight';
+    }
+
+    if (action.action === 'highlight_on_map') {
+      const entities = (action.input && action.input.entities) || [];
+      const names = entities.map(resolveEntityName).filter(Boolean);
+      const renderedNames = new Set(
+        Array.from(document.querySelectorAll('.node'))
+          .map(n => n.__data__ && n.__data__.name)
+          .filter(Boolean)
+      );
+      const matched = names.filter(n => renderedNames.has(n));
+      if (typeof highlightNodes === 'function') {
+        highlightNodes(matched.length ? matched : names);
+      }
+      const label = (action.input && action.input.label) || '';
+      const base = matched.length === names.length
+        ? `Highlighted ${names.length} on map`
+        : `Highlighted ${matched.length} of ${names.length} on map`;
+      if (names.length === 0) return 'No entities to highlight';
+      return base + (label ? ' — ' + label : '');
+    }
+
+    return null;
+  }
+
+  // ── Send ────────────────────────────────────────────────────────────────
+  async function tryBackend(msg) {
+    const res = await fetch(CHAT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: msg, messages: history }),
+    });
+    if (res.status === 404) {
+      const err = new Error('backend-404');
+      err.backendMissing = true;
+      throw err;
+    }
+    if (!res.ok) {
+      let errText = `Server returned ${res.status}`;
+      try { const j = await res.json(); if (j && j.error) errText = j.error; } catch {}
+      if (res.status === 503) errText = 'Chat not configured — ANTHROPIC_SEMANTIC_SEARCH_KEY or ANTHROPIC_API_KEY must be set.';
+      const err = new Error(errText);
+      err.shown = true;
+      throw err;
+    }
+    return res.json();
+  }
+
+  async function send(userText) {
+    const msg = (userText || chatInput.value || '').trim();
+    if (!msg || pending) return;
+
+    // Client mode but no key yet — surface the gate
+    if (mode === 'client' && !apiKey) {
+      keyGate.style.display = 'block';
+      keyInput.focus();
+      return;
+    }
+
+    pending = true;
+    chatSend.disabled = true;
+
+    addBubble('user', msg);
+    chatInput.value = '';
+    autosize();
+
+    const thinking = addThinking();
+    let data = null;
+
+    try {
+      if (mode === 'backend') {
+        try {
+          data = await tryBackend(msg);
+        } catch (err) {
+          if (err.backendMissing) {
+            // Backend not deployed (preview or pre-deploy) — switch to client mode
+            mode = 'client';
+            if (!apiKey) {
+              if (thinking.parentNode) thinking.parentNode.removeChild(thinking);
+              keyGate.style.display = 'block';
+              addBubble('assistant', 'No chat backend here. Paste an Anthropic API key below to run it in your browser.');
+              keyInput.focus();
+              return;
+            }
+            // Have key — fall through to client-side call below
+          } else {
+            throw err;
+          }
+        }
+      }
+
+      if (!data) {
+        // Client-side path
+        data = await runClientSideChat(msg, history);
+      }
+
+      if (thinking.parentNode) thinking.parentNode.removeChild(thinking);
+      history = Array.isArray(data.messages) ? data.messages : history;
+
+      const actionSummaries = [];
+      for (const action of data.ui_actions || []) {
+        const summary = runUiAction(action);
+        if (summary) actionSummaries.push(summary);
+      }
+
+      const reply = data.reply || '';
+      if (reply) {
+        addBubble('assistant', reply, { chip: actionSummaries.join(' · ') || null });
+      } else if (actionSummaries.length) {
+        addBubble('assistant', actionSummaries.join(' · '));
+      } else {
+        addBubble('assistant', '(no response)');
+      }
+    } catch (err) {
+      if (thinking.parentNode) thinking.parentNode.removeChild(thinking);
+      if (err && err.message === 'no-api-key') {
+        keyGate.style.display = 'block';
+        addBubble('assistant', 'Paste an Anthropic API key to continue.');
+        keyInput.focus();
+      } else if (err && err.shown) {
+        addError(err.message);
+      } else {
+        addError(err && err.message ? err.message : 'Network error — please try again.');
+        console.error('Chat error:', err);
+      }
+    } finally {
+      pending = false;
+      chatSend.disabled = false;
+      chatInput.focus();
+    }
+  }
+
+  // ── UI handlers ─────────────────────────────────────────────────────────
+  function autosize() {
+    chatInput.style.height = 'auto';
+    chatInput.style.height = Math.min(chatInput.scrollHeight, 120) + 'px';
+  }
+  chatInput.addEventListener('input', autosize);
+  chatInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      send();
+    }
+  });
+  chatSend.addEventListener('click', () => send());
+
+  chatBtn.addEventListener('click', () => {
+    chatPanel.classList.add('open');
+    chatBtn.classList.add('hidden');
+    // Close contribute panel if open to avoid overlap
+    const contribPanel = document.getElementById('contribute-panel');
+    const contribBtn = document.getElementById('contribute-btn');
+    if (contribPanel && contribPanel.classList.contains('open')) {
+      contribPanel.classList.remove('open');
+      if (contribBtn) contribBtn.classList.remove('hidden');
+    }
+    setTimeout(() => chatInput.focus(), 320);
+  });
+  chatClose.addEventListener('click', () => {
+    chatPanel.classList.remove('open');
+    chatBtn.classList.remove('hidden');
+  });
+  chatClear.addEventListener('click', () => {
+    history = [];
+    chatMessages.innerHTML = '';
+    chatMessages.appendChild(chatEmpty);
+    if (typeof highlightNodes === 'function') highlightNodes([]);
+  });
+
+  // Starter prompts
+  chatEmpty.addEventListener('click', (e) => {
+    const pill = e.target.closest('.chat-prompt');
+    if (!pill) return;
+    const q = pill.getAttribute('data-q');
+    if (q) send(q);
+  });
+})();
+</script>
+
 <script>
 const CATEGORY_COLORS = {
   // Full form names (from form dropdowns)—RColorBrewer Paired palette
@@ -2560,12 +3166,20 @@ function renderMobileDirectory() {
 }
 
 fetch('map-data.json')
-  .then(r => r.json())
+  .then(r => {
+    if (r.ok) return r.json();
+    // Fallback for preview/dev environments that don't serve a local map-data.json:
+    // pull the canonical copy from the production CDN so the map and chat have data.
+    return fetch('https://mapping-ai.org/map-data.json').then(r2 => r2.json());
+  })
   .then(data => {
     allData = data;
     if (!allData.resources) allData.resources = [];
     if (!allData.relationships) allData.relationships = [];
     if (!allData.person_organizations) allData.person_organizations = [];
+    // Expose on window so the chat panel's tool implementations (which live in
+    // a separate <script> IIFE and don't share the `let` Script scope) can read the data.
+    window.allData = allData;
 
     // Lazy-load detail data (notes, stance_detail, threat_models, etc.)
     // in the background — merges into entities when ready

@@ -32,6 +32,16 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
+      // Fallback for local/preview dev that doesn't generate map-data.json:
+      // pull the canonical copy from production so the map renders.
+      '/map-data.json': {
+        target: 'https://mapping-ai.org',
+        changeOrigin: true,
+      },
+      '/map-detail.json': {
+        target: 'https://mapping-ai.org',
+        changeOrigin: true,
+      },
     },
   },
   test: {
