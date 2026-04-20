@@ -3300,6 +3300,10 @@ let _quadtreeDirty = false;
 let _monoFont = 'monospace';
 let _serifFont = 'sans-serif';
 
+// Persistent sprite cache: survives across render() calls so view switches
+// don't re-fetch all 700+ thumbnails. Keyed by "entityType-id-radius".
+const _spriteCache = new Map();
+
 // Pre-parse Path2D objects for resource icons (done once)
 const _iconPaths = {};
 for (const [type, pathStr] of Object.entries(RESOURCE_TYPE_ICONS)) {
@@ -3850,39 +3854,76 @@ function render() {
     .velocityDecay(0.6)
     .stop();
 
-  // Pre-rasterized image sprites (offscreen canvas, circle-clipped)
+  // Pre-rasterized image sprites (offscreen canvas, circle-clipped).
+  // Uses a persistent cache keyed by entity identity + radius so sprites
+  // survive across render() calls (view switches, filter toggles, resize).
+  // Loads are batched (20 concurrent) to avoid hammering the network.
+  const spriteQueue = [];
   nodes.forEach(d => {
     if (d.isResource) return;
     const r = d.radius;
-    function createSprite(url) {
+    const cacheKey = `${d.entityType}-${d.id}`;
+    const cached = _spriteCache.get(cacheKey);
+    if (cached) {
+      d._sprite = cached.sprite;
+      d._imgUrl = cached.url;
+      return;
+    }
+    if (!d.thumbnail_url) return;
+    spriteQueue.push({ d, r, cacheKey });
+  });
+
+  // Batch-load sprites: 20 concurrent, single redraw per batch
+  const BATCH_SIZE = 20;
+  let _spriteRedrawPending = false;
+  function loadSpriteBatch(startIdx) {
+    if (startIdx >= spriteQueue.length) return;
+    let pending = 0;
+    const end = Math.min(startIdx + BATCH_SIZE, spriteQueue.length);
+    function onDone() {
+      pending--;
+      if (pending <= 0) {
+        if (_spriteRedrawPending) { _spriteRedrawPending = false; _requestRedraw(); }
+        loadSpriteBatch(end);
+      }
+    }
+    for (let i = startIdx; i < end; i++) {
+      const { d, r, cacheKey } = spriteQueue[i];
+      pending++;
+      const url = d.thumbnail_url;
       const img = new Image();
-      img.crossOrigin = 'anonymous';
       img.referrerPolicy = 'no-referrer';
       img.onload = () => {
-        const size = r * 2;
+        // Rasterize at high resolution (up to source size) so sprites stay
+        // sharp when zoomed in. The draw call scales down to node size.
+        const hiRes = Math.min(Math.max(img.naturalWidth, img.naturalHeight), 128);
         const oc = document.createElement('canvas');
-        oc.width = size * dpr;
-        oc.height = size * dpr;
+        oc.width = hiRes * dpr;
+        oc.height = hiRes * dpr;
         const octx = oc.getContext('2d');
         octx.scale(dpr, dpr);
+        const hr = hiRes / 2;
         octx.beginPath();
-        octx.arc(r, r, r - (d.entityType === 'organization' ? 2 : 1), 0, Math.PI * 2);
+        octx.arc(hr, hr, hr - (d.entityType === 'organization' ? 2 : 1), 0, Math.PI * 2);
         octx.closePath();
         octx.clip();
         octx.fillStyle = d.entityType === 'organization' ? '#fff' : getClusterColor(d);
-        octx.fillRect(0, 0, size, size);
+        octx.fillRect(0, 0, hiRes, hiRes);
         const iw = img.naturalWidth, ih = img.naturalHeight;
-        const sc = Math.max(size / iw, size / ih);
+        const sc = Math.max(hiRes / iw, hiRes / ih);
         const sw = iw * sc, sh = ih * sc;
-        octx.drawImage(img, (size - sw) / 2, (size - sh) / 2, sw, sh);
+        octx.drawImage(img, (hiRes - sw) / 2, (hiRes - sh) / 2, sw, sh);
         d._sprite = oc;
         d._imgUrl = url;
-        _requestRedraw();
+        _spriteCache.set(cacheKey, { sprite: oc, url });
+        _spriteRedrawPending = true;
+        onDone();
       };
+      img.onerror = onDone;
       img.src = url;
     }
-    resolveEntityImage(d, createSprite);
-  });
+  }
+  if (spriteQueue.length > 0) loadSpriteBatch(0);
 
   // Build quadtree for hit-testing (lazy rebuild on first query)
   _ensureQuadtree();
