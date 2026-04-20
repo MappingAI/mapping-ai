@@ -58,7 +58,7 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
-          node scripts/export-map-data.js
+          npx tsx scripts/export-map-data.ts
           cp map-data.json dist/map-data.json
           if [ -f map-detail.json ]; then cp map-detail.json dist/map-detail.json; fi
 
