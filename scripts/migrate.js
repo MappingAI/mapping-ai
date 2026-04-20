@@ -1,16 +1,16 @@
-import pg from 'pg';
-import 'dotenv/config';
+import pg from 'pg'
+import 'dotenv/config'
 
-const { Pool } = pg;
+const { Pool } = pg
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false },
-});
+})
 
 async function migrate() {
-  const client = await pool.connect();
+  const client = await pool.connect()
   try {
-    console.log('Running migration: 3-table schema (entity / submission / edge)\n');
+    console.log('Running migration: 3-table schema (entity / submission / edge)\n')
 
     // ── 1. entity ────────────────────────────────────────────────────────────
     await client.query(`
@@ -69,8 +69,8 @@ async function migrate() {
         updated_at                      TIMESTAMPTZ DEFAULT NOW(),
         search_vector                   tsvector
       )
-    `);
-    console.log('  ✓ entity');
+    `)
+    console.log('  ✓ entity')
 
     // ── 2. submission ─────────────────────────────────────────────────────────
     await client.query(`
@@ -126,8 +126,8 @@ async function migrate() {
         reviewed_at                      TIMESTAMPTZ,
         reviewed_by                      VARCHAR(200)
       )
-    `);
-    console.log('  ✓ submission');
+    `)
+    console.log('  ✓ submission')
 
     // ── 3. edge ───────────────────────────────────────────────────────────────
     await client.query(`
@@ -143,23 +143,23 @@ async function migrate() {
         created_at   TIMESTAMPTZ DEFAULT NOW(),
         UNIQUE(source_id, target_id, edge_type)
       )
-    `);
-    console.log('  ✓ edge');
+    `)
+    console.log('  ✓ edge')
 
     // ── 4. Indexes ────────────────────────────────────────────────────────────
-    console.log('\nCreating indexes...');
-    await client.query('CREATE INDEX IF NOT EXISTS idx_entity_type   ON entity(entity_type)');
-    await client.query('CREATE INDEX IF NOT EXISTS idx_entity_status ON entity(status)');
-    await client.query('CREATE INDEX IF NOT EXISTS idx_sub_entity    ON submission(entity_id)');
-    await client.query('CREATE INDEX IF NOT EXISTS idx_sub_status    ON submission(status)');
-    await client.query('CREATE INDEX IF NOT EXISTS idx_sub_type      ON submission(entity_type)');
-    await client.query('CREATE INDEX IF NOT EXISTS idx_edge_source   ON edge(source_id)');
-    await client.query('CREATE INDEX IF NOT EXISTS idx_edge_target   ON edge(target_id)');
-    console.log('  ✓ indexes');
+    console.log('\nCreating indexes...')
+    await client.query('CREATE INDEX IF NOT EXISTS idx_entity_type   ON entity(entity_type)')
+    await client.query('CREATE INDEX IF NOT EXISTS idx_entity_status ON entity(status)')
+    await client.query('CREATE INDEX IF NOT EXISTS idx_sub_entity    ON submission(entity_id)')
+    await client.query('CREATE INDEX IF NOT EXISTS idx_sub_status    ON submission(status)')
+    await client.query('CREATE INDEX IF NOT EXISTS idx_sub_type      ON submission(entity_type)')
+    await client.query('CREATE INDEX IF NOT EXISTS idx_edge_source   ON edge(source_id)')
+    await client.query('CREATE INDEX IF NOT EXISTS idx_edge_target   ON edge(target_id)')
+    console.log('  ✓ indexes')
 
     // ── 4b. Schema migrations (safe ADD COLUMN for existing tables) ──────────
-    await client.query(`ALTER TABLE submission ADD COLUMN IF NOT EXISTS parent_org_id INTEGER`);
-    console.log('  ✓ schema migrations');
+    await client.query(`ALTER TABLE submission ADD COLUMN IF NOT EXISTS parent_org_id INTEGER`)
+    console.log('  ✓ schema migrations')
 
     // ── 4c. contributor_keys table ──────────────────────────────────────────────
     await client.query(`
@@ -172,17 +172,42 @@ async function migrate() {
         created_at TIMESTAMPTZ DEFAULT NOW(),
         revoked_at TIMESTAMPTZ                  -- NULL = active, set = revoked
       )
-    `);
-    await client.query(`ALTER TABLE submission ADD COLUMN IF NOT EXISTS contributor_key_id INTEGER REFERENCES contributor_keys(id)`);
-    await client.query('CREATE INDEX IF NOT EXISTS idx_sub_contributor ON submission(contributor_key_id)');
-    console.log('  ✓ contributor_keys');
+    `)
+    await client.query(
+      `ALTER TABLE submission ADD COLUMN IF NOT EXISTS contributor_key_id INTEGER REFERENCES contributor_keys(id)`,
+    )
+    await client.query('CREATE INDEX IF NOT EXISTS idx_sub_contributor ON submission(contributor_key_id)')
+    console.log('  ✓ contributor_keys')
+
+    // ── 4d. Resources Rethink Phase 1 — columns + indexes ────────────────────
+    // Multi-value tags + advocated-belief fields + source attribution.
+    // See docs/plans/2026-04-19-001-feat-resources-rethink-phase-1-plan.md (Unit 1).
+    // Additive and idempotent. Triggers are updated in sections 6 and 8 below
+    // to include the new columns; backfill happens in section 8b after the
+    // triggers are in place.
+    console.log('\nApplying Resources Rethink Phase 1 columns + indexes...')
+    for (const [col, type] of [
+      ['topic_tags', 'TEXT[]'],
+      ['format_tags', 'TEXT[]'],
+      ['advocated_stance', 'TEXT'],
+      ['advocated_timeline', 'TEXT'],
+      ['advocated_risk', 'TEXT'],
+      ['source', 'TEXT'],
+      ['source_url', 'TEXT'],
+    ]) {
+      await client.query(`ALTER TABLE entity     ADD COLUMN IF NOT EXISTS ${col} ${type}`)
+      await client.query(`ALTER TABLE submission ADD COLUMN IF NOT EXISTS ${col} ${type}`)
+    }
+    await client.query('CREATE INDEX IF NOT EXISTS idx_entity_topic_tags  ON entity USING GIN(topic_tags)')
+    await client.query('CREATE INDEX IF NOT EXISTS idx_entity_format_tags ON entity USING GIN(format_tags)')
+    console.log('  ✓ resource columns + GIN indexes')
 
     // ── 5. Score recalculation function ──────────────────────────────────────
     // Weights: self=10, connector=2, external=1
     // _n counts only submissions with a non-null score for that field
     // submission_count counts all approved submissions
     // Weighted variance (one-pass): wvar = SUM(w*x^2)/SUM(w) - (SUM(w*x)/SUM(w))^2
-    console.log('\nCreating trigger functions...');
+    console.log('\nCreating trigger functions...')
     await client.query(`
       CREATE OR REPLACE FUNCTION recalculate_entity_scores(p_entity_id INTEGER) RETURNS void AS $$
       DECLARE
@@ -288,8 +313,8 @@ async function migrate() {
         WHERE id = p_entity_id;
       END;
       $$ LANGUAGE plpgsql;
-    `);
-    console.log('  ✓ recalculate_entity_scores()');
+    `)
+    console.log('  ✓ recalculate_entity_scores()')
 
     // ── 6. BEFORE trigger: entity creation on new submission approval ─────────
     // When admin sets submission.status = 'approved' for a submission with
@@ -313,6 +338,9 @@ async function migrate() {
             belief_regulatory_stance, belief_regulatory_stance_detail,
             belief_evidence_source, belief_agi_timeline, belief_ai_risk,
             belief_threat_models,
+            topic_tags, format_tags,
+            advocated_stance, advocated_timeline, advocated_risk,
+            source, source_url,
             status, qa_approved
           ) VALUES (
             NEW.entity_type,
@@ -324,6 +352,9 @@ async function migrate() {
             NEW.belief_regulatory_stance, NEW.belief_regulatory_stance_detail,
             NEW.belief_evidence_source, NEW.belief_agi_timeline, NEW.belief_ai_risk,
             NEW.belief_threat_models,
+            NEW.topic_tags, NEW.format_tags,
+            NEW.advocated_stance, NEW.advocated_timeline, NEW.advocated_risk,
+            NEW.source, NEW.source_url,
             'approved', true
           ) RETURNING id INTO v_entity_id;
 
@@ -333,14 +364,14 @@ async function migrate() {
         RETURN NEW;
       END;
       $$ LANGUAGE plpgsql;
-    `);
-    await client.query('DROP TRIGGER IF EXISTS trg_before_submission_update ON submission');
+    `)
+    await client.query('DROP TRIGGER IF EXISTS trg_before_submission_update ON submission')
     await client.query(`
       CREATE TRIGGER trg_before_submission_update
       BEFORE UPDATE OF status ON submission
       FOR EACH ROW EXECUTE FUNCTION before_submission_update()
-    `);
-    console.log('  ✓ before_submission_update (entity creation)');
+    `)
+    console.log('  ✓ before_submission_update (entity creation)')
 
     // ── 7. AFTER trigger: score recalculation on status change ────────────────
     await client.query(`
@@ -355,17 +386,17 @@ async function migrate() {
         RETURN NULL;
       END;
       $$ LANGUAGE plpgsql;
-    `);
-    await client.query('DROP TRIGGER IF EXISTS trg_after_submission_update ON submission');
+    `)
+    await client.query('DROP TRIGGER IF EXISTS trg_after_submission_update ON submission')
     await client.query(`
       CREATE TRIGGER trg_after_submission_update
       AFTER UPDATE OF status ON submission
       FOR EACH ROW EXECUTE FUNCTION after_submission_update()
-    `);
-    console.log('  ✓ after_submission_update (score recalculation)');
+    `)
+    console.log('  ✓ after_submission_update (score recalculation)')
 
     // ── 8. Full-text search on entity ─────────────────────────────────────────
-    console.log('\nSetting up full-text search on entity...');
+    console.log('\nSetting up full-text search on entity...')
     await client.query(`
       CREATE OR REPLACE FUNCTION update_entity_search() RETURNS trigger AS $$
       BEGIN
@@ -378,39 +409,144 @@ async function migrate() {
           coalesce(NEW.resource_title, '') || ' ' ||
           coalesce(NEW.resource_author, '') || ' ' ||
           coalesce(NEW.resource_category, '') || ' ' ||
+          coalesce(array_to_string(NEW.topic_tags, ' '), '') || ' ' ||
+          coalesce(array_to_string(NEW.format_tags, ' '), '') || ' ' ||
           coalesce(NEW.notes, '')
         );
         RETURN NEW;
       END;
       $$ LANGUAGE plpgsql;
-    `);
-    await client.query('DROP TRIGGER IF EXISTS trg_entity_search ON entity');
+    `)
+    await client.query('DROP TRIGGER IF EXISTS trg_entity_search ON entity')
     await client.query(`
       CREATE TRIGGER trg_entity_search
       BEFORE INSERT OR UPDATE ON entity
       FOR EACH ROW EXECUTE FUNCTION update_entity_search()
-    `);
-    await client.query('CREATE INDEX IF NOT EXISTS idx_entity_search ON entity USING GIN(search_vector)');
-    console.log('  ✓ full-text search');
+    `)
+    await client.query('CREATE INDEX IF NOT EXISTS idx_entity_search ON entity USING GIN(search_vector)')
+    console.log('  ✓ full-text search (includes topic_tags, format_tags)')
+
+    // ── 8b. Resources Rethink Phase 1 — backfill + validation + tail re-run ──
+    // Runs in a single transaction after the updated triggers are in place,
+    // so backfilled data lands with correct tsvector indexing.
+    // Safe to re-run: WHERE topic_tags IS NULL skips rows already backfilled.
+    console.log('\nBackfilling resource tags from legacy columns...')
+    await client.query('BEGIN')
+    try {
+      await client.query(`
+        UPDATE entity SET format_tags = ARRAY[trim(resource_type)]
+        WHERE entity_type = 'resource'
+          AND format_tags IS NULL
+          AND resource_type IS NOT NULL
+          AND trim(resource_type) <> ''
+      `)
+
+      // topic_tags: handles both CSV ('"Policy,Governance"') and JSON-array
+      // ('["Policy","Governance"]') serializations historically stored in
+      // other_categories. Prepends resource_category when present. Output
+      // is trimmed, deduped, and guaranteed to contain no empty strings.
+      await client.query(`
+        WITH resource_tags AS (
+          SELECT
+            e.id,
+            (
+              SELECT COALESCE(array_agg(DISTINCT trimmed ORDER BY trimmed), ARRAY[]::TEXT[])
+              FROM (
+                SELECT trim(BOTH ' "' FROM raw) AS trimmed
+                FROM (
+                  SELECT unnest(
+                    CASE
+                      WHEN e.other_categories IS NULL OR trim(e.other_categories) = ''
+                        THEN ARRAY[]::TEXT[]
+                      WHEN trim(e.other_categories) LIKE '[%'
+                        THEN (
+                          SELECT array_agg(val)
+                          FROM jsonb_array_elements_text(e.other_categories::jsonb) AS val
+                        )
+                      ELSE string_to_array(e.other_categories, ',')
+                    END
+                  ) AS raw
+                ) csv_or_json
+                WHERE raw IS NOT NULL AND trim(raw) <> ''
+
+                UNION ALL
+
+                SELECT trim(e.resource_category)
+                WHERE e.resource_category IS NOT NULL AND trim(e.resource_category) <> ''
+              ) parts
+              WHERE trimmed IS NOT NULL AND trimmed <> ''
+            ) AS tags
+          FROM entity e
+          WHERE e.entity_type = 'resource'
+            AND e.topic_tags IS NULL
+        )
+        UPDATE entity e
+        SET    topic_tags = r.tags
+        FROM   resource_tags r
+        WHERE  e.id = r.id
+      `)
+      console.log('  ✓ backfilled format_tags + topic_tags')
+
+      // Validation: raise if any row has dirty arrays.
+      const dirty = await client.query(`
+        SELECT
+          COUNT(*) FILTER (
+            WHERE entity_type = 'resource'
+              AND ('' = ANY(COALESCE(topic_tags,  ARRAY[]::TEXT[]))
+                OR '' = ANY(COALESCE(format_tags, ARRAY[]::TEXT[])))
+          ) AS empty_strings,
+          COUNT(*) FILTER (
+            WHERE entity_type = 'resource'
+              AND EXISTS (
+                SELECT 1 FROM unnest(COALESCE(topic_tags, ARRAY[]::TEXT[])) t
+                WHERE t ~ '^\\s|\\s$|^"|"$'
+              )
+          ) AS dirty_whitespace_or_quotes
+        FROM entity
+      `)
+      const { empty_strings, dirty_whitespace_or_quotes } = dirty.rows[0]
+      if (Number(empty_strings) > 0 || Number(dirty_whitespace_or_quotes) > 0) {
+        throw new Error(
+          `Backfill validation failed — ${empty_strings} rows with empty strings, ` +
+            `${dirty_whitespace_or_quotes} rows with whitespace or quotes. Rolling back.`,
+        )
+      }
+      console.log('  ✓ backfill validation passed (0 dirty rows)')
+
+      // Tail re-run: force update_entity_search to rebuild search_vector
+      // on existing resource rows so it includes the new tag columns.
+      // Two writes: set-null then set-timestamp to guarantee both UPDATEs
+      // are materialised on PG17 even with no-op write suppression.
+      await client.query(`UPDATE entity SET search_vector = NULL WHERE entity_type = 'resource'`)
+      await client.query(`UPDATE entity SET updated_at = NOW()   WHERE entity_type = 'resource'`)
+      console.log('  ✓ tail re-run of update_entity_search on resources')
+
+      await client.query('COMMIT')
+      console.log('  ✓ backfill committed')
+    } catch (err) {
+      await client.query('ROLLBACK')
+      console.error('  ✗ backfill failed — rolled back:', err.message)
+      throw err
+    }
 
     // ── 9. Drop old tables ────────────────────────────────────────────────────
-    console.log('\nDropping old tables...');
-    await client.query('DROP TABLE IF EXISTS person_organizations CASCADE');
-    await client.query('DROP TABLE IF EXISTS relationships CASCADE');
-    await client.query('DROP TABLE IF EXISTS submissions CASCADE');
-    await client.query('DROP TABLE IF EXISTS resources CASCADE');
-    await client.query('DROP TABLE IF EXISTS organizations CASCADE');
-    await client.query('DROP TABLE IF EXISTS people CASCADE');
-    console.log('  ✓ people, organizations, resources, submissions, relationships, person_organizations dropped');
+    console.log('\nDropping old tables...')
+    await client.query('DROP TABLE IF EXISTS person_organizations CASCADE')
+    await client.query('DROP TABLE IF EXISTS relationships CASCADE')
+    await client.query('DROP TABLE IF EXISTS submissions CASCADE')
+    await client.query('DROP TABLE IF EXISTS resources CASCADE')
+    await client.query('DROP TABLE IF EXISTS organizations CASCADE')
+    await client.query('DROP TABLE IF EXISTS people CASCADE')
+    console.log('  ✓ people, organizations, resources, submissions, relationships, person_organizations dropped')
 
-    console.log('\nMigration complete.');
+    console.log('\nMigration complete.')
   } finally {
-    client.release();
-    await pool.end();
+    client.release()
+    await pool.end()
   }
 }
 
 migrate().catch((err) => {
-  console.error('Migration failed:', err);
-  process.exit(1);
-});
+  console.error('Migration failed:', err)
+  process.exit(1)
+})

@@ -32,6 +32,13 @@ const makeEntity = (overrides: Partial<Entity>): Entity => ({
   stance_score: null,
   timeline_score: null,
   risk_score: null,
+  topic_tags: [],
+  format_tags: [],
+  advocated_stance: null,
+  advocated_timeline: null,
+  advocated_risk: null,
+  source: null,
+  source_url: null,
   ...overrides,
 })
 
@@ -40,7 +47,12 @@ const testEntities: Entity[] = [
   makeEntity({ id: 2, name: 'Sam Altman', entity_type: 'person', title: 'CEO', primary_org: 'OpenAI' }),
   makeEntity({ id: 3, name: 'Anthropic', entity_type: 'organization', category: 'Frontier Lab' }),
   makeEntity({ id: 4, name: 'OpenAI', entity_type: 'organization', category: 'Frontier Lab' }),
-  makeEntity({ id: 5, name: 'On the Dangers of Stochastic Parrots', entity_type: 'resource', title: 'Stochastic Parrots' }),
+  makeEntity({
+    id: 5,
+    name: 'On the Dangers of Stochastic Parrots',
+    entity_type: 'resource',
+    title: 'Stochastic Parrots',
+  }),
 ]
 
 describe('fuzzySearch', () => {

@@ -41,6 +41,17 @@ export interface Entity {
   year?: string | null
   key_argument?: string | null
 
+  // Resources Rethink Phase 1 — multi-tag taxonomy + advocated beliefs.
+  // For people/orgs topic_tags + format_tags are empty arrays today
+  // (Phase 2 will decide if/how they use these).
+  topic_tags: string[]
+  format_tags: string[]
+  advocated_stance: string | null
+  advocated_timeline: string | null
+  advocated_risk: string | null
+  source: string | null
+  source_url: string | null
+
   // Added by map-detail.json merge or edge queries
   source_type?: string | null
 }
@@ -54,6 +65,13 @@ export interface Edge {
   evidence: string | null
 }
 
+export interface PersonOrganization {
+  person_id: number
+  organization_id: number
+  role: string | null
+  is_primary: boolean | null
+}
+
 /** Shape of map-data.json as served from S3/CloudFront */
 export interface MapData {
   _meta?: { generated_at?: string }
@@ -61,7 +79,7 @@ export interface MapData {
   organizations: Entity[]
   resources: Entity[]
   relationships: Edge[]
-  person_organizations?: any[]
+  person_organizations?: PersonOrganization[]
 }
 
 /** Shape of map-detail.json — keyed by entity ID */

@@ -3,94 +3,141 @@
  * and by scripts/export-map-data.js for local/CI builds.
  */
 
-const SENSITIVE = new Set(['submitter_email', 'submitter_relationship', 'search_vector']);
+const SENSITIVE = new Set(['submitter_email', 'submitter_relationship', 'search_vector'])
 
 const stripSensitive = (row) => {
-  const clean = { ...row };
-  SENSITIVE.forEach(f => delete clean[f]);
-  return clean;
-};
+  const clean = { ...row }
+  SENSITIVE.forEach((f) => delete clean[f])
+  return clean
+}
 
 // Ordinal scores derived from text labels — used as fallback when
 // the entity has no approved submissions (i.e. belief_*_wavg is null)
 const STANCE_SCORES = {
-  'Accelerate': 1,
-  'Light-touch': 2, 'Light-touch regulation': 2,
-  'Targeted': 3, 'Targeted regulation': 3,
-  'Moderate': 4, 'Moderate regulation': 4,
-  'Restrictive': 5, 'Restrictive regulation': 5,
-  'Precautionary': 6,
-  'Nationalize': 7,
-};
+  Accelerate: 1,
+  'Light-touch': 2,
+  'Light-touch regulation': 2,
+  Targeted: 3,
+  'Targeted regulation': 3,
+  Moderate: 4,
+  'Moderate regulation': 4,
+  Restrictive: 5,
+  'Restrictive regulation': 5,
+  Precautionary: 6,
+  Nationalize: 7,
+}
 const TIMELINE_SCORES = {
   'Already here': 1,
-  '2-3 years': 2, 'Within 2-3 years': 2,
+  '2-3 years': 2,
+  'Within 2-3 years': 2,
   '5-10 years': 3,
   '10-25 years': 4,
   '25+ years or never': 5,
-};
+}
 const RISK_SCORES = {
-  'Overstated': 1,
-  'Manageable': 2,
-  'Serious': 3,
-  'Catastrophic': 4, 'Potentially catastrophic': 4,
-  'Existential': 5,
-};
+  Overstated: 1,
+  Manageable: 2,
+  Serious: 3,
+  Catastrophic: 4,
+  'Potentially catastrophic': 4,
+  Existential: 5,
+}
 
 /**
  * Map entity row to the shape the frontend expects.
  * Bridges new DB column names (belief_*) → old frontend field names
  * (regulatory_stance, agi_timeline, ai_risk_level, title for resources).
  */
-function toFrontendShape(row) {
+export function toFrontendShape(row) {
   // Explicit allowlist — only export fields the frontend needs
   const out = {
-    id:               row.id,
-    entity_type:      row.entity_type,
-    name:             row.name,
-    category:         row.category,
+    id: row.id,
+    entity_type: row.entity_type,
+    name: row.name,
+    category: row.category,
     other_categories: row.other_categories || null,
-    title:            row.title,
-    primary_org:      row.primary_org,
-    other_orgs:       row.other_orgs,
-    website:          row.website,
-    funding_model:    row.funding_model,
-    parent_org_id:    row.parent_org_id,
-    location:         row.location,
-    influence_type:   row.influence_type,
-    twitter:          row.twitter,
-    bluesky:          row.bluesky,
-    notes:            row.notes,
-    thumbnail_url:    row.thumbnail_url,
+    title: row.title,
+    primary_org: row.primary_org,
+    other_orgs: row.other_orgs,
+    website: row.website,
+    funding_model: row.funding_model,
+    parent_org_id: row.parent_org_id,
+    location: row.location,
+    influence_type: row.influence_type,
+    twitter: row.twitter,
+    bluesky: row.bluesky,
+    notes: row.notes,
+    thumbnail_url: row.thumbnail_url,
     submission_count: row.submission_count,
-    status:           row.status,
-  };
+    status: row.status,
+  }
 
   // Map belief columns → frontend field names
-  out.regulatory_stance        = row.belief_regulatory_stance;
-  out.regulatory_stance_detail = row.belief_regulatory_stance_detail;
-  out.evidence_source          = row.belief_evidence_source;
-  out.agi_timeline             = row.belief_agi_timeline;
-  out.ai_risk_level            = row.belief_ai_risk;
-  out.threat_models            = row.belief_threat_models;
+  out.regulatory_stance = row.belief_regulatory_stance
+  out.regulatory_stance_detail = row.belief_regulatory_stance_detail
+  out.evidence_source = row.belief_evidence_source
+  out.agi_timeline = row.belief_agi_timeline
+  out.ai_risk_level = row.belief_ai_risk
+  out.threat_models = row.belief_threat_models
+
+  // Resources Rethink Phase 1 fields. Empty arrays (not nulls) for resources
+  // so consumers can `.length` / `.includes()` without nullish guards.
+  // For people + orgs we still emit empty arrays for schema consistency.
+  out.topic_tags = row.topic_tags || []
+  out.format_tags = row.format_tags || []
+  out.advocated_stance = row.advocated_stance || null
+  out.advocated_timeline = row.advocated_timeline || null
+  out.advocated_risk = row.advocated_risk || null
+  out.source = row.source || null
+  out.source_url = row.source_url || null
 
   // Resources: frontend uses `title` (mapped from resource_title)
   if (row.entity_type === 'resource') {
-    out.title         = row.resource_title || row.name;
-    out.category      = row.resource_category || row.category;
-    out.author        = row.resource_author;
-    out.resource_type = row.resource_type;
-    out.url           = row.resource_url;
-    out.year          = row.resource_year;
-    out.key_argument  = row.resource_key_argument;
+    out.title = row.resource_title || row.name
+    out.category = row.resource_category || row.category
+    out.author = row.resource_author
+    out.resource_type = row.resource_type
+    out.url = row.resource_url
+    out.year = row.resource_year
+    out.key_argument = row.resource_key_argument
+
+    // Fallback for pre-migration resources where topic_tags is empty but
+    // the legacy category / other_categories columns still have content.
+    // Guarantees the Library never renders a bare resource.
+    if (out.topic_tags.length === 0) {
+      const legacy = []
+      if (row.resource_category) legacy.push(String(row.resource_category).trim())
+      if (row.other_categories) {
+        const raw = String(row.other_categories).trim()
+        const parts = raw.startsWith('[')
+          ? (() => {
+              try {
+                return JSON.parse(raw)
+              } catch {
+                return []
+              }
+            })()
+          : raw.split(',')
+        for (const p of parts) {
+          const t = String(p).trim().replace(/^"|"$/g, '')
+          if (t) legacy.push(t)
+        }
+      }
+      if (legacy.length) {
+        out.topic_tags = Array.from(new Set(legacy))
+      }
+    }
+    if (out.format_tags.length === 0 && row.resource_type) {
+      out.format_tags = [String(row.resource_type).trim()]
+    }
   }
 
   // Numeric scores: prefer wavg from submissions, fall back to text label lookup
-  out.stance_score   = row.belief_regulatory_stance_wavg ?? STANCE_SCORES[out.regulatory_stance]   ?? null;
-  out.timeline_score = row.belief_agi_timeline_wavg      ?? TIMELINE_SCORES[out.agi_timeline]      ?? null;
-  out.risk_score     = row.belief_ai_risk_wavg           ?? RISK_SCORES[out.ai_risk_level]         ?? null;
+  out.stance_score = row.belief_regulatory_stance_wavg ?? STANCE_SCORES[out.regulatory_stance] ?? null
+  out.timeline_score = row.belief_agi_timeline_wavg ?? TIMELINE_SCORES[out.agi_timeline] ?? null
+  out.risk_score = row.belief_ai_risk_wavg ?? RISK_SCORES[out.ai_risk_level] ?? null
 
-  return out;
+  return out
 }
 
 /**
@@ -108,15 +155,15 @@ async function computeSourceTypes(client) {
     FROM submission
     WHERE entity_id IS NOT NULL AND status = 'approved'
     GROUP BY entity_id
-  `);
-  return new Map(result.rows.map(r => [r.entity_id, r.source_type]));
+  `)
+  return new Map(result.rows.map((r) => [r.entity_id, r.source_type]))
 }
 
 export async function generateMapData(client) {
   // Only export entities that have passed QA review
   const entities = await client.query(
-    `SELECT * FROM entity WHERE status = 'approved' AND qa_approved = true ORDER BY id`
-  );
+    `SELECT * FROM entity WHERE status = 'approved' AND qa_approved = true ORDER BY id`,
+  )
   // Only export edges between QA-approved entities
   const edges = await client.query(
     `SELECT e.id, e.source_id, e.target_id, e.edge_type, e.role, e.is_primary,
@@ -126,28 +173,28 @@ export async function generateMapData(client) {
      FROM edge e
      JOIN entity src ON src.id = e.source_id AND src.qa_approved = true
      JOIN entity tgt ON tgt.id = e.target_id AND tgt.qa_approved = true
-     ORDER BY e.id`
-  );
+     ORDER BY e.id`,
+  )
 
-  const sourceTypeMap = await computeSourceTypes(client);
+  const sourceTypeMap = await computeSourceTypes(client)
 
-  const people = [];
-  const organizations = [];
-  const resources = [];
+  const people = []
+  const organizations = []
+  const resources = []
 
   for (const row of entities.rows) {
-    const clean = stripSensitive(row);
-    const shaped = toFrontendShape(clean);
-    shaped.source_type = sourceTypeMap.get(row.id) || 'external';
+    const clean = stripSensitive(row)
+    const shaped = toFrontendShape(clean)
+    shaped.source_type = sourceTypeMap.get(row.id) || 'external'
 
-    if (row.entity_type === 'person')            people.push(shaped);
-    else if (row.entity_type === 'organization') organizations.push(shaped);
-    else if (row.entity_type === 'resource')     resources.push(shaped);
+    if (row.entity_type === 'person') people.push(shaped)
+    else if (row.entity_type === 'organization') organizations.push(shaped)
+    else if (row.entity_type === 'resource') resources.push(shaped)
   }
 
   // Build relationships array in the shape map.html expects:
   // { source_type, target_type, source_id, target_id, relationship_type }
-  const relationships = edges.rows.map(e => ({
+  const relationships = edges.rows.map((e) => ({
     source_type: e.source_type,
     target_type: e.target_type,
     source_id: e.source_id,
@@ -155,20 +202,23 @@ export async function generateMapData(client) {
     relationship_type: e.edge_type,
     role: e.role,
     evidence: e.evidence,
-  }));
+  }))
 
   // Build person_organizations array for affiliation edges:
   // { person_id, organization_id, role, is_primary }
   const person_organizations = edges.rows
-    .filter(e => e.edge_type === 'affiliated' &&
-      ((e.source_type === 'person' && e.target_type === 'organization') ||
-       (e.source_type === 'organization' && e.target_type === 'person')))
-    .map(e => ({
+    .filter(
+      (e) =>
+        e.edge_type === 'affiliated' &&
+        ((e.source_type === 'person' && e.target_type === 'organization') ||
+          (e.source_type === 'organization' && e.target_type === 'person')),
+    )
+    .map((e) => ({
       person_id: e.source_type === 'person' ? e.source_id : e.target_id,
       organization_id: e.source_type === 'organization' ? e.source_id : e.target_id,
       role: e.role,
       is_primary: e.is_primary,
-    }));
+    }))
 
   return {
     _meta: { generated_at: new Date().toISOString() },
@@ -177,7 +227,7 @@ export async function generateMapData(client) {
     resources,
     relationships,
     person_organizations,
-  };
+  }
 }
 
 /**
@@ -186,10 +236,19 @@ export async function generateMapData(client) {
  * the skeleton and served as a separate lazy-loaded file.
  */
 const DETAIL_FIELDS = new Set([
-  'notes', 'regulatory_stance_detail', 'evidence_source',
-  'threat_models', 'key_argument', 'author', 'url', 'year',
-  'twitter', 'bluesky', 'parent_org_id', 'status',
-]);
+  'notes',
+  'regulatory_stance_detail',
+  'evidence_source',
+  'threat_models',
+  'key_argument',
+  'author',
+  'url',
+  'year',
+  'twitter',
+  'bluesky',
+  'parent_org_id',
+  'status',
+])
 
 /**
  * Split full map data into skeleton (render-critical) + detail (lazy-loaded).
@@ -197,23 +256,30 @@ const DETAIL_FIELDS = new Set([
  * Detail: keyed by entity id — notes, stance_detail, threat_models, etc.
  */
 export function splitMapData(fullData) {
-  const detail = {};
+  const detail = {}
+
+  // For resources, `key_argument` is the primary on-card description copy in
+  // the Library grid/list — promote it into the skeleton so Library renders
+  // usefully without blocking on map-detail.json.
+  const RESOURCE_SKELETON_KEEP = new Set(['key_argument'])
 
   const stripDetail = (entity) => {
-    const d = {};
-    const skeleton = {};
+    const isResource = entity.entity_type === 'resource'
+    const d = {}
+    const skeleton = {}
     for (const [k, v] of Object.entries(entity)) {
-      if (DETAIL_FIELDS.has(k) && v != null) {
-        d[k] = v;
+      const keepInSkeleton = isResource && RESOURCE_SKELETON_KEEP.has(k)
+      if (DETAIL_FIELDS.has(k) && v != null && !keepInSkeleton) {
+        d[k] = v
       } else {
-        skeleton[k] = v;
+        skeleton[k] = v
       }
     }
     if (Object.keys(d).length > 0) {
-      detail[entity.id] = d;
+      detail[entity.id] = d
     }
-    return skeleton;
-  };
+    return skeleton
+  }
 
   const skeleton = {
     _meta: fullData._meta,
@@ -222,7 +288,7 @@ export function splitMapData(fullData) {
     resources: (fullData.resources || []).map(stripDetail),
     relationships: fullData.relationships,
     person_organizations: fullData.person_organizations,
-  };
+  }
 
-  return { skeleton, detail };
+  return { skeleton, detail }
 }
