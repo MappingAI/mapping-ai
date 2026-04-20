@@ -114,7 +114,7 @@ export default tseslint.config(
     // Node-run scripts: prod globals, console allowed. Placed after the browser
     // globals block so its `no-console: off` override actually wins — flat
     // config applies later blocks over earlier ones for matching files.
-    files: ['scripts/**/*.{js,cjs}'],
+    files: ['scripts/**/*.{js,cjs,ts}'],
     languageOptions: {
       globals: {
         process: 'readonly',
