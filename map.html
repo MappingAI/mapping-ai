@@ -3850,8 +3850,8 @@ function render() {
     .force('x', d3.forceX(centerX).strength(clusterDimension === 'category' ? 0.02 : 0.01))
     .force('y', d3.forceY(centerY).strength(clusterDimension === 'category' ? 0.02 : 0.01))
     .alpha(0.5)
-    .alphaDecay(0.04)
-    .velocityDecay(0.6)
+    .alphaDecay(0.07)
+    .velocityDecay(0.78)
     .stop();
 
   // Pre-rasterized image sprites (offscreen canvas, circle-clipped).
@@ -3951,7 +3951,7 @@ function render() {
       }
     })
     .on('start', (event) => {
-      if (!event.active) simulation.alphaDecay(0.04).alphaTarget(0.3).restart();
+      if (!event.active) simulation.alphaTarget(0.3).restart();
       event.subject._node.fx = event.subject._node.x;
       event.subject._node.fy = event.subject._node.y;
     })
@@ -3960,7 +3960,7 @@ function render() {
       event.subject._node.fy = currentZoom.invertY(event.y);
     })
     .on('end', (event) => {
-      if (!event.active) { simulation.alphaTarget(0).alphaDecay(0.15); }
+      if (!event.active) { simulation.alphaTarget(0); }
       event.subject._node.fx = null;
       event.subject._node.fy = null;
     }));
@@ -4023,7 +4023,6 @@ function render() {
   simulation
     .on('tick', ticked)
     .on('end', () => {
-      simulation.alphaDecay(0.04);
       if (typeof reapplySearchHighlighting === 'function') reapplySearchHighlighting();
     })
     .restart();
@@ -4065,10 +4064,10 @@ function render2D(svg, g, width, height) {
   const CONTROLS_WIDTH = isMobile ? 0 : (isTablet ? 200 : 280);
   const is1D = axisMode !== '2d';
   const margin = {
-    top:    isMobile ? 40 : (is1D ? 30 : 60),
-    right:  isMobile ? 15 : (isTablet ? 40 : (is1D ? 60 : 280)),
+    top:    isMobile ? 40 : (is1D ? 20 : 60),
+    right:  isMobile ? 15 : (isTablet ? 25 : (is1D ? 30 : 280)),
     bottom: isMobile ? 60 : (is1D ? 50 : 70),
-    left:   isMobile ? 10 : (isTablet ? 80 : 130),
+    left:   isMobile ? 10 : (isTablet ? 60 : (is1D ? 70 : 130)),
   };
   const plotW = Math.max(100, width - CONTROLS_WIDTH - margin.left - margin.right);
   const plotH = height - margin.top - margin.bottom;
@@ -4096,8 +4095,12 @@ function render2D(svg, g, width, height) {
     if (yAxisDef && d[yAxisDef.scoreKey] == null) return false;
     return true;
   }).map(d => ({ ...d }));
-  // Dynamic radius: fewer nodes → bigger circles, more → smaller
-  const nodeRadius = Math.max(7, Math.min(14, Math.round(Math.sqrt(2500 / Math.max(nodes.length, 1)))));
+  // Dynamic radius: floor drops to 4px at high density so 1000+ nodes can
+  // actually spread apart. Scale by both node count and available area so a
+  // wider plot allows slightly bigger bubbles.
+  const plotArea = plotW * plotH;
+  const areaPerNode = plotArea / Math.max(nodes.length, 1);
+  const nodeRadius = Math.max(4, Math.min(14, Math.round(Math.sqrt(areaPerNode) / 9)));
   nodes.forEach(d => { d.radius = nodeRadius; });
 
   // Update excluded count message
@@ -4118,8 +4121,8 @@ function render2D(svg, g, width, height) {
     // Higher score = top of chart
     yScale = score => margin.top + (1 - (score - 1) / (yTicks.length - 1)) * plotH;
   } else {
-    // 1D: center beeswarm in the plot area, biased slightly toward axis
-    const plotMidY = margin.top + plotH * 0.55;
+    // 1D: center beeswarm vertically in the plot area
+    const plotMidY = margin.top + plotH * 0.5;
     yScale = () => plotMidY;
   }
 
@@ -4128,10 +4131,52 @@ function render2D(svg, g, width, height) {
 
   if (nodes.length === 0) return;
 
-  // Set target positions
-  nodes.forEach(d => {
-    d.targetX = xScale(d[xAxisDef.scoreKey]);
+  // In 1D mode, scores snap to integers for single-submission entities, so
+  // naive layout stacks 160+ nodes in a one-pixel column. We spread horizontally
+  // with violin-shaped jitter: wide at the column's vertical center, tapering
+  // at top and bottom. Jitter magnitude = hash(id) * parabolicWeight(y), so
+  // each node has a stable X offset but overall envelope reads as a violin.
+  const bucketWidth = plotW / Math.max(xTicks.length - 1, 1);
+  const jitterRange = yAxisDef ? 0 : bucketWidth * 0.85;
+  // Hash-based deterministic per-node offset (-0.5 to +0.5) so nodes don't jump
+  // between renders. Direction is fixed per entity; magnitude is scaled by Y.
+  const hashOffset = (d, i) => {
+    const key = Number(d.id);
+    const seed = Number.isFinite(key) ? key : i;
+    const h = (seed * 2654435761) >>> 0;
+    return (h % 1000) / 1000 - 0.5;
+  };
+
+  // Seed Y uniformly across the full plot area for 1D — using all vertical space.
+  // Weak Y force (0.03) won't crush this spread back to the centerline.
+  const pad = nodeRadius + 1;
+  const yTop = margin.top + pad;
+  const yBot = height - margin.bottom - pad;
+  const yRange = yBot - yTop;
+  // Clamp violin jitter to the plot area so extreme score columns don't
+  // render past the axis baselines (left/right margins are narrow in 1D).
+  const xMin = CONTROLS_WIDTH + margin.left + pad;
+  const xMax = CONTROLS_WIDTH + margin.left + plotW - pad;
+
+  nodes.forEach((d, i) => {
     d.targetY = yAxisDef ? yScale(d[yAxisDef.scoreKey]) : yScale();
+    const xRaw = xScale(d[xAxisDef.scoreKey]);
+    if (yAxisDef) {
+      d.targetX = xRaw;
+      d.x = xRaw + (Math.random() - 0.5) * 20;
+      d.y = d.targetY + (Math.random() - 0.5) * 20;
+    } else {
+      // Spread vertically across full plot, but bias slightly toward center
+      // with a triangular distribution so density is highest in the middle —
+      // that's what produces the violin bulge via collision spillover.
+      const r1 = Math.random(), r2 = Math.random();
+      d.y = yTop + ((r1 + r2) / 2) * yRange;
+      const y01 = (d.y - yTop) / yRange;
+      // Parabolic weight: 1 at y-center, 0 at edges → narrow taper top/bottom
+      const weight = 4 * y01 * (1 - y01);
+      d.targetX = Math.max(xMin, Math.min(xMax, xRaw + hashOffset(d, i) * jitterRange * weight));
+      d.x = d.targetX;
+    }
   });
 
   // Node groups
@@ -4163,9 +4208,9 @@ function render2D(svg, g, width, height) {
       hideTooltip();
     })
     .call(d3.drag()
-      .on('start', (event, d) => { if (!event.active) simulation.alphaDecay(0.04).alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
+      .on('start', (event, d) => { if (!event.active) simulation.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
       .on('drag', (event, d) => { d.fx = event.x; d.fy = event.y; })
-      .on('end', (event, d) => { if (!event.active) { simulation.alphaTarget(0).alphaDecay(0.15); } d.fx = null; d.fy = null; }));
+      .on('end', (event, d) => { if (!event.active) { simulation.alphaTarget(0); } d.fx = null; d.fy = null; }));
 
   // Background circles (category color)
   nodeGroup.append('circle')
@@ -4249,25 +4294,30 @@ function render2D(svg, g, width, height) {
     }
   });
 
-  // Simulation: beeswarm—strong pull toward target (axis position), collision for separation
+  // Simulation: beeswarm—strong pull toward target (axis position), collision for separation.
+  // 1D uses a very weak Y pull (0.03) so collision-spread survives convergence
+  // instead of being crushed back to the centerline. Higher velocityDecay + faster
+  // alphaDecay make the sim settle quickly with minimal jitter.
   if (simulation) simulation.stop();
   simulation = d3.forceSimulation(nodes)
     .force('x', d3.forceX(d => d.targetX).strength(0.8))
-    .force('y', d3.forceY(d => d.targetY).strength(yAxisDef ? 0.8 : 0.08))
+    .force('y', d3.forceY(d => d.targetY).strength(yAxisDef ? 0.8 : 0.03))
     .force('collision', d3.forceCollide(d => d.radius + 2).strength(0.9))
-    .alpha(0.6)
-    .alphaDecay(0.04)
-    .velocityDecay(0.6)
+    .alpha(0.4)
+    .alphaDecay(0.08)
+    .velocityDecay(0.78)
     .on('tick', () => {
-      // In 1D mode, clamp nodes within the plot area (above axis, below top margin)
+      // In 1D mode, clamp nodes to the plot area. Use per-node radius so
+      // bubbles can sit flush against the axis baseline (no dead band below).
       if (!yAxisDef) {
-        const yMin = margin.top + 10;
-        const yMax = height - margin.bottom - 15;
-        nodes.forEach(d => { d.y = Math.max(yMin, Math.min(yMax, d.y)); });
+        nodes.forEach(d => {
+          const dp = d.radius + 1;
+          d.y = Math.max(margin.top + dp, Math.min(height - margin.bottom - dp, d.y));
+          d.x = Math.max(xMin, Math.min(xMax, d.x));
+        });
       }
       nodeGroup.attr('transform', d => `translate(${d.x},${d.y})`);
-    })
-    .on('end', () => simulation.alphaDecay(0.04));
+    });
 
   svg.on('click', () => { document.getElementById('detail-panel').classList.remove('open'); clearSelection(); });
 }
