@@ -1,0 +1,663 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Library mockups &mdash; mapping-ai</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      :root {
+        --ink: #111827;
+        --ink-soft: #374151;
+        --ink-mute: #6b7280;
+        --paper: #f8f7f2;
+        --paper-2: #f1efe5;
+        --line: #d9d5c4;
+        --accent: #1f3a5f;
+        --accent-2: #a43a2b;
+        --chip: #ece9dc;
+        --chip-ink: #3b3a2c;
+        --stance-accel: #c25a3a;
+        --stance-caut: #567b9b;
+        --stance-middle: #8b7a3a;
+      }
+      html,
+      body {
+        background: var(--paper);
+        color: var(--ink);
+        font-family: 'Iowan Old Style', 'Iowan', Georgia, 'Times New Roman', serif;
+      }
+      .mono {
+        font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+      }
+      .serif {
+        font-family: 'Iowan Old Style', 'Iowan', Georgia, 'Times New Roman', serif;
+      }
+      .sans {
+        font-family:
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          'Inter',
+          sans-serif;
+      }
+      .chip {
+        background: var(--chip);
+        color: var(--chip-ink);
+        border: 1px solid rgba(0, 0, 0, 0.04);
+      }
+      .chip-active {
+        background: var(--ink);
+        color: var(--paper);
+      }
+      .chip-emergent {
+        background: transparent;
+        color: var(--chip-ink);
+        border: 1px dashed #b7b09a;
+      }
+      .divider-dot::before {
+        content: '\2022';
+        margin: 0 0.4rem;
+        color: var(--ink-mute);
+      }
+      .stance-bar {
+        height: 3px;
+        width: 40px;
+        background: linear-gradient(
+          90deg,
+          var(--stance-accel) 0%,
+          var(--stance-middle) 50%,
+          var(--stance-caut) 100%
+        );
+        border-radius: 2px;
+        position: relative;
+      }
+      .stance-marker {
+        position: absolute;
+        top: -3px;
+        width: 3px;
+        height: 9px;
+        background: var(--ink);
+        border-radius: 1px;
+      }
+      .card {
+        background: #fffef9;
+        border: 1px solid var(--line);
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02);
+      }
+      .card:hover {
+        border-color: #a9a48d;
+      }
+      .bookspine {
+        background: linear-gradient(180deg, #d9cdb0 0%, #c8bb9b 100%);
+        border: 1px solid #a9a48d;
+        color: #4a3f24;
+        position: relative;
+        overflow: hidden;
+      }
+      .bookspine::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(
+          90deg,
+          rgba(0, 0, 0, 0.05) 0px,
+          rgba(0, 0, 0, 0.05) 1px,
+          transparent 1px,
+          transparent 4px
+        );
+        pointer-events: none;
+      }
+      .underline-hover:hover {
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+      [role='tab'][aria-selected='true'] {
+        color: var(--ink);
+        border-bottom-color: var(--ink);
+      }
+      [role='tab'] {
+        border-bottom: 2px solid transparent;
+      }
+      details > summary {
+        list-style: none;
+      }
+      details > summary::-webkit-details-marker {
+        display: none;
+      }
+      .subtle-grid {
+        background-image: linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+        background-size: 12px 100%;
+      }
+      /* hide scrollbars on variant frames for cleaner screenshots */
+      .variant-frame::-webkit-scrollbar {
+        display: none;
+      }
+    </style>
+    <script src="./data.js"></script>
+  </head>
+  <body class="min-h-screen">
+    <!-- Prototype chrome (not part of the real page) -->
+    <div class="border-b border-[var(--line)] bg-[var(--paper-2)]">
+      <div class="mx-auto flex max-w-[1280px] items-end gap-6 px-6 py-3">
+        <div>
+          <div class="mono text-[10px] uppercase tracking-widest text-[var(--ink-mute)]">
+            prototype &middot; not wired
+          </div>
+          <h1 class="serif text-[22px] font-semibold">
+            Library &mdash; UI variants
+          </h1>
+        </div>
+        <nav class="mono ml-auto flex gap-1 text-[11px] uppercase tracking-wider">
+          <button
+            class="variant-btn px-3 py-1.5"
+            data-variant="A"
+            role="tab"
+            aria-selected="true"
+          >
+            A &middot; Reading-room grid
+          </button>
+          <button class="variant-btn px-3 py-1.5" data-variant="B" role="tab">
+            B &middot; Dense research list
+          </button>
+          <button class="variant-btn px-3 py-1.5" data-variant="C" role="tab">
+            C &middot; Tracks-first
+          </button>
+          <button class="variant-btn px-3 py-1.5" data-variant="D" role="tab">
+            D &middot; Detail panel
+          </button>
+        </nav>
+      </div>
+    </div>
+
+    <main class="mx-auto max-w-[1280px] px-6 py-8">
+      <div id="variant-A" class="variant"></div>
+      <div id="variant-B" class="variant hidden"></div>
+      <div id="variant-C" class="variant hidden"></div>
+      <div id="variant-D" class="variant hidden"></div>
+    </main>
+
+    <script type="module">
+      // ----- helpers ------------------------------------------------------
+
+      const R = window.MOCK_RESOURCES;
+      const TRACKS = window.MOCK_TRACKS;
+      const CORE = window.TOPIC_CORE;
+      const FORMATS = window.FORMAT_TAGS;
+
+      const fmtStanceLabel = (s, t, r) => {
+        const bits = [];
+        if (s) bits.push(s);
+        if (t) bits.push(`${t} timeline`);
+        if (r) bits.push(`risk ${r}`);
+        return bits.join(' \u00b7 ');
+      };
+
+      const stanceMarkerPos = (stance) => {
+        if (!stance) return null;
+        const map = {
+          Accelerationist: 5,
+          'Cautious-Optimist': 55,
+          Cautious: 80,
+          Libertarian: 10,
+        };
+        return map[stance] ?? 50;
+      };
+
+      const tagCounts = (field) => {
+        const c = new Map();
+        for (const r of R) for (const t of r[field] || []) c.set(t, (c.get(t) || 0) + 1);
+        return c;
+      };
+      const topicCounts = tagCounts('topic_tags');
+      const formatCounts = tagCounts('format_tags');
+
+      const chip = (label, { active = false, emergent = false, count = null } = {}) => {
+        const cls = active
+          ? 'chip chip-active'
+          : emergent
+            ? 'chip chip-emergent'
+            : 'chip';
+        const c = count != null ? `<span class="mono ml-1.5 text-[10px] opacity-60">${count}</span>` : '';
+        return `<span class="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] leading-none ${cls}">${label}${c}</span>`;
+      };
+
+      // ----- variant A: reading-room grid --------------------------------
+      const renderA = () => {
+        const pinned = R.filter((r) => r.pinned);
+        const rest = R.filter((r) => !r.pinned);
+
+        const filterCol = `
+          <aside class="col-span-3 space-y-6">
+            <div>
+              <label class="mono text-[10px] uppercase tracking-widest text-[var(--ink-mute)]">Search</label>
+              <div class="mt-1 flex items-center gap-2 border-b border-[var(--ink)] pb-1">
+                <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+                <input placeholder="Find a title, author, or idea\u2026" class="sans w-full bg-transparent text-[13px] outline-none" />
+              </div>
+            </div>
+
+            <div>
+              <div class="mono text-[10px] uppercase tracking-widest text-[var(--ink-mute)]">Topic</div>
+              <div class="mt-2 flex flex-wrap gap-1.5">
+                ${CORE.slice(0, 10)
+                  .map((t, i) =>
+                    chip(t, { active: i === 0, count: topicCounts.get(t) || 0 })
+                  )
+                  .join('')}
+                <details class="mt-2 w-full">
+                  <summary class="mono cursor-pointer text-[10px] uppercase tracking-widest text-[var(--ink-mute)] underline-hover">
+                    + 23 emergent tags
+                  </summary>
+                  <div class="mt-2 flex flex-wrap gap-1.5">
+                    ${['mechanistic-interp', 'situational-awareness', 'compute-governance', 'ai-2027-scenario', 'bio-risk', 'agentic-deployment']
+                      .map((t) => chip(t, { emergent: true, count: 3 + Math.floor(Math.random() * 10) }))
+                      .join('')}
+                  </div>
+                </details>
+              </div>
+            </div>
+
+            <div>
+              <div class="mono text-[10px] uppercase tracking-widest text-[var(--ink-mute)]">Format</div>
+              <div class="mt-2 flex flex-wrap gap-1.5">
+                ${FORMATS.slice(0, 8)
+                  .map((t) => chip(t, { count: formatCounts.get(t) || 0 }))
+                  .join('')}
+              </div>
+            </div>
+
+            <div>
+              <div class="mono text-[10px] uppercase tracking-widest text-[var(--ink-mute)]">Advocated stance</div>
+              <div class="mt-2 space-y-1 text-[13px]">
+                ${['Accelerationist', 'Cautious-Optimist', 'Cautious', 'Libertarian', 'Unknown']
+                  .map(
+                    (s) =>
+                      `<label class="flex items-center gap-2 cursor-pointer hover:text-[var(--accent)]">
+                        <input type="checkbox" class="accent-[var(--ink)]" />
+                        <span>${s}</span>
+                      </label>`
+                  )
+                  .join('')}
+              </div>
+            </div>
+
+            <div>
+              <div class="mono text-[10px] uppercase tracking-widest text-[var(--ink-mute)]">Year</div>
+              <div class="sans mt-2 text-[12px] text-[var(--ink-mute)]">2014 &mdash;&mdash;\u25cb&mdash;&mdash; 2026</div>
+            </div>
+
+            <div class="border-t border-[var(--line)] pt-4">
+              <div class="mono text-[10px] uppercase tracking-widest text-[var(--ink-mute)]">Other ecosystem maps</div>
+              <ul class="sans mt-2 space-y-1 text-[12px]">
+                <li><a class="underline-hover" href="#">CAIDP AI Index \u2192</a></li>
+                <li><a class="underline-hover" href="#">MIT AI Governance \u2192</a></li>
+                <li><a class="underline-hover" href="#">IAPP Ecosystem Map \u2192</a></li>
+                <li><a class="underline-hover" href="#">Gabriel\u2019s Stakeholder Map \u2192</a></li>
+                <li><a class="underline-hover" href="#">democracybuild.org \u2192</a></li>
+              </ul>
+            </div>
+          </aside>
+        `;
+
+        const pinnedRow = `
+          <section class="mb-6 rounded-lg border border-[var(--line)] bg-[var(--paper-2)] p-4">
+            <div class="mb-3 flex items-baseline justify-between">
+              <div>
+                <h2 class="serif text-[16px] font-semibold">Other AI ecosystem maps</h2>
+                <p class="sans text-[12px] text-[var(--ink-mute)]">Sister projects. Each also lives in the library as a resource with attribution.</p>
+              </div>
+              <a class="mono text-[11px] uppercase tracking-wider underline-hover" href="#">see all \u2192</a>
+            </div>
+            <div class="grid grid-cols-4 gap-3">
+              ${pinned
+                .map(
+                  (r) => `
+                <a class="card rounded-md px-3 py-3 block hover:translate-y-[-1px] transition">
+                  <div class="mono text-[10px] uppercase tracking-widest text-[var(--ink-mute)]">${(r.format_tags[0] || '').toUpperCase()}</div>
+                  <div class="serif mt-1 text-[15px] font-semibold leading-tight">${r.title}</div>
+                  <div class="sans mt-0.5 text-[11px] text-[var(--ink-mute)]">${r.author}</div>
+                </a>`
+                )
+                .join('')}
+            </div>
+          </section>
+        `;
+
+        const resourceCard = (r) => {
+          const marker = stanceMarkerPos(r.advocated_stance);
+          const stanceBar = marker != null
+            ? `<div class="stance-bar"><div class="stance-marker" style="left:${marker}%"></div></div>`
+            : '<div class="stance-bar opacity-30"></div>';
+          return `
+            <article class="card flex gap-4 rounded-md p-4">
+              <div class="bookspine flex h-28 w-8 flex-none items-end justify-center pb-1 shadow-sm">
+                <div class="mono vertical-text rotate-180 text-[9px] tracking-wider" style="writing-mode:vertical-rl;">${r.format_tags[0] || '\u2014'}</div>
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-baseline justify-between gap-3">
+                  <div>
+                    <h3 class="serif text-[18px] font-semibold leading-tight">${r.title}</h3>
+                    <div class="sans mt-0.5 text-[12px] text-[var(--ink-soft)]">
+                      <span>${r.author}</span><span class="divider-dot"></span><span>${r.year}</span>
+                    </div>
+                  </div>
+                  <div class="mono text-[10px] uppercase tracking-widest text-[var(--ink-mute)]">cited \u00d7 ${r.cited_by}</div>
+                </div>
+                <p class="sans mt-2 text-[13px] leading-snug text-[var(--ink-soft)]">${r.key_argument}</p>
+                <div class="mt-3 flex flex-wrap items-center gap-1.5">
+                  ${r.topic_tags.slice(0, 4).map((t) => chip(t)).join('')}
+                  ${r.format_tags.map((t) => chip(t, { emergent: true })).join('')}
+                </div>
+                <div class="mt-3 flex items-center gap-3 text-[11px] text-[var(--ink-mute)]">
+                  ${stanceBar}
+                  <span class="mono">${fmtStanceLabel(r.advocated_stance, r.advocated_timeline, r.advocated_risk) || 'stance unknown'}</span>
+                </div>
+              </div>
+            </article>
+          `;
+        };
+
+        return `
+          <div class="grid grid-cols-12 gap-8">
+            ${filterCol}
+            <section class="col-span-9">
+              <div class="mb-4 flex items-center justify-between">
+                <div>
+                  <div class="mono text-[10px] uppercase tracking-widest text-[var(--ink-mute)]">Showing</div>
+                  <div class="serif text-[22px] font-semibold">
+                    ${R.length} resources
+                    <span class="sans ml-2 text-[13px] font-normal text-[var(--ink-mute)]">
+                      in Topic: <em>AI Safety</em>
+                    </span>
+                  </div>
+                </div>
+                <div class="mono flex items-center gap-1 text-[11px] uppercase tracking-wider">
+                  <button class="chip chip-active px-2 py-1 rounded">Grid</button>
+                  <button class="chip px-2 py-1 rounded">List</button>
+                  <span class="mx-2 h-4 w-px bg-[var(--line)]"></span>
+                  <span class="text-[var(--ink-mute)]">sort:</span>
+                  <button class="chip px-2 py-1 rounded">Most cited</button>
+                </div>
+              </div>
+              ${pinnedRow}
+              <div class="space-y-3">
+                ${rest.map(resourceCard).join('')}
+              </div>
+            </section>
+          </div>
+        `;
+      };
+
+      // ----- variant B: dense research list ------------------------------
+      const renderB = () => {
+        const row = (r) => {
+          const marker = stanceMarkerPos(r.advocated_stance);
+          return `
+            <tr class="border-b border-[var(--line)] align-top hover:bg-[var(--paper-2)]">
+              <td class="mono w-10 py-3 pr-2 text-[10px] text-[var(--ink-mute)]">${String(r.id).padStart(3, '0')}</td>
+              <td class="py-3 pr-3">
+                <div class="serif text-[14px] font-semibold leading-tight">${r.title}</div>
+                <div class="sans mt-0.5 text-[11px] text-[var(--ink-mute)]">${r.author} &middot; ${r.year}</div>
+                <p class="sans mt-1 text-[12px] text-[var(--ink-soft)]">${r.key_argument}</p>
+              </td>
+              <td class="py-3 pr-3">
+                <div class="flex flex-wrap gap-1">${r.topic_tags.slice(0, 3).map((t) => chip(t)).join('')}</div>
+                <div class="mt-1 flex flex-wrap gap-1">${r.format_tags.map((t) => chip(t, { emergent: true })).join('')}</div>
+              </td>
+              <td class="py-3 pr-3 w-32">
+                ${
+                  marker != null
+                    ? `<div class="stance-bar"><div class="stance-marker" style="left:${marker}%"></div></div>
+                       <div class="mono mt-1 text-[10px] text-[var(--ink-mute)]">${r.advocated_stance}</div>`
+                    : `<div class="mono text-[10px] text-[var(--ink-mute)]">&mdash;</div>`
+                }
+              </td>
+              <td class="mono py-3 pr-3 w-16 text-[11px]">${r.advocated_timeline || '\u2014'}</td>
+              <td class="mono py-3 pr-3 w-16 text-[11px]">${r.advocated_risk || '\u2014'}</td>
+              <td class="mono py-3 w-16 text-right text-[11px]">${r.cited_by}</td>
+            </tr>
+          `;
+        };
+
+        const filterBar = `
+          <div class="mb-5 flex flex-wrap items-center gap-2 border-b border-[var(--line)] pb-3">
+            <div class="mono text-[10px] uppercase tracking-widest text-[var(--ink-mute)]">Filter:</div>
+            ${chip('AI Safety', { active: true, count: topicCounts.get('AI Safety') || 0 })}
+            ${chip('Governance', { count: topicCounts.get('Governance') || 0 })}
+            ${chip('Policy Proposal', { count: topicCounts.get('Policy Proposal') || 0 })}
+            ${chip('Compute', { count: topicCounts.get('Compute') || 0 })}
+            ${chip('Alignment', { count: topicCounts.get('Alignment') || 0 })}
+            ${chip('+ more', { emergent: true })}
+            <span class="mx-2 h-4 w-px bg-[var(--line)]"></span>
+            ${chip('Format: any', { emergent: true })}
+            ${chip('Stance: any', { emergent: true })}
+            ${chip('Year: 2014 \u2013 2026', { emergent: true })}
+            <div class="ml-auto flex items-center gap-2">
+              <div class="flex items-center gap-2 border-b border-[var(--ink)] pb-0.5">
+                <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+                <input placeholder="search title, idea, author" class="sans w-48 bg-transparent text-[12px] outline-none" />
+              </div>
+              <div class="mono flex items-center gap-1 text-[11px] uppercase tracking-wider">
+                <button class="chip px-2 py-1 rounded">Grid</button>
+                <button class="chip chip-active px-2 py-1 rounded">List</button>
+              </div>
+            </div>
+          </div>
+        `;
+
+        return `
+          <div>
+            <div class="mb-4 flex items-baseline justify-between">
+              <h2 class="serif text-[24px] font-semibold">Library</h2>
+              <div class="sans text-[12px] text-[var(--ink-mute)]">${R.length} resources &middot; ${CORE.length} core topics &middot; 23 emergent tags</div>
+            </div>
+            ${filterBar}
+            <div class="overflow-hidden rounded-md border border-[var(--line)] bg-white">
+              <table class="w-full border-collapse text-left">
+                <thead class="mono bg-[var(--paper-2)] text-[10px] uppercase tracking-widest text-[var(--ink-mute)]">
+                  <tr>
+                    <th class="py-2 pl-4">#</th>
+                    <th class="py-2 pr-3">Title / author / argument</th>
+                    <th class="py-2 pr-3">Tags</th>
+                    <th class="py-2 pr-3">Stance</th>
+                    <th class="py-2 pr-3">Timeline</th>
+                    <th class="py-2 pr-3">Risk</th>
+                    <th class="py-2 pr-4 text-right">Cited</th>
+                  </tr>
+                </thead>
+                <tbody class="pl-4">
+                  ${R.map(row).join('')}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+      };
+
+      // ----- variant C: tracks-first -------------------------------------
+      const renderC = () => {
+        const byId = new Map(R.map((r) => [r.id, r]));
+        const trackBlock = (t) => `
+          <section class="mb-10">
+            <header class="mb-4">
+              <div class="mono text-[10px] uppercase tracking-widest text-[var(--ink-mute)]">Track for ${t.audience}</div>
+              <h3 class="serif mt-1 text-[26px] font-semibold leading-tight">${t.title}</h3>
+              <p class="sans mt-1 max-w-xl text-[14px] text-[var(--ink-soft)]">${t.subtitle}</p>
+            </header>
+            <ol class="divide-y divide-[var(--line)] border-y border-[var(--line)]">
+              ${t.items
+                .map((it, i) => {
+                  const r = byId.get(it.resource_id);
+                  if (!r) return '';
+                  return `
+                    <li class="flex gap-4 py-4">
+                      <div class="serif flex h-8 w-8 flex-none items-center justify-center text-[18px] text-[var(--ink-mute)]">${i + 1}</div>
+                      <div class="flex-1 min-w-0">
+                        <div class="flex items-baseline gap-3">
+                          <h4 class="serif text-[16px] font-semibold leading-tight">${r.title}</h4>
+                          <span class="mono text-[10px] uppercase tracking-widest text-[var(--ink-mute)]">${r.format_tags[0]}</span>
+                        </div>
+                        <div class="sans text-[11px] text-[var(--ink-mute)]">${r.author} &middot; ${r.year}</div>
+                        <p class="serif mt-1 italic text-[13px] text-[var(--ink-soft)]">&ldquo;${it.blurb}&rdquo;</p>
+                        <div class="mt-2 flex flex-wrap gap-1">${r.topic_tags.slice(0, 3).map((x) => chip(x)).join('')}</div>
+                      </div>
+                      <a class="mono self-center text-[10px] uppercase tracking-widest underline-hover" href="#">open \u2192</a>
+                    </li>
+                  `;
+                })
+                .join('')}
+            </ol>
+          </section>
+        `;
+
+        return `
+          <div class="grid grid-cols-12 gap-10">
+            <nav class="col-span-3">
+              <div class="sticky top-6">
+                <div class="mono mb-3 text-[10px] uppercase tracking-widest text-[var(--ink-mute)]">In this view</div>
+                <div class="space-y-1 border-l border-[var(--ink)] pl-3 text-[13px]">
+                  ${TRACKS.map((t, i) => `<a class="block underline-hover ${i === 0 ? 'font-semibold' : ''}" href="#">${t.title}</a>`).join('')}
+                </div>
+                <div class="mono mt-8 mb-2 text-[10px] uppercase tracking-widest text-[var(--ink-mute)]">Jump to</div>
+                <div class="sans space-y-1 text-[13px]">
+                  <a class="block underline-hover" href="#">All resources (154)</a>
+                  <a class="block underline-hover" href="#">Sister ecosystem maps (4)</a>
+                  <a class="block underline-hover" href="#">Recently added</a>
+                </div>
+              </div>
+            </nav>
+            <div class="col-span-9">
+              <header class="mb-8 border-b border-[var(--line)] pb-6">
+                <div class="mono text-[10px] uppercase tracking-widest text-[var(--ink-mute)]">The library</div>
+                <h2 class="serif mt-1 text-[40px] font-semibold leading-[1.05]">Reading the AI policy landscape</h2>
+                <p class="sans mt-3 max-w-2xl text-[15px] text-[var(--ink-soft)]">
+                  Short editorial tracks for different readers. Every item links to the same underlying library, where you can filter, search, and see who cites what.
+                </p>
+                <div class="mt-4 flex flex-wrap gap-2">
+                  <a class="mono chip rounded px-3 py-1.5 text-[11px] uppercase tracking-wider" href="#">Browse all 154 \u2192</a>
+                  <a class="mono chip rounded px-3 py-1.5 text-[11px] uppercase tracking-wider" href="#">See the sister maps \u2192</a>
+                </div>
+              </header>
+              ${TRACKS.map(trackBlock).join('')}
+            </div>
+          </div>
+        `;
+      };
+
+      // ----- variant D: detail panel -------------------------------------
+      const renderD = () => {
+        const r = R.find((x) => x.id === 101); // AI 2027
+        return `
+          <div class="grid grid-cols-12 gap-10">
+            <aside class="col-span-4 opacity-50">
+              <div class="card rounded-md p-4">
+                <div class="serif text-[15px] font-semibold">Situational Awareness</div>
+                <div class="sans text-[11px] text-[var(--ink-mute)]">Aschenbrenner &middot; 2024 &middot; Essay</div>
+              </div>
+              <div class="card mt-2 rounded-md p-4">
+                <div class="serif text-[15px] font-semibold">Machines of Loving Grace</div>
+                <div class="sans text-[11px] text-[var(--ink-mute)]">Amodei &middot; 2024 &middot; Essay</div>
+              </div>
+              <div class="card mt-2 rounded-md p-4">
+                <div class="serif text-[15px] font-semibold">The Coming Wave</div>
+                <div class="sans text-[11px] text-[var(--ink-mute)]">Suleyman &middot; 2023 &middot; Book</div>
+              </div>
+            </aside>
+
+            <article class="col-span-8 card rounded-md p-8">
+              <div class="mono mb-4 flex items-center justify-between text-[10px] uppercase tracking-widest text-[var(--ink-mute)]">
+                <span>Essay &middot; Scenario &middot; ~40 min read</span>
+                <span>cited \u00d7 ${r.cited_by} &middot; ${r.year}</span>
+              </div>
+              <h2 class="serif text-[34px] font-semibold leading-tight">${r.title}</h2>
+              <div class="sans mt-1 text-[14px] text-[var(--ink-soft)]">by ${r.author}</div>
+
+              <div class="mt-5 grid grid-cols-2 gap-4">
+                <div class="rounded border border-[var(--line)] bg-[var(--paper-2)] p-3">
+                  <div class="mono text-[10px] uppercase tracking-widest text-[var(--ink-mute)]">Advocated stance</div>
+                  <div class="serif mt-1 text-[15px]">${r.advocated_stance || '\u2014'}</div>
+                </div>
+                <div class="rounded border border-[var(--line)] bg-[var(--paper-2)] p-3">
+                  <div class="mono text-[10px] uppercase tracking-widest text-[var(--ink-mute)]">Advocated timeline</div>
+                  <div class="serif mt-1 text-[15px]">${r.advocated_timeline || '\u2014'} (2026-28)</div>
+                </div>
+                <div class="rounded border border-[var(--line)] bg-[var(--paper-2)] p-3">
+                  <div class="mono text-[10px] uppercase tracking-widest text-[var(--ink-mute)]">Advocated risk</div>
+                  <div class="serif mt-1 text-[15px]">${r.advocated_risk || '\u2014'}</div>
+                </div>
+                <div class="rounded border border-[var(--line)] bg-[var(--paper-2)] p-3">
+                  <div class="mono text-[10px] uppercase tracking-widest text-[var(--ink-mute)]">Source</div>
+                  <div class="serif mt-1 text-[15px]">Original \u2014 primary</div>
+                </div>
+              </div>
+
+              <section class="mt-6">
+                <div class="mono text-[10px] uppercase tracking-widest text-[var(--ink-mute)]">Key argument</div>
+                <p class="serif mt-2 text-[16px] leading-relaxed">${r.key_argument}</p>
+              </section>
+
+              <section class="mt-6">
+                <div class="mono text-[10px] uppercase tracking-widest text-[var(--ink-mute)]">Topic tags</div>
+                <div class="mt-2 flex flex-wrap gap-1.5">
+                  ${r.topic_tags.map((t) => chip(t, { active: true })).join('')}
+                  ${r.format_tags.map((t) => chip(t, { emergent: true })).join('')}
+                </div>
+              </section>
+
+              <section class="mt-6 grid grid-cols-2 gap-6">
+                <div>
+                  <div class="mono mb-2 text-[10px] uppercase tracking-widest text-[var(--ink-mute)]">Authored by</div>
+                  <ul class="sans space-y-1 text-[13px]">
+                    <li><a class="underline-hover" href="#">Daniel Kokotajlo</a> &middot; <span class="text-[var(--ink-mute)]">AI Futures Project</span></li>
+                    <li><a class="underline-hover" href="#">Scott Alexander</a> &middot; <span class="text-[var(--ink-mute)]">Astral Codex Ten</span></li>
+                  </ul>
+                </div>
+                <div>
+                  <div class="mono mb-2 text-[10px] uppercase tracking-widest text-[var(--ink-mute)]">Cited by</div>
+                  <ul class="sans space-y-1 text-[13px]">
+                    <li><a class="underline-hover" href="#">Leopold Aschenbrenner</a> in Situational Awareness</li>
+                    <li><a class="underline-hover" href="#">Dwarkesh Patel</a> in several interviews</li>
+                    <li><a class="underline-hover" href="#">Anthropic</a> policy team memos</li>
+                    <li class="text-[var(--ink-mute)]">+20 more</li>
+                  </ul>
+                </div>
+              </section>
+
+              <section class="mt-6 border-t border-[var(--line)] pt-4">
+                <div class="mono mb-2 text-[10px] uppercase tracking-widest text-[var(--ink-mute)]">Appears in tracks</div>
+                <div class="flex flex-wrap gap-1.5">
+                  ${chip('New to AI policy? #5', { active: true })}
+                </div>
+              </section>
+
+              <div class="mt-8 flex items-center gap-3">
+                <a href="${r.url}" class="mono rounded bg-[var(--ink)] px-3 py-1.5 text-[11px] uppercase tracking-wider text-[var(--paper)]">read original \u2192</a>
+                <a class="mono text-[11px] uppercase tracking-wider text-[var(--ink-mute)] underline-hover" href="#">open in map graph</a>
+                <a class="mono text-[11px] uppercase tracking-wider text-[var(--ink-mute)] underline-hover" href="#">suggest an edit</a>
+              </div>
+            </article>
+          </div>
+        `;
+      };
+
+      // ----- mount + variant toggle --------------------------------------
+      document.getElementById('variant-A').innerHTML = renderA();
+      document.getElementById('variant-B').innerHTML = renderB();
+      document.getElementById('variant-C').innerHTML = renderC();
+      document.getElementById('variant-D').innerHTML = renderD();
+
+      document.querySelectorAll('.variant-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const v = btn.dataset.variant;
+          document.querySelectorAll('.variant-btn').forEach((b) => {
+            b.setAttribute('aria-selected', b === btn ? 'true' : 'false');
+          });
+          document.querySelectorAll('.variant').forEach((el) => {
+            el.classList.toggle('hidden', el.id !== `variant-${v}`);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
