@@ -1,9 +1,11 @@
 ---
 title: 'feat: Resources Rethink — Phase 1 (Library page, multi-tag schema, advocated beliefs, map cleanup)'
 type: feat
-status: active
+status: completed
 date: 2026-04-19
 deepened: 2026-04-19
+completed: 2026-04-20
+pr: https://github.com/MappingAI/mapping-ai/pull/27
 origin: docs/brainstorms/2026-04-19-resources-rethink-requirements.md
 ---
 
