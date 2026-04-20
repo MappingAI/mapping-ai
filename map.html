@@ -3415,9 +3415,9 @@ function _drawFrame() {
     }
     for (const [state, links] of Object.entries(batches)) {
       if (links.length === 0) continue;
-      ctx.globalAlpha = state === 'dimmed' ? 0.03 : state === 'highlighted' ? 0.6 : 0.25;
+      ctx.globalAlpha = state === 'dimmed' ? 0.02 : state === 'highlighted' ? 0.7 : 0.25;
       ctx.strokeStyle = tc.text3;
-      ctx.lineWidth = state === 'highlighted' ? 1.5 : 0.5;
+      ctx.lineWidth = state === 'highlighted' ? 2 : 0.5;
       ctx.setLineDash(state === 'one-hop' ? [4, 3] : []);
       ctx.beginPath();
       for (const l of links) {
@@ -4969,20 +4969,22 @@ function highlightNodes(names) {
 function dimUnconnected(node) {
   if (!node) return;
   if (viewMode === 'search') return;
-  const connectedNames = new Set([node.name]);
+  const clickedName = node.name;
+  const connectedNames = new Set([clickedName]);
   renderedLinks.forEach(l => {
     const srcName = l.source.name || l.source;
     const tgtName = l.target.name || l.target;
-    if (srcName === node.name) connectedNames.add(tgtName);
-    if (tgtName === node.name) connectedNames.add(srcName);
+    if (srcName === clickedName) connectedNames.add(tgtName);
+    if (tgtName === clickedName) connectedNames.add(srcName);
   });
   for (const d of _canvasNodes) {
     d._vs = connectedNames.has(d.name) ? 'highlighted' : 'dimmed';
   }
+  // Only highlight edges directly connected to the clicked node (not neighbor-to-neighbor)
   for (const l of _canvasLinks) {
     const srcName = (l.source && l.source.name) || '';
     const tgtName = (l.target && l.target.name) || '';
-    l._vs = (connectedNames.has(srcName) && connectedNames.has(tgtName)) ? 'highlighted' : 'dimmed';
+    l._vs = (srcName === clickedName || tgtName === clickedName) ? 'highlighted' : 'dimmed';
   }
   _clusterDimmed = true;
   _requestRedraw();
