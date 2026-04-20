@@ -109,9 +109,13 @@ export const handler = async (event) => {
       return { statusCode: 400, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Missing required field: name' }) }
     }
 
-    // Field length limits
+    // Field length limits.
+    // Bumped notes/notesHtml from 2000 → 8000 on 2026-04-20 for the enrichment
+    // skill: expert-curated rows (e.g. Ted Cruz Texas batch) routinely exceed
+    // 2000 chars when biographical notes + enrichment rationale + insider
+    // opinion are combined. DB columns are TEXT so there's no storage concern.
     const SHORT_LIMIT = 200
-    const LONG_LIMIT = 2000
+    const LONG_LIMIT = 8000
     const XLONG_LIMIT = 20000 // notesSources: JSON blob of up to ~20 sources with snippets
     const longFields = new Set(['notes', 'notesHtml', 'keyArgument', 'threatModels', 'regulatoryStanceDetail'])
     const xlongFields = new Set(['notesSources'])

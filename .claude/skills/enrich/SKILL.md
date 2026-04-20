@@ -25,6 +25,10 @@ Check at skill entry. If any required env var is missing, stop and tell the call
 
 **Exa MCP detection (runtime):** probe the session's tool registry for any tool matching `mcp__*exa*web_search*` and `mcp__*exa*web_fetch*`. If both are present, use them as the primary retriever. If absent, fall back in order: `EXA_API_KEY` → built-in `WebSearch` + `WebFetch`. The skill does not handle Exa credentials itself — that's the plugin's job. Warn the caller only if neither Exa MCP, nor `EXA_API_KEY`, nor `WebSearch` is available.
 
+**Exa toggle — ask the user before spending credits.** When Exa is available, `research.js` takes `--use-exa=auto|force|off` (default `auto`). Before running Exa-based research on a new entity, ASK the caller whether to use Exa for this run, unless they've already signalled it. Exa produces higher-quality sourcing but spends API credits; for quick tests, batch imports of expert-curated data, or re-verification of already-sourced entities, `--use-exa=off` (alias `--no-exa`) is often the right choice. Example phrasing: "Exa MCP is available. Use it (higher quality, spends credits) or skip it (`--no-exa`, degraded fallback)?"
+
+**Batch import path.** When the user has already done the research and provides a CSV (expert-curated rows with source URLs filled in), skip Exa entirely and route through `scripts/enrich/batch-import.js --file rows.csv [--execute]`. This is the correct path for mapping-party submissions, CSV exports from a research spreadsheet, and any case where the contributor has gathered sources themselves. Dry-run is the default.
+
 ## Quick Reference
 
 | Operation          | First step          | Canonical invocation                                                                                                                                       |

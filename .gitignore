@@ -73,3 +73,4 @@ bluedot-grant-budget.xlsx
 
 # Workshop setup files (contain DB credentials)
 workshop/*.sql
+tmp/

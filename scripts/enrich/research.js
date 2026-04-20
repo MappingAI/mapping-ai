@@ -60,9 +60,23 @@ function assertEntityType(entityType) {
 
 /**
  * Detect which retriever to use. Checks the Claude Code hook first, then env.
+ *
+ * The `useExa` option controls Exa-specific behaviour:
+ *   'auto' (default) — use MCP hook → EXA_API_KEY → web-search fallback
+ *   'force'          — require Exa (MCP or env); throw if unavailable
+ *   'off'            — skip Exa entirely, always use web-search fallback
+ *                      (use this when you don't want to spend Exa credits)
+ *
  * Returns { retriever, run }, where run(query) => Promise<RawResult[]>.
  */
-export function resolveRetriever() {
+export function resolveRetriever({ useExa = 'auto' } = {}) {
+  if (useExa === 'off') {
+    return {
+      retriever: 'web-search',
+      run: async (query) => webSearchFallback(query),
+    }
+  }
+
   const hook = globalThis.__ENRICH_TOOLS__
   if (hook && typeof hook.exaSearch === 'function') {
     return {
@@ -94,23 +108,30 @@ export function resolveRetriever() {
       },
     }
   }
+  if (useExa === 'force') {
+    throw new Error(
+      '--use-exa=force was set but neither the Claude Code Exa MCP tool nor EXA_API_KEY is available. Install the Exa MCP plugin or set EXA_API_KEY in .env.',
+    )
+  }
   return {
     retriever: 'web-search',
-    run: async (query) => {
-      // Degraded fallback — DuckDuckGo HTML has no proper search API. We fire
-      // a single request to record retrieval intent; we can't parse reliable
-      // snippets, so the result is a skeleton entry that tells downstream
-      // that research quality is low.
-      const url = `https://duckduckgo.com/?q=${encodeURIComponent(query)}`
-      return [
-        {
-          url,
-          title: `DuckDuckGo search: ${query}`,
-          snippet: '(web-search fallback — snippet not extracted; review source manually)',
-        },
-      ]
-    },
+    run: async (query) => webSearchFallback(query),
   }
+}
+
+async function webSearchFallback(query) {
+  // Degraded fallback — DuckDuckGo HTML has no proper search API. We fire
+  // a single request to record retrieval intent; we can't parse reliable
+  // snippets, so the result is a skeleton entry that tells downstream
+  // that research quality is low.
+  const url = `https://duckduckgo.com/?q=${encodeURIComponent(query)}`
+  return [
+    {
+      url,
+      title: `DuckDuckGo search: ${query}`,
+      snippet: '(web-search fallback — snippet not extracted; review source manually)',
+    },
+  ]
 }
 
 function normaliseResults(raw) {
@@ -352,13 +373,25 @@ function diffEntity(existing, draft) {
  * Main entry point. Returns { draft, sources, adjacentHints, duplicates, warnings }.
  *
  * Parameters:
- *   name           seed name (for person/org) or title (for resource)
- *   entityType     'person' | 'organization' | 'resource'
- *   mode           'seed' (default) | 'reverify'
- *   entityId       required when mode === 'reverify'
+ *   name               seed name (for person/org) or title (for resource)
+ *   entityType         'person' | 'organization' | 'resource'
+ *   mode               'seed' (default) | 'reverify'
+ *   entityId           required when mode === 'reverify'
  *   overrideDuplicate  when true, proceed even if a high-similarity DB hit exists
+ *   useExa             'auto' (default) | 'force' | 'off'. Lets the caller
+ *                      opt out of Exa credit spend when they don't need
+ *                      high-quality research (e.g. verifying a known entity,
+ *                      testing the pipeline, or batch-importing expert-
+ *                      curated rows that already have sources attached).
  */
-export async function research({ name, entityType, mode = 'seed', entityId = null, overrideDuplicate = false } = {}) {
+export async function research({
+  name,
+  entityType,
+  mode = 'seed',
+  entityId = null,
+  overrideDuplicate = false,
+  useExa = 'auto',
+} = {}) {
   if (!name) throw new Error('research: `name` is required')
   assertEntityType(entityType)
 
@@ -403,7 +436,7 @@ export async function research({ name, entityType, mode = 'seed', entityId = nul
     }
   }
 
-  const retriever = resolveRetriever()
+  const retriever = resolveRetriever({ useExa })
   if (retriever.retriever === 'web-search') {
     warnings.push({
       type: 'retriever_degraded',
@@ -449,7 +482,7 @@ export async function research({ name, entityType, mode = 'seed', entityId = nul
 // ---------------------------------------------------------------------------
 
 function parseArgs(argv) {
-  const args = { mode: 'seed' }
+  const args = { mode: 'seed', useExa: 'auto' }
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i]
     if (a === '--name') args.name = argv[++i]
@@ -458,7 +491,13 @@ function parseArgs(argv) {
     else if (a === '--entity-id') args.entityId = Number(argv[++i])
     else if (a === '--out') args.out = argv[++i]
     else if (a === '--override-duplicate') args.overrideDuplicate = true
+    else if (a.startsWith('--use-exa=')) args.useExa = a.slice('--use-exa='.length)
+    else if (a === '--use-exa') args.useExa = argv[++i]
+    else if (a === '--no-exa') args.useExa = 'off'
     else if (a === '--help' || a === '-h') args.help = true
+  }
+  if (!['auto', 'force', 'off'].includes(args.useExa)) {
+    throw new Error(`--use-exa must be one of: auto, force, off (got ${args.useExa})`)
   }
   return args
 }
@@ -468,7 +507,14 @@ function printHelp() {
     [
       'Usage: node scripts/enrich/research.js --name "<name>" --type <person|organization|resource>',
       '                                       [--mode=seed|reverify] [--entity-id N]',
-      '                                       [--override-duplicate] [--out draft.json]',
+      '                                       [--override-duplicate]',
+      '                                       [--use-exa=auto|force|off | --no-exa]',
+      '                                       [--out draft.json]',
+      '',
+      'Exa toggle:',
+      '  --use-exa=auto (default)  try Exa via MCP hook, EXA_API_KEY env, or fall back to web-search',
+      '  --use-exa=force           require Exa (fail if neither MCP hook nor EXA_API_KEY is present)',
+      '  --use-exa=off | --no-exa  skip Exa entirely (saves API credits; use web-search stub only)',
       '',
       'Env vars:',
       '  EXA_API_KEY          — enables Exa retrieval (preferred)',
