@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 import { Controller, type UseFormReturn } from 'react-hook-form'
 import { CustomSelect, buildOptions } from '../components/CustomSelect'
 import { TipTapEditor, type MentionData } from '../components/TipTapEditor'
@@ -10,6 +10,14 @@ import { useEntityCache } from '../hooks/useEntityCache'
 import { useSubmitEntity, useAddPendingEntity } from '../hooks/useSubmitEntity'
 import { fuzzySearch } from '../lib/search'
 import { searchEntities as searchAPI } from '../lib/api'
+import {
+  TOPIC_CORE,
+  FORMAT_TAGS,
+  ADVOCATED_STANCE_OPTIONS,
+  ADVOCATED_TIMELINE_OPTIONS,
+  ADVOCATED_RISK_OPTIONS,
+} from '../lib/resourceTaxonomy'
+import { buildTagSearch, tagsToStringArray } from '../lib/tagSerialization'
 import type { FuzzySearchResult } from '../types/api'
 import type { UpdateContext } from './ContributeForm'
 
@@ -23,24 +31,30 @@ interface ResourceFormProps {
   onSubmitSuccess?: () => void
 }
 
-const TYPE_OPTIONS = buildOptions([
-  'Essay',
-  'Book',
-  'Report',
-  'Podcast',
-  'Video',
-  'Website',
-  'Academic Paper',
-  'News Article',
-  'Substack/Newsletter',
-])
+const STANCE_SELECT_OPTIONS = buildOptions([...ADVOCATED_STANCE_OPTIONS])
+const TIMELINE_SELECT_OPTIONS = buildOptions([...ADVOCATED_TIMELINE_OPTIONS])
+const RISK_SELECT_OPTIONS = buildOptions([...ADVOCATED_RISK_OPTIONS])
 
 const LABEL_CLASS = 'font-mono text-[11px] uppercase tracking-wider text-[#555]'
 const INPUT_CLASS =
   'w-full px-3 py-2 font-mono text-[13px] border border-[#ddd] rounded bg-white outline-none transition-colors hover:border-[#999] focus:border-[#2563eb]'
 
-export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPersonTab, onViewExisting, onEnterUpdateMode, onSubmitSuccess }: ResourceFormProps) {
-  const { register, control, watch, handleSubmit, formState: { errors } } = form
+export function ResourceForm({
+  form,
+  updateContext,
+  onOrgPanelOpen,
+  onSwitchToPersonTab,
+  onViewExisting,
+  onEnterUpdateMode,
+  onSubmitSuccess,
+}: ResourceFormProps) {
+  const {
+    register,
+    control,
+    watch,
+    handleSubmit,
+    formState: { errors },
+  } = form
   const { cache } = useEntityCache()
   const submitEntity = useSubmitEntity()
   const addPendingEntity = useAddPendingEntity()
@@ -73,11 +87,56 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPe
               })
             }
           }
-        } catch { /* local results still work */ }
+        } catch {
+          /* local results still work */
+        }
       }
       return local
     },
     [cache],
+  )
+
+  // Aggregate emergent tags from the cache so contributors can reuse ones
+  // other submissions have proposed. Anything in the cache that is not in
+  // TOPIC_CORE / FORMAT_TAGS counts as "emergent" for suggestion purposes.
+  const { emergentTopics, emergentFormats } = useMemo(() => {
+    const topicSet = new Set<string>()
+    const formatSet = new Set<string>()
+    const canonicalTopics = new Set(TOPIC_CORE.map((t) => t.toLowerCase()))
+    const canonicalFormats = new Set(FORMAT_TAGS.map((t) => t.toLowerCase()))
+    for (const e of cache?.entities ?? []) {
+      for (const t of e.topic_tags ?? []) {
+        if (!canonicalTopics.has(t.toLowerCase())) topicSet.add(t)
+      }
+      for (const t of e.format_tags ?? []) {
+        if (!canonicalFormats.has(t.toLowerCase())) formatSet.add(t)
+      }
+    }
+    return {
+      emergentTopics: Array.from(topicSet).sort(),
+      emergentFormats: Array.from(formatSet).sort(),
+    }
+  }, [cache])
+
+  const topicTags = (watch('topicTags') as Tag[]) ?? []
+  const formatTags = (watch('formatTags') as Tag[]) ?? []
+  const searchTopics = useMemo(
+    () =>
+      buildTagSearch({
+        canonical: TOPIC_CORE,
+        emergent: emergentTopics,
+        alreadySelected: topicTags.map((t) => t.label),
+      }),
+    [emergentTopics, topicTags],
+  )
+  const searchFormats = useMemo(
+    () =>
+      buildTagSearch({
+        canonical: FORMAT_TAGS,
+        emergent: emergentFormats,
+        alreadySelected: formatTags.map((t) => t.label),
+      }),
+    [emergentFormats, formatTags],
   )
 
   // Author search — searches existing people
@@ -100,7 +159,9 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPe
               local.push({ id: p.id, label: p.name, detail: p.title ?? p.category ?? undefined, isPending: true })
             }
           }
-        } catch { /* local results still work */ }
+        } catch {
+          /* local results still work */
+        }
       }
       return local
     },
@@ -111,17 +172,35 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPe
     const { _hp, ...fields } = data
     // Serialize arrays: resourceAuthors (Tag[]) → author string, notesMentions → JSON string
     const authors = fields.resourceAuthors as Array<{ label: string }> | undefined
+    const topicTagsArr = tagsToStringArray(fields.topicTags as Tag[] | undefined)
+    const formatTagsArr = tagsToStringArray(fields.formatTags as Tag[] | undefined)
+    // The legacy `resource_type` DB column stays around for backward compat
+    // (map.html + seed scripts still read it), but it is no longer the
+    // primary source. Derive it from the first format tag so existing
+    // consumers keep working until Phase 2 finishes the cutover.
+    const legacyResourceType = formatTagsArr[0] ?? null
     const apiData: Record<string, unknown> = {
       ...fields,
-      author: Array.isArray(authors) ? authors.map((t) => t.label).join(', ') : fields.resourceAuthor ?? null,
-      notesMentions: Array.isArray(fields.notesMentions) ? JSON.stringify(fields.notesMentions) : fields.notesMentions ?? null,
+      author: Array.isArray(authors) ? authors.map((t) => t.label).join(', ') : (fields.resourceAuthor ?? null),
+      notesMentions: Array.isArray(fields.notesMentions)
+        ? JSON.stringify(fields.notesMentions)
+        : (fields.notesMentions ?? null),
       // Map resource field names to what the API expects
       name: fields.resourceTitle ?? null,
       title: fields.resourceTitle ?? null,
-      category: fields.resourceType ?? null,
+      // resource_type is deprecated for resources: source of truth is
+      // formatTags. Keep the legacy column populated from the first format
+      // tag so map.html's existing resource-icon logic still works.
+      resourceType: legacyResourceType,
       url: fields.resourceUrl ?? null,
       year: fields.resourceYear ?? null,
       keyArgument: fields.resourceKeyArgument ?? null,
+      // Phase 1 multi-tag + advocated fields
+      topicTags: topicTagsArr,
+      formatTags: formatTagsArr,
+      advocatedStance: (fields.advocatedStance as string) || null,
+      advocatedTimeline: (fields.advocatedTimeline as string) || null,
+      advocatedRisk: (fields.advocatedRisk as string) || null,
       entityId: updateContext?.entityId ?? undefined,
     }
     submitEntity.mutate(
@@ -137,7 +216,7 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPe
             id: result.submissionId,
             entity_type: 'resource',
             name: (fields.resourceTitle as string) ?? '',
-            category: (fields.resourceType as string) ?? null,
+            category: legacyResourceType,
           })
           onSubmitSuccess?.()
         },
@@ -162,9 +241,7 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPe
           placeholder="Resource title"
         />
         {errors.resourceTitle && (
-          <span className="text-[11px] font-mono text-red-500 mt-0.5">
-            {errors.resourceTitle.message as string}
-          </span>
+          <span className="text-[11px] font-mono text-red-500 mt-0.5">{errors.resourceTitle.message as string}</span>
         )}
         {!updateContext && (
           <DuplicateDetection
@@ -180,18 +257,51 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPe
         )}
       </div>
 
-      {/* Type */}
+      {/* Format tags (multi) */}
       <div className="col-span-2">
-        <label className={LABEL_CLASS}>Type</label>
+        <label className={LABEL_CLASS}>
+          Format
+          <InfoTooltip width={280}>
+            A resource can have multiple formats. A book that is also an anthology; a podcast that is also an interview.
+            Pick as many as apply. You can propose a new format if nothing fits — admins review and merge duplicates
+            later.
+          </InfoTooltip>
+        </label>
         <Controller
-          name="resourceType"
+          name="formatTags"
           control={control}
+          defaultValue={[]}
           render={({ field }) => (
-            <CustomSelect
-              options={TYPE_OPTIONS}
-              value={(field.value as string) ?? ''}
-              onChange={field.onChange}
-              placeholder="Select type..."
+            <TagInput
+              tags={(field.value as Tag[]) ?? []}
+              onTagsChange={field.onChange}
+              searchFn={(q) => Promise.resolve(searchFormats(q))}
+              placeholder="Book, Essay, Podcast, …"
+            />
+          )}
+        />
+      </div>
+
+      {/* Topic tags (multi) */}
+      <div className="col-span-2">
+        <label className={LABEL_CLASS}>
+          Topics
+          <InfoTooltip width={320}>
+            Over-tag rather than under-tag. Pick as many core topics as apply, and propose new ones when an existing tag
+            doesn&apos;t capture the resource&apos;s focus. Suggestions come from the curated set plus tags other
+            contributors have proposed.
+          </InfoTooltip>
+        </label>
+        <Controller
+          name="topicTags"
+          control={control}
+          defaultValue={[]}
+          render={({ field }) => (
+            <TagInput
+              tags={(field.value as Tag[]) ?? []}
+              onTagsChange={field.onChange}
+              searchFn={(q) => Promise.resolve(searchTopics(q))}
+              placeholder="AI Safety, Governance, Compute, …"
             />
           )}
         />
@@ -248,22 +358,13 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPe
       {/* Year */}
       <div>
         <label className={LABEL_CLASS}>Year</label>
-        <input
-          {...register('resourceYear')}
-          className={INPUT_CLASS}
-          placeholder="e.g. 2025"
-        />
+        <input {...register('resourceYear')} className={INPUT_CLASS} placeholder="e.g. 2025" />
       </div>
 
       {/* URL */}
       <div>
         <label className={LABEL_CLASS}>URL</label>
-        <input
-          {...register('resourceUrl')}
-          type="url"
-          className={INPUT_CLASS}
-          placeholder="https://..."
-        />
+        <input {...register('resourceUrl')} type="url" className={INPUT_CLASS} placeholder="https://..." />
       </div>
 
       {/* Key Argument */}
@@ -276,15 +377,81 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPe
         />
       </div>
 
+      {/* Advocated beliefs — what the resource argues for, not the author's
+          personal position. Optional. */}
+      <div className="col-span-2">
+        <div className="flex items-baseline gap-2">
+          <label className={LABEL_CLASS}>Advocated position</label>
+          <InfoTooltip width={320}>
+            What position does <em>this resource</em> argue for? Separate from what the author personally holds. Leave
+            blank when the resource is descriptive, a survey, or does not take a side. Admins and the enrichment
+            pipeline can fill these in later.
+          </InfoTooltip>
+        </div>
+      </div>
+
+      <div>
+        <label className={LABEL_CLASS}>Advocated Stance</label>
+        <Controller
+          name="advocatedStance"
+          control={control}
+          render={({ field }) => (
+            <CustomSelect
+              options={STANCE_SELECT_OPTIONS}
+              value={(field.value as string) ?? ''}
+              onChange={field.onChange}
+              placeholder="Not applicable"
+            />
+          )}
+        />
+      </div>
+
+      <div>
+        <label className={LABEL_CLASS}>Advocated Timeline</label>
+        <Controller
+          name="advocatedTimeline"
+          control={control}
+          render={({ field }) => (
+            <CustomSelect
+              options={TIMELINE_SELECT_OPTIONS}
+              value={(field.value as string) ?? ''}
+              onChange={field.onChange}
+              placeholder="Not applicable"
+            />
+          )}
+        />
+      </div>
+
+      <div className="col-span-2">
+        <label className={LABEL_CLASS}>Advocated Risk</label>
+        <Controller
+          name="advocatedRisk"
+          control={control}
+          render={({ field }) => (
+            <CustomSelect
+              options={RISK_SELECT_OPTIONS}
+              value={(field.value as string) ?? ''}
+              onChange={field.onChange}
+              placeholder="Not applicable"
+            />
+          )}
+        />
+      </div>
+
       {/* Notes (TipTap) */}
       <div className="col-span-2">
         <label className={LABEL_CLASS}>
           Notes
           <InfoTooltip width={280}>
-            <strong>What to include:</strong><br />
-            {'• Context, impact & significance'}<br />
-            {'• Related work & responses'}<br />
-            {'• Key takeaways or controversies'}<br /><br />
+            <strong>What to include:</strong>
+            <br />
+            {'• Context, impact & significance'}
+            <br />
+            {'• Related work & responses'}
+            <br />
+            {'• Key takeaways or controversies'}
+            <br />
+            <br />
             <strong>Use @mentions</strong> to link related people, orgs, and resources.
           </InfoTooltip>
         </label>
@@ -320,12 +487,11 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPe
           placeholder="your@email.com"
         />
         {errors.submitterEmail && (
-          <span className="text-[11px] font-mono text-red-500 mt-0.5">
-            {errors.submitterEmail.message as string}
-          </span>
+          <span className="text-[11px] font-mono text-red-500 mt-0.5">{errors.submitterEmail.message as string}</span>
         )}
         <span className="text-[12px] font-mono text-[#888] mt-0.5 block">
-          Your email will not be displayed publicly. It&apos;s used only if we need to contact you about your submission.
+          Your email will not be displayed publicly. It&apos;s used only if we need to contact you about your
+          submission.
         </span>
       </div>
 
@@ -336,15 +502,12 @@ export function ResourceForm({ form, updateContext, onOrgPanelOpen, onSwitchToPe
           disabled={submitEntity.isPending}
           className="w-full px-6 py-3 font-mono text-[13px] uppercase tracking-wider bg-[#1a1a1a] text-white border-none rounded cursor-pointer transition-colors hover:bg-[#333] disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {submitEntity.isPending
-            ? 'Submitting...'
-            : updateContext
-              ? 'Update Resource'
-              : 'Submit Resource'}
+          {submitEntity.isPending ? 'Submitting...' : updateContext ? 'Update Resource' : 'Submit Resource'}
         </button>
         {submitEntity.isError && (
           <p className="text-[12px] font-mono text-red-600 mt-2">
-            {(submitEntity.error as { body?: { error?: string } })?.body?.error ?? 'Submission failed. Please try again.'}
+            {(submitEntity.error as { body?: { error?: string } })?.body?.error ??
+              'Submission failed. Please try again.'}
           </p>
         )}
       </div>
