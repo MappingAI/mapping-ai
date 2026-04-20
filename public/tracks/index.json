@@ -1,0 +1,25 @@
+{
+  "tracks": [
+    {
+      "id": "new-to-ai-policy",
+      "title": "New to AI policy?",
+      "subtitle": "Eight essentials to get you oriented in roughly ten hours of reading.",
+      "audience": "Newcomers",
+      "file": "new-to-ai-policy.json"
+    },
+    {
+      "id": "the-regulation-debate",
+      "title": "The regulation debate",
+      "subtitle": "Reads that map out the policy arguments, pro and contra.",
+      "audience": "Policymakers, journalists",
+      "file": "the-regulation-debate.json"
+    },
+    {
+      "id": "alignment-foundations",
+      "title": "Alignment foundations",
+      "subtitle": "A technical ladder into the alignment problem.",
+      "audience": "Researchers",
+      "file": "alignment-foundations.json"
+    }
+  ]
+}

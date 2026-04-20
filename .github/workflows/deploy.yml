@@ -123,6 +123,15 @@ jobs:
               --delete
           fi
 
+          # Reading tracks (content/tracks/*.json) — static editorial content
+          # served straight from S3 at /tracks/. Short cache so track edits
+          # propagate quickly on deploy.
+          if [ -d dist/tracks ]; then
+            aws s3 sync dist/tracks/ s3://${{ secrets.S3_BUCKET_NAME }}/tracks/ \
+              --cache-control "public, max-age=60, stale-while-revalidate=300" \
+              --delete
+          fi
+
       - name: Invalidate CloudFront cache
         run: |
           aws cloudfront create-invalidation \

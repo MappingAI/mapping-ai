@@ -1,0 +1,24 @@
+{
+  "id": "alignment-foundations",
+  "title": "Alignment foundations",
+  "subtitle": "A technical ladder into the alignment problem.",
+  "audience": "Researchers",
+  "items": [
+    {
+      "title_hint": "Superintelligence: Paths, Dangers, Strategies",
+      "blurb": "Still the canonical articulation of the problem."
+    },
+    {
+      "title_hint": "Concrete Problems in AI Safety",
+      "blurb": "Concrete research agenda that shaped the field."
+    },
+    {
+      "title_hint": "Dwarkesh Patel × Dario Amodei",
+      "blurb": "State-of-the-field conversation covering interpretability and race dynamics."
+    },
+    {
+      "title_hint": "Machines of Loving Grace",
+      "blurb": "Frontier-lab framing of what a solved alignment problem could unlock."
+    }
+  ]
+}

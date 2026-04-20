@@ -1,0 +1,40 @@
+{
+  "id": "new-to-ai-policy",
+  "title": "New to AI policy?",
+  "subtitle": "Eight essentials to get you oriented in roughly ten hours of reading.",
+  "audience": "Newcomers",
+  "items": [
+    {
+      "title_hint": "Superintelligence: Paths, Dangers, Strategies",
+      "blurb": "Start here. Sets the vocabulary the whole debate uses and why alignment is a first-order problem."
+    },
+    {
+      "title_hint": "The Bitter Lesson",
+      "blurb": "Short and load-bearing: why the field's trajectory favours scale over cleverness."
+    },
+    {
+      "title_hint": "Concrete Problems in AI Safety",
+      "blurb": "Five concrete failure modes — the applied-alignment agenda in miniature."
+    },
+    {
+      "title_hint": "Situational Awareness",
+      "blurb": "The national-security frame. Establishes stakes for state actors and compute governance."
+    },
+    {
+      "title_hint": "AI 2027",
+      "blurb": "A scenario forecast that takes the timeline question seriously, month by month."
+    },
+    {
+      "title_hint": "Machines of Loving Grace",
+      "blurb": "A positive vision of powerful AI. Counterweight to the risk-heavy reads above."
+    },
+    {
+      "title_hint": "Executive Order on Safe, Secure AI",
+      "blurb": "What US federal executive-branch action looked like in practice."
+    },
+    {
+      "title_hint": "The Coming Wave",
+      "blurb": "Ends with what policy could do — governance framing from a deployer."
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "id": "the-regulation-debate",
+  "title": "The regulation debate",
+  "subtitle": "Reads that map out the policy arguments, pro and contra.",
+  "audience": "Policymakers, journalists",
+  "items": [
+    {
+      "title_hint": "Executive Order on Safe, Secure AI",
+      "blurb": "Federal executive-branch action as a baseline."
+    },
+    {
+      "title_hint": "Bill of Materials for AI",
+      "blurb": "EU-style structured-disclosure proposal."
+    },
+    {
+      "title_hint": "Compute Governance: A Research Agenda",
+      "blurb": "Compute as a governance lever — monitoring, rationing, conditioning."
+    },
+    {
+      "title_hint": "The Coming Wave",
+      "blurb": "Containment framing from a major-lab leader."
+    },
+    {
+      "title_hint": "Why I Am Not A Doomer",
+      "blurb": "The accelerationist policy counter-argument."
+    },
+    {
+      "title_hint": "Situational Awareness",
+      "blurb": "Security framing that reframes regulation as strategic, not restrictive."
+    }
+  ]
+}
