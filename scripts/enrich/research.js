@@ -264,7 +264,11 @@ function buildDraft({ name, entityType, classification, sources, warnings }) {
     evidenceSource: classification.evidenceSource ?? null,
     threatModels: classification.threatModels ?? null,
     notesHtml: classification.reasoning ? `<p>${escapeHtml(classification.reasoning)}</p>` : null,
-    notesSources: sources,
+    // Merge raw-search sources with classifier-extracted per-claim sources
+    // (quote, claim_date, definition). Per-claim entries land alongside the
+    // URL-level ones so downstream features (quote-level sourcing UI,
+    // definition-space viz, trajectory sparklines) can read a flat list.
+    notesSources: mergeSources(sources, classification.claims),
     notesConfidence: classification.confidence ?? null,
     enrichmentVersion: classification.enrichmentVersion ?? CURRENT_ENRICHMENT_VERSION,
     submitterRelationship: 'external',
@@ -283,6 +287,36 @@ function buildDraft({ name, entityType, classification, sources, warnings }) {
 
 function escapeHtml(s) {
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+}
+
+/**
+ * Merge raw research sources with per-claim sources from the classifier. A
+ * per-claim entry for a URL we already fetched gets its quote / claim_date /
+ * definition / field_name merged onto the existing entry. Standalone claim
+ * entries (classifier pointed at a URL we didn't fetch) are appended.
+ */
+function mergeSources(rawSources, claims) {
+  const merged = rawSources.map((s) => ({ ...s }))
+  if (!Array.isArray(claims) || claims.length === 0) return merged
+  const byUrl = new Map(merged.map((s) => [s.url, s]))
+  for (const c of claims) {
+    if (!c?.url) continue
+    const existing = byUrl.get(c.url)
+    if (existing) {
+      // Merge per-claim fields onto existing URL entry. If multiple claims
+      // touch the same URL for different fields, the second one overwrites
+      // the first — downstream features should pull claim-level data from
+      // a future per-field provenance table, not rely on this collapsing.
+      existing.field_name = c.field_name ?? existing.field_name ?? null
+      existing.quote = c.quote ?? existing.quote ?? null
+      existing.claim_date = c.claim_date ?? existing.claim_date ?? null
+      existing.definition = c.definition ?? existing.definition ?? null
+    } else {
+      merged.push(c)
+      byUrl.set(c.url, c)
+    }
+  }
+  return merged
 }
 
 /**

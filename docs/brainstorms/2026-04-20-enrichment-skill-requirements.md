@@ -11,6 +11,17 @@ Follows the Anthropic docx skill pattern: rich trigger-description frontmatter, 
 
 Supersedes (for the current build) `docs/brainstorms/2026-04-20-contributor-enrichment-keystones-requirements.md` — the three keystones (provenance, ephemeral preview, schema registry) remain a valid future bundle when contribution volume justifies them.
 
+## Downstream features this pipeline must support
+
+Four follow-on features (surfaced 2026-04-18, tracked separately in the product backlog) all depend on the data this skill produces. Their requirements shape the provenance shape (`notes_sources` JSONB) even though the UI for them lands later:
+
+1. **Quote-level sourcing for AGI claims** — per-entity `claims` sub-object storing direct quote excerpt, URL, date of claim, and the definition the speaker used (e.g., "economically valuable tasks" vs "self-improvement"). Surfaced on the entity detail card as a collapsible excerpt with source link, and as a tooltip on the timeline chip instead of a bare score.
+2. **Visualise the AGI definition-space** — new map.html tab that clusters entities by semantic similarity of their stated AGI definitions (Anthropic embeddings → UMAP/t-SNE → scatter). Depends on feature 1 landing first.
+3. **Sparklines of view shifts over time** — per-entity inline sparkline showing how a stated timeline/stance/risk has moved across dated claims. Requires ≥2 dated claims per dimension; entities with fewer fall back to single-point display.
+4. **Viewer mode (public quiz)** — `/viewer-quiz` with ~8 questions mapping to belief dimensions; anonymous responses in a new `viewer_response` table; results overlaid on the existing plot view alongside expert + public-polling layers.
+
+**Implication for this build:** each entry in `notes_sources` must accommodate `quote` (direct excerpt supporting the claim), `claim_date` (ISO date the speaker made the claim, distinct from `retrieved_at` which is when Exa fetched the page), and `definition` (free text for AGI-specific definitional language). Classifier prompts ask Haiku to extract these when present. The JSONB shape is deliberately open — adding fields per entry is a non-breaking change. The viewer-quiz table is out of scope here but the enrichment pipeline should not assume exclusive write access to the `submission` table or embed schemas that would block the future `viewer_response` addition.
+
 ## Problem Frame
 
 The Stephen Clare / Carina Prunkl / IASR workflow on 2026-04-19 took roughly thirty manual steps: spawning three Exa search subagents, mapping beliefs to enum values by hand, writing SQL inserts, hitting schema-drift bugs (`edge_pkey` sequence desync, `qa_approved` forgotten, `notes` vs `notes_html` divergence, `author` vs `authored_by` edge-type redundancy), regenerating `map-data.json`, uploading to S3, and invalidating CloudFront. Every future entity added to the map faces the same tax.

@@ -79,8 +79,19 @@ Respond in strict JSON only, with these keys:
   "evidenceSource": <one of: ${EVIDENCE_OPTIONS.join(', ')}>,
   "threatModels": <short sentence list using phrases like: ${KEY_CONCERNS.join(', ')}>,
   "confidence": <integer 1-5. 5 = multiple primary sources directly stating this. 1 = no evidence, speculative>,
-  "reasoning": <one short paragraph citing which evidence points support each classification>
+  "reasoning": <one short paragraph citing which evidence points support each classification>,
+  "claims": [
+    {
+      "field_name": <one of: agiTimeline, regulatoryStance, aiRiskLevel, evidenceSource, threatModels, category>,
+      "quote": <direct quoted text from the source that supports this claim; exact wording, not paraphrase>,
+      "url": <URL of the source>,
+      "claim_date": <ISO date YYYY-MM-DD the speaker made the claim, if discoverable from the source; null if unknown>,
+      "definition": <free-text note on what the speaker meant, especially for AGI claims where definitions vary; null if not relevant. Examples: "economically valuable tasks", "self-improvement / ASI-level", "Turing test", "human-level cognition">
+    }
+  ]
 }
+
+For "claims": include one entry per dated, directly-quoted statement you can attach to a belief field. This is load-bearing for downstream features (quote-level sourcing UI, AGI definition-space viz, belief-trajectory sparklines). If you can't find a direct quote, omit that claim entry rather than fabricating one. Multiple claims per field (e.g., two dated timeline quotes) are fine and encouraged — they make trajectory views possible.
 
 If the evidence is too thin to classify confidently, use "Unknown" / "Ill-defined" / "Mixed/nuanced" values rather than guessing, and return confidence: 1 or 2.
 Do not add keys beyond the set above. No markdown fences, no commentary outside the JSON.`
@@ -167,6 +178,25 @@ export async function classifyEntity({ name, entityType, evidenceText }) {
     if (err) enumWarnings.push(err)
   })
 
+  // Normalise the claims array into the notes_sources shape consumers expect.
+  // Each claim becomes a source entry with field_name + quote + claim_date +
+  // definition preserved alongside the URL. Downstream features
+  // (quote-level sourcing UI, AGI definition-space viz, sparklines) depend
+  // on these per-claim fields being present.
+  const rawClaims = Array.isArray(parsed.claims) ? parsed.claims : []
+  const claimSources = rawClaims
+    .filter((c) => c && typeof c.url === 'string' && c.url.length > 0)
+    .map((c) => ({
+      url: c.url,
+      snippet: c.quote ?? null,
+      retrieved_at: new Date().toISOString(),
+      retriever: 'classifier',
+      field_name: c.field_name ?? null,
+      quote: c.quote ?? null,
+      claim_date: c.claim_date ?? null,
+      definition: c.definition ?? null,
+    }))
+
   return {
     category: parsed.category ?? null,
     otherCategories: parsed.otherCategories ?? null,
@@ -177,6 +207,7 @@ export async function classifyEntity({ name, entityType, evidenceText }) {
     threatModels: parsed.threatModels ?? null,
     confidence: typeof parsed.confidence === 'number' ? parsed.confidence : null,
     reasoning: parsed.reasoning ?? null,
+    claims: claimSources,
     enrichmentVersion: CURRENT_ENRICHMENT_VERSION,
     enumWarnings: enumWarnings.length ? enumWarnings : null,
   }
