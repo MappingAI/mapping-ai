@@ -3862,7 +3862,7 @@ function render() {
   nodes.forEach(d => {
     if (d.isResource) return;
     const r = d.radius;
-    const cacheKey = `${d.entityType}-${d.id}-${r}`;
+    const cacheKey = `${d.entityType}-${d.id}`;
     const cached = _spriteCache.get(cacheKey);
     if (cached) {
       d._sprite = cached.sprite;
@@ -3894,22 +3894,25 @@ function render() {
       const img = new Image();
       img.referrerPolicy = 'no-referrer';
       img.onload = () => {
-        const size = r * 2;
+        // Rasterize at high resolution (up to source size) so sprites stay
+        // sharp when zoomed in. The draw call scales down to node size.
+        const hiRes = Math.min(Math.max(img.naturalWidth, img.naturalHeight), 128);
         const oc = document.createElement('canvas');
-        oc.width = size * dpr;
-        oc.height = size * dpr;
+        oc.width = hiRes * dpr;
+        oc.height = hiRes * dpr;
         const octx = oc.getContext('2d');
         octx.scale(dpr, dpr);
+        const hr = hiRes / 2;
         octx.beginPath();
-        octx.arc(r, r, r - (d.entityType === 'organization' ? 2 : 1), 0, Math.PI * 2);
+        octx.arc(hr, hr, hr - (d.entityType === 'organization' ? 2 : 1), 0, Math.PI * 2);
         octx.closePath();
         octx.clip();
         octx.fillStyle = d.entityType === 'organization' ? '#fff' : getClusterColor(d);
-        octx.fillRect(0, 0, size, size);
+        octx.fillRect(0, 0, hiRes, hiRes);
         const iw = img.naturalWidth, ih = img.naturalHeight;
-        const sc = Math.max(size / iw, size / ih);
+        const sc = Math.max(hiRes / iw, hiRes / ih);
         const sw = iw * sc, sh = ih * sc;
-        octx.drawImage(img, (size - sw) / 2, (size - sh) / 2, sw, sh);
+        octx.drawImage(img, (hiRes - sw) / 2, (hiRes - sh) / 2, sw, sh);
         d._sprite = oc;
         d._imgUrl = url;
         _spriteCache.set(cacheKey, { sprite: oc, url });
