@@ -134,7 +134,7 @@ jobs:
           echo "Waiting 30s for CloudFront invalidation to propagate..."
           sleep 30
           FAILED=0
-          for page in "/" "/contribute" "/map" "/about" "/insights" "/admin"; do
+          for page in "/" "/contribute" "/map" "/about" "/insights" "/admin" "/library"; do
             STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://mapping-ai.org${page}")
             if [ "$STATUS" -ne 200 ]; then
               echo "❌ FAIL: ${page} returned HTTP ${STATUS}"

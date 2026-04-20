@@ -5,6 +5,7 @@ const NAV_LINKS = [
   { href: '/', label: 'Background' },
   { href: '/contribute', label: 'Contribute' },
   { href: '/map', label: 'Map' },
+  { href: '/library', label: 'Library' },
   { href: '/about', label: 'About' },
 ]
 
@@ -43,9 +44,7 @@ export function Navigation() {
         }`}
       >
         {NAV_LINKS.map(({ href, label }) => {
-          const isActive =
-            href === currentPath ||
-            (href === '/contribute' && currentPath === '/contribute')
+          const isActive = href === currentPath || (href === '/contribute' && currentPath === '/contribute')
 
           return (
             <a
