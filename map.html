@@ -3951,7 +3951,7 @@ function render() {
       }
     })
     .on('start', (event) => {
-      if (!event.active) simulation.alphaDecay(0.04).alphaTarget(0.3).restart();
+      if (!event.active) simulation.alphaTarget(0.3).restart();
       event.subject._node.fx = event.subject._node.x;
       event.subject._node.fy = event.subject._node.y;
     })
@@ -3960,7 +3960,7 @@ function render() {
       event.subject._node.fy = currentZoom.invertY(event.y);
     })
     .on('end', (event) => {
-      if (!event.active) { simulation.alphaTarget(0).alphaDecay(0.15); }
+      if (!event.active) { simulation.alphaTarget(0); }
       event.subject._node.fx = null;
       event.subject._node.fy = null;
     }));
@@ -4023,7 +4023,6 @@ function render() {
   simulation
     .on('tick', ticked)
     .on('end', () => {
-      simulation.alphaDecay(0.04);
       if (typeof reapplySearchHighlighting === 'function') reapplySearchHighlighting();
     })
     .restart();
@@ -4154,6 +4153,10 @@ function render2D(svg, g, width, height) {
   const yTop = margin.top + pad;
   const yBot = height - margin.bottom - pad;
   const yRange = yBot - yTop;
+  // Clamp violin jitter to the plot area so extreme score columns don't
+  // render past the axis baselines (left/right margins are narrow in 1D).
+  const xMin = CONTROLS_WIDTH + margin.left + pad;
+  const xMax = CONTROLS_WIDTH + margin.left + plotW - pad;
 
   nodes.forEach((d, i) => {
     d.targetY = yAxisDef ? yScale(d[yAxisDef.scoreKey]) : yScale();
@@ -4171,7 +4174,7 @@ function render2D(svg, g, width, height) {
       const y01 = (d.y - yTop) / yRange;
       // Parabolic weight: 1 at y-center, 0 at edges → narrow taper top/bottom
       const weight = 4 * y01 * (1 - y01);
-      d.targetX = xRaw + hashOffset(d, i) * jitterRange * weight;
+      d.targetX = Math.max(xMin, Math.min(xMax, xRaw + hashOffset(d, i) * jitterRange * weight));
       d.x = d.targetX;
     }
   });
@@ -4205,9 +4208,9 @@ function render2D(svg, g, width, height) {
       hideTooltip();
     })
     .call(d3.drag()
-      .on('start', (event, d) => { if (!event.active) simulation.alphaDecay(0.04).alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
+      .on('start', (event, d) => { if (!event.active) simulation.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
       .on('drag', (event, d) => { d.fx = event.x; d.fy = event.y; })
-      .on('end', (event, d) => { if (!event.active) { simulation.alphaTarget(0).alphaDecay(0.15); } d.fx = null; d.fy = null; }));
+      .on('end', (event, d) => { if (!event.active) { simulation.alphaTarget(0); } d.fx = null; d.fy = null; }));
 
   // Background circles (category color)
   nodeGroup.append('circle')
@@ -4308,13 +4311,13 @@ function render2D(svg, g, width, height) {
       // bubbles can sit flush against the axis baseline (no dead band below).
       if (!yAxisDef) {
         nodes.forEach(d => {
-          const pad = d.radius + 1;
-          d.y = Math.max(margin.top + pad, Math.min(height - margin.bottom - pad, d.y));
+          const dp = d.radius + 1;
+          d.y = Math.max(margin.top + dp, Math.min(height - margin.bottom - dp, d.y));
+          d.x = Math.max(xMin, Math.min(xMax, d.x));
         });
       }
       nodeGroup.attr('transform', d => `translate(${d.x},${d.y})`);
-    })
-    .on('end', () => simulation.alphaDecay(0.04));
+    });
 
   svg.on('click', () => { document.getElementById('detail-panel').classList.remove('open'); clearSelection(); });
 }
