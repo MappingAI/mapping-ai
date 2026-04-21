@@ -30,26 +30,26 @@ Essential contributor-facing commands. See `current.md` for the full deploy and 
 
 ```bash
 # Local development
-npm run dev                   # Vite (5173) + Express API (3000) together
-npm run dev:web               # Vite only
-npm run dev:api               # Express API only
-npx vite build                # Production build (outputs to dist/)
+pnpm run dev                   # Vite (5173) + Express API (3000) together
+pnpm run dev:web               # Vite only
+pnpm run dev:api               # Express API only
+pnpm exec vite build          # Production build (outputs to dist/)
 
 # Quality gates
-npx tsc --noEmit              # TypeScript type check
-npx vitest run                # Vitest tests
-npm run lint                  # ESLint
-npm run format:check          # Prettier
+pnpm exec tsc --noEmit        # TypeScript type check
+pnpm exec vitest run          # Vitest tests
+pnpm run lint                  # ESLint
+pnpm run format:check          # Prettier
 
 # Database (requires DATABASE_URL in .env)
-npm run db:migrate            # Create/update tables, triggers, indexes
-npm run db:seed               # Import Airtable CSV data
-npm run db:export-map         # Regenerate map-data.json from approved entries
-npm run db:backup             # Backup all tables to S3 (JSON + SQL)
-npm run db:backup:local       # Backup to local files only
+pnpm run db:migrate            # Create/update tables, triggers, indexes
+pnpm run db:seed               # Import Airtable CSV data
+pnpm run db:export-map         # Regenerate map-data.json from approved entries
+pnpm run db:backup             # Backup all tables to S3 (JSON + SQL)
+pnpm run db:backup:local       # Backup to local files only
 
 # Legacy TipTap bundle (used only by map.html)
-npm run build:tiptap          # esbuild src/tiptap-notes.js → assets/js/tiptap-notes.js
+pnpm run build:tiptap          # esbuild src/tiptap-notes.js → assets/js/tiptap-notes.js
 ```
 
 Frontend auto-deploys on push to `main`. Backend (Lambda) requires manual `sam deploy` with a drift check first. See [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) for the guarded flow.
@@ -124,11 +124,11 @@ See [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) for the full deployment and revie
 ESLint + Prettier + lefthook pre-commit hooks.
 
 ```bash
-npm run lint          # Check for lint errors
-npm run lint:fix      # Auto-fix where possible
-npm run format        # Format src/ and api/ files
-npm run format:check  # Check formatting without writing
-npm run typecheck     # TypeScript type check
+pnpm run lint          # Check for lint errors
+pnpm run lint:fix      # Auto-fix where possible
+pnpm run format        # Format src/ and api/ files
+pnpm run format:check  # Check formatting without writing
+pnpm run typecheck     # TypeScript type check
 ```
 
 Pre-commit hooks run typecheck + lint + format check automatically. If a commit fails the hook, fix the underlying issue and commit again.
@@ -145,7 +145,7 @@ lefthook install
 ## DB safety
 
 - **Deletion protection** enabled on the RDS instance.
-- **Manual backups**: `npm run db:backup` dumps all tables to S3 under the `backups/` prefix as timestamped JSON + SQL. Run before any risky admin work.
+- **Manual backups**: `pnpm run db:backup` dumps all tables to S3 under the `backups/` prefix as timestamped JSON + SQL. Run before any risky admin work.
 - **Planned**: audit log table to track all DB mutations (approve/reject/merge/edit/delete) with revert capability.
 
 ## Known technical debt

@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@10.33.0",
+  "engines": {
+    "node": ">=20"
+  },
   "dependencies": {
     "@aws-sdk/client-cloudfront": "^3.1032.0",
     "@aws-sdk/client-s3": "^3.1026.0",
@@ -66,7 +70,7 @@
     "db:backup": "node scripts/backup-db.js",
     "db:backup:local": "node scripts/backup-db.js --local",
     "predev": "node scripts/ensure-map-data.js",
-    "dev": "concurrently -k -n api,web -c blue,magenta \"npm:dev:api\" \"npm:dev:web\"",
+    "dev": "concurrently -k -n api,web -c blue,magenta \"pnpm run dev:api\" \"pnpm run dev:web\"",
     "dev:api": "tsx dev-server.js",
     "dev:web": "vite",
     "build": "vite build",

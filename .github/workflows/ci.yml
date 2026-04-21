@@ -14,8 +14,10 @@
 # - `actions/checkout` uses `persist-credentials: false` to avoid leaving
 #   GITHUB_TOKEN on disk after checkout.
 #
-# `npm ci` runs lifecycle scripts by default. If a devDep ever starts doing
-# something risky at install, flip to `npm ci --ignore-scripts` here.
+# `pnpm install --frozen-lockfile` runs lifecycle scripts for packages listed
+# in package.json's `onlyBuiltDependencies`. pnpm 10 defaults to blocking
+# install scripts from other packages. If a devDep ever needs a blocked
+# script, add it to `onlyBuiltDependencies` rather than loosening globally.
 
 name: CI
 
@@ -43,29 +45,34 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
+        with:
+          run_install: false
+
       - name: Setup Node
         uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
         with:
           node-version: 20
-          cache: npm
+          cache: pnpm
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Prettier format-check
-        run: npm run format:check
+        run: pnpm run format:check
 
       - name: ESLint
-        run: npm run lint
+        run: pnpm run lint
 
       - name: TypeScript type-check
-        run: npm run typecheck
+        run: pnpm run typecheck
 
       - name: Vitest
-        run: npm test
+        run: pnpm test
 
       - name: Vite build
-        run: npm run build
+        run: pnpm run build
 
   sam-validate:
     name: SAM template validate

@@ -727,9 +727,14 @@ nvm install 20 && nvm use 20`}</Pre>
 
         <Pre>{`git clone https://github.com/MappingAI/mapping-ai.git
 cd mapping-ai
-npm ci
+pnpm install --frozen-lockfile
 brew install lefthook
 lefthook install`}</Pre>
+
+        <p className="mb-4">
+          If you don&rsquo;t have pnpm yet, install it first with <Code>brew install pnpm</Code> or{' '}
+          <Code>npm install -g pnpm</Code>.
+        </p>
 
         <p className="mb-4">
           Create a <Code>.env</Code> file with database credentials (shared via Doppler, or ask an organizer). See{' '}
@@ -738,7 +743,7 @@ lefthook install`}</Pre>
 
         <p className="mb-4">Start local dev:</p>
 
-        <Pre>{`npm run dev`}</Pre>
+        <Pre>{`pnpm run dev`}</Pre>
 
         <p className="mb-4">
           Visit <Code>localhost:5173</Code>. This runs Vite and the Express API server together. Everything works from
@@ -755,10 +760,10 @@ curl -o map-detail.json https://mapping-ai.org/map-detail.json`}</Pre>
 
         <H4>Useful commands</H4>
 
-        <Pre>{`npm run lint          # Check for lint errors
-npm run format        # Auto-format with Prettier
-npm run typecheck     # TypeScript type checking
-npm run test          # Run tests`}</Pre>
+        <Pre>{`pnpm run lint          # Check for lint errors
+pnpm run format        # Auto-format with Prettier
+pnpm run typecheck     # TypeScript type checking
+pnpm test              # Run tests`}</Pre>
 
         <p className="mb-4">
           Pre-commit hooks run automatically via lefthook (typecheck + lint + format). If a commit fails the hook, fix

@@ -4,9 +4,28 @@
 set -e
 
 echo "=== Building preview ==="
+echo "Node: $(node --version 2>/dev/null || echo 'not found')"
+
+# 0. Make pnpm available. CF Pages' auto-detect from pnpm-lock.yaml has been
+# unreliable; install via corepack if pnpm isn't already on PATH.
+if ! command -v pnpm >/dev/null 2>&1; then
+  echo "pnpm not on PATH; enabling via corepack"
+  if command -v corepack >/dev/null 2>&1; then
+    corepack enable pnpm
+    corepack prepare pnpm@10.33.0 --activate
+  else
+    echo "corepack unavailable; falling back to npm install -g pnpm"
+    npm install -g pnpm@10.33.0
+  fi
+fi
+echo "pnpm: $(pnpm --version)"
+
+# Make sure deps are installed. No-op if CF Pages already ran install.
+pnpm install --frozen-lockfile
+echo "✓ Dependencies installed"
 
 # 1. Build TipTap bundle (still needed for map.html inline code)
-npm run build:tiptap
+pnpm run build:tiptap
 echo "✓ TipTap built"
 
 # 2. Pull latest map data from production (so preview has real data)
@@ -15,7 +34,7 @@ curl -sf https://mapping-ai.org/map-detail.json -o map-detail.json || echo "⚠ 
 echo "✓ Map data fetched"
 
 # 3. Build with Vite (outputs to dist/)
-npx vite build
+pnpm exec vite build
 echo "✓ Vite build complete"
 
 # 4. Copy map data into dist/

@@ -8,10 +8,10 @@ This guide explains how to read and write data during the workshop, including qu
 
 There are two databases. Most workshop participants work on **staging**, a complete copy of production data that you can freely modify without affecting the live site. The **debugging team** has read-only access to production to test the contribute form and see how real submissions flow through the system.
 
-| Database | Purpose | Who | Access |
-|----------|---------|-----|--------|
+| Database             | Purpose                     | Who                                         | Access     |
+| -------------------- | --------------------------- | ------------------------------------------- | ---------- |
 | `mappingai_workshop` | Staging - experiment freely | Data Enrichment, Data Quality, Data Seeding | Read/Write |
-| `mappingai` | Production - the live site | Debugging team | Read-only |
+| `mappingai`          | Production - the live site  | Debugging team                              | Read-only  |
 
 **Check your .env file** to confirm which database you're connected to.
 
@@ -24,9 +24,11 @@ Notes should answer: **"Why does this person/org/resource matter to the U.S. AI 
 **Important:** Notes are public-facing. Write clean prose WITHOUT inline citations like [1], [2], [6,7]. Source URLs go in the separate `notes_sources` field.
 
 **Bad (too thin):**
+
 > "Jennifer Pahlka is the founder of Code for America."
 
 **Good (comprehensive):**
+
 > "Jennifer Pahlka founded Code for America in 2009 and served as U.S. Deputy Chief Technology Officer under President Obama (2013-2014). Her 2023 book 'Recoding America' critiques federal technology procurement and has influenced AI governance discussions around government AI adoption. She advocates for iterative, human-centered approaches to public sector technology deployment."
 
 ---
@@ -37,81 +39,83 @@ The database has **3 main tables**:
 
 ### `entity` - People, Organizations, Resources
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `id` | integer | Primary key |
-| `entity_type` | text | `person`, `organization`, or `resource` |
-| `name` | text | Person/org name |
-| `title` | text | Job title (person) or tagline (org) |
-| `category` | text | Primary role/sector (see Reference section) |
-| `other_categories` | text | Additional categories, comma-separated |
-| `primary_org` | text | Person's main organization |
-| `other_orgs` | text | Other affiliations with context |
-| `location` | text | City, State or multiple cities |
-| `website` | text | URL (orgs only) |
-| `funding_model` | text | Funding type (orgs only) |
-| `parent_org_id` | integer | FK to parent org (orgs only) |
-| `influence_type` | text | How they influence AI policy, comma-separated |
-| `twitter` | text | Twitter/X handle |
-| `bluesky` | text | Bluesky handle |
-| `notes` | text | Plain text description (2-4 sentences, NO inline citations) |
-| `notes_html` | text | Rich text (HTML) with @mentions |
-| `notes_sources` | text | JSON array of URLs or citations |
-| `notes_confidence` | smallint | 1-5 quality rating from enrichment |
-| `thumbnail_url` | text | Profile image URL |
-| `importance` | smallint | 1-5 importance rating (how central to AI policy) |
-| `status` | text | `approved`, `pending`, or `internal` |
-| `qa_approved` | boolean | Must be true to appear on map |
-| `enrichment_version` | text | `v2`, `v2-auto`, etc. |
+| Column               | Type     | Description                                                 |
+| -------------------- | -------- | ----------------------------------------------------------- |
+| `id`                 | integer  | Primary key                                                 |
+| `entity_type`        | text     | `person`, `organization`, or `resource`                     |
+| `name`               | text     | Person/org name                                             |
+| `title`              | text     | Job title (person) or tagline (org)                         |
+| `category`           | text     | Primary role/sector (see Reference section)                 |
+| `other_categories`   | text     | Additional categories, comma-separated                      |
+| `primary_org`        | text     | Person's main organization                                  |
+| `other_orgs`         | text     | Other affiliations with context                             |
+| `location`           | text     | City, State or multiple cities                              |
+| `website`            | text     | URL (orgs only)                                             |
+| `funding_model`      | text     | Funding type (orgs only)                                    |
+| `parent_org_id`      | integer  | FK to parent org (orgs only)                                |
+| `influence_type`     | text     | How they influence AI policy, comma-separated               |
+| `twitter`            | text     | Twitter/X handle                                            |
+| `bluesky`            | text     | Bluesky handle                                              |
+| `notes`              | text     | Plain text description (2-4 sentences, NO inline citations) |
+| `notes_html`         | text     | Rich text (HTML) with @mentions                             |
+| `notes_sources`      | text     | JSON array of URLs or citations                             |
+| `notes_confidence`   | smallint | 1-5 quality rating from enrichment                          |
+| `thumbnail_url`      | text     | Profile image URL                                           |
+| `importance`         | smallint | 1-5 importance rating (how central to AI policy)            |
+| `status`             | text     | `approved`, `pending`, or `internal`                        |
+| `qa_approved`        | boolean  | Must be true to appear on map                               |
+| `enrichment_version` | text     | `v2`, `v2-auto`, etc.                                       |
 
 **Belief/stance columns:**
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `belief_regulatory_stance` | text | Position on AI regulation (see Reference) |
-| `belief_regulatory_stance_detail` | text | Evidence/quotes supporting the stance |
-| `belief_evidence_source` | text | `Explicitly stated` or `Inferred` |
-| `belief_agi_timeline` | text | When they think AGI arrives |
-| `belief_ai_risk` | text | How seriously they take AI risk |
-| `belief_threat_models` | text | Top concerns, comma-separated |
+| Column                            | Type | Description                               |
+| --------------------------------- | ---- | ----------------------------------------- |
+| `belief_regulatory_stance`        | text | Position on AI regulation (see Reference) |
+| `belief_regulatory_stance_detail` | text | Evidence/quotes supporting the stance     |
+| `belief_evidence_source`          | text | `Explicitly stated` or `Inferred`         |
+| `belief_agi_timeline`             | text | When they think AGI arrives               |
+| `belief_ai_risk`                  | text | How seriously they take AI risk           |
+| `belief_threat_models`            | text | Top concerns, comma-separated             |
 
 **Resource-specific columns:**
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `resource_title` | text | Title of the resource |
-| `resource_url` | text | Link to the resource |
-| `resource_type` | text | Essay, Book, Report, etc. |
-| `resource_author` | text | Author name(s) |
-| `resource_year` | text | Publication year |
-| `resource_category` | text | AI Safety, AI Governance, etc. |
+| Column                  | Type | Description                           |
+| ----------------------- | ---- | ------------------------------------- |
+| `resource_title`        | text | Title of the resource                 |
+| `resource_url`          | text | Link to the resource                  |
+| `resource_type`         | text | Essay, Book, Report, etc.             |
+| `resource_author`       | text | Author name(s)                        |
+| `resource_year`         | text | Publication year                      |
+| `resource_category`     | text | AI Safety, AI Governance, etc.        |
 | `resource_key_argument` | text | 1-2 sentence summary of main argument |
 
 ### `edge` - Relationships
 
 Connections between entities. Each edge has a **direction**: source → target.
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `id` | integer | Primary key |
-| `source_id` | integer | FK → entity (the "from" entity) |
-| `target_id` | integer | FK → entity (the "to" entity) |
-| `edge_type` | text | Type of relationship (see Reference) |
-| `role` | text | Role in relationship (e.g., "CEO", "Board Member") |
-| `is_primary` | boolean | Is this the person's main/current affiliation? |
-| `start_date` | text | When relationship began (YYYY or YYYY-MM) |
-| `end_date` | text | When it ended (NULL = ongoing) |
-| `evidence` | text | Quote or description proving this relationship |
-| `source_url` | text | URL or citation |
-| `confidence` | smallint | 1-5 confidence rating |
-| `created_by` | text | `system`, `manual`, `enrich-v2`, etc. |
+| Column       | Type     | Description                                        |
+| ------------ | -------- | -------------------------------------------------- |
+| `id`         | integer  | Primary key                                        |
+| `source_id`  | integer  | FK → entity (the "from" entity)                    |
+| `target_id`  | integer  | FK → entity (the "to" entity)                      |
+| `edge_type`  | text     | Type of relationship (see Reference)               |
+| `role`       | text     | Role in relationship (e.g., "CEO", "Board Member") |
+| `is_primary` | boolean  | Is this the person's main/current affiliation?     |
+| `start_date` | text     | When relationship began (YYYY or YYYY-MM)          |
+| `end_date`   | text     | When it ended (NULL = ongoing)                     |
+| `evidence`   | text     | Quote or description proving this relationship     |
+| `source_url` | text     | URL or citation                                    |
+| `confidence` | smallint | 1-5 confidence rating                              |
+| `created_by` | text     | `system`, `manual`, `enrich-v2`, etc.              |
 
 **Direction matters:**
+
 - "Sam Altman employed_by OpenAI" → source: Sam Altman, target: OpenAI
 - "Anthropic spun_out_from OpenAI" → source: Anthropic, target: OpenAI
 - For symmetric relationships like `collaborator`, create edges in both directions
 
 **`is_primary` explained:**
+
 - `true` = This is the person's primary, current affiliation (their main job)
 - `false` = Secondary affiliation (advisory roles, board seats, past positions)
 
@@ -222,11 +226,11 @@ Below are examples of well-filled entities based on actual high-quality work.
 
 Your facilitator will provide one of these files:
 
-| Stream | File | Database Access |
-|--------|------|-----------------|
-| Data Enrichment / Quality | `.env.enrichment` | Staging (read/write) |
-| Data Seeding | `.env.seeding` | Staging (read/write) |
-| Debugging | `.env.debugging` | Production (read-only) |
+| Stream                    | File              | Database Access        |
+| ------------------------- | ----------------- | ---------------------- |
+| Data Enrichment / Quality | `.env.enrichment` | Staging (read/write)   |
+| Data Seeding              | `.env.seeding`    | Staging (read/write)   |
+| Debugging                 | `.env.debugging`  | Production (read-only) |
 
 > ⚠️ **NEVER commit or push your .env file.** It contains database passwords and API keys. Do not paste its contents into commit messages, pull requests, Slack, or any shared location. The `.env` files are gitignored, but be vigilant - leaked credentials require rotating all affected passwords and keys.
 
@@ -235,7 +239,7 @@ Your facilitator will provide one of these files:
 ```bash
 cd mapping-ai
 cp /path/to/.env.enrichment .env
-npm install
+pnpm install --frozen-lockfile
 ```
 
 ### 3. Verify your connection
@@ -462,51 +466,61 @@ node scripts/export-map-data.js
 ## Reference: Field Options
 
 ### Person Categories (`category`) - pick ONE
+
 Executive, Researcher, Policymaker, Investor, Organizer, Journalist, Academic, Cultural figure
 
 ### Organization Categories (`category`) - pick ONE
+
 Frontier Lab, AI Safety/Alignment, Think Tank/Policy Org, Government/Agency, Academic, VC/Capital/Philanthropy, Labor/Civil Society, Ethics/Bias/Rights, Media/Journalism, Political Campaign/PAC, Infrastructure & Compute, Deployers & Platforms
 
 ### Resource Categories (`resource_category`) - pick ONE
+
 AI Safety, AI Governance, AI Capabilities, Labor & Economy, National Security, Industry Analysis, Policy Proposal, Technical, Philosophy/Ethics
 
 ### Resource Types (`resource_type`) - pick ONE
+
 Essay, Book, Report, Podcast, Video, Website, Academic Paper, News Article, Substack/Newsletter
 
 ### Funding Model (`funding_model`) - Organizations only
+
 Venture-backed, Revenue-generating, Government-funded, Philanthropic, Membership/dues-based, Mixed, Public benefit corp, Self-funded/endowed, Other
 
 ### Regulatory Stance (`belief_regulatory_stance`)
 
-| Value | Description |
-|-------|-------------|
-| Accelerate | Minimal/no regulation |
-| Light-touch | Voluntary, self-governance |
-| Targeted | Sector-specific rules, not broad R&D restrictions |
-| Moderate | Mandatory safety evals + transparency |
-| Restrictive | External oversight of compute, training runs |
-| Precautionary | Pause/moratorium until governance catches up |
-| Nationalize | Nationalize/public control |
-| Mixed/unclear | No clear position |
+| Value         | Description                                       |
+| ------------- | ------------------------------------------------- |
+| Accelerate    | Minimal/no regulation                             |
+| Light-touch   | Voluntary, self-governance                        |
+| Targeted      | Sector-specific rules, not broad R&D restrictions |
+| Moderate      | Mandatory safety evals + transparency             |
+| Restrictive   | External oversight of compute, training runs      |
+| Precautionary | Pause/moratorium until governance catches up      |
+| Nationalize   | Nationalize/public control                        |
+| Mixed/unclear | No clear position                                 |
 
 ### AGI Timeline (`belief_agi_timeline`)
+
 Already here, 2-3 years, 5-10 years, 10-25 years, 25+ years or never, Unknown
 
 ### AI Risk Level (`belief_ai_risk`)
+
 Overstated, Manageable, Serious, Catastrophic, Existential, Unknown
 
 ### Threat Models (`belief_threat_models`) - comma-separated, pick up to 3
+
 Loss of control, Power concentration, Labor displacement, Cybersecurity, Weapons, Misinformation, Economic inequality, Democratic erosion, Environmental, Existential risk, Copyright/IP
 
 ### Influence Type (`influence_type`) - comma-separated
+
 Decision-maker, Researcher/analyst, Builder, Narrator, Connector/convener, Advisor/strategist, Funder/investor, Organizer/advocate, Implementer
 
 ### Evidence Source (`belief_evidence_source`)
-| Value | Description |
-|-------|-------------|
-| Explicitly stated | Direct quotes from speeches, testimony, writing, interviews |
-| Inferred | Deduced from actions, funding patterns, affiliations, or organizational positions |
-| Unknown | No clear evidence either way |
+
+| Value             | Description                                                                       |
+| ----------------- | --------------------------------------------------------------------------------- |
+| Explicitly stated | Direct quotes from speeches, testimony, writing, interviews                       |
+| Inferred          | Deduced from actions, funding patterns, affiliations, or organizational positions |
+| Unknown           | No clear evidence either way                                                      |
 
 ### Edge Types
 
@@ -550,24 +564,25 @@ Decision-maker, Researcher/analyst, Builder, Narrator, Connector/convener, Advis
 
 ### Importance (`importance`) - 1-5 scale, relative to the U.S. AI policy stakeholder map
 
-| Value | Meaning | Examples |
-|-------|---------|----------|
-| 5 | **Essential** - Cannot tell the story of U.S. AI policy without them | Sam Altman, Dario Amodei, Senators Schumer/Hawley, NIST |
-| 4 | **Major** - Significant ongoing influence, recognized across the field | CEOs of major AI companies, key congressional staff, leading researchers |
-| 3 | **Notable** - Meaningful contributions, known within AI policy circles | Mid-tier org leaders, prolific researchers, state-level policymakers |
-| 2 | **Minor** - Some relevance, limited visibility outside their niche | Junior staff, emerging voices, smaller orgs |
-| 1 | **Peripheral** - Tangential connection, included for completeness | One-time commentators, orgs with minor AI involvement |
+| Value | Meaning                                                                | Examples                                                                 |
+| ----- | ---------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| 5     | **Essential** - Cannot tell the story of U.S. AI policy without them   | Sam Altman, Dario Amodei, Senators Schumer/Hawley, NIST                  |
+| 4     | **Major** - Significant ongoing influence, recognized across the field | CEOs of major AI companies, key congressional staff, leading researchers |
+| 3     | **Notable** - Meaningful contributions, known within AI policy circles | Mid-tier org leaders, prolific researchers, state-level policymakers     |
+| 2     | **Minor** - Some relevance, limited visibility outside their niche     | Junior staff, emerging voices, smaller orgs                              |
+| 1     | **Peripheral** - Tangential connection, included for completeness      | One-time commentators, orgs with minor AI involvement                    |
 
 **Calibration tip:** Ask "How often does this person/org come up in AI policy conversations?" Score 5 = constantly, score 1 = rarely.
 
 ### Confidence (`notes_confidence`, `edge.confidence`) - 1-5 scale
-| Value | Meaning |
-|-------|---------|
-| 5 | Highly confident - multiple authoritative sources |
-| 4 | Confident - verified against primary source |
-| 3 | Moderate - verified but some ambiguity |
-| 2 | Low - limited sourcing, may need verification |
-| 1 | Very low - speculative, needs verification |
+
+| Value | Meaning                                           |
+| ----- | ------------------------------------------------- |
+| 5     | Highly confident - multiple authoritative sources |
+| 4     | Confident - verified against primary source       |
+| 3     | Moderate - verified but some ambiguity            |
+| 2     | Low - limited sourcing, may need verification     |
+| 1     | Very low - speculative, needs verification        |
 
 ---
 
@@ -576,6 +591,7 @@ Decision-maker, Researcher/analyst, Builder, Narrator, Connector/convener, Advis
 1. **Always check your DATABASE_URL** - make sure you're on staging, not production.
 
 2. **Use transactions** for multi-step changes:
+
    ```sql
    BEGIN;
    UPDATE entity SET notes = 'new notes' WHERE id = 123;

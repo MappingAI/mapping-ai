@@ -10,8 +10,8 @@ How code gets from a local branch to production, and what checks must pass at ea
 
 ```
 Feature branch -> PR (review + CI) -> main -> GitHub Actions auto-deploy
-                                               ├── npm ci
-                                               ├── npm run build:tiptap
+                                               ├── pnpm install --frozen-lockfile
+                                               ├── pnpm run build:tiptap
                                                ├── npx vite build -> dist/
                                                ├── node scripts/export-map-data.js
                                                ├── Password hash + analytics injection on dist/
@@ -56,7 +56,7 @@ Every PR to `main` must include:
 Before creating the PR, test locally:
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 | Page       | URL                       | What to check                                                           |
@@ -84,21 +84,21 @@ Two GitHub Actions workflows run over the PR lifecycle:
 
 **`.github/workflows/ci.yml`** — runs on every PR. These are the candidate required status checks on `main`:
 
-| Check                 | What it runs           |
-| --------------------- | ---------------------- |
-| Prettier format-check | `npm run format:check` |
-| ESLint                | `npm run lint`         |
-| TypeScript type-check | `npm run typecheck`    |
-| Vitest                | `npm test`             |
-| Vite build            | `npm run build`        |
-| SAM template validate | `sam validate --lint`  |
+| Check                 | What it runs            |
+| --------------------- | ----------------------- |
+| Prettier format-check | `pnpm run format:check` |
+| ESLint                | `pnpm run lint`         |
+| TypeScript type-check | `pnpm run typecheck`    |
+| Vitest                | `pnpm test`             |
+| Vite build            | `pnpm run build`        |
+| SAM template validate | `sam validate --lint`   |
 
 See the Branch Protection section below for how to enforce these on `main`.
 
 **`.github/workflows/deploy.yml`** — runs only on push to `main`:
 
-1. `npm ci`
-2. `npm run build:tiptap` (legacy TipTap bundle for map.html)
+1. `pnpm install --frozen-lockfile`
+2. `pnpm run build:tiptap` (legacy TipTap bundle for map.html)
 3. Write `.env.production` with `VITE_SITE_PASSWORD_HASH`
 4. `npx vite build` (React pages to dist/)
 5. DB schema smoke test

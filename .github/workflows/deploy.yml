@@ -11,16 +11,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
+        with:
+          run_install: false
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: pnpm
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Build TipTap bundle
-        run: npm run build:tiptap
+        run: pnpm run build:tiptap
 
       - name: Write .env.production
         run: |
@@ -30,7 +36,7 @@ jobs:
           EOL
 
       - name: Build with Vite
-        run: npx vite build
+        run: pnpm exec vite build
 
       - name: Verify DB schema (smoke test)
         env:
@@ -58,7 +64,7 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
-          npx tsx scripts/export-map-data.ts
+          pnpm exec tsx scripts/export-map-data.ts
           cp map-data.json dist/map-data.json
           if [ -f map-detail.json ]; then cp map-detail.json dist/map-detail.json; fi
 
