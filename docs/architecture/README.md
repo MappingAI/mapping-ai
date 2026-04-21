@@ -11,7 +11,7 @@ Canonical source for the mapping-ai stack. Three files, three jobs:
 | Question                                    | File                                     |
 | ------------------------------------------- | ---------------------------------------- |
 | What database are we using?                 | `current.md`                             |
-| Why aren't we on AWS anymore?               | `adrs/0001-migrate-off-aws.md`           |
+| Why are we migrating off AWS?               | `adrs/0001-migrate-off-aws.md`           |
 | What does the final architecture look like? | `target.md`                              |
 | Why is the map page inline HTML?            | `current.md` (known-limitations section) |
 | What does "Phase 2" mean?                   | `adrs/0001-migrate-off-aws.md`           |

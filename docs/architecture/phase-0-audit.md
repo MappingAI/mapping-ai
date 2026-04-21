@@ -38,6 +38,8 @@ Memory files referenced in this audit live in Claude Code's per-user memory stor
 
 ### Memory files
 
+> All paths in this subsection refer to files in the per-user Claude memory store (`~/.claude/projects/<project-slug>/memory/`), not in this repo. Changes to them happen via filesystem operations during the session, not through git.
+
 **DELETE (Phase 0):**
 
 - `aws_migration.md`: directly contradicts target (asserts "No Vercel/Neon", "migrate Neon → Aurora"). The reversal is captured in [ADR-0001](adrs/0001-migrate-off-aws.md). Deleting.

@@ -55,7 +55,7 @@ mapping-ai/
   scripts/
     migrate.js            # DB schema management
     seed.js               # CSV data import
-    export-map-data.js    # CLI map-data export
+    export-map-data.ts    # CLI map-data export (run via tsx)
     backup-db.js          # DB backup to S3
   assets/
     css/                  # Legacy styles (used by map.html)
