@@ -4,6 +4,25 @@
 set -e
 
 echo "=== Building preview ==="
+echo "Node: $(node --version 2>/dev/null || echo 'not found')"
+
+# 0. Make pnpm available. CF Pages' auto-detect from pnpm-lock.yaml has been
+# unreliable; install via corepack if pnpm isn't already on PATH.
+if ! command -v pnpm >/dev/null 2>&1; then
+  echo "pnpm not on PATH; enabling via corepack"
+  if command -v corepack >/dev/null 2>&1; then
+    corepack enable pnpm
+    corepack prepare pnpm@10.33.0 --activate
+  else
+    echo "corepack unavailable; falling back to npm install -g pnpm"
+    npm install -g pnpm@10.33.0
+  fi
+fi
+echo "pnpm: $(pnpm --version)"
+
+# Make sure deps are installed. No-op if CF Pages already ran install.
+pnpm install --frozen-lockfile
+echo "✓ Dependencies installed"
 
 # 1. Build TipTap bundle (still needed for map.html inline code)
 pnpm run build:tiptap
