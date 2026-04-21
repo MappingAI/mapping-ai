@@ -1,5 +1,7 @@
 # Post-Mortem: D3 Defer Broke Production Map
 
+> **Historical context:** this document describes behavior on the AWS stack (RDS + Lambda + CloudFront + S3 + SAM). See [`docs/architecture/current.md`](../architecture/current.md) for today's live stack and [ADR-0001](../architecture/adrs/0001-migrate-off-aws.md) for migration status.
+
 **Date:** 2026-04-09
 **Duration:** ~50 minutes (22:32 deploy completed → 23:23 hotfix pushed, +2 min deploy)
 **Severity:** P0 — entire map page non-functional, primary product surface
@@ -13,17 +15,17 @@ Adding `defer` to the D3.js CDN `<script>` tag in map.html caused the entire sta
 
 ## Timeline (UTC+1)
 
-| Time | Event |
-|------|-------|
+| Time        | Event                                                                                                                                                                                                                     |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 04:00–06:16 | 12 commits created on `feat/security-performance-hardening` branch (CORS, throttle, split JSON, font defer, D3 defer, TipTap defer, security headers, admin key fix, resize debounce, stats query, load testing, nosniff) |
-| 22:32 | Branch merged to `main` via fast-forward, pushed to origin |
-| 22:32 | GitHub Actions deploy triggered — `npm ci`, build, export, S3 sync, CloudFront invalidation |
-| 22:32 | Deploy completed successfully. Broken map.html now live. |
-| ~23:00 | User reports "entire map is empty and broken" |
-| 23:23 | Hotfix committed: removed `defer` from D3 script tag |
-| 23:23 | Hotfix pushed to main, deploy triggered |
-| 23:25 | Deploy completed, CloudFront invalidation started |
-| ~23:27 | Map confirmed working again |
+| 22:32       | Branch merged to `main` via fast-forward, pushed to origin                                                                                                                                                                |
+| 22:32       | GitHub Actions deploy triggered — `npm ci`, build, export, S3 sync, CloudFront invalidation                                                                                                                               |
+| 22:32       | Deploy completed successfully. Broken map.html now live.                                                                                                                                                                  |
+| ~23:00      | User reports "entire map is empty and broken"                                                                                                                                                                             |
+| 23:23       | Hotfix committed: removed `defer` from D3 script tag                                                                                                                                                                      |
+| 23:23       | Hotfix pushed to main, deploy triggered                                                                                                                                                                                   |
+| 23:25       | Deploy completed, CloudFront invalidation started                                                                                                                                                                         |
+| ~23:27      | Map confirmed working again                                                                                                                                                                                               |
 
 ## Root Cause
 
@@ -38,15 +40,17 @@ Adding `defer` to the D3.js CDN `<script>` tag in map.html caused the entire sta
 ```
 
 **Why this breaks:** HTML script loading semantics:
-- A `defer` script downloads in parallel but executes *after* the document is fully parsed
-- An inline `<script>` (no `src`) executes *immediately* when the parser encounters it
+
+- A `defer` script downloads in parallel but executes _after_ the document is fully parsed
+- An inline `<script>` (no `src`) executes _immediately_ when the parser encounters it
 - map.html's architecture: `<head>` has the D3 CDN script, then `<body>` has a massive inline `<script>` that calls D3 APIs directly
 - Execution order with `defer`: parser encounters inline script → executes it → `d3` is undefined (deferred script hasn't run yet) → all D3 calls throw/fail → empty map
 
 This is a well-known HTML behavior but was not caught because:
+
 1. No local browser testing was performed after the change
 2. No staging environment exists to validate before production
-3. The automated CI pipeline only validates the *build* succeeds, not that the *rendered page* works
+3. The automated CI pipeline only validates the _build_ succeeds, not that the _rendered page_ works
 
 ## What Went Well
 
@@ -60,6 +64,7 @@ This is a well-known HTML behavior but was not caught because:
 ### 1. No browser testing before push
 
 The D3 defer was part of a batch of 12 commits. Automated verification scripts checked:
+
 - All Lambda files import cors.js correctly
 - Split JSON produces valid skeleton + detail files
 - Admin.html uses header auth and sessionStorage
@@ -78,6 +83,7 @@ All 12 commits were merged to main in a single fast-forward merge. No pull reque
 ### 4. Incorrect "safe to push" assessment
 
 The D3 defer was categorized as a "safe frontend-only change" alongside font deferral and TipTap deferral. The reasoning was that `defer` is a standard performance optimization for external scripts. This failed to account for:
+
 - The inline script dependency on D3 (defer only works if ALL dependent code is also deferred or in external files)
 - Font `defer` works differently (fonts degrade gracefully with FOUT; scripts fail hard)
 - TipTap `defer` works because TipTap is initialized via event handlers, not inline parsing
@@ -85,25 +91,27 @@ The D3 defer was categorized as a "safe frontend-only change" alongside font def
 ### 5. No smoke test in CI
 
 The deploy workflow validates:
+
 - Schema exists (DB smoke test)
 - map-data.json generates successfully
 - S3 sync and CloudFront invalidation succeed
 
 It does NOT validate:
+
 - Pages render correctly in a browser
 - JavaScript executes without errors
 - Core user flows work (map loads, filters work, search works)
 
 ## Action Items
 
-| # | Action | Priority | Owner |
-|---|--------|----------|-------|
-| 1 | **Add smoke test to CI:** After S3 deploy, fetch map.html from CloudFront and verify D3 initializes (headless browser or at minimum check for JS errors) | High | TBD |
-| 2 | **Establish PR review requirement:** All changes to main must go through a PR, even from AI assistants. No direct merges. | High | Team |
-| 3 | **Create staging environment:** Preview deploy to a separate CloudFront distribution (or S3 prefix) before production | Medium | TBD |
-| 4 | **Pre-push browser checklist:** Before any push to main, verify core pages load in a local browser: map.html (D3 renders), contribute.html (form works), admin.html (auth gate shows) | High | All contributors |
-| 5 | **AI assistant guardrail:** When making changes to `<script>` tags in HTML, always test in a browser before committing. Never batch script-loading changes with unrelated commits. | High | Claude |
-| 6 | **Separate backend from frontend deploys:** Backend changes (api/*.js, template.yaml) that require `sam deploy` should be on separate branches/PRs from frontend changes, to reduce blast radius | Medium | Team |
+| #   | Action                                                                                                                                                                                            | Priority | Owner            |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ---------------- |
+| 1   | **Add smoke test to CI:** After S3 deploy, fetch map.html from CloudFront and verify D3 initializes (headless browser or at minimum check for JS errors)                                          | High     | TBD              |
+| 2   | **Establish PR review requirement:** All changes to main must go through a PR, even from AI assistants. No direct merges.                                                                         | High     | Team             |
+| 3   | **Create staging environment:** Preview deploy to a separate CloudFront distribution (or S3 prefix) before production                                                                             | Medium   | TBD              |
+| 4   | **Pre-push browser checklist:** Before any push to main, verify core pages load in a local browser: map.html (D3 renders), contribute.html (form works), admin.html (auth gate shows)             | High     | All contributors |
+| 5   | **AI assistant guardrail:** When making changes to `<script>` tags in HTML, always test in a browser before committing. Never batch script-loading changes with unrelated commits.                | High     | Claude           |
+| 6   | **Separate backend from frontend deploys:** Backend changes (api/\*.js, template.yaml) that require `sam deploy` should be on separate branches/PRs from frontend changes, to reduce blast radius | Medium   | Team             |
 
 ## Lessons Learned
 

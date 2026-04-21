@@ -17,13 +17,9 @@ The project is maintained by a working group of researchers, policy experts, and
 
 ## Tech Stack
 
-- **Frontend**: Vite 8 MPA + React 19 + TypeScript + Tailwind CSS v4
-- **Map**: D3.js force-directed graph (inline, not React)
-- **API**: AWS Lambda + API Gateway (Node.js 20)
-- **Database**: PostgreSQL 17 on AWS RDS
-- **Hosting**: S3 + CloudFront (auto-deployed via GitHub Actions)
+Frontend: Vite 8 MPA + React 19 + TypeScript + Tailwind CSS v4. The stakeholder map (`map.html`) is inline D3.js + Canvas 2D, not React.
 
-See [docs/architecture/current.md](docs/architecture/current.md) for the full architecture reference.
+Backend and infrastructure specifics are documented in [`docs/architecture/current.md`](docs/architecture/current.md). A migration off AWS to Cloudflare Workers + Neon + TanStack Start is in progress; see [`docs/architecture/target.md`](docs/architecture/target.md) and [ADR-0001](docs/architecture/adrs/0001-migrate-off-aws.md).
 
 ---
 

@@ -2,6 +2,8 @@
 
 How code gets from a local branch to production, and what checks must pass at each stage.
 
+> **Stack context:** this document describes operational procedures for the current AWS stack (Lambda + API Gateway + CloudFront + S3 + SAM). For the stack itself, see [`docs/architecture/current.md`](architecture/current.md). A migration to Cloudflare Workers + Neon + TanStack Start is planned; see [`docs/architecture/target.md`](architecture/target.md) and [ADR-0001](architecture/adrs/0001-migrate-off-aws.md). Much of this document's guidance (branch strategy, PR requirements, smoke test, incident response) survives the migration; the AWS-specific commands do not.
+
 ---
 
 ## Architecture

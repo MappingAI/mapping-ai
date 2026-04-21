@@ -1,15 +1,15 @@
 ---
-title: "Migrating mapping-ai from inline HTML/CSS/JS to Vite + React + TypeScript"
+title: 'Migrating mapping-ai from inline HTML/CSS/JS to Vite + React + TypeScript'
 date: 2026-04-15
 category: integration-issues
 module: frontend
 problem_type: developer_experience
 component: tooling
 symptoms:
-  - "7 HTML pages totaling ~13,500 lines of inline CSS/JS with no code sharing"
-  - "Duplicated components across pages (navigation, dropdowns, forms, TipTap editors)"
-  - "No type safety — vanilla JS with implicit contracts between frontend and API"
-  - "D3 map page (5,743 lines) too tightly coupled to extract without breaking"
+  - '7 HTML pages totaling ~13,500 lines of inline CSS/JS with no code sharing'
+  - 'Duplicated components across pages (navigation, dropdowns, forms, TipTap editors)'
+  - 'No type safety — vanilla JS with implicit contracts between frontend and API'
+  - 'D3 map page (5,743 lines) too tightly coupled to extract without breaking'
 root_cause: missing_tooling
 resolution_type: migration
 severity: high
@@ -26,6 +26,8 @@ tags:
 ---
 
 # Migrating mapping-ai from inline HTML/CSS/JS to Vite + React + TypeScript
+
+> **Historical context:** this document describes behavior on the AWS stack (RDS + Lambda + CloudFront + S3 + SAM). See [`docs/architecture/current.md`](../../architecture/current.md) for today's live stack and [ADR-0001](../../architecture/adrs/0001-migrate-off-aws.md) for migration status.
 
 ## Problem
 
@@ -54,15 +56,21 @@ Root cause: the D3 code depends on synchronous loading order, global DOM element
 ### 2. `forms` record pattern causing infinite re-renders
 
 The initial ContributeForm created a `forms` object literal each render:
+
 ```typescript
 // BAD — new object reference every render
 const forms: Record<FormType, UseFormReturn> = {
-  person: personForm, organization: orgForm, resource: resourceForm,
+  person: personForm,
+  organization: orgForm,
+  resource: resourceForm,
 }
 // ...used in useCallback deps → infinite loop
-const cancelUpdate = useCallback((formType) => {
-  forms[formType].reset({})
-}, [forms]) // forms changes every render!
+const cancelUpdate = useCallback(
+  (formType) => {
+    forms[formType].reset({})
+  },
+  [forms],
+) // forms changes every render!
 ```
 
 This produced "Maximum update depth exceeded" errors and crashed the contribute iframe inside map.html.
@@ -80,6 +88,7 @@ Vite 8 in MPA mode (`appType: 'mpa'`) with all 7 HTML pages as Rollup input entr
 **P0 spike (critical):** Before committing to the architecture, a minimal Vite config was built and `vite build` was run. The spike confirmed `dist/map.html` preserved all 5,743 lines of inline code, placeholder strings (`__SITE_PASSWORD_HASH__`), and D3 CDN script tags exactly. This took one commit and prevented a failed migration.
 
 ### Stack
+
 - **Vite 8** — MPA mode, dev proxy to Express API server on port 3000
 - **React 19** — separate entry point per page (islands pattern)
 - **TypeScript** — strict mode, types mirroring `toFrontendShape()` DB-to-frontend mapping
@@ -90,24 +99,27 @@ Vite 8 in MPA mode (`appType: 'mpa'`) with all 7 HTML pages as Rollup input entr
 
 ### Phased implementation (17 commits)
 
-| Phase | Commits | What |
-|-------|---------|------|
-| 0: Infrastructure | 1 | Vite MPA + TS + Tailwind + Vitest scaffolding |
-| 1: React plumbing | 3 | Entry points, providers, API hooks, Navigation |
-| 2: Component library | 7 | CustomSelect, TagInput, TipTap, DuplicateDetection, OrgSearch, search components, OrgCreationPanel |
-| 3: Form assembly | 1 | PersonForm, OrgForm, ResourceForm + cutover (4,041 → 32 lines) |
-| Static pages | 1 | about, index, theoryofchange, workshop (1,862 lines removed) |
-| Admin | 1 | Dashboard with auth, stats, pending queue, entity table (1,859 → 21 lines) |
-| Map | 2 | Extraction attempted → reverted to inline |
-| Bugfix | 1 | Infinite re-render loop fix |
+| Phase                | Commits | What                                                                                               |
+| -------------------- | ------- | -------------------------------------------------------------------------------------------------- |
+| 0: Infrastructure    | 1       | Vite MPA + TS + Tailwind + Vitest scaffolding                                                      |
+| 1: React plumbing    | 3       | Entry points, providers, API hooks, Navigation                                                     |
+| 2: Component library | 7       | CustomSelect, TagInput, TipTap, DuplicateDetection, OrgSearch, search components, OrgCreationPanel |
+| 3: Form assembly     | 1       | PersonForm, OrgForm, ResourceForm + cutover (4,041 → 32 lines)                                     |
+| Static pages         | 1       | about, index, theoryofchange, workshop (1,862 lines removed)                                       |
+| Admin                | 1       | Dashboard with auth, stats, pending queue, entity table (1,859 → 21 lines)                         |
+| Map                  | 2       | Extraction attempted → reverted to inline                                                          |
+| Bugfix               | 1       | Infinite re-render loop fix                                                                        |
 
 ### Infinite re-render fix
 
 Replace the `forms` object with a stable ref:
+
 ```typescript
 // GOOD — stable reference across renders
 const formsRef = useRef({
-  person: personForm, organization: orgForm, resource: resourceForm,
+  person: personForm,
+  organization: orgForm,
+  resource: resourceForm,
 })
 formsRef.current = { person: personForm, organization: orgForm, resource: resourceForm }
 
@@ -133,6 +145,7 @@ All 3 form components stay mounted (hidden via CSS). Conditional rendering would
 1. **Spike before extracting tightly-coupled code.** The P0 spike that validated Vite MPA passthrough took one commit and prevented a premature map migration. The map extraction attempted without a spike broke immediately. Any code extraction that changes execution context (inline to external, synchronous to module) needs a working proof first.
 
 2. **Never put mutable objects in useCallback/useMemo dependency arrays.** Object literals and record patterns created inline during render produce new references every render. Use `useRef` for stable references to mutable collections:
+
    ```typescript
    // BAD: new object every render → infinite loop in deps
    const lookup = { a: hookA, b: hookB }

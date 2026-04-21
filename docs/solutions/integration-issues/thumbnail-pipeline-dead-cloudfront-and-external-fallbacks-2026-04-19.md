@@ -30,6 +30,8 @@ tags:
 
 # Thumbnail pipeline serving dead CloudFront domain with live external fallbacks
 
+> **Historical context:** this document describes behavior on the AWS stack (RDS + Lambda + CloudFront + S3 + SAM). See [`docs/architecture/current.md`](../../architecture/current.md) for today's live stack and [ADR-0001](../../architecture/adrs/0001-migrate-off-aws.md) for migration status.
+
 ## Problem
 
 A compound failure across the thumbnail pipeline meant nearly every entity image on mapping-ai.org was either pointing at a dead CloudFront distribution or triggering live external fetches (Wikipedia, Google Favicons) on each page view. The database, the cache script, the admin update path, and the frontend fallback chain were all independently broken in ways that masked each other, so no single fix would have made the map render correctly.
