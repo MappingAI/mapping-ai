@@ -91,6 +91,10 @@ This document describes the stack that is actually running behind https://mappin
 - **Forms:** React Hook Form
 - **Rich text:** TipTap on React pages (`src/components/TipTapEditor.tsx`); legacy esbuild bundle `src/tiptap-notes.js` → `assets/js/tiptap-notes.js` still used by `map.html`
 - **XSS sanitization:** DOMPurify
+- **Fonts:** EB Garamond (serif) + DM Mono (mono) via Google Fonts
+- **Visualization:** D3.js (force simulation on `map.html`, charts on `insights.html`). Canvas 2D for map rendering; SVG for the plot view and insights charts.
+- **Testing:** Vitest + jsdom + React Testing Library
+- **Client-side external APIs** (free, no key required): Google Favicons for org logos, Wikipedia REST API for people headshots, Photon/OpenStreetMap for city geocoding, Bluesky public API for handle search. Per the thumbnail rules, the frontend does not call these at render time; `scripts/cache-thumbnails.js` caches results to S3.
 
 ### Pages
 
@@ -126,6 +130,212 @@ Shared modules (`api/cors.ts`, `api/export-map.ts`) are bundled into each functi
 
 **Dev server:** `dev-server.js` (Express) serves the API locally on port 3000. Vite proxies `/api` → 3000. `npm run dev` runs both concurrently.
 
+## Database schema
+
+Three tables: `entity`, `submission`, `edge`. The schema was migrated from a prior per-type layout (separate `people` / `organizations` / `resources` tables). Do not reference the old names.
+
+### `entity`
+
+| Column                            | Type                | Notes                                                                                                                                      |
+| --------------------------------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `id`                              | SERIAL PK           |                                                                                                                                            |
+| `entity_type`                     | VARCHAR(20)         | `person`, `organization`, or `resource`                                                                                                    |
+| `name`                            | VARCHAR(200)        | Person/org name                                                                                                                            |
+| `title`                           | VARCHAR(300)        | Job title (person)                                                                                                                         |
+| `category`                        | VARCHAR(200)        | Role (person) or sector (org)                                                                                                              |
+| `other_categories`                | TEXT                | Comma-separated secondary categories                                                                                                       |
+| `primary_org`                     | VARCHAR(200)        | Person's primary org                                                                                                                       |
+| `other_orgs`                      | VARCHAR(200)        | Person's other affiliations                                                                                                                |
+| `website`                         | VARCHAR(200)        | Org website                                                                                                                                |
+| `funding_model`                   | VARCHAR(200)        | Org funding model                                                                                                                          |
+| `parent_org_id`                   | INTEGER FK → entity | Org parent                                                                                                                                 |
+| `resource_title`                  | VARCHAR(300)        | Resource title                                                                                                                             |
+| `resource_category`               | VARCHAR(200)        | Resource category                                                                                                                          |
+| `resource_author`                 | VARCHAR(200)        | Resource author                                                                                                                            |
+| `resource_type`                   | VARCHAR(100)        | Essay, Book, Report, etc.                                                                                                                  |
+| `resource_url`                    | VARCHAR(500)        | Resource URL                                                                                                                               |
+| `resource_year`                   | VARCHAR(10)         | Resource year                                                                                                                              |
+| `resource_key_argument`           | TEXT                | Resource key argument                                                                                                                      |
+| `location`                        | VARCHAR(200)        |                                                                                                                                            |
+| `influence_type`                  | TEXT                | Comma-separated                                                                                                                            |
+| `twitter`, `bluesky`              | VARCHAR(200)        | Social handles                                                                                                                             |
+| `notes`                           | TEXT                | Plain-text notes                                                                                                                           |
+| `notes_html`                      | TEXT                | Rich-text notes (TipTap HTML)                                                                                                              |
+| `thumbnail_url`                   | VARCHAR(500)        | `https://mapping-ai.org/thumbnails/...` = cached; `''` = tried, no image; `NULL` = never tried. Populated by `scripts/cache-thumbnails.js` |
+| `belief_regulatory_stance`        | VARCHAR(200)        | Display label (trigger-derived from wavg)                                                                                                  |
+| `belief_regulatory_stance_detail` | TEXT                |                                                                                                                                            |
+| `belief_evidence_source`          | VARCHAR(200)        |                                                                                                                                            |
+| `belief_agi_timeline`             | VARCHAR(200)        | Display label                                                                                                                              |
+| `belief_ai_risk`                  | VARCHAR(200)        | Display label                                                                                                                              |
+| `belief_threat_models`            | TEXT                |                                                                                                                                            |
+| `belief_*_wavg`                   | REAL                | Weighted average score (trigger-maintained)                                                                                                |
+| `belief_*_wvar`                   | REAL                | Weighted variance (trigger-maintained)                                                                                                     |
+| `belief_*_n`                      | INTEGER             | Count of scored submissions                                                                                                                |
+| `submission_count`                | INTEGER             | Total approved submissions                                                                                                                 |
+| `status`                          | VARCHAR(20)         | `approved`, `pending`, `internal`                                                                                                          |
+| `search_vector`                   | tsvector            | Full-text search (GIN indexed, auto-updated by trigger)                                                                                    |
+
+### `submission`
+
+| Column                        | Type                | Notes                                              |
+| ----------------------------- | ------------------- | -------------------------------------------------- |
+| `id`                          | SERIAL PK           |                                                    |
+| `entity_type`                 | VARCHAR(20)         | `person`, `organization`, or `resource`            |
+| `entity_id`                   | INTEGER FK → entity | NULL for new entity submissions, set for edits     |
+| `submitter_email`             | VARCHAR(200)        |                                                    |
+| `submitter_relationship`      | VARCHAR(20)         | `self`, `connector`, `external`                    |
+| (all entity fields)           |                     | Flat columns matching entity table                 |
+| `belief_*_score`              | SMALLINT            | Numeric score (stance 1-7, timeline 1-5, risk 1-5) |
+| `notes_html`                  | TEXT                | Rich text notes                                    |
+| `notes_mentions`              | JSONB               | @mention data                                      |
+| `status`                      | VARCHAR(20)         | `pending`, `approved`, `rejected`                  |
+| `llm_review`                  | JSONB               | Claude Haiku quality rating (1-5), flags, notes    |
+| `resolution_notes`            | TEXT                | Admin notes on review decision                     |
+| `submitted_at`, `reviewed_at` | TIMESTAMPTZ         |                                                    |
+| `reviewed_by`                 | VARCHAR(200)        |                                                    |
+
+### `edge`
+
+| Column       | Type                | Notes                                                       |
+| ------------ | ------------------- | ----------------------------------------------------------- |
+| `id`         | SERIAL PK           |                                                             |
+| `source_id`  | INTEGER FK → entity | ON DELETE CASCADE                                           |
+| `target_id`  | INTEGER FK → entity | ON DELETE CASCADE                                           |
+| `edge_type`  | VARCHAR(50)         | affiliated, collaborator, funder, critic, authored_by, etc. |
+| `role`       | VARCHAR(200)        | Role at org (for affiliation edges)                         |
+| `is_primary` | BOOLEAN             | Primary org affiliation                                     |
+| `evidence`   | TEXT                |                                                             |
+| `created_by` | VARCHAR(50)         | `system`, `admin`, etc.                                     |
+| UNIQUE       |                     | `(source_id, target_id, edge_type)`                         |
+
+### Triggers
+
+1. **`before_submission_update`**: when a new-entity submission is approved (`entity_id IS NULL` and status transitions to `approved`), auto-creates the entity row and backfills `entity_id`.
+2. **`after_submission_update`**: recalculates weighted belief scores on the entity when submission status changes. Weights: self=10, connector=2, external=1.
+3. **`update_entity_search`**: updates `search_vector` on entity INSERT/UPDATE.
+
+### Field-name mapping (DB → frontend)
+
+`api/export-map.ts` maps DB column names to the field names the frontend reads from `map-data.json`.
+
+| DB column                  | Frontend field                                   | Notes                                     |
+| -------------------------- | ------------------------------------------------ | ----------------------------------------- |
+| `belief_regulatory_stance` | `regulatory_stance`                              |                                           |
+| `belief_agi_timeline`      | `agi_timeline`                                   |                                           |
+| `belief_ai_risk`           | `ai_risk_level`                                  |                                           |
+| `belief_evidence_source`   | `evidence_source`                                |                                           |
+| `belief_threat_models`     | `threat_models`                                  |                                           |
+| `resource_title`           | `title`                                          | Resources only                            |
+| `resource_category`        | `category`                                       | Resources only                            |
+| `resource_author`          | `author`                                         | Resources only                            |
+| `resource_url`             | `url`                                            | Resources only                            |
+| `resource_year`            | `year`                                           | Resources only                            |
+| `resource_key_argument`    | `key_argument`                                   | Resources only                            |
+| `belief_*_wavg`            | `stance_score` / `timeline_score` / `risk_score` | Falls back to text label → numeric lookup |
+
+Any schema change must update this mapping or the map/plot view breaks silently.
+
+### Database scripts
+
+```bash
+npm run db:migrate        # Create/update all tables, triggers, indexes
+npm run db:seed           # Import Airtable CSV data
+npm run db:export-map     # Generate map-data.json from approved entries
+npm run db:backup         # Backup all tables to S3 (JSON + SQL)
+npm run db:backup:local   # Backup to local files only
+```
+
+## API reference
+
+Production base URL: `https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com`
+
+For contributor-facing field reference, submission payload schemas, and examples, see `docs/CONTRIBUTOR.md`. The below covers the internal and admin surface.
+
+### `POST /submit`
+
+Submit a new or updated entry for review.
+
+Request body (JSON):
+
+```json
+{
+  "type": "person",
+  "timestamp": "2026-03-24T00:00:00.000Z",
+  "_hp": "",
+  "data": {
+    "name": "Jane Doe",
+    "submitterEmail": "jane@example.com",
+    "submitterRelationship": "self",
+    "category": "Academic",
+    "regulatoryStance": "Moderate",
+    "influenceType": "Researcher/analyst, Advisor/strategist",
+    "entityId": 123
+  }
+}
+```
+
+- `type`: `"person"` | `"organization"` | `"resource"`
+- `_hp`: honeypot; must be empty (bots fill it)
+- `data`: camelCase field names. `entityId` present = edit submission, absent = new entity
+- Stance/timeline/risk text labels are converted to numeric scores server-side
+
+Responses: 200 (accepted), 400 (validation error), 405 (wrong method), 500 (server error).
+
+Side effects: LLM review via Claude Haiku (non-blocking), quality rating stored in `submission.llm_review`.
+
+### `GET /submissions`
+
+Returns approved entities grouped by type, plus edges.
+
+| Parameter | Values                               | Default    |
+| --------- | ------------------------------------ | ---------- |
+| `type`    | `person`, `organization`, `resource` | all        |
+| `status`  | `approved`, `pending`, `rejected`    | `approved` |
+
+Response: `{ "people": [...], "organizations": [...], "resources": [...], "edges": [...] }`
+
+### `GET /search`
+
+Full-text search across entities (tsvector plus ILIKE fallback).
+
+| Parameter | Values                               | Notes                 |
+| --------- | ------------------------------------ | --------------------- |
+| `q`       | search string                        | Required, min 2 chars |
+| `type`    | `person`, `organization`, `resource` | Optional filter       |
+| `status`  | `pending`, `all`                     | Optional              |
+
+### `GET /semantic-search`
+
+LLM-powered semantic matching via Claude Haiku. Rate-limited at 1 req/s + 3 burst at the API Gateway layer. Uses the separate `ANTHROPIC_SEMANTIC_SEARCH_KEY` so costs are tracked independently from submission review.
+
+### `GET /admin`
+
+Authentication: `X-Admin-Key` header or `?key=` query param.
+
+| Query                                       | Returns                                           |
+| ------------------------------------------- | ------------------------------------------------- |
+| `action=stats`                              | Counts by entity_type, pending submissions, edges |
+| `action=pending`                            | New entity submissions (entity_id IS NULL)        |
+| `action=pending_merges`                     | Edit submissions for existing entities            |
+| `action=all&type=entity&entity_type=person` | Browse entities with filters                      |
+
+### `POST /admin`
+
+| Action              | Description                                                        |
+| ------------------- | ------------------------------------------------------------------ |
+| `approve`           | Approve new entity submission (optional field overrides in `data`) |
+| `reject`            | Reject new entity submission                                       |
+| `merge`             | Merge edit submission into existing entity                         |
+| `reject_submission` | Reject edit without touching entity                                |
+| `update_entity`     | Direct admin edit                                                  |
+| `delete`            | Delete entity (cascades edges + submissions)                       |
+
+Side effects: `approve`, `merge`, `delete` auto-regenerate `map-data.json` → upload to S3 → invalidate CloudFront.
+
+### `POST /upload`
+
+Upload thumbnail image (JPG/PNG/WebP, max 2MB). Requires `X-Admin-Key`.
+
 ## Data flow
 
 ### Path 1: Static map data (fast read path)
@@ -159,6 +369,25 @@ Rules:
 - Frontend never calls Wikipedia or Google Favicon at render time. If coverage is too low, run the cache script and redeploy `map-data.json`.
 
 See `docs/solutions/integration-issues/thumbnail-pipeline-dead-cloudfront-and-external-fallbacks-2026-04-19.md`.
+
+## Spam protection
+
+- **Honeypot field** (`_hp`): hidden form field. If non-empty, server returns 200 silently without writing to DB.
+- **LLM review**: Claude Haiku rates submission quality 1-5 (non-blocking), flags spam/duplicates/offensive content. Stored in `submission.llm_review` (JSONB).
+- **Field length limits** enforced server-side (200 chars for short fields, 1000 chars for long fields).
+- **Status gate**: all submissions land in `status = 'pending'`. Nothing appears on the public map until admin approves.
+- **Rate limits**: default 100 req/s + 200 burst at API Gateway; `/semantic-search` capped at 1 req/s + 3 burst; contributor keys limited to 250 submissions/day.
+
+## Security practices
+
+- **No secrets in tracked files.** `DATABASE_URL` passed to Lambda via `--parameter-overrides` and stored in GitHub Secrets. Never in `samconfig.toml`.
+- **`.env` is gitignored.** Holds `DATABASE_URL`, AWS keys, API keys.
+- **Admin auth**: `X-Admin-Key` header on `/admin` and `/upload`. `X-Contributor-Key` header on `/submit` for the contributor-API path.
+- **Deletion protection** enabled on the RDS instance.
+- **DB backups**: `npm run db:backup` dumps to S3 (`backups/` prefix). RDS automated snapshots have 1-day retention (free tier limit). Run before risky admin work.
+- **Submitter emails** stored in DB but stripped from all public API responses.
+- **CSP + security headers** configured in `template.yaml` on the CloudFront response headers policy: `default-src 'self'`, `strict-origin-when-cross-origin` referrer, HSTS 1-year, X-Frame-Options SAMEORIGIN, X-Content-Type-Options nosniff.
+- **CORS allowlist** restricts API access to production domains + Cloudflare Pages preview + localhost variants (see `template.yaml`).
 
 ## Package management
 

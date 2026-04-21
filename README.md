@@ -23,7 +23,7 @@ The project is maintained by a working group of researchers, policy experts, and
 - **Database**: PostgreSQL 17 on AWS RDS
 - **Hosting**: S3 + CloudFront (auto-deployed via GitHub Actions)
 
-See [TECH.md](TECH.md) for the full architecture reference.
+See [docs/architecture/current.md](docs/architecture/current.md) for the full architecture reference.
 
 ---
 
@@ -95,7 +95,8 @@ Submission fields include regulatory stance, influence type, threat model belief
 
 ## For Developers
 
-- [TECH.md](TECH.md) - architecture, API reference, deployment
+- [docs/architecture/current.md](docs/architecture/current.md) - architecture, API reference, schema, deployment
+- [docs/architecture/target.md](docs/architecture/target.md) - planned architecture (migration in progress, see [ADR-0001](docs/architecture/adrs/0001-migrate-off-aws.md))
 - [ONBOARDING.md](ONBOARDING.md) - setup guide for new contributors
 - [CLAUDE.md](CLAUDE.md) - codebase conventions and AI assistant context
 - [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) - deploy process and review guidelines

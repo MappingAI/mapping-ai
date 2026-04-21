@@ -783,7 +783,7 @@ npm run test          # Run tests`}</Pre>
 
         <Pre>{`# In Claude Code, just start a conversation - it reads CLAUDE.md automatically.
 # Or explicitly ask it to read the docs:
-"Read CLAUDE.md, ONBOARDING.md, and TECH.md to understand the codebase"
+"Read CLAUDE.md, ONBOARDING.md, and docs/architecture/current.md to understand the codebase"
 "Read workshop/DATABASE-ORIENTATION.md for the database schema"`}</Pre>
 
         <p className="mb-4">
@@ -833,7 +833,7 @@ agent-browser fill @e1 "test"      # fill a form field`}</Pre>
             <Code>ONBOARDING.md</Code> - setup guide and common patterns
           </li>
           <li>
-            <Code>TECH.md</Code> - API reference, database schema, deployment pipeline
+            <Code>docs/architecture/current.md</Code> - API reference, database schema, deployment pipeline
           </li>
           <li>
             <Code>docs/DEPLOYMENT.md</Code> - how code gets to production

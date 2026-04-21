@@ -323,4 +323,4 @@ Frontend deploys automatically on push to `main` via GitHub Actions (Vite build 
 - `map-data.json` is not tracked in git. It's generated during CI/CD from the database. Run `npm run db:export-map` to generate it locally.
 - TypeScript path aliases: `@/components/Foo` resolves to `src/components/Foo`. Configured in `tsconfig.json`.
 - `map.html` is the only page that is NOT React. It has inline CSS and JS. Do not try to refactor it into React without understanding the D3 force simulation.
-- See [`TECH.md`](TECH.md) for the full API reference, schema details, and deployment instructions.
+- See [`docs/architecture/current.md`](docs/architecture/current.md) for the full API reference, schema details, and deployment instructions.
