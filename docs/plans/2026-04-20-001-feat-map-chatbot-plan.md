@@ -773,3 +773,51 @@ last_turn_directive_failures: [{name: "zoom_to", reason: "node not in current vi
   - [pgvector docs](https://github.com/pgvector/pgvector)
   - [Voyage AI embeddings](https://docs.voyageai.com/docs/embeddings)
   - [Cloudflare Turnstile](https://developers.cloudflare.com/turnstile/)
+
+---
+
+## Addendum (2026-04-20, pre-U7 kickoff)
+
+Two changes after the plan was finalized. Body above is preserved as-is for history; authoritative execution reads the deltas below.
+
+### A1. Pivot: Voyage + pgvector → Cloudflare AI Search (REST API, Bearer token)
+
+**Why:** User asked why we weren't using Cloudflare's managed AI Search primitive. On review, the complexity savings are real (drop `note_chunk` table, HNSW tuning, embedding backfill, stale-marker sweeper).
+
+**Known trade-offs acknowledged by the user:**
+
+1. Cross-cloud dependency in an AWS-only project. CLAUDE.md gets a carve-out.
+2. Metadata filtering at query time is not documented. We compensate by only uploading `status='approved'` entities (so pending/internal never reach the index). A status-change cascade (approved → rejected/merged/internal) must DELETE items from AI Search.
+3. `search_notes(entity_ids?)` scoping is dropped from the tool schema. The model now does whole-corpus `search_notes` with no per-entity scoping. Partial mitigation: if the answer quality on targeted queries suffers, we add a post-query filter in Lambda.
+4. Open beta + TBD pricing. Free tier (20k queries/month) covers our rate-limit worst case of 30 × 5000 × maybe 2 search_notes calls/turn = 300k queries/month. **We will need paid tier when volumes rise above free.** Flag this in U11 budget alarms.
+
+**Section-by-section deltas (authoritative for execution):**
+
+- **U1** — Drop all pgvector content. Migration now only adds `chat_turn` (rate-limit reservation) + 7-day housekeeping + abandoned-row sweeper. No `note_chunk`, no `note_chunk_stale`, no HNSW index.
+- **U2** — Replace the whole body. New title: "AI Search ingest pipeline." Scope:
+  - `scripts/sync-notes-to-aisearch.ts` backfill: `SELECT id, notes_html FROM entity WHERE status='approved' AND notes_html IS NOT NULL`. Strip HTML. Apply ingest-time deny-regex. Chunk paragraph-level ≤500c. POST each chunk to `POST /client/v4/accounts/{id}/ai-search/instances/{name}/items` with `item_id = entity_${id}_chunk_${n}`.
+  - Admin-approval hook in `api/admin.ts`: explicit `BEGIN/COMMIT` around entity write + `INSERT INTO chat_sync_stale (entity_id, reason, marked_at)`. Post-commit async: upsert items for newly-approved entities; DELETE items for newly-rejected/merged/internal.
+  - `chat_sync_stale` table is analogous to the original `note_chunk_stale` and is still needed to paper over cross-cloud failures.
+  - Nightly sweeper (piggyback on backup Lambda) drains stale rows.
+- **U3** — SAM NoEcho params change: drop `VoyageApiKey`; add `CloudflareAccountId`, `CloudflareAiSearchInstance`, `CloudflareAiSearchToken`. CSP `connect-src` adds `https://api.cloudflare.com`.
+- **U5 `search_notes`** — Replace the pgvector SQL with `POST https://api.cloudflare.com/client/v4/accounts/{CloudflareAccountId}/ai-search/instances/{CloudflareAiSearchInstance}/search` with `Authorization: Bearer {CloudflareAiSearchToken}` and body `{"query": q, "max_num_results": 8}`. Parse results; map `item_id = entity_${id}_chunk_${n}` back to `entity_id`; fetch entity name from the 60s-cached map-data for display. **Tool schema change:** drop `entity_ids?` parameter from `search_notes` (no documented metadata filter). Footnotes accumulate as before. The `<untrusted source="entity_name">...</untrusted>` wrapping still applies before handing results to the model.
+- **U11** — Provisioning step: create a Cloudflare account (if not already), provision AI Search instance `mapping-ai-notes`, mint a scoped API token with `AI Search:Write`. Add CSP entry for `api.cloudflare.com`. Add a `chat_sync_stale` age alert (>1h = Slack page). Budget-alarm note: track AI Search free-tier headroom; escalate to paid tier before hitting 20k queries/month.
+- **Scope Boundaries** — Add "No per-entity scoping in `search_notes` in v1" as an explicit accepted limitation.
+- **CLAUDE.md** — Add one line under Tech Stack: "**External RAG:** Cloudflare AI Search (REST API, Bearer token) for notes semantic search. One documented exception to the AWS-only policy; status-change cascade keeps the index in sync with `entity.status='approved'`."
+
+### A2. Migration: `api/*.js` → `api/*.ts`
+
+**Why:** The TypeScript Lambda migration (mentioned in repo research as "on branch, not merged") landed on main during planning. All Lambda source files are now `.ts`. Existing Lambdas: `admin.ts`, `cors.ts`, `export-map.ts`, `search.ts`, `semantic-search.ts`, `submissions.ts`, `submit.ts`, `upload.ts`. `dev-server.js` is still `.js`.
+
+**Section-by-section deltas:**
+
+- All new Lambda files use `.ts` extension and TypeScript types: `api/chat.ts`, `api/chat-tools.ts`, `api/chat-prompt.ts`, `api/chat-budget.ts`, `api/chat-cors.ts`.
+- `scripts/sync-notes-to-aisearch.ts`, `scripts/eval-chat.ts`, `scripts/smoke-chat.sh`, `scripts/chat-killswitch.sh` — bash/sh stays `.sh`; JS scripts migrate to `.ts`.
+- Test files: `src/__tests__/api/chat.test.ts` (was `.js` in plan), etc.
+- `ALLOWED_ORIGINS` constant is a typed `readonly string[]` in `api/cors.ts`.
+- Build tooling: SAM now runs `esbuild` bundling for `.ts` Lambdas (follows existing pattern from the TS migration). No new SAM config beyond matching existing Lambda build.
+- The existing `api/semantic-search.ts` is the 14-day-grace-period endpoint, not `.js`. U10's deprecation step edits `.ts`.
+
+### A3. Execution order (re-confirmed with user)
+
+Frontend-first. U7 → U8 with stubbed responses for user review → (pause for prerequisites) → U1–U6 in dependency order → U9 wiring → U10 evals → U11 rollout.
