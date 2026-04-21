@@ -6,6 +6,8 @@ date: 2026-04-21
 last_updated: 2026-04-21
 ---
 
+> **Update 2026-04-21:** Phase 1.1 (npm → pnpm) shipped in [PR #44](https://github.com/MappingAI/mapping-ai/pull/44). See changelog at the end of this file.
+
 # refactor: Migrate infrastructure from AWS to Cloudflare + Neon + TanStack Start
 
 ## Overview
@@ -28,7 +30,7 @@ Before starting any task in this plan, read these in order:
 | Phase                                    | Status     | PR / Notes                                                                   |
 | ---------------------------------------- | ---------- | ---------------------------------------------------------------------------- |
 | 0: Docs hygiene                          | ✅ Done    | [PR #43](https://github.com/MappingAI/mapping-ai/pull/43), merged 2026-04-21 |
-| 1.1: npm → pnpm                          | 🟡 Active  | Next up                                                                      |
+| 1.1: npm → pnpm                          | ✅ Done    | [PR #44](https://github.com/MappingAI/mapping-ai/pull/44), merged 2026-04-21 |
 | 1.2: Security baseline                   | ⏸ Deferred | Run post-Phase 3 when the target stack is live (more informative baseline)   |
 | 1.3: Reconnaissance doc                  | ⏳ Pending | Can run in parallel with 1.1                                                 |
 | 2.1: Schema + data to Neon               | ⏳ Pending | Prereq: neonctl authed (done), project ID `calm-tree-46517731`               |
@@ -66,33 +68,35 @@ Shipped 2026-04-21 in [PR #43](https://github.com/MappingAI/mapping-ai/pull/43) 
 
 Each of these is one PR. None blocks the others. All operate on the current AWS stack.
 
-### 1.1 npm to pnpm migration
+### 1.1 npm to pnpm migration ✅ DONE 2026-04-21
 
-- [ ] Create branch `chore/pnpm-migration` off latest `main`
-- [ ] Verify pnpm availability locally (`corepack enable pnpm` via Node's corepack, or `brew install pnpm`)
-- [ ] Run `pnpm import` to convert `package-lock.json` → `pnpm-lock.yaml`
-- [ ] Delete `package-lock.json`
-- [ ] Run `pnpm install` clean; confirm `node_modules` is sane
-- [ ] Exercise every script in `package.json`: `pnpm run dev`, `pnpm run build`, `pnpm run test`, `pnpm run typecheck`, `pnpm run lint`, `pnpm run format:check`, `pnpm run build:tiptap`, `pnpm run db:export-map` (if DB creds available)
-- [ ] Update `.github/workflows/ci.yml`: replace `npm ci` with `pnpm install --frozen-lockfile` and add pnpm setup action
-- [ ] Update `.github/workflows/deploy.yml`: same
-- [ ] Update `lefthook.yml` hook commands if they shell out to `npm` or `npx` (they use `npx` which works with pnpm)
-- [ ] Update `CLAUDE.md` Commands section (npm → pnpm)
-- [ ] Update `ONBOARDING.md` setup commands and scripts table
-- [ ] Update `README.md` Quick Start
-- [ ] Update `docs/DEPLOYMENT.md` any `npm` references in the procedure steps
-- [ ] Update `docs/architecture/current.md`: Package management section now says pnpm + `pnpm-lock.yaml`
-- [ ] Update `docs/architecture/target.md`: mark "Package manager" row as **shipped** and link this PR
-- [ ] Open PR, wait for Devin review and CI, address findings, merge
-- [ ] Post-merge: smoke test prod (6 pages return 200)
-- [ ] Run `pnpm install` on main branch to confirm lockfile is healthy
+Shipped in [PR #44](https://github.com/MappingAI/mapping-ai/pull/44).
 
-**Watch out for:**
+- [x] Create branch `chore/pnpm-migration` off latest `main`
+- [x] Verify pnpm availability locally (installed via `npm install -g pnpm@10.33.0`)
+- [x] Run `pnpm import` to convert `package-lock.json` → `pnpm-lock.yaml`
+- [x] Delete `package-lock.json`
+- [x] Run `pnpm install` clean; confirm `node_modules` is sane
+- [x] Exercise every script in `package.json`: typecheck, lint, format:check, test (45 pass), build, build:tiptap
+- [x] Update `.github/workflows/ci.yml`: `pnpm/action-setup@v4.1.0` SHA-pinned, `cache: pnpm`, `pnpm install --frozen-lockfile`
+- [x] Update `.github/workflows/deploy.yml`: same install pattern, `pnpm exec` replaces `npx`
+- [x] Update `scripts/build-preview.sh` for Cloudflare Pages (self-installs pnpm via corepack as fallback)
+- [x] Update `CLAUDE.md` Commands section
+- [x] Update `ONBOARDING.md` setup commands and scripts table
+- [x] Update `README.md` Quick Start
+- [x] Update `docs/DEPLOYMENT.md`
+- [x] Update `docs/architecture/current.md`: Package management section
+- [x] Update `docs/architecture/target.md`: Package manager row marked shipped
+- [x] Update `src/workshop/App.tsx` and `workshop/DATABASE-ORIENTATION.md` (caught in pre-merge audit)
+- [x] Fix `package.json` dev script (`concurrently` `npm:` shorthand → explicit `pnpm run`) per Devin review
+- [x] Update CF Pages dashboard Build command from `npm ci && bash scripts/build-preview.sh` to `bash scripts/build-preview.sh` (dashboard change, not in repo)
+- [x] PR merged, prod deploy ran on pnpm pipeline, smoke test 6/6 green
 
-- `npm run` in anywhere not yet grepped (CI, Makefile, docker, READMEs of subfolders)
-- Scripts that rely on npm-specific behavior (none expected here; standard node scripts)
-- The `postinstall` hooks if any (none in this repo)
-- If it balloons past ~2 hours, something is weird; pause and investigate rather than force through
+**Post-merge observations:**
+
+- Dependabot's `npm` ecosystem auto-detects pnpm and updates `pnpm-lock.yaml` correctly; no `.github/dependabot.yml` changes needed.
+- GitHub is deprecating Node 20 actions in June 2026. All our pinned actions (checkout, setup-node, configure-aws-credentials, pnpm/action-setup) will need bumps eventually. Low priority.
+- Pre-existing PR #36 (dotenv bump from before the migration) may have merge conflicts. Rebase or close and let Dependabot recreate.
 
 ### 1.2 Security baseline with /security-review (DEFERRED)
 
@@ -381,3 +385,4 @@ Resolve before or during the relevant phase; capturing here so they don't get lo
 ## Changelog
 
 - **2026-04-21:** Plan created. Phase 0 marked complete (PR #43 merged). Next up: 1.1 pnpm migration.
+- **2026-04-21:** Phase 1.1 (npm → pnpm) shipped in PR #44. Target.md Package manager row marked shipped. Workshop docs, CI workflows, and build-preview.sh all migrated. Cloudflare Pages build command updated in dashboard. Next up: 1.3 reconnaissance doc, or Phase 2 (Neon migration).
