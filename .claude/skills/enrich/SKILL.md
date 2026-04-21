@@ -5,6 +5,8 @@ description: "Use when someone wants to add data to the mapping-ai stakeholder g
 
 # Enrich a mapping-ai entity
 
+> ⚠️ **Beta (2026-04-20).** This skill and its supporting scripts landed in [PR #40](https://github.com/MappingAI/mapping-ai/pull/40). Unit tests pass (99/99) and dry-run works end-to-end; no live prod write has happened through this path yet. Default to `--dry-run` and `--no-exa` until you've manually reviewed a few drafts. See `docs/enrichment-skill-BETA.md` for the quickstart and known limitations.
+
 ## Overview
 
 Drives the full enrichment pipeline end-to-end from a seed (name or entity_id) plus an operation hint. Research via Exa MCP (or WebSearch fallback) → Haiku classification → validated draft → `/submit` → `/admin` auto-approve. Writes land with durable source provenance in `notes_sources`.
