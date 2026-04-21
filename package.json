@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@10.33.0",
+  "engines": {
+    "node": ">=20"
+  },
   "dependencies": {
     "@aws-sdk/client-cloudfront": "^3.1032.0",
     "@aws-sdk/client-s3": "^3.1026.0",

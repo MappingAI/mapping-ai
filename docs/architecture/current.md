@@ -76,7 +76,7 @@ This document describes the stack that is actually running behind https://mappin
 ### CI/CD (GitHub Actions)
 
 - `.github/workflows/ci.yml`: lint, typecheck, vitest, vite build, SAM validate. Runs on every PR and non-main push.
-- `.github/workflows/deploy.yml`: runs on push to main. Steps: `npm ci` → `npm run build:tiptap` → write `.env.production` with API base + password hash placeholders → `npx vite build` → `npx tsx scripts/export-map-data.ts` (regenerates `map-data.json` from RDS) → inject password hash + Cloudflare analytics token → AWS credentials → `aws s3 sync dist/` (with cache headers) → `aws cloudfront create-invalidation --paths /*` → post-deploy smoke test (curl 200 on 6 pages)
+- `.github/workflows/deploy.yml`: runs on push to main. Steps: `pnpm install --frozen-lockfile` → `pnpm run build:tiptap` → write `.env.production` with API base + password hash placeholders → `pnpm exec vite build` → `pnpm exec tsx scripts/export-map-data.ts` (regenerates `map-data.json` from RDS) → inject password hash + Cloudflare analytics token → AWS credentials → `aws s3 sync dist/` (with cache headers) → `aws cloudfront create-invalidation --paths /*` → post-deploy smoke test (curl 200 on 6 pages)
 
 ### Lambda deploy (separate from frontend CI/CD)
 
@@ -128,7 +128,7 @@ Shared modules (`api/cors.ts`, `api/export-map.ts`) are bundled into each functi
 
 **External packages:** `@aws-sdk/client-s3` and `@aws-sdk/client-cloudfront` are excluded from bundles because Node 20 Lambda runtime provides them. Everything else, including `pg`, is bundled.
 
-**Dev server:** `dev-server.js` (Express) serves the API locally on port 3000. Vite proxies `/api` → 3000. `npm run dev` runs both concurrently.
+**Dev server:** `dev-server.js` (Express) serves the API locally on port 3000. Vite proxies `/api` → 3000. `pnpm dev` runs both concurrently.
 
 ## Database schema
 
@@ -238,11 +238,11 @@ Any schema change must update this mapping or the map/plot view breaks silently.
 ### Database scripts
 
 ```bash
-npm run db:migrate        # Create/update all tables, triggers, indexes
-npm run db:seed           # Import Airtable CSV data
-npm run db:export-map     # Generate map-data.json from approved entries
-npm run db:backup         # Backup all tables to S3 (JSON + SQL)
-npm run db:backup:local   # Backup to local files only
+pnpm run db:migrate        # Create/update all tables, triggers, indexes
+pnpm run db:seed           # Import Airtable CSV data
+pnpm run db:export-map     # Generate map-data.json from approved entries
+pnpm run db:backup         # Backup all tables to S3 (JSON + SQL)
+pnpm run db:backup:local   # Backup to local files only
 ```
 
 ## API reference
@@ -384,15 +384,16 @@ See `docs/solutions/integration-issues/thumbnail-pipeline-dead-cloudfront-and-ex
 - **`.env` is gitignored.** Holds `DATABASE_URL`, AWS keys, API keys.
 - **Admin auth**: `X-Admin-Key` header on `/admin` and `/upload`. `X-Contributor-Key` header on `/submit` for the contributor-API path.
 - **Deletion protection** enabled on the RDS instance.
-- **DB backups**: `npm run db:backup` dumps to S3 (`backups/` prefix). RDS automated snapshots have 1-day retention (free tier limit). Run before risky admin work.
+- **DB backups**: `pnpm run db:backup` dumps to S3 (`backups/` prefix). RDS automated snapshots have 1-day retention (free tier limit). Run before risky admin work.
 - **Submitter emails** stored in DB but stripped from all public API responses.
 - **CSP + security headers** configured in `template.yaml` on the CloudFront response headers policy: `default-src 'self'`, `strict-origin-when-cross-origin` referrer, HSTS 1-year, X-Frame-Options SAMEORIGIN, X-Content-Type-Options nosniff.
 - **CORS allowlist** restricts API access to production domains + Cloudflare Pages preview + localhost variants (see `template.yaml`).
 
 ## Package management
 
-- **npm** (planned migration to pnpm, see [ADR-0001](adrs/0001-migrate-off-aws.md))
-- `package.json` lockfile: `package-lock.json`
+- **pnpm** (migrated from npm 2026-04-21; `packageManager` field in `package.json` pins the version)
+- Lockfile: `pnpm-lock.yaml`
+- CI uses `pnpm install --frozen-lockfile` for reproducibility
 
 ## Environment variables
 

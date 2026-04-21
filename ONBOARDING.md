@@ -174,10 +174,12 @@ An admin reviews pending submissions on `admin.html`.
 ```bash
 git clone https://github.com/MappingAI/mapping-ai.git
 cd mapping-ai
-npm ci
+pnpm install --frozen-lockfile
 brew install lefthook    # pre-commit hooks for linting/formatting
 lefthook install
 ```
+
+Prereq: Node.js 20+ and pnpm 10+. Install pnpm via `brew install pnpm` or `npm install -g pnpm`.
 
 Create a `.env` file with database credentials (shared via Doppler or ask the team):
 
@@ -191,7 +193,7 @@ AWS_SECRET_ACCESS_KEY=...
 ### Running locally
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 Visit `localhost:5173`. A single command runs Vite (port 5173) and the Express API server (port 3000) together; Vite proxies `/api` requests to `:3000` automatically. Everything works from there: map, contribute form, search, admin, insights.
@@ -203,7 +205,7 @@ curl -o map-data.json https://mapping-ai.org/map-data.json
 curl -o map-detail.json https://mapping-ai.org/map-detail.json
 ```
 
-If you only want one of the two servers, `npm run dev:web` and `npm run dev:api` start them individually.
+If you only want one of the two servers, `pnpm run dev:web` and `pnpm run dev:api` start them individually.
 
 ### Database access
 
@@ -214,30 +216,30 @@ With `DATABASE_URL` in your `.env`, you can read/write directly to the staging d
 node scripts/export-map-data.js
 
 # Run database migrations (create/update tables)
-npm run db:migrate
+pnpm run db:migrate
 
 # Backup all tables
-npm run db:backup:local
+pnpm run db:backup:local
 ```
 
-The Express dev server (started by `npm run dev` or `npm run dev:api`) connects to the same database for API calls (form submissions, search, admin actions).
+The Express dev server (started by `pnpm run dev` or `pnpm run dev:api`) connects to the same database for API calls (form submissions, search, admin actions).
 
 ### Available scripts
 
-| Command                   | What it does                                                                                                                |
-| ------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `npm run dev`             | Start Vite + Express API together (Vite on 5173, API on 3000). Auto-generates `map-data.json` on first run if DB creds set. |
-| `npm run dev:web`         | Vite dev server only (port 5173, proxies /api to :3000)                                                                     |
-| `npm run dev:api`         | Local Express API server only (port 3000)                                                                                   |
-| `npx vite build`          | Production build (outputs to dist/)                                                                                         |
-| `npx tsc --noEmit`        | TypeScript type check                                                                                                       |
-| `npx vitest run`          | Run tests (Vitest + jsdom + React Testing Library)                                                                          |
-| `npm run build:tiptap`    | Legacy TipTap bundle for map.html (esbuild)                                                                                 |
-| `npm run db:migrate`      | Create/update all tables, triggers, indexes                                                                                 |
-| `npm run db:seed`         | Import Airtable CSV data                                                                                                    |
-| `npm run db:export-map`   | Generate `map-data.json` from approved entities                                                                             |
-| `npm run db:backup`       | Backup all tables to S3                                                                                                     |
-| `npm run db:backup:local` | Backup to local files only                                                                                                  |
+| Command                    | What it does                                                                                                                |
+| -------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `pnpm run dev`             | Start Vite + Express API together (Vite on 5173, API on 3000). Auto-generates `map-data.json` on first run if DB creds set. |
+| `pnpm run dev:web`         | Vite dev server only (port 5173, proxies /api to :3000)                                                                     |
+| `pnpm run dev:api`         | Local Express API server only (port 3000)                                                                                   |
+| `npx vite build`           | Production build (outputs to dist/)                                                                                         |
+| `npx tsc --noEmit`         | TypeScript type check                                                                                                       |
+| `npx vitest run`           | Run tests (Vitest + jsdom + React Testing Library)                                                                          |
+| `pnpm run build:tiptap`    | Legacy TipTap bundle for map.html (esbuild)                                                                                 |
+| `pnpm run db:migrate`      | Create/update all tables, triggers, indexes                                                                                 |
+| `pnpm run db:seed`         | Import Airtable CSV data                                                                                                    |
+| `pnpm run db:export-map`   | Generate `map-data.json` from approved entities                                                                             |
+| `pnpm run db:backup`       | Backup all tables to S3                                                                                                     |
+| `pnpm run db:backup:local` | Backup to local files only                                                                                                  |
 
 Backend deploy (Lambda functions):
 
@@ -254,7 +256,7 @@ Frontend deploys automatically on push to `main` via GitHub Actions (Vite build 
 - **Add a shared component**: Put it in `src/components/`. Import with `@/components/YourComponent` (path alias configured in tsconfig.json).
 - **Update submission forms**: Edit React components in `src/contribute/`. Forms use React Hook Form. The submit handler sends camelCase `data` to `POST /submit`.
 - **Add a new API endpoint**: Create a handler in `api/`, add a `AWS::Serverless::Function` resource in `template.yaml` with an `HttpApi` event, and add a matching route in `dev-server.js` for local testing.
-- **Change the database schema**: Edit `scripts/migrate.js`, run `npm run db:migrate`. If you change entity columns, update the field mapping in `api/export-map.ts` (`toFrontendShape()`) or the map will break silently.
+- **Change the database schema**: Edit `scripts/migrate.js`, run `pnpm run db:migrate`. If you change entity columns, update the field mapping in `api/export-map.ts` (`toFrontendShape()`) or the map will break silently.
 - **Modify the map visualization**: Edit `map.html` directly -- all D3.js code is inline. Do NOT convert to React. The map reads from `map-data.json`, so check field names against `api/export-map.ts`. Never add `defer` or `async` to the D3 script tag.
 
 ### Key files to start with
@@ -278,7 +280,7 @@ Frontend deploys automatically on push to `main` via GitHub Actions (Vite build 
 
 - Run `npx tsc --noEmit` before pushing to catch type errors early.
 - The Vite dev server has hot module replacement -- changes to React components appear instantly.
-- `map-data.json` is not tracked in git. It's generated during CI/CD from the database. Run `npm run db:export-map` to generate it locally.
+- `map-data.json` is not tracked in git. It's generated during CI/CD from the database. Run `pnpm run db:export-map` to generate it locally.
 - TypeScript path aliases: `@/components/Foo` resolves to `src/components/Foo`. Configured in `tsconfig.json`.
 - `map.html` is the only page that is NOT React. It has inline CSS and JS. Do not try to refactor it into React without understanding the D3 force simulation.
 - See [`docs/architecture/current.md`](docs/architecture/current.md) for the full API reference, schema details, and deployment instructions.

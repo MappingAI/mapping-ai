@@ -25,14 +25,14 @@ Backend and infrastructure specifics are documented in [`docs/architecture/curre
 
 ## Quick Start
 
-**Prerequisites:** Node.js 20+ and npm. Install via [nvm](https://github.com/nvm-sh/nvm) or `brew install node`.
+**Prerequisites:** Node.js 20+ and pnpm. Install Node via [nvm](https://github.com/nvm-sh/nvm) or `brew install node`, then `brew install pnpm` (or `npm install -g pnpm`).
 
 ### 1. Clone and install
 
 ```bash
 git clone https://github.com/MappingAI/mapping-ai.git
 cd mapping-ai
-npm ci
+pnpm install --frozen-lockfile
 brew install lefthook
 lefthook install
 ```
@@ -51,7 +51,7 @@ AWS_SECRET_ACCESS_KEY=...
 ### 3. Start local dev
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 Visit `localhost:5173`. This runs Vite and the Express API server together. Everything works from there: map, contribute form, admin, insights, search, form submissions.
