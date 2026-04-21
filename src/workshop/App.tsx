@@ -783,7 +783,7 @@ npm run test          # Run tests`}</Pre>
 
         <Pre>{`# In Claude Code, just start a conversation - it reads CLAUDE.md automatically.
 # Or explicitly ask it to read the docs:
-"Read CLAUDE.md, ONBOARDING.md, and TECH.md to understand the codebase"
+"Read CLAUDE.md, ONBOARDING.md, and docs/architecture/current.md to understand the codebase"
 "Read workshop/DATABASE-ORIENTATION.md for the database schema"`}</Pre>
 
         <p className="mb-4">
@@ -833,7 +833,7 @@ agent-browser fill @e1 "test"      # fill a form field`}</Pre>
             <Code>ONBOARDING.md</Code> - setup guide and common patterns
           </li>
           <li>
-            <Code>TECH.md</Code> - API reference, database schema, deployment pipeline
+            <Code>docs/architecture/current.md</Code> - API reference, database schema, deployment pipeline
           </li>
           <li>
             <Code>docs/DEPLOYMENT.md</Code> - how code gets to production
@@ -872,8 +872,8 @@ agent-browser fill @e1 "test"      # fill a form field`}</Pre>
                 ['src/admin/', 'Admin panel for reviewing submissions, editing entities, managing the approval queue.'],
                 ['src/components/', 'Shared React components: CustomSelect, TagInput, TipTapEditor, Navigation, etc.'],
                 [
-                  'api/*.js',
-                  'Lambda functions. submit.js handles form submissions, search.js does full-text search, admin.js handles the review queue.',
+                  'api/*.ts',
+                  'Lambda functions. submit.ts handles form submissions, search.ts does full-text search, admin.ts handles the review queue.',
                 ],
                 ['template.yaml', 'AWS SAM template defining all the infrastructure.'],
               ] as const
@@ -931,10 +931,12 @@ agent-browser fill @e1 "test"      # fill a form field`}</Pre>
 
         <p className="mb-4">
           Commit messages use conventional prefixes: <Code>feat:</Code>, <Code>fix:</Code>, <Code>refactor:</Code>,{' '}
-          <Code>docs:</Code>. There are no tests (yes, we know). CSS is inline per page, not in a shared stylesheet. The
-          map loads <Code>map-data.json</Code> which uses different field names than the database (there&rsquo;s a
-          mapping layer in <Code>api/export-map.js</Code>). Read the <Code>CLAUDE.md</Code> in the repo root for full
-          documentation of the schema, field mappings, and architecture.
+          <Code>docs:</Code>. Tests live in <Code>src/__tests__/</Code> (Vitest + jsdom + React Testing Library); run{' '}
+          <Code>npx vitest run</Code>. CSS for React pages is Tailwind via <Code>src/styles/global.css</Code>; the
+          legacy <Code>map.html</Code> has inline styles. The map loads <Code>map-data.json</Code> which uses different
+          field names than the database (mapping layer in <Code>api/export-map.ts</Code>). Read{' '}
+          <Code>docs/architecture/current.md</Code> for the schema, field mappings, and infrastructure reference, and{' '}
+          <Code>CLAUDE.md</Code> for codebase conventions and agent context.
         </p>
 
         <Divider />

@@ -1,14 +1,14 @@
 ---
-title: "SAM deploy overwrites manual CloudFront config causing SSL, routing, and access failures"
+title: 'SAM deploy overwrites manual CloudFront config causing SSL, routing, and access failures'
 date: 2026-04-16
 category: integration-issues
 module: infrastructure
 problem_type: integration_issue
 component: development_workflow
 symptoms:
-  - "ERR_CERT_COMMON_NAME_INVALID on mapping-ai.org — CloudFront lost custom domain aliases and ACM certificate"
-  - "All page navigation redirected to homepage — SPA-style 403/404 error redirects masked missing URL rewrite function"
-  - "Access Denied (403) on all non-root paths after removing error redirects — CloudFront Function detached"
+  - 'ERR_CERT_COMMON_NAME_INVALID on mapping-ai.org — CloudFront lost custom domain aliases and ACM certificate'
+  - 'All page navigation redirected to homepage — SPA-style 403/404 error redirects masked missing URL rewrite function'
+  - 'Access Denied (403) on all non-root paths after removing error redirects — CloudFront Function detached'
 root_cause: config_error
 resolution_type: config_change
 severity: critical
@@ -28,6 +28,8 @@ related_components:
 
 # SAM deploy overwrites manual CloudFront config causing SSL, routing, and access failures
 
+> **Historical context:** this document describes behavior on the AWS stack (RDS + Lambda + CloudFront + S3 + SAM). See [`docs/architecture/current.md`](../../architecture/current.md) for today's live stack and [ADR-0001](../../architecture/adrs/0001-migrate-off-aws.md) for migration status.
+
 ## Problem
 
 Running `sam deploy` to add two CORS origins to the API Gateway caused CloudFormation to reset the CloudFront distribution to template defaults, removing manually-configured custom domain aliases, ACM SSL certificate, and a URL rewrite CloudFront Function. This caused a full production outage (~20 minutes) with cascading SSL, routing, and access failures on mapping-ai.org.
@@ -44,7 +46,7 @@ Running `sam deploy` to add two CORS origins to the API Gateway caused CloudForm
 
 - **CloudFormation rollback (`aws cloudformation rollback-stack`)** — Failed because the stack was in `UPDATE_COMPLETE` state. Rollback is only available for `UPDATE_FAILED` or `CREATE_FAILED` states. A successful but destructive deploy cannot be rolled back this way.
 
-- **Redeploying from a fresh clone of `main`** — Did not fix anything because `main`'s `template.yaml` had the same missing configuration. The problem was what the template *omitted*, not what it contained. Redeploying the same incomplete template re-applied the same broken state.
+- **Redeploying from a fresh clone of `main`** — Did not fix anything because `main`'s `template.yaml` had the same missing configuration. The problem was what the template _omitted_, not what it contained. Redeploying the same incomplete template re-applied the same broken state.
 
 - **Removing SPA error redirects without re-attaching the URL rewrite function** — Made the situation worse. The error redirects were masking the underlying routing problem (detached CloudFront Function). Removing them turned silent misbehavior (everything shows homepage) into loud 403 errors on every page.
 
@@ -53,6 +55,7 @@ Running `sam deploy` to add two CORS origins to the API Gateway caused CloudForm
 ### Immediate fix: Three manual CloudFront API calls
 
 **1. Restore custom domain aliases and SSL certificate:**
+
 ```bash
 # Get current config and ETag
 aws cloudfront get-distribution-config --id E34ZXLC7CZX7XT > cf-config.json
@@ -66,6 +69,7 @@ aws cloudfront update-distribution \
 ```
 
 **2. Re-publish and re-attach the URL rewrite CloudFront Function:**
+
 ```bash
 # The function existed but was UNASSOCIATED after deploy
 aws cloudfront publish-function \
@@ -80,6 +84,7 @@ aws cloudfront update-distribution \
 ```
 
 **3. Invalidate cached error pages:**
+
 ```bash
 aws cloudfront create-invalidation \
   --distribution-id E34ZXLC7CZX7XT \
@@ -146,26 +151,30 @@ Removed the `CustomErrorResponses` (403/404 to /index.html) which were wrong for
 
 ## Why This Works
 
-The root cause is **infrastructure-as-code (IaC) state drift**. SAM/CloudFormation treats `template.yaml` as the single source of truth for every resource it manages. When `sam deploy` runs, it computes a changeset by comparing the *template definition* to the *deployed state* and "corrects" any differences.
+The root cause is **infrastructure-as-code (IaC) state drift**. SAM/CloudFormation treats `template.yaml` as the single source of truth for every resource it manages. When `sam deploy` runs, it computes a changeset by comparing the _template definition_ to the _deployed state_ and "corrects" any differences.
 
 Three critical CloudFront settings existed only in the AWS Console:
+
 1. Custom domain aliases (mapping-ai.org, etc.)
 2. ACM SSL certificate
 3. `mapping-ai-url-rewrite` CloudFront Function association
 
-Because `template.yaml` didn't declare them, CloudFormation interpreted their presence as drift and removed them to match the template. The intended 2-line CORS change to the API Gateway was correct and harmless — the destruction came from CloudFormation reconciling the *entire stack*, not just the changed resource.
+Because `template.yaml` didn't declare them, CloudFormation interpreted their presence as drift and removed them to match the template. The intended 2-line CORS change to the API Gateway was correct and harmless — the destruction came from CloudFormation reconciling the _entire stack_, not just the changed resource.
 
 The permanent fix closes the drift gap by encoding all CloudFront configuration in `template.yaml`. Future `sam deploy` runs will preserve (rather than destroy) these settings because they're now declared as the desired state.
 
 ## Prevention
 
 ### 1. Never configure SAM-managed resources manually in the AWS Console
+
 If CloudFormation owns a resource (it's in `template.yaml`), every setting on that resource must also be in the template. Console changes are transient — the next `sam deploy` will silently remove them. This is the #1 rule of IaC.
 
 ### 2. Always review the full changeset before deploying
+
 Never use `--no-confirm-changeset`. In this incident, the changeset clearly showed `+ Add SecurityHeadersPolicy`, `* Modify CloudFrontDistribution`, and modifications to all Lambda functions — far beyond the intended 2-line CORS addition. Reading the changeset would have revealed the scope before damage occurred.
 
 ### 3. Use --no-execute-changeset for dry runs
+
 ```bash
 sam build && sam deploy --no-execute-changeset
 # Review changeset in CloudFormation console or CLI
@@ -173,22 +182,28 @@ sam build && sam deploy --no-execute-changeset
 ```
 
 ### 4. Audit for drift before deploying
+
 ```bash
 aws cloudformation detect-stack-drift --stack-name mapping-ai
 # Wait, then:
 aws cloudformation describe-stack-drift-detection-status --stack-drift-detection-id <id>
 aws cloudformation describe-stack-resource-drifts --stack-name mapping-ai
 ```
+
 Any drift found should be codified in `template.yaml` before the next deploy.
 
 ### 5. Use targeted API calls for single-resource changes
+
 Adding CORS origins only required changing the API Gateway. This could have been done without touching CloudFront:
+
 ```bash
 aws apigatewayv2 update-api --api-id <id> --cors-configuration '{...}'
 ```
+
 Use the narrowest tool for the job. `sam deploy` is a full-stack reconciliation — don't use it for a single-resource change.
 
 ### 6. Update CLAUDE.md and DEPLOYMENT.md with IaC drift warnings
+
 Add explicit documentation that `sam deploy` will reset ALL resources to template state, and that any manual CloudFront configuration must be in `template.yaml` first. (auto memory [claude])
 
 ## Related Issues
@@ -199,16 +214,16 @@ Add explicit documentation that `sam deploy` will reset ALL resources to templat
 
 ## Incident Timeline
 
-| Time (UTC) | Event |
-|---|---|
-| ~11:00 | `sam deploy` executed to add CORS origins. Changeset auto-approved with `--no-confirm-changeset`. |
-| ~11:05 | Deploy completes. CloudFront distribution updated — aliases, cert, and URL rewrite function removed. |
-| ~11:06 | User reports ERR_CERT_COMMON_NAME_INVALID on mapping-ai.org. |
-| ~11:10 | Attempted CloudFormation rollback — failed (stack not in failed state). |
-| ~11:12 | Redeployed from main branch — no effect (same template). |
-| ~11:15 | Manually restored SSL cert + aliases via CloudFront API. |
-| ~11:18 | User reports all pages route to homepage. SPA error redirects removed. |
-| ~11:20 | User reports Access Denied (403) on all pages. |
-| ~11:22 | Discovered `mapping-ai-url-rewrite` function was UNASSOCIATED. Re-published and re-attached. |
-| ~11:25 | Cache invalidation triggered. Site fully restored. |
-| ~11:30 | Updated template.yaml to codify all manual CloudFront config. |
+| Time (UTC) | Event                                                                                                |
+| ---------- | ---------------------------------------------------------------------------------------------------- |
+| ~11:00     | `sam deploy` executed to add CORS origins. Changeset auto-approved with `--no-confirm-changeset`.    |
+| ~11:05     | Deploy completes. CloudFront distribution updated — aliases, cert, and URL rewrite function removed. |
+| ~11:06     | User reports ERR_CERT_COMMON_NAME_INVALID on mapping-ai.org.                                         |
+| ~11:10     | Attempted CloudFormation rollback — failed (stack not in failed state).                              |
+| ~11:12     | Redeployed from main branch — no effect (same template).                                             |
+| ~11:15     | Manually restored SSL cert + aliases via CloudFront API.                                             |
+| ~11:18     | User reports all pages route to homepage. SPA error redirects removed.                               |
+| ~11:20     | User reports Access Denied (403) on all pages.                                                       |
+| ~11:22     | Discovered `mapping-ai-url-rewrite` function was UNASSOCIATED. Re-published and re-attached.         |
+| ~11:25     | Cache invalidation triggered. Site fully restored.                                                   |
+| ~11:30     | Updated template.yaml to codify all manual CloudFront config.                                        |

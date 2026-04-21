@@ -2,369 +2,154 @@
 
 A collaborative stakeholder mapping project for the U.S. AI policy landscape.
 
-## Project Overview
+**Live site:** https://mapping-ai.org
+
+## Project overview
 
 Multi-page website with an interactive D3.js stakeholder map, crowdsourced data collection via rich forms, and a relational database linking people, organizations, and resources. Bidirectional links between entities enable network visualization.
 
-**Live site:** https://mapping-ai.org
+## Architecture
 
-## Tech Stack
+Architecture details live in [`docs/architecture/`](docs/architecture/), not here.
 
-All infrastructure is on AWS. No Vercel or Neon.
+- [`current.md`](docs/architecture/current.md): the stack running in prod today (AWS: RDS + Lambda + CloudFront + S3 + SAM). Full topology, DB schema, API reference.
+- [`target.md`](docs/architecture/target.md): the planned stack (Cloudflare Workers + Neon + R2 + TanStack Start + pnpm). Status table tracks what's shipped.
+- [`adrs/0001-migrate-off-aws.md`](docs/architecture/adrs/0001-migrate-off-aws.md): the migration currently in progress.
 
-- **Frontend**: Vite 8 MPA + React 19 + TypeScript + Tailwind CSS v4 (migrated from inline HTML/CSS/JS)
-- **map.html**: Only remaining inline page - D3.js force-directed graph with orbital cluster layout (not React)
-- **Data fetching**: TanStack Query (React Query v5)
-- **Forms**: React Hook Form
-- **Rich text**: TipTap (ProseMirror-based) for Notes fields with @mentions (`src/components/TipTapEditor.tsx`); legacy esbuild bundle still used by map.html (`src/tiptap-notes.js`)
-- **XSS sanitization**: DOMPurify
-- **DNS**: Cloudflare (CNAME flattening → CloudFront distribution)
-- **CDN**: AWS CloudFront (caches static files globally, SSL termination)
-- **Static hosting**: AWS S3 (`mapping-ai-website-561047280976` bucket, private, accessed only via CloudFront OAC)
-- **Visualization**: D3.js force-directed graph with orbital cluster layout (`map.html`); D3 also used in insights page charts
-- **API**: AWS API Gateway HTTP API + 5 Lambda functions (Node.js 20)
-- **Database**: AWS RDS PostgreSQL 17 (`mapping-ai-db.c9sccou2k3xe.eu-west-2.rds.amazonaws.com`, db.t4g.micro free tier, 20GB gp3, deletion protection enabled)
-- **Infrastructure-as-code**: AWS SAM (`template.yaml`) - defines Lambda functions, API Gateway, S3 bucket, CloudFront distribution
-- **CI/CD**: GitHub Actions (auto-deploy on push to `main`)
-- **Data enrichment**: Exa API (web search), Anthropic API (Claude Haiku for quality classification)
-- **External APIs (client-side)**: Google Favicons (org logos), Wikipedia (people headshots), Photon/OpenStreetMap (city geocoding), Bluesky (handle search)
+**Rule:** do not assert architecture in this file. Update `current.md` instead. Stale infra claims in CLAUDE.md waste session context on every read.
 
-## Data Flow
+Other entry points:
 
-There are two data paths:
-
-### Path 1: Static map data (read-only, fast)
-
-```
-GitHub push to main
-    → GitHub Actions workflow:
-        1. npm ci
-        2. npm run build:tiptap (esbuild bundles TipTap for map.html)
-        3. npx vite build (builds React pages → dist/)
-        4. npx tsx scripts/export-map-data.ts (queries RDS → generates map-data.json)
-        5. aws s3 sync dist/ (uploads built HTML/CSS/JS/map-data.json to S3)
-        6. aws cloudfront create-invalidation (purges CDN cache)
-    → Users load map.html → fetches map-data.json from CloudFront (no DB call)
-    → contribute.html also loads map-data.json for instant client-side search/autocomplete
-```
-
-### Path 2: Live API (form submissions, search)
-
-```
-User submits form on contribute.html
-    → POST to API Gateway (https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com/submit)
-    → Lambda function (api/submit.ts) → INSERT into submission table (status='pending')
-    → Claude Haiku LLM review (non-blocking, rates quality 1-5)
-
-User searches in form autocomplete (if cache not loaded yet)
-    → GET /search?q=... → Lambda (api/search.ts) → full-text search on RDS → results
-
-Admin approves submission (via admin.html)
-    → POST /admin { action: 'approve' } → Lambda (api/admin.ts)
-    → DB trigger creates entity row from submission, recalculates belief scores
-    → Auto-regenerates map-data.json → uploads to S3 → invalidates CloudFront cache
-    → Map reflects changes within ~60 seconds
-```
-
-### Path 3: Thumbnail pipeline (images in S3, not live external fetches)
-
-```
-scripts/cache-thumbnails.js (run manually or on demand)
-    → For each approved entity with thumbnail_url IS NULL or a non-S3 URL:
-        · Try Google Favicon (orgs) or Wikipedia API (people), OR
-          re-download the existing external URL (reCacheExternalUrl)
-        · Upload to s3://mapping-ai-website-.../thumbnails/<type>-<id>.{png,jpg}
-        · Write https://mapping-ai.org/thumbnails/... into entity.thumbnail_url
-    → On skip or fail: write thumbnail_url = '' (tried-and-no-image marker)
-       so the script excludes the entity on re-runs and the frontend skips
-       any live fallback
-
-Browser loads map.html → resolveEntityImage(entity) returns entity.thumbnail_url
-  or null. Non-empty values render as an <img>; '' and null render as initials
-  on the canvas. No live calls to en.wikipedia.org/api, upload.wikimedia.org,
-  or google.com/s2/favicons on page load.
-```
-
-**Thumbnail rules (see [docs/solutions/integration-issues/thumbnail-pipeline-dead-cloudfront-and-external-fallbacks-2026-04-19.md](docs/solutions/integration-issues/thumbnail-pipeline-dead-cloudfront-and-external-fallbacks-2026-04-19.md)):**
-
-- `entity.thumbnail_url` is the single source of truth. Values: `https://mapping-ai.org/thumbnails/<key>` (cached), `''` (tried, no image available), or `NULL` (never tried).
-- Never hardcode a CloudFront subdomain (e.g. `d3fo5mm9fktie3.cloudfront.net`) in `scripts/cache-thumbnails.js`. Use `mapping-ai.org` — the project owns that alias, the distribution underneath can be replaced.
-- `api/admin.js` `update_entity` must not blind-overwrite `thumbnail_url` to null when the admin form didn't change it. Otherwise routine edits wipe the cache script's work.
-- Frontend never calls Wikipedia or Google Favicon at render time. If coverage is too low, run the cache script and redeploy `map-data.json`.
-
-**Key insight:** The map loads from a static JSON file on S3/CloudFront, NOT from the database. This makes the map load instantly for all users worldwide. New submissions appear on the map automatically after admin approval (no deploy needed). For manual data refresh:
-
-```bash
-npx tsx scripts/export-map-data.ts                        # regenerate from DB
-aws s3 cp map-data.json s3://mapping-ai-website-561047280976/  # upload to S3
-aws cloudfront create-invalidation --distribution-id E34ZXLC7CZX7XT --paths "/map-data.json"
-```
-
-## Project Structure
-
-The frontend is a Vite multi-page app (MPA). Each `.html` file in the repo root is a Vite entry point with a `<div id="...-root">` and a `<script type="module" src="/src/.../main.tsx">` tag. Vite builds all pages into `dist/`. The one exception is `map.html`, which is fully inline (D3.js, not React).
-
-```
-mapping-ai/
-├── index.html              # Home page (React entry → src/home/)
-├── contribute.html         # Submission forms (React entry → src/contribute/)
-├── map.html                # D3.js stakeholder map - INLINE, not React
-├── about.html              # Team info (React entry → src/about/)
-├── admin.html              # Admin dashboard (React entry → src/admin/)
-├── insights.html           # Data insights with D3 charts (React entry → src/insights/)
-├── theoryofchange.html     # Theory of change (React entry → src/theoryofchange/)
-├── workshop/index.html     # Workshop/mapping party (React entry → src/workshop/)
-├── src/
-│   ├── contribute/         # ContributeForm, PersonForm, OrgForm, ResourceForm,
-│   │                        OrgCreationPanel, OrgSearch, LocationSearch, BlueskySearch
-│   ├── admin/              # Admin dashboard (React)
-│   ├── insights/           # Insights page with D3 charts
-│   ├── about/              # About page
-│   ├── home/               # Homepage
-│   ├── theoryofchange/     # Theory of change page
-│   ├── workshop/           # Workshop/mapping party page
-│   ├── map/                # React map wrapper (MapPage, components, hooks)
-│   ├── components/         # Shared: Navigation, TipTapEditor, CustomSelect,
-│   │                        DuplicateDetection, TagInput, PasswordGate, etc.
-│   ├── hooks/              # Shared: useEntityCache, useSearch, useAutoSave,
-│   │                        useSubmitEntity, usePasswordGate, useSubmissionLedger
-│   ├── lib/                # API client (api.ts), search utilities (search.ts)
-│   ├── types/              # TypeScript type definitions (api.ts, entity.ts)
-│   ├── contexts/           # React contexts (DropdownContext)
-│   ├── styles/             # Global CSS with Tailwind (global.css)
-│   ├── __tests__/          # Vitest tests (components/, lib/)
-│   └── tiptap-notes.js     # Legacy TipTap source for map.html (bundled by esbuild)
-├── api/                     # TypeScript Lambda handlers — bundled by SAM esbuild
-│   ├── submit.ts           # Lambda: POST /submit - submissions + LLM review
-│   ├── submissions.ts      # Lambda: GET /submissions - returns entities + edges
-│   ├── search.ts           # Lambda: GET /search - full-text search
-│   ├── semantic-search.ts  # Lambda: GET /semantic-search - LLM-powered search
-│   ├── admin.ts            # Lambda: GET/POST /admin - stats, pending, approve/reject/merge/update/delete, auto map refresh
-│   ├── upload.ts           # Lambda: POST /upload - thumbnail image upload to S3
-│                            # (admin path; bulk caching lives in scripts/cache-thumbnails.js)
-│   ├── cors.ts             # Shared: CORS headers with origin allowlist
-│   └── export-map.ts       # Shared module: generates map-data.json from DB (maps DB columns → frontend field names)
-├── scripts/
-│   ├── migrate.js          # Create/update all 3 tables + triggers + indexes
-│   ├── seed.js             # Import Airtable CSV data
-│   ├── export.js           # Export all tables to CSV
-│   ├── export-map-data.ts  # Generate map-data.json from approved entries (run via tsx)
-│   ├── backup-db.js        # Backup all tables to S3 as JSON + SQL
-│   ├── enrich-elections.js  # Enrich political candidates + PACs via Exa API
-│   ├── enrich-people.js    # General-purpose people enrichment via Exa API
-│   └── seed-time100.js     # Seed TIME100 AI list entities
-├── assets/
-│   ├── css/                # Legacy styles (used by map.html)
-│   ├── images/             # Logo and images
-│   └── js/
-│       └── tiptap-notes.js # Built TipTap bundle for map.html (generated by esbuild)
-├── data/                   # Airtable CSV source exports
-├── dist/                   # Vite build output (not tracked in git)
-├── vite.config.ts          # Vite MPA config with React, Tailwind, proxy, Vitest
-├── tsconfig.json           # TypeScript config (strict, paths: @/* → src/*)
-├── template.yaml           # AWS SAM (5 Lambdas + API Gateway + S3 + CloudFront)
-├── samconfig.toml          # SAM deploy config
-├── .github/workflows/
-│   └── deploy.yml          # CI/CD: Vite build → export → S3 sync → CloudFront invalidate
-└── package.json            # React 19, TanStack Query, React Hook Form, TipTap, Tailwind, Vite 8, Vitest
-```
-
-## Database Schema (3 tables)
-
-The RDS schema uses a **unified `entity` table** (migrated from the old schema that had separate `people`, `organizations`, `resources` tables). Do not assume the old per-type table names - they no longer exist.
-
-### `entity`
-
-id, entity*type (person|organization|resource), name, category, other_categories (TEXT, comma-separated secondary categories), title, primary_org, other_orgs, website, funding_model, parent_org_id (FK → entity), resource_title, resource_category, resource_author, resource_type, resource_url, resource_year, resource_key_argument, location, influence_type, twitter, bluesky, notes, notes_html (TEXT, rich text from TipTap), thumbnail_url, belief_regulatory_stance + detail, belief_evidence_source, belief_agi_timeline, belief_ai_risk, belief_threat_models, belief*\*\_wavg/wvar/n (trigger-maintained weighted aggregates), submission_count, search_vector (tsvector), status (approved|pending|internal)
-
-### `submission`
-
-entity*type, entity_id (nullable - NULL for new entity submissions, set for edit submissions), submitter_email, submitter_relationship (self|connector|external), (all entity fields as flat columns), belief*\*\_score (SMALLINT - numeric scores for trigger aggregation), notes_html, notes_mentions (JSONB), llm_review (JSONB: quality 1-5, flags, notes from Claude Haiku), status (pending|approved|rejected), resolution_notes, reviewed_at, reviewed_by
-
-### `edge` (relationships + org affiliations)
-
-source_id + target_id (both FK → entity, ON DELETE CASCADE), edge_type (affiliated/collaborator/funder/critic/authored_by/etc.), role, is_primary, evidence, created_by, UNIQUE(source_id, target_id, edge_type)
-
-### Triggers
-
-- **before_submission_update**: When new-entity submission approved (entity_id IS NULL), auto-creates entity row and backfills entity_id
-- **after_submission_update**: Recalculates weighted belief scores on entity. Weights: self=10, connector=2, external=1
-- **update_entity_search**: Updates tsvector on entity INSERT/UPDATE
-
-### Field name mapping (DB → Frontend)
-
-The export layer (`api/export-map.ts` → `toFrontendShape()`) maps DB column names to frontend field names. This is critical - the frontend reads different names than the DB stores:
-
-- `belief_regulatory_stance` → `regulatory_stance`
-- `belief_agi_timeline` → `agi_timeline`
-- `belief_ai_risk` → `ai_risk_level`
-- `resource_title` → `title` (resources only)
-- `resource_url` → `url` (resources only)
-- `belief_*_wavg` → `stance_score` / `timeline_score` / `risk_score` (with text-label fallback)
-
-Any schema change must update this mapping or the map/plot will break silently.
-
-**Full-text search:** tsvector column with GIN index on `entity`. Auto-updated via triggers on INSERT/UPDATE.
+- [`docs/CONTRIBUTOR.md`](docs/CONTRIBUTOR.md): contributor-facing API usage (payload schemas, field reference, submission examples).
+- [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md): deploy process, PR requirements, incident response.
+- [`ONBOARDING.md`](ONBOARDING.md): setup guide for new developers.
 
 ## Commands
 
+Essential contributor-facing commands. See `current.md` for the full deploy and DB pipelines.
+
 ```bash
 # Local development
-npm run dev                     # Vite + Express API together (web :5173 proxies /api → :3000). Auto-generates map-data.json on first run if DATABASE_URL is set.
-npm run dev:web                 # Vite only (port 5173)
-npm run dev:api                 # Express API only (port 3000)
-npx vite build                  # Production build (outputs to dist/)
+npm run dev                   # Vite (5173) + Express API (3000) together
+npm run dev:web               # Vite only
+npm run dev:api               # Express API only
+npx vite build                # Production build (outputs to dist/)
 
-# Type checking and tests
-npx tsc --noEmit                # TypeScript type check (no output)
-npx vitest run                  # Run tests (Vitest + jsdom + React Testing Library)
+# Quality gates
+npx tsc --noEmit              # TypeScript type check
+npx vitest run                # Vitest tests
+npm run lint                  # ESLint
+npm run format:check          # Prettier
 
-# Build (legacy TipTap bundle for map.html)
-npm run build:tiptap            # esbuild: src/tiptap-notes.js → assets/js/tiptap-notes.js
+# Database (requires DATABASE_URL in .env)
+npm run db:migrate            # Create/update tables, triggers, indexes
+npm run db:seed               # Import Airtable CSV data
+npm run db:export-map         # Regenerate map-data.json from approved entries
+npm run db:backup             # Backup all tables to S3 (JSON + SQL)
+npm run db:backup:local       # Backup to local files only
 
-# Database
-npm run db:migrate              # Create/update all tables, triggers, indexes
-npm run db:seed                 # Import Airtable CSV data
-npm run db:export-map           # Generate map-data.json from approved entries
-npm run db:backup               # Backup all tables to S3 (JSON + SQL)
-npm run db:backup:local         # Backup to local files only
-
-# Deploy backend (Lambda functions)
-sam build && sam deploy --parameter-overrides DatabaseUrl=$DATABASE_URL AdminKey=$ADMIN_KEY AnthropicApiKey=$ANTHROPIC_API_KEY
-
-# Deploy frontend (automatic on push to main)
-git push origin main            # Triggers: Vite build → export → S3 sync → CloudFront invalidate
-
-# Manual S3 upload + cache invalidation
-aws s3 cp map-data.json s3://mapping-ai-website-561047280976/map-data.json
-aws cloudfront create-invalidation --distribution-id E34ZXLC7CZX7XT --paths "/*"
+# Legacy TipTap bundle (used only by map.html)
+npm run build:tiptap          # esbuild src/tiptap-notes.js → assets/js/tiptap-notes.js
 ```
 
-## Environment Variables
-
-| Variable                     | Where                               | Description                                                              |
-| ---------------------------- | ----------------------------------- | ------------------------------------------------------------------------ |
-| `DATABASE_URL`               | `.env` + Lambda + GitHub Secrets    | RDS PostgreSQL connection string                                         |
-| `AWS_ACCESS_KEY_ID`          | `.env` + GitHub Secrets             | AWS credentials                                                          |
-| `AWS_SECRET_ACCESS_KEY`      | `.env` + GitHub Secrets             | AWS credentials                                                          |
-| `S3_BUCKET_NAME`             | GitHub Secrets                      | `mapping-ai-website-561047280976`                                        |
-| `CLOUDFRONT_DISTRIBUTION_ID` | GitHub Secrets                      | `E34ZXLC7CZX7XT`                                                         |
-| `EXA_API_KEY`                | `.env`                              | Exa API key for data enrichment                                          |
-| `ANTHROPIC_API_KEY`          | `.env` + Lambda (via SAM parameter) | Claude Haiku for LLM review + semantic search                            |
-| `ADMIN_KEY`                  | `.env` + Lambda (via SAM parameter) | Admin authentication (passed via --parameter-overrides, never committed) |
-
-## API Endpoints
-
-**Production:** `https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com`
-
-| Endpoint       | Method | Purpose                                                                                      |
-| -------------- | ------ | -------------------------------------------------------------------------------------------- |
-| `/submit`      | POST   | Form submission (camelCase `data` object → submission table + LLM review)                    |
-| `/submissions` | GET    | Query approved entities with edges                                                           |
-| `/search`      | GET    | Full-text search (`?q=...&type=...&status=pending\|all`)                                     |
-| `/admin`       | GET    | Stats, pending queue, all entities (requires admin key)                                      |
-| `/admin`       | POST   | Approve, reject, merge, update, delete entities (auto-refreshes map on approve/merge/delete) |
-| `/upload`      | POST   | Thumbnail image upload to S3 (requires admin key)                                            |
+Frontend auto-deploys on push to `main`. Backend (Lambda) requires manual `sam deploy` with a drift check first. See [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) for the guarded flow.
 
 ## Form Features (src/contribute/)
 
-- **Relationship pills**: Compact pill toggle at top of each form ("I am this person" / "I can connect you" / "Someone I know of") - click to select, click again to deselect
-- **Clear form**: Inline link on pill row - resets all fields, custom selects, tags, TipTap editors
-- **Primary + secondary categories**: Primary via dropdown ("Primary Role" / "Primary Category"), additional via tag dropdown with click-to-add and × remove
-- **Duplicate detection**: Client-side search on Name/Title fields with existing entry card sidebar
-- **Org search**: Primary org, affiliated orgs, parent org - all search existing DB (approved + pending with badge) with edit/add links. Focus preload (top 5), 1-char search.
-- **Author search**: Resource form searches existing people for author field
-- **TipTap notes**: Rich text (bold/italic/lists/links) with @mentions. Info tooltip explains what to include (policy positions, relationships, funding, career) with @mention example showing bidirectional linking. @mention dropdown shows type badge (Person/Org/Resource), name with ellipsis for long names, detail text.
-- **Custom dropdowns**: Styled selects with category/stance colors, search, arrow key nav, click-to-deselect (clicking selected option clears it)
-- **Example submissions**: Collapsible `<details>` with interactive @mentions - hover shows entity card fetched from search API
-- **Location search**: Multi-city tag input via Photon geocoding API, Remote option for orgs
-- **Social search**: Bluesky handle search (free public API)
-- **Auto-save**: localStorage draft every 500ms, restored on page load, per-form clear
-- **Inline org creation panel**: Slide-in side panel (460px, 100vw mobile) for creating new orgs without leaving the person/resource form. Triggered from "Add 'X' as new org..." dropdown or "Can't find it?" links. Features: name pre-fill from search, category dropdown, website, location search with multi-city tags (Photon/OSM), expandable section with funding model, regulatory stance, Twitter/X, Bluesky live search, TipTap rich text notes with @mentions and info tooltip. Auto-submits via `/submit` API, shows success overlay, auto-closes and links org back to triggering field.
-- **Request body**: camelCase field names in `data` object, `_hp` honeypot field
+- **Relationship pills**: Compact pill toggle at top of each form ("I am this person" / "I can connect you" / "Someone I know of"). Click to select, click again to deselect.
+- **Clear form**: Inline link on pill row; resets all fields, custom selects, tags, TipTap editors.
+- **Primary + secondary categories**: Primary via dropdown ("Primary Role" / "Primary Category"); additional via tag dropdown with click-to-add and × remove.
+- **Duplicate detection**: Client-side search on Name/Title fields with existing entry card sidebar.
+- **Org search**: Primary org, affiliated orgs, parent org. All search existing DB (approved + pending with badge) with edit/add links. Focus preload (top 5), 1-char search.
+- **Author search**: Resource form searches existing people for the author field.
+- **TipTap notes**: Rich text (bold/italic/lists/links) with @mentions. Info tooltip explains what to include (policy positions, relationships, funding, career) with an @mention example showing bidirectional linking. The @mention dropdown shows a type badge (Person/Org/Resource), name with ellipsis for long names, and detail text.
+- **Custom dropdowns**: Styled selects with category/stance colors, search, arrow key nav, click-to-deselect (clicking the selected option clears it).
+- **Example submissions**: Collapsible `<details>` with interactive @mentions. Hover shows an entity card fetched from the search API.
+- **Location search**: Multi-city tag input via Photon geocoding API, Remote option for orgs.
+- **Social search**: Bluesky handle search (free public API).
+- **Auto-save**: localStorage draft every 500ms, restored on page load, per-form clear.
+- **Inline org creation panel**: Slide-in side panel (460px, 100vw mobile) for creating new orgs without leaving the person/resource form. Triggered from "Add 'X' as new org..." in the dropdown or "Can't find it?" links. Features: name pre-fill from search, category dropdown, website, location search with multi-city tags (Photon/OSM), expandable section with funding model, regulatory stance, Twitter/X, Bluesky live search, TipTap rich text notes with @mentions and info tooltip. Auto-submits via `/submit`, shows success overlay, auto-closes, and links the org back to the triggering field.
+- **Request body**: camelCase field names in `data` object, `_hp` honeypot field.
 
 ## Map Features (map.html)
 
-- **D3.js force simulation** with orbital cluster layout, semantic ordering
-- **Network view rendering**: Canvas 2D immediate-mode rendering (single `<canvas>` element). Per-node `_vs` visual state model (`normal`/`dimmed`/`highlighted`/`one-hop`/`hidden`) replaces SVG CSS classes. `d3.quadtree` for O(log N) hit-testing (hover/click/drag). Pre-rasterized image sprites via offscreen canvas. `_requestRedraw()` coalesces state changes into single animation frames.
+- **D3.js force simulation** with orbital cluster layout and semantic ordering.
+- **Network view rendering**: Canvas 2D immediate-mode (single `<canvas>`). Per-node `_vs` visual state model (`normal`/`dimmed`/`highlighted`/`one-hop`/`hidden`) replaces SVG CSS classes. `d3.quadtree` for O(log N) hit-testing (hover/click/drag). Pre-rasterized image sprites via offscreen canvas. `_requestRedraw()` coalesces state changes into single animation frames.
 - **Two-level view system**: Top-level "Network" (with sub-tabs: All/Orgs/People/Resources) and "Plot" (scatter/beeswarm). SVG icons on buttons. Sub-view persisted to localStorage.
-- **Plot view**: 2D scatter or 1D beeswarm plotting people + orgs on any two of {regulatory_stance, agi_timeline, ai_risk_level}; uses `stance_score` / `timeline_score` / `risk_score` from map-data.json; entities with null scores excluded with count shown. **Plot view still uses SVG** (not Canvas).
+- **Plot view**: 2D scatter or 1D beeswarm plotting people + orgs on any two of {regulatory_stance, agi_timeline, ai_risk_level}; uses `stance_score` / `timeline_score` / `risk_score` from `map-data.json`; entities with null scores excluded with count shown. Plot view still uses SVG (not Canvas).
 - **AI Belief panel**: Opacity-based legend showing belief dimension values (stance, timeline, risk). Replaces the former cluster-by-dimension dropdown. Category coloring is default; belief dimensions shown via opacity encoding.
-- **Category normalization**: Merges variants ("AI Safety/Alignment" → "AI Safety")
-- **Multi-category support**: Entities can have a primary category + `other_categories`. Filtering by any category shows entities where it's primary OR secondary. Detail panel shows primary as solid badge, secondary as dashed badges.
-- **Resources**: Rounded squares with type icons, clustered near related entities in All view
-- **Edges**: From edge table (affiliations + relationships); clicking any node (directly, from search, or from detail panel links) highlights connected edges and dims unconnected nodes/edges via `_vs` state changes
+- **Category normalization**: Merges variants ("AI Safety/Alignment" → "AI Safety").
+- **Multi-category support**: Entities can have a primary category plus `other_categories`. Filtering by any category shows entities where it's primary OR secondary. Detail panel shows primary as solid badge, secondary as dashed badges.
+- **Resources**: Rounded squares with type icons, clustered near related entities in All view.
+- **Edges**: From edge table (affiliations + relationships). Clicking any node (directly, from search, or from detail panel links) highlights connected edges and dims unconnected nodes/edges via `_vs` state changes.
 - **Node selection dimming**: In "all" view, clicking a node sets all unconnected nodes/edges to `_vs = 'dimmed'`. Background click calls `clearSelection()` to restore `_vs = 'normal'`.
-- **Submission count**: Subtle gold dashed ring for ≥5 submissions
-- **Source type filter**: Self/connector/external
-- **Cluster labels**: Positioned on outer edge, radiating away from center
-- **Search**: Semantic expansion (SEMANTIC_MAP), 40+ term groups; autocomplete filtered to current view; click-to-zoom on match
-- **Filters**: Dimension-aware chips (rebuild per view + dimension), stance legend; select/deselect all toggle
-- **Images**: Google Favicons (orgs), Wikipedia photos (people), async preload
-- **Collapsible controls sidebar**: Chevron button collapses sidebar with slide animation; "> Controls" button re-expands. Auto-collapses when contribute panel opens, auto-re-expands on close.
-- **Collapsible contribute sidebar**: iframe with "Open full page" option, map resizes
-- **View persistence**: localStorage saves view mode (network/plot) and sub-view
-- **Dark/light theme**: CSS variables, localStorage persistence
-- **Zoom**: 0.1x–20x range, controls bottom-right; click node to zoom (k=3)
-- **Entity count**: Inside controls sidebar (below "About this map"), not floating overlay
+- **Submission count**: Subtle gold dashed ring for ≥5 submissions.
+- **Source type filter**: self/connector/external.
+- **Cluster labels**: Positioned on outer edge, radiating away from center.
+- **Search**: Semantic expansion (SEMANTIC_MAP), 40+ term groups; autocomplete filtered to current view; click-to-zoom on match.
+- **Filters**: Dimension-aware chips (rebuild per view + dimension), stance legend; select/deselect all toggle.
+- **Images**: `entity.thumbnail_url` is the single source of truth. See `current.md` for the thumbnail pipeline rules.
+- **Collapsible controls sidebar**: Chevron button collapses the sidebar with slide animation; "> Controls" button re-expands. Auto-collapses when contribute panel opens, auto-re-expands on close.
+- **Collapsible contribute sidebar**: iframe with "Open full page" option, map resizes.
+- **View persistence**: localStorage saves view mode (network/plot) and sub-view.
+- **Dark/light theme**: CSS variables, localStorage persistence.
+- **Zoom**: 0.1x–20x range, controls bottom-right; click node to zoom (k=3).
+- **Entity count**: Inside controls sidebar (below "About this map"), not a floating overlay.
 
-## Person Categories (roles)
+## Person categories
 
-Executive, Researcher, Policymaker, Investor, Organizer, Journalist, Academic, Cultural figure
+Executive, Researcher, Policymaker, Investor, Organizer, Journalist, Academic, Cultural figure.
 
-## Organization Categories (sectors)
+## Organization categories
 
-Frontier Lab, AI Safety/Alignment, Think Tank/Policy Org, Government/Agency, Academic, VC/Capital/Philanthropy, Labor/Civil Society, Ethics/Bias/Rights, Media/Journalism, Political Campaign/PAC, AI Infrastructure & Compute, AI Deployers & Platforms
+Frontier Lab, AI Safety/Alignment, Think Tank/Policy Org, Government/Agency, Academic, VC/Capital/Philanthropy, Labor/Civil Society, Ethics/Bias/Rights, Media/Journalism, Political Campaign/PAC, AI Infrastructure & Compute, AI Deployers & Platforms.
 
-## Version Control & Deployment Practices
+## Version control and deployment practices
 
-See `docs/DEPLOYMENT.md` for the full deployment and review process.
+See [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) for the full deployment and review process.
 
-- Conventional commit prefixes: `feat:`, `fix:`, `refactor:`, `docs:`
-- `map-data.json` and `map-detail.json` are NOT tracked in git (generated during deploy from DB)
-- `backup-*.json` and `backup-*.sql` are gitignored
-- Test/seed data scripts gitignored
-- **Push to `main` auto-deploys frontend** - test in a browser first, not just with scripts
-- **All changes to `main` must go through a PR** - no direct pushes except P0 hotfixes
-- **Backend (Lambda/API Gateway) requires separate `sam deploy`** - merging api/\*.ts or template.yaml to main does NOT deploy them. `sam deploy` invokes SAM's `BuildMethod: esbuild` per-function to bundle each `api/<name>.ts` into a single `<name>.js` artifact.
-- **Never add `defer` or `async` to the D3 script tag** - inline map code depends on it synchronously (see `docs/post-mortems/2026-04-09-d3-defer-map-outage.md`)
-- **Browser-test map.html before pushing any HTML/JS changes** - automated checks cannot catch rendering failures
-- **MANDATORY: Verify site loads immediately after any push to main** - check /, /contribute, /map, /insights, /admin all return 200. The deploy workflow includes an automated smoke test, but always verify manually too. A broken prod site with no one checking is the worst outcome.
-- **For preview branches**: after pushing, wait for Cloudflare Pages build, then test the pages you changed on the preview URL before reporting the work as done
+- Conventional commit prefixes: `feat:`, `fix:`, `refactor:`, `docs:`.
+- `map-data.json` / `map-detail.json` / `backup-*.json` / `backup-*.sql` are gitignored.
+- Test/seed data scripts gitignored.
+- **All changes to main must go through a PR.** No direct pushes except P0 hotfixes with explicit approval.
+- **Push to main auto-deploys the frontend.** Test in a browser first, not just with scripts.
+- **Backend (Lambda + API Gateway) requires separate `sam deploy`.** Merging `api/*.ts` or `template.yaml` to main does NOT deploy them. Always run `aws cloudformation detect-stack-drift --stack-name mapping-ai` first; a blind `sam deploy` can wipe CloudFront settings not captured in `template.yaml`. This risk goes away when we cut to Cloudflare Workers per [ADR-0001](docs/architecture/adrs/0001-migrate-off-aws.md).
+- **Never add `defer` or `async` to the D3 script tag in `map.html`.** Inline map code uses `d3` synchronously during HTML parsing. See `docs/post-mortems/2026-04-09-d3-defer-map-outage.md`. Risk goes away when `map.html` is rewritten as a React component in Phase 3.
+- **Browser-test map.html before pushing any HTML/JS changes.** Automated checks cannot catch rendering failures.
+- **Verify site loads immediately after any push to main.** Check /, /contribute, /map, /insights, /admin all return 200. The deploy workflow has an automated smoke test; verify manually too.
+- **For preview branches**: wait for Cloudflare Pages build after push, then test the affected pages on the preview URL before reporting work done.
 
-## Linting & Formatting
+## Linting and formatting
 
-The project uses **ESLint** + **Prettier** with **lefthook** pre-commit hooks.
+ESLint + Prettier + lefthook pre-commit hooks.
 
 ```bash
 npm run lint          # Check for lint errors
-npm run lint:fix      # Auto-fix lint errors
-npm run format        # Format all src/ files with Prettier
+npm run lint:fix      # Auto-fix where possible
+npm run format        # Format src/ and api/ files
 npm run format:check  # Check formatting without writing
-npm run typecheck     # TypeScript type checking
+npm run typecheck     # TypeScript type check
 ```
 
-Pre-commit hooks run automatically via lefthook (typecheck + lint + format check). If a commit fails the hook, fix the issue and commit again.
+Pre-commit hooks run typecheck + lint + format check automatically. If a commit fails the hook, fix the underlying issue and commit again.
 
-**Never suppress errors with force flags.** If `--force`, `--no-verify`, or `eslint-disable` seem necessary, the root cause needs addressing instead. If a lint rule is genuinely wrong for the project, update `eslint.config.js` with a comment explaining why.
+**Never suppress errors with force flags.** If `--force`, `--no-verify`, or `eslint-disable` seem necessary, fix the root cause. If a lint rule is genuinely wrong for the project, update `eslint.config.js` with a comment explaining why.
 
 To set up lefthook after cloning:
 
 ```bash
-brew install lefthook    # macOS
-lefthook install         # sets up git hooks
+brew install lefthook
+lefthook install
 ```
 
-## DB Safety
+## DB safety
 
-- **Deletion protection** enabled on RDS instance
-- **Automated backups**: 1-day retention (free tier max), point-in-time recovery available
-- **Manual backups**: `npm run db:backup` dumps all tables to `s3://mapping-ai-website-561047280976/backups/` as timestamped JSON + SQL files. Run before any risky admin work.
-- **Planned**: Audit log table to track all DB mutations (approve/reject/merge/edit/delete) with revert capability
+- **Deletion protection** enabled on the RDS instance.
+- **Manual backups**: `npm run db:backup` dumps all tables to S3 under the `backups/` prefix as timestamped JSON + SQL. Run before any risky admin work.
+- **Planned**: audit log table to track all DB mutations (approve/reject/merge/edit/delete) with revert capability.
 
-## Known Technical Debt
+## Known technical debt
 
-- **map.html inline**: The D3.js map page is fully inline HTML/CSS/JS (not React). All other pages are React/TypeScript/Tailwind.
-- **Legacy TipTap bundle**: `src/tiptap-notes.js` is an esbuild bundle used only by map.html. React pages use `src/components/TipTapEditor.tsx` instead.
-- **Category mapping fragile**: Normalization function handles known variants but may miss new ones
-- **Admin key hardcoded**: Default key in template.yaml, should rotate before adding collaborators
+- **Category mapping fragile**: normalization handles known variants but may miss new ones as data grows.
+- **Admin key hardcoded**: default key in `template.yaml`; should rotate before adding collaborators.
+- Stack-level debt (inline `map.html`, legacy TipTap bundle, SAM drift risk, two-step deploy, pending-entity negative IDs) is tracked in [`docs/architecture/current.md` → Known limitations](docs/architecture/current.md) and addressed by the migration in [ADR-0001](docs/architecture/adrs/0001-migrate-off-aws.md).
