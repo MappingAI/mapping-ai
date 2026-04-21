@@ -8,6 +8,7 @@
  * targeting the chat Function URL. The render functions, directive dispatcher,
  * snapshot/reset wiring, and mutual-exclusion logic stay.
  */
+/* global allData, viewMode, requestAnimationFrame */
 
 ;(function () {
   'use strict'
@@ -189,11 +190,6 @@
     transcript.appendChild(msg)
     scrollToBottom()
     return { msg, textEl }
-  }
-
-  function appendDelta(textEl, delta) {
-    textEl.textContent += delta
-    scrollToBottom()
   }
 
   function renderToolCall(name, summary) {
