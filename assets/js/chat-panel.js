@@ -425,6 +425,15 @@
 
   async function runStubResponse(message) {
     await delay(200) // simulated round-trip
+
+    // If the user is in plot view (SVG), the highlight directive can't paint
+    // because _canvasNodes is empty. The real backend will see this via
+    // map_state and emit set_view('all') first. Stub mirrors that behavior.
+    if (typeof viewMode !== 'undefined' && viewMode !== 'network') {
+      applyDirective('set_view', { mode: 'all' })
+      await delay(400) // let the render settle so _canvasNodes populates
+    }
+
     const { msg, textEl } = startAssistantMessage()
     const script = buildStubScript(message)
 
