@@ -33,11 +33,11 @@ Essential contributor-facing commands. See `current.md` for the full deploy and 
 pnpm run dev                   # Vite (5173) + Express API (3000) together
 pnpm run dev:web               # Vite only
 pnpm run dev:api               # Express API only
-npx vite build                # Production build (outputs to dist/)
+pnpm exec vite build          # Production build (outputs to dist/)
 
 # Quality gates
-npx tsc --noEmit              # TypeScript type check
-npx vitest run                # Vitest tests
+pnpm exec tsc --noEmit        # TypeScript type check
+pnpm exec vitest run          # Vitest tests
 pnpm run lint                  # ESLint
 pnpm run format:check          # Prettier
 

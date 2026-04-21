@@ -122,7 +122,7 @@ Prereq: `neonctl` authenticated on Anushree's machine (done 2026-04-21). Project
 
 - [ ] Dry-run: `pg_dump` from RDS, `pg_restore` to a fresh Neon branch (e.g. `dry-run-2026-MM-DD`). Compare row counts for each of `entity`, `submission`, `edge`. Compare sample rows.
 - [ ] Take a final RDS snapshot via AWS Console or CLI before the real cutover (RDS deletion-protection is already on; belt + suspenders)
-- [ ] Run against a Neon staging branch end-to-end: `DATABASE_URL=<neon-staging> npm run dev` (API should come up, forms submit, admin approve triggers map regen)
+- [ ] Run against a Neon staging branch end-to-end: `DATABASE_URL=<neon-staging> pnpm run dev` (API should come up, forms submit, admin approve triggers map regen)
 - [ ] Real cutover:
   - [ ] Update GitHub Secrets `DATABASE_URL` to Neon prod URL
   - [ ] Update Lambda via `sam deploy` with new `DatabaseUrl` parameter (drift-check first per usual rule)

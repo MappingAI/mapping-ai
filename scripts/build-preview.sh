@@ -6,7 +6,7 @@ set -e
 echo "=== Building preview ==="
 
 # 1. Build TipTap bundle (still needed for map.html inline code)
-npm run build:tiptap
+pnpm run build:tiptap
 echo "✓ TipTap built"
 
 # 2. Pull latest map data from production (so preview has real data)
@@ -15,7 +15,7 @@ curl -sf https://mapping-ai.org/map-detail.json -o map-detail.json || echo "⚠ 
 echo "✓ Map data fetched"
 
 # 3. Build with Vite (outputs to dist/)
-npx vite build
+pnpm exec vite build
 echo "✓ Vite build complete"
 
 # 4. Copy map data into dist/
