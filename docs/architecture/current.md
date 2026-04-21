@@ -65,7 +65,7 @@ This document describes the stack that is actually running behind https://mappin
 - **Instance:** `db.t4g.micro` (free tier), 20GB gp3
 - **Deletion protection:** enabled
 - **Automated backups:** 1-day retention (free tier max), point-in-time recovery available
-- **Schema:** 3 tables (`entity`, `submission`, `edge`). See `scripts/migrate.js` and `CLAUDE.md` for field-level detail.
+- **Schema:** 3 tables (`entity`, `submission`, `edge`). Full field-level detail is in the [Database schema](#database-schema) section below; `scripts/migrate.js` is the authoritative DDL source.
 
 ### IaC (AWS SAM)
 

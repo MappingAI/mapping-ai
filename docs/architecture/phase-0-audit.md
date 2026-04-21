@@ -6,6 +6,8 @@
 
 Every file in the repo that provides instructions to Claude Code, to coding agents, or to human contributors. Assessed for architectural assertions that will contradict the target stack after migration.
 
+Memory files referenced in this audit live in Claude Code's per-user memory store at `~/.claude/projects/<project-slug>/memory/`, not in this repo. They are not visible to readers of the GitHub repo but ARE loaded into every Claude Code session as context, so updates to them are part of Phase 0 even though no repo commit can show them.
+
 ## Summary
 
 - 12 instruction files audited (CLAUDE.md, TECH.md, ONBOARDING.md, README.md, docs/DEPLOYMENT.md, docs/CONTRIBUTOR.md, docs/api-cost-tracking.md, docs/enrichment-v2-design.md, workshop/DATABASE-ORIENTATION.md, .claude/docs/architectural_patterns.md, .github/workflows/deploy.yml, .github/workflows/ci.yml)

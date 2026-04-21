@@ -199,8 +199,8 @@ The deploy workflow does this automatically, but always verify manually too. A b
 | ------------------------------ | ------------------------------------ | ------------------------------------------------- |
 | `map.html`                     | **P0**: primary product page         | Browser test: nodes render, D3 loads              |
 | `src/contribute/`              | **P1**: can't collect data           | Form renders, dropdowns work, submission succeeds |
-| `api/export-map.js`            | **P0**: map data malformed           | Run export locally, verify JSON                   |
-| `api/admin.js`                 | **P1**: admin can't approve/reject   | Test with admin key                               |
+| `api/export-map.ts`            | **P0**: map data malformed           | Run export locally, verify JSON                   |
+| `api/admin.ts`                 | **P1**: admin can't approve/reject   | Test with admin key                               |
 | `template.yaml`                | **P1**: API/CloudFront misconfigured | `sam validate`, check drift                       |
 | `.github/workflows/deploy.yml` | **P0**: deploy pipeline breaks       | Review carefully                                  |
 | `src/hooks/useSubmitEntity.ts` | **P1**: form submission broken       | Test submit end-to-end                            |

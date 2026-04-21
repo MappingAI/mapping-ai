@@ -146,7 +146,7 @@ lefthook install
 
 - **Deletion protection** enabled on the RDS instance.
 - **Manual backups**: `npm run db:backup` dumps all tables to S3 under the `backups/` prefix as timestamped JSON + SQL. Run before any risky admin work.
-- **Planned**: audit log table to track all DB mutations (approve/reject/merge/edit/delete) with revert capability. See `memory/db_audit_log.md` for the design target.
+- **Planned**: audit log table to track all DB mutations (approve/reject/merge/edit/delete) with revert capability.
 
 ## Known technical debt
 
