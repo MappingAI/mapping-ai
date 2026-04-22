@@ -1,0 +1,118 @@
+# Per-PR Neon branch scaffolding (Phase 2.2).
+#
+# When a PR is opened or reopened, create a Neon branch seeded from prod so the
+# PR gets an isolated database. When the PR is closed or merged, delete that
+# branch so we stay within Neon's free-tier 10-branch ceiling.
+#
+# NOT YET WIRED:
+#   - Requires secret `NEON_API_KEY` at the repo or org level. Workflow fails
+#     loudly with a clear message until that secret is added.
+#   - Does NOT wire the branch URL into a preview deploy. That is Phase 4.1;
+#     this file is the shape, not the full feature.
+#
+# Phase 2.1 (the Neon data cutover in docs/runbooks/2026-04-22-phase-2-neon-cutover.md)
+# must ship before per-PR branches have a useful purpose: branches are seeded
+# from prod, so prod needs to be on Neon first.
+#
+# Security posture matches .github/workflows/ci.yml:
+#   - `pull_request_target` here is needed so we have the NEON_API_KEY secret on
+#     PRs from forks. We do NOT check out PR-fork code in any job, so the secret
+#     is not exposed to untrusted code. Any future step that does check out PR
+#     code must set `ref: ${{ github.event.pull_request.head.sha }}` and must not
+#     have `NEON_API_KEY` in its env.
+#   - Third-party actions pinned to commit SHAs (semver in comments for Dependabot).
+#   - Top-level `permissions: pull-requests: write` so the branch URL can be
+#     posted as a PR comment; nothing else.
+
+name: Neon preview branch
+
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize, closed]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  # One run per PR; later events cancel in-flight runs to avoid duplicate branches.
+  group: neon-preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  require-secret:
+    name: Verify NEON_API_KEY is configured
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+      - name: Fail loudly if NEON_API_KEY is missing
+        env:
+          NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
+        run: |
+          if [ -z "${NEON_API_KEY:-}" ]; then
+            echo "::error::NEON_API_KEY secret is not set. Add it at https://github.com/MappingAI/mapping-ai/settings/secrets/actions and rerun this workflow."
+            echo "::error::This workflow is a Phase 2.2 scaffold; wiring the secret is a separate step before per-PR branching goes live."
+            exit 1
+          fi
+
+  create-branch:
+    name: Create Neon branch for PR
+    needs: require-secret
+    if: github.event.action != 'closed'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      # No checkout of PR code. We only need the branch name; checking out
+      # untrusted code while NEON_API_KEY is in scope would be a footgun.
+      - name: Create Neon branch
+        # TODO: wire this up once NEON_API_KEY is added to repo secrets. Until
+        # then the require-secret job above gates execution.
+        # neondatabase/create-branch-action@v6.4.0 (SHA-pinned for prod use).
+        uses: neondatabase/create-branch-action@72ed4f69a12b6be9c16aebfad893f6a21e9aba8b # v6.4.0
+        id: create_branch
+        with:
+          project_id: calm-tree-46517731
+          parent: production
+          branch_name: preview/pr-${{ github.event.pull_request.number }}
+          api_key: ${{ secrets.NEON_API_KEY }}
+
+      - name: Comment branch URL on PR
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const body = [
+              '### Neon preview branch ready',
+              '',
+              '```',
+              'branch: preview/pr-${{ github.event.pull_request.number }}',
+              'host: ${{ steps.create_branch.outputs.host }}',
+              '```',
+              '',
+              'Connection string is available to workflow runs on this PR as',
+              '`${{ steps.create_branch.outputs.db_url }}` (via Neon action outputs).',
+              '',
+              'Full preview deploys land in Phase 4.1. For now, this branch only',
+              'proves the shape: per-PR DB isolation via `neondatabase/create-branch-action`.',
+            ].join('\n');
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body,
+            });
+
+  delete-branch:
+    name: Delete Neon branch on PR close
+    needs: require-secret
+    if: github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Delete Neon branch
+        # neondatabase/delete-branch-action@v3.2.1 (SHA-pinned for prod use).
+        uses: neondatabase/delete-branch-action@4468d825d5a88ef4012f1705a82f02ec3072f776 # v3.2.1
+        with:
+          project_id: calm-tree-46517731
+          branch: preview/pr-${{ github.event.pull_request.number }}
+          api_key: ${{ secrets.NEON_API_KEY }}
