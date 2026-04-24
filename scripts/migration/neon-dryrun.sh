@@ -26,8 +26,11 @@ set -euo pipefail
 # ---------------------------------------------------------------------------
 
 NEON_PROJECT_ID="${NEON_PROJECT_ID:-calm-tree-46517731}"
-BRANCH_NAME="${BRANCH_NAME:-dryrun-$(date +%Y-%m-%d-%H%M%S)}"
-DUMP_PATH="${DUMP_PATH:-/tmp/mapping-ai-dryrun-$(date +%Y-%m-%d-%H%M%S).dump}"
+# Capture the timestamp once so BRANCH_NAME and DUMP_PATH always agree, even
+# if the script crosses a second boundary between the two assignments.
+RUN_TS="$(date +%Y-%m-%d-%H%M%S)"
+BRANCH_NAME="${BRANCH_NAME:-dryrun-${RUN_TS}}"
+DUMP_PATH="${DUMP_PATH:-/tmp/mapping-ai-dryrun-${RUN_TS}.dump}"
 DELETE_AFTER=false
 
 for arg in "$@"; do

@@ -27,8 +27,12 @@
 name: Neon preview branch
 
 on:
+  # Fires on the lifecycle events we act on. `synchronize` is deliberately
+  # excluded: the create step is not idempotent (Neon rejects duplicate branch
+  # names), and contributors expect preview-DB state to persist across pushes
+  # within a single PR. To force a fresh seed from prod, close and reopen the PR.
   pull_request_target:
-    types: [opened, reopened, synchronize, closed]
+    types: [opened, reopened, closed]
 
 permissions:
   contents: read
@@ -78,6 +82,14 @@ jobs:
 
       - name: Comment branch URL on PR
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          # Do NOT move these values into the inline script literal; the
+          # create-branch action emits `db_url` as a full postgres connection
+          # string including the password. Interpolating that into a PR comment
+          # publishes the credential in plaintext (including in email
+          # notifications). Only the branch label and hostname are safe to post.
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          BRANCH_HOST: ${{ steps.create_branch.outputs.host }}
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -85,12 +97,14 @@ jobs:
               '### Neon preview branch ready',
               '',
               '```',
-              'branch: preview/pr-${{ github.event.pull_request.number }}',
-              'host: ${{ steps.create_branch.outputs.host }}',
+              `branch: preview/pr-${process.env.PR_NUMBER}`,
+              `host:   ${process.env.BRANCH_HOST}`,
               '```',
               '',
-              'Connection string is available to workflow runs on this PR as',
-              '`${{ steps.create_branch.outputs.db_url }}` (via Neon action outputs).',
+              'The full connection string is available to workflow steps on this PR',
+              'via the `db_url` output of the Neon create-branch action. It is NOT',
+              'printed here because the output includes the password, and posting it',
+              'as a PR comment would leak that credential in email notifications.',
               '',
               'Full preview deploys land in Phase 4.1. For now, this branch only',
               'proves the shape: per-PR DB isolation via `neondatabase/create-branch-action`.',
