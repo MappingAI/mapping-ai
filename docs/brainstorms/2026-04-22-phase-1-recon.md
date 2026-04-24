@@ -32,7 +32,7 @@ Batch run loop (`scripts/cache-thumbnails.js:228–256`):
 
 ### Cache semantics
 
-- **Store:** S3 bucket `mapping-ai-website-561047280976`, prefix `thumbnails/`, hardcoded in the script at line 26. `CacheControl: public, max-age=31536000, immutable` (1 year).
+- **Store:** S3 bucket (canonical identifier in [`docs/architecture/current.md` → CDN + static hosting](../architecture/current.md)), prefix `thumbnails/`, hardcoded at `scripts/cache-thumbnails.js:26`. `CacheControl: public, max-age=31536000, immutable` (1 year).
 - **URL shape written to DB:** `https://mapping-ai.org/<key>` — the alias, not the CloudFront subdomain. This is deliberate per the 2026-04-19 post-mortem.
 - **Invalidation:** none from the script. S3 `HeadObject` just checks existence; the script won't overwrite an existing S3 object even if the source changed. **To force a re-cache you set `thumbnail_url` back to `NULL` in the DB manually.** There is no cache-bust knob.
 
@@ -172,7 +172,7 @@ PR #40 adds `scripts/enrich/` with a formal API client at `scripts/enrich/lib/ap
 - `buildSubmitPayload()` normalizes camelCase, derives plain-text `notes` from `notesHtml` every call. Allow-list of recognized fields.
 - `approveSubmission()` posts to `/admin` → the same path the admin dashboard uses → triggers the `map-data.json` regeneration.
 - Dry-run is the default. `--execute` required to POST. `--confirm` for destructive actions.
-- Hardcoded API base: `https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com` (line 16), overridable via `MAPPING_AI_API_BASE`. **This will need to flip to the Cloudflare Workers URL in Phase 3.**
+- Hardcoded API base at `scripts/enrich/lib/api.js:16` (canonical URL in [`docs/architecture/current.md` → Compute](../architecture/current.md)), overridable via `MAPPING_AI_API_BASE`. **This will need to flip to the Cloudflare Workers URL in Phase 3.**
 
 **PR #40 changes the answer to the staging-isolation question.** The new enrichment flow is staging-ready: point `DATABASE_URL` + `MAPPING_AI_API_BASE` at the staging stack and the scripts work. The legacy scripts (`enrich-*.js`, `seed-*.js`) are not touched by PR #40 and still need the per-script fix.
 
