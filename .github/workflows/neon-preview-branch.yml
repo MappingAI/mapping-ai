@@ -31,17 +31,23 @@ on:
   # excluded: the create step is not idempotent (Neon rejects duplicate branch
   # names), and contributors expect preview-DB state to persist across pushes
   # within a single PR. To force a fresh seed from prod, close and reopen the PR.
+  # Only act on PRs targeting `main`; a stray target branch should not consume
+  # the Neon free-tier branch ceiling.
   pull_request_target:
     types: [opened, reopened, closed]
+    branches: [main]
 
 permissions:
   contents: read
   pull-requests: write
 
 concurrency:
-  # One run per PR; later events cancel in-flight runs to avoid duplicate branches.
+  # One run per PR. `cancel-in-progress: false` so a close event's delete-branch
+  # always finishes before a subsequent reopen's create-branch starts, otherwise
+  # a rapid close→reopen can leave a stale Neon branch that blocks creation
+  # (Neon rejects duplicate branch names).
   group: neon-preview-${{ github.event.pull_request.number }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   require-secret:
