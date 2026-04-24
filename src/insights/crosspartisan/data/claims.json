@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "note": "One row per (policymaker, policy_area, source). A policymaker may have multiple claims per policy area across different sources/dates; the viz layer aggregates them. Stance is -2..2 per policy-areas.json. Entries prefixed EXAMPLE_ are format placeholders and must be removed before the viz consumes real data.",
+  "field_reference": "See schema.md in the parent directory for field definitions and required/optional status.",
+  "claims": [
+    {
+      "claim_id": "EXAMPLE_wiener_sb1047_preemption_2024-08",
+      "person_id": 91,
+      "person_name": "Scott Wiener",
+      "policy_area": "state_preemption",
+      "stance": -2,
+      "stance_label": "strongly oppose preemption",
+      "definition_used": "State-level safety requirements for frontier AI models should stand when federal law is silent or weaker.",
+      "quote": "[EXAMPLE STUB — replace with verbatim quote, ≤2 sentences]",
+      "source_url": "https://example.com/placeholder",
+      "source_type": "bill",
+      "source_title": "SB 1047 (California Safe and Secure Innovation for Frontier AI Models Act)",
+      "date_stated": "2024-08-29",
+      "confidence": "high",
+      "extracted_by": "manual",
+      "notes": "EXAMPLE STUB — delete before v1 publication."
+    },
+    {
+      "claim_id": "EXAMPLE_cruz_open_source_2024-07",
+      "person_id": 0,
+      "person_name": "Ted Cruz",
+      "policy_area": "open_source_weights",
+      "stance": -2,
+      "stance_label": "strongly oppose restrictions on open weights",
+      "definition_used": "Open-source / open-weight models include models whose parameters are publicly released under permissive license.",
+      "quote": "[EXAMPLE STUB — replace with verbatim quote, ≤2 sentences]",
+      "source_url": "https://example.com/placeholder",
+      "source_type": "floor_speech",
+      "source_title": "Senate floor remarks on AI regulation",
+      "date_stated": "2024-07-15",
+      "confidence": "medium",
+      "extracted_by": "manual",
+      "notes": "EXAMPLE STUB — delete before v1 publication. person_id is a placeholder; resolve against policymakers.json when populating real claim."
+    }
+  ]
+}
