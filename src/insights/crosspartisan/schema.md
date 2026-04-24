@@ -6,7 +6,7 @@ Data for the "where do policymakers across the aisle agree on specific AI polici
 
 All three files live in `data/`.
 
-- `policymakers.json` — snapshot of the 72 US policymakers already tagged with a party-affiliation edge in prod. Read-only snapshot from `map-data.json`; the DB is not modified.
+- `policymakers.json` — snapshot of all 132 policymakers in the map, each with a `party` field (`"D"` / `"R"` / `"I"` / `null`). Null is used for non-US officials (EU, UN, Taiwan) and US career civil servants (NIST, DARPA PMs, agency CIOs) — the viz filters them out rather than forcing a party. Read-only snapshot from `map-data.json`; the DB is not modified.
 - `policy-areas.json` — canonical list of 6 AI policy areas with narrow definitions, stance scales, and convergence hypotheses.
 - `claims.json` — flat table of belief claims. One row per `(person, policy_area, source)`. Current file contains two `EXAMPLE_*` stubs showing the format; real entries go here.
 

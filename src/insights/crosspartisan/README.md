@@ -13,19 +13,19 @@ crosspartisan/
 ├── README.md             # this file
 ├── schema.md             # claim-record schema, stance scale, workflow
 └── data/
-    ├── policymakers.json # 72 policymakers with party edges (44 D, 28 R), read-only snapshot
+    ├── policymakers.json # all 132 policymakers with party (D / R / I / null)
     ├── policy-areas.json # 6 canonical AI policy areas with narrow definitions
     └── claims.json       # empty + 2 EXAMPLE_ stubs; replace with real claims
 ```
 
 ## v1 scope
 
-- 72 US policymakers (those already tagged with a party-affiliation edge in the DB).
-- 6 AI policy areas: state preemption, open-weight model restrictions, compute governance, chip export controls, pre-deployment testing, developer liability.
+- **All 132 policymakers** in the map. Party assigned from the existing DB party-affiliation edges, regex on `"(D/R/I-XX)"` title strings, public record, and a small number of Exa-verified cases. 62 D, 57 R, 1 I (Sanders), 12 with `party=null` (6 non-US, 6 US career civil servants — both groups filtered out of the convergence viz).
+- **6 AI policy areas:** state preemption, open-weight model restrictions, compute governance, chip export controls, pre-deployment testing, developer liability.
 - Statements from 2023-01-01 onward, primary sources preferred.
 - Sparse coverage is fine. Blank cells are data.
 
-Out of scope for v1: orgs (covered in sibling scoping note — political ideology for think tanks is harder to pin without PAC/lobbying filings); Independents (e.g. Bernie Sanders); policymakers without a tagged party edge.
+Out of scope for v1: orgs (political ideology for think tanks is harder to pin without PAC/lobbying filings).
 
 ## Planned viz (not yet built)
 
@@ -35,7 +35,7 @@ Out of scope for v1: orgs (covered in sibling scoping note — political ideolog
 
 ## How the DB is not touched
 
-`policymakers.json` is a read-only snapshot extracted from the local `map-data.json` export. No script in this directory writes to the database. Claims live only in these JSON files. If and when the workflow matures, we can decide whether to promote this into its own table (see `db_audit_log.md` memory re: parallel proposal for mutation-tracking tables).
+`policymakers.json` is a read-only snapshot extracted from the local `map-data.json` export. This data lives only in these viz-scoped JSON files — nothing here is a proposed change to the prod DB schema. If the workflow matures, we can decide later whether to promote this into its own table.
 
 ## Next steps (future PRs)
 
