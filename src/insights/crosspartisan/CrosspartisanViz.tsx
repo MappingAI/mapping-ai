@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef, useMemo } from 'react'
 import policymakersData from './data/policymakers.json'
+import claimsData from './data/claims.json'
+import policyAreasData from './data/policy-areas.json'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const d3: any
@@ -355,15 +357,221 @@ function HorseshoePlot({ data }: { data: Policymaker[] }) {
 }
 
 /* ────────────────────────────────────────────
+   Per-issue beeswarm: stacked beeswarms, one per policy area
+   ──────────────────────────────────────────── */
+
+interface Claim {
+  claim_id: string
+  person_id: number
+  person_name: string
+  policy_area: string
+  stance: number
+  stance_label: string
+  quote: string
+  source_url: string
+  source_title: string
+  date_stated: string
+  confidence: string
+  notes: string | null
+}
+
+interface PolicyArea {
+  id: string
+  label: string
+}
+
+const STANCE_ISSUE_LABELS: Record<number, string> = {
+  [-2]: 'Strongly oppose',
+  [-1]: 'Oppose',
+  [0]: 'Mixed',
+  [1]: 'Support',
+  [2]: 'Strongly support',
+}
+
+function PerIssueBeeswarm() {
+  const ref = useRef<HTMLDivElement>(null)
+
+  const claims = useMemo(() => claimsData.claims as Claim[], [])
+  const policyAreas = useMemo(() => policyAreasData.policy_areas as PolicyArea[], [])
+  const policymakerLookup = useMemo(() => {
+    const m = new Map<number, Policymaker>()
+    for (const p of policymakersData.policymakers as Policymaker[]) m.set(p.person_id, p)
+    return m
+  }, [])
+
+  useEffect(() => {
+    if (!ref.current || claims.length === 0) return
+    const container = ref.current
+    container.innerHTML = ''
+
+    const tip = makeTooltip()
+    const W = container.clientWidth || 700
+    const rowH = 110
+    const padL = 160
+    const padR = 30
+    const padT = 10
+
+    const areasWithClaims = policyAreas.filter((a) => claims.some((c) => c.policy_area === a.id))
+    const H = padT + areasWithClaims.length * rowH + 20
+
+    const svg = d3.select(container).append('svg').attr('viewBox', `0 0 ${W} ${H}`).attr('width', W).attr('height', H)
+
+    const xScale = d3
+      .scaleLinear()
+      .domain([-2.5, 2.5])
+      .range([padL, W - padR])
+
+    // Axis ticks (shared)
+    ;[-2, -1, 0, 1, 2].forEach((v) => {
+      svg
+        .append('line')
+        .attr('x1', xScale(v))
+        .attr('x2', xScale(v))
+        .attr('y1', padT)
+        .attr('y2', H - 20)
+        .attr('stroke', '#eee')
+        .attr('stroke-width', 0.5)
+    })
+
+    // Bottom axis labels
+    ;[-2, -1, 0, 1, 2].forEach((v) => {
+      svg
+        .append('text')
+        .attr('x', xScale(v))
+        .attr('y', H - 6)
+        .attr('text-anchor', 'middle')
+        .attr('font-family', "'DM Mono', monospace")
+        .attr('font-size', 9)
+        .attr('fill', '#888')
+        .text(STANCE_ISSUE_LABELS[v] || '')
+    })
+
+    areasWithClaims.forEach((area, areaIdx) => {
+      const yCenter = padT + areaIdx * rowH + rowH / 2
+
+      // Area label
+      svg
+        .append('text')
+        .attr('x', padL - 10)
+        .attr('y', yCenter + 3)
+        .attr('text-anchor', 'end')
+        .attr('font-family', "'DM Mono', monospace")
+        .attr('font-size', 10)
+        .attr('fill', '#444')
+        .text(area.label.length > 28 ? area.label.slice(0, 26) + '...' : area.label)
+
+      // Count
+      const areaClaims = claims.filter((c) => c.policy_area === area.id)
+      svg
+        .append('text')
+        .attr('x', padL - 10)
+        .attr('y', yCenter + 14)
+        .attr('text-anchor', 'end')
+        .attr('font-family', "'DM Mono', monospace")
+        .attr('font-size', 9)
+        .attr('fill', '#aaa')
+        .text(`${areaClaims.length} claims`)
+
+      // Row separator
+      svg
+        .append('line')
+        .attr('x1', padL)
+        .attr('x2', W - padR)
+        .attr('y1', padT + areaIdx * rowH)
+        .attr('y2', padT + areaIdx * rowH)
+        .attr('stroke', '#eee')
+        .attr('stroke-width', 0.5)
+
+      // Aggregate per-person: average stance across claims for this area
+      const byPerson = d3.group(areaClaims, (c: Claim) => c.person_id) as Map<number, Claim[]>
+      const nodes = Array.from(byPerson.entries()).map(([pid, personClaims]) => {
+        const avg = d3.mean(personClaims, (c: Claim) => c.stance)
+        const pm = policymakerLookup.get(pid)
+        return {
+          person_id: pid,
+          name: personClaims[0]!.person_name,
+          party: pm?.party || null,
+          title: pm?.title || null,
+          stance: avg,
+          claimCount: personClaims.length,
+          quotes: personClaims.map((c: Claim) => c.quote).join(' | '),
+          x: xScale(avg),
+          y: yCenter,
+        }
+      })
+
+      const sim = d3
+        .forceSimulation(nodes)
+        .force('x', d3.forceX((d: { x: number }) => d.x).strength(1))
+        .force('y', d3.forceY(yCenter).strength(0.3))
+        .force('collide', d3.forceCollide(6))
+        .stop()
+      for (let i = 0; i < 120; i++) sim.tick()
+
+      svg
+        .selectAll(null)
+        .data(nodes)
+        .enter()
+        .append('circle')
+        .attr('cx', (d: { x: number }) => d.x)
+        .attr('cy', (d: { y: number }) => d.y)
+        .attr('r', 5)
+        .attr('fill', (d: { party: string | null }) => PARTY_COLOR[d.party || ''] || '#888')
+        .attr('opacity', 0.85)
+        .attr('stroke', '#fff')
+        .attr('stroke-width', 1)
+        .style('cursor', 'pointer')
+        .on(
+          'mouseover',
+          (
+            evt: MouseEvent,
+            d: { name: string; party: string | null; title: string | null; stance: number; claimCount: number },
+          ) => {
+            const partyLabel = d.party === 'D' ? 'Democrat' : d.party === 'R' ? 'Republican' : 'Independent'
+            const html = `
+            <div style="font-weight:500; margin-bottom:2px;">${escapeHtml(d.name)}</div>
+            <div style="color:#666; font-size:10px; margin-bottom:4px;">${escapeHtml(d.title || '')}</div>
+            <div style="color:${PARTY_COLOR[d.party || ''] || '#666'}; font-weight:500;">${partyLabel}</div>
+            <div style="color:#888; font-size:10px;">${escapeHtml(area.label)}: stance ${d.stance > 0 ? '+' : ''}${d.stance.toFixed(1)} (${d.claimCount} claim${d.claimCount > 1 ? 's' : ''})</div>
+          `
+            tip.show(evt, html)
+          },
+        )
+        .on(
+          'mousemove',
+          (
+            evt: MouseEvent,
+            d: { name: string; party: string | null; title: string | null; stance: number; claimCount: number },
+          ) => {
+            const partyLabel = d.party === 'D' ? 'Democrat' : d.party === 'R' ? 'Republican' : 'Independent'
+            const html = `
+            <div style="font-weight:500; margin-bottom:2px;">${escapeHtml(d.name)}</div>
+            <div style="color:#666; font-size:10px; margin-bottom:4px;">${escapeHtml(d.title || '')}</div>
+            <div style="color:${PARTY_COLOR[d.party || ''] || '#666'}; font-weight:500;">${partyLabel}</div>
+            <div style="color:#888; font-size:10px;">${escapeHtml(area.label)}: stance ${d.stance > 0 ? '+' : ''}${d.stance.toFixed(1)} (${d.claimCount} claim${d.claimCount > 1 ? 's' : ''})</div>
+          `
+            tip.show(evt, html)
+          },
+        )
+        .on('mouseout', () => tip.hide())
+    })
+  }, [claims, policyAreas, policymakerLookup])
+
+  return <div ref={ref} />
+}
+
+/* ────────────────────────────────────────────
    Top-level component with tab toggle
    ──────────────────────────────────────────── */
 export function CrosspartisanViz() {
-  const [view, setView] = useState<'beeswarm' | 'horseshoe'>('horseshoe')
+  const [view, setView] = useState<'by-issue' | 'horseshoe' | 'beeswarm'>('by-issue')
 
   const data = useMemo<Policymaker[]>(
     () => (policymakersData.policymakers as Policymaker[]).filter((p) => p.party && p.aggregate_stance_score != null),
     [],
   )
+
+  const claimCount = (claimsData.claims as Claim[]).length
 
   const counts = useMemo(() => {
     const c = { D: 0, R: 0, I: 0 }
@@ -375,8 +583,8 @@ export function CrosspartisanViz() {
 
   return (
     <div>
-      <div className="flex gap-2 mb-3">
-        {(['horseshoe', 'beeswarm'] as const).map((v) => (
+      <div className="flex gap-2 mb-3 flex-wrap">
+        {(['by-issue', 'horseshoe', 'beeswarm'] as const).map((v) => (
           <button
             key={v}
             onClick={() => setView(v)}
@@ -384,14 +592,22 @@ export function CrosspartisanViz() {
               view === v ? 'bg-[#1a1a1a] text-white' : 'bg-[#eee] text-[#555] hover:bg-[#ddd]'
             }`}
           >
-            {v}
+            {v === 'by-issue' ? 'By Issue' : v}
           </button>
         ))}
         <div className="font-mono text-[10px] text-[#888] self-center ml-2">
-          {data.length} policymakers · {counts.D} D · {counts.R} R · {counts.I} I
+          {view === 'by-issue'
+            ? `${claimCount} claims across 6 issues`
+            : `${data.length} policymakers · ${counts.D} D · ${counts.R} R · ${counts.I} I`}
         </div>
       </div>
-      {view === 'beeswarm' ? <BeeswarmStance data={data} /> : <HorseshoePlot data={data} />}
+      {view === 'by-issue' ? (
+        <PerIssueBeeswarm />
+      ) : view === 'beeswarm' ? (
+        <BeeswarmStance data={data} />
+      ) : (
+        <HorseshoePlot data={data} />
+      )}
     </div>
   )
 }
