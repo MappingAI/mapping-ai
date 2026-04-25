@@ -202,10 +202,10 @@ function HorseshoePlot({ data }: { data: Policymaker[] }) {
     container.innerHTML = ''
 
     const W = container.clientWidth || 700
-    const H = 480
+    const H = 520
     const cx = W / 2
-    const cy = 80
-    const rOuter = Math.min(W * 0.42, 320)
+    const cy = 100
+    const rOuter = Math.min(W * 0.38, 280)
     const rInner = rOuter * 0.5
 
     const tip = makeTooltip()
@@ -261,14 +261,15 @@ function HorseshoePlot({ data }: { data: Policymaker[] }) {
         .attr('fill', '#ddd')
         .attr('stroke', 'none')
 
+      // Label at the right end of each ring arc (angle = 0, which is right side)
       svg
         .append('text')
-        .attr('x', cx)
-        .attr('y', cy + r + 4)
-        .attr('text-anchor', 'middle')
+        .attr('x', cx + r + 6)
+        .attr('y', cy + 4)
+        .attr('text-anchor', 'start')
         .attr('font-family', "'DM Mono', monospace")
-        .attr('font-size', 9)
-        .attr('fill', '#999')
+        .attr('font-size', 8)
+        .attr('fill', '#bbb')
         .text(STANCE_LABELS[s - 1])
     }
 
@@ -319,12 +320,12 @@ function HorseshoePlot({ data }: { data: Policymaker[] }) {
       .on('mousemove', (evt: MouseEvent, d: Policymaker) => tip.show(evt, tooltipHtml(d)))
       .on('mouseout', () => tip.hide())
 
-    // Party labels at the arc tips
+    // Party labels inside the arc, near the tips
     svg
       .append('text')
-      .attr('x', cx - rOuter - 8)
-      .attr('y', cy + 4)
-      .attr('text-anchor', 'end')
+      .attr('x', cx - rOuter * 0.65)
+      .attr('y', cy - 12)
+      .attr('text-anchor', 'middle')
       .attr('font-family', "'DM Mono', monospace")
       .attr('font-size', 11)
       .attr('font-weight', 500)
@@ -332,25 +333,24 @@ function HorseshoePlot({ data }: { data: Policymaker[] }) {
       .text('Democrats')
     svg
       .append('text')
-      .attr('x', cx + rOuter + 8)
-      .attr('y', cy + 4)
-      .attr('text-anchor', 'start')
+      .attr('x', cx + rOuter * 0.65)
+      .attr('y', cy - 12)
+      .attr('text-anchor', 'middle')
       .attr('font-family', "'DM Mono', monospace")
       .attr('font-size', 11)
       .attr('font-weight', 500)
       .attr('fill', PARTY_COLOR.R)
       .text('Republicans')
 
-    // Caption / instructions
     svg
       .append('text')
       .attr('x', cx)
-      .attr('y', cy + rOuter + 38)
+      .attr('y', cy + rOuter + 30)
       .attr('text-anchor', 'middle')
       .attr('font-family', "'DM Mono', monospace")
-      .attr('font-size', 10)
-      .attr('fill', '#666')
-      .text('Bottom of the horseshoe = where extremes converge.')
+      .attr('font-size', 9)
+      .attr('fill', '#999')
+      .text('↑ Precautionary extremes converge here ↑')
   }, [data])
 
   return <div ref={ref} />
@@ -395,8 +395,6 @@ function lastName(name: string): string {
 }
 
 function PerIssueBeeswarm() {
-  const ref = useRef<HTMLDivElement>(null)
-
   const claims = useMemo(() => claimsData.claims as Claim[], [])
   const policyAreas = useMemo(() => policyAreasData.policy_areas as PolicyArea[], [])
   const policymakerLookup = useMemo(() => {
@@ -405,190 +403,193 @@ function PerIssueBeeswarm() {
     return m
   }, [])
 
+  const areasWithClaims = useMemo(
+    () => policyAreas.filter((a) => claims.some((c) => c.policy_area === a.id)),
+    [policyAreas, claims],
+  )
+
+  return (
+    <div className="space-y-1">
+      {/* Legend */}
+      <div className="flex gap-5 mb-4">
+        {[
+          { label: 'Democrat', color: PARTY_COLOR.D },
+          { label: 'Republican', color: PARTY_COLOR.R },
+          { label: 'Independent', color: PARTY_COLOR.I },
+        ].map((item) => (
+          <div key={item.label} className="flex items-center gap-1.5">
+            <span className="inline-block w-2.5 h-2.5 rounded-full" style={{ background: item.color }} />
+            <span className="font-mono text-[10px] text-[#555]">{item.label}</span>
+          </div>
+        ))}
+      </div>
+
+      {areasWithClaims.map((area) => (
+        <PerIssueRow
+          key={area.id}
+          area={area}
+          claims={claims.filter((c) => c.policy_area === area.id)}
+          policymakerLookup={policymakerLookup}
+        />
+      ))}
+    </div>
+  )
+}
+
+function PerIssueRow({
+  area,
+  claims: areaClaims,
+  policymakerLookup,
+}: {
+  area: PolicyArea
+  claims: Claim[]
+  policymakerLookup: Map<number, Policymaker>
+}) {
+  const svgRef = useRef<SVGSVGElement>(null)
+
   useEffect(() => {
-    if (!ref.current || claims.length === 0) return
-    const container = ref.current
-    container.innerHTML = ''
+    if (!svgRef.current) return
+    const svg = d3.select(svgRef.current)
+    svg.selectAll('*').remove()
+
+    const W = (svgRef.current.parentElement?.clientWidth || 700) - 2
+    const padL = 16
+    const padR = 16
 
     const tip = makeTooltip()
-    const W = container.clientWidth || 700
-    const padL = 20
-    const padR = 20
-    const headerH = 38
-    const dotZoneH = 70
-    const rowGap = 8
-    const rowH = headerH + dotZoneH + rowGap
-
-    const areasWithClaims = policyAreas.filter((a) => claims.some((c) => c.policy_area === a.id))
-    const legendH = 30
-    const H = legendH + areasWithClaims.length * rowH + 10
-
-    const svg = d3.select(container).append('svg').attr('viewBox', `0 0 ${W} ${H}`).attr('width', W).attr('height', H)
-
-    // Legend
-    const legend = svg.append('g').attr('transform', `translate(${padL}, 12)`)
-    const legendItems = [
-      { label: 'Democrat', key: 'D' },
-      { label: 'Republican', key: 'R' },
-      { label: 'Independent', key: 'I' },
-    ]
-    legendItems.forEach((item, i) => {
-      const g = legend.append('g').attr('transform', `translate(${i * 110}, 0)`)
-      g.append('circle').attr('r', 5).attr('cx', 5).attr('cy', 0).attr('fill', PARTY_COLOR[item.key])
-      g.append('text')
-        .attr('x', 15)
-        .attr('y', 4)
-        .attr('font-family', "'DM Mono', monospace")
-        .attr('font-size', 10)
-        .attr('fill', '#555')
-        .text(item.label)
-    })
 
     const xScale = d3
       .scaleLinear()
-      .domain([-2.5, 2.5])
-      .range([padL + 10, W - padR - 10])
+      .domain([-2.6, 2.6])
+      .range([padL, W - padR])
 
-    areasWithClaims.forEach((area, areaIdx) => {
-      const rowY = legendH + areaIdx * rowH
-      const dotCenterY = rowY + headerH + dotZoneH / 2
-
-      // Issue title (full, not truncated)
-      svg
-        .append('text')
-        .attr('x', padL)
-        .attr('y', rowY + 14)
-        .attr('font-family', "'DM Mono', monospace")
-        .attr('font-size', 11)
-        .attr('font-weight', 500)
-        .attr('fill', '#1a1a1a')
-        .text(area.label)
-
-      // Per-issue axis endpoints
-      const endpoints = AREA_ENDPOINTS[area.id]
-      if (endpoints) {
-        svg
-          .append('text')
-          .attr('x', xScale(-2))
-          .attr('y', rowY + 28)
-          .attr('text-anchor', 'middle')
-          .attr('font-family', "'DM Mono', monospace")
-          .attr('font-size', 8)
-          .attr('fill', '#999')
-          .text(endpoints.oppose)
-        svg
-          .append('text')
-          .attr('x', xScale(2))
-          .attr('y', rowY + 28)
-          .attr('text-anchor', 'middle')
-          .attr('font-family', "'DM Mono', monospace")
-          .attr('font-size', 8)
-          .attr('fill', '#999')
-          .text(endpoints.support)
+    const byPerson = d3.group(areaClaims, (c: Claim) => c.person_id) as Map<number, Claim[]>
+    const dotData = Array.from(byPerson.entries()).map(([pid, personClaims]) => {
+      const avg = d3.mean(personClaims, (c: Claim) => c.stance) as number
+      const pm = policymakerLookup.get(pid)
+      return {
+        person_id: pid,
+        name: personClaims[0]!.person_name,
+        lastName: lastName(personClaims[0]!.person_name),
+        party: pm?.party || null,
+        title: pm?.title || null,
+        stance: avg,
+        claimCount: personClaims.length,
       }
+    })
 
-      // Dot zone axis line
+    const labelH = 16
+    const dotR = 5
+    const labelZoneH = Math.max(30, dotData.length * labelH + 6)
+    const axisY = labelZoneH + 6
+    const totalH = axisY + 16
+
+    const sorted = [...dotData].sort((a, b) => a.stance - b.stance || (a.party || '').localeCompare(b.party || ''))
+
+    svg.attr('viewBox', `0 0 ${W} ${totalH}`).attr('width', W).attr('height', totalH)
+
+    // Axis line
+    svg
+      .append('line')
+      .attr('x1', xScale(-2))
+      .attr('x2', xScale(2))
+      .attr('y1', axisY)
+      .attr('y2', axisY)
+      .attr('stroke', '#ddd')
+      .attr('stroke-width', 1)
+
+    // Tick marks
+    ;[-2, -1, 0, 1, 2].forEach((v) => {
       svg
         .append('line')
-        .attr('x1', xScale(-2))
-        .attr('x2', xScale(2))
-        .attr('y1', dotCenterY)
-        .attr('y2', dotCenterY)
-        .attr('stroke', '#e0e0e0')
-        .attr('stroke-width', 1)
+        .attr('x1', xScale(v))
+        .attr('x2', xScale(v))
+        .attr('y1', axisY - 3)
+        .attr('y2', axisY + 3)
+        .attr('stroke', '#ccc')
+    })
 
-      // Tick marks
-      ;[-2, -1, 0, 1, 2].forEach((v) => {
-        svg
-          .append('line')
-          .attr('x1', xScale(v))
-          .attr('x2', xScale(v))
-          .attr('y1', dotCenterY - 3)
-          .attr('y2', dotCenterY + 3)
-          .attr('stroke', '#ccc')
-          .attr('stroke-width', 1)
-      })
-
-      // Aggregate per-person
-      const areaClaims = claims.filter((c) => c.policy_area === area.id)
-      const byPerson = d3.group(areaClaims, (c: Claim) => c.person_id) as Map<number, Claim[]>
-      const nodes = Array.from(byPerson.entries()).map(([pid, personClaims]) => {
-        const avg = d3.mean(personClaims, (c: Claim) => c.stance)
-        const pm = policymakerLookup.get(pid)
-        return {
-          person_id: pid,
-          name: personClaims[0]!.person_name,
-          party: pm?.party || null,
-          title: pm?.title || null,
-          stance: avg as number,
-          claimCount: personClaims.length,
-          x: xScale(avg),
-          y: dotCenterY,
-          _origX: xScale(avg),
-        }
-      })
-
-      // Collision resolution (mainly vertical spread)
-      const sim = d3
-        .forceSimulation(nodes)
-        .force('x', d3.forceX((d: { _origX: number }) => d._origX).strength(1))
-        .force('y', d3.forceY(dotCenterY).strength(0.15))
-        .force('collide', d3.forceCollide(8))
-        .stop()
-      for (let i = 0; i < 150; i++) sim.tick()
-
-      // Dots
-      svg
-        .selectAll(null)
-        .data(nodes)
-        .enter()
-        .append('circle')
-        .attr('cx', (d: { x: number }) => d.x)
-        .attr('cy', (d: { y: number }) => d.y)
-        .attr('r', 6)
-        .attr('fill', (d: { party: string | null }) => PARTY_COLOR[d.party || ''] || '#888')
-        .attr('opacity', 0.9)
-        .attr('stroke', '#fff')
-        .attr('stroke-width', 1.5)
-        .style('cursor', 'pointer')
-        .on(
-          'mouseover',
-          (
-            evt: MouseEvent,
-            d: { name: string; party: string | null; title: string | null; stance: number; claimCount: number },
-          ) => {
-            const partyLabel = d.party === 'D' ? 'Democrat' : d.party === 'R' ? 'Republican' : 'Independent'
-            tip.show(
-              evt,
-              `
-            <div style="font-weight:500; margin-bottom:2px;">${escapeHtml(d.name)}</div>
+    // Dots on the axis
+    svg
+      .selectAll(null)
+      .data(sorted)
+      .enter()
+      .append('circle')
+      .attr('cx', (d: { stance: number }) => xScale(d.stance))
+      .attr('cy', axisY)
+      .attr('r', dotR)
+      .attr('fill', (d: { party: string | null }) => PARTY_COLOR[d.party || ''] || '#888')
+      .attr('opacity', 0.9)
+      .attr('stroke', '#fff')
+      .attr('stroke-width', 1.5)
+      .style('cursor', 'pointer')
+      .on(
+        'mouseover',
+        (
+          evt: MouseEvent,
+          d: { name: string; party: string | null; title: string | null; stance: number; claimCount: number },
+        ) => {
+          const partyLabel = d.party === 'D' ? 'Democrat' : d.party === 'R' ? 'Republican' : 'Independent'
+          tip.show(
+            evt,
+            `<div style="font-weight:500; margin-bottom:2px;">${escapeHtml(d.name)}</div>
             <div style="color:#666; font-size:10px; margin-bottom:4px;">${escapeHtml(d.title || '')}</div>
             <div style="color:${PARTY_COLOR[d.party || ''] || '#666'}; font-weight:500;">${partyLabel}</div>
-            <div style="color:#888; font-size:10px;">Stance: ${d.stance > 0 ? '+' : ''}${d.stance.toFixed(1)} (${d.claimCount} claim${d.claimCount > 1 ? 's' : ''})</div>
-          `,
-            )
-          },
-        )
-        .on('mouseout', () => tip.hide())
+            <div style="color:#888; font-size:10px;">Stance: ${d.stance > 0 ? '+' : ''}${d.stance.toFixed(1)} (${d.claimCount} claim${d.claimCount > 1 ? 's' : ''})</div>`,
+          )
+        },
+      )
+      .on('mouseout', () => tip.hide())
 
-      // Name labels next to each dot
+    // Labels stacked vertically above the axis, each with a leader line down to its dot
+    sorted.forEach((d, i) => {
+      const dotX = xScale(d.stance)
+      const labelY = 4 + i * labelH + labelH * 0.7
+
+      // Leader line
       svg
-        .selectAll(null)
-        .data(nodes)
-        .enter()
+        .append('line')
+        .attr('x1', dotX)
+        .attr('x2', dotX)
+        .attr('y1', labelY + 3)
+        .attr('y2', axisY - dotR - 1)
+        .attr('stroke', PARTY_COLOR[d.party || ''] || '#ccc')
+        .attr('stroke-width', 0.5)
+        .attr('opacity', 0.3)
+
+      // Name label
+      svg
         .append('text')
-        .attr('x', (d: { x: number }) => d.x)
-        .attr('y', (d: { y: number }) => d.y - 9)
+        .attr('x', dotX)
+        .attr('y', labelY)
         .attr('text-anchor', 'middle')
         .attr('font-family', "'DM Mono', monospace")
-        .attr('font-size', 8)
-        .attr('fill', (d: { party: string | null }) => PARTY_COLOR[d.party || ''] || '#666')
+        .attr('font-size', 10)
+        .attr('fill', PARTY_COLOR[d.party || ''] || '#666')
         .attr('font-weight', 500)
-        .text((d: { name: string }) => lastName(d.name))
+        .text(d.lastName)
     })
-  }, [claims, policyAreas, policymakerLookup])
+  }, [areaClaims, policymakerLookup, area])
 
-  return <div ref={ref} />
+  const endpoints = AREA_ENDPOINTS[area.id]
+
+  return (
+    <div className="pb-3 mb-3 border-b border-[#eee] last:border-0">
+      <div className="flex justify-between items-baseline mb-0.5">
+        <div className="font-mono text-[11px] font-medium text-[#1a1a1a]">{area.label}</div>
+        <div className="font-mono text-[9px] text-[#aaa]">
+          {areaClaims.length} claim{areaClaims.length !== 1 ? 's' : ''}
+        </div>
+      </div>
+      {endpoints && (
+        <div className="flex justify-between font-mono text-[8px] text-[#999] mb-1">
+          <span>{endpoints.oppose}</span>
+          <span>{endpoints.support}</span>
+        </div>
+      )}
+      <svg ref={svgRef} className="w-full block" />
+    </div>
+  )
 }
 
 /* ────────────────────────────────────────────
