@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { Navigation } from '../components/Navigation'
+import { CrosspartisanViz } from './crosspartisan/CrosspartisanViz'
 
 // d3 is loaded from a CDN <script> tag (see index.html) rather than imported as a module,
 // so we don't have compile-time types for it. Treating it as `unknown` forces casts at
@@ -55,6 +56,7 @@ const TOC_ITEMS = [
   { id: 'belief-space', label: 'Beliefs' },
   { id: 'threat-models', label: 'Threat Models' },
   { id: 'network', label: 'Connectivity' },
+  { id: 'crosspartisan', label: 'Crosspartisan' },
 ]
 
 /* ────────────────────────────────────────────
@@ -1048,6 +1050,47 @@ export function App() {
           Government and Think Tank categories have the most cross-category connections, serving as the primary hubs of
           the governance network. Categories like Media/Journalism are more internally focused with fewer bridges to
           other communities.
+        </Finding>
+
+        <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
+
+        {/* ═══════════════════════════════════════════ */}
+        {/* SECTION 4: CROSSPARTISAN CONVERGENCE        */}
+        {/* ═══════════════════════════════════════════ */}
+
+        <SectionLabel id="crosspartisan">Insight 4</SectionLabel>
+        <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">
+          Crosspartisan Convergence on AI Policy
+        </h2>
+
+        <Para>
+          On which AI policy mechanisms do US policymakers from opposite parties converge, and where do they define key
+          terms differently enough that apparent agreement dissolves on inspection? This visualization is a{' '}
+          <strong>preview built on aggregate stance scores already in the map</strong>; the per-issue claims dataset
+          (state preemption, open-weight restrictions, compute governance, chip exports, pre-deployment testing,
+          liability) is being populated separately. Once it lands, each issue gets its own beeswarm and the horseshoe
+          can be sharpened with DW-NOMINATE ideology scores.
+        </Para>
+
+        <ChartContainer
+          title="Crosspartisan AI policy stance, by party"
+          source="Source: aggregate regulatory_stance from Mapping AI database. Toggle horseshoe / beeswarm. Excludes 12 non-US officials and US career civil servants."
+        >
+          <CrosspartisanViz />
+        </ChartContainer>
+
+        <Para>
+          The <strong>horseshoe</strong> view bends the partisan spectrum into a U: Democrats curve down the left side
+          and Republicans down the right. The further toward the bottom, the more precautionary the stance.
+          Crosspartisan convergence shows up as Democrats and Republicans approaching each other near the floor of the
+          U. The <strong>beeswarm</strong> view shows the same data on a flat axis for direct comparison.
+        </Para>
+
+        <Finding>
+          This is preview data using a single aggregate score per policymaker. The real story emerges when we plot per-
+          issue stances side-by-side: a policymaker may be precautionary on open-weight restrictions but accelerationist
+          on compute governance. Definitional drift, captured per claim, is where convergence often dissolves on
+          inspection.
         </Finding>
 
         <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
