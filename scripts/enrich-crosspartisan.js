@@ -26,6 +26,7 @@
  *   Claude: 120 calls × ~$0.003 = ~$0.36
  *   Total: ~$6.12
  */
+import 'dotenv/config'
 import Exa from 'exa-js'
 import Anthropic from '@anthropic-ai/sdk'
 import fs from 'fs'
@@ -292,8 +293,9 @@ async function main() {
   console.log(`New claims: ${newClaims.length}`)
 
   if (!dryRun && newClaims.length > 0) {
-    const manual = existingClaims.claims.filter((c) => c.extracted_by === 'manual')
-    const allClaims = [...manual, ...newClaims]
+    const newIds = new Set(newClaims.map((c) => c.claim_id))
+    const kept = existingClaims.claims.filter((c) => !newIds.has(c.claim_id))
+    const allClaims = [...kept, ...newClaims]
     existingClaims.claims = allClaims
     existingClaims.note =
       'One row per (policymaker, policy_area, source). Claims with extracted_by="manual" were hand-verified. ' +

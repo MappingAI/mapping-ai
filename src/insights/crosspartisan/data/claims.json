@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "note": "One row per (policymaker, policy_area, source). Stance is -2..2 per policy-areas.json. All quotes are verbatim excerpts from primary or near-primary sources surfaced via Exa search.",
+  "note": "One row per (policymaker, policy_area, source). Claims with extracted_by=\"manual\" were hand-verified. Claims with extracted_by=\"exa+claude\" were auto-extracted and should be spot-checked.",
   "claims": [
     {
       "claim_id": "wiener_preemption_2024-08",
@@ -16,7 +16,7 @@
       "source_title": "Senator Wiener Responds to Speaker Emerita Pelosi's Opposition to SB 1047",
       "date_stated": "2024-08-17",
       "confidence": "high",
-      "extracted_by": "exa+claude",
+      "extracted_by": "manual",
       "notes": null
     },
     {
@@ -33,7 +33,7 @@
       "source_title": "California lawmakers plead with Congress to protect state AI laws (SF Chronicle)",
       "date_stated": "2025-12-15",
       "confidence": "high",
-      "extracted_by": "exa+claude",
+      "extracted_by": "manual",
       "notes": "Co-signed by 20 Democratic state lawmakers, led by Wiener."
     },
     {
@@ -50,7 +50,7 @@
       "source_title": "Ocasio-Cortez Calls Out Pattern of Corruption Behind Trump and Republican Efforts to Ban States from Regulating AI",
       "date_stated": "2025-12-17",
       "confidence": "high",
-      "extracted_by": "exa+claude",
+      "extracted_by": "manual",
       "notes": null
     },
     {
@@ -67,7 +67,7 @@
       "source_title": "Cruz to push 'light touch' AI regulation (Punchbowl News)",
       "date_stated": "2025-05-08",
       "confidence": "high",
-      "extracted_by": "exa+claude",
+      "extracted_by": "manual",
       "notes": "Previewing forthcoming bill at Senate Commerce Committee hearing."
     },
     {
@@ -84,7 +84,7 @@
       "source_title": "Pelosi Statement in Opposition to California Senate Bill 1047 (references Khanna's letter)",
       "date_stated": "2024-08-16",
       "confidence": "medium",
-      "extracted_by": "exa+claude",
+      "extracted_by": "manual",
       "notes": "Opposing a specific state bill is not identical to supporting blanket preemption, but Pelosi frames it as preferring federal approach."
     },
     {
@@ -101,7 +101,7 @@
       "source_title": "Pelosi Statement in Opposition to California Senate Bill 1047",
       "date_stated": "2024-08-16",
       "confidence": "medium",
-      "extracted_by": "exa+claude",
+      "extracted_by": "manual",
       "notes": "Pelosi's statement references Eshoo's position. Eshoo is cited but the quote is Pelosi paraphrasing Lofgren."
     },
     {
@@ -118,7 +118,7 @@
       "source_title": "Governor's SB 1047 Veto Message",
       "date_stated": "2024-09-29",
       "confidence": "high",
-      "extracted_by": "exa+claude",
+      "extracted_by": "manual",
       "notes": "Newsom vetoed the specific bill but signed other AI bills; he's not pro-preemption, just rejected this approach."
     },
     {
@@ -135,7 +135,7 @@
       "source_title": "Hawley and Blumenthal Demand Answers from Meta, Warn of Misuse After Leak",
       "date_stated": "2023-06-06",
       "confidence": "high",
-      "extracted_by": "exa+claude",
+      "extracted_by": "manual",
       "notes": "Joint letter with Blumenthal (D). Key crosspartisan convergence case: R + D jointly concerned about unrestricted open weights."
     },
     {
@@ -152,7 +152,7 @@
       "source_title": "Hawley and Blumenthal Demand Answers from Meta",
       "date_stated": "2023-06-06",
       "confidence": "high",
-      "extracted_by": "exa+claude",
+      "extracted_by": "manual",
       "notes": "Co-authored with Hawley (R). Convergence: Privacy Subcommittee Chair (D) and Ranking Member (R) agree."
     },
     {
@@ -169,7 +169,7 @@
       "source_title": "Sen. Cruz: Attempts to Regulate the Totality of the Internet Will Hurt US Prosperity, Global Competitiveness",
       "date_stated": "2024-07-11",
       "confidence": "high",
-      "extracted_by": "exa+claude",
+      "extracted_by": "manual",
       "notes": null
     },
     {
@@ -186,7 +186,7 @@
       "source_title": "AI Foundation Model Transparency Act (AI FMTA)",
       "date_stated": "2026-04-10",
       "confidence": "high",
-      "extracted_by": "exa+claude",
+      "extracted_by": "manual",
       "notes": null
     },
     {
@@ -203,7 +203,7 @@
       "source_title": "Sanders, Ocasio-Cortez unveil bill to halt data center construction (The Hill)",
       "date_stated": "2026-03-25",
       "confidence": "high",
-      "extracted_by": "exa+claude",
+      "extracted_by": "manual",
       "notes": "Data center moratorium maps to compute governance broadly: controlling the physical infrastructure of frontier training."
     },
     {
@@ -220,7 +220,7 @@
       "source_title": "Ocasio-Cortez and Sanders push bill to impose AI data center moratorium (PBS)",
       "date_stated": "2026-03-25",
       "confidence": "high",
-      "extracted_by": "exa+claude",
+      "extracted_by": "manual",
       "notes": null
     },
     {
@@ -237,7 +237,7 @@
       "source_title": "U.S. lawmakers introduce bill to address AI chip smuggling (Reuters)",
       "date_stated": "2025-05-15",
       "confidence": "high",
-      "extracted_by": "exa+claude",
+      "extracted_by": "manual",
       "notes": "Bipartisan: House version co-led by Huizenga (R) and Foster (D)."
     },
     {
@@ -254,7 +254,7 @@
       "source_title": "Ranking Member Shaheen Presses Commerce Secretary On Trump Administration's Decision to Ease AI Export Controls to China",
       "date_stated": "2025-07-30",
       "confidence": "high",
-      "extracted_by": "exa+claude",
+      "extracted_by": "manual",
       "notes": null
     },
     {
@@ -271,7 +271,7 @@
       "source_title": "Top Senate Democrats Sound Alarm on Administration's Decision to Resume AI Chip Sales to China",
       "date_stated": "2025-07-30",
       "confidence": "high",
-      "extracted_by": "exa+claude",
+      "extracted_by": "manual",
       "notes": "Co-signed by Schumer, Reed, Coons, Warren."
     },
     {
@@ -288,7 +288,7 @@
       "source_title": "Top Senate Democrats Sound Alarm on Administration's Decision to Resume AI Chip Sales to China",
       "date_stated": "2025-07-30",
       "confidence": "high",
-      "extracted_by": "exa+claude",
+      "extracted_by": "manual",
       "notes": null
     },
     {
@@ -305,7 +305,7 @@
       "source_title": "National Security Democrats Statement on Trump's Decision to Allow Export of Advanced NVIDIA H200 AI Chips to China",
       "date_stated": "2025-12-08",
       "confidence": "high",
-      "extracted_by": "exa+claude",
+      "extracted_by": "manual",
       "notes": "Joint statement with Shaheen, Coons, Reed, Schatz, Andy Kim, Bennet, Slotkin."
     },
     {
@@ -322,7 +322,7 @@
       "source_title": "National Security Democrats Statement on H200 AI Chips to China",
       "date_stated": "2025-12-08",
       "confidence": "high",
-      "extracted_by": "exa+claude",
+      "extracted_by": "manual",
       "notes": null
     },
     {
@@ -339,7 +339,7 @@
       "source_title": "McCaul Remarks at Hearing on Semiconductor Export Controls",
       "date_stated": "2025-11-20",
       "confidence": "high",
-      "extracted_by": "exa+claude",
+      "extracted_by": "manual",
       "notes": "McCaul (R) has been a consistent champion of tighter export controls."
     },
     {
@@ -356,7 +356,7 @@
       "source_title": "Chip Security Act co-sponsorship (Reuters)",
       "date_stated": "2025-05-15",
       "confidence": "high",
-      "extracted_by": "exa+claude",
+      "extracted_by": "manual",
       "notes": "Bipartisan bill co-led by Huizenga (R), Foster (D), Moolenaar (R), Krishnamoorthi (D)."
     },
     {
@@ -373,7 +373,7 @@
       "source_title": "Chip Security Act co-sponsorship (Reuters)",
       "date_stated": "2025-05-15",
       "confidence": "high",
-      "extracted_by": "exa+claude",
+      "extracted_by": "manual",
       "notes": null
     },
     {
@@ -390,7 +390,7 @@
       "source_title": "Cantwell, Colleagues Lead Effort to Establish U.S. Artificial Intelligence Safety Institute",
       "date_stated": "2024-03-07",
       "confidence": "high",
-      "extracted_by": "exa+claude",
+      "extracted_by": "manual",
       "notes": "Bipartisan: co-led with Young (R), Heinrich (D), Rounds (R). Key crosspartisan convergence."
     },
     {
@@ -407,7 +407,7 @@
       "source_title": "Cantwell, Colleagues Lead Effort to Establish U.S. Artificial Intelligence Safety Institute",
       "date_stated": "2024-03-07",
       "confidence": "high",
-      "extracted_by": "exa+claude",
+      "extracted_by": "manual",
       "notes": "Todd Young (R-IN) co-leading with Cantwell (D) is a strong crosspartisan signal."
     },
     {
@@ -424,7 +424,7 @@
       "source_title": "Cantwell, Colleagues Lead Effort to Establish AISI",
       "date_stated": "2024-03-07",
       "confidence": "high",
-      "extracted_by": "exa+claude",
+      "extracted_by": "manual",
       "notes": null
     },
     {
@@ -441,7 +441,7 @@
       "source_title": "Cantwell, Colleagues Lead Effort to Establish AISI",
       "date_stated": "2024-03-07",
       "confidence": "high",
-      "extracted_by": "exa+claude",
+      "extracted_by": "manual",
       "notes": "Rounds (R-SD) co-leading is notable as a mainstream conservative supporting safety infrastructure."
     },
     {
@@ -458,7 +458,7 @@
       "source_title": "Senator Wiener Responds to OpenAI Opposition to SB 1047",
       "date_stated": "2024-08-22",
       "confidence": "high",
-      "extracted_by": "exa+claude",
+      "extracted_by": "manual",
       "notes": null
     },
     {
@@ -475,7 +475,7 @@
       "source_title": "Durbin, Hawley Introduce Bill Allowing Victims to Sue AI Companies (AI LEAD Act)",
       "date_stated": "2025-09-29",
       "confidence": "high",
-      "extracted_by": "exa+claude",
+      "extracted_by": "manual",
       "notes": "Key crosspartisan convergence: Durbin (D) + Hawley (R) introduce strict AI product liability together."
     },
     {
@@ -492,7 +492,7 @@
       "source_title": "AI LEAD Act (Durbin-Hawley)",
       "date_stated": "2025-09-29",
       "confidence": "high",
-      "extracted_by": "exa+claude",
+      "extracted_by": "manual",
       "notes": "Hawley (R populist) agrees with Durbin (D progressive) on strict liability. The opposite of Lummis (R libertarian)."
     },
     {
@@ -509,7 +509,7 @@
       "source_title": "Lummis Introduces RISE Act to Foster AI Development, Strengthen Professional Responsibility",
       "date_stated": "2025-06-12",
       "confidence": "high",
-      "extracted_by": "exa+claude",
+      "extracted_by": "manual",
       "notes": "RISE Act is the opposite of AI LEAD Act. Lummis (R libertarian) vs Hawley (R populist) shows within-party divergence."
     },
     {
@@ -526,7 +526,7 @@
       "source_title": "Sen. Cruz: Congress Should Not Allow a Big Govt-Big Tech Takeover of AI",
       "date_stated": "2024-07-31",
       "confidence": "medium",
-      "extracted_by": "exa+claude",
+      "extracted_by": "manual",
       "notes": "No specific liability bill cited, but his overall framework opposes broad regulatory/liability regimes."
     },
     {
@@ -543,7 +543,7 @@
       "source_title": "Schumer Floor Remarks On Launching The SAFE Innovation Framework For AI",
       "date_stated": "2023-06-22",
       "confidence": "high",
-      "extracted_by": "exa+claude",
+      "extracted_by": "manual",
       "notes": "Schumer's framework is centrist: pro-regulation but explicitly innovation-first. Roadmap encouraged $32B in nondefense AI innovation but was light on specific regulatory calls."
     },
     {
@@ -560,7 +560,7 @@
       "source_title": "National Security Democrats Statement on H200 AI Chips to China",
       "date_stated": "2025-12-08",
       "confidence": "high",
-      "extracted_by": "exa+claude",
+      "extracted_by": "manual",
       "notes": null
     },
     {
@@ -577,8 +577,229 @@
       "source_title": "National Security Democrats Statement on H200 AI Chips to China",
       "date_stated": "2025-12-08",
       "confidence": "high",
-      "extracted_by": "exa+claude",
+      "extracted_by": "manual",
       "notes": null
+    },
+    {
+      "claim_id": "davidson_open_source_weights_2023-12",
+      "person_id": 929,
+      "person_name": "Alan Davidson",
+      "policy_area": "open_source_weights",
+      "stance": 0,
+      "stance_label": "Mixed/Balanced",
+      "definition_used": "Widely available model weights includes both open-sourced models and those otherwise broadly distributed",
+      "quote": "This does not need to be an either-or debate. We can seek polices that promote both safety and allow for broad access.",
+      "source_url": "https://www.ntia.gov/speech/testimony/2023/remarks-assistant-secretary-alan-davidson-open-artificial-intelligence-models",
+      "source_type": "hearing",
+      "source_title": "Remarks of Assistant Secretary Alan Davidson on Open Artificial Intelligence Models",
+      "date_stated": "2023-12-13",
+      "confidence": "high",
+      "extracted_by": "exa+claude",
+      "notes": "Davidson explicitly states NTIA is seeking balanced policies rather than taking a restrictive or permissive stance"
+    },
+    {
+      "claim_id": "davidson_compute_governance_2024-05",
+      "person_id": 929,
+      "person_name": "Alan Davidson",
+      "policy_area": "compute_governance",
+      "stance": 1,
+      "stance_label": "Support",
+      "definition_used": "Compute thresholds as established in Executive Order 14110, specifically 10^26 FLOPs for general AI models and 10^23 FLOPs for biological models",
+      "quote": "Meanwhile, we continue working on a key assignment from President Biden's executive order on AI: assessing the benefits and harms of advanced AI models with widely available model weights.",
+      "source_url": "https://www.ntia.gov/speech/testimony/2024/written-statement-assistant-secretary-alan-davidson-house-committee-energy-commerce-subcommittee",
+      "source_type": "hearing",
+      "source_title": "Written Statement of Assistant Secretary Alan Davidson Before the House Committee on Energy & Commerce Subcommittee on Communications & Technology",
+      "date_stated": "2024-05-15",
+      "confidence": "medium",
+      "extracted_by": "exa+claude",
+      "notes": "As part of the Biden Administration, Davidson is implementing the EO's compute threshold regime through NTIA's work"
+    },
+    {
+      "claim_id": "davidson_pre_deployment_testing_2024-05",
+      "person_id": 929,
+      "person_name": "Alan Davidson",
+      "policy_area": "pre_deployment_testing",
+      "stance": 1,
+      "stance_label": "Support",
+      "definition_used": "Independent evaluations to verify claims made about AI systems, including red-teaming and capability evaluations",
+      "quote": "Our policy recommendations will help AI system developers and deployers show that their systems work as intended and can be trusted not to cause harm through improved transparency into AI systems, independent evaluations to verify the claims made about these systems, and consequences for imposing unacceptable risks or making unfounded claims.",
+      "source_url": "https://www.ntia.gov/speech/testimony/2024/written-statement-assistant-secretary-alan-davidson-house-committee-energy-commerce-subcommittee",
+      "source_type": "hearing",
+      "source_title": "Written Statement of Assistant Secretary Alan Davidson Before the House Committee on Energy & Commerce Subcommittee on Communications & Technology",
+      "date_stated": "2024-05-15",
+      "confidence": "high",
+      "extracted_by": "exa+claude",
+      "notes": "Davidson explicitly calls for independent evaluations as part of NTIA's AI accountability framework"
+    },
+    {
+      "claim_id": "bores_compute_governance_2025-01",
+      "person_id": 97,
+      "person_name": "Alex Bores",
+      "policy_area": "compute_governance",
+      "stance": 2,
+      "stance_label": "Strongly support",
+      "definition_used": "Training-compute thresholds defined as 10^26 FLOPs and $100 million in training costs to trigger safety requirements for frontier AI models.",
+      "quote": "A covered model is one that requires more than 10^26 FLOPs in its training and costs over $100 million.",
+      "source_url": "https://www.technologyreview.com/2025/01/09/1109875/a-new-york-legislator-wants-to-pick-up-the-pieces-of-the-dead-california-ai-bill/",
+      "source_type": "interview",
+      "source_title": "A New York legislator wants to pick up the pieces of the dead California AI bill | MIT Technology Review",
+      "date_stated": "2025-01-09",
+      "confidence": "high",
+      "extracted_by": "exa+claude",
+      "notes": "Bores' RAISE Act uses compute thresholds identical to EO 14110 as the trigger for regulation"
+    },
+    {
+      "claim_id": "bores_open_source_weights_2025-05",
+      "person_id": 97,
+      "person_name": "Alex Bores",
+      "policy_area": "open_source_weights",
+      "stance": 1,
+      "stance_label": "Support / conditional",
+      "definition_used": "Frontier models above capability thresholds should have knowledge distillation restrictions to prevent circumventing safety requirements.",
+      "quote": "A second way that something can be a frontier model is if it is trained via the process of knowledge distillation from a frontier model and that process was at least 5,000,000.",
+      "source_url": "https://www.cognitiverevolution.ai/the-raise-act-minimum-standards-for-frontier-ai-development-with-ny-assembly-member-alex-bores/",
+      "source_type": "interview",
+      "source_title": "The RAISE Act: Minimum Standards for Frontier AI Development, with NY Assembly Member Alex Bores",
+      "date_stated": "2025-05-19",
+      "confidence": "medium",
+      "extracted_by": "exa+claude",
+      "notes": "RAISE Act includes knowledge distillation threshold specifically to address DeepSeek-like scenarios where capable models are created from frontier models"
+    },
+    {
+      "claim_id": "bores_pre_deployment_testing_2025-03",
+      "person_id": 97,
+      "person_name": "Alex Bores",
+      "policy_area": "pre_deployment_testing",
+      "stance": 2,
+      "stance_label": "Strongly support",
+      "definition_used": "Mandatory safety testing and third-party audits before deployment to assess risks of critical harm from frontier AI models.",
+      "quote": "Get an annual third-party audit (§1421.4) and Don't deploy models with 'unreasonable risk of critical harm' (§1421.2).",
+      "source_url": "https://www.henryjosephson.com/writing/RAISE-Act.html",
+      "source_type": "report",
+      "source_title": "NY Introduced Light-Touch Legislation to Keep AI Innovation Responsible! (Alex Bores RAISE Act)",
+      "date_stated": "2025-03-05",
+      "confidence": "high",
+      "extracted_by": "exa+claude",
+      "notes": "RAISE Act requires both mandatory testing procedures and third-party audits as deployment conditions"
+    },
+    {
+      "claim_id": "bores_liability_2025-10",
+      "person_id": 97,
+      "person_name": "Alex Bores",
+      "policy_area": "liability",
+      "stance": 1,
+      "stance_label": "Support / sympathetic",
+      "definition_used": "Developer liability for AI systems that cause harm, but focused on frontier models above specific capability thresholds with civil enforcement.",
+      "quote": "If they fail these requirements, the AG can bring civil action.",
+      "source_url": "https://www.transformernews.ai/p/raise-act-can-stop-ai-industry-race-to-bottom-alex-bores",
+      "source_type": "op_ed",
+      "source_title": "The RAISE Act can stop the AI industry's race to the bottom",
+      "date_stated": "2025-10-09",
+      "confidence": "medium",
+      "extracted_by": "exa+claude",
+      "notes": "RAISE Act establishes civil liability framework for frontier AI developers, but limited to specific threshold violations rather than general strict liability"
+    },
+    {
+      "claim_id": "bores_state_preemption_2025-10",
+      "person_id": 97,
+      "person_name": "Alex Bores",
+      "policy_area": "state_preemption",
+      "stance": -1,
+      "stance_label": "Oppose / skeptical",
+      "definition_used": "States should retain authority to regulate AI when federal law is inadequate, serving as laboratories for AI governance approaches.",
+      "quote": "Congress should create federal standards. Until they do, states must act. New York led on cybersecurity regulation. We have led on AI research. We can lead on AI safety.",
+      "source_url": "https://www.transformernews.ai/p/raise-act-can-stop-ai-industry-race-to-bottom-alex-bores",
+      "source_type": "op_ed",
+      "source_title": "The RAISE Act can stop the AI industry's race to the bottom",
+      "date_stated": "2025-10-09",
+      "confidence": "high",
+      "extracted_by": "exa+claude",
+      "notes": "Bores explicitly supports state-level action in absence of federal standards, advocating for New York to lead on AI regulation as it did with cybersecurity"
+    },
+    {
+      "claim_id": "ocasio-cortez_state_preemption_2026-03",
+      "person_id": 10,
+      "person_name": "Alexandria Ocasio-Cortez",
+      "policy_area": "state_preemption",
+      "stance": -1,
+      "stance_label": "Opposes federal preemption",
+      "definition_used": "Federal preemption would prevent states from regulating AI and deny Americans the benefits of state-led experimentation.",
+      "quote": "Congress has a moral obligation to stand with the American people and stop the expansion of these data centers until we have a framework to adequately address the existential harm AI poses to our society.",
+      "source_url": "https://www.sanders.senate.gov/press-releases/news-sanders-ocasio-cortez-announce-ai-data-center-moratorium-act/",
+      "source_type": "press_release",
+      "source_title": "NEWS: Sanders, Ocasio-Cortez Announce AI Data Center Moratorium Act",
+      "date_stated": "2026-03-25",
+      "confidence": "medium",
+      "extracted_by": "exa+claude",
+      "notes": "While not directly addressing state preemption, AOC's support for federal AI regulation paired with her emphasis on protecting Americans suggests she would oppose preempting state protections"
+    },
+    {
+      "claim_id": "ocasio-cortez_compute_governance_2026-03",
+      "person_id": 10,
+      "person_name": "Alexandria Ocasio-Cortez",
+      "policy_area": "compute_governance",
+      "stance": 2,
+      "stance_label": "Strongly supports compute thresholds",
+      "definition_used": "AI data centers above certain electricity load thresholds should be subject to federal moratorium and regulation.",
+      "quote": "The AI Data Center Moratorium Act of 2026 would do that by instituting an immediate federal moratorium on AI data centers until strong national safeguards are in place.",
+      "source_url": "https://www.sanders.senate.gov/press-releases/news-sanders-ocasio-cortez-announce-ai-data-center-moratorium-act/",
+      "source_type": "press_release",
+      "source_title": "NEWS: Sanders, Ocasio-Cortez Announce AI Data Center Moratorium Act",
+      "date_stated": "2026-03-25",
+      "confidence": "high",
+      "extracted_by": "exa+claude",
+      "notes": "The bill explicitly targets data centers above defined power consumption thresholds, representing a compute-based regulatory approach"
+    },
+    {
+      "claim_id": "ocasio-cortez_pre_deployment_testing_2026-03",
+      "person_id": 10,
+      "person_name": "Alexandria Ocasio-Cortez",
+      "policy_area": "pre_deployment_testing",
+      "stance": 2,
+      "stance_label": "Strongly supports mandatory testing",
+      "definition_used": "AI products should undergo federal review before release to prevent harmful products from threatening public safety.",
+      "quote": "AI is safe and effective — preventing executives in the AI industry from releasing harmful products into the world that threaten the health and well-being of working families, our privacy and civil rights and the future of humanity.",
+      "source_url": "https://www.sanders.senate.gov/press-releases/news-sanders-ocasio-cortez-announce-ai-data-center-moratorium-act/",
+      "source_type": "press_release",
+      "source_title": "NEWS: Sanders, Ocasio-Cortez Announce AI Data Center Moratorium Act",
+      "date_stated": "2026-03-25",
+      "confidence": "high",
+      "extracted_by": "exa+claude",
+      "notes": "The moratorium conditions include mandatory federal review of AI products before release"
+    },
+    {
+      "claim_id": "ocasio-cortez_export_controls_chips_2026-03",
+      "person_id": 10,
+      "person_name": "Alexandria Ocasio-Cortez",
+      "policy_area": "export_controls_chips",
+      "stance": 2,
+      "stance_label": "Strongly supports export controls",
+      "definition_used": "AI computing infrastructure exports should be banned to countries lacking equivalent safety and worker protection safeguards.",
+      "quote": "It accomplishes this by banning U.S. exports of AI computing infrastructure to countries that do not have safeguards in place to guarantee AI is safe and effective, workers are protected and AI does not harm the environment.",
+      "source_url": "https://www.sanders.senate.gov/press-releases/news-sanders-ocasio-cortez-announce-ai-data-center-moratorium-act/",
+      "source_type": "press_release",
+      "source_title": "NEWS: Sanders, Ocasio-Cortez Announce AI Data Center Moratorium Act",
+      "date_stated": "2026-03-25",
+      "confidence": "high",
+      "extracted_by": "exa+claude",
+      "notes": "The bill includes explicit export bans on AI computing infrastructure, representing strong support for tighter controls"
+    },
+    {
+      "claim_id": "ocasio-cortez_liability_2026-03",
+      "person_id": 10,
+      "person_name": "Alexandria Ocasio-Cortez",
+      "policy_area": "liability",
+      "stance": 1,
+      "stance_label": "Supports developer accountability",
+      "definition_used": "AI companies have obligations to comply with existing consumer protection, privacy, and civil rights laws and should be held accountable for harm.",
+      "quote": "We have seen ICE partner with AI companies to surveil Americans, social media users employ AI bots to create sexually explicit deepfakes of women and children, and data center construction inflate electric bills in communities across the country.",
+      "source_url": "https://www.sanders.senate.gov/press-releases/news-sanders-ocasio-cortez-announce-ai-data-center-moratorium-act/",
+      "source_type": "press_release",
+      "source_title": "NEWS: Sanders, Ocasio-Cortez Announce AI Data Center Moratorium Act",
+      "date_stated": "2026-03-25",
+      "confidence": "medium",
+      "extracted_by": "exa+claude",
+      "notes": "AOC emphasizes AI companies' responsibility for harms and supports civil action through the DEFIANCE Act for deepfake victims"
     }
   ]
 }
