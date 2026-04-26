@@ -9,15 +9,15 @@
  *  - Cloudflare cache API replaces CloudFront invalidation
  *  - export-map.ts is imported from the api/ directory (shared with Lambda)
  */
-import type { PoolClient } from 'pg'
 import type { Env } from './_shared/env.ts'
+import type { NeonQueryFn } from './_shared/db.ts'
 import { jsonResponse, optionsResponse } from './_shared/cors.ts'
-import { getPool } from './_shared/db.ts'
+import { getDb } from './_shared/db.ts'
 import { generateMapData, splitMapData } from '../../api/export-map.ts'
 
-async function refreshMapData(client: PoolClient, bucket: R2Bucket) {
+async function refreshMapData(sql: NeonQueryFn, bucket: R2Bucket) {
   try {
-    const data = await generateMapData(client)
+    const data = await generateMapData(sql)
     const { skeleton, detail } = splitMapData(data)
 
     // Upload skeleton + detail to R2 in parallel
@@ -101,8 +101,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
     return jsonResponse({ error: 'Unauthorized' }, request, 401, corsOptions)
   }
 
-  const pool = getPool(env.DATABASE_URL)
-  const client = await pool.connect()
+  const sql = getDb(env.DATABASE_URL)
 
   try {
     // ── GET endpoints ──────────────────────────────────────────────────────
@@ -112,15 +111,15 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
       // GET ?action=pending
       if (action === 'pending') {
-        const result = await client.query(
+        const rows = await sql(
           `SELECT * FROM submission WHERE entity_id IS NULL AND status = 'pending' ORDER BY id DESC`,
         )
-        return jsonResponse({ submissions: result.rows }, request, 200, corsOptions)
+        return jsonResponse({ submissions: rows }, request, 200, corsOptions)
       }
 
       // GET ?action=pending_merges
       if (action === 'pending_merges') {
-        const result = await client.query(`
+        const rows = await sql(`
           SELECT
             e.*,
             json_agg(
@@ -167,7 +166,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
           GROUP BY e.id
           ORDER BY e.id DESC
         `)
-        return jsonResponse({ entities: result.rows }, request, 200, corsOptions)
+        return jsonResponse({ entities: rows }, request, 200, corsOptions)
       }
 
       // GET ?action=all&type=entity|submission|edge&status=...&entity_type=...
@@ -194,14 +193,14 @@ export const onRequest: PagesFunction<Env> = async (context) => {
         }
 
         const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : ''
-        const query = `SELECT * FROM ${tableType} ${whereClause} ORDER BY id DESC LIMIT 500`
-        const result = await client.query(query, values)
-        return jsonResponse({ data: result.rows, total: result.rows.length }, request, 200, corsOptions)
+        const queryStr = `SELECT * FROM ${tableType} ${whereClause} ORDER BY id DESC LIMIT 500`
+        const rows = await sql(queryStr, values)
+        return jsonResponse({ data: rows, total: rows.length }, request, 200, corsOptions)
       }
 
       // GET ?action=stats
       if (action === 'stats') {
-        const result = await client.query(`
+        const rows = await sql(`
           SELECT
             (SELECT json_object_agg(entity_type, cnt) FROM (SELECT entity_type, COUNT(*)::int AS cnt FROM entity WHERE status = 'approved' GROUP BY entity_type) t) AS approved,
             (SELECT json_object_agg(entity_type, cnt) FROM (SELECT entity_type, COUNT(*)::int AS cnt FROM entity WHERE status = 'pending'  GROUP BY entity_type) t) AS pending,
@@ -209,7 +208,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
             (SELECT COUNT(*)::int FROM submission WHERE entity_id IS NOT NULL AND status = 'pending') AS pending_edit,
             (SELECT COUNT(*)::int FROM edge) AS edges
         `)
-        const r = result.rows[0] as Record<string, unknown>
+        const r = rows[0] as Record<string, unknown>
         return jsonResponse(
           {
             approved: r.approved || {},
@@ -244,13 +243,13 @@ export const onRequest: PagesFunction<Env> = async (context) => {
           return jsonResponse({ error: 'Missing submission_id' }, request, 400, corsOptions)
         }
 
-        const check = await client.query(`SELECT id, entity_id FROM submission WHERE id = $1 AND status = 'pending'`, [
+        const checkRows = await sql(`SELECT id, entity_id FROM submission WHERE id = $1 AND status = 'pending'`, [
           submission_id,
         ])
-        if (check.rows.length === 0) {
+        if (checkRows.length === 0) {
           return jsonResponse({ error: 'Submission not found or already reviewed' }, request, 404, corsOptions)
         }
-        if ((check.rows[0] as Record<string, unknown>).entity_id !== null) {
+        if ((checkRows[0] as Record<string, unknown>).entity_id !== null) {
           return jsonResponse({ error: 'Use action=merge for edit submissions' }, request, 400, corsOptions)
         }
 
@@ -259,9 +258,9 @@ export const onRequest: PagesFunction<Env> = async (context) => {
         setClauses.push(`status = $${overrideFields.length + 2}`)
         setClauses.push(`reviewed_at = NOW()`)
         const values = [submission_id, ...overrideFields.map((k) => overrides[k]), 'approved']
-        await client.query(`UPDATE submission SET ${setClauses.join(', ')} WHERE id = $1`, values)
+        await sql(`UPDATE submission SET ${setClauses.join(', ')} WHERE id = $1`, values)
 
-        await refreshMapData(client, env.DATA_BUCKET)
+        await refreshMapData(sql, env.DATA_BUCKET)
         return jsonResponse({ success: true, action: 'approved' }, request, 200, corsOptions)
       }
 
@@ -271,7 +270,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
         if (!submission_id) {
           return jsonResponse({ error: 'Missing submission_id' }, request, 400, corsOptions)
         }
-        await client.query(
+        await sql(
           `UPDATE submission SET status = 'rejected', reviewed_at = NOW(), resolution_notes = $1
            WHERE id = $2 AND entity_id IS NULL`,
           [resolution_notes || null, submission_id],
@@ -291,19 +290,19 @@ export const onRequest: PagesFunction<Env> = async (context) => {
           return jsonResponse({ error: 'Missing submission_id' }, request, 400, corsOptions)
         }
 
-        const sub = await client.query(`SELECT entity_id FROM submission WHERE id = $1 AND status = 'pending'`, [
+        const subRows = await sql(`SELECT entity_id FROM submission WHERE id = $1 AND status = 'pending'`, [
           submission_id,
         ])
-        if (sub.rows.length === 0) {
+        if (subRows.length === 0) {
           return jsonResponse({ error: 'Submission not found or already reviewed' }, request, 404, corsOptions)
         }
-        const entityId = (sub.rows[0] as Record<string, unknown>).entity_id
+        const entityId = (subRows[0] as Record<string, unknown>).entity_id
         if (!entityId) {
           return jsonResponse({ error: 'Use action=approve for new entity submissions' }, request, 400, corsOptions)
         }
 
-        const entityRow = await client.query(`SELECT * FROM entity WHERE id = $1`, [entityId])
-        if (entityRow.rows.length === 0) {
+        const entityRows = await sql(`SELECT * FROM entity WHERE id = $1`, [entityId])
+        if (entityRows.length === 0) {
           return jsonResponse({ error: 'Entity not found' }, request, 404, corsOptions)
         }
 
@@ -318,16 +317,16 @@ export const onRequest: PagesFunction<Env> = async (context) => {
           }
           if (updates.length > 0) {
             values.push(entityId)
-            await client.query(`UPDATE entity SET ${updates.join(', ')}, updated_at = NOW() WHERE id = $${idx}`, values)
+            await sql(`UPDATE entity SET ${updates.join(', ')}, updated_at = NOW() WHERE id = $${idx}`, values)
           }
         }
 
-        await client.query(
+        await sql(
           `UPDATE submission SET status = 'approved', reviewed_at = NOW(), resolution_notes = $1 WHERE id = $2`,
           [resolution_notes || null, submission_id],
         )
 
-        await refreshMapData(client, env.DATA_BUCKET)
+        await refreshMapData(sql, env.DATA_BUCKET)
         return jsonResponse({ success: true, action: 'merged' }, request, 200, corsOptions)
       }
 
@@ -337,7 +336,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
         if (!submission_id) {
           return jsonResponse({ error: 'Missing submission_id' }, request, 400, corsOptions)
         }
-        await client.query(
+        await sql(
           `UPDATE submission SET status = 'rejected', reviewed_at = NOW(), resolution_notes = $1 WHERE id = $2`,
           [resolution_notes || null, submission_id],
         )
@@ -364,8 +363,8 @@ export const onRequest: PagesFunction<Env> = async (context) => {
           return jsonResponse({ error: 'No valid fields' }, request, 400, corsOptions)
         }
         values.push(entity_id)
-        await client.query(`UPDATE entity SET ${updates.join(', ')}, updated_at = NOW() WHERE id = $${idx}`, values)
-        await refreshMapData(client, env.DATA_BUCKET)
+        await sql(`UPDATE entity SET ${updates.join(', ')}, updated_at = NOW() WHERE id = $${idx}`, values)
+        await refreshMapData(sql, env.DATA_BUCKET)
         return jsonResponse({ success: true, action: 'updated' }, request, 200, corsOptions)
       }
 
@@ -375,8 +374,8 @@ export const onRequest: PagesFunction<Env> = async (context) => {
         if (!entity_id) {
           return jsonResponse({ error: 'Missing entity_id' }, request, 400, corsOptions)
         }
-        await client.query(`DELETE FROM entity WHERE id = $1`, [entity_id])
-        await refreshMapData(client, env.DATA_BUCKET)
+        await sql(`DELETE FROM entity WHERE id = $1`, [entity_id])
+        await refreshMapData(sql, env.DATA_BUCKET)
         return jsonResponse({ success: true, action: 'deleted' }, request, 200, corsOptions)
       }
 
@@ -395,7 +394,5 @@ export const onRequest: PagesFunction<Env> = async (context) => {
       500,
       corsOptions,
     )
-  } finally {
-    client.release()
   }
 }

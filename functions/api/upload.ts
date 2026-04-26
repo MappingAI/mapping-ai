@@ -10,7 +10,7 @@
  */
 import type { Env } from './_shared/env.ts'
 import { jsonResponse, optionsResponse } from './_shared/cors.ts'
-import { getPool } from './_shared/db.ts'
+import { getDb } from './_shared/db.ts'
 
 const MAX_SIZE = 2 * 1024 * 1024 // 2MB
 
@@ -80,17 +80,8 @@ export const onRequest: PagesFunction<Env> = async (context) => {
     const url = `${publicBase}/${key}`
 
     // Update entity in DB
-    const pool = getPool(env.DATABASE_URL)
-    const client = await pool.connect()
-    try {
-      await client.query(`UPDATE entity SET thumbnail_url = $1 WHERE id = $2 AND entity_type = $3`, [
-        url,
-        entityId,
-        entityType,
-      ])
-    } finally {
-      client.release()
-    }
+    const sql = getDb(env.DATABASE_URL)
+    await sql(`UPDATE entity SET thumbnail_url = $1 WHERE id = $2 AND entity_type = $3`, [url, entityId, entityType])
 
     return jsonResponse({ success: true, url }, request, 200, corsOptions)
   } catch (error) {

@@ -10,7 +10,7 @@
  */
 import type { Env } from './_shared/env.ts'
 import { jsonResponse, optionsResponse } from './_shared/cors.ts'
-import { getPool } from './_shared/db.ts'
+import { getDb } from './_shared/db.ts'
 
 interface SearchRow {
   id: number
@@ -92,75 +92,70 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
     const whereExtra = clauses.join(' ')
 
-    const pool = getPool(env.DATABASE_URL)
-    const client = await pool.connect()
-    try {
-      let result: { rows: SearchRow[] }
+    const sql = getDb(env.DATABASE_URL)
+    let rows: SearchRow[]
 
-      if (status === 'pending') {
-        // Search submission table for new pending entities
-        const pendingParams: string[] = [`%${query}%`]
-        let pIdx = 2
-        let pendingTypeClause = ''
-        if (entityType) {
-          pendingTypeClause = `AND entity_type = $${pIdx}`
-          pendingParams.push(entityType)
-          pIdx++
-        }
-        // Suppress unused variable lint — pIdx is kept for clarity if more clauses are added
-        void pIdx
-
-        result = await client.query<SearchRow>(
-          `SELECT id, entity_type, name, category, title, primary_org, location,
-                  belief_regulatory_stance AS regulatory_stance, 'pending' AS status,
-                  resource_title, resource_type, resource_author, resource_category, website, parent_org_id
-           FROM submission
-           WHERE entity_id IS NULL AND status = 'pending'
-             AND (name ILIKE $1 OR resource_title ILIKE $1) ${pendingTypeClause}
-           ORDER BY submitted_at DESC
-           LIMIT 15`,
-          pendingParams,
-        )
-      } else {
-        result = await client.query<SearchRow>(
-          `SELECT id, entity_type, name, category, title, primary_org, location,
-                  belief_regulatory_stance AS regulatory_stance, status,
-                  resource_title, resource_type, resource_author, resource_category, website, parent_org_id,
-                  ts_rank(search_vector, plainto_tsquery('english', $1)) AS rank
-           FROM entity
-           WHERE (search_vector @@ plainto_tsquery('english', $1)
-              OR name ILIKE $2
-              OR resource_title ILIKE $2) ${whereExtra}
-           ORDER BY
-             CASE WHEN name ILIKE $2 OR resource_title ILIKE $2 THEN 0 ELSE 1 END,
-             ts_rank(search_vector, plainto_tsquery('english', $1)) DESC
-           LIMIT 30`,
-          params,
-        )
+    if (status === 'pending') {
+      // Search submission table for new pending entities
+      const pendingParams: (string | number)[] = [`%${query}%`]
+      let pIdx = 2
+      let pendingTypeClause = ''
+      if (entityType) {
+        pendingTypeClause = `AND entity_type = $${pIdx}`
+        pendingParams.push(entityType)
+        pIdx++
       }
+      // Suppress unused variable lint — pIdx is kept for clarity if more clauses are added
+      void pIdx
 
-      // Group results by entity_type for backwards compatibility
-      const results: { people: SearchRow[]; organizations: SearchRow[]; resources: SearchRow[] } = {
-        people: [],
-        organizations: [],
-        resources: [],
-      }
-      for (const row of result.rows) {
-        if (row.entity_type === 'person') {
-          results.people.push(row)
-        } else if (row.entity_type === 'organization') {
-          results.organizations.push(row)
-        } else if (row.entity_type === 'resource') {
-          row.title = row.resource_title
-          row.author = row.resource_author
-          results.resources.push(row)
-        }
-      }
-
-      return jsonResponse(results, request)
-    } finally {
-      client.release()
+      rows = (await sql(
+        `SELECT id, entity_type, name, category, title, primary_org, location,
+                belief_regulatory_stance AS regulatory_stance, 'pending' AS status,
+                resource_title, resource_type, resource_author, resource_category, website, parent_org_id
+         FROM submission
+         WHERE entity_id IS NULL AND status = 'pending'
+           AND (name ILIKE $1 OR resource_title ILIKE $1) ${pendingTypeClause}
+         ORDER BY submitted_at DESC
+         LIMIT 15`,
+        pendingParams,
+      )) as SearchRow[]
+    } else {
+      rows = (await sql(
+        `SELECT id, entity_type, name, category, title, primary_org, location,
+                belief_regulatory_stance AS regulatory_stance, status,
+                resource_title, resource_type, resource_author, resource_category, website, parent_org_id,
+                ts_rank(search_vector, plainto_tsquery('english', $1)) AS rank
+         FROM entity
+         WHERE (search_vector @@ plainto_tsquery('english', $1)
+            OR name ILIKE $2
+            OR resource_title ILIKE $2) ${whereExtra}
+         ORDER BY
+           CASE WHEN name ILIKE $2 OR resource_title ILIKE $2 THEN 0 ELSE 1 END,
+           ts_rank(search_vector, plainto_tsquery('english', $1)) DESC
+         LIMIT 30`,
+        params,
+      )) as SearchRow[]
     }
+
+    // Group results by entity_type for backwards compatibility
+    const results: { people: SearchRow[]; organizations: SearchRow[]; resources: SearchRow[] } = {
+      people: [],
+      organizations: [],
+      resources: [],
+    }
+    for (const row of rows) {
+      if (row.entity_type === 'person') {
+        results.people.push(row)
+      } else if (row.entity_type === 'organization') {
+        results.organizations.push(row)
+      } else if (row.entity_type === 'resource') {
+        row.title = row.resource_title
+        row.author = row.resource_author
+        results.resources.push(row)
+      }
+    }
+
+    return jsonResponse(results, request)
   } catch (error) {
     const msg = error instanceof Error ? error.message : String(error)
     console.error('Search error:', error)

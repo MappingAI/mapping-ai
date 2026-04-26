@@ -24,7 +24,12 @@ const ADMIN_KEY = process.env.ADMIN_KEY
 
 async function refreshMapData(client: PoolClient) {
   try {
-    const data = await generateMapData(client)
+    // Wrap PoolClient to match the SqlQueryFn interface expected by generateMapData
+    const sqlFn = async (query: string, params?: unknown[]) => {
+      const result = await client.query(query, params)
+      return result.rows as Record<string, unknown>[]
+    }
+    const data = await generateMapData(sqlFn)
     const { skeleton, detail } = splitMapData(data)
 
     // Upload skeleton + detail in parallel
