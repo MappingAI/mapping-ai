@@ -32,6 +32,7 @@
     "tippy.js": "^6.3.7"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260426.1",
     "@eslint/js": "^9.39.4",
     "@tailwindcss/vite": "^4.2.2",
     "@testing-library/jest-dom": "^6.9.1",
@@ -75,10 +76,10 @@
     "dev:web": "vite",
     "build": "vite build",
     "build:tiptap": "esbuild src/tiptap-notes.js --bundle --outfile=assets/js/tiptap-notes.js --minify --format=iife --target=es2020",
-    "lint": "eslint src/ api/ scripts/",
-    "lint:fix": "eslint src/ api/ scripts/ --fix",
-    "format": "prettier --write 'src/**/*.{ts,tsx,js,json,css}' 'api/**/*.ts'",
-    "format:check": "prettier --check 'src/**/*.{ts,tsx,js,json,css}' 'api/**/*.ts'",
+    "lint": "eslint src/ api/ scripts/ functions/",
+    "lint:fix": "eslint src/ api/ scripts/ functions/ --fix",
+    "format": "prettier --write 'src/**/*.{ts,tsx,js,json,css}' 'api/**/*.ts' 'functions/**/*.ts'",
+    "format:check": "prettier --check 'src/**/*.{ts,tsx,js,json,css}' 'api/**/*.ts' 'functions/**/*.ts'",
     "typecheck": "tsc --noEmit",
     "sam:build": "PATH=$PWD/node_modules/.bin:$PATH sam build",
     "sam:dry-run": "PATH=$PWD/node_modules/.bin:$PATH sam deploy --no-execute-changeset",
