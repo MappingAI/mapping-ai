@@ -89,6 +89,157 @@ function dotColor(e: { entity_type: string; party: string | null }): string {
   return PARTY_COLOR[e.party || ''] || '#888'
 }
 
+function emitEntitySelect(entityId: number) {
+  window.dispatchEvent(new CustomEvent('cp-entity-select', { detail: entityId }))
+}
+
+interface Source {
+  source_id: string
+  url: string
+  title: string | null
+  type: string | null
+  published: string | null
+  author: string | null
+}
+
+const AREA_LABELS: Record<string, string> = {
+  state_preemption: 'State preemption',
+  open_source_weights: 'Open-source weights',
+  compute_governance: 'Compute governance',
+  export_controls_chips: 'Export controls',
+  pre_deployment_testing: 'Pre-deployment testing',
+  liability: 'Liability',
+}
+
+function EntityDetailPanel({ entityId, onClose }: { entityId: number; onClose: () => void }) {
+  const entity = useMemo(
+    () => (entitiesData.entities as CrosspartisanEntity[]).find((e) => e.entity_id === entityId),
+    [entityId],
+  )
+  const claims = useMemo(() => (claimsData.claims as Claim[]).filter((c) => c.entity_id === entityId), [entityId])
+  const sourceMap = useMemo(() => {
+    const m = new Map<string, Source>()
+    for (const s of claimsData.sources as Source[]) m.set(s.source_id, s)
+    return m
+  }, [])
+
+  if (!entity) return null
+
+  const byArea = new Map<string, Claim[]>()
+  for (const c of claims) {
+    const list = byArea.get(c.policy_area) || []
+    list.push(c)
+    byArea.set(c.policy_area, list)
+  }
+
+  const partyLabel =
+    entity.entity_type === 'organization'
+      ? entity.category
+      : entity.party === 'D'
+        ? 'Democrat'
+        : entity.party === 'R'
+          ? 'Republican'
+          : entity.category
+
+  return (
+    <div
+      className="fixed inset-0 z-[10000] flex justify-end"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose()
+      }}
+    >
+      <div className="bg-white w-full max-w-[480px] h-full overflow-y-auto border-l border-[#ddd] shadow-xl">
+        <div className="sticky top-0 bg-white border-b border-[#eee] px-5 py-3 flex justify-between items-start z-10">
+          <div>
+            <div className="font-mono text-[14px] font-medium text-[#1a1a1a]">{entity.name}</div>
+            <div className="font-mono text-[10px] text-[#888] mt-0.5">
+              <span style={{ color: dotColor(entity) }}>{partyLabel}</span>
+              {entity.title && ` · ${entity.title}`}
+            </div>
+          </div>
+          <button
+            onClick={onClose}
+            className="font-mono text-[16px] text-[#999] hover:text-[#333] px-2 py-1 -mr-2 -mt-1"
+          >
+            ×
+          </button>
+        </div>
+
+        <div className="px-5 py-4">
+          {claims.length === 0 ? (
+            <div className="font-mono text-[11px] text-[#999]">No crosspartisan claims for this entity.</div>
+          ) : (
+            <div className="space-y-5">
+              {Array.from(byArea.entries()).map(([areaId, areaClaims]) => (
+                <div key={areaId}>
+                  <div className="font-mono text-[10px] tracking-[0.08em] uppercase text-[#888] mb-2">
+                    {AREA_LABELS[areaId] || areaId}
+                  </div>
+                  <div className="space-y-3">
+                    {areaClaims.map((c) => {
+                      const src = sourceMap.get(c.source_id)
+                      return (
+                        <div key={c.claim_id} className="border-l-2 border-[#ddd] pl-3">
+                          <div className="flex items-baseline gap-2 mb-1">
+                            <span
+                              className="font-mono text-[11px] font-medium"
+                              style={{
+                                color: c.stance >= 1 ? '#1e6fd1' : c.stance <= -1 ? '#d6342c' : '#888',
+                              }}
+                            >
+                              {c.stance > 0 ? '+' : ''}
+                              {c.stance} {c.stance_label}
+                            </span>
+                            <span
+                              className="font-mono text-[8px] uppercase px-1 py-0.5 rounded"
+                              style={{
+                                background:
+                                  c.confidence === 'high'
+                                    ? '#e8f5e9'
+                                    : c.confidence === 'medium'
+                                      ? '#fff8e1'
+                                      : '#fce4ec',
+                                color:
+                                  c.confidence === 'high'
+                                    ? '#2e7d32'
+                                    : c.confidence === 'medium'
+                                      ? '#f57f17'
+                                      : '#c62828',
+                              }}
+                            >
+                              {c.confidence}
+                            </span>
+                          </div>
+                          <blockquote className="font-serif text-[13px] text-[#444] leading-[1.5] italic mb-1.5">
+                            &ldquo;{c.citation}&rdquo;
+                          </blockquote>
+                          {src && (
+                            <a
+                              href={src.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="font-mono text-[10px] text-[#2563eb] hover:underline block truncate"
+                            >
+                              {src.title || src.url}
+                            </a>
+                          )}
+                          <div className="font-mono text-[9px] text-[#bbb] mt-0.5">
+                            {[src?.type, c.date_stated, src?.author].filter(Boolean).join(' · ')}
+                          </div>
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 /* ────────────────────────────────────────────
    Beeswarm: one swarm, x = aggregate stance, color = party/org
    ──────────────────────────────────────────── */
@@ -177,6 +328,7 @@ function BeeswarmStance({ data }: { data: CrosspartisanEntity[] }) {
       .on('mouseover', (evt: MouseEvent, d: CrosspartisanEntity) => tip.show(evt, entityTooltipHtml(d)))
       .on('mousemove', (evt: MouseEvent, d: CrosspartisanEntity) => tip.show(evt, entityTooltipHtml(d)))
       .on('mouseout', () => tip.hide())
+      .on('click', (_: MouseEvent, d: CrosspartisanEntity) => emitEntitySelect(d.entity_id))
 
     const legend = svg.append('g').attr('transform', `translate(${padL}, ${padT - 12})`)
     const legendItems = [
@@ -310,6 +462,7 @@ function HorseshoePlot({ data }: { data: CrosspartisanEntity[] }) {
       .on('mouseover', (evt: MouseEvent, d: CrosspartisanEntity) => tip.show(evt, entityTooltipHtml(d)))
       .on('mousemove', (evt: MouseEvent, d: CrosspartisanEntity) => tip.show(evt, entityTooltipHtml(d)))
       .on('mouseout', () => tip.hide())
+      .on('click', (_: MouseEvent, d: CrosspartisanEntity) => emitEntitySelect(d.entity_id))
 
     svg
       .append('text')
@@ -569,6 +722,7 @@ function PerIssueRow({
         },
       )
       .on('mouseout', () => tip.hide())
+      .on('click', (_: MouseEvent, d: { entity_id: number }) => emitEntitySelect(d.entity_id))
   }, [areaClaims, entityLookup, area])
 
   const endpoints = AREA_ENDPOINTS[area.id]
@@ -598,6 +752,13 @@ function PerIssueRow({
 export function CrosspartisanViz() {
   const [view, setView] = useState<'by-issue' | 'horseshoe' | 'beeswarm'>('by-issue')
   const [entityFilter, setEntityFilter] = useState<'all' | 'people' | 'orgs'>('all')
+  const [selectedEntityId, setSelectedEntityId] = useState<number | null>(null)
+
+  useEffect(() => {
+    const handler = (e: Event) => setSelectedEntityId((e as CustomEvent).detail)
+    window.addEventListener('cp-entity-select', handler)
+    return () => window.removeEventListener('cp-entity-select', handler)
+  }, [])
 
   const allEntities = useMemo<CrosspartisanEntity[]>(() => entitiesData.entities as CrosspartisanEntity[], [])
 
@@ -661,6 +822,9 @@ export function CrosspartisanViz() {
         <BeeswarmStance data={allEntities} />
       ) : (
         <HorseshoePlot data={allEntities} />
+      )}
+      {selectedEntityId != null && (
+        <EntityDetailPanel entityId={selectedEntityId} onClose={() => setSelectedEntityId(null)} />
       )}
     </div>
   )
