@@ -4450,12 +4450,19 @@ function renderSparkline(entityId, dimension) {
     .sort((a, b) => a.date.localeCompare(b.date));
   if (claims.length < 2) return '';
 
-  const W = 120, H = 28, padL = 4, padR = 4, padT = 4, padB = 4;
-  const dates = claims.map(c => new Date(c.date).getTime());
   const scores = claims.map(c => c.score);
+  const uniqueScores = new Set(scores);
+  // Skip if all scores identical (flat line tells you nothing)
+  if (uniqueScores.size === 1) {
+    const yr0 = claims[0].date.slice(0, 4), yr1 = claims[claims.length - 1].date.slice(0, 4);
+    return `<span style="font-size:9px;color:var(--text-3);margin-left:6px;font-family:'DM Mono',monospace;">(consistent, ${claims.length} sources ${yr0}–${yr1})</span>`;
+  }
+
+  const W = 160, H = 44, padL = 8, padR = 8, padT = 8, padB = 16;
+  const dates = claims.map(c => new Date(c.date).getTime());
   const minDate = Math.min(...dates), maxDate = Math.max(...dates);
-  const minScore = Math.min(...scores), maxScore = Math.max(...scores);
-  const rangeScore = maxScore - minScore || 1;
+  const minScore = Math.min(...scores) - 0.5, maxScore = Math.max(...scores) + 0.5;
+  const rangeScore = maxScore - minScore;
   const rangeDate = maxDate - minDate || 1;
 
   const points = claims.map(c => {
@@ -4467,22 +4474,35 @@ function renderSparkline(entityId, dimension) {
   const pathD = points.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ');
 
   const first = scores[0], last = scores[scores.length - 1];
-  const trend = last > first ? '↑' : last < first ? '↓' : '→';
+  const trend = last > first ? '↑' : last < first ? '↓' : '~';
   const trendColor = last > first ? '#2e7d32' : last < first ? '#d6342c' : 'var(--text-3)';
 
-  const dots = points.map(p => {
-    const label = escHtml((p.c.label || '') + ' (' + p.c.date + ')');
-    return `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="3" fill="var(--accent)" stroke="#fff" stroke-width="1" style="cursor:pointer;">
-      <title>${label}</title>
-    </circle>`;
+  // Use unique ID for tooltip wiring
+  const sparkId = 'spark-' + entityId + '-' + dimension;
+
+  const dots = points.map((p, i) => {
+    const yr = p.c.date.slice(0, 4);
+    const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const dateObj = new Date(p.c.date);
+    const dateLabel = monthNames[dateObj.getMonth()] + ' ' + dateObj.getFullYear();
+    return `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="4" fill="${trendColor}" stroke="#fff" stroke-width="1.5" style="cursor:pointer;"
+      onmouseenter="this.setAttribute('r','6');document.getElementById('${sparkId}-tip').textContent='${escHtml(p.c.label || '')} (${dateLabel})';"
+      onmouseleave="this.setAttribute('r','4');document.getElementById('${sparkId}-tip').textContent='';"
+    />`;
   }).join('');
 
-  return `<div style="display:inline-flex;align-items:center;gap:4px;margin-left:6px;vertical-align:middle;">
+  // Date range labels
+  const yr0 = claims[0].date.slice(0, 4), yr1 = claims[claims.length - 1].date.slice(0, 4);
+
+  return `<div style="display:block;margin-top:4px;">
     <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="display:block;">
-      <path d="${pathD}" fill="none" stroke="var(--accent)" stroke-width="1.5" opacity="0.5"/>
+      <path d="${pathD}" fill="none" stroke="${trendColor}" stroke-width="1.5" opacity="0.4"/>
       ${dots}
+      <text x="${padL}" y="${H - 2}" font-family="'DM Mono',monospace" font-size="8" fill="var(--text-3)">${yr0}</text>
+      <text x="${W - padR}" y="${H - 2}" font-family="'DM Mono',monospace" font-size="8" fill="var(--text-3)" text-anchor="end">${yr1}</text>
     </svg>
-    <span style="font-size:12px;color:${trendColor};" title="${claims.length} claims, ${claims[0].date} to ${claims[claims.length-1].date}">${trend}</span>
+    <div id="${sparkId}-tip" style="font-family:'DM Mono',monospace;font-size:9px;color:var(--text-2);min-height:14px;margin-top:1px;"></div>
+    <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--text-3);">${trend === '↑' ? 'Shifted toward more regulation' : trend === '↓' ? 'Shifted toward less regulation' : 'Fluctuated'} · ${claims.length} sources</div>
   </div>`;
 }
 
@@ -4541,13 +4561,16 @@ function showDetail(d, allNodes) {
     addField('Other Organizations', d.other_orgs);
     addField('Location', d.location);
     const stColor = getStanceColor(d.regulatory_stance);
+    const stSparkline = renderSparkline(d.id, 'regulatory_stance');
     addField('Regulatory Stance', d.regulatory_stance
-      ? `<span style="display:inline-flex;align-items:center;gap:5px;">${stColor ? `<span style="width:8px;height:8px;border-radius:50%;background:${stColor};display:inline-block;"></span>` : ''}${d.regulatory_stance}${renderSparkline(d.id, 'regulatory_stance')}</span>`
+      ? `<span style="display:inline-flex;align-items:center;gap:5px;">${stColor ? `<span style="width:8px;height:8px;border-radius:50%;background:${stColor};display:inline-block;"></span>` : ''}${d.regulatory_stance}</span>${stSparkline}`
       : null);
     if (d.regulatory_stance_detail) addField('Stance Detail', d.regulatory_stance_detail);
     addField('Evidence Source', d.evidence_source);
-    addField('AGI Timeline', d.agi_timeline ? `${d.agi_timeline}${renderSparkline(d.id, 'agi_timeline')}` : null);
-    addField('AI Risk Level', d.ai_risk_level ? `${d.ai_risk_level}${renderSparkline(d.id, 'ai_risk_level')}` : null);
+    const tlSparkline = renderSparkline(d.id, 'agi_timeline');
+    addField('AGI Timeline', d.agi_timeline ? `${d.agi_timeline}${tlSparkline}` : null);
+    const rlSparkline = renderSparkline(d.id, 'ai_risk_level');
+    addField('AI Risk Level', d.ai_risk_level ? `${d.ai_risk_level}${rlSparkline}` : null);
     addField('Key Concerns', d.threat_models);
     addField('Influence Type', d.influence_type);
     addField('Twitter/X', d.twitter ? `<a href="https://x.com/${d.twitter.replace('@', '')}" target="_blank" rel="noopener">@${d.twitter.replace('@', '')}</a>` : null);
@@ -4578,13 +4601,16 @@ function showDetail(d, allNodes) {
     addField('Location', d.location);
     addField('Funding Model', d.funding_model);
     const stColor = getStanceColor(d.regulatory_stance);
+    const stSparkline2 = renderSparkline(d.id, 'regulatory_stance');
     addField('Regulatory Stance', d.regulatory_stance
-      ? `<span style="display:inline-flex;align-items:center;gap:5px;">${stColor ? `<span style="width:8px;height:8px;border-radius:50%;background:${stColor};display:inline-block;"></span>` : ''}${d.regulatory_stance}${renderSparkline(d.id, 'regulatory_stance')}</span>`
+      ? `<span style="display:inline-flex;align-items:center;gap:5px;">${stColor ? `<span style="width:8px;height:8px;border-radius:50%;background:${stColor};display:inline-block;"></span>` : ''}${d.regulatory_stance}</span>${stSparkline2}`
       : null);
     if (d.regulatory_stance_detail) addField('Stance Detail', d.regulatory_stance_detail);
     addField('Evidence Source', d.evidence_source);
-    addField('AGI Timeline', d.agi_timeline ? `${d.agi_timeline}${renderSparkline(d.id, 'agi_timeline')}` : null);
-    addField('AI Risk Level', d.ai_risk_level ? `${d.ai_risk_level}${renderSparkline(d.id, 'ai_risk_level')}` : null);
+    const tlSparkline2 = renderSparkline(d.id, 'agi_timeline');
+    addField('AGI Timeline', d.agi_timeline ? `${d.agi_timeline}${tlSparkline2}` : null);
+    const rlSparkline2 = renderSparkline(d.id, 'ai_risk_level');
+    addField('AI Risk Level', d.ai_risk_level ? `${d.ai_risk_level}${rlSparkline2}` : null);
     addField('Key Concerns', d.threat_models);
     addField('Influence Type', d.influence_type);
     addField('Twitter/X', d.twitter ? `<a href="https://x.com/${d.twitter.replace('@', '')}" target="_blank" rel="noopener">@${d.twitter.replace('@', '')}</a>` : null);
