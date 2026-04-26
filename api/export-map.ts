@@ -122,6 +122,13 @@ export function toFrontendShape(row: RawEntityRow): FrontendEntity {
     out.url = row.resource_url
     out.year = row.resource_year
     out.key_argument = row.resource_key_argument
+    // Resource tagging: topic_tags supplements/replaces single category
+    out.topic_tags = row.topic_tags ?? null
+    out.format_tags = row.format_tags ?? null
+    // Advocated beliefs: what the resource argues for (vs. entity's own beliefs)
+    out.advocated_stance = row.advocated_stance ?? null
+    out.advocated_timeline = row.advocated_timeline ?? null
+    out.advocated_risk = row.advocated_risk ?? null
   }
 
   // Numeric scores: prefer wavg from submissions, fall back to text label lookup.
@@ -281,6 +288,11 @@ const DETAIL_FIELDS = new Set<string>([
   'bluesky',
   'parent_org_id',
   'status',
+  // Resource detail-only fields
+  'format_tags',
+  'advocated_stance',
+  'advocated_timeline',
+  'advocated_risk',
 ])
 
 export interface SplitMapData {
