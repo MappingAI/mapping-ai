@@ -222,15 +222,11 @@ function HorseshoePlot({ data }: { data: CrosspartisanEntity[] }) {
 
     const svg = d3.select(container).append('svg').attr('viewBox', `0 0 ${W} ${H}`).attr('width', W).attr('height', H)
 
-    const filtered = data.filter((e) => e.entity_type === 'person' && e.aggregate_stance_score != null)
+    const filtered = data.filter((e) => e.entity_type === 'person' && e.party && e.aggregate_stance_score != null)
 
     const partyAngle = (p: CrosspartisanEntity): number => {
       const stance = p.aggregate_stance_score!
       const t = (stance - 1) / 5
-      if (p.party === 'I' || !p.party) {
-        const hash = (((p.entity_id * 2654435761) >>> 0) % 1000) / 1000
-        return 1.5 * Math.PI + (hash - 0.5) * 0.25 * Math.PI
-      }
       if (p.party === 'D') return Math.PI + t * 0.5 * Math.PI
       return 2 * Math.PI - t * 0.5 * Math.PI
     }
@@ -610,14 +606,13 @@ export function CrosspartisanViz() {
   const claimCount = (claimsData.claims as Claim[]).length
 
   const partyCounts = useMemo(() => {
-    const c = { D: 0, R: 0, I: 0, none: 0 }
-    const withStance = policymakers.filter((p) => p.aggregate_stance_score != null)
-    withStance.forEach((p) => {
-      if (p.party === 'D') c.D++
-      else if (p.party === 'R') c.R++
-      else if (p.party === 'I') c.I++
-      else c.none++
-    })
+    const c = { D: 0, R: 0 }
+    policymakers
+      .filter((p) => p.party && p.aggregate_stance_score != null)
+      .forEach((p) => {
+        if (p.party === 'D') c.D++
+        else if (p.party === 'R') c.R++
+      })
     return c
   }, [policymakers])
 
@@ -656,7 +651,7 @@ export function CrosspartisanViz() {
           {view === 'by-issue'
             ? `${claimCount} claims · ${policymakers.length} policymakers · ${orgs.length} orgs`
             : view === 'horseshoe'
-              ? `${partyCounts.D} D · ${partyCounts.R} R · ${partyCounts.I} I · ${partyCounts.none} unaffiliated`
+              ? `${partyCounts.D + partyCounts.R} policymakers · ${partyCounts.D} D · ${partyCounts.R} R`
               : `${allEntities.filter((e) => e.aggregate_stance_score != null).length} entities with stance data`}
         </div>
       </div>
