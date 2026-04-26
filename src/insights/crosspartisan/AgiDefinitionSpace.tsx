@@ -344,7 +344,7 @@ function ClusterMapView({
                 ? null
                 : d[colorMode as 'stance' | 'timeline' | 'risk']
           const beliefLine = beliefValue
-            ? `<div style="color:${getPointColor(d, colorMode)};font-weight:500;font-size:10px;margin-bottom:2px;">${beliefValue}</div>`
+            ? `<div style="color:${getPointColor(d, colorMode)};font-weight:500;font-size:10px;margin-bottom:2px;">${escapeHtml(String(beliefValue))}</div>`
             : ''
           tipEl.innerHTML = `<div style="font-weight:500;margin-bottom:2px;">${escapeHtml(d.name)}</div>
             <div style="color:#666;font-size:10px;margin-bottom:2px;">${escapeHtml(d.category)}</div>
@@ -505,7 +505,7 @@ export function AgiDefinitionSpace() {
                 ? null
                 : d[colorMode as 'stance' | 'timeline' | 'risk']
           const beliefLine = beliefValue
-            ? `<div style="color:${getPointColor(d, colorMode)};font-weight:500;font-size:10px;margin-bottom:2px;">${beliefValue}</div>`
+            ? `<div style="color:${getPointColor(d, colorMode)};font-weight:500;font-size:10px;margin-bottom:2px;">${escapeHtml(String(beliefValue))}</div>`
             : ''
           tipEl.innerHTML = `<div style="font-weight:500;margin-bottom:2px;">${escapeHtml(d.name)}</div>
             <div style="color:#666;font-size:10px;margin-bottom:2px;">${escapeHtml(d.category)}</div>
