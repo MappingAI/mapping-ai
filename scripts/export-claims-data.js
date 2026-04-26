@@ -1,23 +1,24 @@
 /**
- * Export claims data from Neon DB to JSON files, then upload to R2.
+ * Export claims data from Neon DB to JSON, then upload to R2.
  *
  * Generates:
  *   - claims-detail.json: All claims + sources keyed by entity ID
- *   - agi-definitions.json: AGI definition embeddings + clusters
+ *
+ * Also uploads agi-definitions.json if found locally.
  *
  * Usage:
- *   node scripts/export-claims-data.js              # generate only
+ *   node scripts/export-claims-data.js              # generate only (writes to stdout summary)
  *   node scripts/export-claims-data.js --upload      # generate + upload to R2
  *
  * Requires:
  *   - DATABASE_URL or PILOT_DB in .env (Neon connection)
- *   - wrangler auth for --upload (via `wrangler login`)
+ *   - R2_ACCESS_KEY_ID + R2_SECRET_ACCESS_KEY in .env or GitHub Secrets (for --upload)
  */
 import 'dotenv/config'
 import pg from 'pg'
 import fs from 'fs'
 import os from 'os'
-import { execSync } from 'child_process'
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
 
 const dbUrl = process.env.PILOT_DB || process.env.DATABASE_URL
 if (!dbUrl) {
@@ -28,7 +29,21 @@ if (!dbUrl) {
 const db = new pg.Pool({ connectionString: dbUrl, ssl: { rejectUnauthorized: false } })
 const upload = process.argv.includes('--upload')
 const BUCKET = 'mapping-ai-data'
-const OUT_DIR = os.tmpdir()
+const ACCOUNT_ID = process.env.CLOUDFLARE_ACCOUNT_ID || 'ac57c6d87068ab259c6f54dba468de8d'
+
+function getR2Client() {
+  const keyId = process.env.R2_ACCESS_KEY_ID
+  const secret = process.env.R2_SECRET_ACCESS_KEY
+  if (!keyId || !secret) {
+    console.error('R2_ACCESS_KEY_ID and R2_SECRET_ACCESS_KEY required for --upload')
+    process.exit(1)
+  }
+  return new S3Client({
+    region: 'auto',
+    endpoint: `https://${ACCOUNT_ID}.r2.cloudflarestorage.com`,
+    credentials: { accessKeyId: keyId, secretAccessKey: secret },
+  })
+}
 
 async function exportClaimsDetail() {
   console.log('Exporting claims-detail.json...')
@@ -66,46 +81,61 @@ async function exportClaimsDetail() {
   }
 
   const json = JSON.stringify({ sources: sourceMap, claims: byEntity })
-  const path = `${OUT_DIR}/claims-detail.json`
-  fs.writeFileSync(path, json)
   console.log(
     `  ${Object.keys(byEntity).length} entities, ${claimR.rows.length} claims, ${Object.keys(sourceMap).length} sources (${(json.length / 1024).toFixed(0)} KB)`,
   )
-  return path
+  return { key: 'claims-detail.json', body: json }
+}
+
+async function uploadToR2(r2, key, body) {
+  await r2.send(
+    new PutObjectCommand({
+      Bucket: BUCKET,
+      Key: key,
+      Body: body,
+      ContentType: 'application/json',
+      CacheControl: 'public, max-age=300, s-maxage=3600',
+    }),
+  )
 }
 
 async function main() {
-  const files = []
+  const uploads = []
 
-  files.push(await exportClaimsDetail())
+  const claims = await exportClaimsDetail()
+  uploads.push(claims)
 
   // agi-definitions.json is pre-generated (requires Voyage AI embeddings)
-  // Check common locations and upload if found
   for (const candidate of ['public/agi-definitions.json', 'agi-definitions.json']) {
     if (fs.existsSync(candidate)) {
-      files.push(candidate)
+      uploads.push({ key: 'agi-definitions.json', body: fs.readFileSync(candidate, 'utf-8') })
       console.log('agi-definitions.json found at ' + candidate + ', will include in upload')
       break
     }
   }
 
   if (upload) {
+    const r2 = getR2Client()
     console.log('\nUploading to R2...')
-    for (const file of files) {
-      const key = file.replace(`${OUT_DIR}/`, '')
+    for (const { key, body } of uploads) {
       try {
-        execSync(
-          `pnpm exec wrangler r2 object put ${BUCKET}/${key} --file=${file} --content-type=application/json --cache-control="public, max-age=300, s-maxage=3600" --remote`,
-          { stdio: 'inherit' },
-        )
-        console.log(`  ✓ ${key}`)
+        await uploadToR2(r2, key, body)
+        console.log(`  ✓ ${key} (${(body.length / 1024).toFixed(0)} KB)`)
       } catch (err) {
         console.error(`  ✗ ${key}: ${err.message}`)
+        process.exit(1)
       }
     }
     console.log('\nUploaded to R2. Served via Pages Function at /data/<filename>')
   } else {
     console.log('\nSkipping upload (use --upload to push to R2)')
+    // Write to temp dir for local inspection
+    const tmpDir = os.tmpdir()
+    for (const { key, body } of uploads) {
+      const path = `${tmpDir}/${key}`
+      fs.writeFileSync(path, body)
+      console.log(`  Written to ${path}`)
+    }
   }
 
   await db.end()
