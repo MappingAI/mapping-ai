@@ -326,7 +326,7 @@ async function writeClaim(client, entity, claim, sid) {
       entity.name,
       entity.entity_type,
       claim.policy_area,
-      claim.stance_label || null,
+      claim.stance || claim.stance_label || null,
       claim.stance_score ?? null,
       claim.stance_label || null,
       claim.definition_used || null,

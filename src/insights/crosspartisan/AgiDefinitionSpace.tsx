@@ -482,12 +482,12 @@ export function AgiDefinitionSpace() {
       .attr('r', 5)
       .attr('fill', (d: AgiPoint) => getPointColor(d, colorMode))
       .attr('opacity', (d: AgiPoint) => {
-        if (colorMode !== 'category') {
-          const scoreKey =
-            colorMode === 'stance' ? 'stance_score' : colorMode === 'timeline' ? 'timeline_score' : 'risk_score'
-          return d[scoreKey] == null ? 0.2 : 0.85
+        if (colorMode === 'category' || colorMode === 'cluster') {
+          return hoveredCategory && d.category !== hoveredCategory ? 0.15 : 0.8
         }
-        return hoveredCategory && d.category !== hoveredCategory ? 0.15 : 0.8
+        const scoreKey =
+          colorMode === 'stance' ? 'stance_score' : colorMode === 'timeline' ? 'timeline_score' : 'risk_score'
+        return d[scoreKey] == null ? 0.2 : 0.85
       })
       .attr('stroke', '#fff')
       .attr('stroke-width', 1)
@@ -525,7 +525,7 @@ export function AgiDefinitionSpace() {
         if (tipEl) tipEl.style.opacity = '0'
         setSelectedPoint(d)
       })
-  }, [data, hoveredCategory, colorMode])
+  }, [data, hoveredCategory, colorMode, viewMode])
 
   if (!data) return <div className="font-mono text-[11px] text-[#999]">Loading definition space...</div>
 
