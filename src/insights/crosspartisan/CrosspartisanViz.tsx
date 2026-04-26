@@ -227,7 +227,10 @@ function HorseshoePlot({ data }: { data: CrosspartisanEntity[] }) {
     const partyAngle = (p: CrosspartisanEntity): number => {
       const stance = p.aggregate_stance_score!
       const t = (stance - 1) / 5
-      if (p.party === 'I' || !p.party) return 1.5 * Math.PI
+      if (p.party === 'I' || !p.party) {
+        const hash = (((p.entity_id * 2654435761) >>> 0) % 1000) / 1000
+        return 1.5 * Math.PI + (hash - 0.5) * 0.25 * Math.PI
+      }
       if (p.party === 'D') return Math.PI + t * 0.5 * Math.PI
       return 2 * Math.PI - t * 0.5 * Math.PI
     }
