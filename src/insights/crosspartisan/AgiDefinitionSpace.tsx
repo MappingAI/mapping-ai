@@ -418,7 +418,7 @@ export function AgiDefinitionSpace() {
   const [viewMode, setViewMode] = useState<'map' | 'clusters' | 'scatter'>('map')
 
   useEffect(() => {
-    fetch('https://pub-b922bd462cf047f2afc0d8dd5a8dd34c.r2.dev/agi-definitions.json')
+    fetch('/data/agi-definitions.json')
       .then((r) => (r.ok ? r.json() : null))
       .then((d) => setData(d))
       .catch(() => {})

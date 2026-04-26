@@ -92,7 +92,7 @@ async function main() {
       const key = file.replace(`${OUT_DIR}/`, '')
       try {
         execSync(
-          `pnpm exec wrangler r2 object put ${BUCKET}/${key} --file=${file} --content-type=application/json --remote`,
+          `pnpm exec wrangler r2 object put ${BUCKET}/${key} --file=${file} --content-type=application/json --cache-control="public, max-age=300, s-maxage=3600" --remote`,
           { stdio: 'inherit' },
         )
         console.log(`  ✓ ${key}`)
@@ -100,7 +100,7 @@ async function main() {
         console.error(`  ✗ ${key}: ${err.message}`)
       }
     }
-    console.log(`\nFiles available at: https://pub-b922bd462cf047f2afc0d8dd5a8dd34c.r2.dev/`)
+    console.log('\nUploaded to R2. Served via Pages Function at /data/<filename>')
   } else {
     console.log('\nSkipping upload (use --upload to push to R2)')
   }
