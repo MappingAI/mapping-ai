@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { Navigation } from '../components/Navigation'
+import { CrosspartisanViz } from './crosspartisan/CrosspartisanViz'
+import { AgiDefinitionSpace } from './crosspartisan/AgiDefinitionSpace'
 
 // d3 is loaded from a CDN <script> tag (see index.html) rather than imported as a module,
 // so we don't have compile-time types for it. Treating it as `unknown` forces casts at
@@ -55,6 +57,8 @@ const TOC_ITEMS = [
   { id: 'belief-space', label: 'Beliefs' },
   { id: 'threat-models', label: 'Threat Models' },
   { id: 'network', label: 'Connectivity' },
+  { id: 'crosspartisan', label: 'Crosspartisan' },
+  { id: 'agi-definitions', label: 'AGI Definitions' },
 ]
 
 /* ────────────────────────────────────────────
@@ -1048,6 +1052,84 @@ export function App() {
           Government and Think Tank categories have the most cross-category connections, serving as the primary hubs of
           the governance network. Categories like Media/Journalism are more internally focused with fewer bridges to
           other communities.
+        </Finding>
+
+        <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
+
+        {/* ═══════════════════════════════════════════ */}
+        {/* SECTION 4: CROSSPARTISAN CONVERGENCE        */}
+        {/* ═══════════════════════════════════════════ */}
+
+        <SectionLabel id="crosspartisan">Insight 4</SectionLabel>
+        <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">
+          Crosspartisan Convergence on AI Policy
+        </h2>
+
+        <Para>
+          On which AI policy mechanisms do policymakers and politically relevant organizations converge, and where do
+          they define key terms differently enough that apparent agreement dissolves on inspection? We track sourced
+          claims across six policy areas: state preemption, open-weight restrictions, compute governance, chip exports,
+          pre-deployment testing, and liability. Each claim is backed by a verbatim quote and URL. The "By Issue" view
+          shows per-issue stance distributions for both policymakers (colored by party) and organizations (green). The
+          horseshoe view maps policymakers onto a U-shaped arc by party and aggregate regulatory stance.
+        </Para>
+
+        <ChartContainer
+          title="Crosspartisan AI policy stances"
+          source="Source: 613 sourced claims across 188 entities (99 policymakers, 89 orgs). Each claim backed by a verbatim quote and URL."
+        >
+          <CrosspartisanViz />
+        </ChartContainer>
+
+        <Para>
+          The <strong>By Issue</strong> view breaks stance down across six policy mechanisms. Filter between
+          policymakers, organizations, or both. The <strong>horseshoe</strong> bends the partisan spectrum into a U:
+          Democrats curve down the left side and Republicans down the right, with precautionary extremes converging at
+          the bottom. The <strong>beeswarm</strong> flattens all entities onto a single regulatory-stance axis for
+          direct comparison.
+        </Para>
+
+        <Finding>
+          State preemption and pre-deployment testing are the most opinionated policy areas, while open-source weight
+          restrictions produce the fewest claims. A policymaker may be precautionary on open-weight restrictions but
+          accelerationist on compute governance. Definitional drift, captured per claim, is where convergence often
+          dissolves on inspection.
+        </Finding>
+
+        <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
+
+        {/* ═══════════════════════════════════════════ */}
+        {/* SECTION 5: AGI DEFINITION SPACE             */}
+        {/* ═══════════════════════════════════════════ */}
+
+        <SectionLabel id="agi-definitions">Insight 5</SectionLabel>
+        <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">The AGI Definition Space</h2>
+
+        <Para>
+          "AGI" is overloaded. Two entities both saying "AGI by 2027" can mean very different things: one might describe
+          human-level performance on economically valuable tasks, while another means recursive self-improvement. The
+          timeline dimension compresses real semantic disagreement into a single axis.
+        </Para>
+
+        <Para>
+          This scatter plot clusters 240 entities by the <em>semantic similarity</em> of their stated AGI definitions.
+          Each definition was embedded using Voyage AI and projected to 2D with UMAP. Position encodes meaning: entities
+          with similar definitions cluster together. Color encodes category. Click any dot to see the full definition
+          and its source.
+        </Para>
+
+        <ChartContainer
+          title="AGI definition space (240 entities)"
+          source="Source: AGI definition claims from enrichment pipeline. Embeddings: Voyage AI voyage-3. Projection: UMAP."
+        >
+          <AgiDefinitionSpace />
+        </ChartContainer>
+
+        <Finding>
+          The definition space reveals distinct clusters: "economic task" framings (AI that performs most knowledge
+          work), "cognitive capability" framings (human-level reasoning), and "autonomy/agency" framings (systems that
+          can self-improve or act independently). Entities placed near each other on the timeline axis may hold
+          fundamentally different conceptions of what they're predicting.
         </Finding>
 
         <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />

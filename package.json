@@ -8,6 +8,7 @@
     "node": ">=20"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.91.1",
     "@aws-sdk/client-cloudfront": "^3.1032.0",
     "@aws-sdk/client-s3": "^3.1026.0",
     "@floating-ui/dom": "^1.7.6",
@@ -29,7 +30,9 @@
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "react-hook-form": "^7.72.1",
-    "tippy.js": "^6.3.7"
+    "tippy.js": "^6.3.7",
+    "umap-js": "^1.4.0",
+    "voyageai": "^0.2.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
@@ -59,6 +62,7 @@
     "typescript-eslint": "^8.58.2",
     "vite": "^8.0.8",
     "vitest": "^3.2.4",
+    "wrangler": "^4.85.0",
     "xlsx": "^0.18.5"
   },
   "scripts": {
@@ -67,6 +71,8 @@
     "db:setup": "node scripts/migrate.js && node scripts/seed.js",
     "db:seed-test": "node scripts/seed-test-data.js --reset",
     "db:export-map": "tsx scripts/export-map-data.ts",
+    "db:export-claims": "node scripts/export-claims-data.js",
+    "db:export-claims:upload": "node scripts/export-claims-data.js --upload",
     "db:backup": "node scripts/backup-db.js",
     "db:backup:local": "node scripts/backup-db.js --local",
     "predev": "node scripts/ensure-map-data.js",

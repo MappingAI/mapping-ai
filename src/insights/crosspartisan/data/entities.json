@@ -1,0 +1,2307 @@
+{
+  "schema_version": 3,
+  "snapshot_date": "2026-04-26T07:46:10.820Z",
+  "source": "All policymakers + orgs with crosspartisan claims from Neon claims-pilot branch.",
+  "entities": [
+    {
+      "entity_id": 929,
+      "name": "Alan Davidson",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "Assistant Secretary for Communications and Information, National Telecommunications and Information Administration (NTIA), U.S. Department of Commerce",
+      "primary_org": "National Telecommunications and Information Administration",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 97,
+      "name": "Alex Bores",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "New York State Assemblymember, 73rd District",
+      "primary_org": "New York State Assembly",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 725,
+      "name": "Alexandra Mealer",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "Candidate, TX House District 09",
+      "primary_org": "Republican Party",
+      "aggregate_stance_score": null
+    },
+    {
+      "entity_id": 10,
+      "name": "Alexandria Ocasio-Cortez",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "U.S. Representative, NY-14",
+      "primary_org": "U.S. House of Representatives",
+      "aggregate_stance_score": 5
+    },
+    {
+      "entity_id": 86,
+      "name": "Alondra Nelson",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "Harold F. Linder Professor, Institute for Advanced Study; Former Acting Director, White House Office of Science and Technology Policy (2022)",
+      "primary_org": "Institute for Advanced Study",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1799,
+      "name": "Alvaro Bedoya",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": null,
+      "title": "FTC Commissioner (confirmed 2022)",
+      "primary_org": "Federal Trade Commission",
+      "aggregate_stance_score": null
+    },
+    {
+      "entity_id": 1261,
+      "name": "Amandeep Singh Gill",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "Under-Secretary-General and Special Envoy for Digital and Emerging Technologies",
+      "primary_org": "United Nations",
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 1004,
+      "name": "Amy Klobuchar",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "U.S. Senator from Minnesota, Chair of Senate Judiciary Subcommittee on Competition Policy, Antitrust, and Consumer Rights",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1814,
+      "name": "Andrew N. Ferguson",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": null,
+      "title": "Chairman, Federal Trade Commission",
+      "primary_org": "Federal Trade Commission",
+      "aggregate_stance_score": null
+    },
+    {
+      "entity_id": 1100,
+      "name": "Andy Kim",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "U.S. Senator (D-NJ)",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 115,
+      "name": "Anna Eshoo",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "fmr U.S. Representative, CA-16",
+      "primary_org": "Unknown",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1258,
+      "name": "António Guterres",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "Secretary-General",
+      "primary_org": "United Nations",
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 119,
+      "name": "Arati Prabhakar",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "OSTP Director (Biden Admin, 2022-2025); fmr DARPA Director (2012-2017); fmr NIST Director (1993-1997)",
+      "primary_org": "White House Office of Science and Technology Policy (OSTP)",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 994,
+      "name": "Audrey Tang",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": null,
+      "title": "Taiwan's Cyber Ambassador (2024-present); Former Digital Minister (2016-2024); World's First Transgender Cabinet Minister",
+      "primary_org": "Government of Taiwan",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1475,
+      "name": "Ayanna Pressley",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "U.S. Representative (D-MA)",
+      "primary_org": "U.S. House of Representatives",
+      "aggregate_stance_score": 5
+    },
+    {
+      "entity_id": 74,
+      "name": "Ben Ray Luján",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "U.S. Senator from New Mexico, Chair of Subcommittee on Communications, Media, and Broadband",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 5
+    },
+    {
+      "entity_id": 1264,
+      "name": "Benjamin Grosof",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": null,
+      "title": "Program Manager, Defense Sciences Office",
+      "primary_org": "DARPA",
+      "aggregate_stance_score": null
+    },
+    {
+      "entity_id": 96,
+      "name": "Bernie Sanders",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "U.S. Senator from Vermont, Independent (Senior Senator)",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 6
+    },
+    {
+      "entity_id": 1426,
+      "name": "Bill Cassidy",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "U.S. Senator (R-LA); Chair, HELP Committee",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 98,
+      "name": "Brian Deese",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "fmr Director of the National Economic Council (Biden Administration)",
+      "primary_org": "White House",
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 7,
+      "name": "Brian Schatz",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "U.S. Senator, HI - Senior Senator",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 45,
+      "name": "Bruce Reed",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "Head of AI, Common Sense Media; Former White House Deputy Chief of Staff for Policy",
+      "primary_org": "Common Sense Media",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1812,
+      "name": "Cameron Stanley",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": null,
+      "title": "Chief Digital and AI Officer, U.S. Department of Defense",
+      "primary_org": "Department of Defense",
+      "aggregate_stance_score": null
+    },
+    {
+      "entity_id": 726,
+      "name": "Carlos De La Cruz",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "Candidate, TX House District 35",
+      "primary_org": "Republican Party",
+      "aggregate_stance_score": null
+    },
+    {
+      "entity_id": 1418,
+      "name": "Catherine Cortez Masto",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "U.S. Senator (D-NV)",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 71,
+      "name": "Chris Coons",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "U.S. Senator from Delaware, Chair of Senate Judiciary Subcommittee on Intellectual Property",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 717,
+      "name": "Chris Gober",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "Candidate, TX House District 10",
+      "primary_org": "Republican Party",
+      "aggregate_stance_score": 2
+    },
+    {
+      "entity_id": 41,
+      "name": "Chris Murphy",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "U.S. Senator from Connecticut (Junior Senator)",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 5
+    },
+    {
+      "entity_id": 2,
+      "name": "Chuck Schumer",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "U.S. Senator, NY; Senate Majority Leader (2021-2025), Senate Minority Leader (2017-2021, 2025-present)",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 1796,
+      "name": "Clare Martorana",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": null,
+      "title": "U.S. Federal Chief Information Officer (appointed 2021)",
+      "primary_org": "Office of Management and Budget",
+      "aggregate_stance_score": null
+    },
+    {
+      "entity_id": 721,
+      "name": "Clay Fuller",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "Candidate, GA House District 14",
+      "primary_org": "Republican Party",
+      "aggregate_stance_score": 2
+    },
+    {
+      "entity_id": 722,
+      "name": "Colin Allred",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "Candidate, TX House District 33",
+      "primary_org": "Democratic Party",
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 24,
+      "name": "Cory Booker",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "U.S. Senator from New Jersey, Senior Senator",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1106,
+      "name": "Cory Gardner",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "President & CEO",
+      "primary_org": "NCTA – The Internet & Television Association",
+      "aggregate_stance_score": null
+    },
+    {
+      "entity_id": 1794,
+      "name": "Craig Martell",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": null,
+      "title": "Former Chief Digital and AI Officer, U.S. Department of Defense (2022–2024)",
+      "primary_org": "Lockheed Martin",
+      "aggregate_stance_score": null
+    },
+    {
+      "entity_id": 32,
+      "name": "Cynthia Lummis",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "U.S. Senator, WY (2021-present)",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 2
+    },
+    {
+      "entity_id": 1411,
+      "name": "Dave McCormick",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "U.S. Senator (R-PA)",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 2
+    },
+    {
+      "entity_id": 42,
+      "name": "David Sacks",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "Former White House AI and Crypto Czar (Jan 2025 - Mar 2026), Co-Chair of President's Council of Advisors on Science and Technology",
+      "primary_org": "President's Council of Advisors on Science and Technology (PCAST)",
+      "aggregate_stance_score": 2
+    },
+    {
+      "entity_id": 1302,
+      "name": "Dick Durbin",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "U.S. Senator (D-IL)",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 114,
+      "name": "Don Beyer",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "U.S. Representative, VA-8; Co-Chair, Congressional AI Caucus",
+      "primary_org": "U.S. House of Representatives",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1103,
+      "name": "Donald Trump",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "45th and 47th President of the United States (2017–2021, 2025–present)",
+      "primary_org": "Trump administration",
+      "aggregate_stance_score": 2
+    },
+    {
+      "entity_id": 1813,
+      "name": "Douglas Matty",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": null,
+      "title": "Former Chief Digital and AI Officer, U.S. Department of Defense (April–December 2025)",
+      "primary_org": "Department of Defense",
+      "aggregate_stance_score": null
+    },
+    {
+      "entity_id": 113,
+      "name": "Ed Markey",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "U.S. Senator from Massachusetts (Junior Senator)",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 6
+    },
+    {
+      "entity_id": 931,
+      "name": "Elham Tabassi",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": null,
+      "title": "Associate Director for Emerging Technologies, Information Technology Laboratory, NIST; Chief AI Advisor and Chief Technologist of the AI Safety Institute",
+      "primary_org": "NIST",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1793,
+      "name": "Elizabeth Kelly",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": null,
+      "title": "Inaugural Director, U.S. AI Safety Institute",
+      "primary_org": "U.S. AI Safety Institute (NIST)",
+      "aggregate_stance_score": null
+    },
+    {
+      "entity_id": 1476,
+      "name": "Elizabeth Warren",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "U.S. Senator, Massachusetts (2013–present)",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 5
+    },
+    {
+      "entity_id": 1465,
+      "name": "Eric Schmitt",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "U.S. Senator (R-MO)",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 2
+    },
+    {
+      "entity_id": 111,
+      "name": "Frank Lucas",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "Chairman, U.S. House Committee on Science, Space and Technology, OK-3",
+      "primary_org": "U.S. House of Representatives",
+      "aggregate_stance_score": 2
+    },
+    {
+      "entity_id": 109,
+      "name": "Gary Peters",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "U.S. Senator from Michigan, Chairman of Senate Homeland Security and Governmental Affairs Committee",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 116,
+      "name": "Gavin Newsom",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "Governor of California",
+      "primary_org": "State of California",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 34,
+      "name": "Gina Raimondo",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "40th Secretary of Commerce (2021-2025)",
+      "primary_org": "Department of Commerce",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1228,
+      "name": "Gordon M. Goldstein",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": null,
+      "title": "Adjunct Senior Fellow",
+      "primary_org": "Council on Foreign Relations",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 89,
+      "name": "Greg Abbott",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "Governor of Texas",
+      "primary_org": "State of Texas",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 724,
+      "name": "Jace Yarbrough",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "Candidate, TX House District 32",
+      "primary_org": "S|L Law PLLC",
+      "aggregate_stance_score": 1
+    },
+    {
+      "entity_id": 81,
+      "name": "Jacky Rosen",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "U.S. Senator from Nevada",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1429,
+      "name": "Jacob Helberg",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "Under Secretary of State for Economic Growth, Energy, and Environment",
+      "primary_org": "Trump administration",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 17,
+      "name": "Jared Polis",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "Governor of Colorado (2019-present), Former U.S. Representative CO-02 (2009-2019)",
+      "primary_org": "State of Colorado",
+      "aggregate_stance_score": null
+    },
+    {
+      "entity_id": 117,
+      "name": "Jay Obernolte",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "U.S. Representative, CA-23, Chairman of House Science Subcommittee on Research and Technology",
+      "primary_org": "U.S. House of Representatives",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1413,
+      "name": "Jeanne Shaheen",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "Former U.S. Senator (D-NH)",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 46,
+      "name": "Jeffrey Kessler",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": null,
+      "title": "Under Secretary of Commerce for Industry and Security",
+      "primary_org": "Department of Commerce",
+      "aggregate_stance_score": 5
+    },
+    {
+      "entity_id": 933,
+      "name": "Jen Easterly",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "Former Director, Cybersecurity and Infrastructure Security Agency (CISA)",
+      "primary_org": "RSAC",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1152,
+      "name": "Jerry McNerney",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "California State Senator (D-SD-5)",
+      "primary_org": "California State Senate",
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 77,
+      "name": "Jerry Moran",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "U.S. Senator, KS (R) - Senior member Commerce Committee, Chair Veterans' Affairs Committee",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 715,
+      "name": "Jesse Jackson Jr.",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "Candidate, IL House District 02",
+      "primary_org": "Democratic Party",
+      "aggregate_stance_score": 1
+    },
+    {
+      "entity_id": 719,
+      "name": "Jessica Steinmann",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "Candidate, TX House District 08",
+      "primary_org": "Republican Party",
+      "aggregate_stance_score": 1
+    },
+    {
+      "entity_id": 1423,
+      "name": "Jim Banks",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "U.S. Senator (R-IN)",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 2
+    },
+    {
+      "entity_id": 1101,
+      "name": "Jim Risch",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "U.S. Senator (Idaho); Chairman, Senate Foreign Relations Committee",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": null
+    },
+    {
+      "entity_id": 1337,
+      "name": "Joanna Rodriguez",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "Communications Director",
+      "primary_org": "National Republican Senatorial Committee",
+      "aggregate_stance_score": 2
+    },
+    {
+      "entity_id": 1376,
+      "name": "Joe Biden",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "46th President of the United States (2021–2025)",
+      "primary_org": "Independent",
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 78,
+      "name": "John Hickenlooper",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "U.S. Senator, CO (Chair, Subcommittee on Consumer Protection, Product Safety, and Data Security)",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1105,
+      "name": "John Kennedy",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "U.S. Senator (R-LA)",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1425,
+      "name": "John Thune",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "Senate Majority Leader (2025–present); U.S. Senator, South Dakota (2005–present)",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 2
+    },
+    {
+      "entity_id": 79,
+      "name": "Jon Husted",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "U.S. Senator from Ohio (2025-present), former Lt. Governor of Ohio (2019-2025)",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 2
+    },
+    {
+      "entity_id": 932,
+      "name": "Jonathan Kanter",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "Assistant Attorney General for the Antitrust Division, Department of Justice (2021-2024); Distinguished Teaching Professor, Washington University Law School",
+      "primary_org": "Washington University School of Law",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 75,
+      "name": "Joni Ernst",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "U.S. Senator, IA (Ranking Member, Senate Armed Services Subcommittee on Emerging Threats and Capabilities)",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1471,
+      "name": "Josh Gottheimer",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "U.S. Representative (D-NJ)",
+      "primary_org": "U.S. House of Representatives",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1422,
+      "name": "Josh Hawley",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "Senator (R-MO)",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 121,
+      "name": "Kathy Hochul",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "Governor of New York State",
+      "primary_org": "State of New York",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1119,
+      "name": "Katie Britt",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "U.S. Senator (R-AL)",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1482,
+      "name": "Ken Buck",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "Former U.S. Representative (R-CO)",
+      "primary_org": "Independent",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 720,
+      "name": "Laurie Buckhout",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "Candidate, NC House District 01",
+      "primary_org": "Republican Party",
+      "aggregate_stance_score": 1
+    },
+    {
+      "entity_id": 930,
+      "name": "Laurie Locascio",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": null,
+      "title": "President and CEO, American National Standards Institute (ANSI); Former Director, National Institute of Standards and Technology (NIST); Former Under Secretary of Commerce for Standards and Techn",
+      "primary_org": "American National Standards Institute (ANSI)",
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 928,
+      "name": "Lina Khan",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "Former Chair, Federal Trade Commission (FTC), 2021-2025",
+      "primary_org": "Columbia Law School",
+      "aggregate_stance_score": 5
+    },
+    {
+      "entity_id": 1440,
+      "name": "Lisa Hansmann",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": null,
+      "title": "Director",
+      "primary_org": "Foundation for American Innovation",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 118,
+      "name": "Lynne Parker",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "Principal Deputy Director of the White House Office of Science and Technology Policy; Executive Director of the President's Council of Advisors on Science and Technology (PCAST)",
+      "primary_org": "White House Office of Science and Technology Policy (OSTP)",
+      "aggregate_stance_score": 2
+    },
+    {
+      "entity_id": 76,
+      "name": "Maggie Hassan",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "U.S. Senator from New Hampshire, Ranking Member of Joint Economic Committee",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1006,
+      "name": "Marco Rubio",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "U.S. Secretary of State (2025-present), Acting National Security Advisor (February-August 2025), Former U.S. Senator from Florida (2011-2025)",
+      "primary_org": "U.S. Department of State",
+      "aggregate_stance_score": 2
+    },
+    {
+      "entity_id": 935,
+      "name": "Margrethe Vestager",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": null,
+      "title": "Former Executive Vice President, European Commission for A Europe Fit for the Digital Age; Former EU Commissioner for Competition",
+      "primary_org": "Technical University of Denmark (DTU)",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 110,
+      "name": "Maria Cantwell",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "U.S. Senator from Washington, Ranking Member of the Senate Committee on Commerce, Science, and Transportation",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 996,
+      "name": "Marietje Schaake",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "International Policy Director, Stanford HAI; Former Member, European Parliament (2009-2019)",
+      "primary_org": "Stanford HAI",
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 1696,
+      "name": "Mark D. Gray",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": null,
+      "title": "Chief Information Officer, Chief Data Officer, and Chief AI Officer",
+      "primary_org": "Federal Trade Commission",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1815,
+      "name": "Mark R. Meador",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": null,
+      "title": "Commissioner, Federal Trade Commission",
+      "primary_org": "Federal Trade Commission",
+      "aggregate_stance_score": null
+    },
+    {
+      "entity_id": 87,
+      "name": "Mark Warner",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "U.S. Senator from Virginia, Vice Chairman of Senate Select Committee on Intelligence",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 11,
+      "name": "Marsha Blackburn",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "U.S. Senator, TN (Senior Senator)",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 5
+    },
+    {
+      "entity_id": 72,
+      "name": "Martin Heinrich",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "U.S. Senator from New Mexico, Founder and Co-Chair of Senate AI Caucus, Member of Senate Intelligence Committee",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1166,
+      "name": "Matt Damschroder",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "Director",
+      "primary_org": "Ohio Department of Job and Family Services",
+      "aggregate_stance_score": 2
+    },
+    {
+      "entity_id": 1430,
+      "name": "Matt Pottinger",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "Chairman, China Program",
+      "primary_org": "Foundation for Defense of Democracies",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1263,
+      "name": "Matt Turek",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": null,
+      "title": "Chief Scientist",
+      "primary_org": "STR",
+      "aggregate_stance_score": null
+    },
+    {
+      "entity_id": 716,
+      "name": "Melissa Bean",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "Candidate, IL House District 08",
+      "primary_org": "Democratic Party",
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 1698,
+      "name": "Melissa Holyoak",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "Former FTC Commissioner",
+      "primary_org": "Independent",
+      "aggregate_stance_score": 2
+    },
+    {
+      "entity_id": 27,
+      "name": "Michael Kratsios",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "Director of Office of Science and Technology Policy and Science Advisor to the President",
+      "primary_org": "White House Office of Science and Technology Policy (OSTP)",
+      "aggregate_stance_score": 2
+    },
+    {
+      "entity_id": 83,
+      "name": "Michael McCaul",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "U.S. Representative, TX-10, Chairman Emeritus House Foreign Affairs Committee",
+      "primary_org": "U.S. House of Representatives",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 108,
+      "name": "Mike Braun",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "Governor of Indiana (2025-present); former U.S. Senator, IN (2019-2025)",
+      "primary_org": "Office of the Governor of Indiana",
+      "aggregate_stance_score": 2
+    },
+    {
+      "entity_id": 1305,
+      "name": "Mike Johnson",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "Speaker of the U.S. House of Representatives (2023–present); U.S. Representative, Louisiana",
+      "primary_org": "U.S. House of Representatives",
+      "aggregate_stance_score": 2
+    },
+    {
+      "entity_id": 68,
+      "name": "Mike Rounds",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "U.S. Senator, SD (Chair, Senate Banking Subcommittee on Securities, Insurance and Investments)",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1304,
+      "name": "Pam Bondi",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "U.S. Attorney General",
+      "primary_org": "Trump administration",
+      "aggregate_stance_score": 2
+    },
+    {
+      "entity_id": 40,
+      "name": "Pete Buttigieg",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "Former United States Secretary of Transportation (2021-2025)",
+      "primary_org": "Independent",
+      "aggregate_stance_score": 6
+    },
+    {
+      "entity_id": 723,
+      "name": "Pete Ricketts",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "Candidate, NE Senate",
+      "primary_org": "Republican Party",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1415,
+      "name": "Peter Welch",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "U.S. Senator (D-VT)",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 1473,
+      "name": "Pramila Jayapal",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "U.S. Representative (D-WA)",
+      "primary_org": "U.S. House of Representatives",
+      "aggregate_stance_score": 5
+    },
+    {
+      "entity_id": 1795,
+      "name": "Radha Plumb",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": null,
+      "title": "Chief Digital and AI Officer, U.S. Department of Defense (appointed 2024)",
+      "primary_org": "Department of Defense",
+      "aggregate_stance_score": null
+    },
+    {
+      "entity_id": 80,
+      "name": "Richard Blumenthal",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "U.S. Senator, CT (Senior Senator, Ranking Member of Veterans' Affairs Committee)",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 5
+    },
+    {
+      "entity_id": 37,
+      "name": "Ro Khanna",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "U.S. Representative, CA-17 (Silicon Valley)",
+      "primary_org": "U.S. House of Representatives",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1414,
+      "name": "Rob Portman",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "Former U.S. Senator (R-OH)",
+      "primary_org": "Independent",
+      "aggregate_stance_score": 2
+    },
+    {
+      "entity_id": 1412,
+      "name": "Roger Wicker",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "U.S. Senator (R-MS); Chairman, Armed Services Committee",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1167,
+      "name": "Ron DeSantis",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "Governor of Florida",
+      "primary_org": "State of Florida",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1005,
+      "name": "Ron Wyden",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "U.S. Senator from Oregon (Democrat), Ranking Member of Senate Finance Committee, Senior Member of Senate Intelligence Committee",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 39,
+      "name": "Saikat Chakrabarti",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "Founder, New Consensus; fmr AOC Chief of Staff; 2026 Congressional Candidate, CA-11",
+      "primary_org": "New Consensus",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 91,
+      "name": "Scott Wiener",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "CA State Senator, District 11 (San Francisco, Broadmoor, Colma, Daly City)",
+      "primary_org": "California State Senate",
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 1424,
+      "name": "Shelley Moore Capito",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "U.S. Senator (R-WV)",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 2
+    },
+    {
+      "entity_id": 1168,
+      "name": "Spencer Cox",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "Governor of Utah",
+      "primary_org": "State of Utah",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 85,
+      "name": "Sriram Krishnan",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "Senior Policy Advisor for Artificial Intelligence, White House Office of Science and Technology Policy",
+      "primary_org": "White House Office of Science and Technology Policy (OSTP)",
+      "aggregate_stance_score": 1
+    },
+    {
+      "entity_id": 934,
+      "name": "Stefano Mazzocchi",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": null,
+      "title": "Chief AI Officer, Department of Commerce",
+      "primary_org": "Department of Commerce",
+      "aggregate_stance_score": null
+    },
+    {
+      "entity_id": 1154,
+      "name": "Steve Padilla",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "California State Senator (D-San Diego, SD-18)",
+      "primary_org": "California State Senate",
+      "aggregate_stance_score": 5
+    },
+    {
+      "entity_id": 1306,
+      "name": "Steve Scalise",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "House Majority Leader (R-LA)",
+      "primary_org": "U.S. House of Representatives",
+      "aggregate_stance_score": 2
+    },
+    {
+      "entity_id": 88,
+      "name": "Suhas Subramanyam",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "U.S. Representative, VA-10",
+      "primary_org": "U.S. House of Representatives",
+      "aggregate_stance_score": 2
+    },
+    {
+      "entity_id": 1474,
+      "name": "Summer Lee",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "U.S. Representative (D-PA)",
+      "primary_org": "U.S. House of Representatives",
+      "aggregate_stance_score": 5
+    },
+    {
+      "entity_id": 1301,
+      "name": "Ted Budd",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "U.S. Senator (R-NC)",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 2
+    },
+    {
+      "entity_id": 82,
+      "name": "Ted Cruz",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "U.S. Senator from Texas, Chairman of Senate Commerce Committee",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 2
+    },
+    {
+      "entity_id": 112,
+      "name": "Ted Lieu",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "U.S. Representative, CA-36th District, Vice Chair of House Democratic Caucus, Co-Chair of House Democratic Commission on AI and the Innovation Economy",
+      "primary_org": "U.S. House of Representatives",
+      "aggregate_stance_score": 6
+    },
+    {
+      "entity_id": 936,
+      "name": "Thierry Breton",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": null,
+      "title": "Former European Commissioner for Internal Market; EU AI Act Architect",
+      "primary_org": "Independent",
+      "aggregate_stance_score": 5
+    },
+    {
+      "entity_id": 1466,
+      "name": "Thom Tillis",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "U.S. Senator (R-NC)",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1153,
+      "name": "Thomas Umberg",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "California State Senator (D-Santa Ana, SD-34); Chair, Senate Judiciary Committee",
+      "primary_org": "California State Senate",
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 73,
+      "name": "Todd Young",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "U.S. Senator (R-IN), member of Senate Commerce Committee",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 2
+    },
+    {
+      "entity_id": 1099,
+      "name": "Tom Cotton",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "U.S. Senator (R-AR)",
+      "primary_org": "United States Senate",
+      "aggregate_stance_score": 2
+    },
+    {
+      "entity_id": 1495,
+      "name": "Tom DiNapoli",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "New York State Comptroller",
+      "primary_org": "New York State",
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 718,
+      "name": "Tom Sell",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "R",
+      "title": "Candidate, TX House District 19",
+      "primary_org": "Republican Party",
+      "aggregate_stance_score": 2
+    },
+    {
+      "entity_id": 714,
+      "name": "Valerie Foushee",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "Candidate, NC House District 04",
+      "primary_org": "U.S. House of Representatives",
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 1156,
+      "name": "William Kimmitt",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": null,
+      "title": "Under Secretary of Commerce for International Trade",
+      "primary_org": "Trump administration",
+      "aggregate_stance_score": 1
+    },
+    {
+      "entity_id": 1472,
+      "name": "Yvette Clarke",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "U.S. Representative (D-NY)",
+      "primary_org": "U.S. House of Representatives",
+      "aggregate_stance_score": 5
+    },
+    {
+      "entity_id": 84,
+      "name": "Zoe Lofgren",
+      "entity_type": "person",
+      "category": "Policymaker",
+      "party": "D",
+      "title": "U.S. Representative (CA-18), Ranking Member of House Science, Space and Technology Committee",
+      "primary_org": "U.S. House of Representatives",
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 905,
+      "name": "ACLU",
+      "entity_type": "organization",
+      "category": "Ethics/Bias/Rights",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1491,
+      "name": "ACM US Technology Policy Committee",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 874,
+      "name": "AFL-CIO",
+      "entity_type": "organization",
+      "category": "Labor/Civil Society",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 173,
+      "name": "AI Now Institute",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 5
+    },
+    {
+      "entity_id": 169,
+      "name": "AI Standards Lab",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 249,
+      "name": "Alex Bores campaign",
+      "entity_type": "organization",
+      "category": "Political Campaign/PAC",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 1017,
+      "name": "Alliance for a Better Future",
+      "entity_type": "organization",
+      "category": "Labor/Civil Society",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1528,
+      "name": "Alliance of Motion Picture and Television Producers",
+      "entity_type": "organization",
+      "category": "Labor/Civil Society",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 2
+    },
+    {
+      "entity_id": 1063,
+      "name": "Amazon Labor Union",
+      "entity_type": "organization",
+      "category": "Labor/Civil Society",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": null
+    },
+    {
+      "entity_id": 268,
+      "name": "American Federation of Teachers",
+      "entity_type": "organization",
+      "category": "Labor/Civil Society",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 228,
+      "name": "Americans for Responsible Innovation (ARI)",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 350,
+      "name": "Association for Long Term Existence and Resilience (ALTER)",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 6
+    },
+    {
+      "entity_id": 233,
+      "name": "Berggruen Institute",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 6
+    },
+    {
+      "entity_id": 1517,
+      "name": "Bipartisan Policy Center",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1455,
+      "name": "British Standards Institute",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 872,
+      "name": "Campaign to Stop Killer Robots",
+      "entity_type": "organization",
+      "category": "Labor/Civil Society",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 6
+    },
+    {
+      "entity_id": 231,
+      "name": "Center for American Progress",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 5
+    },
+    {
+      "entity_id": 907,
+      "name": "Center for Democracy & Technology",
+      "entity_type": "organization",
+      "category": "Ethics/Bias/Rights",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1051,
+      "name": "Center for Humane Technology",
+      "entity_type": "organization",
+      "category": "Ethics/Bias/Rights",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": null
+    },
+    {
+      "entity_id": 291,
+      "name": "Center for Law & AI Risk",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 6
+    },
+    {
+      "entity_id": 131,
+      "name": "Center for Security and Emerging Technology (CSET)",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 293,
+      "name": "Centre for Future Generations",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 230,
+      "name": "Centre for Long-Term Resilience",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 6
+    },
+    {
+      "entity_id": 225,
+      "name": "Centre for the Governance of AI (GovAI)",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 361,
+      "name": "China AI Safety & Development Association (CnAISDA)",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 1062,
+      "name": "Civic Signals",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1371,
+      "name": "Club for Growth Action",
+      "entity_type": "organization",
+      "category": "Political Campaign/PAC",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 1
+    },
+    {
+      "entity_id": 958,
+      "name": "Collective Intelligence Project",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1345,
+      "name": "Colorado AI Policy Work Group",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 1061,
+      "name": "Common Sense Media",
+      "entity_type": "organization",
+      "category": "Ethics/Bias/Rights",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": null
+    },
+    {
+      "entity_id": 246,
+      "name": "ControlAI",
+      "entity_type": "organization",
+      "category": "Labor/Civil Society",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 6
+    },
+    {
+      "entity_id": 1067,
+      "name": "Council on Foreign Relations",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": null
+    },
+    {
+      "entity_id": 875,
+      "name": "DAIR",
+      "entity_type": "organization",
+      "category": "Ethics/Bias/Rights",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 5
+    },
+    {
+      "entity_id": 1052,
+      "name": "DAIR Institute",
+      "entity_type": "organization",
+      "category": "Ethics/Bias/Rights",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": null
+    },
+    {
+      "entity_id": 906,
+      "name": "Data & Society",
+      "entity_type": "organization",
+      "category": "Ethics/Bias/Rights",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 245,
+      "name": "Data Workers' Inquiry",
+      "entity_type": "organization",
+      "category": "Labor/Civil Society",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 5
+    },
+    {
+      "entity_id": 711,
+      "name": "Defending Our Values PAC",
+      "entity_type": "organization",
+      "category": "Political Campaign/PAC",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 1040,
+      "name": "Democratic Party",
+      "entity_type": "organization",
+      "category": "Political Campaign/PAC",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": null
+    },
+    {
+      "entity_id": 1762,
+      "name": "Economic Security Action California",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 5
+    },
+    {
+      "entity_id": 160,
+      "name": "Effective Institutions Project",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 6
+    },
+    {
+      "entity_id": 904,
+      "name": "Electronic Frontier Foundation",
+      "entity_type": "organization",
+      "category": "Ethics/Bias/Rights",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1431,
+      "name": "Encode AI",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 870,
+      "name": "Encode Justice",
+      "entity_type": "organization",
+      "category": "Labor/Civil Society",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 244,
+      "name": "Fairly Trained",
+      "entity_type": "organization",
+      "category": "Labor/Civil Society",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1357,
+      "name": "Federation of American Scientists",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 192,
+      "name": "Foresight Institute",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 229,
+      "name": "Future of Life Institute",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 6
+    },
+    {
+      "entity_id": 294,
+      "name": "Good Ancestors",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 6
+    },
+    {
+      "entity_id": 258,
+      "name": "High Impact Professionals",
+      "entity_type": "organization",
+      "category": "Labor/Civil Society",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": null
+    },
+    {
+      "entity_id": 1522,
+      "name": "Human Rights Data Analysis Group",
+      "entity_type": "organization",
+      "category": "Ethics/Bias/Rights",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 5
+    },
+    {
+      "entity_id": 871,
+      "name": "Human Rights Watch",
+      "entity_type": "organization",
+      "category": "Ethics/Bias/Rights",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 5
+    },
+    {
+      "entity_id": 1016,
+      "name": "Humans First",
+      "entity_type": "organization",
+      "category": "Labor/Civil Society",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 5
+    },
+    {
+      "entity_id": 329,
+      "name": "ILINA Program",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 6
+    },
+    {
+      "entity_id": 1770,
+      "name": "Information Technology Industry Council",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 2
+    },
+    {
+      "entity_id": 429,
+      "name": "Institute for Law & AI (LawAI)",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 712,
+      "name": "Jobs and Democracy PAC",
+      "entity_type": "organization",
+      "category": "Political Campaign/PAC",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 1477,
+      "name": "Lawyers' Committee for Civil Rights Under Law",
+      "entity_type": "organization",
+      "category": "Ethics/Bias/Rights",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 5
+    },
+    {
+      "entity_id": 708,
+      "name": "Leading the Future",
+      "entity_type": "organization",
+      "category": "Political Campaign/PAC",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 2
+    },
+    {
+      "entity_id": 873,
+      "name": "Mozilla Foundation",
+      "entity_type": "organization",
+      "category": "Ethics/Bias/Rights",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1118,
+      "name": "National Republican Senatorial Committee",
+      "entity_type": "organization",
+      "category": "Political Campaign/PAC",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": null
+    },
+    {
+      "entity_id": 1356,
+      "name": "Niskanen Center",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 2
+    },
+    {
+      "entity_id": 314,
+      "name": "Odyssean Institute",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 1618,
+      "name": "Oxford Martin School",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 270,
+      "name": "PauseAI",
+      "entity_type": "organization",
+      "category": "Labor/Civil Society",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 6
+    },
+    {
+      "entity_id": 959,
+      "name": "Plurality Institute",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 317,
+      "name": "Probably Good",
+      "entity_type": "organization",
+      "category": "Labor/Civil Society",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 344,
+      "name": "Public AI Network",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1439,
+      "name": "Public First Action",
+      "entity_type": "organization",
+      "category": "Political Campaign/PAC",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 1018,
+      "name": "QuitGPT",
+      "entity_type": "organization",
+      "category": "Labor/Civil Society",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 5
+    },
+    {
+      "entity_id": 1571,
+      "name": "RAND Center on AI, Security, and Technology",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 152,
+      "name": "RAND Corporation",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 1039,
+      "name": "Republican Party",
+      "entity_type": "organization",
+      "category": "Political Campaign/PAC",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": null
+    },
+    {
+      "entity_id": 312,
+      "name": "Rethink Priorities",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 956,
+      "name": "Roosevelt Institute",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 210,
+      "name": "SAG-AFTRA",
+      "entity_type": "organization",
+      "category": "Labor/Civil Society",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 5
+    },
+    {
+      "entity_id": 1628,
+      "name": "SecureBio",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 6
+    },
+    {
+      "entity_id": 390,
+      "name": "Simon Institute for Longterm Governance",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 1206,
+      "name": "Social Media Victims Law Center",
+      "entity_type": "organization",
+      "category": "Labor/Civil Society",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 5
+    },
+    {
+      "entity_id": 1108,
+      "name": "Special Competitive Studies Project",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": null
+    },
+    {
+      "entity_id": 254,
+      "name": "Stop AI",
+      "entity_type": "organization",
+      "category": "Labor/Civil Society",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 6
+    },
+    {
+      "entity_id": 320,
+      "name": "Successif",
+      "entity_type": "organization",
+      "category": "Labor/Civil Society",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 6
+    },
+    {
+      "entity_id": 1207,
+      "name": "Tech Justice Law Project",
+      "entity_type": "organization",
+      "category": "Labor/Civil Society",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 5
+    },
+    {
+      "entity_id": 296,
+      "name": "The AI Policy Network",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 362,
+      "name": "The AI Whistleblower Initiative (AIWI)",
+      "entity_type": "organization",
+      "category": "Labor/Civil Society",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 6
+    },
+    {
+      "entity_id": 392,
+      "name": "The Future Society",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 3
+    },
+    {
+      "entity_id": 1478,
+      "name": "The Leadership Conference on Civil and Human Rights",
+      "entity_type": "organization",
+      "category": "Ethics/Bias/Rights",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 393,
+      "name": "Vista Institute for AI Policy",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 4
+    },
+    {
+      "entity_id": 1068,
+      "name": "World Economic Forum",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": null
+    },
+    {
+      "entity_id": 135,
+      "name": "Writers Guild of America",
+      "entity_type": "organization",
+      "category": "Labor/Civil Society",
+      "party": null,
+      "title": null,
+      "primary_org": null,
+      "aggregate_stance_score": 3
+    }
+  ]
+}
