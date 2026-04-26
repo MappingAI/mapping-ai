@@ -17,7 +17,7 @@ import { generateMapData, splitMapData } from '../../api/export-map.ts'
 
 async function refreshMapData(sql: NeonQueryFn, bucket: R2Bucket) {
   try {
-    const data = await generateMapData(sql)
+    const data = await generateMapData(sql.query)
     const { skeleton, detail } = splitMapData(data)
 
     // Upload skeleton + detail to R2 in parallel
@@ -111,7 +111,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
       // GET ?action=pending
       if (action === 'pending') {
-        const rows = await sql(
+        const rows = await sql.query(
           `SELECT * FROM submission WHERE entity_id IS NULL AND status = 'pending' ORDER BY id DESC`,
         )
         return jsonResponse({ submissions: rows }, request, 200, corsOptions)
@@ -119,7 +119,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
       // GET ?action=pending_merges
       if (action === 'pending_merges') {
-        const rows = await sql(`
+        const rows = await sql.query(`
           SELECT
             e.*,
             json_agg(
@@ -194,13 +194,13 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
         const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : ''
         const queryStr = `SELECT * FROM ${tableType} ${whereClause} ORDER BY id DESC LIMIT 500`
-        const rows = await sql(queryStr, values)
+        const rows = await sql.query(queryStr, values)
         return jsonResponse({ data: rows, total: rows.length }, request, 200, corsOptions)
       }
 
       // GET ?action=stats
       if (action === 'stats') {
-        const rows = await sql(`
+        const rows = await sql.query(`
           SELECT
             (SELECT json_object_agg(entity_type, cnt) FROM (SELECT entity_type, COUNT(*)::int AS cnt FROM entity WHERE status = 'approved' GROUP BY entity_type) t) AS approved,
             (SELECT json_object_agg(entity_type, cnt) FROM (SELECT entity_type, COUNT(*)::int AS cnt FROM entity WHERE status = 'pending'  GROUP BY entity_type) t) AS pending,
@@ -243,7 +243,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
           return jsonResponse({ error: 'Missing submission_id' }, request, 400, corsOptions)
         }
 
-        const checkRows = await sql(`SELECT id, entity_id FROM submission WHERE id = $1 AND status = 'pending'`, [
+        const checkRows = await sql.query(`SELECT id, entity_id FROM submission WHERE id = $1 AND status = 'pending'`, [
           submission_id,
         ])
         if (checkRows.length === 0) {
@@ -258,7 +258,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
         setClauses.push(`status = $${overrideFields.length + 2}`)
         setClauses.push(`reviewed_at = NOW()`)
         const values = [submission_id, ...overrideFields.map((k) => overrides[k]), 'approved']
-        await sql(`UPDATE submission SET ${setClauses.join(', ')} WHERE id = $1`, values)
+        await sql.query(`UPDATE submission SET ${setClauses.join(', ')} WHERE id = $1`, values)
 
         await refreshMapData(sql, env.DATA_BUCKET)
         return jsonResponse({ success: true, action: 'approved' }, request, 200, corsOptions)
@@ -270,7 +270,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
         if (!submission_id) {
           return jsonResponse({ error: 'Missing submission_id' }, request, 400, corsOptions)
         }
-        await sql(
+        await sql.query(
           `UPDATE submission SET status = 'rejected', reviewed_at = NOW(), resolution_notes = $1
            WHERE id = $2 AND entity_id IS NULL`,
           [resolution_notes || null, submission_id],
@@ -290,7 +290,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
           return jsonResponse({ error: 'Missing submission_id' }, request, 400, corsOptions)
         }
 
-        const subRows = await sql(`SELECT entity_id FROM submission WHERE id = $1 AND status = 'pending'`, [
+        const subRows = await sql.query(`SELECT entity_id FROM submission WHERE id = $1 AND status = 'pending'`, [
           submission_id,
         ])
         if (subRows.length === 0) {
@@ -301,7 +301,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
           return jsonResponse({ error: 'Use action=approve for new entity submissions' }, request, 400, corsOptions)
         }
 
-        const entityRows = await sql(`SELECT * FROM entity WHERE id = $1`, [entityId])
+        const entityRows = await sql.query(`SELECT * FROM entity WHERE id = $1`, [entityId])
         if (entityRows.length === 0) {
           return jsonResponse({ error: 'Entity not found' }, request, 404, corsOptions)
         }
@@ -317,11 +317,11 @@ export const onRequest: PagesFunction<Env> = async (context) => {
           }
           if (updates.length > 0) {
             values.push(entityId)
-            await sql(`UPDATE entity SET ${updates.join(', ')}, updated_at = NOW() WHERE id = $${idx}`, values)
+            await sql.query(`UPDATE entity SET ${updates.join(', ')}, updated_at = NOW() WHERE id = $${idx}`, values)
           }
         }
 
-        await sql(
+        await sql.query(
           `UPDATE submission SET status = 'approved', reviewed_at = NOW(), resolution_notes = $1 WHERE id = $2`,
           [resolution_notes || null, submission_id],
         )
@@ -336,7 +336,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
         if (!submission_id) {
           return jsonResponse({ error: 'Missing submission_id' }, request, 400, corsOptions)
         }
-        await sql(
+        await sql.query(
           `UPDATE submission SET status = 'rejected', reviewed_at = NOW(), resolution_notes = $1 WHERE id = $2`,
           [resolution_notes || null, submission_id],
         )
@@ -363,7 +363,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
           return jsonResponse({ error: 'No valid fields' }, request, 400, corsOptions)
         }
         values.push(entity_id)
-        await sql(`UPDATE entity SET ${updates.join(', ')}, updated_at = NOW() WHERE id = $${idx}`, values)
+        await sql.query(`UPDATE entity SET ${updates.join(', ')}, updated_at = NOW() WHERE id = $${idx}`, values)
         await refreshMapData(sql, env.DATA_BUCKET)
         return jsonResponse({ success: true, action: 'updated' }, request, 200, corsOptions)
       }
@@ -374,7 +374,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
         if (!entity_id) {
           return jsonResponse({ error: 'Missing entity_id' }, request, 400, corsOptions)
         }
-        await sql(`DELETE FROM entity WHERE id = $1`, [entity_id])
+        await sql.query(`DELETE FROM entity WHERE id = $1`, [entity_id])
         await refreshMapData(sql, env.DATA_BUCKET)
         return jsonResponse({ success: true, action: 'deleted' }, request, 200, corsOptions)
       }

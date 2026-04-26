@@ -147,7 +147,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
     if (contributorKey) {
       const keyHash = crypto.createHash('sha256').update(contributorKey).digest('hex')
 
-      const keyRows = await sql(
+      const keyRows = await sql.query(
         'SELECT id, name, daily_limit FROM contributor_keys WHERE key_hash = $1 AND revoked_at IS NULL',
         [keyHash],
       )
@@ -159,7 +159,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
       contributorKeyId = keyRows[0].id as number
       const dailyLimit = (keyRows[0].daily_limit as number) || 20
 
-      const rateRows = await sql(
+      const rateRows = await sql.query(
         `SELECT COUNT(*) AS count FROM submission
          WHERE contributor_key_id = $1 AND submitted_at > NOW() - INTERVAL '24 hours'`,
         [contributorKeyId],
@@ -190,7 +190,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
       ? (data.formatTags as string[]).filter((t) => typeof t === 'string' && t.length > 0)
       : null
 
-    const insertRows = await sql(
+    const insertRows = await sql.query(
       `INSERT INTO submission (
         entity_type, entity_id,
         submitter_email, submitter_relationship, contributor_key_id,

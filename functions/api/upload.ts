@@ -81,7 +81,11 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
     // Update entity in DB
     const sql = getDb(env.DATABASE_URL)
-    await sql(`UPDATE entity SET thumbnail_url = $1 WHERE id = $2 AND entity_type = $3`, [url, entityId, entityType])
+    await sql.query(`UPDATE entity SET thumbnail_url = $1 WHERE id = $2 AND entity_type = $3`, [
+      url,
+      entityId,
+      entityType,
+    ])
 
     return jsonResponse({ success: true, url }, request, 200, corsOptions)
   } catch (error) {

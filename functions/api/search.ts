@@ -108,7 +108,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
       // Suppress unused variable lint — pIdx is kept for clarity if more clauses are added
       void pIdx
 
-      rows = (await sql(
+      rows = (await sql.query(
         `SELECT id, entity_type, name, category, title, primary_org, location,
                 belief_regulatory_stance AS regulatory_stance, 'pending' AS status,
                 resource_title, resource_type, resource_author, resource_category, website, parent_org_id
@@ -120,7 +120,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
         pendingParams,
       )) as SearchRow[]
     } else {
-      rows = (await sql(
+      rows = (await sql.query(
         `SELECT id, entity_type, name, category, title, primary_org, location,
                 belief_regulatory_stance AS regulatory_stance, status,
                 resource_title, resource_type, resource_author, resource_category, website, parent_org_id,

@@ -38,12 +38,12 @@ export const onRequest: PagesFunction<Env> = async (context) => {
     const typeClause = type ? 'AND entity_type = $2' : ''
     const queryParams: string[] = type ? [filterStatus, type] : [filterStatus]
 
-    const entityRows = (await sql(
+    const entityRows = (await sql.query(
       `SELECT * FROM entity WHERE status = $1 ${typeClause} ORDER BY COALESCE(name, resource_title) ASC`,
       queryParams,
     )) as EntityRow[]
 
-    const edgeRows = (await sql(
+    const edgeRows = (await sql.query(
       `SELECT id, source_id, target_id, edge_type, role, is_primary FROM edge ORDER BY id`,
     )) as EdgeRow[]
 
