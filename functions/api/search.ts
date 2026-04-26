@@ -162,7 +162,8 @@ export const onRequest: PagesFunction<Env> = async (context) => {
       client.release()
     }
   } catch (error) {
+    const msg = error instanceof Error ? error.message : String(error)
     console.error('Search error:', error)
-    return jsonResponse({ error: 'Internal server error' }, request, 500)
+    return jsonResponse({ error: 'Internal server error', debug: msg, hasDbUrl: !!env.DATABASE_URL }, request, 500)
   }
 }
