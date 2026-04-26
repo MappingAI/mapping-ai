@@ -27,18 +27,19 @@ Before starting any task in this plan, read these in order:
 
 ## Status summary
 
-| Phase                                    | Status     | PR / Notes                                                                   |
-| ---------------------------------------- | ---------- | ---------------------------------------------------------------------------- |
-| 0: Docs hygiene                          | ✅ Done    | [PR #43](https://github.com/MappingAI/mapping-ai/pull/43), merged 2026-04-21 |
-| 1.1: npm → pnpm                          | ✅ Done    | [PR #44](https://github.com/MappingAI/mapping-ai/pull/44), merged 2026-04-21 |
-| 1.2: Security baseline                   | ⏸ Deferred | Run post-Phase 3 when the target stack is live (more informative baseline)   |
-| 1.3: Reconnaissance doc                  | ⏳ Pending | Can run in parallel with 1.1                                                 |
-| 2.1: Schema + data to Neon               | ⏳ Pending | Prereq: neonctl authed (done), project ID `calm-tree-46517731`               |
-| 2.2: Per-PR Neon branch automation       | ⏳ Pending | Depends on 2.1                                                               |
-| 3.0: TanStack Start map spike            | ⏳ Pending | Throwaway spike. Decision gate for Phase 3+                                  |
-| 3.1–3.10: Full TanStack Start migration  | ⏳ Pending | Gated on 3.0 outcome                                                         |
-| 4.x: End-to-end preview deploys          | ⏳ Pending | Depends on Phase 2 + 3                                                       |
-| 5.x: Tech debt (pending IDs, analytics…) | ⏳ Pending | Post-cutover. Not blocking.                                                  |
+| Phase                                    | Status     | PR / Notes                                                                                            |
+| ---------------------------------------- | ---------- | ----------------------------------------------------------------------------------------------------- |
+| 0: Docs hygiene                          | ✅ Done    | [PR #43](https://github.com/MappingAI/mapping-ai/pull/43), merged 2026-04-21                          |
+| 1.1: npm → pnpm                          | ✅ Done    | [PR #44](https://github.com/MappingAI/mapping-ai/pull/44), merged 2026-04-21                          |
+| 1.2: Security baseline                   | ⏸ Deferred | Run post-Phase 3 when the target stack is live (more informative baseline)                            |
+| 1.3: Reconnaissance doc                  | ⏳ Pending | Can run in parallel with 1.1                                                                          |
+| 2.0: R2 bucket + Pages Function          | ✅ Done    | [PR #51](https://github.com/MappingAI/mapping-ai/pull/51), branch `feat/crosspartisan-enrichment`     |
+| 2.1: Schema + data to Neon               | 🟡 Active  | Neon `claims-pilot` branch has full data. Schema diff audited 2026-04-26. See Phase 2.1 details below |
+| 2.2: Per-PR Neon branch automation       | ⏳ Pending | Depends on 2.1                                                                                        |
+| 3.0: TanStack Start map spike            | ⏳ Pending | Throwaway spike. Decision gate for Phase 3+                                                           |
+| 3.1–3.10: Full TanStack Start migration  | ⏳ Pending | Gated on 3.0 outcome                                                                                  |
+| 4.x: End-to-end preview deploys          | ⏳ Pending | Depends on Phase 2 + 3                                                                                |
+| 5.x: Tech debt (pending IDs, analytics…) | ⏳ Pending | Post-cutover. Not blocking.                                                                           |
 
 Legend: ✅ done, 🟡 active, ⏳ pending, ⏸ deferred.
 
@@ -118,24 +119,124 @@ Investigation to surface gaps before later phases depend on assumptions. Pure re
 
 ---
 
-## Phase 2: Neon migration
+## Phase 2: Neon + R2 migration
 
 Prereq: `neonctl` authenticated on Anushree's machine (done 2026-04-21). Project `calm-tree-46517731` in `aws-us-east-1`. See `memory/neon_project.md`.
 
+### 2.0 R2 bucket + Pages Function ✅ DONE 2026-04-26
+
+Shipped in [PR #51](https://github.com/MappingAI/mapping-ai/pull/51) on branch `feat/crosspartisan-enrichment`.
+
+- [x] Create R2 bucket `mapping-ai-data` via `wrangler r2 bucket create`
+- [x] Enable public `r2.dev` URL for initial testing, then disable it
+- [x] Set CORS rules for `r2.dev` (later removed when public access disabled)
+- [x] Create `functions/data/[file].ts` Pages Function to proxy R2 objects through the Pages domain
+- [x] Allowlist: `claims-detail.json`, `agi-definitions.json` (add more as needed)
+- [x] Cache-Control: `public, max-age=300, s-maxage=3600` (5 min browser, 1 hour edge)
+- [x] Add `wrangler.toml` with R2 binding (`DATA_BUCKET` -> `mapping-ai-data`)
+- [x] Add R2 binding in Cloudflare Pages dashboard (Settings > Bindings > R2 bucket)
+- [x] Create `scripts/export-claims-data.js` for Neon -> R2 upload pipeline
+- [x] Add `pnpm run db:export-claims` and `pnpm run db:export-claims:upload` npm scripts
+- [x] Gitignore `public/claims-detail.json` and `public/agi-definitions.json`
+- [x] Verify data serves at `/data/claims-detail.json` and `/data/agi-definitions.json` on preview
+
+**R2 bucket details:**
+
+- Bucket: `mapping-ai-data`
+- Public access: Disabled (private bucket, served via Pages Function only)
+- Upload: `pnpm run db:export-claims:upload` (requires `wrangler login`)
+- Files currently stored: `claims-detail.json` (2.1 MB), `agi-definitions.json` (295 KB)
+
+**To add `map-data.json` and `map-detail.json` to R2 (Phase 3.7):**
+
+- Add them to the `ALLOWED_FILES` set in `functions/data/[file].ts`
+- Update the export script or add them to `export-claims-data.js`
+- Update `map.html` to fetch from `/data/map-data.json` instead of relative `/map-data.json`
+
 ### 2.1 Schema and data cutover
 
-- [ ] Dry-run: `pg_dump` from RDS, `pg_restore` to a fresh Neon branch (e.g. `dry-run-2026-MM-DD`). Compare row counts for each of `entity`, `submission`, `edge`. Compare sample rows.
-- [ ] Take a final RDS snapshot via AWS Console or CLI before the real cutover (RDS deletion-protection is already on; belt + suspenders)
-- [ ] Run against a Neon staging branch end-to-end: `DATABASE_URL=<neon-staging> pnpm run dev` (API should come up, forms submit, admin approve triggers map regen)
-- [ ] Real cutover:
-  - [ ] Update GitHub Secrets `DATABASE_URL` to Neon prod URL
-  - [ ] Update Lambda via `sam deploy` with new `DatabaseUrl` parameter (drift-check first per usual rule)
-  - [ ] Update local `.env`s for team members
-- [ ] Smoke test: submit a form from the live site, approve it from admin, verify map regenerates and the entity appears
-- [ ] Keep RDS warm as fallback for at least one week; do not delete the instance until Phase 3.10
-- [ ] Update `docs/architecture/current.md`: Database section flips from RDS to Neon (with cutover date). The host identifier in the doc changes.
-- [ ] Update `docs/architecture/target.md`: mark Database row as **shipped**.
-- [ ] Update `memory/credentials.md`: note the Neon cutover so future sessions know RDS is fallback only.
+**Schema audit completed 2026-04-26.** Findings from comparing `scripts/migrate.js` (RDS schema) against live Neon `claims-pilot` branch:
+
+**Neon has everything RDS has, plus:**
+
+- Two extra tables: `claim` (19 cols), `source` (11 cols) for the claims pipeline
+- Six extra entity columns: `qa_approved`, `importance`, `notes_confidence`, `notes_sources`, `enrichment_version`, `notes_v1`
+- Four extra edge columns: `confidence`, `start_date`, `end_date`, `source_url`
+- One extra submission column: `affiliated_org_ids` (JSONB)
+- All triggers and functions from RDS exist on Neon (verified: `trg_entity_search`, `trg_before_submission_update`, `trg_after_submission_update`, all 4 functions)
+- Three orphaned legacy functions on Neon (safe to drop): `update_people_search`, `update_organizations_search`, `update_resources_search`
+
+**Default value difference:** `entity.status` defaults to `'approved'` on Neon vs `'pending'` on RDS. The `before_submission_update()` trigger sets status explicitly, so this only affects direct INSERTs outside the submission flow.
+
+**`qa_approved` column:** Exists on Neon (BOOLEAN default false). The RDS `migrate.js` references it in the `before_submission_update()` trigger INSERT but never creates it as a column. It was likely added via ad-hoc ALTER TABLE on RDS. `api/export-map.js` filters on `qa_approved = true` (lines 118, 127-128).
+
+**Type widening:** Neon widened most VARCHAR columns to TEXT. Functionally compatible and preferable in PostgreSQL.
+
+**What must happen before DB cutover:**
+
+- [ ] Fresh data sync: `pg_dump` from RDS, `pg_restore` to Neon main branch (not the `claims-pilot` branch). Compare row counts for `entity`, `submission`, `edge`.
+- [ ] Verify `qa_approved` column exists and is populated correctly on the target Neon branch (it does on `claims-pilot`)
+- [ ] Verify all 4 triggers fire correctly: submit a test entity, approve it, confirm entity is created and scores recalculated
+- [ ] Verify `entity.status` default won't cause issues (submission flow always sets it explicitly)
+- [ ] Drop orphaned functions: `update_people_search`, `update_organizations_search`, `update_resources_search`
+- [ ] Take a final RDS snapshot via AWS Console or CLI before cutover
+
+**Testing on this branch (before merging to main):**
+
+- [ ] Run `DATABASE_URL=<neon-pilot> pnpm run dev` locally
+- [ ] Test form submission flow: submit from `/contribute`, verify INSERT into `submission` table
+- [ ] Test admin flow: approve submission, verify entity created via trigger, scores recalculated
+- [ ] Test search: verify full-text search works against Neon
+- [ ] Test `pnpm run db:export-map`: verify `map-data.json` generates correctly from Neon
+- [ ] Test `pnpm run db:export-claims:upload`: verify claims data exports and uploads to R2
+- [ ] Verify map renders with Neon-sourced data (map.html loads map-data.json + claims-detail.json)
+- [ ] Verify insights page loads crosspartisan viz + AGI definition space from R2
+
+**Production cutover (separate from this branch):**
+
+- [ ] Update GitHub Secrets `DATABASE_URL` to Neon prod URL
+- [ ] Update Lambda via `sam deploy` with new `DatabaseUrl` parameter (drift-check first)
+- [ ] Update local `.env`s for team members
+- [ ] Smoke test: submit, approve, verify map regenerates
+- [ ] Keep RDS warm as fallback for one week minimum
+- [ ] Update `docs/architecture/current.md`: Database section flips to Neon
+- [ ] Update `docs/architecture/target.md`: mark Database row as **shipped**
+- [ ] Update `memory/credentials.md`: note Neon cutover
+
+**API endpoint migration (Lambda -> Pages Functions):**
+
+Currently all 6 API endpoints run as Lambda functions. For a complete migration:
+
+| Endpoint             | Lambda handler         | Pages Function path              | Writes to              | Reads from               | Side effects                                            |
+| -------------------- | ---------------------- | -------------------------------- | ---------------------- | ------------------------ | ------------------------------------------------------- |
+| POST /submit         | api/submit.js          | functions/api/submit.ts          | submission             | contributor_keys         | LLM review (fire-and-forget)                            |
+| GET /search          | api/search.js          | functions/api/search.ts          | (none)                 | entity (full-text)       | (none)                                                  |
+| GET /semantic-search | api/semantic-search.js | functions/api/semantic-search.ts | (none)                 | entity                   | Anthropic API call                                      |
+| GET/POST /admin      | api/admin.js           | functions/api/admin.ts           | submission, entity     | entity, edge, submission | S3 upload -> R2, CloudFront invalidation -> cache purge |
+| POST /upload         | api/upload.js          | functions/api/upload.ts          | entity (thumbnail_url) | (none)                   | S3 upload -> R2                                         |
+| GET /submissions     | api/submissions.js     | functions/api/submissions.ts     | (none)                 | entity, edge             | (none)                                                  |
+
+The admin and upload endpoints need the most work because they currently use `@aws-sdk/client-s3` and `@aws-sdk/client-cloudfront`. These would be replaced with R2 bucket bindings and Cloudflare Cache Purge API.
+
+**Secrets that need updating:**
+
+| Current secret               | Where used                             | New value                            |
+| ---------------------------- | -------------------------------------- | ------------------------------------ |
+| `DATABASE_URL`               | GitHub Actions, Lambda env, local .env | Neon prod URL                        |
+| `AWS_ACCESS_KEY_ID`          | GitHub Actions (S3 sync, CloudFront)   | Remove (use wrangler deploy instead) |
+| `AWS_SECRET_ACCESS_KEY`      | GitHub Actions                         | Remove                               |
+| `S3_BUCKET_NAME`             | GitHub Actions (deploy.yml)            | Remove (R2 via Pages Function)       |
+| `CLOUDFRONT_DISTRIBUTION_ID` | GitHub Actions, Lambda env             | Remove (Cloudflare CDN purge)        |
+| `ADMIN_KEY`                  | Lambda env, GitHub Actions             | Keep (Cloudflare Pages env)          |
+| `ANTHROPIC_API_KEY`          | Lambda env                             | Keep (Cloudflare Pages env)          |
+| `SITE_PASSWORD`              | GitHub Actions                         | Keep (Cloudflare Pages env)          |
+| `CF_ANALYTICS_TOKEN`         | GitHub Actions                         | Keep                                 |
+| (new) `VOYAGE_API_KEY`       | Scripts only                           | Add to GitHub Secrets                |
+| (new) `R2_BUCKET_NAME`       | wrangler.toml, scripts                 | `mapping-ai-data`                    |
+
+**GitHub Actions workflow changes:**
+
+The current `deploy.yml` does: build > verify DB schema > export map-data > inject secrets > S3 sync > CloudFront invalidation > smoke test. For the Cloudflare migration, this becomes: build > verify DB schema > export map-data + claims-data > upload to R2 > wrangler pages deploy > smoke test. The S3 sync, CloudFront invalidation, and AWS credential steps are removed.
 
 ### 2.2 Per-PR Neon branch automation
 
@@ -204,15 +305,17 @@ Proceed to 3.1+ only after the spike is green.
 - [ ] `/admin` → server route; preserve `X-Admin-Key` auth and the side effect that approve/merge/delete regenerate `map-data.json`
 - [ ] `/upload` → server route; destination is now R2 (see 3.7)
 
-### 3.7 R2 migration
+### 3.7 R2 migration (partially done via Phase 2.0)
 
-- [ ] Create an R2 bucket for static data (`map-data.json`, `map-detail.json`) and thumbnails
-- [ ] Set up custom domain / Worker routing so R2 is reachable at `mapping-ai.org/thumbnails/...` and `mapping-ai.org/map-data.json` (preserves the "never hardcode CDN subdomain" rule from the thumbnail post-mortem)
-- [ ] Script: sync thumbnails from S3 to R2 preserving keys
+- [x] Create R2 bucket `mapping-ai-data` for static data
+- [x] Set up Pages Function routing so R2 is reachable at `mapping-ai.org/data/...` (preserves same-origin fetch, no public bucket URL)
+- [x] Upload pipeline: `pnpm run db:export-claims:upload` generates from Neon + uploads to R2 via wrangler
+- [x] CORS disabled (not needed, same-origin via Pages Function)
+- [ ] Add `map-data.json`, `map-detail.json` to R2 (currently served from S3/CloudFront build pipeline; add to `ALLOWED_FILES` in `functions/data/[file].ts`)
+- [ ] Script: sync thumbnails from S3 to R2 preserving keys (or regenerate via `cache-thumbnails.js`)
 - [ ] Update `scripts/cache-thumbnails.js` to write to R2
-- [ ] Update `/upload` server route to write to R2
-- [ ] Update map-data.json upload target to R2 in the deploy flow
-- [ ] Frontend fetch URLs stay unchanged because we preserved `mapping-ai.org` as the alias
+- [ ] Update `/upload` route to write to R2 instead of S3
+- [ ] Frontend fetch URLs stay unchanged because Pages Function serves at `/data/`
 
 ### 3.8 CSP, security headers, URL rewrites
 
@@ -359,15 +462,18 @@ At `~/.claude/projects/<slug>/memory/`:
 
 ## Risk register
 
-| Risk                                                   | Phase    | Mitigation                                                                                 |
-| ------------------------------------------------------ | -------- | ------------------------------------------------------------------------------------------ |
-| TanStack Start can't handle D3 + Canvas 2D map cleanly | 3.0      | Throwaway spike first. Fail fast. Decision gate before committing to 3.1+.                 |
-| SAM drift during migration window                      | 2.x, 3.x | Established rule: never `sam deploy` without drift check. Obsolete after 3.9.              |
-| RDS → Neon data divergence                             | 2.1      | pg_dump row-count comparison + staging branch verification before prod cutover.            |
-| R2 + Worker URL pattern breaks CSP or thumbnail fetch  | 3.7, 3.8 | Byte-compare CSP headers before and after. Test mapping-ai.org/thumbnails/ explicitly.     |
-| OpenAI contractor blocked on stale docs mid-migration  | ongoing  | `current.md` is authoritative; target.md shows what is shipped. CLAUDE.md asserts neither. |
-| Phase 3 scope explosion                                | 3.x      | Spike (3.0) first. Per-page PRs (3.2, 3.3, 3.4, 3.5, 3.6). Halt and re-plan if >3 days.    |
-| Branch protection bypassed carelessly via --admin      | any      | Only use --admin when user explicitly says merge. Never for code PRs without review.       |
+| Risk                                                   | Phase    | Mitigation                                                                                         |
+| ------------------------------------------------------ | -------- | -------------------------------------------------------------------------------------------------- |
+| TanStack Start can't handle D3 + Canvas 2D map cleanly | 3.0      | Throwaway spike first. Fail fast. Decision gate before committing to 3.1+.                         |
+| SAM drift during migration window                      | 2.x, 3.x | Established rule: never `sam deploy` without drift check. Obsolete after 3.9.                      |
+| RDS → Neon data divergence                             | 2.1      | pg_dump row-count comparison + staging branch verification before prod cutover.                    |
+| R2 + Worker URL pattern breaks CSP or thumbnail fetch  | 3.7, 3.8 | Byte-compare CSP headers before and after. Test mapping-ai.org/thumbnails/ explicitly.             |
+| OpenAI contractor blocked on stale docs mid-migration  | ongoing  | `current.md` is authoritative; target.md shows what is shipped. CLAUDE.md asserts neither.         |
+| Phase 3 scope explosion                                | 3.x      | Spike (3.0) first. Per-page PRs (3.2, 3.3, 3.4, 3.5, 3.6). Halt and re-plan if >3 days.            |
+| Branch protection bypassed carelessly via --admin      | any      | Only use --admin when user explicitly says merge. Never for code PRs without review.               |
+| entity.status default mismatch (pending vs approved)   | 2.1      | Submission flow always sets status explicitly. Direct INSERTs outside the flow need to set status. |
+| qa_approved column missing from migrate.js             | 2.1      | Column exists on Neon, used by export-map.js. Add to migrate.js or verify it exists on target.     |
+| claims-detail.json stale after enrichment              | ongoing  | Run `pnpm run db:export-claims:upload` after any enrichment run to sync R2.                        |
 
 ---
 
@@ -386,3 +492,5 @@ Resolve before or during the relevant phase; capturing here so they don't get lo
 
 - **2026-04-21:** Plan created. Phase 0 marked complete (PR #43 merged). Next up: 1.1 pnpm migration.
 - **2026-04-21:** Phase 1.1 (npm → pnpm) shipped in PR #44. Target.md Package manager row marked shipped. Workshop docs, CI workflows, and build-preview.sh all migrated. Cloudflare Pages build command updated in dashboard. Next up: 1.3 reconnaissance doc, or Phase 2 (Neon migration).
+- **2026-04-26:** Phase 2.0 (R2 bucket + Pages Function) completed in PR #51. R2 bucket `mapping-ai-data` created, Pages Function at `functions/data/[file].ts` serves files through the Pages domain with CDN caching. Public bucket URL disabled. Upload pipeline: `pnpm run db:export-claims:upload`. Files served: `claims-detail.json` (2.1 MB, 3,779 claims), `agi-definitions.json` (295 KB, 240 entities with Voyage AI embeddings + UMAP + Claude clustering). Dashboard binding `DATA_BUCKET` -> `mapping-ai-data` configured.
+- **2026-04-26:** Phase 2.1 schema audit completed. Neon `claims-pilot` branch has all RDS tables, triggers, and functions plus extra tables (`claim`, `source`) and columns (`qa_approved`, `importance`, etc.). Default value difference on `entity.status` documented. Full testing checklist added to plan. API endpoint migration table added with per-endpoint dependencies. Secrets update table added.
