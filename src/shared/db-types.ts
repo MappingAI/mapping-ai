@@ -36,6 +36,13 @@ export interface DbEntityRow {
   resource_year: string | null
   resource_key_argument: string | null
 
+  // Resource tagging + advocated beliefs
+  topic_tags: string[] | null
+  format_tags: string[] | null
+  advocated_stance: string | null
+  advocated_timeline: string | null
+  advocated_risk: string | null
+
   // Shared
   location: string | null
   influence_type: string | null
