@@ -192,30 +192,30 @@ function ClusterMapView({
     container.innerHTML = ''
 
     const W = container.clientWidth || 700
-    const H = Math.max(500, W * 0.75)
-    const pad = 60
-
-    const svg = d3.select(container).append('svg').attr('viewBox', `0 0 ${W} ${H}`).attr('width', W).attr('height', H)
-
     const clusters = data.clusters || []
+
+    // Layout in a virtual coordinate space first, then fit to container
     const cxExtent = d3.extent(clusters, (c: ClusterInfo & { cx?: number }) => c.cx ?? 0) as [number, number]
     const cyExtent = d3.extent(clusters, (c: ClusterInfo & { cy?: number }) => c.cy ?? 0) as [number, number]
 
+    // Map cluster centers to a working space with generous room
+    const workW = 800
+    const workPad = 120
     const xScale = d3
       .scaleLinear()
       .domain([cxExtent[0] - 1, cxExtent[1] + 1])
-      .range([pad + 40, W - pad - 40])
+      .range([workPad, workW - workPad])
+    const workH = 600
     const yScale = d3
       .scaleLinear()
       .domain([cyExtent[0] - 1, cyExtent[1] + 1])
-      .range([H - pad, pad])
+      .range([workH - workPad, workPad])
 
     const clusterCenters = new Map<string, { x: number; y: number; count: number }>()
     clusters.forEach((c: ClusterInfo & { cx?: number; cy?: number }) => {
       clusterCenters.set(c.id, { x: xScale(c.cx ?? 0), y: yScale(c.cy ?? 0), count: c.count })
     })
 
-    // Build nodes with initial position near cluster center
     const nodes = data.points
       .filter((p) => p.cluster_id && clusterCenters.has(p.cluster_id))
       .map((p) => {
@@ -225,21 +225,46 @@ function ClusterMapView({
         return { ...p, x: center.x + Math.cos(angle) * r, y: center.y + Math.sin(angle) * r }
       })
 
-    // Force simulation: attract to cluster center, repel from each other
     const sim = d3
       .forceSimulation(nodes)
       .force(
         'x',
-        d3.forceX((d: AgiPoint & { cluster_id: string }) => clusterCenters.get(d.cluster_id)?.x ?? W / 2).strength(0.3),
+        d3
+          .forceX((d: AgiPoint & { cluster_id: string }) => clusterCenters.get(d.cluster_id)?.x ?? workW / 2)
+          .strength(0.3),
       )
       .force(
         'y',
-        d3.forceY((d: AgiPoint & { cluster_id: string }) => clusterCenters.get(d.cluster_id)?.y ?? H / 2).strength(0.3),
+        d3
+          .forceY((d: AgiPoint & { cluster_id: string }) => clusterCenters.get(d.cluster_id)?.y ?? workH / 2)
+          .strength(0.3),
       )
       .force('collide', d3.forceCollide(6))
       .force('charge', d3.forceManyBody().strength(-2))
       .stop()
     for (let i = 0; i < 200; i++) sim.tick()
+
+    // Compute actual bounds of all nodes
+    const nodeMinX = d3.min(nodes, (d: { x: number }) => d.x) - 10
+    const nodeMaxX = d3.max(nodes, (d: { x: number }) => d.x) + 10
+    const nodeMinY = d3.min(nodes, (d: { y: number }) => d.y) - 10
+    const nodeMaxY = d3.max(nodes, (d: { y: number }) => d.y) + 10
+
+    // Add label margin (labels extend ~120px from cluster edges)
+    const labelMargin = 130
+    const vbX = nodeMinX - labelMargin
+    const vbY = nodeMinY - 30
+    const vbW = nodeMaxX - nodeMinX + labelMargin * 2
+    const vbH = nodeMaxY - nodeMinY + 60
+    const H = W * (vbH / vbW)
+
+    const svg = d3
+      .select(container)
+      .append('svg')
+      .attr('viewBox', `${vbX} ${vbY} ${vbW} ${vbH}`)
+      .attr('width', W)
+      .attr('height', H)
+      .style('overflow', 'visible')
 
     // Tooltip
     const tipId = '__agi-cluster-map-tip'
@@ -253,24 +278,32 @@ function ClusterMapView({
       document.body.appendChild(tipEl)
     }
 
-    // Cluster labels
+    // Cluster labels: find bounding box of each cluster's nodes, place label outside
     clusters.forEach((c: ClusterInfo & { cx?: number; cy?: number }) => {
       const center = clusterCenters.get(c.id)
       if (!center) return
-      const cx = W / 2
-      const cy2 = H / 2
-      const dx = center.x - cx
-      const dy = center.y - cy2
-      const dist = Math.sqrt(dx * dx + dy * dy)
-      const labelDist = dist + 50 + Math.sqrt(c.count) * 4
-      const labelX = cx + (dx / (dist || 1)) * labelDist
-      const labelY = cy2 + (dy / (dist || 1)) * labelDist
+      const clusterNodes = nodes.filter((n: AgiPoint) => n.cluster_id === c.id)
+      if (clusterNodes.length === 0) return
+
+      const maxR =
+        d3.max(clusterNodes, (n: { x: number; y: number }) =>
+          Math.sqrt((n.x - center.x) ** 2 + (n.y - center.y) ** 2),
+        ) || 20
+      const midX = (nodeMinX + nodeMaxX) / 2
+      const midY = (nodeMinY + nodeMaxY) / 2
+      const dx = center.x - midX
+      const dy = center.y - midY
+      const dist = Math.sqrt(dx * dx + dy * dy) || 1
+      const labelOffset = maxR + 18
+      const labelX = center.x + (dx / dist) * labelOffset
+      const labelY = center.y + (dy / dist) * labelOffset
 
       svg
         .append('text')
-        .attr('x', Math.max(pad, Math.min(W - pad, labelX)))
-        .attr('y', Math.max(14, Math.min(H - 4, labelY)))
-        .attr('text-anchor', labelX < cx ? 'end' : labelX > cx ? 'start' : 'middle')
+        .attr('x', labelX)
+        .attr('y', labelY)
+        .attr('text-anchor', dx < 0 ? 'end' : dx > 0 ? 'start' : 'middle')
+        .attr('dominant-baseline', dy < 0 ? 'auto' : 'hanging')
         .attr('font-family', "'DM Mono', monospace")
         .attr('font-size', 10)
         .attr('fill', CLUSTER_COLORS[c.id] || '#888')
