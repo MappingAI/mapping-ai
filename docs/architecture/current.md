@@ -51,6 +51,17 @@ This document describes the stack that is actually running behind https://mappin
 - **URL rewrite function:** clean URLs (`/contribute` → `/contribute.html`) via CloudFront Function (cloudfront-js-2.0)
 - **Security headers policy:** CSP, X-Frame-Options, HSTS, X-Content-Type-Options set on distribution
 
+### Claims + enrichment data (Cloudflare R2 + Pages Function)
+
+- **R2 bucket:** `mapping-ai-data` (private, no public URL)
+- **Pages Function:** `functions/data/[file].ts` proxies R2 objects through the Pages domain at `/data/<filename>`
+- **Binding:** `DATA_BUCKET` configured in Cloudflare Pages dashboard (Settings > Bindings)
+- **Allowed files:** `claims-detail.json` (3,779 claims across 779 entities), `agi-definitions.json` (240 AGI definitions with Voyage AI embeddings + UMAP + Claude clustering)
+- **Cache:** `Cache-Control: public, max-age=300, s-maxage=3600` (5 min browser, 1 hour edge)
+- **Upload:** `pnpm run db:export-claims:upload` generates from Neon DB and uploads via S3-compatible API using `R2_ACCESS_KEY_ID` + `R2_SECRET_ACCESS_KEY`
+- **Dual serving:** Files also uploaded to S3 under `data/` prefix for CloudFront serving (stopgap until full migration to Cloudflare Pages)
+- **Source DB:** Neon `claims-pilot` branch (same entity IDs as RDS prod)
+
 ### Compute (AWS API Gateway HTTP API + Lambda)
 
 - **Base URL:** `https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com`

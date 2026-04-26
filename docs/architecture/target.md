@@ -28,20 +28,20 @@ This document describes where the stack is heading. Everything here is **not yet
 
 ## Status table
 
-| Area                | Current                          | Target                                              | Phase                     |
-| ------------------- | -------------------------------- | --------------------------------------------------- | ------------------------- |
-| **Package manager** | **pnpm (shipped)**               | pnpm                                                | **Phase 1 ✅ 2026-04-21** |
-| Database            | AWS RDS Postgres 17              | Neon Postgres (+ preview branches)                  | Phase 2                   |
-| Static storage      | AWS S3                           | Cloudflare R2                                       | Phase 2 or 3              |
-| CDN                 | AWS CloudFront                   | Cloudflare (Workers + R2)                           | Phase 3                   |
-| Compute             | AWS Lambda + API Gateway (6 fns) | TanStack Start server routes                        | Phase 3                   |
-| Frontend build      | Vite 8 MPA                       | TanStack Start                                      | Phase 3                   |
-| Map page            | Inline HTML + D3 + Canvas        | Client-rendered React component                     | Phase 3                   |
-| IaC                 | AWS SAM                          | `wrangler.toml`                                     | Phase 3                   |
-| Deploy trigger      | push to main → GitHub Actions    | push to main → `wrangler deploy` via GitHub Actions | Phase 3                   |
-| DNS                 | Cloudflare (DNS-only)            | Cloudflare (Workers-aware)                          | Phase 3                   |
-| Analytics           | Cloudflare Web Analytics         | Cloudflare Web Analytics (unchanged for now)        | (none)                    |
-| Secrets             | GitHub Secrets + Lambda env      | Cloudflare Workers secrets + GitHub Secrets         | Phase 3                   |
+| Area                | Current                              | Target                                              | Phase                               |
+| ------------------- | ------------------------------------ | --------------------------------------------------- | ----------------------------------- |
+| **Package manager** | **pnpm (shipped)**                   | pnpm                                                | **Phase 1 ✅ 2026-04-21**           |
+| Database            | AWS RDS Postgres 17                  | Neon Postgres (+ preview branches)                  | Phase 2                             |
+| Static storage      | AWS S3 + **Cloudflare R2 (partial)** | Cloudflare R2                                       | **Phase 2 (partial) ✅ 2026-04-26** |
+| CDN                 | AWS CloudFront                       | Cloudflare (Workers + R2)                           | Phase 3                             |
+| Compute             | AWS Lambda + API Gateway (6 fns)     | TanStack Start server routes                        | Phase 3                             |
+| Frontend build      | Vite 8 MPA                           | TanStack Start                                      | Phase 3                             |
+| Map page            | Inline HTML + D3 + Canvas            | Client-rendered React component                     | Phase 3                             |
+| IaC                 | AWS SAM                              | `wrangler.toml`                                     | Phase 3                             |
+| Deploy trigger      | push to main → GitHub Actions        | push to main → `wrangler deploy` via GitHub Actions | Phase 3                             |
+| DNS                 | Cloudflare (DNS-only)                | Cloudflare (Workers-aware)                          | Phase 3                             |
+| Analytics           | Cloudflare Web Analytics             | Cloudflare Web Analytics (unchanged for now)        | (none)                              |
+| Secrets             | GitHub Secrets + Lambda env          | Cloudflare Workers secrets + GitHub Secrets         | Phase 3                             |
 
 Shipped rows get marked in bold and linked to the PR that delivered them. Rows stay in this table after shipping so the "before/after" contrast remains explicit.
 
