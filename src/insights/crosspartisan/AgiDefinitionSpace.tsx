@@ -178,10 +178,12 @@ function getPointColor(d: AgiPoint, colorMode: ColorMode): string {
 function ClusterMapView({
   data,
   colorMode,
+  hoveredCategory,
   onSelect,
 }: {
   data: AgiData
   colorMode: ColorMode
+  hoveredCategory: string | null
   onSelect: (p: AgiPoint) => void
 }) {
   const ref = useRef<HTMLDivElement>(null)
@@ -327,7 +329,9 @@ function ClusterMapView({
       .attr('cy', (d: { y: number }) => d.y)
       .attr('r', 5)
       .attr('fill', (d: AgiPoint) => getPointColor(d, colorMode))
-      .attr('opacity', 0.85)
+      .attr('opacity', (d: AgiPoint) =>
+        colorMode === 'category' && hoveredCategory && d.category !== hoveredCategory ? 0.15 : 0.85,
+      )
       .attr('stroke', '#fff')
       .attr('stroke-width', 1)
       .style('cursor', 'pointer')
@@ -364,7 +368,7 @@ function ClusterMapView({
         if (tipEl) tipEl.style.opacity = '0'
         onSelect(d)
       })
-  }, [data, colorMode, onSelect])
+  }, [data, colorMode, hoveredCategory, onSelect])
 
   return <div ref={ref} />
 }
@@ -572,7 +576,12 @@ export function AgiDefinitionSpace() {
       </div>
 
       {viewMode === 'map' ? (
-        <ClusterMapView data={data} colorMode={colorMode} onSelect={setSelectedPoint} />
+        <ClusterMapView
+          data={data}
+          colorMode={colorMode}
+          hoveredCategory={hoveredCategory}
+          onSelect={setSelectedPoint}
+        />
       ) : viewMode === 'clusters' ? (
         <ClusterView data={data} onSelect={setSelectedPoint} />
       ) : (

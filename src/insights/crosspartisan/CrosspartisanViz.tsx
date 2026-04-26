@@ -33,18 +33,18 @@ interface TooltipShim {
   hide: () => void
 }
 
+let _tooltipEl: HTMLDivElement | null = null
+let _tooltipApi: TooltipShim | null = null
+
 function makeTooltip(): TooltipShim {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const w = window as any
-  const ref: HTMLDivElement | null = w.__cpTooltip ?? null
-  if (ref) return w.__cpTooltipApi
+  if (_tooltipEl && _tooltipApi) return _tooltipApi
   const el = document.createElement('div')
   el.className =
     'fixed bg-white border border-[#bbb] rounded px-3 py-2 font-mono text-[11px] text-[#1a1a1a] pointer-events-none z-[9999] max-w-[280px] leading-[1.4]'
   el.style.cssText = 'box-shadow: 0 2px 8px rgba(0,0,0,0.08); opacity: 0; left: 0; top: 0;'
   document.body.appendChild(el)
-  w.__cpTooltip = el
-  const api: TooltipShim = {
+  _tooltipEl = el
+  _tooltipApi = {
     show: (evt, html) => {
       el.innerHTML = html
       el.style.left = evt.clientX + 12 + 'px'
@@ -55,8 +55,7 @@ function makeTooltip(): TooltipShim {
       el.style.opacity = '0'
     },
   }
-  w.__cpTooltipApi = api
-  return api
+  return _tooltipApi
 }
 
 function entityTooltipHtml(e: CrosspartisanEntity): string {
@@ -91,9 +90,7 @@ function dotColor(e: { entity_type: string; party: string | null }): string {
 }
 
 function emitEntitySelect(entityId: number) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const tip = (window as any).__cpTooltip as HTMLDivElement | null
-  if (tip) tip.style.opacity = '0'
+  if (_tooltipEl) _tooltipEl.style.opacity = '0'
   window.dispatchEvent(new CustomEvent('cp-entity-select', { detail: entityId }))
 }
 
@@ -151,9 +148,7 @@ function EntityDetailPanel({ entityId, onClose }: { entityId: number; onClose: (
           : entity.category
 
   const handleClose = () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const tip = (window as any).__cpTooltip as HTMLDivElement | null
-    if (tip) tip.style.opacity = '0'
+    if (_tooltipEl) _tooltipEl.style.opacity = '0'
     onClose()
   }
 
