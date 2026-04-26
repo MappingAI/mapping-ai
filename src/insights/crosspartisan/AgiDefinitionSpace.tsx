@@ -191,6 +191,10 @@ function ClusterMapView({
     const container = ref.current
     container.innerHTML = ''
 
+    // Hide any stale tooltip from previous render
+    const staleTip = document.getElementById('__agi-cluster-map-tip')
+    if (staleTip) staleTip.style.opacity = '0'
+
     const W = container.clientWidth || 700
     const clusters = data.clusters || []
 
@@ -434,6 +438,9 @@ export function AgiDefinitionSpace() {
     if (!ref.current || !data) return
     const container = ref.current
     container.innerHTML = ''
+
+    const staleTip = document.getElementById('__agi-def-tip')
+    if (staleTip) staleTip.style.opacity = '0'
 
     const W = container.clientWidth || 700
     const H = Math.max(400, W * 0.65)
