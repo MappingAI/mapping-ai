@@ -143,7 +143,7 @@ async function searchPolicyArea(personName, areaId) {
   }
 }
 
-async function extractClaims(personName, personId, party, title, searchResults) {
+async function extractClaims(personName, personId, party, title, searchResults, sourceRegistry) {
   if (searchResults.length === 0) return []
 
   const sourcesText = searchResults
@@ -174,48 +174,56 @@ ${sourcesText}`
     const raw = JSON.parse(jsonMatch[0])
     return raw
       .filter((c) => c.source_url && c.quote && c.policy_area && c.stance != null)
-      .map((c) => ({
-        claim_id: makeClaimId(personName, c.policy_area, c.date_stated),
-        person_id: personId,
-        person_name: personName,
-        policy_area: c.policy_area,
-        stance: c.stance,
-        stance_label: c.stance_label || '',
-        definition_used: c.definition_used || '',
-        quote: c.quote,
-        source_url: c.source_url,
-        source_type: c.source_type || 'report',
-        source_title: c.source_title || '',
-        date_stated: c.date_stated || 'unknown',
-        confidence: c.confidence || 'medium',
-        extracted_by: 'exa+claude',
-        notes: c.notes || null,
-      }))
+      .map((c) => {
+        const srcId = sourceRegistry.register({
+          url: c.source_url,
+          title: c.source_title || '',
+          type: c.source_type || 'report',
+          published: c.date_stated || 'unknown',
+        })
+        return {
+          claim_id: makeClaimId(personName, c.policy_area, c.date_stated),
+          person_id: personId,
+          person_name: personName,
+          policy_area: c.policy_area,
+          stance: c.stance,
+          stance_label: c.stance_label || '',
+          definition_used: c.definition_used || '',
+          citation: c.quote,
+          source_id: srcId,
+          date_stated: c.date_stated || 'unknown',
+          confidence: c.confidence || 'medium',
+          extracted_by: 'exa+claude',
+          notes: c.notes || null,
+        }
+      })
   } catch (err) {
     console.error(`  Claude error for ${personName}: ${err.message}`)
     return []
   }
 }
 
-function makeSourceId(personId, sourceUrl) {
-  const urlSlug = sourceUrl
-    .replace(/^https?:\/\//, '')
-    .replace(/[^a-z0-9]/gi, '-')
-    .slice(0, 60)
-    .replace(/-+$/, '')
-  return `${personId}_${urlSlug}`
-}
-
-function annotateSourceSharing(claims) {
-  const counts = new Map()
-  for (const c of claims) {
-    const sid = makeSourceId(c.person_id, c.source_url)
-    counts.set(sid, (counts.get(sid) || 0) + 1)
+class SourceRegistry {
+  constructor(existingSources = []) {
+    this.sources = new Map()
+    this.nextId = 1
+    for (const s of existingSources) {
+      this.sources.set(s.url, s)
+      const num = parseInt(s.source_id?.replace('src-', '') || '0')
+      if (num >= this.nextId) this.nextId = num + 1
+    }
   }
-  return claims.map((c) => {
-    const sid = makeSourceId(c.person_id, c.source_url)
-    return { ...c, source_id: sid, claims_from_this_source: counts.get(sid) || 1 }
-  })
+
+  register({ url, title, type, published }) {
+    if (this.sources.has(url)) return this.sources.get(url).source_id
+    const source_id = `src-${String(this.nextId++).padStart(3, '0')}`
+    this.sources.set(url, { source_id, url, title, type, published })
+    return source_id
+  }
+
+  toArray() {
+    return Array.from(this.sources.values())
+  }
 }
 
 function loadProgress() {
@@ -237,8 +245,9 @@ async function main() {
   console.log('==============================')
 
   const policymakers = JSON.parse(fs.readFileSync(POLICYMAKERS_PATH, 'utf-8')).policymakers
-  const existingClaims = JSON.parse(fs.readFileSync(CLAIMS_PATH, 'utf-8'))
+  const existingData = JSON.parse(fs.readFileSync(CLAIMS_PATH, 'utf-8'))
   const progress = loadProgress()
+  const sourceRegistry = new SourceRegistry(existingData.sources || [])
 
   let targets = policymakers.filter((p) => p.party && ['D', 'R', 'I'].includes(p.party))
 
@@ -259,7 +268,7 @@ async function main() {
   console.log(`Mode: ${dryRun ? 'DRY RUN' : 'LIVE'}\n`)
 
   const newClaims = []
-  const existingIds = new Set(existingClaims.claims.map((c) => c.claim_id))
+  const existingIds = new Set(existingData.claims.map((c) => c.claim_id))
   let searchCount = 0
   let claudeCount = 0
 
@@ -282,7 +291,7 @@ async function main() {
       continue
     }
 
-    const claims = await extractClaims(pm.name, pm.person_id, pm.party, pm.title, allResults)
+    const claims = await extractClaims(pm.name, pm.person_id, pm.party, pm.title, allResults, sourceRegistry)
     claudeCount++
     await delay(100)
 
@@ -302,7 +311,7 @@ async function main() {
 
     console.log(`  Claude: ${claims.length} claims extracted, ${added} new`)
     for (const c of claims) {
-      console.log(`    ${c.policy_area}: stance=${c.stance} (${c.confidence}) — ${c.source_url.slice(0, 60)}…`)
+      console.log(`    ${c.policy_area}: stance=${c.stance} (${c.confidence}) [${c.source_id}]`)
     }
 
     progress.completed.push(pm.person_id)
@@ -315,15 +324,19 @@ async function main() {
 
   if (!dryRun && newClaims.length > 0) {
     const newIds = new Set(newClaims.map((c) => c.claim_id))
-    const kept = existingClaims.claims.filter((c) => !newIds.has(c.claim_id))
-    const allClaims = annotateSourceSharing([...kept, ...newClaims])
-    existingClaims.claims = allClaims
-    existingClaims.note =
-      'One row per (policymaker, policy_area, source). Claims with extracted_by="manual" were hand-verified. ' +
-      'Claims with extracted_by="exa+claude" were auto-extracted and should be spot-checked. ' +
-      'source_id groups claims sharing the same (person, URL). claims_from_this_source counts how many claims share that source.'
-    fs.writeFileSync(CLAIMS_PATH, JSON.stringify(existingClaims, null, 2) + '\n')
-    console.log(`Wrote ${allClaims.length} total claims to ${CLAIMS_PATH}`)
+    const kept = existingData.claims.filter((c) => !newIds.has(c.claim_id))
+    const allClaims = [...kept, ...newClaims]
+    const allSources = sourceRegistry.toArray()
+    const output = {
+      schema_version: 2,
+      note:
+        'Each claim references a source_id from the sources array. The citation field is the verbatim quote from that specific source. ' +
+        'Claims with extracted_by="manual" were hand-verified. Claims with extracted_by="exa+claude" were auto-extracted.',
+      sources: allSources,
+      claims: allClaims,
+    }
+    fs.writeFileSync(CLAIMS_PATH, JSON.stringify(output, null, 2) + '\n')
+    console.log(`Wrote ${allClaims.length} claims + ${allSources.length} sources to ${CLAIMS_PATH}`)
   } else if (dryRun) {
     console.log('Dry run; no files written. Re-run without --dry-run to persist.')
   }

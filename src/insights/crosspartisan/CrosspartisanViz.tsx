@@ -367,9 +367,8 @@ interface Claim {
   policy_area: string
   stance: number
   stance_label: string
-  quote: string
-  source_url: string
-  source_title: string
+  citation: string
+  source_id: string
   date_stated: string
   confidence: string
   notes: string | null
