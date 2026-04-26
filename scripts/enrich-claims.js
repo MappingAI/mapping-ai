@@ -278,19 +278,46 @@ async function extractClaims(entity, searchResults) {
     const text = response.content[0]?.text || '[]'
     const jsonMatch = text.match(/\[[\s\S]*\]/)
     if (!jsonMatch) return []
-    return JSON.parse(jsonMatch[0]).filter((c) => c.source_url && c.citation && c.belief_dimension)
+    const parsed = JSON.parse(jsonMatch[0]).filter((c) => c.source_url && c.citation && c.belief_dimension)
+    const verified = []
+    for (const c of parsed) {
+      const v = await verifyUrl(c.source_url)
+      if (v.ok) {
+        c._url_status = v.status
+        verified.push(c)
+      } else {
+        console.log(`    SKIP: URL ${v.status} for ${c.belief_dimension} — ${c.source_url.slice(0, 60)}`)
+      }
+    }
+    return verified
   } catch (err) {
     console.error(`    Claude error: ${err.message}`)
     return []
   }
 }
 
+async function verifyUrl(url) {
+  try {
+    const resp = await fetch(url, {
+      method: 'HEAD',
+      redirect: 'follow',
+      signal: AbortSignal.timeout(6000),
+      headers: { 'User-Agent': 'MappingAI-ClaimVerifier/1.0' },
+    })
+    if (resp.status < 400) return { ok: true, status: resp.status }
+    if (resp.status === 403 || resp.status === 405) return { ok: true, status: resp.status }
+    return { ok: false, status: resp.status }
+  } catch {
+    return { ok: true, status: 'timeout-assumed-ok' }
+  }
+}
+
 async function registerSource(client, claim) {
   const sid = srcId(claim.source_url)
   await client.query(
-    `INSERT INTO source (source_id, url, title, source_type, date_published, author, cached_excerpt)
-     VALUES ($1, $2, $3, $4, $5::date, $6, $7)
-     ON CONFLICT (source_id) DO NOTHING`,
+    `INSERT INTO source (source_id, url, title, source_type, date_published, author, cached_excerpt, last_verified_at)
+     VALUES ($1, $2, $3, $4, $5::date, $6, $7, NOW())
+     ON CONFLICT (source_id) DO UPDATE SET last_verified_at = NOW()`,
     [
       sid,
       claim.source_url,
