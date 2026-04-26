@@ -22,16 +22,30 @@ interface AgiPoint {
   timeline_score: number | null
   risk: string | null
   risk_score: number | null
+  cluster_id: string | null
+  cluster_label: string | null
 }
 
-type ColorMode = 'category' | 'stance' | 'timeline' | 'risk'
+type ColorMode = 'cluster' | 'category' | 'stance' | 'timeline' | 'risk'
 
 const COLOR_MODE_OPTIONS: { value: ColorMode; label: string }[] = [
+  { value: 'cluster', label: 'Definition cluster' },
   { value: 'category', label: 'Entity category' },
   { value: 'stance', label: 'Regulatory stance' },
   { value: 'timeline', label: 'AGI timeline' },
   { value: 'risk', label: 'AI risk level' },
 ]
+
+const CLUSTER_COLORS: Record<string, string> = {
+  'human-level-cognitive-parity': '#4e79a7',
+  'economic-automation': '#f28e2b',
+  'autonomous-research-capability': '#e15759',
+  'superintelligent-systems': '#76b7b2',
+  'general-purpose-agents': '#59a14f',
+  'transformative-societal-impact': '#edc948',
+  'conceptual-critique': '#b07aa1',
+  'augmentative-tools': '#ff9da7',
+}
 
 const BELIEF_SCALES: Record<string, { labels: string[]; colors: string[] }> = {
   stance: {
@@ -54,9 +68,17 @@ interface AgiSource {
   type: string | null
 }
 
+interface ClusterInfo {
+  id: string
+  label: string
+  description: string
+  count: number
+}
+
 interface AgiData {
   points: AgiPoint[]
   sources: Record<string, AgiSource>
+  clusters?: ClusterInfo[]
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
@@ -143,6 +165,7 @@ function DetailModal({ point, source, onClose }: { point: AgiPoint; source: AgiS
 }
 
 function getPointColor(d: AgiPoint, colorMode: ColorMode): string {
+  if (colorMode === 'cluster') return CLUSTER_COLORS[d.cluster_id || ''] || '#ccc'
   if (colorMode === 'category') return CATEGORY_COLORS[d.category] || '#888'
   const scoreKey = colorMode === 'stance' ? 'stance_score' : colorMode === 'timeline' ? 'timeline_score' : 'risk_score'
   const score = d[scoreKey]
@@ -152,12 +175,53 @@ function getPointColor(d: AgiPoint, colorMode: ColorMode): string {
   return scale.colors[Math.min(score - 1, scale.colors.length - 1)] || '#888'
 }
 
+function ClusterView({ data, onSelect }: { data: AgiData; onSelect: (p: AgiPoint) => void }) {
+  const clusters = data.clusters || []
+
+  return (
+    <div className="space-y-6">
+      {clusters
+        .sort((a, b) => b.count - a.count)
+        .map((cluster) => {
+          const entities = data.points.filter((p) => p.cluster_id === cluster.id)
+          return (
+            <div key={cluster.id}>
+              <div className="flex items-baseline gap-2 mb-1.5">
+                <span
+                  className="inline-block w-3 h-3 rounded-sm flex-shrink-0"
+                  style={{ background: CLUSTER_COLORS[cluster.id] || '#ccc' }}
+                />
+                <span className="font-mono text-[12px] font-medium text-[#1a1a1a]">{cluster.label}</span>
+                <span className="font-mono text-[10px] text-[#999]">({cluster.count})</span>
+              </div>
+              <div className="font-mono text-[10px] text-[#666] mb-2 ml-5">{cluster.description}</div>
+              <div className="ml-5 flex flex-wrap gap-1">
+                {entities.map((p) => (
+                  <button
+                    key={p.entity_id}
+                    onClick={() => onSelect(p)}
+                    className="font-mono text-[9px] px-1.5 py-0.5 rounded border border-[#e0e0e0] text-[#555] hover:bg-[#f0f0f0] hover:border-[#bbb] transition-colors truncate"
+                    style={{ maxWidth: '180px' }}
+                    title={p.definition}
+                  >
+                    {p.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )
+        })}
+    </div>
+  )
+}
+
 export function AgiDefinitionSpace() {
   const ref = useRef<HTMLDivElement>(null)
   const [data, setData] = useState<AgiData | null>(null)
   const [selectedPoint, setSelectedPoint] = useState<AgiPoint | null>(null)
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null)
-  const [colorMode, setColorMode] = useState<ColorMode>('category')
+  const [colorMode, setColorMode] = useState<ColorMode>('cluster')
+  const [viewMode, setViewMode] = useState<'scatter' | 'clusters'>('clusters')
 
   useEffect(() => {
     fetch('/agi-definitions.json')
@@ -233,10 +297,15 @@ export function AgiDefinitionSpace() {
       .style('cursor', 'pointer')
       .on('mouseover', (evt: MouseEvent, d: AgiPoint) => {
         if (tipEl) {
-          const beliefLine =
-            colorMode !== 'category'
-              ? `<div style="color:${getPointColor(d, colorMode)};font-weight:500;font-size:10px;margin-bottom:2px;">${d[colorMode] || 'No data'}</div>`
-              : ''
+          const beliefValue =
+            colorMode === 'cluster'
+              ? d.cluster_label
+              : colorMode === 'category'
+                ? null
+                : d[colorMode as 'stance' | 'timeline' | 'risk']
+          const beliefLine = beliefValue
+            ? `<div style="color:${getPointColor(d, colorMode)};font-weight:500;font-size:10px;margin-bottom:2px;">${beliefValue}</div>`
+            : ''
           tipEl.innerHTML = `<div style="font-weight:500;margin-bottom:2px;">${escapeHtml(d.name)}</div>
             <div style="color:#666;font-size:10px;margin-bottom:2px;">${escapeHtml(d.category)}</div>
             ${beliefLine}
@@ -269,28 +338,60 @@ export function AgiDefinitionSpace() {
 
   return (
     <div>
-      {/* Color-by dropdown */}
-      <div className="flex items-center gap-3 mb-3">
-        <span className="font-mono text-[10px] text-[#888]">Color by:</span>
+      {/* View toggle */}
+      <div className="flex items-center gap-3 mb-3 flex-wrap">
         <div className="flex gap-1">
-          {COLOR_MODE_OPTIONS.map((opt) => (
+          {(['clusters', 'scatter'] as const).map((v) => (
             <button
-              key={opt.value}
-              onClick={() => setColorMode(opt.value)}
-              className={`font-mono text-[10px] px-2 py-1 rounded transition-colors ${
-                colorMode === opt.value ? 'bg-[#1a1a1a] text-white' : 'bg-[#eee] text-[#555] hover:bg-[#ddd]'
+              key={v}
+              onClick={() => setViewMode(v)}
+              className={`font-mono text-[10px] tracking-[0.08em] uppercase px-3 py-1.5 rounded transition-colors ${
+                viewMode === v ? 'bg-[#1a1a1a] text-white' : 'bg-[#eee] text-[#555] hover:bg-[#ddd]'
               }`}
             >
-              {opt.label}
+              {v === 'clusters' ? 'By Cluster' : 'Scatter'}
             </button>
           ))}
         </div>
+        {viewMode === 'scatter' && (
+          <>
+            <span className="font-mono text-[10px] text-[#888]">Color by:</span>
+            <div className="flex gap-1">
+              {COLOR_MODE_OPTIONS.map((opt) => (
+                <button
+                  key={opt.value}
+                  onClick={() => setColorMode(opt.value)}
+                  className={`font-mono text-[10px] px-2 py-1 rounded transition-colors ${
+                    colorMode === opt.value ? 'bg-[#555] text-white' : 'bg-[#f5f5f5] text-[#888] hover:bg-[#eee]'
+                  }`}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+          </>
+        )}
+        <span className="font-mono text-[10px] text-[#999]">{data.points.length} definitions</span>
       </div>
 
-      <div ref={ref} />
+      {viewMode === 'clusters' ? <ClusterView data={data} onSelect={setSelectedPoint} /> : <div ref={ref} />}
 
-      {/* Legend */}
-      {colorMode === 'category' ? (
+      {/* Legend (scatter view only) */}
+      {viewMode !== 'scatter' ? null : colorMode === 'cluster' ? (
+        <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2">
+          {(data.clusters || []).map((c) => (
+            <div key={c.id} className="flex items-center gap-1">
+              <span
+                className="inline-block w-2.5 h-2.5 rounded-sm"
+                style={{ background: CLUSTER_COLORS[c.id] || '#ccc' }}
+              />
+              <span className="font-mono text-[9px] text-[#666]">
+                {c.label} ({c.count})
+              </span>
+            </div>
+          ))}
+        </div>
+      ) : colorMode === 'category' ? (
         <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2">
           {categories.map((cat) => (
             <div
