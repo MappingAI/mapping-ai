@@ -197,6 +197,27 @@ ${sourcesText}`
   }
 }
 
+function makeSourceId(personId, sourceUrl) {
+  const urlSlug = sourceUrl
+    .replace(/^https?:\/\//, '')
+    .replace(/[^a-z0-9]/gi, '-')
+    .slice(0, 60)
+    .replace(/-+$/, '')
+  return `${personId}_${urlSlug}`
+}
+
+function annotateSourceSharing(claims) {
+  const counts = new Map()
+  for (const c of claims) {
+    const sid = makeSourceId(c.person_id, c.source_url)
+    counts.set(sid, (counts.get(sid) || 0) + 1)
+  }
+  return claims.map((c) => {
+    const sid = makeSourceId(c.person_id, c.source_url)
+    return { ...c, source_id: sid, claims_from_this_source: counts.get(sid) || 1 }
+  })
+}
+
 function loadProgress() {
   try {
     return JSON.parse(fs.readFileSync(PROGRESS_PATH, 'utf-8'))
@@ -295,11 +316,12 @@ async function main() {
   if (!dryRun && newClaims.length > 0) {
     const newIds = new Set(newClaims.map((c) => c.claim_id))
     const kept = existingClaims.claims.filter((c) => !newIds.has(c.claim_id))
-    const allClaims = [...kept, ...newClaims]
+    const allClaims = annotateSourceSharing([...kept, ...newClaims])
     existingClaims.claims = allClaims
     existingClaims.note =
       'One row per (policymaker, policy_area, source). Claims with extracted_by="manual" were hand-verified. ' +
-      'Claims with extracted_by="exa+claude" were auto-extracted and should be spot-checked.'
+      'Claims with extracted_by="exa+claude" were auto-extracted and should be spot-checked. ' +
+      'source_id groups claims sharing the same (person, URL). claims_from_this_source counts how many claims share that source.'
     fs.writeFileSync(CLAIMS_PATH, JSON.stringify(existingClaims, null, 2) + '\n')
     console.log(`Wrote ${allClaims.length} total claims to ${CLAIMS_PATH}`)
   } else if (dryRun) {

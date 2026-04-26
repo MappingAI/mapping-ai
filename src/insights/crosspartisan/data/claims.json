@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "note": "One row per (policymaker, policy_area, source). Claims with extracted_by=\"manual\" were hand-verified. Claims with extracted_by=\"exa+claude\" were auto-extracted and should be spot-checked.",
+  "note": "One row per (policymaker, policy_area, source). Claims with extracted_by=\"manual\" were hand-verified. Claims with extracted_by=\"exa+claude\" were auto-extracted and should be spot-checked. source_id groups claims sharing the same (person, URL). claims_from_this_source counts how many claims share that source.",
   "claims": [
     {
       "claim_id": "wiener_preemption_2024-08",
@@ -17,7 +17,9 @@
       "date_stated": "2024-08-17",
       "confidence": "high",
       "extracted_by": "manual",
-      "notes": null
+      "notes": null,
+      "source_id": "91_sd11-senate-ca-gov-index-php-news-senator-wiener-responds-sp",
+      "claims_from_this_source": 1
     },
     {
       "claim_id": "padilla_preemption_2025-12",
@@ -34,7 +36,9 @@
       "date_stated": "2025-12-15",
       "confidence": "high",
       "extracted_by": "manual",
-      "notes": "Co-signed by 20 Democratic state lawmakers, led by Wiener."
+      "notes": "Co-signed by 20 Democratic state lawmakers, led by Wiener.",
+      "source_id": "1154_web2-w-sfchronicle-com-politics-article-california-ai-lawmak",
+      "claims_from_this_source": 1
     },
     {
       "claim_id": "aoc_preemption_2025-12",
@@ -51,7 +55,9 @@
       "date_stated": "2025-12-17",
       "confidence": "high",
       "extracted_by": "manual",
-      "notes": null
+      "notes": null,
+      "source_id": "10_ocasio-cortez-house-gov-media-press-releases-ocasio-cortez-c",
+      "claims_from_this_source": 1
     },
     {
       "claim_id": "cruz_preemption_2025-05",
@@ -68,7 +74,9 @@
       "date_stated": "2025-05-08",
       "confidence": "high",
       "extracted_by": "manual",
-      "notes": "Previewing forthcoming bill at Senate Commerce Committee hearing."
+      "notes": "Previewing forthcoming bill at Senate Commerce Committee hearing.",
+      "source_id": "82_punchbowl-news-article-tech-cruz-to-push-ai-regulation",
+      "claims_from_this_source": 1
     },
     {
       "claim_id": "khanna_preemption_2024-08",
@@ -85,7 +93,9 @@
       "date_stated": "2024-08-16",
       "confidence": "medium",
       "extracted_by": "manual",
-      "notes": "Opposing a specific state bill is not identical to supporting blanket preemption, but Pelosi frames it as preferring federal approach."
+      "notes": "Opposing a specific state bill is not identical to supporting blanket preemption, but Pelosi frames it as preferring federal approach.",
+      "source_id": "37_pelosi-house-gov-news-press-releases-pelosi-statement-opposi",
+      "claims_from_this_source": 1
     },
     {
       "claim_id": "eshoo_preemption_2024-08",
@@ -102,7 +112,9 @@
       "date_stated": "2024-08-16",
       "confidence": "medium",
       "extracted_by": "manual",
-      "notes": "Pelosi's statement references Eshoo's position. Eshoo is cited but the quote is Pelosi paraphrasing Lofgren."
+      "notes": "Pelosi's statement references Eshoo's position. Eshoo is cited but the quote is Pelosi paraphrasing Lofgren.",
+      "source_id": "115_pelosi-house-gov-news-press-releases-pelosi-statement-opposi",
+      "claims_from_this_source": 1
     },
     {
       "claim_id": "newsom_preemption_2024-09",
@@ -119,7 +131,9 @@
       "date_stated": "2024-09-29",
       "confidence": "high",
       "extracted_by": "manual",
-      "notes": "Newsom vetoed the specific bill but signed other AI bills; he's not pro-preemption, just rejected this approach."
+      "notes": "Newsom vetoed the specific bill but signed other AI bills; he's not pro-preemption, just rejected this approach.",
+      "source_id": "116_www-gov-ca-gov-wp-content-uploads-2024-09-SB-1047-Veto-Messa",
+      "claims_from_this_source": 1
     },
     {
       "claim_id": "hawley_open_source_2023-06",
@@ -136,7 +150,9 @@
       "date_stated": "2023-06-06",
       "confidence": "high",
       "extracted_by": "manual",
-      "notes": "Joint letter with Blumenthal (D). Key crosspartisan convergence case: R + D jointly concerned about unrestricted open weights."
+      "notes": "Joint letter with Blumenthal (D). Key crosspartisan convergence case: R + D jointly concerned about unrestricted open weights.",
+      "source_id": "1422_www-hawley-senate-gov-hawley-and-blumenthal-demand-answers-m",
+      "claims_from_this_source": 1
     },
     {
       "claim_id": "blumenthal_open_source_2023-06",
@@ -153,7 +169,9 @@
       "date_stated": "2023-06-06",
       "confidence": "high",
       "extracted_by": "manual",
-      "notes": "Co-authored with Hawley (R). Convergence: Privacy Subcommittee Chair (D) and Ranking Member (R) agree."
+      "notes": "Co-authored with Hawley (R). Convergence: Privacy Subcommittee Chair (D) and Ranking Member (R) agree.",
+      "source_id": "80_www-hawley-senate-gov-hawley-and-blumenthal-demand-answers-m",
+      "claims_from_this_source": 1
     },
     {
       "claim_id": "cruz_compute_2024-07",
@@ -170,7 +188,9 @@
       "date_stated": "2024-07-11",
       "confidence": "high",
       "extracted_by": "manual",
-      "notes": null
+      "notes": null,
+      "source_id": "82_www-commerce-senate-gov-2024-7-sen-cruz-attempts-to-regulate",
+      "claims_from_this_source": 1
     },
     {
       "claim_id": "beyer_compute_2026-04",
@@ -187,7 +207,9 @@
       "date_stated": "2026-04-10",
       "confidence": "high",
       "extracted_by": "manual",
-      "notes": null
+      "notes": null,
+      "source_id": "114_www-jdsupra-com-legalnews-show-your-work-ai-congress-pushes",
+      "claims_from_this_source": 1
     },
     {
       "claim_id": "sanders_compute_2026-03",
@@ -204,7 +226,9 @@
       "date_stated": "2026-03-25",
       "confidence": "high",
       "extracted_by": "manual",
-      "notes": "Data center moratorium maps to compute governance broadly: controlling the physical infrastructure of frontier training."
+      "notes": "Data center moratorium maps to compute governance broadly: controlling the physical infrastructure of frontier training.",
+      "source_id": "96_thehill-com-policy-technology-5801008-ai-data-center-morator",
+      "claims_from_this_source": 1
     },
     {
       "claim_id": "aoc_compute_2026-03",
@@ -221,7 +245,9 @@
       "date_stated": "2026-03-25",
       "confidence": "high",
       "extracted_by": "manual",
-      "notes": null
+      "notes": null,
+      "source_id": "10_www-pbs-org-newshour-politics-ocasio-cortez-and-sanders-push",
+      "claims_from_this_source": 1
     },
     {
       "claim_id": "cotton_export_2025-05",
@@ -238,7 +264,9 @@
       "date_stated": "2025-05-15",
       "confidence": "high",
       "extracted_by": "manual",
-      "notes": "Bipartisan: House version co-led by Huizenga (R) and Foster (D)."
+      "notes": "Bipartisan: House version co-led by Huizenga (R) and Foster (D).",
+      "source_id": "1099_www-reuters-com-world-us-us-lawmakers-introduce-bill-address",
+      "claims_from_this_source": 1
     },
     {
       "claim_id": "shaheen_export_2025-07",
@@ -255,7 +283,9 @@
       "date_stated": "2025-07-30",
       "confidence": "high",
       "extracted_by": "manual",
-      "notes": null
+      "notes": null,
+      "source_id": "1413_www-foreign-senate-gov-press-dem-release-ranking-member-shah",
+      "claims_from_this_source": 1
     },
     {
       "claim_id": "warner_export_2025-07",
@@ -272,7 +302,9 @@
       "date_stated": "2025-07-30",
       "confidence": "high",
       "extracted_by": "manual",
-      "notes": "Co-signed by Schumer, Reed, Coons, Warren."
+      "notes": "Co-signed by Schumer, Reed, Coons, Warren.",
+      "source_id": "87_www-warner-senate-gov-public-index-cfm-2025-7-top-senate-dem",
+      "claims_from_this_source": 1
     },
     {
       "claim_id": "schumer_export_2025-07",
@@ -289,7 +321,9 @@
       "date_stated": "2025-07-30",
       "confidence": "high",
       "extracted_by": "manual",
-      "notes": null
+      "notes": null,
+      "source_id": "2_www-warner-senate-gov-public-index-cfm-2025-7-top-senate-dem",
+      "claims_from_this_source": 1
     },
     {
       "claim_id": "warren_export_2025-12",
@@ -306,7 +340,9 @@
       "date_stated": "2025-12-08",
       "confidence": "high",
       "extracted_by": "manual",
-      "notes": "Joint statement with Shaheen, Coons, Reed, Schatz, Andy Kim, Bennet, Slotkin."
+      "notes": "Joint statement with Shaheen, Coons, Reed, Schatz, Andy Kim, Bennet, Slotkin.",
+      "source_id": "1476_www-foreign-senate-gov-press-dem-release-ranking-member-shah",
+      "claims_from_this_source": 1
     },
     {
       "claim_id": "coons_export_2025-12",
@@ -323,7 +359,9 @@
       "date_stated": "2025-12-08",
       "confidence": "high",
       "extracted_by": "manual",
-      "notes": null
+      "notes": null,
+      "source_id": "71_www-foreign-senate-gov-press-dem-release-ranking-member-shah",
+      "claims_from_this_source": 1
     },
     {
       "claim_id": "mccaul_export_2025-11",
@@ -340,7 +378,9 @@
       "date_stated": "2025-11-20",
       "confidence": "high",
       "extracted_by": "manual",
-      "notes": "McCaul (R) has been a consistent champion of tighter export controls."
+      "notes": "McCaul (R) has been a consistent champion of tighter export controls.",
+      "source_id": "83_mccaul-house-gov-media-center-press-releases-mccaul-remarks",
+      "claims_from_this_source": 1
     },
     {
       "claim_id": "lieu_export_2025-05",
@@ -357,7 +397,9 @@
       "date_stated": "2025-05-15",
       "confidence": "high",
       "extracted_by": "manual",
-      "notes": "Bipartisan bill co-led by Huizenga (R), Foster (D), Moolenaar (R), Krishnamoorthi (D)."
+      "notes": "Bipartisan bill co-led by Huizenga (R), Foster (D), Moolenaar (R), Krishnamoorthi (D).",
+      "source_id": "112_www-reuters-com-world-us-us-lawmakers-introduce-bill-address",
+      "claims_from_this_source": 1
     },
     {
       "claim_id": "gottheimer_export_2025-05",
@@ -374,7 +416,9 @@
       "date_stated": "2025-05-15",
       "confidence": "high",
       "extracted_by": "manual",
-      "notes": null
+      "notes": null,
+      "source_id": "1471_www-reuters-com-world-us-us-lawmakers-introduce-bill-address",
+      "claims_from_this_source": 1
     },
     {
       "claim_id": "cantwell_testing_2024-03",
@@ -391,7 +435,9 @@
       "date_stated": "2024-03-07",
       "confidence": "high",
       "extracted_by": "manual",
-      "notes": "Bipartisan: co-led with Young (R), Heinrich (D), Rounds (R). Key crosspartisan convergence."
+      "notes": "Bipartisan: co-led with Young (R), Heinrich (D), Rounds (R). Key crosspartisan convergence.",
+      "source_id": "110_www-commerce-senate-gov-2024-3-cantwell-colleagues-lead-effo",
+      "claims_from_this_source": 1
     },
     {
       "claim_id": "young_testing_2024-03",
@@ -408,7 +454,9 @@
       "date_stated": "2024-03-07",
       "confidence": "high",
       "extracted_by": "manual",
-      "notes": "Todd Young (R-IN) co-leading with Cantwell (D) is a strong crosspartisan signal."
+      "notes": "Todd Young (R-IN) co-leading with Cantwell (D) is a strong crosspartisan signal.",
+      "source_id": "73_www-commerce-senate-gov-2024-3-cantwell-colleagues-lead-effo",
+      "claims_from_this_source": 1
     },
     {
       "claim_id": "heinrich_testing_2024-03",
@@ -425,7 +473,9 @@
       "date_stated": "2024-03-07",
       "confidence": "high",
       "extracted_by": "manual",
-      "notes": null
+      "notes": null,
+      "source_id": "72_www-commerce-senate-gov-2024-3-cantwell-colleagues-lead-effo",
+      "claims_from_this_source": 1
     },
     {
       "claim_id": "rounds_testing_2024-03",
@@ -442,7 +492,9 @@
       "date_stated": "2024-03-07",
       "confidence": "high",
       "extracted_by": "manual",
-      "notes": "Rounds (R-SD) co-leading is notable as a mainstream conservative supporting safety infrastructure."
+      "notes": "Rounds (R-SD) co-leading is notable as a mainstream conservative supporting safety infrastructure.",
+      "source_id": "68_www-commerce-senate-gov-2024-3-cantwell-colleagues-lead-effo",
+      "claims_from_this_source": 1
     },
     {
       "claim_id": "wiener_testing_2024-08",
@@ -459,7 +511,9 @@
       "date_stated": "2024-08-22",
       "confidence": "high",
       "extracted_by": "manual",
-      "notes": null
+      "notes": null,
+      "source_id": "91_sd11-senate-ca-gov-news-senator-wiener-responds-openai-oppos",
+      "claims_from_this_source": 1
     },
     {
       "claim_id": "durbin_liability_2025-09",
@@ -476,7 +530,9 @@
       "date_stated": "2025-09-29",
       "confidence": "high",
       "extracted_by": "manual",
-      "notes": "Key crosspartisan convergence: Durbin (D) + Hawley (R) introduce strict AI product liability together."
+      "notes": "Key crosspartisan convergence: Durbin (D) + Hawley (R) introduce strict AI product liability together.",
+      "source_id": "1302_www-judiciary-senate-gov-press-dem-releases-durbin-hawley-in",
+      "claims_from_this_source": 1
     },
     {
       "claim_id": "hawley_liability_2025-09",
@@ -493,7 +549,9 @@
       "date_stated": "2025-09-29",
       "confidence": "high",
       "extracted_by": "manual",
-      "notes": "Hawley (R populist) agrees with Durbin (D progressive) on strict liability. The opposite of Lummis (R libertarian)."
+      "notes": "Hawley (R populist) agrees with Durbin (D progressive) on strict liability. The opposite of Lummis (R libertarian).",
+      "source_id": "1422_www-judiciary-senate-gov-press-dem-releases-durbin-hawley-in",
+      "claims_from_this_source": 1
     },
     {
       "claim_id": "lummis_liability_2025-06",
@@ -510,7 +568,9 @@
       "date_stated": "2025-06-12",
       "confidence": "high",
       "extracted_by": "manual",
-      "notes": "RISE Act is the opposite of AI LEAD Act. Lummis (R libertarian) vs Hawley (R populist) shows within-party divergence."
+      "notes": "RISE Act is the opposite of AI LEAD Act. Lummis (R libertarian) vs Hawley (R populist) shows within-party divergence.",
+      "source_id": "32_www-lummis-senate-gov-press-releases-lummis-introduces-ai-le",
+      "claims_from_this_source": 1
     },
     {
       "claim_id": "cruz_liability_2024-07",
@@ -527,7 +587,9 @@
       "date_stated": "2024-07-31",
       "confidence": "medium",
       "extracted_by": "manual",
-      "notes": "No specific liability bill cited, but his overall framework opposes broad regulatory/liability regimes."
+      "notes": "No specific liability bill cited, but his overall framework opposes broad regulatory/liability regimes.",
+      "source_id": "82_www-commerce-senate-gov-2024-7-sen-cruz-congress-should-not",
+      "claims_from_this_source": 1
     },
     {
       "claim_id": "schumer_compute_2023-06",
@@ -544,7 +606,9 @@
       "date_stated": "2023-06-22",
       "confidence": "high",
       "extracted_by": "manual",
-      "notes": "Schumer's framework is centrist: pro-regulation but explicitly innovation-first. Roadmap encouraged $32B in nondefense AI innovation but was light on specific regulatory calls."
+      "notes": "Schumer's framework is centrist: pro-regulation but explicitly innovation-first. Roadmap encouraged $32B in nondefense AI innovation but was light on specific regulatory calls.",
+      "source_id": "2_www-democrats-senate-gov-newsroom-press-releases-majority-le",
+      "claims_from_this_source": 1
     },
     {
       "claim_id": "schatz_export_2025-12",
@@ -561,7 +625,9 @@
       "date_stated": "2025-12-08",
       "confidence": "high",
       "extracted_by": "manual",
-      "notes": null
+      "notes": null,
+      "source_id": "7_www-foreign-senate-gov-press-dem-release-ranking-member-shah",
+      "claims_from_this_source": 1
     },
     {
       "claim_id": "kim_export_2025-12",
@@ -578,7 +644,9 @@
       "date_stated": "2025-12-08",
       "confidence": "high",
       "extracted_by": "manual",
-      "notes": null
+      "notes": null,
+      "source_id": "1100_www-foreign-senate-gov-press-dem-release-ranking-member-shah",
+      "claims_from_this_source": 1
     },
     {
       "claim_id": "davidson_open_source_weights_2023-12",
@@ -595,7 +663,9 @@
       "date_stated": "2023-12-13",
       "confidence": "high",
       "extracted_by": "exa+claude",
-      "notes": "Davidson explicitly states NTIA is seeking balanced policies rather than taking a restrictive or permissive stance"
+      "notes": "Davidson explicitly states NTIA is seeking balanced policies rather than taking a restrictive or permissive stance",
+      "source_id": "929_www-ntia-gov-speech-testimony-2023-remarks-assistant-secreta",
+      "claims_from_this_source": 2
     },
     {
       "claim_id": "davidson_compute_governance_2024-05",
@@ -612,7 +682,9 @@
       "date_stated": "2024-05-15",
       "confidence": "medium",
       "extracted_by": "exa+claude",
-      "notes": "As part of the Biden Administration, Davidson is implementing the EO's compute threshold regime through NTIA's work"
+      "notes": "As part of the Biden Administration, Davidson is implementing the EO's compute threshold regime through NTIA's work",
+      "source_id": "929_www-ntia-gov-speech-testimony-2024-written-statement-assista",
+      "claims_from_this_source": 4
     },
     {
       "claim_id": "davidson_pre_deployment_testing_2024-05",
@@ -629,7 +701,9 @@
       "date_stated": "2024-05-15",
       "confidence": "high",
       "extracted_by": "exa+claude",
-      "notes": "Davidson explicitly calls for independent evaluations as part of NTIA's AI accountability framework"
+      "notes": "Davidson explicitly calls for independent evaluations as part of NTIA's AI accountability framework",
+      "source_id": "929_www-ntia-gov-speech-testimony-2024-written-statement-assista",
+      "claims_from_this_source": 4
     },
     {
       "claim_id": "bores_compute_governance_2025-01",
@@ -646,7 +720,9 @@
       "date_stated": "2025-01-09",
       "confidence": "high",
       "extracted_by": "exa+claude",
-      "notes": "Bores' RAISE Act uses compute thresholds identical to EO 14110 as the trigger for regulation"
+      "notes": "Bores' RAISE Act uses compute thresholds identical to EO 14110 as the trigger for regulation",
+      "source_id": "97_www-technologyreview-com-2025-01-09-1109875-a-new-york-legis",
+      "claims_from_this_source": 1
     },
     {
       "claim_id": "bores_open_source_weights_2025-05",
@@ -663,7 +739,9 @@
       "date_stated": "2025-05-19",
       "confidence": "medium",
       "extracted_by": "exa+claude",
-      "notes": "RAISE Act includes knowledge distillation threshold specifically to address DeepSeek-like scenarios where capable models are created from frontier models"
+      "notes": "RAISE Act includes knowledge distillation threshold specifically to address DeepSeek-like scenarios where capable models are created from frontier models",
+      "source_id": "97_www-cognitiverevolution-ai-the-raise-act-minimum-standards-f",
+      "claims_from_this_source": 1
     },
     {
       "claim_id": "bores_pre_deployment_testing_2025-03",
@@ -680,7 +758,9 @@
       "date_stated": "2025-03-05",
       "confidence": "high",
       "extracted_by": "exa+claude",
-      "notes": "RAISE Act requires both mandatory testing procedures and third-party audits as deployment conditions"
+      "notes": "RAISE Act requires both mandatory testing procedures and third-party audits as deployment conditions",
+      "source_id": "97_www-henryjosephson-com-writing-RAISE-Act-html",
+      "claims_from_this_source": 1
     },
     {
       "claim_id": "bores_liability_2025-10",
@@ -697,7 +777,9 @@
       "date_stated": "2025-10-09",
       "confidence": "medium",
       "extracted_by": "exa+claude",
-      "notes": "RAISE Act establishes civil liability framework for frontier AI developers, but limited to specific threshold violations rather than general strict liability"
+      "notes": "RAISE Act establishes civil liability framework for frontier AI developers, but limited to specific threshold violations rather than general strict liability",
+      "source_id": "97_www-transformernews-ai-p-raise-act-can-stop-ai-industry-race",
+      "claims_from_this_source": 2
     },
     {
       "claim_id": "bores_state_preemption_2025-10",
@@ -714,7 +796,9 @@
       "date_stated": "2025-10-09",
       "confidence": "high",
       "extracted_by": "exa+claude",
-      "notes": "Bores explicitly supports state-level action in absence of federal standards, advocating for New York to lead on AI regulation as it did with cybersecurity"
+      "notes": "Bores explicitly supports state-level action in absence of federal standards, advocating for New York to lead on AI regulation as it did with cybersecurity",
+      "source_id": "97_www-transformernews-ai-p-raise-act-can-stop-ai-industry-race",
+      "claims_from_this_source": 2
     },
     {
       "claim_id": "ocasio-cortez_state_preemption_2026-03",
@@ -731,7 +815,9 @@
       "date_stated": "2026-03-25",
       "confidence": "medium",
       "extracted_by": "exa+claude",
-      "notes": "While not directly addressing state preemption, AOC's support for federal AI regulation paired with her emphasis on protecting Americans suggests she would oppose preempting state protections"
+      "notes": "While not directly addressing state preemption, AOC's support for federal AI regulation paired with her emphasis on protecting Americans suggests she would oppose preempting state protections",
+      "source_id": "10_www-sanders-senate-gov-press-releases-news-sanders-ocasio-co",
+      "claims_from_this_source": 8
     },
     {
       "claim_id": "ocasio-cortez_compute_governance_2026-03",
@@ -748,7 +834,9 @@
       "date_stated": "2026-03-25",
       "confidence": "high",
       "extracted_by": "exa+claude",
-      "notes": "The bill explicitly targets data centers above defined power consumption thresholds, representing a compute-based regulatory approach"
+      "notes": "The bill explicitly targets data centers above defined power consumption thresholds, representing a compute-based regulatory approach",
+      "source_id": "10_www-sanders-senate-gov-press-releases-news-sanders-ocasio-co",
+      "claims_from_this_source": 8
     },
     {
       "claim_id": "ocasio-cortez_pre_deployment_testing_2026-03",
@@ -765,7 +853,9 @@
       "date_stated": "2026-03-25",
       "confidence": "high",
       "extracted_by": "exa+claude",
-      "notes": "The moratorium conditions include mandatory federal review of AI products before release"
+      "notes": "The moratorium conditions include mandatory federal review of AI products before release",
+      "source_id": "10_www-sanders-senate-gov-press-releases-news-sanders-ocasio-co",
+      "claims_from_this_source": 8
     },
     {
       "claim_id": "ocasio-cortez_export_controls_chips_2026-03",
@@ -782,7 +872,9 @@
       "date_stated": "2026-03-25",
       "confidence": "high",
       "extracted_by": "exa+claude",
-      "notes": "The bill includes explicit export bans on AI computing infrastructure, representing strong support for tighter controls"
+      "notes": "The bill includes explicit export bans on AI computing infrastructure, representing strong support for tighter controls",
+      "source_id": "10_www-sanders-senate-gov-press-releases-news-sanders-ocasio-co",
+      "claims_from_this_source": 8
     },
     {
       "claim_id": "ocasio-cortez_liability_2026-03",
@@ -799,7 +891,142 @@
       "date_stated": "2026-03-25",
       "confidence": "medium",
       "extracted_by": "exa+claude",
-      "notes": "AOC emphasizes AI companies' responsibility for harms and supports civil action through the DEFIANCE Act for deepfake victims"
+      "notes": "AOC emphasizes AI companies' responsibility for harms and supports civil action through the DEFIANCE Act for deepfake victims",
+      "source_id": "10_www-sanders-senate-gov-press-releases-news-sanders-ocasio-co",
+      "claims_from_this_source": 8
+    },
+    {
+      "claim_id": "davidson_open_source_weights_2023-12-1",
+      "person_id": 929,
+      "person_name": "Alan Davidson",
+      "policy_area": "open_source_weights",
+      "stance": 0,
+      "stance_label": "Mixed/Neutral",
+      "definition_used": "Open-weight models include model weights that have been 'open-sourced' or otherwise broadly distributed, though this differs from traditional open source software.",
+      "quote": "This does not need to be an either-or debate. We can seek polices that promote both safety and allow for broad access.",
+      "source_url": "https://www.ntia.gov/speech/testimony/2023/remarks-assistant-secretary-alan-davidson-open-artificial-intelligence-models",
+      "source_type": "speech",
+      "source_title": "Remarks of Assistant Secretary Alan Davidson on Open Artificial Intelligence Models",
+      "date_stated": "2023-12-13",
+      "confidence": "high",
+      "extracted_by": "exa+claude",
+      "notes": "Davidson explicitly states NTIA is studying both benefits and risks of open weights to develop balanced policies",
+      "source_id": "929_www-ntia-gov-speech-testimony-2023-remarks-assistant-secreta",
+      "claims_from_this_source": 2
+    },
+    {
+      "claim_id": "davidson_compute_governance_2024-05-1",
+      "person_id": 929,
+      "person_name": "Alan Davidson",
+      "policy_area": "compute_governance",
+      "stance": 1,
+      "stance_label": "Support",
+      "definition_used": "Compute-based reporting requirements triggered by training compute thresholds, following EO 14110's 10^26 FLOPs framework.",
+      "quote": "Meanwhile, we continue working on a key assignment from President Biden's executive order on AI: assessing the benefits and harms of advanced AI models with widely available model weights, the core component of AI systems.",
+      "source_url": "https://www.ntia.gov/speech/testimony/2024/written-statement-assistant-secretary-alan-davidson-house-committee-energy-commerce-subcommittee",
+      "source_type": "hearing",
+      "source_title": "Written Statement of Assistant Secretary Alan Davidson Before the House Committee on Energy & Commerce Subcommittee on Communications & Technology",
+      "date_stated": "2024-05-15",
+      "confidence": "medium",
+      "extracted_by": "exa+claude",
+      "notes": "As NTIA head, Davidson is implementing EO 14110's compute threshold reporting requirements, indicating support for the framework",
+      "source_id": "929_www-ntia-gov-speech-testimony-2024-written-statement-assista",
+      "claims_from_this_source": 4
+    },
+    {
+      "claim_id": "davidson_pre_deployment_testing_2024-05-1",
+      "person_id": 929,
+      "person_name": "Alan Davidson",
+      "policy_area": "pre_deployment_testing",
+      "stance": 1,
+      "stance_label": "Support",
+      "definition_used": "Independent evaluations and red-teaming to verify claims about AI systems before deployment.",
+      "quote": "It calls for: improved transparency into AI systems, independent evaluations to verify the claims made about these systems, and consequences for imposing unacceptable risks or making unfounded claims.",
+      "source_url": "https://www.ntia.gov/speech/testimony/2024/written-statement-assistant-secretary-alan-davidson-house-committee-energy-commerce-subcommittee",
+      "source_type": "hearing",
+      "source_title": "Written Statement of Assistant Secretary Alan Davidson Before the House Committee on Energy & Commerce Subcommittee on Communications & Technology",
+      "date_stated": "2024-05-15",
+      "confidence": "high",
+      "extracted_by": "exa+claude",
+      "notes": "NTIA's March 2024 AI accountability report explicitly calls for independent evaluations as a policy recommendation",
+      "source_id": "929_www-ntia-gov-speech-testimony-2024-written-statement-assista",
+      "claims_from_this_source": 4
+    },
+    {
+      "claim_id": "ocasio-cortez_state_preemption_2026-03-1",
+      "person_id": 10,
+      "person_name": "Alexandria Ocasio-Cortez",
+      "policy_area": "state_preemption",
+      "stance": -1,
+      "stance_label": "Opposes federal preemption",
+      "definition_used": "State preemption refers to federal prohibition of state AI laws and regulation.",
+      "quote": "And all of this harm has occurred because of the absence of federal legislation to regulate AI.",
+      "source_url": "https://www.sanders.senate.gov/press-releases/news-sanders-ocasio-cortez-announce-ai-data-center-moratorium-act/",
+      "source_type": "press_release",
+      "source_title": "NEWS: Sanders, Ocasio-Cortez Announce AI Data Center Moratorium Act",
+      "date_stated": "2026-03-25",
+      "confidence": "medium",
+      "extracted_by": "exa+claude",
+      "notes": "Statement implies support for federal regulation rather than preemption of state authority, but doesn't directly address state preemption",
+      "source_id": "10_www-sanders-senate-gov-press-releases-news-sanders-ocasio-co",
+      "claims_from_this_source": 8
+    },
+    {
+      "claim_id": "ocasio-cortez_export_controls_chips_2026-03-1",
+      "person_id": 10,
+      "person_name": "Alexandria Ocasio-Cortez",
+      "policy_area": "export_controls_chips",
+      "stance": 2,
+      "stance_label": "Strongly supports export controls",
+      "definition_used": "Export controls on AI computing infrastructure to ensure safety and worker protections in recipient countries.",
+      "quote": "It accomplishes this by banning U.S. exports of AI computing infrastructure to countries that do not have safeguards in place to guarantee AI is safe and effective, workers are protected and AI does not harm the environment.",
+      "source_url": "https://www.sanders.senate.gov/press-releases/news-sanders-ocasio-cortez-announce-ai-data-center-moratorium-act/",
+      "source_type": "press_release",
+      "source_title": "NEWS: Sanders, Ocasio-Cortez Announce AI Data Center Moratorium Act",
+      "date_stated": "2026-03-25",
+      "confidence": "high",
+      "extracted_by": "exa+claude",
+      "notes": "Proposes extremely strict export controls that would ban exports to virtually all countries",
+      "source_id": "10_www-sanders-senate-gov-press-releases-news-sanders-ocasio-co",
+      "claims_from_this_source": 8
+    },
+    {
+      "claim_id": "ocasio-cortez_pre_deployment_testing_2026-03-1",
+      "person_id": 10,
+      "person_name": "Alexandria Ocasio-Cortez",
+      "policy_area": "pre_deployment_testing",
+      "stance": 2,
+      "stance_label": "Strongly supports mandatory testing",
+      "definition_used": "Federal review and assessment of AI products before release to ensure safety and effectiveness.",
+      "quote": "AI is safe and effective — preventing executives in the AI industry from releasing harmful products into the world that threaten the health and well-being of working families, our privacy and civil rights and the future of humanity.",
+      "source_url": "https://www.sanders.senate.gov/press-releases/news-sanders-ocasio-cortez-announce-ai-data-center-moratorium-act/",
+      "source_type": "press_release",
+      "source_title": "NEWS: Sanders, Ocasio-Cortez Announce AI Data Center Moratorium Act",
+      "date_stated": "2026-03-25",
+      "confidence": "high",
+      "extracted_by": "exa+claude",
+      "notes": "Supports federal review of AI products before release as part of comprehensive safety framework",
+      "source_id": "10_www-sanders-senate-gov-press-releases-news-sanders-ocasio-co",
+      "claims_from_this_source": 8
+    },
+    {
+      "claim_id": "ocasio-cortez_liability_2026-01",
+      "person_id": 10,
+      "person_name": "Alexandria Ocasio-Cortez",
+      "policy_area": "liability",
+      "stance": 1,
+      "stance_label": "Supports developer liability",
+      "definition_used": "Civil liability for those who produce, distribute, or possess AI-generated harmful content with intent to distribute.",
+      "quote": "Once the bill is signed into law, and it will be signed into law, survivors will have the ability to hold their abusers accountable and seek financial and reputational damage for the harm they have caused.",
+      "source_url": "https://ocasio-cortez.house.gov/media/press-releases/ocasio-cortez-lee-join-house-members-and-advocates-calling-pass-defiance-act",
+      "source_type": "press_release",
+      "source_title": "Ocasio-Cortez, Lee Join House Members and Advocates in Calling to Pass DEFIANCE Act",
+      "date_stated": "2026-01-22",
+      "confidence": "medium",
+      "extracted_by": "exa+claude",
+      "notes": "Specifically supports civil liability for deepfake creators/distributors, but this is narrower than general AI developer liability",
+      "source_id": "10_ocasio-cortez-house-gov-media-press-releases-ocasio-cortez-l",
+      "claims_from_this_source": 1
     }
   ]
 }
