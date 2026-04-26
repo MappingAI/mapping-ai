@@ -90,6 +90,9 @@ function dotColor(e: { entity_type: string; party: string | null }): string {
 }
 
 function emitEntitySelect(entityId: number) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const tip = (window as any).__cpTooltip as HTMLDivElement | null
+  if (tip) tip.style.opacity = '0'
   window.dispatchEvent(new CustomEvent('cp-entity-select', { detail: entityId }))
 }
 
@@ -112,6 +115,7 @@ const AREA_LABELS: Record<string, string> = {
 }
 
 function EntityDetailPanel({ entityId, onClose }: { entityId: number; onClose: () => void }) {
+  const panelRef = useRef<HTMLDivElement>(null)
   const entity = useMemo(
     () => (entitiesData.entities as CrosspartisanEntity[]).find((e) => e.entity_id === entityId),
     [entityId],
@@ -122,6 +126,10 @@ function EntityDetailPanel({ entityId, onClose }: { entityId: number; onClose: (
     for (const s of claimsData.sources as Source[]) m.set(s.source_id, s)
     return m
   }, [])
+
+  useEffect(() => {
+    panelRef.current?.scrollTo(0, 0)
+  }, [entityId])
 
   if (!entity) return null
 
@@ -141,16 +149,27 @@ function EntityDetailPanel({ entityId, onClose }: { entityId: number; onClose: (
           ? 'Republican'
           : entity.category
 
+  const handleClose = () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const tip = (window as any).__cpTooltip as HTMLDivElement | null
+    if (tip) tip.style.opacity = '0'
+    onClose()
+  }
+
   return (
     <div
       className="fixed inset-0 z-[10000] flex justify-end"
+      style={{ background: 'rgba(0,0,0,0.15)' }}
       onClick={(e) => {
-        if (e.target === e.currentTarget) onClose()
+        if (e.target === e.currentTarget) handleClose()
       }}
     >
-      <div className="bg-white w-full max-w-[480px] h-full overflow-y-auto border-l border-[#ddd] shadow-xl">
+      <div
+        ref={panelRef}
+        className="bg-white w-full max-w-[520px] h-full overflow-y-auto border-l border-[#ddd] shadow-xl"
+      >
         <div className="sticky top-0 bg-white border-b border-[#eee] px-5 py-3 flex justify-between items-start z-10">
-          <div>
+          <div className="min-w-0 flex-1 pr-4">
             <div className="font-mono text-[14px] font-medium text-[#1a1a1a]">{entity.name}</div>
             <div className="font-mono text-[10px] text-[#888] mt-0.5">
               <span style={{ color: dotColor(entity) }}>{partyLabel}</span>
@@ -158,8 +177,8 @@ function EntityDetailPanel({ entityId, onClose }: { entityId: number; onClose: (
             </div>
           </div>
           <button
-            onClick={onClose}
-            className="font-mono text-[16px] text-[#999] hover:text-[#333] px-2 py-1 -mr-2 -mt-1"
+            onClick={handleClose}
+            className="font-mono text-[16px] text-[#999] hover:text-[#333] px-2 py-1 -mr-2 -mt-1 flex-shrink-0"
           >
             ×
           </button>
@@ -639,9 +658,31 @@ function PerIssueRow({
     })
 
     const dotR = 4.5
-    const swarmH = Math.max(60, Math.min(140, dotData.length * 3))
-    const axisY = swarmH / 2
-    const totalH = swarmH + 20
+
+    // Run simulation at y=0 first, then compute bounds to set viewBox
+    const nodes = dotData.map((d) => ({
+      ...d,
+      x: xScale(d.stance),
+      y: 0,
+    }))
+
+    const sim = d3
+      .forceSimulation(nodes)
+      .force('x', d3.forceX((d: { stance: number }) => xScale(d.stance)).strength(1))
+      .force('y', d3.forceY(0).strength(0.15))
+      .force('collide', d3.forceCollide(dotR + 1.5))
+      .stop()
+    for (let i = 0; i < 200; i++) sim.tick()
+
+    const minY = nodes.length > 0 ? d3.min(nodes, (d: { y: number }) => d.y) - dotR - 2 : -30
+    const maxY = nodes.length > 0 ? d3.max(nodes, (d: { y: number }) => d.y) + dotR + 2 : 30
+    const pad = 8
+    const totalH = maxY - minY + pad * 2
+    const offsetY = -minY + pad
+
+    // Shift all nodes so the top is at pad
+    for (const n of nodes) n.y += offsetY
+    const axisY = offsetY
 
     svg.attr('viewBox', `0 0 ${W} ${totalH}`).attr('width', W).attr('height', totalH)
 
@@ -662,20 +703,6 @@ function PerIssueRow({
         .attr('y2', axisY + 3)
         .attr('stroke', '#ccc')
     })
-
-    const nodes = dotData.map((d) => ({
-      ...d,
-      x: xScale(d.stance),
-      y: axisY,
-    }))
-
-    const sim = d3
-      .forceSimulation(nodes)
-      .force('x', d3.forceX((d: { stance: number }) => xScale(d.stance)).strength(1))
-      .force('y', d3.forceY(axisY).strength(0.15))
-      .force('collide', d3.forceCollide(dotR + 1.5))
-      .stop()
-    for (let i = 0; i < 200; i++) sim.tick()
 
     svg
       .selectAll(null)
