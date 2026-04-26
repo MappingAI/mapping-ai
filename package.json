@@ -61,6 +61,7 @@
     "typescript-eslint": "^8.58.2",
     "vite": "^8.0.8",
     "vitest": "^3.2.4",
+    "wrangler": "^4.85.0",
     "xlsx": "^0.18.5"
   },
   "scripts": {
@@ -69,6 +70,8 @@
     "db:setup": "node scripts/migrate.js && node scripts/seed.js",
     "db:seed-test": "node scripts/seed-test-data.js --reset",
     "db:export-map": "tsx scripts/export-map-data.ts",
+    "db:export-claims": "node scripts/export-claims-data.js",
+    "db:export-claims:upload": "node scripts/export-claims-data.js --upload",
     "db:backup": "node scripts/backup-db.js",
     "db:backup:local": "node scripts/backup-db.js --local",
     "predev": "node scripts/ensure-map-data.js",

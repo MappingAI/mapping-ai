@@ -2482,7 +2482,7 @@ fetch('map-data.json')
       .catch(() => {}); // Non-critical — detail panel degrades gracefully
 
     // Lazy-load claims data for detail panel sources section
-    fetch('claims-detail.json')
+    fetch('https://pub-b922bd462cf047f2afc0d8dd5a8dd34c.r2.dev/claims-detail.json')
       .then(r => r.ok ? r.json() : null)
       .then(cd => { if (cd) window.__claimsDetail = cd; })
       .catch(() => {});
