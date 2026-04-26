@@ -16,6 +16,7 @@
 import 'dotenv/config'
 import pg from 'pg'
 import fs from 'fs'
+import os from 'os'
 import { execSync } from 'child_process'
 
 const dbUrl = process.env.PILOT_DB || process.env.DATABASE_URL
@@ -27,7 +28,7 @@ if (!dbUrl) {
 const db = new pg.Pool({ connectionString: dbUrl, ssl: { rejectUnauthorized: false } })
 const upload = process.argv.includes('--upload')
 const BUCKET = 'mapping-ai-data'
-const OUT_DIR = 'public'
+const OUT_DIR = os.tmpdir()
 
 async function exportClaimsDetail() {
   console.log('Exporting claims-detail.json...')
@@ -65,7 +66,6 @@ async function exportClaimsDetail() {
   }
 
   const json = JSON.stringify({ sources: sourceMap, claims: byEntity })
-  if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true })
   const path = `${OUT_DIR}/claims-detail.json`
   fs.writeFileSync(path, json)
   console.log(
@@ -80,11 +80,13 @@ async function main() {
   files.push(await exportClaimsDetail())
 
   // agi-definitions.json is pre-generated (requires Voyage AI embeddings)
-  // Only upload it if it exists
-  const agiPath = `${OUT_DIR}/agi-definitions.json`
-  if (fs.existsSync(agiPath)) {
-    files.push(agiPath)
-    console.log('agi-definitions.json found, will include in upload')
+  // Check common locations and upload if found
+  for (const candidate of ['public/agi-definitions.json', 'agi-definitions.json']) {
+    if (fs.existsSync(candidate)) {
+      files.push(candidate)
+      console.log('agi-definitions.json found at ' + candidate + ', will include in upload')
+      break
+    }
   }
 
   if (upload) {
