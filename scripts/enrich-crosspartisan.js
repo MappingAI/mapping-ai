@@ -318,8 +318,11 @@ async function writeClaim(client, entity, claim, sid) {
        source_id, date_stated, claim_type, confidence, extracted_by, extraction_model, extraction_date)
      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12::date, $13, $14, $15, $16, CURRENT_DATE)
      ON CONFLICT (claim_id) DO UPDATE SET
-       citation = EXCLUDED.citation, stance_score = EXCLUDED.stance_score,
-       confidence = EXCLUDED.confidence, extraction_date = CURRENT_DATE`,
+       stance = EXCLUDED.stance, stance_score = EXCLUDED.stance_score,
+       stance_label = EXCLUDED.stance_label, definition_used = EXCLUDED.definition_used,
+       citation = EXCLUDED.citation, date_stated = EXCLUDED.date_stated,
+       claim_type = EXCLUDED.claim_type, confidence = EXCLUDED.confidence,
+       extraction_date = CURRENT_DATE`,
     [
       cid,
       entity.id,
