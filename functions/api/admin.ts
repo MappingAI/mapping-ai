@@ -154,7 +154,12 @@ export const onRequest: PagesFunction<Env> = async (context) => {
                 'belief_evidence_source',      s.belief_evidence_source,
                 'belief_agi_timeline',         s.belief_agi_timeline,
                 'belief_ai_risk',              s.belief_ai_risk,
-                'belief_threat_models',        s.belief_threat_models
+                'belief_threat_models',        s.belief_threat_models,
+                'topic_tags',                  s.topic_tags,
+                'format_tags',                 s.format_tags,
+                'advocated_stance',            s.advocated_stance,
+                'advocated_timeline',          s.advocated_timeline,
+                'advocated_risk',              s.advocated_risk
               )
             ) FILTER (WHERE s.id IS NOT NULL) AS pending_submissions
           FROM entity e
