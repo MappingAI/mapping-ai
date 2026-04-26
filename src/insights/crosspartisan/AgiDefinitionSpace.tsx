@@ -175,6 +175,163 @@ function getPointColor(d: AgiPoint, colorMode: ColorMode): string {
   return scale.colors[Math.min(score - 1, scale.colors.length - 1)] || '#888'
 }
 
+function ClusterMapView({
+  data,
+  colorMode,
+  onSelect,
+}: {
+  data: AgiData
+  colorMode: ColorMode
+  onSelect: (p: AgiPoint) => void
+}) {
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!ref.current || !data.clusters) return
+    const container = ref.current
+    container.innerHTML = ''
+
+    const W = container.clientWidth || 700
+    const H = Math.max(500, W * 0.75)
+    const pad = 60
+
+    const svg = d3.select(container).append('svg').attr('viewBox', `0 0 ${W} ${H}`).attr('width', W).attr('height', H)
+
+    const clusters = data.clusters || []
+    const cxExtent = d3.extent(clusters, (c: ClusterInfo & { cx?: number }) => c.cx ?? 0) as [number, number]
+    const cyExtent = d3.extent(clusters, (c: ClusterInfo & { cy?: number }) => c.cy ?? 0) as [number, number]
+
+    const xScale = d3
+      .scaleLinear()
+      .domain([cxExtent[0] - 1, cxExtent[1] + 1])
+      .range([pad + 40, W - pad - 40])
+    const yScale = d3
+      .scaleLinear()
+      .domain([cyExtent[0] - 1, cyExtent[1] + 1])
+      .range([H - pad, pad])
+
+    const clusterCenters = new Map<string, { x: number; y: number; count: number }>()
+    clusters.forEach((c: ClusterInfo & { cx?: number; cy?: number }) => {
+      clusterCenters.set(c.id, { x: xScale(c.cx ?? 0), y: yScale(c.cy ?? 0), count: c.count })
+    })
+
+    // Build nodes with initial position near cluster center
+    const nodes = data.points
+      .filter((p) => p.cluster_id && clusterCenters.has(p.cluster_id))
+      .map((p) => {
+        const center = clusterCenters.get(p.cluster_id!)!
+        const angle = Math.random() * 2 * Math.PI
+        const r = Math.random() * 30 + 10
+        return { ...p, x: center.x + Math.cos(angle) * r, y: center.y + Math.sin(angle) * r }
+      })
+
+    // Force simulation: attract to cluster center, repel from each other
+    const sim = d3
+      .forceSimulation(nodes)
+      .force(
+        'x',
+        d3.forceX((d: AgiPoint & { cluster_id: string }) => clusterCenters.get(d.cluster_id)?.x ?? W / 2).strength(0.3),
+      )
+      .force(
+        'y',
+        d3.forceY((d: AgiPoint & { cluster_id: string }) => clusterCenters.get(d.cluster_id)?.y ?? H / 2).strength(0.3),
+      )
+      .force('collide', d3.forceCollide(6))
+      .force('charge', d3.forceManyBody().strength(-2))
+      .stop()
+    for (let i = 0; i < 200; i++) sim.tick()
+
+    // Tooltip
+    const tipId = '__agi-cluster-map-tip'
+    let tipEl = document.getElementById(tipId) as HTMLDivElement | null
+    if (!tipEl) {
+      tipEl = document.createElement('div')
+      tipEl.id = tipId
+      tipEl.className =
+        'fixed bg-white border border-[#bbb] rounded px-3 py-2 font-mono text-[11px] text-[#1a1a1a] pointer-events-none z-[9999] max-w-[320px] leading-[1.4]'
+      tipEl.style.cssText = 'box-shadow: 0 2px 8px rgba(0,0,0,0.08); opacity: 0; left: 0; top: 0;'
+      document.body.appendChild(tipEl)
+    }
+
+    // Cluster labels
+    clusters.forEach((c: ClusterInfo & { cx?: number; cy?: number }) => {
+      const center = clusterCenters.get(c.id)
+      if (!center) return
+      const cx = W / 2
+      const cy2 = H / 2
+      const dx = center.x - cx
+      const dy = center.y - cy2
+      const dist = Math.sqrt(dx * dx + dy * dy)
+      const labelDist = dist + 50 + Math.sqrt(c.count) * 4
+      const labelX = cx + (dx / (dist || 1)) * labelDist
+      const labelY = cy2 + (dy / (dist || 1)) * labelDist
+
+      svg
+        .append('text')
+        .attr('x', Math.max(pad, Math.min(W - pad, labelX)))
+        .attr('y', Math.max(14, Math.min(H - 4, labelY)))
+        .attr('text-anchor', labelX < cx ? 'end' : labelX > cx ? 'start' : 'middle')
+        .attr('font-family', "'DM Mono', monospace")
+        .attr('font-size', 10)
+        .attr('fill', CLUSTER_COLORS[c.id] || '#888')
+        .attr('font-weight', 500)
+        .attr('opacity', 0.8)
+        .text(c.label)
+    })
+
+    // Entity dots
+    svg
+      .selectAll('circle.entity')
+      .data(nodes)
+      .enter()
+      .append('circle')
+      .attr('class', 'entity')
+      .attr('cx', (d: { x: number }) => d.x)
+      .attr('cy', (d: { y: number }) => d.y)
+      .attr('r', 5)
+      .attr('fill', (d: AgiPoint) => getPointColor(d, colorMode))
+      .attr('opacity', 0.85)
+      .attr('stroke', '#fff')
+      .attr('stroke-width', 1)
+      .style('cursor', 'pointer')
+      .on('mouseover', (evt: MouseEvent, d: AgiPoint) => {
+        if (tipEl) {
+          const beliefValue =
+            colorMode === 'cluster'
+              ? d.cluster_label
+              : colorMode === 'category'
+                ? null
+                : d[colorMode as 'stance' | 'timeline' | 'risk']
+          const beliefLine = beliefValue
+            ? `<div style="color:${getPointColor(d, colorMode)};font-weight:500;font-size:10px;margin-bottom:2px;">${beliefValue}</div>`
+            : ''
+          tipEl.innerHTML = `<div style="font-weight:500;margin-bottom:2px;">${escapeHtml(d.name)}</div>
+            <div style="color:#666;font-size:10px;margin-bottom:2px;">${escapeHtml(d.category)}</div>
+            ${beliefLine}
+            <div style="font-size:10px;color:#444;font-style:italic;">${escapeHtml(d.definition.length > 100 ? d.definition.substring(0, 97) + '...' : d.definition)}</div>`
+          tipEl.style.left = evt.clientX + 12 + 'px'
+          tipEl.style.top = evt.clientY + 12 + 'px'
+          tipEl.style.opacity = '1'
+        }
+      })
+      .on('mousemove', (evt: MouseEvent) => {
+        if (tipEl) {
+          tipEl.style.left = evt.clientX + 12 + 'px'
+          tipEl.style.top = evt.clientY + 12 + 'px'
+        }
+      })
+      .on('mouseout', () => {
+        if (tipEl) tipEl.style.opacity = '0'
+      })
+      .on('click', (_: MouseEvent, d: AgiPoint) => {
+        if (tipEl) tipEl.style.opacity = '0'
+        onSelect(d)
+      })
+  }, [data, colorMode, onSelect])
+
+  return <div ref={ref} />
+}
+
 function ClusterView({ data, onSelect }: { data: AgiData; onSelect: (p: AgiPoint) => void }) {
   const clusters = data.clusters || []
 
@@ -221,7 +378,7 @@ export function AgiDefinitionSpace() {
   const [selectedPoint, setSelectedPoint] = useState<AgiPoint | null>(null)
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null)
   const [colorMode, setColorMode] = useState<ColorMode>('cluster')
-  const [viewMode, setViewMode] = useState<'scatter' | 'clusters'>('clusters')
+  const [viewMode, setViewMode] = useState<'map' | 'clusters' | 'scatter'>('map')
 
   useEffect(() => {
     fetch('/agi-definitions.json')
@@ -341,7 +498,7 @@ export function AgiDefinitionSpace() {
       {/* View toggle */}
       <div className="flex items-center gap-3 mb-3 flex-wrap">
         <div className="flex gap-1">
-          {(['clusters', 'scatter'] as const).map((v) => (
+          {(['map', 'clusters', 'scatter'] as const).map((v) => (
             <button
               key={v}
               onClick={() => setViewMode(v)}
@@ -349,11 +506,11 @@ export function AgiDefinitionSpace() {
                 viewMode === v ? 'bg-[#1a1a1a] text-white' : 'bg-[#eee] text-[#555] hover:bg-[#ddd]'
               }`}
             >
-              {v === 'clusters' ? 'By Cluster' : 'Scatter'}
+              {v === 'map' ? 'Map' : v === 'clusters' ? 'List' : 'Scatter'}
             </button>
           ))}
         </div>
-        {viewMode === 'scatter' && (
+        {(viewMode === 'scatter' || viewMode === 'map') && (
           <>
             <span className="font-mono text-[10px] text-[#888]">Color by:</span>
             <div className="flex gap-1">
@@ -374,10 +531,16 @@ export function AgiDefinitionSpace() {
         <span className="font-mono text-[10px] text-[#999]">{data.points.length} definitions</span>
       </div>
 
-      {viewMode === 'clusters' ? <ClusterView data={data} onSelect={setSelectedPoint} /> : <div ref={ref} />}
+      {viewMode === 'map' ? (
+        <ClusterMapView data={data} colorMode={colorMode} onSelect={setSelectedPoint} />
+      ) : viewMode === 'clusters' ? (
+        <ClusterView data={data} onSelect={setSelectedPoint} />
+      ) : (
+        <div ref={ref} />
+      )}
 
-      {/* Legend (scatter view only) */}
-      {viewMode !== 'scatter' ? null : colorMode === 'cluster' ? (
+      {/* Legend */}
+      {viewMode === 'clusters' ? null : colorMode === 'cluster' ? (
         <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2">
           {(data.clusters || []).map((c) => (
             <div key={c.id} className="flex items-center gap-1">

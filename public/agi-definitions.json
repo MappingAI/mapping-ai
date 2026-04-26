@@ -6161,49 +6161,65 @@
       "id": "human-level-cognitive-parity",
       "label": "Human-Level Cognitive Parity",
       "description": "AGI defined as AI matching human-level performance across a broad range of cognitive tasks.",
-      "count": 74
+      "count": 74,
+      "cx": -10.594607948981427,
+      "cy": 9.685672627094704
     },
     {
       "id": "economic-automation",
       "label": "Economic Work Automation",
       "description": "AGI defined as AI that can perform most economically valuable work that humans do.",
-      "count": 26
+      "count": 26,
+      "cx": -15.19019773060895,
+      "cy": 9.373332667573981
     },
     {
       "id": "autonomous-research-capability",
       "label": "Autonomous Research",
       "description": "AGI defined by ability to conduct independent scientific research and make discoveries.",
-      "count": 13
+      "count": 13,
+      "cx": -12.414274954764165,
+      "cy": 5.432665893081093
     },
     {
       "id": "superintelligent-systems",
       "label": "Superintelligent Systems",
       "description": "AGI defined as AI surpassing human intelligence, often linked to recursive self-improvement.",
-      "count": 39
+      "count": 39,
+      "cx": -9.705481264450027,
+      "cy": 6.0669939446911165
     },
     {
       "id": "general-purpose-agents",
       "label": "General-Purpose Agents",
       "description": "AGI defined as flexible, adaptable AI systems that can handle diverse tasks in open-ended environments.",
-      "count": 32
+      "count": 32,
+      "cx": -12.201506397105552,
+      "cy": 7.930247850899427
     },
     {
       "id": "transformative-societal-impact",
       "label": "Transformative Impact",
       "description": "AGI defined by its potential to fundamentally reshape society, economy, or power structures.",
-      "count": 18
+      "count": 18,
+      "cx": -15.397244981812237,
+      "cy": 6.987376130174175
     },
     {
       "id": "conceptual-critique",
       "label": "Conceptual Critique",
       "description": "Definitions that question, reframe, or reject the standard AGI framing.",
-      "count": 48
+      "count": 48,
+      "cx": -8.845943681947213,
+      "cy": 8.036320580682654
     },
     {
       "id": "augmentative-tools",
       "label": "Augmentative Tools",
       "description": "AGI defined as AI that enhances human capabilities rather than replacing them.",
-      "count": 8
+      "count": 8,
+      "cx": -13.121861294633415,
+      "cy": 10.524753924616574
     }
   ]
 }
