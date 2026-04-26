@@ -65,6 +65,7 @@ async function exportClaimsDetail() {
   }
 
   const json = JSON.stringify({ sources: sourceMap, claims: byEntity })
+  if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true })
   const path = `${OUT_DIR}/claims-detail.json`
   fs.writeFileSync(path, json)
   console.log(
