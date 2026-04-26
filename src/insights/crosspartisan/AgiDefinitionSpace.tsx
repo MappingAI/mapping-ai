@@ -16,6 +16,36 @@ interface AgiPoint {
   confidence: string
   x: number
   y: number
+  stance: string | null
+  stance_score: number | null
+  timeline: string | null
+  timeline_score: number | null
+  risk: string | null
+  risk_score: number | null
+}
+
+type ColorMode = 'category' | 'stance' | 'timeline' | 'risk'
+
+const COLOR_MODE_OPTIONS: { value: ColorMode; label: string }[] = [
+  { value: 'category', label: 'Entity category' },
+  { value: 'stance', label: 'Regulatory stance' },
+  { value: 'timeline', label: 'AGI timeline' },
+  { value: 'risk', label: 'AI risk level' },
+]
+
+const BELIEF_SCALES: Record<string, { labels: string[]; colors: string[] }> = {
+  stance: {
+    labels: ['Accelerate', 'Light-touch', 'Targeted', 'Moderate', 'Restrictive', 'Precautionary'],
+    colors: ['#2166ac', '#67a9cf', '#d1e5f0', '#fddbc7', '#ef8a62', '#b2182b'],
+  },
+  timeline: {
+    labels: ['Already here', '2-3 years', '5-10 years', '10-25 years', '25+ years'],
+    colors: ['#d73027', '#fc8d59', '#fee08b', '#91cf60', '#1a9850'],
+  },
+  risk: {
+    labels: ['Overstated', 'Manageable', 'Serious', 'Catastrophic', 'Existential'],
+    colors: ['#4575b4', '#91bfdb', '#fee090', '#fc8d59', '#d73027'],
+  },
 }
 
 interface AgiSource {
@@ -112,11 +142,22 @@ function DetailModal({ point, source, onClose }: { point: AgiPoint; source: AgiS
   )
 }
 
+function getPointColor(d: AgiPoint, colorMode: ColorMode): string {
+  if (colorMode === 'category') return CATEGORY_COLORS[d.category] || '#888'
+  const scoreKey = colorMode === 'stance' ? 'stance_score' : colorMode === 'timeline' ? 'timeline_score' : 'risk_score'
+  const score = d[scoreKey]
+  if (score == null) return '#ddd'
+  const scale = BELIEF_SCALES[colorMode]
+  if (!scale) return '#888'
+  return scale.colors[Math.min(score - 1, scale.colors.length - 1)] || '#888'
+}
+
 export function AgiDefinitionSpace() {
   const ref = useRef<HTMLDivElement>(null)
   const [data, setData] = useState<AgiData | null>(null)
   const [selectedPoint, setSelectedPoint] = useState<AgiPoint | null>(null)
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null)
+  const [colorMode, setColorMode] = useState<ColorMode>('category')
 
   useEffect(() => {
     fetch('/agi-definitions.json')
@@ -178,15 +219,27 @@ export function AgiDefinitionSpace() {
       .attr('cx', (d: AgiPoint) => xScale(d.x))
       .attr('cy', (d: AgiPoint) => yScale(d.y))
       .attr('r', 5)
-      .attr('fill', (d: AgiPoint) => CATEGORY_COLORS[d.category] || '#888')
-      .attr('opacity', (d: AgiPoint) => (hoveredCategory && d.category !== hoveredCategory ? 0.15 : 0.8))
+      .attr('fill', (d: AgiPoint) => getPointColor(d, colorMode))
+      .attr('opacity', (d: AgiPoint) => {
+        if (colorMode !== 'category') {
+          const scoreKey =
+            colorMode === 'stance' ? 'stance_score' : colorMode === 'timeline' ? 'timeline_score' : 'risk_score'
+          return d[scoreKey] == null ? 0.2 : 0.85
+        }
+        return hoveredCategory && d.category !== hoveredCategory ? 0.15 : 0.8
+      })
       .attr('stroke', '#fff')
       .attr('stroke-width', 1)
       .style('cursor', 'pointer')
       .on('mouseover', (evt: MouseEvent, d: AgiPoint) => {
         if (tipEl) {
+          const beliefLine =
+            colorMode !== 'category'
+              ? `<div style="color:${getPointColor(d, colorMode)};font-weight:500;font-size:10px;margin-bottom:2px;">${d[colorMode] || 'No data'}</div>`
+              : ''
           tipEl.innerHTML = `<div style="font-weight:500;margin-bottom:2px;">${escapeHtml(d.name)}</div>
-            <div style="color:#666;font-size:10px;margin-bottom:4px;">${escapeHtml(d.category)}</div>
+            <div style="color:#666;font-size:10px;margin-bottom:2px;">${escapeHtml(d.category)}</div>
+            ${beliefLine}
             <div style="font-size:10px;color:#444;font-style:italic;">${escapeHtml(d.definition.length > 120 ? d.definition.substring(0, 117) + '...' : d.definition)}</div>`
           tipEl.style.left = evt.clientX + 12 + 'px'
           tipEl.style.top = evt.clientY + 12 + 'px'
@@ -206,32 +259,80 @@ export function AgiDefinitionSpace() {
         if (tipEl) tipEl.style.opacity = '0'
         setSelectedPoint(d)
       })
-  }, [data, hoveredCategory])
+  }, [data, hoveredCategory, colorMode])
 
   if (!data) return <div className="font-mono text-[11px] text-[#999]">Loading definition space...</div>
 
+  const beliefScale = colorMode !== 'category' ? BELIEF_SCALES[colorMode] : null
+  const scoreKey = colorMode === 'stance' ? 'stance_score' : colorMode === 'timeline' ? 'timeline_score' : 'risk_score'
+  const noDataCount = colorMode !== 'category' ? data.points.filter((p) => p[scoreKey] == null).length : 0
+
   return (
     <div>
-      <div ref={ref} />
-      {/* Category legend */}
-      <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2">
-        {categories.map((cat) => (
-          <div
-            key={cat}
-            className="flex items-center gap-1 cursor-pointer"
-            onMouseEnter={() => setHoveredCategory(cat)}
-            onMouseLeave={() => setHoveredCategory(null)}
-          >
-            <span
-              className="inline-block w-2 h-2 rounded-full"
-              style={{ background: CATEGORY_COLORS[cat] || '#888' }}
-            />
-            <span className="font-mono text-[9px] text-[#666]">
-              {cat} ({data.points.filter((p) => p.category === cat).length})
-            </span>
-          </div>
-        ))}
+      {/* Color-by dropdown */}
+      <div className="flex items-center gap-3 mb-3">
+        <span className="font-mono text-[10px] text-[#888]">Color by:</span>
+        <div className="flex gap-1">
+          {COLOR_MODE_OPTIONS.map((opt) => (
+            <button
+              key={opt.value}
+              onClick={() => setColorMode(opt.value)}
+              className={`font-mono text-[10px] px-2 py-1 rounded transition-colors ${
+                colorMode === opt.value ? 'bg-[#1a1a1a] text-white' : 'bg-[#eee] text-[#555] hover:bg-[#ddd]'
+              }`}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
       </div>
+
+      <div ref={ref} />
+
+      {/* Legend */}
+      {colorMode === 'category' ? (
+        <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2">
+          {categories.map((cat) => (
+            <div
+              key={cat}
+              className="flex items-center gap-1 cursor-pointer"
+              onMouseEnter={() => setHoveredCategory(cat)}
+              onMouseLeave={() => setHoveredCategory(null)}
+            >
+              <span
+                className="inline-block w-2 h-2 rounded-full"
+                style={{ background: CATEGORY_COLORS[cat] || '#888' }}
+              />
+              <span className="font-mono text-[9px] text-[#666]">
+                {cat} ({data.points.filter((p) => p.category === cat).length})
+              </span>
+            </div>
+          ))}
+        </div>
+      ) : beliefScale ? (
+        <div className="mt-2">
+          <div className="flex items-center gap-0.5">
+            {beliefScale.labels.map((label, i) => (
+              <div key={label} className="flex flex-col items-center" style={{ flex: 1 }}>
+                <div
+                  className="w-full h-3 rounded-sm"
+                  style={{
+                    background: beliefScale.colors[i],
+                    borderRadius: i === 0 ? '3px 0 0 3px' : i === beliefScale.labels.length - 1 ? '0 3px 3px 0' : '0',
+                  }}
+                />
+                <span className="font-mono text-[8px] text-[#888] mt-1 text-center leading-tight">{label}</span>
+              </div>
+            ))}
+          </div>
+          {noDataCount > 0 && (
+            <div className="font-mono text-[9px] text-[#bbb] mt-1">
+              {noDataCount} entities without {colorMode} data shown in gray
+            </div>
+          )}
+        </div>
+      ) : null}
+
       {selectedPoint && (
         <DetailModal
           point={selectedPoint}

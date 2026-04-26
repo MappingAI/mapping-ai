@@ -11,7 +11,13 @@
       "date": "2025-03-21",
       "confidence": "high",
       "x": -4.1579151444897695,
-      "y": 6.6103494361764215
+      "y": 6.6103494361764215,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 1491,
@@ -24,7 +30,13 @@
       "date": "2025-03-14",
       "confidence": "high",
       "x": -7.389540984098579,
-      "y": 8.333632419681493
+      "y": 8.333632419681493,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 206,
@@ -37,7 +49,13 @@
       "date": "2023-01-31",
       "confidence": "high",
       "x": -3.5370771265560297,
-      "y": 8.470214201392704
+      "y": 8.470214201392704,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 212,
@@ -50,7 +68,13 @@
       "date": "2025-12-31",
       "confidence": "high",
       "x": -11.928091711256306,
-      "y": 5.1968439772110315
+      "y": 5.1968439772110315,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 173,
@@ -63,7 +87,13 @@
       "date": "2025-06-02",
       "confidence": "high",
       "x": -13.873273406069655,
-      "y": 3.1432939274163103
+      "y": 3.1432939274163103,
+      "stance": "Restrictive",
+      "stance_score": 5,
+      "timeline": "Ill-defined",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 154,
@@ -76,7 +106,13 @@
       "date": "2023-03-01",
       "confidence": "high",
       "x": -10.777321580349144,
-      "y": 3.970497954421098
+      "y": 3.970497954421098,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 226,
@@ -89,7 +125,13 @@
       "date": "2023-08-03",
       "confidence": "medium",
       "x": -3.7591173860177234,
-      "y": 8.352005066814776
+      "y": 8.352005066814776,
+      "stance": "Restrictive",
+      "stance_score": 5,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 437,
@@ -102,7 +144,13 @@
       "date": "2025-12-16",
       "confidence": "medium",
       "x": -11.218325759326413,
-      "y": 5.58810807075554
+      "y": 5.58810807075554,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 187,
@@ -115,7 +163,13 @@
       "date": "2025-11-02",
       "confidence": "high",
       "x": -12.809104530001528,
-      "y": 7.9746671663039
+      "y": 7.9746671663039,
+      "stance": "Mixed/unclear",
+      "stance_score": null,
+      "timeline": null,
+      "timeline_score": null,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 315,
@@ -128,7 +182,13 @@
       "date": "2023-05-29",
       "confidence": "medium",
       "x": -8.384868034537059,
-      "y": 6.3870698233336505
+      "y": 6.3870698233336505,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Catastrophic",
+      "risk_score": 4
     },
     {
       "entity_id": 1662,
@@ -141,7 +201,13 @@
       "date": "2024-10-31",
       "confidence": "high",
       "x": -13.349334179299289,
-      "y": 5.664862249462478
+      "y": 5.664862249462478,
+      "stance": "Restrictive",
+      "stance_score": 5,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 965,
@@ -154,7 +220,13 @@
       "date": "2025-09-28",
       "confidence": "high",
       "x": -13.949705461288392,
-      "y": 6.4893801504921305
+      "y": 6.4893801504921305,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "10-25 years",
+      "timeline_score": 4,
+      "risk": "Manageable",
+      "risk_score": 2
     },
     {
       "entity_id": 861,
@@ -167,7 +239,13 @@
       "date": "2022-07-17",
       "confidence": "high",
       "x": -7.211855558312582,
-      "y": 4.965076007381946
+      "y": 4.965076007381946,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 900,
@@ -180,7 +258,13 @@
       "date": "2025-06-02",
       "confidence": "high",
       "x": -12.523485935999394,
-      "y": 3.3705707772080973
+      "y": 3.3705707772080973,
+      "stance": "Restrictive",
+      "stance_score": 5,
+      "timeline": "Ill-defined",
+      "timeline_score": null,
+      "risk": "Mixed/nuanced",
+      "risk_score": null
     },
     {
       "entity_id": 772,
@@ -193,7 +277,13 @@
       "date": "2024-09-23",
       "confidence": "high",
       "x": -4.661077802647883,
-      "y": 5.096044813037196
+      "y": 5.096044813037196,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 992,
@@ -206,7 +296,13 @@
       "date": "2026-04-17",
       "confidence": "high",
       "x": -6.019391068247961,
-      "y": 8.686806319435535
+      "y": 8.686806319435535,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "25+ years or never",
+      "timeline_score": 5,
+      "risk": "Manageable",
+      "risk_score": 2
     },
     {
       "entity_id": 736,
@@ -219,7 +315,13 @@
       "date": "2024-11-11",
       "confidence": "high",
       "x": -3.2109234328463394,
-      "y": 7.157266087721317
+      "y": 7.157266087721317,
+      "stance": "Light-touch",
+      "stance_score": 2,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Mixed/nuanced",
+      "risk_score": null
     },
     {
       "entity_id": 729,
@@ -232,7 +334,13 @@
       "date": "2025-11-07",
       "confidence": "high",
       "x": -16.12288938482217,
-      "y": 4.620622480200898
+      "y": 4.620622480200898,
+      "stance": "Light-touch",
+      "stance_score": 2,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Manageable",
+      "risk_score": 2
     },
     {
       "entity_id": 228,
@@ -245,7 +353,13 @@
       "date": "2025-04-14",
       "confidence": "high",
       "x": -15.918134823473608,
-      "y": 5.8994611483857
+      "y": 5.8994611483857,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 1325,
@@ -258,7 +372,13 @@
       "date": "2024-01-16",
       "confidence": "medium",
       "x": -10.237199824175619,
-      "y": 5.230916628014767
+      "y": 5.230916628014767,
+      "stance": "Restrictive",
+      "stance_score": 5,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 782,
@@ -271,7 +391,13 @@
       "date": "2024-04-11",
       "confidence": "high",
       "x": -16.30300652855125,
-      "y": 5.294318758587037
+      "y": 5.294318758587037,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Mixed/nuanced",
+      "risk_score": null
     },
     {
       "entity_id": 1744,
@@ -284,7 +410,13 @@
       "date": "2023-10-05",
       "confidence": "high",
       "x": -8.136236627053625,
-      "y": 8.906782092380347
+      "y": 8.906782092380347,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 1660,
@@ -297,7 +429,13 @@
       "date": "2023-02-01",
       "confidence": "high",
       "x": -11.551547976679712,
-      "y": 5.434125584328709
+      "y": 5.434125584328709,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 211,
@@ -310,7 +448,13 @@
       "date": "2023-09-24",
       "confidence": "high",
       "x": -13.233178521537365,
-      "y": 5.282865154555169
+      "y": 5.282865154555169,
+      "stance": "Accelerate",
+      "stance_score": 1,
+      "timeline": "10-25 years",
+      "timeline_score": 4,
+      "risk": "Overstated",
+      "risk_score": 1
     },
     {
       "entity_id": 1007,
@@ -323,7 +467,13 @@
       "date": "2025-10-16",
       "confidence": "high",
       "x": -12.043706174015231,
-      "y": 6.021936619323163
+      "y": 6.021936619323163,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "10-25 years",
+      "timeline_score": 4,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 976,
@@ -336,7 +486,13 @@
       "date": "2026-02-27",
       "confidence": "high",
       "x": -14.513454100259004,
-      "y": 5.121375320546914
+      "y": 5.121375320546914,
+      "stance": "Light-touch",
+      "stance_score": 2,
+      "timeline": "25+ years or never",
+      "timeline_score": 5,
+      "risk": "Overstated",
+      "risk_score": 1
     },
     {
       "entity_id": 735,
@@ -349,7 +505,13 @@
       "date": "2025-12-17",
       "confidence": "high",
       "x": -13.184693006663784,
-      "y": 4.104207635078686
+      "y": 4.104207635078686,
+      "stance": "Light-touch",
+      "stance_score": 2,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 1772,
@@ -362,7 +524,13 @@
       "date": "2025-02-28",
       "confidence": "high",
       "x": -13.164576264058985,
-      "y": 7.376876963183103
+      "y": 7.376876963183103,
+      "stance": "Restrictive",
+      "stance_score": 5,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 133,
@@ -375,7 +543,13 @@
       "date": "2025-01-22",
       "confidence": "high",
       "x": -6.078229236354343,
-      "y": 6.917078268715114
+      "y": 6.917078268715114,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 12,
@@ -388,7 +562,13 @@
       "date": "2023-12-01",
       "confidence": "high",
       "x": -6.027384287318628,
-      "y": 7.521114725504143
+      "y": 7.521114725504143,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Mixed/nuanced",
+      "risk_score": null
     },
     {
       "entity_id": 217,
@@ -401,7 +581,13 @@
       "date": "2026-01-19",
       "confidence": "high",
       "x": -8.557752337470657,
-      "y": 8.581301485632947
+      "y": 8.581301485632947,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 746,
@@ -414,7 +600,13 @@
       "date": "2026-03-24",
       "confidence": "high",
       "x": -7.499640571738549,
-      "y": 9.647999361386617
+      "y": 9.647999361386617,
+      "stance": "Light-touch",
+      "stance_score": 2,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Manageable",
+      "risk_score": 2
     },
     {
       "entity_id": 1722,
@@ -427,7 +619,13 @@
       "date": "2025-05-31",
       "confidence": "high",
       "x": -12.556688907993651,
-      "y": 2.2508884628840335
+      "y": 2.2508884628840335,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "Ill-defined",
+      "timeline_score": null,
+      "risk": "Overstated",
+      "risk_score": 1
     },
     {
       "entity_id": 103,
@@ -440,7 +638,13 @@
       "date": "2024-08-22",
       "confidence": "high",
       "x": -12.134578539447736,
-      "y": 7.3772286875099296
+      "y": 7.3772286875099296,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "10-25 years",
+      "timeline_score": 4,
+      "risk": "Mixed/nuanced",
+      "risk_score": null
     },
     {
       "entity_id": 257,
@@ -453,7 +657,13 @@
       "date": "2026-02-13",
       "confidence": "high",
       "x": -4.251855230933956,
-      "y": 8.687577726630566
+      "y": 8.687577726630566,
+      "stance": "Mixed/unclear",
+      "stance_score": null,
+      "timeline": "10-25 years",
+      "timeline_score": 4,
+      "risk": "Catastrophic",
+      "risk_score": 4
     },
     {
       "entity_id": 975,
@@ -466,7 +676,13 @@
       "date": "2023-01-20",
       "confidence": "high",
       "x": -11.421025968813007,
-      "y": 4.783320016292742
+      "y": 4.783320016292742,
+      "stance": "Light-touch",
+      "stance_score": 2,
+      "timeline": "10-25 years",
+      "timeline_score": 4,
+      "risk": "Manageable",
+      "risk_score": 2
     },
     {
       "entity_id": 1003,
@@ -479,7 +695,13 @@
       "date": "2025-04-29",
       "confidence": "high",
       "x": -12.965163479220363,
-      "y": 6.007991801264179
+      "y": 6.007991801264179,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 830,
@@ -492,7 +714,13 @@
       "date": "2025-01-05",
       "confidence": "high",
       "x": -11.533361890746516,
-      "y": 3.195332333244644
+      "y": 3.195332333244644,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Mixed/nuanced",
+      "risk_score": null
     },
     {
       "entity_id": 1349,
@@ -505,7 +733,13 @@
       "date": "2025-06-15",
       "confidence": "high",
       "x": -13.398264023770528,
-      "y": 6.053918763253425
+      "y": 6.053918763253425,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 96,
@@ -518,7 +752,13 @@
       "date": "2026-03-24",
       "confidence": "medium",
       "x": -4.557806253045019,
-      "y": 6.070208292077379
+      "y": 6.070208292077379,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "Ill-defined",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 969,
@@ -531,7 +771,13 @@
       "date": "2025-12-11",
       "confidence": "high",
       "x": -5.158423565467814,
-      "y": 7.081206563965374
+      "y": 7.081206563965374,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "10-25 years",
+      "timeline_score": 4,
+      "risk": "Manageable",
+      "risk_score": 2
     },
     {
       "entity_id": 1009,
@@ -544,7 +790,13 @@
       "date": "2023-03-01",
       "confidence": "high",
       "x": -14.52068776276473,
-      "y": 4.061006758047258
+      "y": 4.061006758047258,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 221,
@@ -557,7 +809,13 @@
       "date": "2025-06-02",
       "confidence": "high",
       "x": -12.871138053692597,
-      "y": 6.317147196244898
+      "y": 6.317147196244898,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Catastrophic",
+      "risk_score": 4
     },
     {
       "entity_id": 1768,
@@ -570,7 +828,13 @@
       "date": "2025-12-08",
       "confidence": "high",
       "x": -3.975301565686297,
-      "y": 5.837189474956782
+      "y": 5.837189474956782,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 1196,
@@ -583,7 +847,13 @@
       "date": "2023-11-30",
       "confidence": "high",
       "x": -14.43253333531265,
-      "y": 5.627538094625566
+      "y": 5.627538094625566,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 124,
@@ -596,7 +866,13 @@
       "date": "2025-01-10",
       "confidence": "high",
       "x": -14.832157991592675,
-      "y": 6.657628463988511
+      "y": 6.657628463988511,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "10-25 years",
+      "timeline_score": 4,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 913,
@@ -609,7 +885,13 @@
       "date": "2025-12-02",
       "confidence": "high",
       "x": -7.300446037070596,
-      "y": 8.474304994530236
+      "y": 8.474304994530236,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 422,
@@ -622,7 +904,13 @@
       "date": "2023-07-04",
       "confidence": "medium",
       "x": -12.919186435416949,
-      "y": 5.419338291154092
+      "y": 5.419338291154092,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 1203,
@@ -635,7 +923,13 @@
       "date": "2025-05-20",
       "confidence": "high",
       "x": -6.156798846391583,
-      "y": 8.158952917856173
+      "y": 8.158952917856173,
+      "stance": "Restrictive",
+      "stance_score": 5,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 443,
@@ -648,7 +942,13 @@
       "date": "2023-10-17",
       "confidence": "high",
       "x": -14.049279833520282,
-      "y": 4.8838310584072175
+      "y": 4.8838310584072175,
+      "stance": "Restrictive",
+      "stance_score": 5,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Catastrophic",
+      "risk_score": 4
     },
     {
       "entity_id": 365,
@@ -661,7 +961,13 @@
       "date": "2024-01-01",
       "confidence": "high",
       "x": -10.840140476611916,
-      "y": 4.324147532976307
+      "y": 4.324147532976307,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Catastrophic",
+      "risk_score": 4
     },
     {
       "entity_id": 205,
@@ -674,7 +980,13 @@
       "date": "2026-02-17",
       "confidence": "high",
       "x": -8.106236658744509,
-      "y": 9.513106841673082
+      "y": 9.513106841673082,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 219,
@@ -687,7 +999,13 @@
       "date": "2023-09-10",
       "confidence": "high",
       "x": -5.66066232376912,
-      "y": 5.9406994647988425
+      "y": 5.9406994647988425,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "10-25 years",
+      "timeline_score": 4,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 274,
@@ -700,7 +1018,13 @@
       "date": "2026-02-01",
       "confidence": "high",
       "x": -7.773219431994987,
-      "y": 8.879687227492278
+      "y": 8.879687227492278,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 131,
@@ -713,7 +1037,13 @@
       "date": "2025-11-24",
       "confidence": "high",
       "x": -14.808823434544772,
-      "y": 4.548050117588766
+      "y": 4.548050117588766,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 224,
@@ -726,7 +1056,13 @@
       "date": "2025-12-04",
       "confidence": "high",
       "x": -3.5316880599749765,
-      "y": 7.866423608729629
+      "y": 7.866423608729629,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 293,
@@ -739,7 +1075,13 @@
       "date": "2025-12-16",
       "confidence": "high",
       "x": -4.187574388568787,
-      "y": 6.400668611591663
+      "y": 6.400668611591663,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 99,
@@ -752,7 +1094,13 @@
       "date": "2025-03-20",
       "confidence": "high",
       "x": -7.076403878613172,
-      "y": 6.203580324398053
+      "y": 6.203580324398053,
+      "stance": "Light-touch",
+      "stance_score": 2,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Manageable",
+      "risk_score": 2
     },
     {
       "entity_id": 41,
@@ -765,7 +1113,13 @@
       "date": "2025-06-15",
       "confidence": "high",
       "x": -5.850891757416542,
-      "y": 8.24993180966876
+      "y": 8.24993180966876,
+      "stance": "Restrictive",
+      "stance_score": 5,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Catastrophic",
+      "risk_score": 4
     },
     {
       "entity_id": 2,
@@ -778,7 +1132,13 @@
       "date": "2024-05-14",
       "confidence": "high",
       "x": -13.481075365828396,
-      "y": 2.5932025117777653
+      "y": 2.5932025117777653,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 727,
@@ -791,7 +1151,13 @@
       "date": "2025-01-01",
       "confidence": "high",
       "x": -15.891628533121409,
-      "y": 3.912381415123403
+      "y": 3.912381415123403,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Manageable",
+      "risk_score": 2
     },
     {
       "entity_id": 128,
@@ -804,7 +1170,13 @@
       "date": "2016-01-01",
       "confidence": "high",
       "x": -6.733574377407051,
-      "y": 5.044405236449892
+      "y": 5.044405236449892,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Catastrophic",
+      "risk_score": 4
     },
     {
       "entity_id": 215,
@@ -817,7 +1189,13 @@
       "date": "2026-03-30",
       "confidence": "medium",
       "x": -12.601794241191257,
-      "y": 5.3930374391681255
+      "y": 5.3930374391681255,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 220,
@@ -830,7 +1208,13 @@
       "date": "2025-12-03",
       "confidence": "high",
       "x": -15.490562897287077,
-      "y": 6.65324169633854
+      "y": 6.65324169633854,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 1690,
@@ -843,7 +1227,13 @@
       "date": "2023-05-03",
       "confidence": "high",
       "x": -12.417323506725051,
-      "y": 6.974775196809884
+      "y": 6.974775196809884,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Catastrophic",
+      "risk_score": 4
     },
     {
       "entity_id": 824,
@@ -856,7 +1246,13 @@
       "date": "2025-05-13",
       "confidence": "high",
       "x": -14.034767882318079,
-      "y": 4.244530266527173
+      "y": 4.244530266527173,
+      "stance": "Restrictive",
+      "stance_score": 5,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 246,
@@ -869,7 +1265,13 @@
       "date": "2026-04-01",
       "confidence": "high",
       "x": -8.236154242585405,
-      "y": 6.852545131330146
+      "y": 6.852545131330146,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 408,
@@ -882,7 +1284,13 @@
       "date": "2025-04-13",
       "confidence": "high",
       "x": -4.174431187660649,
-      "y": 7.743224006015809
+      "y": 7.743224006015809,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 893,
@@ -895,7 +1303,13 @@
       "date": "2024-01-01",
       "confidence": "high",
       "x": -12.840789596177421,
-      "y": 4.226908094409052
+      "y": 4.226908094409052,
+      "stance": "Light-touch",
+      "stance_score": 2,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Manageable",
+      "risk_score": 2
     },
     {
       "entity_id": 93,
@@ -908,7 +1322,13 @@
       "date": "2025-10-20",
       "confidence": "high",
       "x": -15.42222207104405,
-      "y": 6.519411178565945
+      "y": 6.519411178565945,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 65,
@@ -921,7 +1341,13 @@
       "date": "2026-01-01",
       "confidence": "high",
       "x": -12.259831457603868,
-      "y": 5.633044816416401
+      "y": 5.633044816416401,
+      "stance": "Mixed/unclear",
+      "stance_score": null,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Mixed/nuanced",
+      "risk_score": null
     },
     {
       "entity_id": 59,
@@ -934,7 +1360,13 @@
       "date": "2025-04-16",
       "confidence": "high",
       "x": -4.582991033013223,
-      "y": 7.516877076532636
+      "y": 7.516877076532636,
+      "stance": "Restrictive",
+      "stance_score": 5,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 967,
@@ -947,7 +1379,13 @@
       "date": "2024-03-26",
       "confidence": "high",
       "x": -15.321566070765599,
-      "y": 4.757206182083884
+      "y": 4.757206182083884,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 13,
@@ -960,7 +1398,13 @@
       "date": "2026-01-07",
       "confidence": "high",
       "x": -13.272000184590537,
-      "y": 4.696012014505687
+      "y": 4.696012014505687,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 977,
@@ -973,7 +1417,13 @@
       "date": "2025-07-31",
       "confidence": "high",
       "x": -9.940710209430573,
-      "y": 7.055401807252618
+      "y": 7.055401807252618,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "10-25 years",
+      "timeline_score": 4,
+      "risk": "Manageable",
+      "risk_score": 2
     },
     {
       "entity_id": 982,
@@ -986,7 +1436,13 @@
       "date": "2023-04-25",
       "confidence": "high",
       "x": -4.675251677686094,
-      "y": 5.979580690772002
+      "y": 5.979580690772002,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 1201,
@@ -999,7 +1455,13 @@
       "date": "2025-01-31",
       "confidence": "high",
       "x": -16.12054350216926,
-      "y": 6.456881414192794
+      "y": 6.456881414192794,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 8,
@@ -1012,7 +1474,13 @@
       "date": "2024-07-07",
       "confidence": "high",
       "x": -6.7163657750943635,
-      "y": 6.792492371129693
+      "y": 6.792492371129693,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 52,
@@ -1025,7 +1493,13 @@
       "date": "2024-04-04",
       "confidence": "high",
       "x": -3.39417586798706,
-      "y": 6.356584117514051
+      "y": 6.356584117514051,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "25+ years or never",
+      "timeline_score": 5,
+      "risk": "Mixed/nuanced",
+      "risk_score": null
     },
     {
       "entity_id": 962,
@@ -1038,7 +1512,13 @@
       "date": "2026-01-13",
       "confidence": "high",
       "x": -12.076716393934248,
-      "y": 6.657105428880224
+      "y": 6.657105428880224,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 1547,
@@ -1051,7 +1531,13 @@
       "date": "2025-10-20",
       "confidence": "high",
       "x": -15.826666670427166,
-      "y": 6.668067781033288
+      "y": 6.668067781033288,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 14,
@@ -1064,7 +1550,13 @@
       "date": "2024-08-14",
       "confidence": "high",
       "x": -14.521797799377081,
-      "y": 3.6327195008085376
+      "y": 3.6327195008085376,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 839,
@@ -1077,7 +1569,13 @@
       "date": "2026-04-15",
       "confidence": "high",
       "x": -14.991237482530673,
-      "y": 6.04539912397264
+      "y": 6.04539912397264,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 42,
@@ -1090,7 +1588,13 @@
       "date": "2025-08-09",
       "confidence": "high",
       "x": -14.457071340205534,
-      "y": 7.061952523465614
+      "y": 7.061952523465614,
+      "stance": "Light-touch",
+      "stance_score": 2,
+      "timeline": "10-25 years",
+      "timeline_score": 4,
+      "risk": "Mixed/nuanced",
+      "risk_score": null
     },
     {
       "entity_id": 1774,
@@ -1103,7 +1607,13 @@
       "date": "2024-02-06",
       "confidence": "high",
       "x": -5.508598222299807,
-      "y": 5.710532866675136
+      "y": 5.710532866675136,
+      "stance": "Light-touch",
+      "stance_score": 2,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Manageable",
+      "risk_score": 2
     },
     {
       "entity_id": 1420,
@@ -1116,7 +1626,13 @@
       "date": "2025-12-08",
       "confidence": "medium",
       "x": -4.190118387771997,
-      "y": 7.043097115494405
+      "y": 7.043097115494405,
+      "stance": "Accelerate",
+      "stance_score": 1,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Manageable",
+      "risk_score": 2
     },
     {
       "entity_id": 993,
@@ -1129,7 +1645,13 @@
       "date": "2025-09-29",
       "confidence": "high",
       "x": -8.633007596019091,
-      "y": 5.296568098022226
+      "y": 5.296568098022226,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 90,
@@ -1142,7 +1664,13 @@
       "date": "2025-10-19",
       "confidence": "medium",
       "x": -9.156926204912146,
-      "y": 6.705921999239407
+      "y": 6.705921999239407,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 892,
@@ -1155,7 +1683,13 @@
       "date": "2025-08-03",
       "confidence": "high",
       "x": -4.734848584369439,
-      "y": 5.4186816910189455
+      "y": 5.4186816910189455,
+      "stance": "Light-touch",
+      "stance_score": 2,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Mixed/nuanced",
+      "risk_score": null
     },
     {
       "entity_id": 989,
@@ -1168,7 +1702,13 @@
       "date": "2025-12-01",
       "confidence": "high",
       "x": -7.325059795444335,
-      "y": 6.782866378075365
+      "y": 6.782866378075365,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 242,
@@ -1181,7 +1721,13 @@
       "date": "2026-02-01",
       "confidence": "high",
       "x": -5.645421241119866,
-      "y": 5.322777220113132
+      "y": 5.322777220113132,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 797,
@@ -1194,7 +1740,13 @@
       "date": "2025-08-25",
       "confidence": "high",
       "x": -13.837588022372929,
-      "y": 5.348334226779733
+      "y": 5.348334226779733,
+      "stance": "Mixed/unclear",
+      "stance_score": null,
+      "timeline": "10-25 years",
+      "timeline_score": 4,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 22,
@@ -1207,7 +1759,13 @@
       "date": "2023-11-10",
       "confidence": "high",
       "x": -14.176789899044948,
-      "y": 4.306771263062284
+      "y": 4.306771263062284,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 48,
@@ -1220,7 +1778,13 @@
       "date": "2024-03-06",
       "confidence": "high",
       "x": -9.01261534149097,
-      "y": 7.22722150653701
+      "y": 7.22722150653701,
+      "stance": "Mixed/unclear",
+      "stance_score": null,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Catastrophic",
+      "risk_score": 4
     },
     {
       "entity_id": 831,
@@ -1233,7 +1797,13 @@
       "date": "2025-06-03",
       "confidence": "high",
       "x": -12.310135731410677,
-      "y": 2.730710952499869
+      "y": 2.730710952499869,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "Ill-defined",
+      "timeline_score": null,
+      "risk": "Mixed/nuanced",
+      "risk_score": null
     },
     {
       "entity_id": 1563,
@@ -1246,7 +1816,13 @@
       "date": "2025-12-19",
       "confidence": "high",
       "x": -15.752173176562808,
-      "y": 5.424421534413428
+      "y": 5.424421534413428,
+      "stance": "Light-touch",
+      "stance_score": 2,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Catastrophic",
+      "risk_score": 4
     },
     {
       "entity_id": 158,
@@ -1259,7 +1835,13 @@
       "date": "2025-09-15",
       "confidence": "high",
       "x": -3.9794919427983504,
-      "y": 7.597229384314604
+      "y": 7.597229384314604,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "10-25 years",
+      "timeline_score": 4,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 149,
@@ -1272,7 +1854,13 @@
       "date": "2025-11-24",
       "confidence": "medium",
       "x": -12.669072593971732,
-      "y": 2.9745328141087892
+      "y": 2.9745328141087892,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Catastrophic",
+      "risk_score": 4
     },
     {
       "entity_id": 855,
@@ -1285,7 +1873,13 @@
       "date": "2025-07-08",
       "confidence": "high",
       "x": -14.32088676989666,
-      "y": 3.8642997250522644
+      "y": 3.8642997250522644,
+      "stance": "Light-touch",
+      "stance_score": 2,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Mixed/nuanced",
+      "risk_score": null
     },
     {
       "entity_id": 100,
@@ -1298,7 +1892,13 @@
       "date": "2025-12-03",
       "confidence": "high",
       "x": -15.904469445261354,
-      "y": 6.576774696571918
+      "y": 6.576774696571918,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 234,
@@ -1311,7 +1911,13 @@
       "date": "2024-07-24",
       "confidence": "high",
       "x": -14.547030024044906,
-      "y": 5.809750268366977
+      "y": 5.809750268366977,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 1262,
@@ -1324,7 +1930,13 @@
       "date": "2025-10-07",
       "confidence": "high",
       "x": -3.5474744287699065,
-      "y": 6.893045923697383
+      "y": 6.893045923697383,
+      "stance": "Restrictive",
+      "stance_score": 5,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 915,
@@ -1337,7 +1949,13 @@
       "date": "2024-07-24",
       "confidence": "high",
       "x": -16.349616935291536,
-      "y": 4.403834134758602
+      "y": 4.403834134758602,
+      "stance": "Restrictive",
+      "stance_score": 5,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 138,
@@ -1350,7 +1968,13 @@
       "date": "2025-04-02",
       "confidence": "high",
       "x": -14.05872790988985,
-      "y": 4.7225128937269565
+      "y": 4.7225128937269565,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 820,
@@ -1363,7 +1987,13 @@
       "date": "2025-01-05",
       "confidence": "high",
       "x": -11.254660358209874,
-      "y": 3.5744010482237267
+      "y": 3.5744010482237267,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Mixed/nuanced",
+      "risk_score": null
     },
     {
       "entity_id": 67,
@@ -1376,7 +2006,13 @@
       "date": "2025-03-04",
       "confidence": "high",
       "x": -4.074473884697714,
-      "y": 7.36304335599932
+      "y": 7.36304335599932,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 1357,
@@ -1389,7 +2025,13 @@
       "date": "2017-01-11",
       "confidence": "high",
       "x": -14.603454015212725,
-      "y": 4.880016376641709
+      "y": 4.880016376641709,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": null,
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 55,
@@ -1402,7 +2044,13 @@
       "date": "2024-09-30",
       "confidence": "high",
       "x": -12.945521388743504,
-      "y": 2.493630107540662
+      "y": 2.493630107540662,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 192,
@@ -1415,7 +2063,13 @@
       "date": "2024-09-17",
       "confidence": "medium",
       "x": -4.727818651324286,
-      "y": 8.152193584435695
+      "y": 8.152193584435695,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 183,
@@ -1428,7 +2082,13 @@
       "date": "2025-09-16",
       "confidence": "high",
       "x": -7.195295836475962,
-      "y": 4.352973216352944
+      "y": 4.352973216352944,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 1597,
@@ -1441,7 +2101,13 @@
       "date": "2024-06-20",
       "confidence": "high",
       "x": -10.125414803179599,
-      "y": 4.583345223676875
+      "y": 4.583345223676875,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Catastrophic",
+      "risk_score": 4
     },
     {
       "entity_id": 229,
@@ -1454,7 +2120,13 @@
       "date": "2025-02-06",
       "confidence": "high",
       "x": -13.326617534578991,
-      "y": 7.644366368984318
+      "y": 7.644366368984318,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 1748,
@@ -1467,7 +2139,13 @@
       "date": "2025-04-10",
       "confidence": "high",
       "x": -6.623852125013044,
-      "y": 6.185413966897078
+      "y": 6.185413966897078,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 990,
@@ -1480,7 +2158,13 @@
       "date": "2025-01-07",
       "confidence": "high",
       "x": -15.32640777318558,
-      "y": 4.368186446007204
+      "y": 4.368186446007204,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "10-25 years",
+      "timeline_score": 4,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 821,
@@ -1493,7 +2177,13 @@
       "date": "2024-04-05",
       "confidence": "high",
       "x": -4.971999425716021,
-      "y": 7.701647769826747
+      "y": 7.701647769826747,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "10-25 years",
+      "timeline_score": 4,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 297,
@@ -1506,7 +2196,13 @@
       "date": "2025-10-21",
       "confidence": "high",
       "x": -9.409167827488748,
-      "y": 6.286362078855588
+      "y": 6.286362078855588,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 308,
@@ -1519,7 +2215,13 @@
       "date": "2025-04-28",
       "confidence": "high",
       "x": -5.448030144792732,
-      "y": 6.8773865908076
+      "y": 6.8773865908076,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 309,
@@ -1532,7 +2234,13 @@
       "date": "2025-03-01",
       "confidence": "high",
       "x": -15.520936105795075,
-      "y": 4.624521073554223
+      "y": 4.624521073554223,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 372,
@@ -1545,7 +2253,13 @@
       "date": "2024-07-04",
       "confidence": "medium",
       "x": -5.781034230908487,
-      "y": 6.958478156487229
+      "y": 6.958478156487229,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 294,
@@ -1558,7 +2272,13 @@
       "date": "2025-05-13",
       "confidence": "high",
       "x": -3.686251483425035,
-      "y": 7.090052842619743
+      "y": 7.090052842619743,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Catastrophic",
+      "risk_score": 4
     },
     {
       "entity_id": 146,
@@ -1571,7 +2291,13 @@
       "date": "2025-04-01",
       "confidence": "high",
       "x": -6.460523993899318,
-      "y": 8.840729257122948
+      "y": 8.840729257122948,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 951,
@@ -1584,7 +2310,13 @@
       "date": "2024-03-22",
       "confidence": "high",
       "x": -5.371909248677648,
-      "y": 7.657899349066685
+      "y": 7.657899349066685,
+      "stance": "Mixed/unclear",
+      "stance_score": null,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Mixed/nuanced",
+      "risk_score": null
     },
     {
       "entity_id": 825,
@@ -1597,7 +2329,13 @@
       "date": "2026-04-05",
       "confidence": "high",
       "x": -12.931167700934894,
-      "y": 2.7285643394800148
+      "y": 2.7285643394800148,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 1626,
@@ -1610,7 +2348,13 @@
       "date": "2026-01-15",
       "confidence": "high",
       "x": -13.351722026897475,
-      "y": 4.718038045192777
+      "y": 4.718038045192777,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 61,
@@ -1623,7 +2367,13 @@
       "date": "2025-10-30",
       "confidence": "high",
       "x": -11.58423351780755,
-      "y": 4.4048952858752575
+      "y": 4.4048952858752575,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 742,
@@ -1636,7 +2386,13 @@
       "date": "2024-02-07",
       "confidence": "high",
       "x": -13.64315028693533,
-      "y": 6.954950797683026
+      "y": 6.954950797683026,
+      "stance": "Mixed/unclear",
+      "stance_score": null,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 1192,
@@ -1649,7 +2405,13 @@
       "date": "2025-05-16",
       "confidence": "high",
       "x": -14.539663457112384,
-      "y": 6.148381737663606
+      "y": 6.148381737663606,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Manageable",
+      "risk_score": 2
     },
     {
       "entity_id": 766,
@@ -1662,7 +2424,13 @@
       "date": "2023-04-26",
       "confidence": "high",
       "x": -15.232780683455285,
-      "y": 5.829860335228076
+      "y": 5.829860335228076,
+      "stance": "Light-touch",
+      "stance_score": 2,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Manageable",
+      "risk_score": 2
     },
     {
       "entity_id": 860,
@@ -1675,7 +2443,13 @@
       "date": "2023-03-31",
       "confidence": "high",
       "x": -11.731994029619011,
-      "y": 4.173981600714217
+      "y": 4.173981600714217,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 835,
@@ -1688,7 +2462,13 @@
       "date": "2025-11-01",
       "confidence": "high",
       "x": -6.321334745506609,
-      "y": 7.825574032432401
+      "y": 7.825574032432401,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 429,
@@ -1701,7 +2481,13 @@
       "date": "2026-02-25",
       "confidence": "high",
       "x": -4.031944144658754,
-      "y": 6.350902346659604
+      "y": 6.350902346659604,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 842,
@@ -1714,7 +2500,13 @@
       "date": "2023-01-01",
       "confidence": "medium",
       "x": -7.024339134736746,
-      "y": 6.201548399386864
+      "y": 6.201548399386864,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 829,
@@ -1727,7 +2519,13 @@
       "date": "2024-06-02",
       "confidence": "medium",
       "x": -6.346710920073622,
-      "y": 6.627033473360739
+      "y": 6.627033473360739,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 1585,
@@ -1740,7 +2538,13 @@
       "date": "2024-06-04",
       "confidence": "high",
       "x": -6.841634018068217,
-      "y": 5.150188515941359
+      "y": 5.150188515941359,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Manageable",
+      "risk_score": 2
     },
     {
       "entity_id": 16,
@@ -1753,7 +2557,13 @@
       "date": "2025-05-11",
       "confidence": "high",
       "x": -7.4936590403912415,
-      "y": 3.8016088510266686
+      "y": 3.8016088510266686,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 822,
@@ -1766,7 +2576,13 @@
       "date": "2023-08-06",
       "confidence": "high",
       "x": -8.179326117332112,
-      "y": 3.697465353424888
+      "y": 3.697465353424888,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 50,
@@ -1779,7 +2595,13 @@
       "date": "2025-04-05",
       "confidence": "high",
       "x": -13.27336335342368,
-      "y": 7.525129120980759
+      "y": 7.525129120980759,
+      "stance": "Mixed/unclear",
+      "stance_score": null,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 117,
@@ -1792,7 +2614,13 @@
       "date": "2025-10-20",
       "confidence": "high",
       "x": -12.279768974268954,
-      "y": 5.284360925890087
+      "y": 5.284360925890087,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 733,
@@ -1805,7 +2633,13 @@
       "date": "2026-03-23",
       "confidence": "high",
       "x": -12.584257181032946,
-      "y": 4.972424239171116
+      "y": 4.972424239171116,
+      "stance": "Light-touch",
+      "stance_score": 2,
+      "timeline": "Already here",
+      "timeline_score": 1,
+      "risk": "Manageable",
+      "risk_score": 2
     },
     {
       "entity_id": 836,
@@ -1818,7 +2652,13 @@
       "date": "2023-04-19",
       "confidence": "high",
       "x": -3.85323709030817,
-      "y": 6.134756647024712
+      "y": 6.134756647024712,
+      "stance": "Light-touch",
+      "stance_score": 2,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 1451,
@@ -1831,7 +2671,13 @@
       "date": "2024-01-01",
       "confidence": "high",
       "x": -6.624738095065822,
-      "y": 7.764733941098689
+      "y": 7.764733941098689,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 79,
@@ -1844,7 +2690,13 @@
       "date": "2025-05-06",
       "confidence": "high",
       "x": -7.9782051353945365,
-      "y": 5.184622909793273
+      "y": 5.184622909793273,
+      "stance": "Light-touch",
+      "stance_score": 2,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Manageable",
+      "risk_score": 2
     },
     {
       "entity_id": 75,
@@ -1857,7 +2709,13 @@
       "date": "2025-04-30",
       "confidence": "high",
       "x": -8.062645166374454,
-      "y": 4.986848179222293
+      "y": 4.986848179222293,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 964,
@@ -1870,7 +2728,13 @@
       "date": "2026-03-07",
       "confidence": "high",
       "x": -8.219202405378546,
-      "y": 5.477430617002348
+      "y": 5.477430617002348,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 966,
@@ -1883,7 +2747,13 @@
       "date": "2025-12-09",
       "confidence": "high",
       "x": -7.695416212929137,
-      "y": 7.923175546291309
+      "y": 7.923175546291309,
+      "stance": "Light-touch",
+      "stance_score": 2,
+      "timeline": "10-25 years",
+      "timeline_score": 4,
+      "risk": "Mixed/nuanced",
+      "risk_score": null
     },
     {
       "entity_id": 107,
@@ -1896,7 +2766,13 @@
       "date": "2025-07-08",
       "confidence": "high",
       "x": -12.556843562010148,
-      "y": 2.8405117911756164
+      "y": 2.8405117911756164,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "Ill-defined",
+      "timeline_score": null,
+      "risk": "Catastrophic",
+      "risk_score": 4
     },
     {
       "entity_id": 1287,
@@ -1909,7 +2785,13 @@
       "date": "2025-03-04",
       "confidence": "high",
       "x": -12.574334230981133,
-      "y": 4.675099657768783
+      "y": 4.675099657768783,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 1015,
@@ -1922,7 +2804,13 @@
       "date": "2026-03-02",
       "confidence": "high",
       "x": -6.099166235320793,
-      "y": 8.586728163937781
+      "y": 8.586728163937781,
+      "stance": "Light-touch",
+      "stance_score": 2,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Manageable",
+      "risk_score": 2
     },
     {
       "entity_id": 878,
@@ -1935,7 +2823,13 @@
       "date": "2025-04-16",
       "confidence": "high",
       "x": -11.991874010031834,
-      "y": 3.7514105678887475
+      "y": 3.7514105678887475,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 806,
@@ -1948,7 +2842,13 @@
       "date": "2024-11-18",
       "confidence": "high",
       "x": -6.867927694351804,
-      "y": 5.930696581405139
+      "y": 5.930696581405139,
+      "stance": "Light-touch",
+      "stance_score": 2,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Manageable",
+      "risk_score": 2
     },
     {
       "entity_id": 376,
@@ -1961,7 +2861,13 @@
       "date": "2025-06-02",
       "confidence": "high",
       "x": -14.16668969333671,
-      "y": 6.199471421920763
+      "y": 6.199471421920763,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 888,
@@ -1974,7 +2880,13 @@
       "date": "2024-06-05",
       "confidence": "high",
       "x": -7.719173389481098,
-      "y": 3.745648029932624
+      "y": 3.745648029932624,
+      "stance": "Nationalize",
+      "stance_score": null,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 49,
@@ -1987,7 +2899,13 @@
       "date": "2025-06-30",
       "confidence": "high",
       "x": -15.683082971943424,
-      "y": 4.8539004257681
+      "y": 4.8539004257681,
+      "stance": "Light-touch",
+      "stance_score": 2,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 1557,
@@ -2000,7 +2918,13 @@
       "date": "2026-01-23",
       "confidence": "high",
       "x": -14.832147965500504,
-      "y": 5.588068929542461
+      "y": 5.588068929542461,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Catastrophic",
+      "risk_score": 4
     },
     {
       "entity_id": 235,
@@ -2013,7 +2937,13 @@
       "date": "2025-02-04",
       "confidence": "medium",
       "x": -14.93941677056622,
-      "y": 6.365360769888665
+      "y": 6.365360769888665,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 947,
@@ -2026,7 +2956,13 @@
       "date": "2025-04-09",
       "confidence": "high",
       "x": -7.210346689331491,
-      "y": 7.5453053071754335
+      "y": 7.5453053071754335,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "10-25 years",
+      "timeline_score": 4,
+      "risk": "Mixed/nuanced",
+      "risk_score": null
     },
     {
       "entity_id": 1362,
@@ -2039,7 +2975,13 @@
       "date": "2025-04-09",
       "confidence": "high",
       "x": -6.933807986977699,
-      "y": 7.935099526315935
+      "y": 7.935099526315935,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Manageable",
+      "risk_score": 2
     },
     {
       "entity_id": 247,
@@ -2052,7 +2994,13 @@
       "date": "2025-04-09",
       "confidence": "high",
       "x": -7.603553681945776,
-      "y": 7.471009313003182
+      "y": 7.471009313003182,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 949,
@@ -2065,7 +3013,13 @@
       "date": "2024-06-19",
       "confidence": "high",
       "x": -15.96962169580893,
-      "y": 4.325199591723384
+      "y": 4.325199591723384,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "10-25 years",
+      "timeline_score": 4,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 341,
@@ -2078,7 +3032,13 @@
       "date": "2024-12-19",
       "confidence": "high",
       "x": -6.201130397552421,
-      "y": 5.700110734938406
+      "y": 5.700110734938406,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 3,
@@ -2091,7 +3051,13 @@
       "date": "2026-04-04",
       "confidence": "medium",
       "x": -3.768860152722387,
-      "y": 7.454977015488231
+      "y": 7.454977015488231,
+      "stance": "Light-touch",
+      "stance_score": 2,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Manageable",
+      "risk_score": 2
     },
     {
       "entity_id": 1123,
@@ -2104,7 +3070,13 @@
       "date": "2025-07-31",
       "confidence": "medium",
       "x": -3.1356633375843144,
-      "y": 6.972641428874383
+      "y": 6.972641428874383,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 1006,
@@ -2117,7 +3089,13 @@
       "date": "2023-07-16",
       "confidence": "high",
       "x": -8.145738563642068,
-      "y": 7.883619867447286
+      "y": 7.883619867447286,
+      "stance": "Light-touch",
+      "stance_score": 2,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Mixed/nuanced",
+      "risk_score": null
     },
     {
       "entity_id": 1368,
@@ -2130,7 +3108,13 @@
       "date": "2025-06-18",
       "confidence": "high",
       "x": -12.178795173519228,
-      "y": 3.500965710364648
+      "y": 3.500965710364648,
+      "stance": "Restrictive",
+      "stance_score": 5,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 935,
@@ -2143,7 +3127,13 @@
       "date": "2024-04-09",
       "confidence": "medium",
       "x": -8.70261985744572,
-      "y": 7.0066813300883
+      "y": 7.0066813300883,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Manageable",
+      "risk_score": 2
     },
     {
       "entity_id": 54,
@@ -2156,7 +3146,13 @@
       "date": "2025-02-03",
       "confidence": "high",
       "x": -7.783896456400895,
-      "y": 5.094287262637929
+      "y": 5.094287262637929,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 60,
@@ -2169,7 +3165,13 @@
       "date": "2025-04-25",
       "confidence": "high",
       "x": -7.320302964166606,
-      "y": 3.9753143145001117
+      "y": 3.9753143145001117,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 47,
@@ -2182,7 +3184,13 @@
       "date": "2024-01-18",
       "confidence": "high",
       "x": -5.701384930265232,
-      "y": 8.519335772256385
+      "y": 8.519335772256385,
+      "stance": "Mixed/unclear",
+      "stance_score": null,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Mixed/nuanced",
+      "risk_score": null
     },
     {
       "entity_id": 850,
@@ -2195,7 +3203,13 @@
       "date": "2026-03-17",
       "confidence": "high",
       "x": -15.824491754062384,
-      "y": 5.51423567783714
+      "y": 5.51423567783714,
+      "stance": "Light-touch",
+      "stance_score": 2,
+      "timeline": "Ill-defined",
+      "timeline_score": null,
+      "risk": "Overstated",
+      "risk_score": 1
     },
     {
       "entity_id": 778,
@@ -2208,7 +3222,13 @@
       "date": "2024-10-30",
       "confidence": "high",
       "x": -14.531974798066573,
-      "y": 5.157423099312733
+      "y": 5.157423099312733,
+      "stance": "Light-touch",
+      "stance_score": 2,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Manageable",
+      "risk_score": 2
     },
     {
       "entity_id": 846,
@@ -2221,7 +3241,13 @@
       "date": "2025-12-03",
       "confidence": "high",
       "x": -14.904310332469544,
-      "y": 5.794716725529012
+      "y": 5.794716725529012,
+      "stance": "Restrictive",
+      "stance_score": 5,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 95,
@@ -2234,7 +3260,13 @@
       "date": "2023-10-03",
       "confidence": "high",
       "x": -12.667046051753966,
-      "y": 2.425913248448726
+      "y": 2.425913248448726,
+      "stance": "Restrictive",
+      "stance_score": 5,
+      "timeline": "Ill-defined",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 204,
@@ -2247,7 +3279,13 @@
       "date": "2024-01-18",
       "confidence": "high",
       "x": -13.953419865860461,
-      "y": 3.8289612590406956
+      "y": 3.8289612590406956,
+      "stance": "Light-touch",
+      "stance_score": 2,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Manageable",
+      "risk_score": 2
     },
     {
       "entity_id": 381,
@@ -2260,7 +3298,13 @@
       "date": "2025-02-04",
       "confidence": "high",
       "x": -13.780744941006226,
-      "y": 6.499172856483601
+      "y": 6.499172856483601,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 902,
@@ -2273,7 +3317,13 @@
       "date": "2023-03-31",
       "confidence": "high",
       "x": -5.523072325045968,
-      "y": 6.091070152341621
+      "y": 6.091070152341621,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "10-25 years",
+      "timeline_score": 4,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 213,
@@ -2286,7 +3336,13 @@
       "date": "2026-01-28",
       "confidence": "high",
       "x": -11.76533766830093,
-      "y": 3.7621665930654054
+      "y": 3.7621665930654054,
+      "stance": "Light-touch",
+      "stance_score": 2,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Manageable",
+      "risk_score": 2
     },
     {
       "entity_id": 147,
@@ -2299,7 +3355,13 @@
       "date": "2026-03-02",
       "confidence": "high",
       "x": -12.131121842652835,
-      "y": 4.760063169210289
+      "y": 4.760063169210289,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Catastrophic",
+      "risk_score": 4
     },
     {
       "entity_id": 873,
@@ -2312,7 +3374,13 @@
       "date": "2026-01-08",
       "confidence": "medium",
       "x": -7.714885637218772,
-      "y": 9.292666176837539
+      "y": 9.292666176837539,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 1365,
@@ -2325,7 +3393,13 @@
       "date": "2024-12-09",
       "confidence": "high",
       "x": -3.3880074823590576,
-      "y": 8.076575958786425
+      "y": 8.076575958786425,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Catastrophic",
+      "risk_score": 4
     },
     {
       "entity_id": 165,
@@ -2338,7 +3412,13 @@
       "date": "2023-09-26",
       "confidence": "high",
       "x": -4.25831179714733,
-      "y": 8.035568192434674
+      "y": 8.035568192434674,
+      "stance": "Light-touch",
+      "stance_score": 2,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 941,
@@ -2351,7 +3431,13 @@
       "date": "2026-03-18",
       "confidence": "high",
       "x": -13.041338272571974,
-      "y": 6.4353998936436225
+      "y": 6.4353998936436225,
+      "stance": "Restrictive",
+      "stance_score": 5,
+      "timeline": "Ill-defined",
+      "timeline_score": null,
+      "risk": "Catastrophic",
+      "risk_score": 4
     },
     {
       "entity_id": 184,
@@ -2364,7 +3450,13 @@
       "date": "2024-10-01",
       "confidence": "high",
       "x": -7.856912774496407,
-      "y": 6.66243763756022
+      "y": 6.66243763756022,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "10-25 years",
+      "timeline_score": 4,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 999,
@@ -2377,7 +3469,13 @@
       "date": "2025-09-30",
       "confidence": "high",
       "x": -3.733574096134197,
-      "y": 6.614287858000626
+      "y": 6.614287858000626,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 889,
@@ -2390,7 +3488,13 @@
       "date": "2026-03-22",
       "confidence": "medium",
       "x": -4.918302508219487,
-      "y": 5.398464302777559
+      "y": 5.398464302777559,
+      "stance": "Light-touch",
+      "stance_score": 2,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Manageable",
+      "risk_score": 2
     },
     {
       "entity_id": 1011,
@@ -2403,7 +3507,13 @@
       "date": "2023-03-24",
       "confidence": "high",
       "x": -14.446749821129501,
-      "y": 4.378374331647997
+      "y": 4.378374331647997,
+      "stance": "Light-touch",
+      "stance_score": 2,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Manageable",
+      "risk_score": 2
     },
     {
       "entity_id": 1141,
@@ -2416,7 +3526,13 @@
       "date": "2024-09-12",
       "confidence": "high",
       "x": -12.24976182330926,
-      "y": 3.8569578475331294
+      "y": 3.8569578475331294,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 223,
@@ -2429,7 +3545,13 @@
       "date": "2025-12-10",
       "confidence": "medium",
       "x": -12.487735405239677,
-      "y": 4.31835421766217
+      "y": 4.31835421766217,
+      "stance": "Nationalize",
+      "stance_score": null,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Catastrophic",
+      "risk_score": 4
     },
     {
       "entity_id": 847,
@@ -2442,7 +3564,13 @@
       "date": "2014-01-01",
       "confidence": "high",
       "x": -5.4270685295115,
-      "y": 7.886933188715337
+      "y": 7.886933188715337,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 1537,
@@ -2455,7 +3583,13 @@
       "date": "2023-11-18",
       "confidence": "high",
       "x": -5.876337450473083,
-      "y": 5.022590178890967
+      "y": 5.022590178890967,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 728,
@@ -2468,7 +3602,13 @@
       "date": "2024-03-18",
       "confidence": "high",
       "x": -5.890607161102037,
-      "y": 7.637454383262475
+      "y": 7.637454383262475,
+      "stance": "Light-touch",
+      "stance_score": 2,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Manageable",
+      "risk_score": 2
     },
     {
       "entity_id": 1336,
@@ -2481,7 +3621,13 @@
       "date": "2025-05-27",
       "confidence": "high",
       "x": -15.923583212612916,
-      "y": 3.903223045790948
+      "y": 3.903223045790948,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 314,
@@ -2494,7 +3640,13 @@
       "date": "2025-09-28",
       "confidence": "medium",
       "x": -13.218737344596315,
-      "y": 3.4677481123424494
+      "y": 3.4677481123424494,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 1295,
@@ -2507,7 +3659,13 @@
       "date": "2024-03-28",
       "confidence": "high",
       "x": -7.179357687037512,
-      "y": 8.368169669822343
+      "y": 8.368169669822343,
+      "stance": "Light-touch",
+      "stance_score": 2,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Manageable",
+      "risk_score": 2
     },
     {
       "entity_id": 140,
@@ -2520,7 +3678,13 @@
       "date": "2023-02-24",
       "confidence": "high",
       "x": -12.574070235213425,
-      "y": 6.289811870249885
+      "y": 6.289811870249885,
+      "stance": "Light-touch",
+      "stance_score": 2,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 1533,
@@ -2533,7 +3697,13 @@
       "date": "2023-04-25",
       "confidence": "medium",
       "x": -14.494609307227785,
-      "y": 7.4151379957011905
+      "y": 7.4151379957011905,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 882,
@@ -2546,7 +3716,13 @@
       "date": "2025-03-17",
       "confidence": "high",
       "x": -14.884057925068568,
-      "y": 4.961369865940795
+      "y": 4.961369865940795,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 132,
@@ -2559,7 +3735,13 @@
       "date": "2025-07-02",
       "confidence": "high",
       "x": -15.491535628082694,
-      "y": 5.653085012665232
+      "y": 5.653085012665232,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 401,
@@ -2572,7 +3754,13 @@
       "date": "2023-04-30",
       "confidence": "high",
       "x": -7.851247762896965,
-      "y": 6.225590876888565
+      "y": 6.225590876888565,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 270,
@@ -2585,7 +3773,13 @@
       "date": "2023-04-30",
       "confidence": "high",
       "x": -8.499800653939618,
-      "y": 6.284990388644485
+      "y": 6.284990388644485,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 837,
@@ -2598,7 +3792,13 @@
       "date": "2023-09-07",
       "confidence": "high",
       "x": -8.459279058071266,
-      "y": 5.9959954936546955
+      "y": 5.9959954936546955,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 38,
@@ -2611,7 +3811,13 @@
       "date": "2024-08-19",
       "confidence": "high",
       "x": -12.620816694148765,
-      "y": 4.0223956281972475
+      "y": 4.0223956281972475,
+      "stance": "Light-touch",
+      "stance_score": 2,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Manageable",
+      "risk_score": 2
     },
     {
       "entity_id": 1683,
@@ -2624,7 +3830,13 @@
       "date": "2025-03-19",
       "confidence": "high",
       "x": -12.296384426464291,
-      "y": 6.3756121565158015
+      "y": 6.3756121565158015,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 950,
@@ -2637,7 +3849,13 @@
       "date": "2025-04-01",
       "confidence": "high",
       "x": -12.610945714436395,
-      "y": 2.9296428254979774
+      "y": 2.9296428254979774,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Mixed/nuanced",
+      "risk_score": null
     },
     {
       "entity_id": 317,
@@ -2650,7 +3868,13 @@
       "date": "2024-11-19",
       "confidence": "high",
       "x": -6.686355387956252,
-      "y": 8.268094977226257
+      "y": 8.268094977226257,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Catastrophic",
+      "risk_score": 4
     },
     {
       "entity_id": 344,
@@ -2663,7 +3887,13 @@
       "date": "2023-11-08",
       "confidence": "high",
       "x": -8.038929951993872,
-      "y": 5.798888274822519
+      "y": 5.798888274822519,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 737,
@@ -2676,7 +3906,13 @@
       "date": "2026-03-05",
       "confidence": "high",
       "x": -7.820617849670073,
-      "y": 9.243815020234175
+      "y": 9.243815020234175,
+      "stance": "Light-touch",
+      "stance_score": 2,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Manageable",
+      "risk_score": 2
     },
     {
       "entity_id": 848,
@@ -2689,7 +3925,13 @@
       "date": "2023-10-19",
       "confidence": "high",
       "x": -12.212272814584018,
-      "y": 7.242528962308364
+      "y": 7.242528962308364,
+      "stance": "Light-touch",
+      "stance_score": 2,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Manageable",
+      "risk_score": 2
     },
     {
       "entity_id": 780,
@@ -2702,7 +3944,13 @@
       "date": "2024-12-16",
       "confidence": "high",
       "x": -13.681922035306007,
-      "y": 4.1141501942682455
+      "y": 4.1141501942682455,
+      "stance": "Light-touch",
+      "stance_score": 2,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Mixed/nuanced",
+      "risk_score": null
     },
     {
       "entity_id": 80,
@@ -2715,7 +3963,13 @@
       "date": "2025-05-18",
       "confidence": "high",
       "x": -6.912053827165461,
-      "y": 7.136384204882118
+      "y": 7.136384204882118,
+      "stance": "Restrictive",
+      "stance_score": 5,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 956,
@@ -2728,7 +3982,13 @@
       "date": "2025-07-14",
       "confidence": "high",
       "x": -13.553714700294012,
-      "y": 5.776130624554387
+      "y": 5.776130624554387,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 210,
@@ -2741,7 +4001,13 @@
       "date": "2023-11-17",
       "confidence": "high",
       "x": -10.752452308524255,
-      "y": 6.693779586279116
+      "y": 6.693779586279116,
+      "stance": "Restrictive",
+      "stance_score": 5,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 181,
@@ -2754,7 +4020,13 @@
       "date": "2024-06-18",
       "confidence": "high",
       "x": -7.890185756871699,
-      "y": 7.1798274973452925
+      "y": 7.1798274973452925,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 171,
@@ -2767,7 +4039,13 @@
       "date": "2023-03-01",
       "confidence": "high",
       "x": -9.783205243656303,
-      "y": 5.845756914626004
+      "y": 5.845756914626004,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Catastrophic",
+      "risk_score": 4
     },
     {
       "entity_id": 760,
@@ -2780,7 +4058,13 @@
       "date": "2026-01-26",
       "confidence": "medium",
       "x": -10.24779265600381,
-      "y": 7.081301463930595
+      "y": 7.081301463930595,
+      "stance": "Mixed/unclear",
+      "stance_score": null,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Mixed/nuanced",
+      "risk_score": null
     },
     {
       "entity_id": 745,
@@ -2793,7 +4077,13 @@
       "date": "2025-01-24",
       "confidence": "high",
       "x": -5.632207108356096,
-      "y": 8.023083083331473
+      "y": 8.023083083331473,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 358,
@@ -2806,7 +4096,13 @@
       "date": "2025-02-28",
       "confidence": "high",
       "x": -12.96000597127665,
-      "y": 7.281693219370588
+      "y": 7.281693219370588,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 1408,
@@ -2819,7 +4115,13 @@
       "date": "2024-05-13",
       "confidence": "high",
       "x": -13.27598734380766,
-      "y": 2.482281231369479
+      "y": 2.482281231369479,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Manageable",
+      "risk_score": 2
     },
     {
       "entity_id": 166,
@@ -2832,7 +4134,13 @@
       "date": "2024-05-14",
       "confidence": "high",
       "x": -13.556739783859049,
-      "y": 2.9246250400754064
+      "y": 2.9246250400754064,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "Ill-defined",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 1427,
@@ -2845,7 +4153,13 @@
       "date": "2024-05-13",
       "confidence": "high",
       "x": -13.444652718268653,
-      "y": 3.2047140532431384
+      "y": 3.2047140532431384,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 1321,
@@ -2858,7 +4172,13 @@
       "date": "2024-05-04",
       "confidence": "high",
       "x": -10.390432103838412,
-      "y": 6.806730250779026
+      "y": 6.806730250779026,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Manageable",
+      "risk_score": 2
     },
     {
       "entity_id": 744,
@@ -2871,7 +4191,13 @@
       "date": "2023-12-08",
       "confidence": "high",
       "x": -15.069424319769944,
-      "y": 4.243784911125945
+      "y": 4.243784911125945,
+      "stance": "Accelerate",
+      "stance_score": 1,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Manageable",
+      "risk_score": 2
     },
     {
       "entity_id": 819,
@@ -2884,7 +4210,13 @@
       "date": "2024-07-31",
       "confidence": "high",
       "x": -11.553758608374348,
-      "y": 7.026525062776813
+      "y": 7.026525062776813,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 944,
@@ -2897,7 +4229,13 @@
       "date": "2026-02-24",
       "confidence": "high",
       "x": -12.911656560619205,
-      "y": 6.872052425547045
+      "y": 6.872052425547045,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 328,
@@ -2910,7 +4248,13 @@
       "date": "2023-01-23",
       "confidence": "high",
       "x": -11.86155234672488,
-      "y": 4.512857371973365
+      "y": 4.512857371973365,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 426,
@@ -2923,7 +4267,13 @@
       "date": "2023-04-05",
       "confidence": "high",
       "x": -7.304883764557722,
-      "y": 5.921064034473358
+      "y": 5.921064034473358,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 254,
@@ -2936,7 +4286,13 @@
       "date": "2025-02-19",
       "confidence": "high",
       "x": -5.328345295652145,
-      "y": 6.6328312971615215
+      "y": 6.6328312971615215,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 136,
@@ -2949,7 +4305,13 @@
       "date": "2026-02-18",
       "confidence": "high",
       "x": -5.0400657195834055,
-      "y": 6.431184869657369
+      "y": 6.431184869657369,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 296,
@@ -2962,7 +4324,13 @@
       "date": "2025-03-15",
       "confidence": "high",
       "x": -4.733266564137744,
-      "y": 7.977224113610756
+      "y": 7.977224113610756,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Catastrophic",
+      "risk_score": 4
     },
     {
       "entity_id": 301,
@@ -2975,7 +4343,13 @@
       "date": "2025-06-12",
       "confidence": "high",
       "x": -5.838983892686308,
-      "y": 6.420766834418039
+      "y": 6.420766834418039,
+      "stance": "Restrictive",
+      "stance_score": 5,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Catastrophic",
+      "risk_score": 4
     },
     {
       "entity_id": 407,
@@ -2988,7 +4362,13 @@
       "date": "2024-10-31",
       "confidence": "high",
       "x": -13.893074701541801,
-      "y": 5.566307824243083
+      "y": 5.566307824243083,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Existential",
+      "risk_score": 5
     },
     {
       "entity_id": 304,
@@ -3001,7 +4381,13 @@
       "date": "2024-12-14",
       "confidence": "medium",
       "x": -3.846053994336727,
-      "y": 7.819841713609063
+      "y": 7.819841713609063,
+      "stance": "Restrictive",
+      "stance_score": 5,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Catastrophic",
+      "risk_score": 4
     },
     {
       "entity_id": 1169,
@@ -3014,7 +4400,13 @@
       "date": "2025-03-05",
       "confidence": "medium",
       "x": -4.966153439683055,
-      "y": 7.283778461898422
+      "y": 7.283778461898422,
+      "stance": "Accelerate",
+      "stance_score": 1,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Manageable",
+      "risk_score": 2
     },
     {
       "entity_id": 238,
@@ -3027,7 +4419,13 @@
       "date": "2024-01-01",
       "confidence": "high",
       "x": -16.33307022924299,
-      "y": 4.248610230791295
+      "y": 4.248610230791295,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 1241,
@@ -3040,7 +4438,13 @@
       "date": "2025-07-02",
       "confidence": "high",
       "x": -14.80374798799394,
-      "y": 5.257186049573603
+      "y": 5.257186049573603,
+      "stance": "Accelerate",
+      "stance_score": 1,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Manageable",
+      "risk_score": 2
     },
     {
       "entity_id": 1438,
@@ -3053,7 +4457,13 @@
       "date": "2025-01-13",
       "confidence": "high",
       "x": -7.897035368267237,
-      "y": 8.284884370304841
+      "y": 8.284884370304841,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 533,
@@ -3066,7 +4476,13 @@
       "date": "2023-11-03",
       "confidence": "high",
       "x": -16.351775528817075,
-      "y": 4.265756130665694
+      "y": 4.265756130665694,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": null,
+      "timeline_score": null,
+      "risk": "Catastrophic",
+      "risk_score": 4
     },
     {
       "entity_id": 1360,
@@ -3079,7 +4495,13 @@
       "date": "2024-02-05",
       "confidence": "high",
       "x": -5.544726385655979,
-      "y": 5.591011319164695
+      "y": 5.591011319164695,
+      "stance": "Precautionary",
+      "stance_score": 6,
+      "timeline": null,
+      "timeline_score": null,
+      "risk": "Catastrophic",
+      "risk_score": 4
     },
     {
       "entity_id": 1260,
@@ -3092,7 +4514,13 @@
       "date": "2023-05-10",
       "confidence": "high",
       "x": -13.592572087144584,
-      "y": 5.136457795830984
+      "y": 5.136457795830984,
+      "stance": "Moderate",
+      "stance_score": 4,
+      "timeline": "Unknown",
+      "timeline_score": null,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 957,
@@ -3105,7 +4533,13 @@
       "date": "2024-02-14",
       "confidence": "high",
       "x": -5.837195176410768,
-      "y": 5.424176594658699
+      "y": 5.424176594658699,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "5-10 years",
+      "timeline_score": 3,
+      "risk": "Serious",
+      "risk_score": 3
     },
     {
       "entity_id": 890,
@@ -3118,7 +4552,13 @@
       "date": "2025-04-07",
       "confidence": "medium",
       "x": -14.777406685125328,
-      "y": 3.9162299119261332
+      "y": 3.9162299119261332,
+      "stance": "Targeted",
+      "stance_score": 3,
+      "timeline": "2-3 years",
+      "timeline_score": 2,
+      "risk": "Existential",
+      "risk_score": 5
     }
   ],
   "sources": {
