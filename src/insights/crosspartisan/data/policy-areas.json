@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "note": "Canonical policy areas tracked for crosspartisan-convergence analysis. Stance is a -2 to +2 integer scale. Null = no known public position. Definitions are deliberately narrow: a claim must address the specific mechanism described, not just the broad topic.",
+  "stance_scale": {
+    "-2": "Strongly oppose",
+    "-1": "Oppose / skeptical",
+    "0": "Mixed / conditional / neutral",
+    "1": "Support / sympathetic",
+    "2": "Strongly support",
+    "null": "No known public position"
+  },
+  "policy_areas": [
+    {
+      "id": "state_preemption",
+      "label": "Federal preemption of state AI laws",
+      "question": "Should Congress preempt state-level AI regulation in favor of a federal framework?",
+      "support_means": "Favors federal preemption; states should not create their own frontier-AI safety or liability regimes.",
+      "oppose_means": "States should retain authority to regulate AI, especially when federal law is silent.",
+      "key_terms": ["preemption", "federal framework", "patchwork", "state authority", "50-state regime"],
+      "expected_convergence": "Classic federalism split. Progressive-D state AGs and libertarian-R state officials may both oppose federal preemption; national-security D and big-tech-friendly R may both support it."
+    },
+    {
+      "id": "open_source_weights",
+      "label": "Restrictions on open-weight frontier models",
+      "question": "Should the US restrict the release of open-weight frontier model weights?",
+      "support_means": "Favors restrictions, licensing, or delays on open release of frontier weights above some capability threshold.",
+      "oppose_means": "Open weights should remain broadly releasable; restrictions would harm research, competition, and democratic accountability.",
+      "key_terms": ["open source", "open weights", "open models", "Llama", "frontier threshold", "dual-use"],
+      "expected_convergence": "Libertarian-R and progressive-D civil-society voices may converge on keeping weights open; national-security D and hawkish R may converge on restriction."
+    },
+    {
+      "id": "compute_governance",
+      "label": "Training-compute reporting and thresholds",
+      "question": "Should training compute (FLOPs) above a threshold trigger mandatory reporting, registration, or licensing?",
+      "support_means": "Favors a compute-based reporting/licensing regime (e.g., EO 14110-style 10^26 FLOPs threshold or similar).",
+      "oppose_means": "Opposes compute thresholds as a trigger for regulation; prefers outcome-based or no regulation.",
+      "key_terms": ["compute threshold", "FLOPs", "10^26", "training run", "reporting requirement", "KYC"],
+      "expected_convergence": "Accelerationists across the aisle oppose thresholds; safety-focused D and national-security R may converge in favor."
+    },
+    {
+      "id": "export_controls_chips",
+      "label": "AI chip and model export controls to adversaries",
+      "question": "Should the US tighten export controls on advanced AI chips and/or frontier model weights to adversary states (primarily PRC)?",
+      "support_means": "Favors tighter controls, closing loopholes, extending to model weights.",
+      "oppose_means": "Favors loosening or narrowing controls; skeptical they work or worth the economic cost.",
+      "key_terms": ["export controls", "BIS", "H20", "entity list", "diversion", "chokepoint"],
+      "expected_convergence": "National-security hawks in both parties converge on tightening; industry-friendly voices in both parties may converge on narrower controls."
+    },
+    {
+      "id": "pre_deployment_testing",
+      "label": "Mandatory pre-deployment evaluations",
+      "question": "Should frontier models require third-party or government evaluations before public release?",
+      "support_means": "Favors mandatory pre-deployment testing (red-teaming, capability evals, safety evals) as a condition of release.",
+      "oppose_means": "Evaluations should remain voluntary; mandatory testing is premature or would entrench incumbents.",
+      "key_terms": ["pre-deployment", "red-team", "evals", "AISI", "capability evaluation", "safety testing"],
+      "expected_convergence": "Consumer-protection D and safety-focused R may converge in favor; small-gov R and innovation-focused D may converge against."
+    },
+    {
+      "id": "liability",
+      "label": "Developer liability for AI-caused harm",
+      "question": "Should AI developers bear strict or product liability for downstream harms caused by their models?",
+      "support_means": "Favors strict or product liability for frontier AI developers; Section 230-style shields should not apply.",
+      "oppose_means": "Opposes strict liability; harm should be attributed to deployers/users, or existing tort law suffices.",
+      "key_terms": ["liability", "Section 230", "strict liability", "product liability", "tort"],
+      "expected_convergence": "Trial-lawyer-aligned D and consumer-protection R may converge in favor; tech-friendly D and deregulatory R may converge against."
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { Navigation } from '../components/Navigation'
+import { CrosspartisanViz } from './crosspartisan/CrosspartisanViz'
 
 // d3 is loaded from a CDN <script> tag (see index.html) rather than imported as a module,
 // so we don't have compile-time types for it. Treating it as `unknown` forces casts at
@@ -55,6 +56,7 @@ const TOC_ITEMS = [
   { id: 'belief-space', label: 'Beliefs' },
   { id: 'threat-models', label: 'Threat Models' },
   { id: 'network', label: 'Connectivity' },
+  { id: 'crosspartisan', label: 'Crosspartisan' },
 ]
 
 /* ────────────────────────────────────────────
@@ -1048,6 +1050,48 @@ export function App() {
           Government and Think Tank categories have the most cross-category connections, serving as the primary hubs of
           the governance network. Categories like Media/Journalism are more internally focused with fewer bridges to
           other communities.
+        </Finding>
+
+        <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
+
+        {/* ═══════════════════════════════════════════ */}
+        {/* SECTION 4: CROSSPARTISAN CONVERGENCE        */}
+        {/* ═══════════════════════════════════════════ */}
+
+        <SectionLabel id="crosspartisan">Insight 4</SectionLabel>
+        <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">
+          Crosspartisan Convergence on AI Policy
+        </h2>
+
+        <Para>
+          On which AI policy mechanisms do policymakers and politically relevant organizations converge, and where do
+          they define key terms differently enough that apparent agreement dissolves on inspection? We track sourced
+          claims across six policy areas: state preemption, open-weight restrictions, compute governance, chip exports,
+          pre-deployment testing, and liability. Each claim is backed by a verbatim quote and URL. The "By Issue" view
+          shows per-issue stance distributions for both policymakers (colored by party) and organizations (green). The
+          horseshoe view maps policymakers onto a U-shaped arc by party and aggregate regulatory stance.
+        </Para>
+
+        <ChartContainer
+          title="Crosspartisan AI policy stances"
+          source="Source: 613 sourced claims across 188 entities (99 policymakers, 89 orgs). Extracted via Exa + Claude from primary sources."
+        >
+          <CrosspartisanViz />
+        </ChartContainer>
+
+        <Para>
+          The <strong>By Issue</strong> view breaks stance down across six policy mechanisms. Filter between
+          policymakers, organizations, or both. The <strong>horseshoe</strong> bends the partisan spectrum into a U:
+          Democrats curve down the left side and Republicans down the right, with precautionary extremes converging at
+          the bottom. The <strong>beeswarm</strong> flattens all entities onto a single regulatory-stance axis for
+          direct comparison.
+        </Para>
+
+        <Finding>
+          State preemption and pre-deployment testing are the most opinionated policy areas, while open-source weight
+          restrictions produce the fewest claims. A policymaker may be precautionary on open-weight restrictions but
+          accelerationist on compute governance. Definitional drift, captured per claim, is where convergence often
+          dissolves on inspection.
         </Finding>
 
         <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
