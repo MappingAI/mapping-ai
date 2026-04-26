@@ -1,6 +1,6 @@
 {
   "schema_version": 3,
-  "snapshot_date": "2026-04-26T07:27:56.618Z",
+  "snapshot_date": "2026-04-26T07:36:09.672Z",
   "source": "All policymakers + orgs with crosspartisan claims from Neon claims-pilot branch.",
   "entities": [
     {
@@ -178,7 +178,7 @@
       "name": "Bernie Sanders",
       "entity_type": "person",
       "category": "Policymaker",
-      "party": null,
+      "party": "I",
       "title": "U.S. Senator from Vermont, Independent (Senior Senator)",
       "primary_org": "United States Senate",
       "aggregate_stance_score": 6

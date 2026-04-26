@@ -1074,7 +1074,7 @@ export function App() {
 
         <ChartContainer
           title="Crosspartisan AI policy stances"
-          source="Source: 613 sourced claims across 188 entities (99 policymakers, 89 orgs). Extracted via Exa + Claude from primary sources."
+          source="Source: 613 sourced claims across 188 entities (99 policymakers, 89 orgs). Each claim backed by a verbatim quote and URL."
         >
           <CrosspartisanViz />
         </ChartContainer>

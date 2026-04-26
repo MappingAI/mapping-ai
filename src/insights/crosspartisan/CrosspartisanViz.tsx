@@ -212,22 +212,22 @@ function HorseshoePlot({ data }: { data: CrosspartisanEntity[] }) {
     container.innerHTML = ''
 
     const W = container.clientWidth || 700
-    const rOuter = Math.min(W * 0.38, 280)
-    const rInner = rOuter * 0.5
+    const rOuter = Math.min(W * 0.38, 260)
+    const rInner = rOuter * 0.45
     const cx = W / 2
-    const cy = rOuter * 0.38
-    const H = cy + rOuter + 50
+    const cy = rOuter * 0.35
+    const H = cy + rOuter + 35
 
     const tip = makeTooltip()
 
     const svg = d3.select(container).append('svg').attr('viewBox', `0 0 ${W} ${H}`).attr('width', W).attr('height', H)
 
-    const filtered = data.filter((e) => e.entity_type === 'person' && e.party && e.aggregate_stance_score != null)
+    const filtered = data.filter((e) => e.entity_type === 'person' && e.aggregate_stance_score != null)
 
     const partyAngle = (p: CrosspartisanEntity): number => {
       const stance = p.aggregate_stance_score!
       const t = (stance - 1) / 5
-      if (p.party === 'I') return 1.5 * Math.PI
+      if (p.party === 'I' || !p.party) return 1.5 * Math.PI
       if (p.party === 'D') return Math.PI + t * 0.5 * Math.PI
       return 2 * Math.PI - t * 0.5 * Math.PI
     }
@@ -239,6 +239,7 @@ function HorseshoePlot({ data }: { data: CrosspartisanEntity[] }) {
 
     for (let s = 1; s <= 6; s++) {
       const r = stanceRadius(s)
+      const opacity = 0.15 + ((6 - s) / 5) * 0.35
       svg
         .append('path')
         .attr(
@@ -246,31 +247,31 @@ function HorseshoePlot({ data }: { data: CrosspartisanEntity[] }) {
           d3
             .arc()
             .innerRadius(r)
-            .outerRadius(r + 0.5)
+            .outerRadius(r + 1)
             .startAngle(-Math.PI / 2)
             .endAngle(Math.PI / 2)(),
         )
         .attr('transform', `translate(${cx},${cy})`)
-        .attr('fill', '#ddd')
+        .attr('fill', `rgba(0,0,0,${opacity})`)
         .attr('stroke', 'none')
     }
 
-    // Stance legend (vertical stack, top-left)
+    // Stance legend (vertical stack, top-left, matching ring opacity)
     const legendG = svg.append('g').attr('transform', `translate(12, 8)`)
     STANCE_LABELS.forEach((label, i) => {
-      const shade = Math.round(200 + (i / 5) * 40)
+      const opacity = 0.15 + ((5 - i) / 5) * 0.35
       legendG
         .append('line')
         .attr('x1', 0)
-        .attr('x2', 10)
-        .attr('y1', i * 13 + 4)
-        .attr('y2', i * 13 + 4)
-        .attr('stroke', `rgb(${shade},${shade},${shade})`)
-        .attr('stroke-width', 1.5)
+        .attr('x2', 14)
+        .attr('y1', i * 14 + 5)
+        .attr('y2', i * 14 + 5)
+        .attr('stroke', `rgba(0,0,0,${opacity})`)
+        .attr('stroke-width', 2)
       legendG
         .append('text')
-        .attr('x', 14)
-        .attr('y', i * 13 + 7)
+        .attr('x', 18)
+        .attr('y', i * 14 + 8)
         .attr('font-family', "'DM Mono', monospace")
         .attr('font-size', 8)
         .attr('fill', '#999')
@@ -291,7 +292,7 @@ function HorseshoePlot({ data }: { data: CrosspartisanEntity[] }) {
       .force('y', d3.forceY((d: { _origY: number }) => d._origY).strength(0.6))
       .force('collide', d3.forceCollide(5))
       .stop()
-    for (let i = 0; i < 120; i++) sim.tick()
+    for (let i = 0; i < 150; i++) sim.tick()
 
     svg
       .selectAll('circle.node')
@@ -302,8 +303,8 @@ function HorseshoePlot({ data }: { data: CrosspartisanEntity[] }) {
       .attr('cx', (d: { x: number }) => d.x)
       .attr('cy', (d: { y: number }) => d.y)
       .attr('r', 4.5)
-      .attr('fill', (d: CrosspartisanEntity) => PARTY_COLOR[d.party || ''] || '#888')
-      .attr('opacity', 0.85)
+      .attr('fill', (d: CrosspartisanEntity) => PARTY_COLOR[d.party || ''] || '#999')
+      .attr('opacity', (d: CrosspartisanEntity) => (d.party ? 0.85 : 0.5))
       .attr('stroke', '#fff')
       .attr('stroke-width', 1)
       .style('cursor', 'pointer')
@@ -314,7 +315,7 @@ function HorseshoePlot({ data }: { data: CrosspartisanEntity[] }) {
     svg
       .append('text')
       .attr('x', cx - rOuter * 0.65)
-      .attr('y', cy - 12)
+      .attr('y', cy - 8)
       .attr('text-anchor', 'middle')
       .attr('font-family', "'DM Mono', monospace")
       .attr('font-size', 11)
@@ -324,7 +325,7 @@ function HorseshoePlot({ data }: { data: CrosspartisanEntity[] }) {
     svg
       .append('text')
       .attr('x', cx + rOuter * 0.65)
-      .attr('y', cy - 12)
+      .attr('y', cy - 8)
       .attr('text-anchor', 'middle')
       .attr('font-family', "'DM Mono', monospace")
       .attr('font-size', 11)
@@ -335,7 +336,7 @@ function HorseshoePlot({ data }: { data: CrosspartisanEntity[] }) {
     svg
       .append('text')
       .attr('x', cx)
-      .attr('y', cy + rOuter + 30)
+      .attr('y', cy + rOuter + 22)
       .attr('text-anchor', 'middle')
       .attr('font-family', "'DM Mono', monospace")
       .attr('font-size', 9)
@@ -606,10 +607,12 @@ export function CrosspartisanViz() {
   const claimCount = (claimsData.claims as Claim[]).length
 
   const partyCounts = useMemo(() => {
-    const c = { D: 0, R: 0, none: 0 }
-    policymakers.forEach((p) => {
+    const c = { D: 0, R: 0, I: 0, none: 0 }
+    const withStance = policymakers.filter((p) => p.aggregate_stance_score != null)
+    withStance.forEach((p) => {
       if (p.party === 'D') c.D++
       else if (p.party === 'R') c.R++
+      else if (p.party === 'I') c.I++
       else c.none++
     })
     return c
@@ -650,7 +653,7 @@ export function CrosspartisanViz() {
           {view === 'by-issue'
             ? `${claimCount} claims · ${policymakers.length} policymakers · ${orgs.length} orgs`
             : view === 'horseshoe'
-              ? `${partyCounts.D} D · ${partyCounts.R} R (policymakers only)`
+              ? `${partyCounts.D} D · ${partyCounts.R} R · ${partyCounts.I} I · ${partyCounts.none} unaffiliated`
               : `${allEntities.filter((e) => e.aggregate_stance_score != null).length} entities with stance data`}
         </div>
       </div>
