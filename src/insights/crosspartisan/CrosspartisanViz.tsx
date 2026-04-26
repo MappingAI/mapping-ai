@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useMemo } from 'react'
+import { createPortal } from 'react-dom'
 import entitiesData from './data/entities.json'
 import claimsData from './data/claims.json'
 import policyAreasData from './data/policy-areas.json'
@@ -156,21 +157,22 @@ function EntityDetailPanel({ entityId, onClose }: { entityId: number; onClose: (
     onClose()
   }
 
-  return (
+  return createPortal(
     <div
-      className="fixed inset-0 z-[10000] flex justify-end"
-      style={{ background: 'rgba(0,0,0,0.15)' }}
+      className="fixed inset-0 z-[10000] flex items-start justify-center pt-[10vh]"
+      style={{ background: 'rgba(0,0,0,0.2)' }}
       onClick={(e) => {
         if (e.target === e.currentTarget) handleClose()
       }}
     >
       <div
         ref={panelRef}
-        className="bg-white w-full max-w-[520px] h-full overflow-y-auto border-l border-[#ddd] shadow-xl"
+        className="bg-white border border-[#ddd] rounded-lg shadow-xl overflow-y-auto w-[90vw] max-w-[560px]"
+        style={{ maxHeight: '75vh' }}
       >
-        <div className="sticky top-0 bg-white border-b border-[#eee] px-5 py-3 flex justify-between items-start z-10">
+        <div className="sticky top-0 bg-white border-b border-[#eee] px-4 py-2.5 flex justify-between items-start z-10 rounded-t-lg">
           <div className="min-w-0 flex-1 pr-4">
-            <div className="font-mono text-[14px] font-medium text-[#1a1a1a]">{entity.name}</div>
+            <div className="font-mono text-[13px] font-medium text-[#1a1a1a]">{entity.name}</div>
             <div className="font-mono text-[10px] text-[#888] mt-0.5">
               <span style={{ color: dotColor(entity) }}>{partyLabel}</span>
               {entity.title && ` · ${entity.title}`}
@@ -178,28 +180,28 @@ function EntityDetailPanel({ entityId, onClose }: { entityId: number; onClose: (
           </div>
           <button
             onClick={handleClose}
-            className="font-mono text-[16px] text-[#999] hover:text-[#333] px-2 py-1 -mr-2 -mt-1 flex-shrink-0"
+            className="font-mono text-[16px] text-[#999] hover:text-[#333] px-2 py-0.5 -mr-2 flex-shrink-0"
           >
             ×
           </button>
         </div>
 
-        <div className="px-5 py-4">
+        <div className="px-4 py-3">
           {claims.length === 0 ? (
             <div className="font-mono text-[11px] text-[#999]">No crosspartisan claims for this entity.</div>
           ) : (
-            <div className="space-y-5">
+            <div className="space-y-4">
               {Array.from(byArea.entries()).map(([areaId, areaClaims]) => (
                 <div key={areaId}>
-                  <div className="font-mono text-[10px] tracking-[0.08em] uppercase text-[#888] mb-2">
+                  <div className="font-mono text-[10px] tracking-[0.08em] uppercase text-[#888] mb-1.5">
                     {AREA_LABELS[areaId] || areaId}
                   </div>
-                  <div className="space-y-3">
+                  <div className="space-y-2.5">
                     {areaClaims.map((c) => {
                       const src = sourceMap.get(c.source_id)
                       return (
                         <div key={c.claim_id} className="border-l-2 border-[#ddd] pl-3">
-                          <div className="flex items-baseline gap-2 mb-1">
+                          <div className="flex items-baseline gap-2 mb-0.5">
                             <span
                               className="font-mono text-[11px] font-medium"
                               style={{
@@ -229,7 +231,7 @@ function EntityDetailPanel({ entityId, onClose }: { entityId: number; onClose: (
                               {c.confidence}
                             </span>
                           </div>
-                          <blockquote className="font-serif text-[13px] text-[#444] leading-[1.5] italic mb-1.5">
+                          <blockquote className="font-serif text-[13px] text-[#444] leading-[1.45] italic mb-1">
                             &ldquo;{c.citation}&rdquo;
                           </blockquote>
                           {src && (
@@ -255,7 +257,8 @@ function EntityDetailPanel({ entityId, onClose }: { entityId: number; onClose: (
           )}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   )
 }
 
