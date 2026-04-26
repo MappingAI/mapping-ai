@@ -374,8 +374,10 @@ async function main() {
 
       if (results.length === 0) {
         console.log('  No results; skipping')
-        progress.completed.push(entity.id)
-        saveProgress(progress)
+        if (!dryRun) {
+          progress.completed.push(entity.id)
+          saveProgress(progress)
+        }
         continue
       }
 
@@ -391,8 +393,10 @@ async function main() {
         }
       }
 
-      progress.completed.push(entity.id)
-      saveProgress(progress)
+      if (!dryRun) {
+        progress.completed.push(entity.id)
+        saveProgress(progress)
+      }
       await delay(100)
 
       if (processed % 10 === 0) {
