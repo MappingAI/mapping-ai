@@ -106,6 +106,12 @@ async function migrate() {
         resource_url                     VARCHAR(500),
         resource_year                    VARCHAR(10),
         resource_key_argument            TEXT,
+        -- resource tagging + advocated beliefs
+        topic_tags                       TEXT[],
+        format_tags                      TEXT[],
+        advocated_stance                 TEXT,
+        advocated_timeline               TEXT,
+        advocated_risk                   TEXT,
         -- shared
         location                         VARCHAR(200),
         influence_type                   TEXT,
@@ -172,6 +178,11 @@ async function migrate() {
     await client.query(`ALTER TABLE entity ADD COLUMN IF NOT EXISTS advocated_stance TEXT`)
     await client.query(`ALTER TABLE entity ADD COLUMN IF NOT EXISTS advocated_timeline TEXT`)
     await client.query(`ALTER TABLE entity ADD COLUMN IF NOT EXISTS advocated_risk TEXT`)
+    await client.query(`ALTER TABLE submission ADD COLUMN IF NOT EXISTS topic_tags TEXT[]`)
+    await client.query(`ALTER TABLE submission ADD COLUMN IF NOT EXISTS format_tags TEXT[]`)
+    await client.query(`ALTER TABLE submission ADD COLUMN IF NOT EXISTS advocated_stance TEXT`)
+    await client.query(`ALTER TABLE submission ADD COLUMN IF NOT EXISTS advocated_timeline TEXT`)
+    await client.query(`ALTER TABLE submission ADD COLUMN IF NOT EXISTS advocated_risk TEXT`)
     console.log('  ✓ schema migrations')
 
     // ── 4c. contributor_keys table ──────────────────────────────────────────────
@@ -324,6 +335,8 @@ async function migrate() {
             website, funding_model, parent_org_id,
             resource_title, resource_category, resource_author, resource_type,
             resource_url, resource_year, resource_key_argument,
+            topic_tags, format_tags,
+            advocated_stance, advocated_timeline, advocated_risk,
             location, influence_type, twitter, bluesky, notes, notes_html,
             belief_regulatory_stance, belief_regulatory_stance_detail,
             belief_evidence_source, belief_agi_timeline, belief_ai_risk,
@@ -335,6 +348,8 @@ async function migrate() {
             NEW.website, NEW.funding_model, NEW.parent_org_id,
             NEW.resource_title, NEW.resource_category, NEW.resource_author, NEW.resource_type,
             NEW.resource_url, NEW.resource_year, NEW.resource_key_argument,
+            NEW.topic_tags, NEW.format_tags,
+            NEW.advocated_stance, NEW.advocated_timeline, NEW.advocated_risk,
             NEW.location, NEW.influence_type, NEW.twitter, NEW.bluesky, NEW.notes, NEW.notes_html,
             NEW.belief_regulatory_stance, NEW.belief_regulatory_stance_detail,
             NEW.belief_evidence_source, NEW.belief_agi_timeline, NEW.belief_ai_risk,

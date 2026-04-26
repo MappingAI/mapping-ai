@@ -185,6 +185,14 @@ export const onRequest: PagesFunction<Env> = async (context) => {
       const notesHtml = (data.notesHtml as string) || null
       const notesMentions = data.notesMentions ? JSON.parse(data.notesMentions as string) : null
 
+      // Normalize array fields (topic_tags, format_tags): accept string[] from JSON body
+      const topicTags = Array.isArray(data.topicTags)
+        ? (data.topicTags as string[]).filter((t) => typeof t === 'string' && t.length > 0)
+        : null
+      const formatTags = Array.isArray(data.formatTags)
+        ? (data.formatTags as string[]).filter((t) => typeof t === 'string' && t.length > 0)
+        : null
+
       const result = await client.query(
         `INSERT INTO submission (
           entity_type, entity_id,
@@ -193,6 +201,8 @@ export const onRequest: PagesFunction<Env> = async (context) => {
           website, funding_model, parent_org_id,
           resource_title, resource_category, resource_author, resource_type,
           resource_url, resource_year, resource_key_argument,
+          topic_tags, format_tags,
+          advocated_stance, advocated_timeline, advocated_risk,
           location, influence_type, twitter, bluesky, notes, notes_html, notes_mentions,
           belief_regulatory_stance, belief_regulatory_stance_score,
           belief_regulatory_stance_detail, belief_evidence_source,
@@ -203,9 +213,10 @@ export const onRequest: PagesFunction<Env> = async (context) => {
         ) VALUES (
           $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14,
           $15, $16, $17, $18, $19, $20, $21,
-          $22, $23, $24, $25, $26, $27, $28,
-          $29, $30, $31, $32, $33, $34, $35, $36, $37,
-          $38, 'pending'
+          $22, $23, $24, $25, $26,
+          $27, $28, $29, $30, $31, $32, $33,
+          $34, $35, $36, $37, $38, $39, $40, $41, $42,
+          $43, 'pending'
         ) RETURNING id`,
         [
           type,
@@ -229,6 +240,11 @@ export const onRequest: PagesFunction<Env> = async (context) => {
           (data.url as string) || null,
           (data.year as string) || null,
           (data.keyArgument as string) || null,
+          topicTags && topicTags.length > 0 ? topicTags : null,
+          formatTags && formatTags.length > 0 ? formatTags : null,
+          (data.advocatedStance as string) || null,
+          (data.advocatedTimeline as string) || null,
+          (data.advocatedRisk as string) || null,
           (data.location as string) || null,
           (data.influenceType as string) || null,
           (data.twitter as string) || null,
