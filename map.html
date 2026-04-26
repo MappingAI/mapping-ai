@@ -2481,6 +2481,12 @@ fetch('map-data.json')
       })
       .catch(() => {}); // Non-critical — detail panel degrades gracefully
 
+    // Lazy-load claims data for detail panel sources section
+    fetch('claims-detail.json')
+      .then(r => r.ok ? r.json() : null)
+      .then(cd => { if (cd) window.__claimsDetail = cd; })
+      .catch(() => {});
+
     buildSlugMaps();
 
     // Build links (needed by both mobile mini-graph and desktop map)
@@ -4545,6 +4551,59 @@ function showDetail(d, allNodes) {
     fields = '<div class="detail-field"><span style="color:var(--text-3); font-style:italic;">No additional details yet. <a href="/contribute" style="color:var(--accent);">Contribute info</a></span></div>';
   }
 
+  // Claims & sources section
+  let claimsSection = '';
+  const cd = window.__claimsDetail;
+  const entityClaims = cd && cd.claims && cd.claims[d.id];
+  if (entityClaims && entityClaims.length > 0) {
+    const DIM_LABELS = {
+      regulatory_stance: 'Regulatory Stance',
+      agi_timeline: 'AGI Timeline',
+      ai_risk_level: 'AI Risk Level',
+      agi_definition: 'AGI Definition',
+      state_preemption: 'State Preemption',
+      open_source_weights: 'Open-Source Weights',
+      compute_governance: 'Compute Governance',
+      export_controls_chips: 'Export Controls',
+      pre_deployment_testing: 'Pre-Deployment Testing',
+      liability: 'Liability',
+    };
+    const byDim = {};
+    entityClaims.forEach(c => {
+      if (!byDim[c.dim]) byDim[c.dim] = [];
+      byDim[c.dim].push(c);
+    });
+    let claimsHtml = '';
+    for (const [dim, claims] of Object.entries(byDim)) {
+      const dimLabel = DIM_LABELS[dim] || dim;
+      let itemsHtml = '';
+      claims.forEach(c => {
+        const src = cd.sources[c.src];
+        const scoreColor = c.score > 0 ? '#1e6fd1' : c.score < 0 ? '#d6342c' : 'var(--text-3)';
+        const confColor = c.conf === 'high' ? '#2e7d32' : c.conf === 'medium' ? '#f57f17' : '#c62828';
+        const confBg = c.conf === 'high' ? '#e8f5e9' : c.conf === 'medium' ? '#fff8e1' : '#fce4ec';
+        const scoreText = c.score != null ? `<span style="color:${scoreColor};font-weight:500;">${c.score > 0 ? '+' : ''}${c.score}</span> ` : '';
+        const labelText = c.label ? escHtml(c.label) : '';
+        const confBadge = c.conf ? ` <span style="font-size:9px;padding:1px 4px;border-radius:3px;background:${confBg};color:${confColor};text-transform:uppercase;">${c.conf}</span>` : '';
+        const cite = c.cite ? `<div style="font-style:italic;color:var(--text-2);font-size:12px;line-height:1.45;margin:3px 0;">&ldquo;${escHtml(c.cite)}&rdquo;</div>` : '';
+        const srcLink = src && src.url ? `<a href="${escHtml(src.url)}" target="_blank" rel="noopener" style="font-size:10px;color:var(--accent);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escHtml(src.title || src.url)}</a>` : '';
+        const meta = [src && src.type, c.date, src && src.author].filter(Boolean).join(' · ');
+        const metaHtml = meta ? `<div style="font-size:9px;color:var(--text-3);margin-top:2px;">${escHtml(meta)}</div>` : '';
+        itemsHtml += `<div style="border-left:2px solid var(--border);padding-left:8px;margin-bottom:8px;">${scoreText}${labelText}${confBadge}${cite}${srcLink}${metaHtml}</div>`;
+      });
+      claimsHtml += `<div style="margin-bottom:10px;"><div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-3);margin-bottom:4px;">${dimLabel}</div>${itemsHtml}</div>`;
+    }
+    claimsSection = `
+      <div style="margin-top:12px;border-top:1px solid var(--border);padding-top:8px;">
+        <details>
+          <summary style="cursor:pointer;font-family:'DM Mono',monospace;font-size:11px;color:var(--text-2);user-select:none;">
+            Sources & Claims <span style="color:var(--text-3);font-size:10px;">(${entityClaims.length})</span>
+          </summary>
+          <div style="margin-top:8px;">${claimsHtml}</div>
+        </details>
+      </div>`;
+  }
+
   // Build linked entities using shared buildConnections()
   let affiliated = '';
   const linkedItems = buildConnections(d);
@@ -4615,6 +4674,7 @@ function showDetail(d, allNodes) {
     <div class="detail-categories">${categoryBadges}</div>
     ${beliefSummary}
     <div class="detail-fields">${fields}</div>
+    ${claimsSection}
     ${affiliated}
   `;
 
@@ -4641,6 +4701,7 @@ function showDetail(d, allNodes) {
     <div class="detail-categories">${categoryBadges}</div>
     ${beliefSummary}
     <div class="detail-fields">${fields}</div>
+    ${claimsSection}
     ${affiliated}`;
     // Mini graph for people/orgs; resources skip the graph (no edges/beliefs)
     const graphContainer = document.getElementById('mini-graph-container');
