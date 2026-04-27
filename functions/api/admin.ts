@@ -368,12 +368,14 @@ export const onRequest: PagesFunction<Env> = async (context) => {
         return jsonResponse({ success: true, action: 'updated' }, request, 200, corsOptions)
       }
 
-      // Delete an entity
+      // Delete an entity (clear FK references in submission + edge first)
       if (action === 'delete') {
         const entity_id = body.entity_id
         if (!entity_id) {
           return jsonResponse({ error: 'Missing entity_id' }, request, 400, corsOptions)
         }
+        await sql.query(`UPDATE submission SET entity_id = NULL WHERE entity_id = $1`, [entity_id])
+        await sql.query(`DELETE FROM edge WHERE source_id = $1 OR target_id = $1`, [entity_id])
         await sql.query(`DELETE FROM entity WHERE id = $1`, [entity_id])
         await refreshMapData(sql, env.DATA_BUCKET)
         return jsonResponse({ success: true, action: 'deleted' }, request, 200, corsOptions)
