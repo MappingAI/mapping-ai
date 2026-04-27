@@ -8,8 +8,8 @@
  *   - advocated_stance, advocated_timeline, advocated_risk
  *   - claims with source citations (written to claim + source tables)
  *
- * Reads from DATABASE_URL (prod/main), writes entity updates to PILOT_DB
- * and claims/sources to PILOT_DB.
+ * Reads and writes entity updates + claims/sources to PILOT_DB (which has
+ * the latest schema with topic_tags, format_tags, advocated_* columns).
  *
  * Usage:
  *   PILOT_DB="postgresql://..." node scripts/enrich-resources.js --limit=5
@@ -536,8 +536,10 @@ async function main() {
       if (!content) {
         console.log('  No content retrieved; skipping')
         totalSkipped++
-        progress.completed.push(resource.id)
-        saveProgress(progress)
+        if (!dryRun) {
+          progress.completed.push(resource.id)
+          saveProgress(progress)
+        }
         continue
       }
 
@@ -549,8 +551,10 @@ async function main() {
       if (!metadata) {
         console.log('  Extraction failed; skipping')
         totalSkipped++
-        progress.completed.push(resource.id)
-        saveProgress(progress)
+        if (!dryRun) {
+          progress.completed.push(resource.id)
+          saveProgress(progress)
+        }
         continue
       }
 
@@ -589,8 +593,10 @@ async function main() {
         }
       }
 
-      progress.completed.push(resource.id)
-      saveProgress(progress)
+      if (!dryRun) {
+        progress.completed.push(resource.id)
+        saveProgress(progress)
+      }
       await delay(200)
 
       if (processed % 10 === 0) {

@@ -428,8 +428,10 @@ async function main() {
           )
           console.log(`  Registered resource URL as source [${sid}]`)
         }
-        progress.completed.push(entity.id)
-        saveProgress(progress)
+        if (!dryRun) {
+          progress.completed.push(entity.id)
+          saveProgress(progress)
+        }
         continue
       }
 
@@ -443,13 +445,17 @@ async function main() {
 
         if (client) {
           for (const c of claims) {
-            const sid = await registerSource(client, c)
-            await writeClaim(client, entity, c, sid)
-            totalSourced++
-            const dimLabel = c.belief_dimension === 'agi_definition' ? 'AGI def' : c.belief_dimension
-            console.log(
-              `    ${dimLabel}: ${c.stance_label || c.definition_used?.slice(0, 40) || '?'} [${c.confidence}] ${sid}`,
-            )
+            try {
+              const sid = await registerSource(client, c)
+              await writeClaim(client, entity, c, sid)
+              totalSourced++
+              const dimLabel = c.belief_dimension === 'agi_definition' ? 'AGI def' : c.belief_dimension
+              console.log(
+                `    ${dimLabel}: ${c.stance_label || c.definition_used?.slice(0, 40) || '?'} [${c.confidence}] ${sid}`,
+              )
+            } catch (err) {
+              console.error(`    DB write error: ${err.message}`)
+            }
           }
         }
         await delay(100)
@@ -461,8 +467,10 @@ async function main() {
         totalFallback += await writeUnsourcedFallback(client, entity)
       }
 
-      progress.completed.push(entity.id)
-      saveProgress(progress)
+      if (!dryRun) {
+        progress.completed.push(entity.id)
+        saveProgress(progress)
+      }
 
       if (processed % 10 === 0) {
         console.log(`\n  --- Progress: ${processed}/${entities.length} | ${costs.summary()} ---`)
