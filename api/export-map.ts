@@ -8,8 +8,13 @@
  * of the contract will drift silently.
  */
 
-import type { PoolClient } from 'pg'
 import type { DbEntityRow } from '../src/shared/db-types.js'
+
+/**
+ * Generic SQL query function compatible with @neondatabase/serverless.
+ * Accepts a query string and positional params, returns the rows array.
+ */
+type SqlQueryFn = (query: string, params?: unknown[]) => Promise<Record<string, unknown>[]>
 
 const SENSITIVE = new Set<keyof DbEntityRow>([
   // submitter_email / submitter_relationship live on the `submission` table,
@@ -122,6 +127,13 @@ export function toFrontendShape(row: RawEntityRow): FrontendEntity {
     out.url = row.resource_url
     out.year = row.resource_year
     out.key_argument = row.resource_key_argument
+    // Resource tagging: topic_tags supplements/replaces single category
+    out.topic_tags = row.topic_tags ?? null
+    out.format_tags = row.format_tags ?? null
+    // Advocated beliefs: what the resource argues for (vs. entity's own beliefs)
+    out.advocated_stance = row.advocated_stance ?? null
+    out.advocated_timeline = row.advocated_timeline ?? null
+    out.advocated_risk = row.advocated_risk ?? null
   }
 
   // Numeric scores: prefer wavg from submissions, fall back to text label lookup.
@@ -140,8 +152,8 @@ export function toFrontendShape(row: RawEntityRow): FrontendEntity {
  * source_type priority: self > connector > external.
  * Derived from any approved submission for the entity.
  */
-async function computeSourceTypes(client: PoolClient): Promise<Map<number, string>> {
-  const result = await client.query<{ entity_id: number; source_type: string }>(`
+async function computeSourceTypes(sql: SqlQueryFn): Promise<Map<number, string>> {
+  const rows = (await sql(`
     SELECT entity_id,
       CASE
         WHEN bool_or(submitter_relationship = 'self')      THEN 'self'
@@ -151,8 +163,8 @@ async function computeSourceTypes(client: PoolClient): Promise<Map<number, strin
     FROM submission
     WHERE entity_id IS NOT NULL AND status = 'approved'
     GROUP BY entity_id
-  `)
-  return new Map(result.rows.map((r) => [r.entity_id, r.source_type]))
+  `)) as { entity_id: number; source_type: string }[]
+  return new Map(rows.map((r) => [r.entity_id, r.source_type]))
 }
 
 interface EdgeJoinRow {
@@ -194,13 +206,13 @@ export interface GeneratedMapData {
   person_organizations: PersonOrganizationEdge[]
 }
 
-export async function generateMapData(client: PoolClient): Promise<GeneratedMapData> {
+export async function generateMapData(sql: SqlQueryFn): Promise<GeneratedMapData> {
   // Only export entities that have passed QA review.
-  const entities = await client.query<RawEntityRow>(
+  const entityRows = (await sql(
     `SELECT * FROM entity WHERE status = 'approved' AND qa_approved = true ORDER BY id`,
-  )
+  )) as RawEntityRow[]
   // Only export edges between QA-approved entities.
-  const edges = await client.query<EdgeJoinRow>(
+  const edgeRows = (await sql(
     `SELECT e.id, e.source_id, e.target_id, e.edge_type, e.role, e.is_primary,
             e.evidence, e.created_by,
             src.entity_type AS source_type,
@@ -209,15 +221,15 @@ export async function generateMapData(client: PoolClient): Promise<GeneratedMapD
      JOIN entity src ON src.id = e.source_id AND src.qa_approved = true
      JOIN entity tgt ON tgt.id = e.target_id AND tgt.qa_approved = true
      ORDER BY e.id`,
-  )
+  )) as unknown as EdgeJoinRow[]
 
-  const sourceTypeMap = await computeSourceTypes(client)
+  const sourceTypeMap = await computeSourceTypes(sql)
 
   const people: FrontendEntity[] = []
   const organizations: FrontendEntity[] = []
   const resources: FrontendEntity[] = []
 
-  for (const row of entities.rows) {
+  for (const row of entityRows) {
     const clean = stripSensitive(row)
     const shaped = toFrontendShape(clean)
     shaped.source_type = sourceTypeMap.get(row.id) ?? 'external'
@@ -228,7 +240,7 @@ export async function generateMapData(client: PoolClient): Promise<GeneratedMapD
   }
 
   // Build relationships in the shape map.html expects.
-  const relationships: MapRelationship[] = edges.rows.map((e) => ({
+  const relationships: MapRelationship[] = edgeRows.map((e) => ({
     source_type: e.source_type,
     target_type: e.target_type,
     source_id: e.source_id,
@@ -239,7 +251,7 @@ export async function generateMapData(client: PoolClient): Promise<GeneratedMapD
   }))
 
   // Build person_organizations from affiliation edges that cross person↔org.
-  const person_organizations: PersonOrganizationEdge[] = edges.rows
+  const person_organizations: PersonOrganizationEdge[] = edgeRows
     .filter(
       (e) =>
         e.edge_type === 'affiliated' &&
@@ -281,6 +293,11 @@ const DETAIL_FIELDS = new Set<string>([
   'bluesky',
   'parent_org_id',
   'status',
+  // Resource detail-only fields
+  'format_tags',
+  'advocated_stance',
+  'advocated_timeline',
+  'advocated_risk',
 ])
 
 export interface SplitMapData {

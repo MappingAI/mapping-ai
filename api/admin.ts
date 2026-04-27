@@ -24,7 +24,12 @@ const ADMIN_KEY = process.env.ADMIN_KEY
 
 async function refreshMapData(client: PoolClient) {
   try {
-    const data = await generateMapData(client)
+    // Wrap pg.PoolClient in the SqlQueryFn interface that export-map.ts expects
+    const sql = async (query: string, params?: unknown[]) => {
+      const result = await client.query(query, params)
+      return result.rows as Record<string, unknown>[]
+    }
+    const data = await generateMapData(sql)
     const { skeleton, detail } = splitMapData(data)
 
     // Upload skeleton + detail in parallel
@@ -81,6 +86,11 @@ const ENTITY_FIELDS = [
   'resource_url',
   'resource_year',
   'resource_key_argument',
+  'topic_tags',
+  'format_tags',
+  'advocated_stance',
+  'advocated_timeline',
+  'advocated_risk',
   'location',
   'influence_type',
   'twitter',
@@ -156,6 +166,11 @@ export const handler: APIGatewayProxyHandlerV2 = async (event) => {
               'resource_url',                s.resource_url,
               'resource_year',               s.resource_year,
               'resource_key_argument',       s.resource_key_argument,
+              'topic_tags',                  s.topic_tags,
+              'format_tags',                 s.format_tags,
+              'advocated_stance',            s.advocated_stance,
+              'advocated_timeline',          s.advocated_timeline,
+              'advocated_risk',              s.advocated_risk,
               'location',                    s.location,
               'influence_type',              s.influence_type,
               'twitter',                     s.twitter,
