@@ -129,8 +129,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Delete Neon branch
+      - name: Delete Neon branch (if exists)
         # neondatabase/delete-branch-action@v3.2.1 (SHA-pinned for prod use).
+        # continue-on-error: the branch may not exist if the PR was opened
+        # before this workflow was added, or if creation failed/was skipped.
+        continue-on-error: true
         uses: neondatabase/delete-branch-action@4468d825d5a88ef4012f1705a82f02ec3072f776 # v3.2.1
         with:
           project_id: calm-tree-46517731
