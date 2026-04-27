@@ -24,7 +24,12 @@ const ADMIN_KEY = process.env.ADMIN_KEY
 
 async function refreshMapData(client: PoolClient) {
   try {
-    const data = await generateMapData(client)
+    // Wrap pg.PoolClient in the SqlQueryFn interface that export-map.ts expects
+    const sql = async (query: string, params?: unknown[]) => {
+      const result = await client.query(query, params)
+      return result.rows as Record<string, unknown>[]
+    }
+    const data = await generateMapData(sql)
     const { skeleton, detail } = splitMapData(data)
 
     // Upload skeleton + detail in parallel

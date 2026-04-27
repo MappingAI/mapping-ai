@@ -17,7 +17,12 @@ async function exportMapData() {
   const client = await pool.connect()
   try {
     console.log('Exporting map data...\n')
-    const data = await generateMapData(client)
+    // Wrap pg.PoolClient in the SqlQueryFn interface that export-map.ts expects
+    const sql = async (query: string, params?: unknown[]) => {
+      const result = await client.query(query, params)
+      return result.rows as Record<string, unknown>[]
+    }
+    const data = await generateMapData(sql)
 
     const counts = {
       people: data.people.length,
