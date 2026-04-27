@@ -6568,7 +6568,40 @@
               : null,
           )
           addField('Year', d.year)
-          addField('Category', d.category)
+          // Topic tags: show as pills, fall back to single category
+          if (d.topic_tags && d.topic_tags.length > 0) {
+            const tagPills = d.topic_tags.map((t) => {
+              const tagColor = getColor(t) || 'var(--accent)'
+              return `<span style="display:inline-block;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:500;background:${tagColor}20;color:${tagColor};margin:1px 3px 1px 0;">${escHtml(t)}</span>`
+            }).join('')
+            addField('Topics', tagPills)
+          } else {
+            addField('Category', d.category)
+          }
+          // Format tags: smaller badges
+          if (d.format_tags && d.format_tags.length > 0) {
+            const fmtPills = d.format_tags.map((t) =>
+              `<span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;background:var(--bg-2);color:var(--text-2);border:1px solid var(--border);margin:1px 3px 1px 0;">${escHtml(t)}</span>`
+            ).join('')
+            addField('Format', fmtPills)
+          }
+          // Advocated beliefs: what the resource argues for
+          if (d.advocated_stance || d.advocated_timeline || d.advocated_risk) {
+            const advBeliefs = []
+            if (d.advocated_stance) {
+              const sc = getStanceColor(d.advocated_stance) || '#a07828'
+              advBeliefs.push(`<span class="detail-belief-item"><span class="detail-belief-dot" style="background:${sc}"></span>${escHtml(d.advocated_stance)}</span>`)
+            }
+            if (d.advocated_timeline) {
+              const tc = TIMELINE_COLORS[d.advocated_timeline] || '#3182bd'
+              advBeliefs.push(`<span class="detail-belief-item"><span class="detail-belief-dot" style="background:${tc}"></span>${escHtml(d.advocated_timeline)}</span>`)
+            }
+            if (d.advocated_risk) {
+              const rc = RISK_COLORS[d.advocated_risk] || '#ef3b2c'
+              advBeliefs.push(`<span class="detail-belief-item"><span class="detail-belief-dot" style="background:${rc}"></span>${escHtml(d.advocated_risk)}</span>`)
+            }
+            addField('Advocates', `<div class="detail-beliefs" style="display:inline-flex;flex-wrap:wrap;gap:6px;">${advBeliefs.join('')}</div>`)
+          }
           addField('Key Argument', d.key_argument)
           addField('Notes', d.notes)
         } else {
