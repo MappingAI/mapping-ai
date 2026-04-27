@@ -213,7 +213,7 @@ ${resources.join('\n')}
         },
         signal: controller.signal,
         body: JSON.stringify({
-          model: 'claude-3-haiku-20240307',
+          model: 'claude-haiku-4-5-20251001',
           max_tokens: 4096,
           temperature: 0,
           messages: [
