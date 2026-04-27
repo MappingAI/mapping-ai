@@ -103,7 +103,6 @@ function buildRelationshipContext(mapData: MapDataShape): string {
 
   for (const rel of mapData.relationships ?? []) {
     if (!rel.relationship_type || !validEdgeTypes.has(rel.relationship_type)) continue
-    if (rel.relationship_type === 'affiliated') continue
 
     const targetName = entityById.get(rel.target_id)
     const sourceName = entityById.get(rel.source_id)

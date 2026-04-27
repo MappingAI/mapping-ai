@@ -348,7 +348,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
         const entity_id = body.entity_id
         const data: Record<string, unknown> =
           typeof body.data === 'object' && body.data !== null ? (body.data as Record<string, unknown>) : {}
-        if (!entity_id || !data) {
+        if (!entity_id || Object.keys(data).length === 0) {
           return jsonResponse({ error: 'Missing entity_id or data' }, request, 400, corsOptions)
         }
         const updates: string[] = []
@@ -374,9 +374,11 @@ export const onRequest: PagesFunction<Env> = async (context) => {
         if (!entity_id) {
           return jsonResponse({ error: 'Missing entity_id' }, request, 400, corsOptions)
         }
+        await sql.query(`BEGIN`)
         await sql.query(`UPDATE submission SET entity_id = NULL WHERE entity_id = $1`, [entity_id])
         await sql.query(`DELETE FROM edge WHERE source_id = $1 OR target_id = $1`, [entity_id])
         await sql.query(`DELETE FROM entity WHERE id = $1`, [entity_id])
+        await sql.query(`COMMIT`)
         await refreshMapData(sql, env.DATA_BUCKET)
         return jsonResponse({ success: true, action: 'deleted' }, request, 200, corsOptions)
       }
