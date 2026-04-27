@@ -127,8 +127,8 @@ importers:
         specifier: ^9.2.1
         version: 9.2.1
       csv-parse:
-        specifier: ^5.6.0
-        version: 5.6.0
+        specifier: ^6.2.1
+        version: 6.2.1
       dotenv:
         specifier: ^16.4.7
         version: 16.6.1
@@ -3138,8 +3138,8 @@ packages:
   csv-parse@4.16.3:
     resolution: {integrity: sha512-cO1I/zmz4w2dcKHVvpCr7JVRu8/FymG5OEpmvsZYlccYolPBLoVGKUHgNoc4ZGkFeFlWGEDmMyBM+TTqRdW/wg==}
 
-  csv-parse@5.6.0:
-    resolution: {integrity: sha512-l3nz3euub2QMg5ouu5U09Ew9Wf6/wQ8I++ch1loQ0ljmzhmfZYrH9fflS22i/PQEvsPvxCwxgz5q7UB8K1JO4Q==}
+  csv-parse@6.2.1:
+    resolution: {integrity: sha512-LRLMV+UCyfMokp8Wb411duBf1gaBKJfOfBWU9eHMJ+b+cJYZsNu3AFmjJf3+yPGd59Exz1TsMjaSFyxnYB9+IQ==}
 
   d3-dispatch@3.0.1:
     resolution: {integrity: sha512-rzUyPU/S7rwUflMyLc1ETDeBj0NRuHKKAcvukozwhshr6g6c5d8zh4c2gQjY2bZ0dXeGLWc1PF174P2tVvKhfg==}
@@ -9439,7 +9439,7 @@ snapshots:
 
   csv-parse@4.16.3: {}
 
-  csv-parse@5.6.0: {}
+  csv-parse@6.2.1: {}
 
   d3-dispatch@3.0.1: {}
 
