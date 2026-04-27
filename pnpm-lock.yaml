@@ -20,6 +20,9 @@ importers:
       '@floating-ui/dom':
         specifier: ^1.7.6
         version: 1.7.6
+      '@neondatabase/serverless':
+        specifier: ^1.0.0
+        version: 1.1.0
       '@tanstack/react-query':
         specifier: ^5.99.0
         version: 5.99.0(react@19.2.5)
@@ -84,6 +87,9 @@ importers:
         specifier: ^0.2.1
         version: 0.2.1
     devDependencies:
+      '@cloudflare/workers-types':
+        specifier: ^4.20250424.0
+        version: 4.20260426.1
       '@eslint/js':
         specifier: ^9.39.4
         version: 9.39.4
@@ -167,7 +173,7 @@ importers:
         version: 3.2.4(@types/node@25.5.0)(jiti@2.6.1)(jsdom@27.0.1)(lightningcss@1.32.0)(tsx@4.21.0)
       wrangler:
         specifier: ^4.85.0
-        version: 4.85.0
+        version: 4.85.0(@cloudflare/workers-types@4.20260426.1)
       xlsx:
         specifier: ^0.18.5
         version: 0.18.5
@@ -577,6 +583,9 @@ packages:
     engines: {node: '>=16'}
     cpu: [x64]
     os: [win32]
+
+  '@cloudflare/workers-types@4.20260426.1':
+    resolution: {integrity: sha512-cBYeQaWwv/jFV8ualmwp6wIxmAf0rDe2DPPQwPbslKmPHqgv861YpAvm45r05K40QboZgxNQVIPgNkmtHqZeJQ==}
 
   '@colors/colors@1.5.0':
     resolution: {integrity: sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==}
@@ -1359,6 +1368,10 @@ packages:
     peerDependencies:
       '@emnapi/core': ^1.7.1
       '@emnapi/runtime': ^1.7.1
+
+  '@neondatabase/serverless@1.1.0':
+    resolution: {integrity: sha512-r3ZZhRjEcfEdKIZnoB1RusNgvHuaBRqfCzV4Gi+5A9yUX0S4HTws/ASWqt13wL4y4I+0rqsWGdA2w7EQXHi3+Q==}
+    engines: {node: '>=19.0.0'}
 
   '@ngneat/falso@8.0.2':
     resolution: {integrity: sha512-vhPtuoHoxE5JGWPSPBqEyTXcjI4MAn8GllR+Vs8FfpAQu2sQRd4PJc3e8kc9vdbdhYHx1C9HmbECgtGLK30z4w==}
@@ -6825,6 +6838,8 @@ snapshots:
   '@cloudflare/workerd-windows-64@1.20260424.1':
     optional: true
 
+  '@cloudflare/workers-types@4.20260426.1': {}
+
   '@colors/colors@1.5.0':
     optional: true
 
@@ -7398,6 +7413,8 @@ snapshots:
       '@emnapi/runtime': 1.9.2
       '@tybys/wasm-util': 0.10.1
     optional: true
+
+  '@neondatabase/serverless@1.1.0': {}
 
   '@ngneat/falso@8.0.2':
     dependencies:
@@ -11852,7 +11869,7 @@ snapshots:
       '@cloudflare/workerd-linux-arm64': 1.20260424.1
       '@cloudflare/workerd-windows-64': 1.20260424.1
 
-  wrangler@4.85.0:
+  wrangler@4.85.0(@cloudflare/workers-types@4.20260426.1):
     dependencies:
       '@cloudflare/kv-asset-handler': 0.4.2
       '@cloudflare/unenv-preset': 2.16.1(unenv@2.0.0-rc.24)(workerd@1.20260424.1)
@@ -11863,6 +11880,7 @@ snapshots:
       unenv: 2.0.0-rc.24
       workerd: 1.20260424.1
     optionalDependencies:
+      '@cloudflare/workers-types': 4.20260426.1
       fsevents: 2.3.3
     transitivePeerDependencies:
       - bufferutil

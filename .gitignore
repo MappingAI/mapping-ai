@@ -4,6 +4,7 @@ node_modules/
 .vercel/
 .vercel
 .aws-sam/
+.wrangler/
 .worktrees/
 submissions/
 exports/

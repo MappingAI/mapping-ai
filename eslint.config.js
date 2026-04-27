@@ -110,6 +110,19 @@ export default tseslint.config(
       'no-console': 'off',
     },
   },
+  // Cloudflare Pages Functions run in the Workers runtime. Console is the
+  // standard logging path and `process` is available with nodejs_compat.
+  {
+    files: ['functions/**/*.ts'],
+    languageOptions: {
+      globals: {
+        process: 'readonly',
+      },
+    },
+    rules: {
+      'no-console': 'off',
+    },
+  },
   {
     // Node-run scripts: prod globals, console allowed. Placed after the browser
     // globals block so its `no-console: off` override actually wins — flat
