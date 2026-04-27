@@ -76,3 +76,6 @@ bluedot-grant-budget.xlsx
 
 # Workshop setup files (contain DB credentials)
 workshop/*.sql
+
+# Research data exports (local analysis, not tracked)
+research-data/
