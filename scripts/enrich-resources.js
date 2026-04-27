@@ -361,7 +361,7 @@ ${highlightsText}`
 
   try {
     const response = await anthropic.messages.create({
-      model: 'claude-sonnet-4-20250514',
+      model: 'claude-sonnet-4-6',
       max_tokens: 2000,
       messages: [{ role: 'user', content: EXTRACTION_PROMPT + '\n\n' + prompt }],
     })
@@ -480,7 +480,7 @@ async function writeClaims(client, resource, metadata) {
           claim.claim_type || 'resource_content',
           claim.confidence || 'medium',
           'exa+claude',
-          'claude-sonnet-4-20250514',
+          'claude-sonnet-4-6',
         ],
       )
       count++
