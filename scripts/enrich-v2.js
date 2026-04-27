@@ -128,7 +128,7 @@ async function askClaude(prompt, maxTokens = 2000) {
   await new Promise((r) => setTimeout(r, 100))
   llmCalls++
   const msg = await anthropic.messages.create({
-    model: 'claude-sonnet-4-6-20251001',
+    model: 'claude-sonnet-4-20250514',
     max_tokens: maxTokens,
     messages: [{ role: 'user', content: prompt }],
   })

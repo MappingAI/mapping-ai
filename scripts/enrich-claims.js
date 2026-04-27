@@ -279,7 +279,7 @@ async function extractClaims(entity, searchResults) {
 
   try {
     const response = await anthropic.messages.create({
-      model: 'claude-sonnet-4-6-20251001',
+      model: 'claude-sonnet-4-20250514',
       max_tokens: 3000,
       messages: [{ role: 'user', content: EXTRACTION_PROMPT + '\n\n' + prompt }],
     })
@@ -339,7 +339,7 @@ async function writeClaim(client, entity, claim, sid) {
       claim.claim_type || 'direct_statement',
       claim.confidence || 'medium',
       'exa+claude',
-      'claude-sonnet-4-6-20251001',
+      'claude-sonnet-4-20250514',
     ],
   )
 }
