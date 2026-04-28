@@ -1,18 +1,16 @@
 # Per-PR Neon branch scaffolding (Phase 2.2).
 #
-# When a PR is opened or reopened, create a Neon branch seeded from prod so the
-# PR gets an isolated database. When the PR is closed or merged, delete that
-# branch so we stay within Neon's free-tier 10-branch ceiling.
+# When a PR that touches backend/DB code is opened or reopened, create a Neon
+# branch seeded from prod so the PR gets an isolated database. When the PR is
+# closed or merged, delete that branch so we stay within Neon's free-tier
+# 10-branch ceiling.
+#
+# PRs that only touch frontend, docs, CI config, or dependencies skip branch
+# creation entirely.
 #
 # NOT YET WIRED:
-#   - Requires secret `NEON_API_KEY` at the repo or org level. Workflow fails
-#     loudly with a clear message until that secret is added.
 #   - Does NOT wire the branch URL into a preview deploy. That is Phase 4.1;
 #     this file is the shape, not the full feature.
-#
-# Phase 2.1 (the Neon data cutover in docs/runbooks/2026-04-22-phase-2-neon-cutover.md)
-# must ship before per-PR branches have a useful purpose: branches are seeded
-# from prod, so prod needs to be on Neon first.
 #
 # Security posture matches .github/workflows/ci.yml:
 #   - `pull_request_target` here is needed so we have the NEON_API_KEY secret on
@@ -27,12 +25,6 @@
 name: Neon preview branch
 
 on:
-  # Fires on the lifecycle events we act on. `synchronize` is deliberately
-  # excluded: the create step is not idempotent (Neon rejects duplicate branch
-  # names), and contributors expect preview-DB state to persist across pushes
-  # within a single PR. To force a fresh seed from prod, close and reopen the PR.
-  # Only act on PRs targeting `main`; a stray target branch should not consume
-  # the Neon free-tier branch ceiling.
   pull_request_target:
     types: [opened, reopened, closed]
     branches: [main]
@@ -42,16 +34,49 @@ permissions:
   pull-requests: write
 
 concurrency:
-  # One run per PR. `cancel-in-progress: false` so a close event's delete-branch
-  # always finishes before a subsequent reopen's create-branch starts, otherwise
-  # a rapid close→reopen can leave a stale Neon branch that blocks creation
-  # (Neon rejects duplicate branch names).
   group: neon-preview-${{ github.event.pull_request.number }}
   cancel-in-progress: false
 
 jobs:
+  check-relevance:
+    name: Check if PR needs a preview DB
+    if: github.event.action != 'closed'
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    outputs:
+      needs_branch: ${{ steps.check_files.outputs.needs_branch }}
+    steps:
+      - name: Check changed files
+        id: check_files
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Fetch the list of files changed in this PR
+          FILES=$(gh api repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files \
+            --paginate --jq '.[].filename')
+
+          # Backend/DB patterns that warrant a preview branch
+          NEEDS_BRANCH=false
+          while IFS= read -r file; do
+            case "$file" in
+              api/*|functions/*|scripts/migrate*|scripts/seed*|scripts/enrich-*|template.yaml)
+                NEEDS_BRANCH=true
+                break
+                ;;
+            esac
+          done <<< "$FILES"
+
+          echo "needs_branch=$NEEDS_BRANCH" >> "$GITHUB_OUTPUT"
+          if [ "$NEEDS_BRANCH" = "true" ]; then
+            echo "PR touches backend/DB files; preview branch needed"
+          else
+            echo "PR is frontend/docs/deps only; skipping preview branch"
+          fi
+
   require-secret:
     name: Verify NEON_API_KEY is configured
+    needs: check-relevance
+    if: needs.check-relevance.outputs.needs_branch == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 1
     steps:
@@ -61,22 +86,35 @@ jobs:
         run: |
           if [ -z "${NEON_API_KEY:-}" ]; then
             echo "::error::NEON_API_KEY secret is not set. Add it at https://github.com/MappingAI/mapping-ai/settings/secrets/actions and rerun this workflow."
-            echo "::error::This workflow is a Phase 2.2 scaffold; wiring the secret is a separate step before per-PR branching goes live."
             exit 1
           fi
 
   create-branch:
     name: Create Neon branch for PR
-    needs: require-secret
-    if: github.event.action != 'closed'
+    needs: [check-relevance, require-secret]
+    if: needs.check-relevance.outputs.needs_branch == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      # No checkout of PR code. We only need the branch name; checking out
-      # untrusted code while NEON_API_KEY is in scope would be a footgun.
+      - name: Check if Neon branch already exists
+        id: check_branch
+        env:
+          NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
+        run: |
+          BRANCH_NAME="preview/pr-${{ github.event.pull_request.number }}"
+          COUNT=$(curl -sf \
+            -H "Authorization: Bearer ${NEON_API_KEY}" \
+            "https://console.neon.tech/api/v2/projects/calm-tree-46517731/branches?search=${BRANCH_NAME}" \
+            | jq --arg name "$BRANCH_NAME" '[.branches[] | select(.name == $name)] | length')
+          if [ "$COUNT" -gt 0 ]; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "Branch ${BRANCH_NAME} already exists; skipping create"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Create Neon branch
-        # TODO: wire this up once NEON_API_KEY is added to repo secrets. Until
-        # then the require-secret job above gates execution.
+        if: steps.check_branch.outputs.exists == 'false'
         # neondatabase/create-branch-action@v6.4.0 (SHA-pinned for prod use).
         uses: neondatabase/create-branch-action@72ed4f69a12b6be9c16aebfad893f6a21e9aba8b # v6.4.0
         id: create_branch
@@ -87,13 +125,9 @@ jobs:
           api_key: ${{ secrets.NEON_API_KEY }}
 
       - name: Comment branch URL on PR
+        if: steps.check_branch.outputs.exists == 'false'
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         env:
-          # Do NOT move these values into the inline script literal; the
-          # create-branch action emits `db_url` as a full postgres connection
-          # string including the password. Interpolating that into a PR comment
-          # publishes the credential in plaintext (including in email
-          # notifications). Only the branch label and hostname are safe to post.
           PR_NUMBER: ${{ github.event.pull_request.number }}
           BRANCH_HOST: ${{ steps.create_branch.outputs.host }}
         with:
@@ -111,9 +145,6 @@ jobs:
               'via the `db_url` output of the Neon create-branch action. It is NOT',
               'printed here because the output includes the password, and posting it',
               'as a PR comment would leak that credential in email notifications.',
-              '',
-              'Full preview deploys land in Phase 4.1. For now, this branch only',
-              'proves the shape: per-PR DB isolation via `neondatabase/create-branch-action`.',
             ].join('\n');
             await github.rest.issues.createComment({
               issue_number: context.issue.number,
@@ -124,16 +155,42 @@ jobs:
 
   delete-branch:
     name: Delete Neon branch on PR close
-    needs: require-secret
     if: github.event.action == 'closed'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Delete Neon branch (if exists)
+      - name: Check if NEON_API_KEY exists
+        id: has_secret
+        env:
+          NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
+        run: |
+          if [ -n "${NEON_API_KEY:-}" ]; then
+            echo "available=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "available=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Check if Neon branch exists
+        if: steps.has_secret.outputs.available == 'true'
+        id: check_branch
+        env:
+          NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
+        run: |
+          BRANCH_NAME="preview/pr-${{ github.event.pull_request.number }}"
+          COUNT=$(curl -sf \
+            -H "Authorization: Bearer ${NEON_API_KEY}" \
+            "https://console.neon.tech/api/v2/projects/calm-tree-46517731/branches?search=${BRANCH_NAME}" \
+            | jq --arg name "$BRANCH_NAME" '[.branches[] | select(.name == $name)] | length')
+          if [ "$COUNT" -gt 0 ]; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo "Branch ${BRANCH_NAME} not found; skipping delete"
+          fi
+
+      - name: Delete Neon branch
+        if: steps.check_branch.outputs.exists == 'true'
         # neondatabase/delete-branch-action@v3.2.1 (SHA-pinned for prod use).
-        # continue-on-error: the branch may not exist if the PR was opened
-        # before this workflow was added, or if creation failed/was skipped.
-        continue-on-error: true
         uses: neondatabase/delete-branch-action@4468d825d5a88ef4012f1705a82f02ec3072f776 # v3.2.1
         with:
           project_id: calm-tree-46517731
