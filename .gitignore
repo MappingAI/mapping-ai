@@ -79,3 +79,4 @@ workshop/*.sql
 
 # Research data exports (local analysis, not tracked)
 research-data/
+!research-data/*.md
