@@ -79,10 +79,25 @@ jobs:
       # TODO: consolidate so Pages build handles everything and this
       # workflow only runs the smoke test.
 
+      - name: Wait for Cloudflare Pages build
+        run: |
+          echo "Waiting for Cloudflare Pages production deployment..."
+          COMMIT=$(git rev-parse --short HEAD)
+          for i in $(seq 1 30); do
+            # Check if Pages has deployed this commit
+            STATUS=$(curl -sf -H "Authorization: Bearer ${{ secrets.CF_API_TOKEN }}" \
+              "https://api.cloudflare.com/client/v4/accounts/ac57c6d87068ab259c6f54dba468de8d/pages/projects/mapping-ai/deployments?sort_by=created_on&sort_order=desc" 2>/dev/null \
+              | python3 -c "import sys,json; ds=json.load(sys.stdin).get('result',[]); print(ds[0]['latest_stage']['status'] if ds and ds[0].get('deployment_trigger',{}).get('metadata',{}).get('commit_hash','')[:7]=='$COMMIT' else 'waiting')" 2>/dev/null || echo "waiting")
+            if [ "$STATUS" = "success" ]; then
+              echo "✓ Cloudflare Pages deployment complete"
+              break
+            fi
+            echo "  Build status: $STATUS (attempt $i/30)"
+            sleep 10
+          done
+
       - name: Post-deploy smoke test
         run: |
-          echo "Waiting 30s for Cloudflare Pages deployment to propagate..."
-          sleep 30
           FAILED=0
           for page in "/" "/contribute" "/map" "/about" "/insights" "/admin"; do
             STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://mapping-ai.org${page}")

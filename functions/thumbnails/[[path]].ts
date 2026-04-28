@@ -2,8 +2,7 @@
  * Serves entity thumbnails from R2.
  *
  * Catch-all route: /thumbnails/<anything> → R2 key "thumbnails/<anything>"
- * Returns the image with its original content-type and a 1-year cache header
- * (thumbnails are content-addressed by entity ID, so they're effectively immutable).
+ * Returns the image with its original content-type and a 24-hour cache header.
  */
 
 interface Env {
@@ -34,7 +33,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
   return new Response(object.body, {
     headers: {
       'Content-Type': contentType,
-      'Cache-Control': 'public, max-age=31536000, immutable',
+      'Cache-Control': 'public, max-age=86400',
       'Access-Control-Allow-Origin': '*',
     },
   })
