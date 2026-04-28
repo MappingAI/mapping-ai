@@ -82,7 +82,7 @@ jobs:
         id: create_branch
         with:
           project_id: calm-tree-46517731
-          parent: production
+          parent_branch: production
           branch_name: preview/pr-${{ github.event.pull_request.number }}
           api_key: ${{ secrets.NEON_API_KEY }}
 
