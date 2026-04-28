@@ -1,816 +1,1043 @@
-# Edge Enrichment Pipeline: Design Document
+# Edge & Entity Enrichment Pipeline: Design Document
 
 **Author:** Research Team
-**Date:** 2026-04-27
-**Status:** Draft
+**Date:** 2026-04-28
+**Status:** Draft v5
 
 ---
 
-## Current Architecture
+## Executive Summary
 
-Understanding where data lives is critical before designing edge enrichment.
+This document describes the architecture for:
+1. **Discovering new funding relationships** across all entities (people + orgs)
+2. **Enriching ALL existing edges** with temporal data and source citations
+3. **Enriching org entities** with lifecycle data (founding date, end date)
+4. **Maintaining full source attribution** — every enrichment record MUST link to a source
+
+**Core principles:**
+- **No source = no claim.** If we can't find a source, we don't create a record. Empty results are expected and fine.
+- **Reuse existing tables.** We extend Anushree's `claim` table for org lifecycle facts rather than creating a new table.
+- **Source-first, not coverage-first.** We're not trying to fill every field. We're recording only what we can cite.
+
+---
+
+## Table Summary
+
+| Table | Status | Purpose |
+|-------|--------|---------|
+| `source` | **REUSE** | URL deduplication. Shared by all enrichment. |
+| `claim` | **REUSE + EXTEND** | Entity-level claims. Add dimensions for `founded_year`, `end_year`. |
+| `edge_evidence` | **NEW** | Source attribution for existing edges. |
+| `edge_discovery` | **NEW** | Discovered edges pending human review. |
+| `entity_suggestion` | **NEW** | Suggested entities discovered during enrichment, pending review. |
+
+**Total new tables: 3**
+
+---
+
+## Why Two Edge Tables?
+
+We use separate tables for `edge_evidence` and `edge_discovery` because they serve different purposes with different lifecycles:
+
+| Aspect | `edge_evidence` | `edge_discovery` |
+|--------|-----------------|------------------|
+| **Purpose** | Source attribution for **existing** edges | Staging area for **candidate** edges |
+| **Key constraint** | `edge_id NOT NULL` — always links to real edge | `source_entity_id + target_entity_id NOT NULL` — edge doesn't exist yet |
+| **Lifecycle** | Permanent record | Workflow: pending → approved → promoted |
+| **After promotion** | Stays forever | Updated with `promoted_edge_id`, kept as audit trail |
+
+**Why not consolidate?**
+- Consolidated would require nullable FKs (`edge_id` null for discoveries, entity IDs null for enrichments)
+- Separate tables allow clean NOT NULL constraints
+- Different retention/archival policies
+- Clearer queries without status filtering
+
+---
+
+## Promotion Workflow (Key Concept)
+
+When an `edge_discovery` record is approved, data flows to **both** RDS and `edge_evidence`:
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                     RDS (AWS Postgres)                       │
-│  ┌──────────┐  ┌────────────┐  ┌──────────┐                 │
-│  │  entity  │  │ submission │  │   edge   │                 │
-│  │ (1,574)  │  │            │  │ (2,151)  │                 │
-│  └──────────┘  └────────────┘  └──────────┘                 │
-│       PRIMARY SOURCE OF TRUTH FOR ENTITIES + EDGES          │
-└─────────────────────────────────────────────────────────────┘
-                              │
-                              │ entity_id references
-                              ▼
-┌─────────────────────────────────────────────────────────────┐
-│                 Neon (claims-pilot branch)                   │
-│  ┌──────────┐  ┌──────────┐                                 │
-│  │  source  │◄─│  claim   │  ← Anushree's source attribution│
-│  │ (2,809)  │  │ (4,784)  │    for BELIEF CLAIMS only       │
-│  └──────────┘  └──────────┘                                 │
-│       SOURCED BELIEF CLAIMS (stance, timeline, risk, AGI)   │
-└─────────────────────────────────────────────────────────────┘
-                              │
-                              │ export scripts
-                              ▼
-┌─────────────────────────────────────────────────────────────┐
-│                  R2 (Cloudflare CDN)                         │
-│  claims-detail.json, agi-definitions.json                   │
-│       STATIC FILE STORAGE (not a database)                  │
-└─────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                         PROMOTION WORKFLOW                                   │
+│                                                                              │
+│  BEFORE PROMOTION:                                                           │
+│  ┌─────────────────────────────────────────────────────────────────────┐    │
+│  │  edge_discovery                                                      │    │
+│  │                                                                      │    │
+│  │  discovery_id: "128_341_funder_src-abc123"                          │    │
+│  │  source_entity_id: 128 (Open Philanthropy)                          │    │
+│  │  target_entity_id: 341 (MIRI)                                       │    │
+│  │  edge_type: "funder"                                                │    │
+│  │  amount_usd: 3750000                                                │    │
+│  │  citation: "Open Philanthropy awarded $3.75M to MIRI..."            │    │
+│  │  source_id: "src-abc123"                                            │    │
+│  │  status: "approved"  ← Human approved this                          │    │
+│  │  promoted_edge_id: NULL                                             │    │
+│  └─────────────────────────────────────────────────────────────────────┘    │
+│                                    │                                         │
+│                                    │ promote-discoveries.js                  │
+│                                    ▼                                         │
+│  ┌─────────────────────────────────────────────────────────────────────┐    │
+│  │  STEP 1: Create edge in RDS                                          │    │
+│  │                                                                      │    │
+│  │  INSERT INTO edge (source_id, target_id, edge_type, created_by)     │    │
+│  │  VALUES (128, 341, 'funder', 'edge_discovery')                      │    │
+│  │  RETURNING id;  → 2345                                              │    │
+│  └─────────────────────────────────────────────────────────────────────┘    │
+│                                    │                                         │
+│                                    ▼                                         │
+│  ┌─────────────────────────────────────────────────────────────────────┐    │
+│  │  STEP 2: Create edge_evidence in Neon                                │    │
+│  │                                                                      │    │
+│  │  INSERT INTO edge_evidence (                                         │    │
+│  │    evidence_id: "2345_src-abc123",                                  │    │
+│  │    edge_id: 2345,              ← Links to new RDS edge              │    │
+│  │    source_id: "src-abc123",                                         │    │
+│  │    amount_usd: 3750000,                                             │    │
+│  │    citation: "Open Philanthropy awarded $3.75M to MIRI...",         │    │
+│  │    confidence: "high"                                               │    │
+│  │  )                                                                  │    │
+│  └─────────────────────────────────────────────────────────────────────┘    │
+│                                    │                                         │
+│                                    ▼                                         │
+│  ┌─────────────────────────────────────────────────────────────────────┐    │
+│  │  STEP 3: Update edge_discovery (audit trail)                         │    │
+│  │                                                                      │    │
+│  │  UPDATE edge_discovery SET                                           │    │
+│  │    status = 'promoted',                                             │    │
+│  │    promoted_edge_id = 2345,                                         │    │
+│  │    promoted_at = NOW()                                              │    │
+│  │  WHERE discovery_id = '128_341_funder_src-abc123'                   │    │
+│  └─────────────────────────────────────────────────────────────────────┘    │
+│                                                                              │
+│  AFTER PROMOTION:                                                            │
+│  ┌───────────────────┐  ┌───────────────────┐  ┌───────────────────────┐    │
+│  │   RDS edge        │  │  edge_evidence    │  │   edge_discovery      │    │
+│  │                   │  │                   │  │                       │    │
+│  │ id: 2345          │◄─│ edge_id: 2345     │  │ status: promoted      │    │
+│  │ source_id: 128    │  │ amount: $3.75M    │  │ promoted_edge_id:2345 │    │
+│  │ target_id: 341    │  │ citation: "..."   │  │ (audit trail)         │    │
+│  │ edge_type: funder │  │ source_id: src-.. │  │                       │    │
+│  └───────────────────┘  └───────────────────┘  └───────────────────────┘    │
+│        ▲                        ▲                                            │
+│        │                        │                                            │
+│    The real edge            Source attribution                               │
+│    (permanent)              (permanent)                                      │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-### Current Edge Schema (RDS)
+**Summary:**
+- `edge_discovery` → RDS `edge` (the relationship now exists)
+- `edge_discovery` → `edge_evidence` (source attribution for that edge)
+- `edge_discovery` stays as audit trail (who discovered it, when approved)
+
+---
+
+## Architecture Overview
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                           RDS (AWS Postgres)                                 │
+│                         PRIMARY SOURCE OF TRUTH                              │
+│                                                                              │
+│   ┌──────────────┐     ┌──────────────┐     ┌──────────────┐                │
+│   │    entity    │     │  submission  │     │     edge     │                │
+│   │   (~1,600)   │     │              │     │  (~2,200+)   │                │
+│   └──────────────┘     └──────────────┘     └──────────────┘                │
+│         ▲                                           ▲                        │
+│         │                                           │                        │
+└─────────┼───────────────────────────────────────────┼────────────────────────┘
+          │ entity_id                                 │ edge_id
+          │                                           │
+┌─────────┼───────────────────────────────────────────┼────────────────────────┐
+│         ▼                                           ▼                        │
+│                        Neon (claims-pilot branch)                            │
+│                                                                              │
+│   ┌──────────────────────────────────────────────────────────────────────┐  │
+│   │                         source (SHARED)                               │  │
+│   │  source_id | url | title | source_type | date_published              │  │
+│   └──────────────────────────────────────────────────────────────────────┘  │
+│         ▲              ▲              ▲              ▲                       │
+│         │              │              │              │                       │
+│   ┌─────┴────┐   ┌─────┴──────┐  ┌────┴───────┐  ┌──┴──────────────┐       │
+│   │  claim   │   │  edge_     │  │  edge_     │  │                 │       │
+│   │ (REUSE)  │   │  evidence  │  │  discovery │  │   (promotion    │       │
+│   │          │   │  (NEW)     │  │  (NEW)     │  │    creates      │       │
+│   │ Beliefs  │   │            │  │            │  │    both edge +  │       │
+│   │ + org    │   │ Temporal   │  │ Candidate  │  │    evidence)    │       │
+│   │ lifecycle│   │ data for   │  │ edges      │  │                 │       │
+│   │          │   │ existing   │  │ pending    │  │                 │       │
+│   │          │   │ edges      │  │ review     │──┼─────────────────┘       │
+│   └──────────┘   └────────────┘  └────────────┘                            │
+│                                                                              │
+│   ALL TABLES REQUIRE source_id (NOT NULL) — no source = no record           │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## What We're Enriching
+
+### 1. Funding Discovery (People + Orgs)
+
+**Input:** All entities (people AND orgs) — ~1,600 total
+**Goal:** Find funding relationships that don't exist in the database
+**Output:**
+- If edge exists → `edge_evidence` (enrichment)
+- If edge is new → `edge_discovery` (pending review)
+
+**Who can be a funder?**
+- Foundations and philanthropic orgs
+- VC firms, investment funds
+- Government agencies (grants, contracts)
+- Corporations (strategic investments, sponsorships)
+- Individuals (philanthropists, angels, wealthy donors)
+- PACs, political orgs
+- Crowdfunding platforms
+- Universities (internal grants)
+
+**Who can be a recipient?**
+- Nonprofits, research orgs
+- Startups, companies
+- Think tanks, policy orgs
+- Academic institutions
+- Political campaigns
+- Individual researchers (grants, fellowships)
+- Individual creators (sponsorships, patronage)
+
+The search should be broad — we're looking for any flow of money, not just traditional philanthropy.
+
+### 2. Temporal Edge Enrichment (All Edge Types)
+
+**Input:** All existing edges in RDS (~2,200)
+**Goal:** Add start_date, end_date, amounts where findable
+**Output:** `edge_evidence` records (only where we find sourced data)
+
+| Edge Type | Count | What We're Looking For |
+|-----------|-------|------------------------|
+| employer | 722 | start_date, end_date |
+| member | 345 | start_date, end_date |
+| funder | 148 | amount_usd, dates |
+| founder | 198 | founding_date |
+| advisor | 82 | start_date, end_date |
+| ... | ... | ... |
+
+**Important:** No source = no record. We don't force output.
+
+### 3. Org Lifecycle (Founding/End Dates)
+
+**Input:** All org entities (~700)
+**Goal:** Find founding dates and end dates
+**Output:** `claim` records with `belief_dimension = 'founded_year'` or `'end_year'`
+
+---
+
+## Database Schema (Neon)
+
+### `source` (Existing — SHARED)
 
 ```sql
-CREATE TABLE edge (
-  id          SERIAL PRIMARY KEY,
-  source_id   INTEGER REFERENCES entity(id) ON DELETE CASCADE,
-  target_id   INTEGER REFERENCES entity(id) ON DELETE CASCADE,
-  edge_type   VARCHAR(50),   -- funder, employer, founder, etc.
-  role        VARCHAR(200),  -- "CEO", "Board Member", etc.
-  is_primary  BOOLEAN,
-  evidence    TEXT,          -- FREE TEXT, no structure!
-  created_by  VARCHAR(50),
-  UNIQUE(source_id, target_id, edge_type)
+CREATE TABLE source (
+  source_id          TEXT PRIMARY KEY,      -- src-{sha256(url)[:12]}
+  url                TEXT UNIQUE NOT NULL,
+  title              TEXT,
+  source_type        TEXT,
+  date_published     DATE,
+  author             TEXT,
+  cached_excerpt     TEXT,
+  created_at         TIMESTAMPTZ DEFAULT NOW()
 );
 ```
 
-**No source attribution for edges today.** The `evidence` field is unstructured text:
-- `"Open Phil has funded MIRI historically"`
-- `"supporting ($1.40M) — source: elections.transformernews.ai"`
-- `null` (most edges)
-
-### Anushree's Source Attribution Model (Neon)
-
-For belief claims, Anushree built a proper source attribution system:
+### `claim` (Existing — EXTENDED with new dimensions)
 
 ```sql
--- source table (deduplicated by URL hash)
-source_id          TEXT PK      -- src-{sha256(url)[:12]}
-url                TEXT UNIQUE
-title              TEXT
-source_type        TEXT         -- interview, report, hearing, etc.
-date_published     DATE
-author             TEXT
+-- Add new belief_dimension values: 'founded_year', 'end_year'
+-- stance/stance_score are NULL for factual claims
 
--- claim table (one per entity-dimension-source)
-claim_id           TEXT PK      -- {entity_id}_{dimension}_{source_id}
-entity_id          INTEGER      -- FK to RDS entity
-source_id          TEXT         -- FK to source table
-citation           TEXT         -- VERBATIM quote
-confidence         TEXT         -- high/medium/low
+CREATE TABLE claim (
+  claim_id           TEXT PRIMARY KEY,
+  entity_id          INTEGER NOT NULL,
+  entity_name        TEXT,
+  belief_dimension   TEXT NOT NULL,         -- 'founded_year', 'end_year', etc.
+  stance             TEXT,                  -- NULL for factual claims
+  stance_score       INTEGER,               -- NULL for factual claims
+  stance_label       TEXT,                  -- "2015" for founded_year
+  definition_used    TEXT,                  -- Full context
+  citation           TEXT NOT NULL,         -- REQUIRED
+  source_id          TEXT NOT NULL,         -- REQUIRED
+  confidence         TEXT,
+  extracted_by       TEXT,
+  extraction_date    DATE,
+  created_at         TIMESTAMPTZ DEFAULT NOW()
+);
 ```
 
-**Key insight:** This model works well. We should copy it for edges.
+### `edge_evidence` (NEW)
 
----
-
-## Problem Statement
-
-The current edge data has structural gaps that block several high-priority research questions:
-
-| Research Question | Blocked By |
-|-------------------|------------|
-| Funding overlap (safety orgs ↔ accelerationist orgs) | No structured funding amounts or dates |
-| Structural conflicts of interest | No source attribution on funder edges |
-| Revolving door / sequential positions | No start/end dates on employer edges |
-| Cohort effects (2020-2022 EA funding peak) | No founding dates on orgs |
-| Temporal shifts in the field | No temporal data anywhere |
-
-### Current Edge Schema
-
-```
-source_type, target_type, source_id, target_id, relationship_type, role, evidence
-```
-
-**Missing fields:**
-- `start_date` / `end_date` — when the relationship began/ended
-- `amount_usd` — for funder edges
-- `source_url` — citation for the edge data
-- `is_current` — computed from dates, but useful for filtering
-
-### Current Data Quality
-
-| Metric | Value |
-|--------|-------|
-| Total edges | 2,151 |
-| Edges with evidence text | 1,472 (68%) |
-| Funder edges | 148 |
-| Employer edges | 675 |
-| Edges with structured dates | 0 |
-| Edges with structured amounts | 0 |
-
-**Partial data in unstructured fields:**
-- Some `role` fields contain "(former)" hints
-- Some `evidence` fields contain amounts like "$1.40M"
-- No source URLs anywhere
-
----
-
-## Proposed Solution
-
-### 1. Schema Design: Two Options
-
-#### Option A: Extend RDS Edge Table (Simpler)
-
-Add columns directly to the existing `edge` table in RDS:
+For enriching **existing** edges with temporal data and source attribution.
 
 ```sql
--- Edge temporal + funding enrichment (RDS)
-ALTER TABLE edge ADD COLUMN start_date DATE;
-ALTER TABLE edge ADD COLUMN end_date DATE;
-ALTER TABLE edge ADD COLUMN is_current BOOLEAN GENERATED ALWAYS AS (end_date IS NULL OR end_date > CURRENT_DATE) STORED;
-ALTER TABLE edge ADD COLUMN amount_usd NUMERIC(15,2);
-ALTER TABLE edge ADD COLUMN amount_note TEXT;  -- "per year", "total grant", "Series A", etc.
-ALTER TABLE edge ADD COLUMN source_url TEXT;
-ALTER TABLE edge ADD COLUMN source_title TEXT;
-ALTER TABLE edge ADD COLUMN source_date DATE;
-ALTER TABLE edge ADD COLUMN enrichment_date DATE;
-ALTER TABLE edge ADD COLUMN enrichment_confidence TEXT;  -- high/medium/low
-
--- Org founding date (RDS)
-ALTER TABLE entity ADD COLUMN founded_year SMALLINT;
-ALTER TABLE entity ADD COLUMN founded_source_url TEXT;
-```
-
-**Pros:**
-- Edges stay in one place (RDS)
-- Simpler queries, no joins across DBs
-- Works with existing export pipeline
-
-**Cons:**
-- Multiple sources per edge not supported (one source_url per edge)
-- Doesn't reuse Anushree's source table
-
-#### Option B: Create Edge Evidence Table in Neon (Follows Anushree's Pattern)
-
-Create a parallel `edge_evidence` table in Neon that references the existing `source` table:
-
-```sql
--- In Neon (claims-pilot branch)
 CREATE TABLE edge_evidence (
-  evidence_id      TEXT PRIMARY KEY,  -- {edge_id}_{source_id}
-  edge_id          INTEGER NOT NULL,  -- FK to RDS edge.id
+  evidence_id      TEXT PRIMARY KEY,        -- {edge_id}_{source_id}
+
+  -- Link to existing RDS edge (REQUIRED)
+  edge_id          INTEGER NOT NULL,
+
+  -- Link to source (REQUIRED)
   source_id        TEXT NOT NULL REFERENCES source(source_id),
 
   -- Temporal data
   start_date       DATE,
   end_date         DATE,
 
-  -- Funding data (for funder edges)
+  -- Financial data (for funder edges)
   amount_usd       NUMERIC(15,2),
   amount_note      TEXT,
 
+  -- Role clarification
+  role_title       TEXT,
+
+  -- Citation (REQUIRED)
+  citation         TEXT NOT NULL,
+  confidence       TEXT,
+
   -- Extraction metadata
-  citation         TEXT,              -- Verbatim quote supporting this data
-  confidence       TEXT,              -- high/medium/low
-  extracted_by     TEXT,              -- exa+claude
+  extracted_by     TEXT,
+  extraction_model TEXT,
   extraction_date  DATE,
 
   created_at       TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Index for looking up evidence by edge
 CREATE INDEX idx_edge_evidence_edge_id ON edge_evidence(edge_id);
 ```
 
-**Pros:**
-- Multiple sources per edge supported
-- Reuses existing `source` table (deduplicated URLs)
-- Consistent with Anushree's claim model
-- Better provenance tracking
+### `entity_suggestion` (NEW)
 
-**Cons:**
-- Edge data split across RDS + Neon
-- Need to join across DBs for full edge view
-- More complex export pipeline
+For entities discovered during enrichment that don't yet exist in RDS. Goes through human review before entity creation.
 
-#### Recommendation: Option B (Neon)
+```sql
+CREATE TABLE entity_suggestion (
+  suggestion_id      TEXT PRIMARY KEY,       -- suggestion-{sha256(name)[:12]}
 
-Follow Anushree's pattern. Benefits:
-1. Reuses the existing `source` table — no duplicate URL storage
-2. Multiple pieces of evidence per edge (e.g., two sources confirm funding)
-3. Same confidence/citation model as claims
-4. Export pipeline already handles RDS → Neon → R2 flow
+  -- What we extracted
+  extracted_name     TEXT NOT NULL,          -- "METR", "ARC Evals", etc.
+  entity_type        TEXT,                   -- 'organization' or 'person' (inferred)
 
-### 2. New Scripts (Separate from Anushree's)
+  -- Context for reviewer
+  context            TEXT,                   -- "Mentioned as funding recipient from Anthropic"
+  source_url         TEXT,                   -- Where we found this entity
+  source_id          TEXT REFERENCES source(source_id),
+  citation           TEXT,                   -- The quote mentioning this entity
 
-Place all new scripts in `scripts/edge-enrichment/` to avoid touching existing enrichment scripts.
+  -- Aggregation
+  times_seen         INTEGER DEFAULT 1,      -- Increment each time we see this name
+  seen_as_funder     BOOLEAN DEFAULT FALSE,  -- Have we seen this as a funder?
+  seen_as_recipient  BOOLEAN DEFAULT FALSE,  -- Have we seen this as a recipient?
+
+  -- Duplicate detection (populated at creation time)
+  potential_duplicates JSONB,                -- [{entity_id: 123, name: "...", similarity: 0.72}, ...]
+
+  -- Review workflow
+  status             TEXT DEFAULT 'pending', -- pending | approved | rejected | duplicate
+  duplicate_of_id    INTEGER,                -- If duplicate, the existing entity_id
+  duplicate_check_done BOOLEAN DEFAULT FALSE,-- Reviewer confirmed not a duplicate
+  reviewed_by        TEXT,
+  reviewed_at        TIMESTAMPTZ,
+  review_notes       TEXT,
+
+  -- After approval
+  created_entity_id  INTEGER,                -- The new entity_id after creation
+  created_at_rds     TIMESTAMPTZ,            -- When entity was created in RDS
+
+  -- Extraction metadata
+  first_seen_at      TIMESTAMPTZ DEFAULT NOW(),
+  last_seen_at       TIMESTAMPTZ DEFAULT NOW(),
+
+  UNIQUE(extracted_name)
+);
+
+CREATE INDEX idx_entity_suggestion_status ON entity_suggestion(status);
+CREATE INDEX idx_entity_suggestion_times_seen ON entity_suggestion(times_seen DESC);
+```
+
+**Duplicate Prevention (CRITICAL):**
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    DUPLICATE PREVENTION PIPELINE                             │
+│                                                                              │
+│  LAYER 1: Before creating entity_suggestion                                 │
+│  ─────────────────────────────────────────────────────────────────────────── │
+│  Run full entity resolution (exact → normalized → alias → fuzzy)            │
+│  If ANY match (even weak fuzzy 0.6-0.8):                                    │
+│    → Store as potential_duplicate_of in suggestion                          │
+│    → Do NOT skip — still create suggestion for human review                 │
+│                                                                              │
+│  LAYER 2: Merge duplicate suggestions                                       │
+│  ─────────────────────────────────────────────────────────────────────────── │
+│  UNIQUE(extracted_name) — same name always maps to same suggestion          │
+│  ON CONFLICT → increment times_seen, update last_seen_at                    │
+│                                                                              │
+│  LAYER 3: Review UI shows potential duplicates                              │
+│  ─────────────────────────────────────────────────────────────────────────── │
+│  When reviewing "METR", show:                                               │
+│    - Potential match: "Model Evaluation & Threat Research" (0.65 sim)      │
+│    - Potential match: "MIRI" (0.71 sim)                                    │
+│  Reviewer must explicitly confirm: "Not a duplicate" OR select duplicate   │
+│                                                                              │
+│  LAYER 4: Final check before RDS insertion                                  │
+│  ─────────────────────────────────────────────────────────────────────────── │
+│  Even after approval, before INSERT INTO entity:                            │
+│    1. Re-run fuzzy match against current RDS entities                       │
+│    2. If sim > 0.8 found → BLOCK insertion, alert reviewer                 │
+│    3. This catches entities created between suggestion and approval         │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+**Additional fields for duplicate tracking:**
+
+```sql
+-- Add to entity_suggestion:
+  potential_duplicate_ids  INTEGER[],        -- Array of entity IDs that might be duplicates
+  potential_duplicate_sims REAL[],           -- Similarity scores for each
+  duplicate_check_done     BOOLEAN DEFAULT FALSE,  -- Reviewer confirmed not a duplicate
+```
+
+**Review workflow for entity_suggestion:**
+1. Reviewer sees: name, context, how many times seen, source URL
+2. **Reviewer sees potential duplicates** with similarity scores
+3. Reviewer must either:
+   - Select "This IS a duplicate of [entity]" → sets `duplicate_of_id`
+   - Confirm "I checked, NOT a duplicate" → sets `duplicate_check_done = TRUE`
+4. Actions:
+   - **Approve** → Only allowed if `duplicate_check_done = TRUE`. Create entity in RDS, set `created_entity_id`
+   - **Duplicate** → Link to existing entity via `duplicate_of_id`. Update edge_discovery to use existing entity.
+   - **Reject** → Mark as rejected (not AI-relevant)
+
+**After approval (manual follow-up, not automated):**
+
+Newly created entities only have `name`, `entity_type`, and `status = 'approved'`. They have no belief data yet.
+
+To enrich them with Anushree's scripts:
+
+```bash
+# Use --missing-stance flag (targets entities with NULL belief fields)
+PILOT_DB="..." node scripts/enrich-claims.js --missing-stance --limit=50
+
+# Default mode WON'T work — it looks for belief_evidence_source = 'Explicitly stated'
+# which newly created entities don't have
+```
+
+This is a **manual step** done after batch-approving entity suggestions, not automated as part of the edge enrichment pipeline.
+
+### `edge_discovery` (NEW)
+
+For **discovered** edges pending human review. Can reference either real entity IDs or pending entity suggestions.
+
+```sql
+CREATE TABLE edge_discovery (
+  discovery_id       TEXT PRIMARY KEY,
+
+  -- The discovered relationship
+  -- At least one of (source_entity_id, source_suggestion_id) must be set
+  -- At least one of (target_entity_id, target_suggestion_id) must be set
+  source_entity_id     INTEGER,              -- FK to RDS entity.id (if resolved)
+  target_entity_id     INTEGER,              -- FK to RDS entity.id (if resolved)
+  source_suggestion_id TEXT,                 -- FK to entity_suggestion (if pending)
+  target_suggestion_id TEXT,                 -- FK to entity_suggestion (if pending)
+  edge_type            TEXT NOT NULL,
+
+  -- Denormalized for review UI
+  source_entity_name TEXT NOT NULL,          -- Always store the name
+  target_entity_name TEXT NOT NULL,          -- Always store the name
+
+  -- Link to source (REQUIRED)
+  source_id          TEXT NOT NULL REFERENCES source(source_id),
+
+  -- Extracted data (copied to edge_evidence on promotion)
+  start_date         DATE,
+  end_date           DATE,
+  amount_usd         NUMERIC(15,2),
+  amount_note        TEXT,
+
+  -- Citation (REQUIRED)
+  citation           TEXT NOT NULL,
+  confidence         TEXT,
+
+  -- Review workflow
+  status             TEXT DEFAULT 'pending_entities',
+  -- pending_entities = waiting for entity_suggestion approval
+  -- pending_review = entities resolved, waiting for edge review
+  -- approved = edge approved, ready to promote
+  -- rejected = edge rejected
+  -- promoted = edge created in RDS
+
+  reviewed_by        TEXT,
+  reviewed_at        TIMESTAMPTZ,
+  review_notes       TEXT,
+
+  -- After promotion (audit trail)
+  promoted_edge_id   INTEGER,
+  promoted_at        TIMESTAMPTZ,
+
+  -- Extraction metadata
+  extracted_by       TEXT,
+  extraction_model   TEXT,
+  extraction_date    DATE,
+
+  created_at         TIMESTAMPTZ DEFAULT NOW(),
+
+  -- Prevent exact duplicates
+  UNIQUE(source_entity_name, target_entity_name, edge_type, source_id)
+);
+
+CREATE INDEX idx_edge_discovery_status ON edge_discovery(status);
+CREATE INDEX idx_edge_discovery_suggestions ON edge_discovery(source_suggestion_id, target_suggestion_id);
+```
+
+**Status transitions:**
+```
+pending_entities → pending_review → approved → promoted
+                                 ↘ rejected
+```
+
+**When entity_suggestion is resolved:**
+
+```javascript
+// After entity_suggestion is approved OR marked as duplicate:
+
+async function linkSuggestionToEntity(suggestionId, entityId) {
+  // Update all edge_discovery records that reference this suggestion
+  await neonClient.query(`
+    UPDATE edge_discovery
+    SET source_entity_id = $2,
+        source_suggestion_id = NULL,
+        status = CASE
+          WHEN target_entity_id IS NOT NULL THEN 'pending_review'
+          ELSE status
+        END
+    WHERE source_suggestion_id = $1
+  `, [suggestionId, entityId])
+
+  await neonClient.query(`
+    UPDATE edge_discovery
+    SET target_entity_id = $2,
+        target_suggestion_id = NULL,
+        status = CASE
+          WHEN source_entity_id IS NOT NULL THEN 'pending_review'
+          ELSE status
+        END
+    WHERE target_suggestion_id = $1
+  `, [suggestionId, entityId])
+}
+
+// If approved: entityId = newly created entity
+// If duplicate: entityId = duplicate_of_id (existing entity)
+```
+
+---
+
+## Data Flows
+
+### Flow 1: Funding Discovery
+
+```
+For each entity (person or org):
+  1. Exa search for funding relationships
+  2. Claude extracts: funder, recipient, amount, date, citation
+  3. If nothing found → skip (this is fine)
+  4. For each relationship found:
+     a. Register source URL in source table
+     b. Check if edge exists in RDS
+        - EXISTS → write to edge_evidence
+        - NOT EXISTS → write to edge_discovery (pending)
+  5. Human reviews edge_discovery records
+  6. Approved discoveries get promoted (see workflow above)
+```
+
+### Flow 2: Temporal Edge Enrichment
+
+```
+For each existing edge in RDS:
+  1. Exa search for temporal data (query varies by edge type)
+  2. Claude extracts: start_date, end_date, amount (if relevant), citation
+  3. If nothing found → skip (this is fine)
+  4. If data found:
+     a. Register source URL
+     b. Write to edge_evidence
+```
+
+### Flow 3: Org Lifecycle
+
+```
+For each org entity:
+  1. Exa search for founding/end dates
+  2. Claude extracts: founded_year, end_year, citation
+  3. If nothing found → skip (this is fine)
+  4. If data found:
+     a. Register source URL
+     b. Write to claim table with belief_dimension = 'founded_year'
+```
+
+---
+
+## Anti-Hallucination Safeguards
+
+1. **Schema enforcement:** `source_id NOT NULL`, `citation NOT NULL`
+2. **Prompt rules:** "If nothing found, return empty. This is expected and fine."
+3. **Post-extraction validation:** Verify URLs came from search results
+4. **Human review:** Discoveries must be approved before becoming real edges
+
+---
+
+## Cost Estimate
+
+| Phase | Items | Total Cost |
+|-------|-------|------------|
+| Funding Discovery | ~1,600 entities | ~$58 |
+| Edge Enrichment | ~2,200 edges | ~$62 |
+| Org Lifecycle | ~700 orgs | ~$25 |
+| **Total** | | **~$145** |
+
+---
+
+## Scripts
 
 ```
 scripts/edge-enrichment/
-├── enrich-funder-edges.js      # Amounts, dates, sources for funder edges
-├── enrich-employer-edges.js    # Start/end dates for employer edges
-├── enrich-founding-dates.js    # Founding dates (writes to entity table)
-├── enrich-parent-company.js    # Acquisition dates, amounts
-├── lib/
-│   ├── db.js                   # DB connections (RDS + Neon)
-│   ├── progress.js             # Progress tracking (load/save JSON)
-│   ├── costs.js                # Cost tracking (Exa + Claude)
-│   ├── source.js               # Source registration (reuse Anushree's source table)
-│   └── prompts.js              # Claude extraction prompts
-└── README.md
-```
-
-### Script Template (Following Anushree's Patterns)
-
-Each script follows this structure:
-
-```javascript
-// enrich-funder-edges.js
-import 'dotenv/config'
-import Exa from 'exa-js'
-import Anthropic from '@anthropic-ai/sdk'
-import pg from 'pg'
-import crypto from 'crypto'
-import { loadProgress, saveProgress } from './lib/progress.js'
-import { costs } from './lib/costs.js'
-import { srcId, registerSource } from './lib/source.js'
-
-// CLI args: --limit, --all, --edge-id, --resume, --dry-run
-const args = process.argv.slice(2)
-const limit = args.find(a => a.startsWith('--limit='))?.split('=')[1]
-const resumeMode = args.includes('--resume')
-const dryRun = args.includes('--dry-run')
-// ...
-
-// Edge-specific search queries
-const FUNDER_QUERIES = [
-  (src, tgt) => `"${src}" "${tgt}" funding grant investment amount million dollars`,
-  (src, tgt) => `"${src}" donated "${tgt}" grant funding`,
-]
-
-// Claude extraction prompt
-const EXTRACTION_PROMPT = `You are extracting funding data from search results.
-
-RULES:
-1. Every field MUST come from the search results. Never fabricate data.
-2. Amounts in USD. Convert if necessary, note original currency.
-3. Dates as YYYY-MM-DD. Use first of month/year if partial.
-4. If data not found, return null. Empty results are expected and fine.
-
-Return JSON: { amount_usd, amount_note, start_date, end_date, source_url, confidence }`
-
-async function main() {
-  const progress = loadProgress('funder-edges')
-  const edges = await getTargetEdges(progress)
-
-  for (const edge of edges) {
-    // 1. Exa search
-    const results = await searchEdge(edge)
-    costs.trackExa()
-    await delay(150)
-
-    // 2. Claude extraction
-    const data = await extractFundingData(edge, results)
-    costs.trackClaude(data.usage)
-
-    // 3. Write to Neon (edge_evidence table)
-    if (!dryRun && data) {
-      await writeEdgeEvidence(edge, data)
-    }
-
-    // 4. Save progress
-    progress.completed.push(edgeKey(edge))
-    saveProgress('funder-edges', progress)
-  }
-
-  console.log(costs.summary())
-}
+├── discover-funding.js           # Discover funding (people + orgs)
+├── enrich-edges.js               # Temporal enrichment for existing edges
+├── enrich-org-lifecycle.js       # Founding/end dates → claim table
+├── promote-discoveries.js        # Promote approved → RDS + edge_evidence
+├── review-discoveries.js         # CLI for reviewing pending discoveries
+└── lib/
+    ├── db.js
+    ├── progress.js
+    ├── costs.js
+    └── source.js
 ```
 
 ---
 
-## Anushree's Enrichment Best Practices (Import These)
+## Known Risks & Mitigations
 
-Based on `enrich-claims.js`, `enrich-resources.js`, and `enrich-crosspartisan.js`:
+### 1. Entity Resolution (CRITICAL)
 
-### Pipeline Architecture
+**Risk:** Claude extracts "Open Philanthropy funded MIRI" but we need entity IDs (128, 341). How do we map names to IDs?
+
+**Key principle:** We do NOT auto-create entities. If we can't resolve a name, we skip the relationship and log it for manual review. Entity creation is a separate workflow with its own review process.
+
+**Resolution Strategy (in order):**
 
 ```
-┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
-│  1. EXA SEARCH  │ ──► │  2. CLAUDE      │ ──► │  3. DB WRITE    │
-│  (gather sources)│     │  (extract data) │     │  (upsert)       │
-└─────────────────┘     └─────────────────┘     └─────────────────┘
-         │                       │                       │
-    4 searches/entity     1 call/entity          source + claim
-    $0.008 each           ~$0.02 each            tables (Neon)
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                      ENTITY RESOLUTION PIPELINE                              │
+│                                                                              │
+│  Input: "Open Philanthropy" (extracted by Claude)                           │
+│                                                                              │
+│  Step 1: EXACT MATCH (case-insensitive)                                     │
+│  ────────────────────────────────────────                                   │
+│  SELECT id, name FROM entity                                                │
+│  WHERE LOWER(name) = LOWER('Open Philanthropy')                             │
+│  → Match? Return entity_id                                                  │
+│                                                                              │
+│  Step 2: NORMALIZED MATCH (strip suffixes)                                  │
+│  ────────────────────────────────────────                                   │
+│  Normalize: "Open Philanthropy, Inc." → "open philanthropy"                 │
+│             "OpenAI, L.L.C." → "openai"                                     │
+│  Strip: Inc, LLC, Corp, Foundation, Institute, Ltd, Co, LP, PBC            │
+│  SELECT id, name FROM entity                                                │
+│  WHERE normalize(name) = normalize('Open Philanthropy')                     │
+│  → Match? Return entity_id                                                  │
+│                                                                              │
+│  Step 3: ALIAS LOOKUP                                                       │
+│  ────────────────────────────────────────                                   │
+│  Check known aliases:                                                       │
+│    "Open Phil" → "Open Philanthropy" → entity_id 128                       │
+│    "GiveWell" → "GiveWell" → entity_id 234                                 │
+│    "MIRI" → "Machine Intelligence Research Institute" → entity_id 341      │
+│  → Match? Return entity_id                                                  │
+│                                                                              │
+│  Step 4: FUZZY MATCH (with high threshold)                                  │
+│  ────────────────────────────────────────                                   │
+│  Use trigram similarity (pg_trgm) or Levenshtein                           │
+│  SELECT id, name, similarity(name, 'Open Philanthropy') as sim             │
+│  FROM entity                                                                │
+│  WHERE similarity(name, 'Open Philanthropy') > 0.7                         │
+│  ORDER BY sim DESC LIMIT 1                                                  │
+│  → Match with sim > 0.8? Return entity_id                                  │
+│  → Match with 0.7 < sim < 0.8? Log as "uncertain", skip                    │
+│                                                                              │
+│  Step 5: NO MATCH                                                           │
+│  ────────────────────────────────────────                                   │
+│  → Log to unresolved_entities table/file                                   │
+│  → Skip this relationship                                                   │
+│  → Continue processing                                                      │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-### Key Patterns
-
-#### 1. Exa First, Claude Second
-
-```javascript
-// Step 1: Gather sources via Exa (dimension-specific queries)
-const results = await exa.searchAndContents(queryFn(entity.name), {
-  numResults: 4,
-  highlights: { numSentences: 5, highlightsPerUrl: 3 },
-  startPublishedDate: '2023-01-01',  // Filter to recent sources
-})
-
-// Step 2: Send ALL results to Claude in one call
-const claims = await extractClaims(entity, results)
-```
-
-**Why:** Exa is cheap ($0.008/search). Claude is expensive (~$0.02/call). Batch sources into one Claude call.
-
-#### 2. Dimension-Specific Search Queries
-
-```javascript
-const BELIEF_DIMENSIONS = [
-  {
-    id: 'regulatory_stance',
-    person_query: (name) => `"${name}" AI regulation stance policy position statement interview`,
-    org_query: (name) => `"${name}" AI regulation policy position advocacy`,
-  },
-  // ...
-]
-```
-
-**Why:** Different query templates for people vs orgs. Quoted name for exact match.
-
-#### 3. Source Deduplication via URL Hash
-
-```javascript
-function srcId(url) {
-  return 'src-' + crypto.createHash('sha256').update(url).digest('hex').slice(0, 12)
-}
-```
-
-**Why:** Same URL → same source_id. Prevents duplicates, enables reuse.
-
-#### 4. Progress Tracking for Resume
-
-```javascript
-const PROGRESS_PATH = path.join(__dirname, '../data/claims-enrichment-progress.json')
-
-function loadProgress() {
-  try {
-    return JSON.parse(fs.readFileSync(PROGRESS_PATH, 'utf-8'))
-  } catch {
-    return { completed: [] }
-  }
-}
-
-// After each entity:
-progress.completed.push(entity.id)
-saveProgress(progress)
-```
-
-**Why:** Enrichment is expensive. Crashes happen. `--resume` skips already-done work.
-
-#### 5. Cost Tracking
-
-```javascript
-const costs = {
-  exa_searches: 0,
-  exa_cost: 0,
-  claude_calls: 0,
-  claude_input_tokens: 0,
-  claude_output_tokens: 0,
-  trackExa() { this.exa_searches++; this.exa_cost = this.exa_searches * 0.008 },
-  trackClaude(usage) { /* ... */ },
-  summary() { return `Exa: ${this.exa_searches} ($${this.exa_cost}) | Claude: ... | Total: $X.XX` }
-}
-```
-
-**Why:** Know costs before running `--all`. Pilot with `--limit=5` first.
-
-#### 6. CLI Flags
-
-```bash
---limit=N      # Process N entities then stop
---all          # Process everything
---id=N         # Single entity for testing
---resume       # Skip already-processed
---dry-run      # Search + extract, don't write to DB
---type=X       # Filter to person/organization
-```
-
-**Why:** Flexible batching. Test on small batches. Resume after crashes.
-
-#### 7. Upsert Pattern (Idempotent)
+**Alias Table (in Neon or as JSON file):**
 
 ```sql
-INSERT INTO claim (...)
-VALUES (...)
-ON CONFLICT (claim_id) DO UPDATE SET
-  citation = EXCLUDED.citation,
-  confidence = EXCLUDED.confidence,
-  extraction_date = CURRENT_DATE
+CREATE TABLE entity_alias (
+  alias        TEXT PRIMARY KEY,      -- The alias/abbreviation
+  canonical    TEXT NOT NULL,         -- The canonical name
+  entity_id    INTEGER NOT NULL,      -- FK to RDS entity.id
+  created_at   TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Seed with known aliases
+INSERT INTO entity_alias (alias, canonical, entity_id) VALUES
+  ('Open Phil', 'Open Philanthropy', 128),
+  ('MIRI', 'Machine Intelligence Research Institute', 341),
+  ('FHI', 'Future of Humanity Institute', 156),
+  ('GovAI', 'Centre for the Governance of AI', 189),
+  ('80k', '80,000 Hours', 201),
+  ('CEA', 'Centre for Effective Altruism', 145),
+  ('DeepMind', 'Google DeepMind', 67),
+  ('Anthropic AI', 'Anthropic', 42);
 ```
 
-**Why:** Re-running enrichment updates existing data rather than failing.
+**Unresolved Entities Log:**
 
-#### 8. Fallback for Uncovered Dimensions
+```sql
+CREATE TABLE unresolved_entity (
+  id               SERIAL PRIMARY KEY,
+  extracted_name   TEXT NOT NULL,           -- What Claude extracted
+  context          TEXT,                    -- The full extraction context
+  source_url       TEXT,                    -- Where it was found
+  entity_role      TEXT,                    -- 'funder' or 'recipient'
+  times_seen       INTEGER DEFAULT 1,       -- How many times we've seen this
+  status           TEXT DEFAULT 'pending',  -- pending | resolved | ignored
+  resolved_to      INTEGER,                 -- entity_id if manually resolved
+  notes            TEXT,
+  created_at       TIMESTAMPTZ DEFAULT NOW(),
+
+  UNIQUE(extracted_name)
+);
+
+-- On conflict, increment times_seen
+INSERT INTO unresolved_entity (extracted_name, context, source_url, entity_role)
+VALUES ($1, $2, $3, $4)
+ON CONFLICT (extracted_name) DO UPDATE SET
+  times_seen = unresolved_entity.times_seen + 1;
+```
+
+**After Enrichment Run:**
+
+1. Review `unresolved_entity` table sorted by `times_seen DESC`
+2. For frequently-seen names:
+   - Create entity in RDS (via normal submission flow or admin)
+   - Add to `entity_alias` if it's a known abbreviation
+   - Mark as `resolved` with `resolved_to = new_entity_id`
+3. Re-run enrichment with `--retry-unresolved` flag to pick up newly created entities
+
+**Implementation in Code:**
 
 ```javascript
-async function writeUnsourcedFallback(client, entity) {
-  const UNSOURCED_SRC_ID = 'src-crowdsourced-db'
-  // If no sourced claim found, create claim from existing DB data
-  // with confidence = 'unverified'
+// lib/entity-resolution.js
+
+const STRIP_SUFFIXES = [
+  ', Inc.', ', Inc', ' Inc.', ' Inc',
+  ', LLC', ' LLC', ', L.L.C.', ' L.L.C.',
+  ', Corp.', ', Corp', ' Corp.', ' Corp',
+  ', Ltd.', ', Ltd', ' Ltd.', ' Ltd',
+  ', Co.', ', Co', ' Co.', ' Co',
+  ', LP', ' LP', ', L.P.', ' L.P.',
+  ', PBC', ' PBC',
+  ' Foundation', ' Institute', ' Organization',
+  ' Association', ' Initiative', ' Project',
+]
+
+function normalize(name) {
+  let n = name.trim()
+  for (const suffix of STRIP_SUFFIXES) {
+    if (n.toLowerCase().endsWith(suffix.toLowerCase())) {
+      n = n.slice(0, -suffix.length).trim()
+    }
+  }
+  return n.toLowerCase()
+}
+
+async function resolveEntity(extractedName, rdsClient, neonClient) {
+  const normalized = normalize(extractedName)
+
+  // Step 1: Exact match
+  const exact = await rdsClient.query(
+    `SELECT id, name FROM entity
+     WHERE LOWER(name) = $1 AND entity_type IN ('person', 'organization')`,
+    [extractedName.toLowerCase()]
+  )
+  if (exact.rows.length === 1) {
+    return { id: exact.rows[0].id, confidence: 'exact' }
+  }
+
+  // Step 2: Normalized match
+  const normMatch = await rdsClient.query(
+    `SELECT id, name FROM entity
+     WHERE entity_type IN ('person', 'organization')`,
+  )
+  for (const row of normMatch.rows) {
+    if (normalize(row.name) === normalized) {
+      return { id: row.id, confidence: 'normalized' }
+    }
+  }
+
+  // Step 3: Alias lookup
+  const alias = await neonClient.query(
+    `SELECT entity_id FROM entity_alias WHERE LOWER(alias) = $1`,
+    [extractedName.toLowerCase()]
+  )
+  if (alias.rows.length === 1) {
+    return { id: alias.rows[0].entity_id, confidence: 'alias' }
+  }
+
+  // Step 4: Fuzzy match (requires pg_trgm extension)
+  const fuzzy = await rdsClient.query(
+    `SELECT id, name, similarity(name, $1) as sim
+     FROM entity
+     WHERE entity_type IN ('person', 'organization')
+       AND similarity(name, $1) > 0.6
+     ORDER BY sim DESC
+     LIMIT 1`,
+    [extractedName]
+  )
+  if (fuzzy.rows.length === 1) {
+    const sim = fuzzy.rows[0].sim
+    if (sim > 0.85) {
+      return { id: fuzzy.rows[0].id, confidence: 'fuzzy_high' }
+    } else {
+      // Log as uncertain but don't use
+      console.log(`  Uncertain fuzzy match: "${extractedName}" → "${fuzzy.rows[0].name}" (${sim.toFixed(2)})`)
+    }
+  }
+
+  // Step 5: No match
+  return null
+}
+
+async function logUnresolved(neonClient, extractedName, context, sourceUrl, role) {
+  await neonClient.query(
+    `INSERT INTO unresolved_entity (extracted_name, context, source_url, entity_role)
+     VALUES ($1, $2, $3, $4)
+     ON CONFLICT (extracted_name) DO UPDATE SET
+       times_seen = unresolved_entity.times_seen + 1`,
+    [extractedName, context, sourceUrl, role]
+  )
 }
 ```
 
-**Why:** Don't lose existing data. Mark as unverified until sourced.
+**Metrics to Track:**
 
-#### 9. Rate Limiting
+After each run, report:
+- Entities processed: X
+- Relationships extracted: Y
+- Resolved (exact): N1
+- Resolved (normalized): N2
+- Resolved (alias): N3
+- Resolved (fuzzy): N4
+- **Unresolved: N5** ← Key metric to minimize
+- Resolution rate: (N1+N2+N3+N4) / Y
+
+### 2. Duplicate Discovery Detection
+
+**Risk:** Process entity A, find "A funded B". Later process entity B, find same relationship. Creates duplicates.
+
+**Mitigation:**
+- UNIQUE constraint on `(source_entity_id, target_entity_id, edge_type, source_id)` prevents exact duplicates
+- Before inserting, check if discovery already exists (either direction)
+- Use `ON CONFLICT DO NOTHING` for idempotency
+
+```sql
+-- Check both directions
+SELECT * FROM edge_discovery
+WHERE (source_entity_id = $1 AND target_entity_id = $2)
+   OR (source_entity_id = $2 AND target_entity_id = $1)
+AND edge_type = 'funder';
+```
+
+### 3. Funding Direction Ambiguity
+
+**Risk:** "OpenAI received funding from Microsoft" vs "Microsoft funded OpenAI" — same relationship, different phrasing.
+
+**Mitigation:**
+- Explicit prompt instruction: "Always identify the FUNDER (who gave money) and RECIPIENT (who received money)"
+- Validate: funder should typically be a foundation, VC, government, wealthy individual
+- If unclear, set `confidence = 'low'` and flag for review
+
+### 4. Multiple Funding Rounds
+
+**Risk:** Open Phil funded MIRI in 2015, 2018, and 2023. Three grants, one edge.
+
+**Mitigation:**
+- Schema allows multiple `edge_evidence` records per edge (different source_ids)
+- Each grant gets its own evidence record with its own amount/date/citation
+- Add `grant_id` or `funding_round` field if needed for disambiguation
+
+```sql
+-- Multiple evidence records for same edge is OK
+edge_evidence:
+  evidence_id: "142_src-abc" (2015 grant)
+  evidence_id: "142_src-def" (2018 grant)
+  evidence_id: "142_src-ghi" (2023 grant)
+```
+
+### 5. Date Precision
+
+**Risk:** Source says "founded in 2015" — no month/day.
+
+**Mitigation:**
+- Allow partial dates: store `2015-01-01` with `date_precision = 'year'`
+- Add `date_precision` field: `'day'`, `'month'`, `'year'`
+- Or use separate `year` / `date` fields (claim table already has `stance_label` for year)
+
+### 6. Edge Direction Check
+
+**Risk:** Checking if edge exists, but it's stored A→B and we're checking B→A.
+
+**Mitigation:**
+- For funder edges, direction matters: funder→recipient
+- Check both directions when looking for existing edge
+- Normalize direction in extraction: always funder as source_entity_id
+
+### 7. Conflicting Evidence
+
+**Risk:** Source 1 says "Founded 2015", Source 2 says "Founded 2016".
+
+**Mitigation:**
+- Store ALL evidence (multiple claim records, multiple edge_evidence records)
+- Track `confidence` level for each
+- Frontend/analysis can use highest-confidence or most-recent
+- Don't try to resolve conflicts automatically — surface them for review
+
+### 8. Source URL Reliability
+
+**Risk:** Exa returns URL that's now 404, paywalled, or changed content.
+
+**Mitigation:**
+- Store `cached_excerpt` in source table (already there)
+- Consider archiving URLs via Wayback Machine API (future enhancement)
+- For spot-checks, verify URL is still accessible
+
+### 9. API Failures & Retries
+
+**Risk:** Exa or Claude API fails mid-run.
+
+**Mitigation:**
+- Wrap API calls in retry logic (3 attempts, exponential backoff)
+- Progress tracking saves after each entity (already designed)
+- `--resume` flag skips completed entities
+- Log failures for manual retry
 
 ```javascript
-await delay(150)  // 150ms between Exa calls
-```
-
-**Why:** Avoid rate limits. Be a good API citizen.
-
-#### 10. Structured Claude Prompt
-
-```javascript
-const EXTRACTION_PROMPT = `You are extracting sourced claims...
-
-RULES:
-1. Every claim MUST have a source_url from the search results. Never fabricate URLs.
-2. Every claim MUST have a citation — a VERBATIM quote (1-2 sentences) from the source.
-3. Only create claims where you find direct evidence. Empty arrays are expected and fine.
-...
-
-Return ONLY the JSON array.`
-```
-
-**Why:** Strict rules prevent hallucination. "Empty arrays are fine" prevents forced output.
-
----
-
-### 3. Enrichment Strategy by Edge Type
-
-#### Funder Edges (148 total)
-
-**Goal:** Extract amount, date range, source URL
-
-**Exa search pattern:**
-```
-"${source_name}" "${target_name}" funding grant investment donated amount million
-```
-
-**Claude extraction:**
-```json
-{
-  "amount_usd": 5000000,
-  "amount_note": "2023 grant",
-  "start_date": "2023-01-01",
-  "end_date": null,
-  "source_url": "https://...",
-  "source_title": "Open Phil grants database",
-  "confidence": "high"
-}
-```
-
-**Priority:** HIGH — Directly answers funding overlap questions
-
-#### Employer Edges (675 total)
-
-**Goal:** Extract start/end dates
-
-**Exa search pattern:**
-```
-"${person_name}" "${org_name}" joined hired appointed years worked
-```
-
-**Claude extraction:**
-```json
-{
-  "start_date": "2019-03-01",
-  "end_date": "2023-09-15",
-  "role_updated": "CEO (2019-2023)",
-  "source_url": "https://...",
-  "confidence": "medium"
-}
-```
-
-**Priority:** HIGH — Enables revolving door analysis
-
-#### Founder Edges (187 total)
-
-**Goal:** Extract founding year (written to entity, not edge)
-
-**Exa search pattern:**
-```
-"${org_name}" founded established year incorporated
-```
-
-**Claude extraction:**
-```json
-{
-  "founded_year": 2015,
-  "founded_context": "Co-founded by Sam Altman and others",
-  "source_url": "https://...",
-  "confidence": "high"
-}
-```
-
-**Priority:** HIGH — Unlocks cohort analysis
-
-#### Parent Company Edges (110 total)
-
-**Goal:** Extract acquisition date and amount
-
-**Exa search pattern:**
-```
-"${parent_name}" acquired "${subsidiary_name}" acquisition deal year
-```
-
-**Priority:** MEDIUM
-
----
-
-## Implementation Details
-
-### Progress Tracking (Following Anushree's Pattern)
-
-Each script tracks progress separately, using edge natural keys (not IDs which may change):
-
-```
-data/edge-enrichment/
-├── funder-progress.json
-├── employer-progress.json
-├── founding-dates-progress.json
-└── parent-company-progress.json
-```
-
-Format (matches Anushree's `claims-enrichment-progress.json`):
-```json
-{
-  "completed": [
-    "128_341_funder",
-    "211_177_funder"
-  ]
-}
-```
-
-**Edge natural key:** `{source_id}_{target_id}_{edge_type}` — stable even if edge.id changes.
-
-```javascript
-function edgeKey(edge) {
-  return `${edge.source_id}_${edge.target_id}_${edge.edge_type}`
-}
-
-function loadProgress(name) {
-  const path = `data/edge-enrichment/${name}-progress.json`
-  try {
-    return JSON.parse(fs.readFileSync(path, 'utf-8'))
-  } catch {
-    return { completed: [] }
+async function withRetry(fn, maxAttempts = 3) {
+  for (let i = 0; i < maxAttempts; i++) {
+    try {
+      return await fn()
+    } catch (err) {
+      if (i === maxAttempts - 1) throw err
+      await delay(1000 * Math.pow(2, i)) // Exponential backoff
+    }
   }
 }
 ```
 
-### Cost Estimate
+### 10. Progress Tracking Granularity
 
-| Edge Type | Count | Exa/edge | Claude/edge | Est. Total |
-|-----------|-------|----------|-------------|------------|
-| Funder | 148 | $0.008 | $0.02 | ~$4.15 |
-| Employer | 675 | $0.008 | $0.02 | ~$18.90 |
-| Founder | 187 | $0.008 | $0.02 | ~$5.25 |
-| Parent | 110 | $0.008 | $0.02 | ~$3.10 |
-| **Total** | **1,120** | | | **~$31.40** |
+**Risk:** Entity A has 5 funding relationships. Crash after processing 3. On resume, skip A entirely → lose 2 relationships.
 
-### CLI Interface
+**Mitigation:**
+- Track at relationship level, not entity level
+- Progress key: `{entity_id}_{funder_id}_{recipient_id}` or similar
+- Or: accept some re-processing (upsert pattern makes it idempotent)
 
-Consistent with Anushree's scripts:
+### 11. Entity Name Matching
 
-```bash
-# Pilot run
-PILOT_DB="..." node scripts/edge-enrichment/enrich-funder-edges.js --limit=5
+**Risk:** Claude extracts "OpenAI" but DB has "OpenAI, Inc." or "OpenAI LP".
 
-# Dry run (search + extract, don't write)
-PILOT_DB="..." node scripts/edge-enrichment/enrich-funder-edges.js --dry-run --limit=10
+**Mitigation:**
+- Normalize names before matching (lowercase, strip Inc/LLC/etc.)
+- Use fuzzy matching with threshold
+- Build alias table for known variations (future enhancement)
+- Log unmatched names for manual entity creation
 
-# Resume after interruption
-PILOT_DB="..." node scripts/edge-enrichment/enrich-funder-edges.js --limit=50 --resume
+### 12. Promotion Transaction Integrity
 
-# Single edge by ID
-PILOT_DB="..." node scripts/edge-enrichment/enrich-funder-edges.js --edge-id=123
+**Risk:** Promotion has 3 steps. Step 2 fails → RDS has edge but Neon has no evidence.
 
-# All edges of this type
-PILOT_DB="..." node scripts/edge-enrichment/enrich-funder-edges.js --all
+**Mitigation:**
+- Check if edge already exists before inserting (idempotent)
+- Check if evidence already exists before inserting (idempotent)
+- Use `ON CONFLICT DO NOTHING` or `DO UPDATE`
+- If partial failure, re-running promotion fixes it
+
+```javascript
+// Idempotent promotion
+const existingEdge = await rds.query(
+  'SELECT id FROM edge WHERE source_id=$1 AND target_id=$2 AND edge_type=$3',
+  [discovery.source_entity_id, discovery.target_entity_id, discovery.edge_type]
+)
+const edgeId = existingEdge.rows[0]?.id || (await createEdge(...))
 ```
 
-### Extraction Prompt Template
+### 13. RDS Edge ID Stability
 
-```
-You are extracting structured data about a relationship between two entities from web search results.
+**Risk:** `edge_evidence.edge_id` references RDS edge. What if edges get deleted/recreated?
 
-RELATIONSHIP:
-- Source: ${source_name} (${source_type})
-- Target: ${target_name} (${target_type})
-- Type: ${relationship_type}
-- Current evidence: "${evidence}"
+**Mitigation:**
+- Edge IDs are stable (no bulk recreation planned)
+- If edge is deleted, evidence becomes orphaned (acceptable — can clean up)
+- Could add `(source_entity_id, target_entity_id, edge_type)` as secondary key for recovery
 
-TASK: Extract temporal and financial data about this relationship.
+### 14. Self-Funding
 
-RULES:
-1. Only extract data explicitly stated in the search results
-2. Every field must have a source_url from the results
-3. Dates should be YYYY-MM-DD (use first of month/year if partial)
-4. Amounts in USD (convert if necessary, note original currency)
-5. If data not found, return null for that field
-6. confidence: high = explicit statement, medium = inferred from context, low = ambiguous
+**Risk:** Can an entity fund itself? (Internal grants, retained earnings)
 
-Return JSON:
-{
-  "start_date": "YYYY-MM-DD" | null,
-  "end_date": "YYYY-MM-DD" | null,
-  "amount_usd": number | null,
-  "amount_note": "context about the amount" | null,
-  "source_url": "URL from search results",
-  "source_title": "human-readable title",
-  "confidence": "high" | "medium" | "low",
-  "extraction_notes": "any relevant context"
-}
-```
+**Mitigation:**
+- Allow it — some orgs do have internal funding mechanisms
+- Add validation: if `source_entity_id == target_entity_id`, set `confidence = 'low'` and flag
+
+### 15. Resource Entities
+
+**Risk:** Resources (papers, reports) might be mentioned as funders/recipients.
+
+**Mitigation:**
+- Filter to `entity_type IN ('person', 'organization')` when searching
+- If Claude extracts a resource as funder/recipient, entity resolution will fail → skipped
 
 ---
 
-## Validation & QA
+## Pilot Checklist
 
-### Spot-check Protocol
+Before running full enrichment, verify on a 10-entity sample:
 
-After each batch of 20 edges:
-1. Randomly sample 3 enriched edges
-2. Manually verify source URL contains the claimed data
-3. Check date/amount accuracy
-4. Track accuracy rate
-
-**Threshold:** If accuracy < 80%, pause and review prompt.
-
-### Known Edge Cases
-
-| Case | Handling |
-|------|----------|
-| Multiple funding rounds | Create separate edges or use amount_note |
-| Date ranges like "2019-present" | end_date = null, is_current = true |
-| Amounts in other currencies | Convert to USD, note original in amount_note |
-| Conflicting sources | Use most recent/authoritative, note in extraction_notes |
-| Person held role at org twice | May need two edges (edge_id unique constraint) |
+- [ ] Entity resolution works (names → IDs)
+- [ ] Duplicate detection works (same relationship from both sides)
+- [ ] Direction is correct (funder vs recipient)
+- [ ] Citations are verbatim quotes from source URLs
+- [ ] Source URLs are accessible and contain the cited information
+- [ ] Multiple funding rounds create separate evidence records
+- [ ] Progress tracking allows clean resume
+- [ ] Cost tracking matches estimates
 
 ---
 
-## Rollout Plan
+## Summary
 
-### Phase 1: Schema + Infrastructure
-1. Add new columns to edge table (migration script)
-2. Add founded_year to entity table
-3. Create `scripts/edge-enrichment/` directory structure
-4. Build shared libs (db, search, extract)
-
-### Phase 2: Funder Edges (Pilot)
-1. Build `enrich-funder-edges.js`
-2. Run on 10 edges, manual QA
-3. Iterate on prompt if needed
-4. Run on all 148 funder edges
-
-### Phase 3: Employer Edges
-1. Build `enrich-employer-edges.js`
-2. Run on 20 edges, manual QA
-3. Run on all 675 employer edges
-
-### Phase 4: Founder/Org Dates
-1. Build `enrich-founder-edges.js` (writes to entity.founded_year)
-2. Run on all 187 founder edges
-3. Backfill orgs without founder edges via direct search
-
-### Phase 5: Analysis Scripts
-1. Build `scripts/analysis/funding-overlap.js` — answers funding overlap question
-2. Build `scripts/analysis/revolving-door.js` — answers sequential positions question
-3. Build `scripts/analysis/cohort-analysis.js` — answers cohort effects question
-
----
-
-## Dependencies
-
-| Dependency | Current State | Needed By |
-|------------|---------------|-----------|
-| DATABASE_URL (RDS) | Already in .env | All scripts |
-| PILOT_DB (Neon) | Already in .env | All scripts |
-| EXA_API_KEY | Already in .env | All scripts |
-| ANTHROPIC_API_KEY | Already in .env | All scripts |
-| Edge table migration | Not done | Phase 1 |
-| Entity founded_year column | Not done | Phase 4 |
-
----
-
-## Open Questions
-
-1. **Option A vs Option B?** Add columns to RDS edge table, or create `edge_evidence` table in Neon?
-   - **Recommendation: Option B (Neon)** — follows Anushree's pattern, reuses `source` table, supports multiple sources per edge
-
-2. **Edge ID stability?** If edges are recreated during seeding, RDS edge IDs may change. How to handle?
-   - Recommendation: Use `(source_id, target_id, edge_type)` as natural key for progress tracking, not `edge.id`
-
-3. **Multiple enrichment sources?** If we find conflicting data from different sources, which wins?
-   - With Option B: Store all sources in `edge_evidence`, let frontend show most recent or highest confidence
-   - With Option A: Most recent authoritative source wins; log alternatives in `amount_note`
-
-4. **Incremental vs. full refresh?** Re-enrich edges periodically or one-time?
-   - Recommendation: Track `extraction_date`, re-run annually or when source becomes stale
-
-5. **Export format?** How does enriched edge data get to the frontend?
-   - Recommendation: Create `edges-detail.json` parallel to `claims-detail.json`, upload to R2
-
----
-
-## Success Metrics
-
-| Metric | Target |
-|--------|--------|
-| Funder edges with amount_usd | ≥70% of 148 |
-| Funder edges with source_url | ≥90% of 148 |
-| Employer edges with start_date | ≥60% of 675 |
-| Employer edges with end_date (where applicable) | ≥50% of historical roles |
-| Orgs with founded_year | ≥80% of 717 |
-| Extraction accuracy (spot-check) | ≥85% |
-
----
-
-## Appendix: Sample Enriched Edges
-
-### Funder Edge (Before)
-```json
-{
-  "source_id": 128,
-  "target_id": 341,
-  "relationship_type": "funder",
-  "role": null,
-  "evidence": "Open Phil has funded MIRI historically"
-}
-```
-
-### Funder Edge (After)
-```json
-{
-  "source_id": 128,
-  "target_id": 341,
-  "relationship_type": "funder",
-  "role": null,
-  "evidence": "Open Phil has funded MIRI historically",
-  "start_date": "2015-06-01",
-  "end_date": null,
-  "is_current": true,
-  "amount_usd": 3750000,
-  "amount_note": "Cumulative grants 2015-2023",
-  "source_url": "https://www.openphilanthropy.org/grants/machine-intelligence-research-institute-general-support",
-  "source_title": "Open Philanthropy — MIRI General Support",
-  "enrichment_date": "2026-04-27",
-  "enrichment_confidence": "high"
-}
-```
-
-### Employer Edge (Before)
-```json
-{
-  "source_id": 61,
-  "target_id": 128,
-  "relationship_type": "employer",
-  "role": "Co-CEO (former)",
-  "evidence": null
-}
-```
-
-### Employer Edge (After)
-```json
-{
-  "source_id": 61,
-  "target_id": 128,
-  "relationship_type": "employer",
-  "role": "Co-CEO",
-  "evidence": null,
-  "start_date": "2021-03-01",
-  "end_date": "2024-01-15",
-  "is_current": false,
-  "source_url": "https://...",
-  "source_title": "...",
-  "enrichment_date": "2026-04-27",
-  "enrichment_confidence": "high"
-}
-```
+| Question | Answer |
+|----------|--------|
+| How many new tables? | **3** (`edge_evidence`, `edge_discovery`, `entity_suggestion`) |
+| What about org lifecycle? | **Reuse `claim` table** with new dimensions |
+| What happens on promotion? | Discovery → RDS edge + edge_evidence |
+| What if no source found? | **No record created** (source-first principle) |
+| What if entity doesn't exist? | Create `entity_suggestion` for human review |
+| How to prevent duplicate entities? | 4-layer protection: fuzzy match at creation, merge suggestions, review UI shows potential dupes, final check before insert |
+| After new entity created? | **Manual step:** Run `enrich-claims.js --missing-stance` to populate belief claims |
