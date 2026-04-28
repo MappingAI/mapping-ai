@@ -1017,20 +1017,20 @@ export function ReachabilityRings({ entities, edges, maxPeople = 6 }: Reachabili
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {topPeople.map((data, rank) => (
           <div key={data.person.id} className="bg-white border border-[#e0e0e0] rounded-lg p-4">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="font-mono text-[16px] font-medium text-[#2563eb]">#{rank + 1}</span>
-              <div>
-                <div className="font-mono text-[12px] font-medium text-[#1a1a1a]">{data.person.name}</div>
-                <span
-                  className="font-mono text-[8px] tracking-[0.05em] uppercase px-1.5 py-0.5 rounded"
-                  style={{
-                    background: `${CATEGORY_COLORS[data.person.category] || '#888'}20`,
-                    color: CATEGORY_COLORS[data.person.category] || '#888',
-                  }}
-                >
-                  {data.person.category}
-                </span>
+            <div className="mb-2">
+              <div className="flex items-baseline gap-1.5">
+                <span className="font-mono text-[12px] font-medium text-[#2563eb]">{rank + 1}.</span>
+                <span className="font-mono text-[12px] font-medium text-[#1a1a1a]">{data.person.name}</span>
               </div>
+              <span
+                className="font-mono text-[8px] tracking-[0.05em] uppercase px-1.5 py-0.5 rounded inline-block mt-1"
+                style={{
+                  background: `${CATEGORY_COLORS[data.person.category] || '#888'}20`,
+                  color: CATEGORY_COLORS[data.person.category] || '#888',
+                }}
+              >
+                {data.person.category}
+              </span>
             </div>
 
             <div className="flex justify-center">
