@@ -2,6 +2,12 @@ import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { Navigation } from '../components/Navigation'
 import { CrosspartisanViz } from './crosspartisan/CrosspartisanViz'
 import { AgiDefinitionSpace } from './crosspartisan/AgiDefinitionSpace'
+import {
+  OutlierStancesScatter,
+  OutlierSpotlights,
+  BridgeBuilderCards,
+  TopConnectorsList,
+} from './network'
 
 // d3 is loaded from a CDN <script> tag (see index.html) rather than imported as a module,
 // so we don't have compile-time types for it. Treating it as `unknown` forces casts at
@@ -55,8 +61,10 @@ const RISK_LABELS = ['Overstated', 'Manageable', 'Serious', 'Catastrophic', 'Exi
 const TOC_ITEMS = [
   { id: 'overview', label: 'Overview' },
   { id: 'belief-space', label: 'Beliefs' },
+  { id: 'outliers', label: 'Outliers' },
   { id: 'threat-models', label: 'Threat Models' },
   { id: 'network', label: 'Connectivity' },
+  { id: 'bridge-builders', label: 'Bridge Builders' },
   { id: 'crosspartisan', label: 'Crosspartisan' },
   { id: 'agi-definitions', label: 'AGI Definitions' },
 ]
@@ -796,20 +804,7 @@ export function App() {
       .catch((err) => console.error('Failed to load data:', err))
   }, [])
 
-  // Fade-in observer
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) e.target.classList.add('visible')
-        })
-      },
-      { threshold: 0.1 },
-    )
-    const elements = document.querySelectorAll('.fade-in')
-    elements.forEach((el) => observer.observe(el))
-    return () => observer.disconnect()
-  }, [data])
+  // Fade-in observer removed - animation disabled
 
   // TOC scroll tracking
   const updateTOC = useCallback(() => {
@@ -862,16 +857,9 @@ export function App() {
 
   return (
     <>
+      {/* Fade-in disabled - causes white flash with React re-renders */}
       <style>{`
-        .fade-in {
-          opacity: 0;
-          transform: translateY(12px);
-          transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-        .fade-in.visible {
-          opacity: 1;
-          transform: translateY(0);
-        }
+        .fade-in { opacity: 1; transform: none; }
       `}</style>
 
       <Navigation />
@@ -986,7 +974,39 @@ export function App() {
         <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
 
         {/* ═══════════════════════════════════════════ */}
-        {/* SECTION 2: THREAT MODELS                    */}
+        {/* SECTION: OUTLIER STANCES                    */}
+        {/* ═══════════════════════════════════════════ */}
+
+        <SectionLabel id="outliers">Insight 2</SectionLabel>
+        <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">Outlier Stances</h2>
+
+        <Para>
+          Most entities cluster near their category's average stance. But some deviate significantly—individuals or
+          organizations whose regulatory positions differ markedly from their peers. These outliers may represent
+          emerging viewpoints, strategic positioning, or simply heterogeneity within categories.
+        </Para>
+
+        <ChartContainer
+          title="Individual stance vs category average"
+          source="Points far from the diagonal are outliers. Hover for details."
+        >
+          <OutlierStancesScatter entities={allEntities} />
+        </ChartContainer>
+
+        <h3 className="font-serif text-[18px] font-normal mt-8 mb-3">Notable outliers</h3>
+
+        <OutlierSpotlights entities={allEntities} />
+
+        <Finding>
+          Outliers often have cross-cutting concerns—safety researchers at frontier labs who favor more regulation,
+          or civil society advocates who see benefits in lighter-touch approaches. Their positions may signal where
+          coalition-building is possible across traditional category lines.
+        </Finding>
+
+        <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
+
+        {/* ═══════════════════════════════════════════ */}
+        {/* SECTION 3: THREAT MODELS                    */}
         {/* ═══════════════════════════════════════════ */}
 
         <SectionLabel id="threat-models">Insight 2</SectionLabel>
@@ -1057,7 +1077,36 @@ export function App() {
         <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
 
         {/* ═══════════════════════════════════════════ */}
-        {/* SECTION 4: CROSSPARTISAN CONVERGENCE        */}
+        {/* SECTION: BRIDGE BUILDERS                    */}
+        {/* ═══════════════════════════════════════════ */}
+
+        <SectionLabel id="bridge-builders">Insight 5</SectionLabel>
+        <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">Bridge Builders</h2>
+
+        <Para>
+          Some entities serve as connectors—linking otherwise separate communities through affiliations, collaborations,
+          or cross-cutting roles. These bridge builders are structurally important: they're positioned to translate
+          between groups and broker coalitions.
+        </Para>
+
+        <h3 className="font-serif text-[18px] font-normal mt-8 mb-3">Top connectors</h3>
+
+        <TopConnectorsList entities={allEntities} edges={edges} />
+
+        <h3 className="font-serif text-[18px] font-normal mt-8 mb-3">Bridge builder profiles</h3>
+
+        <BridgeBuilderCards entities={allEntities} edges={edges} />
+
+        <Finding>
+          Bridge builders often hold multiple affiliations or have career trajectories spanning different sectors.
+          Their structural position makes them valuable for coalition-building—but also means their departure could
+          fragment networks.
+        </Finding>
+
+        <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
+
+        {/* ═══════════════════════════════════════════ */}
+        {/* SECTION 6: CROSSPARTISAN CONVERGENCE        */}
         {/* ═══════════════════════════════════════════ */}
 
         <SectionLabel id="crosspartisan">Insight 4</SectionLabel>
