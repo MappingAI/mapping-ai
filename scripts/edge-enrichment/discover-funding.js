@@ -189,13 +189,27 @@ async function processEntity(entity, rds, neon, entityCache, dryRun) {
 
   // Filter out invalid/generic entity names
   const INVALID_NAMES = ['unknown', 'private sector', 'federal government', 'government', 'n/a', 'various', 'multiple', 'anonymous']
+  const INVALID_PATTERNS = [
+    /^unknown/i,
+    /\(various\)/i,
+    /^individual /i,
+    /^anonymous /i,
+    /^various /i,
+    /^multiple /i,
+    /^unnamed /i,
+    /^undisclosed /i,
+  ]
 
   for (const rel of extraction.relationships) {
     // Skip relationships with invalid funder/recipient names
     const funderLower = (rel.funder_name || '').toLowerCase().trim()
     const recipientLower = (rel.recipient_name || '').toLowerCase().trim()
-    if (INVALID_NAMES.includes(funderLower) || INVALID_NAMES.includes(recipientLower)) {
-      console.log(`  ⊘ Skipped (invalid name): ${rel.funder_name} → ${rel.recipient_name}`)
+
+    const isInvalidFunder = INVALID_NAMES.includes(funderLower) || INVALID_PATTERNS.some(p => p.test(rel.funder_name || ''))
+    const isInvalidRecipient = INVALID_NAMES.includes(recipientLower) || INVALID_PATTERNS.some(p => p.test(rel.recipient_name || ''))
+
+    if (isInvalidFunder || isInvalidRecipient) {
+      console.log(`  ⊘ Skipped (generic name): ${rel.funder_name} → ${rel.recipient_name}`)
       continue
     }
 
