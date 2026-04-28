@@ -8,6 +8,7 @@ import {
   BridgeBuilderCards,
   TopConnectorsList,
   ReachabilityRings,
+  AxisOutlierChart,
 } from './network'
 
 // d3 is loaded from a CDN <script> tag (see index.html) rather than imported as a module,
@@ -984,26 +985,33 @@ export function App() {
         <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">Outlier Stances</h2>
 
         <Para>
-          Most entities cluster near their category's average stance. But some deviate significantly—individuals or
-          organizations whose regulatory positions differ markedly from their peers. These outliers may represent
-          emerging viewpoints, strategic positioning, or simply heterogeneity within categories.
+          Who holds statistically rare positions? We identify entities in positions with very few peers—not necessarily
+          extreme views, but uncommon ones. Outliers are highlighted with black outlines and are the only nodes you can
+          interact with. Click any outlier to see why they stand out, then view them on the map.
         </Para>
 
+        <h3 className="font-serif text-[18px] font-normal mt-6 mb-3">1D: Single dimension</h3>
+
         <ChartContainer
-          title="Individual stance vs category average"
-          source="Points far from the diagonal are outliers. Hover for details."
+          title="Outliers by belief dimension"
+          source="Positions with ≤10 entities are outliers. Only outliers are clickable. Annotations show top outliers."
         >
-          <OutlierStancesScatter entities={allEntities} />
+          <AxisOutlierChart entities={allEntities} mode="1d" />
         </ChartContainer>
 
-        <h3 className="font-serif text-[18px] font-normal mt-8 mb-3">Notable outliers</h3>
+        <h3 className="font-serif text-[18px] font-normal mt-8 mb-3">2D: Two dimensions</h3>
 
-        <OutlierSpotlights entities={allEntities} />
+        <ChartContainer
+          title="Outliers by belief combination"
+          source="Cells with ≤10 entities are outliers. Select axes to explore different combinations."
+        >
+          <AxisOutlierChart entities={allEntities} mode="2d" />
+        </ChartContainer>
 
         <Finding>
-          Outliers often have cross-cutting concerns—safety researchers at frontier labs who favor more regulation, or
-          civil society advocates who see benefits in lighter-touch approaches. Their positions may signal where
-          coalition-building is possible across traditional category lines.
+          Outliers often hold uncommon belief combinations—an entity might be mainstream on one dimension but rare when
+          you consider two dimensions together. These positions may signal emerging viewpoints, strategic positioning,
+          or simply heterogeneity within the ecosystem.
         </Finding>
 
         <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
