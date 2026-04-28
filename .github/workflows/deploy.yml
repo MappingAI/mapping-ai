@@ -31,7 +31,6 @@ jobs:
       - name: Write .env.production
         run: |
           cat > .env.production <<EOL
-          VITE_API_BASE=https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com
           VITE_SITE_PASSWORD_HASH=__SITE_PASSWORD_HASH__
           EOL
 

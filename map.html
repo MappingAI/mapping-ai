@@ -7541,7 +7541,7 @@
 
         try {
           const response = await fetch(
-            `https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com/semantic-search?q=${encodeURIComponent(query)}`,
+            `/api/semantic-search?q=${encodeURIComponent(query)}`,
           )
           if (!response.ok) {
             throw new Error(`HTTP ${response.status}`)
