@@ -1000,12 +1000,12 @@ export function ReachabilityRings({ entities, edges, maxPeople = 6 }: Reachabili
         ))}
       </div>
 
-      {/* Category colors legend */}
+      {/* Category colors legend - using plain swatches since shapes indicate entity type */}
       <div className="flex flex-wrap gap-x-4 gap-y-1.5 mb-4">
         {[...allCategories].map((cat) => (
           <div key={cat} className="flex items-center gap-1.5">
             <div
-              className="w-2.5 h-2.5 rounded-full flex-shrink-0"
+              className="w-2.5 h-2.5 flex-shrink-0"
               style={{ background: CATEGORY_COLORS[cat] || '#888' }}
             />
             <span className="font-mono text-[9px] text-[#666] whitespace-nowrap">{cat}</span>

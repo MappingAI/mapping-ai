@@ -650,18 +650,20 @@ function ChartCategoryMatrix({ edges, entities }: { edges: Edge[]; entities: Ent
       'AI Safety/Alignment': 'AI Safety',
       'Think Tank/Policy Org': 'Think Tank',
       'Government/Agency': 'Government',
-      'VC/Capital/Philanthropy': 'VC/Capital',
+      'VC/Capital/Philanthropy': 'VC/Philanthropy',
       'Labor/Civil Society': 'Labor/Civil',
       'Ethics/Bias/Rights': 'Ethics/Rights',
       'Media/Journalism': 'Media',
       'Political Campaign/PAC': 'Political',
-      'AI Infrastructure & Compute': 'AI Infra',
-      'AI Deployers & Platforms': 'AI Platforms',
+      'AI Infrastructure & Compute': 'Infra/Compute',
+      'Infrastructure & Compute': 'Infra/Compute',
+      'AI Deployers & Platforms': 'Deployers',
+      'Deployers & Platforms': 'Deployers',
     }
 
     const cellSize = 45
-    const labelPadLeft = 110
-    const labelPadTop = 90
+    const labelPadLeft = 130
+    const labelPadTop = 100
     const W = categories.length * cellSize + labelPadLeft
     const H = categories.length * cellSize + labelPadTop
 
@@ -682,7 +684,7 @@ function ChartCategoryMatrix({ edges, entities }: { edges: Edge[]; entities: Ent
         .attr('font-family', "'DM Mono', monospace")
         .attr('font-size', 9)
         .attr('fill', '#555')
-        .text(label.length > 14 ? label.slice(0, 12) + '...' : label)
+        .text(label.length > 16 ? label.slice(0, 14) + '...' : label)
     })
 
     // Column labels
@@ -695,7 +697,7 @@ function ChartCategoryMatrix({ edges, entities }: { edges: Edge[]; entities: Ent
         .attr('font-family', "'DM Mono', monospace")
         .attr('font-size', 9)
         .attr('fill', '#555')
-        .text(label.length > 12 ? label.slice(0, 10) + '...' : label)
+        .text(label.length > 15 ? label.slice(0, 13) + '...' : label)
     })
 
     // Cells
