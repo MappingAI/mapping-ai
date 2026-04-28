@@ -348,8 +348,10 @@ function ConcentricRingViz({
       })
     })
 
-    // Draw center node (the person)
-    const centerCircle = svg
+    // Draw center node (the person) with initials
+    const centerGroup = svg.append('g').style('cursor', 'pointer')
+
+    centerGroup
       .append('circle')
       .attr('cx', centerX)
       .attr('cy', centerY)
@@ -357,16 +359,38 @@ function ConcentricRingViz({
       .attr('fill', CATEGORY_COLORS[data.person.category] || '#1a1a1a')
       .attr('stroke', '#1a1a1a')
       .attr('stroke-width', 2)
-      .style('cursor', 'pointer')
-    centerCircle.on('mouseover', (evt: MouseEvent) => {
-      centerCircle.attr('r', centerSize * 1.2)
+
+    // Get initials from name
+    const initials = data.person.name
+      .split(' ')
+      .map((word) => word[0])
+      .filter(Boolean)
+      .slice(0, 2)
+      .join('')
+      .toUpperCase()
+
+    centerGroup
+      .append('text')
+      .attr('x', centerX)
+      .attr('y', centerY)
+      .attr('text-anchor', 'middle')
+      .attr('dominant-baseline', 'central')
+      .attr('font-family', "'DM Mono', monospace")
+      .attr('font-size', centerSize * 0.8)
+      .attr('font-weight', '500')
+      .attr('fill', '#fff')
+      .attr('pointer-events', 'none')
+      .text(initials)
+
+    centerGroup.on('mouseover', (evt: MouseEvent) => {
+      centerGroup.select('circle').attr('r', centerSize * 1.2)
       showTooltip(evt, entityTooltipHtml(data.person))
     })
-    centerCircle.on('mouseout', () => {
-      centerCircle.attr('r', centerSize)
+    centerGroup.on('mouseout', () => {
+      centerGroup.select('circle').attr('r', centerSize)
       hideTooltip()
     })
-    centerCircle.on('click', () => {
+    centerGroup.on('click', () => {
       hideTooltip()
       onEntityClick(data.person)
     })
@@ -444,8 +468,8 @@ export function ReachabilityRings({ entities, edges, maxPeople = 6 }: Reachabili
         ))}
       </div>
 
-      {/* Grid of ring visualizations */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+      {/* Grid of ring visualizations - max 2 columns */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {topPeople.map((data, rank) => (
           <div key={data.person.id} className="bg-white border border-[#e0e0e0] rounded-lg p-4">
             {/* Header */}
