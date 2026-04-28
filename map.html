@@ -4148,7 +4148,7 @@
               if (node) {
                 showDetail(node, renderedNodes)
                 // Highlight the node's network (dim unconnected nodes)
-                if (currentView === 'all') dimUnconnected(node)
+                dimUnconnected(node)
                 const zoomTarget = _canvasSel || d3.select('#map-container svg')
                 const mapEl = document.getElementById('map-container')
                 const k = 3
