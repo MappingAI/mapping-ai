@@ -54,28 +54,49 @@ interface PersonReachability {
 function computeReachability(
   personId: number,
   adj: Map<number, Set<number>>,
-  entityMap: Map<number, Entity>,
 ): { hop1: number[]; hop2: number[]; hop3: number[] } {
   const visited = new Set([personId])
-  const byDepth: { 1: number[]; 2: number[]; 3: number[] } = { 1: [], 2: [], 3: [] }
+  const hop1: number[] = []
+  const hop2: number[] = []
+  const hop3: number[] = []
   let frontier = new Set([personId])
 
-  for (let depth = 1; depth <= 3; depth++) {
-    const nextFrontier = new Set<number>()
-    for (const nodeId of frontier) {
-      const neighbors = adj.get(nodeId) || new Set()
-      for (const neighborId of neighbors) {
-        if (!visited.has(neighborId)) {
-          visited.add(neighborId)
-          byDepth[depth as 1 | 2 | 3].push(neighborId)
-          nextFrontier.add(neighborId)
-        }
+  // Hop 1
+  for (const nodeId of frontier) {
+    const neighbors = adj.get(nodeId) || new Set()
+    for (const neighborId of neighbors) {
+      if (!visited.has(neighborId)) {
+        visited.add(neighborId)
+        hop1.push(neighborId)
       }
     }
-    frontier = nextFrontier
+  }
+  frontier = new Set(hop1)
+
+  // Hop 2
+  for (const nodeId of frontier) {
+    const neighbors = adj.get(nodeId) || new Set()
+    for (const neighborId of neighbors) {
+      if (!visited.has(neighborId)) {
+        visited.add(neighborId)
+        hop2.push(neighborId)
+      }
+    }
+  }
+  frontier = new Set(hop2)
+
+  // Hop 3
+  for (const nodeId of frontier) {
+    const neighbors = adj.get(nodeId) || new Set()
+    for (const neighborId of neighbors) {
+      if (!visited.has(neighborId)) {
+        visited.add(neighborId)
+        hop3.push(neighborId)
+      }
+    }
   }
 
-  return byDepth
+  return { hop1, hop2, hop3 }
 }
 
 function ConcentricRingViz({ data }: { data: PersonReachability }) {
@@ -204,7 +225,7 @@ export function ReachabilityRings({ entities, edges, maxPeople = 6 }: Reachabili
     // Compute reachability for each person
     const results: PersonReachability[] = people
       .map((person) => {
-        const reach = computeReachability(person.id, adj, entityMap)
+        const reach = computeReachability(person.id, adj)
         const hop1Entities = reach.hop1.map((id) => entityMap.get(id)).filter((e): e is Entity => !!e)
         const hop2Entities = reach.hop2.map((id) => entityMap.get(id)).filter((e): e is Entity => !!e)
         const hop3Entities = reach.hop3.map((id) => entityMap.get(id)).filter((e): e is Entity => !!e)
