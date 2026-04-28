@@ -1,6 +1,6 @@
 # Current architecture
 
-**Status:** live in production. **Last updated:** 2026-04-21. **Migration in progress:** see [ADR-0001](adrs/0001-migrate-off-aws.md) and [`target.md`](target.md).
+**Status:** live in production. **Last updated:** 2026-04-28. **Migration from AWS:** completed for database and compute. TanStack Start frontend migration shelved. See [ADR-0001](adrs/0001-migrate-off-aws.md) and [`target.md`](target.md).
 
 This document describes the stack that is actually running behind https://mapping-ai.org today. If a claim here is wrong, update this file before shipping code that depends on the new reality.
 
@@ -10,89 +10,104 @@ This document describes the stack that is actually running behind https://mappin
 
 ```
               ┌──────────────────┐
-  users ────► │ Cloudflare DNS   │ (CNAME flattening; no proxy)
+  users ────► │ Cloudflare DNS   │ (proxied mode, orange cloud)
               └────────┬─────────┘
                        │
-              ┌────────▼─────────┐
-              │ AWS CloudFront   │ (CDN, SSL termination, URL rewrite function)
-              └────────┬─────────┘
-                       │
-           ┌───────────┴────────────┐
-           ▼                        ▼
-   ┌─────────────┐         ┌────────────────┐
-   │ AWS S3      │         │ AWS API Gateway│
-   │ (static)    │         │ (HTTP API)     │
-   └─────────────┘         └───────┬────────┘
-                                   │
-                           ┌───────▼────────┐
-                           │ 6 Lambdas      │ (Node.js 20)
-                           │ (Node esbuild) │
-                           └───────┬────────┘
-                                   │
-                           ┌───────▼────────┐
-                           │ AWS RDS        │
-                           │ Postgres 17    │
-                           └────────────────┘
+              ┌────────▼──────────────────┐
+              │ Cloudflare Pages          │ (static assets + Pages Functions)
+              │ - dist/ (Vite MPA build)  │
+              │ - functions/api/* (API)   │
+              │ - functions/data/* (R2)   │
+              └────┬──────────────┬───────┘
+                   │              │
+           ┌───────▼──────┐  ┌───▼──────────┐
+           │ Cloudflare R2│  │ Neon         │
+           │ (claims,     │  │ Postgres 17  │
+           │  AGI defs)   │  │ (+ branches) │
+           └──────────────┘  └──────────────┘
 ```
 
 ## Infrastructure
 
-### DNS (Cloudflare, DNS-only mode)
+### DNS (Cloudflare, proxied mode)
 
-- `mapping-ai.org`, `www.mapping-ai.org`, `aimapping.org`, `www.aimapping.org`
-- CNAME flattening to CloudFront distribution domain
-- Cloudflare Web Analytics beacon is injected at deploy time via `CF_ANALYTICS_TOKEN` secret
+- `mapping-ai.org`, `www.mapping-ai.org` CNAME to `mapping-ai.pages.dev` (proxied)
+- `aimapping.org`, `www.aimapping.org` also configured
+- Cloudflare Web Analytics beacon injected at deploy time via `CF_ANALYTICS_TOKEN` secret
 
-### CDN + static hosting (AWS CloudFront + S3)
+### Static hosting (Cloudflare Pages)
 
-- **S3 bucket:** `mapping-ai-website-561047280976` (region `eu-west-2`, private, OAC-only)
-- **CloudFront distribution ID:** `E34ZXLC7CZX7XT` (price class PriceClass_100)
-- **ACM certificate:** `us-east-1` ARN in `template.yaml`
-- **URL rewrite function:** clean URLs (`/contribute` → `/contribute.html`) via CloudFront Function (cloudfront-js-2.0)
-- **Security headers policy:** CSP, X-Frame-Options, HSTS, X-Content-Type-Options set on distribution
+- **Pages project:** `mapping-ai` (connected to GitHub repo `MappingAI/mapping-ai`)
+- **Build output:** `dist/` (Vite MPA build)
+- **Auto-deploy:** push to `main` triggers production build; PR branches get preview deploys at `<hash>.mapping-ai.pages.dev`
+- **Clean URLs:** Cloudflare Pages natively serves `/contribute` as `/contribute.html`
+- **Config:** `wrangler.toml` (compatibility date `2024-09-23`, `nodejs_compat` flag)
 
-### Claims + enrichment data (Cloudflare R2 + Pages Function)
+### Data files (Cloudflare R2 + Pages Function)
 
 - **R2 bucket:** `mapping-ai-data` (private, no public URL)
-- **Pages Function:** `functions/data/[file].ts` proxies R2 objects through the Pages domain at `/data/<filename>`
-- **Binding:** `DATA_BUCKET` configured in Cloudflare Pages dashboard (Settings > Bindings)
-- **Allowed files:** `claims-detail.json` (3,779 claims across 779 entities), `agi-definitions.json` (240 AGI definitions with Voyage AI embeddings + UMAP + Claude clustering)
+- **Pages Function:** `functions/data/[file].ts` proxies R2 objects at `/data/<filename>`
+- **Binding:** `DATA_BUCKET` configured in `wrangler.toml`
+- **Allowed files:** `claims-detail.json` (5,835 claims across 882 entities), `agi-definitions.json` (201 AGI definitions with Voyage AI embeddings + UMAP)
 - **Cache:** `Cache-Control: public, max-age=300, s-maxage=3600` (5 min browser, 1 hour edge)
-- **Upload:** `pnpm run db:export-claims:upload` generates from Neon DB and uploads via S3-compatible API using `R2_ACCESS_KEY_ID` + `R2_SECRET_ACCESS_KEY`
-- **Dual serving:** Files also uploaded to S3 under `data/` prefix for CloudFront serving (stopgap until full migration to Cloudflare Pages)
-- **Source DB:** Neon `claims-pilot` branch (same entity IDs as RDS prod)
+- **Upload:** `PILOT_DB="..." pnpm run db:export-claims:upload` generates from Neon claims-pilot branch and uploads via S3-compatible API
 
-### Compute (AWS API Gateway HTTP API + Lambda)
+### Map data files (static assets)
 
-- **Base URL:** `https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com`
-- **Runtime:** Node.js 20, bundled by SAM's esbuild BuildMethod
-- **Throttling:** default 100 req/s rate + 200 burst; `/semantic-search` capped at 1 req/s + 3 burst
-- **CORS allowlist:** production domains + Cloudflare Pages preview (`mapping-ai.pages.dev`) + localhost variants (see `template.yaml`)
+- `map-data.json` and `map-detail.json` are generated at CI build time by `scripts/export-map-data.ts` and placed in `dist/`
+- Served as static files at `/map-data.json` and `/map-detail.json`
+- Admin approve/merge/delete triggers also write fresh copies to R2 via the admin Pages Function
+- `map-data.json` is gitignored; generated from DB on every deploy
 
-### Database (AWS RDS Postgres)
+### Compute (Cloudflare Pages Functions)
 
-- **Host:** `mapping-ai-db.c9sccou2k3xe.eu-west-2.rds.amazonaws.com`
-- **Version:** Postgres 17
-- **Instance:** `db.t4g.micro` (free tier), 20GB gp3
-- **Deletion protection:** enabled
-- **Automated backups:** 1-day retention (free tier max), point-in-time recovery available
-- **Schema:** 3 tables (`entity`, `submission`, `edge`). Full field-level detail is in the [Database schema](#database-schema) section below; `scripts/migrate.js` is the authoritative DDL source.
+- **Runtime:** Cloudflare Workers (V8 isolates, not Node.js)
+- **DB driver:** `@neondatabase/serverless` (HTTP-based, compatible with Workers runtime)
+- **API base:** `/api` (same-origin; no CORS needed for frontend calls)
 
-### IaC (AWS SAM)
+| Handler                            | Route                      | Notes                                             |
+| ---------------------------------- | -------------------------- | ------------------------------------------------- |
+| `functions/api/submit.ts`          | `POST /api/submit`         | Entity submissions, rate limiting, honeypot       |
+| `functions/api/submissions.ts`     | `GET /api/submissions`     | Approved entities by type + edges                 |
+| `functions/api/search.ts`          | `GET /api/search`          | Full-text tsvector + ILIKE search                 |
+| `functions/api/semantic-search.ts` | `GET /api/semantic-search` | Disabled (no ANTHROPIC_API_KEY set)               |
+| `functions/api/admin.ts`           | `GET/POST /api/admin`      | Approve/reject/merge/delete, requires X-Admin-Key |
+| `functions/api/upload.ts`          | `POST /api/upload`         | Thumbnail upload to R2, requires X-Admin-Key      |
 
-- `template.yaml` is the single source of truth for the API Gateway, 6 Lambda functions, S3 bucket, CloudFront distribution, security headers policy, and URL rewrite function
-- `samconfig.toml` holds deploy config (region `eu-west-2`, stack `mapping-ai`)
-- **Known risk:** `sam deploy` wipes any CloudFormation-managed resource setting not in the template. Always run `aws cloudformation detect-stack-drift` first. See `docs/solutions/integration-issues/sam-deploy-overwrites-manual-cloudfront-config-2026-04-16.md`.
+Shared modules: `functions/api/_shared/db.ts` (Neon connection), `functions/api/_shared/cors.ts` (CORS headers), `functions/api/_shared/env.ts` (Env type).
 
-### CI/CD (GitHub Actions)
+**Dev server:** `dev-server.js` (Express) serves the API locally on port 3000 using the `pg` driver. Vite proxies `/api` to port 3000. `pnpm run dev` runs both concurrently.
 
-- `.github/workflows/ci.yml`: lint, typecheck, vitest, vite build, SAM validate. Runs on every PR and non-main push.
-- `.github/workflows/deploy.yml`: runs on push to main. Steps: `pnpm install --frozen-lockfile` → `pnpm run build:tiptap` → write `.env.production` with API base + password hash placeholders → `pnpm exec vite build` → `pnpm exec tsx scripts/export-map-data.ts` (regenerates `map-data.json` from RDS) → inject password hash + Cloudflare analytics token → AWS credentials → `aws s3 sync dist/` (with cache headers) → `aws cloudfront create-invalidation --paths /*` → post-deploy smoke test (curl 200 on 6 pages)
+### Database (Neon Postgres 17)
 
-### Lambda deploy (separate from frontend CI/CD)
+- **Project:** `calm-tree-46517731` (region `aws-us-east-1`)
+- **Production branch:** `production` (primary database for the live site)
+- **Claims-pilot branch:** `claims-pilot` (claim + source tables for enrichment pipeline; see [ENRICHMENT.md](../ENRICHMENT.md))
+- **Cutover date:** 2026-04-28 (migrated from AWS RDS via pg_dump/pg_restore)
+- **Schema:** 4 tables on production (`entity`, `submission`, `edge`, `contributor_keys`). Claims-pilot branch adds `claim` and `source` tables.
+- **Per-PR branches:** GitHub Actions workflow creates a Neon branch on PR open (backend-relevant PRs only) and deletes on PR close
 
-- **Not** triggered by push to main. Requires manual `sam build && sam deploy --parameter-overrides ...`
-- See `docs/DEPLOYMENT.md` for the guarded procedure (drift check, dry-run, no `--no-confirm-changeset`)
+Connection string (get via CLI):
+
+```bash
+neonctl connection-string production --project-id calm-tree-46517731
+```
+
+### CI/CD (GitHub Actions + Cloudflare Pages)
+
+- `.github/workflows/ci.yml`: lint, typecheck, vitest, vite build, SAM validate (legacy, to be removed). Runs on every PR.
+- `.github/workflows/deploy.yml`: runs on push to main. Generates `map-data.json` from Neon, builds with Vite, syncs to S3 (legacy, parallel to Cloudflare Pages auto-deploy). Cloudflare Pages auto-deploys from GitHub on push to main.
+- `.github/workflows/neon-preview-branch.yml`: creates/deletes Neon branches for PRs touching backend files.
+
+### Legacy AWS infrastructure (warm for rollback)
+
+The following AWS resources remain active but are no longer serving production traffic. They will be retired after 1+ week of stable operation on Cloudflare/Neon.
+
+- **RDS:** `mapping-ai-db.c9sccou2k3xe.eu-west-2.rds.amazonaws.com` (Postgres 17, deletion protection on, snapshot `pre-neon-cutover-2026-04-28`)
+- **Lambda:** 6 functions via SAM (`template.yaml`), still pointed at RDS
+- **S3:** `mapping-ai-website-561047280976` (static assets + thumbnails)
+- **CloudFront:** distribution `E34ZXLC7CZX7XT` (no longer receiving DNS traffic)
+- **API Gateway:** `https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com` (no longer called by frontend)
 
 ## Frontend
 
@@ -100,16 +115,16 @@ This document describes the stack that is actually running behind https://mappin
 - **Framework:** React 19 + TypeScript (strict) + Tailwind CSS v4
 - **Data fetching:** TanStack Query (React Query v5)
 - **Forms:** React Hook Form
-- **Rich text:** TipTap on React pages (`src/components/TipTapEditor.tsx`); legacy esbuild bundle `src/tiptap-notes.js` → `assets/js/tiptap-notes.js` still used by `map.html`
+- **Rich text:** TipTap on React pages (`src/components/TipTapEditor.tsx`); legacy esbuild bundle `src/tiptap-notes.js` still used by `map.html`
 - **XSS sanitization:** DOMPurify
 - **Fonts:** EB Garamond (serif) + DM Mono (mono) via Google Fonts
-- **Visualization:** D3.js (force simulation on `map.html`, charts on `insights.html`). Canvas 2D for map rendering; SVG for the plot view and insights charts.
+- **Visualization:** D3.js (force simulation on `map.html`, charts on `insights.html`). Canvas 2D for map rendering; SVG for plot view and insights charts.
 - **Testing:** Vitest + jsdom + React Testing Library
-- **Client-side external APIs** (free, no key required): Google Favicons for org logos, Wikipedia REST API for people headshots, Photon/OpenStreetMap for city geocoding, Bluesky public API for handle search. Per the thumbnail rules, the frontend does not call these at render time; `scripts/cache-thumbnails.js` caches results to S3.
+- **Client-side external APIs** (free, no key): Google Favicons for org logos, Wikipedia REST API for people headshots, Photon/OpenStreetMap for city geocoding, Bluesky public API for handle search. Frontend does not call these at render time; `scripts/cache-thumbnails.js` caches results.
 
 ### Pages
 
-All React-migrated except `map.html`, which remains inline HTML/CSS/JS. Attempted D3 extraction broke the map; reverted. Map works under Vite MPA passthrough.
+All React-migrated except `map.html`, which remains inline HTML/CSS/JS.
 
 | Page                  | Entry                         | Framework                     |
 | --------------------- | ----------------------------- | ----------------------------- |
@@ -122,71 +137,54 @@ All React-migrated except `map.html`, which remains inline HTML/CSS/JS. Attempte
 | `theoryofchange.html` | `src/theoryofchange/main.tsx` | React                         |
 | `workshop/index.html` | `src/workshop/main.tsx`       | React                         |
 
-## Backend (API)
-
-6 TypeScript Lambda handlers in `api/`, bundled per-function by SAM esbuild at `sam build` time.
-
-| Handler                  | Route                  | Function name                |
-| ------------------------ | ---------------------- | ---------------------------- |
-| `api/submit.ts`          | `POST /submit`         | `mapping-ai-submit`          |
-| `api/submissions.ts`     | `GET /submissions`     | `mapping-ai-submissions`     |
-| `api/search.ts`          | `GET /search`          | `mapping-ai-search`          |
-| `api/semantic-search.ts` | `GET /semantic-search` | `mapping-ai-semantic-search` |
-| `api/admin.ts`           | `GET/POST /admin`      | `mapping-ai-admin`           |
-| `api/upload.ts`          | `POST /upload`         | `mapping-ai-upload`          |
-
-Shared modules (`api/cors.ts`, `api/export-map.ts`) are bundled into each function that imports them.
-
-**External packages:** `@aws-sdk/client-s3` and `@aws-sdk/client-cloudfront` are excluded from bundles because Node 20 Lambda runtime provides them. Everything else, including `pg`, is bundled.
-
-**Dev server:** `dev-server.js` (Express) serves the API locally on port 3000. Vite proxies `/api` → 3000. `pnpm dev` runs both concurrently.
-
 ## Database schema
 
-Three tables: `entity`, `submission`, `edge`. The schema was migrated from a prior per-type layout (separate `people` / `organizations` / `resources` tables). Do not reference the old names.
+### Production branch tables
 
-### `entity`
+Four tables on the Neon production branch: `entity`, `submission`, `edge`, `contributor_keys`.
 
-| Column                            | Type                | Notes                                                                                                                                      |
-| --------------------------------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| `id`                              | SERIAL PK           |                                                                                                                                            |
-| `entity_type`                     | VARCHAR(20)         | `person`, `organization`, or `resource`                                                                                                    |
-| `name`                            | VARCHAR(200)        | Person/org name                                                                                                                            |
-| `title`                           | VARCHAR(300)        | Job title (person)                                                                                                                         |
-| `category`                        | VARCHAR(200)        | Role (person) or sector (org)                                                                                                              |
-| `other_categories`                | TEXT                | Comma-separated secondary categories                                                                                                       |
-| `primary_org`                     | VARCHAR(200)        | Person's primary org                                                                                                                       |
-| `other_orgs`                      | VARCHAR(200)        | Person's other affiliations                                                                                                                |
-| `website`                         | VARCHAR(200)        | Org website                                                                                                                                |
-| `funding_model`                   | VARCHAR(200)        | Org funding model                                                                                                                          |
-| `parent_org_id`                   | INTEGER FK → entity | Org parent                                                                                                                                 |
-| `resource_title`                  | VARCHAR(300)        | Resource title                                                                                                                             |
-| `resource_category`               | VARCHAR(200)        | Resource category                                                                                                                          |
-| `resource_author`                 | VARCHAR(200)        | Resource author                                                                                                                            |
-| `resource_type`                   | VARCHAR(100)        | Essay, Book, Report, etc.                                                                                                                  |
-| `resource_url`                    | VARCHAR(500)        | Resource URL                                                                                                                               |
-| `resource_year`                   | VARCHAR(10)         | Resource year                                                                                                                              |
-| `resource_key_argument`           | TEXT                | Resource key argument                                                                                                                      |
-| `location`                        | VARCHAR(200)        |                                                                                                                                            |
-| `influence_type`                  | TEXT                | Comma-separated                                                                                                                            |
-| `twitter`, `bluesky`              | VARCHAR(200)        | Social handles                                                                                                                             |
-| `notes`                           | TEXT                | Plain-text notes                                                                                                                           |
-| `notes_html`                      | TEXT                | Rich-text notes (TipTap HTML)                                                                                                              |
-| `thumbnail_url`                   | VARCHAR(500)        | `https://mapping-ai.org/thumbnails/...` = cached; `''` = tried, no image; `NULL` = never tried. Populated by `scripts/cache-thumbnails.js` |
-| `belief_regulatory_stance`        | VARCHAR(200)        | Display label (trigger-derived from wavg)                                                                                                  |
-| `belief_regulatory_stance_detail` | TEXT                |                                                                                                                                            |
-| `belief_evidence_source`          | VARCHAR(200)        |                                                                                                                                            |
-| `belief_agi_timeline`             | VARCHAR(200)        | Display label                                                                                                                              |
-| `belief_ai_risk`                  | VARCHAR(200)        | Display label                                                                                                                              |
-| `belief_threat_models`            | TEXT                |                                                                                                                                            |
-| `belief_*_wavg`                   | REAL                | Weighted average score (trigger-maintained)                                                                                                |
-| `belief_*_wvar`                   | REAL                | Weighted variance (trigger-maintained)                                                                                                     |
-| `belief_*_n`                      | INTEGER             | Count of scored submissions                                                                                                                |
-| `submission_count`                | INTEGER             | Total approved submissions                                                                                                                 |
-| `status`                          | VARCHAR(20)         | `approved`, `pending`, `internal`                                                                                                          |
-| `search_vector`                   | tsvector            | Full-text search (GIN indexed, auto-updated by trigger)                                                                                    |
+#### `entity`
 
-### `submission`
+| Column                            | Type                | Notes                                                                                          |
+| --------------------------------- | ------------------- | ---------------------------------------------------------------------------------------------- |
+| `id`                              | SERIAL PK           |                                                                                                |
+| `entity_type`                     | VARCHAR(20)         | `person`, `organization`, or `resource`                                                        |
+| `name`                            | VARCHAR(200)        | Person/org name                                                                                |
+| `title`                           | VARCHAR(300)        | Job title (person)                                                                             |
+| `category`                        | VARCHAR(200)        | Role (person) or sector (org)                                                                  |
+| `other_categories`                | TEXT                | Comma-separated secondary categories                                                           |
+| `primary_org`                     | VARCHAR(200)        | Person's primary org                                                                           |
+| `other_orgs`                      | VARCHAR(200)        | Person's other affiliations                                                                    |
+| `website`                         | VARCHAR(200)        | Org website                                                                                    |
+| `funding_model`                   | VARCHAR(200)        | Org funding model                                                                              |
+| `parent_org_id`                   | INTEGER FK → entity | Org parent                                                                                     |
+| `resource_title`                  | VARCHAR(300)        | Resource title                                                                                 |
+| `resource_category`               | VARCHAR(200)        | Resource category                                                                              |
+| `resource_author`                 | VARCHAR(200)        | Resource author                                                                                |
+| `resource_type`                   | VARCHAR(100)        | Essay, Book, Report, etc.                                                                      |
+| `resource_url`                    | VARCHAR(500)        | Resource URL                                                                                   |
+| `resource_year`                   | VARCHAR(10)         | Resource year                                                                                  |
+| `resource_key_argument`           | TEXT                | Resource key argument                                                                          |
+| `location`                        | VARCHAR(200)        |                                                                                                |
+| `influence_type`                  | TEXT                | Comma-separated                                                                                |
+| `twitter`, `bluesky`              | VARCHAR(200)        | Social handles                                                                                 |
+| `notes`                           | TEXT                | Plain-text notes                                                                               |
+| `notes_html`                      | TEXT                | Rich-text notes (TipTap HTML)                                                                  |
+| `thumbnail_url`                   | VARCHAR(500)        | `https://mapping-ai.org/thumbnails/...` = cached; `''` = tried, no image; `NULL` = never tried |
+| `belief_regulatory_stance`        | VARCHAR(200)        | Display label (trigger-derived from wavg)                                                      |
+| `belief_regulatory_stance_detail` | TEXT                |                                                                                                |
+| `belief_evidence_source`          | VARCHAR(200)        |                                                                                                |
+| `belief_agi_timeline`             | VARCHAR(200)        | Display label                                                                                  |
+| `belief_ai_risk`                  | VARCHAR(200)        | Display label                                                                                  |
+| `belief_threat_models`            | TEXT                |                                                                                                |
+| `belief_*_wavg`                   | REAL                | Weighted average score (trigger-maintained)                                                    |
+| `belief_*_wvar`                   | REAL                | Weighted variance (trigger-maintained)                                                         |
+| `belief_*_n`                      | INTEGER             | Count of scored submissions                                                                    |
+| `submission_count`                | INTEGER             | Total approved submissions                                                                     |
+| `status`                          | VARCHAR(20)         | `approved`, `pending`, `internal`                                                              |
+| `search_vector`                   | tsvector            | Full-text search (GIN indexed, auto-updated by trigger)                                        |
+
+#### `submission`
 
 | Column                        | Type                | Notes                                              |
 | ----------------------------- | ------------------- | -------------------------------------------------- |
@@ -200,12 +198,12 @@ Three tables: `entity`, `submission`, `edge`. The schema was migrated from a pri
 | `notes_html`                  | TEXT                | Rich text notes                                    |
 | `notes_mentions`              | JSONB               | @mention data                                      |
 | `status`                      | VARCHAR(20)         | `pending`, `approved`, `rejected`                  |
-| `llm_review`                  | JSONB               | Claude Haiku quality rating (1-5), flags, notes    |
+| `llm_review`                  | JSONB               | Quality rating (currently disabled)                |
 | `resolution_notes`            | TEXT                | Admin notes on review decision                     |
 | `submitted_at`, `reviewed_at` | TIMESTAMPTZ         |                                                    |
 | `reviewed_by`                 | VARCHAR(200)        |                                                    |
 
-### `edge`
+#### `edge`
 
 | Column       | Type                | Notes                                                       |
 | ------------ | ------------------- | ----------------------------------------------------------- |
@@ -218,6 +216,66 @@ Three tables: `entity`, `submission`, `edge`. The schema was migrated from a pri
 | `evidence`   | TEXT                |                                                             |
 | `created_by` | VARCHAR(50)         | `system`, `admin`, etc.                                     |
 | UNIQUE       |                     | `(source_id, target_id, edge_type)`                         |
+
+#### `contributor_keys`
+
+| Column        | Type        | Notes                        |
+| ------------- | ----------- | ---------------------------- |
+| `id`          | SERIAL PK   |                              |
+| `key_hash`    | VARCHAR(64) | SHA-256 of `mak_<32hex>` key |
+| `name`        | VARCHAR     | Key holder name              |
+| `email`       | VARCHAR     | Key holder email             |
+| `daily_limit` | INTEGER     | Default 250                  |
+| `created_at`  | TIMESTAMPTZ |                              |
+| `revoked_at`  | TIMESTAMPTZ | NULL = active                |
+
+### Claims-pilot branch tables
+
+The `claims-pilot` Neon branch extends the production schema with two additional tables for the enrichment pipeline. These will be merged into production when the enrichment workflow is finalized. Full documentation in [ENRICHMENT.md](../ENRICHMENT.md).
+
+#### `source`
+
+Every piece of evidence. Deduplicated by URL via `source_id = sha256(url)[:12]`.
+
+| Column               | Type                 | Notes                                                                                                                          |
+| -------------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `source_id`          | text PK              | `src-` + first 12 hex chars of SHA-256 of URL                                                                                  |
+| `url`                | text UNIQUE NOT NULL | Canonical source URL                                                                                                           |
+| `title`              | text                 | Human-readable title                                                                                                           |
+| `source_type`        | text                 | hearing, bill, tweet, op_ed, interview, press_release, floor_speech, letter, report, paper, blog, podcast, video, crowdsourced |
+| `date_published`     | date                 | Publication date                                                                                                               |
+| `author`             | text                 | Author name                                                                                                                    |
+| `publisher`          | text                 | Publisher/outlet                                                                                                               |
+| `cached_excerpt`     | text                 | Verbatim excerpt cached at extraction time                                                                                     |
+| `resource_entity_id` | integer              | FK to entity if this source is a resource entity                                                                               |
+| `created_at`         | timestamptz          | Auto-set                                                                                                                       |
+| `last_verified_at`   | timestamptz          | When URL was last checked                                                                                                      |
+
+#### `claim`
+
+One row per entity-dimension-source combination. 5,835 claims as of 2026-04-28.
+
+| Column             | Type             | Notes                                                                                                |
+| ------------------ | ---------------- | ---------------------------------------------------------------------------------------------------- |
+| `claim_id`         | text PK          | `{entity_id}_{dimension}_{source_id}`                                                                |
+| `entity_id`        | integer NOT NULL | FK to entity                                                                                         |
+| `entity_name`      | text NOT NULL    | Denormalized for query convenience                                                                   |
+| `entity_type`      | text NOT NULL    | person, organization, resource                                                                       |
+| `belief_dimension` | text NOT NULL    | regulatory_stance, agi_timeline, ai_risk_level, agi_definition, or policy-area dimensions            |
+| `stance`           | text             | Text label from the scale                                                                            |
+| `stance_score`     | smallint         | Ordinal score (null for agi_definition)                                                              |
+| `stance_label`     | text             | Short display label                                                                                  |
+| `definition_used`  | text             | For agi_definition: their definition in normalized form                                              |
+| `citation`         | text NOT NULL    | Verbatim quote from source (1-2 sentences)                                                           |
+| `source_id`        | text NOT NULL    | FK to source table                                                                                   |
+| `date_stated`      | date             | When the entity made this statement                                                                  |
+| `claim_type`       | text             | direct_statement, authored_position, inferred_from_action, resource_content, crowdsourced_submission |
+| `confidence`       | text             | high, medium, low, unverified                                                                        |
+| `supersedes`       | text             | claim_id this replaces (for evolving positions)                                                      |
+| `extracted_by`     | text             | exa+claude, db_fallback, manual                                                                      |
+| `extraction_model` | text             | claude-sonnet-4-6                                                                                    |
+| `extraction_date`  | date             | When extraction ran                                                                                  |
+| `created_at`       | timestamptz      | Auto-set                                                                                             |
 
 ### Triggers
 
@@ -252,17 +310,16 @@ Any schema change must update this mapping or the map/plot view breaks silently.
 pnpm run db:migrate        # Create/update all tables, triggers, indexes
 pnpm run db:seed           # Import Airtable CSV data
 pnpm run db:export-map     # Generate map-data.json from approved entries
-pnpm run db:backup         # Backup all tables to S3 (JSON + SQL)
 pnpm run db:backup:local   # Backup to local files only
 ```
 
 ## API reference
 
-Production base URL: `https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com`
+Production base URL: `https://mapping-ai.org/api` (same-origin)
 
-For contributor-facing field reference, submission payload schemas, and examples, see `docs/CONTRIBUTOR.md`. The below covers the internal and admin surface.
+For contributor-facing field reference, submission payload schemas, and examples, see `docs/CONTRIBUTOR.md`.
 
-### `POST /submit`
+### `POST /api/submit`
 
 Submit a new or updated entry for review.
 
@@ -292,9 +349,7 @@ Request body (JSON):
 
 Responses: 200 (accepted), 400 (validation error), 405 (wrong method), 500 (server error).
 
-Side effects: LLM review via Claude Haiku (non-blocking), quality rating stored in `submission.llm_review`.
-
-### `GET /submissions`
+### `GET /api/submissions`
 
 Returns approved entities grouped by type, plus edges.
 
@@ -305,7 +360,7 @@ Returns approved entities grouped by type, plus edges.
 
 Response: `{ "people": [...], "organizations": [...], "resources": [...], "edges": [...] }`
 
-### `GET /search`
+### `GET /api/search`
 
 Full-text search across entities (tsvector plus ILIKE fallback).
 
@@ -315,11 +370,11 @@ Full-text search across entities (tsvector plus ILIKE fallback).
 | `type`    | `person`, `organization`, `resource` | Optional filter       |
 | `status`  | `pending`, `all`                     | Optional              |
 
-### `GET /semantic-search`
+### `GET /api/semantic-search`
 
-LLM-powered semantic matching via Claude Haiku. Rate-limited at 1 req/s + 3 burst at the API Gateway layer. Uses the separate `ANTHROPIC_SEMANTIC_SEARCH_KEY` so costs are tracked independently from submission review.
+Currently disabled (no `ANTHROPIC_API_KEY` configured). Returns `503 "AI search not configured"`. The map UI handles this gracefully with a "LLM search unavailable" message.
 
-### `GET /admin`
+### `GET /api/admin`
 
 Authentication: `X-Admin-Key` header or `?key=` query param.
 
@@ -330,7 +385,7 @@ Authentication: `X-Admin-Key` header or `?key=` query param.
 | `action=pending_merges`                     | Edit submissions for existing entities            |
 | `action=all&type=entity&entity_type=person` | Browse entities with filters                      |
 
-### `POST /admin`
+### `POST /api/admin`
 
 | Action              | Description                                                        |
 | ------------------- | ------------------------------------------------------------------ |
@@ -341,64 +396,55 @@ Authentication: `X-Admin-Key` header or `?key=` query param.
 | `update_entity`     | Direct admin edit                                                  |
 | `delete`            | Delete entity (cascades edges + submissions)                       |
 
-Side effects: `approve`, `merge`, `delete` auto-regenerate `map-data.json` → upload to S3 → invalidate CloudFront.
+Side effects: `approve`, `merge`, `delete` auto-regenerate `map-data.json` and upload to R2.
 
-### `POST /upload`
+### `POST /api/upload`
 
-Upload thumbnail image (JPG/PNG/WebP, max 2MB). Requires `X-Admin-Key`.
+Upload thumbnail image (JPG/PNG/WebP, max 2MB). Requires `X-Admin-Key`. Writes to R2.
 
 ## Data flow
 
 ### Path 1: Static map data (fast read path)
 
-Push to `main` → GitHub Actions → regenerate `map-data.json` from RDS → upload to S3 → invalidate CloudFront → users fetch `map-data.json` from CloudFront (no DB call at read time).
+Push to `main` → Cloudflare Pages auto-build → regenerate `map-data.json` from Neon → place in `dist/` → users fetch `/map-data.json` (no DB call at read time).
 
 `contribute.html` also loads `map-data.json` for instant client-side search and autocomplete.
 
 ### Path 2: Live API (writes + search)
 
-Form submit → `POST /submit` → `submission` table (status `pending`) + non-blocking Claude Haiku review.
+Form submit → `POST /api/submit` → `submission` table (status `pending`).
 
-Client-side autocomplete falls back to `GET /search` (full-text search) if `map-data.json` hasn't loaded yet.
+Client-side autocomplete falls back to `GET /api/search` (full-text search) if `map-data.json` hasn't loaded yet.
 
-Admin approve → `POST /admin { action: 'approve' }` → DB trigger creates `entity` row + recalculates belief scores → Lambda regenerates `map-data.json` → uploads to S3 → invalidates CloudFront. Map reflects changes within ~60 seconds.
+Admin approve → `POST /api/admin { action: 'approve' }` → DB trigger creates `entity` row + recalculates belief scores → Pages Function regenerates `map-data.json` → uploads to R2. Map reflects changes within ~60 seconds.
 
 ### Path 3: Thumbnails
 
-`scripts/cache-thumbnails.js` (run manually or on demand):
+`scripts/cache-thumbnails.js` (run manually):
 
-- Tries Google Favicon (orgs) or Wikipedia API (people), or re-downloads an existing external URL
-- Uploads to `s3://mapping-ai-website-561047280976/thumbnails/<type>-<id>.{png,jpg}`
+- Tries Google Favicon (orgs) or Wikipedia API (people)
+- Uploads to S3 (legacy; migration to R2 pending)
 - Writes `https://mapping-ai.org/thumbnails/...` into `entity.thumbnail_url`
-- On skip or fail: writes `thumbnail_url = ''` so the script excludes the entity on re-runs and the frontend skips live fallback
+- On skip or fail: writes `thumbnail_url = ''` so the script skips the entity on re-runs
 
 Rules:
 
 - `entity.thumbnail_url` is the single source of truth. Values: cached URL, `''` (tried, no image), or `NULL` (never tried)
-- Never hardcode a CloudFront subdomain (e.g. `d3fo5mm9fktie3.cloudfront.net`). Use `mapping-ai.org` (stable alias; the distribution underneath can be replaced)
-- `api/admin.ts` `update_entity` must not blind-overwrite `thumbnail_url` to null when the admin form didn't change it
-- Frontend never calls Wikipedia or Google Favicon at render time. If coverage is too low, run the cache script and redeploy `map-data.json`.
-
-See `docs/solutions/integration-issues/thumbnail-pipeline-dead-cloudfront-and-external-fallbacks-2026-04-19.md`.
+- Frontend never calls Wikipedia or Google Favicon at render time
 
 ## Spam protection
 
 - **Honeypot field** (`_hp`): hidden form field. If non-empty, server returns 200 silently without writing to DB.
-- **LLM review**: Claude Haiku rates submission quality 1-5 (non-blocking), flags spam/duplicates/offensive content. Stored in `submission.llm_review` (JSONB).
 - **Field length limits** enforced server-side (200 chars for short fields, 1000 chars for long fields).
 - **Status gate**: all submissions land in `status = 'pending'`. Nothing appears on the public map until admin approves.
-- **Rate limits**: default 100 req/s + 200 burst at API Gateway; `/semantic-search` capped at 1 req/s + 3 burst; contributor keys limited to 250 submissions/day.
+- **Rate limits**: contributor keys limited to 250 submissions/day; anonymous IP rate limit of 10/hour (in-isolate).
 
 ## Security practices
 
-- **No secrets in tracked files.** `DATABASE_URL` passed to Lambda via `--parameter-overrides` and stored in GitHub Secrets. Never in `samconfig.toml`.
-- **`.env` is gitignored.** Holds `DATABASE_URL`, AWS keys, API keys.
-- **Admin auth**: `X-Admin-Key` header on `/admin` and `/upload`. `X-Contributor-Key` header on `/submit` for the contributor-API path.
-- **Deletion protection** enabled on the RDS instance.
-- **DB backups**: `pnpm run db:backup` dumps to S3 (`backups/` prefix). RDS automated snapshots have 1-day retention (free tier limit). Run before risky admin work.
+- **No secrets in tracked files.** `DATABASE_URL` set as Cloudflare Pages secret via `wrangler pages secret put`. Never in committed files.
+- **`.env` is gitignored.** Holds `DATABASE_URL`, API keys for local dev and scripts.
+- **Admin auth**: `X-Admin-Key` header on `/api/admin` and `/api/upload`.
 - **Submitter emails** stored in DB but stripped from all public API responses.
-- **CSP + security headers** configured in `template.yaml` on the CloudFront response headers policy: `default-src 'self'`, `strict-origin-when-cross-origin` referrer, HSTS 1-year, X-Frame-Options SAMEORIGIN, X-Content-Type-Options nosniff.
-- **CORS allowlist** restricts API access to production domains + Cloudflare Pages preview + localhost variants (see `template.yaml`).
 
 ## Package management
 
@@ -408,32 +454,36 @@ See `docs/solutions/integration-issues/thumbnail-pipeline-dead-cloudfront-and-ex
 
 ## Environment variables
 
-| Variable                                      | Where it lives                       | Purpose                                 |
-| --------------------------------------------- | ------------------------------------ | --------------------------------------- |
-| `DATABASE_URL`                                | `.env` + Lambda env + GitHub Secrets | RDS Postgres connection                 |
-| `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY` | `.env` + GitHub Secrets              | AWS SDK auth                            |
-| `S3_BUCKET_NAME`                              | GitHub Secrets                       | `mapping-ai-website-561047280976`       |
-| `CLOUDFRONT_DISTRIBUTION_ID`                  | GitHub Secrets                       | `E34ZXLC7CZX7XT`                        |
-| `ANTHROPIC_API_KEY`                           | `.env` + Lambda (SAM parameter)      | Claude Haiku (submission review)        |
-| `ANTHROPIC_SEMANTIC_SEARCH_KEY`               | Lambda (SAM parameter)               | Claude for semantic search endpoint     |
-| `ADMIN_KEY`                                   | `.env` + Lambda (SAM parameter)      | Admin endpoint auth                     |
-| `EXA_API_KEY`                                 | `.env` (scripts only)                | Data enrichment via Exa                 |
-| `SITE_PASSWORD`                               | GitHub Secrets                       | Pre-launch password gate hash injection |
-| `CF_ANALYTICS_TOKEN`                          | GitHub Secrets                       | Cloudflare Web Analytics beacon         |
+| Variable                | Where it lives                         | Purpose                             |
+| ----------------------- | -------------------------------------- | ----------------------------------- |
+| `DATABASE_URL`          | Cloudflare Pages secrets + `.env`      | Neon Postgres production connection |
+| `ADMIN_KEY`             | Cloudflare Pages secrets + `.env`      | Admin endpoint auth                 |
+| `ANTHROPIC_API_KEY`     | `.env` (scripts only)                  | Claude for enrichment scripts       |
+| `EXA_API_KEY`           | `.env` (scripts only)                  | Exa web search for enrichment       |
+| `VOYAGE_API_KEY`        | `.env` (scripts only)                  | Voyage AI embeddings                |
+| `R2_ACCESS_KEY_ID`      | `.env` (scripts only)                  | R2 upload for claims export         |
+| `R2_SECRET_ACCESS_KEY`  | `.env` (scripts only)                  | R2 upload for claims export         |
+| `CLOUDFLARE_ACCOUNT_ID` | `.env` / `wrangler.toml`               | R2 endpoint                         |
+| `CF_ANALYTICS_TOKEN`    | GitHub Secrets                         | Cloudflare Web Analytics beacon     |
+| `NEON_PROD_URL`         | `.env` (scripts only)                  | Neon production (alias)             |
+| `PILOT_DB`              | Inline when running enrichment scripts | Neon claims-pilot branch            |
 
 ## Known limitations
 
-- **`map.html` is inline** (5700+ lines of D3 + Canvas 2D). React extraction attempted and reverted. Will be revisited during the TanStack Start migration (see [target.md](target.md) and [ADR-0001](adrs/0001-migrate-off-aws.md)).
+- **`map.html` is inline** (5700+ lines of D3 + Canvas 2D). React extraction attempted and reverted.
 - **Legacy TipTap bundle:** `src/tiptap-notes.js` (esbuild) duplicates the React `TipTapEditor` component. Will be removed when `map.html` becomes a React component.
-- **SAM drift risk:** any manual change to AWS Console state on a CloudFormation-managed resource will be wiped by the next `sam deploy`. Caused prod outage 2026-04-16.
-- **D3 script tag cannot be deferred/async** in `map.html`: the inline 4000+ line script depends on `d3` being available synchronously during HTML parsing. Caused prod outage 2026-04-09.
+- **D3 script tag cannot be deferred/async** in `map.html`: the inline script depends on `d3` being available synchronously during HTML parsing.
 - **Category normalization** handles known variants but may miss new ones as data grows.
-- **Admin key** default is in `template.yaml` and should rotate before adding collaborators.
+- **Thumbnails still on S3**: `scripts/cache-thumbnails.js` writes to S3. Migration to R2 pending.
+- **Legacy AWS deploy workflow** (`deploy.yml`) still runs on push to main (S3 sync + CloudFront invalidation). Harmless but wasteful; to be removed after stability period.
+- **Claims/source tables on separate branch**: The `claim` and `source` tables are on the `claims-pilot` Neon branch, not production. They need to be merged to production when the enrichment pipeline is finalized.
 
 ## Links
 
-- `template.yaml`: IaC source of truth
-- `.github/workflows/deploy.yml`: deploy pipeline
-- `docs/DEPLOYMENT.md`: guarded backend deploy procedure
-- `docs/post-mortems/`: incidents tied to this architecture
-- `docs/solutions/integration-issues/`: known gotchas
+- `wrangler.toml`: Cloudflare Pages config
+- `functions/api/`: Pages Functions (API handlers)
+- `functions/data/`: R2 data proxy
+- `.github/workflows/deploy.yml`: deploy pipeline (legacy AWS + Cloudflare Pages auto-deploy)
+- `docs/DEPLOYMENT.md`: deploy process
+- `docs/ENRICHMENT.md`: enrichment pipeline guide
+- `docs/post-mortems/`: incidents
