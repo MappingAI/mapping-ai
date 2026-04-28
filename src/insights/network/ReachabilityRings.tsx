@@ -46,6 +46,18 @@ const CATEGORY_COLORS: Record<string, string> = {
   'Political Campaign/PAC': '#984ea3',
 }
 
+// Person categories get circles, org categories get squares
+const PERSON_CATEGORIES = new Set([
+  'Executive',
+  'Researcher',
+  'Policymaker',
+  'Investor',
+  'Organizer',
+  'Journalist',
+  'Academic',
+  'Cultural figure',
+])
+
 type EntityFilter = 'all' | 'people' | 'orgs'
 
 interface PersonReachability {
@@ -1000,17 +1012,20 @@ export function ReachabilityRings({ entities, edges, maxPeople = 6 }: Reachabili
         ))}
       </div>
 
-      {/* Category colors legend - using plain swatches since shapes indicate entity type */}
+      {/* Category colors legend - circles for person categories, squares for org categories */}
       <div className="flex flex-wrap gap-x-4 gap-y-1.5 mb-4">
-        {[...allCategories].map((cat) => (
-          <div key={cat} className="flex items-center gap-1.5">
-            <div
-              className="w-2.5 h-2.5 flex-shrink-0"
-              style={{ background: CATEGORY_COLORS[cat] || '#888' }}
-            />
-            <span className="font-mono text-[9px] text-[#666] whitespace-nowrap">{cat}</span>
-          </div>
-        ))}
+        {[...allCategories].map((cat) => {
+          const isPersonCategory = PERSON_CATEGORIES.has(cat)
+          return (
+            <div key={cat} className="flex items-center gap-1.5">
+              <div
+                className={`w-2.5 h-2.5 flex-shrink-0 ${isPersonCategory ? 'rounded-full' : 'rounded-sm'}`}
+                style={{ background: CATEGORY_COLORS[cat] || '#888' }}
+              />
+              <span className="font-mono text-[9px] text-[#666] whitespace-nowrap">{cat}</span>
+            </div>
+          )
+        })}
       </div>
 
       {/* Grid */}
