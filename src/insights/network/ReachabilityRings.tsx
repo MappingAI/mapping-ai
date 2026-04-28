@@ -50,6 +50,11 @@ type EntityFilter = 'all' | 'people' | 'orgs'
 
 interface PersonReachability {
   person: Entity
+  // Full lists (unfiltered) - for center node card
+  hop1All: Entity[]
+  hop2All: Entity[]
+  hop3All: Entity[]
+  // Filtered lists - for display in rings
   hop1: Entity[]
   hop2: Entity[]
   hop3: Entity[]
@@ -132,13 +137,11 @@ function findPaths(
 
     const neighbors = adj.get(nodeId) || new Set()
     for (const neighborId of neighbors) {
-      // Avoid cycles
       if (path.some((step) => step.entity.id === neighborId)) continue
 
       const entity = entityMap.get(neighborId)
       if (!entity) continue
 
-      // Get edge relationship type
       const edgeKey1 = `${nodeId}-${neighborId}`
       const edgeKey2 = `${neighborId}-${nodeId}`
       const edge = edgeMap.get(edgeKey1) || edgeMap.get(edgeKey2)
@@ -157,7 +160,158 @@ function findPaths(
   return paths
 }
 
-// Entity detail modal with connection paths
+// Center person detail modal - shows full connection breakdown
+function CenterPersonModal({ data, onClose }: { data: PersonReachability; onClose: () => void }) {
+  const panelRef = useRef<HTMLDivElement>(null)
+  const [expandedHop, setExpandedHop] = useState<number | null>(null)
+
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+    }
+    window.addEventListener('keydown', handleEsc)
+    return () => window.removeEventListener('keydown', handleEsc)
+  }, [onClose])
+
+  const mapUrl = `/map.html?entity=${getMapSlug(data.person)}`
+
+  // Group entities by type for each hop
+  const groupByType = (entities: Entity[]) => {
+    const people = entities.filter((e) => e.entity_type === 'person')
+    const orgs = entities.filter((e) => e.entity_type === 'organization')
+    return { people, orgs }
+  }
+
+  const hop1Groups = groupByType(data.hop1All)
+  const hop2Groups = groupByType(data.hop2All)
+  const hop3Groups = groupByType(data.hop3All)
+
+  const totalPeople = hop1Groups.people.length + hop2Groups.people.length + hop3Groups.people.length
+  const totalOrgs = hop1Groups.orgs.length + hop2Groups.orgs.length + hop3Groups.orgs.length
+
+  return createPortal(
+    <div
+      className="fixed inset-0 z-[10000] flex items-start justify-center pt-[5vh]"
+      style={{ background: 'rgba(0,0,0,0.2)' }}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose()
+      }}
+    >
+      <div
+        ref={panelRef}
+        className="bg-white border border-[#ddd] rounded-lg shadow-xl overflow-y-auto w-[90vw] max-w-[560px]"
+        style={{ maxHeight: '85vh' }}
+      >
+        <div className="sticky top-0 bg-white border-b border-[#eee] px-4 py-2.5 flex justify-between items-start z-10 rounded-t-lg">
+          <div className="min-w-0 flex-1 pr-4">
+            <div className="font-mono text-[13px] font-medium text-[#1a1a1a]">{data.person.name}</div>
+            {data.person.title && <div className="font-mono text-[10px] text-[#888] mt-0.5">{data.person.title}</div>}
+          </div>
+          <button
+            onClick={onClose}
+            className="font-mono text-[16px] text-[#999] hover:text-[#333] px-2 py-0.5 -mr-2 flex-shrink-0"
+          >
+            ×
+          </button>
+        </div>
+
+        <div className="px-4 py-3">
+          {/* Category badge */}
+          <div className="flex items-center gap-2 mb-4">
+            <span
+              className="font-mono text-[9px] tracking-[0.05em] uppercase px-2 py-1 rounded"
+              style={{
+                background: `${CATEGORY_COLORS[data.person.category] || '#888'}20`,
+                color: CATEGORY_COLORS[data.person.category] || '#888',
+              }}
+            >
+              {data.person.category}
+            </span>
+          </div>
+
+          {/* Summary stats */}
+          <div className="bg-[#f8f8f8] rounded p-3 mb-4">
+            <div className="font-mono text-[10px] tracking-[0.08em] uppercase text-[#888] mb-2">
+              Network reach summary
+            </div>
+            <div className="grid grid-cols-3 gap-3 text-center">
+              <div>
+                <div className="font-mono text-[18px] font-medium text-[#1a1a1a]">{data.hop1All.length}</div>
+                <div className="font-mono text-[9px] text-[#888]">1-hop</div>
+              </div>
+              <div>
+                <div className="font-mono text-[18px] font-medium text-[#1a1a1a]">{data.hop2All.length}</div>
+                <div className="font-mono text-[9px] text-[#888]">2-hop</div>
+              </div>
+              <div>
+                <div className="font-mono text-[18px] font-medium text-[#1a1a1a]">{data.hop3All.length}</div>
+                <div className="font-mono text-[9px] text-[#888]">3-hop</div>
+              </div>
+            </div>
+            <div className="mt-3 pt-3 border-t border-[#e0e0e0] flex justify-center gap-6">
+              <div className="font-mono text-[10px] text-[#666]">
+                <span className="font-medium">{totalPeople}</span> people
+              </div>
+              <div className="font-mono text-[10px] text-[#666]">
+                <span className="font-medium">{totalOrgs}</span> organizations
+              </div>
+            </div>
+          </div>
+
+          {/* Expandable hop sections */}
+          {[
+            { level: 1, entities: data.hop1All, groups: hop1Groups },
+            { level: 2, entities: data.hop2All, groups: hop2Groups },
+            { level: 3, entities: data.hop3All, groups: hop3Groups },
+          ].map(({ level, entities, groups }) => (
+            <div key={level} className="mb-3">
+              <button
+                onClick={() => setExpandedHop(expandedHop === level ? null : level)}
+                className="w-full flex items-center justify-between py-2 px-3 bg-[#f5f5f5] hover:bg-[#eee] rounded transition-colors"
+              >
+                <span className="font-mono text-[11px] font-medium text-[#1a1a1a]">
+                  {level}-hop connections ({entities.length})
+                </span>
+                <span className="font-mono text-[10px] text-[#888]">
+                  {groups.people.length} people · {groups.orgs.length} orgs
+                  <span className="ml-2">{expandedHop === level ? '▼' : '▶'}</span>
+                </span>
+              </button>
+
+              {expandedHop === level && (
+                <div className="mt-2 pl-3 border-l-2 border-[#e0e0e0] max-h-[200px] overflow-y-auto">
+                  {entities.length === 0 ? (
+                    <div className="font-mono text-[10px] text-[#999] py-2">No connections at this level</div>
+                  ) : (
+                    <div className="space-y-1 py-1">
+                      {entities.map((e) => (
+                        <div key={e.id} className="flex items-center gap-2">
+                          <div
+                            className="w-2 h-2 rounded-full flex-shrink-0"
+                            style={{ background: CATEGORY_COLORS[e.category] || '#888' }}
+                          />
+                          <span className="font-mono text-[10px] text-[#1a1a1a]">{e.name}</span>
+                          <span className="font-mono text-[8px] text-[#888] capitalize">{e.entity_type}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          ))}
+
+          <a href={mapUrl} className="inline-block font-mono text-[11px] text-[#2563eb] hover:underline mt-2">
+            View on map →
+          </a>
+        </div>
+      </div>
+    </div>,
+    document.body,
+  )
+}
+
+// Entity detail modal with connection paths (for hop nodes)
 function EntityDetailModal({
   entity,
   centerPerson,
@@ -235,7 +389,6 @@ function EntityDetailModal({
                 {paths.slice(0, 5).map((path, pathIdx) => (
                   <div key={pathIdx} className="bg-[#f8f8f8] rounded p-2">
                     <div className="flex flex-wrap items-center gap-1">
-                      {/* Start with center person */}
                       <span
                         className="font-mono text-[10px] font-medium px-1.5 py-0.5 rounded"
                         style={{
@@ -246,7 +399,6 @@ function EntityDetailModal({
                         {centerPerson.name}
                       </span>
 
-                      {/* Path steps */}
                       {path.map((step, stepIdx) => (
                         <span key={stepIdx} className="flex items-center gap-1">
                           <span className="font-mono text-[9px] text-[#888]">
@@ -283,63 +435,61 @@ function EntityDetailModal({
   )
 }
 
+// Compute reachability - always traverse through ALL nodes, filter at the end
 function computeReachability(
   personId: number,
   adj: Map<number, Set<number>>,
-  entityMap: Map<number, Entity>,
-  entityFilter: EntityFilter,
 ): { hop1: number[]; hop2: number[]; hop3: number[] } {
   const visited = new Set([personId])
   const hop1: number[] = []
   const hop2: number[] = []
   const hop3: number[] = []
+
+  // Hop 1 - get ALL neighbors
   let frontier = new Set([personId])
-
-  const shouldInclude = (id: number): boolean => {
-    if (entityFilter === 'all') return true
-    const entity = entityMap.get(id)
-    if (!entity) return false
-    if (entityFilter === 'people') return entity.entity_type === 'person'
-    if (entityFilter === 'orgs') return entity.entity_type === 'organization'
-    return true
-  }
-
-  // Hop 1
   for (const nodeId of frontier) {
     const neighbors = adj.get(nodeId) || new Set()
     for (const neighborId of neighbors) {
       if (!visited.has(neighborId)) {
         visited.add(neighborId)
-        if (shouldInclude(neighborId)) hop1.push(neighborId)
+        hop1.push(neighborId)
       }
     }
   }
+
+  // Hop 2 - expand from ALL hop1 nodes
   frontier = new Set(hop1)
-
-  // Hop 2
   for (const nodeId of frontier) {
     const neighbors = adj.get(nodeId) || new Set()
     for (const neighborId of neighbors) {
       if (!visited.has(neighborId)) {
         visited.add(neighborId)
-        if (shouldInclude(neighborId)) hop2.push(neighborId)
+        hop2.push(neighborId)
       }
     }
   }
-  frontier = new Set(hop2)
 
-  // Hop 3
+  // Hop 3 - expand from ALL hop2 nodes
+  frontier = new Set(hop2)
   for (const nodeId of frontier) {
     const neighbors = adj.get(nodeId) || new Set()
     for (const neighborId of neighbors) {
       if (!visited.has(neighborId)) {
         visited.add(neighborId)
-        if (shouldInclude(neighborId)) hop3.push(neighborId)
+        hop3.push(neighborId)
       }
     }
   }
 
   return { hop1, hop2, hop3 }
+}
+
+// Filter entities by type
+function filterEntities(entities: Entity[], filter: EntityFilter): Entity[] {
+  if (filter === 'all') return entities
+  if (filter === 'people') return entities.filter((e) => e.entity_type === 'person')
+  if (filter === 'orgs') return entities.filter((e) => e.entity_type === 'organization')
+  return entities
 }
 
 function ConcentricRingViz({
@@ -356,7 +506,10 @@ function ConcentricRingViz({
     const container = ref.current
     container.innerHTML = ''
 
-    // Responsive sizing - use container width
+    // Hide tooltip when mouse leaves the container entirely
+    const handleMouseLeave = () => hideTooltip()
+    container.addEventListener('mouseleave', handleMouseLeave)
+
     const containerWidth = container.clientWidth || 320
     const W = Math.max(280, Math.min(containerWidth, 500))
     const H = W
@@ -373,13 +526,11 @@ function ConcentricRingViz({
       .style('display', 'block')
       .style('margin', '0 auto')
 
-    // Scale radii based on size
     const scale = W / 320
-    const r1 = 60 * scale // 1-hop ring
-    const r2 = 110 * scale // 2-hop ring
-    const r3 = 150 * scale // 3-hop ring
+    const r1 = 60 * scale
+    const r2 = 110 * scale
+    const r3 = 150 * scale
 
-    // Draw ring guides (faint circles)
     ;[r1, r2, r3].forEach((r, i) => {
       svg
         .append('circle')
@@ -392,7 +543,6 @@ function ConcentricRingViz({
         .attr('stroke-dasharray', i === 0 ? 'none' : '3,3')
     })
 
-    // Helper to position nodes in a ring
     const positionInRing = (index: number, total: number, radius: number) => {
       const angle = (2 * Math.PI * index) / total - Math.PI / 2
       return {
@@ -401,13 +551,12 @@ function ConcentricRingViz({
       }
     }
 
-    // Node sizes scaled
     const nodeSize1 = 6 * scale
     const nodeSize2 = 4 * scale
     const nodeSize3 = 3 * scale
     const centerSize = 12 * scale
 
-    // Draw 3-hop nodes (smallest, most faded) - sample if too many
+    // Draw 3-hop nodes - sample if too many
     const hop3Sample = data.hop3.length > 40 ? data.hop3.slice(0, 40) : data.hop3
     hop3Sample.forEach((entity, i) => {
       const pos = positionInRing(i, hop3Sample.length, r3)
@@ -433,7 +582,7 @@ function ConcentricRingViz({
       })
     })
 
-    // Draw 2-hop nodes (medium) - sample if too many
+    // Draw 2-hop nodes
     const hop2Sample = data.hop2.length > 30 ? data.hop2.slice(0, 30) : data.hop2
     hop2Sample.forEach((entity, i) => {
       const pos = positionInRing(i, hop2Sample.length, r2)
@@ -459,7 +608,7 @@ function ConcentricRingViz({
       })
     })
 
-    // Draw 1-hop nodes (largest, fully visible)
+    // Draw 1-hop nodes
     data.hop1.forEach((entity, i) => {
       const pos = positionInRing(i, data.hop1.length, r1)
       const circle = svg
@@ -486,7 +635,7 @@ function ConcentricRingViz({
       })
     })
 
-    // Draw center node (the person) with initials
+    // Draw center node with initials
     const centerGroup = svg.append('g').style('cursor', 'pointer')
 
     centerGroup
@@ -498,7 +647,6 @@ function ConcentricRingViz({
       .attr('stroke', '#1a1a1a')
       .attr('stroke-width', 2)
 
-    // Get initials from name
     const initials = data.person.name
       .split(' ')
       .map((word) => word[0])
@@ -532,6 +680,12 @@ function ConcentricRingViz({
       hideTooltip()
       onEntityClick(data.person, 0)
     })
+
+    // Cleanup: hide tooltip and remove listener when component unmounts or re-renders
+    return () => {
+      hideTooltip()
+      container.removeEventListener('mouseleave', handleMouseLeave)
+    }
   }, [data, onEntityClick])
 
   return <div ref={ref} className="w-full aspect-square max-w-[500px] mx-auto" />
@@ -542,6 +696,7 @@ export function ReachabilityRings({ entities, edges, maxPeople = 6 }: Reachabili
     entity: Entity
     centerPerson: Entity
     hopLevel: number
+    data?: PersonReachability
   } | null>(null)
   const [entityFilter, setEntityFilter] = useState<EntityFilter>('all')
 
@@ -563,27 +718,35 @@ export function ReachabilityRings({ entities, edges, maxPeople = 6 }: Reachabili
   }, [entities, edges])
 
   const topPeople = useMemo(() => {
-    // Filter to people only
     const people = entities.filter((e) => e.entity_type === 'person')
 
-    // Compute reachability for each person
     const results: PersonReachability[] = people
       .map((person) => {
-        const reach = computeReachability(person.id, adj, entityMap, entityFilter)
-        const hop1Entities = reach.hop1.map((id) => entityMap.get(id)).filter((e): e is Entity => !!e)
-        const hop2Entities = reach.hop2.map((id) => entityMap.get(id)).filter((e): e is Entity => !!e)
-        const hop3Entities = reach.hop3.map((id) => entityMap.get(id)).filter((e): e is Entity => !!e)
+        // Compute reachability through ALL paths (no filter during traversal)
+        const reach = computeReachability(person.id, adj)
+        const hop1All = reach.hop1.map((id) => entityMap.get(id)).filter((e): e is Entity => !!e)
+        const hop2All = reach.hop2.map((id) => entityMap.get(id)).filter((e): e is Entity => !!e)
+        const hop3All = reach.hop3.map((id) => entityMap.get(id)).filter((e): e is Entity => !!e)
+
+        // Apply filter for display
+        const hop1 = filterEntities(hop1All, entityFilter)
+        const hop2 = filterEntities(hop2All, entityFilter)
+        const hop3 = filterEntities(hop3All, entityFilter)
 
         return {
           person,
-          hop1: hop1Entities,
-          hop2: hop2Entities,
-          hop3: hop3Entities,
-          score: reach.hop1.length * 3 + reach.hop2.length * 2 + reach.hop3.length,
-          totalReach: reach.hop1.length + reach.hop2.length + reach.hop3.length,
+          hop1All,
+          hop2All,
+          hop3All,
+          hop1,
+          hop2,
+          hop3,
+          // Score based on filtered view
+          score: hop1.length * 3 + hop2.length * 2 + hop3.length,
+          totalReach: hop1.length + hop2.length + hop3.length,
         }
       })
-      .filter((r) => r.hop1.length > 0)
+      .filter((r) => r.hop1All.length > 0) // Filter based on having ANY connections
       .sort((a, b) => b.score - a.score)
       .slice(0, maxPeople)
 
@@ -605,13 +768,8 @@ export function ReachabilityRings({ entities, edges, maxPeople = 6 }: Reachabili
   }, [selectedEntity, adj, edgeMap, entityMap])
 
   const handleEntityClick = useCallback(
-    (centerPerson: Entity) => (entity: Entity, hopLevel: number) => {
-      if (hopLevel === 0) {
-        // Clicked center person - just show their info
-        setSelectedEntity({ entity, centerPerson, hopLevel })
-      } else {
-        setSelectedEntity({ entity, centerPerson, hopLevel })
-      }
+    (centerPerson: Entity, data: PersonReachability) => (entity: Entity, hopLevel: number) => {
+      setSelectedEntity({ entity, centerPerson, hopLevel, data })
     },
     [],
   )
@@ -631,7 +789,7 @@ export function ReachabilityRings({ entities, edges, maxPeople = 6 }: Reachabili
 
   return (
     <div>
-      {/* Filter buttons - matching CrosspartisanViz style */}
+      {/* Filter buttons */}
       <div className="flex items-center gap-2 mb-4">
         <span className="font-mono text-[10px] text-[#888]">Show:</span>
         {(['all', 'people', 'orgs'] as EntityFilter[]).map((f) => (
@@ -647,7 +805,7 @@ export function ReachabilityRings({ entities, edges, maxPeople = 6 }: Reachabili
         ))}
       </div>
 
-      {/* Legend - full names, wrapping */}
+      {/* Legend */}
       <div className="flex flex-wrap gap-x-4 gap-y-1.5 mb-4">
         {[...allCategories].map((cat) => (
           <div key={cat} className="flex items-center gap-1.5">
@@ -660,7 +818,7 @@ export function ReachabilityRings({ entities, edges, maxPeople = 6 }: Reachabili
         ))}
       </div>
 
-      {/* Grid of ring visualizations - max 2 columns */}
+      {/* Grid of ring visualizations */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {topPeople.map((data, rank) => (
           <div key={data.person.id} className="bg-white border border-[#e0e0e0] rounded-lg p-4">
@@ -683,12 +841,17 @@ export function ReachabilityRings({ entities, edges, maxPeople = 6 }: Reachabili
 
             {/* Ring visualization */}
             <div className="flex justify-center">
-              <ConcentricRingViz data={data} onEntityClick={handleEntityClick(data.person)} />
+              <ConcentricRingViz data={data} onEntityClick={handleEntityClick(data.person, data)} />
             </div>
 
-            {/* Hop counts - moved below viz */}
+            {/* Hop counts - show "X of Y" when sampling */}
             <div className="text-center font-mono text-[10px] text-[#888] mt-2">
-              1-hop: {data.hop1.length} · 2-hop: {data.hop2.length} · 3-hop: {data.hop3.length}
+              1-hop: {data.hop1.length}
+              {data.hop1.length !== data.hop1All.length && ` of ${data.hop1All.length}`}
+              {' · '}2-hop: {data.hop2.length}
+              {data.hop2.length !== data.hop2All.length && ` of ${data.hop2All.length}`}
+              {' · '}3-hop: {data.hop3.length > 40 ? `40 of ${data.hop3.length}` : data.hop3.length}
+              {data.hop3.length !== data.hop3All.length && data.hop3.length <= 40 && ` of ${data.hop3All.length}`}
             </div>
 
             {/* Stats */}
@@ -707,8 +870,11 @@ export function ReachabilityRings({ entities, edges, maxPeople = 6 }: Reachabili
         ))}
       </div>
 
-      {/* Entity detail modal */}
-      {selectedEntity && (
+      {/* Modals */}
+      {selectedEntity && selectedEntity.hopLevel === 0 && selectedEntity.data && (
+        <CenterPersonModal data={selectedEntity.data} onClose={() => setSelectedEntity(null)} />
+      )}
+      {selectedEntity && selectedEntity.hopLevel > 0 && (
         <EntityDetailModal
           entity={selectedEntity.entity}
           centerPerson={selectedEntity.centerPerson}
