@@ -7,6 +7,7 @@ import {
   OutlierSpotlights,
   BridgeBuilderCards,
   TopConnectorsList,
+  ReachabilityRings,
 } from './network'
 
 // d3 is loaded from a CDN <script> tag (see index.html) rather than imported as a module,
@@ -1009,7 +1010,7 @@ export function App() {
         {/* SECTION 3: THREAT MODELS                    */}
         {/* ═══════════════════════════════════════════ */}
 
-        <SectionLabel id="threat-models">Insight 2</SectionLabel>
+        <SectionLabel id="threat-models">Insight 3</SectionLabel>
         <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">Threat Models & Key Concerns</h2>
 
         <Para>
@@ -1051,7 +1052,7 @@ export function App() {
         {/* SECTION 3: CONNECTIVITY                     */}
         {/* ═══════════════════════════════════════════ */}
 
-        <SectionLabel id="network">Insight 3</SectionLabel>
+        <SectionLabel id="network">Insight 4</SectionLabel>
         <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">Connectivity</h2>
 
         <Para>
@@ -1084,23 +1085,28 @@ export function App() {
         <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">Bridge Builders</h2>
 
         <Para>
-          Some entities serve as connectors—linking otherwise separate communities through affiliations, collaborations,
-          or cross-cutting roles. These bridge builders are structurally important: they're positioned to translate
-          between groups and broker coalitions.
+          Who are the most structurally important <em>people</em> in the AI governance ecosystem? We measure this by
+          reachability: how many entities can a person reach within 1, 2, or 3 hops through the relationship network.
+          People with high reachability can spread information—or broker coalitions—across otherwise separate communities.
         </Para>
 
-        <h3 className="font-serif text-[18px] font-normal mt-8 mb-3">Top connectors</h3>
+        <Para>
+          Each ring shows actual connections: the inner ring (1-hop) shows direct relationships, the middle ring (2-hop)
+          shows friends-of-friends, and the outer ring (3-hop) shows the extended network. Node colors indicate category.
+        </Para>
 
-        <TopConnectorsList entities={allEntities} edges={edges} />
-
-        <h3 className="font-serif text-[18px] font-normal mt-8 mb-3">Bridge builder profiles</h3>
-
-        <BridgeBuilderCards entities={allEntities} edges={edges} />
+        <ChartContainer
+          title="Network reachability by person"
+          source="Concentric rings show 1-hop, 2-hop, and 3-hop connections. Nodes colored by category."
+        >
+          <ReachabilityRings entities={allEntities} edges={edges} maxPeople={6} />
+        </ChartContainer>
 
         <Finding>
-          Bridge builders often hold multiple affiliations or have career trajectories spanning different sectors.
-          Their structural position makes them valuable for coalition-building—but also means their departure could
-          fragment networks.
+          Policymakers like Brian Schatz and Chris Murphy top the reachability rankings—their government roles connect
+          them to many organizations. Researchers like Paul Christiano bridge AI Safety, Frontier Labs, and Government.
+          High reachability doesn't mean influence, but it does indicate structural position for information flow and
+          coalition-building.
         </Finding>
 
         <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
@@ -1109,7 +1115,7 @@ export function App() {
         {/* SECTION 6: CROSSPARTISAN CONVERGENCE        */}
         {/* ═══════════════════════════════════════════ */}
 
-        <SectionLabel id="crosspartisan">Insight 4</SectionLabel>
+        <SectionLabel id="crosspartisan">Insight 6</SectionLabel>
         <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">
           Crosspartisan Convergence on AI Policy
         </h2>
@@ -1151,7 +1157,7 @@ export function App() {
         {/* SECTION 5: AGI DEFINITION SPACE             */}
         {/* ═══════════════════════════════════════════ */}
 
-        <SectionLabel id="agi-definitions">Insight 5</SectionLabel>
+        <SectionLabel id="agi-definitions">Insight 7</SectionLabel>
         <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">The AGI Definition Space</h2>
 
         <Para>
