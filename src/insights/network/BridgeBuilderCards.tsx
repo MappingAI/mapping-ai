@@ -183,7 +183,10 @@ export function BridgeBuilderCards({ entities, edges, maxCards = 5 }: BridgeBuil
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
       {centralEntities.map((entity, rank) => (
-        <div key={entity.id} className="bg-white border border-[#e0e0e0] rounded-lg p-4 hover:border-[#bbb] transition-colors">
+        <div
+          key={entity.id}
+          className="bg-white border border-[#e0e0e0] rounded-lg p-4 hover:border-[#bbb] transition-colors"
+        >
           {/* Rank badge */}
           <div className="flex items-start justify-between gap-2 mb-2">
             <div className="flex items-center gap-2">
@@ -243,7 +246,10 @@ export function BridgeBuilderCards({ entities, edges, maxCards = 5 }: BridgeBuil
           </div>
 
           {/* Link */}
-          <a href={`/map?highlight=${entity.id}`} className="block font-mono text-[9px] text-[#2563eb] hover:underline mt-3">
+          <a
+            href={`/map?highlight=${entity.id}`}
+            className="block font-mono text-[9px] text-[#2563eb] hover:underline mt-3"
+          >
             View on map →
           </a>
         </div>

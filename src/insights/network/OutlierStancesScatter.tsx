@@ -82,12 +82,7 @@ export function OutlierStancesScatter({ entities, onSelectEntity }: OutlierStanc
     const H = Math.min(500, W * 0.7)
     const pad = { top: 40, right: 30, bottom: 60, left: 70 }
 
-    const svg = d3
-      .select(container)
-      .append('svg')
-      .attr('viewBox', `0 0 ${W} ${H}`)
-      .attr('width', W)
-      .attr('height', H)
+    const svg = d3.select(container).append('svg').attr('viewBox', `0 0 ${W} ${H}`).attr('width', W).attr('height', H)
 
     const xScale = d3
       .scaleLinear()

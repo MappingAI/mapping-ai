@@ -999,8 +999,8 @@ export function App() {
         <OutlierSpotlights entities={allEntities} />
 
         <Finding>
-          Outliers often have cross-cutting concerns—safety researchers at frontier labs who favor more regulation,
-          or civil society advocates who see benefits in lighter-touch approaches. Their positions may signal where
+          Outliers often have cross-cutting concerns—safety researchers at frontier labs who favor more regulation, or
+          civil society advocates who see benefits in lighter-touch approaches. Their positions may signal where
           coalition-building is possible across traditional category lines.
         </Finding>
 
@@ -1087,12 +1087,14 @@ export function App() {
         <Para>
           Who are the most structurally important <em>people</em> in the AI governance ecosystem? We measure this by
           reachability: how many entities can a person reach within 1, 2, or 3 hops through the relationship network.
-          People with high reachability can spread information—or broker coalitions—across otherwise separate communities.
+          People with high reachability can spread information—or broker coalitions—across otherwise separate
+          communities.
         </Para>
 
         <Para>
           Each ring shows actual connections: the inner ring (1-hop) shows direct relationships, the middle ring (2-hop)
-          shows friends-of-friends, and the outer ring (3-hop) shows the extended network. Node colors indicate category.
+          shows friends-of-friends, and the outer ring (3-hop) shows the extended network. Node colors indicate
+          category.
         </Para>
 
         <ChartContainer

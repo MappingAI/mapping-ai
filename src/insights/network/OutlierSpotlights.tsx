@@ -76,8 +76,12 @@ export function OutlierSpotlights({ entities, maxSpotlights = 5 }: OutlierSpotli
       .sort((a, b) => b.outlierScore - a.outlierScore)
 
     // Get a mix: some more restrictive, some more permissive
-    const restrictive = withScores.filter((e) => e.direction === 'more-restrictive').slice(0, Math.ceil(maxSpotlights / 2))
-    const permissive = withScores.filter((e) => e.direction === 'more-permissive').slice(0, Math.floor(maxSpotlights / 2))
+    const restrictive = withScores
+      .filter((e) => e.direction === 'more-restrictive')
+      .slice(0, Math.ceil(maxSpotlights / 2))
+    const permissive = withScores
+      .filter((e) => e.direction === 'more-permissive')
+      .slice(0, Math.floor(maxSpotlights / 2))
 
     return [...restrictive, ...permissive].slice(0, maxSpotlights)
   }, [entities, maxSpotlights])
@@ -103,9 +107,7 @@ export function OutlierSpotlights({ entities, maxSpotlights = 5 }: OutlierSpotli
             <div className="flex items-start justify-between gap-2 mb-3">
               <div className="min-w-0 flex-1">
                 <div className="font-mono text-[12px] font-medium text-[#1a1a1a] truncate">{entity.name}</div>
-                {entity.title && (
-                  <div className="font-mono text-[9px] text-[#888] truncate mt-0.5">{entity.title}</div>
-                )}
+                {entity.title && <div className="font-mono text-[9px] text-[#888] truncate mt-0.5">{entity.title}</div>}
               </div>
               <span
                 className="flex-shrink-0 font-mono text-[8px] tracking-[0.05em] uppercase px-1.5 py-0.5 rounded"

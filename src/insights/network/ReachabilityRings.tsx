@@ -54,7 +54,7 @@ interface PersonReachability {
 function computeReachability(
   personId: number,
   adj: Map<number, Set<number>>,
-  entityMap: Map<number, Entity>
+  entityMap: Map<number, Entity>,
 ): { hop1: number[]; hop2: number[]; hop3: number[] } {
   const visited = new Set([personId])
   const byDepth: { 1: number[]; 2: number[]; 3: number[] } = { 1: [], 2: [], 3: [] }
@@ -91,12 +91,7 @@ function ConcentricRingViz({ data }: { data: PersonReachability }) {
     const centerX = W / 2
     const centerY = H / 2
 
-    const svg = d3
-      .select(container)
-      .append('svg')
-      .attr('viewBox', `0 0 ${W} ${H}`)
-      .attr('width', W)
-      .attr('height', H)
+    const svg = d3.select(container).append('svg').attr('viewBox', `0 0 ${W} ${H}`).attr('width', W).attr('height', H)
 
     // Ring radii
     const r1 = 60 // 1-hop ring
@@ -248,13 +243,8 @@ export function ReachabilityRings({ entities, edges, maxPeople = 6 }: Reachabili
       <div className="flex flex-wrap gap-2 mb-4">
         {[...allCategories].slice(0, 8).map((cat) => (
           <div key={cat} className="flex items-center gap-1">
-            <div
-              className="w-2.5 h-2.5 rounded-full"
-              style={{ background: CATEGORY_COLORS[cat] || '#888' }}
-            />
-            <span className="font-mono text-[9px] text-[#666]">
-              {cat.length > 18 ? cat.slice(0, 16) + '...' : cat}
-            </span>
+            <div className="w-2.5 h-2.5 rounded-full" style={{ background: CATEGORY_COLORS[cat] || '#888' }} />
+            <span className="font-mono text-[9px] text-[#666]">{cat.length > 18 ? cat.slice(0, 16) + '...' : cat}</span>
           </div>
         ))}
       </div>
