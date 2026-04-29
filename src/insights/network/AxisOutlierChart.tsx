@@ -21,7 +21,6 @@ type AxisKey = 'stance' | 'timeline' | 'risk'
 interface AxisOutlierChartProps {
   entities: Entity[]
   mode: '1d' | '2d'
-  outlierThreshold?: number
 }
 
 const AXIS_CONFIG: Record<AxisKey, { scoreKey: keyof Entity; labels: string[]; title: string; shortTitle: string }> = {
@@ -212,7 +211,7 @@ function OutlierDetailCard({
   )
 }
 
-export function AxisOutlierChart({ entities, mode, outlierThreshold = 10 }: AxisOutlierChartProps) {
+export function AxisOutlierChart({ entities, mode }: AxisOutlierChartProps) {
   const ref = useRef<HTMLDivElement>(null)
   const [axisX, setAxisX] = useState<AxisKey>('stance')
   const [axisY, setAxisY] = useState<AxisKey>('timeline')
@@ -233,8 +232,8 @@ export function AxisOutlierChart({ entities, mode, outlierThreshold = 10 }: Axis
     })
   }, [entities, configX.scoreKey, mode, configY])
 
-  // Compute position counts and outliers
-  const { positionCounts, outlierPositions, totalCount } = useMemo(() => {
+  // Compute position counts and outliers using 50% of median threshold
+  const { positionCounts, outlierPositions, totalCount, outlierThreshold } = useMemo(() => {
     const counts: Record<string, number> = {}
 
     validEntities.forEach((e) => {
@@ -248,15 +247,20 @@ export function AxisOutlierChart({ entities, mode, outlierThreshold = 10 }: Axis
       }
     })
 
+    // Calculate median and threshold (50% of median)
+    const countValues = Object.values(counts).sort((a, b) => a - b)
+    const median = countValues.length > 0 ? countValues[Math.floor(countValues.length / 2)] : 0
+    const threshold = Math.floor(median * 0.5)
+
     const outliers = new Set<string>()
     Object.entries(counts).forEach(([key, count]) => {
-      if (count <= outlierThreshold) {
+      if (count < threshold) {
         outliers.add(key)
       }
     })
 
-    return { positionCounts: counts, outlierPositions: outliers, totalCount: validEntities.length }
-  }, [validEntities, configX.scoreKey, mode, configY, outlierThreshold])
+    return { positionCounts: counts, outlierPositions: outliers, totalCount: validEntities.length, outlierThreshold: threshold }
+  }, [validEntities, configX.scoreKey, mode, configY])
 
   // Count outlier entities
   const outlierCount = useMemo(() => {
@@ -282,8 +286,8 @@ export function AxisOutlierChart({ entities, mode, outlierThreshold = 10 }: Axis
     const H = mode === '2d' ? 550 : 420
     const margin =
       mode === '2d'
-        ? { top: 60, right: 100, bottom: 70, left: 80 }
-        : { top: 40, right: 90, bottom: 60, left: 30 }
+        ? { top: 60, right: 120, bottom: 80, left: 90 }
+        : { top: 40, right: 110, bottom: 70, left: 40 }
     const plotW = W - margin.left - margin.right
     const plotH = H - margin.top - margin.bottom
 
@@ -564,13 +568,17 @@ export function AxisOutlierChart({ entities, mode, outlierThreshold = 10 }: Axis
       .slice(0, mode === '2d' ? 5 : 3) // Limit annotations
 
     annotationCandidates.forEach((d) => {
-      const name = d.entity.name.length > 18 ? d.entity.name.slice(0, 16) + '...' : d.entity.name
-      // Position label on left side if node is in right half of chart
+      // Truncate long names more aggressively
+      const maxLen = 14
+      const name = d.entity.name.length > maxLen ? d.entity.name.slice(0, maxLen - 1) + '…' : d.entity.name
+
+      // Position label on left side if node is in right 60% of chart
       const onRightHalf = d.x > plotW * 0.6
-      const labelX = onRightHalf ? d.x - d.radius - 4 : d.x + d.radius + 4
+      const labelX = onRightHalf ? d.x - d.radius - 6 : d.x + d.radius + 6
       const anchor = onRightHalf ? 'end' : 'start'
 
-      g.append('text')
+      // Add background rect for readability (rendered first, behind text)
+      const textNode = g.append('text')
         .attr('x', labelX)
         .attr('y', d.y + 3)
         .attr('text-anchor', anchor)
@@ -580,6 +588,19 @@ export function AxisOutlierChart({ entities, mode, outlierThreshold = 10 }: Axis
         .attr('fill', '#b8860b')
         .style('pointer-events', 'none')
         .text(name)
+
+      // Get text bounding box and add background
+      const bbox = textNode.node()?.getBBox()
+      if (bbox) {
+        g.insert('rect', 'text')
+          .attr('x', bbox.x - 2)
+          .attr('y', bbox.y - 1)
+          .attr('width', bbox.width + 4)
+          .attr('height', bbox.height + 2)
+          .attr('fill', 'rgba(255, 255, 255, 0.85)')
+          .attr('rx', 2)
+          .style('pointer-events', 'none')
+      }
     })
 
     return () => {
@@ -642,7 +663,9 @@ export function AxisOutlierChart({ entities, mode, outlierThreshold = 10 }: Axis
           <div className="w-3 h-3 rounded-full bg-[#888] border-2 border-[#1a1a1a]" />
           <span className="font-mono text-[9px] text-[#666]">Outlier (clickable)</span>
         </div>
-        <div className="font-mono text-[9px] text-[#999]">Positions with ≤{outlierThreshold} entities</div>
+        <div className="font-mono text-[9px] text-[#999]">
+          Positions with &lt;{outlierThreshold} entities (50% of median)
+        </div>
       </div>
 
       {/* Detail modal */}
