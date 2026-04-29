@@ -298,9 +298,32 @@ export function App() {
         >
           Other contributors
         </div>
-        <p {...fadeProps(fi++)} className="mb-4 text-[16.5px]">
-          Connor Mack
-        </p>
+        <div
+          {...fadeProps(fi++)}
+          className="grid grid-cols-3 max-[600px]:grid-cols-2 gap-x-6 gap-y-1.5 mb-4 text-[16.5px]"
+        >
+          {[
+            'April Chen',
+            'Caleb Strom',
+            'Connor Mack',
+            'Eric Bower',
+            'Kayla Huang',
+            'Kunal Handa',
+            'Kyle Kabasares',
+            'Luke Clancy',
+            'Lydia You',
+            'Max Kaufmann',
+            'Melissa Du',
+            'Michael Tang',
+            'Raunak Chowdhuri',
+            'Ro Huang',
+            'Shon Pan',
+            'Vishakha Agrawal',
+            'William Li',
+          ].map((name) => (
+            <span key={name}>{name}</span>
+          ))}
+        </div>
 
         <hr className="border-none border-t border-[#bbb]/50 my-10" />
 
