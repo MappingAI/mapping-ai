@@ -1,6 +1,13 @@
-import { useEffect } from 'react'
+import { useEffect, useState, useCallback } from 'react'
+import { ResourcesView, type Resource } from './components/ResourcesView'
+import { DefinitionsView } from './components/DefinitionsView'
+
+type ReactView = 'resources' | 'definitions' | null
 
 export function App() {
+  const [reactView, setReactView] = useState<ReactView>(null)
+  const [resources, setResources] = useState<Resource[]>([])
+
   useEffect(() => {
     let engineCleanup: { destroy: () => void } | null = null
     let cancelled = false
@@ -17,6 +24,32 @@ export function App() {
       cancelled = true
       if (engineCleanup) engineCleanup.destroy()
     }
+  }, [])
+
+  useEffect(() => {
+    fetch('/map-data.json')
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => {
+        if (d?.resources) setResources(d.resources)
+      })
+      .catch(() => {})
+  }, [])
+
+  useEffect(() => {
+    function handleEngineModeClick(e: Event) {
+      const btn = (e.target as HTMLElement).closest('.mode-btn[data-mode]')
+      if (btn) {
+        setReactView(null)
+        setTimeout(() => window.dispatchEvent(new Event('resize')), 100)
+      }
+    }
+    document.addEventListener('click', handleEngineModeClick)
+    return () => document.removeEventListener('click', handleEngineModeClick)
+  }, [])
+
+  const activateReactView = useCallback((view: 'resources' | 'definitions') => {
+    document.querySelectorAll('.mode-btn').forEach((btn) => btn.classList.remove('active'))
+    setReactView(view)
   }, [])
 
   return (
@@ -189,6 +222,47 @@ export function App() {
                 <line x1="9" y1="9" x2="12" y2="12" />
               </svg>
               Search <span style={{ fontSize: '9px', verticalAlign: 'super', opacity: 0.7 }}>&#10022;</span>
+            </button>
+            <button
+              className={`mode-btn${reactView === 'resources' ? ' active' : ''}`}
+              onClick={() => activateReactView('resources')}
+            >
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <rect x="2" y="1" width="10" height="12" rx="1" />
+                <line x1="4.5" y1="4" x2="9.5" y2="4" />
+                <line x1="4.5" y1="7" x2="9.5" y2="7" />
+                <line x1="4.5" y1="10" x2="7.5" y2="10" />
+              </svg>
+              Library
+            </button>
+            <button
+              className={`mode-btn${reactView === 'definitions' ? ' active' : ''}`}
+              onClick={() => activateReactView('definitions')}
+            >
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="7" cy="7" r="5" />
+                <path d="M5.5 5.5a1.5 1.5 0 0 1 3 0c0 1-1.5 1.2-1.5 2.5" />
+                <circle cx="7" cy="10.5" r="0.5" fill="currentColor" />
+              </svg>
+              Beliefs
             </button>
           </div>
           <div className="view-toggles" id="network-sub-tabs">
@@ -482,6 +556,43 @@ export function App() {
       </div>
 
       <div className="map-container" id="map-container"></div>
+
+      {reactView && (
+        <>
+          <style>{`
+            .map-container { display: none !important; }
+            .zoom-controls { display: none !important; }
+            #contribute-btn { display: none !important; }
+            #category-filters { display: none !important; }
+            #stance-legend { display: none !important; }
+            #source-type-filter { display: none !important; }
+            #axis-controls { display: none !important; }
+            #secondary-category-filter { display: none !important; }
+            #network-sub-tabs { display: none !important; }
+            #plot-sub-tabs { display: none !important; }
+            #search-mode-controls { display: none !important; }
+            #entity-count { display: none !important; }
+            .control-group:has(.info-btn) { display: none !important; }
+            .controls .control-group:first-child { display: none !important; }
+          `}</style>
+          <div
+            id="react-view-container"
+            style={{
+              position: 'fixed',
+              top: '48px',
+              left: 0,
+              right: 0,
+              bottom: 0,
+              overflow: 'auto',
+              background: 'var(--bg-page)',
+              zIndex: 10,
+            }}
+          >
+            {reactView === 'resources' && <ResourcesView resources={resources} />}
+            {reactView === 'definitions' && <DefinitionsView />}
+          </div>
+        </>
+      )}
 
       <div id="mobile-directory" style={{ display: 'none' }}>
         <div id="mobile-hero-toggle" className="mobile-hero-toggle">
