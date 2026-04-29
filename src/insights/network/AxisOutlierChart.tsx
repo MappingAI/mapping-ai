@@ -570,38 +570,72 @@ export function AxisOutlierChart({ entities, mode }: AxisOutlierChartProps) {
     // Create a group for annotations so backgrounds render behind text
     const annotationGroup = g.append('g').attr('class', 'annotations')
 
+    // Helper to wrap name into lines
+    function wrapName(name: string, maxLineLen: number): string[] {
+      if (name.length <= maxLineLen) return [name]
+
+      // Try to split at a space near the middle
+      const words = name.split(' ')
+      if (words.length >= 2) {
+        // Find best split point
+        let line1 = words[0] || ''
+        let lineIdx = 1
+        while (lineIdx < words.length) {
+          const nextWord = words[lineIdx] || ''
+          if ((line1 + ' ' + nextWord).length <= maxLineLen) {
+            line1 += ' ' + nextWord
+            lineIdx++
+          } else {
+            break
+          }
+        }
+        const line2 = words.slice(lineIdx).join(' ')
+        if (line2.length > maxLineLen) {
+          return [line1, line2.slice(0, maxLineLen - 1) + '…']
+        }
+        return line2 ? [line1, line2] : [line1]
+      }
+
+      // No spaces - just split at maxLineLen
+      return [name.slice(0, maxLineLen), name.slice(maxLineLen, maxLineLen * 2)]
+    }
+
     annotationCandidates.forEach((d) => {
-      // Truncate long names more aggressively
-      const maxLen = 14
-      const name = d.entity.name.length > maxLen ? d.entity.name.slice(0, maxLen - 1) + '…' : d.entity.name
+      const maxLineLen = 12
+      const lines = wrapName(d.entity.name, maxLineLen)
 
       // Position label on left side if node is in right 60% of chart
       const onRightHalf = d.x > plotW * 0.6
       const labelX = onRightHalf ? d.x - d.radius - 6 : d.x + d.radius + 6
       const anchor = onRightHalf ? 'end' : 'start'
 
-      // Create text first to measure, then add background behind it
+      // Create text with tspans for multi-line
       const textNode = annotationGroup.append('text')
         .attr('x', labelX)
-        .attr('y', d.y + 3)
+        .attr('y', d.y - (lines.length > 1 ? 3 : -3))
         .attr('text-anchor', anchor)
         .attr('font-family', "'DM Mono', monospace")
         .attr('font-size', 9)
         .attr('font-weight', '500')
         .attr('fill', '#b8860b')
         .style('pointer-events', 'none')
-        .text(name)
+
+      lines.forEach((line, i) => {
+        textNode.append('tspan')
+          .attr('x', labelX)
+          .attr('dy', i === 0 ? 0 : 11)
+          .text(line)
+      })
 
       // Get text bounding box and add background behind it
       const bbox = textNode.node()?.getBBox()
       if (bbox) {
-        // Insert rect before the text node we just created
         annotationGroup.insert('rect', function() { return textNode.node() })
-          .attr('x', bbox.x - 2)
-          .attr('y', bbox.y - 1)
-          .attr('width', bbox.width + 4)
-          .attr('height', bbox.height + 2)
-          .attr('fill', 'rgba(255, 255, 255, 0.85)')
+          .attr('x', bbox.x - 3)
+          .attr('y', bbox.y - 2)
+          .attr('width', bbox.width + 6)
+          .attr('height', bbox.height + 4)
+          .attr('fill', 'rgba(255, 255, 255, 0.9)')
           .attr('rx', 2)
           .style('pointer-events', 'none')
       }
