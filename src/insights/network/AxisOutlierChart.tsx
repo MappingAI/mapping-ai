@@ -69,14 +69,21 @@ function escapeHtml(s: string): string {
   return s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!)
 }
 
+// Map axis keys to map.html axis values
+const AXIS_TO_MAP_PARAM: Record<AxisKey, string> = {
+  stance: 'regulatory_stance',
+  timeline: 'agi_timeline',
+  risk: 'ai_risk_level',
+}
+
 function getMapUrl(entity: Entity, axisX: AxisKey, axisY?: AxisKey): string {
   const typePrefix = entity.entity_type === 'person' ? 'person' : 'org'
-  const xParam = AXIS_CONFIG[axisX].scoreKey.replace('_score', '')
+  const xParam = AXIS_TO_MAP_PARAM[axisX]
   if (axisY) {
-    const yParam = AXIS_CONFIG[axisY].scoreKey.replace('_score', '')
-    return `/map.html?view=2d&axisX=${xParam}&axisY=${yParam}&entity=${typePrefix}/${entity.id}`
+    const yParam = AXIS_TO_MAP_PARAM[axisY]
+    return `/map.html?view=plot&axisMode=2d&axisX=${xParam}&axisY=${yParam}&entity=${typePrefix}/${entity.id}`
   }
-  return `/map.html?view=2d&axisX=${xParam}&entity=${typePrefix}/${entity.id}`
+  return `/map.html?view=plot&axisMode=1d&axisX=${xParam}&entity=${typePrefix}/${entity.id}`
 }
 
 // Tooltip singleton
