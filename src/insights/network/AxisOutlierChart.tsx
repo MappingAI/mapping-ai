@@ -701,9 +701,6 @@ export function AxisOutlierChart({ entities, mode }: AxisOutlierChartProps) {
           <div className="w-3 h-3 rounded-full bg-[#888] border-2 border-[#1a1a1a]" />
           <span className="font-mono text-[9px] text-[#666]">Outlier (clickable)</span>
         </div>
-        <div className="font-mono text-[9px] text-[#999]">
-          Positions with &lt;{outlierThreshold} entities (50% of median)
-        </div>
       </div>
 
       {/* Detail modal */}
