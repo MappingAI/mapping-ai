@@ -272,11 +272,11 @@ export function AxisOutlierChart({ entities, mode, outlierThreshold = 10 }: Axis
     container.addEventListener('mouseleave', handleMouseLeave)
 
     const W = container.clientWidth || 600
-    const H = mode === '2d' ? 400 : 200
+    const H = mode === '2d' ? 450 : 320
     const margin =
       mode === '2d'
-        ? { top: 40, right: 40, bottom: 60, left: 80 }
-        : { top: 30, right: 30, bottom: 50, left: 30 }
+        ? { top: 50, right: 40, bottom: 70, left: 80 }
+        : { top: 40, right: 30, bottom: 60, left: 30 }
     const plotW = W - margin.left - margin.right
     const plotH = H - margin.top - margin.bottom
 
@@ -326,7 +326,7 @@ export function AxisOutlierChart({ entities, mode, outlierThreshold = 10 }: Axis
         .attr('font-family', "'DM Mono', monospace")
         .attr('font-size', 9)
         .attr('fill', '#666')
-        .text(label.length > 12 ? label.slice(0, 10) + '...' : label)
+        .text(label)
 
       if (mode === '1d') {
         const count = positionCounts[String(i + 1)] || 0
@@ -550,41 +550,24 @@ export function AxisOutlierChart({ entities, mode, outlierThreshold = 10 }: Axis
       })
     })
 
-    // Add annotations for top outliers (most isolated positions)
+    // Add annotations for top outliers (most isolated positions) - name next to node
     const annotationCandidates = outlierNodes
       .filter((d) => d.posCount <= 5) // Only annotate very rare positions
       .sort((a, b) => a.posCount - b.posCount)
       .slice(0, mode === '2d' ? 5 : 3) // Limit annotations
 
-    annotationCandidates.forEach((d, i) => {
-      // Offset annotation to avoid overlap
-      const offsetX = i % 2 === 0 ? 50 : -50
-      const offsetY = -20 - (i * 15)
+    annotationCandidates.forEach((d) => {
+      const name = d.entity.name.length > 18 ? d.entity.name.slice(0, 16) + '...' : d.entity.name
 
-      const annotG = g.append('g').style('pointer-events', 'none')
-
-      // Leader line
-      annotG
-        .append('line')
-        .attr('x1', d.x)
-        .attr('y1', d.y - d.radius - 2)
-        .attr('x2', d.x + offsetX * 0.5)
-        .attr('y2', d.y + offsetY + 10)
-        .attr('stroke', '#b8860b')
-        .attr('stroke-width', 1)
-        .attr('stroke-dasharray', '2,2')
-
-      // Annotation text
-      const name = d.entity.name.length > 15 ? d.entity.name.slice(0, 13) + '...' : d.entity.name
-      annotG
-        .append('text')
-        .attr('x', d.x + offsetX * 0.5)
-        .attr('y', d.y + offsetY)
-        .attr('text-anchor', offsetX > 0 ? 'start' : 'end')
+      g.append('text')
+        .attr('x', d.x + d.radius + 4)
+        .attr('y', d.y + 3)
+        .attr('text-anchor', 'start')
         .attr('font-family', "'DM Mono', monospace")
         .attr('font-size', 9)
         .attr('font-weight', '500')
         .attr('fill', '#b8860b')
+        .style('pointer-events', 'none')
         .text(name)
     })
 
