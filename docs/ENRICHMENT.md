@@ -19,11 +19,10 @@ cp .env.example .env   # then fill in credentials (see below)
 
 **Database URLs** (ask project owner):
 
-| Var             | Points to                                          | Used by                                              |
-| --------------- | -------------------------------------------------- | ---------------------------------------------------- |
-| `DATABASE_URL`  | AWS RDS (primary entities, edges, submissions)     | enrich-claims, enrich-crosspartisan, export-map-data |
-| `PILOT_DB`      | Neon `claims-pilot` branch (claim + source tables) | All enrichment scripts that write claims             |
-| `NEON_PROD_URL` | Neon production branch                             | Not used by enrichment scripts yet                   |
+| Var            | Points to                                          | Used by                                                               |
+| -------------- | -------------------------------------------------- | --------------------------------------------------------------------- |
+| `DATABASE_URL` | Neon production (entities, edges, submissions)     | enrich-claims, enrich-crosspartisan, export-map-data, edge enrichment |
+| `PILOT_DB`     | Neon `claims-pilot` branch (claim + source tables) | All enrichment scripts that write claims, edge enrichment scripts     |
 
 **R2 upload credentials** (for pushing exports to CDN):
 
@@ -42,7 +41,7 @@ neonctl connection-string --project-id calm-tree-46517731 --branch claims-pilot
 
 ## Database Schema
 
-Enrichment scripts read entities from RDS (`DATABASE_URL`) and write claims + sources to Neon (`PILOT_DB`).
+Enrichment scripts read entities from the production database (`DATABASE_URL`) and write claims + sources to the claims-pilot branch (`PILOT_DB`).
 
 ### `source` table (Neon)
 
@@ -69,7 +68,7 @@ One row per entity-dimension-source combination.
 | Column             | Type             | Notes                                                                                                |
 | ------------------ | ---------------- | ---------------------------------------------------------------------------------------------------- |
 | `claim_id`         | text PK          | `{entity_id}_{dimension}_{source_id}`                                                                |
-| `entity_id`        | integer NOT NULL | FK to entity in RDS                                                                                  |
+| `entity_id`        | integer NOT NULL | FK to entity                                                                                         |
 | `entity_name`      | text NOT NULL    | Denormalized for query convenience                                                                   |
 | `entity_type`      | text NOT NULL    | person, organization, resource                                                                       |
 | `belief_dimension` | text NOT NULL    | See dimensions below                                                                                 |
@@ -158,7 +157,7 @@ PILOT_DB="postgresql://..." node scripts/enrich-claims.js --all
 
 **What it does:**
 
-1. Queries RDS for approved entities with `belief_evidence_source = 'Explicitly stated'`
+1. Queries production DB for approved entities with `belief_evidence_source = 'Explicitly stated'`
 2. For each entity, runs 4 Exa searches (one per belief dimension) with dimension-specific queries
 3. Sends all search results to Claude with the extraction prompt
 4. Claude returns a JSON array of claims, each with a verbatim citation and source URL
@@ -221,7 +220,7 @@ PILOT_DB="postgresql://..." node scripts/enrich-crosspartisan.js --all
 
 **What it does:**
 
-1. Queries RDS for approved policymakers (category = 'Policymaker')
+1. Queries production DB for approved policymakers (category = 'Policymaker')
 2. For each policymaker, runs 6 Exa searches (one per policy area)
 3. Claude extracts sourced claims with verbatim quotes per policy area
 4. Writes to the same `claim` + `source` tables as enrich-claims.js (dimensions don't overlap)
@@ -229,7 +228,7 @@ PILOT_DB="postgresql://..." node scripts/enrich-crosspartisan.js --all
 
 ### Legacy enrichment scripts
 
-These predate the claims/source table schema. They write directly to the entity's `belief_*` and `notes` fields on RDS, without source citations.
+These predate the claims/source table schema. They write directly to the entity's `belief_*` and `notes` fields on the production DB, without source citations.
 
 | Script                | Target          | Notes                                                                                                                                           |
 | --------------------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -278,6 +277,30 @@ PILOT_DB="postgresql://..." pnpm run db:export-claims
 node scripts/discover-with-exa.js --resources
 node scripts/discover-with-exa.js --people
 ```
+
+### Edge enrichment scripts
+
+Scripts for discovering funding relationships, enriching edges with temporal data, and tracking org lifecycles. Located in `scripts/edge-enrichment/`. Full documentation in [`scripts/edge-enrichment/README.md`](../scripts/edge-enrichment/README.md).
+
+```bash
+# First-time setup: create tables in Neon claims-pilot
+psql "$PILOT_DB" -f scripts/edge-enrichment/schema.sql
+
+# Discover funding relationships (pilot: 3 entities, ~$1)
+node scripts/edge-enrichment/discover-funding.js --limit=3
+
+# Enrich existing edges with dates (pilot: 5 edges, ~$0.15)
+node scripts/edge-enrichment/enrich-edges.js --limit=5
+
+# Add founding/end dates to orgs
+node scripts/edge-enrichment/enrich-org-lifecycle.js --limit=5
+
+# Review and promote discoveries
+node scripts/edge-enrichment/review-discoveries.js
+node scripts/edge-enrichment/promote-discoveries.js
+```
+
+These scripts add 4 tables to the claims-pilot branch: `edge_evidence` (source attribution for existing edges), `edge_discovery` (candidate edges pending review), `entity_suggestion` (discovered entities pending review), `entity_alias` (known abbreviations for entity resolution).
 
 ## Common workflows
 

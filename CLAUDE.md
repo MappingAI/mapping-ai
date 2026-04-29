@@ -12,8 +12,8 @@ Multi-page website with an interactive D3.js stakeholder map, crowdsourced data 
 
 Architecture details live in [`docs/architecture/`](docs/architecture/), not here.
 
-- [`current.md`](docs/architecture/current.md): the stack running in prod today (AWS: RDS + Lambda + CloudFront + S3 + SAM). Full topology, DB schema, API reference.
-- [`target.md`](docs/architecture/target.md): the planned stack (Cloudflare Workers + Neon + R2 + TanStack Start + pnpm). Status table tracks what's shipped.
+- [`current.md`](docs/architecture/current.md): the stack running in prod today (Cloudflare Pages + Pages Functions + Neon Postgres + R2). Full topology, DB schema, API reference.
+- [`target.md`](docs/architecture/target.md): migration status table. Database, compute, CDN, and DNS migrated to Cloudflare/Neon (2026-04-28). TanStack Start shelved.
 - [`adrs/0001-migrate-off-aws.md`](docs/architecture/adrs/0001-migrate-off-aws.md): the migration currently in progress.
 
 **Rule:** do not assert architecture in this file. Update `current.md` instead. Stale infra claims in CLAUDE.md waste session context on every read.
@@ -52,7 +52,7 @@ pnpm run db:backup:local       # Backup to local files only
 pnpm run build:tiptap          # esbuild src/tiptap-notes.js → assets/js/tiptap-notes.js
 ```
 
-Frontend auto-deploys on push to `main`. Backend (Lambda) requires manual `sam deploy` with a drift check first. See [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) for the guarded flow.
+Frontend and backend auto-deploy on push to `main` via Cloudflare Pages. See [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) for the deploy process.
 
 ## Form Features (src/contribute/)
 
@@ -112,8 +112,7 @@ See [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) for the full deployment and revie
 - `map-data.json` / `map-detail.json` / `backup-*.json` / `backup-*.sql` are gitignored.
 - Test/seed data scripts gitignored.
 - **All changes to main must go through a PR.** No direct pushes except P0 hotfixes with explicit approval.
-- **Push to main auto-deploys the frontend.** Test in a browser first, not just with scripts.
-- **Backend (Lambda + API Gateway) requires separate `sam deploy`.** Merging `api/*.ts` or `template.yaml` to main does NOT deploy them. Always run `aws cloudformation detect-stack-drift --stack-name mapping-ai` first; a blind `sam deploy` can wipe CloudFront settings not captured in `template.yaml`. This risk goes away when we cut to Cloudflare Workers per [ADR-0001](docs/architecture/adrs/0001-migrate-off-aws.md).
+- **Push to main auto-deploys both frontend and backend** via Cloudflare Pages. Test in a browser first, not just with scripts.
 - **Never add `defer` or `async` to the D3 script tag in `map.html`.** Inline map code uses `d3` synchronously during HTML parsing. See `docs/post-mortems/2026-04-09-d3-defer-map-outage.md`. Risk goes away when `map.html` is rewritten as a React component in Phase 3.
 - **Browser-test map.html before pushing any HTML/JS changes.** Automated checks cannot catch rendering failures.
 - **Verify site loads immediately after any push to main.** Check /, /contribute, /map, /insights, /admin all return 200. The deploy workflow has an automated smoke test; verify manually too.
@@ -144,12 +143,13 @@ lefthook install
 
 ## DB safety
 
-- **Deletion protection** enabled on the RDS instance.
-- **Manual backups**: `pnpm run db:backup` dumps all tables to S3 under the `backups/` prefix as timestamped JSON + SQL. Run before any risky admin work.
+- **Database**: Neon Postgres (project `calm-tree-46517731`). Production branch + claims-pilot branch.
+- **Manual backups**: `pnpm run db:backup:local` dumps all tables to local files as timestamped JSON + SQL. Run before any risky admin work.
 - **Planned**: audit log table to track all DB mutations (approve/reject/merge/edit/delete) with revert capability.
 
 ## Known technical debt
 
 - **Category mapping fragile**: normalization handles known variants but may miss new ones as data grows.
-- **Admin key hardcoded**: default key in `template.yaml`; should rotate before adding collaborators.
-- Stack-level debt (inline `map.html`, legacy TipTap bundle, SAM drift risk, two-step deploy, pending-entity negative IDs) is tracked in [`docs/architecture/current.md` → Known limitations](docs/architecture/current.md) and addressed by the migration in [ADR-0001](docs/architecture/adrs/0001-migrate-off-aws.md).
+- **Thumbnails still on S3**: `scripts/cache-thumbnails.js` writes to S3. Served from R2 via Pages Function, but new uploads need the script updated.
+- **Claims/source tables on separate branch**: The `claim`, `source`, and edge enrichment tables are on the `claims-pilot` Neon branch, not production yet.
+- Stack-level debt (inline `map.html`, legacy TipTap bundle, pending-entity negative IDs) is tracked in [`docs/architecture/current.md` → Known limitations](docs/architecture/current.md).

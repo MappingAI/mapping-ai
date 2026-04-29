@@ -2,54 +2,37 @@
 
 How code gets from a local branch to production, and what checks must pass at each stage.
 
-> **Stack context:** this document describes operational procedures for the current AWS stack (Lambda + API Gateway + CloudFront + S3 + SAM). For the stack itself, see [`docs/architecture/current.md`](architecture/current.md). A migration to Cloudflare Workers + Neon + TanStack Start is planned; see [`docs/architecture/target.md`](architecture/target.md) and [ADR-0001](architecture/adrs/0001-migrate-off-aws.md). Much of this document's guidance (branch strategy, PR requirements, smoke test, incident response) survives the migration; the AWS-specific commands do not.
+> **Stack context:** Cloudflare Pages (static + Pages Functions) + Neon Postgres + R2. See [`docs/architecture/current.md`](architecture/current.md) for the full topology. AWS infrastructure is archived in `archive/aws-legacy/` with a rollback README.
 
 ---
 
 ## Architecture
 
 ```
-Feature branch -> PR (review + CI) -> main -> GitHub Actions auto-deploy
-                                               ├── pnpm install --frozen-lockfile
-                                               ├── pnpm run build:tiptap
-                                               ├── npx vite build -> dist/
-                                               ├── node scripts/export-map-data.js
-                                               ├── Password hash + analytics injection on dist/
-                                               ├── aws s3 sync dist/ -> S3
-                                               ├── CloudFront cache invalidation
-                                               └── Post-deploy smoke test (all pages HTTP 200)
-
-Backend (Lambda + API Gateway + CloudFront config):
-Feature branch -> PR -> main -> manual `sam build && sam deploy`
+Feature branch -> PR (review + CI) -> main -> Cloudflare Pages auto-deploy
+                                               ├── Vite build -> dist/
+                                               ├── Pages Functions (functions/api/*)
+                                               └── Post-deploy smoke test
 ```
 
-**Key distinction:** Pushing to `main` automatically deploys the _frontend_ (Vite-built static files to S3/CloudFront). It does NOT deploy the _backend_ (Lambda functions, API Gateway, CloudFront settings). Backend requires a manual `sam deploy`.
-
-**Critical: Never run `sam deploy` without checking for drift first.** See the [SAM deploy post-mortem](solutions/integration-issues/sam-deploy-overwrites-manual-cloudfront-config-2026-04-16.md) for why. Always run `aws cloudformation detect-stack-drift` before deploying.
-
-### Header + CSP tweaks: use the CloudFront CLI, not `sam deploy`
-
-Response-header changes (CSP, `script-src` allow-list, HSTS, Referrer-Policy) should be applied in place via `aws cloudfront update-response-headers-policy`, not by running `sam deploy`. The 2026-04-16 incident showed unattended SAM deploys can silently replace a hand-tuned CloudFront config. The 2026-04-19 fix adding `https://static.cloudflareinsights.com` to `script-src` landed via CLI with no SAM deploy. See [`thumbnail-pipeline-dead-cloudfront-and-external-fallbacks-2026-04-19.md`](solutions/integration-issues/thumbnail-pipeline-dead-cloudfront-and-external-fallbacks-2026-04-19.md) for the exact commands (including the `XSSProtection: {}` stanza that has to be stripped from the GET payload before UPDATE will accept it).
-
-After applying a header change with the CLI, mirror it into `template.yaml` in the same PR so the IaC source stays in sync for the next SAM deploy. CLI change without a matching `template.yaml` edit is a drift bomb.
+Pushing to `main` deploys both frontend and backend in one step. Cloudflare Pages builds from the GitHub repo, serves `dist/` as static assets and `functions/` as Pages Functions (API endpoints).
 
 ## Branch Strategy
 
-| Branch   | Purpose                                       | Deploys to                      |
-| -------- | --------------------------------------------- | ------------------------------- |
-| `main`   | Production. Every push auto-deploys frontend. | Live site (mapping-ai.org)      |
-| `feat/*` | Feature branches. Work in progress.           | Cloudflare Pages preview (auto) |
-| `fix/*`  | Hotfix branches. Urgent production fixes.     | Nothing until merged to main    |
+| Branch   | Purpose                                   | Deploys to                               |
+| -------- | ----------------------------------------- | ---------------------------------------- |
+| `main`   | Production. Every push auto-deploys.      | mapping-ai.org                           |
+| `feat/*` | Feature branches. Work in progress.       | Preview at `<hash>.mapping-ai.pages.dev` |
+| `fix/*`  | Hotfix branches. Urgent production fixes. | Preview until merged to main             |
 
 **Rules:**
 
 - Never push directly to `main`. Always use a PR.
 - Exception: P0 hotfixes (site is down) may push directly to main with post-hoc PR for documentation.
-- Feature branches get automatic Cloudflare Pages preview deployments at `<branch>.mapping-ai.pages.dev`.
+- Feature branches get automatic Cloudflare Pages preview deployments.
+- PRs touching backend files (`api/`, `functions/`, `scripts/migrate*`, `scripts/seed*`, `scripts/enrich-*`) also get a Neon preview branch.
 
 ## Pull Request Requirements
-
-Every PR to `main` must include:
 
 ### 1. Local verification
 
@@ -70,8 +53,8 @@ pnpm run dev
 Also run:
 
 ```bash
-npx tsc --noEmit    # Type checking
-npx vitest run      # Unit tests
+pnpm exec tsc --noEmit    # Type checking
+pnpm exec vitest run      # Unit tests
 ```
 
 ### 2. PR description
@@ -80,9 +63,7 @@ Include a summary, testing notes, and risk assessment.
 
 ### 3. CI checks pass
 
-Two GitHub Actions workflows run over the PR lifecycle:
-
-**`.github/workflows/ci.yml`** — runs on every PR. These are the candidate required status checks on `main`:
+**`.github/workflows/ci.yml`** runs on every PR:
 
 | Check                 | What it runs            |
 | --------------------- | ----------------------- |
@@ -91,95 +72,41 @@ Two GitHub Actions workflows run over the PR lifecycle:
 | TypeScript type-check | `pnpm run typecheck`    |
 | Vitest                | `pnpm test`             |
 | Vite build            | `pnpm run build`        |
-| SAM template validate | `sam validate --lint`   |
 
-See the Branch Protection section below for how to enforce these on `main`.
-
-**`.github/workflows/deploy.yml`** — runs only on push to `main`:
-
-1. `pnpm install --frozen-lockfile`
-2. `pnpm run build:tiptap` (legacy TipTap bundle for map.html)
-3. Write `.env.production` with `VITE_SITE_PASSWORD_HASH`
-4. `npx vite build` (React pages to dist/)
-5. DB schema smoke test
-6. `node scripts/export-map-data.js` generates map-data.json + map-detail.json
-7. Password hash and analytics token injection on dist/ files
-8. S3 sync (HTML with no-cache, hashed assets with immutable cache)
-9. CloudFront invalidation
-10. **Post-deploy smoke test** (curls all pages, fails build if any return non-200)
-
-## Branch Protection
-
-Once `ci.yml` has had a green run on a real PR, configure branch protection in GitHub → Settings → Branches for `main`:
-
-- ✅ Require a pull request before merging
-- ✅ Require status checks to pass before merging → select:
-  - `Lint, type-check, test, build`
-  - `SAM template validate`
-- ✅ Require branches to be up to date before merging
-- ✅ Do not allow bypassing (include administrators)
-- ❌ Allow force pushes (leave off)
-
-**P0 hotfix exception:** site-down incidents may push directly to `main` with branch protection temporarily relaxed. Re-enable immediately afterward and file a PR for the record.
+**`.github/workflows/deploy.yml`** runs on push to `main`: builds, generates map-data.json from Neon, waits for Cloudflare Pages build, then runs a smoke test.
 
 ### 4. Review
 
 - At least one human or thorough AI review must approve the PR
 - Changes to map.html, D3 code, or script tags require extra scrutiny
-- Backend changes (api/\*.js, template.yaml) should be in separate PRs from frontend when possible
 
 ## Deploy Process
 
-### Frontend (automatic)
-
 ```
 git push origin main
--> GitHub Actions: build -> export -> inject -> sync -> invalidate -> smoke test
--> Live in ~3-5 minutes
+-> Cloudflare Pages auto-build (~2-3 min)
+-> GitHub Actions: map-data export + smoke test
+-> Live at mapping-ai.org
 ```
 
-**What gets deployed:** All files in `dist/` (Vite-built HTML/JS/CSS), map-data.json, map-detail.json, workshop/ directory
+**What gets deployed:** `dist/` (Vite build), `functions/` (Pages Functions), `public/_headers` (security headers)
 
-**What does NOT get deployed:** `api/`, `scripts/`, `template.yaml`, `node_modules/`, `src/`
-
-### Backend (manual)
-
-```bash
-# ALWAYS check for drift first
-aws cloudformation detect-stack-drift --stack-name mapping-ai
-
-# Then build and deploy
-sam build && sam deploy --parameter-overrides \
-  DatabaseUrl=$DATABASE_URL \
-  AdminKey=$ADMIN_KEY \
-  AnthropicApiKey=$ANTHROPIC_API_KEY
-```
-
-**Review the changeset before confirming.** If it shows unexpected Modify/Add on resources you didn't change (especially CloudFront), STOP and investigate.
-
-### Cloudflare Pages (automatic for branches)
-
-Every branch push triggers a Cloudflare Pages preview build via `scripts/build-preview.sh`. Preview URLs: `<branch-name>.mapping-ai.pages.dev`
+**What does NOT get deployed:** `scripts/`, `archive/`, `node_modules/`, `src/` (compiled into dist)
 
 ## Rollback
 
-### Frontend rollback (~2 min)
+### Quick rollback (~2 min)
 
 ```bash
-# Option 1: Revert and push
+# Revert the bad commit and push
 git revert HEAD
 git push origin main
-
-# Option 2: Force invalidation after S3 rollback
-aws cloudfront create-invalidation --distribution-id E34ZXLC7CZX7XT --paths "/*"
+# Cloudflare Pages rebuilds from the reverted state
 ```
 
-### Backend rollback (~5 min)
+### Full AWS rollback (emergency, ~10 min)
 
-```bash
-git revert <commit>
-sam build && sam deploy
-```
+See `archive/aws-legacy/README.md` for the procedure: flip DNS back to CloudFront, Lambda + RDS are still warm.
 
 ## Post-Push Verification (MANDATORY)
 
@@ -191,20 +118,38 @@ for page in "/" "/contribute" "/map" "/about" "/insights" "/admin"; do
 done
 ```
 
-The deploy workflow does this automatically, but always verify manually too. A broken prod site with no one checking is the worst outcome.
+The deploy workflow runs a smoke test automatically, but always verify manually too.
+
+## Security Headers
+
+CSP and security headers are configured in `public/_headers` (Cloudflare Pages convention). Changes to CSP policy go in that file and deploy with the next push to main.
+
+## Environment & Secrets
+
+Secrets are managed in two places:
+
+| Secret               | Where                    | Purpose                         |
+| -------------------- | ------------------------ | ------------------------------- |
+| `DATABASE_URL`       | Cloudflare Pages secrets | Neon production connection      |
+| `ADMIN_KEY`          | Cloudflare Pages secrets | Admin endpoint auth             |
+| `DATABASE_URL`       | GitHub Secrets           | Deploy workflow map-data export |
+| `CF_ANALYTICS_TOKEN` | GitHub Secrets           | Cloudflare Web Analytics        |
+| `SITE_PASSWORD`      | GitHub Secrets           | Password gate hash              |
+
+Set Cloudflare Pages secrets via: `npx wrangler pages secret put <NAME> --project-name mapping-ai`
 
 ## Known Risks by File
 
-| File(s)                        | Risk                                 | Key checks                                        |
-| ------------------------------ | ------------------------------------ | ------------------------------------------------- |
-| `map.html`                     | **P0**: primary product page         | Browser test: nodes render, D3 loads              |
-| `src/contribute/`              | **P1**: can't collect data           | Form renders, dropdowns work, submission succeeds |
-| `api/export-map.ts`            | **P0**: map data malformed           | Run export locally, verify JSON                   |
-| `api/admin.ts`                 | **P1**: admin can't approve/reject   | Test with admin key                               |
-| `template.yaml`                | **P1**: API/CloudFront misconfigured | `sam validate`, check drift                       |
-| `.github/workflows/deploy.yml` | **P0**: deploy pipeline breaks       | Review carefully                                  |
-| `src/hooks/useSubmitEntity.ts` | **P1**: form submission broken       | Test submit end-to-end                            |
-| `src/lib/api.ts`               | **P1**: all API calls broken         | Check search + submit work                        |
+| File(s)                        | Risk                               | Key checks                                        |
+| ------------------------------ | ---------------------------------- | ------------------------------------------------- |
+| `map.html`                     | **P0**: primary product page       | Browser test: nodes render, D3 loads              |
+| `src/contribute/`              | **P1**: can't collect data         | Form renders, dropdowns work, submission succeeds |
+| `api/export-map.ts`            | **P0**: map data malformed         | Run export locally, verify JSON                   |
+| `functions/api/admin.ts`       | **P1**: admin can't approve/reject | Test with admin key                               |
+| `.github/workflows/deploy.yml` | **P0**: deploy pipeline breaks     | Review carefully                                  |
+| `src/hooks/useSubmitEntity.ts` | **P1**: form submission broken     | Test submit end-to-end                            |
+| `src/lib/api.ts`               | **P1**: all API calls broken       | Check search + submit work                        |
+| `public/_headers`              | **P1**: CSP blocks scripts/styles  | Check response headers after deploy               |
 
 ## Incident Response
 
@@ -214,5 +159,5 @@ If the live site is broken:
 2. **Check CI:** `gh run list --limit 1` (did the last deploy succeed?)
 3. **Identify:** `git log --oneline -5` (what changed?)
 4. **Fix or revert:** obvious fix -> commit and push. Unclear -> `git revert HEAD && git push`
-5. **Verify:** Wait for deploy (~3 min), check all pages
+5. **Verify:** Wait for Cloudflare Pages deploy (~2-3 min), check all pages
 6. **Document:** Write a post-mortem in `docs/post-mortems/`

@@ -231,7 +231,11 @@ Four tables on the Neon production branch: `entity`, `submission`, `edge`, `cont
 
 ### Claims-pilot branch tables
 
-The `claims-pilot` Neon branch extends the production schema with two additional tables for the enrichment pipeline. These will be merged into production when the enrichment workflow is finalized. Full documentation in [ENRICHMENT.md](../ENRICHMENT.md).
+The `claims-pilot` Neon branch extends the production schema with tables for the enrichment pipeline. These will be merged into production when the enrichment workflow is finalized. Full documentation in [ENRICHMENT.md](../ENRICHMENT.md) and [`scripts/edge-enrichment/README.md`](../../scripts/edge-enrichment/README.md).
+
+**Belief enrichment tables:** `source`, `claim` (see below).
+
+**Edge enrichment tables** (added 2026-04-28): `edge_evidence` (source attribution for existing edges), `edge_discovery` (candidate edges pending review), `entity_suggestion` (discovered entities pending review), `entity_alias` (known abbreviations for entity resolution). Schema in `scripts/edge-enrichment/schema.sql`.
 
 #### `source`
 
