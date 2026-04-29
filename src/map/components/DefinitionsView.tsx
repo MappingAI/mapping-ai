@@ -1107,8 +1107,8 @@ export function DefinitionsView() {
   const showColorSwitcher = viewMode === 'map' || viewMode === 'scatter'
 
   return (
-    <div style={{ padding: '16px 20px' }}>
-      <div className="flex items-center gap-3 mb-4 flex-wrap">
+    <div style={{ padding: '16px 24px' }}>
+      <div className="flex items-center gap-3 mb-4 flex-wrap" style={{ padding: '0 0 8px' }}>
         <select
           value={viewMode}
           onChange={(e) => setViewMode(e.target.value as SubView)}
@@ -1121,8 +1121,9 @@ export function DefinitionsView() {
             color: 'var(--text-1)',
             border: '1px solid var(--line)',
             borderRadius: '4px',
-            padding: '4px 8px',
+            padding: '5px 10px',
             cursor: 'pointer',
+            outline: 'none',
           }}
         >
           <option value="map">Map</option>
@@ -1134,7 +1135,9 @@ export function DefinitionsView() {
         </select>
         {showColorSwitcher && (
           <>
-            <span className="font-mono text-[10px] text-[#888]">Color by:</span>
+            <span className="font-mono text-[10px]" style={{ color: 'var(--text-3)' }}>
+              Color by:
+            </span>
             <select
               value={colorMode}
               onChange={(e) => setColorMode(e.target.value as ColorMode)}
@@ -1147,8 +1150,9 @@ export function DefinitionsView() {
                 color: 'var(--text-1)',
                 border: '1px solid var(--line)',
                 borderRadius: '4px',
-                padding: '4px 8px',
+                padding: '5px 10px',
                 cursor: 'pointer',
+                outline: 'none',
               }}
             >
               {COLOR_MODE_OPTIONS.map((opt) => (
@@ -1159,16 +1163,21 @@ export function DefinitionsView() {
             </select>
           </>
         )}
-        <span className="font-mono text-[10px] text-[#999]">{data.points.length} definitions</span>
+        <span className="font-mono text-[10px]" style={{ color: 'var(--text-3)' }}>
+          {data.points.length} definitions
+        </span>
       </div>
 
       <div
         style={{
-          background: 'white',
+          background: 'var(--bg-panel)',
           borderRadius: '8px',
           padding: '24px',
           margin: '0 0 16px',
           border: '1px solid var(--line)',
+          width: '100%',
+          maxHeight: 'calc(100vh - 260px)',
+          overflow: 'hidden',
         }}
       >
         {viewMode === 'map' && (

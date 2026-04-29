@@ -25,16 +25,16 @@ interface ResourcesViewProps {
 
 type SortKey = 'year' | 'title' | 'submission_count'
 
-const RESOURCE_TYPE_EMOJI: Record<string, string> = {
-  Book: '\u{1F4D5}',
-  Podcast: '\u{1F399}',
-  Report: '\u{1F4CB}',
-  Essay: '\u{1F4DD}',
-  Video: '▶',
-  'News Article': '\u{1F4F0}',
-  'Academic Paper': '\u{1F4D6}',
-  Website: '\u{1F310}',
-  'Substack/Newsletter': '\u{1F4E7}',
+const RESOURCE_TYPE_SHORT: Record<string, string> = {
+  Book: 'Book',
+  Podcast: 'Pod',
+  Report: 'Report',
+  Essay: 'Essay',
+  Video: 'Video',
+  'News Article': 'News',
+  'Academic Paper': 'Paper',
+  Website: 'Web',
+  'Substack/Newsletter': 'Letter',
 }
 
 const RESOURCE_TYPE_COLORS: Record<string, string> = {
@@ -74,9 +74,17 @@ const RISK_COLORS: Record<string, string> = {
   Existential: '#8e44ad',
 }
 
-function getTypeEmoji(type: string | null): string {
-  if (!type) return '\u{1F4C4}'
-  return RESOURCE_TYPE_EMOJI[type] ?? '\u{1F4C4}'
+function TypeBadge({ type }: { type: string | null }) {
+  const label = type ? (RESOURCE_TYPE_SHORT[type] ?? type) : 'Doc'
+  const color = RESOURCE_TYPE_COLORS[type ?? ''] ?? '#888'
+  return (
+    <span
+      className="inline-flex items-center justify-center rounded-full px-2 py-0.5 font-mono text-[9px] tracking-wide leading-none shrink-0"
+      style={{ backgroundColor: color + '18', color, border: `1px solid ${color}40` }}
+    >
+      {label}
+    </span>
+  )
 }
 
 function BeliefBadge({ label, value, colorMap }: { label: string; value: string; colorMap: Record<string, string> }) {
@@ -115,31 +123,38 @@ function ResourceCard({ resource, onSelect }: { resource: Resource; onSelect: ()
   return (
     <button
       onClick={onSelect}
-      className="block w-full text-left bg-white border border-[#bbb]/40 rounded-lg py-5 pr-4 pl-4 hover:border-[#888] hover:shadow-sm transition-all duration-150 cursor-pointer group"
-      style={{ borderLeft: `3px solid ${borderColor}` }}
+      className="block w-full text-left border rounded-lg py-4 pr-4 pl-4 hover:shadow-sm transition-all duration-150 cursor-pointer group"
+      style={{
+        borderTopColor: 'var(--line)',
+        borderRightColor: 'var(--line)',
+        borderBottomColor: 'var(--line)',
+        borderLeftWidth: '4px',
+        borderLeftColor: borderColor,
+        background: 'var(--bg-panel)',
+      }}
     >
       <div className="flex items-start gap-2.5 mb-2">
-        <span className="text-lg leading-none mt-0.5 shrink-0">{getTypeEmoji(resource.resource_type)}</span>
+        <TypeBadge type={resource.resource_type} />
         <div className="min-w-0 flex-1">
-          <h3 className="font-serif text-[15px] leading-snug text-[#1a1a1a] group-hover:text-[#2563eb] transition-colors duration-150 line-clamp-2 m-0">
+          <h3
+            className="font-serif text-[15px] leading-snug group-hover:text-[#2563eb] transition-colors duration-150 line-clamp-2 m-0"
+            style={{ color: 'var(--text-1)' }}
+          >
             {displayTitle}
           </h3>
-          <div className="flex items-center gap-2 mt-1 font-mono text-[10px] text-[#888] tracking-wide">
+          <div
+            className="flex items-center gap-2 mt-1 font-mono text-[10px] tracking-wide"
+            style={{ color: 'var(--text-3)' }}
+          >
             {resource.author && <span className="truncate max-w-[160px]">{resource.author}</span>}
             {resource.author && resource.year && <span>&middot;</span>}
             {resource.year && <span>{resource.year}</span>}
-            {resource.resource_type && (
-              <>
-                <span>&middot;</span>
-                <span>{resource.resource_type}</span>
-              </>
-            )}
           </div>
         </div>
       </div>
 
       {resource.key_argument && (
-        <p className="font-serif text-[13px] leading-relaxed text-[#555] line-clamp-2 mt-2 mb-0">
+        <p className="font-serif text-[13px] leading-relaxed line-clamp-2 mt-2 mb-0" style={{ color: 'var(--text-2)' }}>
           {resource.key_argument}
         </p>
       )}
@@ -148,7 +163,8 @@ function ResourceCard({ resource, onSelect }: { resource: Resource; onSelect: ()
         {topicTags.map((tag) => (
           <span
             key={tag}
-            className="rounded-full bg-[#f8f7f5] px-2 py-0.5 font-mono text-[9px] text-[#555] tracking-wide"
+            className="rounded-full px-2 py-0.5 font-mono text-[9px] tracking-wide"
+            style={{ background: 'var(--bg-page)', color: 'var(--text-2)' }}
           >
             {tag}
           </span>
@@ -222,7 +238,7 @@ function DetailPanel({
 
         <div className="px-5 py-5">
           <div className="flex items-start gap-3 mb-4">
-            <span className="text-2xl leading-none mt-1 shrink-0">{getTypeEmoji(resource.resource_type)}</span>
+            <TypeBadge type={resource.resource_type} />
             <div>
               <h2 className="font-serif text-[20px] leading-snug text-[#1a1a1a] m-0">{displayTitle}</h2>
               <div className="flex flex-wrap items-center gap-2 mt-1.5 font-mono text-[11px] text-[#888] tracking-wide">
@@ -346,18 +362,22 @@ function ReadingTrack({
   const remaining = resources.slice(4)
 
   return (
-    <div className="border border-[#bbb]/30 rounded-lg overflow-hidden">
+    <div className="rounded-lg overflow-hidden" style={{ border: '1px solid var(--line)' }}>
       <button
         onClick={() => setExpanded(!expanded)}
-        className="w-full flex items-center justify-between px-4 py-3 bg-transparent hover:bg-[#f8f7f5] transition-colors duration-150 cursor-pointer border-none text-left"
+        className="w-full flex items-center justify-between px-4 py-3 bg-transparent transition-colors duration-150 cursor-pointer border-none text-left"
       >
         <div className="flex items-center gap-2">
-          <span className="font-mono text-[11px] tracking-wide text-[#1a1a1a]">{trackName}</span>
-          <span className="font-mono text-[10px] text-[#888]">{resources.length}</span>
+          <span className="font-mono text-[11px] tracking-wide" style={{ color: 'var(--text-1)' }}>
+            {trackName}
+          </span>
+          <span className="font-mono text-[10px]" style={{ color: 'var(--text-3)' }}>
+            {resources.length}
+          </span>
         </div>
         <span
-          className="font-mono text-[10px] text-[#888] transition-transform duration-200"
-          style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
+          className="font-mono text-[10px] transition-transform duration-200"
+          style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)', color: 'var(--text-3)' }}
         >
           &#9662;
         </span>
@@ -369,10 +389,13 @@ function ReadingTrack({
             <button
               key={r.id}
               onClick={() => onSelectResource(r)}
-              className="flex items-center gap-1.5 rounded-md bg-[#f8f7f5] border border-[#bbb]/30 px-2.5 py-1.5 hover:border-[#888] transition-colors duration-150 cursor-pointer max-w-[200px]"
+              className="flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 transition-colors duration-150 cursor-pointer max-w-[200px]"
+              style={{ background: 'var(--bg-page)', borderColor: 'var(--line)' }}
             >
-              <span className="text-sm shrink-0">{getTypeEmoji(r.resource_type)}</span>
-              <span className="font-serif text-[12px] text-[#1a1a1a] truncate">{r.title || r.name}</span>
+              <TypeBadge type={r.resource_type} />
+              <span className="font-serif text-[12px] truncate" style={{ color: 'var(--text-1)' }}>
+                {r.title || r.name}
+              </span>
             </button>
           ))}
         </div>
@@ -383,10 +406,13 @@ function ReadingTrack({
               <button
                 key={r.id}
                 onClick={() => onSelectResource(r)}
-                className="flex items-center gap-1.5 rounded-md bg-[#f8f7f5] border border-[#bbb]/30 px-2.5 py-1.5 hover:border-[#888] transition-colors duration-150 cursor-pointer max-w-[200px]"
+                className="flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 transition-colors duration-150 cursor-pointer max-w-[200px]"
+                style={{ background: 'var(--bg-page)', borderColor: 'var(--line)' }}
               >
-                <span className="text-sm shrink-0">{getTypeEmoji(r.resource_type)}</span>
-                <span className="font-serif text-[12px] text-[#1a1a1a] truncate">{r.title || r.name}</span>
+                <TypeBadge type={r.resource_type} />
+                <span className="font-serif text-[12px] truncate" style={{ color: 'var(--text-1)' }}>
+                  {r.title || r.name}
+                </span>
               </button>
             ))}
           </div>
@@ -526,7 +552,7 @@ export function ResourcesView({ resources, onEntityClick }: ResourcesViewProps) 
   }, [])
 
   return (
-    <div className="min-h-screen" style={{ background: '#faf9f7' }}>
+    <div className="min-h-screen" style={{ background: 'var(--bg-page)' }}>
       <style>{`
         @keyframes slide-in-from-right {
           from { transform: translateX(100%); }
@@ -543,11 +569,15 @@ export function ResourcesView({ resources, onEntityClick }: ResourcesViewProps) 
         }
       `}</style>
 
-      <div className="max-w-5xl mx-auto" style={{ padding: '24px 28px' }}>
+      <div className="max-w-7xl mx-auto" style={{ padding: '24px 32px' }}>
         <div className="mb-6">
-          <div className="font-mono text-[11px] tracking-[0.1em] uppercase text-[#888] mb-1">Library</div>
-          <h1 className="font-serif text-[24px] font-normal text-[#1a1a1a] m-0">Resources</h1>
-          <p className="font-serif text-[14px] text-[#888] mt-1 mb-0">
+          <div className="font-mono text-[11px] tracking-[0.1em] uppercase mb-1" style={{ color: 'var(--text-3)' }}>
+            Library
+          </div>
+          <h1 className="font-serif text-[24px] font-normal m-0" style={{ color: 'var(--text-1)' }}>
+            Resources
+          </h1>
+          <p className="font-serif text-[14px] mt-1 mb-0" style={{ color: 'var(--text-3)' }}>
             {resources.length} reports, papers, essays, and more on AI policy.
           </p>
         </div>
@@ -568,11 +598,11 @@ export function ResourcesView({ resources, onEntityClick }: ResourcesViewProps) 
           </div>
         )}
 
-        <div className="mb-8 bg-[#f8f7f5] rounded-lg p-4">
-          <div className="font-mono text-[10px] tracking-[0.08em] uppercase mb-2" style={{ color: 'var(--accent)' }}>
+        <div className="mb-8 rounded-lg p-5" style={{ background: 'var(--bg-panel)', border: '1px solid var(--line)' }}>
+          <div className="font-mono text-[10px] tracking-[0.08em] uppercase mb-3" style={{ color: 'var(--accent)' }}>
             Adjacent Tools and Resources
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {[
               { name: 'AI Policy Network', url: 'https://theaipn.org/', desc: 'Policy community network and events' },
               { name: 'AI Regulation Map', url: 'https://airegulationmap.org/', desc: 'Global AI regulation tracker' },
@@ -589,19 +619,27 @@ export function ResourcesView({ resources, onEntityClick }: ResourcesViewProps) 
                 href={s.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-start gap-2.5 rounded-md border border-[#bbb]/30 bg-white px-3 py-2.5 no-underline hover:border-[#2563eb]/40 hover:bg-[#f8f7f5] transition-colors duration-150"
+                className="flex items-start gap-2.5 rounded-md px-3 py-2.5 no-underline transition-colors duration-150"
+                style={{ background: 'var(--bg-page)', border: '1px solid var(--line)' }}
               >
                 <span className="font-mono text-[10px] text-[#2563eb] mt-0.5 flex-shrink-0">&#8599;</span>
                 <div className="min-w-0">
-                  <div className="font-mono text-[11px] text-[#1a1a1a] tracking-wide">{s.name}</div>
-                  <div className="font-mono text-[9px] text-[#888] tracking-wide mt-0.5">{s.desc}</div>
+                  <div className="font-mono text-[11px] tracking-wide" style={{ color: 'var(--text-1)' }}>
+                    {s.name}
+                  </div>
+                  <div className="font-mono text-[9px] tracking-wide mt-0.5" style={{ color: 'var(--text-3)' }}>
+                    {s.desc}
+                  </div>
                 </div>
               </a>
             ))}
           </div>
         </div>
 
-        <div className="bg-[#f8f7f5] rounded-lg p-4" style={{ margin: '0 0 20px 0' }}>
+        <div
+          className="rounded-lg p-5"
+          style={{ margin: '0 0 20px 0', background: 'var(--bg-panel)', border: '1px solid var(--line)' }}
+        >
           <div className="flex flex-wrap items-center gap-3 mb-3">
             <div className="relative flex-1 min-w-[200px] max-w-sm">
               <input
@@ -621,7 +659,7 @@ export function ResourcesView({ resources, onEntityClick }: ResourcesViewProps) 
               <option value="">All types</option>
               {allTypes.map((t) => (
                 <option key={t} value={t}>
-                  {getTypeEmoji(t)} {t}
+                  {t}
                 </option>
               ))}
             </select>
@@ -689,7 +727,7 @@ export function ResourcesView({ resources, onEntityClick }: ResourcesViewProps) 
           )}
         </div>
 
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((r) => (
             <ResourceCard key={r.id} resource={r} onSelect={() => handleSelectResource(r)} />
           ))}

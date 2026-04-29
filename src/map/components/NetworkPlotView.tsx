@@ -32,8 +32,11 @@ export function NetworkPlotView({ viewMode, onViewChange }: NetworkPlotViewProps
   useEffect(() => {
     if (!engineLoaded) return
     if (viewMode !== 'network' && viewMode !== 'plot') return
-    const event = new CustomEvent('map:viewModeChange', { detail: { viewMode } })
-    window.dispatchEvent(event)
+    const timer = setTimeout(() => {
+      const event = new CustomEvent('map:viewModeChange', { detail: { viewMode } })
+      window.dispatchEvent(event)
+    }, 150)
+    return () => clearTimeout(timer)
   }, [viewMode, engineLoaded])
 
   return (

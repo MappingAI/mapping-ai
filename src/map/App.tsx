@@ -122,7 +122,7 @@ export function App() {
     setViewMode(mode)
     localStorage.setItem('mapMode', mode)
     if (mode === 'network' || mode === 'plot') {
-      setTimeout(() => window.dispatchEvent(new Event('resize')), 50)
+      setTimeout(() => window.dispatchEvent(new Event('resize')), 200)
     }
   }, [])
 
@@ -131,6 +131,67 @@ export function App() {
   }, [])
 
   const isEngineView = viewMode === 'network' || viewMode === 'plot'
+
+  const viewIcons: Record<ViewMode, React.ReactNode> = {
+    network: (
+      <svg
+        width="11"
+        height="11"
+        viewBox="0 0 14 14"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      >
+        <circle cx="3" cy="3" r="2" />
+        <circle cx="11" cy="3" r="2" />
+        <circle cx="7" cy="11" r="2" />
+        <line x1="4.5" y1="4" x2="6" y2="9.5" />
+        <line x1="9.5" y1="4" x2="8" y2="9.5" />
+      </svg>
+    ),
+    plot: (
+      <svg width="11" height="11" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <circle cx="3" cy="10" r="1.5" fill="currentColor" />
+        <circle cx="6" cy="5" r="1.5" fill="currentColor" />
+        <circle cx="10" cy="8" r="1.5" fill="currentColor" />
+        <circle cx="11" cy="3" r="1.5" fill="currentColor" />
+      </svg>
+    ),
+    resources: (
+      <svg
+        width="11"
+        height="11"
+        viewBox="0 0 14 14"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <rect x="2" y="1" width="10" height="12" rx="1" />
+        <line x1="5" y1="4" x2="9" y2="4" />
+        <line x1="5" y1="7" x2="9" y2="7" />
+        <line x1="5" y1="10" x2="7" y2="10" />
+      </svg>
+    ),
+    definitions: (
+      <svg
+        width="11"
+        height="11"
+        viewBox="0 0 14 14"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      >
+        <circle cx="4" cy="4" r="2" />
+        <circle cx="10" cy="4" r="2" />
+        <circle cx="4" cy="10" r="2" />
+        <circle cx="10" cy="10" r="2" />
+      </svg>
+    ),
+  }
 
   const viewSwitcher = (
     <div
@@ -152,6 +213,9 @@ export function App() {
           key={m}
           onClick={() => handleViewChange(m)}
           style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '3px',
             padding: '4px 10px',
             border: 'none',
             borderRadius: '3px',
@@ -165,6 +229,7 @@ export function App() {
             transition: 'background 0.15s, color 0.15s',
           }}
         >
+          {viewIcons[m]}
           {{ network: 'Network', plot: 'Plot', resources: 'Library', definitions: 'Beliefs' }[m]}
         </button>
       ))}
@@ -173,6 +238,7 @@ export function App() {
 
   return (
     <>
+      <style>{`html, body { overflow-x: hidden; }`}</style>
       <Navigation />
 
       {showDisclaimer && <DisclaimerOverlay onDismiss={handleDismissDisclaimer} />}
