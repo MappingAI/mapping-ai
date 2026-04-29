@@ -561,7 +561,7 @@ export function AxisOutlierChart({ entities, mode }: AxisOutlierChartProps) {
       })
     })
 
-    // Add annotations for top outliers (most isolated positions)
+    // Add annotations for top outliers using force-based label placement
     const annotationCandidates = outlierNodes
       .filter((d) => d.posCount <= 5) // Only annotate very rare positions
       .sort((a, b) => a.posCount - b.posCount)
@@ -585,80 +585,78 @@ export function AxisOutlierChart({ entities, mode }: AxisOutlierChartProps) {
       return [words.slice(0, bestSplit).join(' '), words.slice(bestSplit).join(' ')]
     }
 
-    // Track placed labels to avoid overlaps
-    const placedLabels: Array<{ x: number; y: number; width: number; height: number }> = []
-
-    // Check if a label position would overlap with existing labels
-    function wouldOverlap(x: number, y: number, width: number, height: number): boolean {
-      for (const label of placedLabels) {
-        const overlapX = Math.abs(x - label.x) < (width + label.width) / 2 + 10
-        const overlapY = Math.abs(y - label.y) < (height + label.height) / 2 + 5
-        if (overlapX && overlapY) return true
-      }
-      return false
-    }
-
-    annotationCandidates.forEach((d) => {
+    // Create label nodes for force simulation
+    const labelNodes = annotationCandidates.map((d) => {
       const lines = splitName(d.entity.name)
-      const labelHeight = lines.length * 11 + 4
-      const labelWidth = Math.max(...lines.map(l => l.length)) * 5.5 // approximate
+      const labelWidth = Math.max(...lines.map(l => l.length)) * 5.5
+      const labelHeight = lines.length * 11
 
-      // Try right side first, then left side, with vertical offsets if needed
-      let bestX = d.x + d.radius + 6
-      let bestY = d.y - (lines.length > 1 ? 4 : 0)
-      let bestAnchor: 'start' | 'end' = 'start'
-      let foundGoodSpot = false
+      // Determine preferred side based on position
+      const preferRight = d.x < plotW * 0.7
+      const offsetX = preferRight ? d.radius + labelWidth / 2 + 10 : -(d.radius + labelWidth / 2 + 10)
 
-      // Don't place labels on left if too close to y-axis (within 100px)
-      const canUseLeft = d.x > 100
-
-      // Try positions: right, right-up, right-down, left, left-up, left-down
-      const offsets = [0, -25, 25, -50, 50]
-      for (const yOffset of offsets) {
-        // Try right side
-        const rightX = d.x + d.radius + 6
-        const testY = d.y + yOffset - (lines.length > 1 ? 4 : 0)
-        if (!wouldOverlap(rightX + labelWidth / 2, testY, labelWidth, labelHeight)) {
-          bestX = rightX
-          bestY = testY
-          bestAnchor = 'start'
-          foundGoodSpot = true
-          break
-        }
-        // Try left side (if not too close to y-axis)
-        if (canUseLeft) {
-          const leftX = d.x - d.radius - 6
-          if (!wouldOverlap(leftX - labelWidth / 2, testY, labelWidth, labelHeight)) {
-            bestX = leftX
-            bestY = testY
-            bestAnchor = 'end'
-            foundGoodSpot = true
-            break
-          }
-        }
+      return {
+        nodeX: d.x,
+        nodeY: d.y,
+        x: d.x + offsetX,
+        y: d.y,
+        targetX: d.x + offsetX,
+        targetY: d.y,
+        lines,
+        labelWidth,
+        labelHeight,
+        preferRight,
       }
-
-      // Record this label's position
-      const centerX = bestAnchor === 'start' ? bestX + labelWidth / 2 : bestX - labelWidth / 2
-      placedLabels.push({ x: centerX, y: bestY, width: labelWidth, height: labelHeight })
-
-      const textNode = g.append('text')
-        .attr('x', bestX)
-        .attr('y', bestY)
-        .attr('text-anchor', bestAnchor)
-        .attr('font-family', "'DM Mono', monospace")
-        .attr('font-size', 9)
-        .attr('font-weight', '500')
-        .attr('fill', '#b8860b')
-        .style('pointer-events', 'none')
-
-      lines.forEach((line, i) => {
-        textNode.append('tspan')
-          .attr('x', bestX)
-          .attr('dy', i === 0 ? 0 : 11)
-          .text(line)
-      })
     })
+
+    // Run force simulation to resolve overlaps
+    if (labelNodes.length > 0) {
+      const labelSim = d3.forceSimulation(labelNodes)
+        .force('x', d3.forceX((d: typeof labelNodes[0]) => d.targetX).strength(0.3))
+        .force('y', d3.forceY((d: typeof labelNodes[0]) => d.targetY).strength(0.3))
+        .force('collide', d3.forceCollide((d: typeof labelNodes[0]) => Math.max(d.labelWidth, d.labelHeight) / 2 + 8).strength(1))
+        .force('boundary', () => {
+          // Keep labels within plot bounds
+          for (const d of labelNodes) {
+            // Keep away from left edge (y-axis labels)
+            if (d.x < 20) d.x = 20
+            // Keep away from right edge
+            if (d.x > plotW - 20) d.x = plotW - 20
+            // Keep within vertical bounds
+            if (d.y < 10) d.y = 10
+            if (d.y > plotH - 10) d.y = plotH - 10
+          }
+        })
+        .stop()
+
+      // Run simulation
+      for (let i = 0; i < 150; i++) labelSim.tick()
+
+      // Draw labels at their final positions
+      labelNodes.forEach((label) => {
+        // Determine text anchor based on final position relative to node
+        const isRightOfNode = label.x > label.nodeX
+        const anchor = isRightOfNode ? 'start' : 'end'
+        const textX = isRightOfNode ? label.x - label.labelWidth / 2 : label.x + label.labelWidth / 2
+
+        const textNode = g.append('text')
+          .attr('x', textX)
+          .attr('y', label.y - (label.lines.length > 1 ? 5 : 0))
+          .attr('text-anchor', anchor)
+          .attr('font-family', "'DM Mono', monospace")
+          .attr('font-size', 9)
+          .attr('font-weight', '500')
+          .attr('fill', '#b8860b')
+          .style('pointer-events', 'none')
+
+        label.lines.forEach((line, i) => {
+          textNode.append('tspan')
+            .attr('x', textX)
+            .attr('dy', i === 0 ? 0 : 11)
+            .text(line)
+        })
+      })
+    }
 
     return () => {
       hideTooltip()
