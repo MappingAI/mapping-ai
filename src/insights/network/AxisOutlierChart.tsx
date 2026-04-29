@@ -258,34 +258,16 @@ export function AxisOutlierChart({ entities, mode, outlierThreshold = 10 }: Axis
     return { positionCounts: counts, outlierPositions: outliers, totalCount: validEntities.length }
   }, [validEntities, configX.scoreKey, mode, configY, outlierThreshold])
 
-  // Count outlier entities and get their categories
-  const { outlierCount, outlierCategoriesByType } = useMemo(() => {
-    const outlierEntities = validEntities.filter((e) => {
+  // Count outlier entities
+  const outlierCount = useMemo(() => {
+    return validEntities.filter((e) => {
       const scoreX = Math.round(e[configX.scoreKey] as number)
       if (mode === '2d' && configY) {
         const scoreY = Math.round(e[configY.scoreKey] as number)
         return outlierPositions.has(`${scoreX}-${scoreY}`)
       }
       return outlierPositions.has(String(scoreX))
-    })
-
-    const personCats = new Set<string>()
-    const orgCats = new Set<string>()
-    outlierEntities.forEach((e) => {
-      if (e.entity_type === 'person') {
-        personCats.add(e.category)
-      } else {
-        orgCats.add(e.category)
-      }
-    })
-
-    return {
-      outlierCount: outlierEntities.length,
-      outlierCategoriesByType: {
-        person: [...personCats].sort(),
-        org: [...orgCats].sort(),
-      },
-    }
+    }).length
   }, [validEntities, configX.scoreKey, mode, configY, outlierPositions])
 
   useEffect(() => {
@@ -583,11 +565,15 @@ export function AxisOutlierChart({ entities, mode, outlierThreshold = 10 }: Axis
 
     annotationCandidates.forEach((d) => {
       const name = d.entity.name.length > 18 ? d.entity.name.slice(0, 16) + '...' : d.entity.name
+      // Position label on left side if node is in right half of chart
+      const onRightHalf = d.x > plotW * 0.6
+      const labelX = onRightHalf ? d.x - d.radius - 4 : d.x + d.radius + 4
+      const anchor = onRightHalf ? 'end' : 'start'
 
       g.append('text')
-        .attr('x', d.x + d.radius + 4)
+        .attr('x', labelX)
         .attr('y', d.y + 3)
-        .attr('text-anchor', 'start')
+        .attr('text-anchor', anchor)
         .attr('font-family', "'DM Mono', monospace")
         .attr('font-size', 9)
         .attr('font-weight', '500')
@@ -651,59 +637,12 @@ export function AxisOutlierChart({ entities, mode, outlierThreshold = 10 }: Axis
       <div ref={ref} />
 
       {/* Legend */}
-      <div className="mt-3 space-y-2">
-        {/* Outlier indicator + threshold */}
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-1.5">
-            <div className="w-3 h-3 rounded-full bg-[#888] border-2 border-[#1a1a1a]" />
-            <span className="font-mono text-[9px] text-[#666]">Outlier (clickable)</span>
-          </div>
-          <div className="font-mono text-[9px] text-[#999]">Positions with ≤{outlierThreshold} entities</div>
+      <div className="flex items-center gap-4 mt-2">
+        <div className="flex items-center gap-1.5">
+          <div className="w-3 h-3 rounded-full bg-[#888] border-2 border-[#1a1a1a]" />
+          <span className="font-mono text-[9px] text-[#666]">Outlier (clickable)</span>
         </div>
-
-        {/* Color legend by entity type */}
-        {(outlierCategoriesByType.person.length > 0 || outlierCategoriesByType.org.length > 0) && (
-          <div className="bg-[#fafafa] rounded p-2 space-y-1.5">
-            {outlierCategoriesByType.person.length > 0 && (
-              <div className="flex items-center gap-2">
-                <div className="flex items-center gap-1 min-w-[50px]">
-                  <div className="w-2 h-2 rounded-full bg-[#666]" />
-                  <span className="font-mono text-[8px] text-[#888] uppercase tracking-wide">People</span>
-                </div>
-                <div className="flex flex-wrap gap-x-3 gap-y-1">
-                  {outlierCategoriesByType.person.map((cat) => (
-                    <div key={cat} className="flex items-center gap-1">
-                      <div
-                        className="w-2 h-2 rounded-full border border-[#1a1a1a]"
-                        style={{ background: CATEGORY_COLORS[cat] || '#888' }}
-                      />
-                      <span className="font-mono text-[8px] text-[#666]">{cat}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-            {outlierCategoriesByType.org.length > 0 && (
-              <div className="flex items-center gap-2">
-                <div className="flex items-center gap-1 min-w-[50px]">
-                  <div className="w-2 h-2 bg-[#666]" />
-                  <span className="font-mono text-[8px] text-[#888] uppercase tracking-wide">Orgs</span>
-                </div>
-                <div className="flex flex-wrap gap-x-3 gap-y-1">
-                  {outlierCategoriesByType.org.map((cat) => (
-                    <div key={cat} className="flex items-center gap-1">
-                      <div
-                        className="w-2 h-2 border border-[#1a1a1a]"
-                        style={{ background: CATEGORY_COLORS[cat] || '#888' }}
-                      />
-                      <span className="font-mono text-[8px] text-[#666]">{cat}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        )}
+        <div className="font-mono text-[9px] text-[#999]">Positions with ≤{outlierThreshold} entities</div>
       </div>
 
       {/* Detail modal */}
