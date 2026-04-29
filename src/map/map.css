@@ -1889,7 +1889,7 @@ body {
   border-color: var(--text-2, #666);
   color: var(--text-1, #222);
 }
-</style > <style > #contribute-btn {
+#contribute-btn {
   position: fixed;
   bottom: 1.5rem;
   right: 4.5rem;
@@ -1968,9 +1968,7 @@ body {
     right: 0;
   }
 }
-</style>
-    <style>
-/* PASSWORD GATE—locked state: allow browsing views/filters but block node detail */
+/* PASSWORD GATE: locked state */
 body.locked #detail-panel {
   pointer-events: none;
   opacity: 0.5;
