@@ -90,7 +90,7 @@ export function App() {
   const [viewMode, setViewMode] = useState<ViewMode>(() => {
     const hash = window.location.hash.replace('#', '')
     if (hash === 'library') return 'resources'
-    if (hash === 'definitions') return 'definitions'
+    if (hash === 'definitions' || hash === 'beliefs') return 'definitions'
     const saved = localStorage.getItem('mapMode')
     if (saved === 'network' || saved === 'plot' || saved === 'resources' || saved === 'definitions') return saved
     return 'network'
