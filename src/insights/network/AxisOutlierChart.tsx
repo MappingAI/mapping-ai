@@ -286,7 +286,7 @@ export function AxisOutlierChart({ entities, mode }: AxisOutlierChartProps) {
     const H = mode === '2d' ? 550 : 420
     const margin =
       mode === '2d'
-        ? { top: 60, right: 120, bottom: 80, left: 90 }
+        ? { top: 60, right: 120, bottom: 80, left: 110 }
         : { top: 40, right: 110, bottom: 70, left: 40 }
     const plotW = W - margin.left - margin.right
     const plotH = H - margin.top - margin.bottom
@@ -393,12 +393,12 @@ export function AxisOutlierChart({ entities, mode }: AxisOutlierChartProps) {
           .text(label)
       })
 
-      // Y axis label
+      // Y axis label - positioned further left to avoid overlap with tick labels
       yAxisG
         .append('text')
         .attr('transform', 'rotate(-90)')
         .attr('x', -plotH / 2)
-        .attr('y', -60)
+        .attr('y', -75)
         .attr('text-anchor', 'middle')
         .attr('font-family', "'DM Mono', monospace")
         .attr('font-size', 10)
@@ -567,23 +567,31 @@ export function AxisOutlierChart({ entities, mode }: AxisOutlierChartProps) {
       .sort((a, b) => a.posCount - b.posCount)
       .slice(0, mode === '2d' ? 5 : 3) // Limit annotations
 
-    // Sort by y position to handle vertical proximity
-    const sortedByY = [...annotationCandidates].sort((a, b) => a.y - b.y)
+    // Sort by position to handle proximity - first by y, then by x
+    const sortedAnnotations = [...annotationCandidates].sort((a, b) => {
+      const yDiff = a.y - b.y
+      if (Math.abs(yDiff) > 20) return yDiff
+      return a.x - b.x
+    })
 
-    // Assign sides: alternate for nodes that are close vertically, otherwise use position-based logic
+    // Assign sides: alternate for nodes that are close, otherwise use position-based logic
     const labelSides: Map<number, 'left' | 'right'> = new Map()
-    sortedByY.forEach((d, i) => {
-      // Check if this node is close to the previous one vertically (within 30px)
-      const prevNode = i > 0 ? sortedByY[i - 1] : null
-      const isCloseVertically = prevNode && Math.abs(d.y - prevNode.y) < 30
+    sortedAnnotations.forEach((d, i) => {
+      // Check if this node is close to any previous node (within 40px in both x and y)
+      let foundClose = false
+      for (let j = 0; j < i; j++) {
+        const prev = sortedAnnotations[j]
+        if (prev && Math.abs(d.x - prev.x) < 60 && Math.abs(d.y - prev.y) < 40) {
+          // Close to a previous node - use opposite side
+          const prevSide = labelSides.get(prev.index)
+          labelSides.set(d.index, prevSide === 'left' ? 'right' : 'left')
+          foundClose = true
+          break
+        }
+      }
 
-      if (isCloseVertically && prevNode) {
-        // Alternate from previous node's side
-        const prevSide = labelSides.get(prevNode.index)
-        labelSides.set(d.index, prevSide === 'left' ? 'right' : 'left')
-      } else {
+      if (!foundClose) {
         // Use position-based logic: right side of chart = label on left, left side = label on right
-        // This keeps labels pointing toward the center
         labelSides.set(d.index, d.x > plotW * 0.5 ? 'left' : 'right')
       }
     })
