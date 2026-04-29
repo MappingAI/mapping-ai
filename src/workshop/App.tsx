@@ -279,12 +279,22 @@ export function App() {
           most valuable parts of the format.
         </p>
 
-        {/* MappingParty photo */}
-        <div className="mb-6 rounded-md overflow-hidden">
+        {/* MappingParty photos */}
+        <div className="grid grid-cols-3 gap-3 mb-6 max-[600px]:grid-cols-1">
           <img
             src="/assets/images/mapping-party-1.jpg"
-            alt="The first MappingParty: contributors working together on the stakeholder map"
-            className="w-full rounded-md"
+            alt="MappingParty contributors working together"
+            className="w-full aspect-[4/3] object-cover rounded-md"
+          />
+          <img
+            src="/assets/images/mapping-party-2.jpg"
+            alt="MappingParty working session"
+            className="w-full aspect-[4/3] object-cover rounded-md"
+          />
+          <img
+            src="/assets/images/mapping-party-3.jpg"
+            alt="MappingParty group collaboration"
+            className="w-full aspect-[4/3] object-cover rounded-md"
           />
         </div>
 
