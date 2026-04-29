@@ -29,6 +29,7 @@ map-data.json
 map-detail.json
 public/claims-detail.json
 public/agi-definitions.json
+public/data/
 backup-*.json
 backup-*.sql
 perf-artifacts/
