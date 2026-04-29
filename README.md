@@ -101,7 +101,7 @@ Submission fields include regulatory stance, influence type, threat model belief
 
 ## Community
 
-Join the [Discord server](https://discord.gg/2gntpaxV) for discussions, coordination, and mapping parties. Use the forum channels to track bugs, share research questions, and post feature ideas.
+Join the [Discord server](https://discord.gg/EFZ3FxAt) for discussions, coordination, and mapping parties. Use the forum channels to track bugs, share research questions, and post feature ideas.
 
 ---
 
