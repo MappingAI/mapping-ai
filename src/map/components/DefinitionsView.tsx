@@ -1172,7 +1172,7 @@ export function DefinitionsView() {
         style={{
           background: 'var(--bg-panel)',
           borderRadius: '8px',
-          padding: '16px',
+          padding: '16px 24px 16px 32px',
           margin: '0 0 16px',
           border: '1px solid var(--line)',
           width: '100%',
