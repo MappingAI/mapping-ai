@@ -258,16 +258,34 @@ export function AxisOutlierChart({ entities, mode, outlierThreshold = 10 }: Axis
     return { positionCounts: counts, outlierPositions: outliers, totalCount: validEntities.length }
   }, [validEntities, configX.scoreKey, mode, configY, outlierThreshold])
 
-  // Count outlier entities
-  const outlierCount = useMemo(() => {
-    return validEntities.filter((e) => {
+  // Count outlier entities and get their categories
+  const { outlierCount, outlierCategoriesByType } = useMemo(() => {
+    const outlierEntities = validEntities.filter((e) => {
       const scoreX = Math.round(e[configX.scoreKey] as number)
       if (mode === '2d' && configY) {
         const scoreY = Math.round(e[configY.scoreKey] as number)
         return outlierPositions.has(`${scoreX}-${scoreY}`)
       }
       return outlierPositions.has(String(scoreX))
-    }).length
+    })
+
+    const personCats = new Set<string>()
+    const orgCats = new Set<string>()
+    outlierEntities.forEach((e) => {
+      if (e.entity_type === 'person') {
+        personCats.add(e.category)
+      } else {
+        orgCats.add(e.category)
+      }
+    })
+
+    return {
+      outlierCount: outlierEntities.length,
+      outlierCategoriesByType: {
+        person: [...personCats].sort(),
+        org: [...orgCats].sort(),
+      },
+    }
   }, [validEntities, configX.scoreKey, mode, configY, outlierPositions])
 
   useEffect(() => {
@@ -279,11 +297,11 @@ export function AxisOutlierChart({ entities, mode, outlierThreshold = 10 }: Axis
     container.addEventListener('mouseleave', handleMouseLeave)
 
     const W = container.clientWidth || 600
-    const H = mode === '2d' ? 450 : 320
+    const H = mode === '2d' ? 550 : 420
     const margin =
       mode === '2d'
-        ? { top: 50, right: 40, bottom: 70, left: 80 }
-        : { top: 40, right: 30, bottom: 60, left: 30 }
+        ? { top: 60, right: 100, bottom: 70, left: 80 }
+        : { top: 40, right: 90, bottom: 60, left: 30 }
     const plotW = W - margin.left - margin.right
     const plotH = H - margin.top - margin.bottom
 
@@ -633,16 +651,59 @@ export function AxisOutlierChart({ entities, mode, outlierThreshold = 10 }: Axis
       <div ref={ref} />
 
       {/* Legend */}
-      <div className="flex items-center gap-4 mt-2">
-        <div className="flex items-center gap-1.5">
-          <div className="w-3 h-3 rounded-full bg-[#888] border-2 border-[#1a1a1a]" />
-          <span className="font-mono text-[9px] text-[#666]">Outlier (clickable)</span>
+      <div className="mt-3 space-y-2">
+        {/* Outlier indicator + threshold */}
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-1.5">
+            <div className="w-3 h-3 rounded-full bg-[#888] border-2 border-[#1a1a1a]" />
+            <span className="font-mono text-[9px] text-[#666]">Outlier (clickable)</span>
+          </div>
+          <div className="font-mono text-[9px] text-[#999]">Positions with ≤{outlierThreshold} entities</div>
         </div>
-        <div className="flex items-center gap-1.5">
-          <div className="w-3 h-3 rounded-full bg-[#888] opacity-20" />
-          <span className="font-mono text-[9px] text-[#666]">Non-outlier</span>
-        </div>
-        <div className="font-mono text-[9px] text-[#999] ml-auto">Positions with ≤{outlierThreshold} entities</div>
+
+        {/* Color legend by entity type */}
+        {(outlierCategoriesByType.person.length > 0 || outlierCategoriesByType.org.length > 0) && (
+          <div className="bg-[#fafafa] rounded p-2 space-y-1.5">
+            {outlierCategoriesByType.person.length > 0 && (
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1 min-w-[50px]">
+                  <div className="w-2 h-2 rounded-full bg-[#666]" />
+                  <span className="font-mono text-[8px] text-[#888] uppercase tracking-wide">People</span>
+                </div>
+                <div className="flex flex-wrap gap-x-3 gap-y-1">
+                  {outlierCategoriesByType.person.map((cat) => (
+                    <div key={cat} className="flex items-center gap-1">
+                      <div
+                        className="w-2 h-2 rounded-full border border-[#1a1a1a]"
+                        style={{ background: CATEGORY_COLORS[cat] || '#888' }}
+                      />
+                      <span className="font-mono text-[8px] text-[#666]">{cat}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            {outlierCategoriesByType.org.length > 0 && (
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1 min-w-[50px]">
+                  <div className="w-2 h-2 bg-[#666]" />
+                  <span className="font-mono text-[8px] text-[#888] uppercase tracking-wide">Orgs</span>
+                </div>
+                <div className="flex flex-wrap gap-x-3 gap-y-1">
+                  {outlierCategoriesByType.org.map((cat) => (
+                    <div key={cat} className="flex items-center gap-1">
+                      <div
+                        className="w-2 h-2 border border-[#1a1a1a]"
+                        style={{ background: CATEGORY_COLORS[cat] || '#888' }}
+                      />
+                      <span className="font-mono text-[8px] text-[#666]">{cat}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Detail modal */}
