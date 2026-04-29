@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback, useRef, useEffect } from 'react'
+import { useState, useMemo, useCallback } from 'react'
 
 export interface Resource {
   id: number
@@ -35,31 +35,6 @@ const RESOURCE_TYPE_COLORS: Record<string, string> = {
   Video: '#e74c3c',
   'News Article': '#7f8c8d',
   Website: '#2c3e50',
-}
-
-const STANCE_COLORS: Record<string, string> = {
-  Accelerate: '#e74c3c',
-  'Light-touch': '#e67e22',
-  Targeted: '#f39c12',
-  Moderate: '#3498db',
-  Restrictive: '#8e44ad',
-  Precautionary: '#2c3e50',
-}
-
-const TIMELINE_COLORS: Record<string, string> = {
-  'Already here': '#e74c3c',
-  '2-3 years': '#e67e22',
-  '5-10 years': '#f39c12',
-  '10-25 years': '#3498db',
-  '25+ years': '#8e44ad',
-}
-
-const RISK_COLORS: Record<string, string> = {
-  Overstated: '#27ae60',
-  Manageable: '#3498db',
-  Serious: '#f39c12',
-  Catastrophic: '#e74c3c',
-  Existential: '#8e44ad',
 }
 
 const ADJACENT_LINKS = [
@@ -104,7 +79,7 @@ function ResourceCard({
         width: '100%',
         textAlign: 'left' as const,
         borderRadius: '6px',
-        padding: '16px',
+        padding: '12px',
         border: 'none',
         borderLeft: `4px solid ${borderColor}`,
         background: 'var(--bg-panel)',
@@ -113,7 +88,7 @@ function ResourceCard({
         transition: 'box-shadow 0.15s ease',
       }}
     >
-      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', marginBottom: '8px' }}>
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', marginBottom: '4px' }}>
         <span
           style={{
             fontFamily: 'var(--mono)',
@@ -175,6 +150,25 @@ function ResourceCard({
             {resource.author && resource.year && <span>&middot;</span>}
             {resource.year && <span>{resource.year}</span>}
           </div>
+          {(resource.topic_tags?.length ?? 0) > 0 && (
+            <div style={{ display: 'flex', flexWrap: 'wrap' as const, gap: '4px', marginTop: '4px' }}>
+              {resource.topic_tags!.slice(0, 3).map((tag) => (
+                <span
+                  key={tag}
+                  style={{
+                    fontFamily: 'var(--mono)',
+                    fontSize: '8px',
+                    color: 'var(--text-3)',
+                    border: '1px solid var(--line)',
+                    borderRadius: '3px',
+                    padding: '1px 5px',
+                  }}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
@@ -199,364 +193,10 @@ function ResourceCard({
   )
 }
 
-function DetailPanel({ resource, onClose }: { resource: Resource; onClose: () => void }) {
-  const panelRef = useRef<HTMLDivElement>(null)
-  const displayTitle = resource.title || resource.name
-
-  useEffect(() => {
-    function handleKey(e: KeyboardEvent) {
-      if (e.key === 'Escape') onClose()
-    }
-    document.addEventListener('keydown', handleKey)
-    return () => document.removeEventListener('keydown', handleKey)
-  }, [onClose])
-
-  useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      if (panelRef.current && !panelRef.current.contains(e.target as Node)) {
-        onClose()
-      }
-    }
-    const timeout = setTimeout(() => {
-      document.addEventListener('mousedown', handleClickOutside)
-    }, 100)
-    return () => {
-      clearTimeout(timeout)
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [onClose])
-
-  const borderColor = typeColor(resource.resource_type)
-  const hasBeliefs = resource.advocated_stance || resource.advocated_timeline || resource.advocated_risk
-
-  return (
-    <div
-      style={{
-        position: 'fixed',
-        inset: 0,
-        zIndex: 50,
-        display: 'flex',
-        justifyContent: 'flex-end',
-      }}
-    >
-      <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.2)' }} />
-      <div
-        ref={panelRef}
-        style={{
-          position: 'relative',
-          width: 'min(440px, 50vw)',
-          background: 'var(--bg-panel)',
-          borderLeft: '1px solid var(--line)',
-          overflowY: 'auto',
-          animation: 'slideInFromRight 0.2s ease-out',
-        }}
-      >
-        <div
-          style={{
-            position: 'sticky',
-            top: 0,
-            background: 'var(--bg-panel)',
-            borderBottom: '1px solid var(--line)',
-            padding: '12px 20px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            zIndex: 10,
-          }}
-        >
-          <span
-            style={{
-              fontFamily: 'var(--mono)',
-              fontSize: '10px',
-              letterSpacing: '0.1em',
-              textTransform: 'uppercase' as const,
-              color: 'var(--text-3)',
-            }}
-          >
-            Resource Detail
-          </span>
-          <button
-            onClick={onClose}
-            style={{
-              width: '28px',
-              height: '28px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: '50%',
-              border: 'none',
-              background: 'transparent',
-              color: 'var(--text-3)',
-              fontSize: '18px',
-              lineHeight: 1,
-              cursor: 'pointer',
-            }}
-          >
-            &times;
-          </button>
-        </div>
-
-        <div style={{ padding: '20px' }}>
-          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', marginBottom: '16px' }}>
-            <span
-              style={{
-                fontFamily: 'var(--mono)',
-                fontSize: '9px',
-                letterSpacing: '0.04em',
-                color: borderColor,
-                backgroundColor: borderColor + '18',
-                border: `1px solid ${borderColor}40`,
-                borderRadius: '9999px',
-                padding: '2px 8px',
-                whiteSpace: 'nowrap' as const,
-                flexShrink: 0,
-              }}
-            >
-              {resource.resource_type ?? 'Doc'}
-            </span>
-            <div>
-              <h2
-                style={{
-                  fontFamily: 'var(--serif)',
-                  fontSize: '20px',
-                  lineHeight: '1.3',
-                  color: 'var(--text-1)',
-                  margin: 0,
-                  fontWeight: 400,
-                }}
-              >
-                {displayTitle}
-              </h2>
-              <div
-                style={{
-                  display: 'flex',
-                  flexWrap: 'wrap' as const,
-                  alignItems: 'center',
-                  gap: '8px',
-                  marginTop: '6px',
-                  fontFamily: 'var(--mono)',
-                  fontSize: '11px',
-                  color: 'var(--text-3)',
-                  letterSpacing: '0.04em',
-                }}
-              >
-                {resource.author && <span>{resource.author}</span>}
-                {resource.author && resource.year && <span>&middot;</span>}
-                {resource.year && <span>{resource.year}</span>}
-              </div>
-              {resource.resource_type && (
-                <span
-                  style={{
-                    display: 'inline-block',
-                    marginTop: '6px',
-                    borderRadius: '9999px',
-                    background: 'var(--bg-page)',
-                    padding: '2px 10px',
-                    fontFamily: 'var(--mono)',
-                    fontSize: '10px',
-                    color: 'var(--text-2)',
-                    letterSpacing: '0.04em',
-                  }}
-                >
-                  {resource.resource_type}
-                </span>
-              )}
-            </div>
-          </div>
-
-          {resource.key_argument && (
-            <div style={{ marginBottom: '20px' }}>
-              <div
-                style={{
-                  fontFamily: 'var(--mono)',
-                  fontSize: '10px',
-                  letterSpacing: '0.08em',
-                  textTransform: 'uppercase' as const,
-                  color: 'var(--text-3)',
-                  marginBottom: '6px',
-                }}
-              >
-                Key Argument
-              </div>
-              <p
-                style={{
-                  fontFamily: 'var(--serif)',
-                  fontSize: '15px',
-                  lineHeight: '1.6',
-                  color: 'var(--text-1)',
-                  margin: 0,
-                }}
-              >
-                {resource.key_argument}
-              </p>
-            </div>
-          )}
-
-          {(resource.topic_tags?.length ?? 0) > 0 && (
-            <div style={{ marginBottom: '16px' }}>
-              <div
-                style={{
-                  fontFamily: 'var(--mono)',
-                  fontSize: '10px',
-                  letterSpacing: '0.08em',
-                  textTransform: 'uppercase' as const,
-                  color: 'var(--text-3)',
-                  marginBottom: '6px',
-                }}
-              >
-                Topics
-              </div>
-              <div style={{ display: 'flex', flexWrap: 'wrap' as const, gap: '6px' }}>
-                {resource.topic_tags!.map((tag) => (
-                  <span
-                    key={tag}
-                    style={{
-                      borderRadius: '9999px',
-                      background: 'var(--bg-page)',
-                      border: '1px solid var(--line)',
-                      padding: '2px 10px',
-                      fontFamily: 'var(--mono)',
-                      fontSize: '10px',
-                      color: 'var(--text-2)',
-                      letterSpacing: '0.04em',
-                    }}
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {(resource.format_tags?.length ?? 0) > 0 && (
-            <div style={{ marginBottom: '16px' }}>
-              <div
-                style={{
-                  fontFamily: 'var(--mono)',
-                  fontSize: '10px',
-                  letterSpacing: '0.08em',
-                  textTransform: 'uppercase' as const,
-                  color: 'var(--text-3)',
-                  marginBottom: '6px',
-                }}
-              >
-                Format
-              </div>
-              <div style={{ display: 'flex', flexWrap: 'wrap' as const, gap: '6px' }}>
-                {resource.format_tags!.map((tag) => (
-                  <span
-                    key={tag}
-                    style={{
-                      borderRadius: '9999px',
-                      background: 'var(--bg-page)',
-                      padding: '2px 10px',
-                      fontFamily: 'var(--mono)',
-                      fontSize: '10px',
-                      color: 'var(--text-2)',
-                      letterSpacing: '0.04em',
-                    }}
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {hasBeliefs && (
-            <div style={{ marginBottom: '20px' }}>
-              <div
-                style={{
-                  fontFamily: 'var(--mono)',
-                  fontSize: '10px',
-                  letterSpacing: '0.08em',
-                  textTransform: 'uppercase' as const,
-                  color: 'var(--text-3)',
-                  marginBottom: '8px',
-                }}
-              >
-                Advocated Beliefs
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column' as const, gap: '8px' }}>
-                {resource.advocated_stance && (
-                  <BeliefRow label="Stance" value={resource.advocated_stance} colorMap={STANCE_COLORS} />
-                )}
-                {resource.advocated_timeline && (
-                  <BeliefRow label="Timeline" value={resource.advocated_timeline} colorMap={TIMELINE_COLORS} />
-                )}
-                {resource.advocated_risk && (
-                  <BeliefRow label="Risk" value={resource.advocated_risk} colorMap={RISK_COLORS} />
-                )}
-              </div>
-            </div>
-          )}
-
-          {resource.url && (
-            <a
-              href={resource.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px',
-                fontFamily: 'var(--mono)',
-                fontSize: '11px',
-                letterSpacing: '0.04em',
-                color: 'var(--accent)',
-                textDecoration: 'none',
-                marginBottom: '20px',
-              }}
-            >
-              View source &#8594;
-            </a>
-          )}
-        </div>
-      </div>
-    </div>
-  )
-}
-
-function BeliefRow({ label, value, colorMap }: { label: string; value: string; colorMap: Record<string, string> }) {
-  const color = colorMap[value] ?? '#888'
-  return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-      <span
-        style={{
-          fontFamily: 'var(--mono)',
-          fontSize: '10px',
-          color: 'var(--text-3)',
-          width: '80px',
-          flexShrink: 0,
-        }}
-      >
-        {label}
-      </span>
-      <span
-        style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '4px',
-          borderRadius: '9999px',
-          padding: '2px 8px',
-          fontFamily: 'var(--mono)',
-          fontSize: '9px',
-          letterSpacing: '0.04em',
-          color: '#fff',
-          backgroundColor: color,
-        }}
-      >
-        {value}
-      </span>
-    </div>
-  )
-}
-
 export function ResourcesView({ resources }: ResourcesViewProps) {
   const [searchQuery, setSearchQuery] = useState('')
   const [activeType, setActiveType] = useState<string>('')
   const [sortKey, setSortKey] = useState<SortKey>('year')
-  const [selectedResource, setSelectedResource] = useState<Resource | null>(null)
   const [hoveredId, setHoveredId] = useState<number | null>(null)
 
   const allTypes = useMemo(() => {
@@ -604,22 +244,13 @@ export function ResourcesView({ resources }: ResourcesViewProps) {
   }, [resources, searchQuery, activeType, sortKey])
 
   const handleSelectResource = useCallback((r: Resource) => {
-    setSelectedResource(r)
-  }, [])
-
-  const handleCloseDetail = useCallback(() => {
-    setSelectedResource(null)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ;(window as any).__mapEngine?.showDetail?.(r, [])
+    document.getElementById('detail-panel')?.classList.add('open')
   }, [])
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg-page)' }}>
-      <style>{`
-        @keyframes slideInFromRight {
-          from { transform: translateX(100%); }
-          to { transform: translateX(0); }
-        }
-      `}</style>
-
       <div style={{ padding: '24px 32px 24px 300px' }}>
         <div style={{ marginBottom: '24px', textAlign: 'center' as const }}>
           <div
@@ -645,16 +276,6 @@ export function ResourcesView({ resources }: ResourcesViewProps) {
           >
             Resources
           </h1>
-          <p
-            style={{
-              fontFamily: 'var(--serif)',
-              fontSize: '14px',
-              color: 'var(--text-3)',
-              margin: '4px 0 0',
-            }}
-          >
-            {resources.length} reports, papers, essays, and more on AI policy.
-          </p>
         </div>
 
         <div style={{ marginBottom: '24px' }}>
@@ -853,8 +474,6 @@ export function ResourcesView({ resources }: ResourcesViewProps) {
           </div>
         )}
       </div>
-
-      {selectedResource && <DetailPanel resource={selectedResource} onClose={handleCloseDetail} />}
     </div>
   )
 }

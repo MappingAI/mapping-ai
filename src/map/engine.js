@@ -5572,6 +5572,8 @@ ${dots}
     })
   }
 
+  window.__mapEngine = { showDetail, allData }
+
   return {
     destroy() {
       if (simulation) simulation.stop()

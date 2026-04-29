@@ -518,7 +518,7 @@ export function App() {
             #search-mode-controls { display: none !important; }
             #entity-count { display: none !important; }
             .control-group:has(.info-btn) { display: none !important; }
-            .controls .control-group:first-child .search-box { display: none !important; }
+            .controls .control-group:first-child { display: none !important; }
           `}</style>
           <div
             id="react-view-container"
