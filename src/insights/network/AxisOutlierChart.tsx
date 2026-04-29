@@ -561,84 +561,49 @@ export function AxisOutlierChart({ entities, mode }: AxisOutlierChartProps) {
       })
     })
 
-    // Add annotations for top outliers (most isolated positions) - name next to node
+    // Add annotations for top outliers (most isolated positions)
     const annotationCandidates = outlierNodes
       .filter((d) => d.posCount <= 5) // Only annotate very rare positions
       .sort((a, b) => a.posCount - b.posCount)
       .slice(0, mode === '2d' ? 5 : 3) // Limit annotations
 
-    // Create a group for annotations so backgrounds render behind text
-    const annotationGroup = g.append('g').attr('class', 'annotations')
+    // Sort by y position to handle vertical proximity
+    const sortedByY = [...annotationCandidates].sort((a, b) => a.y - b.y)
 
-    // Helper to wrap name into lines
-    function wrapName(name: string, maxLineLen: number): string[] {
-      if (name.length <= maxLineLen) return [name]
+    // Assign sides: alternate for nodes that are close vertically, otherwise use position-based logic
+    const labelSides: Map<number, 'left' | 'right'> = new Map()
+    sortedByY.forEach((d, i) => {
+      // Check if this node is close to the previous one vertically (within 30px)
+      const prevNode = i > 0 ? sortedByY[i - 1] : null
+      const isCloseVertically = prevNode && Math.abs(d.y - prevNode.y) < 30
 
-      // Try to split at a space near the middle
-      const words = name.split(' ')
-      if (words.length >= 2) {
-        // Find best split point
-        let line1 = words[0] || ''
-        let lineIdx = 1
-        while (lineIdx < words.length) {
-          const nextWord = words[lineIdx] || ''
-          if ((line1 + ' ' + nextWord).length <= maxLineLen) {
-            line1 += ' ' + nextWord
-            lineIdx++
-          } else {
-            break
-          }
-        }
-        const line2 = words.slice(lineIdx).join(' ')
-        if (line2.length > maxLineLen) {
-          return [line1, line2.slice(0, maxLineLen - 1) + '…']
-        }
-        return line2 ? [line1, line2] : [line1]
+      if (isCloseVertically && prevNode) {
+        // Alternate from previous node's side
+        const prevSide = labelSides.get(prevNode.index)
+        labelSides.set(d.index, prevSide === 'left' ? 'right' : 'left')
+      } else {
+        // Use position-based logic: right side of chart = label on left, left side = label on right
+        // This keeps labels pointing toward the center
+        labelSides.set(d.index, d.x > plotW * 0.5 ? 'left' : 'right')
       }
-
-      // No spaces - just split at maxLineLen
-      return [name.slice(0, maxLineLen), name.slice(maxLineLen, maxLineLen * 2)]
-    }
+    })
 
     annotationCandidates.forEach((d) => {
-      const maxLineLen = 12
-      const lines = wrapName(d.entity.name, maxLineLen)
+      const name = d.entity.name
+      const side = labelSides.get(d.index) || 'right'
+      const labelX = side === 'left' ? d.x - d.radius - 6 : d.x + d.radius + 6
+      const anchor = side === 'left' ? 'end' : 'start'
 
-      // Position label on left side if node is in right 60% of chart
-      const onRightHalf = d.x > plotW * 0.6
-      const labelX = onRightHalf ? d.x - d.radius - 6 : d.x + d.radius + 6
-      const anchor = onRightHalf ? 'end' : 'start'
-
-      // Create text with tspans for multi-line
-      const textNode = annotationGroup.append('text')
+      g.append('text')
         .attr('x', labelX)
-        .attr('y', d.y - (lines.length > 1 ? 3 : -3))
+        .attr('y', d.y + 3)
         .attr('text-anchor', anchor)
         .attr('font-family', "'DM Mono', monospace")
         .attr('font-size', 9)
         .attr('font-weight', '500')
         .attr('fill', '#b8860b')
         .style('pointer-events', 'none')
-
-      lines.forEach((line, i) => {
-        textNode.append('tspan')
-          .attr('x', labelX)
-          .attr('dy', i === 0 ? 0 : 11)
-          .text(line)
-      })
-
-      // Get text bounding box and add background behind it
-      const bbox = textNode.node()?.getBBox()
-      if (bbox) {
-        annotationGroup.insert('rect', function() { return textNode.node() })
-          .attr('x', bbox.x - 3)
-          .attr('y', bbox.y - 2)
-          .attr('width', bbox.width + 6)
-          .attr('height', bbox.height + 4)
-          .attr('fill', 'rgba(255, 255, 255, 0.9)')
-          .attr('rx', 2)
-          .style('pointer-events', 'none')
-      }
+        .text(name)
     })
 
     return () => {
