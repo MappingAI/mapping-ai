@@ -38,7 +38,7 @@ const TEAM: TeamMember[] = [
     bio: 'Robby is an expert in housing policy. He previously led outreach for a YIMBY organization and now serves as Chief Strategy Officer for a data analytics firm.',
   },
   {
-    name: 'Sophia Wang',
+    name: 'Sophia J Wang',
     href: 'https://www.linkedin.com/in/sophia-j-wang/',
     role: 'Working Group',
     bio: 'Sophia leads research for a deep tech fund. She specializes in the development of highly autonomous systems and the design of new research institutions.',
