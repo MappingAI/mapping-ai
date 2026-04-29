@@ -567,6 +567,9 @@ export function AxisOutlierChart({ entities, mode }: AxisOutlierChartProps) {
       .sort((a, b) => a.posCount - b.posCount)
       .slice(0, mode === '2d' ? 5 : 3) // Limit annotations
 
+    // Create a group for annotations so backgrounds render behind text
+    const annotationGroup = g.append('g').attr('class', 'annotations')
+
     annotationCandidates.forEach((d) => {
       // Truncate long names more aggressively
       const maxLen = 14
@@ -577,8 +580,8 @@ export function AxisOutlierChart({ entities, mode }: AxisOutlierChartProps) {
       const labelX = onRightHalf ? d.x - d.radius - 6 : d.x + d.radius + 6
       const anchor = onRightHalf ? 'end' : 'start'
 
-      // Add background rect for readability (rendered first, behind text)
-      const textNode = g.append('text')
+      // Create text first to measure, then add background behind it
+      const textNode = annotationGroup.append('text')
         .attr('x', labelX)
         .attr('y', d.y + 3)
         .attr('text-anchor', anchor)
@@ -589,10 +592,11 @@ export function AxisOutlierChart({ entities, mode }: AxisOutlierChartProps) {
         .style('pointer-events', 'none')
         .text(name)
 
-      // Get text bounding box and add background
+      // Get text bounding box and add background behind it
       const bbox = textNode.node()?.getBBox()
       if (bbox) {
-        g.insert('rect', 'text')
+        // Insert rect before the text node we just created
+        annotationGroup.insert('rect', function() { return textNode.node() })
           .attr('x', bbox.x - 2)
           .attr('y', bbox.y - 1)
           .attr('width', bbox.width + 4)
