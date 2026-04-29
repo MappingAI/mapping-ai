@@ -46,17 +46,6 @@ const CATEGORY_COLORS: Record<string, string> = {
   'Political Campaign/PAC': '#984ea3',
 }
 
-// Person categories get circles, org categories get squares
-const PERSON_CATEGORIES = new Set([
-  'Executive',
-  'Researcher',
-  'Policymaker',
-  'Investor',
-  'Organizer',
-  'Journalist',
-  'Academic',
-  'Cultural figure',
-])
 
 type EntityFilter = 'all' | 'people' | 'orgs'
 
@@ -973,59 +962,37 @@ export function ReachabilityRings({ entities, edges, maxPeople = 6 }: Reachabili
     return <div className="font-mono text-[11px] text-[#999]">No network data available.</div>
   }
 
-  // Get unique categories for legend
-  const allCategories = new Set<string>()
-  topPeople.forEach((p) => {
-    if (p.person.category) allCategories.add(p.person.category)
-    ;[...p.hop1, ...p.hop2, ...p.hop3].forEach((e) => {
-      if (e.category) allCategories.add(e.category)
-    })
-  })
-
   return (
     <div>
-      {/* Legend with shapes */}
-      <div className="flex items-center gap-4 mb-3">
-        <div className="flex items-center gap-1.5">
-          <div className="w-3 h-3 rounded-full bg-[#888]" />
-          <span className="font-mono text-[9px] text-[#666]">Person</span>
+      {/* Compact legend: shapes + filter in one row */}
+      <div className="flex items-center gap-6 mb-4 flex-wrap">
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-1.5">
+            <div className="w-2.5 h-2.5 rounded-full bg-[#666]" />
+            <span className="font-mono text-[9px] text-[#666]">Person</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <div className="w-2.5 h-2.5 bg-[#666]" />
+            <span className="font-mono text-[9px] text-[#666]">Organization</span>
+          </div>
         </div>
-        <div className="flex items-center gap-1.5">
-          <div className="w-3 h-3 rounded-sm bg-[#888]" />
-          <span className="font-mono text-[9px] text-[#666]">Organization</span>
+
+        <div className="flex items-center gap-2">
+          <span className="font-mono text-[9px] text-[#888]">Show:</span>
+          {(['all', 'people', 'orgs'] as EntityFilter[]).map((f) => (
+            <button
+              key={f}
+              onClick={() => setEntityFilter(f)}
+              className={`font-mono text-[9px] px-2 py-0.5 rounded transition-colors ${
+                entityFilter === f ? 'bg-[#555] text-white' : 'bg-[#f0f0f0] text-[#666] hover:bg-[#e5e5e5]'
+              }`}
+            >
+              {f === 'all' ? 'All' : f === 'people' ? 'People' : 'Orgs'}
+            </button>
+          ))}
         </div>
-      </div>
 
-      {/* Filter buttons */}
-      <div className="flex items-center gap-2 mb-4">
-        <span className="font-mono text-[10px] text-[#888]">Show:</span>
-        {(['all', 'people', 'orgs'] as EntityFilter[]).map((f) => (
-          <button
-            key={f}
-            onClick={() => setEntityFilter(f)}
-            className={`font-mono text-[10px] px-2 py-1 rounded transition-colors ${
-              entityFilter === f ? 'bg-[#555] text-white' : 'bg-[#f5f5f5] text-[#888] hover:bg-[#eee]'
-            }`}
-          >
-            {f === 'all' ? 'All' : f === 'people' ? 'People' : 'Orgs'}
-          </button>
-        ))}
-      </div>
-
-      {/* Category colors legend - circles for person categories, squares for org categories */}
-      <div className="flex flex-wrap gap-x-4 gap-y-1.5 mb-4">
-        {[...allCategories].map((cat) => {
-          const isPersonCategory = PERSON_CATEGORIES.has(cat)
-          return (
-            <div key={cat} className="flex items-center gap-1.5">
-              <div
-                className={`w-2.5 h-2.5 flex-shrink-0 ${isPersonCategory ? 'rounded-full' : 'rounded-sm'}`}
-                style={{ background: CATEGORY_COLORS[cat] || '#888' }}
-              />
-              <span className="font-mono text-[9px] text-[#666] whitespace-nowrap">{cat}</span>
-            </div>
-          )
-        })}
+        <div className="font-mono text-[9px] text-[#999]">Hover for category</div>
       </div>
 
       {/* Grid */}
