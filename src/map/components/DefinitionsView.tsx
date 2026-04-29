@@ -137,12 +137,7 @@ function buildQuarters(points: AgiPoint[]): QuarterBucket[] {
   while (y < endY || (y === endY && q <= endQ)) {
     const start = new Date(y, q * 3, 1)
     const end = new Date(y, q * 3 + 3, 0)
-    quarters.push({
-      key: `${y}Q${q + 1}`,
-      label: `Q${q + 1} ${y}`,
-      start,
-      end,
-    })
+    quarters.push({ key: `${y}Q${q + 1}`, label: `Q${q + 1} ${y}`, start, end })
     q++
     if (q > 3) {
       q = 0
@@ -158,76 +153,29 @@ function pointInQuarter(p: AgiPoint, qb: QuarterBucket): boolean {
   return d >= qb.start && d <= qb.end
 }
 
-function DetailModal({ point, source, onClose }: { point: AgiPoint; source: AgiSource | null; onClose: () => void }) {
-  return createPortal(
-    <div
-      className="fixed inset-0 z-[10000] flex items-start justify-center pt-[10vh]"
-      style={{ background: 'rgba(0,0,0,0.2)' }}
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose()
-      }}
-    >
-      <div
-        className="bg-white border border-[#ddd] rounded-lg shadow-xl overflow-y-auto w-[90vw] max-w-[520px]"
-        style={{ maxHeight: '75vh' }}
-      >
-        <div className="sticky top-0 bg-white border-b border-[#eee] px-4 py-2.5 flex justify-between items-start z-10 rounded-t-lg">
-          <div className="min-w-0 flex-1 pr-4">
-            <div className="font-mono text-[13px] font-medium text-[#1a1a1a]">{point.name}</div>
-            <div className="font-mono text-[10px] text-[#888] mt-0.5">
-              <span style={{ color: CATEGORY_COLORS[point.category] || '#888' }}>{point.category}</span>
-              {point.entity_type === 'organization' ? ' · Organization' : ' · Person'}
-            </div>
-          </div>
-          <button
-            onClick={onClose}
-            className="font-mono text-[16px] text-[#999] hover:text-[#333] px-2 py-0.5 -mr-2 flex-shrink-0"
-          >
-            ×
-          </button>
-        </div>
-        <div className="px-4 py-3 space-y-3">
-          <div>
-            <div className="font-mono text-[10px] tracking-[0.08em] uppercase text-[#888] mb-1">
-              How they define AGI
-            </div>
-            <div className="font-serif text-[14px] text-[#1a1a1a] leading-[1.5]">{point.definition}</div>
-          </div>
-          {point.citation && (
-            <div className="border-l-2 border-[#ddd] pl-3">
-              <blockquote className="font-serif text-[13px] text-[#444] leading-[1.45] italic">
-                &ldquo;{point.citation}&rdquo;
-              </blockquote>
-              {source && (
-                <a
-                  href={source.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-mono text-[10px] text-[#2563eb] hover:underline block truncate mt-1"
-                >
-                  {source.title || source.url}
-                </a>
-              )}
-              <div className="font-mono text-[9px] text-[#bbb] mt-0.5">
-                {[source?.type, point.date, point.confidence].filter(Boolean).join(' · ')}
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>,
-    document.body,
-  )
-}
-
 function createTooltip(id: string): HTMLDivElement {
   let el = document.getElementById(id) as HTMLDivElement | null
   if (!el) {
     el = document.createElement('div')
     el.id = id
-    el.className =
-      'fixed bg-white border border-[#bbb] rounded px-3 py-2 font-mono text-[11px] text-[#1a1a1a] pointer-events-none z-[9999] max-w-[320px] leading-[1.4]'
-    el.style.cssText = 'box-shadow: 0 2px 8px rgba(0,0,0,0.08); opacity: 0; left: 0; top: 0;'
+    Object.assign(el.style, {
+      position: 'fixed',
+      background: 'var(--bg-panel)',
+      border: '1px solid var(--line)',
+      borderRadius: '4px',
+      padding: '8px 12px',
+      fontFamily: 'var(--mono)',
+      fontSize: '11px',
+      color: 'var(--text-1)',
+      pointerEvents: 'none',
+      zIndex: '9999',
+      maxWidth: '320px',
+      lineHeight: '1.4',
+      boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+      opacity: '0',
+      left: '0',
+      top: '0',
+    })
     document.body.appendChild(el)
   }
   return el
@@ -261,9 +209,149 @@ function buildTooltipHtml(d: AgiPoint, colorMode: ColorMode): string {
     : ''
   const defText = d.definition.length > 100 ? d.definition.substring(0, 97) + '...' : d.definition
   return `<div style="font-weight:500;margin-bottom:2px;">${escapeHtml(d.name)}</div>
-    <div style="color:#666;font-size:10px;margin-bottom:2px;">${escapeHtml(d.category)}</div>
+    <div style="color:var(--text-3);font-size:10px;margin-bottom:2px;">${escapeHtml(d.category)}</div>
     ${beliefLine}
-    <div style="font-size:10px;color:#444;font-style:italic;">${escapeHtml(defText)}</div>`
+    <div style="font-size:10px;color:var(--text-2);font-style:italic;">${escapeHtml(defText)}</div>`
+}
+
+function DetailModal({ point, source, onClose }: { point: AgiPoint; source: AgiSource | null; onClose: () => void }) {
+  return createPortal(
+    <div
+      style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 10000,
+        display: 'flex',
+        alignItems: 'flex-start',
+        justifyContent: 'center',
+        paddingTop: '10vh',
+        background: 'rgba(0,0,0,0.2)',
+      }}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose()
+      }}
+    >
+      <div
+        style={{
+          background: 'var(--bg-panel)',
+          border: '1px solid var(--line)',
+          borderRadius: '8px',
+          boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
+          overflowY: 'auto',
+          width: '90vw',
+          maxWidth: '520px',
+          maxHeight: '75vh',
+        }}
+      >
+        <div
+          style={{
+            position: 'sticky',
+            top: 0,
+            background: 'var(--bg-panel)',
+            borderBottom: '1px solid var(--line)',
+            padding: '10px 16px',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'flex-start',
+            zIndex: 10,
+            borderRadius: '8px 8px 0 0',
+          }}
+        >
+          <div style={{ minWidth: 0, flex: 1, paddingRight: '16px' }}>
+            <div
+              style={{
+                fontFamily: 'var(--mono)',
+                fontSize: '13px',
+                fontWeight: 500,
+                color: 'var(--text-1)',
+              }}
+            >
+              {point.name}
+            </div>
+            <div style={{ fontFamily: 'var(--mono)', fontSize: '10px', color: 'var(--text-3)', marginTop: '2px' }}>
+              <span style={{ color: CATEGORY_COLORS[point.category] || 'var(--text-3)' }}>{point.category}</span>
+              {point.entity_type === 'organization' ? ' · Organization' : ' · Person'}
+            </div>
+          </div>
+          <button
+            onClick={onClose}
+            style={{
+              fontFamily: 'var(--mono)',
+              fontSize: '16px',
+              color: 'var(--text-3)',
+              padding: '2px 8px',
+              marginRight: '-8px',
+              flexShrink: 0,
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+            }}
+          >
+            ×
+          </button>
+        </div>
+        <div style={{ padding: '12px 16px' }}>
+          <div style={{ marginBottom: '12px' }}>
+            <div
+              style={{
+                fontFamily: 'var(--mono)',
+                fontSize: '10px',
+                letterSpacing: '0.08em',
+                textTransform: 'uppercase' as const,
+                color: 'var(--text-3)',
+                marginBottom: '4px',
+              }}
+            >
+              How they define AGI
+            </div>
+            <div style={{ fontFamily: 'var(--serif)', fontSize: '14px', color: 'var(--text-1)', lineHeight: 1.5 }}>
+              {point.definition}
+            </div>
+          </div>
+          {point.citation && (
+            <div style={{ borderLeft: '2px solid var(--line)', paddingLeft: '12px' }}>
+              <blockquote
+                style={{
+                  fontFamily: 'var(--serif)',
+                  fontSize: '13px',
+                  color: 'var(--text-2)',
+                  lineHeight: 1.45,
+                  fontStyle: 'italic',
+                  margin: 0,
+                }}
+              >
+                &ldquo;{point.citation}&rdquo;
+              </blockquote>
+              {source && (
+                <a
+                  href={source.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    fontFamily: 'var(--mono)',
+                    fontSize: '10px',
+                    color: 'var(--accent)',
+                    display: 'block',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap' as const,
+                    marginTop: '4px',
+                    textDecoration: 'none',
+                  }}
+                >
+                  {source.title || source.url}
+                </a>
+              )}
+              <div style={{ fontFamily: 'var(--mono)', fontSize: '9px', color: 'var(--text-3)', marginTop: '2px' }}>
+                {[source?.type, point.date, point.confidence].filter(Boolean).join(' · ')}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>,
+    document.body,
+  )
 }
 
 function ClusterMapView({
@@ -427,29 +515,68 @@ function ListView({ data, onSelect }: { data: AgiData; onSelect: (p: AgiPoint) =
   const clusters = data.clusters || []
 
   return (
-    <div className="space-y-6">
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
       {clusters
         .sort((a, b) => b.count - a.count)
         .map((cluster) => {
           const entities = data.points.filter((p) => p.cluster_id === cluster.id)
           return (
             <div key={cluster.id}>
-              <div className="flex items-baseline gap-2 mb-1.5">
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginBottom: '6px' }}>
                 <span
-                  className="inline-block w-3 h-3 rounded-sm flex-shrink-0"
-                  style={{ background: CLUSTER_COLORS[cluster.id] || '#ccc' }}
+                  style={{
+                    display: 'inline-block',
+                    width: '12px',
+                    height: '12px',
+                    borderRadius: '2px',
+                    flexShrink: 0,
+                    background: CLUSTER_COLORS[cluster.id] || '#ccc',
+                  }}
                 />
-                <span className="font-mono text-[12px] font-medium text-[#1a1a1a]">{cluster.label}</span>
-                <span className="font-mono text-[10px] text-[#999]">({cluster.count})</span>
+                <span
+                  style={{
+                    fontFamily: 'var(--mono)',
+                    fontSize: '12px',
+                    fontWeight: 500,
+                    color: 'var(--text-1)',
+                  }}
+                >
+                  {cluster.label}
+                </span>
+                <span style={{ fontFamily: 'var(--mono)', fontSize: '10px', color: 'var(--text-3)' }}>
+                  ({cluster.count})
+                </span>
               </div>
-              <div className="font-mono text-[10px] text-[#666] mb-2 ml-5">{cluster.description}</div>
-              <div className="ml-5 flex flex-wrap gap-1">
+              <div
+                style={{
+                  fontFamily: 'var(--mono)',
+                  fontSize: '10px',
+                  color: 'var(--text-2)',
+                  marginBottom: '8px',
+                  marginLeft: '20px',
+                }}
+              >
+                {cluster.description}
+              </div>
+              <div style={{ marginLeft: '20px', display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
                 {entities.map((p) => (
                   <button
                     key={p.entity_id}
                     onClick={() => onSelect(p)}
-                    className="font-mono text-[9px] px-1.5 py-0.5 rounded border border-[#e0e0e0] text-[#555] hover:bg-[#f0f0f0] hover:border-[#bbb] transition-colors truncate"
-                    style={{ maxWidth: '180px' }}
+                    style={{
+                      fontFamily: 'var(--mono)',
+                      fontSize: '9px',
+                      padding: '2px 6px',
+                      borderRadius: '4px',
+                      border: '1px solid var(--line)',
+                      color: 'var(--text-2)',
+                      background: 'none',
+                      cursor: 'pointer',
+                      maxWidth: '180px',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap' as const,
+                    }}
                     title={p.definition}
                   >
                     {p.name}
@@ -560,13 +687,15 @@ function TimelineView({ data }: { data: AgiData }) {
 
   if (quarters.length === 0) {
     return (
-      <div className="font-mono text-[11px] text-[#999]">No dated definitions available for timeline analysis.</div>
+      <div style={{ fontFamily: 'var(--mono)', fontSize: '11px', color: 'var(--text-3)' }}>
+        No dated definitions available for timeline analysis.
+      </div>
     )
   }
 
   return (
-    <div className="space-y-6">
-      <div className="space-y-3">
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
         {clusters.map((c) => {
           const series = clusterTimeSeries[c.id] || []
           const maxVal = Math.max(...series, 1)
@@ -586,26 +715,56 @@ function TimelineView({ data }: { data: AgiData }) {
           const pathD = line(series) || ''
 
           return (
-            <div key={c.id} className="flex items-center gap-3">
+            <div key={c.id} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
               <span
-                className="inline-block w-2.5 h-2.5 rounded-sm flex-shrink-0"
-                style={{ background: CLUSTER_COLORS[c.id] || '#ccc' }}
+                style={{
+                  display: 'inline-block',
+                  width: '10px',
+                  height: '10px',
+                  borderRadius: '2px',
+                  flexShrink: 0,
+                  background: CLUSTER_COLORS[c.id] || '#ccc',
+                }}
               />
-              <span className="font-mono text-[10px] text-[#555] w-[200px] truncate flex-shrink-0">{c.label}</span>
-              <svg width={sparkW} height={sparkH} className="flex-shrink-0">
+              <span
+                style={{
+                  fontFamily: 'var(--mono)',
+                  fontSize: '10px',
+                  color: 'var(--text-2)',
+                  width: '200px',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap' as const,
+                  flexShrink: 0,
+                }}
+              >
+                {c.label}
+              </span>
+              <svg width={sparkW} height={sparkH} style={{ flexShrink: 0 }}>
                 <path d={pathD} fill="none" stroke={CLUSTER_COLORS[c.id] || '#ccc'} strokeWidth={1.5} />
               </svg>
-              <span className="font-mono text-[9px] text-[#999]">{series.reduce((a, b) => a + b, 0)} total</span>
+              <span style={{ fontFamily: 'var(--mono)', fontSize: '9px', color: 'var(--text-3)' }}>
+                {series.reduce((a, b) => a + b, 0)} total
+              </span>
             </div>
           )
         })}
       </div>
 
-      <div className="border-t border-[#eee] pt-4">
-        <div className="font-mono text-[10px] tracking-[0.08em] uppercase text-[#888] mb-2">
+      <div style={{ borderTop: '1px solid var(--line)', paddingTop: '16px' }}>
+        <div
+          style={{
+            fontFamily: 'var(--mono)',
+            fontSize: '10px',
+            letterSpacing: '0.08em',
+            textTransform: 'uppercase' as const,
+            color: 'var(--text-3)',
+            marginBottom: '8px',
+          }}
+        >
           All definitions over time
         </div>
-        <svg width="100%" viewBox={`0 0 ${Math.max(quarters.length * 20, 200)} 80`} className="block">
+        <svg width="100%" viewBox={`0 0 ${Math.max(quarters.length * 20, 200)} 80`} style={{ display: 'block' }}>
           {(() => {
             const w = Math.max(quarters.length * 20, 200)
             const h = 80
@@ -641,10 +800,10 @@ function TimelineView({ data }: { data: AgiData }) {
 
             return (
               <>
-                <path d={areaD} fill="#1a1a1a" opacity={0.06} />
-                <path d={pathD} fill="none" stroke="#1a1a1a" strokeWidth={1.5} opacity={0.5} />
+                <path d={areaD} fill="var(--text-1)" opacity={0.06} />
+                <path d={pathD} fill="none" stroke="var(--text-1)" strokeWidth={1.5} opacity={0.5} />
                 {totalSeries.map((val, i) => (
-                  <circle key={i} cx={xScale(i)} cy={yScale(val)} r={2.5} fill="#1a1a1a" opacity={0.4} />
+                  <circle key={i} cx={xScale(i)} cy={yScale(val)} r={2.5} fill="var(--text-1)" opacity={0.4} />
                 ))}
                 {tickIndices.map((i) => (
                   <text
@@ -654,7 +813,7 @@ function TimelineView({ data }: { data: AgiData }) {
                     textAnchor="middle"
                     fontFamily="'DM Mono', monospace"
                     fontSize={8}
-                    fill="#999"
+                    fill="var(--text-3)"
                   >
                     {quarters[i]?.label || ''}
                   </text>
@@ -694,7 +853,7 @@ function TrendsView({ data }: { data: AgiData }) {
     let bestGrowth = ''
     let bestGrowthRate = 0
     const clusterMap = new Map(clusters.map((c) => [c.id, c.label]))
-    stackedData.keys.forEach((key) => {
+    stackedData.keys.forEach((key: string) => {
       const vals = stackedData.rows.map((r) => r[key] || 0)
       const firstHalf = vals.slice(0, Math.floor(vals.length / 2)).reduce((a, b) => a + b, 0)
       const secondHalf = vals.slice(Math.floor(vals.length / 2)).reduce((a, b) => a + b, 0)
@@ -768,7 +927,7 @@ function TrendsView({ data }: { data: AgiData }) {
             const val = stackedData.rows[clampedIdx]?.[key] || 0
             if (val === 0) return null
             const clusterLabel = clusters[ki]?.label || key
-            return `<div style="color:${CLUSTER_COLORS[key] || '#888'}">${escapeHtml(clusterLabel)}: ${val}</div>`
+            return `<div style="color:${CLUSTER_COLORS[key] || 'var(--text-3)'}">${escapeHtml(clusterLabel)}: ${val}</div>`
           })
           .filter(Boolean)
           .join('')
@@ -789,7 +948,7 @@ function TrendsView({ data }: { data: AgiData }) {
         .attr('text-anchor', 'middle')
         .attr('font-family', "'DM Mono', monospace")
         .attr('font-size', 9)
-        .attr('fill', '#999')
+        .attr('fill', 'var(--text-3)')
         .text(quarters[i]?.label || '')
     })
 
@@ -803,7 +962,7 @@ function TrendsView({ data }: { data: AgiData }) {
         .attr('dominant-baseline', 'middle')
         .attr('font-family', "'DM Mono', monospace")
         .attr('font-size', 9)
-        .attr('fill', '#999')
+        .attr('fill', 'var(--text-3)')
         .text(t)
       svg
         .append('line')
@@ -811,12 +970,16 @@ function TrendsView({ data }: { data: AgiData }) {
         .attr('x2', W - pad.right)
         .attr('y1', yScale(t))
         .attr('y2', yScale(t))
-        .attr('stroke', '#eee')
+        .attr('stroke', 'var(--line)')
     })
   }, [stackedData, quarters, clusters])
 
   if (quarters.length === 0) {
-    return <div className="font-mono text-[11px] text-[#999]">No dated definitions available for trend analysis.</div>
+    return (
+      <div style={{ fontFamily: 'var(--mono)', fontSize: '11px', color: 'var(--text-3)' }}>
+        No dated definitions available for trend analysis.
+      </div>
+    )
   }
 
   return (
@@ -824,8 +987,19 @@ function TrendsView({ data }: { data: AgiData }) {
       <div ref={ref} />
       {tooltipState && (
         <div
-          className="fixed bg-white border border-[#bbb] rounded px-3 py-2 font-mono text-[11px] text-[#1a1a1a] pointer-events-none z-[9999] max-w-[320px] leading-[1.4]"
           style={{
+            position: 'fixed',
+            background: 'var(--bg-panel)',
+            border: '1px solid var(--line)',
+            borderRadius: '4px',
+            padding: '8px 12px',
+            fontFamily: 'var(--mono)',
+            fontSize: '11px',
+            color: 'var(--text-1)',
+            pointerEvents: 'none',
+            zIndex: 9999,
+            maxWidth: '320px',
+            lineHeight: 1.4,
             boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
             left: tooltipState.x,
             top: tooltipState.y,
@@ -833,19 +1007,36 @@ function TrendsView({ data }: { data: AgiData }) {
           dangerouslySetInnerHTML={{ __html: tooltipState.html }}
         />
       )}
-      <div className="flex flex-wrap gap-x-4 gap-y-1 mt-3">
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 16px', marginTop: '12px' }}>
         {clusters.map((c) => (
-          <div key={c.id} className="flex items-center gap-1">
+          <div key={c.id} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
             <span
-              className="inline-block w-2.5 h-2.5 rounded-sm"
-              style={{ background: CLUSTER_COLORS[c.id] || '#ccc' }}
+              style={{
+                display: 'inline-block',
+                width: '10px',
+                height: '10px',
+                borderRadius: '2px',
+                background: CLUSTER_COLORS[c.id] || '#ccc',
+              }}
             />
-            <span className="font-mono text-[9px] text-[#666]">{c.label}</span>
+            <span style={{ fontFamily: 'var(--mono)', fontSize: '9px', color: 'var(--text-2)' }}>{c.label}</span>
           </div>
         ))}
       </div>
       {summaryText && (
-        <div className="font-mono text-[10px] text-[#555] mt-3 bg-[#f8f7f5] rounded px-3 py-2">{summaryText}</div>
+        <div
+          style={{
+            fontFamily: 'var(--mono)',
+            fontSize: '10px',
+            color: 'var(--text-2)',
+            marginTop: '12px',
+            background: 'var(--bg-page)',
+            borderRadius: '4px',
+            padding: '8px 12px',
+          }}
+        >
+          {summaryText}
+        </div>
       )}
     </div>
   )
@@ -885,7 +1076,9 @@ function BeliefsView({ data }: { data: AgiData }) {
 
   if (quarters.length === 0) {
     return (
-      <div className="font-mono text-[11px] text-[#999]">No dated definitions available for belief drift analysis.</div>
+      <div style={{ fontFamily: 'var(--mono)', fontSize: '11px', color: 'var(--text-3)' }}>
+        No dated definitions available for belief drift analysis.
+      </div>
     )
   }
 
@@ -893,14 +1086,14 @@ function BeliefsView({ data }: { data: AgiData }) {
     const validPairs = series.map((v, i) => [i, v] as [number, number]).filter(([, v]) => !isNaN(v))
     if (validPairs.length < 2) {
       return (
-        <svg width={sparkW} height={sparkH} className="flex-shrink-0">
+        <svg width={sparkW} height={sparkH} style={{ flexShrink: 0 }}>
           <text
             x={sparkW / 2}
             y={sparkH / 2 + 3}
             textAnchor="middle"
             fontFamily="'DM Mono', monospace"
             fontSize={7}
-            fill="#ccc"
+            fill="var(--text-3)"
           >
             n/a
           </text>
@@ -929,7 +1122,7 @@ function BeliefsView({ data }: { data: AgiData }) {
     const pathD = line(series.map((v, i) => [i, v] as [number, number])) || ''
 
     return (
-      <svg width={sparkW} height={sparkH} className="flex-shrink-0">
+      <svg width={sparkW} height={sparkH} style={{ flexShrink: 0 }}>
         <defs>
           <linearGradient id={gradId} x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stopColor={colorStart} />
@@ -942,17 +1135,19 @@ function BeliefsView({ data }: { data: AgiData }) {
   }
 
   return (
-    <div className="space-y-5">
-      <div className="flex gap-4 mb-2">
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      <div style={{ display: 'flex', gap: '16px', marginBottom: '8px' }}>
         {beliefDims.map((dim) => (
-          <div key={dim.key} className="flex items-center gap-1">
+          <div key={dim.key} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
             <div
-              className="w-8 h-2 rounded-sm"
               style={{
+                width: '32px',
+                height: '8px',
+                borderRadius: '2px',
                 background: `linear-gradient(to right, ${dim.colors[0]}, ${dim.colors[dim.colors.length - 1]})`,
               }}
             />
-            <span className="font-mono text-[9px] text-[#888]">{dim.label}</span>
+            <span style={{ fontFamily: 'var(--mono)', fontSize: '9px', color: 'var(--text-3)' }}>{dim.label}</span>
           </div>
         ))}
       </div>
@@ -961,19 +1156,45 @@ function BeliefsView({ data }: { data: AgiData }) {
         const series = clusterBeliefSeries[c.id]
         if (!series) return null
         return (
-          <div key={c.id} className="flex items-center gap-3 flex-wrap">
-            <div className="flex items-center gap-1.5 w-[180px] flex-shrink-0">
+          <div key={c.id} style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', width: '180px', flexShrink: 0 }}>
               <span
-                className="inline-block w-2.5 h-2.5 rounded-sm flex-shrink-0"
-                style={{ background: CLUSTER_COLORS[c.id] || '#ccc' }}
+                style={{
+                  display: 'inline-block',
+                  width: '10px',
+                  height: '10px',
+                  borderRadius: '2px',
+                  flexShrink: 0,
+                  background: CLUSTER_COLORS[c.id] || '#ccc',
+                }}
               />
-              <span className="font-mono text-[10px] text-[#555] truncate">{c.label}</span>
+              <span
+                style={{
+                  fontFamily: 'var(--mono)',
+                  fontSize: '10px',
+                  color: 'var(--text-2)',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap' as const,
+                }}
+              >
+                {c.label}
+              </span>
             </div>
             {beliefDims.map((dim) => {
               const dimSeries = series[dim.key] || []
               return (
-                <div key={dim.key} className="flex items-center gap-1">
-                  <span className="font-mono text-[8px] text-[#aaa] w-[36px] text-right flex-shrink-0">
+                <div key={dim.key} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <span
+                    style={{
+                      fontFamily: 'var(--mono)',
+                      fontSize: '8px',
+                      color: 'var(--text-3)',
+                      width: '36px',
+                      textAlign: 'right' as const,
+                      flexShrink: 0,
+                    }}
+                  >
                     {dim.label}
                   </span>
                   {renderSparkline(dimSeries, dim.colors[0] ?? '#888', dim.colors[dim.colors.length - 1] ?? '#888')}
@@ -984,7 +1205,7 @@ function BeliefsView({ data }: { data: AgiData }) {
         )
       })}
 
-      <div className="font-mono text-[9px] text-[#aaa] mt-2">
+      <div style={{ fontFamily: 'var(--mono)', fontSize: '9px', color: 'var(--text-3)', marginTop: '8px' }}>
         Each sparkline shows the cluster's mean score per quarter. Gaps indicate quarters with no scored definitions.
       </div>
     </div>
@@ -1008,14 +1229,19 @@ function Legend({
 
   if (colorMode === 'cluster') {
     return (
-      <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2">
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 16px', marginTop: '8px' }}>
         {(data.clusters || []).map((c) => (
-          <div key={c.id} className="flex items-center gap-1">
+          <div key={c.id} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
             <span
-              className="inline-block w-2.5 h-2.5 rounded-sm"
-              style={{ background: CLUSTER_COLORS[c.id] || '#ccc' }}
+              style={{
+                display: 'inline-block',
+                width: '10px',
+                height: '10px',
+                borderRadius: '2px',
+                background: CLUSTER_COLORS[c.id] || '#ccc',
+              }}
             />
-            <span className="font-mono text-[9px] text-[#666]">
+            <span style={{ fontFamily: 'var(--mono)', fontSize: '9px', color: 'var(--text-2)' }}>
               {c.label} ({c.count})
             </span>
           </div>
@@ -1026,19 +1252,24 @@ function Legend({
 
   if (colorMode === 'category') {
     return (
-      <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2">
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 16px', marginTop: '8px' }}>
         {categories.map((cat) => (
           <div
             key={cat}
-            className="flex items-center gap-1 cursor-pointer"
+            style={{ display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer' }}
             onMouseEnter={() => setHoveredCategory(cat)}
             onMouseLeave={() => setHoveredCategory(null)}
           >
             <span
-              className="inline-block w-2 h-2 rounded-full"
-              style={{ background: CATEGORY_COLORS[cat] || '#888' }}
+              style={{
+                display: 'inline-block',
+                width: '8px',
+                height: '8px',
+                borderRadius: '50%',
+                background: CATEGORY_COLORS[cat] || '#888',
+              }}
             />
-            <span className="font-mono text-[9px] text-[#666]">
+            <span style={{ fontFamily: 'var(--mono)', fontSize: '9px', color: 'var(--text-2)' }}>
               {cat} ({data.points.filter((p) => p.category === cat).length})
             </span>
           </div>
@@ -1049,23 +1280,35 @@ function Legend({
 
   if (beliefScale) {
     return (
-      <div className="mt-2">
-        <div className="flex items-center gap-0.5">
+      <div style={{ marginTop: '8px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
           {beliefScale.labels.map((label, i) => (
-            <div key={label} className="flex flex-col items-center" style={{ flex: 1 }}>
+            <div key={label} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1 }}>
               <div
-                className="w-full h-3 rounded-sm"
                 style={{
+                  width: '100%',
+                  height: '12px',
                   background: beliefScale.colors[i],
                   borderRadius: i === 0 ? '3px 0 0 3px' : i === beliefScale.labels.length - 1 ? '0 3px 3px 0' : '0',
                 }}
               />
-              <span className="font-mono text-[8px] text-[#888] mt-1 text-center leading-tight">{label}</span>
+              <span
+                style={{
+                  fontFamily: 'var(--mono)',
+                  fontSize: '8px',
+                  color: 'var(--text-3)',
+                  marginTop: '4px',
+                  textAlign: 'center' as const,
+                  lineHeight: 1.1,
+                }}
+              >
+                {label}
+              </span>
             </div>
           ))}
         </div>
         {noDataCount > 0 && (
-          <div className="font-mono text-[9px] text-[#bbb] mt-1">
+          <div style={{ fontFamily: 'var(--mono)', fontSize: '9px', color: 'var(--text-3)', marginTop: '4px' }}>
             {noDataCount} entities without {colorMode} data shown in gray
           </div>
         )}
@@ -1110,31 +1353,42 @@ export function DefinitionsView() {
   }, [data])
 
   if (!data) {
-    return <div className="font-mono text-[11px] text-[#999] p-4">Loading definition space...</div>
+    return (
+      <div style={{ fontFamily: 'var(--mono)', fontSize: '11px', color: 'var(--text-3)', padding: '16px' }}>
+        Loading definition space...
+      </div>
+    )
   }
 
   const showColorSwitcher = viewMode === 'map' || viewMode === 'scatter'
 
+  const selectStyle: React.CSSProperties = {
+    fontFamily: 'var(--mono)',
+    fontSize: '10px',
+    letterSpacing: '0.08em',
+    textTransform: 'uppercase',
+    background: 'var(--bg-panel)',
+    color: 'var(--text-1)',
+    border: '1px solid var(--line)',
+    borderRadius: '4px',
+    padding: '5px 10px',
+    cursor: 'pointer',
+    outline: 'none',
+  }
+
   return (
-    <div style={{ padding: '16px 24px' }}>
-      <div className="flex items-center gap-3 mb-4 flex-wrap" style={{ padding: '0 0 8px' }}>
-        <select
-          value={viewMode}
-          onChange={(e) => setViewMode(e.target.value as SubView)}
-          style={{
-            fontFamily: 'var(--mono)',
-            fontSize: '10px',
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-            background: 'var(--bg-panel)',
-            color: 'var(--text-1)',
-            border: '1px solid var(--line)',
-            borderRadius: '4px',
-            padding: '5px 10px',
-            cursor: 'pointer',
-            outline: 'none',
-          }}
-        >
+    <div style={{ maxWidth: 1400, margin: '0 auto', padding: '16px 32px' }}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '12px',
+          marginBottom: '16px',
+          flexWrap: 'wrap',
+          paddingBottom: '8px',
+        }}
+      >
+        <select value={viewMode} onChange={(e) => setViewMode(e.target.value as SubView)} style={selectStyle}>
           <option value="map">Map</option>
           <option value="list">List</option>
           <option value="scatter">Scatter</option>
@@ -1144,25 +1398,11 @@ export function DefinitionsView() {
         </select>
         {showColorSwitcher && (
           <>
-            <span className="font-mono text-[10px]" style={{ color: 'var(--text-3)' }}>
-              Color by:
-            </span>
+            <span style={{ fontFamily: 'var(--mono)', fontSize: '10px', color: 'var(--text-3)' }}>Color by:</span>
             <select
               value={colorMode}
               onChange={(e) => setColorMode(e.target.value as ColorMode)}
-              style={{
-                fontFamily: 'var(--mono)',
-                fontSize: '10px',
-                letterSpacing: '0.04em',
-                textTransform: 'uppercase',
-                background: 'var(--bg-panel)',
-                color: 'var(--text-1)',
-                border: '1px solid var(--line)',
-                borderRadius: '4px',
-                padding: '5px 10px',
-                cursor: 'pointer',
-                outline: 'none',
-              }}
+              style={{ ...selectStyle, letterSpacing: '0.04em' }}
             >
               {COLOR_MODE_OPTIONS.map((opt) => (
                 <option key={opt.value} value={opt.value}>
@@ -1172,7 +1412,7 @@ export function DefinitionsView() {
             </select>
           </>
         )}
-        <span className="font-mono text-[10px]" style={{ color: 'var(--text-3)' }}>
+        <span style={{ fontFamily: 'var(--mono)', fontSize: '10px', color: 'var(--text-3)' }}>
           {data.points.length} definitions
         </span>
       </div>
@@ -1181,7 +1421,7 @@ export function DefinitionsView() {
         style={{
           background: 'var(--bg-panel)',
           borderRadius: '8px',
-          padding: '16px 24px 16px 32px',
+          padding: '20px',
           margin: '0 0 16px',
           border: '1px solid var(--line)',
           width: '100%',
@@ -1212,14 +1452,18 @@ export function DefinitionsView() {
         />
       )}
 
-      <div className="pt-3 border-t border-[#eee]">
-        <a
-          href="/insights#agi-definitions"
-          className="font-mono text-[10px] text-[#2563eb] hover:underline tracking-[0.04em]"
-        >
-          See full analysis on Insights →
-        </a>
-      </div>
+      <a
+        href="/insights#agi-definitions"
+        style={{
+          fontFamily: 'var(--mono)',
+          fontSize: '11px',
+          color: 'var(--accent)',
+          letterSpacing: '0.04em',
+          textDecoration: 'none',
+        }}
+      >
+        See full analysis on Insights →
+      </a>
     </div>
   )
 }
