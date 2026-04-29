@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Mapping Party - Door Poster</title>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Mono', monospace;
+      background: #f0f0f0;
+      min-height: 100vh;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .controls {
+      margin-bottom: 20px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .controls button {
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      padding: 10px 16px;
+      border: 1px solid #333;
+      background: #2563eb;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .controls button:hover {
+      background: #1d4ed8;
+    }
+
+    /* The poster - letter size (8.5x11 aspect ratio) */
+    #poster {
+      width: 850px;
+      height: 1100px;
+      font-family: 'EB Garamond', Georgia, serif;
+      position: relative;
+      overflow: hidden;
+      background-color: #fff;
+      background-image: url('network-bg-v2.png');
+      background-size: 250% auto;
+      background-position: 80% center;
+      border: 1px solid #ddd;
+    }
+
+    /* Overlay for text readability */
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to right,
+        rgba(255,255,255,0.97) 0%,
+        rgba(255,255,255,0.95) 40%,
+        rgba(255,255,255,0.8) 70%,
+        rgba(255,255,255,0.4) 100%
+      );
+    }
+
+    .content {
+      position: absolute;
+      top: 80px;
+      left: 60px;
+      right: 60px;
+      bottom: 80px;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 18px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 120px;
+      font-weight: 400;
+      font-style: italic;
+      color: #1a1a1a;
+      line-height: 1.0;
+      margin-bottom: 40px;
+    }
+
+    .location-box {
+      background: rgba(248, 247, 245, 0.95);
+      border-radius: 12px;
+      padding: 40px 50px;
+      border: 1px solid rgba(0,0,0,0.1);
+      margin-bottom: 50px;
+      max-width: 500px;
+    }
+
+    .location-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 12px;
+    }
+
+    .location {
+      font-size: 72px;
+      font-weight: 400;
+      color: #1a1a1a;
+      line-height: 1.1;
+    }
+
+    .contact-section {
+      margin-top: auto;
+      padding-top: 40px;
+    }
+
+    .contact-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 16px;
+    }
+
+    .contact-row {
+      display: flex;
+      gap: 60px;
+    }
+
+    .contact-person {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .contact-name {
+      font-size: 36px;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+    }
+
+    .contact-phone {
+      font-family: 'DM Mono', monospace;
+      font-size: 28px;
+      font-weight: 500;
+      color: #1a1a1a;
+      letter-spacing: 0.02em;
+    }
+
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 40px;
+    }
+
+    .url {
+      font-family: 'DM Mono', monospace;
+      font-size: 20px;
+      font-weight: 500;
+      color: #666;
+      letter-spacing: 0.02em;
+    }
+
+    .sponsor-logo {
+      height: 50px;
+      width: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <button onclick="exportPNG()">Export as PNG</button>
+  </div>
+
+  <div id="poster">
+    <div class="overlay"></div>
+
+    <div class="content">
+      <div class="eyebrow">Mapping AI Workshop</div>
+      <h1>Mapping<br>Party</h1>
+
+      <div class="location-box">
+        <div class="location-label">Location</div>
+        <div class="location">3rd Floor</div>
+      </div>
+
+      <div class="contact-section">
+        <div class="contact-label">To get in, contact</div>
+        <div class="contact-row">
+          <div class="contact-person">
+            <div class="contact-name">Sophia</div>
+            <div class="contact-phone">+1 (203) 507-0590</div>
+          </div>
+          <div class="contact-person">
+            <div class="contact-name">Kayla</div>
+            <div class="contact-phone">+1 (773) 749-6802</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <div class="url">mapping-ai.org/workshop/</div>
+        <img src="sway-logo.png" alt="Sway" class="sponsor-logo">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function exportPNG() {
+      const poster = document.getElementById('poster');
+      html2canvas(poster, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        width: 850,
+        height: 1100
+      }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'mapping-party-door-poster.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      });
+    }
+  </script>
+</body>
+</html>

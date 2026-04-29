@@ -1,241 +1,294 @@
-# Smart Filter Design: Single-Occurrence Entity Classification
+# Edge Enrichment: Post-Processing Roadmap
 
-## The Problem
+## Current State (April 29, 2026)
 
-We have 2,376 entity suggestions that were only seen once during enrichment. These represent 56% of our edge discoveries (2,170 discoveries depend on them).
+### Edge Discoveries
 
-**Quality is mixed:**
-- Some are real entities: "Dragoneer", "True Ventures", "High-Flyer Capital Management"
-- Some are noise: "investors", "U.S. operations", "AI programs", "wealthy backers"
+| Status | Count | Description |
+|--------|-------|-------------|
+| `pending_review` | 347 | ✅ Both entities exist, AI-relevant, ready to promote |
+| `pending_entities` | 2,341 | ⏳ Need entity creation/resolution |
+| `rejected` | 110 | ❌ Not AI-related or invalid |
+| **Total** | **2,798** | After consolidation (removed 117 duplicates) |
 
-We need to classify them without:
-1. Rejecting real entities (false negatives)
-2. Keeping garbage (false positives)
-3. Introducing AI hallucinations
+### Multi-Source Edges
 
----
+| Metric | Count |
+|--------|-------|
+| Edges with 2+ sources | 103 |
+| Now tracked via `sources_count` column | ✅ |
 
-## Risk: AI Hallucination
+### Entity Suggestions
 
-Using Claude to classify entities could introduce errors:
+| Status | Count | Description |
+|--------|-------|-------------|
+| `pending` | 1,881 | ⏳ Need classification |
 
-| Risk | Example | Consequence |
-|------|---------|-------------|
-| **False confidence** | Claude says "XYZ Corp is a real AI company" when it doesn't exist | We keep garbage |
-| **Over-rejection** | Claude says "Dragoneer is not AI-related" when it's a major tech VC | We lose real data |
-| **Fabrication** | Claude invents details about an entity | Corrupted data |
+**By occurrence:**
+- Seen once: 1,437 (76%) - highest risk of noise
+- Seen 2-4 times: 342 (18%)
+- Seen 5+ times: 102 (5%) - likely real
 
-### Mitigation Strategies
+### Edge Evidence (Temporal Data)
 
-1. **Ground truth first**: Only trust Exa search results, not Claude's "knowledge"
-2. **Conservative defaults**: When uncertain, keep (don't reject)
-3. **Human review layer**: Flag ambiguous cases for manual review
-4. **Audit trail**: Log all decisions with reasoning
-
----
-
-## Approach Options
-
-### Option A: Rules-Only (No AI)
-
-Use pattern matching to classify:
-
-```
-REJECT if:
-- Matches noise patterns (investors, various, unknown, etc.)
-- Too long (>100 chars, likely a description)
-- Generic government terms ("federal government", "state funding")
-
-KEEP if:
-- Matches entity patterns (Inc, LLC, Foundation, Fund, etc.)
-- Proper noun structure
-- Has specific funding amount attached
-
-REVIEW if:
-- Everything else
-```
-
-**Pros:** No hallucination risk, fast, free
-**Cons:** Many entities end up in "review" pile, limited intelligence
-
-**Estimated outcome:**
-- ~80 auto-rejected (obvious noise)
-- ~200 auto-kept (obvious entities)
-- ~2,100 need manual review
+| Metric | Count |
+|--------|-------|
+| Total evidence records | 1,887 |
+| With start_date | 1,221 (65%) |
+| With end_date | 279 (15%) |
 
 ---
 
-### Option B: Exa Search Only (No Claude)
+## Completed Steps ✅
 
-Use Exa to verify entity existence:
+### Step 0: Cleanup Orphan Edges ✅
+- Fuzzy matched 53 edges (suffix stripping: "SoftBank Group" → "SoftBank")
+- Deleted 992 tangential edges (neither entity in RDS)
+- Deleted 1,133 orphaned entity suggestions
+- Exported deleted data for recovery
 
-```
-For each entity:
-1. Search Exa for exact name
-2. If 0 results → likely noise
-3. If 1+ results with matching title → likely real
-4. Check if results mention AI/tech/policy → AI-relevant
-```
+### Step 0.5: Fix Wrong Matches ✅
+- Fixed 13 DeepMind edges (was matched to "Ezra Klein" → now "Google DeepMind")
+- Fixed 2 CEA edges (was matched to "Aether" → now unmatched)
 
-**Pros:** Grounded in real search results, no fabrication
-**Cons:**
-- Search may not find real entities (false negatives)
-- Search may find unrelated matches (false positives)
-- Cost: ~$19 for 2,376 searches
+### Step 0.6: AI Relevance Review ✅
+- Exported 448 deduplicated edges for Claude review
+- Claude identified ~93 non-AI-related edges
+- Applied rejections (110 total rejected including self-referential)
 
-**Estimated outcome:**
-- More accurate than rules-only
-- Still need human review for edge cases
+### Step 0.7: Improved Enrichment Prompt ✅
+- Updated `discover-funding.js` with AI-relevance requirements
+- Added entity involvement check (searched entity must be funder OR recipient)
+- Added server-side validation (AI keywords, no self-referential, entity involved)
 
----
-
-### Option C: Exa + Claude (Current Script)
-
-Use Exa search, then Claude to interpret results:
-
-```
-For each entity:
-1. Pre-filter with rules (skip obvious noise/real)
-2. Search Exa for name
-3. Pass search results to Claude
-4. Claude classifies based on search evidence
-```
-
-**Pros:** Most accurate classification
-**Cons:**
-- Hallucination risk from Claude
-- Cost: ~$40-50 for full run
-- Slower
+### Step 0.8: Source Consolidation ✅
+- Added `sources_count` and `updated_at` columns to edge_discovery
+- Updated `discover-funding.js` to consolidate sources at discovery time (Option A)
+- Ran consolidation script on existing data: 117 duplicate rows → 103 multi-source edges
+- Script: `post-process/consolidate-duplicate-edges.js`
 
 ---
 
-### Option D: Tiered Approach (Recommended)
+## Remaining Roadmap
 
-Combine all approaches in layers:
+### Phase 1: Promote Ready Edges
 
+**Step 1.1: Promote pending_review edges to production**
+- 398 edges ready to add to RDS `edge` table
+- Script: `promote-discoveries.js`
+- Creates new edges with source attribution
+
+**Estimated effort:** ~5 minutes (scripted)
+
+---
+
+### Phase 2: Process Entity Suggestions (1,881 pending)
+
+**Step 2.1: Merge Known Duplicates**
+- Script: `post-process-1-merge-duplicates.js`
+- Merges obvious duplicates (e.g., "Open Philanthropy" → "Coefficient Giving")
+- Updates edge_discovery to point to existing entity IDs
+
+**Step 2.2: Reject Generic Names**
+- Script: `post-process-2-reject-generic.js`
+- Auto-rejects: "investors", "federal government", "private sector", etc.
+- Estimated: ~50-100 auto-rejected
+
+**Step 2.3: Classify Single-Occurrence Entities (1,437)**
+- Highest risk of noise
+- Options:
+  - **Option A:** Rules-only triage (free, fast, ~80% accuracy)
+  - **Option B:** Exa search verification (~$12 for all, higher accuracy)
+  - **Option C:** Export for Claude review (similar to edge review)
+- Need to decide: aggressive (auto-reject more) vs conservative (review more)
+
+**Step 2.4: Review Multi-Occurrence Entities (444)**
+- Seen 2+ times = higher confidence they're real
+- Still need AI-relevance check
+- Could batch review in Claude
+
+**Estimated effort:** 2-4 hours depending on approach
+
+---
+
+### Phase 3: Create Approved Entities in RDS
+
+**Step 3.1: Export approved suggestions for creation**
+- Generate entity creation list with:
+  - Name, type (person/org)
+  - Category (if inferrable)
+  - Context (how discovered)
+
+**Step 3.2: Batch create entities in RDS**
+- Script: `create-entities-from-suggestions.js` (to be created)
+- Assigns IDs, sets status='pending' for human review
+
+**Step 3.3: Update edge_discovery with new entity IDs**
+- Resolves pending_entities → pending_review
+
+**Estimated effort:** 1-2 hours (scripted)
+
+---
+
+### Phase 4: Enrich New Entities
+
+Once entities are created in RDS, they need enrichment:
+
+**Step 4.1: Employment/Affiliation Edges**
+- Script: `enrich-edges.js`
+- Finds employment, board positions, affiliations
+- Cost: ~$0.03/entity
+
+**Step 4.2: Lifecycle Data (Orgs only)**
+- Script: `enrich-org-lifecycle.js`
+- Finds founding dates, end dates
+- Cost: ~$0.01/entity
+
+**Step 4.3: Thumbnails**
+- Script: `resolve-thumbnails.js`
+- Finds profile images
+- Cost: ~$0.01/entity
+
+**Estimated cost for 500 new entities:** ~$25
+
+---
+
+### Phase 5: Second-Pass Funding Discovery
+
+After new entities exist, run discover-funding again:
+
+**Step 5.1: Run discover-funding on new entities**
+- Now uses improved prompt (AI-relevant, entity-involved)
+- May discover additional funding relationships
+
+**Step 5.2: Process new discoveries**
+- Repeat Phase 1-3 for any new edges/suggestions
+
+---
+
+### Phase 6: Final Promotion
+
+**Step 6.1: Promote all pending_review edges**
+- All edges with both entities resolved
+
+**Step 6.2: Apply edge evidence to existing edges**
+- 1,887 temporal data records
+- Updates start_date, end_date on existing edges
+
+**Step 6.3: Regenerate map-data.json**
+- `pnpm run db:export-map`
+- Reflects new entities and edges
+
+---
+
+## Decision Points
+
+### Decision 1: Entity Suggestion Classification Approach
+
+| Approach | Cost | Accuracy | Time |
+|----------|------|----------|------|
+| A. Rules-only | $0 | ~80% | 10 min |
+| B. Exa verification | ~$15 | ~90% | 1 hour |
+| C. Claude batch review | ~$5 | ~95% | 30 min |
+| D. Manual review | $0 | 100% | 4+ hours |
+
+**Recommendation:** Option C for high-value (seen 2+ times), Option A for single-occurrence
+
+### Decision 2: New Entity Creation Threshold
+
+Should we create ALL approved suggestions, or only high-confidence ones?
+
+| Threshold | Entities Created | Risk |
+|-----------|-----------------|------|
+| All approved | ~1,500 | More noise in RDS |
+| Seen 2+ times | ~400 | Miss real single-occurrence entities |
+| With funding amount | ~800 | Good balance |
+
+**Recommendation:** Create entities with funding amounts first, review rest later
+
+### Decision 3: Enrichment Priority
+
+Which new entities to enrich first?
+
+| Priority | Criteria | Count |
+|----------|----------|-------|
+| P0 | AI labs, safety orgs | ~50 |
+| P1 | VCs, foundations | ~200 |
+| P2 | Other tech companies | ~300 |
+| P3 | Everything else | ~500+ |
+
+---
+
+## Cost Estimates
+
+| Phase | Estimated Cost |
+|-------|---------------|
+| Phase 1 (Promote) | $0 |
+| Phase 2 (Entity classification) | $5-20 |
+| Phase 3 (Entity creation) | $0 |
+| Phase 4 (Enrichment) | $25-50 |
+| Phase 5 (Second-pass) | $20-40 |
+| **Total** | **$50-110** |
+
+---
+
+## Scripts Reference
+
+| Script | Purpose | Status |
+|--------|---------|--------|
+| `post-process/post-process-0-cleanup-orphans.js` | Delete tangential edges | ✅ Done |
+| `post-process/post-process-1-merge-duplicates.js` | Merge known duplicates | ⏳ Ready |
+| `post-process/post-process-2-reject-generic.js` | Reject generic names | ⏳ Ready |
+| `post-process/post-process-4-smart-filter.js` | AI relevance filter | ⏳ Ready |
+| `post-process/apply-review-rejections.js` | Apply Claude review | ✅ Done |
+| `post-process/consolidate-duplicate-edges.js` | Consolidate multi-source edges | ✅ Done |
+| `post-process/promote-discoveries.js` | Promote edges to RDS | ⏳ Ready |
+| `post-process/export-pending-review.js` | Export for review | ✅ Done |
+| `discover-funding.js` | Discover funding relationships | ✅ Updated (w/ source consolidation) |
+| `enrich-edges.js` | Add temporal data | ⏳ Ready |
+| `enrich-org-lifecycle.js` | Add founding dates | ⏳ Ready |
+
+---
+
+## Quick Start: Next Actions
+
+```bash
+# 1. Run merge duplicates (entity suggestions)
+node scripts/edge-enrichment/post-process/post-process-1-merge-duplicates.js --dry-run
+node scripts/edge-enrichment/post-process/post-process-1-merge-duplicates.js --apply
+
+# 2. Run reject generic (entity suggestions)
+node scripts/edge-enrichment/post-process/post-process-2-reject-generic.js --dry-run
+node scripts/edge-enrichment/post-process/post-process-2-reject-generic.js --apply
+
+# 3. Promote ready edges (347 pending_review edges)
+node scripts/edge-enrichment/post-process/promote-discoveries.js --dry-run
+node scripts/edge-enrichment/post-process/promote-discoveries.js --apply
+
+# 4. Export remaining suggestions for review
+node scripts/edge-enrichment/post-process/export-entity-suggestions.js
 ```
-Layer 1: Rules (free, instant)
-├── REJECT: obvious noise patterns → ~80 entities
-├── KEEP: obvious entity patterns → ~200 entities
-└── CONTINUE: ambiguous → ~2,100 entities
-
-Layer 2: Exa Search (cheap, grounded)
-├── NO RESULTS: likely noise → reject
-├── RESULTS MATCH: likely real → keep
-└── AMBIGUOUS: → Layer 3
-
-Layer 3: Human Review
-├── High-value (has funding amounts) → prioritize
-├── Low-value (no context) → bulk decision
-```
-
-**Key principle:** Claude is NOT used for classification. Only Exa search + rules.
 
 ---
 
-## Recommended Implementation
+## Appendix: Enrichment Run Summary (April 28, 2026)
 
-### Phase 1: Rules-Based Triage (No API)
+**Total Cost:** $84.43 (Exa: $30.91, Anthropic: $53.51)
 
-Create buckets:
+### Original Counts (Before Post-Processing)
 
-| Bucket | Criteria | Action |
-|--------|----------|--------|
-| `reject_obvious` | Matches noise patterns | Auto-reject |
-| `keep_obvious` | Matches entity patterns (Inc, LLC, Foundation) | Auto-keep |
-| `high_value` | Has funding amount > $100K | Prioritize for Exa |
-| `low_value` | No context, no amount | Deprioritize |
+| Metric | Count |
+|--------|-------|
+| Edge discoveries | 3,907 |
+| Entity suggestions | 3,014 |
+| Edge evidence | 1,887 |
+| Lifecycle claims | 645 |
 
-### Phase 2: Exa Verification (For high-value only)
+### After Post-Processing (Current)
 
-For entities with funding amounts (higher signal):
-
-1. Search Exa for entity name
-2. **If 0 results:** Mark as `likely_noise`
-3. **If results exist:** Check if any result title contains the entity name
-   - Yes → Mark as `verified_real`
-   - No → Mark as `needs_review`
-
-**No Claude involved.** Just search existence verification.
-
-### Phase 3: Human Review
-
-Generate a review spreadsheet:
-- Entity name
-- Context (citation snippet)
-- Amount (if any)
-- Exa search results (titles + URLs)
-- Suggested action
-
-Human makes final call.
-
----
-
-## Cost Estimate (Tiered Approach)
-
-| Phase | Entities | Cost |
-|-------|----------|------|
-| Rules triage | 2,376 | $0 |
-| Exa (high-value only) | ~500 | $4 |
-| Human review | ~300 | Time only |
-
-**Total: ~$4** vs $40-50 for full AI classification
-
----
-
-## Questions to Resolve
-
-1. **What's our tolerance for false negatives?**
-   - If we reject a real entity, we lose funding data
-   - Conservative = keep more, manual review more
-   - Aggressive = reject more, risk losing data
-
-2. **How much human review time is available?**
-   - If limited: be more aggressive with auto-reject
-   - If available: be conservative, review more manually
-
-3. **Should we use Claude at all?**
-   - Pro: Better at understanding context
-   - Con: Hallucination risk, cost
-   - Alternative: Use Claude only for EXPLAINING decisions, not making them
-
-4. **What about entities that exist but aren't AI-relevant?**
-   - "Brooklyn Academy of Music" is real but not AI-related
-   - Should we reject these or keep them?
-   - Recommendation: Keep for now (they might fund AI research)
-
----
-
-## Next Steps
-
-1. [ ] Decide on approach (A, B, C, or D)
-2. [ ] If D: Implement rules-only triage first
-3. [ ] Generate review list for high-value ambiguous entities
-4. [ ] Manual review session
-5. [ ] Run Exa verification on remaining high-value
-6. [ ] Final cleanup
-
----
-
-## Appendix: Noise Patterns
-
-```javascript
-const NOISE_PATTERNS = [
-  /^(unknown|unspecified|various|multiple|several|other)/i,
-  /^(investors|donors|funders|backers|supporters|members)$/i,
-  /^(private|public|federal|state|local) (sector|government|investors)/i,
-  /^(wealthy|rich|anonymous|individual) /i,
-  /(unspecified|various|unknown)$/i,
-  /\(various\)/i,
-]
-```
-
-## Appendix: Entity Patterns
-
-```javascript
-const ENTITY_PATTERNS = [
-  / (Inc|LLC|Corp|Ltd|Foundation|Fund|Institute|University|Ventures|Capital|Partners)\.?$/i,
-  / (GmbH|AG|SA|BV|PLC)$/i,
-  /^[A-Z][a-z]+ [A-Z][a-z]+ Foundation$/,  // "John Smith Foundation"
-]
-```
+| Metric | Count |
+|--------|-------|
+| Edge discoveries | 2,915 |
+| Entity suggestions | 1,881 |
+| Rejected edges | 110 |
+| Deleted (tangential) | 992 |

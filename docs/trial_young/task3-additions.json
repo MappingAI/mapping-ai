@@ -1,0 +1,79 @@
+{
+  "edges": [
+    {
+      "source_id": 733,
+      "target_id": 728,
+      "edge_type": "founded",
+      "role": "Founder, President & CEO",
+      "is_primary": true,
+      "start_date": "1993",
+      "end_date": null,
+      "evidence": "Jensen Huang co-founded Nvidia in 1993 with Chris Malachowsky and Curtis Priem. The trio founded the company at a Denny's in San Jose with $40,000 in starting capital. Huang has served as president and CEO since the company's inception.",
+      "source_url": "https://en.wikipedia.org/wiki/Jensen_Huang",
+      "source_name": "Jensen Huang",
+      "source_entity_type": "person",
+      "target_name": "Nvidia",
+      "target_entity_type": "organization"
+    },
+    {
+      "source_id": 1365,
+      "target_id": 1042,
+      "edge_type": "employed_by",
+      "role": "EVP and CEO, Microsoft AI",
+      "is_primary": true,
+      "start_date": "2024-03",
+      "end_date": null,
+      "evidence": "In March 2024, Microsoft appointed Mustafa Suleyman as Executive Vice President and CEO of its newly created consumer AI unit, Microsoft AI. He reports directly to CEO Satya Nadella and leads Copilot, Bing, and Edge.",
+      "source_url": "https://blogs.microsoft.com/blog/2024/03/19/mustafa-suleyman-deepmind-and-inflection-co-founder-joins-microsoft-to-lead-copilot/",
+      "source_name": "Mustafa Suleyman",
+      "source_entity_type": "person",
+      "target_name": "Microsoft",
+      "target_entity_type": "organization"
+    },
+    {
+      "source_id": 848,
+      "target_id": 1365,
+      "edge_type": "co_founded_with",
+      "role": null,
+      "is_primary": false,
+      "start_date": "2022",
+      "end_date": null,
+      "evidence": "Reid Hoffman and Mustafa Suleyman co-founded Inflection AI in March 2022, along with AI researcher Karen Simonyan. The company raised $225 million in its initial funding round and later $1.3 billion at a $4 billion valuation.",
+      "source_url": "https://www.cnbc.com/2022/03/08/reid-hoffman-has-set-up-a-new-ai-company-with-deepminds-co-founder.html",
+      "source_name": "Reid Hoffman",
+      "source_entity_type": "person",
+      "target_name": "Mustafa Suleyman",
+      "target_entity_type": "person"
+    }
+  ],
+  "new_entity": {
+    "entity_type": "organization",
+    "name": "Inflection AI",
+    "category": "Frontier Lab",
+    "other_categories": "Deployers & Platforms",
+    "website": "https://inflection.ai",
+    "funding_model": "Venture-backed",
+    "parent_org_id": null,
+    "location": "Palo Alto, CA",
+    "influence_type": "Builder, Researcher/analyst",
+    "twitter": "@inflectionAI",
+    "bluesky": null,
+    "notes": "Inflection AI was founded in March 2022 by Mustafa Suleyman, Reid Hoffman, and Karen Simonyan to build personal AI assistants. The company raised $1.525 billion across two rounds and launched Pi, a conversational AI chatbot. In March 2024, Microsoft hired Suleyman and most of Inflection's 70-person team in an acqui-hire deal that included a $650 million technology licensing payment to Inflection's investors. The episode became a landmark case study in AI talent concentration, prompting FTC scrutiny of acqui-hire structures as a means of circumventing traditional merger review.",
+    "notes_sources": [
+      "https://en.wikipedia.org/wiki/Inflection_AI",
+      "https://techcrunch.com/2024/03/19/microsoft-hires-inflection-founders-to-run-new-consumer-ai-division/",
+      "https://www.cnbc.com/2022/03/08/reid-hoffman-has-set-up-a-new-ai-company-with-deepminds-co-founder.html",
+      "https://spectrum.ieee.org/inflection-ai-pi"
+    ],
+    "belief_regulatory_stance": "Light-touch",
+    "belief_regulatory_stance_detail": "Under Suleyman's leadership, Inflection emphasized safety through product design (empathetic, non-harmful responses) rather than external regulation. The company's approach favored voluntary responsible development practices over government-imposed restrictions.",
+    "belief_evidence_source": "Inferred",
+    "belief_agi_timeline": "5-10 years",
+    "belief_ai_risk": "Serious",
+    "belief_threat_models": "Power concentration, Loss of control",
+    "_verification": {
+      "issues_found": "Entity did not exist in the database. Inflection AI is significant to the U.S. AI policy landscape because its acqui-hire by Microsoft raised questions about market concentration and prompted FTC scrutiny of talent acquisition deals.",
+      "notes": "Founding date (March 2022), founders, funding amounts ($225M Series A, $1.3B Series B), acqui-hire details ($650M licensing deal), and FTC scrutiny all verified via Wikipedia, TechCrunch, CNBC, and IEEE Spectrum."
+    }
+  }
+}

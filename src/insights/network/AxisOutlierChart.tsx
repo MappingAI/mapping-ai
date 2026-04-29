@@ -567,41 +567,10 @@ export function AxisOutlierChart({ entities, mode }: AxisOutlierChartProps) {
       .sort((a, b) => a.posCount - b.posCount)
       .slice(0, mode === '2d' ? 5 : 3) // Limit annotations
 
-    // Sort by position to handle proximity - first by y, then by x
-    const sortedAnnotations = [...annotationCandidates].sort((a, b) => {
-      const yDiff = a.y - b.y
-      if (Math.abs(yDiff) > 20) return yDiff
-      return a.x - b.x
-    })
-
-    // Assign sides: alternate for nodes that are close, otherwise use position-based logic
-    const labelSides: Map<number, 'left' | 'right'> = new Map()
-    sortedAnnotations.forEach((d, i) => {
-      // Check if this node is close to any previous node (within 40px in both x and y)
-      let foundClose = false
-      for (let j = 0; j < i; j++) {
-        const prev = sortedAnnotations[j]
-        if (prev && Math.abs(d.x - prev.x) < 60 && Math.abs(d.y - prev.y) < 40) {
-          // Close to a previous node - use opposite side
-          const prevSide = labelSides.get(prev.index)
-          labelSides.set(d.index, prevSide === 'left' ? 'right' : 'left')
-          foundClose = true
-          break
-        }
-      }
-
-      if (!foundClose) {
-        // Use position-based logic: right side of chart = label on left, left side = label on right
-        labelSides.set(d.index, d.x > plotW * 0.5 ? 'left' : 'right')
-      }
-    })
-
     // Helper to split name into two lines at word boundary
     function splitName(name: string): string[] {
       const words = name.split(' ')
       if (words.length === 1) return [name]
-
-      // Find split point closest to middle
       const mid = name.length / 2
       let bestSplit = 1
       let bestDiff = Infinity
@@ -616,16 +585,67 @@ export function AxisOutlierChart({ entities, mode }: AxisOutlierChartProps) {
       return [words.slice(0, bestSplit).join(' '), words.slice(bestSplit).join(' ')]
     }
 
+    // Track placed labels to avoid overlaps
+    const placedLabels: Array<{ x: number; y: number; width: number; height: number }> = []
+
+    // Check if a label position would overlap with existing labels
+    function wouldOverlap(x: number, y: number, width: number, height: number): boolean {
+      for (const label of placedLabels) {
+        const overlapX = Math.abs(x - label.x) < (width + label.width) / 2 + 10
+        const overlapY = Math.abs(y - label.y) < (height + label.height) / 2 + 5
+        if (overlapX && overlapY) return true
+      }
+      return false
+    }
+
     annotationCandidates.forEach((d) => {
       const lines = splitName(d.entity.name)
-      const side = labelSides.get(d.index) || 'right'
-      const labelX = side === 'left' ? d.x - d.radius - 6 : d.x + d.radius + 6
-      const anchor = side === 'left' ? 'end' : 'start'
+      const labelHeight = lines.length * 11 + 4
+      const labelWidth = Math.max(...lines.map(l => l.length)) * 5.5 // approximate
+
+      // Try right side first, then left side, with vertical offsets if needed
+      let bestX = d.x + d.radius + 6
+      let bestY = d.y - (lines.length > 1 ? 4 : 0)
+      let bestAnchor: 'start' | 'end' = 'start'
+      let foundGoodSpot = false
+
+      // Don't place labels on left if too close to y-axis (within 100px)
+      const canUseLeft = d.x > 100
+
+      // Try positions: right, right-up, right-down, left, left-up, left-down
+      const offsets = [0, -25, 25, -50, 50]
+      for (const yOffset of offsets) {
+        // Try right side
+        const rightX = d.x + d.radius + 6
+        const testY = d.y + yOffset - (lines.length > 1 ? 4 : 0)
+        if (!wouldOverlap(rightX + labelWidth / 2, testY, labelWidth, labelHeight)) {
+          bestX = rightX
+          bestY = testY
+          bestAnchor = 'start'
+          foundGoodSpot = true
+          break
+        }
+        // Try left side (if not too close to y-axis)
+        if (canUseLeft) {
+          const leftX = d.x - d.radius - 6
+          if (!wouldOverlap(leftX - labelWidth / 2, testY, labelWidth, labelHeight)) {
+            bestX = leftX
+            bestY = testY
+            bestAnchor = 'end'
+            foundGoodSpot = true
+            break
+          }
+        }
+      }
+
+      // Record this label's position
+      const centerX = bestAnchor === 'start' ? bestX + labelWidth / 2 : bestX - labelWidth / 2
+      placedLabels.push({ x: centerX, y: bestY, width: labelWidth, height: labelHeight })
 
       const textNode = g.append('text')
-        .attr('x', labelX)
-        .attr('y', d.y - (lines.length > 1 ? 4 : 0))
-        .attr('text-anchor', anchor)
+        .attr('x', bestX)
+        .attr('y', bestY)
+        .attr('text-anchor', bestAnchor)
         .attr('font-family', "'DM Mono', monospace")
         .attr('font-size', 9)
         .attr('font-weight', '500')
@@ -634,7 +654,7 @@ export function AxisOutlierChart({ entities, mode }: AxisOutlierChartProps) {
 
       lines.forEach((line, i) => {
         textNode.append('tspan')
-          .attr('x', labelX)
+          .attr('x', bestX)
           .attr('dy', i === 0 ? 0 : 11)
           .text(line)
       })

@@ -732,7 +732,7 @@ function ChartContainer({ title, source, children }: { title: string; source: st
     <div className="bg-[#f8f7f5] rounded-lg p-6 my-8 overflow-hidden fade-in [&_svg]:w-full [&_svg]:block">
       <div className="font-mono text-[11px] tracking-[0.08em] uppercase text-[#555] mb-4">{title}</div>
       {children}
-      <div className="font-mono text-[9px] text-[#888] tracking-[0.04em] mt-3 text-right">{source}</div>
+      <div className="font-mono text-[9px] text-[#888] tracking-[0.04em] mt-3 text-center">{source}</div>
     </div>
   )
 }

@@ -1,0 +1,75 @@
+{
+  "edges": [
+    {
+      "source_id": 1058,
+      "target_id": 140,
+      "edge_type": "partner_of",
+      "role": null,
+      "is_primary": false,
+      "start_date": "2024-12",
+      "end_date": null,
+      "evidence": "Anduril and OpenAI announced a strategic partnership in December 2024 to integrate advanced AI into counter-unmanned aircraft systems, with plans to train AI models using Anduril's counter-drone operations data to protect U.S. military personnel and allied forces.",
+      "source_url": "https://www.anduril.com/news/anduril-partners-with-openai-to-advance-u-s-artificial-intelligence-leadership-and-protect-u-s",
+      "source_name": "Anduril Industries",
+      "source_entity_type": "organization",
+      "target_name": "OpenAI",
+      "target_entity_type": "organization"
+    },
+    {
+      "source_id": 1008,
+      "target_id": 1058,
+      "edge_type": "founded",
+      "role": "Founder",
+      "is_primary": true,
+      "start_date": "2017",
+      "end_date": null,
+      "evidence": "Palmer Luckey co-founded Anduril Industries in 2017. The company was founded with the aim of selling AI and robotics systems to the U.S. Department of Defense.",
+      "source_url": "https://en.wikipedia.org/wiki/Anduril_Industries",
+      "source_name": "Palmer Luckey",
+      "source_entity_type": "person",
+      "target_name": "Anduril Industries",
+      "target_entity_type": "organization"
+    },
+    {
+      "source_id": 1123,
+      "target_id": 745,
+      "edge_type": "founded",
+      "role": "Chair, CEO, and Co-Founder",
+      "is_primary": true,
+      "start_date": "1999",
+      "end_date": null,
+      "evidence": "Marc Benioff co-founded Salesforce in 1999 and has served as its chairman and CEO since inception. Under his leadership, Salesforce has become a major enterprise AI platform with products like Einstein AI and Agentforce.",
+      "source_url": "https://en.wikipedia.org/wiki/Marc_Benioff",
+      "source_name": "Marc Benioff",
+      "source_entity_type": "person",
+      "target_name": "Salesforce",
+      "target_entity_type": "organization"
+    }
+  ],
+  "new_entity": {
+    "entity_type": "person",
+    "name": "Elizabeth Kelly",
+    "title": "Head of Beneficial Deployments, Anthropic; Former Inaugural Director, U.S. AI Safety Institute (2024-2025)",
+    "category": "Policymaker",
+    "other_categories": null,
+    "primary_org": "Anthropic",
+    "other_orgs": "Former Director of U.S. AI Safety Institute at NIST (2024-2025), Former Special Assistant to the President for Economic Policy at the White House National Economic Council",
+    "location": "Washington, DC",
+    "influence_type": "Decision-maker, Implementer, Advisor/strategist",
+    "twitter": null,
+    "bluesky": null,
+    "notes": "Elizabeth Kelly served as the inaugural Director of the U.S. AI Safety Institute at NIST from February 2024 to February 2025, appointed by Commerce Secretary Gina Raimondo to lead the government's effort to measure and mitigate risks from advanced AI systems. She was a key drafter of President Biden's landmark Executive Order on AI and previously served as Special Assistant to the President for Economic Policy at the White House National Economic Council. Under her leadership, the AISI reached agreements with OpenAI and Anthropic to test their models prior to release and helped establish the international network of AI safety institutes. Time magazine named her one of the 100 most influential people in AI in 2024. She departed the AISI in February 2025 after the Trump administration rescinded Biden's AI executive order.",
+    "notes_sources": [
+      "https://www.commerce.gov/news/press-releases/2024/02/us-commerce-secretary-gina-raimondo-announces-key-executive-leadership",
+      "https://time.com/7012783/elizabeth-kelly/",
+      "https://dig.watch/updates/us-ai-safety-institute-director-steps-down-amid-uncertainty",
+      "https://www.csis.org/analysis/us-vision-ai-safety-conversation-elizabeth-kelly-director-us-ai-safety-institute"
+    ],
+    "belief_regulatory_stance": "Moderate",
+    "belief_regulatory_stance_detail": "Led the creation of federal AI safety testing standards and pre-deployment evaluation protocols for frontier models. Advocated for mandatory safety evaluations and international coordination on AI governance through the AISI. Her approach balanced enabling innovation with establishing concrete safety benchmarks.",
+    "belief_evidence_source": "Inferred",
+    "belief_agi_timeline": "Unknown",
+    "belief_ai_risk": "Serious",
+    "belief_threat_models": "Loss of control, Misinformation, Cybersecurity"
+  }
+}

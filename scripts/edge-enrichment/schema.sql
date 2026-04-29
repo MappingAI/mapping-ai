@@ -108,6 +108,7 @@ CREATE TABLE IF NOT EXISTS edge_discovery (
   -- approved = edge approved, ready to promote
   -- rejected = edge rejected
   -- promoted = edge created in RDS
+  sources_count      INTEGER DEFAULT 1,      -- Number of independent sources that found this edge
   reviewed_by        TEXT,
   reviewed_at        TIMESTAMPTZ,
   review_notes       TEXT,
@@ -117,6 +118,7 @@ CREATE TABLE IF NOT EXISTS edge_discovery (
   extraction_model   TEXT,
   extraction_date    DATE,
   created_at         TIMESTAMPTZ DEFAULT NOW(),
+  updated_at         TIMESTAMPTZ DEFAULT NOW(),
   UNIQUE(source_entity_name, target_entity_name, edge_type, source_id)
 );
 

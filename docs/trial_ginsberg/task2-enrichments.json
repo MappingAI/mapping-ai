@@ -1,0 +1,95 @@
+[
+  {
+    "id": 1196,
+    "entity_type": "person",
+    "name": "Brad Smith",
+    "title": "Vice Chair and President",
+    "category": "Executive",
+    "other_categories": "Policymaker",
+    "primary_org": "Microsoft",
+    "other_orgs": "Board member of Netflix, Board of Trustees at Princeton University, Former General Counsel of Microsoft (2002-2015)",
+    "location": "Washington, DC",
+    "influence_type": "Decision-maker, Narrator, Advisor/strategist",
+    "twitter": "@BradSmi",
+    "bluesky": null,
+    "notes": "Brad Smith is Vice Chair and President of Microsoft, where he oversees the company's legal, government affairs, and public policy functions. He has testified before Congress multiple times on AI policy, including before the Senate Commerce Committee in May 2025, where he advocated for federal AI infrastructure investment and workforce development. His 2019 book 'Tools and Weapons: The Promise and the Peril of the Digital Age' argued that governments must regulate technology by moving faster to match the pace of innovation. Smith has been a leading industry voice for responsible AI development, supporting Microsoft's Responsible AI principles while advocating for targeted regulation of high-risk AI applications.",
+    "notes_sources": [
+      "https://en.wikipedia.org/wiki/Brad_Smith_(American_lawyer)",
+      "https://blogs.microsoft.com/on-the-issues/2025/05/08/winning-the-ai-race/",
+      "https://news.microsoft.com/source/exec/brad-smith/"
+    ],
+    "thumbnail_url": null,
+    "belief_regulatory_stance": "Moderate",
+    "belief_regulatory_stance_detail": "Advocates for mandatory safety evaluations and transparency requirements for AI systems. Testified before Senate Commerce Committee in May 2025 supporting federal investment in AI infrastructure and workforce. His book 'Tools and Weapons' argued governments need to regulate technology by matching the pace of innovation. Supports targeted regulation of high-risk AI applications through existing and new federal frameworks.",
+    "belief_evidence_source": "Explicitly stated",
+    "belief_agi_timeline": "Unknown",
+    "belief_ai_risk": "Serious",
+    "belief_threat_models": "Cybersecurity, Power concentration, Labor displacement",
+    "_verification": {
+      "issues_found": "Entity had no notes, no title, no primary_org, no location, and no other fields filled. Only had name, category (Executive), and a thumbnail URL (from Wikimedia Commons, which I removed as the format doesn't match the project's CDN pattern).",
+      "notes": "Verified title as Vice Chair and President of Microsoft via official Microsoft executive page and LinkedIn. Verified Senate Commerce Committee testimony May 2025 via Microsoft blog post. Verified 'Tools and Weapons' book publication (2019) via Amazon and Penguin Random House. Verified Twitter handle @BradSmi via LinkedIn profile. Set location as Washington, DC based on his primary policy-facing role; Microsoft's HQ is in Redmond, WA but Smith frequently operates from DC."
+    }
+  },
+  {
+    "id": 1123,
+    "entity_type": "person",
+    "name": "Marc Benioff",
+    "title": "Chair, CEO and Co-Founder",
+    "category": "Executive",
+    "other_categories": null,
+    "primary_org": "Salesforce",
+    "other_orgs": "Co-owner of TIME magazine (acquired 2018), Former VP at Oracle Corporation (1986-1999), World Economic Forum board member",
+    "location": "San Francisco, CA",
+    "influence_type": "Decision-maker, Builder, Narrator",
+    "twitter": "@Benioff",
+    "bluesky": null,
+    "notes": "Marc Benioff is Chair, CEO, and Co-Founder of Salesforce, a Fortune 150 cloud computing company he founded in 1999. Under his leadership, Salesforce has invested heavily in enterprise AI through its Einstein AI platform and the Agentforce product for deploying autonomous AI agents, which has been adopted by over 12,000 enterprise customers. Benioff has advocated for a stakeholder capitalism approach to technology, and Salesforce was an early adopter of responsible AI guidelines for its products. As co-owner of TIME magazine, he has also shaped public discourse on AI through editorial decisions including the TIME100 AI list.",
+    "notes_sources": [
+      "https://www.salesforce.com/company/marc-benioff-bio/",
+      "https://en.wikipedia.org/wiki/Marc_Benioff",
+      "https://fortune.com/2025/10/21/salesforce-marc-benioff-ai-agents-dreamforce-agentforce-eye-on-ai/"
+    ],
+    "thumbnail_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Marc_Benioff.jpg/330px-Marc_Benioff.jpg",
+    "belief_regulatory_stance": "Moderate",
+    "belief_regulatory_stance_detail": "Supports responsible AI development with corporate accountability. Salesforce has published AI Acceptable Use Policies and ethical AI guidelines. Has advocated for transparency in AI systems and responsible deployment through enterprise guardrails. In 2025 interviews, stated he does not foresee a white-collar jobs apocalypse from AI but emphasizes the need for workforce adaptation.",
+    "belief_evidence_source": "Inferred",
+    "belief_agi_timeline": "Unknown",
+    "belief_ai_risk": "Manageable",
+    "belief_threat_models": "Labor displacement, Power concentration",
+    "_verification": {
+      "issues_found": "Entity had no notes and almost no fields filled — only name, category (Executive), and a Wikimedia thumbnail URL.",
+      "notes": "Verified title as Chair, CEO and Co-Founder via official Salesforce bio page. Verified Salesforce founding in 1999 via Wikipedia and Salesforce.com. Verified Agentforce adoption (12,000+ customers) via Fortune (Oct 2025). Verified TIME magazine co-ownership (acquired 2018) via Wikipedia. Verified Twitter handle @Benioff via public profiles. Set location as San Francisco based on Salesforce HQ; Benioff lives primarily in Hawaii but company is HQ'd in SF."
+    }
+  },
+  {
+    "id": 1167,
+    "entity_type": "person",
+    "name": "Ron DeSantis",
+    "title": "Governor of Florida",
+    "category": "Policymaker",
+    "other_categories": null,
+    "primary_org": "State of Florida",
+    "other_orgs": "Former U.S. Representative for Florida's 6th congressional district (2013-2018)",
+    "location": "Tallahassee, FL",
+    "influence_type": "Decision-maker, Organizer/advocate",
+    "twitter": "@GovRonDeSantis",
+    "bluesky": null,
+    "notes": "Ron DeSantis is the Governor of Florida who has emerged as a prominent state-level voice on AI regulation. In December 2025, he proposed a 'Citizen Bill of Rights for Artificial Intelligence' covering data privacy, parental controls, consumer protections, and restrictions on AI use of individuals' likenesses without consent. The proposal also includes bans on state use of Chinese AI tools like DeepSeek and protections for ratepayers from data center energy costs. DeSantis has publicly defied President Trump's executive order seeking to preempt state AI regulation, arguing that states retain the right to regulate AI and that executive orders cannot override state authority.",
+    "notes_sources": [
+      "https://www.flgov.com/eog/news/press/2025/governor-ron-desantis-announces-proposal-citizen-bill-rights-artificial",
+      "https://www.foxbusiness.com/politics/desantis-says-florida-can-regulate-ai-trumps-executive-order-we-have-right-do-this",
+      "https://thehill.com/homenews/administration/5649792-florida-desantis-ai-regulation/"
+    ],
+    "thumbnail_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Ron_DeSantis_official_photo.jpg/330px-Ron_DeSantis_official_photo.jpg",
+    "belief_regulatory_stance": "Targeted",
+    "belief_regulatory_stance_detail": "Proposed Florida AI Bill of Rights (December 2025) focused on consumer protection, data privacy, and restrictions on AI-generated deepfakes. Opposes both federal preemption of state AI regulation and unrestricted AI deployment. Supports banning Chinese AI tools in government and protecting ratepayers from data center energy costs. Argues states have the constitutional right to regulate AI regardless of federal executive orders.",
+    "belief_evidence_source": "Explicitly stated",
+    "belief_agi_timeline": "Unknown",
+    "belief_ai_risk": "Manageable",
+    "belief_threat_models": "Misinformation, Power concentration, Democratic erosion",
+    "_verification": {
+      "issues_found": "Entity had no notes and almost no fields filled — only name, category (Policymaker), and a Wikimedia thumbnail URL.",
+      "notes": "Verified DeSantis is still serving as Governor of Florida. Verified AI Bill of Rights proposal (December 2025) via official Florida Governor press release and multiple news outlets (Fox Business, The Hill, Florida Politics). Verified his public opposition to Trump's AI executive order seeking federal preemption via Fox Business and The Hill. Verified ban on Chinese AI tools (DeepSeek) and ratepayer protections from Florida Governor's official announcement. Twitter handle verified as @GovRonDeSantis from official state communications."
+    }
+  }
+]
