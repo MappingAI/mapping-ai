@@ -329,7 +329,7 @@ export function App() {
           The Gap
         </div>
         <p {...fadeProps(fi++)} className="mb-4 text-[16.5px]">
-          Michel Justen's{' '}
+          Several projects map parts of this landscape: Michel Justen's{' '}
           <a
             href="https://substack.com/home/post/p-185759007"
             target="_blank"
@@ -338,7 +338,7 @@ export function App() {
           >
             "A Guide to the AI Tribes"
           </a>{' '}
-          provides a useful taxonomy of the ideological camps shaping AI discourse, while{' '}
+          taxonomizes ideological camps,{' '}
           <a
             href="https://www.aisafety.com/map"
             target="_blank"
@@ -347,12 +347,42 @@ export function App() {
           >
             aisafety.com
           </a>{' '}
-          visualizes the safety ecosystem.{' '}
-          <span className="font-medium">
-            But we've yet to see anything that maps the full potential of the policy landscape
-          </span>
-          —civil society, industry, government—and where these actors stand on crucial governance questions, such as the
-          technology's capabilities and the role of public policy. We aim to fill that gap.
+          visualizes the safety ecosystem, the{' '}
+          <a
+            href="https://theaipn.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#2563eb] no-underline hover:underline"
+          >
+            AI Policy Network
+          </a>{' '}
+          connects policy communities, the{' '}
+          <a
+            href="https://airegulationmap.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#2563eb] no-underline hover:underline"
+          >
+            AI Regulation Map
+          </a>{' '}
+          tracks global regulation, and{' '}
+          <a
+            href="https://gaberoni24.github.io/AI_Stakeholder_Map/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#2563eb] no-underline hover:underline"
+          >
+            Gabriel's stakeholder map
+          </a>{' '}
+          charts the broader landscape. (See more in our Library view on the map.)
+        </p>
+        <p {...fadeProps(fi++)} className="mb-4 text-[16.5px]">
+          <span className="font-medium">Where does Mapping AI add value?</span> We track the relationships and edges
+          between people, organizations, and resources, revealing who funds whom, who collaborates across sectors, and
+          where the structural gaps lie. We map changing stances over time, drawing from both public records and
+          crowdsourced contributions. Our data spans every actor type: frontier labs, civil society, government,
+          academia, investors, media, and more. And the tool is open-source and crowdsourced, built to be useful to
+          researchers, policymakers, industry leaders, academics, and civil society alike.
         </p>
 
         {/* Who We're Mapping */}
