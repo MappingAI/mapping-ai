@@ -279,17 +279,13 @@ export function App() {
           most valuable parts of the format.
         </p>
 
-        {/* Photo grid placeholder */}
-        <div className="grid grid-cols-3 gap-3 mb-6 max-[600px]:grid-cols-1">
-          <div className="aspect-[4/3] bg-[#f0eeeb] rounded-md flex items-center justify-center">
-            <span className="font-mono text-[11px] text-[#aaa] uppercase tracking-wider">Photo 1</span>
-          </div>
-          <div className="aspect-[4/3] bg-[#f0eeeb] rounded-md flex items-center justify-center">
-            <span className="font-mono text-[11px] text-[#aaa] uppercase tracking-wider">Photo 2</span>
-          </div>
-          <div className="aspect-[4/3] bg-[#f0eeeb] rounded-md flex items-center justify-center">
-            <span className="font-mono text-[11px] text-[#aaa] uppercase tracking-wider">Photo 3</span>
-          </div>
+        {/* MappingParty photo */}
+        <div className="mb-6 rounded-md overflow-hidden">
+          <img
+            src="/assets/images/mapping-party-1.jpg"
+            alt="The first MappingParty: contributors working together on the stakeholder map"
+            className="w-full rounded-md"
+          />
         </div>
 
         <p className="mb-4">
