@@ -134,7 +134,6 @@ Secrets are managed in two places:
 | `ADMIN_KEY`          | Cloudflare Pages secrets | Admin endpoint auth             |
 | `DATABASE_URL`       | GitHub Secrets           | Deploy workflow map-data export |
 | `CF_ANALYTICS_TOKEN` | GitHub Secrets           | Cloudflare Web Analytics        |
-| `SITE_PASSWORD`      | GitHub Secrets           | Password gate hash              |
 
 Set Cloudflare Pages secrets via: `npx wrangler pages secret put <NAME> --project-name mapping-ai`
 

@@ -1939,6 +1939,7 @@
         <a href="/">Background</a>
         <a href="/contribute">Contribute</a>
         <a href="/map">Map</a>
+        <a href="/insights">Insights</a>
         <a href="/about">About</a>
       </div>
       <button class="theme-toggle" id="theme-toggle" title="Toggle dark/light mode">&#9790;</button>
@@ -4064,8 +4065,7 @@
           }, 50)
         })
 
-        // Deep link (PASSWORD GATE: defer until unlocked)
-        const deepLinkTarget = document.body.classList.contains('locked') ? null : resolveDeepLink()
+        const deepLinkTarget = resolveDeepLink()
         if (deepLinkTarget) {
           const targetSlug = getEntitySlug(deepLinkTarget)
           const targetCard = document.querySelector(`.mobile-card[data-slug="${targetSlug}"]`)
@@ -4139,8 +4139,7 @@
           updateSourceTypeVisibility()
           render()
 
-          // Desktop deep link handling (PASSWORD GATE: defer until unlocked)
-          const deepLinkTarget = document.body.classList.contains('locked') ? null : resolveDeepLink()
+          const deepLinkTarget = resolveDeepLink()
           if (deepLinkTarget) {
             setTimeout(() => {
               const renderedNodes = _canvasNodes.length > 0 ? _canvasNodes : d3.selectAll('.node').data()
@@ -6449,15 +6448,6 @@
 
       // Detail panel
       function showDetail(d, allNodes) {
-        // PASSWORD GATE: prompt for password instead of showing detail when locked
-        if (document.body.classList.contains('locked')) {
-          const pwOverlay = document.getElementById('password-overlay')
-          if (pwOverlay) {
-            pwOverlay.style.display = 'flex'
-            document.getElementById('gate-password').focus()
-          }
-          return
-        }
         const panel = document.getElementById('detail-panel')
         const content = document.getElementById('detail-content')
 
@@ -7970,12 +7960,11 @@
         _requestRedraw()
       })
     </script>
-    <!-- PASSWORD GATE START -->
-    <!-- Disclaimer popup (shows every page load) -->
+    <!-- Disclaimer popup (shows once per user, cached in localStorage) -->
     <div
       id="disclaimer-overlay"
       style="
-        display: flex;
+        display: none;
         position: fixed;
         inset: 0;
         z-index: 10000;
@@ -8035,254 +8024,21 @@
       </div>
     </div>
 
-    <!-- Lock overlay (blocks all interaction when not authenticated; top:48px keeps navbar clickable) -->
-    <div
-      id="lock-overlay"
-      style="display: none; position: fixed; top: 48px; left: 0; right: 0; bottom: 0; z-index: 500; cursor: pointer"
-    ></div>
-
-    <!-- Password prompt modal -->
-    <div
-      id="password-overlay"
-      style="
-        display: none;
-        position: fixed;
-        inset: 0;
-        z-index: 10000;
-        background: rgba(0, 0, 0, 0.5);
-        align-items: center;
-        justify-content: center;
-      "
-    >
-      <div
-        style="
-          background: var(--bg-panel);
-          border-radius: 8px;
-          padding: 1.5rem 2rem;
-          max-width: 380px;
-          width: 90%;
-          font-family: var(--serif);
-          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-        "
-      >
-        <h2
-          style="
-            font-family: var(--mono);
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            margin: 0 0 0.75rem;
-          "
-        >
-          Enter Password
-        </h2>
-        <p style="font-size: 14px; line-height: 1.5; color: var(--text-2); margin: 0 0 1rem">
-          This tool is in a pre-launch beta. Enter the password to access the full interactive experience.
-        </p>
-        <input
-          id="gate-password"
-          type="password"
-          placeholder="Password"
-          style="
-            width: 100%;
-            padding: 0.6rem 0.75rem;
-            font-family: var(--mono);
-            font-size: 13px;
-            background: var(--input-bg);
-            color: var(--text-1);
-            border: 1px solid var(--line);
-            border-radius: 4px;
-            margin-bottom: 0.5rem;
-            box-sizing: border-box;
-          "
-        />
-        <div
-          id="gate-error"
-          style="color: #dc2626; font-size: 12px; font-family: var(--mono); margin-bottom: 0.5rem; display: none"
-        >
-          Incorrect password
-        </div>
-        <button
-          id="gate-submit"
-          style="
-            font-family: var(--mono);
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            padding: 0.6rem 1.5rem;
-            background: var(--text-1);
-            color: var(--bg-page);
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-          "
-        >
-          Submit
-        </button>
-      </div>
-    </div>
-
     <script>
       ;(function () {
-        var SITE_HASH = '__SITE_PASSWORD_HASH__'
-        var isDevMode = SITE_HASH === '__SITE_' + 'PASSWORD_HASH__'
-        var isUnlocked = isDevMode || localStorage.getItem('siteUnlocked') === '1'
-
-        // Always show disclaimer
         var disclaimerOv = document.getElementById('disclaimer-overlay')
-        var lockOv = document.getElementById('lock-overlay')
-        var passwordOv = document.getElementById('password-overlay')
-
-        document.getElementById('disclaimer-dismiss').addEventListener('click', function () {
+        if (localStorage.getItem('disclaimerDismissed')) return
+        disclaimerOv.style.display = 'flex'
+        function dismiss() {
           disclaimerOv.style.display = 'none'
-          if (!isUnlocked) {
-            lockOv.style.display = 'block'
-          }
-        })
+          localStorage.setItem('disclaimerDismissed', '1')
+        }
+        document.getElementById('disclaimer-dismiss').addEventListener('click', dismiss)
         disclaimerOv.addEventListener('click', function (e) {
-          if (e.target === disclaimerOv) {
-            disclaimerOv.style.display = 'none'
-            if (!isUnlocked) {
-              lockOv.style.display = 'block'
-            }
-          }
+          if (e.target === disclaimerOv) dismiss()
         })
-
-        // Lock overlay click → show password prompt
-        lockOv.addEventListener('click', function () {
-          passwordOv.style.display = 'flex'
-          document.getElementById('gate-password').focus()
-        })
-
-        // Brute-force protection: 5 attempts allowed, then 30s lockout
-        var MAX_ATTEMPTS = 5
-        var LOCKOUT_MS = 30000
-        var attempts = parseInt(sessionStorage.getItem('gateAttempts') || '0', 10)
-        var lockedUntil = parseInt(sessionStorage.getItem('gateLockUntil') || '0', 10)
-
-        function isLockedOut() {
-          return Date.now() < lockedUntil
-        }
-
-        function setLockoutMessage(remaining) {
-          var errEl = document.getElementById('gate-error')
-          errEl.textContent = 'Too many attempts. Try again in ' + remaining + 's.'
-          errEl.style.display = 'block'
-        }
-
-        // Countdown ticker while locked out
-        var lockoutTimer = null
-        function startLockoutCountdown() {
-          clearInterval(lockoutTimer)
-          lockoutTimer = setInterval(function () {
-            var remaining = Math.ceil((lockedUntil - Date.now()) / 1000)
-            if (remaining <= 0) {
-              clearInterval(lockoutTimer)
-              document.getElementById('gate-error').style.display = 'none'
-              document.getElementById('gate-submit').disabled = false
-              document.getElementById('gate-password').disabled = false
-            } else {
-              setLockoutMessage(remaining)
-            }
-          }, 500)
-        }
-
-        if (isLockedOut()) {
-          document.getElementById('gate-submit').disabled = true
-          document.getElementById('gate-password').disabled = true
-          startLockoutCountdown()
-        }
-
-        // Password submission
-        async function tryUnlock() {
-          if (isLockedOut()) return
-          var input = document.getElementById('gate-password').value
-          if (!input) return
-          var encoded = new TextEncoder().encode(input)
-          var hashBuf = await crypto.subtle.digest('SHA-256', encoded)
-          var hashHex = Array.from(new Uint8Array(hashBuf))
-            .map(function (b) {
-              return b.toString(16).padStart(2, '0')
-            })
-            .join('')
-          if (hashHex === SITE_HASH) {
-            sessionStorage.removeItem('gateAttempts')
-            sessionStorage.removeItem('gateLockUntil')
-            localStorage.setItem('siteUnlocked', '1')
-            isUnlocked = true
-            lockOv.style.display = 'none'
-            passwordOv.style.display = 'none'
-            document.body.classList.remove('locked')
-            // Restore saved view preference now that we're unlocked
-            var savedMode = localStorage.getItem('mapMode') || 'plot'
-            if (typeof viewMode !== 'undefined' && viewMode !== savedMode) {
-              viewMode = savedMode
-              if (typeof applyViewState === 'function') applyViewState()
-            }
-          } else {
-            attempts++
-            sessionStorage.setItem('gateAttempts', attempts)
-            if (attempts >= MAX_ATTEMPTS) {
-              lockedUntil = Date.now() + LOCKOUT_MS
-              sessionStorage.setItem('gateLockUntil', lockedUntil)
-              document.getElementById('gate-submit').disabled = true
-              document.getElementById('gate-password').disabled = true
-              startLockoutCountdown()
-            } else {
-              var errEl = document.getElementById('gate-error')
-              errEl.textContent =
-                'Incorrect password (' +
-                (MAX_ATTEMPTS - attempts) +
-                ' attempt' +
-                (MAX_ATTEMPTS - attempts === 1 ? '' : 's') +
-                ' remaining)'
-              errEl.style.display = 'block'
-            }
-            document.getElementById('gate-password').value = ''
-            document.getElementById('gate-password').focus()
-          }
-        }
-        document.getElementById('gate-submit').addEventListener('click', tryUnlock)
-        document.getElementById('gate-password').addEventListener('keydown', function (e) {
-          if (e.key === 'Enter') tryUnlock()
-        })
-        passwordOv.addEventListener('click', function (e) {
-          if (e.target === passwordOv) {
-            passwordOv.style.display = 'none'
-          }
-        })
-
-        // Apply locked state
-        if (!isUnlocked) {
-          document.body.classList.add('locked')
-        }
       })()
     </script>
-    <style>
-      /* PASSWORD GATE—locked state: allow browsing views/filters but block node detail */
-      body.locked #detail-panel {
-        pointer-events: none;
-        opacity: 0.5;
-      }
-      body.locked #contribute-btn {
-        pointer-events: none;
-        opacity: 0.4;
-      }
-      body.locked #mobile-directory {
-        pointer-events: none;
-      }
-      body.locked .mobile-search-bar {
-        pointer-events: none;
-      }
-      body.locked .mobile-type-chips {
-        pointer-events: none;
-      }
-      body.locked #mobile-hero-toggle {
-        pointer-events: none;
-      }
-    </style>
-    <!-- PASSWORD GATE END -->
     <script
       defer
       src="https://static.cloudflareinsights.com/beacon.min.js"

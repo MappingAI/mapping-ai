@@ -28,12 +28,6 @@ jobs:
       - name: Build TipTap bundle
         run: pnpm run build:tiptap
 
-      - name: Write .env.production
-        run: |
-          cat > .env.production <<EOL
-          VITE_SITE_PASSWORD_HASH=__SITE_PASSWORD_HASH__
-          EOL
-
       - name: Build with Vite
         run: pnpm exec vite build
 
@@ -44,19 +38,6 @@ jobs:
           pnpm exec tsx scripts/export-map-data.ts
           cp map-data.json dist/map-data.json
           if [ -f map-detail.json ]; then cp map-detail.json dist/map-detail.json; fi
-
-      # PASSWORD GATE — remove after public launch
-      - name: Inject password gate hash
-        env:
-          SITE_PASSWORD: ${{ secrets.SITE_PASSWORD }}
-        run: |
-          if [ -n "$SITE_PASSWORD" ]; then
-            HASH=$(echo -n "$SITE_PASSWORD" | sha256sum | cut -d' ' -f1)
-            sed -i "s/__SITE_PASSWORD_HASH__/$HASH/g" dist/map.html dist/contribute.html dist/assets/*.js
-            echo "✓ Password gate hash injected"
-          else
-            echo "⚠ No SITE_PASSWORD set — gate will auto-bypass"
-          fi
 
       - name: Inject Cloudflare analytics token
         env:
@@ -71,7 +52,7 @@ jobs:
 
       # Cloudflare Pages auto-deploys from GitHub on push to main.
       # This workflow handles pre-build steps (map-data generation,
-      # password hash injection, analytics token) that Pages can't do
+      # analytics token injection) that Pages can't do
       # in its build command alone. The dist/ output here is NOT
       # uploaded anywhere — Pages builds independently from the same
       # commit and runs the same build steps via its own build config.
