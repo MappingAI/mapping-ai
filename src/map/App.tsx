@@ -122,7 +122,10 @@ export function App() {
     setViewMode(mode)
     localStorage.setItem('mapMode', mode)
     if (mode === 'network' || mode === 'plot') {
-      setTimeout(() => window.dispatchEvent(new Event('resize')), 200)
+      setTimeout(() => {
+        window.dispatchEvent(new CustomEvent('map:viewModeChange', { detail: { viewMode: mode } }))
+        window.dispatchEvent(new Event('resize'))
+      }, 200)
     }
   }, [])
 

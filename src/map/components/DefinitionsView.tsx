@@ -1172,12 +1172,11 @@ export function DefinitionsView() {
         style={{
           background: 'var(--bg-panel)',
           borderRadius: '8px',
-          padding: '24px',
+          padding: '16px',
           margin: '0 0 16px',
           border: '1px solid var(--line)',
           width: '100%',
-          maxHeight: 'calc(100vh - 260px)',
-          overflow: 'hidden',
+          overflow: 'auto',
         }}
       >
         {viewMode === 'map' && (

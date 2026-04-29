@@ -123,14 +123,11 @@ function ResourceCard({ resource, onSelect }: { resource: Resource; onSelect: ()
   return (
     <button
       onClick={onSelect}
-      className="block w-full text-left border rounded-lg py-4 pr-4 pl-4 hover:shadow-sm transition-all duration-150 cursor-pointer group"
+      className="block w-full text-left rounded-lg p-4 transition-all duration-150 cursor-pointer group"
       style={{
-        borderTopColor: 'var(--line)',
-        borderRightColor: 'var(--line)',
-        borderBottomColor: 'var(--line)',
-        borderLeftWidth: '4px',
-        borderLeftColor: borderColor,
+        borderLeft: `4px solid ${borderColor}`,
         background: 'var(--bg-panel)',
+        boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
       }}
     >
       <div className="flex items-start gap-2.5 mb-2">
@@ -727,7 +724,7 @@ export function ResourcesView({ resources, onEntityClick }: ResourcesViewProps) 
           )}
         </div>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((r) => (
             <ResourceCard key={r.id} resource={r} onSelect={() => handleSelectResource(r)} />
           ))}
