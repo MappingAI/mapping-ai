@@ -611,26 +611,47 @@ export function AxisOutlierChart({ entities, mode }: AxisOutlierChartProps) {
 
     // Run force simulation to resolve overlaps
     if (labelNodes.length > 0) {
+      // Get all outlier node positions to avoid
+      const outlierPositions = outlierNodes.map(d => ({ x: d.x, y: d.y, r: d.radius }))
+
       const labelSim = d3.forceSimulation(labelNodes)
         .force('x', d3.forceX((d: typeof labelNodes[0]) => d.targetX).strength(0.3))
         .force('y', d3.forceY((d: typeof labelNodes[0]) => d.targetY).strength(0.3))
         .force('collide', d3.forceCollide((d: typeof labelNodes[0]) => Math.max(d.labelWidth, d.labelHeight) / 2 + 8).strength(1))
+        .force('avoidNodes', () => {
+          // Push labels away from data nodes
+          for (const label of labelNodes) {
+            for (const node of outlierPositions) {
+              const dx = label.x - node.x
+              const dy = label.y - node.y
+              const dist = Math.sqrt(dx * dx + dy * dy)
+              const minDist = node.r + Math.max(label.labelWidth, label.labelHeight) / 2 + 15
+
+              if (dist < minDist && dist > 0) {
+                // Push label away from node
+                const force = (minDist - dist) / dist * 0.5
+                label.x += dx * force
+                label.y += dy * force
+              }
+            }
+          }
+        })
         .force('boundary', () => {
           // Keep labels within plot bounds
           for (const d of labelNodes) {
             // Keep away from left edge (y-axis labels)
-            if (d.x < 20) d.x = 20
+            if (d.x < 50) d.x = 50
             // Keep away from right edge
             if (d.x > plotW - 20) d.x = plotW - 20
             // Keep within vertical bounds
-            if (d.y < 10) d.y = 10
-            if (d.y > plotH - 10) d.y = plotH - 10
+            if (d.y < 15) d.y = 15
+            if (d.y > plotH - 15) d.y = plotH - 15
           }
         })
         .stop()
 
       // Run simulation
-      for (let i = 0; i < 150; i++) labelSim.tick()
+      for (let i = 0; i < 200; i++) labelSim.tick()
 
       // Draw labels at their final positions
       labelNodes.forEach((label) => {
