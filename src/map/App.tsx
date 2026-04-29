@@ -27,12 +27,21 @@ export function App() {
   }, [])
 
   useEffect(() => {
-    fetch('/map-data.json')
-      .then((r) => (r.ok ? r.json() : null))
-      .then((d) => {
-        if (d?.resources) setResources(d.resources)
-      })
-      .catch(() => {})
+    Promise.all([
+      fetch('/map-data.json').then((r) => (r.ok ? r.json() : null)),
+      fetch('/map-detail.json')
+        .then((r) => (r.ok ? r.json() : null))
+        .catch(() => null),
+    ]).then(([mapData, detail]) => {
+      if (!mapData?.resources) return
+      if (detail) {
+        for (const entity of mapData.resources) {
+          const d = detail[String(entity.id)]
+          if (d) Object.assign(entity, d)
+        }
+      }
+      setResources(mapData.resources)
+    })
   }, [])
 
   useEffect(() => {
@@ -498,6 +507,7 @@ export function App() {
             .map-container { display: none !important; }
             .zoom-controls { display: none !important; }
             #contribute-btn { display: none !important; }
+            #contribute-panel { display: none !important; }
             #category-filters { display: none !important; }
             #stance-legend { display: none !important; }
             #source-type-filter { display: none !important; }
@@ -508,7 +518,7 @@ export function App() {
             #search-mode-controls { display: none !important; }
             #entity-count { display: none !important; }
             .control-group:has(.info-btn) { display: none !important; }
-            .controls .control-group:first-child { display: none !important; }
+            .controls .control-group:first-child .search-box { display: none !important; }
           `}</style>
           <div
             id="react-view-container"
@@ -521,6 +531,7 @@ export function App() {
               overflow: 'auto',
               background: 'var(--bg-page)',
               zIndex: 10,
+              paddingTop: '8px',
             }}
           >
             {reactView === 'resources' && <ResourcesView resources={resources} />}

@@ -620,7 +620,7 @@ export function ResourcesView({ resources }: ResourcesViewProps) {
         }
       `}</style>
 
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '24px 32px' }}>
+      <div style={{ padding: '24px 32px 24px 300px' }}>
         <div style={{ marginBottom: '24px', textAlign: 'center' as const }}>
           <div
             style={{
