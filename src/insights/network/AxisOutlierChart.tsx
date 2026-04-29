@@ -26,7 +26,7 @@ interface AxisOutlierChartProps {
 const AXIS_CONFIG: Record<AxisKey, { scoreKey: keyof Entity; labels: string[]; title: string; shortTitle: string }> = {
   stance: {
     scoreKey: 'stance_score',
-    labels: ['Accelerate', 'Light-touch', 'Targeted', 'Moderate', 'Restrictive', 'Precautionary'],
+    labels: ['Accelerate', 'Light-touch', 'Targeted', 'Moderate', 'Restrictive', 'Precautionary', 'Nationalize'],
     title: 'Regulatory Stance',
     shortTitle: 'Stance',
   },
@@ -390,7 +390,7 @@ export function AxisOutlierChart({ entities, mode }: AxisOutlierChartProps) {
           .attr('font-family', "'DM Mono', monospace")
           .attr('font-size', 9)
           .attr('fill', '#666')
-          .text(label.length > 12 ? label.slice(0, 10) + '...' : label)
+          .text(label)
       })
 
       // Y axis label
@@ -588,22 +588,48 @@ export function AxisOutlierChart({ entities, mode }: AxisOutlierChartProps) {
       }
     })
 
+    // Helper to split name into two lines at word boundary
+    function splitName(name: string): string[] {
+      const words = name.split(' ')
+      if (words.length === 1) return [name]
+
+      // Find split point closest to middle
+      const mid = name.length / 2
+      let bestSplit = 1
+      let bestDiff = Infinity
+      for (let i = 1; i < words.length; i++) {
+        const line1Len = words.slice(0, i).join(' ').length
+        const diff = Math.abs(line1Len - mid)
+        if (diff < bestDiff) {
+          bestDiff = diff
+          bestSplit = i
+        }
+      }
+      return [words.slice(0, bestSplit).join(' '), words.slice(bestSplit).join(' ')]
+    }
+
     annotationCandidates.forEach((d) => {
-      const name = d.entity.name
+      const lines = splitName(d.entity.name)
       const side = labelSides.get(d.index) || 'right'
       const labelX = side === 'left' ? d.x - d.radius - 6 : d.x + d.radius + 6
       const anchor = side === 'left' ? 'end' : 'start'
 
-      g.append('text')
+      const textNode = g.append('text')
         .attr('x', labelX)
-        .attr('y', d.y + 3)
+        .attr('y', d.y - (lines.length > 1 ? 4 : 0))
         .attr('text-anchor', anchor)
         .attr('font-family', "'DM Mono', monospace")
         .attr('font-size', 9)
         .attr('font-weight', '500')
         .attr('fill', '#b8860b')
         .style('pointer-events', 'none')
-        .text(name)
+
+      lines.forEach((line, i) => {
+        textNode.append('tspan')
+          .attr('x', labelX)
+          .attr('dy', i === 0 ? 0 : 11)
+          .text(line)
+      })
     })
 
     return () => {
