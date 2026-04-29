@@ -994,7 +994,7 @@ export function App() {
 
         <ChartContainer
           title="Outliers by belief dimension"
-          source="Positions with ≤10 entities are outliers. Only outliers are clickable. Annotations show top outliers."
+          source="Outliers are positions below 50% of median count. Click any outlier for details."
         >
           <AxisOutlierChart entities={allEntities} mode="1d" />
         </ChartContainer>
@@ -1003,7 +1003,7 @@ export function App() {
 
         <ChartContainer
           title="Outliers by belief combination"
-          source="Cells with ≤10 entities are outliers. Select axes to explore different combinations."
+          source="Outliers are cells below 50% of median count. Select axes to explore combinations."
         >
           <AxisOutlierChart entities={allEntities} mode="2d" />
         </ChartContainer>
