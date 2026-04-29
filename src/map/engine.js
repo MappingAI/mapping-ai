@@ -5549,26 +5549,28 @@ ${dots}
   })
 
   // Theme toggle
-  const themeBtn = document.getElementById('theme-toggle')
-  const savedTheme = localStorage.getItem('map-theme')
-  if (savedTheme === 'dark') {
-    document.documentElement.setAttribute('data-theme', 'dark')
-    themeBtn.textContent = '\u2600'
-  }
-  themeBtn.addEventListener('click', () => {
-    const isDark = document.documentElement.getAttribute('data-theme') === 'dark'
-    if (isDark) {
-      document.documentElement.removeAttribute('data-theme')
-      localStorage.setItem('map-theme', 'light')
-      themeBtn.textContent = '\u263E'
-    } else {
+  var themeBtn = document.getElementById('theme-toggle')
+  if (themeBtn) {
+    var savedTheme = localStorage.getItem('map-theme')
+    if (savedTheme === 'dark') {
       document.documentElement.setAttribute('data-theme', 'dark')
-      localStorage.setItem('map-theme', 'dark')
       themeBtn.textContent = '\u2600'
     }
-    _themeColors = null
-    _requestRedraw()
-  })
+    themeBtn.addEventListener('click', function () {
+      var isDark = document.documentElement.getAttribute('data-theme') === 'dark'
+      if (isDark) {
+        document.documentElement.removeAttribute('data-theme')
+        localStorage.setItem('map-theme', 'light')
+        themeBtn.textContent = '\u263E'
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        localStorage.setItem('map-theme', 'dark')
+        themeBtn.textContent = '\u2600'
+      }
+      _themeColors = null
+      _requestRedraw()
+    })
+  }
 
   return {
     destroy() {

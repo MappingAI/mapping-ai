@@ -3,15 +3,18 @@ import { useEffect } from 'react'
 export function App() {
   useEffect(() => {
     let engineCleanup: { destroy: () => void } | null = null
+    let cancelled = false
 
-    Promise.all([import('./engine.js'), import('./password-gate.js')]).then(
-      ([{ initMapEngine }, { initPasswordGate }]) => {
+    Promise.all([import('./engine.js'), import('./password-gate.js')])
+      .then(([{ initMapEngine }, { initPasswordGate }]) => {
+        if (cancelled) return
         engineCleanup = initMapEngine()
         initPasswordGate()
-      },
-    )
+      })
+      .catch((err) => console.error('Failed to load map engine:', err))
 
     return () => {
+      cancelled = true
       if (engineCleanup) engineCleanup.destroy()
     }
   }, [])
