@@ -2546,6 +2546,15 @@ export function initMapEngine() {
   let _quadtreeDirty = false
   let _monoFont = 'monospace'
   let _serifFont = 'sans-serif'
+  let _isPlotView = false
+  let _plotMargin = null
+  let _plotControlsWidth = 0
+  let _plotW = 0
+  let _plotH = 0
+  let _plotXScale = null
+  let _plotYScale = null
+  let _plotXAxisDef = null
+  let _plotYAxisDef = null
 
   // Persistent sprite cache: survives across render() calls so view switches
   // don't re-fetch all 700+ thumbnails. Keyed by "entityType-id-radius".
@@ -2561,6 +2570,8 @@ export function initMapEngine() {
     if (_themeColors) return _themeColors
     const cs = getComputedStyle(document.documentElement)
     _themeColors = {
+      text1: cs.getPropertyValue('--text-1').trim() || '#eee',
+      text2: cs.getPropertyValue('--text-2').trim() || '#aaa',
       text3: cs.getPropertyValue('--text-3').trim() || '#888',
       bgPage: cs.getPropertyValue('--bg-page').trim() || '#fff',
     }
@@ -2645,6 +2656,10 @@ export function initMapEngine() {
   function _drawFrame() {
     const ctx = _canvasCtx
     if (!ctx) return
+    if (_isPlotView) {
+      _drawPlotFrame()
+      return
+    }
     const tc = _getThemeColors()
     const w = _canvasWidth,
       h = _canvasHeight
@@ -2863,28 +2878,31 @@ export function initMapEngine() {
     _quadtree = null
     _quadtreeDirty = false
 
-    // 2D plot view still uses SVG (render2D depends on it)
     if (currentView === '2d') {
-      const svg = d3.select('#map-container').append('svg').attr('width', width).attr('height', height)
-      const g = svg.append('g')
-      zoomBehavior = d3
-        .zoom()
-        .scaleExtent([0.1, 20])
-        .on('zoom', (event) => {
-          currentZoom = event.transform
-          g.attr('transform', event.transform)
-        })
-      svg.call(zoomBehavior).call(zoomBehavior.transform, currentZoom)
-      document.getElementById('zoom-in').onclick = () => svg.transition().duration(300).call(zoomBehavior.scaleBy, 1.5)
-      document.getElementById('zoom-out').onclick = () =>
-        svg.transition().duration(300).call(zoomBehavior.scaleBy, 0.67)
-      document.getElementById('zoom-reset').onclick = () => {
-        currentZoom = d3.zoomIdentity
-        svg.transition().duration(500).call(zoomBehavior.transform, d3.zoomIdentity)
-      }
-      render2D(svg, g, width, height)
+      _isPlotView = true
+      const dpr = window.devicePixelRatio || 1
+      const canvas = document.createElement('canvas')
+      canvas.width = width * dpr
+      canvas.height = height * dpr
+      canvas.style.width = width + 'px'
+      canvas.style.height = height + 'px'
+      container.appendChild(canvas)
+      const ctx = canvas.getContext('2d')
+      const canvasSel = d3.select(canvas)
+
+      _canvasCtx = ctx
+      _canvasSel = canvasSel
+      _canvasDpr = dpr
+      _canvasWidth = width
+      _canvasHeight = height
+      _themeColors = null
+      _getThemeColors()
+
+      render2DCanvas(ctx, canvasSel, canvas, width, height, dpr)
       return
     }
+
+    _isPlotView = false
 
     // --- Network view: Canvas 2D rendering ---
     const dpr = window.devicePixelRatio || 1
@@ -3391,10 +3409,9 @@ export function initMapEngine() {
     Existential: 'Exist',
   }
 
-  function render2D(svg, g, width, height) {
+  function render2DCanvas(ctx, canvasSel, canvas, width, height, dpr) {
     const isMobile = width < 600
     const isTablet = width >= 600 && width < 1024
-    // On mobile, controls are in bottom bar, not left panel
     const CONTROLS_WIDTH = isMobile ? 0 : isTablet ? 200 : 280
     const is1D = axisMode !== '2d'
     const margin = {
@@ -3409,7 +3426,6 @@ export function initMapEngine() {
     const xAxisDef = AXES[axisX]
     const yAxisDef = axisMode === '2d' ? AXES[axisY] : null
 
-    // Build candidate nodes: people + orgs passing entity type and category filter
     const candidates = [
       ...(axis2dEntityType !== 'organizations'
         ? allData.people.map((d) => ({ ...d, entityType: 'person', submissionCount: d.submission_count || 1 }))
@@ -3425,13 +3441,11 @@ export function initMapEngine() {
       if (!d.category) return false
       if (!passesStanceFilter(d)) return false
       if (!passesSourceTypeFilter(d)) return false
-      // If filter is active (user interacted), respect selections; otherwise show all
       if (!categoryFilterActive) return true
-      if (activeCategories.size === 0) return false // all deselected = show none
+      if (activeCategories.size === 0) return false
       return activeCategories.has(d.category) || activeCategories.has(normalizeCategory(d.category))
     })
 
-    // Filter to nodes with valid scores on all selected axes
     const nodes = candidates
       .filter((d) => {
         if (d[xAxisDef.scoreKey] == null) return false
@@ -3439,9 +3453,7 @@ export function initMapEngine() {
         return true
       })
       .map((d) => ({ ...d }))
-    // Dynamic radius: floor drops to 4px at high density so 1000+ nodes can
-    // actually spread apart. Scale by both node count and available area so a
-    // wider plot allows slightly bigger bubbles.
+
     const plotArea = plotW * plotH
     const areaPerNode = plotArea / Math.max(nodes.length, 1)
     const nodeRadius = Math.max(4, Math.min(14, Math.round(Math.sqrt(areaPerNode) / 9)))
@@ -3449,42 +3461,41 @@ export function initMapEngine() {
       d.radius = nodeRadius
     })
 
-    // Update excluded count message
     const excluded = candidates.length - nodes.length
     document.getElementById('axis-excluded-msg').textContent =
       `${nodes.length} of ${candidates.length} shown` + (excluded > 0 ? ` (${excluded} excluded—missing data)` : '')
 
     document.getElementById('entity-count').textContent = `${nodes.length} entities`
 
-    // Scale functions: score (1-based integer) → pixel position
     const xTicks = xAxisDef.ticks
     const xScale = (score) => CONTROLS_WIDTH + margin.left + ((score - 1) / (xTicks.length - 1)) * plotW
 
     let yScale
     if (yAxisDef) {
       const yTicks = yAxisDef.ticks
-      // Higher score = top of chart
       yScale = (score) => margin.top + (1 - (score - 1) / (yTicks.length - 1)) * plotH
     } else {
-      // 1D: center beeswarm vertically in the plot area
       const plotMidY = margin.top + plotH * 0.5
       yScale = () => plotMidY
     }
 
-    // Draw axes (always, even with no nodes)
-    drawAxes2D(g, xAxisDef, yAxisDef, xScale, yScale, CONTROLS_WIDTH, margin, plotW, plotH, width, height)
+    _plotMargin = margin
+    _plotControlsWidth = CONTROLS_WIDTH
+    _plotW = plotW
+    _plotH = plotH
+    _plotXScale = xScale
+    _plotYScale = yScale
+    _plotXAxisDef = xAxisDef
+    _plotYAxisDef = yAxisDef
 
-    if (nodes.length === 0) return
+    if (nodes.length === 0) {
+      _canvasNodes = []
+      _drawPlotFrame()
+      return
+    }
 
-    // In 1D mode, scores snap to integers for single-submission entities, so
-    // naive layout stacks 160+ nodes in a one-pixel column. We spread horizontally
-    // with violin-shaped jitter: wide at the column's vertical center, tapering
-    // at top and bottom. Jitter magnitude = hash(id) * parabolicWeight(y), so
-    // each node has a stable X offset but overall envelope reads as a violin.
     const bucketWidth = plotW / Math.max(xTicks.length - 1, 1)
     const jitterRange = yAxisDef ? 0 : bucketWidth * 0.85
-    // Hash-based deterministic per-node offset (-0.5 to +0.5) so nodes don't jump
-    // between renders. Direction is fixed per entity; magnitude is scaled by Y.
     const hashOffset = (d, i) => {
       const key = Number(d.id)
       const seed = Number.isFinite(key) ? key : i
@@ -3492,14 +3503,10 @@ export function initMapEngine() {
       return (h % 1000) / 1000 - 0.5
     }
 
-    // Seed Y uniformly across the full plot area for 1D — using all vertical space.
-    // Weak Y force (0.03) won't crush this spread back to the centerline.
     const pad = nodeRadius + 1
     const yTop = margin.top + pad
     const yBot = height - margin.bottom - pad
     const yRange = yBot - yTop
-    // Clamp violin jitter to the plot area so extreme score columns don't
-    // render past the axis baselines (left/right margins are narrow in 1D).
     const xMin = CONTROLS_WIDTH + margin.left + pad
     const xMax = CONTROLS_WIDTH + margin.left + plotW - pad
 
@@ -3511,176 +3518,192 @@ export function initMapEngine() {
         d.x = xRaw + (Math.random() - 0.5) * 20
         d.y = d.targetY + (Math.random() - 0.5) * 20
       } else {
-        // Spread vertically across full plot, but bias slightly toward center
-        // with a triangular distribution so density is highest in the middle —
-        // that's what produces the violin bulge via collision spillover.
         const r1 = Math.random(),
           r2 = Math.random()
         d.y = yTop + ((r1 + r2) / 2) * yRange
         const y01 = (d.y - yTop) / yRange
-        // Parabolic weight: 1 at y-center, 0 at edges → narrow taper top/bottom
         const weight = 4 * y01 * (1 - y01)
         d.targetX = Math.max(xMin, Math.min(xMax, xRaw + hashOffset(d, i) * jitterRange * weight))
         d.x = d.targetX
       }
     })
 
-    // Node groups
-    const nodeGroup = g
-      .selectAll('.node')
-      .data(nodes)
-      .join('g')
-      .attr('class', 'node')
-      .on('click', (event, d) => {
-        event.stopPropagation()
-        showDetail(d, nodes)
-        selectedNode = d
-        d3.selectAll('.node').each(function (nd) {
-          d3.select(this)
-            .classed('dimmed', nd !== d)
-            .classed('highlighted', nd === d)
-        })
-        const k = 3
-        const t = d3.zoomIdentity.translate(width / 2 - k * d.x, height / 2 - k * d.y).scale(k)
-        svg.transition().duration(500).call(zoomBehavior.transform, t)
-      })
-      .on('mouseenter', function (event, d) {
-        d3.select(this).select('.node-bg').attr('opacity', 1)
-        d3.select(this).select('.node-image').attr('opacity', 1)
-        showTooltip(event, d)
-      })
-      .on('mousemove', (event) => moveTooltip(event))
-      .on('mouseleave', function (event, d) {
-        const baseOpacity = d.entityType === 'organization' ? 0.9 : 0.7
-        d3.select(this).select('.node-bg').attr('opacity', baseOpacity)
-        d3.select(this).select('.node-image').attr('opacity', baseOpacity)
-        hideTooltip()
-      })
-      .call(
-        d3
-          .drag()
-          .on('start', (event, d) => {
-            if (!event.active) simulation.alphaTarget(0.3).restart()
-            d.fx = d.x
-            d.fy = d.y
-          })
-          .on('drag', (event, d) => {
-            d.fx = event.x
-            d.fy = event.y
-          })
-          .on('end', (event, d) => {
-            if (!event.active) {
-              simulation.alphaTarget(0)
-            }
-            d.fx = null
-            d.fy = null
-          }),
-      )
-
-    // Background circles (category color)
-    nodeGroup
-      .append('circle')
-      .attr('class', 'node-bg')
-      .attr('r', (d) => d.radius)
-      .attr('fill', (d) => getColor(normalizeCategory(d.category)))
-      .attr('stroke', (d) =>
-        d.entityType === 'organization' ? d3.color(getColor(normalizeCategory(d.category))).brighter(0.8) : 'none',
-      )
-      .attr('stroke-width', (d) => (d.entityType === 'organization' ? 1.5 : 0))
-      .attr('opacity', (d) => (d.entityType === 'organization' ? 0.9 : 0.7))
-
-    // Initials fallback text
-    nodeGroup
-      .append('text')
-      .attr('text-anchor', 'middle')
-      .attr('dy', '0.35em')
-      .attr('font-family', 'var(--mono)')
-      .attr('font-size', (d) => (d.radius >= 16 ? '8px' : d.radius >= 10 ? '6px' : '5px'))
-      .attr('fill', '#fff')
-      .attr('opacity', 0.9)
-      .attr('pointer-events', 'none')
-      .text((d) => {
-        const parts = (d.name || '').split(/[\s]+/)
-        return parts.length >= 2
-          ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
-          : (d.name || '').slice(0, 2).toUpperCase()
-      })
-
-    // Submission count ring (5+ submissions)
-    nodeGroup
-      .filter((d) => (d.submissionCount || 0) >= 5)
-      .append('circle')
-      .attr('r', (d) => d.radius + 4)
-      .attr('fill', 'none')
-      .attr('stroke', '#d4a574')
-      .attr('stroke-dasharray', '2,2')
-      .attr('stroke-width', 1.5)
-      .attr('pointer-events', 'none')
-
-    // Async image loading (same pattern as main render)
-    const defs = svg.append('defs')
-    nodes.forEach((d, i) => {
-      const r = d.radius
-      const clipId = `clip2d-${i}`
-      const patId = `img2d-${i}`
-      defs.append('clipPath').attr('id', clipId).append('circle').attr('r', r)
-      d._clipId2d = clipId
-      d._patId2d = patId
-      d._imgIdx2d = i
-
-      function applyImage(url) {
-        const pat = defs
-          .append('pattern')
-          .attr('id', patId)
-          .attr('width', 1)
-          .attr('height', 1)
-          .attr('patternContentUnits', 'objectBoundingBox')
-        pat
-          .append('rect')
-          .attr('width', 1)
-          .attr('height', 1)
-          .attr('fill', d.entityType === 'organization' ? '#fff' : getColor(normalizeCategory(d.category)))
-        pat
-          .append('image')
-          .attr('href', url)
-          .attr('width', 1)
-          .attr('height', 1)
-          .attr('preserveAspectRatio', 'xMidYMid slice')
-        const nodeEl = d3.select(nodeGroup.nodes()[i])
-        if (nodeEl.node()) {
-          nodeEl.select('text').remove() // remove initials now that image loaded
-          nodeEl
-            .insert('circle', 'text')
-            .attr('class', 'node-image')
-            .attr('r', r - (d.entityType === 'organization' ? 2 : 1))
-            .attr('fill', `url(#${patId})`)
-            .attr('clip-path', `url(#${clipId})`)
-          nodeEl
-            .insert('circle', 'text')
-            .attr('r', r)
-            .attr('fill', 'none')
-            .attr('stroke', getColor(normalizeCategory(d.category)))
-            .attr('stroke-width', 2)
-            .attr('opacity', 0.8)
-        }
+    nodes.forEach((d) => {
+      d._vs = 'normal'
+      d._sprite = null
+      d._initials = _getInitials(d.name)
+      if (d.entityType === 'organization') {
+        d._brighterColor = d3
+          .color(getColor(normalizeCategory(d.category)))
+          .brighter(0.8)
+          .toString()
       }
+    })
+    _canvasNodes = nodes
+    _hoveredNode = null
+    _clusterDimmed = false
 
-      // Single image path for people + orgs: load thumbnail_url if present,
-      // otherwise leave the node as its initials/default glyph. No live external
-      // fallbacks (Wikipedia, Google Favicon, legacy /logos/ bucket) — all
-      // images are pre-cached in S3 via scripts/cache-thumbnails.js.
-      if (d.entityType !== 'resource' && d.thumbnail_url) {
-        const img = new Image()
-        img.referrerPolicy = 'no-referrer'
-        img.onload = () => applyImage(d.thumbnail_url)
-        img.src = d.thumbnail_url
+    let _spriteRedrawPending = false
+    function rasterizeSprite(d, img) {
+      const hiRes = Math.min(Math.max(img.naturalWidth, img.naturalHeight), 128)
+      const oc = document.createElement('canvas')
+      oc.width = hiRes * dpr
+      oc.height = hiRes * dpr
+      const octx = oc.getContext('2d')
+      octx.scale(dpr, dpr)
+      const hr = hiRes / 2
+      octx.beginPath()
+      octx.arc(hr, hr, hr - (d.entityType === 'organization' ? 2 : 1), 0, Math.PI * 2)
+      octx.closePath()
+      octx.clip()
+      octx.fillStyle = d.entityType === 'organization' ? '#fff' : getColor(normalizeCategory(d.category))
+      octx.fillRect(0, 0, hiRes, hiRes)
+      const iw = img.naturalWidth,
+        ih = img.naturalHeight
+      const sc = Math.max(hiRes / iw, hiRes / ih)
+      const sw = iw * sc,
+        sh = ih * sc
+      octx.drawImage(img, (hiRes - sw) / 2, (hiRes - sh) / 2, sw, sh)
+      return oc
+    }
+    function scheduleRedraw() {
+      if (!_spriteRedrawPending) {
+        _spriteRedrawPending = true
+        requestAnimationFrame(() => {
+          _spriteRedrawPending = false
+          _requestRedraw()
+        })
+      }
+    }
+    const spriteQueue = []
+    nodes.forEach((d) => {
+      const cacheKey = `${d.entityType}-${d.id}`
+      const cached = _spriteCache.get(cacheKey)
+      if (cached) {
+        d._sprite = cached.sprite
+        d._imgUrl = cached.url
+        return
+      }
+      if (!d.thumbnail_url) return
+      spriteQueue.push({ d, cacheKey })
+    })
+    const vcx = CONTROLS_WIDTH + (width - CONTROLS_WIDTH) / 2
+    const vcy = height / 2
+    spriteQueue.sort((a, b) => {
+      const da = (a.d.x - vcx) ** 2 + (a.d.y - vcy) ** 2
+      const db = (b.d.x - vcx) ** 2 + (b.d.y - vcy) ** 2
+      return da - db
+    })
+    for (const { d, cacheKey } of spriteQueue) {
+      const url = d.thumbnail_url
+      const img = new Image()
+      img.referrerPolicy = 'no-referrer'
+      img.onload = () => {
+        const oc = rasterizeSprite(d, img)
+        d._sprite = oc
+        d._imgUrl = url
+        _spriteCache.set(cacheKey, { sprite: oc, url })
+        scheduleRedraw()
+      }
+      img.src = url
+    }
+
+    _ensureQuadtree()
+
+    zoomBehavior = d3
+      .zoom()
+      .scaleExtent([0.1, 20])
+      .on('zoom', (event) => {
+        currentZoom = event.transform
+        _requestRedraw()
+      })
+
+    canvasSel.call(
+      d3
+        .drag()
+        .container(canvas)
+        .clickDistance(4)
+        .subject(function (event) {
+          const [mx, my] = d3.pointer(event, canvas)
+          const node = _findNodeAt(mx, my)
+          if (node) {
+            return { x: currentZoom.applyX(node.x), y: currentZoom.applyY(node.y), _node: node }
+          }
+        })
+        .on('start', (event) => {
+          if (!event.active) simulation.alphaTarget(0.3).restart()
+          event.subject._node.fx = event.subject._node.x
+          event.subject._node.fy = event.subject._node.y
+        })
+        .on('drag', (event) => {
+          event.subject._node.fx = currentZoom.invertX(event.x)
+          event.subject._node.fy = currentZoom.invertY(event.y)
+        })
+        .on('end', (event) => {
+          if (!event.active) {
+            simulation.alphaTarget(0)
+          }
+          event.subject._node.fx = null
+          event.subject._node.fy = null
+        }),
+    )
+
+    canvasSel.call(zoomBehavior)
+    canvasSel.call(zoomBehavior.transform, currentZoom)
+
+    document.getElementById('zoom-in').onclick = () =>
+      canvasSel.transition().duration(300).call(zoomBehavior.scaleBy, 1.5)
+    document.getElementById('zoom-out').onclick = () =>
+      canvasSel.transition().duration(300).call(zoomBehavior.scaleBy, 0.67)
+    document.getElementById('zoom-reset').onclick = () => {
+      currentZoom = d3.zoomIdentity
+      canvasSel.transition().duration(500).call(zoomBehavior.transform, d3.zoomIdentity)
+    }
+
+    canvasSel.on('mousemove.hover', function (event) {
+      const [mx, my] = d3.pointer(event, canvas)
+      const node = _findNodeAt(mx, my)
+      if (node !== _hoveredNode) {
+        _hoveredNode = node
+        canvas.style.cursor = node ? 'pointer' : 'default'
+        if (node) showTooltip(event, node)
+        else hideTooltip()
+        _requestRedraw()
+      } else if (node) {
+        moveTooltip(event)
+      }
+    })
+    canvasSel.on('mouseleave.hover', function () {
+      if (_hoveredNode) {
+        _hoveredNode = null
+        hideTooltip()
+        _requestRedraw()
       }
     })
 
-    // Simulation: beeswarm—strong pull toward target (axis position), collision for separation.
-    // 1D uses a very weak Y pull (0.03) so collision-spread survives convergence
-    // instead of being crushed back to the centerline. Higher velocityDecay + faster
-    // alphaDecay make the sim settle quickly with minimal jitter.
+    canvasSel.on('click.detail', function (event) {
+      const [mx, my] = d3.pointer(event, canvas)
+      const node = _findNodeAt(mx, my)
+      if (node) {
+        showDetail(node, nodes)
+        selectedNode = node
+        nodes.forEach((nd) => {
+          nd._vs = nd === node ? 'highlighted' : 'dimmed'
+        })
+        _requestRedraw()
+        const k = 3
+        const t = d3.zoomIdentity.translate(width / 2 - k * node.x, height / 2 - k * node.y).scale(k)
+        canvasSel.transition().duration(500).call(zoomBehavior.transform, t)
+      } else {
+        document.getElementById('detail-panel').classList.remove('open')
+        nodes.forEach((nd) => {
+          nd._vs = 'normal'
+        })
+        selectedNode = null
+        _requestRedraw()
+      }
+    })
+
     if (simulation) simulation.stop()
     simulation = d3
       .forceSimulation(nodes)
@@ -3691,8 +3714,6 @@ export function initMapEngine() {
       .alphaDecay(0.08)
       .velocityDecay(0.78)
       .on('tick', () => {
-        // In 1D mode, clamp nodes to the plot area. Use per-node radius so
-        // bubbles can sit flush against the axis baseline (no dead band below).
         if (!yAxisDef) {
           nodes.forEach((d) => {
             const dp = d.radius + 1
@@ -3700,137 +3721,223 @@ export function initMapEngine() {
             d.x = Math.max(xMin, Math.min(xMax, d.x))
           })
         }
-        nodeGroup.attr('transform', (d) => `translate(${d.x},${d.y})`)
+        _markQuadtreeDirty()
+        _requestRedraw()
       })
 
-    svg.on('click', () => {
-      document.getElementById('detail-panel').classList.remove('open')
-      clearSelection()
-    })
+    _drawPlotFrame()
+    simulation.restart()
   }
 
-  function drawAxes2D(g, xAxisDef, yAxisDef, xScale, yScale, controlsWidth, margin, plotW, plotH, width, height) {
-    g.selectAll('.axis-2d').remove()
-    const ax = g.append('g').attr('class', 'axis-2d')
+  function _drawPlotAxes(ctx, tc) {
+    const margin = _plotMargin
+    const controlsWidth = _plotControlsWidth
+    const plotW = _plotW
+    const plotH = _plotH
+    const xScale = _plotXScale
+    const yScale = _plotYScale
+    const xAxisDef = _plotXAxisDef
+    const yAxisDef = _plotYAxisDef
+    const w = _canvasWidth
+    const h = _canvasHeight
     const xTicks = xAxisDef.ticks
-    const isMobile = width < 600
-    const isTablet = width >= 600 && width < 1024
-    const useAbbrev = width < 1200
+    const isMobile = w < 600
+    const isTablet = w >= 600 && w < 1024
+    const useAbbrev = w < 1200
     const tickFontSize = isMobile ? 7 : isTablet ? 8 : 9
     const labelFontSize = isMobile ? 9 : 11
 
-    // X axis baseline
-    ax.append('line')
-      .attr('x1', controlsWidth + margin.left)
-      .attr('x2', controlsWidth + margin.left + plotW)
-      .attr('y1', height - margin.bottom)
-      .attr('y2', height - margin.bottom)
-      .attr('stroke', 'var(--text-3,#888)')
-      .attr('stroke-width', 1)
+    ctx.strokeStyle = tc.text3
+    ctx.lineWidth = 1
+    ctx.beginPath()
+    ctx.moveTo(controlsWidth + margin.left, h - margin.bottom)
+    ctx.lineTo(controlsWidth + margin.left + plotW, h - margin.bottom)
+    ctx.stroke()
 
-    // X ticks, labels, gridlines
     xTicks.forEach((label, i) => {
       const x = xScale(i + 1)
-      ax.append('line')
-        .attr('x1', x)
-        .attr('x2', x)
-        .attr('y1', height - margin.bottom)
-        .attr('y2', height - margin.bottom + 5)
-        .attr('stroke', 'var(--text-3,#888)')
+      ctx.strokeStyle = tc.text3
+      ctx.lineWidth = 1
+      ctx.beginPath()
+      ctx.moveTo(x, h - margin.bottom)
+      ctx.lineTo(x, h - margin.bottom + 5)
+      ctx.stroke()
+
       const displayLabel = useAbbrev ? TICK_ABBREV[label] || label : label
-      const tickText = ax
-        .append('text')
-        .attr('x', x)
-        .attr('y', height - margin.bottom + (isMobile ? 12 : 17))
-        .attr('font-size', tickFontSize)
-        .attr('font-family', 'var(--mono)')
-        .attr('fill', 'var(--text-2,#aaa)')
-        .text(displayLabel)
-      // Rotate labels on narrower screens to prevent overlap
-      if (width < 1200) {
-        const yPos = height - margin.bottom + (isMobile ? 12 : 17)
-        tickText.attr('text-anchor', 'end').attr('transform', `rotate(-35, ${x}, ${yPos})`)
+      ctx.fillStyle = tc.text2
+      ctx.font = `${tickFontSize}px ${_monoFont}`
+      const yPos = h - margin.bottom + (isMobile ? 12 : 17)
+      if (w < 1200) {
+        ctx.save()
+        ctx.translate(x, yPos)
+        ctx.rotate((-35 * Math.PI) / 180)
+        ctx.textAlign = 'right'
+        ctx.textBaseline = 'alphabetic'
+        ctx.fillText(displayLabel, 0, 0)
+        ctx.restore()
       } else {
-        tickText.attr('text-anchor', 'middle')
+        ctx.textAlign = 'center'
+        ctx.textBaseline = 'alphabetic'
+        ctx.fillText(displayLabel, x, yPos)
       }
-      ax.append('line')
-        .attr('x1', x)
-        .attr('x2', x)
-        .attr('y1', margin.top)
-        .attr('y2', height - margin.bottom)
-        .attr('stroke', 'var(--text-3,#888)')
-        .attr('stroke-opacity', 0.12)
-        .attr('stroke-dasharray', '3,3')
+
+      ctx.strokeStyle = tc.text3
+      ctx.globalAlpha = 0.12
+      ctx.setLineDash([3, 3])
+      ctx.lineWidth = 1
+      ctx.beginPath()
+      ctx.moveTo(x, margin.top)
+      ctx.lineTo(x, h - margin.bottom)
+      ctx.stroke()
+      ctx.setLineDash([])
+      ctx.globalAlpha = 1
     })
 
-    // X axis label
-    ax.append('text')
-      .attr('x', controlsWidth + margin.left + plotW / 2)
-      .attr('y', height - margin.bottom + (isMobile ? 50 : 40))
-      .attr('text-anchor', 'middle')
-      .attr('font-size', labelFontSize)
-      .attr('font-weight', 600)
-      .attr('font-family', 'var(--mono)')
-      .attr('fill', 'var(--text-1,#eee)')
-      .text(xAxisDef.label)
+    ctx.fillStyle = tc.text1
+    ctx.font = `600 ${labelFontSize}px ${_monoFont}`
+    ctx.textAlign = 'center'
+    ctx.textBaseline = 'alphabetic'
+    ctx.fillText(xAxisDef.label, controlsWidth + margin.left + plotW / 2, h - margin.bottom + (isMobile ? 50 : 40))
 
-    if (!yAxisDef) return // 1D: no Y axis
+    if (!yAxisDef) return
 
     const yTicks = yAxisDef.ticks
 
-    // Y axis baseline
-    ax.append('line')
-      .attr('x1', controlsWidth + margin.left)
-      .attr('x2', controlsWidth + margin.left)
-      .attr('y1', margin.top)
-      .attr('y2', height - margin.bottom)
-      .attr('stroke', 'var(--text-3,#888)')
-      .attr('stroke-width', 1)
+    ctx.strokeStyle = tc.text3
+    ctx.lineWidth = 1
+    ctx.beginPath()
+    ctx.moveTo(controlsWidth + margin.left, margin.top)
+    ctx.lineTo(controlsWidth + margin.left, h - margin.bottom)
+    ctx.stroke()
 
-    // Y ticks, labels, gridlines
     yTicks.forEach((label, i) => {
       const y = yScale(i + 1)
-      ax.append('line')
-        .attr('x1', controlsWidth + margin.left - 5)
-        .attr('x2', controlsWidth + margin.left)
-        .attr('y1', y)
-        .attr('y2', y)
-        .attr('stroke', 'var(--text-3,#888)')
+      ctx.strokeStyle = tc.text3
+      ctx.lineWidth = 1
+      ctx.beginPath()
+      ctx.moveTo(controlsWidth + margin.left - 5, y)
+      ctx.lineTo(controlsWidth + margin.left, y)
+      ctx.stroke()
+
       const displayLabel = useAbbrev ? TICK_ABBREV[label] || label : label
-      ax.append('text')
-        .attr('x', controlsWidth + margin.left - 9)
-        .attr('y', y + 4)
-        .attr('text-anchor', 'end')
-        .attr('font-size', tickFontSize)
-        .attr('font-family', 'var(--mono)')
-        .attr('fill', 'var(--text-2,#aaa)')
-        .text(displayLabel)
-      ax.append('line')
-        .attr('x1', controlsWidth + margin.left)
-        .attr('x2', controlsWidth + margin.left + plotW)
-        .attr('y1', y)
-        .attr('y2', y)
-        .attr('stroke', 'var(--text-3,#888)')
-        .attr('stroke-opacity', 0.12)
-        .attr('stroke-dasharray', '3,3')
+      ctx.fillStyle = tc.text2
+      ctx.font = `${tickFontSize}px ${_monoFont}`
+      ctx.textAlign = 'right'
+      ctx.textBaseline = 'middle'
+      ctx.fillText(displayLabel, controlsWidth + margin.left - 9, y)
+
+      ctx.strokeStyle = tc.text3
+      ctx.globalAlpha = 0.12
+      ctx.setLineDash([3, 3])
+      ctx.lineWidth = 1
+      ctx.beginPath()
+      ctx.moveTo(controlsWidth + margin.left, y)
+      ctx.lineTo(controlsWidth + margin.left + plotW, y)
+      ctx.stroke()
+      ctx.setLineDash([])
+      ctx.globalAlpha = 1
     })
 
-    // Y axis label (rotated)
     const yLabelX = isMobile
       ? controlsWidth + 8
       : isTablet
         ? controlsWidth + margin.left - 65
         : controlsWidth + margin.left - 118
-    ax.append('text')
-      .attr('transform', `rotate(-90)`)
-      .attr('x', -(margin.top + plotH / 2))
-      .attr('y', yLabelX)
-      .attr('text-anchor', 'middle')
-      .attr('font-size', labelFontSize)
-      .attr('font-weight', 600)
-      .attr('font-family', 'var(--mono)')
-      .attr('fill', 'var(--text-1,#eee)')
-      .text(yAxisDef.label)
+    ctx.save()
+    ctx.translate(yLabelX, margin.top + plotH / 2)
+    ctx.rotate(-Math.PI / 2)
+    ctx.fillStyle = tc.text1
+    ctx.font = `600 ${labelFontSize}px ${_monoFont}`
+    ctx.textAlign = 'center'
+    ctx.textBaseline = 'alphabetic'
+    ctx.fillText(yAxisDef.label, 0, 0)
+    ctx.restore()
+  }
+
+  function _drawPlotFrame() {
+    const ctx = _canvasCtx
+    if (!ctx) return
+    const tc = _getThemeColors()
+    const w = _canvasWidth,
+      h = _canvasHeight
+
+    ctx.save()
+    ctx.setTransform(_canvasDpr, 0, 0, _canvasDpr, 0, 0)
+    ctx.clearRect(0, 0, w, h)
+    ctx.translate(currentZoom.x, currentZoom.y)
+    ctx.scale(currentZoom.k, currentZoom.k)
+
+    _drawPlotAxes(ctx, tc)
+
+    const nodes = _canvasNodes
+    for (let ni = 0; ni < nodes.length; ni++) {
+      const d = nodes[ni]
+      if (d._vs === 'hidden') continue
+      const isHover = _hoveredNode === d
+      const alpha = isHover ? 1 : _nodeAlpha(d)
+      if (alpha <= 0) continue
+      const x = d.x,
+        y = d.y,
+        r = d.radius
+
+      if (d._sprite) {
+        ctx.globalAlpha = alpha
+        ctx.drawImage(d._sprite, x - r, y - r, r * 2, r * 2)
+        const ringColor = d._vs === 'highlighted' ? '#fff' : getColor(normalizeCategory(d.category))
+        ctx.globalAlpha = d._vs === 'highlighted' || isHover ? 1 : alpha
+        ctx.strokeStyle = ringColor
+        ctx.lineWidth = d._vs === 'highlighted' || isHover ? 3 : 2
+        ctx.beginPath()
+        ctx.arc(x, y, r, 0, Math.PI * 2)
+        ctx.stroke()
+      } else {
+        ctx.globalAlpha = isHover ? 1 : alpha
+        ctx.fillStyle = getColor(normalizeCategory(d.category))
+        ctx.beginPath()
+        ctx.arc(x, y, r, 0, Math.PI * 2)
+        ctx.fill()
+        if (d.entityType === 'organization') {
+          ctx.strokeStyle = d._brighterColor
+          ctx.lineWidth = 1.5
+          ctx.stroke()
+        }
+        if (d._vs === 'highlighted') {
+          ctx.globalAlpha = 1
+          ctx.strokeStyle = '#fff'
+          ctx.lineWidth = 3
+          ctx.beginPath()
+          ctx.arc(x, y, r, 0, Math.PI * 2)
+          ctx.stroke()
+        } else if (isHover) {
+          ctx.globalAlpha = 0.8
+          ctx.strokeStyle = getColor(normalizeCategory(d.category))
+          ctx.lineWidth = 3
+          ctx.beginPath()
+          ctx.arc(x, y, r, 0, Math.PI * 2)
+          ctx.stroke()
+        }
+        if (r >= 6) {
+          ctx.globalAlpha = Math.min(0.9, alpha + 0.1)
+          ctx.fillStyle = '#fff'
+          ctx.font = `${r >= 16 ? 8 : r >= 10 ? 6 : 5}px ${_monoFont}`
+          ctx.textAlign = 'center'
+          ctx.textBaseline = 'middle'
+          ctx.fillText(d._initials, x, y)
+        }
+      }
+      if ((d.submissionCount || 0) >= 5) {
+        ctx.globalAlpha = Math.min(0.5, alpha)
+        ctx.strokeStyle = '#fbbf24'
+        ctx.lineWidth = 1
+        ctx.setLineDash([2, 2])
+        ctx.beginPath()
+        ctx.arc(x, y, r + 2, 0, Math.PI * 2)
+        ctx.stroke()
+        ctx.setLineDash([])
+      }
+    }
+
+    ctx.restore()
   }
 
   // Tooltip (suppress on touch devices—tap triggers detail panel via click handler)
