@@ -6,14 +6,7 @@ This guide explains how to read and write data during the workshop, including qu
 
 ## Overview
 
-There are two databases. Most workshop participants work on **staging**, a complete copy of production data that you can freely modify without affecting the live site. The **debugging team** has read-only access to production to test the contribute form and see how real submissions flow through the system.
-
-| Database             | Purpose                     | Who                                         | Access     |
-| -------------------- | --------------------------- | ------------------------------------------- | ---------- |
-| `mappingai_workshop` | Staging - experiment freely | Data Enrichment, Data Quality, Data Seeding | Read/Write |
-| `mappingai`          | Production - the live site  | Debugging team                              | Read-only  |
-
-**Check your .env file** to confirm which database you're connected to.
+The production database is **Neon Postgres** (project `calm-tree-46517731`). If you need database access for development work, email [info@mapping-ai.org](mailto:info@mapping-ai.org) to request environment variables.
 
 ---
 
@@ -224,21 +217,15 @@ Below are examples of well-filled entities based on actual high-quality work.
 
 ### 1. Get your .env file
 
-Your facilitator will provide one of these files:
+Email [info@mapping-ai.org](mailto:info@mapping-ai.org) to request environment variables for database access. You will receive a `.env` file with the `DATABASE_URL` and any other required keys.
 
-| Stream                    | File              | Database Access        |
-| ------------------------- | ----------------- | ---------------------- |
-| Data Enrichment / Quality | `.env.enrichment` | Staging (read/write)   |
-| Data Seeding              | `.env.seeding`    | Staging (read/write)   |
-| Debugging                 | `.env.debugging`  | Production (read-only) |
-
-> ⚠️ **NEVER commit or push your .env file.** It contains database passwords and API keys. Do not paste its contents into commit messages, pull requests, Slack, or any shared location. The `.env` files are gitignored, but be vigilant - leaked credentials require rotating all affected passwords and keys.
+> **NEVER commit or push your .env file.** It contains database passwords and API keys. Do not paste its contents into commit messages, pull requests, Discord, or any shared location. The `.env` files are gitignored, but be vigilant.
 
 ### 2. Place the .env file
 
 ```bash
 cd mapping-ai
-cp /path/to/.env.enrichment .env
+cp /path/to/your-env-file .env
 pnpm install --frozen-lockfile
 ```
 
@@ -435,29 +422,27 @@ VALUES (5678, 1234, 'collaborator', 'Co-authored "AI Governance Framework" paper
 
 To see your changes on the map:
 
-### 1. Export map data from staging
+### 1. Export map data
 
 ```bash
-source .env
-node scripts/export-map-data.js
+pnpm run db:export-map
 # Creates map-data.json in project root
 ```
 
-### 2. Run a local server
+### 2. Run local dev
 
 ```bash
-npx serve .
-# Or: python3 -m http.server 8000
+pnpm run dev
 ```
 
 ### 3. View the map
 
-Open http://localhost:3000/map.html - it loads the local `map-data.json`.
+Open http://localhost:5173/map - it loads the local `map-data.json`.
 
 ### 4. Refresh after changes
 
 ```bash
-node scripts/export-map-data.js
+pnpm run db:export-map
 # Refresh browser
 ```
 
@@ -588,7 +573,7 @@ Decision-maker, Researcher/analyst, Builder, Narrator, Connector/convener, Advis
 
 ## Tips
 
-1. **Always check your DATABASE_URL** - make sure you're on staging, not production.
+1. **Always check your DATABASE_URL** before running any write queries.
 
 2. **Use transactions** for multi-step changes:
 
@@ -599,11 +584,9 @@ Decision-maker, Researcher/analyst, Builder, Narrator, Connector/convener, Advis
    COMMIT;  -- or ROLLBACK if wrong
    ```
 
-3. **The staging database is yours** - don't worry about breaking things.
+3. **Re-export after changes** - the map reads from `map-data.json`, not the database directly.
 
-4. **Re-export after changes** - the map reads from `map-data.json`, not the database.
-
-5. **When in doubt, remove unverifiable claims** - accuracy > completeness.
+4. **When in doubt, remove unverifiable claims** - accuracy > completeness.
 
 ---
 
