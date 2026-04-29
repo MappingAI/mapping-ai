@@ -259,10 +259,44 @@ export function App() {
 
         <hr className="border-none border-t border-[#bbb]/50 my-10" />
 
-        {/* Get involved */}
+        {/* Ways to contribute */}
         <div {...fadeProps(fi++, 'font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3')}>
-          Get involved
+          Ways to contribute
         </div>
+        <p {...fadeProps(fi++, 'mb-4 text-[16.5px]')}>
+          Mapping AI is fully open source. The codebase lives on{' '}
+          <a
+            href="https://github.com/MappingAI/mapping-ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#2563eb] no-underline hover:underline"
+          >
+            GitHub
+          </a>
+          , and we welcome contributions of all kinds: adding data, reporting bugs, building features, improving data
+          quality, helping with outreach, or creating visualizations from the dataset.
+        </p>
+        <p {...fadeProps(fi++, 'mb-4 text-[16.5px]')}>
+          In April 2026, we hosted a mapping party where contributors did all of the above ahead of public release. We
+          coordinate ongoing work through our{' '}
+          <a
+            href="https://discord.gg/2gntpaxV"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#2563eb] no-underline hover:underline"
+          >
+            Discord server
+          </a>
+          .
+        </p>
+        <p {...fadeProps(fi++, 'mb-4 text-[16.5px]')}>
+          If you're a researcher, policymaker, developer, or anyone else with ideas for deeper collaboration, reach out
+          at{' '}
+          <a href="mailto:info@mapping-ai.org" className="text-[#2563eb] no-underline hover:underline">
+            info@mapping-ai.org
+          </a>
+          .
+        </p>
         <p {...fadeProps(fi++, 'mb-4 text-[16.5px]')}>
           If you work in or adjacent to AI policy, governance, safety, labor, or civil society, we welcome your
           contributions to the map.{' '}
