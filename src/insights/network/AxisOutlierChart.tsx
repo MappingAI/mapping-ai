@@ -249,7 +249,7 @@ export function AxisOutlierChart({ entities, mode }: AxisOutlierChartProps) {
 
     // Calculate median and threshold (50% of median)
     const countValues = Object.values(counts).sort((a, b) => a - b)
-    const median = countValues.length > 0 ? countValues[Math.floor(countValues.length / 2)] : 0
+    const median = countValues.length > 0 ? (countValues[Math.floor(countValues.length / 2)] ?? 0) : 0
     const threshold = Math.floor(median * 0.5)
 
     const outliers = new Set<string>()
