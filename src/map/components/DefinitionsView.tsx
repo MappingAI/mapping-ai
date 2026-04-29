@@ -1362,87 +1362,105 @@ export function DefinitionsView() {
 
   const showColorSwitcher = viewMode === 'map' || viewMode === 'scatter'
 
-  const selectStyle: React.CSSProperties = {
+  const btnBase: React.CSSProperties = {
     fontFamily: 'var(--mono)',
     fontSize: '10px',
     letterSpacing: '0.08em',
     textTransform: 'uppercase',
-    background: 'var(--bg-panel)',
-    color: 'var(--text-1)',
-    border: '1px solid var(--line)',
+    padding: '6px 12px',
     borderRadius: '4px',
-    padding: '5px 10px',
+    border: 'none',
     cursor: 'pointer',
-    outline: 'none',
+    transition: 'background 0.15s, color 0.15s',
   }
+  const btnActive: React.CSSProperties = { ...btnBase, background: 'var(--text-1)', color: 'var(--bg-panel)' }
+  const btnInactive: React.CSSProperties = { ...btnBase, background: 'var(--bg-page)', color: 'var(--text-2)' }
+
+  const subViews: { key: SubView; label: string }[] = [
+    { key: 'map', label: 'Map' },
+    { key: 'list', label: 'List' },
+    { key: 'scatter', label: 'Scatter' },
+    { key: 'timeline', label: 'Timeline' },
+    { key: 'trends', label: 'Trends' },
+    { key: 'beliefs', label: 'Beliefs' },
+  ]
 
   return (
-    <div style={{ maxWidth: 1400, margin: '0 auto', padding: '16px 32px' }}>
+    <div style={{ maxWidth: 1100, margin: '0 auto', padding: '24px 40px' }}>
       <div
         style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '12px',
-          marginBottom: '16px',
-          flexWrap: 'wrap',
-          paddingBottom: '8px',
+          fontFamily: 'var(--mono)',
+          fontSize: '11px',
+          letterSpacing: '0.08em',
+          textTransform: 'uppercase',
+          color: 'var(--text-2)',
+          marginBottom: '12px',
         }}
       >
-        <select value={viewMode} onChange={(e) => setViewMode(e.target.value as SubView)} style={selectStyle}>
-          <option value="map">Map</option>
-          <option value="list">List</option>
-          <option value="scatter">Scatter</option>
-          <option value="timeline">Timeline</option>
-          <option value="trends">Trends</option>
-          <option value="beliefs">Beliefs</option>
-        </select>
+        AGI Definition Space ({data.points.length} entities)
+      </div>
+
+      <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '12px', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: '4px' }}>
+          {subViews.map((v) => (
+            <button key={v.key} onClick={() => setViewMode(v.key)} style={viewMode === v.key ? btnActive : btnInactive}>
+              {v.label}
+            </button>
+          ))}
+        </div>
         {showColorSwitcher && (
           <>
-            <span style={{ fontFamily: 'var(--mono)', fontSize: '10px', color: 'var(--text-3)' }}>Color by:</span>
-            <select
-              value={colorMode}
-              onChange={(e) => setColorMode(e.target.value as ColorMode)}
-              style={{ ...selectStyle, letterSpacing: '0.04em' }}
-            >
+            <span style={{ fontFamily: 'var(--mono)', fontSize: '10px', color: 'var(--text-3)', marginLeft: '8px' }}>
+              Color by:
+            </span>
+            <div style={{ display: 'flex', gap: '4px' }}>
               {COLOR_MODE_OPTIONS.map((opt) => (
-                <option key={opt.value} value={opt.value}>
+                <button
+                  key={opt.value}
+                  onClick={() => setColorMode(opt.value)}
+                  style={
+                    colorMode === opt.value
+                      ? {
+                          ...btnBase,
+                          fontSize: '10px',
+                          padding: '4px 8px',
+                          background: 'var(--text-2)',
+                          color: 'var(--bg-panel)',
+                        }
+                      : {
+                          ...btnBase,
+                          fontSize: '10px',
+                          padding: '4px 8px',
+                          background: 'var(--bg-page)',
+                          color: 'var(--text-3)',
+                        }
+                  }
+                >
                   {opt.label}
-                </option>
+                </button>
               ))}
-            </select>
+            </div>
           </>
         )}
-        <span style={{ fontFamily: 'var(--mono)', fontSize: '10px', color: 'var(--text-3)' }}>
+        <span style={{ fontFamily: 'var(--mono)', fontSize: '10px', color: 'var(--text-3)', marginLeft: '8px' }}>
           {data.points.length} definitions
         </span>
       </div>
 
-      <div
-        style={{
-          background: 'var(--bg-panel)',
-          borderRadius: '8px',
-          padding: '20px',
-          margin: '0 0 16px',
-          border: '1px solid var(--line)',
-          width: '100%',
-          overflow: 'auto',
-        }}
-      >
-        {viewMode === 'map' && (
-          <ClusterMapView data={data} colorMode={colorMode} hoveredCategory={hoveredCategory} onSelect={handleSelect} />
-        )}
-        {viewMode === 'list' && <ListView data={data} onSelect={handleSelect} />}
-        {viewMode === 'scatter' && (
-          <ScatterView data={data} colorMode={colorMode} hoveredCategory={hoveredCategory} onSelect={handleSelect} />
-        )}
-        {viewMode === 'timeline' && <TimelineView data={data} />}
-        {viewMode === 'trends' && <TrendsView data={data} />}
-        {viewMode === 'beliefs' && <BeliefsView data={data} />}
+      {viewMode === 'map' && (
+        <ClusterMapView data={data} colorMode={colorMode} hoveredCategory={hoveredCategory} onSelect={handleSelect} />
+      )}
+      {viewMode === 'list' && <ListView data={data} onSelect={handleSelect} />}
+      {viewMode === 'scatter' && (
+        <ScatterView data={data} colorMode={colorMode} hoveredCategory={hoveredCategory} onSelect={handleSelect} />
+      )}
+      {viewMode === 'timeline' && <TimelineView data={data} />}
+      {viewMode === 'trends' && <TrendsView data={data} />}
+      {viewMode === 'beliefs' && <BeliefsView data={data} />}
 
-        {(viewMode === 'map' || viewMode === 'scatter') && (
-          <Legend data={data} colorMode={colorMode} setHoveredCategory={setHoveredCategory} categories={categories} />
-        )}
-      </div>
+      {(viewMode === 'map' || viewMode === 'scatter') && (
+        <Legend data={data} colorMode={colorMode} setHoveredCategory={setHoveredCategory} categories={categories} />
+      )}
 
       {selectedPoint && (
         <DetailModal
@@ -1452,9 +1470,23 @@ export function DefinitionsView() {
         />
       )}
 
+      <div
+        style={{
+          marginTop: '12px',
+          fontFamily: 'var(--mono)',
+          fontSize: '9px',
+          color: 'var(--text-3)',
+          letterSpacing: '0.04em',
+        }}
+      >
+        Source: AGI definition claims from enrichment pipeline. Embeddings: Voyage AI voyage-3. Projection: UMAP.
+      </div>
+
       <a
         href="/insights#agi-definitions"
         style={{
+          display: 'inline-block',
+          marginTop: '8px',
           fontFamily: 'var(--mono)',
           fontSize: '11px',
           color: 'var(--accent)',

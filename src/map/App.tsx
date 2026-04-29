@@ -180,88 +180,23 @@ export function App() {
         </div>
         <div className="control-group">
           <h3>View</h3>
-          <div className="view-mode-toggles">
+          <div className="view-mode-toggles" style={{ display: 'flex', flexWrap: 'wrap', gap: '3px' }}>
             <button className="mode-btn active" data-mode="network">
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 14 14"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              >
-                <circle cx="3" cy="3" r="2" />
-                <circle cx="11" cy="3" r="2" />
-                <circle cx="7" cy="11" r="2" />
-                <line x1="4.5" y1="4" x2="6" y2="9.5" />
-                <line x1="9.5" y1="4" x2="8" y2="9.5" />
-              </svg>
               Network
             </button>
             <button className="mode-btn" data-mode="plot">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <circle cx="3" cy="10" r="1.5" fill="currentColor" />
-                <circle cx="6" cy="5" r="1.5" fill="currentColor" />
-                <circle cx="10" cy="8" r="1.5" fill="currentColor" />
-                <circle cx="11" cy="3" r="1.5" fill="currentColor" />
-              </svg>
               Plot
-            </button>
-            <button className="mode-btn" data-mode="search">
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 14 14"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              >
-                <circle cx="6" cy="6" r="4" />
-                <line x1="9" y1="9" x2="12" y2="12" />
-              </svg>
-              Search <span style={{ fontSize: '9px', verticalAlign: 'super', opacity: 0.7 }}>&#10022;</span>
             </button>
             <button
               className={`mode-btn${reactView === 'resources' ? ' active' : ''}`}
               onClick={() => activateReactView('resources')}
             >
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 14 14"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <rect x="2" y="1" width="10" height="12" rx="1" />
-                <line x1="4.5" y1="4" x2="9.5" y2="4" />
-                <line x1="4.5" y1="7" x2="9.5" y2="7" />
-                <line x1="4.5" y1="10" x2="7.5" y2="10" />
-              </svg>
               Library
             </button>
             <button
               className={`mode-btn${reactView === 'definitions' ? ' active' : ''}`}
               onClick={() => activateReactView('definitions')}
             >
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 14 14"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <circle cx="7" cy="7" r="5" />
-                <path d="M5.5 5.5a1.5 1.5 0 0 1 3 0c0 1-1.5 1.2-1.5 2.5" />
-                <circle cx="7" cy="10.5" r="0.5" fill="currentColor" />
-              </svg>
               Beliefs
             </button>
           </div>
