@@ -4,7 +4,7 @@ import { NetworkPlotView } from './components/NetworkPlotView'
 import { ResourcesView } from './components/ResourcesView'
 import { DefinitionsView } from './components/DefinitionsView'
 
-type ViewMode = 'network' | 'plot' | 'resources' | 'definitions'
+export type ViewMode = 'network' | 'plot' | 'resources' | 'definitions'
 
 interface MapData {
   people: Record<string, unknown>[]
@@ -15,109 +15,6 @@ interface MapData {
   _meta?: { generated_at: string }
 }
 
-const VIEW_ICONS: Record<ViewMode, React.ReactNode> = {
-  network: (
-    <svg
-      width="14"
-      height="14"
-      viewBox="0 0 14 14"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-    >
-      <circle cx="3" cy="3" r="2" />
-      <circle cx="11" cy="3" r="2" />
-      <circle cx="7" cy="11" r="2" />
-      <line x1="4.5" y1="4" x2="6" y2="9.5" />
-      <line x1="9.5" y1="4" x2="8" y2="9.5" />
-    </svg>
-  ),
-  plot: (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5">
-      <circle cx="3" cy="10" r="1.5" fill="currentColor" />
-      <circle cx="6" cy="5" r="1.5" fill="currentColor" />
-      <circle cx="10" cy="8" r="1.5" fill="currentColor" />
-      <circle cx="11" cy="3" r="1.5" fill="currentColor" />
-    </svg>
-  ),
-  resources: (
-    <svg
-      width="14"
-      height="14"
-      viewBox="0 0 14 14"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <rect x="2" y="1" width="10" height="12" rx="1" />
-      <line x1="5" y1="4" x2="9" y2="4" />
-      <line x1="5" y1="7" x2="9" y2="7" />
-      <line x1="5" y1="10" x2="7" y2="10" />
-    </svg>
-  ),
-  definitions: (
-    <svg
-      width="14"
-      height="14"
-      viewBox="0 0 14 14"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-    >
-      <circle cx="4" cy="4" r="2" />
-      <circle cx="10" cy="4" r="2" />
-      <circle cx="4" cy="10" r="2" />
-      <circle cx="10" cy="10" r="2" />
-      <line x1="6" y1="4" x2="8" y2="4" opacity="0.4" />
-      <line x1="4" y1="6" x2="4" y2="8" opacity="0.4" />
-      <line x1="10" y1="6" x2="10" y2="8" opacity="0.4" />
-    </svg>
-  ),
-}
-
-const VIEW_LABELS: Record<ViewMode, string> = {
-  network: 'Network',
-  plot: 'Plot',
-  resources: 'Library',
-  definitions: 'Definitions',
-}
-
-function ThemeToggle() {
-  const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('theme') || 'light'
-  })
-
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme === 'dark' ? 'dark' : '')
-    localStorage.setItem('theme', theme)
-  }, [theme])
-
-  return (
-    <button
-      className="theme-toggle"
-      onClick={() => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))}
-      title="Toggle dark/light mode"
-      style={{
-        position: 'fixed',
-        top: '14px',
-        right: '16px',
-        zIndex: 101,
-        background: 'none',
-        border: 'none',
-        cursor: 'pointer',
-        fontSize: '16px',
-        color: 'var(--text-2)',
-      }}
-    >
-      {theme === 'dark' ? '☀' : '☽'}
-    </button>
-  )
-}
-
 function DisclaimerOverlay({ onDismiss }: { onDismiss: () => void }) {
   return (
     <div
@@ -125,7 +22,7 @@ function DisclaimerOverlay({ onDismiss }: { onDismiss: () => void }) {
         display: 'flex',
         position: 'fixed',
         inset: 0,
-        zIndex: 10000,
+        zIndex: 99999,
         background: 'rgba(0,0,0,0.5)',
         alignItems: 'center',
         justifyContent: 'center',
@@ -191,6 +88,9 @@ function DisclaimerOverlay({ onDismiss }: { onDismiss: () => void }) {
 
 export function App() {
   const [viewMode, setViewMode] = useState<ViewMode>(() => {
+    const hash = window.location.hash.replace('#', '')
+    if (hash === 'library') return 'resources'
+    if (hash === 'definitions') return 'definitions'
     const saved = localStorage.getItem('mapMode')
     if (saved === 'network' || saved === 'plot' || saved === 'resources' || saved === 'definitions') return saved
     return 'network'
@@ -231,18 +131,10 @@ export function App() {
   }, [])
 
   const isEngineView = viewMode === 'network' || viewMode === 'plot'
-  const [engineEverShown, setEngineEverShown] = useState(isEngineView)
-
-  useEffect(() => {
-    if (isEngineView && !engineEverShown) {
-      setEngineEverShown(true)
-    }
-  }, [isEngineView, engineEverShown])
 
   return (
     <>
       <Navigation />
-      <ThemeToggle />
 
       {showDisclaimer && <DisclaimerOverlay onDismiss={handleDismissDisclaimer} />}
 
@@ -258,71 +150,57 @@ export function App() {
           flexDirection: 'column',
         }}
       >
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '2px',
-            padding: '6px 12px',
-            borderBottom: '1px solid var(--line)',
-            background: 'var(--bg-panel)',
-            zIndex: 90,
-            flexShrink: 0,
-          }}
-        >
-          {(Object.keys(VIEW_LABELS) as ViewMode[]).map((mode) => (
-            <button
-              key={mode}
-              onClick={() => handleViewChange(mode)}
-              className="react-mode-btn"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '5px',
-                padding: '6px 12px',
-                border: 'none',
-                borderRadius: '4px',
-                fontFamily: 'var(--mono)',
-                fontSize: '10px',
-                letterSpacing: '0.04em',
-                textTransform: 'uppercase',
-                cursor: 'pointer',
-                transition: 'background 0.15s, color 0.15s',
-                background: viewMode === mode ? 'var(--text-1)' : 'transparent',
-                color: viewMode === mode ? 'var(--bg-page)' : 'var(--text-3)',
-              }}
-            >
-              {VIEW_ICONS[mode]}
-              {VIEW_LABELS[mode]}
-            </button>
-          ))}
-        </div>
-
         <div style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
-          {engineEverShown && (
-            <div
-              style={{
-                display: isEngineView ? 'block' : 'none',
-                width: '100%',
-                height: '100%',
-                position: isEngineView ? 'relative' : 'absolute',
-                pointerEvents: isEngineView ? 'auto' : 'none',
-              }}
-            >
-              <NetworkPlotView viewMode={viewMode as 'network' | 'plot'} />
-            </div>
-          )}
+          <NetworkPlotView viewMode={viewMode} onViewChange={handleViewChange} />
 
           {viewMode === 'resources' && data && (
-            <div style={{ width: '100%', height: '100%', overflow: 'auto' }}>
+            <div
+              style={{
+                position: 'absolute',
+                top: 0,
+                bottom: 0,
+                right: 0,
+                left: 'var(--sidebar-width, 240px)',
+                overflow: 'auto',
+                background: 'var(--bg-page)',
+                zIndex: 80,
+              }}
+            >
               <ResourcesView resources={data.resources as never[]} />
             </div>
           )}
 
           {viewMode === 'definitions' && (
-            <div style={{ width: '100%', height: '100%', overflow: 'auto' }}>
+            <div
+              style={{
+                position: 'absolute',
+                top: 0,
+                bottom: 0,
+                right: 0,
+                left: 'var(--sidebar-width, 240px)',
+                overflow: 'auto',
+                background: 'var(--bg-page)',
+                zIndex: 80,
+              }}
+            >
               <DefinitionsView />
             </div>
+          )}
+
+          {!isEngineView && (
+            <style>{`
+              .map-container,
+              .zoom-controls,
+              #contribute-btn,
+              #contribute-panel,
+              #category-filters,
+              #stance-legend,
+              #source-type-filter,
+              #axis-controls,
+              #secondary-category-filter,
+              #network-sub-tabs,
+              #plot-sub-tabs { display: none !important; }
+            `}</style>
           )}
         </div>
       </div>

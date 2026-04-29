@@ -374,19 +374,15 @@ export function App() {
           >
             Gabriel's stakeholder map
           </a>{' '}
-          charts the broader landscape. (See more in our{' '}
-          <a href="/map" className="text-[#2563eb] no-underline hover:underline">
-            Library
-          </a>
-          .)
+          charts the broader landscape. (See more in our Library view on the map.)
         </p>
         <p {...fadeProps(fi++)} className="mb-4 text-[16.5px]">
-          <span className="font-medium">Mapping AI is different.</span> We track the relationships and edges between
-          people, organizations, and resources, revealing who funds whom, who collaborates across sectors, and where the
-          structural gaps lie. We map changing stances over time, drawing from both public records and crowdsourced
-          contributions. Our data spans every actor type: frontier labs, civil society, government, academia, investors,
-          media, and more. And the tool is open-source and crowdsourced, built to be useful to researchers,
-          policymakers, industry leaders, academics, and civil society alike.
+          <span className="font-medium">Where does Mapping AI add value?</span> We track the relationships and edges
+          between people, organizations, and resources, revealing who funds whom, who collaborates across sectors, and
+          where the structural gaps lie. We map changing stances over time, drawing from both public records and
+          crowdsourced contributions. Our data spans every actor type: frontier labs, civil society, government,
+          academia, investors, media, and more. And the tool is open-source and crowdsourced, built to be useful to
+          researchers, policymakers, industry leaders, academics, and civil society alike.
         </p>
 
         {/* Who We're Mapping */}

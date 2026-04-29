@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
+import type { ViewMode } from '../App'
 
 interface NetworkPlotViewProps {
-  viewMode: 'network' | 'plot'
+  viewMode: ViewMode
+  onViewChange: (mode: ViewMode) => void
 }
 
-export function NetworkPlotView({ viewMode }: NetworkPlotViewProps) {
+export function NetworkPlotView({ viewMode, onViewChange }: NetworkPlotViewProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const engineRef = useRef<{ destroy: () => void } | null>(null)
   const [engineLoaded, setEngineLoaded] = useState(false)
@@ -29,6 +31,7 @@ export function NetworkPlotView({ viewMode }: NetworkPlotViewProps) {
 
   useEffect(() => {
     if (!engineLoaded) return
+    if (viewMode !== 'network' && viewMode !== 'plot') return
     const event = new CustomEvent('map:viewModeChange', { detail: { viewMode } })
     window.dispatchEvent(event)
   }, [viewMode, engineLoaded])
@@ -92,6 +95,108 @@ export function NetworkPlotView({ viewMode }: NetworkPlotViewProps) {
 
         <div className="control-group">
           <h3>View</h3>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '3px', marginBottom: '6px' }}>
+            {[
+              {
+                key: 'network' as ViewMode,
+                label: 'Network',
+                icon: (
+                  <svg
+                    width="11"
+                    height="11"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                  >
+                    <circle cx="3" cy="3" r="2" />
+                    <circle cx="11" cy="3" r="2" />
+                    <circle cx="7" cy="11" r="2" />
+                    <line x1="4.5" y1="4" x2="6" y2="9.5" />
+                    <line x1="9.5" y1="4" x2="8" y2="9.5" />
+                  </svg>
+                ),
+              },
+              {
+                key: 'plot' as ViewMode,
+                label: 'Plot',
+                icon: (
+                  <svg width="11" height="11" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <circle cx="3" cy="10" r="1.5" fill="currentColor" />
+                    <circle cx="6" cy="5" r="1.5" fill="currentColor" />
+                    <circle cx="10" cy="8" r="1.5" fill="currentColor" />
+                    <circle cx="11" cy="3" r="1.5" fill="currentColor" />
+                  </svg>
+                ),
+              },
+              {
+                key: 'resources' as ViewMode,
+                label: 'Library',
+                icon: (
+                  <svg
+                    width="11"
+                    height="11"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <rect x="2" y="1" width="10" height="12" rx="1" />
+                    <line x1="5" y1="4" x2="9" y2="4" />
+                    <line x1="5" y1="7" x2="9" y2="7" />
+                    <line x1="5" y1="10" x2="7" y2="10" />
+                  </svg>
+                ),
+              },
+              {
+                key: 'definitions' as ViewMode,
+                label: 'Defs',
+                icon: (
+                  <svg
+                    width="11"
+                    height="11"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                  >
+                    <circle cx="4" cy="4" r="2" />
+                    <circle cx="10" cy="4" r="2" />
+                    <circle cx="4" cy="10" r="2" />
+                    <circle cx="10" cy="10" r="2" />
+                  </svg>
+                ),
+              },
+            ].map((v) => (
+              <button
+                key={v.key}
+                onClick={() => onViewChange(v.key)}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '3px',
+                  padding: '3px 6px',
+                  border: 'none',
+                  borderRadius: '3px',
+                  fontFamily: 'var(--mono)',
+                  fontSize: '9px',
+                  letterSpacing: '0.04em',
+                  textTransform: 'uppercase',
+                  cursor: 'pointer',
+                  transition: 'background 0.15s, color 0.15s',
+                  background: viewMode === v.key ? 'var(--text-1)' : 'transparent',
+                  color: viewMode === v.key ? 'var(--bg-page)' : 'var(--text-3)',
+                }}
+              >
+                {v.icon}
+                {v.label}
+              </button>
+            ))}
+          </div>
           <div className="view-toggles" id="network-sub-tabs">
             <button className="view-btn active" data-view="all">
               All

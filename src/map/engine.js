@@ -4391,14 +4391,14 @@ export function initMapEngine() {
     }
   })
 
-  // Nav
-  const path = window.location.pathname
-  document.querySelectorAll('.nav-links a').forEach((a) => {
-    if (a.getAttribute('href') === path) a.classList.add('active')
-  })
-  document.querySelector('.nav-hamburger').addEventListener('click', () => {
-    document.querySelector('.nav-links').classList.toggle('open')
-  })
+  // Nav (guard: React Navigation component may use different selectors)
+  var navHamburger = document.querySelector('.nav-hamburger')
+  if (navHamburger) {
+    navHamburger.addEventListener('click', () => {
+      var navLinks = document.querySelector('.nav-links')
+      if (navLinks) navLinks.classList.toggle('open')
+    })
+  }
 
   {
     let _resizeTimer

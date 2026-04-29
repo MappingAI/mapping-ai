@@ -555,7 +555,9 @@ export function ResourcesView({ resources, onEntityClick }: ResourcesViewProps) 
         )}
 
         <div className="mb-8">
-          <div className="font-mono text-[10px] tracking-[0.08em] uppercase text-[#888] mb-2">Sister Maps & Tools</div>
+          <div className="font-mono text-[10px] tracking-[0.08em] uppercase text-[#888] mb-2">
+            Adjacent Tools and Resources
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
             {[
               { name: 'AI Policy Network', url: 'https://theaipn.org/', desc: 'Policy community network and events' },
