@@ -153,7 +153,7 @@ export function NetworkPlotView({ viewMode, onViewChange }: NetworkPlotViewProps
               },
               {
                 key: 'definitions' as ViewMode,
-                label: 'Defs',
+                label: 'Beliefs',
                 icon: (
                   <svg
                     width="11"
@@ -188,6 +188,8 @@ export function NetworkPlotView({ viewMode, onViewChange }: NetworkPlotViewProps
                   textTransform: 'uppercase',
                   cursor: 'pointer',
                   transition: 'background 0.15s, color 0.15s',
+                  flexShrink: 0,
+                  whiteSpace: 'nowrap',
                   background: viewMode === v.key ? 'var(--text-1)' : 'transparent',
                   color: viewMode === v.key ? 'var(--bg-page)' : 'var(--text-3)',
                 }}

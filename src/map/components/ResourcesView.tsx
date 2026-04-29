@@ -37,6 +37,18 @@ const RESOURCE_TYPE_EMOJI: Record<string, string> = {
   'Substack/Newsletter': '\u{1F4E7}',
 }
 
+const RESOURCE_TYPE_COLORS: Record<string, string> = {
+  Report: '#3498db',
+  'Academic Paper': '#8e44ad',
+  Essay: '#27ae60',
+  'Substack/Newsletter': '#e67e22',
+  Book: '#c0392b',
+  Podcast: '#f39c12',
+  Video: '#e74c3c',
+  'News Article': '#7f8c8d',
+  Website: '#2c3e50',
+}
+
 const STANCE_COLORS: Record<string, string> = {
   Accelerate: '#e74c3c',
   'Light-touch': '#e67e22',
@@ -98,11 +110,13 @@ function ResourceCard({ resource, onSelect }: { resource: Resource; onSelect: ()
   const displayTitle = resource.title || resource.name
   const topicTags = (resource.topic_tags ?? []).slice(0, 2)
   const hasBeliefs = resource.advocated_stance || resource.advocated_timeline || resource.advocated_risk
+  const borderColor = RESOURCE_TYPE_COLORS[resource.resource_type ?? ''] ?? '#ccc'
 
   return (
     <button
       onClick={onSelect}
-      className="block w-full text-left bg-white border border-[#bbb]/40 rounded-lg p-4 hover:border-[#888] transition-colors duration-150 cursor-pointer group"
+      className="block w-full text-left bg-white border border-[#bbb]/40 rounded-lg py-5 pr-4 pl-4 hover:border-[#888] hover:shadow-sm transition-all duration-150 cursor-pointer group"
+      style={{ borderLeft: `3px solid ${borderColor}` }}
     >
       <div className="flex items-start gap-2.5 mb-2">
         <span className="text-lg leading-none mt-0.5 shrink-0">{getTypeEmoji(resource.resource_type)}</span>
@@ -512,7 +526,7 @@ export function ResourcesView({ resources, onEntityClick }: ResourcesViewProps) 
   }, [])
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen" style={{ background: '#faf9f7' }}>
       <style>{`
         @keyframes slide-in-from-right {
           from { transform: translateX(100%); }
@@ -529,7 +543,7 @@ export function ResourcesView({ resources, onEntityClick }: ResourcesViewProps) 
         }
       `}</style>
 
-      <div className="max-w-5xl mx-auto px-5 py-6">
+      <div className="max-w-5xl mx-auto" style={{ padding: '24px 28px' }}>
         <div className="mb-6">
           <div className="font-mono text-[11px] tracking-[0.1em] uppercase text-[#888] mb-1">Library</div>
           <h1 className="font-serif text-[24px] font-normal text-[#1a1a1a] m-0">Resources</h1>
@@ -554,8 +568,8 @@ export function ResourcesView({ resources, onEntityClick }: ResourcesViewProps) 
           </div>
         )}
 
-        <div className="mb-8">
-          <div className="font-mono text-[10px] tracking-[0.08em] uppercase text-[#888] mb-2">
+        <div className="mb-8 bg-[#f8f7f5] rounded-lg p-4">
+          <div className="font-mono text-[10px] tracking-[0.08em] uppercase mb-2" style={{ color: 'var(--accent)' }}>
             Adjacent Tools and Resources
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
@@ -587,7 +601,7 @@ export function ResourcesView({ resources, onEntityClick }: ResourcesViewProps) 
           </div>
         </div>
 
-        <div className="bg-[#f8f7f5] rounded-lg p-4 mb-6">
+        <div className="bg-[#f8f7f5] rounded-lg p-4" style={{ margin: '0 0 20px 0' }}>
           <div className="flex flex-wrap items-center gap-3 mb-3">
             <div className="relative flex-1 min-w-[200px] max-w-sm">
               <input
@@ -657,7 +671,7 @@ export function ResourcesView({ resources, onEntityClick }: ResourcesViewProps) 
         </div>
 
         <div className="flex items-center justify-between mb-3">
-          <span className="font-mono text-[10px] text-[#888] tracking-wide">
+          <span className="font-mono text-[10px] text-[#888] tracking-wide bg-[#eee] rounded-full px-2.5 py-0.5">
             {filtered.length} result{filtered.length !== 1 ? 's' : ''}
           </span>
           {(activeTopicTags.size > 0 || activeFormatTags.size > 0 || activeType || searchQuery) && (

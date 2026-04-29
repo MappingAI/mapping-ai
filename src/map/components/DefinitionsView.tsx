@@ -1106,66 +1106,86 @@ export function DefinitionsView() {
 
   const showColorSwitcher = viewMode === 'map' || viewMode === 'scatter'
 
-  const subViews: { key: SubView; label: string }[] = [
-    { key: 'map', label: 'Map' },
-    { key: 'list', label: 'List' },
-    { key: 'scatter', label: 'Scatter' },
-    { key: 'timeline', label: 'Timeline' },
-    { key: 'trends', label: 'Trends' },
-    { key: 'beliefs', label: 'Beliefs' },
-  ]
-
   return (
-    <div className="p-4">
-      <div className="flex items-center gap-3 mb-3 flex-wrap">
-        <div className="flex gap-1">
-          {subViews.map((v) => (
-            <button
-              key={v.key}
-              onClick={() => setViewMode(v.key)}
-              className={`font-mono text-[10px] tracking-[0.08em] uppercase px-3 py-1.5 rounded transition-colors ${
-                viewMode === v.key ? 'bg-[#1a1a1a] text-white' : 'bg-[#eee] text-[#555] hover:bg-[#ddd]'
-              }`}
-            >
-              {v.label}
-            </button>
-          ))}
-        </div>
+    <div style={{ padding: '16px 20px' }}>
+      <div className="flex items-center gap-3 mb-4 flex-wrap">
+        <select
+          value={viewMode}
+          onChange={(e) => setViewMode(e.target.value as SubView)}
+          style={{
+            fontFamily: 'var(--mono)',
+            fontSize: '10px',
+            letterSpacing: '0.08em',
+            textTransform: 'uppercase',
+            background: 'var(--bg-panel)',
+            color: 'var(--text-1)',
+            border: '1px solid var(--line)',
+            borderRadius: '4px',
+            padding: '4px 8px',
+            cursor: 'pointer',
+          }}
+        >
+          <option value="map">Map</option>
+          <option value="list">List</option>
+          <option value="scatter">Scatter</option>
+          <option value="timeline">Timeline</option>
+          <option value="trends">Trends</option>
+          <option value="beliefs">Beliefs</option>
+        </select>
         {showColorSwitcher && (
           <>
             <span className="font-mono text-[10px] text-[#888]">Color by:</span>
-            <div className="flex gap-1">
+            <select
+              value={colorMode}
+              onChange={(e) => setColorMode(e.target.value as ColorMode)}
+              style={{
+                fontFamily: 'var(--mono)',
+                fontSize: '10px',
+                letterSpacing: '0.04em',
+                textTransform: 'uppercase',
+                background: 'var(--bg-panel)',
+                color: 'var(--text-1)',
+                border: '1px solid var(--line)',
+                borderRadius: '4px',
+                padding: '4px 8px',
+                cursor: 'pointer',
+              }}
+            >
               {COLOR_MODE_OPTIONS.map((opt) => (
-                <button
-                  key={opt.value}
-                  onClick={() => setColorMode(opt.value)}
-                  className={`font-mono text-[10px] px-2 py-1 rounded transition-colors ${
-                    colorMode === opt.value ? 'bg-[#555] text-white' : 'bg-[#f5f5f5] text-[#888] hover:bg-[#eee]'
-                  }`}
-                >
+                <option key={opt.value} value={opt.value}>
                   {opt.label}
-                </button>
+                </option>
               ))}
-            </div>
+            </select>
           </>
         )}
         <span className="font-mono text-[10px] text-[#999]">{data.points.length} definitions</span>
       </div>
 
-      {viewMode === 'map' && (
-        <ClusterMapView data={data} colorMode={colorMode} hoveredCategory={hoveredCategory} onSelect={handleSelect} />
-      )}
-      {viewMode === 'list' && <ListView data={data} onSelect={handleSelect} />}
-      {viewMode === 'scatter' && (
-        <ScatterView data={data} colorMode={colorMode} hoveredCategory={hoveredCategory} onSelect={handleSelect} />
-      )}
-      {viewMode === 'timeline' && <TimelineView data={data} />}
-      {viewMode === 'trends' && <TrendsView data={data} />}
-      {viewMode === 'beliefs' && <BeliefsView data={data} />}
+      <div
+        style={{
+          background: 'white',
+          borderRadius: '8px',
+          padding: '24px',
+          margin: '0 0 16px',
+          border: '1px solid var(--line)',
+        }}
+      >
+        {viewMode === 'map' && (
+          <ClusterMapView data={data} colorMode={colorMode} hoveredCategory={hoveredCategory} onSelect={handleSelect} />
+        )}
+        {viewMode === 'list' && <ListView data={data} onSelect={handleSelect} />}
+        {viewMode === 'scatter' && (
+          <ScatterView data={data} colorMode={colorMode} hoveredCategory={hoveredCategory} onSelect={handleSelect} />
+        )}
+        {viewMode === 'timeline' && <TimelineView data={data} />}
+        {viewMode === 'trends' && <TrendsView data={data} />}
+        {viewMode === 'beliefs' && <BeliefsView data={data} />}
 
-      {(viewMode === 'map' || viewMode === 'scatter') && (
-        <Legend data={data} colorMode={colorMode} setHoveredCategory={setHoveredCategory} categories={categories} />
-      )}
+        {(viewMode === 'map' || viewMode === 'scatter') && (
+          <Legend data={data} colorMode={colorMode} setHoveredCategory={setHoveredCategory} categories={categories} />
+        )}
+      </div>
 
       {selectedPoint && (
         <DetailModal
@@ -1175,7 +1195,7 @@ export function DefinitionsView() {
         />
       )}
 
-      <div className="mt-6 pt-3 border-t border-[#eee]">
+      <div className="pt-3 border-t border-[#eee]">
         <a
           href="/insights#agi-definitions"
           className="font-mono text-[10px] text-[#2563eb] hover:underline tracking-[0.04em]"

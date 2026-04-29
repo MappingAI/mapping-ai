@@ -132,6 +132,45 @@ export function App() {
 
   const isEngineView = viewMode === 'network' || viewMode === 'plot'
 
+  const viewSwitcher = (
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '6px',
+        padding: '8px 16px',
+        borderBottom: '1px solid var(--line)',
+        fontFamily: 'var(--mono)',
+        fontSize: '10px',
+        letterSpacing: '0.04em',
+        textTransform: 'uppercase' as const,
+        background: 'var(--bg-panel)',
+      }}
+    >
+      {(['network', 'plot', 'resources', 'definitions'] as ViewMode[]).map((m) => (
+        <button
+          key={m}
+          onClick={() => handleViewChange(m)}
+          style={{
+            padding: '4px 10px',
+            border: 'none',
+            borderRadius: '3px',
+            fontFamily: 'inherit',
+            fontSize: 'inherit',
+            letterSpacing: 'inherit',
+            textTransform: 'inherit' as const,
+            cursor: 'pointer',
+            background: viewMode === m ? 'var(--text-1)' : 'transparent',
+            color: viewMode === m ? 'var(--bg-page)' : 'var(--text-3)',
+            transition: 'background 0.15s, color 0.15s',
+          }}
+        >
+          {{ network: 'Network', plot: 'Plot', resources: 'Library', definitions: 'Beliefs' }[m]}
+        </button>
+      ))}
+    </div>
+  )
+
   return (
     <>
       <Navigation />
@@ -159,14 +198,18 @@ export function App() {
                 position: 'absolute',
                 top: 0,
                 bottom: 0,
+                left: 0,
                 right: 0,
-                left: 'var(--sidebar-width, 240px)',
-                overflow: 'auto',
-                background: 'var(--bg-page)',
+                display: 'flex',
+                flexDirection: 'column',
+                background: 'var(--bg-panel)',
                 zIndex: 80,
               }}
             >
-              <ResourcesView resources={data.resources as never[]} />
+              {viewSwitcher}
+              <div style={{ flex: 1, overflow: 'auto' }}>
+                <ResourcesView resources={data.resources as never[]} />
+              </div>
             </div>
           )}
 
@@ -176,14 +219,18 @@ export function App() {
                 position: 'absolute',
                 top: 0,
                 bottom: 0,
+                left: 0,
                 right: 0,
-                left: 'var(--sidebar-width, 240px)',
-                overflow: 'auto',
-                background: 'var(--bg-page)',
+                display: 'flex',
+                flexDirection: 'column',
+                background: 'var(--bg-panel)',
                 zIndex: 80,
               }}
             >
-              <DefinitionsView />
+              {viewSwitcher}
+              <div style={{ flex: 1, overflow: 'auto' }}>
+                <DefinitionsView />
+              </div>
             </div>
           )}
 
@@ -193,13 +240,13 @@ export function App() {
               .zoom-controls,
               #contribute-btn,
               #contribute-panel,
-              #category-filters,
-              #stance-legend,
-              #source-type-filter,
-              #axis-controls,
-              #secondary-category-filter,
-              #network-sub-tabs,
-              #plot-sub-tabs { display: none !important; }
+              .controls,
+              #sidebar-toggle,
+              .tooltip,
+              .share-toast,
+              .onboarding-overlay,
+              #mobile-directory,
+              .mobile-banner { display: none !important; }
             `}</style>
           )}
         </div>
