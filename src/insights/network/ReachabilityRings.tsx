@@ -232,7 +232,7 @@ function OverflowListModal({
                   />
                 ) : (
                   <div
-                    className="w-3 h-3 rounded-sm flex-shrink-0"
+                    className="w-3 h-3  flex-shrink-0"
                     style={{ background: CATEGORY_COLORS[e.category] || '#888' }}
                   />
                 )}
@@ -341,7 +341,7 @@ function CenterPersonModal({ data, onClose }: { data: PersonReachability; onClos
                 <span className="font-medium">{totalPeople}</span> people
               </div>
               <div className="font-mono text-[10px] text-[#666] flex items-center gap-1">
-                <span className="w-2 h-2 rounded-sm bg-[#888]" />
+                <span className="w-2 h-2  bg-[#888]" />
                 <span className="font-medium">{totalOrgs}</span> organizations
               </div>
             </div>
@@ -381,7 +381,7 @@ function CenterPersonModal({ data, onClose }: { data: PersonReachability; onClos
                             />
                           ) : (
                             <div
-                              className="w-2 h-2 rounded-sm flex-shrink-0"
+                              className="w-2 h-2  flex-shrink-0"
                               style={{ background: CATEGORY_COLORS[e.category] || '#888' }}
                             />
                           )}
