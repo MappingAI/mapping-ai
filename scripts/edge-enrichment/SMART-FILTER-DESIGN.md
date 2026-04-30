@@ -1,6 +1,6 @@
 # Edge Enrichment: Post-Processing Roadmap
 
-## Current State (April 30, 2026 - Post Claims QC)
+## Current State (April 30, 2026 - Post Final Entity QC)
 
 ### Edge Discoveries
 
@@ -14,9 +14,9 @@
 
 | Metric | Count |
 |--------|-------|
-| **Total approved entities** | **1,899** |
-| **Total edges** | **3,306** |
-| New entities (combined-v4) | 271 |
+| **Total approved entities** | **~1,891** |
+| **Total edges** | **~3,297** |
+| New entities (combined-v4) | 263 |
 | New edges (from discovery) | 1,176 |
 
 ### Enrichment Quality (combined-v4)
@@ -24,10 +24,13 @@
 | Metric | Count |
 |--------|-------|
 | Entities created | 279 |
-| Duplicates deleted (entity QC) | 7 |
-| Duplicates deleted (claims QC) | 1 |
-| Final new entities | 271 |
-| Quality issues fixed | 31 field updates |
+| Duplicates merged (entity QC) | 7 |
+| Duplicates merged (claims QC) | 1 |
+| Duplicates merged (final QC) | 6 |
+| Non-AI entities deleted | 2 |
+| Final new entities | 263 |
+| Quality issues fixed | 48+ field updates |
+| Parent org assignments | 15 |
 | Notes flagged for verification | 18 |
 
 ### Source Attribution (Claims)
@@ -323,6 +326,65 @@
   - Total claims: 1,752 (includes claims from earlier enrichment runs)
   - Approved entities: 1,899 (down 1 from merge)
   - Combined-v4 entities: 271 (down 1 from merge)
+
+### Step 1.17: Auto-Fix Field Value Issues ✅
+- **Identified issues via form validation check:**
+  - 251 entities with invalid `belief_evidence_source` ("Inferred from actions/associations")
+  - 60 entities with invalid categories (person categories wrong)
+  - 58 entities with invalid `belief_threat_models` ("Privacy", "Weapons proliferation")
+  - 23 claims with invalid confidence value ("unverified")
+  - 83 entities potentially needing parent_org assignment
+  - 16 potential duplicates with existing entities
+- **Auto-fixes applied:**
+  - 251 evidence source: "Inferred from actions/associations" → "Inferred from actions"
+  - 1 person category: "Researcher/analyst" → "Researcher"
+  - 10 person category: "VC/Capital/Philanthropy" → "Investor"
+  - 16 threat model: "Weapons proliferation" → "Weapons"
+  - 42 threat model: removed invalid "Privacy"
+  - 23 claims: confidence "unverified" → "low"
+- **Note:** Category values "Deployers & Platforms" and "Infrastructure & Compute" are CORRECT (no "AI " prefix). Reverted any erroneous prefix additions.
+
+### Step 1.18: Final Entity QC Review ✅
+- Exported `docs/combined-v4-full-review.json` (862KB) for Claude.ai review
+- **Claude.ai reviewed all 271 combined-v4 entities and identified:**
+  - 5 merges with existing entities
+  - 1 internal duplicate
+  - 17 parent org assignments
+  - 25+ field fixes
+  - 2 deletions (no AI relevance)
+- **Script:** `apply-final-entity-fixes.js`
+- **Results:**
+  - 6 entities merged (Johns Hopkins APL, LASR Labs, NIH, OSTP, TU Berlin, Mellon Foundation)
+  - 2 entities deleted (NC General Assembly, Utah AG's Office)
+  - 9 edges remapped to existing entities
+  - 7 parent orgs assigned (Samsung family, Sony family, corporate VC arms, UK FAIR → UKRI)
+  - 17 fields fixed (category, stance, importance, names)
+- **Critical fix:** Sierra Club (#2248) → Sierra (AI startup sierra.ai)
+- **Final entity count:** 263 combined-v4 entities
+
+### Step 1.19: Additional Parent Org Assignments ✅
+- Applied 8 additional parent relationships based on entity name analysis:
+  - Mozilla Ventures → Mozilla Foundation
+  - Mozilla Technology Fund → Mozilla Foundation
+  - Public Interest Tech Lab → Harvard University
+  - MIT Lincoln Laboratory → MIT
+  - Schwartz Reisman Institute → University of Toronto
+  - Wharton Mack Institute → University of Pennsylvania
+  - University of Cambridge Enterprise Fund → University of Cambridge
+  - Vanderbilt University Institute → Vanderbilt University
+- **Total parent assignments:** 15 (7 from Claude.ai + 8 additional)
+
+### Step 1.20: Threat Model Truncation ⏳
+- 48 entities have >3 threat model values (max allowed: 3)
+- Exported `docs/threat-models-truncation-review.json` for Claude.ai review
+- **Task:** Claude.ai selects best 3 values for each entity based on notes/evidence
+- **After Claude.ai review:** Apply truncations with `apply-threat-model-truncations.js`
+
+### Step 1.21: Entity Naming Review ⏳
+- 53 entities have names with embedded parent info (e.g., "Hoover Institution at Stanford University")
+- Exported `docs/entity-naming-review.json` for Claude.ai review
+- **Task:** Claude.ai identifies names to simplify + parent org to assign
+- **After Claude.ai review:** Apply naming fixes
 
 ---
 

@@ -102,7 +102,24 @@ Executive, Researcher, Policymaker, Investor, Organizer, Journalist, Academic, C
 
 ## Organization categories
 
-Frontier Lab, AI Safety/Alignment, Think Tank/Policy Org, Government/Agency, Academic, VC/Capital/Philanthropy, Labor/Civil Society, Ethics/Bias/Rights, Media/Journalism, Political Campaign/PAC, AI Infrastructure & Compute, AI Deployers & Platforms.
+Frontier Lab, AI Safety/Alignment, Think Tank/Policy Org, Government/Agency, Academic, VC/Capital/Philanthropy, Labor/Civil Society, Ethics/Bias/Rights, Media/Journalism, Political Campaign/PAC, Infrastructure & Compute, Deployers & Platforms.
+
+## Entity field constraints
+
+Form fields enforce cardinality constraints that enrichment scripts must respect:
+
+| Field | Constraint | Allowed values |
+|-------|-----------|----------------|
+| `category` | SELECT_1 | Person: Executive, Researcher, Policymaker, Investor, Organizer, Journalist, Academic, Cultural figure. Org: see list above |
+| `other_categories` | SELECT_MULTIPLE | Same as category (comma-separated) |
+| `belief_regulatory_stance` | SELECT_1 | Accelerate, Light-touch, Moderate, Cautious, Mixed/unclear |
+| `belief_agi_timeline` | SELECT_1 | <2 years, 2-5 years, 5-10 years, 10-20 years, 20+ years, Never, Mixed/unclear |
+| `belief_ai_risk_level` | SELECT_1 | Existential, High, Moderate, Low, Minimal, Mixed/unclear |
+| `threat_models` | SELECT_UP_TO_3 | Max 3 comma-separated values from: Power concentration, Misuse, Accidents/misalignment, Erosion of epistemics, Labor/economic, Surveillance/privacy, Bias/discrimination, Copyright/IP |
+| `evidence_sources` | SELECT_MULTIPLE | Comma-separated: Direct quote, Published writing, Public statement, Inferred from actions |
+| `funding_model` | SELECT_MULTIPLE | Comma-separated: Grants, Contracts, VC, Donations, Government, Revenue, Endowment |
+
+**Enrichment note**: Scripts creating entities must validate against these constraints. `threat_models` is enforced to max 3 values.
 
 ## Version control and deployment practices
 
