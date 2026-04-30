@@ -10,6 +10,13 @@ import {
   ReachabilityRings,
   AxisOutlierChart,
 } from './network'
+import {
+  FundingFlowSankey,
+  FundingConcentration,
+  FunderStanceChart,
+  FundingTimeline,
+  FunderTimingHeatmap,
+} from './funding'
 
 // d3 is loaded from a CDN <script> tag (see index.html) rather than imported as a module,
 // so we don't have compile-time types for it. Treating it as `unknown` forces casts at
@@ -52,6 +59,60 @@ interface MapData {
   _meta?: { generated_at: string }
 }
 
+interface FundingFunder {
+  name: string
+  category: string
+  type: string
+  investments: number
+  unique_recipients: number
+  total_usd: number
+  mean_recipient_stance: number | null
+  first_year: number | null
+  last_year: number | null
+}
+
+interface FundingRecipient {
+  name: string
+  category: string
+  type: string
+  stance: string | null
+  funding_rounds: number
+  unique_funders: number
+  total_usd: number
+}
+
+interface FundingFlow {
+  funder: string
+  funder_category: string
+  recipient_category: string
+  count: number
+  total_usd: number
+}
+
+interface FundingYearData {
+  year: number
+  count: number
+  total_usd: number
+  by_recipient_category: Record<string, { count: number; total_usd: number }>
+}
+
+interface FunderYearData {
+  funder: string
+  funder_category: string
+  year: number
+  count: number
+  total_usd: number
+}
+
+interface FundingData {
+  _meta: { generated_at: string; total_edges: number }
+  funders: FundingFunder[]
+  recipients: FundingRecipient[]
+  flows: FundingFlow[]
+  byYear: FundingYearData[]
+  funderByYear: FunderYearData[]
+}
+
 /* ────────────────────────────────────────────
    Constants
    ──────────────────────────────────────────── */
@@ -67,6 +128,8 @@ const TOC_ITEMS = [
   { id: 'threat-models', label: 'Threat Models' },
   { id: 'network', label: 'Connectivity' },
   { id: 'bridge-builders', label: 'Bridge Builders' },
+  { id: 'funding-flows', label: 'Funding Flows' },
+  { id: 'funding-timing', label: 'Funding Timing' },
   { id: 'crosspartisan', label: 'Crosspartisan' },
   { id: 'agi-definitions', label: 'AGI Definitions' },
 ]
@@ -786,6 +849,7 @@ function TableOfContents({ activeId }: { activeId: string }) {
 
 export function App() {
   const [data, setData] = useState<MapData | null>(null)
+  const [fundingData, setFundingData] = useState<FundingData | null>(null)
   const [activeSection, setActiveSection] = useState('overview')
   const activeSectionRef = useRef('overview')
 
@@ -796,14 +860,18 @@ export function App() {
       fetch('/map-detail.json')
         .then((r) => r.json())
         .catch(() => ({})),
+      fetch('/funding-data.json')
+        .then((r) => r.json())
+        .catch(() => null),
     ])
-      .then(([mapData, detail]: [MapData, Record<string, Partial<Entity>>]) => {
+      .then(([mapData, detail, funding]: [MapData, Record<string, Partial<Entity>>, FundingData | null]) => {
         const all = [...(mapData.people || []), ...(mapData.organizations || []), ...(mapData.resources || [])]
         for (const entity of all) {
           const d = detail[String(entity.id)]
           if (d) Object.assign(entity, d)
         }
         setData(mapData)
+        if (funding) setFundingData(funding)
       })
       .catch((err) => console.error('Failed to load data:', err))
   }, [])
@@ -1124,10 +1192,151 @@ export function App() {
         <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
 
         {/* ═══════════════════════════════════════════ */}
-        {/* SECTION 6: CROSSPARTISAN CONVERGENCE        */}
+        {/* SECTION 6: FUNDING FLOWS                    */}
         {/* ═══════════════════════════════════════════ */}
 
-        <SectionLabel id="crosspartisan">Insight 6</SectionLabel>
+        <SectionLabel id="funding-flows">Insight 6</SectionLabel>
+        <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">Funding Flows</h2>
+
+        <Para>
+          Who funds whom in the AI ecosystem? We track <span className="font-mono">{fundingData?._meta?.total_edges || '—'}</span> funding
+          relationships from edge discovery data, connecting funders (VCs, philanthropies, government agencies, Big Tech)
+          to recipient organizations. This reveals the capital allocation patterns shaping AI development and governance.
+        </Para>
+
+        {fundingData && (
+          <>
+            <ChartContainer
+              title="Funding flows: Top funders → recipient categories"
+              source="Top 12 funders by investment count. Width = number of investments to each category."
+            >
+              <FundingFlowSankey flows={fundingData.flows} funders={fundingData.funders} />
+            </ChartContainer>
+
+            <Para>
+              The Sankey diagram shows where capital flows from major funders to different organization types.
+              Open Philanthropy and Good Ventures heavily fund AI Safety organizations, while Big Tech
+              companies invest in Frontier Labs and compute infrastructure. Government agencies like NSF
+              and DARPA fund academic research.
+            </Para>
+
+            <h3 className="font-serif text-[18px] font-normal mt-8 mb-3">Funding concentration</h3>
+
+            <Para>
+              How concentrated is AI funding? A small number of recipients receive the majority of capital,
+              with frontier labs dominating the top positions.
+            </Para>
+
+            <ChartContainer
+              title="Top recipients by total funding"
+              source="Log scale. Hover for details. Only organizations with known funding amounts shown."
+            >
+              <FundingConcentration
+                recipients={fundingData.recipients}
+                showTooltip={showTooltip}
+                hideTooltip={hideTooltip}
+              />
+            </ChartContainer>
+
+            <h3 className="font-serif text-[18px] font-normal mt-8 mb-3">Funder → recipient stance alignment</h3>
+
+            <Para>
+              Do funders select recipients that share their regulatory worldview? We measure the mean regulatory
+              stance of each funder's recipients. Lower values indicate the funder's portfolio skews accelerationist;
+              higher values indicate precautionary leanings.
+            </Para>
+
+            <ChartContainer
+              title="Mean recipient regulatory stance by funder"
+              source="Scale: 1 = Accelerate, 6 = Precautionary. Only funders with 5+ investments and recipients with known stances shown."
+            >
+              <FunderStanceChart
+                funders={fundingData.funders}
+                showTooltip={showTooltip}
+                hideTooltip={hideTooltip}
+              />
+            </ChartContainer>
+
+            <Finding>
+              Funding patterns reveal ideological clustering: philanthropic funders like Open Philanthropy and
+              Good Ventures fund organizations with higher (more precautionary) regulatory stances, while
+              venture capital and Big Tech investments flow to organizations with lower (more accelerationist)
+              stances. This structural pattern suggests funders either select for alignment or shape grantee positions.
+            </Finding>
+          </>
+        )}
+
+        <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
+
+        {/* ═══════════════════════════════════════════ */}
+        {/* SECTION 7: FUNDING TIMING                   */}
+        {/* ═══════════════════════════════════════════ */}
+
+        <SectionLabel id="funding-timing">Insight 7</SectionLabel>
+        <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">Funding Timing & Patterns</h2>
+
+        <Para>
+          When did the AI funding explosion happen, and how did different funders enter the space?
+          Temporal patterns reveal whether certain funders led or followed, and whether funding waves
+          concentrated in specific organization types.
+        </Para>
+
+        {fundingData && (
+          <>
+            <ChartContainer
+              title="AI funding by year (2015–2026)"
+              source="Stacked area by recipient category. Toggle between count of investments and total USD."
+            >
+              <FundingTimeline
+                byYear={fundingData.byYear}
+                showTooltip={showTooltip}
+                hideTooltip={hideTooltip}
+              />
+            </ChartContainer>
+
+            <Para>
+              The funding timeline shows dramatic acceleration from 2022 onwards, coinciding with the
+              release of GPT-3 and growing public attention to AI capabilities. Frontier Lab funding
+              dominates by dollar volume, while AI Safety and Academic funding show steady but smaller growth.
+            </Para>
+
+            <h3 className="font-serif text-[18px] font-normal mt-8 mb-3">Funder timing patterns</h3>
+
+            <Para>
+              When did each major funder deploy capital? The heatmap shows investment activity by year,
+              revealing which funders were early movers and which scaled up more recently.
+            </Para>
+
+            <ChartContainer
+              title="Investment timing by funder (2018–2026)"
+              source="Cell intensity = number of investments that year. Top 15 funders by total investment count."
+            >
+              <FunderTimingHeatmap
+                funderByYear={fundingData.funderByYear}
+                funders={fundingData.funders}
+                showTooltip={showTooltip}
+                hideTooltip={hideTooltip}
+              />
+            </ChartContainer>
+
+            <Finding>
+              Open Philanthropy and related EA funders show consistent investment from 2018 onwards,
+              predating the mainstream AI funding boom. Big Tech companies (Google, Microsoft, Amazon)
+              dramatically increased investment starting in 2023–2024. Government funding (NSF, DARPA,
+              Commerce) has grown steadily but lags private capital in both timing and scale. This
+              temporal pattern suggests philanthropic funders helped build the AI safety field before
+              commercial interest peaked.
+            </Finding>
+          </>
+        )}
+
+        <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
+
+        {/* ═══════════════════════════════════════════ */}
+        {/* SECTION 8: CROSSPARTISAN CONVERGENCE        */}
+        {/* ═══════════════════════════════════════════ */}
+
+        <SectionLabel id="crosspartisan">Insight 8</SectionLabel>
         <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">
           Crosspartisan Convergence on AI Policy
         </h2>
@@ -1166,10 +1375,10 @@ export function App() {
         <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
 
         {/* ═══════════════════════════════════════════ */}
-        {/* SECTION 5: AGI DEFINITION SPACE             */}
+        {/* SECTION 9: AGI DEFINITION SPACE             */}
         {/* ═══════════════════════════════════════════ */}
 
-        <SectionLabel id="agi-definitions">Insight 7</SectionLabel>
+        <SectionLabel id="agi-definitions">Insight 9</SectionLabel>
         <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">The AGI Definition Space</h2>
 
         <Para>

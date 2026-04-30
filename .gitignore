@@ -27,6 +27,7 @@ data/*-enrichment-progress.json
 # Data files (generated from DB during deploy, not tracked in git)
 map-data.json
 map-detail.json
+funding-data.json
 public/claims-detail.json
 public/agi-definitions.json
 backup-*.json
