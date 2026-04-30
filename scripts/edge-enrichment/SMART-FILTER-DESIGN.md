@@ -374,17 +374,24 @@
   - Vanderbilt University Institute → Vanderbilt University
 - **Total parent assignments:** 15 (7 from Claude.ai + 8 additional)
 
-### Step 1.20: Threat Model Truncation ⏳
-- 48 entities have >3 threat model values (max allowed: 3)
+### Step 1.20: Threat Model Truncation ✅
+- 48 entities had >3 threat model values (max allowed: 3)
 - Exported `docs/threat-models-truncation-review.json` for Claude.ai review
-- **Task:** Claude.ai selects best 3 values for each entity based on notes/evidence
-- **After Claude.ai review:** Apply truncations with `apply-threat-model-truncations.js`
+- Claude.ai selected best 3 values for each entity based on notes/evidence
+- **Script:** `apply-threat-model-truncations.js`
+- **Results:** 46 entities updated, 2 skipped (already merged)
 
-### Step 1.21: Entity Naming Review ⏳
-- 53 entities have names with embedded parent info (e.g., "Hoover Institution at Stanford University")
-- Exported `docs/entity-naming-review.json` for Claude.ai review
-- **Task:** Claude.ai identifies names to simplify + parent org to assign
-- **After Claude.ai review:** Apply naming fixes
+### Step 1.21: Entity Naming Review ✅
+- Exported `docs/entity-naming-review-full.json` (263 entities) for Claude.ai review
+- Claude.ai identified 51 names to standardize + 7 parent org assignments
+- **Script:** `apply-entity-naming-fixes.js`
+- **Results:**
+  - 51 names standardized (removed "The" prefix, legal suffixes, redundant parentheticals)
+  - 6 parent orgs assigned (Hoover→Stanford, MIT labs→MIT, NYU CMEP→NYU, etc.)
+  - 1 skipped (UC Investments - "University of California" not in DB)
+  - 6 entities need new parent orgs created (KAUST, HSBC, TDK Corp, etc.)
+- **Flagged for manual review:**
+  - Samsung (#2232) vs Samsung Electronics (#2235) - potential duplicate
 
 ---
 
