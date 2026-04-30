@@ -1,0 +1,2822 @@
+[
+  {
+    "id": 2037,
+    "name": "Accel",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 4,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2036,
+    "name": "AMP PBC",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2292,
+    "name": "Andrew W. Mellon Foundation",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2039,
+    "name": "Athena 2.0 (AI Safety Mentorship Program)",
+    "entity_type": "organization",
+    "category": "AI Safety/Alignment",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2226,
+    "name": "California State University, Sacramento",
+    "entity_type": "organization",
+    "category": "Academic",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2084,
+    "name": "Capital K (KAUST Deep Tech Innovation Fund)",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 3,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2041,
+    "name": "Captions",
+    "entity_type": "organization",
+    "category": "Deployers & Platforms",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2042,
+    "name": "Caroline Mehl",
+    "entity_type": "person",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 2,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2045,
+    "name": "Composite",
+    "entity_type": "organization",
+    "category": "Deployers & Platforms",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2119,
+    "name": "DAF-MIT AI Accelerator",
+    "entity_type": "organization",
+    "category": "Government/Agency",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 6,
+    "name": "Dario",
+    "entity_type": "person",
+    "category": null,
+    "enrichment_version": "v1",
+    "belief_regulatory_stance": null,
+    "importance": null,
+    "notes_confidence": null
+  },
+  {
+    "id": 2085,
+    "name": "Daron Acemoglu",
+    "entity_type": "person",
+    "category": "Academic",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Restrictive",
+    "importance": 4,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2046,
+    "name": "DeepTechXL Fund I",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2048,
+    "name": "Draper Laboratory",
+    "entity_type": "organization",
+    "category": "Infrastructure & Compute",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2049,
+    "name": "Emergent Ventures",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2327,
+    "name": "fal.ai",
+    "entity_type": "organization",
+    "category": "Infrastructure & Compute",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2300,
+    "name": "Fundamental AI Research Lab (FAIR Laboratory)",
+    "entity_type": "organization",
+    "category": "Academic",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2040,
+    "name": "German Federal Government (Bund)",
+    "entity_type": "organization",
+    "category": "Government/Agency",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 3,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2207,
+    "name": "Government of Quebec",
+    "entity_type": "organization",
+    "category": "Government/Agency",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 3,
+    "notes_confidence": 3
+  },
+  {
+    "id": 685,
+    "name": "Gradual Disempowerment",
+    "entity_type": "resource",
+    "category": "AI Safety/Alignment",
+    "enrichment_version": "phase3-manual",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2050,
+    "name": "Grok Ventures",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2263,
+    "name": "Hoover Institution at Stanford University",
+    "entity_type": "organization",
+    "category": "Think Tank/Policy Org",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2052,
+    "name": "Horizons Ventures",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2051,
+    "name": "HSBC Strategic Innovation Investments",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 3,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2053,
+    "name": "Hugging Face",
+    "entity_type": "organization",
+    "category": "Infrastructure & Compute",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 5,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2054,
+    "name": "ICONIQ Capital",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2057,
+    "name": "Imbue",
+    "entity_type": "organization",
+    "category": "Frontier Lab",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 3,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2058,
+    "name": "Inclusive Abundance Action",
+    "entity_type": "organization",
+    "category": "Think Tank/Policy Org",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 2,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2059,
+    "name": "Index Ventures",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 3,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2060,
+    "name": "Ineffable Intelligence",
+    "entity_type": "organization",
+    "category": "Frontier Lab",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2061,
+    "name": "Infisical",
+    "entity_type": "organization",
+    "category": "Infrastructure & Compute",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2062,
+    "name": "Infosys Foundation",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2063,
+    "name": "Innovate UK",
+    "entity_type": "organization",
+    "category": "Government/Agency",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2064,
+    "name": "Institute for Law & AI (LawAI)",
+    "entity_type": "organization",
+    "category": "Think Tank/Policy Org",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2055,
+    "name": "Institute for New Economic Thinking (INET)",
+    "entity_type": "organization",
+    "category": "Think Tank/Policy Org",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Restrictive",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2065,
+    "name": "Intel Corporation",
+    "entity_type": "organization",
+    "category": "Infrastructure & Compute",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 5,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2066,
+    "name": "IvySys Technologies, LLC",
+    "entity_type": "organization",
+    "category": "Infrastructure & Compute",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2068,
+    "name": "Jakob N. Foerster",
+    "entity_type": "person",
+    "category": "Researcher",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2072,
+    "name": "James Pallotta",
+    "entity_type": "person",
+    "category": "Investor",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2069,
+    "name": "Jane Street",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2070,
+    "name": "Jed McCaleb",
+    "entity_type": "person",
+    "category": "Investor",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2071,
+    "name": "Jessica Rumbelow",
+    "entity_type": "person",
+    "category": "Researcher",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Targeted",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2073,
+    "name": "John Arnold",
+    "entity_type": "person",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2074,
+    "name": "John S. and James L. Knight Foundation",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2076,
+    "name": "Johns Hopkins University Applied Physics Laboratory",
+    "entity_type": "organization",
+    "category": "Academic",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2075,
+    "name": "John Simon Guggenheim Memorial Foundation",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2077,
+    "name": "Joshua Clymer",
+    "entity_type": "person",
+    "category": "Researcher",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Precautionary",
+    "importance": 2,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2067,
+    "name": "JPMorgan Chase & Co.",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 4,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2079,
+    "name": "Julie Carson",
+    "entity_type": "person",
+    "category": "Investor",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 1,
+    "notes_confidence": 2
+  },
+  {
+    "id": 2080,
+    "name": "Jump Capital",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 2,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2081,
+    "name": "Jump Trading Group",
+    "entity_type": "organization",
+    "category": "Infrastructure & Compute",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2082,
+    "name": "Justin Dollman",
+    "entity_type": "person",
+    "category": "Organizer",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2083,
+    "name": "KAIST",
+    "entity_type": "organization",
+    "category": "Academic",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": null,
+    "importance": 3,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2088,
+    "name": "Kearny Jackson",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2089,
+    "name": "Kim Jungsik (Kim Jeong-sik)",
+    "entity_type": "person",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2090,
+    "name": "Kitware, Inc.",
+    "entity_type": "organization",
+    "category": "Infrastructure & Compute",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2093,
+    "name": "Laidir Foundation",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2094,
+    "name": "Lambda (Lambda Labs)",
+    "entity_type": "organization",
+    "category": "Infrastructure & Compute",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Accelerate",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2095,
+    "name": "Land Berlin (State of Berlin)",
+    "entity_type": "organization",
+    "category": "Government/Agency",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 3,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2097,
+    "name": "Langsikt - Centre for Long-Term Policy",
+    "entity_type": "organization",
+    "category": "Think Tank/Policy Org",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 2,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2091,
+    "name": "LASR Labs (London AI Safety Research Labs)",
+    "entity_type": "organization",
+    "category": "AI Safety/Alignment",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Precautionary",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2098,
+    "name": "Leidos",
+    "entity_type": "organization",
+    "category": "Deployers & Platforms",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2099,
+    "name": "Lemni Technologies",
+    "entity_type": "organization",
+    "category": "Deployers & Platforms",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2100,
+    "name": "Leverhulme Trust",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Precautionary",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2101,
+    "name": "Lightcone Infrastructure",
+    "entity_type": "organization",
+    "category": "AI Safety/Alignment",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Precautionary",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2102,
+    "name": "Lightspeed Venture Partners",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 5,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2103,
+    "name": "Likith Govindaiah",
+    "entity_type": "person",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2104,
+    "name": "Liquid Intelligent Technologies",
+    "entity_type": "organization",
+    "category": "Infrastructure & Compute",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2105,
+    "name": "Lisa Thiergart",
+    "entity_type": "person",
+    "category": "Researcher",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Restrictive",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2092,
+    "name": "London Initiative for Safe AI (LISA)",
+    "entity_type": "organization",
+    "category": "AI Safety/Alignment",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Precautionary",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2106,
+    "name": "Look AI Ventures",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2107,
+    "name": "Lord Foundation of California",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2108,
+    "name": "Los Alamos National Laboratory",
+    "entity_type": "organization",
+    "category": "Government/Agency",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2109,
+    "name": "Loti AI",
+    "entity_type": "organization",
+    "category": "Deployers & Platforms",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2110,
+    "name": "Lucidworks",
+    "entity_type": "organization",
+    "category": "Deployers & Platforms",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": null,
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2111,
+    "name": "Luke Hsi Lin Ding",
+    "entity_type": "person",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Precautionary",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2112,
+    "name": "Luma AI",
+    "entity_type": "organization",
+    "category": "Frontier Lab",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Accelerate",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2113,
+    "name": "M12 (Microsoft's Venture Fund)",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 3,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2217,
+    "name": "MacArthur Foundation Research Network on Opening Governance",
+    "entity_type": "organization",
+    "category": "Think Tank/Policy Org",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2321,
+    "name": "Mack Institute for Innovation Management (Wharton)",
+    "entity_type": "organization",
+    "category": "Academic",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2121,
+    "name": "Manas AI",
+    "entity_type": "organization",
+    "category": "Frontier Lab",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2122,
+    "name": "Marcus Abramovitch",
+    "entity_type": "person",
+    "category": "Investor",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Precautionary",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2114,
+    "name": "MARS Programme (Mentorship for Alignment Research Students)",
+    "entity_type": "organization",
+    "category": "AI Safety/Alignment",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Precautionary",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2115,
+    "name": "MATS Research Inc.",
+    "entity_type": "organization",
+    "category": "AI Safety/Alignment",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Precautionary",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2126,
+    "name": "Matthew J. Salganik",
+    "entity_type": "person",
+    "category": "Academic",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2125,
+    "name": "Matt McIlwain",
+    "entity_type": "person",
+    "category": "Investor",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2124,
+    "name": "MatX",
+    "entity_type": "organization",
+    "category": "Infrastructure & Compute",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2127,
+    "name": "Max Chiswick",
+    "entity_type": "person",
+    "category": "Researcher",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2128,
+    "name": "Max Planck Society",
+    "entity_type": "organization",
+    "category": "Academic",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2129,
+    "name": "Melinda French Gates",
+    "entity_type": "person",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2130,
+    "name": "Mentee Robotics",
+    "entity_type": "organization",
+    "category": "Infrastructure & Compute",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": null,
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2131,
+    "name": "Merge Labs",
+    "entity_type": "organization",
+    "category": "AI Safety/Alignment",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Accelerate",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2132,
+    "name": "Michael Bloomberg",
+    "entity_type": "person",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 3,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2133,
+    "name": "Micron Technology",
+    "entity_type": "organization",
+    "category": "Infrastructure & Compute",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2134,
+    "name": "Minderoo Foundation",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Restrictive",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2135,
+    "name": "Ministry of Science and ICT (MSIT)",
+    "entity_type": "organization",
+    "category": "Government/Agency",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2264,
+    "name": "Ministry of Science, Research and Arts of Baden-Württemberg",
+    "entity_type": "organization",
+    "category": "Government/Agency",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2117,
+    "name": "MIT Lincoln Laboratory",
+    "entity_type": "organization",
+    "category": "Government/Agency",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2116,
+    "name": "MIT Quest for Intelligence (MIT Siegel Family Quest for Intelligence)",
+    "entity_type": "organization",
+    "category": "Academic",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2118,
+    "name": "MIT Task Force on the Work of the Future",
+    "entity_type": "organization",
+    "category": "Think Tank/Policy Org",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2136,
+    "name": "Morgan Stanley",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 4,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2137,
+    "name": "MosaicML",
+    "entity_type": "organization",
+    "category": "Infrastructure & Compute",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2138,
+    "name": "Mozilla Technology Fund",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Restrictive",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2139,
+    "name": "Mozilla Ventures",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2140,
+    "name": "Musk Foundation",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2141,
+    "name": "NASA Innovative Advanced Concepts (NIAC)",
+    "entity_type": "organization",
+    "category": "Government/Agency",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2147,
+    "name": "Natcast (National Center for the Advancement of Semiconductor Technology)",
+    "entity_type": "organization",
+    "category": "Government/Agency",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2148,
+    "name": "National AI Research Resource (NAIRR) Pilot",
+    "entity_type": "organization",
+    "category": "Government/Agency",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2149,
+    "name": "National Artificial Intelligence Research Institutes",
+    "entity_type": "organization",
+    "category": "Government/Agency",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2150,
+    "name": "National Bank of Canada",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2142,
+    "name": "National Defense Science and Engineering Graduate (NDSEG) Fellowship Program",
+    "entity_type": "organization",
+    "category": "Government/Agency",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2151,
+    "name": "National Development Fund (Taiwan)",
+    "entity_type": "organization",
+    "category": "Government/Agency",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2239,
+    "name": "National Infrastructure Fund (Infra)",
+    "entity_type": "organization",
+    "category": "Infrastructure & Compute",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Accelerate",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2144,
+    "name": "National Institutes of Health (NIH)",
+    "entity_type": "organization",
+    "category": "Government/Agency",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 4,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2152,
+    "name": "National Telecommunications and Information Administration",
+    "entity_type": "organization",
+    "category": "Government/Agency",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2153,
+    "name": "Natural Sciences and Engineering Research Council of Canada",
+    "entity_type": "organization",
+    "category": "Government/Agency",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2154,
+    "name": "Naver Corporation",
+    "entity_type": "organization",
+    "category": "Frontier Lab",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2155,
+    "name": "Navitas Capital",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 2,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2156,
+    "name": "Nebius Group N.V.",
+    "entity_type": "organization",
+    "category": "Infrastructure & Compute",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2157,
+    "name": "Neel Nanda",
+    "entity_type": "person",
+    "category": "Researcher",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 4,
+    "notes_confidence": 5
+  },
+  {
+    "id": 2159,
+    "name": "New Enterprise Associates",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2160,
+    "name": "New Priorities Foundation",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 2,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2161,
+    "name": "New Science",
+    "entity_type": "organization",
+    "category": "Think Tank/Policy Org",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2162,
+    "name": "New Venture Fund",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2163,
+    "name": "New York State",
+    "entity_type": "organization",
+    "category": "Government/Agency",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 4,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2143,
+    "name": "NFDG Ventures",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2164,
+    "name": "Nicholas Tomlin",
+    "entity_type": "person",
+    "category": "Researcher",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2165,
+    "name": "Nick D'Aloisio",
+    "entity_type": "person",
+    "category": "Executive",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": null,
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2166,
+    "name": "Nicolas Berggruen Charitable Trust",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 3,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2167,
+    "name": "Noemi Dreksler",
+    "entity_type": "person",
+    "category": "Researcher",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Targeted",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2168,
+    "name": "North Carolina General Assembly",
+    "entity_type": "organization",
+    "category": "Government/Agency",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2170,
+    "name": "Nscale",
+    "entity_type": "organization",
+    "category": "Infrastructure & Compute",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2145,
+    "name": "NVentures (NVIDIA Venture Capital)",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2146,
+    "name": "NYU Center for Mind, Ethics, and Policy (CMEP)",
+    "entity_type": "organization",
+    "category": "Academic",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2172,
+    "name": "Office of Naval Research",
+    "entity_type": "organization",
+    "category": "Government/Agency",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 4,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2173,
+    "name": "Office of Science and Technology Policy",
+    "entity_type": "organization",
+    "category": "Government/Agency",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 5,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2174,
+    "name": "Okawa Foundation for Information and Telecommunications",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2175,
+    "name": "Okta, Inc.",
+    "entity_type": "organization",
+    "category": "Infrastructure & Compute",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2176,
+    "name": "Omidyar Network",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2177,
+    "name": "Ontario Early Researcher Awards",
+    "entity_type": "organization",
+    "category": "Government/Agency",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2178,
+    "name": "Open Society Foundations",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Restrictive",
+    "importance": 4,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2179,
+    "name": "Oracle Corporation",
+    "entity_type": "organization",
+    "category": "Infrastructure & Compute",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 4,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2180,
+    "name": "Oregon State University",
+    "entity_type": "organization",
+    "category": "Academic",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2181,
+    "name": "Organisation for Economic Co-operation and Development (OECD)",
+    "entity_type": "organization",
+    "category": "Think Tank/Policy Org",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 5,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2182,
+    "name": "Overland AI",
+    "entity_type": "organization",
+    "category": "Infrastructure & Compute",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2183,
+    "name": "Owl Ventures",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2184,
+    "name": "Parallel (beparallel.com)",
+    "entity_type": "organization",
+    "category": "Deployers & Platforms",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2185,
+    "name": "Park Foundation",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Restrictive",
+    "importance": 2,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2186,
+    "name": "Partnership for Global Inclusivity on AI (PGIAI)",
+    "entity_type": "organization",
+    "category": "Government/Agency",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 4,
+    "notes_confidence": 5
+  },
+  {
+    "id": 2187,
+    "name": "Pasupalak AI Fellowship",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": null,
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2188,
+    "name": "Patrick J. McGovern Foundation",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2189,
+    "name": "Pegatron Corporation",
+    "entity_type": "organization",
+    "category": "Infrastructure & Compute",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2191,
+    "name": "Phil Black",
+    "entity_type": "person",
+    "category": "Investor",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 3,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2192,
+    "name": "Phylo",
+    "entity_type": "organization",
+    "category": "Frontier Lab",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2193,
+    "name": "Pivotal Research",
+    "entity_type": "organization",
+    "category": "AI Safety/Alignment",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Precautionary",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2194,
+    "name": "Playground Global",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 3,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2195,
+    "name": "Plural Platform",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 3,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2196,
+    "name": "Polar Semiconductor",
+    "entity_type": "organization",
+    "category": "Infrastructure & Compute",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2198,
+    "name": "Prairies Economic Development Canada (PrairiesCan)",
+    "entity_type": "organization",
+    "category": "Government/Agency",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2199,
+    "name": "Prime Intellect",
+    "entity_type": "organization",
+    "category": "Infrastructure & Compute",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Accelerate",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2200,
+    "name": "Principles of Intelligence",
+    "entity_type": "organization",
+    "category": "AI Safety/Alignment",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2201,
+    "name": "Public First",
+    "entity_type": "organization",
+    "category": "Political Campaign/PAC",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Targeted",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2202,
+    "name": "Public Interest Tech Lab (Harvard Kennedy School)",
+    "entity_type": "organization",
+    "category": "Ethics/Bias/Rights",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Restrictive",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2203,
+    "name": "Pulse AI",
+    "entity_type": "organization",
+    "category": "Infrastructure & Compute",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2204,
+    "name": "Qatar Investment Authority",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2205,
+    "name": "Quantitative Foundation",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2206,
+    "name": "Qube Research & Technologies",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 3,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2208,
+    "name": "QuintessenceLabs",
+    "entity_type": "organization",
+    "category": "Infrastructure & Compute",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2211,
+    "name": "Rachel Weinberg",
+    "entity_type": "person",
+    "category": "Organizer",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2212,
+    "name": "Rad AI",
+    "entity_type": "organization",
+    "category": "Deployers & Platforms",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2213,
+    "name": "Radical Ventures",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2214,
+    "name": "Recraft",
+    "entity_type": "organization",
+    "category": "Deployers & Platforms",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2215,
+    "name": "Recursion Pharmaceuticals",
+    "entity_type": "organization",
+    "category": "Deployers & Platforms",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2216,
+    "name": "Renaissance Philanthropy",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2218,
+    "name": "Respan (formerly Keywords AI)",
+    "entity_type": "organization",
+    "category": "Infrastructure & Compute",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": null,
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2219,
+    "name": "Responsible Technology Youth Power Fund",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2220,
+    "name": "Richard King Mellon Foundation",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2123,
+    "name": "R. Martin Chavez",
+    "entity_type": "person",
+    "category": "Investor",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2222,
+    "name": "Ronald D. Sugar",
+    "entity_type": "person",
+    "category": "Executive",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2210,
+    "name": "RTX Ventures",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2223,
+    "name": "Runway AI",
+    "entity_type": "organization",
+    "category": "Frontier Lab",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2224,
+    "name": "Russell Sage Foundation",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2225,
+    "name": "Ryan Kidd",
+    "entity_type": "person",
+    "category": "Organizer",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 3,
+    "notes_confidence": 5
+  },
+  {
+    "id": 2227,
+    "name": "Safeguarded AI Programme",
+    "entity_type": "organization",
+    "category": "AI Safety/Alignment",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 4,
+    "notes_confidence": 5
+  },
+  {
+    "id": 2228,
+    "name": "Sage Bergerson",
+    "entity_type": "person",
+    "category": "Researcher",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 1,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2229,
+    "name": "Salesforce Ventures",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2230,
+    "name": "Sally Gao",
+    "entity_type": "person",
+    "category": "Organizer",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 1,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2231,
+    "name": "Sam Bankman-Fried",
+    "entity_type": "person",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2232,
+    "name": "Samsung",
+    "entity_type": "organization",
+    "category": "Infrastructure & Compute",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2233,
+    "name": "Samsung Advanced Institute of Technology (SAIT)",
+    "entity_type": "organization",
+    "category": "Frontier Lab",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2234,
+    "name": "Samsung Austin Semiconductor, LLC",
+    "entity_type": "organization",
+    "category": "Infrastructure & Compute",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2235,
+    "name": "Samsung Electronics",
+    "entity_type": "organization",
+    "category": "Infrastructure & Compute",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2237,
+    "name": "Sands Capital",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 2,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2238,
+    "name": "Sapphire Ventures",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2240,
+    "name": "Schmidt Sciences",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2241,
+    "name": "Schwartz Reisman Institute for Technology and Society",
+    "entity_type": "organization",
+    "category": "Think Tank/Policy Org",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2242,
+    "name": "Schwarz Group",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 3,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2243,
+    "name": "Sentinel Bio",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Targeted",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2244,
+    "name": "Shamil Chandaria",
+    "entity_type": "person",
+    "category": "Researcher",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2245,
+    "name": "Shield Technology Partners",
+    "entity_type": "organization",
+    "category": "Deployers & Platforms",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2247,
+    "name": "Siegel Family Endowment",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2248,
+    "name": "Sierra",
+    "entity_type": "organization",
+    "category": "Deployers & Platforms",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2249,
+    "name": "SigIQ.ai",
+    "entity_type": "organization",
+    "category": "Deployers & Platforms",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2250,
+    "name": "Silicon Valley Bank Foundation (Donor Advised Fund)",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2251,
+    "name": "Silicon Valley Community Foundation",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2252,
+    "name": "Simon Newstead",
+    "entity_type": "person",
+    "category": "Investor",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 1,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2253,
+    "name": "Simons Foundation",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2254,
+    "name": "Social & Environmental Entrepreneurs, Inc.",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Precautionary",
+    "importance": 2,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2255,
+    "name": "Social Sciences and Humanities Research Council of Canada",
+    "entity_type": "organization",
+    "category": "Government/Agency",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2256,
+    "name": "Sony Group Corporation",
+    "entity_type": "organization",
+    "category": "Frontier Lab",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2257,
+    "name": "Sony Innovation Fund",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2258,
+    "name": "South Park Commons",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2259,
+    "name": "Sozo Ventures",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2260,
+    "name": "Spatial Capital",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2261,
+    "name": "Squirrel AI Learning (Yixue Group)",
+    "entity_type": "organization",
+    "category": "Deployers & Platforms",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2262,
+    "name": "Stanford Impact Labs",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2096,
+    "name": "State of Brandenburg (Land Brandenburg)",
+    "entity_type": "organization",
+    "category": "Government/Agency",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 2,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2267,
+    "name": "StepStone Group Inc.",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2268,
+    "name": "Steve Newman",
+    "entity_type": "person",
+    "category": "Investor",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 2,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2269,
+    "name": "Strategic Artificial Intelligence Research Centre",
+    "entity_type": "organization",
+    "category": "AI Safety/Alignment",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Precautionary",
+    "importance": 3,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2270,
+    "name": "Strategic Innovation Fund (Canada)",
+    "entity_type": "organization",
+    "category": "Government/Agency",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2271,
+    "name": "Sunil Wadhwani",
+    "entity_type": "person",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2272,
+    "name": "Susan Crown Exchange",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2274,
+    "name": "Swiss Federal Government",
+    "entity_type": "organization",
+    "category": "Government/Agency",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 3,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2273,
+    "name": "Swiss Philanthropy Foundation",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Restrictive",
+    "importance": 2,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2275,
+    "name": "Symbolica AI",
+    "entity_type": "organization",
+    "category": "Frontier Lab",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2278,
+    "name": "Tarbell Center for AI Journalism",
+    "entity_type": "organization",
+    "category": "Media/Journalism",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2276,
+    "name": "TDK Ventures Inc.",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 2,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2279,
+    "name": "Teachers' Venture Growth (TVG)",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2277,
+    "name": "Technische Universität Berlin (TU Berlin)",
+    "entity_type": "organization",
+    "category": "Academic",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2280,
+    "name": "Technology Modernization Fund (TMF)",
+    "entity_type": "organization",
+    "category": "Government/Agency",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2281,
+    "name": "Templeton World Charity Foundation",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2282,
+    "name": "Tencent Holdings Limited",
+    "entity_type": "organization",
+    "category": "Deployers & Platforms",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 4,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2283,
+    "name": "Texas Instruments",
+    "entity_type": "organization",
+    "category": "Infrastructure & Compute",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 3,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2284,
+    "name": "Texas Semiconductor Innovation Fund (TSIF)",
+    "entity_type": "organization",
+    "category": "Government/Agency",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Accelerate",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2285,
+    "name": "The Alan Turing Institute",
+    "entity_type": "organization",
+    "category": "Think Tank/Policy Org",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2286,
+    "name": "The Alignment Project",
+    "entity_type": "organization",
+    "category": "AI Safety/Alignment",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2287,
+    "name": "The Andrew W. Mellon Foundation",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2288,
+    "name": "The Eric and Wendy Schmidt Fund for Strategic Innovation",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2289,
+    "name": "The Ethics & Governance of AI Initiative",
+    "entity_type": "organization",
+    "category": "Ethics/Bias/Rights",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2290,
+    "name": "The Goodly Institute",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2086,
+    "name": "The Kavli Foundation",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2291,
+    "name": "The Marcus Foundation",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2120,
+    "name": "The MITRE Corporation",
+    "entity_type": "organization",
+    "category": "Think Tank/Policy Org",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2293,
+    "name": "The NOMIS Foundation",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2221,
+    "name": "The Rockefeller Foundation",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 3,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2236,
+    "name": "The San Francisco Compute Company",
+    "entity_type": "organization",
+    "category": "Infrastructure & Compute",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2190,
+    "name": "Thiel Foundation",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Accelerate",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2246,
+    "name": "Thomas and Stacey Siebel Foundation",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2294,
+    "name": "Toyota Motor Corporation",
+    "entity_type": "organization",
+    "category": "Deployers & Platforms",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2295,
+    "name": "Truth Terminal",
+    "entity_type": "organization",
+    "category": "Deployers & Platforms",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2299,
+    "name": "UC Investments (University of California Investment Office)",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 3,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2301,
+    "name": "UK Government",
+    "entity_type": "organization",
+    "category": "Government/Agency",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 5,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2302,
+    "name": "UK Research and Innovation (UKRI)",
+    "entity_type": "organization",
+    "category": "Government/Agency",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2305,
+    "name": "University at Albany (SUNY)",
+    "entity_type": "organization",
+    "category": "Academic",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2304,
+    "name": "University of Cambridge Enterprise Fund (UCEF)",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2306,
+    "name": "University of Tsukuba",
+    "entity_type": "organization",
+    "category": "Academic",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2307,
+    "name": "University of Waterloo",
+    "entity_type": "organization",
+    "category": "Academic",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2308,
+    "name": "University of Wisconsin-Milwaukee",
+    "entity_type": "organization",
+    "category": "Academic",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2296,
+    "name": "U.S. Air Force",
+    "entity_type": "organization",
+    "category": "Government/Agency",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 4,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2298,
+    "name": "U.S. International Development Finance Corporation (DFC)",
+    "entity_type": "organization",
+    "category": "Government/Agency",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2303,
+    "name": "U.S. Venture Partners (USVP)",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 2,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2266,
+    "name": "Utah Attorney General's Office",
+    "entity_type": "organization",
+    "category": "Government/Agency",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2309,
+    "name": "Valor Equity Partners",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 3,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2310,
+    "name": "Vanderbilt University Institute of National Security",
+    "entity_type": "organization",
+    "category": "Think Tank/Policy Org",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2311,
+    "name": "Vanguard Charitable Endowment Program",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2312,
+    "name": "VAST Data",
+    "entity_type": "organization",
+    "category": "Infrastructure & Compute",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 4,
+    "notes_confidence": 4
+  },
+  {
+    "id": 450,
+    "name": "Vector Institute",
+    "entity_type": "organization",
+    "category": null,
+    "enrichment_version": "phase3-manual",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 4,
+    "notes_confidence": 5
+  },
+  {
+    "id": 2313,
+    "name": "Vicarious FPC Inc.",
+    "entity_type": "organization",
+    "category": "Frontier Lab",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2314,
+    "name": "Vipul Naik",
+    "entity_type": "person",
+    "category": "Researcher/analyst",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": null,
+    "importance": 2,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2315,
+    "name": "Virtual AI Safety Unconference (VAISU)",
+    "entity_type": "organization",
+    "category": "AI Safety/Alignment",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2316,
+    "name": "Vitalik Buterin",
+    "entity_type": "person",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2318,
+    "name": "Waymo",
+    "entity_type": "organization",
+    "category": "Deployers & Platforms",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 5,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2319,
+    "name": "Wells Fargo & Company",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2320,
+    "name": "Wenbo Guo",
+    "entity_type": "person",
+    "category": "Researcher",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Moderate",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2322,
+    "name": "Wing Venture Capital",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2323,
+    "name": "Wolfspeed, Inc.",
+    "entity_type": "organization",
+    "category": "Infrastructure & Compute",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2324,
+    "name": "Work-Bench",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 3
+  },
+  {
+    "id": 2317,
+    "name": "WP Global Partners",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": null,
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2326,
+    "name": "Xianfeng David Gu",
+    "entity_type": "person",
+    "category": "Researcher",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 2,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2328,
+    "name": "xLight",
+    "entity_type": "organization",
+    "category": "Infrastructure & Compute",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Light-touch",
+    "importance": 3,
+    "notes_confidence": 4
+  },
+  {
+    "id": 2325,
+    "name": "XTX Markets",
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "enrichment_version": "combined-v4",
+    "belief_regulatory_stance": "Mixed/unclear",
+    "importance": 3,
+    "notes_confidence": 4
+  }
+]

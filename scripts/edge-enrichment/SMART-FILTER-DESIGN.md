@@ -1,15 +1,53 @@
 # Edge Enrichment: Post-Processing Roadmap
 
-## Current State (April 29, 2026)
+## Current State (April 30, 2026 - Post Claims QC)
 
 ### Edge Discoveries
 
 | Status | Count | Description |
 |--------|-------|-------------|
-| `pending_review` | 347 | ✅ Both entities exist, AI-relevant, ready to promote |
-| `pending_entities` | 2,341 | ⏳ Need entity creation/resolution |
-| `rejected` | 110 | ❌ Not AI-related or invalid |
-| **Total** | **2,798** | After consolidation (removed 117 duplicates) |
+| `promoted` | 1,176 | ✅ Promoted to RDS production |
+| `rejected` | 1,567 | ❌ Not AI-related, generic, or invalid |
+| **Total** | **2,743** | After all processing |
+
+### RDS Production
+
+| Metric | Count |
+|--------|-------|
+| **Total approved entities** | **1,899** |
+| **Total edges** | **3,306** |
+| New entities (combined-v4) | 271 |
+| New edges (from discovery) | 1,176 |
+
+### Enrichment Quality (combined-v4)
+
+| Metric | Count |
+|--------|-------|
+| Entities created | 279 |
+| Duplicates deleted (entity QC) | 7 |
+| Duplicates deleted (claims QC) | 1 |
+| Final new entities | 271 |
+| Quality issues fixed | 31 field updates |
+| Notes flagged for verification | 18 |
+
+### Source Attribution (Claims)
+
+| Metric | Count |
+|--------|-------|
+| Total claims | 1,752 |
+| Combined-v4 claims created | 1,161 |
+| Claims deleted (QC review) | 53 |
+| Claims updated (stance/confidence) | 8 |
+| Entities with admin-mixing notes | 3 |
+
+### RDS Production Edges
+
+| Metric | Count |
+|--------|-------|
+| Total edges | ~2,800 |
+| Funding edges | ~550 |
+| New funding edges (from discovery) | 431 |
+| Edge evidence records | 2,224 |
 
 ### Multi-Source Edges
 
@@ -17,17 +55,6 @@
 |--------|-------|
 | Edges with 2+ sources | 103 |
 | Now tracked via `sources_count` column | ✅ |
-
-### Entity Suggestions
-
-| Status | Count | Description |
-|--------|-------|-------------|
-| `pending` | 1,881 | ⏳ Need classification |
-
-**By occurrence:**
-- Seen once: 1,437 (76%) - highest risk of noise
-- Seen 2-4 times: 342 (18%)
-- Seen 5+ times: 102 (5%) - likely real
 
 ### Edge Evidence (Temporal Data)
 
@@ -67,117 +94,434 @@
 - Ran consolidation script on existing data: 117 duplicate rows → 103 multi-source edges
 - Script: `post-process/consolidate-duplicate-edges.js`
 
----
-
-## Remaining Roadmap
-
-### Phase 1: Promote Ready Edges
-
-**Step 1.1: Promote pending_review edges to production**
-- 398 edges ready to add to RDS `edge` table
+### Step 1.0: Promote Ready Edges ✅
+- QC review: rejected 10 non-AI-related edges (mental health, RNA research, internal funding, etc.)
+- Approved 337 edges that passed QC
+- Promoted all 337 to RDS production
+- Created 316 new funding edges + 21 already existed (evidence added)
 - Script: `promote-discoveries.js`
-- Creates new edges with source attribution
 
-**Estimated effort:** ~5 minutes (scripted)
+### Step 1.1: Batch AI Relevance Review ✅
+- Exported pending_entities edges in 4 batches (~530 each) for Claude.ai review
+- Batch 1 (rows 1-1060): 190 rejections applied
+- Batch 2 (rows 1061-2120): 238 rejections applied
+- Batch 3 (rows 2121-3180): 219 rejections applied
+- Batch 4 (rows 3181-3700): 222 rejections applied
+- Also reviewed 187 promoted-from-merge edges: 28 rejections applied
+- Scripts: `apply-pending-rejections-batch1.js` through `batch4.js`, `apply-promoted-merge-rejections.js`
 
----
+### Step 1.2: Entity Review ✅
+- Exported ~900 unique unmatched entities for Claude.ai review
+- Categorized into CREATE (~235), MAP (~75), REJECT (~590)
+- Applied REJECT entities: 378 edges rejected (generic aggregates, PACs, non-AI)
+- Applied MAP entities: 106 edges updated, 51 duplicates merged
+- Scripts: `reject-generic-entities.js`, `map-entity-aliases.js`
 
-### Phase 2: Process Entity Suggestions (1,881 pending)
-
-**Step 2.1: Merge Known Duplicates**
-- Script: `post-process-1-merge-duplicates.js`
-- Merges obvious duplicates (e.g., "Open Philanthropy" → "Coefficient Giving")
-- Updates edge_discovery to point to existing entity IDs
-
-**Step 2.2: Reject Generic Names**
-- Script: `post-process-2-reject-generic.js`
-- Auto-rejects: "investors", "federal government", "private sector", etc.
-- Estimated: ~50-100 auto-rejected
-
-**Step 2.3: Classify Single-Occurrence Entities (1,437)**
-- Highest risk of noise
-- Options:
-  - **Option A:** Rules-only triage (free, fast, ~80% accuracy)
-  - **Option B:** Exa search verification (~$12 for all, higher accuracy)
-  - **Option C:** Export for Claude review (similar to edge review)
-- Need to decide: aggressive (auto-reject more) vs conservative (review more)
-
-**Step 2.4: Review Multi-Occurrence Entities (444)**
-- Seen 2+ times = higher confidence they're real
-- Still need AI-relevance check
-- Could batch review in Claude
-
-**Estimated effort:** 2-4 hours depending on approach
+### Step 1.3: Cleanup Remaining Generics ✅
+- Caught remaining PACs and generic entities: 21 more rejections
+- Final state: 788 pending_entities edges, ~570 unique entities to create
 
 ---
 
-### Phase 3: Create Approved Entities in RDS
+## Key Decision: Breaking the Endless Loop
 
-**Step 3.1: Export approved suggestions for creation**
-- Generate entity creation list with:
-  - Name, type (person/org)
-  - Category (if inferrable)
-  - Context (how discovered)
+**The Problem:** Edge discovery → find unmatched entities → create entities → discover more edges → repeat forever
 
-**Step 3.2: Batch create entities in RDS**
-- Script: `create-entities-from-suggestions.js` (to be created)
-- Assigns IDs, sets status='pending' for human review
+**The Decision:** We will NOT run edge discovery on newly created entities. Here's why:
 
-**Step 3.3: Update edge_discovery with new entity IDs**
-- Resolves pending_entities → pending_review
+1. **Scope boundary:** The ~570 new entities are "first-hop" connections from our core entities. Going another hop would explode scope exponentially.
 
-**Estimated effort:** 1-2 hours (scripted)
+2. **Diminishing returns:** Core stakeholders already have rich data. Adding obscure entities with 1-2 connections adds noise, not value.
+
+3. **Quality over quantity:** Better to have 2,000 well-enriched entities than 10,000 skeleton entities.
+
+**Boundary rule for new entities:**
+- Must have 2+ edges to existing entities, OR
+- Must be directly AI-relevant and submitted by a user, OR
+- Must be a high-profile AI stakeholder (frontier labs, major funders, key researchers)
+
+### Step 1.4: Final Entity Review ✅
+- Exported 570 remaining unmatched entities for Claude.ai review
+- Claude.ai categorization: 310 CREATE, 57 REJECT, 7 MAP
+- Applied 57 REJECT entities: 39 edges rejected (PACs, generic aggregates, non-AI)
+- Applied 7 MAP entities: 4 edges mapped, 3 duplicates deleted
+- Notable: Self-referential graph errors found (University of Cambridge → University of Cambridge)
+- Scripts: `apply-final-entity-rejections.js`, `map-entity-aliases.js` (updated)
+
+### Step 1.5: Entity Overlap Check ✅
+- Exported 516 CREATE entities + 1,635 existing RDS entities for Claude.ai overlap review
+- Claude.ai found:
+  - 20 exact duplicates (CREATE entities already exist in RDS)
+  - 17 alias/variant mappings (CREATE → canonical RDS names)
+  - 3 internal CREATE duplicates (merge before creating)
+  - 11 internal RDS duplicates (7 confirmed, 4 investigate)
+- Applied overlap mappings: 104 edges updated, 1 duplicate deleted
+- 88 edges now ready to promote (both entity IDs set)
+- Scripts: `export-entities-for-overlap.js`, `apply-overlap-mappings.js`
+- Documented internal RDS duplicates: `docs/internal-rds-duplicates.md`
+
+### Step 1.6: Promote Overlap-Linked Edges ✅
+- Updated 88 edges from `pending_entities` to `approved` status
+- Promoted all 88 to RDS production
+- Created 72 new funding edges + 16 added evidence to existing edges
+- Deleted 2 self-referential edges (University of Cambridge → University of Cambridge, etc.)
+- Script: `promote-discoveries.js`
+
+### Step 1.7: Clean Up Internal RDS Duplicates ✅
+- Merged 7 confirmed duplicate entity pairs:
+  - DAIR ↔ DAIR Institute
+  - International Association for Safe and Ethical AI ↔ International Association for Safe & Ethical AI (IASEAI)
+  - MIT CSAIL ↔ MIT Computer Science & Artificial Intelligence Laboratory
+  - Survival and Flourishing Fund ↔ Survival & Flourishing Fund
+  - Mila ↔ Mila - Quebec Artificial Intelligence Institute
+  - Long-Term Future Fund ↔ LTFF
+  - ML Alignment & Theory Scholars (MATS) ↔ SERI-MATS
+- Updated 15 edges to point to canonical entity, deleted 12 duplicate edges
+- Script: `merge-rds-duplicates.js`
+
+### Step 1.8: Entity Enrichment (combined-v4) ✅
+- Created 279 skeleton entities from unmatched edge_discovery names
+- Ran `enrich-combined.js` to fill all RDS columns (notes, beliefs, categories, etc.)
+- Cost: ~$85 (Exa + Claude)
+- Script: `enrich-combined.js`
+
+### Step 1.9: Claude.ai Quality Review ✅
+- Exported 279 enriched entities to `docs/combined-v4-entities-full-review.json`
+- Claude.ai reviewed for hallucinations, wrong categories, stance mismatches, duplicates
+- Found 52 issues across 279 entities (quality: acceptable)
+- Key issue types:
+  - 7 duplicates (entities already exist in RDS under same name)
+  - 10 wrong secondary categories (using influence_type values instead of categories)
+  - 7 stance mismatches (over-inferred from single actions)
+  - 12 hallucinations/unverified claims (specific $ figures, wrong attributions)
+  - 5 name errors (.ai domain suffixes in names)
+  - 4 importance inflation
+
+### Step 1.10: Apply Review Fixes ✅
+- Deleted 7 duplicate entities, remapped their edges to existing RDS entities:
+  - Daron Acemoglu (#2085 → #52)
+  - DAF-MIT AI Accelerator (#2119 → #1131)
+  - Institute for Law & AI (#2064 → #429)
+  - Lightcone Infrastructure (#2101 → #302)
+  - London Initiative for Safe AI (#2092 → #203)
+  - Tarbell Center for AI Journalism (#2278 → #136)
+  - MARS Programme (#2114 → #194)
+- Applied 31 field updates (categories, stances, importance, names)
+- Fixed critical Lightspeed (#2102) hallucinations:
+  - Removed false Greg Colbourn/PauseAI claim (he's not a Lightspeed partner)
+  - Corrected SSI round: $2B@$32B → $1B@$5B (Sept 2024)
+- Script: `apply-claude-review-fixes.js`
+- **Remaining entities: 272** (279 - 7 duplicates)
+
+### Step 1.11: Promote Edges to RDS ✅
+- Updated 657 edges from `pending_entities` → `approved` status
+- Promoted 657 edges to RDS production (268 new + 389 added evidence to existing)
+- Total promoted edges: 1,176
+- Total RDS edges: 3,306
+- Script: `promote-discoveries.js`
+
+### Step 1.12: Approve New Entities ✅
+- Changed 272 combined-v4 entities from `pending` → `approved`
+- Total approved entities: 1,900
+- Script: inline SQL update
+
+### Step 1.13: Notes Flagged for Manual Verification ⏳
+18 notes contain unverified claims (specific $ figures, dates, names):
+- Hugging Face Series C lead investor (Lux vs a16z)
+- Intel $135M Element AI (may be total round)
+- Ineffable $1.1B seed at $5.1B (verify record claim)
+- Knight Foundation $27M (may be total initiative)
+- Neel Nanda $250K Manifund (unusually large)
+- NY State $300M Stony Brook (single source)
+- And 12 others documented in `apply-claude-review-fixes.js`
+
+### Step 1.14: Source Attribution (Claims Enrichment) ✅
+- Ran `enrich-claims.js` on 272 combined-v4 entities
+- **Results:** 272 entities processed, 1 error (UKRI - re-run successful)
+- **Total claims created:** 1,161 (668 initial + UKRI retry)
+- **Total cost:** $26.69
+- Log: `docs/claims-enrichment-full-run.log`
+- Script: `run-claims-enrichment-combined-v4.js`
+
+### Step 1.15: Claims QC Review ✅
+- Exported claims in 6 batches for Claude.ai review:
+  - `docs/claims-review-batch-1.json` (50 entities, 208 claims)
+  - `docs/claims-review-batch-2.json` (50 entities, 234 claims)
+  - `docs/claims-review-batch-3.json` (50 entities, 208 claims)
+  - `docs/claims-review-batch-4.json` (50 entities, 215 claims)
+  - `docs/claims-review-batch-5.json` (50 entities, 209 claims) - includes UKRI
+  - `docs/claims-review-batch-6.json` (22 entities, 86 claims)
+
+**Batches 1-3 Review Complete (150 entities, 650 claims):**
+- **14 issues found** across 150 entities (9.3% issue rate)
+- **3 Critical:**
+  - Accel (#2033): Wrong entity - claims are about Accel Partners VC, not Accel AI Institute (Berkeley)
+  - Jim Mitre (#2224): Wrong entity - claims are about MITRE Corp, not individual Jim Mitre
+  - Public First (#2261): Mixed entity - some claims about Public First (research firm), others about Public First Action (political advocacy)
+- **6 High:**
+  - Land Berlin (#2227): Wrong attributions - EU/national AI strategy claims attributed to state government
+  - Innovate UK (#2217): Wrong claims - attributed national R&D strategies that are central government policy
+  - Infosys Foundation (#2213): Missing evidence - regulatory_stance claims have no cited sources
+  - Leverhulme Trust (#2230): Wrong focus - claims about AI research recipients, not the trust's own position
+  - OSTP (#2253): Admin mixing - conflated Obama-era and Biden-era positions as single stance
+- **5 Medium:**
+  - Citation/confidence miscalibrations: third-party analyst reports marked "high" confidence, opposition politicians' blogs attributed to governments
+
+**Batches 4-6 Review Complete (122 entities, 249 sourced claims):**
+- **19 issues found** across 14 entities (11.5% issue rate)
+- **2 Critical:**
+  - Schmidt Fund (#2288): Duplicate of Schmidt Sciences (#2240) - same org, identical source IDs
+  - Sierra (#2248): Ambiguous name - only source is sierraclub.org (environmental nonprofit), not AI company sierra.ai
+- **8 High:**
+  - Samsung SAIT (#2233) + Samsung Austin (#2234): Corporate AI ethics claims belong to Samsung Electronics (#2235)
+  - UKRI (#2302): Gov.uk DSIT documents attributed to UKRI (UKRI only mentioned as partner)
+  - Utah AG (#2266): Jeff Jackson quotes are NC AG, not Utah AG
+  - QIA (#2204): Investment appetite ≠ regulatory stance (category error)
+  - Truth Terminal (#2295): AI chatbot can't hold policy beliefs - claims are creator Andy Ayrey's views
+  - CSU Sacramento (#2226): genai.calstate.edu is 23-campus system, not Sacramento specifically
+  - FAIR (#2300): Superintelligence lab article attributed to FAIR (different Meta unit)
+- **9 Medium:**
+  - Truth Terminal: "Light-tooth" typo → "Light-touch"
+  - Hoover Institution (#2263): Risk evaluation = Targeted, not Light-touch
+  - Waymo (#2318): AV-specific lobbying ≠ general Accelerate stance
+  - MacArthur Research Network (#2217): macfound.org = Foundation, not Research Network
+  - Safeguarded AI (#2227): atlascomputing.org third-party summary, not ARIA
+  - DFC (#2298): Biden/Trump admin stances merged without date-scoping
+  - The Alignment Project (#2286): UK AISI programme, not independent entity
+  - FAIR (#2300): forwardfuture.ai third-party blog for LeCun quotes
+  - UKRI (#2302): AISI evaluations doc attributed to UKRI
+
+**Combined Review Summary (All 6 Batches):**
+- Total entities reviewed: 272
+- Total claims reviewed: ~900
+- Total issues found: 33 (14 batches 1-3 + 19 batches 4-6)
+- Issue rate: ~12%
+- Critical: 5, High: 14, Medium: 14
+
+### Step 1.16: Apply Claims QC Fixes ✅
+- Script: `apply-claims-review-fixes.js`
+- **Entity-level fixes:**
+  - Merged Schmidt Fund (#2288) → Schmidt Sciences (#2240): 1 edge remapped, 5 claims deleted
+  - Renamed Sierra (#2248) → Sierra Club (disambiguation: sierraclub.org source)
+  - Renamed Truth Terminal (#2295) → Andy Ayrey (AI chatbot → human creator)
+- **Claims deleted (53 total):**
+  - 26 claims from wrong entities: Jim Mitre (3), Land Berlin (6), Innovate UK (5), Infosys Foundation (7), Leverhulme Trust (5)
+  - 22 specific wrong attributions: Samsung SAIT/Austin, UKRI, Utah AG, QIA, CSU Sacramento, FAIR
+  - 5 claims from merged entity (Schmidt Fund)
+- **Claims updated (4):**
+  - Fixed "Light-tooth" → "Light-touch" typo
+  - Hoover Institution: Light-touch → Targeted
+  - Waymo: Accelerate → Targeted (AV-specific lobbying)
+- **Confidence downgrades (4):**
+  - Safeguarded AI: 3 claims → low (third-party atlascomputing.org)
+  - FAIR: 1 claim → low (third-party forwardfuture.ai)
+- **Entity notes added (3):**
+  - OSTP (#2173): Admin-mixing context note
+  - DFC (#2298): Admin-mixing context note
+  - Public First (#2201): Disambiguation note (vs Public First Action)
+- **Final state:**
+  - Total claims: 1,752 (includes claims from earlier enrichment runs)
+  - Approved entities: 1,899 (down 1 from merge)
+  - Combined-v4 entities: 271 (down 1 from merge)
 
 ---
 
-### Phase 4: Enrich New Entities
+## Remaining Roadmap (Final Steps)
 
-Once entities are created in RDS, they need enrichment:
+### Phase 2: Create Skeleton Entities in RDS
 
-**Step 4.1: Employment/Affiliation Edges**
-- Script: `enrich-edges.js`
-- Finds employment, board positions, affiliations
-- Cost: ~$0.03/entity
+**Step 2.1: Export approved CREATE entities**
+- ~310 entities approved in final entity review
+- Export with name, type (person/org), category (if inferrable)
+- Script: `export-create-entities.js` (to be created)
 
-**Step 4.2: Lifecycle Data (Orgs only)**
-- Script: `enrich-org-lifecycle.js`
-- Finds founding dates, end dates
-- Cost: ~$0.01/entity
+**Step 2.2: Batch create entities in RDS**
+- Script: `create-skeleton-entities.js` (to be created)
+- Skeleton entities: name + type only, no enriched data
+- Sets status='pending' for future human review
+- Assigns RDS entity IDs
 
-**Step 4.3: Thumbnails**
-- Script: `resolve-thumbnails.js`
-- Finds profile images
-- Cost: ~$0.01/entity
-
-**Estimated cost for 500 new entities:** ~$25
-
----
-
-### Phase 5: Second-Pass Funding Discovery
-
-After new entities exist, run discover-funding again:
-
-**Step 5.1: Run discover-funding on new entities**
-- Now uses improved prompt (AI-relevant, entity-involved)
-- May discover additional funding relationships
-
-**Step 5.2: Process new discoveries**
-- Repeat Phase 1-3 for any new edges/suggestions
+**Step 2.3: Run entity matching on pending_entities edges**
+- Script: `match-pending-entities.js` (to be created)
+- Links edge_discovery source/target names to new RDS entity IDs
+- Updates status: `pending_entities` → `pending_review`
 
 ---
 
-### Phase 6: Final Promotion
+### Phase 3: Final Edge Promotion
 
-**Step 6.1: Promote all pending_review edges**
-- All edges with both entities resolved
+**Step 3.1: Promote matched edges to RDS production**
+- Script: `promote-discoveries.js`
+- ~746 edges ready after entity matching
+- Creates new funding edges with source attribution
 
-**Step 6.2: Apply edge evidence to existing edges**
-- 1,887 temporal data records
-- Updates start_date, end_date on existing edges
+**Step 3.2: Apply edge evidence to existing edges**
+- 1,887 temporal data records (start_date, end_date)
+- Updates existing edges with temporal data
 
-**Step 6.3: Regenerate map-data.json**
+**Step 3.3: Regenerate map-data.json**
 - `pnpm run db:export-map`
-- Reflects new entities and edges
+- Reflects new entities and edges on the map
+
+---
+
+### Phase 4: Full Entity Enrichment Pipeline
+
+**Required for all new skeleton entities (~481 to create)**
+
+The enrichment pipeline uses multiple scripts that target different fields. All scripts are on the main branch.
+
+#### Database Architecture
+
+| Database | Table | Purpose |
+|----------|-------|---------|
+| **RDS** | `entity` | Primary entity data (name, type, category, notes, beliefs, thumbnail) |
+| **RDS** | `edge` | Relationships between entities |
+| **Neon** | `source` | Evidence/citations deduplicated by URL (source_id = sha256(url)[:12]) |
+| **Neon** | `claim` | Entity-dimension-source claims with verbatim citations |
+
+#### Step 4.1: Notes Enrichment (enrich-v2.js)
+
+**Anti-hallucination design with confidence scoring**
+
+```bash
+node scripts/enrich-v2.js --id=<entity_id>    # Single entity
+node scripts/enrich-v2.js --people            # All people
+node scripts/enrich-v2.js --orgs              # All orgs
+```
+
+**Updates RDS entity table:**
+| Field | Description |
+|-------|-------------|
+| `notes` | 2-4 sentences of sourced facts (max 3000 chars) |
+| `notes_confidence` | 1-5 confidence score |
+| `notes_sources` | JSON array of source URLs |
+| `enrichment_version` | 'v2' or 'v2-insufficient' |
+
+**Key rules:**
+- Only include facts from Exa search results
+- If sources insufficient → returns `INSUFFICIENT_DATA`
+- Creates edges only if confidence >= 3 with exact source quote
+- Cost: ~$0.08/entity
+
+#### Step 4.2: Deep Enrichment (enrich-deep.js / enrich-deep-orgs.js)
+
+**Fills belief stances and detailed fields**
+
+```bash
+node scripts/enrich-deep.js --id=<entity_id>       # Single person
+node scripts/enrich-deep-orgs.js --id=<entity_id>  # Single org
+```
+
+**Updates RDS entity table:**
+| Field | Description |
+|-------|-------------|
+| `title` | Job title (people) |
+| `location` | City, State/Country |
+| `belief_regulatory_stance` | Accelerate/Light-touch/Targeted/Moderate/Restrictive/Precautionary |
+| `belief_regulatory_stance_detail` | 1-3 sentence explanation with evidence |
+| `belief_evidence_source` | Explicitly stated / Inferred from actions / Inferred from associations |
+| `belief_agi_timeline` | Already here / 2-3 years / 5-10 years / 10-25 years / 25+ years / Never |
+| `belief_ai_risk` | Overstated / Manageable / Serious / Catastrophic / Existential |
+| `belief_threat_models` | Specific concerns (max 3) |
+| `influence_type` | Decision-maker / Researcher / Funder / Builder / Organizer / etc. |
+| `twitter` | Verified @handle |
+| `other_orgs` | Additional affiliations |
+
+**Cost:** ~$0.15/entity
+
+#### Step 4.3: Source Attribution / Claims (enrich-claims.js) ← Anushree's work
+
+**Creates sourced claims with verbatim citations for belief dimensions**
+
+```bash
+PILOT_DB="postgresql://..." node scripts/enrich-claims.js --id=<entity_id>
+PILOT_DB="postgresql://..." node scripts/enrich-claims.js --limit=20
+```
+
+**Writes to Neon:**
+- `source` table: Evidence URLs with metadata
+- `claim` table: One row per entity-dimension-source with:
+  - `belief_dimension`: regulatory_stance / agi_timeline / ai_risk_level / agi_definition
+  - `stance`: Text label from scale
+  - `stance_score`: Ordinal score
+  - `citation`: Verbatim quote from source
+  - `claim_type`: direct_statement / authored_position / inferred_from_action
+  - `confidence`: high / medium / low / unverified
+
+**Cost:** ~$0.08/entity (4 Exa searches + 1 Claude call)
+
+#### Step 4.4: Thumbnails (resolve-thumbnails.js)
+
+```bash
+node scripts/resolve-thumbnails.js --id=<entity_id>
+```
+
+**Updates:** `thumbnail_url` field
+
+**Cost:** ~$0.01/entity
+
+#### Step 4.5: Additional Scripts (as needed)
+
+| Script | Purpose | When to use |
+|--------|---------|-------------|
+| `enrich-crosspartisan.js` | Policy-area claims for policymakers | 6 specific policy dimensions |
+| `enrich-resources.js` | Resource metadata + claims | For resource entities only |
+| `enrich-elections.js` | Election candidates/PACs | Election-related entities |
+
+#### Enrichment Order (Recommended)
+
+```
+1. enrich-v2.js        → Notes + confidence + sources
+2. enrich-deep.js      → Belief stances + influence type (people)
+   enrich-deep-orgs.js → Belief stances + funding model (orgs)
+3. enrich-claims.js    → Source attribution for beliefs
+4. resolve-thumbnails  → Profile images
+```
+
+#### Entity Column Coverage (Current)
+
+| Field | % Filled | Script |
+|-------|----------|--------|
+| entity_type | 100% | skeleton creation |
+| name | 100% | skeleton creation |
+| notes | 100% | enrich-v2.js |
+| enrichment_version | 100% | enrich-v2.js |
+| importance | 100% | manual/rules |
+| category | 94% | skeleton creation / inferred |
+| thumbnail_url | 91% | resolve-thumbnails.js |
+| influence_type | 84% | enrich-deep.js |
+| belief_ai_risk | 79% | enrich-deep.js |
+| belief_evidence_source | 79% | enrich-deep.js |
+| belief_agi_timeline | 77% | enrich-deep.js |
+| belief_regulatory_stance | 77% | enrich-deep.js |
+| notes_sources | 69% | enrich-v2.js |
+| notes_confidence | 64% | enrich-v2.js |
+
+**Estimated total cost for 481 new entities:** ~$75-150
+
+---
+
+### ⚠️ Boundary Rule: No Second-Pass Discovery
+
+Per the "Breaking the Endless Loop" decision above:
+- We will NOT run `discover-funding.js` on the newly created entities
+- These are "first-hop" connections; another hop would explode scope
+- Future edge discovery only for user-submitted entities or high-profile stakeholders
+
+---
+
+### Phase 5: Final Steps
+
+**Step 5.1: Regenerate map-data.json**
+```bash
+pnpm run db:export-map
+```
+
+**Step 5.2: Verify on map**
+- Check new entities appear correctly
+- Verify edges are displayed
+- Test search finds new entities
 
 ---
 
@@ -241,6 +585,12 @@ Which new entities to enrich first?
 | `post-process/post-process-2-reject-generic.js` | Reject generic names | ⏳ Ready |
 | `post-process/post-process-4-smart-filter.js` | AI relevance filter | ⏳ Ready |
 | `post-process/apply-review-rejections.js` | Apply Claude review | ✅ Done |
+| `post-process/apply-pending-rejections-batch1-4.js` | Apply batch edge rejections | ✅ Done |
+| `post-process/apply-final-entity-rejections.js` | Apply final entity rejections | ✅ Done |
+| `post-process/apply-overlap-mappings.js` | Apply overlap mappings to RDS | ✅ Done |
+| `post-process/export-entities-for-overlap.js` | Export entities for overlap check | ✅ Done |
+| `post-process/reject-generic-entities.js` | Reject generic entity edges | ✅ Done |
+| `post-process/map-entity-aliases.js` | Map entity aliases to canonical | ✅ Done |
 | `post-process/consolidate-duplicate-edges.js` | Consolidate multi-source edges | ✅ Done |
 | `post-process/promote-discoveries.js` | Promote edges to RDS | ⏳ Ready |
 | `post-process/export-pending-review.js` | Export for review | ✅ Done |
@@ -253,15 +603,15 @@ Which new entities to enrich first?
 ## Quick Start: Next Actions
 
 ```bash
-# 1. Run merge duplicates (entity suggestions)
-node scripts/edge-enrichment/post-process/post-process-1-merge-duplicates.js --dry-run
-node scripts/edge-enrichment/post-process/post-process-1-merge-duplicates.js --apply
+# 1. Create ~310 skeleton entities in RDS (script to be created)
+node scripts/edge-enrichment/post-process/create-skeleton-entities.js --dry-run
+node scripts/edge-enrichment/post-process/create-skeleton-entities.js --apply
 
-# 2. Run reject generic (entity suggestions)
-node scripts/edge-enrichment/post-process/post-process-2-reject-generic.js --dry-run
-node scripts/edge-enrichment/post-process/post-process-2-reject-generic.js --apply
+# 2. Run entity matching on pending_entities edges
+node scripts/edge-enrichment/post-process/match-pending-entities.js --dry-run
+node scripts/edge-enrichment/post-process/match-pending-entities.js --apply
 
-# 3. Promote ready edges (347 pending_review edges)
+# 3. Promote matched edges to RDS
 node scripts/edge-enrichment/post-process/promote-discoveries.js --dry-run
 node scripts/edge-enrichment/post-process/promote-discoveries.js --apply
 

@@ -1,0 +1,530 @@
+[
+  {
+    "id": 2036,
+    "name": "AMP",
+    "status": "SUCCESS",
+    "shapes_ai_ecosystem": true,
+    "entity_type": "organization",
+    "category": "Deployers & Platforms",
+    "other_categories": [
+      "Infrastructure & Compute"
+    ],
+    "bio": "Amp (ampcode.com) is a frontier coding agent that provides AI-powered software development tools through terminal and editor interfaces. The company offers multiple modes including smart mode using state-of-the-art models like Claude Opus 4.7 and GPT-5.4, with features like subagents, code review, and thread sharing for collaborative development.",
+    "website": "https://ampcode.com",
+    "twitter": "AmpCode",
+    "bluesky": null,
+    "location": null,
+    "belief_regulatory_stance": null,
+    "belief_regulatory_stance_detail": null,
+    "belief_agi_timeline": null,
+    "belief_ai_risk": null,
+    "belief_evidence_source": null,
+    "source_urls": [
+      "https://ampcode.com/",
+      "https://ampcode.com/manual",
+      "http://ampcode.com/news/amp-free",
+      "https://usegitai.com/docs/cli/amp"
+    ],
+    "confidence": {
+      "entity_type": 5,
+      "category": 4,
+      "bio": 4,
+      "beliefs": 0
+    },
+    "reasoning": "Clear identification as AI coding agent company from multiple sources. Categorized as Deployers & Platforms since they build AI-powered development tools for end users. Twitter handle found in testimonials. No explicit belief stances found in sources - they focus on technical capabilities rather than AI policy positions."
+  },
+  {
+    "id": 2037,
+    "name": "Accel",
+    "status": "SUCCESS",
+    "shapes_ai_ecosystem": true,
+    "entity_type": "organization",
+    "category": "AI Safety/Alignment",
+    "other_categories": [
+      "Academic",
+      "Labor/Civil Society"
+    ],
+    "bio": "Accel AI Institute is a 501(c)(3) nonprofit founded in 2016 and headquartered in Berkeley, California, with a mission to lower barriers to entry in engineering artificial intelligence. The organization focuses on integrating AI and social impact through consulting, workshops, and research on ethical AI development, particularly serving underrepresented groups in tech, social justice advocates, and those experiencing job loss due to automation.",
+    "website": "https://accel.ai/",
+    "twitter": null,
+    "bluesky": null,
+    "location": "Berkeley, California",
+    "belief_regulatory_stance": null,
+    "belief_regulatory_stance_detail": null,
+    "belief_agi_timeline": null,
+    "belief_ai_risk": null,
+    "belief_evidence_source": null,
+    "source_urls": [
+      "https://accel.ai/",
+      "https://www.crunchbase.com/organization/accel-ai",
+      "https://www.linkedin.com/company/accel.ai",
+      "https://data.org/organizations/accel-ai/"
+    ],
+    "confidence": {
+      "entity_type": 5,
+      "category": 4,
+      "bio": 5,
+      "beliefs": 0
+    },
+    "reasoning": "Clear organizational entity with multiple sources confirming nonprofit status, founding details, and mission. Categorized as AI Safety/Alignment due to explicit focus on ethical AI development and social impact. Also fits Academic and Labor/Civil Society categories given research activities and focus on underrepresented groups. No explicit belief stances found in sources despite ethical AI focus."
+  },
+  {
+    "id": 2038,
+    "name": "American Talent Initiative",
+    "status": "SUCCESS",
+    "shapes_ai_ecosystem": false,
+    "entity_type": "organization",
+    "category": "Academic",
+    "other_categories": null,
+    "bio": "The American Talent Initiative is a Bloomberg Philanthropies-supported collaboration between the Aspen Institute College Excellence Program and Ithaka S+R that brings together over 135 high-graduation-rate colleges and universities to expand access and opportunity for talented low- and moderate-income students. Founded in 2016, ATI set a goal to educate 50,000 more high-achieving, lower-income students by 2025 at institutions with graduation rates above 70 percent.",
+    "website": "https://americantalentinitiative.org/",
+    "twitter": null,
+    "bluesky": null,
+    "location": null,
+    "belief_regulatory_stance": null,
+    "belief_regulatory_stance_detail": null,
+    "belief_agi_timeline": null,
+    "belief_ai_risk": null,
+    "belief_evidence_source": null,
+    "source_urls": [
+      "https://americantalentinitiative.org/",
+      "https://americantalentinitiative.org/who-we-are/",
+      "https://americantalentinitiative.org/what-we-do/",
+      "https://sr.ithaka.org/our-work/american-talent-initiative/",
+      "https://americantalentinitiative.org/join-ati/",
+      "https://americantalentinitiative.org/resources/",
+      "https://americantalentinitiative.org/progress/",
+      "https://americantalentinitiative.org/who-we-are/ati-leadership/"
+    ],
+    "confidence": {
+      "entity_type": 5,
+      "category": 4,
+      "bio": 5,
+      "beliefs": 0
+    },
+    "reasoning": "This is clearly an organization focused on higher education access, not AI. It's a collaborative initiative between academic institutions and philanthropic organizations to increase college access for low-income students. While categorized as Academic due to its work with universities, it doesn't shape the AI ecosystem - it focuses on college access and educational opportunity."
+  },
+  {
+    "id": 2039,
+    "name": "Athena 2.0",
+    "status": "INSUFFICIENT_DATA",
+    "shapes_ai_ecosystem": false,
+    "entity_type": null,
+    "category": null,
+    "other_categories": null,
+    "bio": null,
+    "website": null,
+    "twitter": null,
+    "bluesky": null,
+    "location": null,
+    "belief_regulatory_stance": null,
+    "belief_regulatory_stance_detail": null,
+    "belief_agi_timeline": null,
+    "belief_ai_risk": null,
+    "belief_evidence_source": null,
+    "source_urls": [
+      "https://arxiv.org/abs/2111.02519",
+      "https://www.amazon.science/alexa-prize/proceedings/athena-2-0-discourse-and-user-modeling-in-open-domain-dialogue",
+      "http://arxiv.org/pdf/2308.01887v1",
+      "https://aclanthology.org/2021.emnlp-demo.15/",
+      "https://athena.connex.ai/us/athena-2.0.php",
+      "https://nexusflow.ai/blogs/athene-v2",
+      "https://github.com/Devolved-AI/Devolved_AI_Athena_2.0_Decentralized_training_Client_App_dev_version",
+      "https://gargantua.ai/product/gargantua-robot-bases-athena-2-0/"
+    ],
+    "confidence": {
+      "entity_type": 0,
+      "category": 0,
+      "bio": 0,
+      "beliefs": 0
+    },
+    "reasoning": "The search results show multiple different AI systems/products named 'Athena 2.0' from different organizations: a UCSC Alexa Prize socialbot, ConnexAI's customer service agent, Nexusflow's language model, a decentralized training client, and a Slamtec robot base. Without additional context to specify which 'Athena 2.0' entity is being mapped, it's impossible to determine if any single entity shapes the AI ecosystem or provide accurate classification."
+  },
+  {
+    "id": 2040,
+    "name": "Bund",
+    "status": "INSUFFICIENT_DATA",
+    "shapes_ai_ecosystem": null,
+    "entity_type": null,
+    "category": null,
+    "other_categories": null,
+    "bio": null,
+    "website": null,
+    "twitter": null,
+    "bluesky": null,
+    "location": null,
+    "belief_regulatory_stance": null,
+    "belief_regulatory_stance_detail": null,
+    "belief_agi_timeline": null,
+    "belief_ai_risk": null,
+    "belief_evidence_source": null,
+    "source_urls": [
+      "https://www.bundl.ai/",
+      "https://www.bundly.ai/",
+      "https://bundl.run/",
+      "https://www.westbund.com/en/index/KEY-PROJECTS/detail_3e6y4N.html",
+      "https://www.bundl.ai/privacy",
+      "https://www.launchingnext.com/s/bundl-ai/115367/",
+      "https://www.neobund.ai/",
+      "https://bundly.ai/about-us"
+    ],
+    "confidence": {
+      "entity_type": 0,
+      "category": 0,
+      "bio": 0,
+      "beliefs": 0
+    },
+    "reasoning": "The entity name 'Bund' is ambiguous and does not clearly map to any single entity in the sources. The search results contain multiple different companies/projects with similar names: Bundl AI (workflow automation), Bundly AI (business toolkit), Bundl.run (Mac app installer), West Bund AI Tower (Shanghai development), and NeoBund.ai (TikTok video agent). Without additional context to specify which 'Bund' entity is intended, I cannot determine the correct entity type, category, or other details."
+  },
+  {
+    "id": 2041,
+    "name": "Captions",
+    "status": "SUCCESS",
+    "shapes_ai_ecosystem": true,
+    "entity_type": "organization",
+    "category": "Frontier Lab",
+    "other_categories": [
+      "Deployers & Platforms"
+    ],
+    "bio": "Captions is an AI video editing platform built by Mirage in New York City that uses AI to automatically edit videos, generate captions, create AI avatars, and provide voice translation. The app has been downloaded over 10 million times and offers features like eye contact correction, automatic caption generation in 100+ languages, and AI-powered video editing for creators making short-form content.",
+    "website": "https://captions.ai/",
+    "twitter": null,
+    "bluesky": null,
+    "location": "New York City",
+    "belief_regulatory_stance": null,
+    "belief_regulatory_stance_detail": null,
+    "belief_agi_timeline": null,
+    "belief_ai_risk": null,
+    "belief_evidence_source": null,
+    "source_urls": [
+      "https://captions.ai/",
+      "https://www.captions.ai/overview",
+      "https://apps.apple.com/us/app/captions-ai-edits-your-video/id1541407007",
+      "https://itirupati.com/captions-ai/",
+      "https://captions.ai/help/whats-new"
+    ],
+    "confidence": {
+      "entity_type": 5,
+      "category": 4,
+      "bio": 5,
+      "beliefs": 0
+    },
+    "reasoning": "Clear organization developing multiple AI models and technologies for video editing, avatar creation, and content generation. Built by Mirage, operates as a frontier lab creating proprietary AI models like Mirage video generation. Shapes AI ecosystem through product development and technology innovation, not just using existing AI tools."
+  },
+  {
+    "id": 2042,
+    "name": "Caroline Mehl",
+    "status": "SUCCESS",
+    "shapes_ai_ecosystem": false,
+    "entity_type": "person",
+    "category": "Organizer",
+    "other_categories": [
+      "Academic"
+    ],
+    "bio": "Caroline Mehl is the Co-Founder and Executive Director of the Constructive Dialogue Institute, a non-profit organization that builds educational tools to equip Americans with the skills to communicate and collaborate across differences. She has expertise in translating psychological research into real-world applications and previously worked as an Associate Research Scholar at NYU's Stern School of Business with Jonathan Haidt.",
+    "website": null,
+    "twitter": null,
+    "bluesky": null,
+    "location": "Washington, District of Columbia, United States",
+    "belief_regulatory_stance": null,
+    "belief_regulatory_stance_detail": null,
+    "belief_agi_timeline": null,
+    "belief_ai_risk": null,
+    "belief_evidence_source": null,
+    "source_urls": [
+      "https://cof.org/person/caroline-mehl",
+      "https://constructivedialogue.org/articles/were-in-the-danger-zone-a-conversation-with-caroline-mehl/",
+      "https://www.linkedin.com/in/caroline-mehl-42102a56",
+      "https://constructivedialogue.org/articles/caroline-mehl-helping-people-communicate-across-divides/",
+      "https://www.gfoa.org/bio/mehl"
+    ],
+    "confidence": {
+      "entity_type": 5,
+      "category": 4,
+      "bio": 4,
+      "beliefs": 0
+    },
+    "reasoning": "Caroline Mehl is clearly a person who leads a nonprofit focused on constructive dialogue and communication across differences. While her organization uses behavioral science research, there is no evidence in the sources that she researches, builds, funds, regulates, advocates about, or reports on AI specifically. Her work focuses on dialogue, polarization, campus conflict, and free speech rather than artificial intelligence."
+  },
+  {
+    "id": 2043,
+    "name": "Center on Emerging Risk Research",
+    "status": "SUCCESS",
+    "shapes_ai_ecosystem": true,
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "other_categories": [
+      "AI Safety/Alignment"
+    ],
+    "bio": "The Center for Emerging Risk Research is a Basel, Switzerland-based investment firm founded in 2019 that conducts research on improving quality of life for future generations. The organization has invested in AI companies including Anthropic's Series A funding round in 2021.",
+    "website": "emergingrisk.ch/",
+    "twitter": null,
+    "bluesky": null,
+    "location": "Basel, Basel-Stadt, Switzerland",
+    "belief_regulatory_stance": null,
+    "belief_regulatory_stance_detail": null,
+    "belief_agi_timeline": null,
+    "belief_ai_risk": null,
+    "belief_evidence_source": null,
+    "source_urls": [
+      "https://www.crunchbase.com/organization/center-for-emerging-risk-research"
+    ],
+    "confidence": {
+      "entity_type": 5,
+      "category": 4,
+      "bio": 4,
+      "beliefs": 0
+    },
+    "reasoning": "Clear evidence shows this is an investment firm that has funded AI companies like Anthropic, making it a VC/Capital organization that shapes the AI ecosystem. Founded in 2019, based in Basel, with research focus on future generations. No explicit belief stances found in sources."
+  },
+  {
+    "id": 2044,
+    "name": "Centre for Innovation and Entrepreneurship at the Rotman School of Management",
+    "status": "INSUFFICIENT_DATA",
+    "shapes_ai_ecosystem": null,
+    "entity_type": null,
+    "category": null,
+    "other_categories": null,
+    "bio": null,
+    "website": null,
+    "twitter": null,
+    "bluesky": null,
+    "location": null,
+    "belief_regulatory_stance": null,
+    "belief_regulatory_stance_detail": null,
+    "belief_agi_timeline": null,
+    "belief_ai_risk": null,
+    "belief_evidence_source": null,
+    "source_urls": [
+      "https://rotman.utoronto.ca/the-rotman-experience/about-rotman/ai-at-rotman/",
+      "https://www.creativedestructionlab.com/locations/toronto/",
+      "https://www.rotman.utoronto.ca/faculty-and-research/education-labs/creative-destruction-lab/",
+      "https://rotman.utoronto.ca/programs/startup",
+      "https://www.rotman.utoronto.ca/programs/professional-development-programs/executive-programs/programs-for-individuals/generative-ai-for-business-driving-growth-and-competitive-advantage/",
+      "https://www.rotman.utoronto.ca/FacultyAndResearch/EducationCentres/CreativeDestructionLab",
+      "https://creativedestructionlab.com/about/",
+      "http://stage-www.rotman.utoronto.ca/the-rotman-experience/about-rotman/joseph-l-rotman/rotman-catalyst-fund/"
+    ],
+    "confidence": {
+      "entity_type": 0,
+      "category": 0,
+      "bio": 0,
+      "beliefs": 0
+    },
+    "reasoning": "The search results do not contain any specific information about a 'Centre for Innovation and Entrepreneurship at the Rotman School of Management' as a distinct entity. The sources discuss various programs at Rotman including Creative Destruction Lab, Startup Rotman, and AI initiatives, but none specifically mention this centre by name. Without direct evidence of this entity's existence or activities, classification is not possible."
+  },
+  {
+    "id": 2045,
+    "name": "Composite",
+    "status": "INSUFFICIENT_DATA",
+    "shapes_ai_ecosystem": null,
+    "entity_type": null,
+    "category": null,
+    "other_categories": null,
+    "bio": null,
+    "website": null,
+    "twitter": null,
+    "bluesky": null,
+    "location": null,
+    "belief_regulatory_stance": null,
+    "belief_regulatory_stance_detail": null,
+    "belief_agi_timeline": null,
+    "belief_ai_risk": null,
+    "belief_evidence_source": null,
+    "source_urls": [
+      "https://www.tredence.com/blog/composite-ai",
+      "https://www.dynatrace.com/knowledge-base/composite-ai/",
+      "https://www.sas.com/en_us/solutions/ai/composite.html",
+      "https://artoonsolutions.com/glossary/composite-ai/",
+      "https://www.oracle.com/artificial-intelligence/composite-ai/",
+      "https://insightfinder.com/blog/what-is-composite-ai/",
+      "https://knowledgereactor.ai/2026/03/16/composite-ai/",
+      "https://www.debutinfotech.com/blog/what-is-composite-ai"
+    ],
+    "confidence": {
+      "entity_type": 0,
+      "category": 0,
+      "bio": 0,
+      "beliefs": 0
+    },
+    "reasoning": "The entity name 'Composite' appears to refer to a technical AI concept (Composite AI) rather than a specific person or organization. All sources discuss Composite AI as a methodology/approach that combines multiple AI techniques, not as an entity that shapes the AI ecosystem. No evidence found of 'Composite' being a company, person, or organization involved in AI research, development, funding, regulation, or advocacy."
+  },
+  {
+    "id": 2046,
+    "name": "DeepTechXL Fund I",
+    "status": "SUCCESS",
+    "shapes_ai_ecosystem": false,
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "other_categories": null,
+    "bio": "DeepTechXL Fund I is a €110 million Dutch venture capital fund that invests in promising deep-tech startups and scale-ups focusing on complex technologies like photonics, semiconductors, and quantum computing. The fund operates from High Tech Campus Eindhoven and is backed by strategic investors including ASML, Philips, PME Pension Fund, Invest-NL, and research institute TNO.",
+    "website": "https://www.deeptechxl.com/",
+    "twitter": null,
+    "bluesky": null,
+    "location": "Eindhoven",
+    "belief_regulatory_stance": null,
+    "belief_regulatory_stance_detail": null,
+    "belief_agi_timeline": null,
+    "belief_ai_risk": null,
+    "belief_evidence_source": null,
+    "source_urls": [
+      "https://www.deeptechxl.com/news-item/deeptechxl-fund-announcement",
+      "https://invest-nl.nl/en/impact/portfolio/deeptechxl-fund-i",
+      "https://www.deeptechxl.com/",
+      "https://tech.eu/2024/03/14/deeptechxl-raises-eur110m-boost-for-dutch-deep-tech-startups/",
+      "https://www.cbinsights.com/investor/deeptechxl",
+      "https://www.deeptechxl.com/funding",
+      "https://funderlyst.com/blog/dutch-deeptechxl-secures-e110m-to-boost-top-deeptech-startups/",
+      "https://www.deeptechxl.com/portfolio"
+    ],
+    "confidence": {
+      "entity_type": 5,
+      "category": 5,
+      "bio": 5,
+      "beliefs": 0
+    },
+    "reasoning": "Entity is clearly a venture capital fund organization based on multiple sources describing it as a VC fund with €110M in capital. The fund focuses on deep-tech investments in areas like photonics, semiconductors, and quantum computing, but sources show no evidence of AI-specific investments or AI ecosystem involvement. Portfolio companies and investment focus areas mentioned do not indicate AI specialization, making this a general deep-tech fund rather than an AI ecosystem shaper."
+  },
+  {
+    "id": 2047,
+    "name": "Delaware Innovation Space",
+    "status": "SUCCESS",
+    "shapes_ai_ecosystem": false,
+    "entity_type": "organization",
+    "category": "Academic",
+    "other_categories": [
+      "Infrastructure & Compute"
+    ],
+    "bio": "The Innovation Space is a 501(c)3 nonprofit innovation ecosystem founded in 2017 through a partnership between the State of Delaware, DuPont, and the University of Delaware. Located at DuPont's Experimental Station in Wilmington, Delaware, it provides 130,000 square feet of state-of-the-art laboratory space and support programs to accelerate science-based startups in life sciences, clean tech, and advanced materials.",
+    "website": "https://innovationspace.org",
+    "twitter": null,
+    "bluesky": null,
+    "location": "Wilmington, Delaware",
+    "belief_regulatory_stance": null,
+    "belief_regulatory_stance_detail": null,
+    "belief_agi_timeline": null,
+    "belief_ai_risk": null,
+    "belief_evidence_source": null,
+    "source_urls": [
+      "https://delawareinnovationspace.com/",
+      "https://innovationspace.org/about/",
+      "https://innovationspace.org/wp-content/uploads/2023/08/Fact-Sheet-Innovation-Space.pdf",
+      "https://delawarebusinesstimes.com/supplements/innovation/the-innovation-space-giving-startups-room-to-grow/amp/",
+      "https://www.udel.edu/udaily/2017/april/delaware-innovation-space/",
+      "https://www.eda.gov/funding/programs/build-to-scale/past-grantees/2020-venture-challenge/Delaware-Innovation-Space",
+      "https://www.choosedelaware.com/in-the-news/the-innovation-space-expands-lab-and-office-space-for-startups/",
+      "https://technical.ly/company/delaware-innovation-space"
+    ],
+    "confidence": {
+      "entity_type": 5,
+      "category": 4,
+      "bio": 5,
+      "beliefs": 0
+    },
+    "reasoning": "This is clearly an organization (nonprofit) focused on supporting science-based startups in life sciences, clean tech, and advanced materials. While it provides infrastructure and support for tech companies, there is no evidence in the sources that it specifically shapes the AI ecosystem through AI research, development, funding, or policy work. Categorized as Academic due to University of Delaware partnership and educational components, with Infrastructure & Compute as secondary due to providing lab facilities and equipment."
+  },
+  {
+    "id": 2048,
+    "name": "Draper",
+    "status": "SUCCESS",
+    "shapes_ai_ecosystem": true,
+    "entity_type": "person",
+    "category": "Investor",
+    "other_categories": [
+      "Executive"
+    ],
+    "bio": "Tim Draper is a venture capitalist and founder of Draper Associates with over 40 years of experience funding transformative technology. He has made early investments in companies like SpaceX, Tesla, Coinbase, Skype, and Twitch, and is known for bold contrarian bets including his championing of bitcoin and blockchain technology.",
+    "website": "https://www.draper.vc/",
+    "twitter": null,
+    "bluesky": null,
+    "location": "Silicon Valley",
+    "belief_regulatory_stance": null,
+    "belief_regulatory_stance_detail": null,
+    "belief_agi_timeline": null,
+    "belief_ai_risk": null,
+    "belief_evidence_source": null,
+    "source_urls": [
+      "https://www.draper.vc/",
+      "https://news.crunchbase.com/venture/tim-draper-ai-bitcoin-human-accelerators/",
+      "https://pitchtimdraper.com/",
+      "https://draper.live/",
+      "https://draperchat.com/"
+    ],
+    "confidence": {
+      "entity_type": 5,
+      "category": 5,
+      "bio": 4,
+      "beliefs": 0
+    },
+    "reasoning": "Clear evidence shows Tim Draper is a venture capitalist with Draper Associates investing heavily in AI companies. Multiple sources confirm his role as an investor and founder. He shapes the AI ecosystem through funding and has created AI tools (digital twins), but no explicit beliefs about regulation, timelines, or risk levels are stated in the sources."
+  },
+  {
+    "id": 2049,
+    "name": "Emergent Ventures",
+    "status": "INSUFFICIENT_DATA",
+    "shapes_ai_ecosystem": true,
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "other_categories": null,
+    "bio": "Multiple distinct organizations named 'Emergent Ventures' exist: a Silicon Valley VC firm investing in AI-powered enterprise software (founded 2016), a Mercatus Center fellowship program supporting social entrepreneurs (launched 2018), and an Australian corporate venture capital firm specializing in data-linked AI investments.",
+    "website": null,
+    "twitter": null,
+    "bluesky": null,
+    "location": null,
+    "belief_regulatory_stance": null,
+    "belief_regulatory_stance_detail": null,
+    "belief_agi_timeline": null,
+    "belief_ai_risk": null,
+    "belief_evidence_source": null,
+    "source_urls": [
+      "https://emergent.vc/",
+      "https://www.mercatus.org/emergent-ventures",
+      "https://www.mercatus.org/features/mercatus-center-announces-launch-emergent-ventures-ai",
+      "https://www.emergent.vc/startups",
+      "https://emergentventures.vc/",
+      "https://marginalrevolution.com/marginalrevolution/2022/04/ai-for-emergent-ventures.html",
+      "https://www.vcbeast.com/vc-firms/emergent-ventures",
+      "https://emergentventures.vc/about-us/"
+    ],
+    "confidence": {
+      "entity_type": 4,
+      "category": 4,
+      "bio": 3,
+      "beliefs": 0
+    },
+    "reasoning": "The search results reveal at least three distinct organizations named 'Emergent Ventures': a Silicon Valley VC firm focused on AI enterprise software, a Mercatus Center fellowship program with an AI vertical, and an Australian corporate VC firm. All shape the AI ecosystem through investment and funding activities. Due to the ambiguity of which specific entity is being referenced and conflicting information across sources, confidence is limited and no single location/website can be definitively assigned."
+  },
+  {
+    "id": 2050,
+    "name": "Grok Ventures",
+    "status": "SUCCESS",
+    "shapes_ai_ecosystem": false,
+    "entity_type": "organization",
+    "category": "VC/Capital/Philanthropy",
+    "other_categories": null,
+    "bio": "Grok Ventures is an Australia-based venture capital fund founded in 2008 that invests globally in technology-enabled climate companies and infrastructure. Originally backed by Mike Cannon-Brookes (CEO and co-founder of Atlassian), the fund has been investing in climate tech since 2016 and focuses exclusively on decarbonization solutions across venture capital, infrastructure, and lighthouse investments.",
+    "website": "https://grok.ventures/",
+    "twitter": "grok_ventures",
+    "bluesky": null,
+    "location": "Sydney, Australia",
+    "belief_regulatory_stance": null,
+    "belief_regulatory_stance_detail": null,
+    "belief_agi_timeline": null,
+    "belief_ai_risk": null,
+    "belief_evidence_source": null,
+    "source_urls": [
+      "https://grok.ventures/",
+      "https://impact.dealroom.co/investors/grok_ventures",
+      "https://www.cbinsights.com/investor/grok-ventures",
+      "https://grok.ventures/about/the-grok-story/",
+      "https://goldi.ai/intelligence/vc/grok-ventures"
+    ],
+    "confidence": {
+      "entity_type": 5,
+      "category": 5,
+      "bio": 5,
+      "beliefs": 0
+    },
+    "reasoning": "Grok Ventures is clearly an organization (VC fund) focused on climate tech investments, not AI. Despite the name confusion with Elon Musk's Grok AI chatbot mentioned in search results, this is a separate Australian climate-focused investment fund. They do not shape the AI ecosystem - they invest in climate technology solutions. No evidence of AI-related beliefs or stances found in sources."
+  }
+]
