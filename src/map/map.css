@@ -2,7 +2,6 @@
   --serif: 'EB Garamond', Georgia, serif;
   --mono: 'DM Mono', monospace;
   --accent: #2563eb;
-  --controls-width: 350px;
   /* Light mode (default) */
   --bg-page: #f0eeeb;
   --bg-panel: #fff;
@@ -893,9 +892,6 @@ body {
   border-color: var(--text-3);
 }
 @media (max-width: 600px) {
-  :root {
-    --controls-width: 0px;
-  }
   .site-nav {
     padding: 0 1rem;
   }
@@ -1800,9 +1796,6 @@ body {
 
 /* Tablet: narrower controls */
 @media (min-width: 601px) and (max-width: 1024px) {
-  :root {
-    --controls-width: 200px;
-  }
   .controls {
     left: 0.5rem;
   }

@@ -425,14 +425,14 @@ function ClusterMapView({
     const nodeMinY = d3.min(nodes, (d: { y: number }) => d.y) - 10
     const nodeMaxY = d3.max(nodes, (d: { y: number }) => d.y) + 10
 
-    const labelMargin = 130
+    const labelMargin = 80
     const vbX = nodeMinX - labelMargin
-    const vbY = nodeMinY - 30
+    const vbY = nodeMinY - 20
     const vbW = nodeMaxX - nodeMinX + labelMargin * 2
-    const vbH = nodeMaxY - nodeMinY + 60
-    const maxH = window.innerHeight - 220
+    const vbH = nodeMaxY - nodeMinY + 40
+    const availH = (container.closest('#react-view-container')?.clientHeight || window.innerHeight - 48) - 120
     const naturalH = W * (vbH / vbW)
-    const H = Math.min(naturalH, maxH)
+    const H = Math.min(naturalH, availH)
 
     const svg = d3
       .select(container)

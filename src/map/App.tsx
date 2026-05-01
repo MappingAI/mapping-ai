@@ -575,10 +575,16 @@ export function App() {
           `}</style>
           <div
             id="react-view-container"
+            ref={(el) => {
+              if (el) {
+                const sidebar = document.querySelector('.controls')
+                const sidebarRight = sidebar ? sidebar.getBoundingClientRect().right + 8 : 350
+                el.style.left = sidebarRight + 'px'
+              }
+            }}
             style={{
               position: 'fixed',
               top: '48px',
-              left: 'var(--controls-width, 350px)',
               right: 0,
               bottom: 0,
               overflow: 'auto',
