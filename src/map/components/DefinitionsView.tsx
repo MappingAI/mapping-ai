@@ -881,23 +881,25 @@ function TrendsView({ data }: { data: AgiData }) {
               >
                 {c.label}
               </span>
-              <svg
-                viewBox={`0 0 ${countSparkW} ${countSparkH}`}
-                style={{ flex: '1 1 80px', height: countSparkH, minWidth: 0 }}
-              >
-                <path d={pathD} fill="none" stroke={CLUSTER_COLORS[c.id] || '#ccc'} strokeWidth={1.5} />
-              </svg>
-              <span
-                style={{
-                  fontFamily: 'var(--mono)',
-                  fontSize: '9px',
-                  color: 'var(--text-3)',
-                  flexShrink: 0,
-                  whiteSpace: 'nowrap',
-                }}
-              >
-                {countSeries.reduce((a, b) => a + b, 0)}
-              </span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flex: '1 1 0', minWidth: 0 }}>
+                <svg
+                  viewBox={`0 0 ${countSparkW} ${countSparkH}`}
+                  style={{ flex: '1 1 0', height: countSparkH, minWidth: 0 }}
+                >
+                  <path d={pathD} fill="none" stroke={CLUSTER_COLORS[c.id] || '#ccc'} strokeWidth={1.5} />
+                </svg>
+                <span
+                  style={{
+                    fontFamily: 'var(--mono)',
+                    fontSize: '9px',
+                    color: 'var(--text-3)',
+                    flexShrink: 0,
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  {countSeries.reduce((a, b) => a + b, 0)}
+                </span>
+              </div>
               {beliefs &&
                 beliefDims.map((dim) => {
                   const dimSeries = beliefs[dim.key] || []
