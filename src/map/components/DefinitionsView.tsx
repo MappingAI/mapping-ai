@@ -723,7 +723,7 @@ function MiniSparkline({
   )
 }
 
-function TimelineView({ data }: { data: AgiData }) {
+function TrendsView({ data }: { data: AgiData }) {
   const quarters = useMemo(() => buildQuarters(data.points), [data.points])
   const clusters = useMemo(() => (data.clusters || []).sort((a, b) => b.count - a.count), [data.clusters])
 
@@ -921,7 +921,7 @@ function TimelineView({ data }: { data: AgiData }) {
   )
 }
 
-function TrendsView({ data }: { data: AgiData }) {
+function TimelineView({ data }: { data: AgiData }) {
   const ref = useRef<HTMLDivElement>(null)
   const [tooltipState, setTooltipState] = useState<{ x: number; y: number; html: string } | null>(null)
 

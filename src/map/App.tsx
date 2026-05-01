@@ -284,8 +284,8 @@ export function App() {
                 { key: 'map', label: 'Map' },
                 { key: 'list', label: 'List' },
                 { key: 'scatter', label: 'Scatter' },
-                { key: 'trends', label: 'Timeline' },
-                { key: 'timeline', label: 'Trends' },
+                { key: 'timeline', label: 'Timeline' },
+                { key: 'trends', label: 'Trends' },
               ] as const
             ).map((v) => (
               <button
