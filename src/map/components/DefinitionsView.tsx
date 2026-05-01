@@ -1137,20 +1137,59 @@ function BeliefsView({ data }: { data: AgiData }) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-      <div style={{ display: 'flex', gap: '16px', marginBottom: '8px' }}>
-        {beliefDims.map((dim) => (
-          <div key={dim.key} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-            <div
-              style={{
-                width: '32px',
-                height: '8px',
-                borderRadius: '2px',
-                background: `linear-gradient(to right, ${dim.colors[0]}, ${dim.colors[dim.colors.length - 1]})`,
-              }}
-            />
-            <span style={{ fontFamily: 'var(--mono)', fontSize: '9px', color: 'var(--text-3)' }}>{dim.label}</span>
-          </div>
-        ))}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginBottom: '8px' }}>
+        {beliefDims.map((dim) => {
+          const scale = BELIEF_SCALES[dim.key]
+          const startLabel = scale?.labels[0] || ''
+          const endLabel = scale?.labels[scale.labels.length - 1] || ''
+          return (
+            <div key={dim.key} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <span
+                style={{
+                  fontFamily: 'var(--mono)',
+                  fontSize: '9px',
+                  color: 'var(--text-2)',
+                  width: '55px',
+                  flexShrink: 0,
+                }}
+              >
+                {dim.label}
+              </span>
+              <span
+                style={{
+                  fontFamily: 'var(--mono)',
+                  fontSize: '7px',
+                  color: 'var(--text-3)',
+                  textAlign: 'right',
+                  width: '65px',
+                  flexShrink: 0,
+                }}
+              >
+                {startLabel}
+              </span>
+              <div
+                style={{
+                  width: '60px',
+                  height: '6px',
+                  borderRadius: '3px',
+                  flexShrink: 0,
+                  background: `linear-gradient(to right, ${dim.colors[0]}, ${dim.colors[dim.colors.length - 1]})`,
+                }}
+              />
+              <span
+                style={{
+                  fontFamily: 'var(--mono)',
+                  fontSize: '7px',
+                  color: 'var(--text-3)',
+                  width: '75px',
+                  flexShrink: 0,
+                }}
+              >
+                {endLabel}
+              </span>
+            </div>
+          )
+        })}
       </div>
 
       {clusters.map((c) => {
