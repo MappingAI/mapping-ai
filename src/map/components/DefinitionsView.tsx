@@ -1137,7 +1137,7 @@ function BeliefsView({ data }: { data: AgiData }) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginBottom: '8px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '12px' }}>
         {beliefDims.map((dim) => {
           const scale = BELIEF_SCALES[dim.key]
           const startLabel = scale?.labels[0] || ''
@@ -1148,8 +1148,8 @@ function BeliefsView({ data }: { data: AgiData }) {
                 style={{
                   fontFamily: 'var(--mono)',
                   fontSize: '9px',
-                  color: 'var(--text-2)',
-                  width: '55px',
+                  color: 'var(--text-1)',
+                  minWidth: '55px',
                   flexShrink: 0,
                 }}
               >
@@ -1158,31 +1158,28 @@ function BeliefsView({ data }: { data: AgiData }) {
               <span
                 style={{
                   fontFamily: 'var(--mono)',
-                  fontSize: '7px',
+                  fontSize: '8px',
                   color: 'var(--text-3)',
-                  textAlign: 'right',
-                  width: '65px',
-                  flexShrink: 0,
+                  whiteSpace: 'nowrap',
                 }}
               >
                 {startLabel}
               </span>
               <div
                 style={{
-                  width: '60px',
+                  width: '50px',
+                  minWidth: '50px',
                   height: '6px',
                   borderRadius: '3px',
-                  flexShrink: 0,
                   background: `linear-gradient(to right, ${dim.colors[0]}, ${dim.colors[dim.colors.length - 1]})`,
                 }}
               />
               <span
                 style={{
                   fontFamily: 'var(--mono)',
-                  fontSize: '7px',
+                  fontSize: '8px',
                   color: 'var(--text-3)',
-                  width: '75px',
-                  flexShrink: 0,
+                  whiteSpace: 'nowrap',
                 }}
               >
                 {endLabel}
