@@ -1970,28 +1970,6 @@ body {
   }
 }
 
-/* PASSWORD GATE—locked state: allow browsing views/filters but block node detail */
-body.locked #detail-panel {
-  pointer-events: none;
-  opacity: 0.5;
-}
-body.locked #contribute-btn {
-  pointer-events: none;
-  opacity: 0.4;
-}
-body.locked #mobile-directory {
-  pointer-events: none;
-}
-body.locked .mobile-search-bar {
-  pointer-events: none;
-}
-body.locked .mobile-type-chips {
-  pointer-events: none;
-}
-body.locked #mobile-hero-toggle {
-  pointer-events: none;
-}
-
 body.react-view-active .map-container,
 body.react-view-active .zoom-controls,
 body.react-view-active #contribute-btn,

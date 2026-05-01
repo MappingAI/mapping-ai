@@ -14,9 +14,6 @@ export default tseslint.config(
       'assets/js/',
       'archive/',
       'src/tiptap-notes.js',
-      // Legacy password gate extracted verbatim from inline map.html;
-      // will be rewritten in React during Phase 3 migration.
-      'src/map/password-gate.js',
       // One-off admin/analysis scripts stay out of lint. Production-critical
       // scripts (cache-thumbnails, export-map-data, migrate, seed, backup-db,
       // ensure-map-data, compute-positions) are linted via the scripts/ block
