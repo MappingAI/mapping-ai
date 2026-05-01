@@ -139,7 +139,7 @@ export function PolicyKingmakers({ edges, showTooltip, hideTooltip }: Props) {
     const padL = 290
     const padR = 45
     const padTop = 35
-    const legendH = 75
+    const legendH = 90
     const H = funderStats.length * (barH + gap) + padTop + legendH
 
     const svg = d3
@@ -347,8 +347,8 @@ export function PolicyKingmakers({ edges, showTooltip, hideTooltip }: Props) {
       })
     }
 
-    // Power law annotation
-    const annotationY = legendY + 20
+    // Power law annotation - position below legend rows
+    const annotationY = legendY + (row2.length > 0 ? 40 : 20)
     svg
       .append('text')
       .attr('x', W / 2)

@@ -208,7 +208,7 @@ export function FundingFragility({ edges, showTooltip, hideTooltip }: Props) {
     const padL = 220
     const padR = 15
     const padTop = 45
-    const legendH = 70
+    const legendH = 90
     const H = recipientData.length * (barH + gap) + padTop + legendH
 
     const svg = d3

@@ -183,7 +183,7 @@ export function FunderDiversity({ edges, showTooltip, hideTooltip }: Props) {
     const rowH = 32
     const padTop = 45
     const maxRows = Math.max(displayDiverse.length, displaySingle.length)
-    const legendH = 55
+    const legendH = 75
     const H = maxRows * rowH + padTop + legendH
 
     const svg = d3
