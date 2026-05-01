@@ -109,6 +109,8 @@ interface FundingEdge {
   amount_usd: number | null
   year: number | null
   citation: string | null
+  source_url?: string | null
+  source_title?: string | null
   funder_category: string
   recipient_category: string
 }

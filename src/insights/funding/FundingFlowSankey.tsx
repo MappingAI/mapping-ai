@@ -19,6 +19,8 @@ interface FundingEdge {
   amount_usd: number | null
   year: number | null
   citation: string | null
+  source_url?: string | null
+  source_title?: string | null
   funder_category: string
   recipient_category: string
 }
@@ -50,51 +52,6 @@ function formatUSD(amount: number | null): string {
   if (amount >= 1e6) return `$${(amount / 1e6).toFixed(1)}M`
   if (amount >= 1e3) return `$${(amount / 1e3).toFixed(0)}K`
   return `$${amount.toFixed(0)}`
-}
-
-interface ParsedSource {
-  url: string
-  title: string
-}
-
-function parseSources(citation: string): { sources: ParsedSource[]; text: string } {
-  const sources: ParsedSource[] = []
-  let text = citation
-
-  // Extract markdown-style links [text](url)
-  const mdLinkRegex = /\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g
-  let match: RegExpExecArray | null
-  while ((match = mdLinkRegex.exec(citation)) !== null) {
-    if (match[1] && match[2]) {
-      sources.push({ title: match[1], url: match[2] })
-    }
-  }
-  // Remove markdown links from text
-  text = text.replace(mdLinkRegex, '')
-
-  // Extract plain URLs not already captured
-  const urlRegex = /https?:\/\/[^\s|,<>"]+/g
-  const existingUrls = new Set(sources.map(s => s.url))
-  while ((match = urlRegex.exec(text)) !== null) {
-    const url = match[0].replace(/[.,;:)]+$/, '') // trim trailing punctuation
-    if (!existingUrls.has(url)) {
-      // Extract domain as title
-      try {
-        const domain = new URL(url).hostname.replace('www.', '')
-        sources.push({ title: domain, url })
-        existingUrls.add(url)
-      } catch {
-        sources.push({ title: 'Source', url })
-      }
-    }
-  }
-
-  // Clean up remaining text
-  text = text.replace(urlRegex, '').replace(/\|+/g, ' · ').replace(/\s+/g, ' ').trim()
-  // Remove empty separators
-  text = text.replace(/^[\s·]+|[\s·]+$/g, '').replace(/\s*·\s*·\s*/g, ' · ')
-
-  return { sources, text }
 }
 
 interface SelectedFlow {
@@ -143,42 +100,35 @@ function FlowDetailCard({ flow, onClose }: { flow: SelectedFlow; onClose: () => 
                     {formatUSD(edge.amount_usd)}
                   </div>
                 </div>
-                {edge.citation && (() => {
-                  const { sources, text } = parseSources(edge.citation)
-                  return (
-                    <div className="mt-2">
-                      {text && (
-                        <div className="font-mono text-[10px] text-[#888] leading-relaxed line-clamp-2 mb-1">
-                          {text}
-                        </div>
-                      )}
-                      {sources.length > 0 && (
-                        <div className="flex flex-wrap gap-1.5 mt-1">
-                          {sources.slice(0, 3).map((source, j) => (
-                            <a
-                              key={j}
-                              href={source.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1 font-mono text-[9px] text-[#2563eb] hover:underline bg-[#f0f4ff] px-1.5 py-0.5 rounded"
-                              onClick={(e) => e.stopPropagation()}
-                            >
-                              <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                              </svg>
-                              {source.title.length > 25 ? source.title.slice(0, 25) + '…' : source.title}
-                            </a>
-                          ))}
-                          {sources.length > 3 && (
-                            <span className="font-mono text-[9px] text-[#888]">
-                              +{sources.length - 3} more
-                            </span>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  )
-                })()}
+                {(edge.citation || edge.source_url) && (
+                  <div className="mt-2">
+                    {edge.citation && (
+                      <div className="font-mono text-[10px] text-[#888] leading-relaxed line-clamp-2 mb-1">
+                        {edge.citation}
+                      </div>
+                    )}
+                    {edge.source_url && (
+                      <a
+                        href={edge.source_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 font-mono text-[9px] text-[#2563eb] hover:underline bg-[#f0f4ff] px-1.5 py-0.5 rounded mt-1"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                        {edge.source_title || (() => {
+                          try {
+                            return new URL(edge.source_url).hostname.replace('www.', '')
+                          } catch {
+                            return 'Source'
+                          }
+                        })()}
+                      </a>
+                    )}
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -237,8 +187,8 @@ export function FundingFlowSankey({ flows, funders, edges }: Props) {
     if (links.length === 0) return
 
     const W = container.clientWidth || 700
-    const H = 560
-    const margin = { top: 20, right: 200, bottom: 60, left: 200 }
+    const H = 580
+    const margin = { top: 20, right: 200, bottom: 80, left: 200 }
 
     const svg = d3.select(container).append('svg').attr('viewBox', `0 0 ${W} ${H}`).attr('width', W).attr('height', H)
 
@@ -363,9 +313,7 @@ export function FundingFlowSankey({ flows, funders, edges }: Props) {
       }
     })
 
-    // Legend for recipient categories
-    const legendY = H - 25
-    const legendCategories = recipientCategories.slice(0, 6)
+    // Legend for recipient categories - two rows to fit all
     const shortLabels: Record<string, string> = {
       'AI Safety/Alignment': 'AI Safety',
       'Think Tank/Policy Org': 'Think Tank',
@@ -373,40 +321,79 @@ export function FundingFlowSankey({ flows, funders, edges }: Props) {
       'Infrastructure & Compute': 'Infra/Compute',
       'Deployers & Platforms': 'Deployers',
       'VC/Capital/Philanthropy': 'VC/Philanthropy',
+      'Ethics/Bias/Rights': 'Ethics/Rights',
+      'Labor/Civil Society': 'Labor/Civil',
+      'Media/Journalism': 'Media',
     }
+
+    // Split categories into two rows
+    const midpoint = Math.ceil(recipientCategories.length / 2)
+    const row1 = recipientCategories.slice(0, midpoint)
+    const row2 = recipientCategories.slice(midpoint)
+
+    const legendStartX = 20
+    const legendY1 = H - 38
+    const legendY2 = H - 20
 
     svg
       .append('text')
-      .attr('x', margin.left)
-      .attr('y', legendY - 12)
+      .attr('x', legendStartX)
+      .attr('y', legendY1 - 12)
       .attr('font-family', "'DM Mono', monospace")
       .attr('font-size', 9)
       .attr('fill', '#888')
       .text('Recipient category:')
 
-    let legendX = margin.left
-    legendCategories.forEach((cat) => {
+    // Row 1
+    let legendX = legendStartX
+    row1.forEach((cat) => {
       svg
         .append('rect')
         .attr('x', legendX)
-        .attr('y', legendY - 8)
+        .attr('y', legendY1 - 8)
         .attr('width', 10)
         .attr('height', 10)
         .attr('rx', 2)
         .attr('fill', CATEGORY_COLORS[cat] || '#999')
 
-      const label = shortLabels[cat] || (cat.length > 12 ? cat.slice(0, 10) + '..' : cat)
+      const label = shortLabels[cat] || (cat.length > 14 ? cat.slice(0, 12) + '..' : cat)
       const text = svg
         .append('text')
         .attr('x', legendX + 14)
-        .attr('y', legendY)
+        .attr('y', legendY1)
         .attr('font-family', "'DM Mono', monospace")
         .attr('font-size', 9)
         .attr('fill', '#888')
         .text(label)
         .node()
 
-      legendX += (text?.getComputedTextLength() || 60) + 24
+      legendX += (text?.getComputedTextLength() || 60) + 20
+    })
+
+    // Row 2
+    legendX = legendStartX
+    row2.forEach((cat) => {
+      svg
+        .append('rect')
+        .attr('x', legendX)
+        .attr('y', legendY2 - 8)
+        .attr('width', 10)
+        .attr('height', 10)
+        .attr('rx', 2)
+        .attr('fill', CATEGORY_COLORS[cat] || '#999')
+
+      const label = shortLabels[cat] || (cat.length > 14 ? cat.slice(0, 12) + '..' : cat)
+      const text = svg
+        .append('text')
+        .attr('x', legendX + 14)
+        .attr('y', legendY2)
+        .attr('font-family', "'DM Mono', monospace")
+        .attr('font-size', 9)
+        .attr('fill', '#888')
+        .text(label)
+        .node()
+
+      legendX += (text?.getComputedTextLength() || 60) + 20
     })
 
     // Tooltip div

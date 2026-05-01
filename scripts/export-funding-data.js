@@ -51,19 +51,23 @@ async function main() {
   console.log(`Loaded ${entityResult.rows.length} entities from RDS`)
 
   // Get promoted funding edges from Neon (only approved edges with resolved entities)
+  // Join with source table to get actual URLs
   const fundingResult = await neon.query(`
     SELECT
-      source_entity_name as funder,
-      target_entity_name as recipient,
-      source_entity_id as funder_id,
-      target_entity_id as recipient_id,
-      amount_usd,
-      start_date,
-      end_date,
-      citation
-    FROM edge_discovery
-    WHERE status = 'promoted'
-    ORDER BY start_date DESC NULLS LAST
+      ed.source_entity_name as funder,
+      ed.target_entity_name as recipient,
+      ed.source_entity_id as funder_id,
+      ed.target_entity_id as recipient_id,
+      ed.amount_usd,
+      ed.start_date,
+      ed.end_date,
+      ed.citation,
+      s.url as source_url,
+      s.title as source_title
+    FROM edge_discovery ed
+    LEFT JOIN source s ON ed.source_id = s.source_id
+    WHERE ed.status = 'promoted'
+    ORDER BY ed.start_date DESC NULLS LAST
   `)
   console.log(`Loaded ${fundingResult.rows.length} funding edges from Neon`)
 
@@ -81,6 +85,8 @@ async function main() {
       start_date: e.start_date,
       end_date: e.end_date,
       citation: e.citation || null,
+      source_url: e.source_url || null,
+      source_title: e.source_title || null,
       funder_category: funderEntity?.category || 'Unknown',
       funder_type: funderEntity?.entity_type || 'unknown',
       recipient_category: recipientEntity?.category || 'Unknown',
@@ -272,6 +278,8 @@ async function main() {
     amount_usd: e.amount_usd,
     year: e.start_date ? new Date(e.start_date).getFullYear() : null,
     citation: e.citation,
+    source_url: e.source_url,
+    source_title: e.source_title,
     funder_category: e.funder_category,
     recipient_category: e.recipient_category,
   }))
