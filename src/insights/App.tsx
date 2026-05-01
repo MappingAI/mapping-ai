@@ -938,6 +938,13 @@ export function App() {
     }
   }, [allEntities])
 
+  // Hide tooltip on scroll (prevents stuck tooltips when scrolling away from element)
+  useEffect(() => {
+    const handleScroll = () => hideTooltip()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   return (
     <>
       {/* Fade-in disabled - causes white flash with React re-renders */}
