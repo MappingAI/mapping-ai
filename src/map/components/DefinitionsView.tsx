@@ -609,7 +609,7 @@ function ScatterView({
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (!ref.current || !data) return
+    if (!ref.current || !data || data.points.length === 0) return
     const container = ref.current
     container.innerHTML = ''
 
@@ -1194,10 +1194,6 @@ function Legend({
   setHoveredCategory: (cat: string | null) => void
   categories: string[]
 }) {
-  const scoreKey = colorMode === 'stance' ? 'stance_score' : colorMode === 'timeline' ? 'timeline_score' : 'risk_score'
-  const noDataCount = colorMode !== 'category' ? data.points.filter((p) => p[scoreKey] == null).length : 0
-  const beliefScale = colorMode !== 'category' ? BELIEF_SCALES[colorMode] : null
-
   if (colorMode === 'cluster') {
     return (
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 16px', marginTop: '8px' }}>
@@ -1248,6 +1244,10 @@ function Legend({
       </div>
     )
   }
+
+  const scoreKey = colorMode === 'stance' ? 'stance_score' : colorMode === 'timeline' ? 'timeline_score' : 'risk_score'
+  const noDataCount = data.points.filter((p) => p[scoreKey] == null).length
+  const beliefScale = BELIEF_SCALES[colorMode]
 
   if (beliefScale) {
     return (

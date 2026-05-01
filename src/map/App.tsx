@@ -44,6 +44,10 @@ export function App() {
     return () => document.removeEventListener('click', handleEngineModeClick)
   }, [])
 
+  useEffect(() => {
+    document.body.classList.toggle('react-view-active', reactView !== null)
+  }, [reactView])
+
   const activateReactView = useCallback((view: 'definitions') => {
     document.querySelectorAll('.mode-btn').forEach((btn) => btn.classList.remove('active'))
     setReactView(view)
@@ -577,23 +581,6 @@ export function App() {
 
       {reactView && (
         <>
-          <style>{`
-            .map-container { display: none !important; }
-            .zoom-controls { display: none !important; }
-            #contribute-btn { display: none !important; }
-            #contribute-panel { display: none !important; }
-            #category-filters { display: none !important; }
-            #stance-legend { display: none !important; }
-            #source-type-filter { display: none !important; }
-            #axis-controls { display: none !important; }
-            #secondary-category-filter { display: none !important; }
-            #network-sub-tabs { display: none !important; }
-            #plot-sub-tabs { display: none !important; }
-            #search-mode-controls { display: none !important; }
-            #entity-count { display: none !important; }
-            .controls .control-group:first-child { display: none !important; }
-            #beliefs-sub-tabs { display: block !important; }
-          `}</style>
           <div
             id="react-view-container"
             ref={(el) => {
@@ -613,12 +600,7 @@ export function App() {
               zIndex: 10,
             }}
           >
-            {reactView === 'definitions' && (
-              <DefinitionsView
-                subView={beliefsSubView === 'beliefs' ? 'timeline' : beliefsSubView}
-                colorMode={beliefsColorMode}
-              />
-            )}
+            {reactView === 'definitions' && <DefinitionsView subView={beliefsSubView} colorMode={beliefsColorMode} />}
           </div>
         </>
       )}

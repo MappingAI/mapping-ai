@@ -1991,3 +1991,23 @@ body.locked .mobile-type-chips {
 body.locked #mobile-hero-toggle {
   pointer-events: none;
 }
+
+body.react-view-active .map-container,
+body.react-view-active .zoom-controls,
+body.react-view-active #contribute-btn,
+body.react-view-active #contribute-panel,
+body.react-view-active #category-filters,
+body.react-view-active #stance-legend,
+body.react-view-active #source-type-filter,
+body.react-view-active #axis-controls,
+body.react-view-active #secondary-category-filter,
+body.react-view-active #network-sub-tabs,
+body.react-view-active #plot-sub-tabs,
+body.react-view-active #search-mode-controls,
+body.react-view-active #entity-count,
+body.react-view-active .controls .control-group:first-child {
+  display: none !important;
+}
+body.react-view-active #beliefs-sub-tabs {
+  display: block !important;
+}
