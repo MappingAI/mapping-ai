@@ -50,7 +50,7 @@ async function main() {
   })
   console.log(`Loaded ${entityResult.rows.length} entities from RDS`)
 
-  // Get all funding edges from Neon (include entity IDs for proper lookup)
+  // Get promoted funding edges from Neon (only approved edges with resolved entities)
   const fundingResult = await neon.query(`
     SELECT
       source_entity_name as funder,
@@ -62,6 +62,7 @@ async function main() {
       end_date,
       citation
     FROM edge_discovery
+    WHERE status = 'promoted'
     ORDER BY start_date DESC NULLS LAST
   `)
   console.log(`Loaded ${fundingResult.rows.length} funding edges from Neon`)
