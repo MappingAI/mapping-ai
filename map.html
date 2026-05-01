@@ -4131,7 +4131,7 @@
             .catch(() => {}) // Non-critical — detail panel degrades gracefully
 
           // Lazy-load claims data for detail panel sources section
-          fetch('/claims-detail.json')
+          fetch('/data/claims-detail.json')
             .then((r) => (r.ok ? r.json() : null))
             .then((cd) => {
               if (cd) window.__claimsDetail = cd
@@ -4139,7 +4139,7 @@
             .catch(() => {})
 
           // Lazy-load edge evidence data for edge tooltips and detail panels
-          fetch('/edge-evidence.json')
+          fetch('/data/edge-evidence.json')
             .then((r) => (r.ok ? r.json() : null))
             .then((data) => {
               if (data) {

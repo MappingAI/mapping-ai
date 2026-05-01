@@ -29,9 +29,10 @@ data/*-enrichment-progress.json
 /map-data.json
 /map-detail.json
 /funding-data.json
-# These are uploaded to R2 in production but tracked for preview deployments
-# public/claims-detail.json
-# public/agi-definitions.json
+# These are uploaded to R2 and served via /data/ endpoint
+public/claims-detail.json
+public/edge-evidence.json
+public/agi-definitions.json
 backup-*.json
 backup-*.sql
 perf-artifacts/
