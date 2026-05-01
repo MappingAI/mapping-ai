@@ -871,12 +871,11 @@ function TrendsView({ data }: { data: AgiData }) {
                   fontFamily: 'var(--mono)',
                   fontSize: '10px',
                   color: 'var(--text-2)',
-                  minWidth: '100px',
-                  maxWidth: '200px',
+                  width: '160px',
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
                   whiteSpace: 'nowrap' as const,
-                  flexShrink: 1,
+                  flexShrink: 0,
                 }}
               >
                 {c.label}
@@ -894,7 +893,8 @@ function TrendsView({ data }: { data: AgiData }) {
                     fontSize: '9px',
                     color: 'var(--text-3)',
                     flexShrink: 0,
-                    whiteSpace: 'nowrap',
+                    width: '28px',
+                    textAlign: 'right' as const,
                   }}
                 >
                   {countSeries.reduce((a, b) => a + b, 0)}
