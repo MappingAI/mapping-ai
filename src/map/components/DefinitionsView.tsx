@@ -430,7 +430,9 @@ function ClusterMapView({
     const vbY = nodeMinY - 30
     const vbW = nodeMaxX - nodeMinX + labelMargin * 2
     const vbH = nodeMaxY - nodeMinY + 60
-    const H = W * (vbH / vbW)
+    const maxH = window.innerHeight - 220
+    const naturalH = W * (vbH / vbW)
+    const H = Math.min(naturalH, maxH)
 
     const svg = d3
       .select(container)
@@ -438,6 +440,7 @@ function ClusterMapView({
       .attr('viewBox', `${vbX} ${vbY} ${vbW} ${vbH}`)
       .attr('width', W)
       .attr('height', H)
+      .attr('preserveAspectRatio', 'xMidYMid meet')
       .style('overflow', 'visible')
 
     const tipEl = createTooltip('__defview-map-tip')
@@ -604,7 +607,8 @@ function ScatterView({
     if (staleTip) staleTip.style.opacity = '0'
 
     const W = container.clientWidth || 700
-    const H = Math.max(400, W * 0.65)
+    const maxH = window.innerHeight - 220
+    const H = Math.min(Math.max(400, W * 0.65), maxH)
     const pad = 40
 
     const svg = d3.select(container).append('svg').attr('viewBox', `0 0 ${W} ${H}`).attr('width', W).attr('height', H)
