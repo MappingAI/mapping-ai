@@ -48,7 +48,7 @@ interface AgiData {
 }
 
 type ColorMode = 'cluster' | 'category' | 'stance' | 'timeline' | 'risk'
-type SubView = 'map' | 'list' | 'scatter' | 'timeline' | 'trends' | 'beliefs'
+type SubView = 'map' | 'list' | 'scatter' | 'timeline' | 'trends'
 
 const CLUSTER_COLORS: Record<string, string> = {
   'human-level-cognitive-parity': '#4e79a7',
@@ -659,9 +659,83 @@ function ScatterView({
   return <div ref={ref} />
 }
 
+function MiniSparkline({
+  series,
+  colorStart,
+  colorEnd,
+  sparkW,
+  sparkH,
+}: {
+  series: number[]
+  colorStart: string
+  colorEnd: string
+  sparkW: number
+  sparkH: number
+}) {
+  const validPairs = series.map((v, i) => [i, v] as [number, number]).filter(([, v]) => !isNaN(v))
+  if (validPairs.length < 2) {
+    return (
+      <svg width={sparkW} height={sparkH} style={{ flexShrink: 0 }}>
+        <text
+          x={sparkW / 2}
+          y={sparkH / 2 + 3}
+          textAnchor="middle"
+          fontFamily="'DM Mono', monospace"
+          fontSize={7}
+          fill="var(--text-3)"
+        >
+          n/a
+        </text>
+      </svg>
+    )
+  }
+  const vals = validPairs.map(([, v]) => v)
+  const minV = Math.min(...vals)
+  const maxV = Math.max(...vals)
+  const range = maxV - minV || 1
+  const xScale = d3
+    .scaleLinear()
+    .domain([0, series.length - 1])
+    .range([2, sparkW - 2])
+  const yScale = d3
+    .scaleLinear()
+    .domain([minV - range * 0.1, maxV + range * 0.1])
+    .range([sparkH - 2, 2])
+  const gradId = `bgrad-${Math.random().toString(36).slice(2, 8)}`
+  const line = d3
+    .line()
+    .defined((d: [number, number]) => !isNaN(d[1]))
+    .x((d: [number, number]) => xScale(d[0]))
+    .y((d: [number, number]) => yScale(d[1]))
+    .curve(d3.curveMonotoneX)
+  const pathD = line(series.map((v, i) => [i, v] as [number, number])) || ''
+
+  return (
+    <svg width={sparkW} height={sparkH} style={{ flexShrink: 0 }}>
+      <defs>
+        <linearGradient id={gradId} x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor={colorStart} />
+          <stop offset="100%" stopColor={colorEnd} />
+        </linearGradient>
+      </defs>
+      <path d={pathD} fill="none" stroke={`url(#${gradId})`} strokeWidth={1.5} />
+    </svg>
+  )
+}
+
 function TimelineView({ data }: { data: AgiData }) {
   const quarters = useMemo(() => buildQuarters(data.points), [data.points])
   const clusters = useMemo(() => (data.clusters || []).sort((a, b) => b.count - a.count), [data.clusters])
+
+  const beliefDims = useMemo(
+    () =>
+      [
+        { key: 'stance_score' as const, label: 'Stance', colors: BELIEF_SCALES.stance!.colors },
+        { key: 'timeline_score' as const, label: 'Timeline', colors: BELIEF_SCALES.timeline!.colors },
+        { key: 'risk_score' as const, label: 'Risk', colors: BELIEF_SCALES.risk!.colors },
+      ] as const,
+    [],
+  )
 
   const clusterTimeSeries = useMemo(() => {
     const series: Record<string, number[]> = {}
@@ -673,13 +747,30 @@ function TimelineView({ data }: { data: AgiData }) {
     return series
   }, [data.points, clusters, quarters])
 
+  const clusterBeliefSeries = useMemo(() => {
+    const result: Record<string, Record<string, number[]>> = {}
+    clusters.forEach((c) => {
+      result[c.id] = {}
+      beliefDims.forEach((dim) => {
+        result[c.id]![dim.key] = quarters.map((q) => {
+          const inQ = data.points.filter((p) => p.cluster_id === c.id && pointInQuarter(p, q) && p[dim.key] != null)
+          if (inQ.length === 0) return NaN
+          return d3.mean(inQ, (p: AgiPoint) => p[dim.key]) as number
+        })
+      })
+    })
+    return result
+  }, [data.points, clusters, quarters, beliefDims])
+
   const totalSeries = useMemo(
     () => quarters.map((q) => data.points.filter((p) => pointInQuarter(p, q)).length),
     [data.points, quarters],
   )
 
-  const sparkW = 120
-  const sparkH = 30
+  const countSparkW = 120
+  const countSparkH = 30
+  const beliefSparkW = 80
+  const beliefSparkH = 24
 
   if (quarters.length === 0) {
     return (
@@ -691,27 +782,80 @@ function TimelineView({ data }: { data: AgiData }) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+        {beliefDims.map((dim) => {
+          const scale = BELIEF_SCALES[dim.key]
+          const startLabel = scale?.labels[0] || ''
+          const endLabel = scale?.labels[scale.labels.length - 1] || ''
+          return (
+            <div key={dim.key} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <span
+                style={{
+                  fontFamily: 'var(--mono)',
+                  fontSize: '9px',
+                  color: 'var(--text-1)',
+                  minWidth: '55px',
+                  flexShrink: 0,
+                }}
+              >
+                {dim.label}
+              </span>
+              <span
+                style={{
+                  fontFamily: 'var(--mono)',
+                  fontSize: '9px',
+                  color: 'var(--text-3)',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {startLabel}
+              </span>
+              <div
+                style={{
+                  height: '6px',
+                  borderRadius: '3px',
+                  flexShrink: 1,
+                  flexGrow: 1,
+                  background: `linear-gradient(to right, ${dim.colors[0]}, ${dim.colors[dim.colors.length - 1]})`,
+                }}
+              />
+              <span
+                style={{
+                  fontFamily: 'var(--mono)',
+                  fontSize: '9px',
+                  color: 'var(--text-3)',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {endLabel}
+              </span>
+            </div>
+          )
+        })}
+      </div>
+
       <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
         {clusters.map((c) => {
-          const series = clusterTimeSeries[c.id] || []
-          const maxVal = Math.max(...series, 1)
+          const countSeries = clusterTimeSeries[c.id] || []
+          const maxVal = Math.max(...countSeries, 1)
           const xScale = d3
             .scaleLinear()
-            .domain([0, series.length - 1])
-            .range([0, sparkW])
+            .domain([0, countSeries.length - 1])
+            .range([0, countSparkW])
           const yScale = d3
             .scaleLinear()
             .domain([0, maxVal])
-            .range([sparkH - 2, 2])
+            .range([countSparkH - 2, 2])
           const line = d3
             .line()
             .x((_: number, i: number) => xScale(i))
             .y((d: number) => yScale(d))
             .curve(d3.curveMonotoneX)
-          const pathD = line(series) || ''
+          const pathD = line(countSeries) || ''
+          const beliefs = clusterBeliefSeries[c.id]
 
           return (
-            <div key={c.id} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div key={c.id} style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
               <span
                 style={{
                   display: 'inline-block',
@@ -736,15 +880,46 @@ function TimelineView({ data }: { data: AgiData }) {
               >
                 {c.label}
               </span>
-              <svg width={sparkW} height={sparkH} style={{ flexShrink: 0 }}>
+              <svg width={countSparkW} height={countSparkH} style={{ flexShrink: 0 }}>
                 <path d={pathD} fill="none" stroke={CLUSTER_COLORS[c.id] || '#ccc'} strokeWidth={1.5} />
               </svg>
               <span style={{ fontFamily: 'var(--mono)', fontSize: '9px', color: 'var(--text-3)' }}>
-                {series.reduce((a, b) => a + b, 0)} total
+                {countSeries.reduce((a, b) => a + b, 0)} total
               </span>
+              {beliefs &&
+                beliefDims.map((dim) => {
+                  const dimSeries = beliefs[dim.key] || []
+                  return (
+                    <div key={dim.key} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                      <span
+                        style={{
+                          fontFamily: 'var(--mono)',
+                          fontSize: '8px',
+                          color: 'var(--text-3)',
+                          width: '36px',
+                          textAlign: 'right' as const,
+                          flexShrink: 0,
+                        }}
+                      >
+                        {dim.label}
+                      </span>
+                      <MiniSparkline
+                        series={dimSeries}
+                        colorStart={dim.colors[0] ?? '#888'}
+                        colorEnd={dim.colors[dim.colors.length - 1] ?? '#888'}
+                        sparkW={beliefSparkW}
+                        sparkH={beliefSparkH}
+                      />
+                    </div>
+                  )
+                })}
             </div>
           )
         })}
+      </div>
+
+      <div style={{ fontFamily: 'var(--mono)', fontSize: '9px', color: 'var(--text-3)' }}>
+        Each sparkline shows the cluster's mean score per quarter. Gaps indicate quarters with no scored definitions.
       </div>
 
       <div style={{ borderTop: '1px solid var(--line)', paddingTop: '16px' }}>
@@ -1043,212 +1218,6 @@ function TrendsView({ data }: { data: AgiData }) {
   )
 }
 
-function BeliefsView({ data }: { data: AgiData }) {
-  const quarters = useMemo(() => buildQuarters(data.points), [data.points])
-  const clusters = useMemo(() => (data.clusters || []).sort((a, b) => b.count - a.count), [data.clusters])
-
-  const beliefDims = useMemo(
-    () =>
-      [
-        { key: 'stance_score' as const, label: 'Stance', colors: BELIEF_SCALES.stance!.colors },
-        { key: 'timeline_score' as const, label: 'Timeline', colors: BELIEF_SCALES.timeline!.colors },
-        { key: 'risk_score' as const, label: 'Risk', colors: BELIEF_SCALES.risk!.colors },
-      ] as const,
-    [],
-  )
-
-  const clusterBeliefSeries = useMemo(() => {
-    const result: Record<string, Record<string, number[]>> = {}
-    clusters.forEach((c) => {
-      result[c.id] = {}
-      beliefDims.forEach((dim) => {
-        result[c.id]![dim.key] = quarters.map((q) => {
-          const inQ = data.points.filter((p) => p.cluster_id === c.id && pointInQuarter(p, q) && p[dim.key] != null)
-          if (inQ.length === 0) return NaN
-          return d3.mean(inQ, (p: AgiPoint) => p[dim.key]) as number
-        })
-      })
-    })
-    return result
-  }, [data.points, clusters, quarters, beliefDims])
-
-  const sparkW = 80
-  const sparkH = 24
-
-  if (quarters.length === 0) {
-    return (
-      <div style={{ fontFamily: 'var(--mono)', fontSize: '11px', color: 'var(--text-3)' }}>
-        No dated definitions available for belief drift analysis.
-      </div>
-    )
-  }
-
-  function renderSparkline(series: number[], colorStart: string, colorEnd: string) {
-    const validPairs = series.map((v, i) => [i, v] as [number, number]).filter(([, v]) => !isNaN(v))
-    if (validPairs.length < 2) {
-      return (
-        <svg width={sparkW} height={sparkH} style={{ flexShrink: 0 }}>
-          <text
-            x={sparkW / 2}
-            y={sparkH / 2 + 3}
-            textAnchor="middle"
-            fontFamily="'DM Mono', monospace"
-            fontSize={7}
-            fill="var(--text-3)"
-          >
-            n/a
-          </text>
-        </svg>
-      )
-    }
-    const vals = validPairs.map(([, v]) => v)
-    const minV = Math.min(...vals)
-    const maxV = Math.max(...vals)
-    const range = maxV - minV || 1
-    const xScale = d3
-      .scaleLinear()
-      .domain([0, series.length - 1])
-      .range([2, sparkW - 2])
-    const yScale = d3
-      .scaleLinear()
-      .domain([minV - range * 0.1, maxV + range * 0.1])
-      .range([sparkH - 2, 2])
-    const gradId = `bgrad-${Math.random().toString(36).slice(2, 8)}`
-    const line = d3
-      .line()
-      .defined((d: [number, number]) => !isNaN(d[1]))
-      .x((d: [number, number]) => xScale(d[0]))
-      .y((d: [number, number]) => yScale(d[1]))
-      .curve(d3.curveMonotoneX)
-    const pathD = line(series.map((v, i) => [i, v] as [number, number])) || ''
-
-    return (
-      <svg width={sparkW} height={sparkH} style={{ flexShrink: 0 }}>
-        <defs>
-          <linearGradient id={gradId} x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor={colorStart} />
-            <stop offset="100%" stopColor={colorEnd} />
-          </linearGradient>
-        </defs>
-        <path d={pathD} fill="none" stroke={`url(#${gradId})`} strokeWidth={1.5} />
-      </svg>
-    )
-  }
-
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '12px' }}>
-        {beliefDims.map((dim) => {
-          const scale = BELIEF_SCALES[dim.key]
-          const startLabel = scale?.labels[0] || ''
-          const endLabel = scale?.labels[scale.labels.length - 1] || ''
-          return (
-            <div key={dim.key} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span
-                style={{
-                  fontFamily: 'var(--mono)',
-                  fontSize: '9px',
-                  color: 'var(--text-1)',
-                  minWidth: '55px',
-                  flexShrink: 0,
-                }}
-              >
-                {dim.label}
-              </span>
-              <span
-                style={{
-                  fontFamily: 'var(--mono)',
-                  fontSize: '8px',
-                  color: 'var(--text-3)',
-                  whiteSpace: 'nowrap',
-                }}
-              >
-                {startLabel}
-              </span>
-              <div
-                style={{
-                  width: '50px',
-                  minWidth: '50px',
-                  height: '6px',
-                  borderRadius: '3px',
-                  background: `linear-gradient(to right, ${dim.colors[0]}, ${dim.colors[dim.colors.length - 1]})`,
-                }}
-              />
-              <span
-                style={{
-                  fontFamily: 'var(--mono)',
-                  fontSize: '8px',
-                  color: 'var(--text-3)',
-                  whiteSpace: 'nowrap',
-                }}
-              >
-                {endLabel}
-              </span>
-            </div>
-          )
-        })}
-      </div>
-
-      {clusters.map((c) => {
-        const series = clusterBeliefSeries[c.id]
-        if (!series) return null
-        return (
-          <div key={c.id} style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', width: '180px', flexShrink: 0 }}>
-              <span
-                style={{
-                  display: 'inline-block',
-                  width: '10px',
-                  height: '10px',
-                  borderRadius: '2px',
-                  flexShrink: 0,
-                  background: CLUSTER_COLORS[c.id] || '#ccc',
-                }}
-              />
-              <span
-                style={{
-                  fontFamily: 'var(--mono)',
-                  fontSize: '10px',
-                  color: 'var(--text-2)',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap' as const,
-                }}
-              >
-                {c.label}
-              </span>
-            </div>
-            {beliefDims.map((dim) => {
-              const dimSeries = series[dim.key] || []
-              return (
-                <div key={dim.key} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                  <span
-                    style={{
-                      fontFamily: 'var(--mono)',
-                      fontSize: '8px',
-                      color: 'var(--text-3)',
-                      width: '36px',
-                      textAlign: 'right' as const,
-                      flexShrink: 0,
-                    }}
-                  >
-                    {dim.label}
-                  </span>
-                  {renderSparkline(dimSeries, dim.colors[0] ?? '#888', dim.colors[dim.colors.length - 1] ?? '#888')}
-                </div>
-              )
-            })}
-          </div>
-        )
-      })}
-
-      <div style={{ fontFamily: 'var(--mono)', fontSize: '9px', color: 'var(--text-3)', marginTop: '8px' }}>
-        Each sparkline shows the cluster's mean score per quarter. Gaps indicate quarters with no scored definitions.
-      </div>
-    </div>
-  )
-}
-
 function Legend({
   data,
   colorMode,
@@ -1408,7 +1377,6 @@ export function DefinitionsView({ subView, colorMode }: { subView: string; color
       )}
       {viewMode === 'timeline' && <TimelineView data={data} />}
       {viewMode === 'trends' && <TrendsView data={data} />}
-      {viewMode === 'beliefs' && <BeliefsView data={data} />}
 
       {(viewMode === 'map' || viewMode === 'scatter') && (
         <Legend data={data} colorMode={cm} setHoveredCategory={setHoveredCategory} categories={categories} />

@@ -279,7 +279,7 @@ export function App() {
         <div className="control-group" id="beliefs-sub-tabs" style={{ display: 'none' }}>
           <h3>Sub-view</h3>
           <div className="filter-chips">
-            {(['map', 'list', 'scatter', 'timeline', 'trends', 'beliefs'] as const).map((v) => (
+            {(['map', 'list', 'scatter', 'timeline', 'trends'] as const).map((v) => (
               <button
                 key={v}
                 className={'view-btn' + (beliefsSubView === v ? ' active' : '')}
@@ -593,7 +593,12 @@ export function App() {
               zIndex: 10,
             }}
           >
-            {reactView === 'definitions' && <DefinitionsView subView={beliefsSubView} colorMode={beliefsColorMode} />}
+            {reactView === 'definitions' && (
+              <DefinitionsView
+                subView={beliefsSubView === 'beliefs' ? 'timeline' : beliefsSubView}
+                colorMode={beliefsColorMode}
+              />
+            )}
           </div>
         </>
       )}
