@@ -12,10 +12,8 @@ import {
 } from './network'
 import {
   FundingFlowSankey,
-  FundingConcentration,
-  FunderStanceChart,
-  FundingTimeline,
-  FunderTimingHeatmap,
+  FunderCategoryStance,
+  PolicyVoiceIndependence,
 } from './funding'
 
 // d3 is loaded from a CDN <script> tag (see index.html) rather than imported as a module,
@@ -140,7 +138,7 @@ const TOC_ITEMS = [
   { id: 'network', label: 'Connectivity' },
   { id: 'bridge-builders', label: 'Bridge Builders' },
   { id: 'funding-flows', label: 'Funding Flows' },
-  { id: 'funding-timing', label: 'Funding Timing' },
+  { id: 'funding-structure', label: 'Funding Structure' },
   { id: 'crosspartisan', label: 'Crosspartisan' },
   { id: 'agi-definitions', label: 'AGI Definitions' },
 ]
@@ -1210,69 +1208,32 @@ export function App() {
         <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">Funding Flows</h2>
 
         <Para>
-          Who funds whom in the AI ecosystem? We track <span className="font-mono">{fundingData?._meta?.total_edges || '—'}</span> funding
-          relationships from edge discovery data, connecting funders (VCs, philanthropies, government agencies, Big Tech)
-          to recipient organizations. This reveals the capital allocation patterns shaping AI development and governance.
+          Who funds whom in the AI ecosystem? We've tracked <span className="font-mono">{fundingData?._meta?.total_edges || '—'}</span> funding
+          relationships connecting funders (VCs, philanthropies, government agencies, tech companies)
+          to recipient organizations. This is a sample, not a comprehensive database—but it reveals
+          structural patterns in how capital flows through the ecosystem.
         </Para>
 
         {fundingData && (
           <>
             <ChartContainer
               title="Funding flows: Top funders → recipient categories"
-              source="Top 12 funders by investment count. Width = number of investments to each category."
+              source="Top 12 funders by investment count in our sample. Width = number of tracked investments to each category. Click any flow for details."
             >
               <FundingFlowSankey flows={fundingData.flows} funders={fundingData.funders} edges={fundingData.edges} />
             </ChartContainer>
 
             <Para>
               The Sankey diagram shows where capital flows from major funders to different organization types.
-              Open Philanthropy and Good Ventures heavily fund AI Safety organizations, while Big Tech
-              companies invest in Frontier Labs and compute infrastructure. Government agencies like NSF
-              and DARPA fund academic research.
+              Even in this sample, distinct patterns emerge: philanthropic funders concentrate on AI Safety
+              and Think Tanks, while tech companies and VCs flow to Frontier Labs and infrastructure.
             </Para>
-
-            <h3 className="font-serif text-[18px] font-normal mt-8 mb-3">Funding concentration</h3>
-
-            <Para>
-              How concentrated is AI funding? A small number of recipients receive the majority of capital,
-              with frontier labs dominating the top positions.
-            </Para>
-
-            <ChartContainer
-              title="Top recipients by total funding"
-              source="Log scale. Hover for details. Only organizations with known funding amounts shown."
-            >
-              <FundingConcentration
-                recipients={fundingData.recipients}
-                showTooltip={showTooltip}
-                hideTooltip={hideTooltip}
-              />
-            </ChartContainer>
-
-            <h3 className="font-serif text-[18px] font-normal mt-8 mb-3">Funder → recipient stance alignment</h3>
-
-            <Para>
-              Do funders select recipients that share their regulatory worldview? We measure the mean regulatory
-              stance of each funder's recipients. Lower values indicate the funder's portfolio skews accelerationist;
-              higher values indicate precautionary leanings.
-            </Para>
-
-            <ChartContainer
-              title="Mean recipient regulatory stance by funder"
-              source="Scale: 1 = Accelerate, 6 = Precautionary. Only funders with 5+ investments and recipients with known stances shown."
-            >
-              <FunderStanceChart
-                funders={fundingData.funders}
-                showTooltip={showTooltip}
-                hideTooltip={hideTooltip}
-              />
-            </ChartContainer>
 
             <Finding>
-              Funding patterns reveal ideological clustering: philanthropic funders like Open Philanthropy and
-              Good Ventures fund organizations with higher (more precautionary) regulatory stances, while
-              venture capital and Big Tech investments flow to organizations with lower (more accelerationist)
-              stances. This structural pattern suggests funders either select for alignment or shape grantee positions.
+              Funding follows category lines. Open Philanthropy and related EA funders dominate AI Safety funding,
+              while tech companies like Google and Microsoft invest in Frontier Labs and compute. Government
+              agencies (NSF, DARPA) focus on academic research. These are structural patterns, not claims about
+              total capital—the sample reveals <em>who funds what kind of work</em>.
             </Finding>
           </>
         )}
@@ -1280,50 +1241,34 @@ export function App() {
         <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
 
         {/* ═══════════════════════════════════════════ */}
-        {/* SECTION 7: FUNDING TIMING                   */}
+        {/* SECTION 7: FUNDING STRUCTURE                */}
         {/* ═══════════════════════════════════════════ */}
 
-        <SectionLabel id="funding-timing">Insight 7</SectionLabel>
-        <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">Funding Timing & Patterns</h2>
+        <SectionLabel id="funding-structure">Insight 7</SectionLabel>
+        <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">Structural Conflicts & Independence</h2>
 
         <Para>
-          When did the AI funding explosion happen, and how did different funders enter the space?
-          Temporal patterns reveal whether certain funders led or followed, and whether funding waves
-          concentrated in specific organization types.
+          Beyond tracking who funds whom, we can ask structural questions: Do funders systematically back
+          organizations that share their regulatory interests? And how independent are the policy voices
+          that shape AI governance?
         </Para>
 
         {fundingData && (
           <>
-            <ChartContainer
-              title="AI funding by year (2015–2026)"
-              source="Stacked area by recipient category. Toggle between count of investments and total USD."
-            >
-              <FundingTimeline
-                byYear={fundingData.byYear}
-                showTooltip={showTooltip}
-                hideTooltip={hideTooltip}
-              />
-            </ChartContainer>
+            <h3 className="font-serif text-[18px] font-normal mt-6 mb-3">Do funders back aligned recipients?</h3>
 
             <Para>
-              The funding timeline shows dramatic acceleration from 2022 onwards, coinciding with the
-              release of GPT-3 and growing public attention to AI capabilities. Frontier Lab funding
-              dominates by dollar volume, while AI Safety and Academic funding show steady but smaller growth.
-            </Para>
-
-            <h3 className="font-serif text-[18px] font-normal mt-8 mb-3">Funder timing patterns</h3>
-
-            <Para>
-              When did each major funder deploy capital? The heatmap shows investment activity by year,
-              revealing which funders were early movers and which scaled up more recently.
+              We measure the mean regulatory stance of recipients for each funder category. If tech platform
+              companies fund organizations that advocate for lighter regulation, while safety-focused funders
+              back more precautionary voices, that's a structural pattern worth understanding—regardless of
+              whether funders actively shape grantees or simply select for alignment.
             </Para>
 
             <ChartContainer
-              title="Investment timing by funder (2018–2026)"
-              source="Cell intensity = number of investments that year. Top 15 funders by total investment count."
+              title="Mean recipient stance by funder category"
+              source="Scale: 1 = Accelerate, 6 = Precautionary. Error bars show ±1 standard deviation. Categories with 2+ funders shown."
             >
-              <FunderTimingHeatmap
-                funderByYear={fundingData.funderByYear}
+              <FunderCategoryStance
                 funders={fundingData.funders}
                 showTooltip={showTooltip}
                 hideTooltip={hideTooltip}
@@ -1331,12 +1276,37 @@ export function App() {
             </ChartContainer>
 
             <Finding>
-              Open Philanthropy and related EA funders show consistent investment from 2018 onwards,
-              predating the mainstream AI funding boom. Big Tech companies (Google, Microsoft, Amazon)
-              dramatically increased investment starting in 2023–2024. Government funding (NSF, DARPA,
-              Commerce) has grown steadily but lags private capital in both timing and scale. This
-              temporal pattern suggests philanthropic funders helped build the AI safety field before
-              commercial interest peaked.
+              Funder categories cluster by recipient stance. Tech platforms and infrastructure companies fund
+              recipients averaging ~3.2 (Light-touch to Targeted), while AI Safety funders average ~4.6
+              (Moderate to Precautionary). This isn't surprising—but it's structural: the entities producing
+              policy research receive funding from sources with interests in the regulatory outcome.
+            </Finding>
+
+            <h3 className="font-serif text-[18px] font-normal mt-8 mb-3">How independent are policy voices?</h3>
+
+            <Para>
+              For think tanks, AI safety organizations, and ethics groups that shape policy discourse,
+              funding diversity matters. An organization with many funders has more independence than one
+              reliant on a single source. We measure this by counting unique funders and flagging
+              concentration (when one funder provides the majority of support).
+            </Para>
+
+            <ChartContainer
+              title="Funding diversity for policy-relevant organizations"
+              source="Think tanks, AI Safety, and Ethics/Rights orgs. Color indicates funding concentration. Click for funder breakdown."
+            >
+              <PolicyVoiceIndependence
+                edges={fundingData.edges}
+                showTooltip={showTooltip}
+                hideTooltip={hideTooltip}
+              />
+            </ChartContainer>
+
+            <Finding>
+              Funding concentration varies widely. Some policy organizations have diverse funding bases
+              (5+ unique funders, no single source dominant), while others depend heavily on one or two
+              funders. High concentration doesn't mean captured—but it does mean structural dependence
+              on specific actors' continued support.
             </Finding>
           </>
         )}

@@ -1,5 +1,3 @@
 export { FundingFlowSankey } from './FundingFlowSankey'
-export { FundingConcentration } from './FundingConcentration'
-export { FunderStanceChart } from './FunderStanceChart'
-export { FundingTimeline } from './FundingTimeline'
-export { FunderTimingHeatmap } from './FunderTimingHeatmap'
+export { FunderCategoryStance } from './FunderCategoryStance'
+export { PolicyVoiceIndependence } from './PolicyVoiceIndependence'
