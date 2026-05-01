@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { sankey, sankeyLinkHorizontal } from 'd3-sankey'
 
 // d3 loaded from CDN
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -79,9 +80,8 @@ export function FundingFlowSankey({ flows, funders }: Props) {
     const svg = d3.select(container).append('svg').attr('viewBox', `0 0 ${W} ${H}`).attr('width', W).attr('height', H)
 
     // Sankey generator
-    const sankey = d3
-      .sankey()
-      .nodeId((d: { id: string }) => d.id)
+    const sankeyGenerator = sankey<{ id: string; name: string; type: string }, { source: number; target: number; value: number }>()
+      .nodeId((d) => d.id)
       .nodeWidth(15)
       .nodePadding(12)
       .extent([
@@ -89,7 +89,7 @@ export function FundingFlowSankey({ flows, funders }: Props) {
         [W - margin.right, H - margin.bottom],
       ])
 
-    const { nodes: sankeyNodes, links: sankeyLinks } = sankey({
+    const { nodes: sankeyNodes, links: sankeyLinks } = sankeyGenerator({
       nodes: nodes.map((d) => ({ ...d })),
       links: links.map((d) => ({ ...d })),
     })
@@ -101,7 +101,7 @@ export function FundingFlowSankey({ flows, funders }: Props) {
       .selectAll('path')
       .data(sankeyLinks)
       .join('path')
-      .attr('d', d3.sankeyLinkHorizontal())
+      .attr('d', sankeyLinkHorizontal())
       .attr('stroke', (d: { target: { name: string } }) => CATEGORY_COLORS[d.target.name] || '#999')
       .attr('stroke-width', (d: { width: number }) => Math.max(1, d.width))
       .style('cursor', 'pointer')
