@@ -50,11 +50,13 @@ async function main() {
   })
   console.log(`Loaded ${entityResult.rows.length} entities from RDS`)
 
-  // Get all funding edges from Neon
+  // Get all funding edges from Neon (include entity IDs for proper lookup)
   const fundingResult = await neon.query(`
     SELECT
       source_entity_name as funder,
       target_entity_name as recipient,
+      source_entity_id as funder_id,
+      target_entity_id as recipient_id,
       amount_usd,
       start_date,
       end_date,
@@ -65,13 +67,15 @@ async function main() {
   console.log(`Loaded ${fundingResult.rows.length} funding edges from Neon`)
 
   // Process funding edges with entity metadata
+  // Use entity IDs for lookup (more reliable than name matching)
   const fundingEdges = fundingResult.rows.map(e => {
-    const funderEntity = entityByName.get(e.funder.toLowerCase())
-    const recipientEntity = entityByName.get(e.recipient.toLowerCase())
+    // Prefer ID lookup, fall back to name lookup
+    const funderEntity = e.funder_id ? entityById.get(e.funder_id) : entityByName.get(e.funder.toLowerCase())
+    const recipientEntity = e.recipient_id ? entityById.get(e.recipient_id) : entityByName.get(e.recipient.toLowerCase())
 
     return {
-      funder: e.funder,
-      recipient: e.recipient,
+      funder: funderEntity?.name || e.funder, // Use canonical name from RDS if available
+      recipient: recipientEntity?.name || e.recipient,
       amount_usd: e.amount_usd ? parseFloat(e.amount_usd) : null,
       start_date: e.start_date,
       end_date: e.end_date,
