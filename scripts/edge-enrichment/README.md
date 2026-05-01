@@ -34,13 +34,13 @@ node scripts/edge-enrichment/promote-discoveries.js
 
 ## Scripts
 
-| Script | Purpose | Cost (full run) |
-|--------|---------|-----------------|
-| `discover-funding.js` | Discover funding relationships (people + orgs) | ~$58 |
-| `enrich-edges.js` | Add temporal data to existing edges | ~$62 |
-| `enrich-org-lifecycle.js` | Add founding/end dates to orgs | ~$25 |
-| `review-discoveries.js` | CLI for reviewing pending discoveries | Free |
-| `promote-discoveries.js` | Promote approved → RDS + edge_evidence | Free |
+| Script                    | Purpose                                        | Cost (full run) |
+| ------------------------- | ---------------------------------------------- | --------------- |
+| `discover-funding.js`     | Discover funding relationships (people + orgs) | ~$58            |
+| `enrich-edges.js`         | Add temporal data to existing edges            | ~$62            |
+| `enrich-org-lifecycle.js` | Add founding/end dates to orgs                 | ~$25            |
+| `review-discoveries.js`   | CLI for reviewing pending discoveries          | Free            |
+| `promote-discoveries.js`  | Promote approved → RDS + edge_evidence         | Free            |
 
 ### `discover-funding.js`
 
@@ -65,6 +65,7 @@ node scripts/edge-enrichment/discover-funding.js --type=person --limit=10
 ```
 
 **Output:**
+
 - Existing edges → `edge_evidence` (enrichment)
 - New edges → `edge_discovery` (pending review)
 - Unknown entities → `entity_suggestion` (pending review)
@@ -317,6 +318,7 @@ Step 5: NO MATCH → create entity_suggestion
 See the [Design Document](/research-data/EDGE-ENRICHMENT-DESIGN.md#known-risks--mitigations) for full details.
 
 Key mitigations:
+
 - **No source = no record** — Schema enforces `source_id NOT NULL`
 - **Duplicate prevention** — 4-layer pipeline (fuzzy match, merge suggestions, review UI, final check)
 - **Human review** — All discoveries must be approved before becoming real edges

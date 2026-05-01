@@ -209,7 +209,7 @@ async function processEdge(edge, neon, dryRun) {
       extraction.confidence,
       SCRIPT_NAME,
       CLAUDE_MODEL,
-    ]
+    ],
   )
 
   console.log(`  ✓ Saved evidence: ${extraction.start_date || '?'} - ${extraction.end_date || 'present'}`)

@@ -177,7 +177,7 @@ async function processOrg(org, neon, dryRun) {
         sid,
         extraction.confidence,
         SCRIPT_NAME,
-      ]
+      ],
     )
     console.log(`  ✓ Founded: ${extraction.founded_year}`)
     result.founded = true
@@ -205,7 +205,7 @@ async function processOrg(org, neon, dryRun) {
         sid,
         extraction.confidence,
         SCRIPT_NAME,
-      ]
+      ],
     )
     console.log(`  ✓ Ended: ${extraction.end_year}`)
     result.ended = true

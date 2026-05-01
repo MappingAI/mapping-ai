@@ -21,8 +21,7 @@ export const costs = {
     this.claude_input_tokens += usage.input_tokens || 0
     this.claude_output_tokens += usage.output_tokens || 0
     // Claude Sonnet pricing: $3/M input, $15/M output
-    this.claude_cost =
-      (this.claude_input_tokens / 1_000_000) * 3 + (this.claude_output_tokens / 1_000_000) * 15
+    this.claude_cost = (this.claude_input_tokens / 1_000_000) * 3 + (this.claude_output_tokens / 1_000_000) * 15
   },
 
   summary() {

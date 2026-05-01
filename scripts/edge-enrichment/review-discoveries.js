@@ -99,7 +99,7 @@ async function showStats(neon) {
   console.log(`Edges waiting on entity resolution: ${waitingOnEntities.rows[0].count}`)
 }
 
-async function reviewEntities(neon, rds) {
+async function reviewEntities(neon, _rds) {
   console.log('\n=== Reviewing Entity Suggestions ===\n')
 
   const pending = await neon.query(`
@@ -122,7 +122,9 @@ async function reviewEntities(neon, rds) {
     console.log(`Name: ${suggestion.extracted_name}`)
     console.log(`Type: ${suggestion.entity_type || 'unknown'}`)
     console.log(`Times seen: ${suggestion.times_seen}`)
-    console.log(`Roles: ${suggestion.seen_as_funder ? 'funder' : ''} ${suggestion.seen_as_recipient ? 'recipient' : ''}`)
+    console.log(
+      `Roles: ${suggestion.seen_as_funder ? 'funder' : ''} ${suggestion.seen_as_recipient ? 'recipient' : ''}`,
+    )
     console.log(`Context: ${suggestion.context || 'none'}`)
     console.log(`Citation: ${suggestion.citation || 'none'}`)
     console.log(`Source: ${suggestion.source_url || 'none'}`)
@@ -155,7 +157,7 @@ async function reviewEntities(neon, rds) {
         `UPDATE entity_suggestion
          SET status = 'approved', duplicate_check_done = true, reviewed_at = NOW()
          WHERE suggestion_id = $1`,
-        [suggestion.suggestion_id]
+        [suggestion.suggestion_id],
       )
       console.log('Approved!')
 
@@ -167,7 +169,7 @@ async function reviewEntities(neon, rds) {
         `UPDATE entity_suggestion
          SET status = 'rejected', review_notes = $2, reviewed_at = NOW()
          WHERE suggestion_id = $1`,
-        [suggestion.suggestion_id, notes || null]
+        [suggestion.suggestion_id, notes || null],
       )
       console.log('Rejected.')
     } else if (action.startsWith('d')) {
@@ -177,7 +179,7 @@ async function reviewEntities(neon, rds) {
           `UPDATE entity_suggestion
            SET status = 'duplicate', duplicate_of_id = $2, reviewed_at = NOW()
            WHERE suggestion_id = $1`,
-          [suggestion.suggestion_id, dupeId]
+          [suggestion.suggestion_id, dupeId],
         )
         console.log(`Marked as duplicate of entity ${dupeId}`)
 
@@ -213,7 +215,9 @@ async function reviewEdges(neon) {
   for (const edge of pending.rows) {
     console.log('─'.repeat(60))
     console.log(`${edge.source_entity_name} —[${edge.edge_type}]→ ${edge.target_entity_name}`)
-    console.log(`Amount: ${edge.amount_usd ? `$${edge.amount_usd.toLocaleString()}` : 'unknown'} ${edge.amount_note || ''}`)
+    console.log(
+      `Amount: ${edge.amount_usd ? `$${edge.amount_usd.toLocaleString()}` : 'unknown'} ${edge.amount_note || ''}`,
+    )
     console.log(`Dates: ${edge.start_date || '?'} - ${edge.end_date || 'present'}`)
     console.log(`Confidence: ${edge.confidence}`)
     console.log(`Citation: "${edge.citation}"`)
@@ -230,7 +234,7 @@ async function reviewEdges(neon) {
         `UPDATE edge_discovery
          SET status = 'approved', reviewed_at = NOW()
          WHERE discovery_id = $1`,
-        [edge.discovery_id]
+        [edge.discovery_id],
       )
       console.log('Approved! Run promote-discoveries.js to create the edge.')
     } else if (action === 'r') {
@@ -239,7 +243,7 @@ async function reviewEdges(neon) {
         `UPDATE edge_discovery
          SET status = 'rejected', review_notes = $2, reviewed_at = NOW()
          WHERE discovery_id = $1`,
-        [edge.discovery_id, notes || null]
+        [edge.discovery_id, notes || null],
       )
       console.log('Rejected.')
     } else if (action === 's') {
@@ -257,7 +261,7 @@ async function updateEdgeDiscoveryStatus(neon, suggestionId) {
        ELSE status
      END
      WHERE source_suggestion_id = $1 AND status = 'pending_entities'`,
-    [suggestionId]
+    [suggestionId],
   )
 
   // Update edges where this was the target suggestion
@@ -268,7 +272,7 @@ async function updateEdgeDiscoveryStatus(neon, suggestionId) {
        ELSE status
      END
      WHERE target_suggestion_id = $1 AND status = 'pending_entities'`,
-    [suggestionId]
+    [suggestionId],
   )
 }
 
@@ -283,7 +287,7 @@ async function linkSuggestionToEntity(neon, suggestionId, entityId) {
            ELSE status
          END
      WHERE source_suggestion_id = $1`,
-    [suggestionId, entityId]
+    [suggestionId, entityId],
   )
 
   await neon.query(
@@ -295,7 +299,7 @@ async function linkSuggestionToEntity(neon, suggestionId, entityId) {
            ELSE status
          END
      WHERE target_suggestion_id = $1`,
-    [suggestionId, entityId]
+    [suggestionId, entityId],
   )
 }
 

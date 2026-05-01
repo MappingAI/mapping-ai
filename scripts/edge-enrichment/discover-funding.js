@@ -12,8 +12,8 @@ import 'dotenv/config'
 import Anthropic from '@anthropic-ai/sdk'
 import Exa from 'exa-js'
 import { getConnections, closeConnections } from './lib/db.js'
-import { resolveEntity, loadEntityCache, createOrUpdateSuggestion, suggestionId } from './lib/entity-resolution.js'
-import { registerSource, srcId } from './lib/source.js'
+import { resolveEntity, loadEntityCache, createOrUpdateSuggestion } from './lib/entity-resolution.js'
+import { registerSource } from './lib/source.js'
 import { loadProgress, saveProgress } from './lib/progress.js'
 import { costs } from './lib/costs.js'
 
@@ -188,7 +188,16 @@ async function processEntity(entity, rds, neon, entityCache, dryRun) {
   const stats = { found: extraction.relationships.length, existing: 0, new: 0, suggestions: 0 }
 
   // Filter out invalid/generic entity names
-  const INVALID_NAMES = ['unknown', 'private sector', 'federal government', 'government', 'n/a', 'various', 'multiple', 'anonymous']
+  const INVALID_NAMES = [
+    'unknown',
+    'private sector',
+    'federal government',
+    'government',
+    'n/a',
+    'various',
+    'multiple',
+    'anonymous',
+  ]
 
   for (const rel of extraction.relationships) {
     // Skip relationships with invalid funder/recipient names
@@ -226,7 +235,7 @@ async function processEntity(entity, rds, neon, entityCache, dryRun) {
       const existingEdge = await rds.query(
         `SELECT id FROM edge
          WHERE source_id = $1 AND target_id = $2 AND edge_type = 'funder'`,
-        [funderId, recipientId]
+        [funderId, recipientId],
       )
       if (existingEdge.rows.length > 0) {
         edgeExists = true
@@ -256,7 +265,7 @@ async function processEntity(entity, rds, neon, entityCache, dryRun) {
           rel.confidence,
           SCRIPT_NAME,
           CLAUDE_MODEL,
-        ]
+        ],
       )
       console.log(`  ✓ Enriched existing edge ${existingEdgeId}: ${rel.funder_name} → ${rel.recipient_name}`)
       stats.existing++
@@ -331,7 +340,7 @@ async function processEntity(entity, rds, neon, entityCache, dryRun) {
           status,
           SCRIPT_NAME,
           CLAUDE_MODEL,
-        ]
+        ],
       )
       console.log(`  + New discovery: ${rel.funder_name} → ${rel.recipient_name} (${status})`)
       stats.new++

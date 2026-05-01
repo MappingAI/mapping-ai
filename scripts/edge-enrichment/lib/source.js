@@ -33,7 +33,7 @@ export async function registerSource(client, sourceData) {
       sourceData.date || null,
       sourceData.author || null,
       sourceData.excerpt || null,
-    ]
+    ],
   )
   return sid
 }

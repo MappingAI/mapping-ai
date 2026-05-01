@@ -225,7 +225,7 @@ export async function createOrUpdateSuggestion(neon, rds, suggestionData) {
       suggestionData.seen_as_funder || false,
       suggestionData.seen_as_recipient || false,
       duplicates.length > 0 ? JSON.stringify(duplicates) : null,
-    ]
+    ],
   )
 
   return sid

@@ -38,7 +38,6 @@ async function main() {
   }
 
   let promoted = 0
-  let skipped = 0
   let errors = 0
 
   for (const discovery of approved.rows) {
@@ -49,7 +48,7 @@ async function main() {
       const existing = await rds.query(
         `SELECT id FROM edge
          WHERE source_id = $1 AND target_id = $2 AND edge_type = $3`,
-        [discovery.source_entity_id, discovery.target_entity_id, discovery.edge_type]
+        [discovery.source_entity_id, discovery.target_entity_id, discovery.edge_type],
       )
 
       let edgeId
@@ -66,7 +65,7 @@ async function main() {
             `INSERT INTO edge (source_id, target_id, edge_type, created_by)
              VALUES ($1, $2, $3, 'edge_discovery')
              RETURNING id`,
-            [discovery.source_entity_id, discovery.target_entity_id, discovery.edge_type]
+            [discovery.source_entity_id, discovery.target_entity_id, discovery.edge_type],
           )
           edgeId = newEdge.rows[0].id
           console.log(`  Created edge: ${edgeId}`)
@@ -97,7 +96,7 @@ async function main() {
             discovery.extracted_by,
             discovery.extraction_model,
             discovery.extraction_date,
-          ]
+          ],
         )
         console.log(`  Created evidence: ${evidenceId}`)
 
@@ -108,7 +107,7 @@ async function main() {
                promoted_edge_id = $2,
                promoted_at = NOW()
            WHERE discovery_id = $1`,
-          [discovery.discovery_id, edgeId]
+          [discovery.discovery_id, edgeId],
         )
         console.log(`  Marked as promoted`)
       }
