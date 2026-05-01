@@ -1353,7 +1353,7 @@ export function DefinitionsView({ subView, colorMode }: { subView: string; color
   }
 
   return (
-    <div style={{ padding: '24px 40px 24px 300px' }}>
+    <div style={{ padding: '12px 24px' }}>
       {viewMode === 'map' && (
         <ClusterMapView data={data} colorMode={cm} hoveredCategory={hoveredCategory} onSelect={handleSelect} />
       )}

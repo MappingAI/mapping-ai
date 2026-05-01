@@ -195,9 +195,6 @@ export function App() {
             <button className="view-btn" data-view="people">
               People
             </button>
-            <button className="view-btn" data-view="resources">
-              Resources
-            </button>
           </div>
           <div className="view-toggles" id="plot-sub-tabs" style={{ display: 'none' }}>
             <button className="view-btn active" data-entity="all">
@@ -211,7 +208,7 @@ export function App() {
             </button>
           </div>
           <div id="beliefs-sub-tabs" style={{ display: 'none' }}>
-            <div className="view-toggles">
+            <div className="view-toggles" style={{ flexWrap: 'wrap' }}>
               {(['map', 'list', 'scatter', 'timeline', 'trends', 'beliefs'] as const).map((v) => (
                 <button
                   key={v}
@@ -238,7 +235,7 @@ export function App() {
                 >
                   Color by
                 </h3>
-                <div className="view-toggles">
+                <div className="view-toggles" style={{ flexWrap: 'wrap' }}>
                   {(
                     [
                       { value: 'cluster', label: 'Cluster' },
@@ -543,7 +540,6 @@ export function App() {
             #plot-sub-tabs { display: none !important; }
             #search-mode-controls { display: none !important; }
             #entity-count { display: none !important; }
-            .control-group:has(.info-btn) { display: none !important; }
             .controls .control-group:first-child { display: none !important; }
             #beliefs-sub-tabs { display: flex !important; flex-direction: column; gap: 4px; }
           `}</style>
