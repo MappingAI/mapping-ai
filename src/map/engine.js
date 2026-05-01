@@ -2078,7 +2078,7 @@ export function initMapEngine() {
   document.getElementById('search-input').placeholder = phMap0[currentView] || 'Search entities...'
 
   // Top-level mode buttons
-  document.querySelectorAll('.mode-btn').forEach((btn) => {
+  document.querySelectorAll('.mode-btn[data-mode]').forEach((btn) => {
     btn.addEventListener('click', () => {
       viewMode = btn.dataset.mode
       localStorage.setItem('mapMode', viewMode)
