@@ -57,19 +57,19 @@ export function FundingFlowSankey({ flows, funders }: Props) {
     const funderNodes = topFunders.map((name) => ({ id: `funder:${name}`, name, type: 'funder' }))
     const categoryNodes = recipientCategories.map((cat) => ({ id: `cat:${cat}`, name: cat, type: 'category' }))
     const nodes = [...funderNodes, ...categoryNodes]
-    const nodeIndex = new Map(nodes.map((n, i) => [n.id, i]))
+    const nodeIdSet = new Set(nodes.map((n) => n.id))
 
-    // Build links
+    // Build links - use string IDs to match nodeId()
     const links = filteredFlows
       .filter((f) => f.recipient_category !== 'Unknown')
       .map((f) => ({
-        source: nodeIndex.get(`funder:${f.funder}`) ?? 0,
-        target: nodeIndex.get(`cat:${f.recipient_category}`) ?? 0,
+        source: `funder:${f.funder}`,
+        target: `cat:${f.recipient_category}`,
         value: f.count,
         funder: f.funder,
         category: f.recipient_category,
       }))
-      .filter((l) => l.value > 0)
+      .filter((l) => l.value > 0 && nodeIdSet.has(l.source) && nodeIdSet.has(l.target))
 
     if (links.length === 0) return
 
@@ -80,7 +80,7 @@ export function FundingFlowSankey({ flows, funders }: Props) {
     const svg = d3.select(container).append('svg').attr('viewBox', `0 0 ${W} ${H}`).attr('width', W).attr('height', H)
 
     // Sankey generator
-    const sankeyGenerator = sankey<{ id: string; name: string; type: string }, { source: number; target: number; value: number }>()
+    const sankeyGenerator = sankey<{ id: string; name: string; type: string }, { source: string; target: string; value: number }>()
       .nodeId((d) => d.id)
       .nodeWidth(15)
       .nodePadding(12)
