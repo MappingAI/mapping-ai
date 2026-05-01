@@ -139,7 +139,7 @@ export function PolicyKingmakers({ edges, showTooltip, hideTooltip }: Props) {
     const padL = 290
     const padR = 45
     const padTop = 35
-    const legendH = 55
+    const legendH = 75
     const H = funderStats.length * (barH + gap) + padTop + legendH
 
     const svg = d3
@@ -179,16 +179,6 @@ export function PolicyKingmakers({ edges, showTooltip, hideTooltip }: Props) {
     funderStats.forEach((f, i) => {
       const y = padTop + i * (barH + gap)
       const barColor = FUNDER_CATEGORY_COLORS[f.category] || '#888'
-
-      // Category indicator
-      svg
-        .append('rect')
-        .attr('x', 4)
-        .attr('y', y + 4)
-        .attr('width', 4)
-        .attr('height', barH - 8)
-        .attr('rx', 2)
-        .attr('fill', barColor)
 
       // Label - wrap long names to two lines
       const maxChars = 38
@@ -285,25 +275,36 @@ export function PolicyKingmakers({ edges, showTooltip, hideTooltip }: Props) {
         .text(f.orgCount)
     })
 
-    // Legend
+    // Legend - dynamically show all categories used in the data
+    const usedCategories = [...new Set(funderStats.map((f) => f.category))]
+    const shortLabels: Record<string, string> = {
+      'VC/Capital/Philanthropy': 'VC/Philanthropy',
+      'Think Tank/Policy Org': 'Think Tank',
+      'AI Safety/Alignment': 'AI Safety',
+      'Government/Agency': 'Government',
+      'Deployers & Platforms': 'Deployers',
+      'Infrastructure & Compute': 'Infrastructure',
+    }
+
     const legendY = padTop + funderStats.length * (barH + gap) + 15
+    const midpoint = Math.ceil(usedCategories.length / 2)
+    const row1 = usedCategories.slice(0, midpoint)
+    const row2 = usedCategories.slice(midpoint)
+    const legendStartX = 20
+    const itemWidth = 110
+
     svg
       .append('text')
-      .attr('x', 8)
+      .attr('x', legendStartX)
       .attr('y', legendY)
       .attr('font-family', "'DM Mono', monospace")
       .attr('font-size', 9)
       .attr('fill', '#888')
       .text('Funder type:')
 
-    const legendCategories = ['VC/Capital/Philanthropy', 'Think Tank/Policy Org', 'AI Safety/Alignment', 'Investor']
-    const shortLabels: Record<string, string> = {
-      'VC/Capital/Philanthropy': 'VC/Philanthropy',
-      'Think Tank/Policy Org': 'Think Tank',
-      'AI Safety/Alignment': 'AI Safety',
-    }
-    legendCategories.forEach((cat, i) => {
-      const x = 80 + i * 120
+    // Row 1
+    row1.forEach((cat, i) => {
+      const x = legendStartX + 70 + i * itemWidth
       svg
         .append('rect')
         .attr('x', x)
@@ -311,7 +312,7 @@ export function PolicyKingmakers({ edges, showTooltip, hideTooltip }: Props) {
         .attr('width', 10)
         .attr('height', 10)
         .attr('rx', 2)
-        .attr('fill', FUNDER_CATEGORY_COLORS[cat])
+        .attr('fill', FUNDER_CATEGORY_COLORS[cat] || '#ccc')
       svg
         .append('text')
         .attr('x', x + 14)
@@ -321,6 +322,30 @@ export function PolicyKingmakers({ edges, showTooltip, hideTooltip }: Props) {
         .attr('fill', '#888')
         .text(shortLabels[cat] || cat)
     })
+
+    // Row 2 (if needed)
+    if (row2.length > 0) {
+      const legendY2 = legendY + 16
+      row2.forEach((cat, i) => {
+        const x = legendStartX + 70 + i * itemWidth
+        svg
+          .append('rect')
+          .attr('x', x)
+          .attr('y', legendY2 - 8)
+          .attr('width', 10)
+          .attr('height', 10)
+          .attr('rx', 2)
+          .attr('fill', FUNDER_CATEGORY_COLORS[cat] || '#ccc')
+        svg
+          .append('text')
+          .attr('x', x + 14)
+          .attr('y', legendY2)
+          .attr('font-family', "'DM Mono', monospace")
+          .attr('font-size', 9)
+          .attr('fill', '#888')
+          .text(shortLabels[cat] || cat)
+      })
+    }
 
     // Power law annotation
     const annotationY = legendY + 20

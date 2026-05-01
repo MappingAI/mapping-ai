@@ -205,10 +205,10 @@ export function FundingFragility({ edges, showTooltip, hideTooltip }: Props) {
     const W = container.clientWidth || 660
     const barH = 22
     const gap = 5
-    const padL = 195
+    const padL = 220
     const padR = 15
     const padTop = 45
-    const legendH = 50
+    const legendH = 70
     const H = recipientData.length * (barH + gap) + padTop + legendH
 
     const svg = d3
@@ -286,18 +286,57 @@ export function FundingFragility({ edges, showTooltip, hideTooltip }: Props) {
         .attr('r', 4)
         .attr('fill', getRiskColor(r.topFunderShare))
 
-      // Label
-      const displayName = r.name.length > 26 ? r.name.slice(0, 24) + '...' : r.name
-      svg
-        .append('text')
-        .attr('x', padL - 8)
-        .attr('y', y + barH / 2)
-        .attr('text-anchor', 'end')
-        .attr('dominant-baseline', 'middle')
-        .attr('font-family', "'DM Mono', monospace")
-        .attr('font-size', 10)
-        .attr('fill', '#333')
-        .text(displayName)
+      // Label - wrap long names to two lines
+      const maxChars = 28
+      const name = r.name
+      if (name.length > maxChars) {
+        const words = name.split(' ')
+        const lines: string[] = []
+        let currentLine = ''
+
+        words.forEach((word: string) => {
+          if ((currentLine + ' ' + word).trim().length <= maxChars) {
+            currentLine = (currentLine + ' ' + word).trim()
+          } else {
+            if (currentLine) lines.push(currentLine)
+            currentLine = word
+          }
+        })
+        if (currentLine) lines.push(currentLine)
+
+        // Limit to 2 lines
+        if (lines.length > 2) {
+          lines[1] = lines[1]!.slice(0, maxChars - 3) + '...'
+          lines.length = 2
+        }
+
+        const lineHeight = 10
+        const startY = y + barH / 2 - ((lines.length - 1) * lineHeight) / 2
+
+        lines.forEach((line, j) => {
+          svg
+            .append('text')
+            .attr('x', padL - 8)
+            .attr('y', startY + j * lineHeight)
+            .attr('text-anchor', 'end')
+            .attr('dominant-baseline', 'middle')
+            .attr('font-family', "'DM Mono', monospace")
+            .attr('font-size', 10)
+            .attr('fill', '#333')
+            .text(line)
+        })
+      } else {
+        svg
+          .append('text')
+          .attr('x', padL - 8)
+          .attr('y', y + barH / 2)
+          .attr('text-anchor', 'end')
+          .attr('dominant-baseline', 'middle')
+          .attr('font-family', "'DM Mono', monospace")
+          .attr('font-size', 10)
+          .attr('fill', '#333')
+          .text(name)
+      }
 
       // Stacked bar segments
       r.funders.forEach((f) => {
@@ -361,20 +400,38 @@ export function FundingFragility({ edges, showTooltip, hideTooltip }: Props) {
         .text(item.label)
     })
 
-    // Funder category legend
+    // Funder category legend - dynamically show all categories used
+    const usedCategories = [
+      ...new Set(recipientData.flatMap((r) => r.funders.map((f) => f.category))),
+    ]
+    const shortLabels: Record<string, string> = {
+      'VC/Capital/Philanthropy': 'VC/Philanthropy',
+      'Think Tank/Policy Org': 'Think Tank',
+      'AI Safety/Alignment': 'AI Safety',
+      'Government/Agency': 'Government',
+      'Deployers & Platforms': 'Deployers',
+      'Infrastructure & Compute': 'Infrastructure',
+    }
+
     const legendY2 = legendY + 18
+    const midpoint = Math.ceil(usedCategories.length / 2)
+    const row1 = usedCategories.slice(0, midpoint)
+    const row2 = usedCategories.slice(midpoint)
+    const legendStartX = 8
+    const itemWidth = 105
+
     svg
       .append('text')
-      .attr('x', 8)
+      .attr('x', legendStartX)
       .attr('y', legendY2)
       .attr('font-family', "'DM Mono', monospace")
       .attr('font-size', 9)
       .attr('fill', '#888')
       .text('Funder type:')
 
-    const topCategories = ['VC/Capital/Philanthropy', 'Investor', 'Think Tank/Policy Org']
-    topCategories.forEach((cat, i) => {
-      const x = 80 + i * 120
+    // Row 1
+    row1.forEach((cat, i) => {
+      const x = legendStartX + 72 + i * itemWidth
       svg
         .append('rect')
         .attr('x', x)
@@ -382,11 +439,7 @@ export function FundingFragility({ edges, showTooltip, hideTooltip }: Props) {
         .attr('width', 10)
         .attr('height', 10)
         .attr('rx', 2)
-        .attr('fill', FUNDER_CATEGORY_COLORS[cat])
-      const shortLabels: Record<string, string> = {
-        'VC/Capital/Philanthropy': 'VC/Philanthropy',
-        'Think Tank/Policy Org': 'Think Tank',
-      }
+        .attr('fill', FUNDER_CATEGORY_COLORS[cat] || '#ccc')
       svg
         .append('text')
         .attr('x', x + 14)
@@ -396,6 +449,30 @@ export function FundingFragility({ edges, showTooltip, hideTooltip }: Props) {
         .attr('fill', '#888')
         .text(shortLabels[cat] || cat)
     })
+
+    // Row 2 (if needed)
+    if (row2.length > 0) {
+      const legendY3 = legendY2 + 16
+      row2.forEach((cat, i) => {
+        const x = legendStartX + 72 + i * itemWidth
+        svg
+          .append('rect')
+          .attr('x', x)
+          .attr('y', legendY3 - 8)
+          .attr('width', 10)
+          .attr('height', 10)
+          .attr('rx', 2)
+          .attr('fill', FUNDER_CATEGORY_COLORS[cat] || '#ccc')
+        svg
+          .append('text')
+          .attr('x', x + 14)
+          .attr('y', legendY3)
+          .attr('font-family', "'DM Mono', monospace")
+          .attr('font-size', 9)
+          .attr('fill', '#888')
+          .text(shortLabels[cat] || cat)
+      })
+    }
   }, [edges, showTooltip, hideTooltip])
 
   return (
