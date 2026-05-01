@@ -2,22 +2,17 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://mapping-ai.org/</loc>
-    <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://mapping-ai.org/map.html</loc>
-    <priority>0.9</priority>
+    <loc>https://mapping-ai.org/map</loc>
   </url>
   <url>
-    <loc>https://mapping-ai.org/contribute.html</loc>
-    <priority>0.8</priority>
+    <loc>https://mapping-ai.org/contribute</loc>
   </url>
   <url>
-    <loc>https://mapping-ai.org/about.html</loc>
-    <priority>0.7</priority>
+    <loc>https://mapping-ai.org/about</loc>
   </url>
   <url>
-    <loc>https://mapping-ai.org/theoryofchange.html</loc>
-    <priority>0.7</priority>
+    <loc>https://mapping-ai.org/insights</loc>
   </url>
 </urlset>

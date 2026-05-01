@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react'
 import { QueryClient, QueryClientProvider, useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Navigation } from '../components/Navigation'
 
-const API_BASE = import.meta.env.PROD ? 'https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com' : '/api'
+const API_BASE = '/api'
 
 const queryClient = new QueryClient({ defaultOptions: { queries: { retry: 1, refetchOnWindowFocus: false } } })
 

@@ -45,51 +45,62 @@ mapping-ai/
     styles/               # Global CSS with Tailwind (global.css)
     __tests__/            # Vitest tests
   api/
-    submit.ts             # POST /submit
-    search.ts             # GET /search
-    submissions.ts        # GET /submissions
-    semantic-search.ts    # GET /semantic-search
-    admin.ts              # GET/POST /admin
-    upload.ts             # POST /upload
-    export-map.ts         # Shared map-data generator
+    export-map.ts         # Shared map-data generator (used by scripts + Pages Functions)
+  functions/
+    api/                  # Cloudflare Pages Functions (API endpoints)
+      submit.ts           # POST /api/submit
+      submissions.ts      # GET /api/submissions
+      search.ts           # GET /api/search
+      semantic-search.ts  # GET /api/semantic-search
+      admin.ts            # GET/POST /api/admin
+      upload.ts           # POST /api/upload
+      _shared/            # Shared DB, CORS, env utilities
+    data/[file].ts        # R2 data file proxy (/data/claims-detail.json, etc.)
+    thumbnails/[[path]].ts # R2 thumbnail proxy (/thumbnails/*)
   scripts/
     migrate.js            # DB schema management
     seed.js               # CSV data import
     export-map-data.ts    # CLI map-data export (run via tsx)
-    backup-db.js          # DB backup to S3
+    enrich-claims.js      # Exa + Claude claim enrichment
+    enrich-resources.js   # Resource metadata + claim enrichment
+    edge-enrichment/      # Edge discovery + temporal enrichment pipeline
+    backup-db.js          # DB backup to local files
   assets/
     css/                  # Legacy styles (used by map.html)
     js/                   # Legacy TipTap bundle (used by map.html)
     images/               # Logos
   vite.config.ts          # Vite MPA config with React, Tailwind, proxy, Vitest
   tsconfig.json           # TypeScript config (strict, paths: @/* → src/*)
-  template.yaml           # AWS SAM (IaC)
+  wrangler.toml           # Cloudflare Pages config + R2 binding
   .github/workflows/
-    deploy.yml            # CI/CD pipeline
+    deploy.yml            # Map-data export + smoke test
+    ci.yml                # Lint, typecheck, test, build
+    neon-preview-branch.yml # Per-PR Neon branches
 ```
 
 React pages use Tailwind CSS for styling via `src/styles/global.css`. The legacy `assets/css/` and inline `<style>` blocks only apply to `map.html`.
 
 ### Key modules
 
-| Module              | Responsibility                                                                                      |
-| ------------------- | --------------------------------------------------------------------------------------------------- |
-| `src/contribute/`   | React contribute forms (PersonForm, OrgForm, ResourceForm) with TipTap, org search, location search |
-| `src/admin/`        | React admin dashboard (pending queue, entity editing, merging)                                      |
-| `src/insights/`     | React insights page with D3 charts                                                                  |
-| `src/components/`   | Shared React components (Navigation, TipTapEditor, CustomSelect, TagInput, etc.)                    |
-| `src/hooks/`        | Shared hooks (useEntityCache, useSearch, useAutoSave, useSubmitEntity, etc.)                        |
-| `src/lib/api.ts`    | Typed API client for all Lambda endpoints                                                           |
-| `src/types/`        | TypeScript type definitions for entities, API responses                                             |
-| `api/`              | Lambda handlers for submissions, search, admin, uploads                                             |
-| `api/export-map.ts` | Generates `map-data.json` from DB; maps DB column names to frontend field names                     |
-| `scripts/`          | DB migration, seeding, export, and backup utilities                                                 |
-| `map.html`          | D3.js force-directed graph with orbital clusters, plot view, semantic search (inline, not React)    |
-| `template.yaml`     | AWS SAM definition for all infrastructure                                                           |
+| Module                  | Responsibility                                                                                      |
+| ----------------------- | --------------------------------------------------------------------------------------------------- |
+| `src/contribute/`       | React contribute forms (PersonForm, OrgForm, ResourceForm) with TipTap, org search, location search |
+| `src/admin/`            | React admin dashboard (pending queue, entity editing, merging)                                      |
+| `src/insights/`         | React insights page with D3 charts                                                                  |
+| `src/components/`       | Shared React components (Navigation, TipTapEditor, CustomSelect, TagInput, etc.)                    |
+| `src/hooks/`            | Shared hooks (useEntityCache, useSearch, useAutoSave, useSubmitEntity, etc.)                        |
+| `src/lib/api.ts`        | Typed API client (all calls go to same-origin `/api`)                                               |
+| `src/types/`            | TypeScript type definitions for entities, API responses                                             |
+| `functions/api/`        | Cloudflare Pages Functions (API endpoints: submit, search, admin, etc.)                             |
+| `functions/data/`       | Pages Function serving R2 data files (claims, AGI definitions)                                      |
+| `functions/thumbnails/` | Pages Function serving entity thumbnails from R2                                                    |
+| `api/export-map.ts`     | Generates `map-data.json` from DB; maps DB column names to frontend field names (shared library)    |
+| `scripts/`              | DB migration, seeding, enrichment, export, and backup utilities                                     |
+| `map.html`              | D3.js force-directed graph with orbital clusters, plot view, semantic search (inline, not React)    |
 
 ### External dependencies
 
-See [`docs/architecture/current.md`](docs/architecture/current.md) for the full list with configuration details. High-level: AWS (RDS, S3, CloudFront, Lambda + API Gateway) for infrastructure; Cloudflare for DNS and web analytics; Anthropic (Claude Haiku) for submission quality review and semantic search; Exa for data enrichment; Google Favicons, Wikipedia, Photon/OpenStreetMap, and Bluesky for client-side lookups.
+See [`docs/architecture/current.md`](docs/architecture/current.md) for the full list. High-level: Cloudflare (Pages, R2, DNS, web analytics) for infrastructure; Neon Postgres for database; Exa for data enrichment; Google Favicons, Wikipedia, Photon/OpenStreetMap, and Bluesky for client-side lookups.
 
 ---
 
@@ -103,7 +114,7 @@ See [`docs/architecture/current.md`](docs/architecture/current.md) for the full 
 | Belief fields          | Stance on regulatory policy, AGI timeline, and AI risk level. Stored as text labels on `entity`, with weighted averages computed from submissions.                                                               |
 | Weighted belief scores | `belief_*_wavg` columns on `entity`, auto-maintained by DB triggers. Weights: self=10, connector=2, external=1.                                                                                                  |
 | Field name mapping     | DB columns (`belief_regulatory_stance`) map to different frontend names (`regulatory_stance`). The `toFrontendShape()` function in `api/export-map.ts` handles this. Any schema change must update this mapping. |
-| `map-data.json`        | Static JSON snapshot of all approved entities and edges. Generated from DB, uploaded to S3, served by CloudFront. The map never hits the database directly.                                                      |
+| `map-data.json`        | Static JSON snapshot of all approved entities and edges. Generated from DB at build time, served as a static file. The map never hits the database directly.                                                     |
 | Source type            | How a submission relates to the entity: `self` (the person themselves), `connector` (close relation), or `external` (third party). Determines belief score weight.                                               |
 | LLM review             | Claude Haiku rates each submission 1-5 for quality, flags spam/duplicates. Non-blocking, stored in `submission.llm_review` as JSONB.                                                                             |
 | Orbital cluster layout | The D3.js map groups nodes into clusters by category (org sector or person role) arranged in orbits around a center point.                                                                                       |
@@ -155,13 +166,13 @@ An admin reviews pending submissions on `admin.html`.
 3. Admin clicks Approve → `POST /admin { action: 'approve', id: ... }`
 4. DB trigger `before_submission_update` fires: creates an `entity` row from the submission, backfills `entity_id`
 5. DB trigger `after_submission_update` fires: recalculates weighted belief scores on the entity
-6. Lambda regenerates `map-data.json` via `api/export-map.ts`, uploads to S3, invalidates CloudFront
+6. Pages Function regenerates `map-data.json` via `api/export-map.ts`, uploads to R2
 7. Map reflects the change within ~60 seconds
 
 ### Flow 3: Map loads static data
 
 1. User opens `map.html`
-2. Browser fetches `map-data.json` from CloudFront (cached globally)
+2. Browser fetches `map-data.json` from Cloudflare Pages (cached at edge)
 3. D3.js renders force-directed graph with orbital clusters
 4. No database call -- the map is entirely client-side after the initial JSON fetch
 
@@ -238,17 +249,10 @@ The Express dev server (started by `pnpm run dev` or `pnpm run dev:api`) connect
 | `pnpm run db:migrate`      | Create/update all tables, triggers, indexes                                                                                 |
 | `pnpm run db:seed`         | Import Airtable CSV data                                                                                                    |
 | `pnpm run db:export-map`   | Generate `map-data.json` from approved entities                                                                             |
-| `pnpm run db:backup`       | Backup all tables to S3                                                                                                     |
+| `pnpm run db:backup:local` | Backup all tables to local files                                                                                            |
 | `pnpm run db:backup:local` | Backup to local files only                                                                                                  |
 
-Backend deploy (Lambda functions):
-
-```bash
-source .env && sam build && sam deploy \
-  --parameter-overrides "DatabaseUrl=$DATABASE_URL"
-```
-
-Frontend deploys automatically on push to `main` via GitHub Actions (Vite build + S3 sync + CloudFront invalidation).
+Both frontend and backend deploy automatically on push to `main` via Cloudflare Pages. See [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md).
 
 ### Common change patterns
 
@@ -266,15 +270,15 @@ Frontend deploys automatically on push to `main` via GitHub Actions (Vite build 
 | Contribute forms  | `src/contribute/`              | PersonForm, OrgForm, ResourceForm with validation     |
 | Shared components | `src/components/`              | TipTapEditor, CustomSelect, Navigation, TagInput      |
 | Shared hooks      | `src/hooks/`                   | useEntityCache, useSearch, useAutoSave                |
-| API client        | `src/lib/api.ts`               | Typed API client for all Lambda endpoints             |
+| API client        | `src/lib/api.ts`               | Typed API client (same-origin /api calls)             |
 | Type definitions  | `src/types/`                   | Entity, submission, and API response types            |
 | Map visualization | `map.html`                     | Inline D3.js -- clusters, search, filters (not React) |
-| Lambda handlers   | `api/submit.ts`                | How submissions are validated and stored              |
+| API handlers      | `functions/api/submit.ts`      | How submissions are validated and stored              |
 | Data pipeline     | `api/export-map.ts`            | DB → frontend field mapping                           |
 | Admin workflow    | `api/admin.ts`                 | Approve/reject/merge logic, auto map refresh          |
 | DB schema         | `scripts/migrate.js`           | Table definitions, triggers, indexes                  |
 | Build config      | `vite.config.ts`               | MPA entry points, proxy, test config                  |
-| CI/CD             | `.github/workflows/deploy.yml` | Vite build → export → S3 sync → CDN invalidation      |
+| CI/CD             | `.github/workflows/deploy.yml` | Map-data export + smoke test (Pages auto-deploys)     |
 
 ### Tips
 

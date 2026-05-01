@@ -1,7 +1,7 @@
 import type { SubmitRequest, SubmitResponse, SearchResponse, SearchResult } from '../types/api'
 import type { MapData, MapDetail } from '../types/entity'
 
-const API_BASE = import.meta.env.PROD ? 'https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com' : '/api'
+const API_BASE = '/api'
 
 async function fetchJSON<T>(url: string, init?: RequestInit): Promise<T> {
   const res = await fetch(url, init)
