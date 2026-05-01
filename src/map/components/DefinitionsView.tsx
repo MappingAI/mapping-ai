@@ -902,14 +902,15 @@ function TrendsView({ data }: { data: AgiData }) {
                 beliefDims.map((dim) => {
                   const dimSeries = beliefs[dim.key] || []
                   return (
-                    <div key={dim.key} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <div
+                      key={dim.key}
+                      style={{ display: 'flex', alignItems: 'center', gap: '4px', flex: '1 1 0', minWidth: 0 }}
+                    >
                       <span
                         style={{
                           fontFamily: 'var(--mono)',
                           fontSize: '8px',
                           color: 'var(--text-3)',
-                          width: '36px',
-                          textAlign: 'right' as const,
                           flexShrink: 0,
                         }}
                       >
