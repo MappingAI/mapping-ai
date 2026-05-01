@@ -1,4 +1,3 @@
-/* eslint-disable */
 // @ts-nocheck
 export function initPasswordGate() {
   var SITE_HASH = '__SITE_PASSWORD_HASH__'

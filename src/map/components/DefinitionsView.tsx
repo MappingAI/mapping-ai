@@ -1,9 +1,6 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-declare const d3: any
-
 interface AgiPoint {
   entity_id: number
   name: string
@@ -105,7 +102,8 @@ function getPointColor(d: AgiPoint, colorMode: ColorMode): string {
   if (score == null) return '#ddd'
   const scale = BELIEF_SCALES[colorMode]
   if (!scale) return '#888'
-  return scale.colors[Math.min(score - 1, scale.colors.length - 1)] || '#888'
+  const idx = Math.max(0, Math.min(Math.round(score) - 1, scale.colors.length - 1))
+  return scale.colors[idx] || '#888'
 }
 
 interface QuarterBucket {
@@ -361,7 +359,7 @@ function ClusterMapView({
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (!ref.current || !data.clusters) return
+    if (!ref.current || !data.clusters || data.clusters.length === 0) return
     const container = ref.current
     container.innerHTML = ''
 
@@ -369,7 +367,7 @@ function ClusterMapView({
     if (staleTip) staleTip.style.opacity = '0'
 
     const W = container.clientWidth || 700
-    const clusters = data.clusters || []
+    const clusters = data.clusters
 
     const cxExtent = d3.extent(clusters, (c: ClusterInfo) => c.cx ?? 0) as [number, number]
     const cyExtent = d3.extent(clusters, (c: ClusterInfo) => c.cy ?? 0) as [number, number]
@@ -488,9 +486,7 @@ function ClusterMapView({
       .attr('cy', (d: { y: number }) => d.y)
       .attr('r', 5)
       .attr('fill', (d: AgiPoint) => getPointColor(d, colorMode))
-      .attr('opacity', (d: AgiPoint) =>
-        colorMode === 'category' && hoveredCategory && d.category !== hoveredCategory ? 0.15 : 0.85,
-      )
+      .attr('opacity', 0.85)
       .attr('stroke', '#fff')
       .attr('stroke-width', 1)
       .style('cursor', 'pointer')
@@ -501,7 +497,21 @@ function ClusterMapView({
         hideTip(tipEl)
         onSelect(d)
       })
-  }, [data, colorMode, hoveredCategory, onSelect])
+
+    return () => {
+      const tip = document.getElementById('__defview-map-tip')
+      if (tip) tip.remove()
+    }
+  }, [data, colorMode, onSelect])
+
+  useEffect(() => {
+    if (!ref.current) return
+    d3.select(ref.current)
+      .selectAll('circle.entity')
+      .attr('opacity', (d: AgiPoint) =>
+        colorMode === 'category' && hoveredCategory && d.category !== hoveredCategory ? 0.15 : 0.85,
+      )
+  }, [hoveredCategory, colorMode])
 
   return <div ref={ref} />
 }
@@ -511,7 +521,7 @@ function ListView({ data, onSelect }: { data: AgiData; onSelect: (p: AgiPoint) =
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-      {clusters
+      {[...clusters]
         .sort((a, b) => b.count - a.count)
         .map((cluster) => {
           const entities = data.points.filter((p) => p.cluster_id === cluster.id)
@@ -636,14 +646,7 @@ function ScatterView({
       .attr('cy', (d: AgiPoint) => yScale(d.y))
       .attr('r', 5)
       .attr('fill', (d: AgiPoint) => getPointColor(d, colorMode))
-      .attr('opacity', (d: AgiPoint) => {
-        if (colorMode === 'category' || colorMode === 'cluster') {
-          return hoveredCategory && d.category !== hoveredCategory ? 0.15 : 0.8
-        }
-        const scoreKey =
-          colorMode === 'stance' ? 'stance_score' : colorMode === 'timeline' ? 'timeline_score' : 'risk_score'
-        return d[scoreKey] == null ? 0.2 : 0.85
-      })
+      .attr('opacity', 0.8)
       .attr('stroke', '#fff')
       .attr('stroke-width', 1)
       .style('cursor', 'pointer')
@@ -654,7 +657,26 @@ function ScatterView({
         hideTip(tipEl)
         onSelect(d)
       })
-  }, [data, hoveredCategory, colorMode, onSelect])
+
+    return () => {
+      const tip = document.getElementById('__defview-scatter-tip')
+      if (tip) tip.remove()
+    }
+  }, [data, colorMode, onSelect])
+
+  useEffect(() => {
+    if (!ref.current) return
+    d3.select(ref.current)
+      .selectAll('circle')
+      .attr('opacity', (d: AgiPoint) => {
+        if (colorMode === 'category' || colorMode === 'cluster') {
+          return hoveredCategory && d.category !== hoveredCategory ? 0.15 : 0.8
+        }
+        const scoreKey =
+          colorMode === 'stance' ? 'stance_score' : colorMode === 'timeline' ? 'timeline_score' : 'risk_score'
+        return d[scoreKey] == null ? 0.2 : 0.85
+      })
+  }, [hoveredCategory, colorMode])
 
   return <div ref={ref} />
 }
@@ -725,7 +747,7 @@ function MiniSparkline({
 
 function TrendsView({ data }: { data: AgiData }) {
   const quarters = useMemo(() => buildQuarters(data.points), [data.points])
-  const clusters = useMemo(() => (data.clusters || []).sort((a, b) => b.count - a.count), [data.clusters])
+  const clusters = useMemo(() => [...(data.clusters || [])].sort((a, b) => b.count - a.count), [data.clusters])
 
   const beliefDims = useMemo(
     () =>
@@ -945,7 +967,7 @@ function TimelineView({ data }: { data: AgiData }) {
   const [tooltipState, setTooltipState] = useState<{ x: number; y: number; html: string } | null>(null)
 
   const quarters = useMemo(() => buildQuarters(data.points), [data.points])
-  const clusters = useMemo(() => (data.clusters || []).sort((a, b) => b.count - a.count), [data.clusters])
+  const clusters = useMemo(() => [...(data.clusters || [])].sort((a, b) => b.count - a.count), [data.clusters])
 
   const stackedData = useMemo(() => {
     if (quarters.length === 0) return null

@@ -7,6 +7,7 @@ export function App() {
   const [reactView, setReactView] = useState<ReactView>(null)
   const [beliefsSubView, setBeliefsSubView] = useState<string>('map')
   const [beliefsColorMode, setBeliefsColorMode] = useState<string>('cluster')
+  const [bannerDismissed, setBannerDismissed] = useState(() => localStorage.getItem('mobileBannerDismissed') === '1')
 
   useEffect(() => {
     let engineCleanup: { destroy: () => void } | null = null
@@ -66,18 +67,19 @@ export function App() {
         </button>
       </nav>
 
-      <div className="mobile-banner" id="mobile-banner">
-        <span>Best viewed on desktop for the full interactive experience</span>
-        <button
-          onClick={(e) => {
-            const el = e.currentTarget.parentElement
-            if (el) el.remove()
-            localStorage.setItem('mobileBannerDismissed', '1')
-          }}
-        >
-          &#10005;
-        </button>
-      </div>
+      {!bannerDismissed && (
+        <div className="mobile-banner" id="mobile-banner">
+          <span>Best viewed on desktop for the full interactive experience</span>
+          <button
+            onClick={() => {
+              localStorage.setItem('mobileBannerDismissed', '1')
+              setBannerDismissed(true)
+            }}
+          >
+            &#10005;
+          </button>
+        </div>
+      )}
 
       <div className="onboarding-overlay" id="onboarding-overlay" style={{ display: 'none' }}>
         <div className="onboarding-card">
@@ -85,19 +87,21 @@ export function App() {
           <p>An interactive visualization of the people, organizations, and resources shaping U.S. AI governance.</p>
           <div className="onboarding-tips">
             <div className="onboarding-tip">
-              <strong>Views:</strong> Switch between Orgs, People, Resources, All (combined), and Plot (scatter chart)
-              using the tabs on the left.
+              <strong>Network:</strong> Force-directed graph of stakeholders. Sub-tabs filter by All, Orgs, or People.
+              Click any node to see details and connections. Scroll to zoom, drag to pan.
             </div>
             <div className="onboarding-tip">
-              <strong>Filters:</strong> Use Category chips and Regulatory Stance legend to show/hide groups. Click
-              &quot;select all&quot; to toggle.
+              <strong>Plot:</strong> Scatter chart positioning entities along belief dimensions (regulatory stance, AGI
+              timeline, AI risk level). Switch axes and entity types with the controls below.
             </div>
             <div className="onboarding-tip">
-              <strong>Search:</strong> Type to find any entity. Supports related terms (e.g., &quot;safety&quot; finds
-              alignment orgs too).
+              <strong>Beliefs:</strong> Explore how stakeholders define AGI. Sub-views include a cluster map, list,
+              scatter projection, stacked timeline, and per-cluster trend sparklines. Color by cluster, category, or
+              belief dimension.
             </div>
             <div className="onboarding-tip">
-              <strong>Interact:</strong> Click any node to see details. Scroll to zoom. Drag to pan.
+              <strong>Filters &amp; Search:</strong> Use category chips and the stance legend to show or hide groups.
+              Search supports related terms (e.g., &quot;safety&quot; finds alignment orgs too).
             </div>
             <div className="onboarding-tip">
               <strong>Source:</strong> Data is crowdsourced and admin-reviewed. Belief scores (stance, timeline, risk)
@@ -173,7 +177,7 @@ export function App() {
         <div className="control-group">
           <h3>View</h3>
           <div className="view-mode-toggles" style={{ display: 'flex', flexWrap: 'wrap', gap: '3px' }}>
-            <button className="mode-btn active" data-mode="network">
+            <button className={`mode-btn${reactView === null ? ' active' : ''}`} data-mode="network">
               <svg
                 width="14"
                 height="14"

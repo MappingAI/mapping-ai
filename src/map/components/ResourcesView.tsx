@@ -244,8 +244,7 @@ export function ResourcesView({ resources }: ResourcesViewProps) {
   }, [resources, searchQuery, activeType, sortKey])
 
   const handleSelectResource = useCallback((r: Resource) => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ;(window as any).__mapEngine?.showDetail?.(r, [])
+    window.__mapEngine?.showDetail?.(r, [])
     document.getElementById('detail-panel')?.classList.add('open')
   }, [])
 
