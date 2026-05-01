@@ -45,6 +45,7 @@ export function App() {
 
   return (
     <>
+      <style>{`#source-type-filter { display: none !important; }`}</style>
       <nav className="site-nav">
         <a className="nav-brand" href="/">
           Mapping AI
