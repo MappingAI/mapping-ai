@@ -134,10 +134,10 @@ export function PolicyKingmakers({ edges, showTooltip, hideTooltip }: Props) {
     const top5Share = Math.round((top5OrgReach / (totalOrgs * 1.0)) * 100)
 
     const W = container.clientWidth || 660
-    const barH = 24
-    const gap = 5
-    const padL = 240
-    const padR = 50
+    const barH = 28
+    const gap = 4
+    const padL = 290
+    const padR = 45
     const padTop = 35
     const legendH = 55
     const H = funderStats.length * (barH + gap) + padTop + legendH
@@ -190,18 +190,57 @@ export function PolicyKingmakers({ edges, showTooltip, hideTooltip }: Props) {
         .attr('rx', 2)
         .attr('fill', barColor)
 
-      // Label
-      const displayName = f.name.length > 34 ? f.name.slice(0, 32) + '...' : f.name
-      svg
-        .append('text')
-        .attr('x', padL - 8)
-        .attr('y', y + barH / 2)
-        .attr('text-anchor', 'end')
-        .attr('dominant-baseline', 'middle')
-        .attr('font-family', "'DM Mono', monospace")
-        .attr('font-size', 10)
-        .attr('fill', '#333')
-        .text(displayName)
+      // Label - wrap long names to two lines
+      const maxChars = 38
+      const name = f.name
+      if (name.length > maxChars) {
+        const words = name.split(' ')
+        const lines: string[] = []
+        let currentLine = ''
+
+        words.forEach((word: string) => {
+          if ((currentLine + ' ' + word).trim().length <= maxChars) {
+            currentLine = (currentLine + ' ' + word).trim()
+          } else {
+            if (currentLine) lines.push(currentLine)
+            currentLine = word
+          }
+        })
+        if (currentLine) lines.push(currentLine)
+
+        // Limit to 2 lines
+        if (lines.length > 2) {
+          lines[1] = lines[1]!.slice(0, maxChars - 3) + '...'
+          lines.length = 2
+        }
+
+        const lineHeight = 10
+        const startY = y + barH / 2 - ((lines.length - 1) * lineHeight) / 2
+
+        lines.forEach((line, j) => {
+          svg
+            .append('text')
+            .attr('x', padL - 8)
+            .attr('y', startY + j * lineHeight)
+            .attr('text-anchor', 'end')
+            .attr('dominant-baseline', 'middle')
+            .attr('font-family', "'DM Mono', monospace")
+            .attr('font-size', 10)
+            .attr('fill', '#333')
+            .text(line)
+        })
+      } else {
+        svg
+          .append('text')
+          .attr('x', padL - 8)
+          .attr('y', y + barH / 2)
+          .attr('text-anchor', 'end')
+          .attr('dominant-baseline', 'middle')
+          .attr('font-family', "'DM Mono', monospace")
+          .attr('font-size', 10)
+          .attr('fill', '#333')
+          .text(name)
+      }
 
       // Bar
       const barWidth = xScale(f.orgCount) - padL
