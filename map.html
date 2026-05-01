@@ -4108,7 +4108,7 @@
             .catch(() => {}) // Non-critical — detail panel degrades gracefully
 
           // Lazy-load claims data for detail panel sources section
-          fetch('/data/claims-detail.json')
+          fetch('/claims-detail.json')
             .then((r) => (r.ok ? r.json() : null))
             .then((cd) => {
               if (cd) window.__claimsDetail = cd

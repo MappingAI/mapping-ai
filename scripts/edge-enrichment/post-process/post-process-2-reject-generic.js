@@ -117,6 +117,15 @@ const REJECT_EXACT = [
   'Self-funded',
   'Bootstrap',
   'Bootstrapped',
+  // Too generic for funding relationships
+  'U.S. Congress',
+  'U.S. Senate',
+  'U.S. House of Representatives',
+  'Congress',
+  'Senate',
+  'researchers',
+  'research teams around the world',
+  'Professor Mark Walker', // Generic "Professor X" pattern
 ]
 
 // Known short names that are REAL companies - do not reject

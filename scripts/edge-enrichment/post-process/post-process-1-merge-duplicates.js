@@ -52,6 +52,13 @@ const DUPLICATE_MAPPINGS = [
   // People
   { suggestion: 'Eric and Wendy Schmidt', existingName: 'Eric Schmidt' },
 
+  // Additional mappings identified during processing
+  { suggestion: 'NSF', existingName: 'U.S. National Science Foundation' },
+  { suggestion: 'John D. and Catherine T. MacArthur Foundation', existingName: 'MacArthur Foundation' },
+  { suggestion: 'Palantir Technologies', existingName: 'Palantir' },
+  { suggestion: 'Facebook', existingName: 'Meta' },
+  { suggestion: 'Survival and Flourishing Fund', existingName: 'Survival and Flourishing Fund' },
+
   // Add more as identified...
 ]
 
