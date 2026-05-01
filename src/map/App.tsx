@@ -173,15 +173,50 @@ export function App() {
           <h3>View</h3>
           <div className="view-mode-toggles" style={{ display: 'flex', flexWrap: 'wrap', gap: '3px' }}>
             <button className="mode-btn active" data-mode="network">
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              >
+                <circle cx="3" cy="3" r="2" />
+                <circle cx="11" cy="3" r="2" />
+                <circle cx="7" cy="11" r="2" />
+                <line x1="4.5" y1="4" x2="6" y2="9.5" />
+                <line x1="9.5" y1="4" x2="8" y2="9.5" />
+              </svg>
               Network
             </button>
             <button className="mode-btn" data-mode="plot">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <circle cx="3" cy="10" r="1.5" fill="currentColor" />
+                <circle cx="6" cy="5" r="1.5" fill="currentColor" />
+                <circle cx="10" cy="8" r="1.5" fill="currentColor" />
+                <circle cx="11" cy="3" r="1.5" fill="currentColor" />
+              </svg>
               Plot
             </button>
             <button
               className={`mode-btn${reactView === 'definitions' ? ' active' : ''}`}
               onClick={() => activateReactView('definitions')}
             >
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              >
+                <circle cx="4" cy="4" r="2" />
+                <circle cx="10" cy="4" r="2" />
+                <circle cx="4" cy="10" r="2" />
+                <circle cx="10" cy="10" r="2" />
+              </svg>
               Beliefs
             </button>
           </div>
