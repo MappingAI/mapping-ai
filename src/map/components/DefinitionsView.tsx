@@ -675,7 +675,7 @@ function MiniSparkline({
   const validPairs = series.map((v, i) => [i, v] as [number, number]).filter(([, v]) => !isNaN(v))
   if (validPairs.length < 2) {
     return (
-      <svg width={sparkW} height={sparkH} style={{ minWidth: 0, flex: '0 1 auto' }}>
+      <svg viewBox={`0 0 ${sparkW} ${sparkH}`} style={{ minWidth: 0, flex: '1 1 60px', height: sparkH }}>
         <text
           x={sparkW / 2}
           y={sparkH / 2 + 3}
@@ -871,20 +871,32 @@ function TrendsView({ data }: { data: AgiData }) {
                   fontFamily: 'var(--mono)',
                   fontSize: '10px',
                   color: 'var(--text-2)',
-                  width: '200px',
+                  minWidth: '100px',
+                  maxWidth: '200px',
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
                   whiteSpace: 'nowrap' as const,
-                  flexShrink: 0,
+                  flexShrink: 1,
                 }}
               >
                 {c.label}
               </span>
-              <svg width={countSparkW} height={countSparkH} style={{ flexShrink: 0 }}>
+              <svg
+                viewBox={`0 0 ${countSparkW} ${countSparkH}`}
+                style={{ flex: '1 1 80px', height: countSparkH, minWidth: 0 }}
+              >
                 <path d={pathD} fill="none" stroke={CLUSTER_COLORS[c.id] || '#ccc'} strokeWidth={1.5} />
               </svg>
-              <span style={{ fontFamily: 'var(--mono)', fontSize: '9px', color: 'var(--text-3)' }}>
-                {countSeries.reduce((a, b) => a + b, 0)} total
+              <span
+                style={{
+                  fontFamily: 'var(--mono)',
+                  fontSize: '9px',
+                  color: 'var(--text-3)',
+                  flexShrink: 0,
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {countSeries.reduce((a, b) => a + b, 0)}
               </span>
               {beliefs &&
                 beliefDims.map((dim) => {
@@ -1295,7 +1307,7 @@ export function DefinitionsView({ subView, colorMode }: { subView: string; color
   }
 
   return (
-    <div style={{ padding: '12px 24px' }}>
+    <div style={{ padding: '12px 24px', overflow: 'hidden' }}>
       {viewMode === 'map' && (
         <ClusterMapView data={data} colorMode={cm} hoveredCategory={hoveredCategory} onSelect={handleSelect} />
       )}
