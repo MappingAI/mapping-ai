@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { sankey, sankeyLinkHorizontal } from 'd3-sankey'
 
 // d3 loaded from CDN
@@ -13,9 +13,20 @@ interface Flow {
   total_usd: number
 }
 
+interface FundingEdge {
+  funder: string
+  recipient: string
+  amount_usd: number | null
+  year: number | null
+  citation: string | null
+  funder_category: string
+  recipient_category: string
+}
+
 interface Props {
   flows: Flow[]
   funders: Array<{ name: string; investments: number; category: string }>
+  edges: FundingEdge[]
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
@@ -33,8 +44,84 @@ const CATEGORY_COLORS: Record<string, string> = {
   Unknown: '#cccccc',
 }
 
-export function FundingFlowSankey({ flows, funders }: Props) {
+function formatUSD(amount: number | null): string {
+  if (!amount) return '—'
+  if (amount >= 1e9) return `$${(amount / 1e9).toFixed(1)}B`
+  if (amount >= 1e6) return `$${(amount / 1e6).toFixed(1)}M`
+  if (amount >= 1e3) return `$${(amount / 1e3).toFixed(0)}K`
+  return `$${amount.toFixed(0)}`
+}
+
+interface SelectedFlow {
+  funder: string
+  recipientCategory: string
+  edges: FundingEdge[]
+}
+
+function FlowDetailCard({ flow, onClose }: { flow: SelectedFlow; onClose: () => void }) {
+  const sortedEdges = [...flow.edges].sort((a, b) => (b.amount_usd || 0) - (a.amount_usd || 0))
+
+  return (
+    <div
+      className="fixed inset-0 z-[10000] flex items-start justify-center pt-[10vh] px-4"
+      style={{ background: 'rgba(0,0,0,0.3)' }}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose()
+      }}
+    >
+      <div className="bg-white rounded-lg shadow-xl max-w-[600px] w-full max-h-[70vh] overflow-hidden flex flex-col">
+        {/* Header */}
+        <div className="flex justify-between items-start p-5 pb-3 border-b border-[#eee]">
+          <div>
+            <div className="font-mono text-[10px] tracking-[0.08em] uppercase text-[#888] mb-1">Funding Flow</div>
+            <div className="font-serif text-[18px] font-medium">{flow.funder}</div>
+            <div className="font-mono text-[11px] text-[#666] mt-0.5">
+              → {flow.recipientCategory} ({flow.edges.length} investments)
+            </div>
+          </div>
+          <button onClick={onClose} className="font-mono text-[18px] text-[#999] hover:text-[#333] px-2 -mr-2">
+            ×
+          </button>
+        </div>
+
+        {/* Edge list */}
+        <div className="overflow-y-auto flex-1 p-4">
+          <div className="space-y-3">
+            {sortedEdges.map((edge, i) => (
+              <div key={i} className="bg-[#f8f7f5] rounded-md p-3">
+                <div className="flex justify-between items-start gap-3">
+                  <div className="font-mono text-[12px] font-medium text-[#333] flex-1">
+                    {edge.recipient}
+                  </div>
+                  <div className="font-mono text-[11px] text-[#666] shrink-0">
+                    {edge.year && <span className="mr-2">{edge.year}</span>}
+                    {formatUSD(edge.amount_usd)}
+                  </div>
+                </div>
+                {edge.citation && (
+                  <div className="font-mono text-[10px] text-[#888] mt-2 leading-relaxed line-clamp-3">
+                    {edge.citation}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="p-4 pt-3 border-t border-[#eee] bg-[#faf9f7]">
+          <div className="font-mono text-[10px] text-[#888]">
+            Total: {formatUSD(flow.edges.reduce((sum, e) => sum + (e.amount_usd || 0), 0))} across {flow.edges.length} investments
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export function FundingFlowSankey({ flows, funders, edges }: Props) {
   const ref = useRef<HTMLDivElement>(null)
+  const [selectedFlow, setSelectedFlow] = useState<SelectedFlow | null>(null)
 
   useEffect(() => {
     if (!ref.current || flows.length === 0) return
@@ -74,8 +161,8 @@ export function FundingFlowSankey({ flows, funders }: Props) {
     if (links.length === 0) return
 
     const W = container.clientWidth || 700
-    const H = 500
-    const margin = { top: 20, right: 180, bottom: 20, left: 180 }
+    const H = 520
+    const margin = { top: 20, right: 200, bottom: 20, left: 200 }
 
     const svg = d3.select(container).append('svg').attr('viewBox', `0 0 ${W} ${H}`).attr('width', W).attr('height', H)
 
@@ -110,13 +197,24 @@ export function FundingFlowSankey({ flows, funders }: Props) {
         const tooltip = d3.select(container).select('.tooltip')
         tooltip
           .style('opacity', 1)
-          .html(`<strong>${d.source.name}</strong> → ${d.target.name}<br>${d.value} investments`)
+          .html(`<strong>${d.source.name}</strong> → ${d.target.name}<br>${d.value} investments<br><em style="font-size:9px;color:#888">Click for details</em>`)
           .style('left', evt.offsetX + 10 + 'px')
           .style('top', evt.offsetY - 10 + 'px')
       })
       .on('mouseleave', function (this: SVGPathElement) {
         d3.select(this).attr('stroke-opacity', 0.4)
         d3.select(container).select('.tooltip').style('opacity', 0)
+      })
+      .on('click', function (_evt: MouseEvent, d: { source: { name: string }; target: { name: string } }) {
+        // Find edges matching this flow
+        const flowEdges = edges.filter(
+          (e) => e.funder === d.source.name && e.recipient_category === d.target.name
+        )
+        setSelectedFlow({
+          funder: d.source.name,
+          recipientCategory: d.target.name,
+          edges: flowEdges,
+        })
       })
 
     // Draw nodes
@@ -135,19 +233,59 @@ export function FundingFlowSankey({ flows, funders }: Props) {
       )
       .attr('rx', 2)
 
-    // Labels
-    nodeGroup
-      .selectAll('text')
-      .data(sankeyNodes)
-      .join('text')
-      .attr('x', (d: { x0: number; x1: number; type: string }) => (d.type === 'funder' ? d.x0 - 6 : d.x1 + 6))
-      .attr('y', (d: { y0: number; y1: number }) => (d.y0 + d.y1) / 2)
-      .attr('dy', '0.35em')
-      .attr('text-anchor', (d: { type: string }) => (d.type === 'funder' ? 'end' : 'start'))
-      .attr('font-family', "'DM Mono', monospace")
-      .attr('font-size', 10)
-      .attr('fill', '#333')
-      .text((d: { name: string }) => (d.name.length > 25 ? d.name.slice(0, 23) + '...' : d.name))
+    // Labels - with text wrapping for long names
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    sankeyNodes.forEach((d: any) => {
+      const isLeft = d.type === 'funder'
+      const x = isLeft ? (d.x0 ?? 0) - 8 : (d.x1 ?? 0) + 8
+      const y = ((d.y0 ?? 0) + (d.y1 ?? 0)) / 2
+      const name = d.name
+
+      // Wrap long names to multiple lines
+      const maxChars = 22
+      if (name.length > maxChars) {
+        const words = name.split(' ')
+        const lines: string[] = []
+        let currentLine = ''
+
+        words.forEach((word: string) => {
+          if ((currentLine + ' ' + word).trim().length <= maxChars) {
+            currentLine = (currentLine + ' ' + word).trim()
+          } else {
+            if (currentLine) lines.push(currentLine)
+            currentLine = word
+          }
+        })
+        if (currentLine) lines.push(currentLine)
+
+        const lineHeight = 11
+        const startY = y - ((lines.length - 1) * lineHeight) / 2
+
+        lines.forEach((line, i) => {
+          svg
+            .append('text')
+            .attr('x', x)
+            .attr('y', startY + i * lineHeight)
+            .attr('dy', '0.35em')
+            .attr('text-anchor', isLeft ? 'end' : 'start')
+            .attr('font-family', "'DM Mono', monospace")
+            .attr('font-size', 10)
+            .attr('fill', '#333')
+            .text(line)
+        })
+      } else {
+        svg
+          .append('text')
+          .attr('x', x)
+          .attr('y', y)
+          .attr('dy', '0.35em')
+          .attr('text-anchor', isLeft ? 'end' : 'start')
+          .attr('font-family', "'DM Mono', monospace")
+          .attr('font-size', 10)
+          .attr('fill', '#333')
+          .text(name)
+      }
+    })
 
     // Tooltip div
     d3.select(container)
@@ -163,7 +301,12 @@ export function FundingFlowSankey({ flows, funders }: Props) {
       .style('pointer-events', 'none')
       .style('opacity', 0)
       .style('z-index', 10)
-  }, [flows, funders])
+  }, [flows, funders, edges])
 
-  return <div ref={ref} style={{ position: 'relative' }} />
+  return (
+    <>
+      <div ref={ref} style={{ position: 'relative' }} />
+      {selectedFlow && <FlowDetailCard flow={selectedFlow} onClose={() => setSelectedFlow(null)} />}
+    </>
+  )
 }

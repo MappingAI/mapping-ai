@@ -104,6 +104,16 @@ interface FunderYearData {
   total_usd: number
 }
 
+interface FundingEdge {
+  funder: string
+  recipient: string
+  amount_usd: number | null
+  year: number | null
+  citation: string | null
+  funder_category: string
+  recipient_category: string
+}
+
 interface FundingData {
   _meta: { generated_at: string; total_edges: number }
   funders: FundingFunder[]
@@ -111,6 +121,7 @@ interface FundingData {
   flows: FundingFlow[]
   byYear: FundingYearData[]
   funderByYear: FunderYearData[]
+  edges: FundingEdge[]
 }
 
 /* ────────────────────────────────────────────
@@ -1210,7 +1221,7 @@ export function App() {
               title="Funding flows: Top funders → recipient categories"
               source="Top 12 funders by investment count. Width = number of investments to each category."
             >
-              <FundingFlowSankey flows={fundingData.flows} funders={fundingData.funders} />
+              <FundingFlowSankey flows={fundingData.flows} funders={fundingData.funders} edges={fundingData.edges} />
             </ChartContainer>
 
             <Para>

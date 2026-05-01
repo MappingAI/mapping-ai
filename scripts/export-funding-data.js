@@ -75,6 +75,7 @@ async function main() {
       amount_usd: e.amount_usd ? parseFloat(e.amount_usd) : null,
       start_date: e.start_date,
       end_date: e.end_date,
+      citation: e.citation || null,
       funder_category: funderEntity?.category || 'Unknown',
       funder_type: funderEntity?.entity_type || 'unknown',
       recipient_category: recipientEntity?.category || 'Unknown',
@@ -259,6 +260,17 @@ async function main() {
 
   console.log(`Generated ${funderByYear.length} funder-year data points`)
 
+  // Build detailed edges for click-through (include citation/source)
+  const detailedEdges = fundingEdges.map(e => ({
+    funder: e.funder,
+    recipient: e.recipient,
+    amount_usd: e.amount_usd,
+    year: e.start_date ? new Date(e.start_date).getFullYear() : null,
+    citation: e.citation,
+    funder_category: e.funder_category,
+    recipient_category: e.recipient_category,
+  }))
+
   // Build output
   const output = {
     _meta: {
@@ -266,12 +278,14 @@ async function main() {
       total_edges: fundingEdges.length,
       edges_with_amounts: fundingEdges.filter(e => e.amount_usd).length,
       edges_with_dates: fundingEdges.filter(e => e.start_date).length,
+      edges_with_citations: fundingEdges.filter(e => e.citation).length,
     },
     funders: funders.slice(0, 100), // Top 100 funders
     recipients: recipients.slice(0, 100), // Top 100 recipients
     flows,
     byYear,
     funderByYear,
+    edges: detailedEdges, // All edges with citations for click-through
   }
 
   // Write to file
