@@ -237,8 +237,8 @@ export function FundingFlowSankey({ flows, funders, edges }: Props) {
     if (links.length === 0) return
 
     const W = container.clientWidth || 700
-    const H = 520
-    const margin = { top: 20, right: 200, bottom: 20, left: 200 }
+    const H = 560
+    const margin = { top: 20, right: 200, bottom: 60, left: 200 }
 
     const svg = d3.select(container).append('svg').attr('viewBox', `0 0 ${W} ${H}`).attr('width', W).attr('height', H)
 
@@ -361,6 +361,52 @@ export function FundingFlowSankey({ flows, funders, edges }: Props) {
           .attr('fill', '#333')
           .text(name)
       }
+    })
+
+    // Legend for recipient categories
+    const legendY = H - 25
+    const legendCategories = recipientCategories.slice(0, 6)
+    const shortLabels: Record<string, string> = {
+      'AI Safety/Alignment': 'AI Safety',
+      'Think Tank/Policy Org': 'Think Tank',
+      'Government/Agency': 'Government',
+      'Infrastructure & Compute': 'Infra/Compute',
+      'Deployers & Platforms': 'Deployers',
+      'VC/Capital/Philanthropy': 'VC/Philanthropy',
+    }
+
+    svg
+      .append('text')
+      .attr('x', margin.left)
+      .attr('y', legendY - 12)
+      .attr('font-family', "'DM Mono', monospace")
+      .attr('font-size', 9)
+      .attr('fill', '#888')
+      .text('Recipient category:')
+
+    let legendX = margin.left
+    legendCategories.forEach((cat) => {
+      svg
+        .append('rect')
+        .attr('x', legendX)
+        .attr('y', legendY - 8)
+        .attr('width', 10)
+        .attr('height', 10)
+        .attr('rx', 2)
+        .attr('fill', CATEGORY_COLORS[cat] || '#999')
+
+      const label = shortLabels[cat] || (cat.length > 12 ? cat.slice(0, 10) + '..' : cat)
+      const text = svg
+        .append('text')
+        .attr('x', legendX + 14)
+        .attr('y', legendY)
+        .attr('font-family', "'DM Mono', monospace")
+        .attr('font-size', 9)
+        .attr('fill', '#888')
+        .text(label)
+        .node()
+
+      legendX += (text?.getComputedTextLength() || 60) + 24
     })
 
     // Tooltip div

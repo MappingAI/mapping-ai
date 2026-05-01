@@ -125,6 +125,7 @@ Form fields enforce cardinality constraints that enrichment scripts must respect
 
 See [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) for the full deployment and review process.
 
+- **NEVER switch branches or create new branches without explicit user permission.** The user may be working in parallel terminals. Always ask first.
 - Conventional commit prefixes: `feat:`, `fix:`, `refactor:`, `docs:`.
 - `map-data.json` / `map-detail.json` / `backup-*.json` / `backup-*.sql` are gitignored.
 - Test/seed data scripts gitignored.
