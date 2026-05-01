@@ -441,6 +441,7 @@ function ClusterMapView({
       .attr('width', W)
       .attr('height', H)
       .attr('preserveAspectRatio', 'xMidYMid meet')
+      .style('overflow', 'visible')
 
     const tipEl = createTooltip('__defview-map-tip')
 
@@ -1356,7 +1357,7 @@ export function DefinitionsView({ subView, colorMode }: { subView: string; color
   }
 
   return (
-    <div style={{ padding: '12px 24px 12px var(--controls-width, 280px)' }}>
+    <div style={{ padding: '12px 24px' }}>
       {viewMode === 'map' && (
         <ClusterMapView data={data} colorMode={cm} hoveredCategory={hoveredCategory} onSelect={handleSelect} />
       )}

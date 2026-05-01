@@ -578,13 +578,12 @@ export function App() {
             style={{
               position: 'fixed',
               top: '48px',
-              left: 0,
+              left: 'var(--controls-width, 350px)',
               right: 0,
               bottom: 0,
               overflow: 'auto',
               background: 'var(--bg-page)',
               zIndex: 10,
-              paddingTop: '8px',
             }}
           >
             {reactView === 'definitions' && <DefinitionsView subView={beliefsSubView} colorMode={beliefsColorMode} />}
