@@ -242,56 +242,6 @@ export function App() {
               People
             </button>
           </div>
-          <div id="beliefs-sub-tabs" style={{ display: 'none' }}>
-            <div className="view-toggles" style={{ flexWrap: 'wrap' }}>
-              {(['map', 'list', 'scatter', 'timeline', 'trends', 'beliefs'] as const).map((v) => (
-                <button
-                  key={v}
-                  className={'view-btn' + (beliefsSubView === v ? ' active' : '')}
-                  onClick={() => setBeliefsSubView(v)}
-                >
-                  {v.charAt(0).toUpperCase() + v.slice(1)}
-                </button>
-              ))}
-            </div>
-            {(beliefsSubView === 'map' || beliefsSubView === 'scatter') && (
-              <>
-                <h3
-                  style={{
-                    fontFamily: 'var(--mono)',
-                    fontSize: '9px',
-                    letterSpacing: '0.04em',
-                    textTransform: 'uppercase',
-                    fontWeight: 600,
-                    padding: 0,
-                    margin: '8px 0 4px',
-                    color: 'var(--text-1)',
-                  }}
-                >
-                  Color by
-                </h3>
-                <div className="view-toggles" style={{ flexWrap: 'wrap' }}>
-                  {(
-                    [
-                      { value: 'cluster', label: 'Cluster' },
-                      { value: 'category', label: 'Category' },
-                      { value: 'stance', label: 'Stance' },
-                      { value: 'timeline', label: 'Timeline' },
-                      { value: 'risk', label: 'Risk' },
-                    ] as const
-                  ).map((opt) => (
-                    <button
-                      key={opt.value}
-                      className={'view-btn' + (beliefsColorMode === opt.value ? ' active' : '')}
-                      onClick={() => setBeliefsColorMode(opt.value)}
-                    >
-                      {opt.label}
-                    </button>
-                  ))}
-                </div>
-              </>
-            )}
-          </div>
           <div id="search-mode-controls" style={{ display: 'none', marginTop: '0.5rem' }}>
             <h3>Query</h3>
             <textarea
@@ -323,6 +273,51 @@ export function App() {
                 Back to full map
               </button>
             </div>
+          </div>
+        </div>
+        <div className="control-group" id="beliefs-sub-tabs" style={{ display: 'none' }}>
+          <h3>Sub-view</h3>
+          <div className="filter-chips">
+            {(['map', 'list', 'scatter', 'timeline', 'trends', 'beliefs'] as const).map((v) => (
+              <button
+                key={v}
+                className={'view-btn' + (beliefsSubView === v ? ' active' : '')}
+                onClick={() => setBeliefsSubView(v)}
+              >
+                {v.charAt(0).toUpperCase() + v.slice(1)}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div
+          className="control-group"
+          id="beliefs-color-tabs"
+          style={{
+            display:
+              reactView === 'definitions' && (beliefsSubView === 'map' || beliefsSubView === 'scatter')
+                ? undefined
+                : 'none',
+          }}
+        >
+          <h3>Color by</h3>
+          <div className="filter-chips">
+            {(
+              [
+                { value: 'cluster', label: 'Cluster' },
+                { value: 'category', label: 'Category' },
+                { value: 'stance', label: 'Stance' },
+                { value: 'timeline', label: 'Timeline' },
+                { value: 'risk', label: 'Risk' },
+              ] as const
+            ).map((opt) => (
+              <button
+                key={opt.value}
+                className={'view-btn' + (beliefsColorMode === opt.value ? ' active' : '')}
+                onClick={() => setBeliefsColorMode(opt.value)}
+              >
+                {opt.label}
+              </button>
+            ))}
           </div>
         </div>
         <div className="control-group" id="category-filters">
@@ -576,7 +571,7 @@ export function App() {
             #search-mode-controls { display: none !important; }
             #entity-count { display: none !important; }
             .controls .control-group:first-child { display: none !important; }
-            #beliefs-sub-tabs { display: flex !important; flex-direction: column; gap: 4px; }
+            #beliefs-sub-tabs { display: block !important; }
           `}</style>
           <div
             id="react-view-container"
