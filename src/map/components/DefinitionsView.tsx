@@ -50,14 +50,6 @@ interface AgiData {
 type ColorMode = 'cluster' | 'category' | 'stance' | 'timeline' | 'risk'
 type SubView = 'map' | 'list' | 'scatter' | 'timeline' | 'trends' | 'beliefs'
 
-const COLOR_MODE_OPTIONS: { value: ColorMode; label: string }[] = [
-  { value: 'cluster', label: 'Definition cluster' },
-  { value: 'category', label: 'Entity category' },
-  { value: 'stance', label: 'Regulatory stance' },
-  { value: 'timeline', label: 'AGI timeline' },
-  { value: 'risk', label: 'AI risk level' },
-]
-
 const CLUSTER_COLORS: Record<string, string> = {
   'human-level-cognitive-parity': '#4e79a7',
   'economic-automation': '#f28e2b',
@@ -1319,12 +1311,12 @@ function Legend({
   return null
 }
 
-export function DefinitionsView() {
+export function DefinitionsView({ subView, colorMode }: { subView: string; colorMode: string }) {
+  const viewMode = subView as SubView
+  const cm = colorMode as ColorMode
   const [data, setData] = useState<AgiData | null>(null)
   const [selectedPoint, setSelectedPoint] = useState<AgiPoint | null>(null)
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null)
-  const [colorMode, setColorMode] = useState<ColorMode>('cluster')
-  const [viewMode, setViewMode] = useState<SubView>('map')
 
   useEffect(() => {
     fetch('/data/agi-definitions.json')
@@ -1360,106 +1352,21 @@ export function DefinitionsView() {
     )
   }
 
-  const showColorSwitcher = viewMode === 'map' || viewMode === 'scatter'
-
-  const btnBase: React.CSSProperties = {
-    fontFamily: 'var(--mono)',
-    fontSize: '10px',
-    letterSpacing: '0.08em',
-    textTransform: 'uppercase',
-    padding: '6px 12px',
-    borderRadius: '4px',
-    border: 'none',
-    cursor: 'pointer',
-    transition: 'background 0.15s, color 0.15s',
-  }
-  const btnActive: React.CSSProperties = { ...btnBase, background: 'var(--text-1)', color: 'var(--bg-panel)' }
-  const btnInactive: React.CSSProperties = { ...btnBase, background: 'var(--bg-page)', color: 'var(--text-2)' }
-
-  const subViews: { key: SubView; label: string }[] = [
-    { key: 'map', label: 'Map' },
-    { key: 'list', label: 'List' },
-    { key: 'scatter', label: 'Scatter' },
-    { key: 'timeline', label: 'Timeline' },
-    { key: 'trends', label: 'Trends' },
-    { key: 'beliefs', label: 'Beliefs' },
-  ]
-
   return (
     <div style={{ padding: '24px 40px 24px 300px' }}>
-      <div
-        style={{
-          fontFamily: 'var(--mono)',
-          fontSize: '11px',
-          letterSpacing: '0.08em',
-          textTransform: 'uppercase',
-          color: 'var(--text-2)',
-          marginBottom: '12px',
-        }}
-      >
-        AGI Definition Space ({data.points.length} entities)
-      </div>
-
-      <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '12px', flexWrap: 'wrap' }}>
-        <div style={{ display: 'flex', gap: '4px' }}>
-          {subViews.map((v) => (
-            <button key={v.key} onClick={() => setViewMode(v.key)} style={viewMode === v.key ? btnActive : btnInactive}>
-              {v.label}
-            </button>
-          ))}
-        </div>
-        {showColorSwitcher && (
-          <>
-            <span style={{ fontFamily: 'var(--mono)', fontSize: '10px', color: 'var(--text-3)', marginLeft: '8px' }}>
-              Color by:
-            </span>
-            <div style={{ display: 'flex', gap: '4px' }}>
-              {COLOR_MODE_OPTIONS.map((opt) => (
-                <button
-                  key={opt.value}
-                  onClick={() => setColorMode(opt.value)}
-                  style={
-                    colorMode === opt.value
-                      ? {
-                          ...btnBase,
-                          fontSize: '10px',
-                          padding: '4px 8px',
-                          background: 'var(--text-2)',
-                          color: 'var(--bg-panel)',
-                        }
-                      : {
-                          ...btnBase,
-                          fontSize: '10px',
-                          padding: '4px 8px',
-                          background: 'var(--bg-page)',
-                          color: 'var(--text-3)',
-                        }
-                  }
-                >
-                  {opt.label}
-                </button>
-              ))}
-            </div>
-          </>
-        )}
-        <span style={{ fontFamily: 'var(--mono)', fontSize: '10px', color: 'var(--text-3)', marginLeft: '8px' }}>
-          {data.points.length} definitions
-        </span>
-      </div>
-
       {viewMode === 'map' && (
-        <ClusterMapView data={data} colorMode={colorMode} hoveredCategory={hoveredCategory} onSelect={handleSelect} />
+        <ClusterMapView data={data} colorMode={cm} hoveredCategory={hoveredCategory} onSelect={handleSelect} />
       )}
       {viewMode === 'list' && <ListView data={data} onSelect={handleSelect} />}
       {viewMode === 'scatter' && (
-        <ScatterView data={data} colorMode={colorMode} hoveredCategory={hoveredCategory} onSelect={handleSelect} />
+        <ScatterView data={data} colorMode={cm} hoveredCategory={hoveredCategory} onSelect={handleSelect} />
       )}
       {viewMode === 'timeline' && <TimelineView data={data} />}
       {viewMode === 'trends' && <TrendsView data={data} />}
       {viewMode === 'beliefs' && <BeliefsView data={data} />}
 
       {(viewMode === 'map' || viewMode === 'scatter') && (
-        <Legend data={data} colorMode={colorMode} setHoveredCategory={setHoveredCategory} categories={categories} />
+        <Legend data={data} colorMode={cm} setHoveredCategory={setHoveredCategory} categories={categories} />
       )}
 
       {selectedPoint && (

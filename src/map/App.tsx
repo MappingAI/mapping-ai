@@ -1,12 +1,12 @@
 import { useEffect, useState, useCallback } from 'react'
-import { ResourcesView, type Resource } from './components/ResourcesView'
 import { DefinitionsView } from './components/DefinitionsView'
 
-type ReactView = 'resources' | 'definitions' | null
+type ReactView = 'definitions' | null
 
 export function App() {
   const [reactView, setReactView] = useState<ReactView>(null)
-  const [resources, setResources] = useState<Resource[]>([])
+  const [beliefsSubView, setBeliefsSubView] = useState<string>('map')
+  const [beliefsColorMode, setBeliefsColorMode] = useState<string>('cluster')
 
   useEffect(() => {
     let engineCleanup: { destroy: () => void } | null = null
@@ -27,24 +27,6 @@ export function App() {
   }, [])
 
   useEffect(() => {
-    Promise.all([
-      fetch('/map-data.json').then((r) => (r.ok ? r.json() : null)),
-      fetch('/map-detail.json')
-        .then((r) => (r.ok ? r.json() : null))
-        .catch(() => null),
-    ]).then(([mapData, detail]) => {
-      if (!mapData?.resources) return
-      if (detail) {
-        for (const entity of mapData.resources) {
-          const d = detail[String(entity.id)]
-          if (d) Object.assign(entity, d)
-        }
-      }
-      setResources(mapData.resources)
-    })
-  }, [])
-
-  useEffect(() => {
     function handleEngineModeClick(e: Event) {
       const btn = (e.target as HTMLElement).closest('.mode-btn[data-mode]')
       if (btn) {
@@ -56,7 +38,7 @@ export function App() {
     return () => document.removeEventListener('click', handleEngineModeClick)
   }, [])
 
-  const activateReactView = useCallback((view: 'resources' | 'definitions') => {
+  const activateReactView = useCallback((view: 'definitions') => {
     document.querySelectorAll('.mode-btn').forEach((btn) => btn.classList.remove('active'))
     setReactView(view)
   }, [])
@@ -197,12 +179,6 @@ export function App() {
               Plot
             </button>
             <button
-              className={`mode-btn${reactView === 'resources' ? ' active' : ''}`}
-              onClick={() => activateReactView('resources')}
-            >
-              Library
-            </button>
-            <button
               className={`mode-btn${reactView === 'definitions' ? ' active' : ''}`}
               onClick={() => activateReactView('definitions')}
             >
@@ -233,6 +209,56 @@ export function App() {
             <button className="view-btn" data-entity="people">
               People
             </button>
+          </div>
+          <div id="beliefs-sub-tabs" style={{ display: 'none' }}>
+            <div className="view-toggles">
+              {(['map', 'list', 'scatter', 'timeline', 'trends', 'beliefs'] as const).map((v) => (
+                <button
+                  key={v}
+                  className={'view-btn' + (beliefsSubView === v ? ' active' : '')}
+                  onClick={() => setBeliefsSubView(v)}
+                >
+                  {v.charAt(0).toUpperCase() + v.slice(1)}
+                </button>
+              ))}
+            </div>
+            {(beliefsSubView === 'map' || beliefsSubView === 'scatter') && (
+              <>
+                <h3
+                  style={{
+                    fontFamily: 'var(--mono)',
+                    fontSize: '9px',
+                    letterSpacing: '0.04em',
+                    textTransform: 'uppercase',
+                    fontWeight: 600,
+                    padding: 0,
+                    margin: '8px 0 4px',
+                    color: 'var(--text-1)',
+                  }}
+                >
+                  Color by
+                </h3>
+                <div className="view-toggles">
+                  {(
+                    [
+                      { value: 'cluster', label: 'Cluster' },
+                      { value: 'category', label: 'Category' },
+                      { value: 'stance', label: 'Stance' },
+                      { value: 'timeline', label: 'Timeline' },
+                      { value: 'risk', label: 'Risk' },
+                    ] as const
+                  ).map((opt) => (
+                    <button
+                      key={opt.value}
+                      className={'view-btn' + (beliefsColorMode === opt.value ? ' active' : '')}
+                      onClick={() => setBeliefsColorMode(opt.value)}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
           </div>
           <div id="search-mode-controls" style={{ display: 'none', marginTop: '0.5rem' }}>
             <h3>Query</h3>
@@ -519,6 +545,7 @@ export function App() {
             #entity-count { display: none !important; }
             .control-group:has(.info-btn) { display: none !important; }
             .controls .control-group:first-child { display: none !important; }
+            #beliefs-sub-tabs { display: flex !important; flex-direction: column; gap: 4px; }
           `}</style>
           <div
             id="react-view-container"
@@ -534,8 +561,7 @@ export function App() {
               paddingTop: '8px',
             }}
           >
-            {reactView === 'resources' && <ResourcesView resources={resources} />}
-            {reactView === 'definitions' && <DefinitionsView />}
+            {reactView === 'definitions' && <DefinitionsView subView={beliefsSubView} colorMode={beliefsColorMode} />}
           </div>
         </>
       )}
