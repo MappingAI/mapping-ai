@@ -788,11 +788,10 @@ function TimelineView({ data }: { data: AgiData }) {
             const pathD = line(totalSeries) || ''
             const areaD = area(totalSeries) || ''
 
-            const tickIndices = quarters
-              .map((_, i) => i)
-              .filter(
-                (i) => i === 0 || i === quarters.length - 1 || i % Math.max(1, Math.floor(quarters.length / 5)) === 0,
-              )
+            const yearTicks: number[] = []
+            quarters.forEach((qq, i) => {
+              if (qq.start.getMonth() === 0 || i === 0) yearTicks.push(i)
+            })
 
             return (
               <>
@@ -801,7 +800,7 @@ function TimelineView({ data }: { data: AgiData }) {
                 {totalSeries.map((val, i) => (
                   <circle key={i} cx={xScale(i)} cy={yScale(val)} r={2.5} fill="var(--text-1)" opacity={0.4} />
                 ))}
-                {tickIndices.map((i) => (
+                {yearTicks.map((i) => (
                   <text
                     key={i}
                     x={xScale(i)}
@@ -811,7 +810,7 @@ function TimelineView({ data }: { data: AgiData }) {
                     fontSize={8}
                     fill="var(--text-3)"
                   >
-                    {quarters[i]?.label || ''}
+                    {String(quarters[i]?.start.getFullYear() || '')}
                   </text>
                 ))}
               </>
@@ -874,7 +873,7 @@ function TrendsView({ data }: { data: AgiData }) {
 
     const W = container.clientWidth || 700
     const H = 300
-    const pad = { top: 10, right: 40, bottom: 40, left: 40 }
+    const pad = { top: 10, right: 60, bottom: 40, left: 40 }
 
     const svg = d3
       .select(container)
@@ -937,11 +936,12 @@ function TrendsView({ data }: { data: AgiData }) {
       })
       .on('mouseleave', () => setTooltipState(null))
 
-    const tickIndices = quarters
-      .map((_, i) => i)
-      .filter((i) => i === 0 || i === quarters.length - 1 || i % Math.max(1, Math.floor(quarters.length / 4)) === 0)
+    const yearIndices: number[] = []
+    quarters.forEach((q, i) => {
+      if (q.start.getMonth() === 0 || i === 0) yearIndices.push(i)
+    })
 
-    tickIndices.forEach((i) => {
+    yearIndices.forEach((i) => {
       svg
         .append('text')
         .attr('x', xScale(i))
@@ -950,7 +950,7 @@ function TrendsView({ data }: { data: AgiData }) {
         .attr('font-family', "'DM Mono', monospace")
         .attr('font-size', 9)
         .attr('fill', 'var(--text-3)')
-        .text(quarters[i]?.label || '')
+        .text(String(quarters[i]?.start.getFullYear() || ''))
     })
 
     const yTicks = yScale.ticks(4)
