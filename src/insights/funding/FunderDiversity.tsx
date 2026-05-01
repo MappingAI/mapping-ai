@@ -361,8 +361,82 @@ export function FunderDiversity({ edges, showTooltip, hideTooltip }: Props) {
         .text(`${o.uniqueFunders} funders`)
     })
 
+    // Legend - show all funder categories used
+    const usedCategories = [
+      ...new Set(orgData.flatMap((o) => o.funders.map((f) => f.category))),
+    ]
+    const shortLabels: Record<string, string> = {
+      'VC/Capital/Philanthropy': 'VC/Philanthropy',
+      'Think Tank/Policy Org': 'Think Tank',
+      'AI Safety/Alignment': 'AI Safety',
+      'Government/Agency': 'Government',
+      'Deployers & Platforms': 'Deployers',
+      'Infrastructure & Compute': 'Infrastructure',
+    }
+
+    const legendY = maxRows * rowH + padTop + 12
+    const midpoint = Math.ceil(usedCategories.length / 2)
+    const row1 = usedCategories.slice(0, midpoint)
+    const row2 = usedCategories.slice(midpoint)
+    const legendStartX = 10
+    const itemWidth = 105
+
+    svg
+      .append('text')
+      .attr('x', legendStartX)
+      .attr('y', legendY)
+      .attr('font-family', "'DM Mono', monospace")
+      .attr('font-size', 9)
+      .attr('fill', '#888')
+      .text('Funder type:')
+
+    // Row 1
+    row1.forEach((cat, i) => {
+      const x = legendStartX + 72 + i * itemWidth
+      svg
+        .append('rect')
+        .attr('x', x)
+        .attr('y', legendY - 8)
+        .attr('width', 10)
+        .attr('height', 10)
+        .attr('rx', 2)
+        .attr('fill', FUNDER_CATEGORY_COLORS[cat] || '#ccc')
+      svg
+        .append('text')
+        .attr('x', x + 14)
+        .attr('y', legendY)
+        .attr('font-family', "'DM Mono', monospace")
+        .attr('font-size', 9)
+        .attr('fill', '#888')
+        .text(shortLabels[cat] || cat)
+    })
+
+    // Row 2 (if needed)
+    if (row2.length > 0) {
+      const legendY2 = legendY + 16
+      row2.forEach((cat, i) => {
+        const x = legendStartX + 72 + i * itemWidth
+        svg
+          .append('rect')
+          .attr('x', x)
+          .attr('y', legendY2 - 8)
+          .attr('width', 10)
+          .attr('height', 10)
+          .attr('rx', 2)
+          .attr('fill', FUNDER_CATEGORY_COLORS[cat] || '#ccc')
+        svg
+          .append('text')
+          .attr('x', x + 14)
+          .attr('y', legendY2)
+          .attr('font-family', "'DM Mono', monospace")
+          .attr('font-size', 9)
+          .attr('fill', '#888')
+          .text(shortLabels[cat] || cat)
+      })
+    }
+
     // Summary annotation
-    const annotationY = H - 15
+    const annotationY = H - 8
     svg
       .append('text')
       .attr('x', W / 2)
