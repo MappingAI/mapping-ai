@@ -779,7 +779,8 @@ function TrendsView({ data }: { data: AgiData }) {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
         {beliefDims.map((dim) => {
-          const scale = BELIEF_SCALES[dim.key]
+          const scaleKey = dim.key.replace('_score', '')
+          const scale = BELIEF_SCALES[scaleKey]
           const startLabel = scale?.labels[0] || ''
           const endLabel = scale?.labels[scale.labels.length - 1] || ''
           return (
@@ -851,7 +852,7 @@ function TrendsView({ data }: { data: AgiData }) {
           const beliefs = clusterBeliefSeries[c.id]
 
           return (
-            <div key={c.id} style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
+            <div key={c.id} style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden' }}>
               <span
                 style={{
                   display: 'inline-block',
