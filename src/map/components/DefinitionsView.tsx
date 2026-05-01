@@ -441,7 +441,6 @@ function ClusterMapView({
       .attr('width', W)
       .attr('height', H)
       .attr('preserveAspectRatio', 'xMidYMid meet')
-      .style('overflow', 'visible')
 
     const tipEl = createTooltip('__defview-map-tip')
 
