@@ -170,4 +170,5 @@ lefthook install
 
 - **Category mapping fragile**: normalization handles known variants but may miss new ones as data grows.
 - **Admin key hardcoded**: default key in `template.yaml`; should rotate before adding collaborators.
+- **Cloudflare Pages build cache**: Cloudflare aggressively caches files in `public/` during builds. Updating `public/map-data.json` or `public/map-detail.json` may not deploy even after pushing - the build uses stale cached versions. Current workaround: renamed files to `map-data-v2.json` and `map-detail-v2.json`. Proper fix: either move these to R2 (like `claims-detail.json`), add cache-busting hashes to filenames during build, or find the Cloudflare Pages setting to disable build caching.
 - Stack-level debt (inline `map.html`, legacy TipTap bundle, SAM drift risk, two-step deploy, pending-entity negative IDs) is tracked in [`docs/architecture/current.md` → Known limitations](docs/architecture/current.md) and addressed by the migration in [ADR-0001](docs/architecture/adrs/0001-migrate-off-aws.md).
