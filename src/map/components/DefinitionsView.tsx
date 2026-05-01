@@ -119,7 +119,8 @@ function buildQuarters(points: AgiPoint[]): QuarterBucket[] {
   const dated = points.filter((p) => p.date)
   if (dated.length === 0) return []
   const dates = dated.map((p) => new Date(p.date!))
-  const minDate = new Date(Math.min(...dates.map((d) => d.getTime())))
+  const rawMin = new Date(Math.min(...dates.map((d) => d.getTime())))
+  const minDate = rawMin.getFullYear() < 2020 ? new Date(2020, 0, 1) : rawMin
   const maxDate = new Date(Math.max(...dates.map((d) => d.getTime())))
   const quarters: QuarterBucket[] = []
   let y = minDate.getFullYear()
@@ -763,7 +764,7 @@ function TimelineView({ data }: { data: AgiData }) {
           {(() => {
             const w = Math.max(quarters.length * 20, 200)
             const h = 80
-            const pad = { top: 4, bottom: 20, left: 4, right: 4 }
+            const pad = { top: 4, bottom: 20, left: 4, right: 30 }
             const maxVal = Math.max(...totalSeries, 1)
             const xScale = d3
               .scaleLinear()
@@ -873,9 +874,14 @@ function TrendsView({ data }: { data: AgiData }) {
 
     const W = container.clientWidth || 700
     const H = 300
-    const pad = { top: 10, right: 10, bottom: 40, left: 40 }
+    const pad = { top: 10, right: 40, bottom: 40, left: 40 }
 
-    const svg = d3.select(container).append('svg').attr('viewBox', `0 0 ${W} ${H}`).attr('width', W).attr('height', H)
+    const svg = d3
+      .select(container)
+      .append('svg')
+      .attr('viewBox', `0 0 ${W} ${H}`)
+      .attr('width', '100%')
+      .attr('height', H)
 
     const xScale = d3
       .scaleLinear()
