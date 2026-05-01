@@ -4107,7 +4107,7 @@
         }
       }
 
-      fetch('map-data.json')
+      fetch('map-data-v2.json')
         .then((r) => r.json())
         .then((data) => {
           allData = data
@@ -4117,7 +4117,7 @@
 
           // Lazy-load detail data (notes, stance_detail, threat_models, etc.)
           // in the background — merges into entities when ready
-          fetch('map-detail.json')
+          fetch('map-detail-v2.json')
             .then((r) => (r.ok ? r.json() : null))
             .then((detail) => {
               if (!detail) return

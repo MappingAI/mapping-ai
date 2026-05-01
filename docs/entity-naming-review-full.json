@@ -1,0 +1,1848 @@
+{
+  "purpose": "Full entity naming review for all combined-v4 entities",
+  "instructions": "Review each entity name for:\n1. Names with embedded parent info that should be simplified (e.g., Hoover Institution at Stanford University -> Hoover Institution with parent Stanford)\n2. Inconsistent acronym usage (e.g., should Samsung Advanced Institute of Technology be SAIT?)\n3. Names that are too verbose or could be more canonical\n4. Missing parent org assignments for subsidiaries, labs, funds, institutes\n\nReturn JSON array with fixes needed. Only include entities that need changes.",
+  "total_entities": 263,
+  "entities": [
+    {
+      "id": 2037,
+      "name": "Accel",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2036,
+      "name": "AMP PBC",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2292,
+      "name": "Andrew W. Mellon Foundation",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2295,
+      "name": "Andy Ayrey",
+      "type": "person",
+      "category": "Researcher",
+      "currentParent": null
+    },
+    {
+      "id": 2039,
+      "name": "Athena 2.0 (AI Safety Mentorship Program)",
+      "type": "organization",
+      "category": "AI Safety/Alignment",
+      "currentParent": null
+    },
+    {
+      "id": 2226,
+      "name": "California State University, Sacramento",
+      "type": "organization",
+      "category": "Academic",
+      "currentParent": null
+    },
+    {
+      "id": 2084,
+      "name": "Capital K (KAUST Deep Tech Innovation Fund)",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2041,
+      "name": "Captions",
+      "type": "organization",
+      "category": "Deployers & Platforms",
+      "currentParent": null
+    },
+    {
+      "id": 2042,
+      "name": "Caroline Mehl",
+      "type": "person",
+      "category": "Investor",
+      "currentParent": null
+    },
+    {
+      "id": 2045,
+      "name": "Composite",
+      "type": "organization",
+      "category": "Deployers & Platforms",
+      "currentParent": null
+    },
+    {
+      "id": 2046,
+      "name": "DeepTechXL Fund I",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2048,
+      "name": "Draper Laboratory",
+      "type": "organization",
+      "category": "Infrastructure & Compute",
+      "currentParent": null
+    },
+    {
+      "id": 2049,
+      "name": "Emergent Ventures",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2327,
+      "name": "fal",
+      "type": "organization",
+      "category": "Deployers & Platforms",
+      "currentParent": null
+    },
+    {
+      "id": 2300,
+      "name": "Fundamental AI Research Lab (FAIR Laboratory)",
+      "type": "organization",
+      "category": "AI Safety/Alignment",
+      "currentParent": "UK Research and Innovation (UKRI)"
+    },
+    {
+      "id": 2040,
+      "name": "German Federal Government (Bund)",
+      "type": "organization",
+      "category": "Government/Agency",
+      "currentParent": null
+    },
+    {
+      "id": 2207,
+      "name": "Government of Quebec",
+      "type": "organization",
+      "category": "Government/Agency",
+      "currentParent": null
+    },
+    {
+      "id": 2050,
+      "name": "Grok Ventures",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2263,
+      "name": "Hoover Institution at Stanford University",
+      "type": "organization",
+      "category": "Think Tank/Policy Org",
+      "currentParent": null
+    },
+    {
+      "id": 2052,
+      "name": "Horizons Ventures",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2051,
+      "name": "HSBC Strategic Innovation Investments",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2053,
+      "name": "Hugging Face",
+      "type": "organization",
+      "category": "Frontier Lab",
+      "currentParent": null
+    },
+    {
+      "id": 2054,
+      "name": "ICONIQ Capital",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2057,
+      "name": "Imbue",
+      "type": "organization",
+      "category": "Frontier Lab",
+      "currentParent": null
+    },
+    {
+      "id": 2058,
+      "name": "Inclusive Abundance Action",
+      "type": "organization",
+      "category": "Think Tank/Policy Org",
+      "currentParent": null
+    },
+    {
+      "id": 2059,
+      "name": "Index Ventures",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2060,
+      "name": "Ineffable Intelligence",
+      "type": "organization",
+      "category": "Frontier Lab",
+      "currentParent": null
+    },
+    {
+      "id": 2061,
+      "name": "Infisical",
+      "type": "organization",
+      "category": "Infrastructure & Compute",
+      "currentParent": null
+    },
+    {
+      "id": 2062,
+      "name": "Infosys Foundation",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2063,
+      "name": "Innovate UK",
+      "type": "organization",
+      "category": "Government/Agency",
+      "currentParent": null
+    },
+    {
+      "id": 2055,
+      "name": "Institute for New Economic Thinking (INET)",
+      "type": "organization",
+      "category": "Think Tank/Policy Org",
+      "currentParent": null
+    },
+    {
+      "id": 2065,
+      "name": "Intel Corporation",
+      "type": "organization",
+      "category": "Infrastructure & Compute",
+      "currentParent": null
+    },
+    {
+      "id": 2066,
+      "name": "IvySys Technologies, LLC",
+      "type": "organization",
+      "category": "Infrastructure & Compute",
+      "currentParent": null
+    },
+    {
+      "id": 2068,
+      "name": "Jakob N. Foerster",
+      "type": "person",
+      "category": "Researcher",
+      "currentParent": null
+    },
+    {
+      "id": 2072,
+      "name": "James Pallotta",
+      "type": "person",
+      "category": "Investor",
+      "currentParent": null
+    },
+    {
+      "id": 2069,
+      "name": "Jane Street",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2070,
+      "name": "Jed McCaleb",
+      "type": "person",
+      "category": "Investor",
+      "currentParent": null
+    },
+    {
+      "id": 2071,
+      "name": "Jessica Rumbelow",
+      "type": "person",
+      "category": "Researcher",
+      "currentParent": null
+    },
+    {
+      "id": 2073,
+      "name": "John Arnold",
+      "type": "person",
+      "category": "Investor",
+      "currentParent": null
+    },
+    {
+      "id": 2074,
+      "name": "John S. and James L. Knight Foundation",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2075,
+      "name": "John Simon Guggenheim Memorial Foundation",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2077,
+      "name": "Joshua Clymer",
+      "type": "person",
+      "category": "Researcher",
+      "currentParent": null
+    },
+    {
+      "id": 2067,
+      "name": "JPMorgan Chase & Co.",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2079,
+      "name": "Julie Carson",
+      "type": "person",
+      "category": "Investor",
+      "currentParent": null
+    },
+    {
+      "id": 2080,
+      "name": "Jump Capital",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2081,
+      "name": "Jump Trading Group",
+      "type": "organization",
+      "category": "Infrastructure & Compute",
+      "currentParent": null
+    },
+    {
+      "id": 2082,
+      "name": "Justin Dollman",
+      "type": "person",
+      "category": "Organizer",
+      "currentParent": null
+    },
+    {
+      "id": 2083,
+      "name": "KAIST",
+      "type": "organization",
+      "category": "Academic",
+      "currentParent": null
+    },
+    {
+      "id": 2088,
+      "name": "Kearny Jackson",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2089,
+      "name": "Kim Jungsik (Kim Jeong-sik)",
+      "type": "person",
+      "category": "Investor",
+      "currentParent": null
+    },
+    {
+      "id": 2090,
+      "name": "Kitware, Inc.",
+      "type": "organization",
+      "category": "Infrastructure & Compute",
+      "currentParent": null
+    },
+    {
+      "id": 2093,
+      "name": "Laidir Foundation",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2094,
+      "name": "Lambda (Lambda Labs)",
+      "type": "organization",
+      "category": "Infrastructure & Compute",
+      "currentParent": null
+    },
+    {
+      "id": 2095,
+      "name": "Land Berlin (State of Berlin)",
+      "type": "organization",
+      "category": "Government/Agency",
+      "currentParent": null
+    },
+    {
+      "id": 2097,
+      "name": "Langsikt - Centre for Long-Term Policy",
+      "type": "organization",
+      "category": "Think Tank/Policy Org",
+      "currentParent": null
+    },
+    {
+      "id": 2098,
+      "name": "Leidos",
+      "type": "organization",
+      "category": "Deployers & Platforms",
+      "currentParent": null
+    },
+    {
+      "id": 2099,
+      "name": "Lemni Technologies",
+      "type": "organization",
+      "category": "Deployers & Platforms",
+      "currentParent": null
+    },
+    {
+      "id": 2100,
+      "name": "Leverhulme Trust",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2102,
+      "name": "Lightspeed Venture Partners",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2103,
+      "name": "Likith Govindaiah",
+      "type": "person",
+      "category": "Investor",
+      "currentParent": null
+    },
+    {
+      "id": 2104,
+      "name": "Liquid Intelligent Technologies",
+      "type": "organization",
+      "category": "Infrastructure & Compute",
+      "currentParent": null
+    },
+    {
+      "id": 2105,
+      "name": "Lisa Thiergart",
+      "type": "person",
+      "category": "Researcher",
+      "currentParent": null
+    },
+    {
+      "id": 2106,
+      "name": "Look AI Ventures",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2107,
+      "name": "Lord Foundation of California",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2108,
+      "name": "Los Alamos National Laboratory",
+      "type": "organization",
+      "category": "Government/Agency",
+      "currentParent": null
+    },
+    {
+      "id": 2109,
+      "name": "Loti AI",
+      "type": "organization",
+      "category": "Deployers & Platforms",
+      "currentParent": null
+    },
+    {
+      "id": 2110,
+      "name": "Lucidworks",
+      "type": "organization",
+      "category": "Deployers & Platforms",
+      "currentParent": null
+    },
+    {
+      "id": 2111,
+      "name": "Luke Hsi Lin Ding",
+      "type": "person",
+      "category": "Investor",
+      "currentParent": null
+    },
+    {
+      "id": 2112,
+      "name": "Luma AI",
+      "type": "organization",
+      "category": "Frontier Lab",
+      "currentParent": null
+    },
+    {
+      "id": 2113,
+      "name": "M12 (Microsoft's Venture Fund)",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": "Microsoft"
+    },
+    {
+      "id": 2217,
+      "name": "MacArthur Foundation Research Network on Opening Governance",
+      "type": "organization",
+      "category": "Think Tank/Policy Org",
+      "currentParent": null
+    },
+    {
+      "id": 2121,
+      "name": "Manas AI",
+      "type": "organization",
+      "category": "Frontier Lab",
+      "currentParent": null
+    },
+    {
+      "id": 2122,
+      "name": "Marcus Abramovitch",
+      "type": "person",
+      "category": "Investor",
+      "currentParent": null
+    },
+    {
+      "id": 2115,
+      "name": "MATS Research Inc.",
+      "type": "organization",
+      "category": "AI Safety/Alignment",
+      "currentParent": null
+    },
+    {
+      "id": 2126,
+      "name": "Matthew J. Salganik",
+      "type": "person",
+      "category": "Academic",
+      "currentParent": null
+    },
+    {
+      "id": 2125,
+      "name": "Matt McIlwain",
+      "type": "person",
+      "category": "Investor",
+      "currentParent": null
+    },
+    {
+      "id": 2124,
+      "name": "MatX",
+      "type": "organization",
+      "category": "Infrastructure & Compute",
+      "currentParent": null
+    },
+    {
+      "id": 2127,
+      "name": "Max Chiswick",
+      "type": "person",
+      "category": "Researcher",
+      "currentParent": null
+    },
+    {
+      "id": 2128,
+      "name": "Max Planck Society",
+      "type": "organization",
+      "category": "Academic",
+      "currentParent": null
+    },
+    {
+      "id": 2129,
+      "name": "Melinda French Gates",
+      "type": "person",
+      "category": "Investor",
+      "currentParent": null
+    },
+    {
+      "id": 2130,
+      "name": "Mentee Robotics",
+      "type": "organization",
+      "category": "Infrastructure & Compute",
+      "currentParent": null
+    },
+    {
+      "id": 2131,
+      "name": "Merge Labs",
+      "type": "organization",
+      "category": "Frontier Lab",
+      "currentParent": null
+    },
+    {
+      "id": 2132,
+      "name": "Michael Bloomberg",
+      "type": "person",
+      "category": "Investor",
+      "currentParent": null
+    },
+    {
+      "id": 2133,
+      "name": "Micron Technology",
+      "type": "organization",
+      "category": "Infrastructure & Compute",
+      "currentParent": null
+    },
+    {
+      "id": 2134,
+      "name": "Minderoo Foundation",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2135,
+      "name": "Ministry of Science and ICT (MSIT)",
+      "type": "organization",
+      "category": "Government/Agency",
+      "currentParent": null
+    },
+    {
+      "id": 2264,
+      "name": "Ministry of Science, Research and Arts of Baden-Württemberg",
+      "type": "organization",
+      "category": "Government/Agency",
+      "currentParent": null
+    },
+    {
+      "id": 2117,
+      "name": "MIT Lincoln Laboratory",
+      "type": "organization",
+      "category": "Government/Agency",
+      "currentParent": "Massachusetts Institute of Technology"
+    },
+    {
+      "id": 2116,
+      "name": "MIT Quest for Intelligence (MIT Siegel Family Quest for Intelligence)",
+      "type": "organization",
+      "category": "Academic",
+      "currentParent": null
+    },
+    {
+      "id": 2118,
+      "name": "MIT Task Force on the Work of the Future",
+      "type": "organization",
+      "category": "Think Tank/Policy Org",
+      "currentParent": null
+    },
+    {
+      "id": 2136,
+      "name": "Morgan Stanley",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2137,
+      "name": "MosaicML",
+      "type": "organization",
+      "category": "Infrastructure & Compute",
+      "currentParent": null
+    },
+    {
+      "id": 2138,
+      "name": "Mozilla Technology Fund",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": "Mozilla Foundation"
+    },
+    {
+      "id": 2139,
+      "name": "Mozilla Ventures",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": "Mozilla Foundation"
+    },
+    {
+      "id": 2140,
+      "name": "Musk Foundation",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2141,
+      "name": "NASA Innovative Advanced Concepts (NIAC)",
+      "type": "organization",
+      "category": "Government/Agency",
+      "currentParent": null
+    },
+    {
+      "id": 2147,
+      "name": "Natcast (National Center for the Advancement of Semiconductor Technology)",
+      "type": "organization",
+      "category": "Government/Agency",
+      "currentParent": null
+    },
+    {
+      "id": 2148,
+      "name": "National AI Research Resource (NAIRR) Pilot",
+      "type": "organization",
+      "category": "Government/Agency",
+      "currentParent": null
+    },
+    {
+      "id": 2149,
+      "name": "National Artificial Intelligence Research Institutes",
+      "type": "organization",
+      "category": "Government/Agency",
+      "currentParent": null
+    },
+    {
+      "id": 2150,
+      "name": "National Bank of Canada",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2142,
+      "name": "National Defense Science and Engineering Graduate (NDSEG) Fellowship Program",
+      "type": "organization",
+      "category": "Government/Agency",
+      "currentParent": null
+    },
+    {
+      "id": 2151,
+      "name": "National Development Fund (Taiwan)",
+      "type": "organization",
+      "category": "Government/Agency",
+      "currentParent": null
+    },
+    {
+      "id": 2239,
+      "name": "National Infrastructure Fund (Infra)",
+      "type": "organization",
+      "category": "Infrastructure & Compute",
+      "currentParent": null
+    },
+    {
+      "id": 2152,
+      "name": "National Telecommunications and Information Administration",
+      "type": "organization",
+      "category": "Government/Agency",
+      "currentParent": null
+    },
+    {
+      "id": 2153,
+      "name": "Natural Sciences and Engineering Research Council of Canada",
+      "type": "organization",
+      "category": "Government/Agency",
+      "currentParent": null
+    },
+    {
+      "id": 2154,
+      "name": "Naver Corporation",
+      "type": "organization",
+      "category": "Frontier Lab",
+      "currentParent": null
+    },
+    {
+      "id": 2155,
+      "name": "Navitas Capital",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2156,
+      "name": "Nebius Group N.V.",
+      "type": "organization",
+      "category": "Infrastructure & Compute",
+      "currentParent": null
+    },
+    {
+      "id": 2157,
+      "name": "Neel Nanda",
+      "type": "person",
+      "category": "Researcher",
+      "currentParent": null
+    },
+    {
+      "id": 2159,
+      "name": "New Enterprise Associates",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2160,
+      "name": "New Priorities Foundation",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2161,
+      "name": "New Science",
+      "type": "organization",
+      "category": "Think Tank/Policy Org",
+      "currentParent": null
+    },
+    {
+      "id": 2162,
+      "name": "New Venture Fund",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2163,
+      "name": "New York State",
+      "type": "organization",
+      "category": "Government/Agency",
+      "currentParent": null
+    },
+    {
+      "id": 2143,
+      "name": "NFDG Ventures",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2164,
+      "name": "Nicholas Tomlin",
+      "type": "person",
+      "category": "Researcher",
+      "currentParent": null
+    },
+    {
+      "id": 2165,
+      "name": "Nick D'Aloisio",
+      "type": "person",
+      "category": "Executive",
+      "currentParent": null
+    },
+    {
+      "id": 2166,
+      "name": "Nicolas Berggruen Charitable Trust",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2167,
+      "name": "Noemi Dreksler",
+      "type": "person",
+      "category": "Researcher",
+      "currentParent": null
+    },
+    {
+      "id": 2170,
+      "name": "Nscale",
+      "type": "organization",
+      "category": "Infrastructure & Compute",
+      "currentParent": null
+    },
+    {
+      "id": 2145,
+      "name": "NVentures (NVIDIA Venture Capital)",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": "Nvidia"
+    },
+    {
+      "id": 2146,
+      "name": "NYU Center for Mind, Ethics, and Policy (CMEP)",
+      "type": "organization",
+      "category": "Academic",
+      "currentParent": null
+    },
+    {
+      "id": 2172,
+      "name": "Office of Naval Research",
+      "type": "organization",
+      "category": "Government/Agency",
+      "currentParent": null
+    },
+    {
+      "id": 2174,
+      "name": "Okawa Foundation for Information and Telecommunications",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2175,
+      "name": "Okta, Inc.",
+      "type": "organization",
+      "category": "Deployers & Platforms",
+      "currentParent": null
+    },
+    {
+      "id": 2176,
+      "name": "Omidyar Network",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2177,
+      "name": "Ontario Early Researcher Awards",
+      "type": "organization",
+      "category": "Government/Agency",
+      "currentParent": null
+    },
+    {
+      "id": 2178,
+      "name": "Open Society Foundations",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2179,
+      "name": "Oracle Corporation",
+      "type": "organization",
+      "category": "Infrastructure & Compute",
+      "currentParent": null
+    },
+    {
+      "id": 2180,
+      "name": "Oregon State University",
+      "type": "organization",
+      "category": "Academic",
+      "currentParent": null
+    },
+    {
+      "id": 2181,
+      "name": "Organisation for Economic Co-operation and Development (OECD)",
+      "type": "organization",
+      "category": "Think Tank/Policy Org",
+      "currentParent": null
+    },
+    {
+      "id": 2182,
+      "name": "Overland AI",
+      "type": "organization",
+      "category": "Deployers & Platforms",
+      "currentParent": null
+    },
+    {
+      "id": 2183,
+      "name": "Owl Ventures",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2184,
+      "name": "Parallel (beparallel.com)",
+      "type": "organization",
+      "category": "Deployers & Platforms",
+      "currentParent": null
+    },
+    {
+      "id": 2185,
+      "name": "Park Foundation",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2186,
+      "name": "Partnership for Global Inclusivity on AI (PGIAI)",
+      "type": "organization",
+      "category": "Government/Agency",
+      "currentParent": null
+    },
+    {
+      "id": 2187,
+      "name": "Pasupalak AI Fellowship",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2188,
+      "name": "Patrick J. McGovern Foundation",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2189,
+      "name": "Pegatron Corporation",
+      "type": "organization",
+      "category": "Infrastructure & Compute",
+      "currentParent": null
+    },
+    {
+      "id": 2191,
+      "name": "Phil Black",
+      "type": "person",
+      "category": "Investor",
+      "currentParent": null
+    },
+    {
+      "id": 2192,
+      "name": "Phylo",
+      "type": "organization",
+      "category": "Frontier Lab",
+      "currentParent": null
+    },
+    {
+      "id": 2193,
+      "name": "Pivotal Research",
+      "type": "organization",
+      "category": "AI Safety/Alignment",
+      "currentParent": null
+    },
+    {
+      "id": 2194,
+      "name": "Playground Global",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2195,
+      "name": "Plural Platform",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2196,
+      "name": "Polar Semiconductor",
+      "type": "organization",
+      "category": "Infrastructure & Compute",
+      "currentParent": null
+    },
+    {
+      "id": 2198,
+      "name": "Prairies Economic Development Canada (PrairiesCan)",
+      "type": "organization",
+      "category": "Government/Agency",
+      "currentParent": null
+    },
+    {
+      "id": 2199,
+      "name": "Prime Intellect",
+      "type": "organization",
+      "category": "Infrastructure & Compute",
+      "currentParent": null
+    },
+    {
+      "id": 2200,
+      "name": "Principles of Intelligence",
+      "type": "organization",
+      "category": "AI Safety/Alignment",
+      "currentParent": null
+    },
+    {
+      "id": 2201,
+      "name": "Public First",
+      "type": "organization",
+      "category": "Political Campaign/PAC",
+      "currentParent": null
+    },
+    {
+      "id": 2202,
+      "name": "Public Interest Tech Lab (Harvard Kennedy School)",
+      "type": "organization",
+      "category": "Ethics/Bias/Rights",
+      "currentParent": "Harvard University"
+    },
+    {
+      "id": 2203,
+      "name": "Pulse AI",
+      "type": "organization",
+      "category": "Infrastructure & Compute",
+      "currentParent": null
+    },
+    {
+      "id": 2204,
+      "name": "Qatar Investment Authority",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2205,
+      "name": "Quantitative Foundation",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2206,
+      "name": "Qube Research & Technologies",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2208,
+      "name": "QuintessenceLabs",
+      "type": "organization",
+      "category": "Infrastructure & Compute",
+      "currentParent": null
+    },
+    {
+      "id": 2211,
+      "name": "Rachel Weinberg",
+      "type": "person",
+      "category": "Organizer",
+      "currentParent": null
+    },
+    {
+      "id": 2212,
+      "name": "Rad AI",
+      "type": "organization",
+      "category": "Deployers & Platforms",
+      "currentParent": null
+    },
+    {
+      "id": 2213,
+      "name": "Radical Ventures",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2214,
+      "name": "Recraft",
+      "type": "organization",
+      "category": "Deployers & Platforms",
+      "currentParent": null
+    },
+    {
+      "id": 2215,
+      "name": "Recursion Pharmaceuticals",
+      "type": "organization",
+      "category": "Deployers & Platforms",
+      "currentParent": null
+    },
+    {
+      "id": 2216,
+      "name": "Renaissance Philanthropy",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2218,
+      "name": "Respan (formerly Keywords AI)",
+      "type": "organization",
+      "category": "Infrastructure & Compute",
+      "currentParent": null
+    },
+    {
+      "id": 2219,
+      "name": "Responsible Technology Youth Power Fund",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2220,
+      "name": "Richard King Mellon Foundation",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2123,
+      "name": "R. Martin Chavez",
+      "type": "person",
+      "category": "Investor",
+      "currentParent": null
+    },
+    {
+      "id": 2222,
+      "name": "Ronald D. Sugar",
+      "type": "person",
+      "category": "Executive",
+      "currentParent": null
+    },
+    {
+      "id": 2210,
+      "name": "RTX Ventures",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2223,
+      "name": "Runway AI",
+      "type": "organization",
+      "category": "Frontier Lab",
+      "currentParent": null
+    },
+    {
+      "id": 2224,
+      "name": "Russell Sage Foundation",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2225,
+      "name": "Ryan Kidd",
+      "type": "person",
+      "category": "Organizer",
+      "currentParent": null
+    },
+    {
+      "id": 2227,
+      "name": "Safeguarded AI Programme",
+      "type": "organization",
+      "category": "AI Safety/Alignment",
+      "currentParent": null
+    },
+    {
+      "id": 2228,
+      "name": "Sage Bergerson",
+      "type": "person",
+      "category": "Researcher",
+      "currentParent": null
+    },
+    {
+      "id": 2229,
+      "name": "Salesforce Ventures",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": "Salesforce"
+    },
+    {
+      "id": 2230,
+      "name": "Sally Gao",
+      "type": "person",
+      "category": "Organizer",
+      "currentParent": null
+    },
+    {
+      "id": 2231,
+      "name": "Sam Bankman-Fried",
+      "type": "person",
+      "category": "Investor",
+      "currentParent": null
+    },
+    {
+      "id": 2232,
+      "name": "Samsung",
+      "type": "organization",
+      "category": "Infrastructure & Compute",
+      "currentParent": null
+    },
+    {
+      "id": 2233,
+      "name": "Samsung Advanced Institute of Technology (SAIT)",
+      "type": "organization",
+      "category": "Academic",
+      "currentParent": "Samsung Electronics"
+    },
+    {
+      "id": 2234,
+      "name": "Samsung Austin Semiconductor, LLC",
+      "type": "organization",
+      "category": "Infrastructure & Compute",
+      "currentParent": "Samsung Electronics"
+    },
+    {
+      "id": 2235,
+      "name": "Samsung Electronics",
+      "type": "organization",
+      "category": "Infrastructure & Compute",
+      "currentParent": null
+    },
+    {
+      "id": 2237,
+      "name": "Sands Capital",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2238,
+      "name": "Sapphire Ventures",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2240,
+      "name": "Schmidt Sciences",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2241,
+      "name": "Schwartz Reisman Institute for Technology and Society",
+      "type": "organization",
+      "category": "Think Tank/Policy Org",
+      "currentParent": "University of Toronto"
+    },
+    {
+      "id": 2242,
+      "name": "Schwarz Group",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2243,
+      "name": "Sentinel Bio",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2244,
+      "name": "Shamil Chandaria",
+      "type": "person",
+      "category": "Researcher",
+      "currentParent": null
+    },
+    {
+      "id": 2245,
+      "name": "Shield Technology Partners",
+      "type": "organization",
+      "category": "Deployers & Platforms",
+      "currentParent": null
+    },
+    {
+      "id": 2247,
+      "name": "Siegel Family Endowment",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2248,
+      "name": "Sierra",
+      "type": "organization",
+      "category": "Frontier Lab",
+      "currentParent": null
+    },
+    {
+      "id": 2249,
+      "name": "SigIQ",
+      "type": "organization",
+      "category": "Deployers & Platforms",
+      "currentParent": null
+    },
+    {
+      "id": 2250,
+      "name": "Silicon Valley Bank Foundation (Donor Advised Fund)",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2251,
+      "name": "Silicon Valley Community Foundation",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2252,
+      "name": "Simon Newstead",
+      "type": "person",
+      "category": "Investor",
+      "currentParent": null
+    },
+    {
+      "id": 2253,
+      "name": "Simons Foundation",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2254,
+      "name": "Social & Environmental Entrepreneurs, Inc.",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2255,
+      "name": "Social Sciences and Humanities Research Council of Canada",
+      "type": "organization",
+      "category": "Government/Agency",
+      "currentParent": null
+    },
+    {
+      "id": 2256,
+      "name": "Sony Group Corporation",
+      "type": "organization",
+      "category": "Deployers & Platforms",
+      "currentParent": null
+    },
+    {
+      "id": 2257,
+      "name": "Sony Innovation Fund",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": "Sony Group Corporation"
+    },
+    {
+      "id": 2258,
+      "name": "South Park Commons",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2259,
+      "name": "Sozo Ventures",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2260,
+      "name": "Spatial Capital",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2261,
+      "name": "Squirrel AI Learning (Yixue Group)",
+      "type": "organization",
+      "category": "Deployers & Platforms",
+      "currentParent": null
+    },
+    {
+      "id": 2262,
+      "name": "Stanford Impact Labs",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2096,
+      "name": "State of Brandenburg (Land Brandenburg)",
+      "type": "organization",
+      "category": "Government/Agency",
+      "currentParent": null
+    },
+    {
+      "id": 2267,
+      "name": "StepStone Group Inc.",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2268,
+      "name": "Steve Newman",
+      "type": "person",
+      "category": "Investor",
+      "currentParent": null
+    },
+    {
+      "id": 2269,
+      "name": "Strategic Artificial Intelligence Research Centre",
+      "type": "organization",
+      "category": "AI Safety/Alignment",
+      "currentParent": null
+    },
+    {
+      "id": 2270,
+      "name": "Strategic Innovation Fund (Canada)",
+      "type": "organization",
+      "category": "Government/Agency",
+      "currentParent": null
+    },
+    {
+      "id": 2271,
+      "name": "Sunil Wadhwani",
+      "type": "person",
+      "category": "Investor",
+      "currentParent": null
+    },
+    {
+      "id": 2272,
+      "name": "Susan Crown Exchange",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2274,
+      "name": "Swiss Federal Government",
+      "type": "organization",
+      "category": "Government/Agency",
+      "currentParent": null
+    },
+    {
+      "id": 2273,
+      "name": "Swiss Philanthropy Foundation",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2275,
+      "name": "Symbolica AI",
+      "type": "organization",
+      "category": "Frontier Lab",
+      "currentParent": null
+    },
+    {
+      "id": 2276,
+      "name": "TDK Ventures Inc.",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2279,
+      "name": "Teachers' Venture Growth (TVG)",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2280,
+      "name": "Technology Modernization Fund (TMF)",
+      "type": "organization",
+      "category": "Government/Agency",
+      "currentParent": null
+    },
+    {
+      "id": 2281,
+      "name": "Templeton World Charity Foundation",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2282,
+      "name": "Tencent Holdings Limited",
+      "type": "organization",
+      "category": "Deployers & Platforms",
+      "currentParent": null
+    },
+    {
+      "id": 2283,
+      "name": "Texas Instruments",
+      "type": "organization",
+      "category": "Infrastructure & Compute",
+      "currentParent": null
+    },
+    {
+      "id": 2284,
+      "name": "Texas Semiconductor Innovation Fund (TSIF)",
+      "type": "organization",
+      "category": "Government/Agency",
+      "currentParent": null
+    },
+    {
+      "id": 2285,
+      "name": "The Alan Turing Institute",
+      "type": "organization",
+      "category": "Think Tank/Policy Org",
+      "currentParent": null
+    },
+    {
+      "id": 2286,
+      "name": "The Alignment Project",
+      "type": "organization",
+      "category": "AI Safety/Alignment",
+      "currentParent": null
+    },
+    {
+      "id": 2289,
+      "name": "The Ethics & Governance of AI Initiative",
+      "type": "organization",
+      "category": "Ethics/Bias/Rights",
+      "currentParent": null
+    },
+    {
+      "id": 2290,
+      "name": "The Goodly Institute",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2086,
+      "name": "The Kavli Foundation",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2291,
+      "name": "The Marcus Foundation",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2120,
+      "name": "The MITRE Corporation",
+      "type": "organization",
+      "category": "Think Tank/Policy Org",
+      "currentParent": null
+    },
+    {
+      "id": 2293,
+      "name": "The NOMIS Foundation",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2221,
+      "name": "The Rockefeller Foundation",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2236,
+      "name": "The San Francisco Compute Company",
+      "type": "organization",
+      "category": "Infrastructure & Compute",
+      "currentParent": null
+    },
+    {
+      "id": 2190,
+      "name": "Thiel Foundation",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2246,
+      "name": "Thomas and Stacey Siebel Foundation",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2294,
+      "name": "Toyota Motor Corporation",
+      "type": "organization",
+      "category": "Deployers & Platforms",
+      "currentParent": null
+    },
+    {
+      "id": 2299,
+      "name": "UC Investments (University of California Investment Office)",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2301,
+      "name": "UK Government",
+      "type": "organization",
+      "category": "Government/Agency",
+      "currentParent": null
+    },
+    {
+      "id": 2302,
+      "name": "UK Research and Innovation (UKRI)",
+      "type": "organization",
+      "category": "Government/Agency",
+      "currentParent": null
+    },
+    {
+      "id": 2305,
+      "name": "University at Albany (SUNY)",
+      "type": "organization",
+      "category": "Academic",
+      "currentParent": null
+    },
+    {
+      "id": 2304,
+      "name": "University of Cambridge Enterprise Fund (UCEF)",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": "University of Cambridge"
+    },
+    {
+      "id": 2306,
+      "name": "University of Tsukuba",
+      "type": "organization",
+      "category": "Academic",
+      "currentParent": null
+    },
+    {
+      "id": 2307,
+      "name": "University of Waterloo",
+      "type": "organization",
+      "category": "Academic",
+      "currentParent": null
+    },
+    {
+      "id": 2308,
+      "name": "University of Wisconsin-Milwaukee",
+      "type": "organization",
+      "category": "Academic",
+      "currentParent": null
+    },
+    {
+      "id": 2296,
+      "name": "U.S. Air Force",
+      "type": "organization",
+      "category": "Government/Agency",
+      "currentParent": null
+    },
+    {
+      "id": 2298,
+      "name": "U.S. International Development Finance Corporation (DFC)",
+      "type": "organization",
+      "category": "Government/Agency",
+      "currentParent": null
+    },
+    {
+      "id": 2303,
+      "name": "U.S. Venture Partners (USVP)",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2309,
+      "name": "Valor Equity Partners",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2310,
+      "name": "Vanderbilt University Institute of National Security",
+      "type": "organization",
+      "category": "Think Tank/Policy Org",
+      "currentParent": "Vanderbilt University"
+    },
+    {
+      "id": 2311,
+      "name": "Vanguard Charitable Endowment Program",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2312,
+      "name": "VAST Data",
+      "type": "organization",
+      "category": "Infrastructure & Compute",
+      "currentParent": null
+    },
+    {
+      "id": 2313,
+      "name": "Vicarious FPC Inc.",
+      "type": "organization",
+      "category": "Frontier Lab",
+      "currentParent": null
+    },
+    {
+      "id": 2314,
+      "name": "Vipul Naik",
+      "type": "person",
+      "category": "Researcher",
+      "currentParent": null
+    },
+    {
+      "id": 2315,
+      "name": "Virtual AI Safety Unconference (VAISU)",
+      "type": "organization",
+      "category": "AI Safety/Alignment",
+      "currentParent": null
+    },
+    {
+      "id": 2316,
+      "name": "Vitalik Buterin",
+      "type": "person",
+      "category": "Investor",
+      "currentParent": null
+    },
+    {
+      "id": 2318,
+      "name": "Waymo",
+      "type": "organization",
+      "category": "Deployers & Platforms",
+      "currentParent": null
+    },
+    {
+      "id": 2319,
+      "name": "Wells Fargo & Company",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2320,
+      "name": "Wenbo Guo",
+      "type": "person",
+      "category": "Researcher",
+      "currentParent": null
+    },
+    {
+      "id": 2321,
+      "name": "Wharton Mack Institute",
+      "type": "organization",
+      "category": "Academic",
+      "currentParent": "University of Pennsylvania"
+    },
+    {
+      "id": 2322,
+      "name": "Wing Venture Capital",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2323,
+      "name": "Wolfspeed, Inc.",
+      "type": "organization",
+      "category": "Infrastructure & Compute",
+      "currentParent": null
+    },
+    {
+      "id": 2324,
+      "name": "Work-Bench",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2317,
+      "name": "WP Global Partners",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    },
+    {
+      "id": 2326,
+      "name": "Xianfeng David Gu",
+      "type": "person",
+      "category": "Researcher",
+      "currentParent": null
+    },
+    {
+      "id": 2328,
+      "name": "xLight",
+      "type": "organization",
+      "category": "Infrastructure & Compute",
+      "currentParent": null
+    },
+    {
+      "id": 2325,
+      "name": "XTX Markets",
+      "type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "currentParent": null
+    }
+  ]
+}
