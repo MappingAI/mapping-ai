@@ -52,6 +52,51 @@ function formatUSD(amount: number | null): string {
   return `$${amount.toFixed(0)}`
 }
 
+interface ParsedSource {
+  url: string
+  title: string
+}
+
+function parseSources(citation: string): { sources: ParsedSource[]; text: string } {
+  const sources: ParsedSource[] = []
+  let text = citation
+
+  // Extract markdown-style links [text](url)
+  const mdLinkRegex = /\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g
+  let match: RegExpExecArray | null
+  while ((match = mdLinkRegex.exec(citation)) !== null) {
+    if (match[1] && match[2]) {
+      sources.push({ title: match[1], url: match[2] })
+    }
+  }
+  // Remove markdown links from text
+  text = text.replace(mdLinkRegex, '')
+
+  // Extract plain URLs not already captured
+  const urlRegex = /https?:\/\/[^\s|,<>"]+/g
+  const existingUrls = new Set(sources.map(s => s.url))
+  while ((match = urlRegex.exec(text)) !== null) {
+    const url = match[0].replace(/[.,;:)]+$/, '') // trim trailing punctuation
+    if (!existingUrls.has(url)) {
+      // Extract domain as title
+      try {
+        const domain = new URL(url).hostname.replace('www.', '')
+        sources.push({ title: domain, url })
+        existingUrls.add(url)
+      } catch {
+        sources.push({ title: 'Source', url })
+      }
+    }
+  }
+
+  // Clean up remaining text
+  text = text.replace(urlRegex, '').replace(/\|+/g, ' · ').replace(/\s+/g, ' ').trim()
+  // Remove empty separators
+  text = text.replace(/^[\s·]+|[\s·]+$/g, '').replace(/\s*·\s*·\s*/g, ' · ')
+
+  return { sources, text }
+}
+
 interface SelectedFlow {
   funder: string
   recipientCategory: string
@@ -98,11 +143,42 @@ function FlowDetailCard({ flow, onClose }: { flow: SelectedFlow; onClose: () => 
                     {formatUSD(edge.amount_usd)}
                   </div>
                 </div>
-                {edge.citation && (
-                  <div className="font-mono text-[10px] text-[#888] mt-2 leading-relaxed line-clamp-3">
-                    {edge.citation}
-                  </div>
-                )}
+                {edge.citation && (() => {
+                  const { sources, text } = parseSources(edge.citation)
+                  return (
+                    <div className="mt-2">
+                      {text && (
+                        <div className="font-mono text-[10px] text-[#888] leading-relaxed line-clamp-2 mb-1">
+                          {text}
+                        </div>
+                      )}
+                      {sources.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 mt-1">
+                          {sources.slice(0, 3).map((source, j) => (
+                            <a
+                              key={j}
+                              href={source.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 font-mono text-[9px] text-[#2563eb] hover:underline bg-[#f0f4ff] px-1.5 py-0.5 rounded"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                              </svg>
+                              {source.title.length > 25 ? source.title.slice(0, 25) + '…' : source.title}
+                            </a>
+                          ))}
+                          {sources.length > 3 && (
+                            <span className="font-mono text-[9px] text-[#888]">
+                              +{sources.length - 3} more
+                            </span>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  )
+                })()}
               </div>
             ))}
           </div>
