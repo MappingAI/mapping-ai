@@ -5,6 +5,10 @@ type ReactView = 'definitions' | null
 
 export function App() {
   const [reactView, setReactView] = useState<ReactView>(null)
+  const [engineMode, setEngineMode] = useState<'network' | 'plot'>(() => {
+    const saved = localStorage.getItem('mapMode')
+    return saved === 'network' ? 'network' : 'plot'
+  })
   const [beliefsSubView, setBeliefsSubView] = useState<string>('map')
   const [beliefsColorMode, setBeliefsColorMode] = useState<string>('cluster')
   const [bannerDismissed, setBannerDismissed] = useState(() => localStorage.getItem('mobileBannerDismissed') === '1')
@@ -29,8 +33,9 @@ export function App() {
 
   useEffect(() => {
     function handleEngineModeClick(e: Event) {
-      const btn = (e.target as HTMLElement).closest('.mode-btn[data-mode]')
-      if (btn) {
+      const btn = (e.target as HTMLElement).closest('.mode-btn[data-mode]') as HTMLElement | null
+      if (btn?.dataset.mode) {
+        setEngineMode(btn.dataset.mode as 'network' | 'plot')
         setReactView(null)
         setTimeout(() => window.dispatchEvent(new Event('resize')), 100)
       }
@@ -177,7 +182,10 @@ export function App() {
         <div className="control-group">
           <h3>View</h3>
           <div className="view-mode-toggles" style={{ display: 'flex', flexWrap: 'wrap', gap: '3px' }}>
-            <button className={`mode-btn${reactView === null ? ' active' : ''}`} data-mode="network">
+            <button
+              className={`mode-btn${!reactView && engineMode === 'network' ? ' active' : ''}`}
+              data-mode="network"
+            >
               <svg
                 width="14"
                 height="14"
@@ -195,7 +203,7 @@ export function App() {
               </svg>
               Network
             </button>
-            <button className="mode-btn" data-mode="plot">
+            <button className={`mode-btn${!reactView && engineMode === 'plot' ? ' active' : ''}`} data-mode="plot">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5">
                 <circle cx="3" cy="10" r="1.5" fill="currentColor" />
                 <circle cx="6" cy="5" r="1.5" fill="currentColor" />
