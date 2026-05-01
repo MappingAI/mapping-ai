@@ -5319,9 +5319,13 @@
           }
           ctx.setLineDash([])
 
-          // Layer 2b: Render hovered/selected edge with gold glow effect
-          const activeEdge = _selectedEdge || _hoveredEdge
-          if (activeEdge) {
+          // Layer 2b: Render hovered/selected edges with gold glow effect
+          // Render both if they're different edges
+          const edgesToHighlight = []
+          if (_selectedEdge) edgesToHighlight.push(_selectedEdge)
+          if (_hoveredEdge && _hoveredEdge !== _selectedEdge) edgesToHighlight.push(_hoveredEdge)
+
+          for (const activeEdge of edgesToHighlight) {
             const sx = activeEdge.source.x, sy = activeEdge.source.y
             const tx = activeEdge.target.x, ty = activeEdge.target.y
             // Glow/shadow effect (multiple passes with decreasing alpha)
