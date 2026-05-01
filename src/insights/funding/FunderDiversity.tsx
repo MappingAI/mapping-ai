@@ -180,7 +180,7 @@ export function FunderDiversity({ edges, showTooltip, hideTooltip }: Props) {
 
     const W = container.clientWidth || 660
     const colW = (W - 40) / 2
-    const rowH = 32
+    const rowH = 38
     const padTop = 45
     const maxRows = Math.max(displayDiverse.length, displaySingle.length)
     const legendH = 75
@@ -245,7 +245,6 @@ export function FunderDiversity({ edges, showTooltip, hideTooltip }: Props) {
     // Draw diverse orgs
     displayDiverse.forEach((o, i) => {
       const y = padTop + i * rowH
-      const displayName = o.name.length > 28 ? o.name.slice(0, 26) + '...' : o.name
 
       // Category dots
       const dotSpacing = 12
@@ -258,18 +257,64 @@ export function FunderDiversity({ edges, showTooltip, hideTooltip }: Props) {
           .attr('fill', FUNDER_CATEGORY_COLORS[cc.category] || '#ccc')
       })
 
-      // Org name
-      const text = svg
-        .append('text')
-        .attr('x', 20 + o.categoryCounts.slice(0, 5).length * dotSpacing)
-        .attr('y', y + rowH / 2)
-        .attr('dominant-baseline', 'middle')
-        .attr('font-family', "'DM Mono', monospace")
-        .attr('font-size', 10)
-        .attr('fill', '#333')
-        .style('cursor', 'pointer')
-        .text(displayName)
-        .node()
+      // Org name - wrap to two lines if needed
+      const textStartX = 20 + o.categoryCounts.slice(0, 5).length * dotSpacing
+      const maxChars = 22
+      const name = o.name
+
+      let textNode: SVGTextElement | null = null
+      if (name.length > maxChars) {
+        const words = name.split(' ')
+        const lines: string[] = []
+        let currentLine = ''
+
+        words.forEach((word: string) => {
+          if ((currentLine + ' ' + word).trim().length <= maxChars) {
+            currentLine = (currentLine + ' ' + word).trim()
+          } else {
+            if (currentLine) lines.push(currentLine)
+            currentLine = word
+          }
+        })
+        if (currentLine) lines.push(currentLine)
+
+        if (lines.length > 2) {
+          lines[1] = lines[1]!.slice(0, maxChars - 3) + '...'
+          lines.length = 2
+        }
+
+        const lineHeight = 10
+        const startY = y + rowH / 2 - ((lines.length - 1) * lineHeight) / 2
+
+        lines.forEach((line, j) => {
+          const t = svg
+            .append('text')
+            .attr('x', textStartX)
+            .attr('y', startY + j * lineHeight)
+            .attr('dominant-baseline', 'middle')
+            .attr('font-family', "'DM Mono', monospace")
+            .attr('font-size', 10)
+            .attr('fill', '#333')
+            .style('cursor', 'pointer')
+            .text(line)
+            .node()
+          if (j === 0) textNode = t
+        })
+      } else {
+        textNode = svg
+          .append('text')
+          .attr('x', textStartX)
+          .attr('y', y + rowH / 2)
+          .attr('dominant-baseline', 'middle')
+          .attr('font-family', "'DM Mono', monospace")
+          .attr('font-size', 10)
+          .attr('fill', '#333')
+          .style('cursor', 'pointer')
+          .text(name)
+          .node()
+      }
+
+      const text = textNode
 
       if (text) {
         text.addEventListener('mouseenter', (e: MouseEvent) => {
@@ -303,7 +348,6 @@ export function FunderDiversity({ edges, showTooltip, hideTooltip }: Props) {
     // Draw single-category orgs
     displaySingle.forEach((o, i) => {
       const y = padTop + i * rowH
-      const displayName = o.name.length > 28 ? o.name.slice(0, 26) + '...' : o.name
       const dominantCategory = o.categoryCounts[0]?.category || 'Unknown'
 
       // Category indicator
@@ -316,18 +360,64 @@ export function FunderDiversity({ edges, showTooltip, hideTooltip }: Props) {
         .attr('rx', 2)
         .attr('fill', FUNDER_CATEGORY_COLORS[dominantCategory] || '#ccc')
 
-      // Org name
-      const text = svg
-        .append('text')
-        .attr('x', colW + 42)
-        .attr('y', y + rowH / 2)
-        .attr('dominant-baseline', 'middle')
-        .attr('font-family', "'DM Mono', monospace")
-        .attr('font-size', 10)
-        .attr('fill', '#333')
-        .style('cursor', 'pointer')
-        .text(displayName)
-        .node()
+      // Org name - wrap to two lines if needed
+      const textStartX = colW + 42
+      const maxChars = 22
+      const name = o.name
+
+      let textNode: SVGTextElement | null = null
+      if (name.length > maxChars) {
+        const words = name.split(' ')
+        const lines: string[] = []
+        let currentLine = ''
+
+        words.forEach((word: string) => {
+          if ((currentLine + ' ' + word).trim().length <= maxChars) {
+            currentLine = (currentLine + ' ' + word).trim()
+          } else {
+            if (currentLine) lines.push(currentLine)
+            currentLine = word
+          }
+        })
+        if (currentLine) lines.push(currentLine)
+
+        if (lines.length > 2) {
+          lines[1] = lines[1]!.slice(0, maxChars - 3) + '...'
+          lines.length = 2
+        }
+
+        const lineHeight = 10
+        const startY = y + rowH / 2 - ((lines.length - 1) * lineHeight) / 2
+
+        lines.forEach((line, j) => {
+          const t = svg
+            .append('text')
+            .attr('x', textStartX)
+            .attr('y', startY + j * lineHeight)
+            .attr('dominant-baseline', 'middle')
+            .attr('font-family', "'DM Mono', monospace")
+            .attr('font-size', 10)
+            .attr('fill', '#333')
+            .style('cursor', 'pointer')
+            .text(line)
+            .node()
+          if (j === 0) textNode = t
+        })
+      } else {
+        textNode = svg
+          .append('text')
+          .attr('x', textStartX)
+          .attr('y', y + rowH / 2)
+          .attr('dominant-baseline', 'middle')
+          .attr('font-family', "'DM Mono', monospace")
+          .attr('font-size', 10)
+          .attr('fill', '#333')
+          .style('cursor', 'pointer')
+          .text(name)
+          .node()
+      }
+
+      const text = textNode
 
       if (text) {
         text.addEventListener('mouseenter', (e: MouseEvent) => {
