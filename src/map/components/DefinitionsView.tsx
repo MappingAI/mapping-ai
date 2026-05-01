@@ -762,11 +762,6 @@ function TimelineView({ data }: { data: AgiData }) {
     return result
   }, [data.points, clusters, quarters, beliefDims])
 
-  const totalSeries = useMemo(
-    () => quarters.map((q) => data.points.filter((p) => pointInQuarter(p, q)).length),
-    [data.points, quarters],
-  )
-
   const countSparkW = 120
   const countSparkH = 30
   const beliefSparkW = 80
@@ -812,10 +807,11 @@ function TimelineView({ data }: { data: AgiData }) {
               </span>
               <div
                 style={{
+                  width: '80px',
+                  minWidth: '80px',
                   height: '6px',
                   borderRadius: '3px',
-                  flexShrink: 1,
-                  flexGrow: 1,
+                  flexShrink: 0,
                   background: `linear-gradient(to right, ${dim.colors[0]}, ${dim.colors[dim.colors.length - 1]})`,
                 }}
               />
@@ -920,78 +916,6 @@ function TimelineView({ data }: { data: AgiData }) {
 
       <div style={{ fontFamily: 'var(--mono)', fontSize: '9px', color: 'var(--text-3)' }}>
         Each sparkline shows the cluster's mean score per quarter. Gaps indicate quarters with no scored definitions.
-      </div>
-
-      <div style={{ borderTop: '1px solid var(--line)', paddingTop: '16px' }}>
-        <div
-          style={{
-            fontFamily: 'var(--mono)',
-            fontSize: '10px',
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase' as const,
-            color: 'var(--text-3)',
-            marginBottom: '8px',
-          }}
-        >
-          All definitions over time
-        </div>
-        <svg width="100%" viewBox={`0 0 ${Math.max(quarters.length * 20, 200)} 80`} style={{ display: 'block' }}>
-          {(() => {
-            const w = Math.max(quarters.length * 20, 200)
-            const h = 80
-            const pad = { top: 4, bottom: 20, left: 4, right: 30 }
-            const maxVal = Math.max(...totalSeries, 1)
-            const xScale = d3
-              .scaleLinear()
-              .domain([0, totalSeries.length - 1])
-              .range([pad.left, w - pad.right])
-            const yScale = d3
-              .scaleLinear()
-              .domain([0, maxVal])
-              .range([h - pad.bottom, pad.top])
-            const line = d3
-              .line()
-              .x((_: number, i: number) => xScale(i))
-              .y((d: number) => yScale(d))
-              .curve(d3.curveMonotoneX)
-            const area = d3
-              .area()
-              .x((_: number, i: number) => xScale(i))
-              .y0(h - pad.bottom)
-              .y1((d: number) => yScale(d))
-              .curve(d3.curveMonotoneX)
-            const pathD = line(totalSeries) || ''
-            const areaD = area(totalSeries) || ''
-
-            const yearTicks: number[] = []
-            quarters.forEach((qq, i) => {
-              if (qq.start.getMonth() === 0 || i === 0) yearTicks.push(i)
-            })
-
-            return (
-              <>
-                <path d={areaD} fill="var(--text-1)" opacity={0.06} />
-                <path d={pathD} fill="none" stroke="var(--text-1)" strokeWidth={1.5} opacity={0.5} />
-                {totalSeries.map((val, i) => (
-                  <circle key={i} cx={xScale(i)} cy={yScale(val)} r={2.5} fill="var(--text-1)" opacity={0.4} />
-                ))}
-                {yearTicks.map((i) => (
-                  <text
-                    key={i}
-                    x={xScale(i)}
-                    y={h - 4}
-                    textAnchor="middle"
-                    fontFamily="'DM Mono', monospace"
-                    fontSize={8}
-                    fill="var(--text-3)"
-                  >
-                    {String(quarters[i]?.start.getFullYear() || '')}
-                  </text>
-                ))}
-              </>
-            )
-          })()}
-        </svg>
       </div>
     </div>
   )

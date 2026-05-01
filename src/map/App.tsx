@@ -279,13 +279,21 @@ export function App() {
         <div className="control-group" id="beliefs-sub-tabs" style={{ display: 'none' }}>
           <h3>Sub-view</h3>
           <div className="filter-chips">
-            {(['map', 'list', 'scatter', 'timeline', 'trends'] as const).map((v) => (
+            {(
+              [
+                { key: 'map', label: 'Map' },
+                { key: 'list', label: 'List' },
+                { key: 'scatter', label: 'Scatter' },
+                { key: 'trends', label: 'Timeline' },
+                { key: 'timeline', label: 'Trends' },
+              ] as const
+            ).map((v) => (
               <button
-                key={v}
-                className={'view-btn' + (beliefsSubView === v ? ' active' : '')}
-                onClick={() => setBeliefsSubView(v)}
+                key={v.key}
+                className={'view-btn' + (beliefsSubView === v.key ? ' active' : '')}
+                onClick={() => setBeliefsSubView(v.key)}
               >
-                {v.charAt(0).toUpperCase() + v.slice(1)}
+                {v.label}
               </button>
             ))}
           </div>
