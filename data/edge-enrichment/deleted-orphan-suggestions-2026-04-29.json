@@ -1,0 +1,5667 @@
+[
+  {
+    "suggestion_id": "suggestion-7235e125128f",
+    "extracted_name": "Chris Anderson",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c929973e6544",
+    "extracted_name": "federal government",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-6dc1c5c6a07b",
+    "extracted_name": "ConnectALL/BEAD Program",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-bf6a739ba244",
+    "extracted_name": "Mishcon",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-bcedb594ac36",
+    "extracted_name": "CHIPS & Science Law",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-0cbb2ed5371d",
+    "extracted_name": "Private sector",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-7439dbd225b7",
+    "extracted_name": "DynamiCare Health",
+    "times_seen": 4
+  },
+  {
+    "suggestion_id": "suggestion-b2583bd6ece6",
+    "extracted_name": "CHIPS Investment Tax Credit",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-6bd06eff1fa9",
+    "extracted_name": "Ctrl AI",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a41275df2339",
+    "extracted_name": "Vin Ryan",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-8811ebd5aa23",
+    "extracted_name": "Fin Capital",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-2068b93e490b",
+    "extracted_name": "Fred Wilson",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b23a6a8439c0",
+    "extracted_name": "Unknown",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-d28331584a72",
+    "extracted_name": "Gray Swan AI",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a674f77993a3",
+    "extracted_name": "St Jude Children's Research Hospital",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-84381eb69a68",
+    "extracted_name": "Ulysses",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-bfc99d5231b9",
+    "extracted_name": "Protege AI",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-d109da98c97d",
+    "extracted_name": "Asher Soryl",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-99dbb3614c51",
+    "extracted_name": "Deeptune",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-2f7ec5f2fb9c",
+    "extracted_name": "Bogdan-Ionut Cirstea",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-dc8e6bc170b2",
+    "extracted_name": "CLR Fund",
+    "times_seen": 7
+  },
+  {
+    "suggestion_id": "suggestion-f0839d03c5f4",
+    "extracted_name": "Nandy Schoots",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-bb95b3a3523c",
+    "extracted_name": "Joanne Wilson",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-3fdcf4164dcc",
+    "extracted_name": "Writers Guild of America, West",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-b7c34e094009",
+    "extracted_name": "Actors Fund",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-cdeb79a53d41",
+    "extracted_name": "The Kevin Kelly Foundation",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-f5c64205182b",
+    "extracted_name": "Collaborative Support Services",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-80aa86f672dd",
+    "extracted_name": "Hale Makua Health Services",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-878eca70a891",
+    "extracted_name": "Sumitomo Dainippon Pharma Co., Ltd.",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-40d3a0e3618f",
+    "extracted_name": "Web3 Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-d550bd7ad713",
+    "extracted_name": "Cyborg Network",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-9a439aad528e",
+    "extracted_name": "SBI Investment Co., Ltd.",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-1993ebf00b9b",
+    "extracted_name": "The Dai-Ichi Life Insurance Company Ltd.",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-e1458e804a20",
+    "extracted_name": "MELTIN MMI Co., Ltd.",
+    "times_seen": 6
+  },
+  {
+    "suggestion_id": "suggestion-7a5c60d491ab",
+    "extracted_name": "Alex Bores for New York",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-48281f3607b9",
+    "extracted_name": "University of Hawaii",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-644c993aaf26",
+    "extracted_name": "nonprofit foundations",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-08a2027c767c",
+    "extracted_name": "Honolulu Rail Transit Project",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-2411f635186b",
+    "extracted_name": "Aether Biomachines",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-79ce9326eac0",
+    "extracted_name": "ActBlue Non-Federal",
+    "times_seen": 3
+  },
+  {
+    "suggestion_id": "suggestion-c2bc220ef368",
+    "extracted_name": "UCLA College Division of Humanities",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-ea9b05396c62",
+    "extracted_name": "Hawaii Island Community Health Center",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-9b87a187e7dd",
+    "extracted_name": "County of Maui",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-2a7d4aeaeec2",
+    "extracted_name": "Lanai Kinaole",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-5362b5f0bba6",
+    "extracted_name": "The Arc of Hilo",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-9c16db4e1545",
+    "extracted_name": "Kauai Planning and Action Alliance",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a1029d122670",
+    "extracted_name": "Foundation for Individual Rights and Expression",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-19987e24c9ee",
+    "extracted_name": "Institute for Cross Disciplinary Engagement At Dartmouth",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-115649640e98",
+    "extracted_name": "Heinlein Society",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-08ee6a325cc1",
+    "extracted_name": "Baltimore Science Fiction Society",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-4561ff518195",
+    "extracted_name": "David Milner",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-31cd88e5719c",
+    "extracted_name": "HPA",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-2861e8af9ef3",
+    "extracted_name": "Colorado Mountain College",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-6c3232c22990",
+    "extracted_name": "Lamar Community College",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-3e255dfcfa42",
+    "extracted_name": "wealthy tech luminaries",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-df5b4e4fb0b3",
+    "extracted_name": "Colorado Energy Office",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-adbdb8071425",
+    "extracted_name": "Brian and Sabine Atkins",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-9e6d4945a338",
+    "extracted_name": "Singularity Institute for Artificial Intelligence",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b4c37a0b2880",
+    "extracted_name": "Scott & Cyan Banister",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-071ab7d1d9d4",
+    "extracted_name": "The Good Food Institute",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-02f010f9b10c",
+    "extracted_name": "David Kaplan's lab at Tufts University",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-cf2d1a3f00a0",
+    "extracted_name": "Recoding America Fund",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-ea34bbe6e42d",
+    "extracted_name": "NCAA and FBS conferences",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ebe627280c9e",
+    "extracted_name": "UCLA First Amendment Amicus Brief Clinic",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-41e966f9929a",
+    "extracted_name": "Franciscan Shelters",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-fc16e97a67b5",
+    "extracted_name": "Doina Precup",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-49c2e10d18de",
+    "extracted_name": "South Dakota projects",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-0b6c32fd4565",
+    "extracted_name": "AI TechX",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-388fd941b5ab",
+    "extracted_name": "CA-17 community projects",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-702aa2d3fa29",
+    "extracted_name": "2026 Thiel Fellowship cohort",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c9f5ac42c69a",
+    "extracted_name": "Holly Elmore",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-5c9e8a0b0e6d",
+    "extracted_name": "Power conference schools",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-053b8dff2d69",
+    "extracted_name": "Thiel Fellowship recipients",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-62d6e9c64574",
+    "extracted_name": "VitalizeVC",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-67836b87a947",
+    "extracted_name": "College athletes",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-ca0e92234150",
+    "extracted_name": "Ravenswood Family Health Network",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-46136ef79e14",
+    "extracted_name": "Children's Health Council",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c9cca6cf641a",
+    "extracted_name": "Ravenswood Early Learning",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-fe18564674bb",
+    "extracted_name": "Andela",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-cc429fc67243",
+    "extracted_name": "University of Tennessee faculty teams",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-d6cc5094f341",
+    "extracted_name": "Ethan Perez",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-568a2e18f69a",
+    "extracted_name": "AI safety research and governance",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ea8e7891879f",
+    "extracted_name": "Research Grants Council (RGC)",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a11823b74b70",
+    "extracted_name": "Prof. WANG Dan",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-dbf727de91d0",
+    "extracted_name": "WEB Water Development Inc.",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-0a4c0944c6cf",
+    "extracted_name": "United States Army Corps of Engineers; Omaha District",
+    "times_seen": 3
+  },
+  {
+    "suggestion_id": "suggestion-ee119c86440d",
+    "extracted_name": "Ethereal Ventures",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-3cbb48107d63",
+    "extracted_name": "U.S. Federal Government",
+    "times_seen": 6
+  },
+  {
+    "suggestion_id": "suggestion-4a6d6626c448",
+    "extracted_name": "Chris Coons for Delaware",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-102e6c42ba1b",
+    "extracted_name": "ActBlue Technical Services, Inc.",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-955ee9aed635",
+    "extracted_name": "ReJoule",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-68e083348ee4",
+    "extracted_name": "Sandia National Laboratories",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-442d96be15b0",
+    "extracted_name": "Albuquerque Community Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-4a936bbe1cb7",
+    "extracted_name": "Compendia",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-62b59953e6c2",
+    "extracted_name": "County of Taos",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-05da3c83f37f",
+    "extracted_name": "New Mexico Minority Business Development Agency Business Center",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-0936a370962c",
+    "extracted_name": "City of Albuquerque",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c70d2bcf2a44",
+    "extracted_name": "New Mexico",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-485528ecb081",
+    "extracted_name": "Cannon Air Force Base",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ae898f56fed7",
+    "extracted_name": "Martha L Asplundh",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-777ac33ad130",
+    "extracted_name": "Joni Ernst for US Senate",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-d4183daf1300",
+    "extracted_name": "Northwest Technical College",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-136c6c3d48d8",
+    "extracted_name": "U.S. Department of Commerce's Economic Development Administration",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-2c19fce44855",
+    "extracted_name": "Justin C Walker",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-6a824985d8bf",
+    "extracted_name": "Alejandro Zaffaroni",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f24cecc9b4a2",
+    "extracted_name": "City of Salina",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-1b9a6c3f8f43",
+    "extracted_name": "Richard Tice",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a2448c093508",
+    "extracted_name": "Solana Institute",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-557a726ef0a1",
+    "extracted_name": "Safra A Catz",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-cd8549bf668d",
+    "extracted_name": "Institute of Museum and Library Services",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-17c89bb9e341",
+    "extracted_name": "Connecticut State Library",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-91688d90c01d",
+    "extracted_name": "Reform UK",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-5211a450bd8d",
+    "extracted_name": "Miriam Adelson",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-bc86624d615a",
+    "extracted_name": "Farris Wilks",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b9a57e3cea5c",
+    "extracted_name": "Dan Wilks",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-2afac5f516ed",
+    "extracted_name": "Super PAC backing Ted Cruz",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-476b3cd789b5",
+    "extracted_name": "iHeartMedia Management Services",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-e5a66554f625",
+    "extracted_name": "Truth and Courage PAC",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-11525524778d",
+    "extracted_name": "Kearny Jackson Fund III",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-5e790ada4b5a",
+    "extracted_name": "Bain Ventures",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-2c2240217b64",
+    "extracted_name": "Grain",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-e274204a79b8",
+    "extracted_name": "Sandstone",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-667b108cf7c9",
+    "extracted_name": "C4 Ventures",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a83a3af1a486",
+    "extracted_name": "AMI Labs",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-34cffa8cd4c0",
+    "extracted_name": "Compendium",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-9a2d1e11990c",
+    "extracted_name": "Daniel Craig",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-6d85b923f4b7",
+    "extracted_name": "Americans Socially United",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-19f14dafbb24",
+    "extracted_name": "With Honor Fund",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-5ab9fece0935",
+    "extracted_name": "Irwin Jacobs",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-bf417c9bfdd6",
+    "extracted_name": "Carol A Bartz",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-bebd7480e07b",
+    "extracted_name": "Alliance to Protect Home Care",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c4f9e86e8eb6",
+    "extracted_name": "Serving CA",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-872fd8761138",
+    "extracted_name": "researchers worldwide",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-de77dac14f3d",
+    "extracted_name": "Major Long-Term Investors",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-48140b125a47",
+    "extracted_name": "Aligned Intermediary",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ad30289e9c4d",
+    "extracted_name": "AIX Ventures",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b7b9ccc9edcd",
+    "extracted_name": "Workhelix",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b5f778ce0927",
+    "extracted_name": "AI Health Fund",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-539b3c5b0fa2",
+    "extracted_name": "Treehub",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-0b2bfe8bb80f",
+    "extracted_name": "24 youth and intergenerationally-led organizations",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-452118af0834",
+    "extracted_name": "Compendium.Fi",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ca8242be921a",
+    "extracted_name": "Rosenwald Fund",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-8436bfc11d25",
+    "extracted_name": "Public contribution",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-19119fd40d9f",
+    "extracted_name": "Negroes Contribution",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-e2e5047ca124",
+    "extracted_name": "Elliston School",
+    "times_seen": 3
+  },
+  {
+    "suggestion_id": "suggestion-46e09796f4bc",
+    "extracted_name": "Iron Nation partnership",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ddcac2df5d3d",
+    "extracted_name": "Iron Nation project",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-66690fb96244",
+    "extracted_name": "HOPE Super PAC",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-8ff3620e8bbc",
+    "extracted_name": "Indiana Republican state senate challengers",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-bab8e795ebab",
+    "extracted_name": "MIT School of Humanities, Arts, and Social Sciences",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-49e46d61d39c",
+    "extracted_name": "Cinnaire New Markets",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-28557b35a1ea",
+    "extracted_name": "Invest Detroit",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-4d448cd2e864",
+    "extracted_name": "Federico Faggin",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-03943479087d",
+    "extracted_name": "Detroit Regional Partnership Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b7e77dd27738",
+    "extracted_name": "Michigan Community Capital",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-a1e625a77790",
+    "extracted_name": "UC Santa Cruz",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f2c2212bec7e",
+    "extracted_name": "Center for the Study of Apparent Selves",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-84481ff44a50",
+    "extracted_name": "Cinnaire New Markets LLC",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-eb6d4cff7c13",
+    "extracted_name": "U.S. Department of Treasury Community Development Financial Institutions Fund",
+    "times_seen": 5
+  },
+  {
+    "suggestion_id": "suggestion-5f54070fa11e",
+    "extracted_name": "Amber Group",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-2c310dddf2f8",
+    "extracted_name": "Ted Lieu For Congress",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-0595f1e2813d",
+    "extracted_name": "Maxine Waters",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-16d515d88b50",
+    "extracted_name": "University of Tennessee Min H. Kao Department of Electrical Engineering and Computer Science",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-e52d3c7b4a3a",
+    "extracted_name": "Harlem RBI, Inc. dba DREAM",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-aa3772424e40",
+    "extracted_name": "SUNY at Stony Brook",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-549f28a1f11a",
+    "extracted_name": "Anna Eshoo for Congress",
+    "times_seen": 4
+  },
+  {
+    "suggestion_id": "suggestion-6055ac512de6",
+    "extracted_name": "Brittiny Gunty",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-31058e857ca5",
+    "extracted_name": "Brookhaven National Laboratory",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ed74b0cd6d8d",
+    "extracted_name": "United CDPAP",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-7ec83beff2c1",
+    "extracted_name": "Fund for Policy Reform",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-95d01c240ffc",
+    "extracted_name": "Gavin Newsom redistricting campaign",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-5d7876608a84",
+    "extracted_name": "Bill Bloomfield",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-74af81caaa3d",
+    "extracted_name": "Kalamazoo Artistic Development Initiative of the Arts Council of Greater Kalamazoo",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f2e815534a9a",
+    "extracted_name": "Gloria Page",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-93fcd86070e4",
+    "extracted_name": "Newsom's Ballot Measure Committee",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-6e681cf42f29",
+    "extracted_name": "Zoox",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-6e4991b5aaa1",
+    "extracted_name": "Protocol Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-3dc95441bf48",
+    "extracted_name": "California Volunteers Fund",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ebdc5e40297d",
+    "extracted_name": "Tipping Point Community",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-8aa17b8a28bc",
+    "extracted_name": "Foundation for California Community Colleges",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-67dbafe637bc",
+    "extracted_name": "Lynne and Robert Parker",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-8d004e4a204f",
+    "extracted_name": "Donors (unspecified)",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-6ebec1961e52",
+    "extracted_name": "Neotec",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-d59be02c4a13",
+    "extracted_name": "Salveo Capital",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-fa6a66a98e6b",
+    "extracted_name": "Equilibria",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-e6869cc73d71",
+    "extracted_name": "Frederick H Iii Howalt",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-82e71ac44489",
+    "extracted_name": "MetaDAO",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-9faf6a3c903b",
+    "extracted_name": "Galxe",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-4e8399ea2aae",
+    "extracted_name": "Zeta Markets",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-1b7da03478ad",
+    "extracted_name": "Fermi Labs",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-d90605f2f004",
+    "extracted_name": "Equilibrium Ventures",
+    "times_seen": 4
+  },
+  {
+    "suggestion_id": "suggestion-622713875f30",
+    "extracted_name": "Silo Labs",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-836257e83c4f",
+    "extracted_name": "ERA Fellowship",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-5d80db0f61d6",
+    "extracted_name": "Lily L. Tsai",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c3321267f1a9",
+    "extracted_name": "University of Edinburgh AI Accelerator",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-4c74e120163f",
+    "extracted_name": "Shardeum",
+    "times_seen": 9
+  },
+  {
+    "suggestion_id": "suggestion-44a0843bf91c",
+    "extracted_name": "AI programs and research",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-9cf56e160f2b",
+    "extracted_name": "Astera Neuro",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-3f29e2edecdb",
+    "extracted_name": "Haystack",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-265c53a09b9f",
+    "extracted_name": "Balaji Srinivasan",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-da11d696284f",
+    "extracted_name": "AI innovation programs",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-5f817638ff7b",
+    "extracted_name": "Clayton Fuller For Congress",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-3b72491f211e",
+    "extracted_name": "Agnese Nelms Haury Program",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a5b3116ab030",
+    "extracted_name": "Neuberger Berman Funds",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-855d044eff75",
+    "extracted_name": "organizations served by RAISEimpact",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-eacc27ee6aa2",
+    "extracted_name": "Safe Artificial Intelligence Forum Institute",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ff16415191ab",
+    "extracted_name": "Mayur Gupta",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-d44b7990a220",
+    "extracted_name": "SFC Capital",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c537eec005de",
+    "extracted_name": "Leaf AI",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-745af56766ca",
+    "extracted_name": "Impact Academy",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-7208d9c0cd17",
+    "extracted_name": "Pankaj Gupta",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-7ea2d5225546",
+    "extracted_name": "Casa of Ventura County",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-998f458bf636",
+    "extracted_name": "Open Book Publishers",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-5f871c4b6c49",
+    "extracted_name": "Cathay Innovation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-7310f2d359d2",
+    "extracted_name": "SAG-AFTRA Motion Picture Players Welfare Fund",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a383afd3b5cf",
+    "extracted_name": "Greycroft",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-1f6481932491",
+    "extracted_name": "Hiro Capital",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-e181dc89b764",
+    "extracted_name": "HV Capital",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-2996b4dca078",
+    "extracted_name": "Bezos Expeditions",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-589bea6f5cd3",
+    "extracted_name": "Advanced Machine Intelligence",
+    "times_seen": 5
+  },
+  {
+    "suggestion_id": "suggestion-feffeba2f8b9",
+    "extracted_name": "US-based organizations",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-16b33ba57853",
+    "extracted_name": "Martian",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-8fc6ce465a3a",
+    "extracted_name": "AI safety startups",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b14b59141717",
+    "extracted_name": "Technical AI safety researchers",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c7b33fbddaf8",
+    "extracted_name": "AI interpretability researchers",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-101a7fcbc46c",
+    "extracted_name": "Institute for Progress",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-085ed98e7181",
+    "extracted_name": "Advanced AI project developers",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-cfc895a5c44d",
+    "extracted_name": "Chi-Yuan Hsu",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-53bb55fbeb61",
+    "extracted_name": "Global AI Safety Fellowship participants",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-4f816623f9e2",
+    "extracted_name": "Negative Five Ventures",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-95aee8b1e8d8",
+    "extracted_name": "Conjecture Pro",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-57483be8b1ac",
+    "extracted_name": "Centre for the Governance of AI",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-49e06eb35047",
+    "extracted_name": "AI Security Startup Accelerator Batch #2",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a327b81e4619",
+    "extracted_name": "LuminArx Capital Management",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-4ab2e9a7ba6d",
+    "extracted_name": "MATS Program",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-126be5c30a8c",
+    "extracted_name": "Beijing Municipal Education Commission",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-5861664ccc53",
+    "extracted_name": "Ribbit Capital",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-10159e97b3af",
+    "extracted_name": "Coatue",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c83034abec69",
+    "extracted_name": "Ventura Capital",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-117c62b39254",
+    "extracted_name": "CreditEase Fintech Investment Fund",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-d8d0ac06b255",
+    "extracted_name": "A. Poletto & Associates",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-13c8c20e9aba",
+    "extracted_name": "SignalFire",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-9ef6fb5fab84",
+    "extracted_name": "U.S. Senate Committee on Commerce, Science and Transportation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-48cde3a89b8b",
+    "extracted_name": "Broadband Equity, Access, and Deployment Program",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-7a79bd13cafd",
+    "extracted_name": "Viewpoint Ventures",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-43e409d465e3",
+    "extracted_name": "Digital Europe Program",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-998eeefc43bf",
+    "extracted_name": "Horizon Europe",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-726878a17c5b",
+    "extracted_name": "Apply AI Strategy",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-e49b5c7a9e73",
+    "extracted_name": "RAISE",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-86c5d045ac1b",
+    "extracted_name": "Transformation Capital",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c4ee8004b566",
+    "extracted_name": "Shaper Capital",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-3fad339052e3",
+    "extracted_name": "Healthy Ventures",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-836087021c12",
+    "extracted_name": "Valtruis",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-a7ff0dab235b",
+    "extracted_name": "Flex Capital",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-7ffe035f3681",
+    "extracted_name": "Center for AI Governance",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-1b6a3443f30a",
+    "extracted_name": "Gradient",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-7ea191a50ac7",
+    "extracted_name": "MIT School of Science",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-700b2730933c",
+    "extracted_name": "Underdog Labs",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-4ed2f319f1dd",
+    "extracted_name": "Arbital Health",
+    "times_seen": 7
+  },
+  {
+    "suggestion_id": "suggestion-17d79836a6c1",
+    "extracted_name": "Robin and Tim Wentworth",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-923133a52fa7",
+    "extracted_name": "University of Rochester Institute for Data Science",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f7c7829dd24f",
+    "extracted_name": "The Spartan Group",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-3cbd8045aabc",
+    "extracted_name": "J17 Capital",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-2bc16890fd8f",
+    "extracted_name": "Struck Crypto",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-6616d5dcbd23",
+    "extracted_name": "MIT Center for Theoretical Physics",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-044bf56dfff1",
+    "extracted_name": "Manufacturers and Traders Trust Company",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-2cdc9a4d08b2",
+    "extracted_name": "CONTRAFACTUM RESEARCH MANAGEMENT LLC",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-8a3ceacfdcf6",
+    "extracted_name": "James Brake",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-e2b41d035068",
+    "extracted_name": "Stellaris Venture Partners",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-7c8260250085",
+    "extracted_name": "Atlas",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-700e0733cdec",
+    "extracted_name": "Meredith Corporation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a924ae193f08",
+    "extracted_name": "Time Inc.",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-1d27381d4782",
+    "extracted_name": "David and Ruth Norman Family Foundation",
+    "times_seen": 3
+  },
+  {
+    "suggestion_id": "suggestion-55699e7a4ed9",
+    "extracted_name": "researchers (unspecified)",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-8f70e58fd584",
+    "extracted_name": "Fred Zulfa Memorial Scholarship Fund",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-11c05e28d7a7",
+    "extracted_name": "27 projects (unspecified)",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-3ca809c2feb9",
+    "extracted_name": "academic researchers (unspecified)",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a5e28faeb077",
+    "extracted_name": "Intel Capital",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-1ce00db0d910",
+    "extracted_name": "UL Ventures",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a24436005506",
+    "extracted_name": "PivotNorth Capital",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b70a51e5f06a",
+    "extracted_name": "Kyndi",
+    "times_seen": 3
+  },
+  {
+    "suggestion_id": "suggestion-a207a5baf6c4",
+    "extracted_name": "Horizon Europe programme",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-4a9a14dbf435",
+    "extracted_name": "University of Amsterdam",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a4967ac8ddff",
+    "extracted_name": "IVADO",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-c060919391e7",
+    "extracted_name": "University of Arizona",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-783c845a2c0c",
+    "extracted_name": "Stichting Centre for Future Generations",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-8f1bf4af105c",
+    "extracted_name": "Elaine Perlman/Waitlist Zero",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-6985b3782d30",
+    "extracted_name": "Jason Dorsett",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-9f0b04e54470",
+    "extracted_name": "Jane Street Capital",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a52351f31965",
+    "extracted_name": "Civilization Research Initiative",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-074a4a07b416",
+    "extracted_name": "Cameron Colby Thomson",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-7fb6ddd1016f",
+    "extracted_name": "FTX Philanthropies",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-cce8b09d8e39",
+    "extracted_name": "All-Fed",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-55fc52f447a3",
+    "extracted_name": "Lachy Groom",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-77caebd05818",
+    "extracted_name": "Boulton & Watt",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-9338adb27b51",
+    "extracted_name": "NYCR-CDE",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-9d5a910a14fe",
+    "extracted_name": "River Capital",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-19faf1bb25a3",
+    "extracted_name": "Moxie",
+    "times_seen": 7
+  },
+  {
+    "suggestion_id": "suggestion-0fb0ff119ac5",
+    "extracted_name": "Nova Global",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-4cc289f9aa5b",
+    "extracted_name": "RRE",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-04a64ee55f95",
+    "extracted_name": "Creandum",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c7d1523bad42",
+    "extracted_name": "Franklin Templeton",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-02dfcd535af8",
+    "extracted_name": "Coinbase Ventures",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-554140deb9af",
+    "extracted_name": "Framework Ventures",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-3a9023d5efaf",
+    "extracted_name": "Midas",
+    "times_seen": 6
+  },
+  {
+    "suggestion_id": "suggestion-e2d6115c2338",
+    "extracted_name": "Cornwall & Isles of Scilly Growth Hub",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-0be272fc46f6",
+    "extracted_name": "Infocomm Media Development Authority",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-bea9c794c193",
+    "extracted_name": "Digital Trust Centre",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-3d3533e2e889",
+    "extracted_name": "National Research Foundation, Singapore",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-2be47e759ba0",
+    "extracted_name": "Centre for Advanced Technologies in Online Safety",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-eb1461daccad",
+    "extracted_name": "USAID",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-2c5e870d5441",
+    "extracted_name": "Responsible AI programs",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-8978e3aadfb9",
+    "extracted_name": "Atlanta Interdisciplinary Artificial Intelligence (AIAI) Network",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-7adfca3d5e2e",
+    "extracted_name": "AI4Science Center",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-55857bb811bd",
+    "extracted_name": "seed grant recipients",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-fdcc56675743",
+    "extracted_name": "Steve Byrnes",
+    "times_seen": 3
+  },
+  {
+    "suggestion_id": "suggestion-b6072e6a6175",
+    "extracted_name": "Fellowship participants",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-d99b3ed28e9f",
+    "extracted_name": "Project leads or their institutions",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-49b35a7e08b6",
+    "extracted_name": "FIG Fellows",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-fc30c2ce174c",
+    "extracted_name": "Future Impact Group",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-f0c48f799bd6",
+    "extracted_name": "High-impact projects",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-0544e5b399b0",
+    "extracted_name": "Beth Barnes",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c0e0fa51df01",
+    "extracted_name": "National Philanthropic Trust",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ef2412235722",
+    "extracted_name": "CEA donor lottery program",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-66a53c7e58d0",
+    "extracted_name": "Sound Ventures",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a325cf007e35",
+    "extracted_name": "AI science safety program researchers",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-153ea388a0a7",
+    "extracted_name": "Issa Rice",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-e4cf7f264624",
+    "extracted_name": "Wendy Schmidt",
+    "times_seen": 3
+  },
+  {
+    "suggestion_id": "suggestion-4d765e8c3d3e",
+    "extracted_name": "AI2050 fellows",
+    "times_seen": 3
+  },
+  {
+    "suggestion_id": "suggestion-585c8db59f5f",
+    "extracted_name": "International Development Research Centre",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-bc356dea058b",
+    "extracted_name": "Centre for Internet and Society",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-90058d40ac53",
+    "extracted_name": "Responsible Design, Development, and Deployment of Technologies (ReDDDoT) program",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ffd331b33048",
+    "extracted_name": "Experiential Learning in Emerging and Novel Technologies (ExLENT) program",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a81f6689330a",
+    "extracted_name": "Resilient and Intelligent Next-Generation Systems program (RINGS)",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-20c1b5be76c8",
+    "extracted_name": "AI Research Institutes",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-1a9044b67859",
+    "extracted_name": "QIS Research Centers",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a223830755c7",
+    "extracted_name": "Series D investors",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-4f1f4da26817",
+    "extracted_name": "Singapore Telecom",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-cf148f2ed3d5",
+    "extracted_name": "Rethink Robotics",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-34ba604afd92",
+    "extracted_name": "Guanxi",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-7a4c75004993",
+    "extracted_name": "The Audacious Project",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ec99ce30dc23",
+    "extracted_name": "METR",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ab17ce217bd3",
+    "extracted_name": "Blake Borgeson",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-460f3490aca5",
+    "extracted_name": "Egor Krasheninnikov",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-65289cb8b523",
+    "extracted_name": "Talos Network",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-e5a7bf20167f",
+    "extracted_name": "Betaworks Ventures",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-45382bfcfe12",
+    "extracted_name": "Linton Investments",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-af5ecccf5834",
+    "extracted_name": "Whitebox",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-01cfb2eb9643",
+    "extracted_name": "Lupa Systems",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b728b7e775f7",
+    "extracted_name": "Ink",
+    "times_seen": 4
+  },
+  {
+    "suggestion_id": "suggestion-8d5101752b8f",
+    "extracted_name": "global AI safety initiative",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-1b64368e4a68",
+    "extracted_name": "sociotechnical challenges in AI safety",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-1c5236b6e992",
+    "extracted_name": "Fifty Years",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f075b457134d",
+    "extracted_name": "Canadian AI Safety Institute",
+    "times_seen": 3
+  },
+  {
+    "suggestion_id": "suggestion-84765870a9f2",
+    "extracted_name": "Anu Nadella",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-2b741f2cdab7",
+    "extracted_name": "Felicis VC",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-7755e5ccf5c1",
+    "extracted_name": "Tuhu",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-05ebe0325ad4",
+    "extracted_name": "Greylock Discovery Fund",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-16e513cee8c7",
+    "extracted_name": "Gokul Rajaram",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-478cf430e494",
+    "extracted_name": "CUNY Graduate Center",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-752115f45427",
+    "extracted_name": "Kairos",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-79306f65cace",
+    "extracted_name": "AI safety university group organizers",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-829282c3af2f",
+    "extracted_name": "Richard Collins",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-174eaeb789e7",
+    "extracted_name": "Antora Energy",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a020b2b923dd",
+    "extracted_name": "Global Polio Eradication Initiative",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-9079898e5d39",
+    "extracted_name": "Mohr Davidow Ventures",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-7c6cf2412386",
+    "extracted_name": "Nissan Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-7deba3bdd3c7",
+    "extracted_name": "Altman Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b44b184233b1",
+    "extracted_name": "Charles River Ventures",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-791f97a73e36",
+    "extracted_name": "DREAM Charter School",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-3cf243bfbe60",
+    "extracted_name": "Heckscher Foundation for Children",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-30fde358b347",
+    "extracted_name": "DREAM",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a5a00b8ede26",
+    "extracted_name": "Massive Health",
+    "times_seen": 5
+  },
+  {
+    "suggestion_id": "suggestion-ac351748ed86",
+    "extracted_name": "John Kerry",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-5f36ab5df727",
+    "extracted_name": "Mark Dayton",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ee061c435764",
+    "extracted_name": "Martin Olav Sabo",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-14e8042bbfd3",
+    "extracted_name": "Sam Kaplan",
+    "times_seen": 4
+  },
+  {
+    "suggestion_id": "suggestion-06446266c4fa",
+    "extracted_name": "Minnesota Democratic Farmer Labor Party",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-7895ac123f90",
+    "extracted_name": "Nishad Singh",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-025e75518bd0",
+    "extracted_name": "Chapel Hill Transit",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-43969264f099",
+    "extracted_name": "Melissa Bean For Congress",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-4f21e24f5ef8",
+    "extracted_name": "Office of Victims of Crime",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-6a627f9f919a",
+    "extracted_name": "crime victims and domestic human trafficking programs",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ee57b46d5473",
+    "extracted_name": "Michigan Council for Arts and Cultural Affairs",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-7452d66c3c7a",
+    "extracted_name": "Pete Ricketts and family",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-d39498de6488",
+    "extracted_name": "2024 conservative campaigns and causes",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-352976526bac",
+    "extracted_name": "Republican Party of Texas",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-3a47c62babfe",
+    "extracted_name": "The Yellow Rose of Texas Republican Women (DISSOLVED)",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-1f2f63f5d6a6",
+    "extracted_name": "Alexandra Mealer Campaign",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-7dfb7a2edbdc",
+    "extracted_name": "Democratic Party of Oregon",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f37d65b25d33",
+    "extracted_name": "Standard Bank of South Africa",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-47374a65ce50",
+    "extracted_name": "Rand Merchant Bank",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-d3e83a9f1b0a",
+    "extracted_name": "Nedbank of South Africa",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-000a59592316",
+    "extracted_name": "International Finance Corporation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-be09b223c98b",
+    "extracted_name": "Wyden for Senate",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-6a714aad5ba1",
+    "extracted_name": "SUNY Oswego",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-d7424ecd14ed",
+    "extracted_name": "Foundational Questions Institute",
+    "times_seen": 3
+  },
+  {
+    "suggestion_id": "suggestion-6527d6c4b7f5",
+    "extracted_name": "NoHarm.ai",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-18f2741ac3d2",
+    "extracted_name": "development finance institutions",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-0b550952f9e9",
+    "extracted_name": "Higher Life Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a0fbf8c069f8",
+    "extracted_name": "junior and senior doctors",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-85b70a05e381",
+    "extracted_name": "China's National Security Commission",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-37efa1b9a129",
+    "extracted_name": "People's Liberation Army",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-10710300686f",
+    "extracted_name": "China Construction Bank",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a0caa0bd50c4",
+    "extracted_name": "telephone companies",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c15cdd9b1605",
+    "extracted_name": "U.S. universities",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-8cc41e1a54d8",
+    "extracted_name": "Huawei Technologies",
+    "times_seen": 4
+  },
+  {
+    "suggestion_id": "suggestion-4727010b0ff5",
+    "extracted_name": "Harvard",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b3de260a3c70",
+    "extracted_name": "SUNY Polytechnic Institute",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-13ed070478ef",
+    "extracted_name": "Netflix",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f03d5b4a3349",
+    "extracted_name": "Russian Doll production",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-cdf21870bd7f",
+    "extracted_name": "Ryan Zurrer",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a4da837d3ed3",
+    "extracted_name": "Pablo Rodriguez-Fraile",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-4b9e3051db3a",
+    "extracted_name": "Museum of Modern Art",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-bff7e7a88de1",
+    "extracted_name": "Karel Komárek",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-391756d80a73",
+    "extracted_name": "0xCollection",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-3ed4c935fa7b",
+    "extracted_name": "Binghamton University",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-aa3c76c403ef",
+    "extracted_name": "Ministry for Electronics and IT",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-72678ca652cf",
+    "extracted_name": "Frank Castagna",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f13cba0030d0",
+    "extracted_name": "Indian government",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-440f0d10d137",
+    "extracted_name": "AI4Bharat",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-1e7b9aea8b92",
+    "extracted_name": "Jeffrey T. Leek",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-17d23dbd7240",
+    "extracted_name": "Stuart and Molly Sloan Precision Oncology Institute",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-96c5e0a26709",
+    "extracted_name": "investigators at Fred Hutch Cancer Center, University of Washington and Seattle Children's Research Institute",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-600b998d9ef7",
+    "extracted_name": "Real Estate Board of New York PAC",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-4094a2b7125c",
+    "extracted_name": "Rubrik",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-23c2a754cabf",
+    "extracted_name": "Bedrock Data",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-d9500ef8e461",
+    "extracted_name": "8VC Fund VI",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-bd02380746c0",
+    "extracted_name": "8VC Fund V",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-389afaf62946",
+    "extracted_name": "IQ Capital",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-9497c9c9d765",
+    "extracted_name": "Bernard L Schwartz",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-410d4c41fe1d",
+    "extracted_name": "UCLA School of Law",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-89b50ba36571",
+    "extracted_name": "Nuffield Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b5705c6d24da",
+    "extracted_name": "Ada Lovelace Institute",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-06a68602830a",
+    "extracted_name": "Howard and Frances Nostrand",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-e5ad7b324497",
+    "extracted_name": "University of Washington Department of Linguistics",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-7ef4d6d3933d",
+    "extracted_name": "AI Collaborative",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-1dd29641613d",
+    "extracted_name": "Luminate",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-e7e13b33dbb2",
+    "extracted_name": "Centre for the Study of Existential Risk",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-592cc302663c",
+    "extracted_name": "VMware",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-79e3ead651ed",
+    "extracted_name": "Nicira",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-6be5197bd5cb",
+    "extracted_name": "Quova Inc.",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-1cdd412cb703",
+    "extracted_name": "Illuminics Systems",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-08d951b3e051",
+    "extracted_name": "Sesame AI",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-025bef6d3209",
+    "extracted_name": "Benchmark Capital",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-3fc7c9f8b679",
+    "extracted_name": "Ubiquity6",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-5bb3a70fbdeb",
+    "extracted_name": "Drop.io",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-8d0c2491416d",
+    "extracted_name": "VC funding",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-d1aa5e5bc114",
+    "extracted_name": "Sonya Huang's father's company",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-48897d28a105",
+    "extracted_name": "Modern Technical Fund",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-61dc2ebf0871",
+    "extracted_name": "Technical founders",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-44497a0b3b7a",
+    "extracted_name": "Veolia",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-bad4fe9a3ac6",
+    "extracted_name": "Start Fund",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-444b484d4da6",
+    "extracted_name": "Lakestar",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-0a47521e4978",
+    "extracted_name": "Foundation Model Taskforce",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-84615b1a7bd7",
+    "extracted_name": "TicketMaster",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-8449c6d1efe1",
+    "extracted_name": "Songkick",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-8a1db3652fea",
+    "extracted_name": "David H. Koch",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-9328b082a775",
+    "extracted_name": "Novartis",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-bf3ecddf1eda",
+    "extracted_name": "Legatum",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-78198e7ab262",
+    "extracted_name": "MIT",
+    "times_seen": 3
+  },
+  {
+    "suggestion_id": "suggestion-26922833e3ac",
+    "extracted_name": "solar geoengineering researchers",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-bc382176aaa6",
+    "extracted_name": "ARPA-E",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a9ae6758675a",
+    "extracted_name": "Connie Ballmer",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-4076235a47e6",
+    "extracted_name": "National Public Radio",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a8f01d0a86d5",
+    "extracted_name": "City Fund",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-25b5728caf33",
+    "extracted_name": "HBCU-Charter School Partnerships",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-71e4b1ef553b",
+    "extracted_name": "The Logic",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f96cb5f369ce",
+    "extracted_name": "FT Ventures",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-8399e5740562",
+    "extracted_name": "Charter",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-2cfb997a58b3",
+    "extracted_name": "Grace Ministries Int't",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-af46c4d1243e",
+    "extracted_name": "Bert Brodsky",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-70b16f167ec8",
+    "extracted_name": "AP Fund for Journalism",
+    "times_seen": 4
+  },
+  {
+    "suggestion_id": "suggestion-cbadb0541182",
+    "extracted_name": "The Associated Press",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-7a9d97f58fc9",
+    "extracted_name": "United Peace International",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-40b811e60b11",
+    "extracted_name": "Stop Killer Robots",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a705083e9e83",
+    "extracted_name": "Families and Workers Fund",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a0af9f865bf6",
+    "extracted_name": "PATH",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-7988219e1134",
+    "extracted_name": "American Federation of Labor and Congress of Industrial Organizations (AFL-CIO)",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-8a9668a48dbb",
+    "extracted_name": "Thomas P DiNapoli",
+    "times_seen": 5
+  },
+  {
+    "suggestion_id": "suggestion-ce3e99e4f9fc",
+    "extracted_name": "United Association - PPF",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c2ea078c10be",
+    "extracted_name": "International Alliance of Theatrical Stage Employees (IATSE)",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b440255cb690",
+    "extracted_name": "AFL-CIO Technology Institute",
+    "times_seen": 3
+  },
+  {
+    "suggestion_id": "suggestion-12fa59523a8b",
+    "extracted_name": "Next Generation Manufacturing Canada",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-fe7170f02bcb",
+    "extracted_name": "Downsview Aerospace Innovation & Research",
+    "times_seen": 3
+  },
+  {
+    "suggestion_id": "suggestion-712b7efe3a5f",
+    "extracted_name": "The Craig and Christy Smith Foundation",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-1ecfb4bfb1fb",
+    "extracted_name": "VINCENT FAMILY FOUNDATION",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-386f8b0b9172",
+    "extracted_name": "VINCENT-JAMISON FUND",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-e1c57ff1b9b7",
+    "extracted_name": "THE VINCENT FAMILY FUND",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-376f152cb6ca",
+    "extracted_name": "CAMP HOPE",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b0559d8e6867",
+    "extracted_name": "James L Vincent Foundation",
+    "times_seen": 6
+  },
+  {
+    "suggestion_id": "suggestion-c5aeaf9d8692",
+    "extracted_name": "COLGATE UNIVERSITY",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-1e15c214f50a",
+    "extracted_name": "NBC Universal",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-481589ebc0dc",
+    "extracted_name": "Special Olympics Kansas",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b561557263e9",
+    "extracted_name": "Betsy Searle",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-7c9e95ff1b8b",
+    "extracted_name": "United Auto Workers v-Cap",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-d58051877c3a",
+    "extracted_name": "Heylogin",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-27a157d108c9",
+    "extracted_name": "Block Party",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-d09fe774231c",
+    "extracted_name": "Secure AI Labs",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-6a58e366b176",
+    "extracted_name": "George Soros through Open Society Institute",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-3e8807c023e7",
+    "extracted_name": "Alex and Demiana Hanna Pride Scholarship",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-bbd24dfc1a27",
+    "extracted_name": "Cassidy Martin",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-22105d0677a2",
+    "extracted_name": "donor-advised fund",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c2bc07610fb1",
+    "extracted_name": "Ned",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-25336a6f9177",
+    "extracted_name": "Washington State Department of Ecology",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-cb8db387bfe4",
+    "extracted_name": "Washington Department of Ecology",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f8d84743b217",
+    "extracted_name": "Olympic Region Clean Air Agency",
+    "times_seen": 3
+  },
+  {
+    "suggestion_id": "suggestion-bbd83205fdbf",
+    "extracted_name": "West Health Investment Fund, LLC",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f602d4d88e00",
+    "extracted_name": "Minority Business Development Agency",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-449a1fa14ed2",
+    "extracted_name": "MBDA Business Centers and Specialty Centers",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b09261552a20",
+    "extracted_name": "Sandler Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-227aa93eeab0",
+    "extracted_name": "Gary and Mary West",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-bdeca1263641",
+    "extracted_name": "Leon Levy Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ea0f0d3d0df5",
+    "extracted_name": "American Civil Liberties Union",
+    "times_seen": 3
+  },
+  {
+    "suggestion_id": "suggestion-924d1ac55976",
+    "extracted_name": "organizations in the former Soviet Union",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-50f0e006f033",
+    "extracted_name": "advocacy organizations",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ff5a853a1397",
+    "extracted_name": "UCLA Center for Critical Internet Inquiry",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-22febd9c3088",
+    "extracted_name": "Barry Diller",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-639004ec3a92",
+    "extracted_name": "GGV Capital",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ca3b33fb2b3a",
+    "extracted_name": "Northern Light Venture Capital",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-96d877d260a2",
+    "extracted_name": "Drive.ai",
+    "times_seen": 3
+  },
+  {
+    "suggestion_id": "suggestion-790e8da90675",
+    "extracted_name": "Council on Big Data, Ethics, & Society",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-2e5175946c60",
+    "extracted_name": "European Defense Industry Reinforcement Through Common Procurement Act (EDIRPA)",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-2457249e0211",
+    "extracted_name": "European defense industry",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-7fb0a27cdb5e",
+    "extracted_name": "Yuval Noah Harari and Itzik Yahav",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-5d7638d4b74c",
+    "extracted_name": "World Health Organization",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-cb45e72bcba7",
+    "extracted_name": "Sustainable Markets Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-e2d9ac02a915",
+    "extracted_name": "The Message Productions",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-1348c1da2d0a",
+    "extracted_name": "West Wireless Health Institute",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-6baaf0c3f4ff",
+    "extracted_name": "Robert King and Dorothy King",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-92fe445f439b",
+    "extracted_name": "Stanford King Center on Global Development",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-7dbf9a65b193",
+    "extracted_name": "Corporation for National and Community Service's Social Innovation Fund",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c88cc11d0d3b",
+    "extracted_name": "MIT Work of the Future",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a67b516a5a72",
+    "extracted_name": "The Joyce Family Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-573204d09336",
+    "extracted_name": "The Spott Fitness Ltd",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-df10733e8f68",
+    "extracted_name": "Robert Jenrick",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-bfce85b3f7a8",
+    "extracted_name": "Gary Klopfenstein",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-31c488b11fb3",
+    "extracted_name": "Princeton Center for Information Technology Policy",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f37029528513",
+    "extracted_name": "Harvard Ash Center for Democratic Governance and Innovation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f1594623eac4",
+    "extracted_name": "3KVC",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-d302cde00976",
+    "extracted_name": "SAINT THOMAS THE APOSTLE PARISH",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-d5124e7edb4d",
+    "extracted_name": "Whirlscape",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-6eb5aeb62540",
+    "extracted_name": "Nova Scotia",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-1549eba266eb",
+    "extracted_name": "Creative Destruction Lab – Atlantic",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-9f78316653bd",
+    "extracted_name": "Invest Nova Scotia",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-6f275b34ecd0",
+    "extracted_name": "CDL-Atlantic startups",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f7dad522ad49",
+    "extracted_name": "George Soros' Open Society Institute",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-0b0cc6a7c3ce",
+    "extracted_name": "Initiative for Policy Dialogue",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-4969f8ac99b9",
+    "extracted_name": "Thurman Arnold Project",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-8877cac3a16c",
+    "extracted_name": "Allen & Co",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-fa5d1f7e9061",
+    "extracted_name": "Kype Muir Wind Farm",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-651597852243",
+    "extracted_name": "Blackwood and Kirkmuirhill Resilience Group",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-41ee719adab1",
+    "extracted_name": "CodeCombat",
+    "times_seen": 3
+  },
+  {
+    "suggestion_id": "suggestion-a0dc45618066",
+    "extracted_name": "MIT Computer Science and Artificial Intelligence Laboratory",
+    "times_seen": 3
+  },
+  {
+    "suggestion_id": "suggestion-fc4b903ce59a",
+    "extracted_name": "several major donors including Rob Zahra, Quixey, Clippy, Luke Nosek, Edwin Evans, Rick Schwall, Brian Cartmell, Mike Blume, Jeff Bone, Johan Edsträm, Zvi Mowshowitz, John Salvatier, Louie Helm, Kevin Fischer, Emil Gilliam, Rob and Oksana Brazell, Guy Srinivasan, John Chisholm, and John Ku",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-174d3b5fcbee",
+    "extracted_name": "dozens of donors",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-4abf9338f82a",
+    "extracted_name": "Dezernat Zukunft",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-d72498e4d4c1",
+    "extracted_name": "Elihu Rose",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b87c7083a2a2",
+    "extracted_name": "Barack Obama",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-d19389d6c52b",
+    "extracted_name": "Renegade Partners",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-5a2a558c78d3",
+    "extracted_name": "nate",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-e759968ca927",
+    "extracted_name": "Visa",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-07ed5f2729f3",
+    "extracted_name": "Enni Karikoski",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c03a9ab0c91d",
+    "extracted_name": "Harvard Medical School",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-dc5da06ae2bf",
+    "extracted_name": "David and Claudia Harding Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-7690f5f8139b",
+    "extracted_name": "Cambridge University",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-591b66b11758",
+    "extracted_name": "Ripple",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-5e7787d8b2e4",
+    "extracted_name": "UC Berkeley College of Engineering",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-d8f228b507c7",
+    "extracted_name": "Lam Research Corp",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-01ab8fa03040",
+    "extracted_name": "UC Berkeley Marvell Nanofabrication Laboratory",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-fea27ccc927f",
+    "extracted_name": "UC Berkeley-affiliated AI startups",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-0eec3d0cce19",
+    "extracted_name": "New York State Office for People With Developmental Disabilities",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-6b624c29f35b",
+    "extracted_name": "NYU College of Dentistry",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-faffa3084278",
+    "extracted_name": "18 universities and colleges in the Public Interest Technology University Network",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-be290d382b20",
+    "extracted_name": "Rapid-Line Inc.",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a08e8fbdb9aa",
+    "extracted_name": "California General Fund",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-8489084639e1",
+    "extracted_name": "California Civic Media Program",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-84080c9ddabb",
+    "extracted_name": "New America",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-1083aaa16969",
+    "extracted_name": "24 unique Network members",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-96d991979e40",
+    "extracted_name": "Altria Group",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b19511d5c808",
+    "extracted_name": "Amazon.com",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-e51982800ff5",
+    "extracted_name": "The Lutnick Family",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-195b7b2275ba",
+    "extracted_name": "Cameron Winklevoss",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-39cca6b8f5ad",
+    "extracted_name": "Tyler Winklevoss",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-81ebc96c4cce",
+    "extracted_name": "Stephen A. Schwarzman",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-a4bb2d959d61",
+    "extracted_name": "Eugene Clothiaux",
+    "times_seen": 3
+  },
+  {
+    "suggestion_id": "suggestion-005c33dce5d8",
+    "extracted_name": "Adam Schumaker",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-89fffafca94a",
+    "extracted_name": "1000 Dreams Fund",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-c0bf33ee5a31",
+    "extracted_name": "Zoey M.",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-20bb09a677cb",
+    "extracted_name": "Seven locations",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-4b6fea2b70ce",
+    "extracted_name": "Ohio Department of Development",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-735c8313af15",
+    "extracted_name": "11 professionally managed investment funds",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ec3084299949",
+    "extracted_name": "five regional partners",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-79ff3821cd13",
+    "extracted_name": "Ohio Third Frontier Commission",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-fbd54fa31750",
+    "extracted_name": "10 organizations",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-28ca84c8bfba",
+    "extracted_name": "Indiana Economic Development Corporation",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-fecf6c0455c7",
+    "extracted_name": "Silicon Valley billionaires",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c0f908a22f0a",
+    "extracted_name": "Majority Democrats and the Bench",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ca588af3cf38",
+    "extracted_name": "ActBlue donors",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-2cf1733020a4",
+    "extracted_name": "Democratic candidates and groups",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-757f20c0ab43",
+    "extracted_name": "Democratic National Committee",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-c896b8af9217",
+    "extracted_name": "state parties",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-377f77d87176",
+    "extracted_name": "workforce development and education organizations",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c0fbdd02a9db",
+    "extracted_name": "University of Virginia Darden School of Business",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-36d254edb4d3",
+    "extracted_name": "Scott Stephenson",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b4eec279625b",
+    "extracted_name": "University of Virginia School of Data Science",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-2cda80859a88",
+    "extracted_name": "University of Virginia School of Engineering and Applied Science",
+    "times_seen": 3
+  },
+  {
+    "suggestion_id": "suggestion-5126d350899e",
+    "extracted_name": "55 North",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-dc13c9b6594a",
+    "extracted_name": "QMatter",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-145ce0300f1b",
+    "extracted_name": "Advanced Research Projects Agency for Health (ARPA-H)",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-3a7802e4a472",
+    "extracted_name": "Wyss Institute at Harvard University",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-94c65df0f038",
+    "extracted_name": "Semiconductor Research Corporation (SRC)",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ead9170d5462",
+    "extracted_name": "Columbia Engineering",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-1e2d444aeefe",
+    "extracted_name": "HSI Research Fund",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-416563319b05",
+    "extracted_name": "MIT Sloan researchers",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-1d8b8e83b136",
+    "extracted_name": "Tamara Rajaram",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-542483b7725f",
+    "extracted_name": "Chris Chia",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-605167ae2b75",
+    "extracted_name": "Karen Chia",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-03cb9937e314",
+    "extracted_name": "Yu-Ting Kuo",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ad1efac94c18",
+    "extracted_name": "Mindy Hsu",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-85628582c8f8",
+    "extracted_name": "David Lee",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f6ad2b4faa2d",
+    "extracted_name": "MIT Sloan Endowment for Enduring Diversity and Inclusion",
+    "times_seen": 7
+  },
+  {
+    "suggestion_id": "suggestion-fcb69e0f71bf",
+    "extracted_name": "Sad Cat Studios",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-35365cdcd882",
+    "extracted_name": "FoxNext Games",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a6b890d420b3",
+    "extracted_name": "Altered Matter",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-2de9aab30464",
+    "extracted_name": "UK Games Fund",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-e3ae8428ade2",
+    "extracted_name": "Skyline Studios Games",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-dc0339564cbe",
+    "extracted_name": "Downsview Aerospace Innovation & Research (DAIR)",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-62a5e2054567",
+    "extracted_name": "Kapor Center",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-13620f247428",
+    "extracted_name": "Novo Nordisk Foundation",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-635c76f25c77",
+    "extracted_name": "Wellcome",
+    "times_seen": 3
+  },
+  {
+    "suggestion_id": "suggestion-7c25d0c6a447",
+    "extracted_name": "Times readers and subscribers",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-6fd37f6a2759",
+    "extracted_name": "The New York Times Communities Fund",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b43199899486",
+    "extracted_name": "Indie Fund",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-05170c255add",
+    "extracted_name": "Double Dusk",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-18931953ba41",
+    "extracted_name": "GEM Capital",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-14d43dfafd83",
+    "extracted_name": "Periodic Labs",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-0c3078a3ef7d",
+    "extracted_name": "nonprofits, academic institutions, and social enterprises",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-eadb074178d8",
+    "extracted_name": "Montreal Institute for Learning Algorithms (MILA)",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-cf10206cdac1",
+    "extracted_name": "Felicis",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-0d50481a3b62",
+    "extracted_name": "Tesla Motors",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b0b920f4c455",
+    "extracted_name": "ARK Investment Management",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b184a5dfa6b4",
+    "extracted_name": "Future Builders initiative",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-8a5c86d22b0b",
+    "extracted_name": "Breakthrough Energy's Catalyst Program",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c9215f37a90d",
+    "extracted_name": "Invest America",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-cd347ad9c719",
+    "extracted_name": "Blavatnik Fund for Innovation at Yale",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-fee91f0782ef",
+    "extracted_name": "Omia Agribusiness Development Group Limited",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-4c37a10037fc",
+    "extracted_name": "UN Capital Development Fund",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-3e83c6636ccf",
+    "extracted_name": "SokoFresh",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-4dca60f2fd75",
+    "extracted_name": "Government of the People's Republic of China",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-cad9b7335128",
+    "extracted_name": "United Nations Peace and Development Trust Fund",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f6e30c3e1144",
+    "extracted_name": "Mastercard Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-5fef81d5ed81",
+    "extracted_name": "UNHCR",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-94fc21a4cff9",
+    "extracted_name": "Orion Pharma",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-e769279b3e82",
+    "extracted_name": "European Investment Bank Group",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-1a9a788a30df",
+    "extracted_name": "renewable energy projects",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c05c2990637e",
+    "extracted_name": "Stewart and Lynda Resnick",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-2f35816707c5",
+    "extracted_name": "UCLA Health",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c2afeef22658",
+    "extracted_name": "Patient-Centered Outcomes Research Institute",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-234bc93193f2",
+    "extracted_name": "Johns Hopkins Bloomberg School of Public Health",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b064a4ab9b36",
+    "extracted_name": "Federal officials",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-7e04b91e6f94",
+    "extracted_name": "Jhpiego",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-32a05f7cd401",
+    "extracted_name": "James and Heather Gills",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-fcb8575817b3",
+    "extracted_name": "Wilmer Eye Institute, Johns Hopkins Medicine",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c365d5ee86fd",
+    "extracted_name": "The Mark Foundation for Cancer Research",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f6bd2c22922e",
+    "extracted_name": "The Johns Hopkins University",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-1aaf519fc599",
+    "extracted_name": "Humana Inc.",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-3724258e5fba",
+    "extracted_name": "The Humana Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-8cab826c53f7",
+    "extracted_name": "Arcadia Fund",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-032fdd39f623",
+    "extracted_name": "American University Washington College of Law",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f69b6b63408f",
+    "extracted_name": "UAlbany's Center for Advanced Technology in Nanomaterials and Nanoelectronics",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-03532851694f",
+    "extracted_name": "Tony Gorman",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-1961bf3858e0",
+    "extracted_name": "USC School of Cinematic Arts",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-bed84e893c21",
+    "extracted_name": "LI2: Lego Institute for Lego Investigation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c5e05f11fce6",
+    "extracted_name": "Benioff Endowment",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-723c7a10eb37",
+    "extracted_name": "Dr. Bruce I. Jacobs",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-e779f55113c8",
+    "extracted_name": "The Wharton School of the University of Pennsylvania",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-bf056e4d829b",
+    "extracted_name": "Asbjornson Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-707cbe4305d4",
+    "extracted_name": "University of Tulsa",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-77ab184751c5",
+    "extracted_name": "Norvig Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-d30b260bac3e",
+    "extracted_name": "Michael Dell",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-e0372655a11c",
+    "extracted_name": "CDTI",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-7b5ee4b3a63d",
+    "extracted_name": "Susan Dell",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b61e34d49f8e",
+    "extracted_name": "Trump accounts program",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-08948c921c05",
+    "extracted_name": "Timothy Mellon",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a6a6075f98da",
+    "extracted_name": "Tim Mellon",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-218f5ab703b0",
+    "extracted_name": "Acadiana Cares, Inc.",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-e8e1ac034f83",
+    "extracted_name": "Donald Trump military salary payment",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-0db254895c54",
+    "extracted_name": "FEMA",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-d2c1b3ad303e",
+    "extracted_name": "Ochsner Medical Center",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c4e143a00e56",
+    "extracted_name": "Louisiana Department of Health",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b6890adefb7f",
+    "extracted_name": "Total Community Action, Inc.",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-9edc4de7e906",
+    "extracted_name": "The Policy and Research Group",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-373bcbd4bf51",
+    "extracted_name": "Louisiana State Office of Behavioral Health",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-1563872babae",
+    "extracted_name": "Louisiana State University A&M",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-2fe08e6309d9",
+    "extracted_name": "Department of Health and Human Services",
+    "times_seen": 6
+  },
+  {
+    "suggestion_id": "suggestion-1402e788c77c",
+    "extracted_name": "Shell Chemicals",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-61579dcf07ac",
+    "extracted_name": "Newton College students project",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-cdbafd84d23b",
+    "extracted_name": "Matthew Botvinick",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-9dd0acb87d7c",
+    "extracted_name": "GRAND RAPIDS STUDENT ADVANCE FDTN",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-72dc8a572871",
+    "extracted_name": "DIOCESE OF GRAND RAPIDS",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b8175fdd3d9d",
+    "extracted_name": "John C & Nancy G Kennedy Family Foundation",
+    "times_seen": 4
+  },
+  {
+    "suggestion_id": "suggestion-6cfaa0ba26fb",
+    "extracted_name": "GRAND VALLEY STATE UNIVERSITY",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-51172681fa11",
+    "extracted_name": "Daniel Patrick O'Day",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-58019dbb395a",
+    "extracted_name": "Cory Gardner for Senate",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-78740f94739b",
+    "extracted_name": "National Aeronautics and Space Administration",
+    "times_seen": 3
+  },
+  {
+    "suggestion_id": "suggestion-a1b7eb7ddae3",
+    "extracted_name": "Sunflower Capital",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-be771bb4a70f",
+    "extracted_name": "Essence VC",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-6c8f4e88ef78",
+    "extracted_name": "Letta",
+    "times_seen": 3
+  },
+  {
+    "suggestion_id": "suggestion-2e9eb8ae8d42",
+    "extracted_name": "The House Fund",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-87ebb5063565",
+    "extracted_name": "Berkeley AI researchers",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ad75b988ebc2",
+    "extracted_name": "Alpha-Omega",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-6c64dc6d09d5",
+    "extracted_name": "leading think tanks and academic institutions",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b1def018873d",
+    "extracted_name": "eligible UK research organizations",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-beb636e05c1a",
+    "extracted_name": "Benjamin Haley",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b98de157a198",
+    "extracted_name": "Conseil de recherches en sciences naturelles et en génie du Canada",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-1e5be5089743",
+    "extracted_name": "Jean-François Lapierre",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f34208bc0383",
+    "extracted_name": "Alabama First leadership PAC",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-165f8ec1109a",
+    "extracted_name": "Rhett Marques",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-44f522843ab8",
+    "extracted_name": "SAIL-Toyota Center for AI Research",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-9884d60b1689",
+    "extracted_name": "Corporate members",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ef886709134b",
+    "extracted_name": "Stanford AI Lab",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-5b4fb77e2199",
+    "extracted_name": "Sebastian Man",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f479122a311f",
+    "extracted_name": "MIT Stephen A. Schwarzman College of Computing",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-ea0ca2f2712c",
+    "extracted_name": "Mark Zuckerberg and Priscilla Chan",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b7f1bbc9b79f",
+    "extracted_name": "Kempner Institute for the Study of Natural and Artificial Intelligence",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c8b7fdbc3794",
+    "extracted_name": "Central Park Conservancy",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-7b9689a2819b",
+    "extracted_name": "Jewish Communal Fund",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-40ed6e0cb6d6",
+    "extracted_name": "Thomas L. Kempner Jr Foundation",
+    "times_seen": 3
+  },
+  {
+    "suggestion_id": "suggestion-3410d25b3a83",
+    "extracted_name": "Mount Sinai Hospital",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-018400d960c1",
+    "extracted_name": "Center for Medicare & Medicaid Innovation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-5b64510d1e09",
+    "extracted_name": "Project ECHO",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-1cedf2994ad7",
+    "extracted_name": "Never Back Down Inc.",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-39539ec1fe64",
+    "extracted_name": "Florida Department of Commerce",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-224ddeb75843",
+    "extracted_name": "Indian River State College",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-518bb8b66754",
+    "extracted_name": "NextEra Energy Inc.",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c7cdc535767e",
+    "extracted_name": "Restore Our Nation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-70d2ceab76d2",
+    "extracted_name": "Kent Godfrey",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-3808ae8698e6",
+    "extracted_name": "Jules. At Your Service.",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-6c5359beed81",
+    "extracted_name": "The Thomas L. Pearson and The Pearson Family Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-7d7f56dced00",
+    "extracted_name": "University of Chicago",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-8f8e6ea8f5db",
+    "extracted_name": "Vanderbilt University's College of Connected Computing",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-67678cbf0c4f",
+    "extracted_name": "NCInnovation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-5c7bdf5e63c7",
+    "extracted_name": "UNC System institutions",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-4eb575e70880",
+    "extracted_name": "Goodnight Educational Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-beb4f732f1c7",
+    "extracted_name": "C.D. Spangler Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-02d977da4d33",
+    "extracted_name": "UNC System",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-ca599985c37c",
+    "extracted_name": "UNC School of Civic Life and Leadership",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-1023efe3d4f2",
+    "extracted_name": "a16z",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-90a685ba024c",
+    "extracted_name": "Micron Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f2ed4886e20f",
+    "extracted_name": "Ericsson",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-8fc2dba43f0f",
+    "extracted_name": "CIRM",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f3f521a850ec",
+    "extracted_name": "University of California, Santa Barbara",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-71adfab19ac5",
+    "extracted_name": "Alexander von Humboldt Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-087be869c3d2",
+    "extracted_name": "Francis Joseph Doyle III",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-bb28df2fcf6d",
+    "extracted_name": "University of Houston",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-fe5cbb514029",
+    "extracted_name": "Dr. Lynn Hassan Jones",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-d46237e5be9c",
+    "extracted_name": "Brad D. Smith and Alys Smith",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-edb807766a24",
+    "extracted_name": "Marshall University",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-2055664dd367",
+    "extracted_name": "Brad Smith and Alys Smith",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-967f44f196ab",
+    "extracted_name": "West Virginia University",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-4fb8b6de1de1",
+    "extracted_name": "Brad Smith and Kathy Smith",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-dad5327b2eae",
+    "extracted_name": "Rotary All-User Playground project",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-4f364b00e3db",
+    "extracted_name": "CharacterAI",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-19dd31ffd7bb",
+    "extracted_name": "Two Sigma",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-9eaa66cd9a2c",
+    "extracted_name": "Susa Ventures",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-6b75aa4a423d",
+    "extracted_name": "Montreal Canadiens Children's Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-613ee9b81460",
+    "extracted_name": "57 organizations working for the well-being of children",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-226a7510f489",
+    "extracted_name": "Quartz Bot Studio",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b9dcc2f108c3",
+    "extracted_name": "Freedman Consulting, LLC",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-d1b0a7872653",
+    "extracted_name": "Craig Newmark",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-e9a8983aaa17",
+    "extracted_name": "Dragoneer Investment Group",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-dc00be6a5d2c",
+    "extracted_name": "International Peace Institute",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-2133b9cf2801",
+    "extracted_name": "Kenneth and Elaine Langone",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a16c68fabcc8",
+    "extracted_name": "NYU Long Island School of Medicine",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b38c122721b5",
+    "extracted_name": "NYU Langone Health",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-488df5386a9a",
+    "extracted_name": "Grant funding",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-40b6d4227308",
+    "extracted_name": "NYU Grossman School of Medicine",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c08c62e81a69",
+    "extracted_name": "Insitro",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-33ad263d8f89",
+    "extracted_name": "U.S. Army Research Laboratory",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-14cefbcb9185",
+    "extracted_name": "Alfred University",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-cedf36cded7b",
+    "extracted_name": "Aligned Data Centers",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-59bba357145c",
+    "extracted_name": "Binance",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-d71810dc5eee",
+    "extracted_name": "Khazna",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ccad08c22cf2",
+    "extracted_name": "Individuals (donors)",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-3d3a156dc981",
+    "extracted_name": "The Committee to Elect Robbie Goldstein",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-357e7f3d9f82",
+    "extracted_name": "Green Climate Fund",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-0677dcfe1ffc",
+    "extracted_name": "Allianz Global Investors",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-809213cb6bdb",
+    "extracted_name": "Australian Ethical",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b621c4bb40aa",
+    "extracted_name": "Coefficient Giving via Silicon Valley Community Foundation",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-e3b1f3d08ee5",
+    "extracted_name": "Riley Children's Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-74a8ce1be6c7",
+    "extracted_name": "Samerian Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-06883202708c",
+    "extracted_name": "Riley Children's Health",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-47d5efb1ad8b",
+    "extracted_name": "Herbert Simon Family Foundation",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-0a9da20250fb",
+    "extracted_name": "DonorsChoose.org projects",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c7d3b156d7f5",
+    "extracted_name": "TripleHop Technologies",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-cf8c44fa7e01",
+    "extracted_name": "Air Force Research Lab",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a07b17d84b01",
+    "extracted_name": "Patrick F. Cadigan Family Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ead6b1db43a0",
+    "extracted_name": "Patrick F. Cadigan",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-9b9a1ef9827b",
+    "extracted_name": "Boston College",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-2dae7b70efdc",
+    "extracted_name": "Naval Sea Systems Command",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-d4a681deef5a",
+    "extracted_name": "Washington Headquarters Services",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-6e6e099b6499",
+    "extracted_name": "Robert and Arlene Kogod",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-77d2165fbb47",
+    "extracted_name": "Kogod School of Business at American University",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-eac875af8aa6",
+    "extracted_name": "77th Precinct United Clergy Council",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c32cb6731dc8",
+    "extracted_name": "Regara",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-1707f0b024eb",
+    "extracted_name": "AngelNV",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-02dbfad8bb3b",
+    "extracted_name": "RevReply",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-66aa65818cc7",
+    "extracted_name": "State Small Business Credit Initiative",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-7e3d8bdf87d2",
+    "extracted_name": "three Las Vegas-based startups",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b1f0b1a72bca",
+    "extracted_name": "May and Stanley Smith Charitable Trust",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-97bd0e6d751d",
+    "extracted_name": "USC School of Social Work",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-92d4e24ccbb0",
+    "extracted_name": "Sony Interactive Entertainment",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-1efdfb15586d",
+    "extracted_name": "Harold L. and Heather E. Jurist NC '64 Endowed Fund",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-21d3e69117e7",
+    "extracted_name": "Tulane Center of Excellence in Artificial Intelligence",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-4a6e1b5ca25b",
+    "extracted_name": "USC Games",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-8c24a7398719",
+    "extracted_name": "Deerfield Capital Management",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a12d953b6b22",
+    "extracted_name": "United Health Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-e4225382969d",
+    "extracted_name": "UNC",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-f5fc41681a41",
+    "extracted_name": "Shuford family",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ed6f1120aeb1",
+    "extracted_name": "University of North Carolina at Chapel Hill",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-96dc931e0ca6",
+    "extracted_name": "Penn Engineering alumni and donors",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-3667dbaecee5",
+    "extracted_name": "University of Pennsylvania School of Engineering and Applied Science",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-d299816e3fe6",
+    "extracted_name": "Nestlé Purina PetCare Company",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-87d2a55a2cf2",
+    "extracted_name": "University of Pennsylvania School of Veterinary Medicine Working Dog Center",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f21b737525ca",
+    "extracted_name": "Community-Engaged Artificial Intelligence and Data Science Summer Research Program",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-0029128508a6",
+    "extracted_name": "Fallon Aidoo",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a9012e87c416",
+    "extracted_name": "federal agencies",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-425eafed5829",
+    "extracted_name": "Steve Blank",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-5d6fc3038c71",
+    "extracted_name": "Bertelsmann",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-08c050bfdc69",
+    "extracted_name": "Baillie Gifford",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-e615505227ff",
+    "extracted_name": "Google Ventures",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-598b0c51935c",
+    "extracted_name": "States Signatories",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-d5e3ed780cf2",
+    "extracted_name": "Open Textbook Pilot Program",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-ca6e315b0f26",
+    "extracted_name": "City of Elmwood",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-97e7bf28bf9e",
+    "extracted_name": "City of Kinmundy",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f63725709dbe",
+    "extracted_name": "Guilford Township",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-4421056641df",
+    "extracted_name": "Illinois Valley Community College Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-daf1f25fdd04",
+    "extracted_name": "Battelle Energy Alliance",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-aa39660cd3f0",
+    "extracted_name": "recognized 501(c)(3) nonprofits",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-43d410aac625",
+    "extracted_name": "Donald J. Trump Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-20509160f861",
+    "extracted_name": "And Justice for All",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-86e6e311497e",
+    "extracted_name": "Federal Communication Commission",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-3b289b97c55a",
+    "extracted_name": "rural Louisiana",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c211f53780bf",
+    "extracted_name": "Alberta Machine Intelligence Institute",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-e7518d52887c",
+    "extracted_name": "ServiceNow Ventures",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-92d1b783158c",
+    "extracted_name": "Plat4Mation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-7167a4b86aa5",
+    "extracted_name": "McGill team",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-e0d6c1350df0",
+    "extracted_name": "FRQS",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-8fdb8a1f6fb4",
+    "extracted_name": "McGill researchers",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a2639d8aa81d",
+    "extracted_name": "Ayar Third Investment Company",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-948278737ada",
+    "extracted_name": "Lucid",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-6aa3b676998c",
+    "extracted_name": "Royal Commission for AlUla",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-2930ff5040c6",
+    "extracted_name": "Smithsonian National Zoo and Conservation Biology Institute",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b64587fb6871",
+    "extracted_name": "Cornell Duffield College of Engineering",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-5341613962ca",
+    "extracted_name": "ADIA",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-4fbddb45c863",
+    "extracted_name": "Temasek",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a0f5dc61f594",
+    "extracted_name": "Ontario Teachers",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-8b0f59e188fa",
+    "extracted_name": "Australian Super",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f996ea54a2ef",
+    "extracted_name": "AIIB",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b023b39c07dc",
+    "extracted_name": "HDFC",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c8f06bd6d903",
+    "extracted_name": "Kotak Mahindra Bank",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-52cc75641406",
+    "extracted_name": "Axis Bank",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-bee4f75d30e5",
+    "extracted_name": "ICICI Bank",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-e8b7a48594d7",
+    "extracted_name": "National Investment and Infrastructure Fund",
+    "times_seen": 10
+  },
+  {
+    "suggestion_id": "suggestion-6e009451f99d",
+    "extracted_name": "John and Shirley Berry",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-b6f2e2d3a155",
+    "extracted_name": "Northern Michigan University",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-a15a44e94f08",
+    "extracted_name": "U.S. Election Assistance Commission",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-31d12017a273",
+    "extracted_name": "Secretary of State of Arizona",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-0e89820860c3",
+    "extracted_name": "Benchmark",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-eb4a8960d115",
+    "extracted_name": "Robert A. and Patricia M. Long",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f4985c5d46bc",
+    "extracted_name": "The Ohio State University",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-189220641bbc",
+    "extracted_name": "Robert And Patricia Long Family Foundation",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-f9a987777b55",
+    "extracted_name": "preselected charitable organizations",
+    "times_seen": 3
+  },
+  {
+    "suggestion_id": "suggestion-14b7f26b7be5",
+    "extracted_name": "U.S. AI Safety Institute",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-21ae426f3cfd",
+    "extracted_name": "Frontier AI Taskforce",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-cab41e4075c6",
+    "extracted_name": "UK registered organisations",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b7191f29ff87",
+    "extracted_name": "UK registered SME businesses",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c9d1f8c4b8d4",
+    "extracted_name": "Frontier AI demonstrator projects",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-304b5d7eb263",
+    "extracted_name": "Jameel Clinic AI Hospital Network",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-aa2be35854d5",
+    "extracted_name": "IBM Research",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-d46384ac50e6",
+    "extracted_name": "MIT-IBM Watson AI Lab",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-bc1a72ccd89e",
+    "extracted_name": "Cornell NanoScale Science and Technology Facility",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-7444e2a489ee",
+    "extracted_name": "Daimler-Benz AG",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-dc7b31cf579f",
+    "extracted_name": "Margaret Mitchell House Inc.",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ec80eba460f5",
+    "extracted_name": "World Bank",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-567ea584abb3",
+    "extracted_name": "Pakistan government",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-561575dc761a",
+    "extracted_name": "Future Forward PAC",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-8ec6c42ed50e",
+    "extracted_name": "Mike Bloomberg",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-14408c8c10b3",
+    "extracted_name": "David Ellison",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-3182129651c6",
+    "extracted_name": "Georgia Department of Community Affairs / Invest Georgia",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-540b8834501a",
+    "extracted_name": "Johnson Energy Storage",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-9371b3d0d72f",
+    "extracted_name": "Other donors",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-9c07ff3d9c5c",
+    "extracted_name": "ACX Grants program",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f8959601f30d",
+    "extracted_name": "Effective Altruism Funds: Long-Term Future Fund",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a625ba5be23b",
+    "extracted_name": "Kaarel Hänni, Kay Kozaronek, Walter Laurito, and Georgios Kaklmanos",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-35d8688e5bb4",
+    "extracted_name": "Dr. Florian Wimmers",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-bb9190858781",
+    "extracted_name": "Dr. Claire Vernade",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f56c6ca89db0",
+    "extracted_name": "German federal government",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-48366c9cafa0",
+    "extracted_name": "State of Berlin",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ddbfd48d0cc5",
+    "extracted_name": "Berlin Institute for the Foundations of Learning and Data (BIFOLD) at Technische Universität Berlin",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-a671d7932488",
+    "extracted_name": "Einstein Center for Youth Mental Health",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-d11497d57c97",
+    "extracted_name": "MATH+ at Technische Universität Berlin",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-e883da666daa",
+    "extracted_name": "Dow Jones",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-3e990d3ed45a",
+    "extracted_name": "Next Gen Personal Finance",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-3a6776deabf2",
+    "extracted_name": "Jeffrey Yass",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-36d15ddad3f4",
+    "extracted_name": "Keystone Renewal PAC",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-ab534fab42a4",
+    "extracted_name": "Federal Railroad Administration",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-49d51cd481cf",
+    "extracted_name": "Gulf Coast Rail",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c946621ac36b",
+    "extracted_name": "U.S. Economic Development Administration",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-c62eefcbd836",
+    "extracted_name": "City of Manchester",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f19c15477aba",
+    "extracted_name": "Economic Development Agency",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-6b58d8192308",
+    "extracted_name": "City of Nashua",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-aaec50f9c306",
+    "extracted_name": "Keene Family YMCA",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-58e80788fbc2",
+    "extracted_name": "Portman Center for Policy Solutions",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-e1c319d52445",
+    "extracted_name": "Donald M Casey Jr",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-06a359e564bd",
+    "extracted_name": "Greg D Carmichael",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-7c659181d965",
+    "extracted_name": "David B Dillon",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b86196949c52",
+    "extracted_name": "Portman for Senate Committee",
+    "times_seen": 3
+  },
+  {
+    "suggestion_id": "suggestion-3b32bd15605d",
+    "extracted_name": "Kenneth Griffin",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f73e90f26b15",
+    "extracted_name": "Linda McMahon",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-3b83105721d3",
+    "extracted_name": "Fighting for Ohio Fund",
+    "times_seen": 3
+  },
+  {
+    "suggestion_id": "suggestion-33a5c7d69fd4",
+    "extracted_name": "Northeast Dairy Business Innovation Center",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-5c8d23bb8993",
+    "extracted_name": "U.S. Environmental Protection Agency",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-d40858698da8",
+    "extracted_name": "Institute for Sustainable Communities",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-2b6598a0a4be",
+    "extracted_name": "Deborah Simon",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-98bbf7d3a3fa",
+    "extracted_name": "Reinier Beeuwkes",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-524d3416baf2",
+    "extracted_name": "Catherine Cortez Masto for Senate",
+    "times_seen": 3
+  },
+  {
+    "suggestion_id": "suggestion-c67df0e10b6a",
+    "extracted_name": "U.S. Department of the Treasury",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-37f6fe1abc8a",
+    "extracted_name": "Las Vegas Community Investment Corporation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-87ad89493e46",
+    "extracted_name": "Jim Banks' Hoosier Leadership For America",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-d051a2650a5f",
+    "extracted_name": "Conservative candidates in Indiana Senate primaries",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-bdc8045dc2e0",
+    "extracted_name": "American Leadership PAC",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-53b87bf87b4a",
+    "extracted_name": "Jim Banks' colleagues and Republican candidates",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-18c073e21ea3",
+    "extracted_name": "United States Department of the Treasury",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-361e161f45bd",
+    "extracted_name": "Sicangu Fund",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-d02bfe89010a",
+    "extracted_name": "Houchens Industries, Inc. Political Action Committee Houchens Pac",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-cf300d89e99a",
+    "extracted_name": "Friends of John Thune",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-79eaf8a82443",
+    "extracted_name": "William C. (Bill) Morris",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-63072965a036",
+    "extracted_name": "Nonprofit Security Grant Program",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-277054a89908",
+    "extracted_name": "YALSA",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-bd421ef97971",
+    "extracted_name": "UK Sovereign AI Unit",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-05a6d28ffa1b",
+    "extracted_name": "Encode: AI for Science Fellowship",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b55e1037cf05",
+    "extracted_name": "AT&T",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-0cdcb39190cc",
+    "extracted_name": "Western Electric Company",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-73e4287f4749",
+    "extracted_name": "Western Electric",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-794cb58eb6e9",
+    "extracted_name": "AT&T R&D organization",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a4861b48ff04",
+    "extracted_name": "AT&T Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a62c11eb3792",
+    "extracted_name": "AT&T Ph.D. fellowship programs",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-46168e53bab6",
+    "extracted_name": "Michael Cohen",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-13fd7ae4b128",
+    "extracted_name": "Huo Family Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-d74e32244424",
+    "extracted_name": "Center for Information Technology Policy",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a4d57375a3da",
+    "extracted_name": "Joint United Nations Program for HIV/AIDS",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c39bf047f41a",
+    "extracted_name": "Digital Cooperation Fund",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-8bc02d9b086b",
+    "extracted_name": "Advisory Body on Artificial Intelligence",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-4ae219401eb1",
+    "extracted_name": "British Standards Institution",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f5f7c4ac87be",
+    "extracted_name": "U.S. Department of Housing and Urban Development",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-859993cd1923",
+    "extracted_name": "Foster Youth to Independence program",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b10d4d66ed1a",
+    "extracted_name": "Sovereign wealth fund of Oman",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-549dcb51f62f",
+    "extracted_name": "Atlantic Bridge Ventures",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-2bfea8516893",
+    "extracted_name": "Anna Adams",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-4f17ed309322",
+    "extracted_name": "The University of Kansas Health System",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-82046d5abf4b",
+    "extracted_name": "Travis Adams",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-0efdc327d215",
+    "extracted_name": "Arkansas Tech University",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-fc568c215cd5",
+    "extracted_name": "67th Precinct Clergy Council",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-7c11fb5d7c2a",
+    "extracted_name": "Pulitzer Center on Crisis Reporting",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-5655bcfc66c2",
+    "extracted_name": "NYC Housing Preservation and Development",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-9d5d3d36421e",
+    "extracted_name": "Tech Prep Solutions",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-e5d42ed35d18",
+    "extracted_name": "Carey Gabay Foundation",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-5adf66e6608a",
+    "extracted_name": "American Council of Minority Women, Inc.",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-607195ec44f2",
+    "extracted_name": "Bridgeway Capital",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-0ed08fb476c6",
+    "extracted_name": "U.S. Department of the Treasury's CDFI Fund",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-b72060e7fd6c",
+    "extracted_name": "Invest PGH",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-5e667d904042",
+    "extracted_name": "ST Engineering",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-e6f8aba6de1e",
+    "extracted_name": "Sheldon and Miriam Adelson",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-510518929200",
+    "extracted_name": "Janus Technologies",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-99bc901939a2",
+    "extracted_name": "Robert McNair",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-cc4478432fc7",
+    "extracted_name": "Neville Roy Singham",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-9ea7a345e190",
+    "extracted_name": "network of nonprofits and shell companies",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ba1ce961a0f5",
+    "extracted_name": "California Air Resources Board",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-bc6c5a2be2a3",
+    "extracted_name": "Janus Electric Holdings Ltd",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-1019f4a68604",
+    "extracted_name": "J Herrmann",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-238561a7a119",
+    "extracted_name": "Play Framework",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-140f451139f3",
+    "extracted_name": "BayBG",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-0a3de87d8198",
+    "extracted_name": "Herrmann's Manufaktur",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-3ca74b3bef7a",
+    "extracted_name": "Stem AI",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-4fe6033154f2",
+    "extracted_name": "Avalon Ventures",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-97e5166a1cd1",
+    "extracted_name": "TPG",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f67a1dc78c35",
+    "extracted_name": "The Rise Fund",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-1f24f70486e9",
+    "extracted_name": "Evan Williams",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-3ca3c8272e57",
+    "extracted_name": "Allen and Company",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-babc32629da5",
+    "extracted_name": "Advance Publications",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ee7eed050082",
+    "extracted_name": "Rethink Education",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-42a5a86086ba",
+    "extracted_name": "Rethink Impact",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f4cfefe5c34b",
+    "extracted_name": "EA Funds",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-ed11e288ed91",
+    "extracted_name": "other effective charities",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-4f2cf4511fc3",
+    "extracted_name": "USC Gould School of Law",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b7054779cf6e",
+    "extracted_name": "Child Advocates of Silicon Valley",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-10a33e0a821f",
+    "extracted_name": "Andon Labs",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-aac5dbd6116b",
+    "extracted_name": "Lucid Computing",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-2f2a4d83cda9",
+    "extracted_name": "Miami University",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c43687caac96",
+    "extracted_name": "Point of Pride",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-aa4c231348ed",
+    "extracted_name": "Juliana",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-669634d930d6",
+    "extracted_name": "Effective Altruism Australia",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-04027119c3fb",
+    "extracted_name": "effective charities helping the global poor",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a311e8aed67b",
+    "extracted_name": "Hexcel Corp.",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-19cfd07084bc",
+    "extracted_name": "Wichita State University's National Institute for Aviation Research",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-701b29b2386b",
+    "extracted_name": "Effective Giving",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b083f140f7d5",
+    "extracted_name": "Effective Altruism Netherlands",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-3103fb7db901",
+    "extracted_name": "LG AI Research",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-274037f123b4",
+    "extracted_name": "University of Michigan Computer Science and Engineering",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b52d6ba5de43",
+    "extracted_name": "TimothyTelleenLawton",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-0f9604506b8a",
+    "extracted_name": "Epidemic Forecasting",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f54e549308a7",
+    "extracted_name": "Research to Prevent Blindness",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-273c01dd57b3",
+    "extracted_name": "Douglas Raymond S MD PhD",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c15592d4e1e8",
+    "extracted_name": "Janus Henderson Investors US LLC",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-3caa9fbb3629",
+    "extracted_name": "Ray Therapeutics, Inc.",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-6b8f59c9db68",
+    "extracted_name": "The Launch Sequence",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-e64b71fdfb0a",
+    "extracted_name": "Proposal authors",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f80e6507f90e",
+    "extracted_name": "Research affiliates",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-e9d869063b47",
+    "extracted_name": "Advanced Research & Invention Agency",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-72177973c51e",
+    "extracted_name": "AI safety programme",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-3572c7b03ec3",
+    "extracted_name": "Lead Investors (identities unclear)",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-204646ff1257",
+    "extracted_name": "The Jenny Project",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-d6ac0f33e21e",
+    "extracted_name": "Robert Huber",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-620674c7d090",
+    "extracted_name": "Greater Green Bay Community Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f51d4d9ed975",
+    "extracted_name": "Green Bay West High School graduates",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-eee32977c875",
+    "extracted_name": "ASRC Federal Data Network Technologies",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-8aa991c4dc1b",
+    "extracted_name": "ASRC Federal",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-d1cc3a837247",
+    "extracted_name": "American Heart Association",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-8b5f00872754",
+    "extracted_name": "Eclipse Ventures",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-8f8407c822f8",
+    "extracted_name": "Two Sigma Ventures",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-8f4a0aaa62c4",
+    "extracted_name": "Spell",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-f596997355d3",
+    "extracted_name": "CapitalG",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-fd12cc3eaeb1",
+    "extracted_name": "Nikesh Arora",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-d8b4a70ca326",
+    "extracted_name": "National Football League",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ca47c658dfff",
+    "extracted_name": "Foundation for the National Institutes of Health",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-6457c03eddba",
+    "extracted_name": "group of highly experienced financial services investors and executives led by Gunnar Overstrom, Partner at Corsair Capital",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-688a8256abaa",
+    "extracted_name": "Deep Labs",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-79e67590536e",
+    "extracted_name": "Mayfield Fund",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-66ae9b449678",
+    "extracted_name": "Abstract Ventures",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a9bfa9cb3192",
+    "extracted_name": "Oliver Space",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-1511ec299766",
+    "extracted_name": "David and Lucile Packard Foundation",
+    "times_seen": 4
+  },
+  {
+    "suggestion_id": "suggestion-0a3e135ea698",
+    "extracted_name": "Party Round",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c1f53c55609c",
+    "extracted_name": "Payall",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ee928445cfcc",
+    "extracted_name": "Credit Karma",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-730551f5bad4",
+    "extracted_name": "Snowball",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b064bbfa28ec",
+    "extracted_name": "Kalshi",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a5c1835f2f1f",
+    "extracted_name": "Revolut",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f9b83b92da9f",
+    "extracted_name": "Flock Safety",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-2a004abc06f5",
+    "extracted_name": "Hebbia",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-fcbae2dba427",
+    "extracted_name": "Sardine",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f4ea550c7812",
+    "extracted_name": "Method Financial",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-40a7e9acb062",
+    "extracted_name": "Titan",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-30ec2f855071",
+    "extracted_name": "Silo",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-19818c00e27a",
+    "extracted_name": "Mosaic",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-8073c5350194",
+    "extracted_name": "Deel",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ae679821f064",
+    "extracted_name": "Runway",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-e98f08b11330",
+    "extracted_name": "RVO (Rijksdienst voor Ondernemend Nederland)",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b2ebc1109517",
+    "extracted_name": "Alex Warstadt and Sam Bowman",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ef2b2ed1e9ba",
+    "extracted_name": "Samuel R. Bowman",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-804d3758e03f",
+    "extracted_name": "Taner Halıcıoğlu",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-21e8cabe8558",
+    "extracted_name": "UC San Diego",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-688b54363b4d",
+    "extracted_name": "Institute for Data, Econometrics, Algorithms, and Learning",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c5080a1180c9",
+    "extracted_name": "Georgetown University Department of Linguistics",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-18b7db85ca84",
+    "extracted_name": "University of New Mexico Department of Linguistics",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-8afc0d067f01",
+    "extracted_name": "Marsden Fund of the Royal Society of Aotearoa New Zealand",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-42f479f2e4eb",
+    "extracted_name": "Sally Akevai Nicholas and Dartmouth Professor Rolando Coto-Solano",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-9f027c750fab",
+    "extracted_name": "ID Insight Inc.",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-07da73c6c0e0",
+    "extracted_name": "Baltimore City",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-2efc9fd4c988",
+    "extracted_name": "Baltimore Children and Youth Fund",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-76e0a1751ebc",
+    "extracted_name": "Brandon Scott",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-bfb489554ccd",
+    "extracted_name": "Amplify Partners",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-114faa251985",
+    "extracted_name": "FreeS",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-2bcea619308b",
+    "extracted_name": "11.2 Capital",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-90df7adebf34",
+    "extracted_name": "A. Capital",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-73bab8f215de",
+    "extracted_name": "Live Current Media",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ad424e2c9334",
+    "extracted_name": "Auctomatic",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-890045c7ee8d",
+    "extracted_name": "Public contributors",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-d855061f4f4b",
+    "extracted_name": "Tezos Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-29c3b35c13be",
+    "extracted_name": "Kathleen Breitman",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-3355a6ff6a30",
+    "extracted_name": "Charitable causes (via Founders Pledge)",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b59443918e07",
+    "extracted_name": "Dorset Community Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-f0a7e779bbaf",
+    "extracted_name": "Lily Brett",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-cefa2b03859e",
+    "extracted_name": "Drug-Free Communities (DFC) Support Program",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ccc5cd6f30dc",
+    "extracted_name": "Emily's Hope",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-e6a5e8657680",
+    "extracted_name": "Blue Shield of California Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c30a4065944d",
+    "extracted_name": "Economic Security Project Inc",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-05d6cf293945",
+    "extracted_name": "Hyperplane Venture Capital",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-79f1fbd56e1a",
+    "extracted_name": "Patrick J. Kennedy",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a648a059acae",
+    "extracted_name": "Early Light Ventures",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-e0d5a5ae2ae0",
+    "extracted_name": "MassDevelopment",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a73d1c4951d0",
+    "extracted_name": "Bob Bell",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-2f6f62486fc1",
+    "extracted_name": "54 other donors",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c5628c480170",
+    "extracted_name": "Tom Shaffer",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-50ac06eeb6c6",
+    "extracted_name": "Tom Schaeffer",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-88f961322991",
+    "extracted_name": "Herring for Senate - Mark",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c1aff5b3a453",
+    "extracted_name": "Adam Back",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-cea5478cdacb",
+    "extracted_name": "Connecting Excellence Group Plc",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-6c52b5783b1a",
+    "extracted_name": "European Investment Fund (EIF)",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-ca7740ac54de",
+    "extracted_name": "Sustainable Development Capital, LLP",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a392937c78b9",
+    "extracted_name": "Bureau of Industry and Security",
+    "times_seen": 5
+  },
+  {
+    "suggestion_id": "suggestion-45fdfd225988",
+    "extracted_name": "BSNB LLC",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-0287fc353554",
+    "extracted_name": "THE MAXTER GROUP INC",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-9b0c54852d8d",
+    "extracted_name": "Price Modern LLC",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a6c045617f8e",
+    "extracted_name": "Bill and Elizabeth Kelly",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-bbbe466087a7",
+    "extracted_name": "Eastern Connecticut State University",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-9f23dbde4f25",
+    "extracted_name": "U.S. AbilityOne Commission",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-897cadfa56ba",
+    "extracted_name": "Commerce Department's National Weather Service",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-37ac0cc73125",
+    "extracted_name": "Department of Education's Federal Student Aid",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-97b9d0106718",
+    "extracted_name": "Federal Election Commission",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-1ea24462759e",
+    "extracted_name": "Bureau of Indian Education",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-517b5f3a40ce",
+    "extracted_name": "Esperanza Education Fund",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c90675e0b9f7",
+    "extracted_name": "immigrant students",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-d6cef6726f9a",
+    "extracted_name": "VCC Bank",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-dc05419a9860",
+    "extracted_name": "The Cameron Foundation",
+    "times_seen": 4
+  },
+  {
+    "suggestion_id": "suggestion-6552589372c4",
+    "extracted_name": "Virginia Community Capital",
+    "times_seen": 3
+  },
+  {
+    "suggestion_id": "suggestion-cb9b8d728934",
+    "extracted_name": "Andrew Ferguson Trust U/W",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-1c62044403ff",
+    "extracted_name": "James A. Meador Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-76a9758c3645",
+    "extracted_name": "Saunders Fire Department",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-88991d9c5f2f",
+    "extracted_name": "NED Inc",
+    "times_seen": 2
+  },
+  {
+    "suggestion_id": "suggestion-e3934cf4b268",
+    "extracted_name": "Brooklyn Bridge Ventures",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-e1cd814adb29",
+    "extracted_name": "Babuschkin Ventures",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-a1417a0231c9",
+    "extracted_name": "AI-safety research and startups",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-be10b4fd2685",
+    "extracted_name": "Thomson Reuters Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-d8d88dd95816",
+    "extracted_name": "Reuters Institute for the Study of Journalism",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-1aed27abfa34",
+    "extracted_name": "Hostplus",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-03fd51ec5e8a",
+    "extracted_name": "Employment Hero",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-7a60cfad3c1c",
+    "extracted_name": "Henry Luce Foundation",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-69d9f7657d4a",
+    "extracted_name": "Pfizer",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-b0e72e32bf56",
+    "extracted_name": "Outset Cornwall",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-7d48c459edb7",
+    "extracted_name": "Steve Clare",
+    "times_seen": 1
+  },
+  {
+    "suggestion_id": "suggestion-c7c44905581f",
+    "extracted_name": "CHAILD project",
+    "times_seen": 1
+  }
+]

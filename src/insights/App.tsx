@@ -2,6 +2,21 @@ import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { Navigation } from '../components/Navigation'
 import { CrosspartisanViz } from './crosspartisan/CrosspartisanViz'
 import { AgiDefinitionSpace } from './crosspartisan/AgiDefinitionSpace'
+import {
+  OutlierStancesScatter,
+  OutlierSpotlights,
+  BridgeBuilderCards,
+  TopConnectorsList,
+  ReachabilityRings,
+  AxisOutlierChart,
+} from './network'
+import {
+  FundingFlowSankey,
+  FundingConcentration,
+  FunderStanceChart,
+  FundingTimeline,
+  FunderTimingHeatmap,
+} from './funding'
 
 // d3 is loaded from a CDN <script> tag (see index.html) rather than imported as a module,
 // so we don't have compile-time types for it. Treating it as `unknown` forces casts at
@@ -44,6 +59,60 @@ interface MapData {
   _meta?: { generated_at: string }
 }
 
+interface FundingFunder {
+  name: string
+  category: string
+  type: string
+  investments: number
+  unique_recipients: number
+  total_usd: number
+  mean_recipient_stance: number | null
+  first_year: number | null
+  last_year: number | null
+}
+
+interface FundingRecipient {
+  name: string
+  category: string
+  type: string
+  stance: string | null
+  funding_rounds: number
+  unique_funders: number
+  total_usd: number
+}
+
+interface FundingFlow {
+  funder: string
+  funder_category: string
+  recipient_category: string
+  count: number
+  total_usd: number
+}
+
+interface FundingYearData {
+  year: number
+  count: number
+  total_usd: number
+  by_recipient_category: Record<string, { count: number; total_usd: number }>
+}
+
+interface FunderYearData {
+  funder: string
+  funder_category: string
+  year: number
+  count: number
+  total_usd: number
+}
+
+interface FundingData {
+  _meta: { generated_at: string; total_edges: number }
+  funders: FundingFunder[]
+  recipients: FundingRecipient[]
+  flows: FundingFlow[]
+  byYear: FundingYearData[]
+  funderByYear: FunderYearData[]
+}
+
 /* ────────────────────────────────────────────
    Constants
    ──────────────────────────────────────────── */
@@ -55,8 +124,12 @@ const RISK_LABELS = ['Overstated', 'Manageable', 'Serious', 'Catastrophic', 'Exi
 const TOC_ITEMS = [
   { id: 'overview', label: 'Overview' },
   { id: 'belief-space', label: 'Beliefs' },
+  { id: 'outliers', label: 'Outliers' },
   { id: 'threat-models', label: 'Threat Models' },
   { id: 'network', label: 'Connectivity' },
+  { id: 'bridge-builders', label: 'Bridge Builders' },
+  { id: 'funding-flows', label: 'Funding Flows' },
+  { id: 'funding-timing', label: 'Funding Timing' },
   { id: 'crosspartisan', label: 'Crosspartisan' },
   { id: 'agi-definitions', label: 'AGI Definitions' },
 ]
@@ -641,18 +714,20 @@ function ChartCategoryMatrix({ edges, entities }: { edges: Edge[]; entities: Ent
       'AI Safety/Alignment': 'AI Safety',
       'Think Tank/Policy Org': 'Think Tank',
       'Government/Agency': 'Government',
-      'VC/Capital/Philanthropy': 'VC/Capital',
+      'VC/Capital/Philanthropy': 'VC/Philanthropy',
       'Labor/Civil Society': 'Labor/Civil',
       'Ethics/Bias/Rights': 'Ethics/Rights',
       'Media/Journalism': 'Media',
       'Political Campaign/PAC': 'Political',
-      'AI Infrastructure & Compute': 'AI Infra',
-      'AI Deployers & Platforms': 'AI Platforms',
+      'AI Infrastructure & Compute': 'Infra/Compute',
+      'Infrastructure & Compute': 'Infra/Compute',
+      'AI Deployers & Platforms': 'Deployers',
+      'Deployers & Platforms': 'Deployers',
     }
 
     const cellSize = 45
-    const labelPadLeft = 110
-    const labelPadTop = 90
+    const labelPadLeft = 130
+    const labelPadTop = 100
     const W = categories.length * cellSize + labelPadLeft
     const H = categories.length * cellSize + labelPadTop
 
@@ -673,7 +748,7 @@ function ChartCategoryMatrix({ edges, entities }: { edges: Edge[]; entities: Ent
         .attr('font-family', "'DM Mono', monospace")
         .attr('font-size', 9)
         .attr('fill', '#555')
-        .text(label.length > 14 ? label.slice(0, 12) + '...' : label)
+        .text(label.length > 16 ? label.slice(0, 14) + '...' : label)
     })
 
     // Column labels
@@ -686,7 +761,7 @@ function ChartCategoryMatrix({ edges, entities }: { edges: Edge[]; entities: Ent
         .attr('font-family', "'DM Mono', monospace")
         .attr('font-size', 9)
         .attr('fill', '#555')
-        .text(label.length > 12 ? label.slice(0, 10) + '...' : label)
+        .text(label.length > 15 ? label.slice(0, 13) + '...' : label)
     })
 
     // Cells
@@ -720,7 +795,7 @@ function ChartContainer({ title, source, children }: { title: string; source: st
     <div className="bg-[#f8f7f5] rounded-lg p-6 my-8 overflow-hidden fade-in [&_svg]:w-full [&_svg]:block">
       <div className="font-mono text-[11px] tracking-[0.08em] uppercase text-[#555] mb-4">{title}</div>
       {children}
-      <div className="font-mono text-[9px] text-[#888] tracking-[0.04em] mt-3 text-right">{source}</div>
+      <div className="font-mono text-[9px] text-[#888] tracking-[0.04em] mt-3 text-center">{source}</div>
     </div>
   )
 }
@@ -774,6 +849,7 @@ function TableOfContents({ activeId }: { activeId: string }) {
 
 export function App() {
   const [data, setData] = useState<MapData | null>(null)
+  const [fundingData, setFundingData] = useState<FundingData | null>(null)
   const [activeSection, setActiveSection] = useState('overview')
   const activeSectionRef = useRef('overview')
 
@@ -784,32 +860,23 @@ export function App() {
       fetch('/map-detail.json')
         .then((r) => r.json())
         .catch(() => ({})),
+      fetch('/funding-data.json')
+        .then((r) => r.json())
+        .catch(() => null),
     ])
-      .then(([mapData, detail]: [MapData, Record<string, Partial<Entity>>]) => {
+      .then(([mapData, detail, funding]: [MapData, Record<string, Partial<Entity>>, FundingData | null]) => {
         const all = [...(mapData.people || []), ...(mapData.organizations || []), ...(mapData.resources || [])]
         for (const entity of all) {
           const d = detail[String(entity.id)]
           if (d) Object.assign(entity, d)
         }
         setData(mapData)
+        if (funding) setFundingData(funding)
       })
       .catch((err) => console.error('Failed to load data:', err))
   }, [])
 
-  // Fade-in observer
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) e.target.classList.add('visible')
-        })
-      },
-      { threshold: 0.1 },
-    )
-    const elements = document.querySelectorAll('.fade-in')
-    elements.forEach((el) => observer.observe(el))
-    return () => observer.disconnect()
-  }, [data])
+  // Fade-in observer removed - animation disabled
 
   // TOC scroll tracking
   const updateTOC = useCallback(() => {
@@ -862,16 +929,9 @@ export function App() {
 
   return (
     <>
+      {/* Fade-in disabled - causes white flash with React re-renders */}
       <style>{`
-        .fade-in {
-          opacity: 0;
-          transform: translateY(12px);
-          transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-        .fade-in.visible {
-          opacity: 1;
-          transform: translateY(0);
-        }
+        .fade-in { opacity: 1; transform: none; }
       `}</style>
 
       <Navigation />
@@ -986,10 +1046,49 @@ export function App() {
         <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
 
         {/* ═══════════════════════════════════════════ */}
-        {/* SECTION 2: THREAT MODELS                    */}
+        {/* SECTION: OUTLIER STANCES                    */}
         {/* ═══════════════════════════════════════════ */}
 
-        <SectionLabel id="threat-models">Insight 2</SectionLabel>
+        <SectionLabel id="outliers">Insight 2</SectionLabel>
+        <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">Outlier Stances</h2>
+
+        <Para>
+          Who holds statistically rare positions? We identify entities in positions with very few peers—not necessarily
+          extreme views, but uncommon ones. Outliers are highlighted with black outlines and are the only nodes you can
+          interact with. Click any outlier to see why they stand out, then view them on the map.
+        </Para>
+
+        <h3 className="font-serif text-[18px] font-normal mt-6 mb-3">1D: Single dimension</h3>
+
+        <ChartContainer
+          title="Outliers by belief dimension"
+          source="Outliers are positions below 50% of median count. Click any outlier for details."
+        >
+          <AxisOutlierChart entities={allEntities} mode="1d" />
+        </ChartContainer>
+
+        <h3 className="font-serif text-[18px] font-normal mt-8 mb-3">2D: Two dimensions</h3>
+
+        <ChartContainer
+          title="Outliers by belief combination"
+          source="Outliers are cells below 50% of median count. Select axes to explore combinations."
+        >
+          <AxisOutlierChart entities={allEntities} mode="2d" />
+        </ChartContainer>
+
+        <Finding>
+          Outliers often hold uncommon belief combinations—an entity might be mainstream on one dimension but rare when
+          you consider two dimensions together. These positions may signal emerging viewpoints, strategic positioning,
+          or simply heterogeneity within the ecosystem.
+        </Finding>
+
+        <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
+
+        {/* ═══════════════════════════════════════════ */}
+        {/* SECTION 3: THREAT MODELS                    */}
+        {/* ═══════════════════════════════════════════ */}
+
+        <SectionLabel id="threat-models">Insight 3</SectionLabel>
         <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">Threat Models & Key Concerns</h2>
 
         <Para>
@@ -1031,7 +1130,7 @@ export function App() {
         {/* SECTION 3: CONNECTIVITY                     */}
         {/* ═══════════════════════════════════════════ */}
 
-        <SectionLabel id="network">Insight 3</SectionLabel>
+        <SectionLabel id="network">Insight 4</SectionLabel>
         <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">Connectivity</h2>
 
         <Para>
@@ -1057,10 +1156,187 @@ export function App() {
         <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
 
         {/* ═══════════════════════════════════════════ */}
-        {/* SECTION 4: CROSSPARTISAN CONVERGENCE        */}
+        {/* SECTION: BRIDGE BUILDERS                    */}
         {/* ═══════════════════════════════════════════ */}
 
-        <SectionLabel id="crosspartisan">Insight 4</SectionLabel>
+        <SectionLabel id="bridge-builders">Insight 5</SectionLabel>
+        <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">Bridge Builders</h2>
+
+        <Para>
+          Who are the most structurally important <em>people</em> in the AI governance ecosystem? We measure this by
+          reachability: how many entities can a person reach within 1, 2, or 3 hops through the relationship network.
+          People with high reachability can spread information—or broker coalitions—across otherwise separate
+          communities.
+        </Para>
+
+        <Para>
+          Each ring shows actual connections: the inner ring (1-hop) shows direct relationships, the middle ring (2-hop)
+          shows friends-of-friends, and the outer ring (3-hop) shows the extended network. Node colors indicate
+          category.
+        </Para>
+
+        <ChartContainer
+          title="Network reachability by person"
+          source="Concentric rings show 1-hop, 2-hop, and 3-hop connections. Nodes colored by category."
+        >
+          <ReachabilityRings entities={allEntities} edges={edges} maxPeople={6} />
+        </ChartContainer>
+
+        <Finding>
+          Policymakers like Brian Schatz and Chris Murphy top the reachability rankings—their government roles connect
+          them to many organizations. Researchers like Paul Christiano bridge AI Safety, Frontier Labs, and Government.
+          High reachability doesn't mean influence, but it does indicate structural position for information flow and
+          coalition-building.
+        </Finding>
+
+        <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
+
+        {/* ═══════════════════════════════════════════ */}
+        {/* SECTION 6: FUNDING FLOWS                    */}
+        {/* ═══════════════════════════════════════════ */}
+
+        <SectionLabel id="funding-flows">Insight 6</SectionLabel>
+        <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">Funding Flows</h2>
+
+        <Para>
+          Who funds whom in the AI ecosystem? We track <span className="font-mono">{fundingData?._meta?.total_edges || '—'}</span> funding
+          relationships from edge discovery data, connecting funders (VCs, philanthropies, government agencies, Big Tech)
+          to recipient organizations. This reveals the capital allocation patterns shaping AI development and governance.
+        </Para>
+
+        {fundingData && (
+          <>
+            <ChartContainer
+              title="Funding flows: Top funders → recipient categories"
+              source="Top 12 funders by investment count. Width = number of investments to each category."
+            >
+              <FundingFlowSankey flows={fundingData.flows} funders={fundingData.funders} />
+            </ChartContainer>
+
+            <Para>
+              The Sankey diagram shows where capital flows from major funders to different organization types.
+              Open Philanthropy and Good Ventures heavily fund AI Safety organizations, while Big Tech
+              companies invest in Frontier Labs and compute infrastructure. Government agencies like NSF
+              and DARPA fund academic research.
+            </Para>
+
+            <h3 className="font-serif text-[18px] font-normal mt-8 mb-3">Funding concentration</h3>
+
+            <Para>
+              How concentrated is AI funding? A small number of recipients receive the majority of capital,
+              with frontier labs dominating the top positions.
+            </Para>
+
+            <ChartContainer
+              title="Top recipients by total funding"
+              source="Log scale. Hover for details. Only organizations with known funding amounts shown."
+            >
+              <FundingConcentration
+                recipients={fundingData.recipients}
+                showTooltip={showTooltip}
+                hideTooltip={hideTooltip}
+              />
+            </ChartContainer>
+
+            <h3 className="font-serif text-[18px] font-normal mt-8 mb-3">Funder → recipient stance alignment</h3>
+
+            <Para>
+              Do funders select recipients that share their regulatory worldview? We measure the mean regulatory
+              stance of each funder's recipients. Lower values indicate the funder's portfolio skews accelerationist;
+              higher values indicate precautionary leanings.
+            </Para>
+
+            <ChartContainer
+              title="Mean recipient regulatory stance by funder"
+              source="Scale: 1 = Accelerate, 6 = Precautionary. Only funders with 5+ investments and recipients with known stances shown."
+            >
+              <FunderStanceChart
+                funders={fundingData.funders}
+                showTooltip={showTooltip}
+                hideTooltip={hideTooltip}
+              />
+            </ChartContainer>
+
+            <Finding>
+              Funding patterns reveal ideological clustering: philanthropic funders like Open Philanthropy and
+              Good Ventures fund organizations with higher (more precautionary) regulatory stances, while
+              venture capital and Big Tech investments flow to organizations with lower (more accelerationist)
+              stances. This structural pattern suggests funders either select for alignment or shape grantee positions.
+            </Finding>
+          </>
+        )}
+
+        <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
+
+        {/* ═══════════════════════════════════════════ */}
+        {/* SECTION 7: FUNDING TIMING                   */}
+        {/* ═══════════════════════════════════════════ */}
+
+        <SectionLabel id="funding-timing">Insight 7</SectionLabel>
+        <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">Funding Timing & Patterns</h2>
+
+        <Para>
+          When did the AI funding explosion happen, and how did different funders enter the space?
+          Temporal patterns reveal whether certain funders led or followed, and whether funding waves
+          concentrated in specific organization types.
+        </Para>
+
+        {fundingData && (
+          <>
+            <ChartContainer
+              title="AI funding by year (2015–2026)"
+              source="Stacked area by recipient category. Toggle between count of investments and total USD."
+            >
+              <FundingTimeline
+                byYear={fundingData.byYear}
+                showTooltip={showTooltip}
+                hideTooltip={hideTooltip}
+              />
+            </ChartContainer>
+
+            <Para>
+              The funding timeline shows dramatic acceleration from 2022 onwards, coinciding with the
+              release of GPT-3 and growing public attention to AI capabilities. Frontier Lab funding
+              dominates by dollar volume, while AI Safety and Academic funding show steady but smaller growth.
+            </Para>
+
+            <h3 className="font-serif text-[18px] font-normal mt-8 mb-3">Funder timing patterns</h3>
+
+            <Para>
+              When did each major funder deploy capital? The heatmap shows investment activity by year,
+              revealing which funders were early movers and which scaled up more recently.
+            </Para>
+
+            <ChartContainer
+              title="Investment timing by funder (2018–2026)"
+              source="Cell intensity = number of investments that year. Top 15 funders by total investment count."
+            >
+              <FunderTimingHeatmap
+                funderByYear={fundingData.funderByYear}
+                funders={fundingData.funders}
+                showTooltip={showTooltip}
+                hideTooltip={hideTooltip}
+              />
+            </ChartContainer>
+
+            <Finding>
+              Open Philanthropy and related EA funders show consistent investment from 2018 onwards,
+              predating the mainstream AI funding boom. Big Tech companies (Google, Microsoft, Amazon)
+              dramatically increased investment starting in 2023–2024. Government funding (NSF, DARPA,
+              Commerce) has grown steadily but lags private capital in both timing and scale. This
+              temporal pattern suggests philanthropic funders helped build the AI safety field before
+              commercial interest peaked.
+            </Finding>
+          </>
+        )}
+
+        <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
+
+        {/* ═══════════════════════════════════════════ */}
+        {/* SECTION 8: CROSSPARTISAN CONVERGENCE        */}
+        {/* ═══════════════════════════════════════════ */}
+
+        <SectionLabel id="crosspartisan">Insight 8</SectionLabel>
         <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">
           Crosspartisan Convergence on AI Policy
         </h2>
@@ -1099,10 +1375,10 @@ export function App() {
         <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
 
         {/* ═══════════════════════════════════════════ */}
-        {/* SECTION 5: AGI DEFINITION SPACE             */}
+        {/* SECTION 9: AGI DEFINITION SPACE             */}
         {/* ═══════════════════════════════════════════ */}
 
-        <SectionLabel id="agi-definitions">Insight 5</SectionLabel>
+        <SectionLabel id="agi-definitions">Insight 9</SectionLabel>
         <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">The AGI Definition Space</h2>
 
         <Para>

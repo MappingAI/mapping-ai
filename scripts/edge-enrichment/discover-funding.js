@@ -54,11 +54,33 @@ function normalizeDate(dateStr) {
   return null // Invalid format
 }
 
-const EXTRACTION_PROMPT = `You are extracting funding relationships from search results about an entity.
+const EXTRACTION_PROMPT = `You are extracting AI-RELATED funding relationships from search results about a specific entity.
 
-For the entity provided, extract ALL funding relationships where they are either:
-1. A FUNDER (giving money to others)
-2. A RECIPIENT (receiving money from others)
+For the entity provided, extract funding relationships where:
+1. The entity is the FUNDER (giving money), OR
+2. The entity is the RECIPIENT (receiving money)
+
+CRITICAL RULES:
+- The searched entity MUST be either the funder OR recipient in every relationship
+- Do NOT extract relationships between two OTHER entities mentioned in the text
+- Only extract relationships related to AI, ML, technology, or policy
+
+AI-RELATED includes:
+✓ AI/ML companies, research labs, safety organizations
+✓ Tech companies with AI divisions (Google, Microsoft, Amazon, Meta, Nvidia)
+✓ AI policy think tanks, governance organizations
+✓ Semiconductor/chip manufacturing (AI infrastructure)
+✓ AI ethics, safety, alignment research
+✓ Universities doing AI/ML/CS research
+✓ Government AI programs (DARPA AI, NSF AI grants, CHIPS Act implementation)
+
+NOT AI-RELATED (skip these):
+✗ General philanthropy (global health, poverty, climate - unless AI-focused)
+✗ Non-tech acquisitions or corporate activities
+✗ Political campaign donations (unless specifically for AI policy organizations)
+✗ Media/journalism funding (unless AI-focused publication)
+✗ General education funding (unless AI/CS/ML programs)
+✗ Biomedical/NIH grants (unless specifically AI/ML in healthcare)
 
 For each relationship found, return:
 - funder_name: The ACTUAL ORGANIZATION OR PERSON that provided the money
@@ -70,11 +92,13 @@ For each relationship found, return:
 - citation: A verbatim quote from the source supporting this claim (1-2 sentences)
 - source_url: The URL where you found this information
 - confidence: "high" (explicit statement), "medium" (clear implication), "low" (uncertain)
+- ai_relevance: Brief explanation of why this is AI-related (required)
 
 CRITICAL - VALID FUNDERS/RECIPIENTS:
 ✓ Organizations: companies, foundations, nonprofits, universities, government agencies
 ✓ People: individuals, philanthropists, investors
 ✗ NOT valid: legislation (CHIPS Act), programs (BEAD Program), tax credits, "federal government", "private sector", generic terms
+✗ NOT valid: Self-referential (funder = recipient)
 
 Examples:
 - "CHIPS Act funding" → funder should be "U.S. Department of Commerce" not "CHIPS Act"
@@ -82,12 +106,14 @@ Examples:
 - "private investment" → only include if the specific investor is named
 
 IMPORTANT:
+- The searched entity MUST be either funder_name or recipient_name in every relationship
 - Only extract relationships with clear evidence in the text
 - Include the exact source URL for each relationship
-- If no funding relationships are found, return an empty array - this is fine
+- If no AI-related funding relationships involving the entity are found, return an empty array
 - Do not invent or guess relationships
 - The citation must be a VERBATIM quote from the text
-- Skip relationships where you cannot identify a specific org/person as funder
+- Skip relationships where funder = recipient (self-referential)
+- Skip political donations, general philanthropy, and non-AI grants
 
 Return JSON in this exact format:
 {
@@ -102,12 +128,13 @@ Return JSON in this exact format:
       "end_date": null,
       "citation": "verbatim quote from source...",
       "source_url": "https://...",
-      "confidence": "high"
+      "confidence": "high",
+      "ai_relevance": "AI safety research funding"
     }
   ]
 }
 
-If no relationships found, return:
+If no AI-related relationships found involving the entity, return:
 {
   "entity_name": "...",
   "relationships": []
@@ -189,13 +216,56 @@ async function processEntity(entity, rds, neon, entityCache, dryRun) {
 
   // Filter out invalid/generic entity names
   const INVALID_NAMES = ['unknown', 'private sector', 'federal government', 'government', 'n/a', 'various', 'multiple', 'anonymous']
+  const INVALID_PATTERNS = [
+    /^unknown/i,
+    /\(various\)/i,
+    /^individual /i,
+    /^anonymous /i,
+    /^various /i,
+    /^multiple /i,
+    /^unnamed /i,
+    /^undisclosed /i,
+  ]
+
+  // AI relevance keywords for validation
+  const AI_KEYWORDS = /\b(ai|artificial intelligence|machine learning|ml|deep learning|neural|llm|gpt|transformer|nlp|computer vision|robotics|autonomous|semiconductor|chip|gpu|safety|alignment|governance|anthropic|openai|deepmind|meta ai|google ai|microsoft ai)\b/i
 
   for (const rel of extraction.relationships) {
     // Skip relationships with invalid funder/recipient names
     const funderLower = (rel.funder_name || '').toLowerCase().trim()
     const recipientLower = (rel.recipient_name || '').toLowerCase().trim()
-    if (INVALID_NAMES.includes(funderLower) || INVALID_NAMES.includes(recipientLower)) {
-      console.log(`  ⊘ Skipped (invalid name): ${rel.funder_name} → ${rel.recipient_name}`)
+
+    const isInvalidFunder = INVALID_NAMES.includes(funderLower) || INVALID_PATTERNS.some(p => p.test(rel.funder_name || ''))
+    const isInvalidRecipient = INVALID_NAMES.includes(recipientLower) || INVALID_PATTERNS.some(p => p.test(rel.recipient_name || ''))
+
+    if (isInvalidFunder || isInvalidRecipient) {
+      console.log(`  ⊘ Skipped (generic name): ${rel.funder_name} → ${rel.recipient_name}`)
+      continue
+    }
+
+    // VALIDATION 1: Entity must be involved (funder or recipient)
+    const entityLower = entity.name.toLowerCase()
+    const entityInvolved =
+      funderLower.includes(entityLower) ||
+      recipientLower.includes(entityLower) ||
+      entityLower.includes(funderLower) ||
+      entityLower.includes(recipientLower)
+
+    if (!entityInvolved) {
+      console.log(`  ⊘ Skipped (entity not involved): ${rel.funder_name} → ${rel.recipient_name}`)
+      continue
+    }
+
+    // VALIDATION 2: No self-referential edges
+    if (funderLower === recipientLower) {
+      console.log(`  ⊘ Skipped (self-referential): ${rel.funder_name} → ${rel.recipient_name}`)
+      continue
+    }
+
+    // VALIDATION 3: AI relevance check (if ai_relevance field missing or no keywords)
+    const textToCheck = `${rel.funder_name} ${rel.recipient_name} ${rel.citation || ''} ${rel.ai_relevance || ''}`
+    if (!AI_KEYWORDS.test(textToCheck)) {
+      console.log(`  ⊘ Skipped (not AI-related): ${rel.funder_name} → ${rel.recipient_name}`)
       continue
     }
 
@@ -293,6 +363,34 @@ async function processEntity(entity, rds, neon, entityCache, dryRun) {
         stats.suggestions++
       }
 
+      // Check if this edge already exists in edge_discovery (consolidate sources)
+      // Match on funder, recipient, type, AND amount to avoid treating different funding rounds as duplicates
+      const existingDiscovery = await neon.query(
+        `SELECT discovery_id, source_id, sources_count
+         FROM edge_discovery
+         WHERE LOWER(source_entity_name) = LOWER($1)
+           AND LOWER(target_entity_name) = LOWER($2)
+           AND edge_type = 'funder'
+           AND (amount_usd = $3 OR (amount_usd IS NULL AND $3 IS NULL))`,
+        [rel.funder_name, rel.recipient_name, rel.amount_usd || null]
+      )
+
+      if (existingDiscovery.rows.length > 0) {
+        // Edge already discovered - increment sources count
+        const existing = existingDiscovery.rows[0]
+        const newCount = (existing.sources_count || 1) + 1
+        await neon.query(
+          `UPDATE edge_discovery
+           SET sources_count = $1,
+               updated_at = CURRENT_TIMESTAMP
+           WHERE discovery_id = $2`,
+          [newCount, existing.discovery_id]
+        )
+        console.log(`  ≡ Consolidated source (${newCount} total): ${rel.funder_name} → ${rel.recipient_name}`)
+        stats.existing++ // Count as existing since we're not creating a new row
+        continue
+      }
+
       // Write to edge_discovery (new edge pending review)
       const discoveryId = `${rel.funder_name}_${rel.recipient_name}_funder_${sid}`.slice(0, 200)
 
@@ -308,9 +406,9 @@ async function processEntity(entity, rds, neon, entityCache, dryRun) {
           source_suggestion_id, target_suggestion_id,
           edge_type, source_entity_name, target_entity_name,
           source_id, start_date, end_date, amount_usd, amount_note,
-          citation, confidence, status,
+          citation, confidence, status, sources_count,
           extracted_by, extraction_model, extraction_date
-        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10::date, $11::date, $12, $13, $14, $15, $16, $17, $18, CURRENT_DATE)
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10::date, $11::date, $12, $13, $14, $15, $16, 1, $17, $18, CURRENT_DATE)
         ON CONFLICT (source_entity_name, target_entity_name, edge_type, source_id) DO NOTHING`,
         [
           discoveryId,

@@ -4108,7 +4108,7 @@
             .catch(() => {}) // Non-critical — detail panel degrades gracefully
 
           // Lazy-load claims data for detail panel sources section
-          fetch('/data/claims-detail.json')
+          fetch('/claims-detail.json')
             .then((r) => (r.ok ? r.json() : null))
             .then((cd) => {
               if (cd) window.__claimsDetail = cd
@@ -4146,6 +4146,8 @@
               const node = renderedNodes.find((n) => n.name === (deepLinkTarget.name || deepLinkTarget.title))
               if (node) {
                 showDetail(node, renderedNodes)
+                // Highlight the node's network (dim unconnected nodes)
+                dimUnconnected(node)
                 const zoomTarget = _canvasSel || d3.select('#map-container svg')
                 const mapEl = document.getElementById('map-container')
                 const k = 3
@@ -4501,6 +4503,31 @@
       // PASSWORD GATE: force plot view when locked (don't overwrite saved preference)
       let viewMode = localStorage.getItem('mapMode') || 'plot'
       const savedSubView = localStorage.getItem('mapSubView') || 'all'
+
+      // URL param overrides for deep linking from insights page
+      const urlParams = new URLSearchParams(window.location.search)
+      if (urlParams.get('view') === 'plot') viewMode = 'plot'
+      if (urlParams.get('axisMode')) axisMode = urlParams.get('axisMode')
+      if (urlParams.get('axisX')) axisX = urlParams.get('axisX')
+      if (urlParams.get('axisY')) axisY = urlParams.get('axisY')
+      // Sync UI with URL params after DOM is ready
+      setTimeout(() => {
+        if (urlParams.get('axisX')) {
+          const xSelect = document.getElementById('axis-x-select')
+          if (xSelect) xSelect.value = axisX
+        }
+        if (urlParams.get('axisY')) {
+          const ySelect = document.getElementById('axis-y-select')
+          if (ySelect) ySelect.value = axisY
+        }
+        if (urlParams.get('axisMode')) {
+          document.querySelectorAll('#axis-mode-toggles [data-mode]').forEach((b) => {
+            b.classList.toggle('active', b.dataset.mode === axisMode)
+          })
+          const yGroup = document.getElementById('axis-y-group')
+          if (yGroup) yGroup.style.display = axisMode === '2d' ? '' : 'none'
+        }
+      }, 0)
 
       function applyViewState() {
         const is2D = viewMode === 'plot'

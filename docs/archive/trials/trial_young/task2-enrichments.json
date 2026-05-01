@@ -1,0 +1,94 @@
+[
+  {
+    "id": 1329,
+    "entity_type": "organization",
+    "name": "Apple",
+    "category": "Deployers & Platforms",
+    "other_categories": "Infrastructure & Compute",
+    "website": "https://www.apple.com",
+    "funding_model": "Revenue-generating",
+    "parent_org_id": null,
+    "location": "Cupertino, CA",
+    "influence_type": "Decision-maker, Builder, Implementer",
+    "twitter": "@Apple",
+    "bluesky": null,
+    "notes": "Apple launched Apple Intelligence in 2024, integrating generative AI across its operating systems with a privacy-first architecture that processes most tasks on-device and routes heavier workloads through Private Cloud Compute servers with no persistent storage. Third-party AI integrations like ChatGPT require explicit user consent, while Apple's own cloud processing is handled automatically under its privacy policy. Apple's scale (over 2 billion active devices) means its design choices around AI transparency, consent, and data minimization shape how billions of people interact with AI daily.",
+    "notes_sources": [
+      "https://www.apple.com/legal/privacy/data/en/intelligence-engine/",
+      "https://security.apple.com/blog/private-cloud-compute/",
+      "https://www.corellium.com/blog/apple-intelligence-data-privacy",
+      "https://apple.gadgethacks.com/news/apples-privacy-first-ai-strategy-reshapes-tech-future/"
+    ],
+    "thumbnail_url": "https://www.google.com/s2/favicons?domain=apple.com&sz=128",
+    "belief_regulatory_stance": "Targeted",
+    "belief_regulatory_stance_detail": "Apple has supported sector-specific privacy regulations and has publicly backed GDPR-style data protections, but has not called for broad restrictions on AI development. The company's guidelines now curb how third-party apps send user data to external AI systems, effectively self-regulating through App Store policy.",
+    "belief_evidence_source": "Inferred",
+    "belief_agi_timeline": "Unknown",
+    "belief_ai_risk": "Manageable",
+    "belief_threat_models": "Cybersecurity, Power concentration, Copyright/IP",
+    "_verification": {
+      "issues_found": "Entity existed with no notes, no fields filled except name and category. Apple is one of the most consequential AI deployers in the world and its absence from the enriched dataset was a significant gap.",
+      "notes": "Apple Intelligence launch (2024), Private Cloud Compute architecture, on-device processing design, and App Store AI data policy all verified via Apple's official privacy documentation, Corellium security analysis, and AppleMagazine 2026 analysis. Belief fields inferred from Apple's public positions on privacy regulation and its self-regulatory App Store policies."
+    }
+  },
+  {
+    "id": 650,
+    "entity_type": "resource",
+    "resource_title": "Executive Order on Safe, Secure, and Trustworthy AI",
+    "resource_category": "AI Governance",
+    "resource_author": "White House (Biden Administration)",
+    "resource_type": "Report",
+    "resource_url": "https://bidenwhitehouse.archives.gov/briefing-room/presidential-actions/2023/10/30/executive-order-on-the-safe-secure-and-trustworthy-development-and-use-of-artificial-intelligence/",
+    "resource_year": "2023",
+    "resource_key_argument": "Established the most comprehensive U.S. federal AI governance framework to date, requiring developers of powerful AI systems to report safety test results to the government, directing agencies to set standards for AI safety and security, and mandating protections against AI-enabled fraud, discrimination, and threats to privacy.",
+    "notes": "Executive Order 14110, signed by President Biden on October 30, 2023, was the most sweeping federal action on AI governance in U.S. history. It required companies training models above certain compute thresholds to share safety test results with the government, directed NIST to develop red-teaming standards, and ordered agencies across government to address AI risks in hiring, healthcare, housing, and criminal justice. President Trump revoked the order on January 20, 2025. Three days later, he signed Executive Order 14179 ('Removing Barriers to American Leadership in Artificial Intelligence'), which prioritized deregulation and global AI competitiveness over safety mandates. Despite its revocation, EO 14110 established the policy vocabulary and regulatory framework that continues to shape congressional AI legislation.",
+    "notes_sources": [
+      "https://en.wikipedia.org/wiki/Executive_Order_14110",
+      "https://www.skadden.com/insights/publications/executive-briefing/ai-broad-biden-order-is-withdrawn",
+      "https://www.wiley.law/alert-President-Trump-Revokes-Biden-Administrations-AI-EO-What-To-Know",
+      "https://en.wikipedia.org/wiki/Executive_Order_14179"
+    ],
+    "belief_regulatory_stance": "Moderate",
+    "belief_regulatory_stance_detail": "The order mandated safety evaluations and transparency requirements (compute-threshold reporting, red-teaming standards) while avoiding outright restrictions on AI development or deployment. It sought a middle path between industry self-governance and prescriptive regulation.",
+    "belief_evidence_source": "Explicitly stated",
+    "belief_agi_timeline": null,
+    "belief_ai_risk": "Serious",
+    "belief_threat_models": "Cybersecurity, Misinformation, Labor displacement",
+    "_verification": {
+      "issues_found": "Entity existed with basic metadata (title, author, URL, year, key_argument) but no notes at all. Given that this is arguably the single most important U.S. AI policy document to date, the empty notes field was a critical gap. The existing resource_key_argument was also thin.",
+      "notes": "Signing date (October 30, 2023), EO number (14110), compute-threshold reporting requirement, NIST red-teaming mandate, agency directives, and revocation by Trump (January 20, 2025, via EO 14179) all verified via Wikipedia, Skadden analysis, and Wiley legal alert. The characterization as 'most comprehensive' comes from multiple legal analyses."
+    }
+  },
+  {
+    "id": 1196,
+    "entity_type": "person",
+    "name": "Brad Smith",
+    "title": "Vice Chair and President",
+    "category": "Executive",
+    "other_categories": null,
+    "primary_org": "Microsoft",
+    "other_orgs": "Netflix (board member), Princeton University (trustee)",
+    "location": "Redmond, WA",
+    "influence_type": "Decision-maker, Advisor/strategist, Narrator",
+    "twitter": "@BradSmi",
+    "bluesky": null,
+    "website": null,
+    "notes": "Brad Smith has served as Microsoft's president since 2015 and vice chair since 2021, overseeing the company's legal, regulatory, and public policy functions. He has been Microsoft's primary voice on AI governance, testifying before Congress on AI safety and calling for a federal regulatory agency dedicated to AI oversight. In early 2026, he pushed for tech companies to fund their own AI infrastructure rather than relying on taxpayers, and warned that Chinese AI subsidies threaten U.S. competitiveness. He co-authored 'Tools and Weapons: The Promise and the Peril of the Digital Age' (2019) with Carol Ann Browne, which argued for proactive technology regulation.",
+    "notes_sources": [
+      "https://www.cnbc.com/2026/02/18/microsoft-president-brad-smith-chinese-ai-subsidies.html",
+      "https://blogs.microsoft.com/on-the-issues/2026/01/13/community-first-ai-infrastructure/",
+      "https://blogs.microsoft.com/on-the-issues/2023/09/12/developing-and-deploying-ai-responsibly-elements-of-an-effective-legislative-framework-to-regulate-ai/",
+      "https://en.wikipedia.org/wiki/Brad_Smith_(American_lawyer)"
+    ],
+    "belief_regulatory_stance": "Moderate",
+    "belief_regulatory_stance_detail": "Smith has consistently called for mandatory safety requirements, transparency obligations, and the creation of a dedicated federal AI regulatory body, while opposing broad development bans. His 2023 Microsoft policy paper proposed a framework emphasizing safety brakes, licensing for high-risk AI, and international cooperation.",
+    "belief_evidence_source": "Inferred",
+    "belief_agi_timeline": "Unknown",
+    "belief_ai_risk": "Serious",
+    "belief_threat_models": "Cybersecurity, Labor displacement, Democratic erosion",
+    "_verification": {
+      "issues_found": "Entity existed with only name and category. No title, org, location, notes, belief fields, or social handles. Brad Smith is one of the most prominent corporate voices on AI policy in the U.S. and his absence from the enriched dataset was a major gap.",
+      "notes": "Title (Vice Chair and President), tenure (president since 2015, vice chair since 2021), congressional testimony, 2026 infrastructure policy stance, Chinese AI subsidies warning, and book title all verified via CNBC, Microsoft On the Issues blog, and Wikipedia. Regulatory stance inferred from his 2023 legislative framework proposal and public statements."
+    }
+  }
+]

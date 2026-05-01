@@ -1,10 +1,7 @@
-import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { App } from './App'
 import '../styles/global.css'
 
-createRoot(document.getElementById('insights-root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-)
+// StrictMode disabled - causes double-mount which resets component state
+// and triggers visual glitches with D3 charts
+createRoot(document.getElementById('insights-root')!).render(<App />)

@@ -1,0 +1,158 @@
+[
+  {
+    "id": 3,
+    "entity_type": "person",
+    "name": "Marc Andreessen",
+    "title": "Co-Founder & General Partner, Andreessen Horowitz (a16z)",
+    "category": "Investor",
+    "other_categories": "Executive",
+    "primary_org": "Andreessen Horowitz (a16z)",
+    "other_orgs": "Co-Founder of Netscape (1994), Co-Founder/CEO of Opsware (sold to HP for $1.6B in 2007), Board member of Meta/Facebook, Advisor to Trump administration on technology policy",
+    "location": "San Francisco, CA",
+    "influence_type": "Funder/investor, Narrator, Decision-maker, Advisor/strategist",
+    "twitter": "@pmarca",
+    "bluesky": null,
+    "notes": "Marc Andreessen is an American entrepreneur and venture capitalist who co-founded the web browser Mosaic and Netscape in the 1990s. He co-founded the venture capital firm Andreessen Horowitz (a16z) with Ben Horowitz in 2009, which now manages over $42 billion in assets and is one of the most active investors in AI startups. In October 2023, he published 'The Techno-Optimist Manifesto,' arguing against AI regulation and for accelerated technological development. He has been a vocal opponent of state-level AI legislation such as California's SB 1047 and serves as an informal advisor to the Trump administration on technology policy.",
+    "notes_sources": [
+      "https://a16z.com/the-techno-optimist-manifesto/",
+      "https://en.wikipedia.org/wiki/Marc_Andreessen",
+      "https://fortune.com/2023/10/16/marc-andreessen-techno-optimist-manifesto-ai-50-billion-people-billionaire-vc/"
+    ],
+    "thumbnail_url": "https://d1vsiezx2npkka.cloudfront.net/thumbnails/person-3.jpg",
+    "belief_regulatory_stance": "Light-touch",
+    "belief_regulatory_stance_detail": "Strongly advocates against AI regulation, particularly state-level legislation. Called California's SB 1047 'completely insane' and warned it would kill open source AI and startups. Published the Techno-Optimist Manifesto in 2023 arguing technology should be developed without restrictive regulation. Opposes EU AI Act. Supports minimal federal oversight while opposing state-level 'patchwork' regulation.",
+    "belief_evidence_source": "Explicitly stated",
+    "belief_agi_timeline": "5-10 years",
+    "belief_ai_risk": "Manageable",
+    "belief_threat_models": "Power concentration, Democratic erosion",
+    "_verification": {
+      "issues_found": "1) Notes were repetitive — the same fact about co-founding Netscape and a16z appeared twice. 2) Citation artifacts [1], [3], [6] throughout. 3) Notes were extremely thin on AI policy relevance — no mention of the Techno-Optimist Manifesto, opposition to SB 1047, or advisory role to Trump admin. 4) Twitter handle was listed as @a16z (the firm's handle) instead of his personal handle @pmarca. 5) Net worth figure ($1.9B) removed — dollar amounts are prone to rapid change and not relevant to AI policy notes. 6) Mosaic description 'first web browser to display inline images' is debatable and was removed as unnecessary detail.",
+      "notes": "Verified co-founding of a16z (2009) via Wikipedia. Verified Techno-Optimist Manifesto publication date (Oct 16, 2023) via Fortune and a16z.com. Verified opposition to SB 1047 from existing belief_regulatory_stance_detail. Removed repetitive sentences and citation artifacts. Replaced @a16z with personal handle @pmarca."
+    }
+  },
+  {
+    "id": 18,
+    "entity_type": "person",
+    "name": "Sam Altman",
+    "title": "CEO of OpenAI",
+    "category": "Executive",
+    "other_categories": "Investor",
+    "primary_org": "OpenAI",
+    "other_orgs": "Chairman of Helion Energy, Co-founder of Worldcoin, Former President of Y Combinator (2014-2019), Co-founder of Hydrazine Capital",
+    "location": "San Francisco, CA",
+    "influence_type": "Decision-maker, Narrator, Builder, Funder/investor",
+    "twitter": "@sama",
+    "bluesky": null,
+    "notes": "Sam Altman is the CEO of OpenAI, the organization behind ChatGPT and the GPT series of language models. He co-founded OpenAI as a nonprofit in December 2015, served as co-chairman, and became CEO in 2019 after leaving his role as president of Y Combinator. In November 2023, OpenAI's board briefly removed him as CEO, but he was reinstated five days later after employee and investor pressure. Altman testified before the U.S. Senate Judiciary Committee in May 2023, supporting the creation of a new federal agency to license and regulate advanced AI systems and proposing an international regulatory body modeled on the IAEA.",
+    "notes_sources": [
+      "https://en.wikipedia.org/wiki/Sam_Altman",
+      "https://www.axios.com/2023/11/22/openai-microsoft-sam-altman-ceo-chaos-timeline",
+      "https://time.com/6338789/sam-altman-openai-return-timeline/"
+    ],
+    "thumbnail_url": "https://d1vsiezx2npkka.cloudfront.net/thumbnails/person-18.jpg",
+    "belief_regulatory_stance": "Targeted",
+    "belief_regulatory_stance_detail": "Advocates for targeted regulation of AI systems above certain capability thresholds, including licensing requirements for advanced AI models. Testified before Senate in May 2023 supporting safety requirements, external testing, and publication of evaluation results. Has called for a global regulatory body modeled on the IAEA to manage AI risks.",
+    "belief_evidence_source": "Explicitly stated",
+    "belief_agi_timeline": "2-3 years",
+    "belief_ai_risk": "Serious",
+    "belief_threat_models": "Power concentration, Misinformation, Loss of control",
+    "_verification": {
+      "issues_found": "1) Citation artifacts [1,6,9], [6,7], [6,10] throughout notes. 2) Notes were thin on AI policy relevance — no mention of Senate testimony (May 2023), IAEA-style regulatory body proposal, or policy positions. 3) Net worth claim ('$3.3 billion by Forbes in March 2026') removed — sources conflict significantly (estimates range from $1.2B to $3.3B) and net worth is not relevant to AI policy notes. 4) Original threat_models had 7 entries (max is 3 per spec); reduced to top 3.",
+      "notes": "Verified co-founding of OpenAI (December 2015) via Wikipedia. Verified Y Combinator presidency and transition to OpenAI CEO in 2019 via Britannica. Verified November 2023 firing timeline: removed Nov 17, reinstated Nov 22 (5 days) via Axios and TIME. Verified Senate Judiciary testimony May 2023 from multiple news sources. Removed unverifiable exact net worth figure."
+    }
+  },
+  {
+    "id": 16,
+    "entity_type": "person",
+    "name": "Jakub Pachocki",
+    "title": "Chief Scientist, OpenAI",
+    "category": "Researcher",
+    "other_categories": null,
+    "primary_org": "OpenAI",
+    "other_orgs": "Former Research Director at OpenAI (2021-2024), Former postdoc at Harvard University and Simons Institute for the Theory of Computing",
+    "location": "San Francisco, CA",
+    "influence_type": "Decision-maker, Builder, Researcher/analyst",
+    "twitter": null,
+    "bluesky": null,
+    "notes": "Jakub Pachocki is OpenAI's chief scientist, responsible for setting the company's long-term research direction. Born in 1991 in Gdańsk, Poland, he joined OpenAI in 2017 and was promoted to chief scientist in May 2024 following Ilya Sutskever's departure. He earned his PhD in computer science from Carnegie Mellon University, was a multi-time finalist of the Polish Olympiad in Informatics, and won a silver medal at the International Olympiad in Informatics in 2009. As chief scientist, Pachocki oversees development of OpenAI's frontier models including GPT-4 and its reasoning models, placing him at the center of decisions about AI capabilities and safety tradeoffs.",
+    "notes_sources": [
+      "https://en.wikipedia.org/wiki/Jakub_Pachocki",
+      "https://www.technologyreview.com/2026/03/20/1134438/openai-is-throwing-everything-into-building-a-fully-automated-researcher/",
+      "https://time.com/collections/time100-ai-2025/7305886/jakub-pachocki/"
+    ],
+    "thumbnail_url": "https://d1vsiezx2npkka.cloudfront.net/thumbnails/person-16.jpg",
+    "belief_regulatory_stance": "Targeted",
+    "belief_regulatory_stance_detail": "Serves on OpenAI's Safety and Security Committee. Advocates for empirical, engineering-driven approaches to AI safety including AI-assisted monitoring and chain-of-thought faithfulness techniques. Supports responsible scaling with safety evaluations but focuses on technical solutions rather than broad regulatory restrictions.",
+    "belief_evidence_source": "Inferred",
+    "belief_agi_timeline": "5-10 years",
+    "belief_ai_risk": "Serious",
+    "belief_threat_models": "Loss of control, Power concentration, Existential risk",
+    "_verification": {
+      "issues_found": "1) Citation artifacts [1], [6] throughout. 2) CRITICAL: Claim 'six-time finalist of the International Olympiad in Informatics' is WRONG. IOI official records (stats.ioinformatics.org/people/1051) show Pachocki competed at the IOI exactly ONCE — in 2009, earning a silver medal. The 'six-time finalist' refers to the Polish national Olympiad in Informatics, not the International competition. This is a hallucination caused by mistranslation/conflation of Polish sources. 3) Quote attributed to Sam Altman ('easily one of the greatest minds of our generation') was verified — it comes from Altman's X post on May 14, 2024, but was removed from notes to keep them focused on policy relevance. 4) PhD supervisor Gary Miller was confirmed via CMU doctoral records. 5) Original threat_models had 3 entries which is at the max.",
+      "notes": "Verified birth year 1991 and Gdańsk origin via Wikipedia. Verified joining OpenAI in 2017 and promotion to chief scientist May 2024 via MIT Technology Review and OpenAI announcement. Verified PhD from CMU under Gary Miller via CMU doctoral degrees page. CORRECTED IOI claim: official IOI statistics (stats.ioinformatics.org) confirm only 1 IOI participation (2009, silver medal, rank 49). The 'six-time finalist' referred to the Polish Olympiad in Informatics per Polish-language source Wirtualne Media. Added context about AI policy relevance."
+    }
+  },
+  {
+    "id": 22,
+    "entity_type": "person",
+    "name": "Eliezer Yudkowsky",
+    "title": "Co-Founder and Research Fellow",
+    "category": "Researcher",
+    "other_categories": null,
+    "primary_org": "Machine Intelligence Research Institute (MIRI)",
+    "other_orgs": "Co-founded Singularity Institute for Artificial Intelligence (now MIRI) in 2000, Created LessWrong community blog in 2009",
+    "location": "Berkeley, CA",
+    "influence_type": "Researcher/analyst, Narrator, Organizer/advocate",
+    "twitter": "@ESYudkowsky",
+    "bluesky": null,
+    "notes": "Eliezer Yudkowsky is an American AI researcher who co-founded the Machine Intelligence Research Institute (originally the Singularity Institute for Artificial Intelligence) in 2000 and serves as a research fellow there. He is credited with founding the field of AI alignment research and popularizing ideas about friendly artificial intelligence. In 2009, he created LessWrong, a community blog on rationality that grew out of his writing on the Overcoming Bias blog. His 2025 book 'If Anyone Builds It, Everyone Dies,' co-authored with MIRI president Nate Soares, became a New York Times bestseller. In a widely cited 2023 TIME op-ed, Yudkowsky called for an immediate moratorium on training AI systems more powerful than GPT-4.",
+    "notes_sources": [
+      "https://en.wikipedia.org/wiki/Eliezer_Yudkowsky",
+      "https://en.wikipedia.org/wiki/If_Anyone_Builds_It,_Everyone_Dies",
+      "https://en.wikipedia.org/wiki/LessWrong",
+      "https://time.com/6266923/ai-eliezer-yudkowsky-open-letter-not-enough/"
+    ],
+    "thumbnail_url": "https://d1vsiezx2npkka.cloudfront.net/thumbnails/person-22.jpg",
+    "belief_regulatory_stance": "Precautionary",
+    "belief_regulatory_stance_detail": "Has called for immediate pause on AI development above GPT-4 capabilities. In his 2023 TIME op-ed, wrote that participating countries should be willing to 'destroy a rogue datacenter by airstrike' and that the world should 'shut down all the large GPU clusters' globally. Argues current voluntary safety commitments are wholly inadequate given existential stakes.",
+    "belief_evidence_source": "Explicitly stated",
+    "belief_agi_timeline": "5-10 years",
+    "belief_ai_risk": "Existential",
+    "belief_threat_models": "Loss of control, Existential risk",
+    "_verification": {
+      "issues_found": "1) Citation artifacts [6] throughout. 2) Notes said he 'founded' MIRI — he co-founded the Singularity Institute for AI in 2000 (with Brian and Sabine Atkins), which was later renamed to MIRI. His title correctly says 'Co-Founder' but the notes said 'founder'; corrected to 'co-founded.' 3) Notes said he 'founded LessWrong' — more accurately, he created it in February 2009 as a spinoff from the Overcoming Bias blog; added this context. 4) Notes claimed the book was 'co-authored with Nate Soares' — confirmed: Soares is listed as co-author on Amazon, Hachette, and Barnes & Noble. 5) NYT bestseller status confirmed via Wikipedia article on the book. 6) Notes were thin on policy relevance — added the TIME op-ed which is his most significant AI policy intervention.",
+      "notes": "Verified MIRI co-founding via Wikipedia (originally Singularity Institute, co-founded 2000). Verified LessWrong creation in February 2009, evolving from Overcoming Bias blog, via Wikipedia and LessWrong's own history page. Verified book 'If Anyone Builds It, Everyone Dies' (2025) as NYT bestseller co-authored with Nate Soares via multiple publisher listings. Verified 2023 TIME op-ed calling for AI moratorium."
+    }
+  },
+  {
+    "id": 27,
+    "entity_type": "person",
+    "name": "Michael Kratsios",
+    "title": "Director of Office of Science and Technology Policy and Science Advisor to the President",
+    "category": "Policymaker",
+    "other_categories": null,
+    "primary_org": "Office of Science and Technology Policy",
+    "other_orgs": "Former Chief Technology Officer of the United States (2019-2021), Former Acting Under Secretary of Defense for Research and Engineering (2020-2021), Former Managing Director at Scale AI (2021-2025), Former positions at Thiel Capital LLC",
+    "location": "Washington, DC",
+    "influence_type": "Decision-maker, Advisor/strategist, Implementer",
+    "twitter": null,
+    "bluesky": null,
+    "notes": "Michael Kratsios serves as Director of the White House Office of Science and Technology Policy and Science Advisor to President Trump, confirmed by the Senate on March 25, 2025. He previously served as the fourth U.S. Chief Technology Officer during Trump's first term and as Acting Under Secretary of Defense for Research and Engineering from July 2020 to January 2021, where he oversaw a $106 billion R&D budget. Between government stints, he was a Managing Director at Scale AI. He advocates for sector-specific AI regulation through existing agencies rather than comprehensive federal AI legislation, and supports federal preemption of state-level AI laws.",
+    "notes_sources": [
+      "https://en.wikipedia.org/wiki/Michael_Kratsios",
+      "https://www.axios.com/pro/tech-policy/2025/03/25/michael-kratsios-confirmed-to-lead-ostp",
+      "https://www.war.gov/About/Biographies/Biography/Article/2279091/michael-jk-kratsios/"
+    ],
+    "thumbnail_url": "https://d1vsiezx2npkka.cloudfront.net/thumbnails/person-27.jpg",
+    "belief_regulatory_stance": "Light-touch",
+    "belief_regulatory_stance_detail": "Advocates for a 'use-case and sector-specific' regulatory framework rather than comprehensive federal AI legislation. Supports regulatory sandboxes and opposes 'onerous' state AI laws, favoring federal preemption. Prefers existing sector regulators (FDA, FAA) handle AI in their domains. Argues a 'patchwork of laws' favors large tech companies over startups.",
+    "belief_evidence_source": "Explicitly stated",
+    "belief_agi_timeline": "5-10 years",
+    "belief_ai_risk": "Manageable",
+    "belief_threat_models": "Labor displacement, Cybersecurity, Power concentration",
+    "_verification": {
+      "issues_found": "1) Citation artifacts [10,11], [6,10], [7,10] throughout. 2) CRITICAL: Notes referred to his Pentagon role as 'Under Secretary of War' — this is anachronistic. During 2020-2021, the department was still named the Department of Defense (renamed to 'Department of War' by executive order in September 2025). The correct historical title is 'Acting Under Secretary of Defense for Research and Engineering.' 3) Notes did not mention his role was 'Acting' (not Senate-confirmed) at the Pentagon. 4) Princeton degree and Tsinghua visiting scholar claims are in his official bios but removed from notes as not AI-policy relevant. 5) Original threat_models had 6 entries (max is 3); reduced to top 3. 6) Notes were thin on current policy significance — added his regulatory philosophy.",
+      "notes": "Verified Senate confirmation 74-25 on March 25, 2025 via Axios. Verified he was the fourth U.S. CTO (after Chopra, Park, Smith) via Wikipedia. Corrected 'Under Secretary of War' to 'Acting Under Secretary of Defense for Research and Engineering' — the DoD was renamed by executive order in September 2025, but in 2020-2021 it was still the Department of Defense. Verified Scale AI role via Wikipedia and LinkedIn. Verified $106B R&D budget oversight from DoD biography."
+    }
+  }
+]

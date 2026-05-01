@@ -1,0 +1,80 @@
+{
+  "edges": [
+    {
+      "source_id": 1196,
+      "target_id": 1042,
+      "edge_type": "employed_by",
+      "role": "Vice Chair and President",
+      "is_primary": true,
+      "start_date": "2015",
+      "end_date": null,
+      "evidence": "Brad Smith has served as President of Microsoft since 2015, and was additionally named Vice Chair in 2021. He oversees legal, government affairs, and public policy.",
+      "source_url": "https://news.microsoft.com/source/exec/brad-smith/",
+      "source_name": "Brad Smith",
+      "source_entity_type": "person",
+      "target_name": "Microsoft",
+      "target_entity_type": "organization"
+    },
+    {
+      "source_id": 1123,
+      "target_id": 745,
+      "edge_type": "founded",
+      "role": "Chair, CEO and Co-Founder",
+      "is_primary": true,
+      "start_date": "1999",
+      "end_date": null,
+      "evidence": "Marc Benioff co-founded Salesforce in 1999 and has served as its CEO since inception. He holds the title of Chair, CEO and Co-Founder.",
+      "source_url": "https://www.salesforce.com/company/marc-benioff-bio/",
+      "source_name": "Marc Benioff",
+      "source_entity_type": "person",
+      "target_name": "Salesforce",
+      "target_entity_type": "organization"
+    },
+    {
+      "source_id": 27,
+      "target_id": 772,
+      "edge_type": "former_colleague",
+      "role": "Managing Director at Scale AI (2021-2025), working under CEO Alexandr Wang",
+      "is_primary": false,
+      "start_date": "2021",
+      "end_date": "2025",
+      "evidence": "Michael Kratsios served as Managing Director at Scale AI from January 2021 to January 2025, where Alexandr Wang is CEO and co-founder. Kratsios oversaw government and defense partnerships at Scale AI before returning to government as OSTP Director.",
+      "source_url": "https://en.wikipedia.org/wiki/Michael_Kratsios",
+      "source_name": "Michael Kratsios",
+      "source_entity_type": "person",
+      "target_name": "Alexandr Wang",
+      "target_entity_type": "person"
+    }
+  ],
+  "new_entity": {
+    "entity_type": "person",
+    "name": "Nick Begich III",
+    "title": "U.S. Representative, Alaska At-Large",
+    "category": "Policymaker",
+    "other_categories": "Executive",
+    "primary_org": "U.S. House of Representatives",
+    "other_orgs": "House Committee on Science, Space, and Technology; House Committee on Natural Resources; Founder and former Executive Chairman of FarShore Partners (software development, ~150 employees)",
+    "location": "Anchorage, AK",
+    "influence_type": "Decision-maker, Builder, Implementer",
+    "twitter": "@RepNickBegich",
+    "bluesky": null,
+    "website": "https://begich.house.gov",
+    "notes": "Nick Begich III is Alaska's at-large U.S. Representative and one of the few members of Congress with a hands-on technology background. Before entering politics, he founded FarShore Partners, a software development company with roughly 150 employees that built custom products for startups and enterprises. He serves on the House Committee on Science, Space, and Technology, and is introducing the House version of the DATA Act, which would exempt self-powered AI data centers from federal energy regulations to accelerate buildout. Begich has built an AI training program for fellow congressional offices and advocates for federal preemption over state-level AI regulation patchwork to preserve startup competitiveness.",
+    "notes_sources": [
+      "https://begich.house.gov/about",
+      "https://en.wikipedia.org/wiki/Nick_Begich_III",
+      "https://www.congress.gov/member/nicholas-begich/B001323",
+      "https://foleyhoag.com/news-and-insights/blogs/energy-and-climate-counsel/2026/march/the-data-act-of-2026-and-the-future-of-data-center-development/"
+    ],
+    "thumbnail_url": null,
+    "belief_regulatory_stance": "Light-touch",
+    "belief_regulatory_stance_detail": "Advocates for federal preemption of state AI laws to prevent a regulatory patchwork that he argues shrinks total addressable markets and disadvantages startups. Supports the DATA Act to exempt off-grid AI data centers from FERC regulation. Compares the current AI moment to the early internet, arguing that the federal government's light-touch approach to web platforms in the 1990s should serve as a model. Emphasizes that falling six months behind in AI development could be catastrophic for U.S. competitiveness.",
+    "belief_evidence_source": "Explicitly stated",
+    "belief_agi_timeline": "Unknown",
+    "belief_ai_risk": "Manageable",
+    "belief_threat_models": "Power concentration, Labor displacement",
+    "_verification": {
+      "notes": "Confirmed Nick Begich does not exist in the database (searched entities.json for 'begich'). Verified election to Congress (November 2024, defeating Mary Peltola) and committee assignments via Congress.gov and official House website. Verified FarShore Partners founding and ~120-150 employee count via Wikipedia and campaign filings. Verified DATA Act details (Tom Cotton's Senate bill, Begich introducing House version) via Foley Hoag legal analysis, Data Center Dynamics, and Reason. AI policy positions and training program for colleagues verified from Scaling Laws podcast interview (March 31, 2026, Lawfare/UT Law). Education (BBA Baylor, MBA Indiana University) verified via Wikipedia and Ballotpedia."
+    }
+  }
+}

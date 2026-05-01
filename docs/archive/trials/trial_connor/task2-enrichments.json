@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1123,
+    "entity_type": "person",
+    "name": "Marc Benioff",
+    "title": "Chair, CEO, and Co-Founder of Salesforce",
+    "category": "Executive",
+    "other_categories": null,
+    "primary_org": "Salesforce",
+    "other_orgs": "Owner and Co-Chairman of Time magazine, World Economic Forum Board of Trustees member",
+    "location": "San Francisco, CA",
+    "influence_type": "Decision-maker, Narrator, Builder",
+    "twitter": "@Benioff",
+    "bluesky": null,
+    "notes": "Marc Benioff is the co-founder, chairman, and CEO of Salesforce, which has invested heavily in AI through its Einstein AI platform and Agentforce autonomous agent product line. He has been one of the most vocal major tech CEOs calling for AI regulation, stating at the 2026 World Economic Forum in Davos that AI models 'became suicide coaches' and arguing that Section 230 must be reformed so that companies are held accountable for harmful AI outputs. Under his leadership, Salesforce cut approximately 4,000 customer service roles due to AI automation and paused hiring software engineers for FY2026, making Benioff a central figure in debates about AI's impact on employment.",
+    "notes_sources": [
+      "https://www.cnbc.com/2026/01/20/salesforce-benioff-ai-regulation-suicide-coaches.html",
+      "https://fortune.com/2025/09/02/salesforce-ceo-billionaire-marc-benioff-ai-agents-jobs-layoffs-customer-service-sales/",
+      "https://en.wikipedia.org/wiki/Marc_Benioff"
+    ],
+    "belief_regulatory_stance": "Targeted",
+    "belief_regulatory_stance_detail": "Called for AI regulation at the 2026 World Economic Forum, arguing 'it can't be just growth at any cost.' Advocates for reforming Section 230 so tech companies are liable for harmful AI outputs. Has been a vocal critic of Section 230 since 2019, calling for its abolition in the context of both social media and AI harms.",
+    "belief_evidence_source": "Explicitly stated",
+    "belief_agi_timeline": "Unknown",
+    "belief_ai_risk": "Serious",
+    "belief_threat_models": "Labor displacement, Misinformation, Power concentration",
+    "_verification": {
+      "issues_found": "Entity was an empty shell — only had name, category (Executive), and a thumbnail URL. All other fields were null.",
+      "notes": "Verified Salesforce CEO role and AI regulation statements via CNBC reporting on 2026 Davos remarks. Verified Agentforce product and 4,000 job cuts via Fortune reporting (September 2025). Verified @Benioff Twitter handle via x.com. AI regulation stance sourced from multiple on-the-record quotes at WEF. Did not include net worth or other financial figures as these are volatile and not policy-relevant."
+    }
+  },
+  {
+    "id": 1058,
+    "entity_type": "organization",
+    "name": "Anduril Industries",
+    "category": "Infrastructure & Compute",
+    "other_categories": "Deployers & Platforms",
+    "website": "https://www.anduril.com",
+    "funding_model": "Venture-backed",
+    "parent_org_id": null,
+    "location": "Costa Mesa, CA",
+    "influence_type": "Builder, Decision-maker",
+    "twitter": "@anduriltech",
+    "bluesky": null,
+    "notes": "Anduril Industries is a defense technology company founded in 2017 by Palmer Luckey that develops AI-powered autonomous systems for the U.S. military and allied forces. Its products include counter-drone systems, autonomous surveillance platforms, and the Lattice networked command-and-control software. Anduril entered a strategic partnership with OpenAI in December 2024 to integrate advanced AI models into counter-unmanned aircraft systems, marking a significant expansion of commercial AI into military applications. The company has secured over $6 billion in government contracts and is constructing 'Arsenal-1,' a hyperscale autonomous weapons manufacturing facility near Columbus, Ohio.",
+    "notes_sources": [
+      "https://www.anduril.com/news/anduril-partners-with-openai-to-advance-u-s-artificial-intelligence-leadership-and-protect-u-s",
+      "https://en.wikipedia.org/wiki/Anduril_Industries",
+      "https://breakingdefense.com/2024/12/anduril-openai-enter-strategic-partnership-to-use-ai-against-drones/"
+    ],
+    "belief_regulatory_stance": "Light-touch",
+    "belief_regulatory_stance_detail": "Supports streamlined defense procurement and advocates for integrating commercial AI into military systems without restrictive regulation. CEO Palmer Luckey has argued AI-powered autonomous weapons are the future of warfare and should be developed responsibly but without excessive government constraints on innovation.",
+    "belief_evidence_source": "Inferred",
+    "belief_agi_timeline": "Unknown",
+    "belief_ai_risk": "Manageable",
+    "belief_threat_models": "Weapons, Cybersecurity",
+    "_verification": {
+      "issues_found": "Entity was an empty shell — only had name and category (Deployers & Platforms). All other fields were null.",
+      "notes": "Verified founding date (2017) and founder (Palmer Luckey) via Wikipedia and anduril.com. Verified OpenAI partnership (December 2024) via anduril.com press release and Breaking Defense. Verified $6B+ government contracts and Arsenal-1 facility via CBS News (60 Minutes feature) and CNBC. Category updated to 'Infrastructure & Compute' with 'Deployers & Platforms' as secondary — Anduril is primarily a defense hardware/systems company. Valuation ($30.5B) excluded as volatile."
+    }
+  },
+  {
+    "id": 1149,
+    "entity_type": "organization",
+    "name": "House Bipartisan Task Force on Artificial Intelligence",
+    "category": "Government/Agency",
+    "other_categories": null,
+    "website": "https://obernolte.house.gov/AITFReport",
+    "funding_model": "Government-funded",
+    "parent_org_id": null,
+    "location": "Washington, DC",
+    "influence_type": "Advisor/strategist, Researcher/analyst",
+    "twitter": null,
+    "bluesky": null,
+    "notes": "The House Bipartisan Task Force on Artificial Intelligence was established by Speaker Mike Johnson and then-Minority Leader Hakeem Jeffries to develop a comprehensive congressional approach to AI policy. Co-chaired by Representatives Jay Obernolte (R-CA) and Ted Lieu (D-CA), the 24-member task force included twelve Republicans and twelve Democrats drawn from twenty House committees. In December 2024, it released a 273-page report containing 66 key findings and approximately 85-89 recommendations (sources vary) across 15 policy areas including healthcare, education, intellectual property, and national security, advocating for a sector-specific regulatory approach to AI governance.",
+    "notes_sources": [
+      "https://science.house.gov/2024/12/house-bipartisan-task-force-on-artificial-intelligence-delivers-report",
+      "https://obernolte.house.gov/AITFReport",
+      "https://www.lawfaremedia.org/article/unpacking-the-final-report-of-the-bipartisan-house-task-force-on-ai"
+    ],
+    "belief_regulatory_stance": "Targeted",
+    "belief_regulatory_stance_detail": "The task force report advocated for sector-specific AI regulation rather than comprehensive federal legislation, recommending that existing agencies (FDA, FAA, FTC, etc.) handle AI within their domains. The report emphasized maintaining U.S. competitiveness while establishing guardrails for high-risk applications.",
+    "belief_evidence_source": "Explicitly stated",
+    "belief_agi_timeline": null,
+    "belief_ai_risk": null,
+    "belief_threat_models": null,
+    "_verification": {
+      "issues_found": "Entity was an empty shell — only had name and category (Government/Agency). All other fields were null. Note: a near-duplicate entity exists at ID 1470 ('Bipartisan Taskforce on Artificial Intelligence') which likely refers to the same body.",
+      "notes": "Verified task force co-chairs (Obernolte, Lieu), membership (24 members, 12R/12D from 20 committees), and report details (273 pages, 66 findings, 89 recommendations, December 2024) via science.house.gov press release and Lawfare analysis. Report URL verified at obernolte.house.gov/AITFReport. Flagged potential duplicate entity at ID 1470."
+    }
+  }
+]

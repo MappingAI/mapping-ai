@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { Navigation } from '../components/Navigation'
 
 /* ------------------------------------------------------------------ */
@@ -38,7 +38,7 @@ const TEAM: TeamMember[] = [
     bio: 'Robby is an expert in housing policy. He previously led outreach for a YIMBY organization and now serves as Chief Strategy Officer for a data analytics firm.',
   },
   {
-    name: 'Sophia Wang',
+    name: 'Sophia J Wang',
     href: 'https://www.linkedin.com/in/sophia-j-wang/',
     role: 'Working Group',
     bio: 'Sophia leads research for a deep tech fund. She specializes in the development of highly autonomous systems and the design of new research institutions.',
@@ -49,35 +49,7 @@ const TEAM: TeamMember[] = [
 /*  Fade-in observer hook                                              */
 /* ------------------------------------------------------------------ */
 
-function useFadeIn() {
-  const refs = useRef<(HTMLElement | null)[]>([])
-
-  const setRef = useCallback(
-    (index: number) => (el: HTMLElement | null) => {
-      refs.current[index] = el
-    },
-    [],
-  )
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            ;(e.target as HTMLElement).style.opacity = '1'
-            ;(e.target as HTMLElement).style.transform = 'translateY(0)'
-            observer.unobserve(e.target)
-          }
-        })
-      },
-      { threshold: 0.1 },
-    )
-    refs.current.forEach((el) => el && observer.observe(el))
-    return () => observer.disconnect()
-  }, [])
-
-  return setRef
-}
+// Fade-in animation removed - was causing white flash issues
 
 /* ------------------------------------------------------------------ */
 /*  Beta overlay                                                       */
@@ -208,20 +180,15 @@ function MailIcon() {
 /* ------------------------------------------------------------------ */
 
 export function App() {
-  const setRef = useFadeIn()
-  let fi = 0
-
-  const fadeProps = (index: number) => ({
-    ref: setRef(index),
-    style: {
-      opacity: 0,
-      transform: 'translateY(12px)',
-      transition: 'opacity 0.5s ease, transform 0.5s ease',
-    } as const,
+  // Fade-in disabled - just pass through className
+  const fadeProps = (_index: number, existingClassName = '') => ({
+    className: existingClassName,
   })
+  let fi = 0 // Keep counter to avoid changing all fadeProps calls
 
   return (
     <>
+      {/* Fade-in animation removed - was causing white flash on re-renders */}
       <BetaOverlay />
       <Navigation />
 
@@ -239,13 +206,10 @@ export function App() {
         </h1>
 
         {/* Who we are */}
-        <div
-          {...fadeProps(fi++)}
-          className="font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3"
-        >
+        <div {...fadeProps(fi++, 'font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3')}>
           Who we are
         </div>
-        <p {...fadeProps(fi++)} className="mb-4 text-[16.5px]">
+        <p {...fadeProps(fi++, 'mb-4 text-[16.5px]')}>
           We are a working group of researchers, policy experts, and practitioners building a comprehensive map of the
           U.S. AI policy landscape. Our goal is to identify who is shaping AI governance, where the coalitions are
           forming, and where the gaps are—and to use that map as the foundation for a coordinated policy agenda ahead of
@@ -255,19 +219,16 @@ export function App() {
         <hr className="border-none border-t border-[#bbb]/50 my-10" />
 
         {/* What we believe */}
-        <div
-          {...fadeProps(fi++)}
-          className="font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3"
-        >
+        <div {...fadeProps(fi++, 'font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3')}>
           What we believe
         </div>
-        <p {...fadeProps(fi++)} className="mb-4 text-[16.5px]">
+        <p {...fadeProps(fi++, 'mb-4 text-[16.5px]')}>
           We take existential risks seriously and view the work of technical safety researchers, both in and out of
           frontier labs, as vitally important. But if we can avoid realizing existential outcomes, good governance will
           be critical to ensure human flourishing. Technical safety work is the prerequisite; governance is what shapes
           outcomes in the world where that work succeeds.
         </p>
-        <p {...fadeProps(fi++)} className="mb-4 text-[16.5px]">
+        <p {...fadeProps(fi++, 'mb-4 text-[16.5px]')}>
           Our organizing principle is distribution—not as an afterthought, and not as redistribution after the fact, but
           as the design criterion for how AI's benefits flow. The question that unifies labor, safety, national
           security, and institutional design is the same: who captures value from American innovation, and on what
@@ -277,13 +238,10 @@ export function App() {
         <hr className="border-none border-t border-[#bbb]/50 my-10" />
 
         {/* The team */}
-        <div
-          {...fadeProps(fi++)}
-          className="font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3"
-        >
+        <div {...fadeProps(fi++, 'font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3')}>
           The team
         </div>
-        <div {...fadeProps(fi++)} className="grid grid-cols-2 max-[600px]:grid-cols-1 gap-3 my-5">
+        <div {...fadeProps(fi++, 'grid grid-cols-2 max-[600px]:grid-cols-1 gap-3 my-5')}>
           {TEAM.map((member) => (
             <TeamCard key={member.name} member={member} />
           ))}
@@ -292,26 +250,54 @@ export function App() {
         <hr className="border-none border-t border-[#bbb]/50 my-10" />
 
         {/* Other contributors */}
-        <div
-          {...fadeProps(fi++)}
-          className="font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3"
-        >
+        <div {...fadeProps(fi++, 'font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3')}>
           Other contributors
         </div>
-        <p {...fadeProps(fi++)} className="mb-4 text-[16.5px]">
+        <p {...fadeProps(fi++, 'mb-4 text-[16.5px]')}>
           Connor Mack
         </p>
 
         <hr className="border-none border-t border-[#bbb]/50 my-10" />
 
-        {/* Get involved */}
-        <div
-          {...fadeProps(fi++)}
-          className="font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3"
-        >
-          Get involved
+        {/* Ways to contribute */}
+        <div {...fadeProps(fi++, 'font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3')}>
+          Ways to contribute
         </div>
-        <p {...fadeProps(fi++)} className="mb-4 text-[16.5px]">
+        <p {...fadeProps(fi++, 'mb-4 text-[16.5px]')}>
+          Mapping AI is fully open source. The codebase lives on{' '}
+          <a
+            href="https://github.com/MappingAI/mapping-ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#2563eb] no-underline hover:underline"
+          >
+            GitHub
+          </a>
+          , and we welcome contributions of all kinds: adding data, reporting bugs, building features, improving data
+          quality, helping with outreach, or creating visualizations from the dataset.
+        </p>
+        <p {...fadeProps(fi++, 'mb-4 text-[16.5px]')}>
+          In April 2026, we hosted a mapping party where contributors did all of the above ahead of public release. We
+          coordinate ongoing work through our{' '}
+          <a
+            href="https://discord.gg/2gntpaxV"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#2563eb] no-underline hover:underline"
+          >
+            Discord server
+          </a>
+          .
+        </p>
+        <p {...fadeProps(fi++, 'mb-4 text-[16.5px]')}>
+          If you're a researcher, policymaker, developer, or anyone else with ideas for deeper collaboration, reach out
+          at{' '}
+          <a href="mailto:info@mapping-ai.org" className="text-[#2563eb] no-underline hover:underline">
+            info@mapping-ai.org
+          </a>
+          .
+        </p>
+        <p {...fadeProps(fi++, 'mb-4 text-[16.5px]')}>
           If you work in or adjacent to AI policy, governance, safety, labor, or civil society, we welcome your
           contributions to the map.{' '}
           <a href="/contribute" className="text-[#2563eb] no-underline hover:underline">
@@ -320,7 +306,7 @@ export function App() {
         </p>
 
         {/* Disclaimer */}
-        <p {...fadeProps(fi++)} className="font-mono text-[11px] text-[#888] tracking-wide mt-10 leading-relaxed">
+        <p {...fadeProps(fi++, 'font-mono text-[11px] text-[#888] tracking-wide mt-10 leading-relaxed')}>
           The views expressed on this site are our own and do not reflect the views of any of our employers or
           affiliated institutions.
         </p>
