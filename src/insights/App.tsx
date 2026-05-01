@@ -12,7 +12,6 @@ import {
 } from './network'
 import {
   FundingFlowSankey,
-  FunderCategoryStance,
   PolicyVoiceIndependence,
 } from './funding'
 
@@ -137,8 +136,7 @@ const TOC_ITEMS = [
   { id: 'threat-models', label: 'Threat Models' },
   { id: 'network', label: 'Connectivity' },
   { id: 'bridge-builders', label: 'Bridge Builders' },
-  { id: 'funding-flows', label: 'Funding Flows' },
-  { id: 'funding-structure', label: 'Funding Structure' },
+  { id: 'funding', label: 'Funding' },
   { id: 'crosspartisan', label: 'Crosspartisan' },
   { id: 'agi-definitions', label: 'AGI Definitions' },
 ]
@@ -1032,26 +1030,6 @@ export function App() {
           them requires external validation.
         </Finding>
 
-        <h3 className="font-serif text-[18px] font-normal mt-8 mb-3">Funding model → ideology</h3>
-
-        <Para>
-          Does knowing how an organization is funded predict its regulatory stance? This isn't necessarily
-          causal—funders may seek out aligned orgs, not shape them—but the correlation is structurally important.
-        </Para>
-
-        <ChartContainer
-          title="Mean regulatory stance by funding model"
-          source="Scale: 1 = Accelerate, 6 = Precautionary. Only funding models with 5+ orgs shown."
-        >
-          <ChartFundingStance orgs={orgs} />
-        </ChartContainer>
-
-        <Finding>
-          Funding source is predictive of regulatory stance. Philanthropically-funded organizations skew more
-          restrictive, while venture-backed organizations favor lighter regulation. This structural pattern holds
-          regardless of whether funders actively influence grantees or simply select for aligned orgs.
-        </Finding>
-
         <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
 
         {/* ═══════════════════════════════════════════ */}
@@ -1201,11 +1179,11 @@ export function App() {
         <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
 
         {/* ═══════════════════════════════════════════ */}
-        {/* SECTION 6: FUNDING FLOWS                    */}
+        {/* SECTION 6: FUNDING                          */}
         {/* ═══════════════════════════════════════════ */}
 
-        <SectionLabel id="funding-flows">Insight 6</SectionLabel>
-        <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">Funding Flows</h2>
+        <SectionLabel id="funding">Insight 6</SectionLabel>
+        <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">Funding & Independence</h2>
 
         <Para>
           Who funds whom in the AI ecosystem? We've tracked <span className="font-mono">{fundingData?._meta?.total_edges || '—'}</span> funding
@@ -1229,57 +1207,24 @@ export function App() {
               and Think Tanks, while tech companies and VCs flow to Frontier Labs and infrastructure.
             </Para>
 
-            <Finding>
-              Funding follows category lines. Open Philanthropy and related EA funders dominate AI Safety funding,
-              while tech companies like Google and Microsoft invest in Frontier Labs and compute. Government
-              agencies (NSF, DARPA) focus on academic research. These are structural patterns, not claims about
-              total capital—the sample reveals <em>who funds what kind of work</em>.
-            </Finding>
-          </>
-        )}
-
-        <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
-
-        {/* ═══════════════════════════════════════════ */}
-        {/* SECTION 7: FUNDING STRUCTURE                */}
-        {/* ═══════════════════════════════════════════ */}
-
-        <SectionLabel id="funding-structure">Insight 7</SectionLabel>
-        <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">Structural Conflicts & Independence</h2>
-
-        <Para>
-          Beyond tracking who funds whom, we can ask structural questions: Do funders systematically back
-          organizations that share their regulatory interests? And how independent are the policy voices
-          that shape AI governance?
-        </Para>
-
-        {fundingData && (
-          <>
-            <h3 className="font-serif text-[18px] font-normal mt-6 mb-3">Do funders back aligned recipients?</h3>
+            <h3 className="font-serif text-[18px] font-normal mt-8 mb-3">Funding model → regulatory stance</h3>
 
             <Para>
-              We measure the mean regulatory stance of recipients for each funder category. If tech platform
-              companies fund organizations that advocate for lighter regulation, while safety-focused funders
-              back more precautionary voices, that's a structural pattern worth understanding—regardless of
-              whether funders actively shape grantees or simply select for alignment.
+              Does knowing how an organization is funded predict its regulatory stance? This isn't necessarily
+              causal—funders may seek out aligned orgs, not shape them—but the correlation is structurally important.
             </Para>
 
             <ChartContainer
-              title="Mean recipient stance by funder category"
-              source="Scale: 1 = Accelerate, 6 = Precautionary. Error bars show ±1 standard deviation. Categories with 2+ funders shown."
+              title="Mean regulatory stance by funding model"
+              source="Scale: 1 = Accelerate, 6 = Precautionary. Only funding models with 5+ orgs shown."
             >
-              <FunderCategoryStance
-                funders={fundingData.funders}
-                showTooltip={showTooltip}
-                hideTooltip={hideTooltip}
-              />
+              <ChartFundingStance orgs={orgs} />
             </ChartContainer>
 
             <Finding>
-              Funder categories cluster by recipient stance. Tech platforms and infrastructure companies fund
-              recipients averaging ~3.2 (Light-touch to Targeted), while AI Safety funders average ~4.6
-              (Moderate to Precautionary). This isn't surprising—but it's structural: the entities producing
-              policy research receive funding from sources with interests in the regulatory outcome.
+              Funding source is predictive of regulatory stance. Philanthropically-funded organizations skew more
+              precautionary, while venture-backed organizations favor lighter regulation. This structural pattern
+              holds regardless of whether funders actively influence grantees or simply select for aligned orgs.
             </Finding>
 
             <h3 className="font-serif text-[18px] font-normal mt-8 mb-3">How independent are policy voices?</h3>
@@ -1317,7 +1262,7 @@ export function App() {
         {/* SECTION 8: CROSSPARTISAN CONVERGENCE        */}
         {/* ═══════════════════════════════════════════ */}
 
-        <SectionLabel id="crosspartisan">Insight 8</SectionLabel>
+        <SectionLabel id="crosspartisan">Insight 7</SectionLabel>
         <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">
           Crosspartisan Convergence on AI Policy
         </h2>
@@ -1359,7 +1304,7 @@ export function App() {
         {/* SECTION 9: AGI DEFINITION SPACE             */}
         {/* ═══════════════════════════════════════════ */}
 
-        <SectionLabel id="agi-definitions">Insight 9</SectionLabel>
+        <SectionLabel id="agi-definitions">Insight 8</SectionLabel>
         <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">The AGI Definition Space</h2>
 
         <Para>
