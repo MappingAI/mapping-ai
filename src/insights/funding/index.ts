@@ -1,2 +1,5 @@
 export { FundingFlowSankey } from './FundingFlowSankey'
 export { PolicyVoiceIndependence } from './PolicyVoiceIndependence'
+export { FundingFragility } from './FundingFragility'
+export { PolicyKingmakers } from './PolicyKingmakers'
+export { FunderDiversity } from './FunderDiversity'

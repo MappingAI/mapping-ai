@@ -12,7 +12,9 @@ import {
 } from './network'
 import {
   FundingFlowSankey,
-  PolicyVoiceIndependence,
+  FundingFragility,
+  PolicyKingmakers,
+  FunderDiversity,
 } from './funding'
 
 // d3 is loaded from a CDN <script> tag (see index.html) rather than imported as a module,
@@ -1227,20 +1229,58 @@ export function App() {
               holds regardless of whether funders actively influence grantees or simply select for aligned orgs.
             </Finding>
 
-            <h3 className="font-serif text-[18px] font-normal mt-8 mb-3">How independent are policy voices?</h3>
+            <h3 className="font-serif text-[18px] font-normal mt-8 mb-3">Who are the kingmakers?</h3>
 
             <Para>
-              For think tanks, AI safety organizations, and ethics groups that shape policy discourse,
-              funding diversity matters. An organization with many funders has more independence than one
-              reliant on a single source. We measure this by counting unique funders and flagging
-              concentration (when one funder provides the majority of support).
+              Which funders have the most reach across policy organizations? A handful of funders
+              back a disproportionate share of think tanks, AI safety orgs, and ethics groups.
+              This isn't inherently problematic—but it does mean these funders have structural
+              influence over which organizations have resources to operate.
             </Para>
 
             <ChartContainer
-              title="Funding diversity for policy-relevant organizations"
-              source="Think tanks, AI Safety, and Ethics/Rights orgs. Color indicates funding concentration. Click for funder breakdown."
+              title="Top policy funders by reach"
+              source="Funders backing 2+ policy organizations (Think Tanks, AI Safety, Ethics/Rights). Click for full list of recipients."
             >
-              <PolicyVoiceIndependence
+              <PolicyKingmakers
+                edges={fundingData.edges}
+                showTooltip={showTooltip}
+                hideTooltip={hideTooltip}
+              />
+            </ChartContainer>
+
+            <h3 className="font-serif text-[18px] font-normal mt-8 mb-3">How fragile is policy funding?</h3>
+
+            <Para>
+              If a major funder withdrew, which organizations would be affected? We measure
+              concentration risk by how much of an org's funding comes from its top funder.
+              High concentration (red) means structural dependence on a single source.
+            </Para>
+
+            <ChartContainer
+              title="Funding concentration risk"
+              source="Policy orgs with 2+ funders. Bars show each funder's share; color = funder category. Sorted by concentration."
+            >
+              <FundingFragility
+                edges={fundingData.edges}
+                showTooltip={showTooltip}
+                hideTooltip={hideTooltip}
+              />
+            </ChartContainer>
+
+            <h3 className="font-serif text-[18px] font-normal mt-8 mb-3">Funder category diversity</h3>
+
+            <Para>
+              Beyond concentration, we can ask: are funders all the same <em>type</em>? An org funded by
+              3 philanthropies is less diverse than one funded by a mix of philanthropy, government, and
+              tech companies. Single-category funding may indicate alignment or echo chamber effects.
+            </Para>
+
+            <ChartContainer
+              title="Funder diversity vs single-category funding"
+              source="Policy orgs with 2+ funders. Diverse = 3+ funder categories; Single = all funders same type."
+            >
+              <FunderDiversity
                 edges={fundingData.edges}
                 showTooltip={showTooltip}
                 hideTooltip={hideTooltip}
@@ -1248,10 +1288,10 @@ export function App() {
             </ChartContainer>
 
             <Finding>
-              Funding concentration varies widely. Some policy organizations have diverse funding bases
-              (5+ unique funders, no single source dominant), while others depend heavily on one or two
-              funders. High concentration doesn't mean captured—but it does mean structural dependence
-              on specific actors' continued support.
+              A small group of funders—led by Open Philanthropy—has reach across most policy organizations.
+              Some orgs have highly concentrated funding (60%+ from one source), creating structural
+              dependence. Meanwhile, 16 policy orgs are funded entirely by one funder category (mostly
+              VC/Philanthropy), while 17 have genuinely diverse funding across 3+ categories.
             </Finding>
           </>
         )}
