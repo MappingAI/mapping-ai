@@ -425,7 +425,7 @@ function ClusterMapView({
     const nodeMinY = d3.min(nodes, (d: { y: number }) => d.y) - 10
     const nodeMaxY = d3.max(nodes, (d: { y: number }) => d.y) + 10
 
-    const labelMargin = 80
+    const labelMargin = 160
     const vbX = nodeMinX - labelMargin
     const vbY = nodeMinY - 20
     const vbW = nodeMaxX - nodeMinX + labelMargin * 2
@@ -438,10 +438,9 @@ function ClusterMapView({
       .select(container)
       .append('svg')
       .attr('viewBox', `${vbX} ${vbY} ${vbW} ${vbH}`)
-      .attr('width', W)
+      .attr('width', '100%')
       .attr('height', H)
       .attr('preserveAspectRatio', 'xMidYMid meet')
-      .style('overflow', 'visible')
 
     const tipEl = createTooltip('__defview-map-tip')
 
