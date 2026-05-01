@@ -675,7 +675,7 @@ function MiniSparkline({
   const validPairs = series.map((v, i) => [i, v] as [number, number]).filter(([, v]) => !isNaN(v))
   if (validPairs.length < 2) {
     return (
-      <svg width={sparkW} height={sparkH} style={{ flexShrink: 0 }}>
+      <svg width={sparkW} height={sparkH} style={{ minWidth: 0, flex: '0 1 auto' }}>
         <text
           x={sparkW / 2}
           y={sparkH / 2 + 3}
@@ -711,7 +711,7 @@ function MiniSparkline({
   const pathD = line(series.map((v, i) => [i, v] as [number, number])) || ''
 
   return (
-    <svg width={sparkW} height={sparkH} style={{ flexShrink: 0 }}>
+    <svg width={sparkW} height={sparkH} style={{ minWidth: 0, flex: '0 1 auto' }}>
       <defs>
         <linearGradient id={gradId} x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%" stopColor={colorStart} />
@@ -799,9 +799,12 @@ function TrendsView({ data }: { data: AgiData }) {
               <span
                 style={{
                   fontFamily: 'var(--mono)',
-                  fontSize: '9px',
+                  fontSize: '8px',
                   color: 'var(--text-3)',
                   whiteSpace: 'nowrap',
+                  width: '75px',
+                  textAlign: 'right',
+                  flexShrink: 0,
                 }}
               >
                 {startLabel}
@@ -852,7 +855,7 @@ function TrendsView({ data }: { data: AgiData }) {
           const beliefs = clusterBeliefSeries[c.id]
 
           return (
-            <div key={c.id} style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden' }}>
+            <div key={c.id} style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0 }}>
               <span
                 style={{
                   display: 'inline-block',
