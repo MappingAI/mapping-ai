@@ -23,12 +23,21 @@ scripts/extract-fields.js
 # Enrichment output (generated, contains raw API data)
 enriched-*.json
 data/*-enrichment-progress.json
+data/edge-enrichment/*.json
+data/sample-enriched-entities.json
 
-# Data files (generated from DB during deploy, not tracked in git)
-map-data.json
-map-detail.json
+# Data files at root (generated from DB during deploy, not tracked in git)
+# Note: public/*.json versions ARE tracked for Cloudflare Pages deployment
+/map-data.json
+/map-detail.json
+/funding-data.json
+# These are uploaded to R2 and served via /data/ endpoint
 public/claims-detail.json
+public/data/claims-detail.json
+public/edge-evidence.json
 public/agi-definitions.json
+public/map-data-v2.json
+public/map-detail-v2.json
 backup-*.json
 backup-*.sql
 perf-artifacts/

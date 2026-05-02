@@ -181,6 +181,7 @@ interface EdgeJoinRow {
 }
 
 export interface MapRelationship {
+  id: number
   source_type: string
   target_type: string
   source_id: number
@@ -241,6 +242,7 @@ export async function generateMapData(sql: SqlQueryFn): Promise<GeneratedMapData
 
   // Build relationships in the shape map.html expects.
   const relationships: MapRelationship[] = edgeRows.map((e) => ({
+    id: e.id,
     source_type: e.source_type,
     target_type: e.target_type,
     source_id: e.source_id,

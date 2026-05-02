@@ -1,0 +1,169 @@
+[
+  {
+    "id": 59,
+    "entity_type": "person",
+    "name": "Daniel Kokotajlo",
+    "title": "Executive Director and Founder, AI Futures Project; former OpenAI governance researcher",
+    "category": "Researcher",
+    "other_categories": "Organizer",
+    "primary_org": "AI Futures Project",
+    "other_orgs": "Former OpenAI governance division (2022-2024), University of North Carolina at Chapel Hill (MA Philosophy 2017)",
+    "location": "Berkeley, CA",
+    "influence_type": "Researcher/analyst, Organizer/advocate, Narrator",
+    "twitter": "@DKokotajlo",
+    "bluesky": null,
+    "website": "https://www.aifutures.org",
+    "notes": "Daniel Kokotajlo is a former OpenAI governance researcher who resigned in April 2024 after losing confidence the company would act responsibly in pursuing AGI. He declined to sign a non-disparagement agreement that initially threatened forfeiture of his vested equity, though OpenAI later confirmed the equity was retained. In June 2024, he co-signed an open letter with other former employees calling for a 'right to warn' about AI risks. He founded the AI Futures Project, a nonprofit conducting independent AI forecasting and policy research. The organization released AI 2027, a detailed scenario forecast co-authored with Eli Lifland, Thomas Larsen, and Romeo Dean, describing how superintelligence could emerge by the end of the decade. He was named to TIME's 100 Most Influential People in AI in both 2024 and 2025.",
+    "notes_sources": [
+      "https://en.wikipedia.org/wiki/Daniel_Kokotajlo_(researcher)",
+      "https://time.com/collections/time100-ai-2024/7012881/daniel-kokotajlo/",
+      "https://time.com/collections/time100-ai-2025/7305823/daniel-kokotajlo-ai/",
+      "https://www.aifutures.org/about",
+      "https://ai-2027.com/about",
+      "https://x.com/DKokotajlo/status/1797994238468407380"
+    ],
+    "belief_regulatory_stance": "Restrictive",
+    "belief_regulatory_stance_detail": "Co-authored transparency proposals with Dean Ball calling for public reporting requirements when frontier labs achieve novel capabilities, publication of safety cases, and whistleblower protections. Has advocated for regulation requiring companies to inform the public when major AI capabilities are reached and to share safety justifications. Argues that training AGI in secret would be 'unsafe and unethical' and calls for mandatory transparency measures including public access to models for researchers and real-time capability reporting.",
+    "belief_evidence_source": "Explicitly stated",
+    "belief_agi_timeline": "2-3 years",
+    "belief_ai_risk": "Existential",
+    "belief_threat_models": "Loss of control, Power concentration, Existential risk",
+    "_verification": {
+      "issues_found": "1) Original notes claimed resignation 'costing him approximately $2 million in equity' -- misleading. He initially risked losing vested equity by not signing the NDA, but OpenAI later confirmed the equity was retained. Corrected to accurately reflect the sequence. 2) Primary org was listed as 'Center for AI Safety (CAIS)' but should be 'AI Futures Project,' which he founded in 2025. 3) 'Author of AI 2027' understated co-authors Eli Lifland, Thomas Larsen, and Romeo Dean. 4) Location was 'Unknown' -- updated to Berkeley, CA (AI Futures Project HQ). 5) Twitter was missing -- added @DKokotajlo. 6) Six citation artifacts removed.",
+      "notes": "Resignation date (April 2024), non-disparagement clause, equity retention, right-to-warn letter (June 2024), AI Futures Project founding (2025), AI 2027 co-authors, and TIME 100 AI (2024 and 2025) all verified via Wikipedia, TIME, aifutures.org, and his X post."
+    },
+    "thumbnail_url": null
+  },
+  {
+    "id": 211,
+    "entity_type": "organization",
+    "name": "Andreessen Horowitz (a16z)",
+    "category": "VC/Capital/Philanthropy",
+    "other_categories": null,
+    "website": "https://a16z.com",
+    "funding_model": "Venture-backed",
+    "parent_org_id": null,
+    "location": "Menlo Park, CA",
+    "influence_type": "Funder/investor, Narrator",
+    "twitter": "@a16z",
+    "bluesky": null,
+    "notes": "Andreessen Horowitz (a16z) is a venture capital firm founded in 2009 by Marc Andreessen and Ben Horowitz. The firm raised over $15 billion across multiple funds in 2025 and reports more than $90 billion under management. a16z invests across AI, bio and healthcare, consumer, crypto, enterprise, fintech, games, infrastructure, and what it calls 'American dynamism.' Co-founder Marc Andreessen published 'Why AI Will Save the World' in June 2023, arguing that AI risk concerns are overstated and opposing most proposed AI regulation. The firm has been one of the most vocal institutional opponents of AI safety regulation in Washington.",
+    "notes_sources": [
+      "https://a16z.com/about/",
+      "https://a16z.com/ai-will-save-the-world/",
+      "https://www.cooley.com/news/coverage/2026/2026-01-09-andreessen-horowitz-raises-more-than-$15-billion-in-new-funds",
+      "https://iq.wiki/wiki/andreessen-horowitz"
+    ],
+    "belief_regulatory_stance": "Accelerate",
+    "belief_regulatory_stance_detail": "Strong pro-acceleration stance with opposition to most AI regulation. Published 'Why AI Will Save the World' manifesto arguing against AI risks being overstated. Advocates for minimal regulatory barriers to AI development and deployment.",
+    "belief_evidence_source": "Explicitly stated",
+    "belief_agi_timeline": "Already here",
+    "belief_ai_risk": "Overstated",
+    "belief_threat_models": "Misinformation",
+    "_verification": {
+      "issues_found": "1) Original claimed 'over 18% of all venture capital dollars allocated in the United States that year' for the $15B raise -- this percentage claim could not be independently verified and was removed. 2) '$90B+ under management as of March 5, 2026' cited an overly specific date that appears to be a page-update timestamp, not a meaningful data point. Simplified to 'more than $90 billion under management.' 3) Original notes lacked any mention of the firm's AI policy stance despite being categorized as 'Accelerate' -- added context about the 'Why AI Will Save the World' essay and opposition to AI regulation. 4) Six citation artifacts removed.",
+      "notes": "Founding (2009), founders, $15B fundraise (2025), $90B+ AUM, and investment sectors verified via a16z.com About page (last updated 2026), Cooley law firm coverage, and iq.wiki. The 'Why AI Will Save the World' essay by Marc Andreessen (June 2023) verified via a16z.com."
+    },
+    "thumbnail_url": "https://d1vsiezx2npkka.cloudfront.net/thumbnails/org-211.png"
+  },
+  {
+    "id": 101,
+    "entity_type": "person",
+    "name": "Tim Wu",
+    "title": "Julius Silver Professor of Law, Science and Technology at Columbia Law School",
+    "category": "Academic",
+    "other_categories": "Policymaker",
+    "primary_org": "Columbia University",
+    "other_orgs": "Former Special Assistant to the President for Technology and Competition Policy (White House, 2021-2023), Former Senior Advisor at Federal Trade Commission (2011-2012)",
+    "location": "New York, NY",
+    "influence_type": "Decision-maker, Advisor/strategist, Researcher/analyst, Narrator",
+    "twitter": "@superwuster",
+    "bluesky": null,
+    "website": null,
+    "notes": "Tim Wu is the Julius Silver Professor of Law, Science and Technology at Columbia Law School. He coined the term 'net neutrality' and has shaped technology regulation debates for two decades. He served as Special Assistant to President Biden for technology and competition policy from 2021 to 2023, helping craft the administration's antitrust approach to Big Tech. His 2025 book 'The Age of Extraction: How Tech Platforms Conquered the Economy and Threaten Our Future Prosperity' argues that tech platforms have become instruments of wealth extraction and calls for stronger regulatory frameworks to prevent deepening economic inequality.",
+    "notes_sources": [
+      "https://www.law.columbia.edu/faculty/timothy-wu",
+      "https://en.wikipedia.org/wiki/Tim_Wu",
+      "https://www.penguinrandomhouse.com/books/691177/the-age-of-extraction-by-tim-wu/",
+      "https://www.brookings.edu/articles/the-age-of-extraction-a-discussion-on-tim-wus-new-book-the-techtank-podcast/"
+    ],
+    "belief_regulatory_stance": "Restrictive",
+    "belief_regulatory_stance_detail": "Wu has been a leading advocate for breaking up Big Tech companies, particularly calling for antitrust action against Facebook in the late 2010s. He helped craft the Biden administration's antitrust policies and has argued that highly concentrated industries develop outsized lobbying power and capture regulators. In 'The Age of Extraction' (2025), he argues for stronger regulatory frameworks to prevent tech platforms from extracting wealth and deepening inequality.",
+    "belief_evidence_source": "Explicitly stated",
+    "belief_agi_timeline": "Unknown",
+    "belief_ai_risk": "Serious",
+    "belief_threat_models": "Power concentration, Economic inequality, Democratic erosion",
+    "_verification": {
+      "issues_found": "1) Ten citation artifacts ([1][2][7], etc.) removed throughout notes. 2) Notes were thin (4 short sentences with citations) and lacked context about his AI policy significance beyond general antitrust work. Enriched with specifics about his 20-year influence on tech regulation and the substance of his 2025 book. 3) Book title verified as 'The Age of Extraction: How Tech Platforms Conquered the Economy and Threaten Our Future Prosperity' -- original notes had it correct. 4) White House dates (2021-2023) confirmed.",
+      "notes": "Columbia Law title, 'net neutrality' coinage, Biden admin role (2021-2023), book title and publication year (2025) all verified via Columbia Law School faculty page, Wikipedia, Penguin Random House, and Brookings."
+    },
+    "thumbnail_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Tim_Wu_2014.jpg/330px-Tim_Wu_2014.jpg"
+  },
+  {
+    "id": 68,
+    "entity_type": "person",
+    "name": "Mike Rounds",
+    "title": "U.S. Senator (R-SD)",
+    "category": "Policymaker",
+    "other_categories": null,
+    "primary_org": "United States Senate",
+    "other_orgs": "Senate Appropriations; Armed Services; Banking, Housing and Urban Affairs; Indian Affairs; Select Committee on Intelligence; Senate AI Caucus (co-chair with Sen. Heinrich); Bipartisan Senate AI Working Group; former 31st Governor of South Dakota (2003-2011)",
+    "location": "Fort Pierre, SD",
+    "influence_type": "Decision-maker, Connector/convener",
+    "twitter": "@SenatorRounds",
+    "bluesky": null,
+    "website": null,
+    "notes": "Mike Rounds is a Republican U.S. Senator from South Dakota, sworn in on January 6, 2015. He serves on five committees: Appropriations; Armed Services; Banking, Housing and Urban Affairs; Indian Affairs; and the Select Committee on Intelligence. He previously served as the 31st governor of South Dakota from 2003 to 2011. Rounds co-chairs the bipartisan Senate AI Caucus alongside Senator Martin Heinrich and participates in the Senate AI Working Group. He has introduced multiple pieces of AI legislation, including the Economy of the Future Commission Act with Senator Mark Warner in March 2026 and the Unleashing AI Innovation in Financial Services Act, which would create regulatory sandboxes for AI experimentation in financial institutions.",
+    "notes_sources": [
+      "https://www.rounds.senate.gov/about-mike",
+      "https://en.wikipedia.org/wiki/Mike_Rounds",
+      "https://www.warner.senate.gov/public/index.cfm/2026/3/warner-rounds-unveil-bipartisan-plan-to-prepare-american-workers-for-ai-driven-workforce-changes",
+      "https://www.rounds.senate.gov/newsroom/press-releases/rounds-reintroduces-legislation-supporting-ai-innovation-in-financial-services"
+    ],
+    "belief_regulatory_stance": "Targeted",
+    "belief_regulatory_stance_detail": "Advocates for targeted regulatory sandboxes and innovation-friendly frameworks rather than broad restrictions. Sponsors the Unleashing AI Innovation in Financial Services Act to create 'safe spaces for experimentation' between financial institutions and regulators. Co-sponsors the Economy of the Future Commission Act focusing on workforce preparation rather than restrictive oversight. Emphasizes 'guardrails and growth' approach that supports innovation while protecting consumers.",
+    "belief_evidence_source": "Explicitly stated",
+    "belief_agi_timeline": "Unknown",
+    "belief_ai_risk": "Serious",
+    "belief_threat_models": "Labor displacement, Cybersecurity",
+    "_verification": {
+      "issues_found": "1) Ten citation artifacts removed. 2) Original title listed 'Chair, Senate Banking Subcommittee on Securities, Insurance and Investments' -- simplified to 'U.S. Senator (R-SD).' 3) Swearing-in date 'January 6th, 2015' confirmed via rounds.senate.gov. 4) Clarified that Rounds co-chairs the Senate AI Caucus (with Sen. Heinrich) and also participates in the separate Bipartisan Senate AI Working Group. Original notes conflated the two. 5) AGI timeline was listed as '2-3 years' which is implausible for a senator with no public statements on AGI timelines -- changed to 'Unknown.'",
+      "notes": "Senate swearing-in (January 6, 2015), five committee assignments, 31st governor (2003-2011), AI Working Group co-chair role, Economy of the Future Commission Act (March 2026, with Warner), and Unleashing AI Innovation in Financial Services Act all verified via rounds.senate.gov, Wikipedia, and Warner press release."
+    },
+    "thumbnail_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Mike_Rounds_official_Senate_portrait.jpg/330px-Mike_Rounds_official_Senate_portrait.jpg"
+  },
+  {
+    "id": 107,
+    "entity_type": "person",
+    "name": "Karen Hao",
+    "title": "Journalist and author of 'Empire of AI'",
+    "category": "Journalist",
+    "other_categories": null,
+    "primary_org": "Freelance",
+    "other_orgs": "BBC (co-host, The Interface podcast), former Wall Street Journal correspondent, former senior AI editor at MIT Technology Review, Pulitzer Center (AI Spotlight Series co-creator)",
+    "location": null,
+    "influence_type": "Narrator, Connector/convener",
+    "twitter": "@_KarenHao",
+    "bluesky": "@karenhao.bsky.social",
+    "website": "https://karendhao.com",
+    "notes": "Karen Hao is a journalist and author whose book 'Empire of AI: Dreams and Nightmares in Sam Altman's OpenAI,' published May 20, 2025, became a New York Times bestseller and won the National Book Critics Circle Award for nonfiction. The book, based on over 200 interviews including current and former OpenAI employees, examines the company's rise and its culture of secrecy. She previously served as senior AI editor at MIT Technology Review and as a foreign correspondent at The Wall Street Journal covering American and Chinese tech companies. She co-hosts the BBC podcast The Interface, which launched in February 2026. She was named to TIME's 100 Most Influential People in AI in 2025.",
+    "notes_sources": [
+      "https://en.wikipedia.org/wiki/Karen_Hao",
+      "https://karendhao.com/about",
+      "https://time.com/collections/time100-ai-2025/7305808/karen-hao/",
+      "https://www.technologyreview.com/2025/07/09/1119784/inside-openais-empire-a-conversation-with-karen-hao/",
+      "https://www.radiotoday.uk/2026/02/bbc-studios-launches-tech-podcast-the-interface/"
+    ],
+    "belief_regulatory_stance": "Precautionary",
+    "belief_regulatory_stance_detail": "Advocates for urgent shift away from current AI development trajectory, criticizing the 'scale-at-all-costs approach' and calling for stronger oversight of AI companies. Has written extensively about the need to separate AI development from what she calls 'empire building,' emphasizing that current voluntary safety commitments are insufficient. Her book and reporting consistently argue for more democratic governance of AI development rather than leaving decisions to tech executives.",
+    "belief_evidence_source": "Explicitly stated",
+    "belief_agi_timeline": "Unknown",
+    "belief_ai_risk": "Serious",
+    "belief_threat_models": "Power concentration, Democratic erosion, Labor displacement",
+    "_verification": {
+      "issues_found": "1) Twitter was listed as '@mit' (MIT's institutional handle) -- corrected to '@_KarenHao.' 2) Primary org was 'MIT Technology Review' but she left that role; updated to 'Freelance.' 3) Original notes omitted that 'Empire of AI' won the National Book Critics Circle Award and was based on ~300 interviews -- added. 4) Original notes did not mention the BBC podcast launch date (February 2026) -- added. 5) Citation artifacts removed. 6) Threat models list reduced from 6 to 3 most relevant per schema (max 3).",
+      "notes": "Book title, publication date (May 20, 2025), NYT bestseller status, NBCC Award, ~300 interviews, WSJ and MIT Tech Review roles, BBC podcast The Interface (launched Feb 2026), and TIME 100 AI 2025 all verified via Wikipedia, karendhao.com, MIT Tech Review, RadioToday, and TIME."
+    },
+    "thumbnail_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Karen_Hao_at_author_talk_on_%22Empire_of_AI_Dreams_and_Nightmares_in_Sam_Altman%27s_OpenAI%22_at_Politics_and_Prose.jpg/330px-Karen_Hao_at_author_talk_on_%22Empire_of_AI_Dreams_and_Nightmares_in_Sam_Altman%27s_OpenAI%22_at_Politics_and_Prose.jpg"
+  }
+]

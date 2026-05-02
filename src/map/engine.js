@@ -324,14 +324,13 @@ export function initMapEngine() {
       return null
     }
 
-    function addItem(entity, entityType, rel) {
+    function addItem(entity, entityType, rel, edgeId = null) {
       const key = entityType + ':' + entity.id
       if (seen.has(key)) return
       seen.add(key)
       const typeName = entityType === 'organization' ? 'org' : entityType
-      // Resources use title as canonical name (entity.name is often null for resources)
       const displayName = entityType === 'resource' ? entity.title || entity.name : entity.name || entity.title
-      items.push({ entity, entityType, name: displayName, type: typeName, rel: rel || 'affiliated' })
+      items.push({ entity, entityType, name: displayName, type: typeName, rel: rel || 'affiliated', edgeId })
     }
 
     // From inferredLinks
@@ -351,12 +350,13 @@ export function initMapEngine() {
       const entityKey = d.entityType === 'resource' ? 'resource' : d.entityType
       allData.relationships.forEach((rel) => {
         const relType = rel.relationship_type || rel.edge_type || ''
+        const edgeId = rel.id || null
         if (rel.source_type === entityKey && rel.source_id === d.id) {
           const target = findEntity(rel.target_type, rel.target_id)
-          if (target) addItem(target, rel.target_type, relType)
+          if (target) addItem(target, rel.target_type, relType, edgeId)
         } else if (rel.target_type === entityKey && rel.target_id === d.id) {
           const source = findEntity(rel.source_type, rel.source_id)
-          if (source) addItem(source, rel.source_type, relType)
+          if (source) addItem(source, rel.source_type, relType, edgeId)
         }
       })
     }
@@ -1619,6 +1619,15 @@ export function initMapEngine() {
         })
         .catch(() => {})
 
+      fetch('/data/edge-evidence.json')
+        .then((r) => (r.ok ? r.json() : null))
+        .then((data) => {
+          if (data) window.__edgeEvidence = data
+        })
+        .catch(() => {
+          window.__edgeEvidence = { edges: {} }
+        })
+
       buildSlugMaps()
 
       // Build links (needed by both mobile mini-graph and desktop map)
@@ -1651,6 +1660,7 @@ export function initMapEngine() {
           const node = renderedNodes.find((n) => n.name === (deepLinkTarget.name || deepLinkTarget.title))
           if (node) {
             showDetail(node, renderedNodes)
+            dimUnconnected(node)
             const zoomTarget = _canvasSel || d3.select('#map-container svg')
             const mapEl = document.getElementById('map-container')
             const k = 3
@@ -2006,6 +2016,29 @@ export function initMapEngine() {
   // PASSWORD GATE: force plot view when locked (don't overwrite saved preference)
   let viewMode = localStorage.getItem('mapMode') || 'plot'
   const savedSubView = localStorage.getItem('mapSubView') || 'all'
+
+  const urlParams = new URLSearchParams(window.location.search)
+  if (urlParams.get('view') === 'plot') viewMode = 'plot'
+  if (urlParams.get('axisMode')) axisMode = urlParams.get('axisMode')
+  if (urlParams.get('axisX')) axisX = urlParams.get('axisX')
+  if (urlParams.get('axisY')) axisY = urlParams.get('axisY')
+  setTimeout(() => {
+    if (urlParams.get('axisX')) {
+      const xSelect = document.getElementById('axis-x-select')
+      if (xSelect) xSelect.value = axisX
+    }
+    if (urlParams.get('axisY')) {
+      const ySelect = document.getElementById('axis-y-select')
+      if (ySelect) ySelect.value = axisY
+    }
+    if (urlParams.get('axisMode')) {
+      document.querySelectorAll('#axis-mode-toggles [data-mode]').forEach((b) => {
+        b.classList.toggle('active', b.dataset.mode === axisMode)
+      })
+      const yGroup = document.getElementById('axis-y-group')
+      if (yGroup) yGroup.style.display = axisMode === '2d' ? '' : 'none'
+    }
+  }, 0)
 
   function applyViewState() {
     const is2D = viewMode === 'plot'
@@ -2539,6 +2572,9 @@ export function initMapEngine() {
   let _canvasCenterX = 0
   let _canvasCenterY = 0
   let _hoveredNode = null
+  let _hoveredEdge = null
+  let _selectedEdge = null
+  let _previousState = null
   let _clusterDimmed = false
   let _redrawScheduled = false
   let _themeColors = null
@@ -2653,6 +2689,36 @@ export function initMapEngine() {
     return closest
   }
 
+  function _pointToSegmentDistance(px, py, x1, y1, x2, y2) {
+    const dx = x2 - x1
+    const dy = y2 - y1
+    const lengthSq = dx * dx + dy * dy
+    if (lengthSq === 0) return Math.sqrt((px - x1) ** 2 + (py - y1) ** 2)
+    const t = Math.max(0, Math.min(1, ((px - x1) * dx + (py - y1) * dy) / lengthSq))
+    const projX = x1 + t * dx
+    const projY = y1 + t * dy
+    return Math.sqrt((px - projX) ** 2 + (py - projY) ** 2)
+  }
+
+  function _findEdgeAt(mx, my, onlyHighlighted = false) {
+    const x = (mx - currentZoom.x) / currentZoom.k
+    const y = (my - currentZoom.y) / currentZoom.k
+    const baseThreshold = isTouchDevice ? 30 : 22
+    const threshold = baseThreshold / currentZoom.k
+    let closest = null
+    let closestDist = Infinity
+    for (const l of _canvasLinks) {
+      if (l._vs === 'hidden') continue
+      if (onlyHighlighted && l._vs !== 'highlighted') continue
+      const dist = _pointToSegmentDistance(x, y, l.source.x, l.source.y, l.target.x, l.target.y)
+      if (dist < threshold && dist < closestDist) {
+        closest = l
+        closestDist = dist
+      }
+    }
+    return closest
+  }
+
   function _drawFrame() {
     const ctx = _canvasCtx
     if (!ctx) return
@@ -2690,13 +2756,14 @@ export function initMapEngine() {
       const batches = { normal: [], dimmed: [], highlighted: [], 'one-hop': [] }
       for (const l of _canvasLinks) {
         if (l._vs === 'hidden') continue
+        if (l === _hoveredEdge || l === _selectedEdge) continue
         ;(batches[l._vs] || batches.normal).push(l)
       }
       for (const [state, links] of Object.entries(batches)) {
         if (links.length === 0) continue
-        ctx.globalAlpha = state === 'dimmed' ? 0.02 : state === 'highlighted' ? 0.7 : 0.25
+        ctx.globalAlpha = state === 'dimmed' ? 0.02 : state === 'highlighted' ? 0.8 : 0.25
         ctx.strokeStyle = tc.text3
-        ctx.lineWidth = state === 'highlighted' ? 2 : 0.5
+        ctx.lineWidth = state === 'highlighted' ? 2.5 : 0.5
         ctx.setLineDash(state === 'one-hop' ? [4, 3] : [])
         ctx.beginPath()
         for (const l of links) {
@@ -2706,6 +2773,38 @@ export function initMapEngine() {
         ctx.stroke()
       }
       ctx.setLineDash([])
+
+      const edgesToHighlight = []
+      if (_selectedEdge) edgesToHighlight.push(_selectedEdge)
+      if (_hoveredEdge && _hoveredEdge !== _selectedEdge) edgesToHighlight.push(_hoveredEdge)
+      for (const activeEdge of edgesToHighlight) {
+        const sx = activeEdge.source.x,
+          sy = activeEdge.source.y
+        const tx = activeEdge.target.x,
+          ty = activeEdge.target.y
+        ctx.lineCap = 'round'
+        for (const pass of [
+          { width: 12, alpha: 0.15 },
+          { width: 8, alpha: 0.25 },
+          { width: 5, alpha: 0.4 },
+        ]) {
+          ctx.globalAlpha = pass.alpha
+          ctx.strokeStyle = '#D4AF37'
+          ctx.lineWidth = pass.width
+          ctx.beginPath()
+          ctx.moveTo(sx, sy)
+          ctx.lineTo(tx, ty)
+          ctx.stroke()
+        }
+        ctx.globalAlpha = 1
+        ctx.strokeStyle = '#D4AF37'
+        ctx.lineWidth = 3
+        ctx.beginPath()
+        ctx.moveTo(sx, sy)
+        ctx.lineTo(tx, ty)
+        ctx.stroke()
+        ctx.lineCap = 'butt'
+      }
     }
 
     // Layer 3: Nodes
@@ -3095,13 +3194,22 @@ export function initMapEngine() {
       inferredLinks.forEach((l) => {
         const p = nodesByName.get(l.personName)
         const o = nodesByName.get(l.orgName)
-        if (p && o) _canvasLinks.push({ source: p, target: o, _vs: 'normal' })
+        if (p && o)
+          _canvasLinks.push({ source: p, target: o, relType: 'affiliated', edgeId: null, role: null, _vs: 'normal' })
       })
       ;(allData.relationships || []).forEach((rel) => {
         if (rel.relationship_type === 'subsidiary') return
         const src = nodeById[`${rel.source_type}-${rel.source_id}`]
         const tgt = nodeById[`${rel.target_type}-${rel.target_id}`]
-        if (src && tgt) _canvasLinks.push({ source: src, target: tgt, relType: rel.relationship_type, _vs: 'normal' })
+        if (src && tgt)
+          _canvasLinks.push({
+            source: src,
+            target: tgt,
+            relType: rel.relationship_type,
+            edgeId: rel.id,
+            role: rel.role,
+            _vs: 'normal',
+          })
       })
     }
 
@@ -3311,23 +3419,88 @@ export function initMapEngine() {
       canvasSel.transition().duration(500).call(zoomBehavior.transform, d3.zoomIdentity)
     }
 
-    // Canvas hover (tooltip)
+    // Canvas hover (tooltip for nodes and edges)
     canvasSel.on('mousemove.hover', function (event) {
       const [mx, my] = d3.pointer(event, canvas)
+
+      if (selectedNode && currentView === 'all' && viewMode !== 'search') {
+        const node = _findNodeAt(mx, my)
+        if (node && node._vs === 'highlighted') {
+          if (node !== _hoveredNode) {
+            _hoveredNode = node
+            _hoveredEdge = null
+            canvas.style.cursor = 'pointer'
+            showTooltip(event, node)
+            _requestRedraw()
+          } else {
+            moveTooltip(event)
+          }
+          return
+        }
+        if (_hoveredNode) {
+          _hoveredNode = null
+          hideTooltip()
+          _requestRedraw()
+        }
+        const edge = _findEdgeAt(mx, my, true)
+        if (edge !== _hoveredEdge) {
+          _hoveredEdge = edge
+          if (edge) {
+            canvas.style.cursor = 'pointer'
+            showEdgeTooltip(event, edge)
+          } else {
+            canvas.style.cursor = 'default'
+            hideTooltip()
+          }
+          _requestRedraw()
+        } else if (edge) {
+          moveTooltip(event)
+        } else {
+          canvas.style.cursor = 'default'
+          hideTooltip()
+        }
+        return
+      }
+
       const node = _findNodeAt(mx, my)
       if (node !== _hoveredNode) {
         _hoveredNode = node
-        canvas.style.cursor = node ? 'pointer' : 'default'
-        if (node) showTooltip(event, node)
-        else hideTooltip()
-        _requestRedraw()
+        if (node) {
+          _hoveredEdge = null
+          canvas.style.cursor = 'pointer'
+          showTooltip(event, node)
+          _requestRedraw()
+          return
+        }
       } else if (node) {
         moveTooltip(event)
+        return
+      }
+
+      if (!_hoveredNode) {
+        const edge = _findEdgeAt(mx, my)
+        if (edge !== _hoveredEdge) {
+          _hoveredEdge = edge
+          if (edge) {
+            canvas.style.cursor = 'pointer'
+            showEdgeTooltip(event, edge)
+          } else {
+            canvas.style.cursor = 'default'
+            hideTooltip()
+          }
+          _requestRedraw()
+        } else if (edge) {
+          moveTooltip(event)
+        } else {
+          canvas.style.cursor = 'default'
+          hideTooltip()
+        }
       }
     })
     canvasSel.on('mouseleave.hover', function () {
-      if (_hoveredNode) {
+      if (_hoveredNode || _hoveredEdge) {
         _hoveredNode = null
+        _hoveredEdge = null
         hideTooltip()
         _requestRedraw()
       }
@@ -3336,18 +3509,59 @@ export function initMapEngine() {
     // Canvas click (detail panel + dim)
     canvasSel.on('click.detail', function (event) {
       const [mx, my] = d3.pointer(event, canvas)
+
+      if (selectedNode && currentView === 'all' && viewMode !== 'search') {
+        const node = _findNodeAt(mx, my)
+        if (node && node._vs === 'highlighted') {
+          showDetail(node, nodes)
+          selectedNode = node
+          _selectedEdge = null
+          dimUnconnected(node)
+          const k = 3
+          const t = d3.zoomIdentity.translate(width / 2 - k * node.x, height / 2 - k * node.y).scale(k)
+          canvasSel.transition().duration(500).call(zoomBehavior.transform, t)
+          return
+        }
+        const edge = _findEdgeAt(mx, my, true)
+        if (edge) {
+          showEdgeDetail(edge)
+          _selectedEdge = edge
+          _requestRedraw()
+          return
+        }
+        document.getElementById('detail-panel').classList.remove('open')
+        clearSelection()
+        _selectedEdge = null
+        return
+      }
+
       const node = _findNodeAt(mx, my)
       if (node) {
         showDetail(node, nodes)
         selectedNode = node
+        _selectedEdge = null
         if (viewMode !== 'search' && currentView === 'all') dimUnconnected(node)
         const k = 3
         const t = d3.zoomIdentity.translate(width / 2 - k * node.x, height / 2 - k * node.y).scale(k)
         canvasSel.transition().duration(500).call(zoomBehavior.transform, t)
-      } else {
-        document.getElementById('detail-panel').classList.remove('open')
-        clearSelection()
+        return
       }
+
+      const edge = _findEdgeAt(mx, my)
+      if (edge) {
+        showEdgeDetail(edge)
+        _selectedEdge = edge
+        selectedNode = null
+        for (const l of _canvasLinks) {
+          l._vs = l === edge ? 'highlighted' : 'normal'
+        }
+        _requestRedraw()
+        return
+      }
+
+      document.getElementById('detail-panel').classList.remove('open')
+      clearSelection()
+      _selectedEdge = null
     })
 
     // ticked → mark quadtree dirty + redraw canvas
@@ -3962,6 +4176,17 @@ export function initMapEngine() {
     tooltip.classList.remove('visible')
   }
 
+  function showEdgeTooltip(event, edge) {
+    if (isTouchDevice) return
+    const type = edge.relType || 'related'
+    const sourceName = edge.source.name || 'Unknown'
+    const targetName = edge.target.name || 'Unknown'
+    document.getElementById('tooltip-name').textContent = `${sourceName} → ${targetName}`
+    document.getElementById('tooltip-sub').textContent = type.charAt(0).toUpperCase() + type.slice(1)
+    tooltip.classList.add('visible')
+    moveTooltip(event)
+  }
+
   // Sparkline for belief trajectories
   function renderSparkline(entityId, dimension) {
     const cd = window.__claimsDetail
@@ -4327,8 +4552,27 @@ ${dots}
     let affiliated = ''
     const linkedItems = buildConnections(d)
 
+    const REL_COLORS = {
+      affiliated: { bg: 'rgba(99, 102, 241, 0.15)', text: '#818cf8' },
+      employed: { bg: 'rgba(99, 102, 241, 0.15)', text: '#818cf8' },
+      funded: { bg: 'rgba(34, 197, 94, 0.15)', text: '#4ade80' },
+      funder: { bg: 'rgba(34, 197, 94, 0.15)', text: '#4ade80' },
+      invested: { bg: 'rgba(16, 185, 129, 0.15)', text: '#34d399' },
+      board: { bg: 'rgba(249, 115, 22, 0.15)', text: '#fb923c' },
+      advisory: { bg: 'rgba(168, 85, 247, 0.15)', text: '#c084fc' },
+      collaborated: { bg: 'rgba(14, 165, 233, 0.15)', text: '#38bdf8' },
+      partner: { bg: 'rgba(6, 182, 212, 0.15)', text: '#22d3ee' },
+      authored: { bg: 'rgba(236, 72, 153, 0.15)', text: '#f472b6' },
+      founder: { bg: 'rgba(245, 158, 11, 0.15)', text: '#fbbf24' },
+      member: { bg: 'rgba(139, 92, 246, 0.15)', text: '#a78bfa' },
+      subsidiary: { bg: 'rgba(107, 114, 128, 0.15)', text: '#9ca3af' },
+      supporter: { bg: 'rgba(244, 63, 94, 0.15)', text: '#fb7185' },
+      critic: { bg: 'rgba(239, 68, 68, 0.15)', text: '#f87171' },
+      mentor: { bg: 'rgba(59, 130, 246, 0.15)', text: '#60a5fa' },
+      'co-founder': { bg: 'rgba(245, 158, 11, 0.15)', text: '#fbbf24' },
+    }
+
     if (linkedItems.length > 0) {
-      // Group by type
       const byType = {}
       linkedItems.forEach((item) => {
         const label = item.type === 'resource' ? 'Resources' : item.type === 'person' ? 'People' : 'Organizations'
@@ -4339,11 +4583,28 @@ ${dots}
       for (const [label, items] of Object.entries(byType)) {
         const itemsHtml = items
           .map((item) => {
-            const relLabel =
-              item.rel && item.rel !== 'affiliated'
-                ? ` <span style="color:var(--text-3);font-size:10px;">(${item.rel.replace(/_/g, ' ')})</span>`
-                : ''
-            return `<div class="affiliated-item" data-name="${item.name}">${item.name}${relLabel}</div>`
+            const relType = item.rel ? item.rel.replace(/_/g, ' ') : 'affiliated'
+            const itemId = `conn-${d.id}-${item.entityType}-${item.entity.id}`
+            const hasEvidence = item.edgeId && window.__edgeEvidence?.edges?.[item.edgeId]
+            const relColor = REL_COLORS[item.rel] || { bg: 'var(--input-bg)', text: 'var(--text-3)' }
+            return `
+              <div class="connection-row" data-item-id="${itemId}">
+                <div class="connection-header" data-item-id="${itemId}" style="display:flex;align-items:center;gap:6px;padding:6px 0;cursor:pointer;">
+                  <span class="connection-chevron" style="color:var(--text-3);font-size:10px;transition:transform 0.15s;">▸</span>
+                  <span class="connection-name" style="flex:1;">${escHtml(item.name)}</span>
+                  <span style="font-size:10px;padding:2px 6px;border-radius:3px;background:${relColor.bg};color:${relColor.text};">${relType}</span>
+                </div>
+                <div class="connection-details" data-item-id="${itemId}" style="display:none;padding:8px 0 8px 16px;border-left:2px solid var(--line);margin-left:4px;">
+                  <div class="connection-evidence" data-edge-id="${item.edgeId || ''}" style="font-size:12px;color:var(--text-2);margin-bottom:8px;">
+                    ${hasEvidence ? '' : '<span style="font-style:italic;color:var(--text-3);">No source citations available</span>'}
+                  </div>
+                  <div style="display:flex;gap:12px;font-family:var(--mono);font-size:10px;">
+                    <a href="#" class="connection-view-entity" data-name="${escHtml(item.name)}" data-type="${item.entityType}" data-id="${item.entity.id}" style="color:var(--accent);text-decoration:underline;">View ${item.type === 'org' ? 'org' : item.type}</a>
+                    <a href="#" class="connection-view-edge" data-edge-id="${item.edgeId || ''}" data-source-id="${d.id}" data-target-id="${item.entity.id}" data-rel-type="${item.rel || 'affiliated'}" style="color:var(--accent);text-decoration:underline;">View relationship</a>
+                  </div>
+                </div>
+              </div>
+            `
           })
           .join('')
         sections += `<h4 style="margin-top:0.5rem;">${label}</h4>${itemsHtml}`
@@ -4473,71 +4734,158 @@ ${dots}
       content.innerHTML = detailHtml
     }
 
-    // Load detail image asynchronously using shared resolver
     const detailImgContainer = document.getElementById(detailImgId)
     if (detailImgContainer) {
+      const initials =
+        (d.name || '')
+          .split(' ')
+          .map((w) => w[0])
+          .join('')
+          .slice(0, 2)
+          .toUpperCase() || '?'
+      detailImgContainer.innerHTML = `<div style="width:56px;height:56px;border-radius:50%;background:${color}30;border:2px solid ${color}44;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:20px;font-weight:500;color:${color};">${initials}</div>`
       resolveEntityImage(d, (url) => {
         detailImgContainer.innerHTML = `<img src="${url}" alt="${d.name}" style="width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid ${color}44;display:block;">`
       })
     }
 
-    // Click affiliated items and author links to navigate—switch view, zoom, show detail
+    function navigateToEntity(name, entityType, entityId) {
+      const person = allData.people.find((p) => p.name === name || p.id === entityId)
+      const org = allData.organizations.find((o) => o.name === name || o.id === entityId)
+      const resource = allData.resources.find((r) => r.title === name || r.id === entityId)
+      const target = person || org || resource
+      if (!target) return
+      const type = person ? 'person' : org ? 'organization' : 'resource'
+      if (isMobileDirectory) {
+        showDetail(Object.assign({}, target, { entityType: type }), [])
+        return
+      }
+      if (type === 'resource' && currentView !== 'resources') {
+        document.querySelector('[data-view="resources"]').click()
+      } else if (type === 'organization' && (currentView === 'people' || currentView === 'resources')) {
+        document.querySelector('[data-view="orgs"]').click()
+      } else if (type === 'person' && (currentView === 'orgs' || currentView === 'resources')) {
+        document.querySelector('[data-view="people"]').click()
+      }
+      setTimeout(() => {
+        const renderedNodes = _canvasNodes.length > 0 ? _canvasNodes : d3.selectAll('.node').data()
+        const node = renderedNodes.find((n) => n.name === (target.name || target.title))
+        if (node) {
+          showDetail(node, renderedNodes)
+          const zoomTarget = _canvasSel || d3.select('#map-container svg')
+          const mapEl = document.getElementById('map-container')
+          const k = 3
+          zoomTarget
+            .transition()
+            .duration(500)
+            .call(
+              zoomBehavior.transform,
+              d3.zoomIdentity
+                .translate(mapEl.clientWidth / 2 - k * node.x, mapEl.clientHeight / 2 - k * node.y)
+                .scale(k),
+            )
+          selectedNode = node
+          if (viewMode !== 'search' && currentView === 'all') {
+            dimUnconnected(node)
+          } else {
+            highlightNodes([node.name])
+          }
+        }
+      }, 100)
+    }
+
     const activeContent = isMobileDirectory ? document.getElementById('mobile-split-detail') : content
-    activeContent.querySelectorAll('.affiliated-item, .detail-link').forEach((el) => {
-      el.addEventListener('click', (e) => {
-        e.preventDefault()
-        const name = el.dataset.name
-        // Find entity in allData
-        const person = allData.people.find((p) => p.name === name)
-        const org = allData.organizations.find((o) => o.name === name)
-        const resource = allData.resources.find((r) => r.title === name)
-        const target = person || org || resource
-        if (!target) return
 
-        const entityType = person ? 'person' : org ? 'organization' : 'resource'
-
-        // Mobile: just show target detail, no zoom
-        if (isMobileDirectory) {
-          showDetail(Object.assign({}, target, { entityType }), [])
-          return
-        }
-
-        // Switch view if needed (same logic as search)
-        if (entityType === 'resource' && currentView !== 'resources') {
-          document.querySelector('[data-view="resources"]').click()
-        } else if (entityType === 'organization' && (currentView === 'people' || currentView === 'resources')) {
-          document.querySelector('[data-view="orgs"]').click()
-        } else if (entityType === 'person' && (currentView === 'orgs' || currentView === 'resources')) {
-          document.querySelector('[data-view="people"]').click()
-        }
-
-        // Find and zoom to node after re-render
-        setTimeout(() => {
-          const renderedNodes = _canvasNodes.length > 0 ? _canvasNodes : d3.selectAll('.node').data()
-          const node = renderedNodes.find((n) => n.name === (target.name || target.title))
-          if (node) {
-            showDetail(node, renderedNodes)
-            const zoomTarget = _canvasSel || d3.select('#map-container svg')
-            const mapEl = document.getElementById('map-container')
-            const k = 3
-            zoomTarget
-              .transition()
-              .duration(500)
-              .call(
-                zoomBehavior.transform,
-                d3.zoomIdentity
-                  .translate(mapEl.clientWidth / 2 - k * node.x, mapEl.clientHeight / 2 - k * node.y)
-                  .scale(k),
-              )
-            // Use same highlighting as direct node click for consistency
-            selectedNode = node
-            if (viewMode !== 'search' && currentView === 'all') {
-              dimUnconnected(node)
-            } else {
-              highlightNodes([node.name])
+    activeContent.querySelectorAll('.connection-header').forEach((header) => {
+      header.addEventListener('click', () => {
+        const itemId = header.dataset.itemId
+        const details = activeContent.querySelector(`.connection-details[data-item-id="${itemId}"]`)
+        const chevron = header.querySelector('.connection-chevron')
+        if (!details) return
+        const isOpen = details.style.display !== 'none'
+        details.style.display = isOpen ? 'none' : 'block'
+        chevron.style.transform = isOpen ? '' : 'rotate(90deg)'
+        if (!isOpen) {
+          const evidenceEl = details.querySelector('.connection-evidence')
+          const edgeId = evidenceEl?.dataset.edgeId
+          if (edgeId && !evidenceEl.dataset.loaded) {
+            evidenceEl.dataset.loaded = 'true'
+            const evidence = window.__edgeEvidence?.edges?.[edgeId]?.evidence?.[0]
+            if (evidence) {
+              let html = ''
+              if (evidence.citation) {
+                const cite =
+                  evidence.citation.length > 150 ? evidence.citation.substring(0, 150) + '...' : evidence.citation
+                html += `<div style="font-style:italic;margin-bottom:4px;">&ldquo;${escHtml(cite)}&rdquo;</div>`
+              }
+              if (evidence.source_url) {
+                const linkText = evidence.source_title || new URL(evidence.source_url).hostname
+                html += `<div style="font-size:10px;"><a href="${escHtml(evidence.source_url)}" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline;">${escHtml(linkText)}</a></div>`
+              } else if (evidence.source_title) {
+                html += `<div style="font-size:10px;"><span style="color:var(--text-3);">${escHtml(evidence.source_title)}</span></div>`
+              }
+              if (html) evidenceEl.innerHTML = html
             }
           }
-        }, 100)
+        }
+      })
+    })
+
+    activeContent.querySelectorAll('.connection-view-entity').forEach((link) => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        navigateToEntity(link.dataset.name, link.dataset.type, parseInt(link.dataset.id, 10))
+      })
+    })
+
+    activeContent.querySelectorAll('.connection-view-edge').forEach((link) => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        const edgeIdStr = link.dataset.edgeId
+        const edgeId = edgeIdStr ? parseInt(edgeIdStr, 10) : null
+        const sourceId = parseInt(link.dataset.sourceId, 10)
+        const targetId = parseInt(link.dataset.targetId, 10)
+        const relType = link.dataset.relType || 'affiliated'
+        let edge = edgeId ? _canvasLinks.find((l) => l.edgeId === edgeId) : null
+        if (!edge) {
+          edge = _canvasLinks.find(
+            (l) =>
+              (l.source.id === sourceId && l.target.id === targetId) ||
+              (l.source.id === targetId && l.target.id === sourceId),
+          )
+        }
+        if (!edge) {
+          const sourceNode = _canvasNodes.find((n) => n.id === sourceId)
+          const targetNode = _canvasNodes.find((n) => n.id === targetId)
+          if (sourceNode && targetNode) {
+            edge = { source: sourceNode, target: targetNode, relType, edgeId: null, role: null, _vs: 'normal' }
+          }
+        }
+        if (edge) {
+          const midX = (edge.source.x + edge.target.x) / 2
+          const midY = (edge.source.y + edge.target.y) / 2
+          const k = 2.5
+          const panelWidth = 320
+          const centerX = (_canvasWidth - panelWidth) / 2
+          const centerY = _canvasHeight / 2
+          const newTransform = d3.zoomIdentity.translate(centerX - midX * k, centerY - midY * k).scale(k)
+          if (zoomBehavior && _canvasSel) {
+            _canvasSel.transition().duration(400).call(zoomBehavior.transform, newTransform)
+          }
+          _selectedEdge = edge
+          selectedNode = edge.source
+          dimUnconnected(selectedNode)
+          showEdgeDetail(edge)
+        }
+      })
+    })
+
+    activeContent.querySelectorAll('.detail-link').forEach((el) => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault()
+        navigateToEntity(el.dataset.name, null, null)
       })
     })
 
@@ -4547,9 +4895,242 @@ ${dots}
     panel.classList.add('open')
   }
 
+  function showEdgeDetail(edge) {
+    if (document.body.classList.contains('locked')) {
+      const pwOverlay = document.getElementById('password-overlay')
+      if (pwOverlay) {
+        pwOverlay.style.display = 'flex'
+        document.getElementById('gate-password').focus()
+      }
+      return
+    }
+
+    _previousState = {
+      transform: currentZoom ? { ...currentZoom } : null,
+      selectedNode: selectedNode,
+      selectedEdge: edge,
+    }
+
+    const panel = document.getElementById('detail-panel')
+    const content = document.getElementById('detail-content')
+    const relType = edge.relType || 'related'
+    const sourceName = edge.source.name || 'Unknown'
+    const targetName = edge.target.name || 'Unknown'
+    const sourceColor = getColor(edge.source.category) || 'var(--accent)'
+    const targetColor = getColor(edge.target.category) || 'var(--accent)'
+
+    const evidenceData = window.__edgeEvidence?.edges?.[edge.edgeId]?.evidence || []
+    const isLoading = !window.__edgeEvidence
+    const isInferred = edge.edgeId === null
+
+    function buildEntityCard(entity, imgContainerId) {
+      const name = entity.name || 'Unknown'
+      const category = entity.category || ''
+      const cardColor = getColor(category) || 'var(--accent)'
+      const typeLabel =
+        entity.entityType === 'person' ? 'Person' : entity.entityType === 'organization' ? 'Organization' : 'Resource'
+      const initials =
+        name
+          .split(' ')
+          .map((w) => w[0])
+          .join('')
+          .slice(0, 2)
+          .toUpperCase() || '?'
+      return `
+        <div style="flex:1;min-width:0;text-align:center;">
+          <div id="${imgContainerId}" style="width:40px;height:40px;margin:0 auto 8px auto;">
+            <div style="width:40px;height:40px;border-radius:50%;background:${cardColor}30;border:2px solid ${cardColor}44;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:14px;font-weight:500;color:${cardColor};">${initials}</div>
+          </div>
+          <div style="font-family:var(--serif);font-size:14px;font-weight:500;margin-bottom:2px;line-height:1.2;">${escHtml(name)}</div>
+          <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:4px;">${typeLabel}</div>
+          ${category ? `<span class="detail-category" style="background:${cardColor}33;color:${cardColor};font-size:8px;">${escHtml(category)}</span>` : ''}
+          <a href="#" class="edge-entity-link" data-type="${entity.entityType}" data-id="${entity.id}" style="display:block;margin-top:6px;font-family:var(--mono);font-size:9px;color:var(--accent);text-decoration:underline;">View on map</a>
+        </div>
+      `
+    }
+
+    let evidenceHtml = ''
+    if (isLoading) {
+      evidenceHtml = '<div style="color:var(--text-3);font-style:italic;">Loading evidence...</div>'
+    } else if (isInferred) {
+      evidenceHtml =
+        '<div style="color:var(--text-3);font-style:italic;">This relationship was inferred from employment data. No source citations available.</div>'
+    } else if (evidenceData.length === 0) {
+      evidenceHtml =
+        '<div style="color:var(--text-3);font-style:italic;">No citations available for this relationship.</div>'
+    } else {
+      evidenceHtml = evidenceData
+        .map((ev) => {
+          const cite = ev.citation
+            ? `<div style="font-style:italic;color:var(--text-2);font-size:12px;line-height:1.45;margin:3px 0;">&ldquo;${escHtml(ev.citation.length > 300 ? ev.citation.substring(0, 300) + '...' : ev.citation)}&rdquo;</div>`
+            : ''
+          const srcLink = ev.source_url
+            ? `<a href="${escHtml(ev.source_url)}" target="_blank" rel="noopener" style="font-size:11px;color:var(--accent);text-decoration:underline;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escHtml(ev.source_title || new URL(ev.source_url).hostname)}</a>`
+            : ev.source_title
+              ? `<span style="font-size:11px;color:var(--text-2);">${escHtml(ev.source_title)}</span>`
+              : ''
+          const meta = [ev.source_type, ev.date_published, ev.author].filter(Boolean).join(' · ')
+          const metaHtml = meta
+            ? `<div style="font-size:9px;color:var(--text-3);margin-top:2px;">${escHtml(meta)}</div>`
+            : ''
+          const amountHtml = ev.amount_usd
+            ? `<div style="font-size:11px;color:#22c55e;font-weight:500;margin-top:3px;">$${ev.amount_usd.toLocaleString()}</div>`
+            : ''
+          const periodHtml =
+            ev.start_date || ev.end_date
+              ? `<div style="font-size:10px;color:var(--text-3);margin-top:2px;">${ev.start_date || '?'} – ${ev.end_date || 'present'}</div>`
+              : ''
+          const roleHtml = ev.role_title
+            ? `<div style="font-size:10px;color:var(--text-2);margin-top:2px;">${escHtml(ev.role_title)}</div>`
+            : ''
+          return `<div style="border-left:2px solid var(--line);padding-left:8px;margin-bottom:10px;">${cite}${srcLink}${metaHtml}${amountHtml}${periodHtml}${roleHtml}</div>`
+        })
+        .join('')
+    }
+
+    let totalSummary = ''
+    if (evidenceData.length > 1) {
+      const totalAmount = evidenceData.reduce((sum, e) => sum + (e.amount_usd || 0), 0)
+      if (totalAmount > 0) {
+        totalSummary = `<div style="font-size:12px;color:#22c55e;font-weight:500;margin-bottom:8px;">Total: $${totalAmount.toLocaleString()} across ${evidenceData.length} records</div>`
+      }
+    }
+
+    const sourceImgId = 'edge-img-source-' + edge.source.id
+    const targetImgId = 'edge-img-target-' + edge.target.id
+
+    content.innerHTML = `
+      ${_previousState?.selectedNode ? `<a href="#" id="edge-back-btn" style="position:absolute;top:0.75rem;left:1.25rem;display:inline-flex;align-items:center;gap:4px;font-family:var(--mono);font-size:10px;color:var(--text-3);text-decoration:none;transition:color 0.15s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-3)'">&larr; Back</a>` : ''}
+      <div style="height:20px;"></div>
+      <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:16px;">
+        ${buildEntityCard(edge.source, sourceImgId)}
+        <div style="flex-shrink:0;text-align:center;padding-top:48px;">
+          <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-2);">${relType}</div>
+          <div style="color:var(--text-3);font-size:16px;margin-top:2px;">&rarr;</div>
+        </div>
+        ${buildEntityCard(edge.target, targetImgId)}
+      </div>
+      <div style="padding-top:12px;border-top:1px solid var(--line);">
+        <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-3);margin-bottom:8px;">Sources & Evidence${evidenceData.length ? ` (${evidenceData.length})` : ''}</div>
+        ${totalSummary}
+        ${evidenceHtml}
+      </div>
+    `
+
+    const sourceImgContainer = document.getElementById(sourceImgId)
+    const targetImgContainer = document.getElementById(targetImgId)
+    if (sourceImgContainer) {
+      resolveEntityImage(edge.source, (url) => {
+        sourceImgContainer.innerHTML = `<img src="${url}" alt="${sourceName}" style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid ${sourceColor}44;">`
+      })
+    }
+    if (targetImgContainer) {
+      resolveEntityImage(edge.target, (url) => {
+        targetImgContainer.innerHTML = `<img src="${url}" alt="${targetName}" style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid ${targetColor}44;">`
+      })
+    }
+
+    content.querySelectorAll('.edge-entity-link').forEach((link) => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault()
+        const entityType = link.dataset.type
+        const entityId = parseInt(link.dataset.id, 10)
+        const arr =
+          entityType === 'person'
+            ? allData.people
+            : entityType === 'organization'
+              ? allData.organizations
+              : allData.resources
+        const entity = arr?.find((ent) => ent.id === entityId)
+        if (!entity) return
+        const renderedNodes = _canvasNodes.length > 0 ? _canvasNodes : d3.selectAll('.node').data()
+        const node = renderedNodes.find((n) => n.id === entityId || n.name === entity.name)
+        _selectedEdge = null
+        for (const l of _canvasLinks) l._vs = 'normal'
+        if (node) {
+          const zoomTarget = _canvasSel || d3.select('#map-container svg')
+          const mapEl = document.getElementById('map-container')
+          const k = 3
+          zoomTarget
+            .transition()
+            .duration(500)
+            .call(
+              zoomBehavior.transform,
+              d3.zoomIdentity
+                .translate(mapEl.clientWidth / 2 - k * node.x, mapEl.clientHeight / 2 - k * node.y)
+                .scale(k),
+            )
+          selectedNode = node
+          if (viewMode !== 'search' && currentView === 'all') {
+            dimUnconnected(node)
+          } else {
+            highlightNodes([node.name])
+          }
+          showDetail(Object.assign({}, entity, { entityType }), renderedNodes)
+        } else {
+          showDetail(Object.assign({}, entity, { entityType }), renderedNodes || [])
+        }
+      })
+    })
+
+    document.getElementById('edge-back-btn')?.addEventListener('click', () => {
+      if (_previousState?.selectedNode) {
+        const node = _previousState.selectedNode
+        const zoomTarget = _canvasSel || d3.select('#map-container svg')
+        const mapEl = document.getElementById('map-container')
+        const k = 3
+        zoomTarget
+          .transition()
+          .duration(500)
+          .call(
+            zoomBehavior.transform,
+            d3.zoomIdentity.translate(mapEl.clientWidth / 2 - k * node.x, mapEl.clientHeight / 2 - k * node.y).scale(k),
+          )
+        selectedNode = node
+        _selectedEdge = null
+        for (const l of _canvasLinks) l._vs = 'normal'
+        if (viewMode !== 'search' && currentView === 'all') {
+          dimUnconnected(node)
+        }
+        const entityType =
+          node.entityType || (node.resource_type ? 'resource' : node.primary_org ? 'person' : 'organization')
+        showDetail(Object.assign({}, node, { entityType }), _canvasNodes || [])
+      }
+      _previousState = null
+    })
+
+    panel.classList.add('open')
+  }
+
   document.getElementById('detail-close').addEventListener('click', () => {
     document.getElementById('detail-panel').classList.remove('open')
-    clearSelection() // This will re-apply search highlighting if in search mode
+
+    if (_selectedEdge) {
+      if (_previousState?.selectedNode) {
+        const node = _previousState.selectedNode
+        const zoomTarget = _canvasSel || d3.select('#map-container svg')
+        const mapEl = document.getElementById('map-container')
+        const k = 3
+        zoomTarget
+          .transition()
+          .duration(500)
+          .call(
+            zoomBehavior.transform,
+            d3.zoomIdentity.translate(mapEl.clientWidth / 2 - k * node.x, mapEl.clientHeight / 2 - k * node.y).scale(k),
+          )
+        selectedNode = node
+        if (viewMode !== 'search' && currentView === 'all') {
+          dimUnconnected(node)
+        }
+      } else {
+        clearSelection()
+      }
+      _selectedEdge = null
+      _previousState = null
+      return
+    }
+
+    clearSelection()
     if (zoomBehavior) {
       const zoomTarget = _canvasSel || d3.select('#map-container svg')
       if (zoomTarget.node()) zoomTarget.transition().duration(500).call(zoomBehavior.transform, d3.zoomIdentity)
@@ -4944,6 +5525,7 @@ ${dots}
 
   function clearSelection() {
     selectedNode = null
+    _selectedEdge = null
     if (viewMode === 'search') return
     if (_canvasNodes.length > 0) {
       for (const d of _canvasNodes) d._vs = 'normal'

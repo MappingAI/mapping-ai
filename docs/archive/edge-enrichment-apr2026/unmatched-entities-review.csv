@@ -1,0 +1,1040 @@
+entity_role,entity_name,edge_count,connected_to
+source,Coefficient Giving,16,"80,000 Hours; Americans for Responsible Innovation; Computational Rational Agents Laboratory (CORAL); Epoch AI; FAR.AI; Forecasting Research Institute; Forethought; Giving What We Can; High Impact Professionals; ILINA Program; Meridian Cambridge; Orion AI Governance Initiative; RAND Corporation; Redwood Research; SecureBio; Transformer"
+source,Schmidt Sciences,11,Arvind Narayanan; Atlas Computing; Dan Hendrycks; David Autor; David Krueger; Dylan Hadfield-Menell; LawZero; Priya Donti; Roger Grosse; Zico Kolter
+source,Alfred P. Sloan Foundation,9,Anca Dragan; David Duvenaud; Electronic Frontier Foundation; Percy Liang; Prasanna (Sonny) Tambe; Rob Fergus; Roger Grosse; Zico Kolter
+source,NIH,4,Center for Community-Engaged Artificial Intelligence; Olga Troyanskaya; William Bialek; Yale Center for Research Computing
+source,National Telecommunications and Information Administration,4,California Department of Technology; State of California; State of Colorado
+source,Patrick J. McGovern Foundation,4,Center for Security and Emerging Technology; Center for Security and Emerging Technology (CSET); Stanford Digital Economy Lab; The Future Society
+source,Omidyar Network,4,Americans for Responsible Innovation; Center for Humane Technology; Encode Justice; MIT Media Lab
+source,Future Fund,4,Association for Long Term Existence and Resilience (ALTER); Berkeley Existential Risk Initiative; Ought; Quantified Uncertainty Research Institute (QURI)
+source,Capital One,4,AI4ALL; USC; USC School of Advanced Computing; USC Viterbi School of Engineering
+source,New Enterprise Associates,4,AI Fund; Median; Samaya AI; Workera
+source,Effective Altruism Funds,4,Association for Long Term Existence and Resilience (ALTER); Effective Institutions Project; Effective Thesis; Ought
+source,John S. and James L. Knight Foundation,4,Fiona Scott Morton; Georgetown University; MIT Media Lab; USC Marshall School of Business
+source,NVentures,3,Radical AI; Samaya AI; World Labs
+source,Technology Modernization Fund,3,Department of Energy; Department of State; Federal Trade Commission
+source,Tencent,3,DST Global; DeepSeek; Reddit Inc
+source,Bessemer Venture Partners,3,EliseAI; LinkedIn; Midjourney
+source,Simons Foundation,3,City University of New York; Scott Aaronson; William Bialek
+source,European Research Council,3,Nick Bostrom; Philipp Hennig; University of Tübingen
+source,Vitalik Buterin,3,Beneficial AI Foundation; Future of Life Institute
+source,Intel,3,Cornell University; Element AI; Mobileye
+source,Sentinel Bio,3,Centre for Long-Term Resilience; Epoch AI; SecureBio
+source,Leverhulme Trust,3,Leverhulme Centre for the Future of Intelligence; University of Cambridge
+source,Natural Sciences and Engineering Research Council of Canada,3,HEC Montréal; Joelle Pineau; Richard Zemel
+source,SoftBank Group,3,AI Fund; OpenAI
+source,JPMorgan Chase,3,OpenAI; SoftBank Group; SoftBank Group Corp
+source,Advanced Research Projects Agency for Health,3,Stanford University; Vanderbilt University
+source,Lightspeed,3,Goodfire; Mistral AI; PauseAI
+source,Alameda Research,3,Aligned AI; Manifold Markets
+source,AI Safety Tactical Opportunities Fund,3,ILINA Program; Luthien; Stanford Digital Economy Lab
+source,Hertz Foundation,3,Ben Mildenhall; Jared Kaplan; Sam Rodriques
+source,AISTOF,3,Apart Research; Centre for Enabling EA Learning & Research (CEEALAR); Timaeus
+source,Long Term Future Fund,2,Eli Lifland; Jamie Bernardi
+source,Stanford Impact Labs,2,Jeff Hancock; Stanford RegLab
+source,Grok Ventures,2,Dovetail
+source,Databricks Ventures,2,Samaya AI; World Labs
+source,Lord Foundation of California,2,USC; USC School of Advanced Computing
+source,Cambridge Enterprise,2,Jukedeck
+source,Luke Ding,2,"80,000 Hours; Global Priorities Institute"
+source,Cambridge Innovation Capital,2,Jukedeck
+source,MGX,2,Anthropic; xAI
+source,Emergent Ventures,2,Marius Hobbhahn; Sam Bowman
+source,Radical Ventures,2,Cohere; World Labs
+source,Constellation Brands Inc Political Action Committee,2,Cory Gardner; Todd Young
+source,Defense Advanced Research Projects Agency,2,Johns Hopkins Applied Physics Laboratory; Princeton University
+source,John Simon Guggenheim Memorial Foundation,2,Alison Gopnik; John A. Bargh
+source,Russell Sage Foundation,2,Andrew McAfee; Stanford Digital Economy Lab
+source,Erik Otto,2,Beneficial AI Foundation; Future of Life Institute
+source,ARIA,2,Centre for Future Generations; Meaning Alignment Institute
+source,Didier Elzinga,2,Dovetail
+source,SFF,2,Meaning Alignment Institute; Timaeus
+source,Blackbird Ventures,2,Dovetail; Midjourney
+source,The David and Lucile Packard Foundation,2,AI Now Institute Inc; Center for Humane Technology
+source,Sam Bankman-Fried,2,"80,000 Hours; Conjecture"
+source,Samsung,2,Aaron Courville; Sam Bowman
+source,Digital Research Alliance of Canada,2,McGill University; University of Toronto
+source,Accel,2,Dovetail; Thinking Machines Lab
+source,"Applied Materials, Inc.",2,Stony Brook University; University at Buffalo
+source,FTX Future Fund,2,AI Safety Camp; Jesse Hoogland
+source,Microsoft Corporation,2,Brookings Institution; OpenAI
+source,CEA,2,Czech Association for Effective Altruism; community organisers
+source,Laidir Foundation,2,"80,000 Hours; Effective Institutions Project"
+source,CIFAR,2,David Duvenaud; Partnership on AI
+source,Senate Appropriations Committee,2,National Institute of Standards and Technology; U.S. Artificial Intelligence Safety Institute
+source,Baidu,2,CloudFlare; Cloudflare
+source,Owl Ventures,2,Workera
+source,Felicis Ventures,2,Dovetail
+source,Musk Foundation,2,Center for Security and Emerging Technology; Center for Security and Emerging Technology (CSET)
+source,D. E. Shaw Ventures,2,Anthropic; OpenAI
+source,Dustin Moskovitz and Cari Tuna,2,Future of Life Institute; OpenAI
+source,NEA,2,Sakana AI; World Labs
+source,Silicon Valley Community Foundation,2,Atlas Computing; Effective Institutions Project
+source,UK Government,2,Advanced Research and Invention Agency (ARIA); Evolution AI
+source,Sloan Foundation,2,Avi Goldfarb; Olga Troyanskaya
+source,DCVC,2,Agility Robotics; Element AI
+source,Social Sciences and Humanities Research Council of Canada,2,Ajay Agrawal; Avi Goldfarb
+source,SoftBank Group Corp,2,OpenAI
+source,Lightspeed Venture Partners,2,Midjourney; Safe Superintelligence Inc.
+source,Greenoaks Capital Partners,2,Safe Superintelligence; Safe Superintelligence Inc.
+source,Lilly Endowment Inc.,2,Emory University; University of Notre Dame
+source,EPSRC,2,Michael Osborne; University of Cambridge
+source,Blockchain Capital,1,Tools For Humanity
+source,Bold.org,1,Santiago Rodriguez
+source,Booz Allen Hamilton,1,Credo AI
+source,Bowelbabe Fund for Cancer Research UK,1,University College London
+source,Brad Burnham,1,Workshop Labs
+source,Breakthrough Energy Ventures,1,KoBold Metals
+source,Bridgepoint Development Capital,1,Forward Global
+source,British Academy,1,John Tasioulas
+source,British Patient Capital,1,Quantexa
+source,Bund,1,Weizenbaum Institute
+source,Business Development Bank of Canada,1,Element AI
+source,C******* D.,1,Jesse Jackson Jr.
+source,C5 Capital,1,Cassava Technologies
+source,CME Group and Mathematical Science Research Institute (MSRI),1,Susan Athey
+source,CNPq,1,NoHarm
+source,Caisse de dépôt et placement du Québec,1,Inovia Capital
+source,Campaign for Accountability,1,Tech Justice Law Project
+source,Canada First Research Excellence Fund,1,University of Toronto
+source,Canada Foundation for Innovation,1,University of Toronto
+source,Canadian Foundation for Innovation,1,McGill University
+source,Canadian Institute for Advanced Research,1,Gillian Hadfield
+source,Canadian Singularity Institute for Artificial Intelligence,1,Shane Legg
+source,Cancer Research UK,1,University College London
+source,Capital One Ventures,1,Plural
+source,Carl ROTH,1,Sven Herrmann
+source,Carl Shulman,1,Epoch AI
+source,Carnegie Mellon University's Secure Blockchain Initiative,1,Bryan Parno
+source,Caroline Mehl,1,Americans for Responsible Innovation
+source,Center for Effective Altruism,1,AI Impacts
+source,Center for Existential Safety,1,International AI Governance Alliance (IAIGA)
+source,Center on Emerging Risk Research,1,Cooperative AI Foundation
+source,Centre for Effective Altruism,1,Jonas Vollmer
+source,Centre for Innovation and Entrepreneurship at the Rotman School of Management,1,Ajay Agrawal
+source,Chainlink Labs,1,Cynthia Lummis
+source,Challenge Seattle,1,UW Tech Policy Lab
+source,Character Capital,1,Workshop Labs
+source,"Charles ""Ed"" Bailey",1,Ken Stanley
+source,Cisco,1,Thinking Machines Lab
+source,Cisco Systems Inc Federal PAC,1,Anna Eshoo
+source,Cisco Systems Inc.,1,xAI
+source,Citi,1,OpenAI
+source,City of Seattle,1,UW Tech Policy Lab
+source,Clement Delangue,1,Sakana AI
+source,Clikia,1,Aether
+source,Coeffecient Giving,1,Heron
+source,Cognitive Science Society,1,Alison Gopnik
+source,Colloquium on Scholarship in Employment and Labor Law,1,Veena Dubal
+source,Community Jameel,1,MIT Jameel Clinic
+source,Company Ventures,1,Plural
+source,Conjointly,1,PauseAI
+source,Conviction,1,Thinking Machines Lab
+source,Conviction Partners,1,Thinking Machines Lab
+source,CoreWeave,1,Inflection AI
+source,Corporate Founding Members,1,Stanford HAI
+source,Cosmos Holdings,1,Workshop Labs
+source,"Cotchett, Pitre & McCarthy",1,Ted Lieu
+source,"Cracker Barrel Old Country Store, Inc. PAC",1,Marsha Blackburn
+source,CrimsoNox,1,Credo AI
+source,CrimsoNox Capital,1,Credo AI
+source,DARPA Information Systems Office,1,Yolanda Gil
+source,"DARR, WILLIAM H (BILL)",1,Josh Hawley
+source,Dasein Capital,1,Electric Sheep
+source,David Siegel,1,Samaya AI
+source,Davis Polk & Wardwell LLP,1,Columbia Law School
+source,Dawn Capital,1,Quantexa
+source,Dean's Innovation Fund contributors,1,"College of Computing, Data Science, and Society"
+source,Decibel Partners,1,Credo AI
+source,Decibel VC,1,Credo AI
+source,Deutsche Forschungsgemeinschaft,1,Philipp Hennig
+source,Dieter Schwarz Foundation,1,Stanford Digital Economy Lab
+source,Digital Trust Foundation,1,Virginia Eubanks
+source,"Directv Group, Inc. Fund - Federal (Directv PAC)",1,Steve Scalise
+source,Distributed Global,1,Tools for Humanity
+source,Dominion Energy,1,Lawyers' Committee for Civil Rights Under Law
+source,Donors via Every.org,1,Alignment Ecosystem Development
+source,Dragoneer,1,Anthropic
+source,Dreamery Foundation,1,Centre for Future Generations
+source,Durable Capital Partners LP,1,KoBold Metals
+source,Dwight and Dian Diercks,1,Mayo Clinic
+source,EAIF,1,Centre for Enabling EA Learning & Research (CEEALAR)
+source,ENS,1,Centre pour la Sécurité de l'IA (CeSIA)
+source,EU Commission,1,TSMC
+source,Edward Fein Charitable Trust,1,"University of California, San Francisco"
+source,Effective Altruism Foundation,1,Center on Long-Term Risk
+source,Effective Altruism Infrastructure Fund,1,Effective Thesis
+source,Elevation Capital,1,Midjourney
+source,Empire State Development,1,Empire AI
+source,Eni,1,Radical AI
+source,Eric Ries,1,Harmony Intelligence
+source,Eric Schmidt Foundation,1,Hélène Landemore
+source,European Commission's AI Office,1,SaferAI
+source,Eva Lau,1,University of Toronto
+source,Evolution Equity Partners,1,Quantexa
+source,Ewing Marion Kauffman Foundation,1,Stanford Digital Economy Lab
+source,FPV Ventures,1,Credo AI
+source,FTX Foundation,1,Berkeley Existential Risk Initiative
+source,Facebook founders,1,Americans for Responsible Innovation
+source,Fathom Computing,1,AI Impacts
+source,Federal Economic Development Agency for Southern Ontario,1,Creative Destruction Lab
+source,Federal Ministry of Education and Research,1,Weizenbaum Institute
+source,"Federal Ministry of Research, Technology and Space",1,Weizenbaum Institute
+source,Fidelity Investments Canada,1,Element AI
+source,Fidelity Management & Research Company,1,xAI
+source,Fidelity Management and Research Company LLC,1,Reddit Inc
+source,Filecoin Foundation for the Decentralized Web,1,Electronic Frontier Foundation
+source,Financial Industry Regulatory Authority (FINRA),1,Arthur Breitman
+source,Finnish Fund for Industrial Cooperation Ltd,1,Cassava Technologies
+source,First Minute Capital,1,Evolution AI
+source,First Row Partners,1,Harmony Intelligence
+source,Fit 4 Start,1,Tryolabs
+source,Fonds de solidarité FTQ,1,Inovia Capital
+source,Foresight Ventures,1,PublicAI
+source,Founders Growth Equity Fund,1,Google DeepMind
+source,France,1,International Telecommunication Union
+source,FundersClub,1,Simplex
+source,Genentech Inc. Political Action Committee,1,Bill Cassidy
+source,General Catalyst,1,Thrive Capital
+source,General Motors,1,AI4ALL
+source,German Research Foundation (DFG),1,Technische Universität Berlin
+source,Germany,1,International Telecommunication Union
+source,Getthiss Innovation Sdn. Bhd.,1,Median Group Inc.
+source,Gilead Sciences Inc Healthcare Policy PAC,1,Anna Eshoo
+source,Giving What We Can USA Inc.,1,Centre for Future Generations
+source,Global Priorities Institute,1,Nicholas Emery-Xu
+source,Goldman Sachs,1,OpenAI
+source,Goldman Sachs' GS Growth,1,Splice
+source,Google (Alphabet),1,Anthropic
+source,Google Capital,1,CloudFlare
+source,Google X,1,Google Brain
+source,Gordon Irlam,1,Global Catastrophic Risk Institute
+source,Gordon and Betty Moore Foundation,1,Cornell University
+source,Government of Australia,1,Center for Strategic and International Studies (CSIS)
+source,Government of India,1,"Indian Institute of Technology, Kanpur"
+source,Government of Japan,1,Center for Strategic and International Studies (CSIS)
+source,Government of Quebec,1,McGill University
+source,Government of the Federal Republic of Germany,1,Munich Security Conference
+source,Government of the Free State of Bavaria,1,Munich Security Conference
+source,Gratitude America Ltd,1,Noam Chomsky
+source,Greg Colbourn,1,PauseAI
+source,Greylock Partners,1,AI Fund
+source,H&R Block Inc. Political Action Committee (Blockpac),1,Todd Young
+source,HSBC,1,Quantexa
+source,Harvard Technology and Public Purpose program,1,Karen Hao
+source,4DX Ventures,1,Aether
+source,Hector Stiftung,1,University of Tübingen
+source,Heising-Simons Foundation,1,Encode Justice
+source,Helena,1,Aether
+source,Henkel,1,Aether
+source,High-Flyer Capital Management,1,DeepSeek
+source,High-Flyer Quant,1,DeepSeek
+source,Hitachi,1,Aaron Courville
+source,Hogan Lovells,1,Lawyers' Committee for Civil Rights Under Law
+source,Horizon Institute for Public Service,1,Thomas Woodside
+source,Horizons Ventures,1,Inflection AI
+source,Hutchison Whampoa Group,1,Singapore Management University
+source,ICICI Foundation for Inclusive Growth,1,"Indian Institute of Technology, Kanpur"
+source,ICONIQ,1,Anthropic
+source,IIT Kanpur 1986 Batch Alumni,1,"Indian Institute of Technology, Kanpur"
+source,IIT Kanpur 2000 Batch Alumni,1,"Indian Institute of Technology, Kanpur"
+source,IIT Kanpur Alumni,1,"Indian Institute of Technology, Kanpur"
+source,INET (Institute for New Economic Thinking),1,Joseph Stiglitz
+source,IOBC Capital,1,PublicAI
+source,Inclusive Abundance Action,1,Americans for Responsible Innovation
+source,Index Ventures,1,Cohere
+source,Industrial Technology Investment Corporation,1,Agility Robotics
+source,Infinite Capital,1,Radical AI
+source,Infosys Foundation,1,Daphne Koller
+source,Innovate UK,1,Electric Sheep
+source,Institute for New Economic Thinking,1,Anton Korinek
+source,Institute for Operations Research and the Management Sciences,1,Kate Kellogg
+source,Intel Corp.,1,Element AI
+source,Intel Corporation,1,MIT CSAIL
+source,Intel Corporation Political Action Committee,1,Anna Eshoo
+source,International Association of Heat & Frost Insulators and Allied Workers,1,Ayanna Pressley
+source,International Association of Machinists and Aerospace Workers,1,Ayanna Pressley
+source,Investment Company Institute Political Action Committee (Ici PAC),1,Catherine Cortez Masto
+source,Italy,1,International Telecommunication Union
+source,JP Morgan,1,OpenAI
+source,Jacob Eliosoff,1,Alex Bores
+source,James M. and Cathleen D. Stone Foundation,1,MIT Shaping the Future of Work Initiative
+source,James S. McDonnell Foundation,1,Alison Gopnik
+source,Jane Street,1,Thinking Machines Lab
+source,Japan,1,International Telecommunication Union
+source,Jed McCaleb,1,The Navigation Fund
+source,Jeff and Liesl Wilke,1,Stanford Digital Economy Lab
+source,Jim Pallotta,1,MIT Media Lab
+source,John Arnold,1,Vanderbilt University
+source,Juliana Seawell,1,Compassion in Machine Learning (CaML)
+source,Julie Carson,1,Americans for Responsible Innovation
+source,Jump Capital,1,Workera
+source,Jump Trading Group,1,University College London
+source,Kaphan Foundation,1,Electronic Frontier Foundation
+source,Kavli Foundation,1,FutureHouse
+source,Keith Block,1,Block Center for Technology and Society
+source,Kensington Capital Partners,1,Inovia Capital
+source,Kim Jungsik,1,Seoul National University
+source,Knight Foundation,1,UW Tech Policy Lab
+source,KolnBusiness,1,Midjourney
+source,LISA,1,Alignment Research Engineer Accelerator (ARENA)
+source,Land Berlin,1,Weizenbaum Institute
+source,Land Brandenburg,1,Weizenbaum Institute
+source,Land O'Lakes Inc,1,Joint Economic Committee
+source,Laura Arnold,1,Vanderbilt University
+source,Laurance S. Rockefeller and the Rockefeller Brothers Fund,1,Sherry Turkle
+source,Leidos,1,University of Pittsburgh
+source,Leinweber Foundation,1,Massachusetts Institute of Technology
+source,Leverhulme Foundation,1,University of Cambridge
+source,Lightcone,1,Machine Learning for Alignment Bootcamp (MLAB)
+source,Likith Govindaiah,1,Epoch AI
+source,Lockheed Martin Corporation,1,Center for Strategic and International Studies (CSIS)
+source,Longterm Future Fund,1,Existential Risk Observatory
+source,Longview,1,Forethought
+source,Look AI Ventures,1,Electric Sheep
+source,Lori Huang,1,AI4ALL
+source,Los Alamos National Laboratory,1,University of Michigan
+source,M12,1,Arkose Labs
+source,MFV Partners,1,Agility Robotics
+source,MGM Resorts International,1,Catherine Cortez Masto
+source,MIT Knight Science Journalism program,1,Karen Hao
+source,MIT Lincoln Laboratory,1,MIT FutureTech
+source,MIT-Air Force AI accelerator,1,MIT FutureTech
+source,MUSIC joint venture with Liontree,1,Splice
+source,Manhattan Beer Distributors LLC,1,Alex Bores
+source,Manifund regrantors,1,Jesse Hoogland
+source,Marcus Abramovitch,1,Compassion in Machine Learning (CaML)
+source,Mark Cuban,1,Electronic Frontier Foundation
+source,Mark and Debra Leslie,1,New York University
+source,Markus Persson,1,Electronic Frontier Foundation
+source,Marty Chavez,1,Samaya AI
+source,Matt McIlwain,1,Workshop Labs
+source,Max Planck Society,1,Philipp Hennig
+source,Max Planck Society of Germany,1,John A. Bargh
+source,Maxwell Capital,1,Harmony Intelligence
+source,McDonald's Corp,1,Ted Lieu
+source,McGovern Foundation,1,AI4ALL
+source,Meki,1,Thinking Machines Lab
+source,Melinda Gates,1,AI4ALL
+source,Meta Platforms,1,Scale AI
+source,Minderoo Foundation,1,New York University
+source,Ministry of Science and ICT,1,Institute for Information & Communications Technology Planning & Evaluation
+source,Morgan Stanley,1,OpenAI
+source,Mozilla Technology Fund,1,Nathan Lambert
+source,Mozilla Ventures,1,Credo AI
+source,NASA Innovative Advanced Concepts (NIAC),1,Matthew Johnson-Roberson
+source,NDSEG,1,Nathan Lambert
+source,NEAR Foundation,1,PublicAI
+source,NEH,1,Center for Community-Engaged Artificial Intelligence
+source,NET Institute,1,Ajay Agrawal
+source,NFDG,1,Safe Superintelligence
+source,NFDG Ventures,1,Safe Superintelligence Inc.
+source,NHMRC,1,University of Melbourne
+source,NIH NIGMS,1,William Bialek
+source,NSF - National Science Foundation,1,Tom Griffiths
+source,Natcast,1,American Federation of Teachers
+source,National Bank,1,Element AI
+source,National Bank of Canada,1,Element AI
+source,National Cancer Institute,1,University College London
+source,National Development Fund,1,Taiwan Ministry of Digital Affairs
+source,National Rifle Association,1,Marsha Blackburn
+source,National Science Foundation (NSF),1,Columbia University
+source,Natural Sciences and Engineering Research Council,1,Aaron Courville
+source,Naver,1,Seoul National University
+source,Navitas Capital,1,EliseAI
+source,Netflix Inc,1,Ted Lieu
+source,New Science,1,Theia Vogel
+source,New Venture Fund,1,Algorithmic Justice League
+source,New York State,1,Stony Brook University
+source,Nick D'Aloisio,1,DeepMind
+source,Nicolas Berggruen Charitable Trust,1,Berggruen Institute
+source,Noa,1,Radical AI
+source,Noah's Ark Lab,1,Berkeley Artificial Intelligence Research
+source,Noble Energy Political Action Committee,1,Cory Gardner
+source,North Carolina General Assembly,1,University of North Carolina System
+source,Northleaf Capital,1,Inovia Capital
+source,Northrop Grumman,1,Center for Strategic and International Studies (CSIS)
+source,Northrop Grumman Corporation,1,USC Viterbi School of Engineering
+source,Norway,1,World Economic Forum
+source,Norway's International Climate and Forest Initiative (NICFI),1,Pulitzer Center
+source,Norwegian Agency for Development Cooperation (Norad),1,Pulitzer Center
+source,O'Shaughnessy Ventures,1,Ben Reinhardt
+source,OCP Foundation,1,UNESCO
+source,OVO Fund,1,Workshop Labs
+source,Office of Naval Research - MA,1,Tom Griffiths
+source,Office of Science and Technology Policy,1,President's Council of Advisors on Science and Technology (PCAST)
+source,Office of the Attorney General of Virginia,1,Andrew N. Ferguson
+source,Ohio Republican State Central & Executive Committee State Candidate Fund,1,Jon Husted
+source,Okawa Foundation,1,Anca Dragan
+source,Okta,1,Center for Long-Term Cybersecurity
+source,Ontario Early Research Award,1,Kate Larson
+source,Open Society Foundations,1,Center for Strategic and International Studies (CSIS)
+source,Oracle,1,Cohere
+source,Others Others,1,Conjecture
+source,PROMPT,1,HEC Montréal
+source,Packard Foundation,1,Scott Aaronson
+source,Park Foundation,1,Center for Humane Technology
+source,Pasupalak AI Fellowship,1,Kate Larson
+source,Paul & Daisy Soros Fellowship for New Americans,1,Alvaro Bedoya
+source,Paul & Daisy Soros Fellowships for New Americans,1,Tarun Chhabra
+source,Paul Forster,1,Meta
+source,"Paul, Weiss, Rifkind, Wharton & Garrison",1,Jonathan Kanter
+source,PayPal,1,Arkose Labs
+source,PayPal Ventures,1,Arkose Labs
+source,Pegatron Corporation,1,MIT CSAIL
+source,Pelion Ventures,1,Cloudflare
+source,Peter Thiel Foundation,1,Chris Olah
+source,Peter and Brynn Huntsman and the Huntsman Family Foundation,1,University of Utah
+source,Phil Black,1,Mythos Ventures
+source,Phillip (Terry) Ragon,1,Massachusetts Institute of Technology
+source,Playground Global,1,Agility Robotics
+source,Plural Platform,1,Conjecture
+source,Polaris Ventures,1,Jesse Clifton
+source,Polymarket,1,Delphi Ventures
+source,PrairiesCan,1,Amii
+source,Prime Intellect,1,Theia Vogel
+source,Princeton University Center for Human Values,1,Sayash Kapoor
+source,Qatar Investment Authority,1,xAI
+source,Qualcomm Ventures,1,CloudFlare
+source,Quantitative Foundation,1,University of Virginia
+source,Qube Research & Technologies,1,University of Oxford
+source,Quebec government,1,Mila
+source,Quebec's Mees,1,McGill University
+source,Quebec's Ministère de l'Enseignement supérieur,1,McGill University
+source,Québec government,1,Mila
+source,RAISE Invest,1,Forward Global
+source,RTX Ventures,1,Radical AI
+source,Radicle Impact,1,Aether
+source,Republic of Korea Ministry of Science and ICT,1,Global AI Frontier Lab
+source,Responsible Technology Youth Power Fund,1,Encode Justice
+source,Richard King Mellon Foundation,1,Carnegie Mellon University
+source,Robert Wood Johnson Foundation,1,Brookings Institution
+source,Rockefeller Foundation,1,Black in AI
+source,Ron Conway,1,Reddit Inc
+source,Ronald D. Sugar,1,USC School of Advanced Computing
+source,Russian Federation,1,International Telecommunication Union
+source,Ryan Kidd,1,Compassion in Machine Learning (CaML)
+source,SEAFARERS INTERNATIONAL UNION OF NA-AGLIW,1,Maria Cantwell
+source,Safar Partners,1,Agility Robotics
+source,Salesforce Ventures,1,Cohere
+source,Samsung Advanced Institute of Technology,1,Kyunghyun Cho
+source,Sands Capital,1,Credo AI
+source,Sapphire Ventures,1,EliseAI
+source,Saudi Arabia,1,International Telecommunication Union
+source,Saudi Arabia's National Infrastructure Fund,1,Humain
+source,Saudi Telecom Group,1,PublicAI
+source,Schmidt Foundation,1,Transluce
+source,Schwartz Reisman Institute,1,David Duvenaud
+source,Schwarz Group,1,Cohere
+source,Scott Levitan,1,Valerie Foushee
+source,Seldon Lab,1,Workshop Labs
+source,Sequoia,1,ByteDance
+source,"Seven-bank consortium (BNP Paribas, Crédit Agricole CIB, HSBC, MUFG, Bpifrance, La Banque Postale, and Natixis CIB)",1,Mistral AI
+source,Shamil Chandaria,1,Global Priorities Institute
+source,Shinrai Investments LLC,1,World Labs
+source,Shrug Capital,1,Aether
+source,Shuttleworth Foundation,1,Mark Surman
+source,Siebel Foundation,1,Priya Donti
+source,Siegel Family Endowment,1,Nicole Alvarez
+source,Silicon Valley Bank Donor Advised Fund,1,Atlas Computing
+source,Simon Newstead,1,Compassion in Machine Learning (CaML)
+source,Simons Foundation International,1,City University of New York
+source,Snoop Dogg,1,Reddit Inc
+source,"Social & Environmental Entrepreneurs, Inc.",1,Center for AI Risk Management & Alignment (CARMA)
+source,SoftBank Group Corp.,1,Carnegie Mellon University
+source,SoftBank Vision Fund 2,1,Arkose Labs
+source,Someland Foundation,1,Electronic Frontier Foundation
+source,Sony,1,Aaron Courville
+source,Sony Innovation Fund,1,Agility Robotics
+source,South Park Commons,1,Goodfire
+source,Sozo Ventures,1,Workera
+source,Spatial Capital,1,Electric Sheep
+source,Squirrel AI,1,Association for the Advancement of Artificial Intelligence (AAAI)
+source,Stanford Institute for Human-Centered Artificial Intelligence,1,Daniel Ho
+source,State Ministry of Research and Arts of Baden-Württemberg,1,University of Tübingen
+source,State of California Department of Health Care Access and Information,1,USC Suzanne Dworak-Peck School of Social Work
+source,State of Utah - Utah Attorney General's Office,1,Melissa Holyoak
+source,Stepstone Group,1,xAI
+source,Steve Newman,1,Americans for Responsible Innovation
+source,Strategic Innovation Fund,1,Creative Destruction Lab
+source,Strong Start to Finish,1,City University of New York
+source,Sunil Wadhwani,1,IIT Madras
+source,Susan Crown Exchange,1,Center for Humane Technology
+source,Susan Ragon,1,Massachusetts Institute of Technology
+source,Suzanne Dworak-Peck,1,USC Suzanne Dworak-Peck School of Social Work
+source,Swiss Philanthropy Foundation,1,Campaign to Stop Killer Robots
+source,Swiss government,1,Simon Institute for Longterm Governance
+source,Switzerland,1,World Economic Forum
+source,TDK Ventures,1,Agility Robotics
+source,TVM Ventures,1,Trail of Bits
+source,Tadashi Yanai,1,"University of California, Los Angeles"
+source,Taiwan Semiconductor Manufacturing Company,1,Joint Economic Committee
+source,Tarbell Fellowship,1,Billy Perrigo
+source,Teachers' Venture Growth,1,Quantexa
+source,Templeton World Charity Foundation,1,Max Tegmark
+source,Tencent Holdings Ltd.,1,Element AI
+source,Texas Semiconductor Innovation Fund,1,Arm Inc.
+source,The AI Safety Tactical Opportunities Fund,1,Centre for Future Generations
+source,The Alan Turing Institute,1,Neil Lawrence
+source,The Andrew H. And Ann R. Tisch Foundation,1,Brookings Institution
+source,The Andrew W. Mellon Foundation,1,New York University
+source,The Apache Software Foundation,1,Responsible AI Initiative
+source,The Atlantic Philanthropies,1,Leadership Conference on Civil and Human Rights
+source,The Eric & Wendy Schmidt Fund for Strategic Innovation,1,Special Competitive Studies Project
+source,The Ethics & Governance of AI Initiative,1,Human Rights Data Analysis Group
+source,The Ford Foundation,1,Black in AI
+source,The Goizueta Foundation,1,Emory University
+source,The Goodly Institute,1,AI Objectives Institute
+source,The Gordon and Betty Moore Foundation,1,Partnership on AI
+source,The Hutchins Family Foundation,1,Brookings Institution
+source,The Marcus Foundation,1,Baylor College of Medicine
+source,The Mellon Foundation,1,Emory University
+source,The NOMIS Foundation,1,Tom Griffiths
+source,The Patrick J McGovern Foundation,1,Black in AI
+source,The Rockefeller Foundation,1,RadicalxChange Foundation Ltd.
+source,Thiel Foundation,1,Nicholas Jitkoff
+source,Tom Shaughnessy,1,Mythos Ventures
+source,Toyota,1,MIT CSAIL
+source,Twine Ventures,1,The Wall Street Journal
+source,Tyler Cowen,1,Dwarkesh Patel
+source,Tyler Cowen's Emergent Ventures,1,Leopold Aschenbrenner
+source,U.S. Air Force,1,Massachusetts Institute of Technology
+source,U.S. Census Bureau,1,Robert M. Groves
+source,U.S. Department of Education,1,University of North Carolina System
+source,U.S. Department of Energy Office of Environmental Management,1,Vanderbilt University
+source,U.S. Department of Health and Human Services,1,USC Suzanne Dworak-Peck School of Social Work
+source,"U.S. Department of Health and Human Services, Administration for Children and Families",1,Ohio Department of Job and Family Services
+source,U.S. International Development Finance Corporation,1,Cassava Technologies
+source,U.S. government,1,TSMC
+source,UAE Zayed Award for Human Fraternity,1,António Guterres
+source,UC Investments,1,Berkeley Institute for Data Science
+source,UK Research and Innovation,1,Adrian Weller
+source,UK's Advanced Research and Invention Agency (ARIA),1,5050 AI (by Fifty Years)
+source,UKRI,1,Neil Lawrence
+source,UN institutions,1,Simon Institute for Longterm Governance
+source,UNITED FOOD AND COMMERCIAL WORKERS INTERNATIONAL UNION,1,Maria Cantwell
+source,US Venture Partners,1,Arkose Labs
+source,USVP,1,Arkose Labs
+source,Umane,1,NoHarm
+source,United States,1,International Telecommunication Union
+source,United States Department of Agriculture,1,Aether
+source,University EIS Fund,1,Jukedeck
+source,University of Waterloo,1,Kate Larson
+source,Valerie Sugar,1,USC School of Advanced Computing
+source,Valor Equity Partners,1,xAI
+source,Vanguard Charitable,1,Atlas Computing
+source,Vector Institute,1,David Duvenaud
+source,Venrock,1,Cloudflare
+source,Vocal Ventures,1,The Wall Street Journal
+source,Vy Capital,1,Reddit Inc
+source,WAIAI,1,Prasanna (Sonny) Tambe
+source,WP Global,1,Agility Robotics
+source,Walter Kortschak,1,Mythos Ventures
+source,Washington Research Foundation,1,Fred Hutchinson Cancer Center
+source,We Are Family Foundation,1,Encode Justice
+source,Weill Family Foundation,1,"University of California, San Francisco"
+source,Wells Fargo,1,OpenAI
+source,Wharton Mack Institute,1,Prasanna (Sonny) Tambe
+source,Wing Venture Capital,1,Goodfire
+source,Winston Churchill Foundation of U.S.,1,Sam Rodriques
+source,Work-Bench,1,Goodfire
+source,XLMedia,1,Kyle Scott
+source,XTX Markets,1,University of Oxford
+source,Yosemite,1,University College London
+source,ZUFFA LLC DBA ULTIMATE FIGHTING CHAMPIONSHIP,1,Thomas Umberg
+source,a16z crypto,1,Tools for Humanity
+source,charitable donations and grants,1,AI Futures Project
+source,contributions and grants,1,RadicalxChange
+source,donations,1,The AI Whistleblower Initiative (AIWI)
+source,eBay founders,1,Americans for Responsible Innovation
+source,investors including Amazon,1,Agility Robotics
+source,philanthropic foundation,1,Cooperative AI Foundation
+source,"private and public pensions, family offices, high-net worth individuals and sovereign wealth funds",1,B Capital
+source,private foundations,1,Yale Center for Research Computing
+source,traditional donors,1,Center for AI Policy (CAIP)
+source,unspecified funders,1,AI Objectives Institute
+source,unspecified lead investors,1,Soft Max
+source,weXelerate,1,Janus
+source,Hbp Marketing Llc,1,Pete Ricketts
+source,500 Global,1,Sakana AI
+source,8 investors,1,Evolution AI
+source,A*STAR,1,Tan Zhi Xuan
+source,AAAS Leshner Leadership Institute for Public Engagement with Science,1,Michael Littman
+source,ABN AMRO Ventures,1,Quantexa
+source,ACX Grants,1,Centre for Future Generations
+source,AMD Ventures,1,World Labs
+source,"AMERICAN FEDERATION OF STATE, COUNTY AND MUNICIPAL EMPLOYEES, AFL-CIO",1,Valerie Foushee
+source,"AMERICAN ROLL-ON ROLL-OFF CARRIER GROUP, INC. FREEDOM PAC / ARC FREEDOM",1,Maria Cantwell
+source,AMP,1,Anthropic
+source,Acceleration Consortium,1,Avi Goldfarb
+source,Accenture,1,MIT FutureTech
+source,Accenture Ventures,1,Quantexa
+source,Accomplice,1,AngelList
+source,Adam Dingle,1,PauseAI
+source,Adobe Ventures,1,World Labs
+source,Advance Magazine Publishers Inc.,1,Wired
+source,Advanced Research Projects Agency,1,Carnegie Mellon University
+source,Advanced Research Projects Agency-Energy,1,University of Tennessee
+source,Advanced Research+Invention Agency,1,Computational Rational Agents Laboratory (CORAL)
+source,Adverb Ventures,1,Piramidal
+source,Airtree Ventures,1,Harmony Intelligence
+source,Alberta,1,Amii
+source,Alberta government,1,Inovia Capital
+source,AlbionVC,1,Quantexa
+source,Alex Kastner,1,Compassion in Machine Learning (CaML)
+source,Alfred Lin,1,Reddit Inc
+source,Alibaba,1,DeepSeek
+source,Allan Keen,1,Josh Gottheimer
+source,AlleyCorp,1,Radical AI
+source,Alliance for Clinical Trials Foundation,1,Rachel Freedman
+source,Alpha Venture Partners,1,EliseAI
+source,Alumni Ventures,1,Samaya AI
+source,Amazon Web Services,1,UK AI Security Institute
+source,"Amazon.com, Inc.",1,Center for Strategic and International Studies (CSIS)
+source,American Association for the Advancement of Science,1,Eoghan Stafford
+source,American Express,1,Stanford Digital Economy Lab
+source,American Postal Workers Union Committee on Political Action,1,Ayanna Pressley
+source,American Staffing Association Staffing PAC,1,Todd Young
+source,American Talent Initiative,1,Stony Brook University
+source,Anadarko Petroleum Corporation Political Action Committee,1,Cory Gardner
+source,Andrew Carnegie Foundation,1,David Autor
+source,Andy Florance,1,Princeton University
+source,Andy Florance and Heather Florance,1,Princeton University
+source,Anil Varanasi,1,Dwarkesh Patel
+source,Anna Brockman,1,Leading the Future
+source,Anna Counselman,1,Mythos Ventures
+source,Aptos,1,Cynthia Lummis
+source,Aptos Foundation,1,Singapore Management University
+source,Aramco,1,Center for Strategic and International Studies (CSIS)
+source,Archewell Foundation,1,Encode Justice
+source,Assurant Inc. Political Action Committee,1,Bill Cassidy
+source,Astera Institute,1,Astera Neuro & AGI
+source,Augur,1,Delphi Ventures
+source,Australian Research Council Centre of Excellence on Automated Decision-Making & Society,1,Frank Pasquale
+source,Autodesk,1,World Labs
+source,BDC Capital,1,Creative Destruction Lab
+source,BHP Foundation,1,Brookings Institution
+source,BMO,1,McGill Collaborative for AI and Society
+source,BMO Capital Markets,1,Inovia Capital
+source,BNDES,1,NoHarm
+source,BNY,1,Carnegie Mellon University
+source,BRANCH 193 NATIONAL ASSOCIATION OF LETTER CARRIERS POLITICAL ACTION COMMITTEE,1,Maria Cantwell
+source,Backed VC,1,Jukedeck
+source,Bain Capital Crypto,1,Tools for Humanity
+source,Bain Capital Ventures,1,LinkedIn
+source,Bakala Foundation,1,Charles University
+source,Bank of America Corporation,1,Center for Strategic and International Studies (CSIS)
+source,Baron Capital Group,1,xAI
+source,Baseline Ventures,1,Quartz
+source,Ben Delo,1,"80,000 Hours"
+source,"Bender Foundation, Inc.",1,American University
+source,Berkeley Law Foundation,1,Veena Dubal
+source,Bessemer,1,Mistral AI
+source,Betty and David Koetser Foundation for Brain Research,1,John A. Bargh
+source,Biden administration,1,TSMC
+source,BioNTech SE,1,University of Pennsylvania
+source,Blackbird,1,Dovetail
+source,Block Chain Defense Initiative,1,Cynthia Lummis
+target,The Alignment Project,7,AI Safety Tactical Opportunities Fund; Anthropic; Microsoft; OpenAI; UK AI Security Institute
+target,AI Safety Fund,5,Anthropic; Google; Jaan Tallinn; Microsoft; OpenAI
+target,Hugging Face,4,Bloomberg; Lux Capital; Qualcomm; Salesforce
+target,Alignment Project researchers,4,Anthropic; Microsoft; OpenAI; UK AI Security Institute
+target,CoreWeave,3,Meta; Nvidia
+target,Center for Democracy and Technology,3,Ford Foundation; Google; Meta
+target,Principles of Intelligence,3,AI Safety Tactical Opportunities Fund; Cooperative AI Foundation; Survival and Flourishing Fund
+target,MATS Research Inc.,3,Berkeley Existential Risk Initiative; Good Ventures Foundation; Manifund
+target,Adobe Film & TV Fund,3,Adobe; Adobe Foundation
+target,Sierra,3,Greenoaks Capital; Sequoia Capital; Thrive Capital
+target,Distributed AI Research Institute (DAIR),3,Ford Foundation; MacArthur Foundation
+target,Waymo,3,Alphabet Inc.; DST Global; Sequoia Capital
+target,Stanford researchers,2,Stanford HAI
+target,Ineffable Intelligence,2,Sequoia Capital
+target,Anduril,2,Founders Fund; U.S. Army
+target,CommonAI,2,Advanced Research and Invention Agency (ARIA)
+target,Kearny Jackson,2,Marc Andreessen; Sequoia Capital
+target,Catalyze Impact incubated organizations,2,AI Safety Tactical Opportunities Fund; Survival and Flourishing Fund
+target,International Association for Safe and Ethical AI (IASEAI),2,Beneficial AI Foundation; Future of Life Institute
+target,CIFAR,2,Government of Canada; Kyunghyun Cho
+target,universities,2,Huawei; Microsoft
+target,Mentee Robotics,2,Amnon Shashua; Mobileye
+target,/dev/agents,2,Alexandr Wang; Andrej Karpathy
+target,Schmidt Sciences,2,Eric Schmidt
+target,Created by Humans,2,Emmett Shear; Sam Lessin
+target,Hemlock Semiconductor,2,U.S. Department of Commerce
+target,Center for Security and Emerging Technology,2,Public Interest Technology University Network; William and Flora Hewlett Foundation
+target,Embodied Intelligence,2,Lux Capital; SV Angels
+target,University at Albany,2,IBM; State of New York
+target,Antimetal,2,Daniel Gross; Nat Friedman
+target,PIBBSS,2,LTFF; Survival and Flourishing Fund
+target,AI Security Institute's Alignment Project,2,Microsoft; OpenAI
+target,DAIR (Distributed AI Research Institute),2,Ford Foundation; MacArthur Foundation
+target,Allen Institute for Artificial Intelligence,2,NVIDIA; U.S. National Science Foundation
+target,AI.Humanity Seed Grant Program recipients,1,Emory University
+target,AKG Group,1,Kartik Hosanagar
+target,AMAG Consulting LLC,1,National Institute of Standards and Technology
+target,ASTM International,1,National Institute of Standards and Technology
+target,Aalto University Department of Computer Science,1,Kyunghyun Cho
+target,Aaron Maiwald,1,BlueDot Impact
+target,Abnormal AI,1,Menlo Ventures
+target,Accordance,1,Khosla Ventures
+target,Advanced Connectivity Technologies programme recipients,1,"Department for Science, Innovation and Technology"
+target,Against Malaria Foundation (AMF),1,Peter Wildeford
+target,Aidan O'Gara,1,Manifund
+target,Akave,1,Protocol Labs
+target,Akbir Khan,1,AI Risk Mitigation Fund
+target,Alan Chan,1,AI Risk Mitigation Fund
+target,Alden Scientific,1,ARPA-H
+target,Alexander Turner,1,AI Risk Mitigation Fund
+target,Alien,1,Juniper Ventures
+target,Alignment Research Center,1,Future of Life Institute
+target,Alignment researchers,1,AI Alignment Foundation
+target,Alltius,1,Kartik Hosanagar
+target,Amazon Web Services,1,General Services Administration
+target,"American Indians, Alaska Natives, and Native Hawaiians",1,U.S. Department of Labor
+target,American universities including Harvard,1,Huawei
+target,Andrew Tulloch,1,Meta
+target,Annapurna Labs,1,Amazon
+target,Anthropic AI Safety Fellows,1,Anthropic
+target,Anusandhan National Research Foundation,1,Qualcomm
+target,Apache Software Foundation,1,Anthropic
+target,Applied Imaging Solutions LLC,1,National Institute of Standards and Technology
+target,Applied Intuition,1,Lux Capital
+target,Ash Institute for Democratic Governance and Innovation,1,IBM
+target,Ashwinee Panda,1,FAR.AI
+target,"Ashwinee Panda, University of Maryland College Park",1,FAR.AI
+target,Astra Fellowship participants,1,Constellation Institute
+target,Asymmetric Security,1,Halcyon Futures
+target,Athena 2.0,1,Manifund
+target,Athena Mentorship Program for Women,1,Manifund
+target,Atla,1,Steve Huffman
+target,Augment,1,8VC
+target,Axiamatic,1,Greylock
+target,BAE Systems,1,DARPA
+target,Back-to-school grants programs,1,American Federation of Teachers
+target,Beacon,1,Fidji Simo
+target,Bloomberg Philanthropies,1,Bloomberg L.P.
+target,"Blue Origin, Inc.",1,State of Texas
+target,Blueprint,1,Emmett Shear
+target,Bonaventure Dossou,1,Mozilla Foundation
+target,Borderless AI,1,Ivan Zhang
+target,Brain Co.,1,Fidji Simo
+target,Braintrust,1,Arthur Mensch
+target,CFAR,1,Zvi Mowshowitz
+target,Caleb Withers,1,AI Risk Mitigation Fund
+target,California Workforce Development Board and California Department of Transportation,1,State of California
+target,Callosum,1,Plural
+target,Capital One AI Research Neighborhood,1,University of Virginia
+target,Captions,1,Jacob Andreou
+target,Cardiff University,1,Huawei
+target,Cassini Fund,1,European Union
+target,"Center for AI Safety, Inc.",1,Future of Life Institute
+target,"Center for Mind, Brain, and Consciousness (NYU)",1,Macroscopic Ventures
+target,Centre for Human-Inspired Artificial Intelligence (CHIA),1,Google
+target,Chinese Educational Commission,1,Carnegie Corporation of New York
+target,Christian Schroeder de Witt,1,Cooperative AI Foundation
+target,Civic Hall,1,Craig Newmark Philanthropies
+target,ClearGuide Medical,1,National Institutes of Health
+target,Coefficient Giving,1,Good Ventures
+target,Community Collaboration Fund,1,Office of the Governor of Indiana
+target,Composite,1,Nat Friedman
+target,Corridor,1,Mike Krieger
+target,Cove,1,Allie K. Miller
+target,Critical Minerals Infrastructure Fund projects,1,Government of Canada
+target,"Critical Minerals Research, Development and Demonstration program projects",1,Government of Canada
+target,Cylake,1,Greylock
+target,Czech Association for Effective Altruism,1,CEA
+target,Data & Society Research Institute,1,MacArthur Foundation
+target,Data Workers' Inquiry researchers,1,Weizenbaum Institute
+target,DeepMind Technologies Ltd,1,Google Inc
+target,DeepTechXL Fund I,1,ASML
+target,Delaware Innovation Space,1,U.S. Department of Commerce
+target,Draper,1,ARPA-H
+target,DreamYard Project,1,OpenAI Foundation
+target,Effective Altruists of Berkeley,1,Good Ventures
+target,Ego,1,Sam Lessin
+target,Eitán Sprejer,1,BlueDot Impact
+target,Elmnts,1,Brian Long
+target,Empire AI Consortium,1,State of New York
+target,Energy Innovation Program projects,1,Government of Canada
+target,Enveil,1,In-Q-Tel
+target,Ethics and Governance of Artificial Intelligence Fund,1,Reid Hoffman
+target,External alignment researchers,1,Anthropic
+target,Ezee Assist,1,Ajay Agrawal
+target,FAST (Faculty and Students Together) Funds,1,American Federation of Teachers
+target,Fathom (YC W21),1,Emmett Shear
+target,Fellows,1,Institute for AI Policy and Strategy (IAPS)
+target,Fellows (early-career journalists),1,Tarbell Center for AI Journalism
+target,Finster,1,Ivan Zhang
+target,First and Last Mile Fund projects,1,Government of Canada
+target,Florian Tramer,1,FAR.AI
+target,"Florian Tramer, ETH Zurich",1,FAR.AI
+target,Francis Doyle,1,National Institutes of Health
+target,Freed,1,Daniel Gross
+target,Future of Privacy Forum,1,Department of Energy
+target,G42,1,Microsoft
+target,GE HealthCare,1,ARPA-H
+target,Gabriel Mukobi,1,LTFF
+target,Global AI Opportunity Fund,1,Google
+target,Global Challenges Prize 2017 winners,1,Global Challenges Foundation
+target,GlobalFoundries,1,U.S. Department of Commerce
+target,Glowstick,1,Jean-François Gagné
+target,Grant for the Web program,1,Mozilla Foundation
+target,HUMAIN Ventures,1,Public Investment Fund
+target,Hadfield-Menell Lab at MIT,1,Founders Pledge
+target,Haize Labs,1,Juniper Ventures
+target,Hangzhou DeepSeek Artificial Intelligence,1,Liang Wenfeng
+target,Harvey,1,Elad Gil
+target,Hashmi for Lt Governor - Ghazala,1,Mark Warner
+target,Helical,1,Ivan Zhang
+target,Hinton Chair in Artificial Intelligence,1,University of Toronto
+target,INHealthVI,1,ARPA-H
+target,Imbue,1,Tom Brown
+target,Incubator participants,1,Constellation Institute
+target,India AI infrastructure,1,Microsoft
+target,India startups,1,Qualcomm
+target,Indian AI startups,1,Qualcomm
+target,Indigenous Natural Resource Partnerships program projects,1,Government of Canada
+target,Infisical,1,Elad Gil
+target,Institute for Law and Ai,1,Good Ventures Foundation
+target,Intel,1,U.S. Department of Commerce
+target,International Union of Painters and Allied Trades Political Action Together Political Comm,1,Sean McGarvey
+target,Internship Programme participants,1,Orion AI Governance Initiative
+target,Isaacson School for New Media at Colorado Mountain College,1,Walter Isaacson
+target,Iupat Member and Family Fundraising PC Account,1,Sean McGarvey
+target,"IvySys Technologies, LLC",1,DARPA
+target,Jakob Foerster,1,Cooperative AI Foundation
+target,Jakob Foerster and Christian Schroeder de Witt,1,Cooperative AI Foundation
+target,Jaron Lanier startup,1,Adobe
+target,Jessica Rumbelow,1,AI Risk Mitigation Fund
+target,Johns Hopkins University Applied Physics Laboratory,1,Department of Defense
+target,Joshua Clymer,1,Long-Term Future Fund
+target,Justin Dollman,1,BlueDot Impact
+target,K-12 public schools and community colleges,1,California Department of General Services
+target,"K-12 schools, colleges, nonprofits, public agencies, and other organizations",1,Department of Homeland Security
+target,KAIST,1,Kyunghyun Cho
+target,KAUST tech startups fund,1,Mohammed bin Salman
+target,Kamala Harris campaign,1,Reid Hoffman
+target,Kamer Daron Acemoglu,1,Carnegie Corporation of New York
+target,Kayhan Space,1,Jacob Helberg
+target,Kindling,1,Ben Thompson
+target,Kitware Inc.,1,DARPA
+target,"Korean universities, research institutes, corporate R&D centers, and startups",1,Institute for Information & Communications Technology Planning & Evaluation
+target,LASR Labs,1,Arcadia Impact
+target,"Lake, Orange, Riverside, Sacramento, Santa Clara, Solano, Yolo and Yuba regions",1,State of California
+target,Lambda,1,Andrej Karpathy
+target,Langsikt - Centre for Long-Term Policy,1,Astralis Foundation
+target,Lawyers and legal professionals,1,Legal Advocates for Safe Science and Technology
+target,Leap Motion,1,Founders Fund
+target,Lemni Technologies,1,Arthur Mensch
+target,Lemon Slice,1,Emmett Shear
+target,Liquid Intelligent Technologies,1,Cassava Technologies
+target,Lisa Thiergart,1,Manifund
+target,Loti AI,1,Khosla Ventures
+target,LucidWorks,1,In-Q-Tel
+target,Luma AI,1,Anjney Midha
+target,MARS Programme,1,Cambridge AI Safety Hub
+target,MATS Fellowship recipients,1,MATS (ML Alignment Theory Scholars)
+target,MATS Program scholars,1,MATS (ML Alignment Theory Scholars)
+target,MIT AI Alignment,1,Cambridge Boston Alignment Initiative
+target,MIT Intelligence Quest,1,Eric Schmidt
+target,MIT Work of the Future Task Force,1,Ford Foundation
+target,MITRE Corp.,1,National Institute of Standards and Technology
+target,Manas AI,1,Reid Hoffman
+target,MatX,1,John Collison
+target,Matthew Salganik,1,National Institutes of Health
+target,Max Chiswick,1,MIRI
+target,McKinstry Essention LLC,1,State of Colorado
+target,Merge Labs,1,OpenAI
+target,Michigan Manufacturing Technology Center,1,National Institute of Standards and Technology
+target,Micron,1,U.S. Department of Commerce
+target,Micron Technology,1,U.S. Department of Commerce
+target,Modem,1,Ivan Zhang
+target,Monaco,1,John Collison
+target,MosaicML,1,Lux Capital
+target,NSF FINDERS FOUNDRY program participants,1,U.S. National Science Foundation
+target,"NYU Mind, Ethics, and Policy",1,The Navigation Fund
+target,Natcast,1,U.S. Department of Commerce
+target,National 4-H Council,1,Microsoft
+target,National AI Research Resource (NAIRR) pilot,1,Microsoft
+target,National Artificial Intelligence Research Institutes,1,U.S. National Science Foundation
+target,Nebius,1,Meta
+target,Nebraska Department of Transportation,1,Department of Transportation
+target,Neel Nanda,1,Manifund
+target,New Priorities Foundation,1,Effective Institutions Project
+target,New York Public Library,1,Carnegie Corporation of New York
+target,New York Times Company,1,Carnegie Corporation of New York
+target,Newark Public Schools Red Hawks Rising Teacher Academy,1,American Federation of Teachers
+target,Nicholas Tomlin,1,FAR.AI
+target,"Nicholas Tomlin, UC Berkeley",1,FAR.AI
+target,Noemi Dreksler,1,AI Risk Mitigation Fund
+target,Norwich University Applied Research Institutes,1,National Institute of Standards and Technology
+target,Nous,1,Marc Warner
+target,Nscale,1,Nvidia
+target,Ohio faith-based and nonprofit institutions,1,Department of Homeland Security
+target,OneWeb Ltd,1,SoftBank Group
+target,OpenAI Safety Fellowship participants,1,OpenAI
+target,Oregon State University,1,Jensen Huang
+target,Organisation for Economic Co-operation and Development (OECD),1,Gates Foundation
+target,Overland AI,1,8VC
+target,PIBBSS Fellowship,1,Cooperative AI Foundation
+target,Packaging Machinery Manufacturers Institute,1,International Trade Administration
+target,Parallel,1,Arthur Mensch
+target,Partnership for Global Inclusivity on AI,1,U.S. Department of State
+target,PauseAI US,1,Manifund
+target,Phylo,1,Menlo Ventures
+target,Pinterest Inc.,1,Emerson Collective
+target,Pittsburgh,1,University of Pittsburgh
+target,Pivotal Research,1,Good Ventures
+target,Polar Semiconductor,1,U.S. Department of Commerce
+target,"Political Educational Fund of the Building and Construction Trades Department, Afl-Cio",1,Sean McGarvey
+target,"Pop-Up Magazine Productions, Inc.",1,Emerson Collective
+target,Press Forward coalition,1,Carnegie Corporation of New York
+target,Princeton faculty,1,The Princeton Laboratory for Artificial Intelligence
+target,Princeton faculty and lecturers,1,The Princeton Laboratory for Artificial Intelligence
+target,Public First,1,Public First Action
+target,Public Interest Tech Lab,1,Ford Foundation
+target,Pulse AI,1,Daniel Gross
+target,QuintessenceLabs,1,In-Q-Tel
+target,Rachel Weinberg,1,Long-Term Future Fund
+target,Rad AI,1,Khosla Ventures
+target,Recraft,1,Nat Friedman
+target,Recursion Pharmaceuticals,1,Lux Capital
+target,"Redwood Research Group, Inc.",1,Future of Life Institute
+target,Regents of the University of California at Berkeley,1,Beneficial AI Foundation
+target,Renaissance Philanthropy,1,Eric Schmidt
+target,Reppo Labs,1,Protocol Labs
+target,Research Network on Opening Governance,1,MacArthur Foundation
+target,Respan,1,Y Combinator
+target,Riverside,1,Sam Lessin
+target,Rockefeller Philanthropy Advisors (RPA),1,MacArthur Foundation
+target,Runway AI,1,Lux Capital
+target,SBIR/STTR program recipients,1,NASA Ames Research Center
+target,SFF,1,Jaan Tallinn
+target,SFF applicants,1,Effective Institutions Project
+target,Sacramento State University,1,Mark Zuckerberg
+target,Safeguarded AI programme,1,Advanced Research and Invention Agency (ARIA)
+target,Sage Bergerson,1,AI Risk Mitigation Fund
+target,Sally Gao,1,BlueDot Impact
+target,"Samsung Austin Semiconductor, LLC",1,State of Texas
+target,Samsung Electronics,1,U.S. Department of Commerce
+target,San Francisco Compute,1,Macroscopic Ventures
+target,Senior Fellows,1,Institute for AI Policy and Strategy (IAPS)
+target,Series,1,Steve Huffman
+target,Shield Technology Partners,1,Thrive Holdings
+target,SigIQ,1,Trevor Darrell
+target,Singularity Summit,1,Peter Thiel
+target,Small Business Investment Companies,1,Small Business Administration
+target,Smith for Delegate - Stephen,1,Eugene Volokh
+target,Softbank Vision Fund,1,Public Investment Fund
+target,Sovereign AI Strategic Assets Grants Programme recipients,1,"Department for Science, Innovation and Technology"
+target,Space Exploration Technologies (SpaceX),1,Founders Fund
+target,Spanberger for Governor - Abigail,1,Mark Warner
+target,Stanford Research Teams,1,Stanford HAI
+target,Stanford University Trust for Post Retirement and Post Employment Benefits,1,Berggruen Institute
+target,Stanford's Hoover Institution,1,William and Flora Hewlett Foundation
+target,Stephenson Data Science Bicentennial Scholars Fund,1,University of Virginia
+target,Strategic AI Research Centre,1,Future of Life Institute
+target,Sumble,1,Nat Friedman
+target,Summer Research Fellowship participants,1,Cambridge Boston Alignment Initiative
+target,Symbolica,1,Vinod Khosla
+target,Symbolica AI,1,Khosla Ventures
+target,TNW (The Next Web),1,Financial Times
+target,TSMC Arizona Corporation,1,U.S. Department of Commerce
+target,TU Berlin,1,Facebook AI Research (FAIR)
+target,Tennessee Republican Party Federal Election Account,1,Marsha Blackburn
+target,Testmachine,1,Delphi Ventures
+target,Texas Instruments,1,U.S. Department of Commerce
+target,"The Atlantic Monthly Group, LLC",1,Emerson Collective
+target,The New York Times's Neediest Cases Fund,1,The New York Times
+target,TrueNorth,1,Delphi Ventures
+target,Truth Terminal,1,Marc Andreessen
+target,UCL,1,Huawei
+target,UCLA Luskin School of Public Affairs,1,Berggruen Institute
+target,UCLA Luskin School of Public Affairs Department of Social Welfare,1,Ballmer Group
+target,UK AI research lab,1,"Department for Science, Innovation and Technology"
+target,Udacity,1,Emerson Collective
+target,University of Cambridge Cavendish Laboratory,1,University of Cambridge
+target,University of Hawaii Sea Grant College Program,1,U.S. House of Representatives
+target,University of Michigan Computer Science and Engineering Division,1,Peter Lee
+target,University of Southern California,1,Department of Defense
+target,University of Tsukuba,1,Amazon
+target,University of Wisconsin-Madison Department of Sociology,1,Alex Hanna
+target,University of Wisconsin-Milwaukee,1,Satya Nadella
+target,Valid,1,Steve Huffman
+target,Vanderbilt University Institute of National Security,1,William & Flora Hewlett Foundation
+target,Vast Data,1,Nvidia
+target,Vicarious,1,Khosla Ventures
+target,Viktor Warlop and Oliver Zhang,1,AI Risk Mitigation Fund
+target,Vipul Naik,1,Manifund
+target,Virtual AI Safety Unconference,1,Dawn Drescher
+target,Visiting Fellowship participants,1,Constellation Institute
+target,Wallace Community College-Dothan,1,Katie Britt
+target,Wenbo Guo,1,FAR.AI
+target,"Wenbo Guo, UC Santa Barbara",1,FAR.AI
+target,Wolfspeed,1,U.S. Department of Commerce
+target,Xianfeng David Gu,1,Google
+target,Yale faculty,1,Yale University
+target,"Zito Media Communications II, LLC",1,NTIA
+target,advocacy efforts,1,Alliance for a Better Future
+target,alignment research projects,1,UK AI Security Institute
+target,broadband service providers and utility cooperatives,1,Office of the Governor of Indiana
+target,charities working in the poorest countries,1,Toby Ord
+target,"cities, towns, counties, Tribal governments and Metropolitan Planning Organizations",1,U.S. Department of Transportation
+target,community organisers,1,CEA
+target,community organizations,1,Small Business Administration
+target,early-career journalists,1,Tarbell Center for AI Journalism
+target,eligible organizations,1,Bureau of Cyberspace and Digital Policy
+target,faith-based groups and others,1,Department of Homeland Security
+target,fal,1,Sequoia Capital
+target,"founders building AI with intention, care, and a long-term view",1,Igor Babuschkin
+target,interdisciplinary teams,1,Stanford HAI
+target,"interdisciplinary teams from DOE National Laboratories, U.S. industry, and academia",1,Department of Energy
+target,journalists,1,Tarbell Center for AI Journalism
+target,"nonprofits, Resource Partners, and educational organizations",1,Small Business Administration
+target,open-source AI projects,1,AI Grant
+target,proof-of-concept projects with local authorities,1,University of Cambridge
+target,quantum and nanotechnology research sites,1,U.S. National Science Foundation
+target,research teams,1,DARPA
+target,seed grant recipients across Tulane University,1,Center for Community-Engaged Artificial Intelligence
+target,semiconductor research projects,1,U.S. National Science Foundation
+target,seven organizations,1,Carnegie Corporation of New York
+target,"small and medium-sized manufacturers and their National Laboratory, university, and non-profit partners",1,Department of Energy
+target,small manufacturers,1,Small Business Administration
+target,state and local entities,1,Department of Homeland Security
+target,state and territory governments,1,Small Business Administration
+target,"state, local, and territorial prosecuting agencies",1,Department of Justice
+target,states and territories and local and Tribal communities,1,Department of Justice
+target,xLight,1,U.S. Department of Commerce
+target,10 AI safety projects,1,Foresight Institute
+target,12 Tech Hubs,1,U.S. Department of Commerce
+target,12 projects for industrial catalyst development,1,Department of Energy
+target,12 public universities and North Carolina's Area Health Education Centers,1,University of North Carolina System
+target,13 organizations and institutions,1,Cognizant Foundation
+target,143 researchers from 87 institutions,1,Google
+target,15 regions representing all 92 counties,1,Office of the Governor of Indiana
+target,19 teams,1,DARPA
+target,2077AI Open Source Foundation,1,PublicAI
+target,37 AI startups,1,Jeff Dean
+target,37 startups across California,1,State of California
+target,375ai,1,Delphi Ventures
+target,39 separate affiliates and organizations,1,American Federation of Teachers
+target,46 educator-led teams,1,U.S. National Science Foundation
+target,47 teams of U.S. citizen exchange alumni,1,U.S. Department of State
+target,610 institutions and their contract research labs,1,Institute for Information & Communications Technology Planning & Evaluation
+target,ACX Grants participants,1,Scott Alexander
+target,ACX Grants program participants,1,Scott Alexander
+target,AFT Innovation Fund recipients,1,American Federation of Teachers
+target,AI Accountability Lab,1,MacArthur Foundation
+target,AI Alignment Research at Hadfield-Menell's Lab at MIT,1,Founders Pledge
+target,AI Policy Fellowship participants,1,Institute for AI Policy and Strategy (IAPS)
+target,AI Safety Fellows,1,Anthropic
+target,AI Safety Fellows program participants,1,Anthropic
+target,AI Safety Poland,1,BlueDot Impact
+target,AI Safety Retraining Program participants,1,MIRI
+target,AI governance programs globally,1,U.S. Department of State
+target,AI researchers,1,Eric Schmidt
+target,AI resilience projects,1,OpenAI Foundation
+target,AI safety researchers,1,BlueDot Impact
+target,AI safety whistleblowers,1,Legal Advocates for Safe Science and Technology
+target,AI startups,1,IBM
+target,AI talent,1,Meta

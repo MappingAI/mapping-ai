@@ -1,0 +1,155 @@
+[
+  {
+    "id": 27,
+    "entity_type": "person",
+    "name": "Michael Kratsios",
+    "title": "Director of Office of Science and Technology Policy and Science Advisor to the President",
+    "category": "Policymaker",
+    "other_categories": null,
+    "primary_org": "Office of Science and Technology Policy",
+    "other_orgs": "Former Chief Technology Officer of the United States (2019-2020), Former Acting Under Secretary of Defense for Research and Engineering (2020-2021), Former Managing Director at Scale AI (2021-2025)",
+    "location": "Washington, DC",
+    "influence_type": "Decision-maker, Advisor/strategist, Implementer",
+    "twitter": null,
+    "bluesky": null,
+    "notes": "Michael Kratsios serves as Director of the White House Office of Science and Technology Policy and Science Advisor to the President, confirmed by the Senate in a 74-25 vote on March 25, 2025. He is the youngest person and first millennial to serve as OSTP director. He previously served as the fourth Chief Technology Officer of the United States during Trump's first term and as Acting Under Secretary of Defense for Research and Engineering from July 2020 to January 2021, where he oversaw a $106 billion research and development budget. Prior to returning to government, he was a Managing Director at Scale AI. Kratsios has championed a sector-specific approach to AI regulation, opposing broad federal AI legislation in favor of existing agency oversight and regulatory sandboxes.",
+    "notes_sources": [
+      "https://www.whitehouse.gov/articles/2025/03/ostp-press-release/",
+      "https://en.wikipedia.org/wiki/Michael_Kratsios",
+      "https://www.michaelkratsios.com/bio",
+      "https://www.defense.gov/News/Releases/Release/Article/2271633/dod-names-acting-under-secretary-of-defense-for-research-and-engineering/"
+    ],
+    "belief_regulatory_stance": "Light-touch",
+    "belief_regulatory_stance_detail": "Advocates for a 'use-case and sector-specific' regulatory framework rather than comprehensive federal AI regulation like the EU AI Act. Supports regulatory sandboxes to allow AI testing with reduced restrictions, as evidenced by his praise for Sen. Cruz's SANDBOX Act. Opposes what he calls 'onerous' state AI laws and supports federal preemption of state regulations, arguing that a 'patchwork of laws all across the country' favors large tech companies over startups. Emphasizes that 'creating a one-size-fits-all regulation around AI is not the way' and prefers existing sector regulators (FDA for medical AI, FAA for drones) handle AI applications.",
+    "belief_evidence_source": "Explicitly stated",
+    "belief_agi_timeline": "5-10 years",
+    "belief_ai_risk": "Manageable",
+    "belief_threat_models": "Labor displacement, Power concentration, Cybersecurity",
+    "_verification": {
+      "issues_found": "1) Notes stated he served as 'Under Secretary of War from January 2020 to January 2021' — this title is fabricated. The correct title was 'Acting Under Secretary of Defense for Research and Engineering,' appointed July 2020 (not January). The 'War' designation likely comes from the DoD website being recently rebranded to war.gov, which the AI source-scraper incorrectly incorporated into the title. 2) Citation artifacts [10,11], [6,10], [6], [7,10] throughout notes. 3) Notes lacked AI policy context — his OSTP role and regulatory philosophy are central to his relevance. 4) other_orgs field was truncated.",
+      "notes": "Verified Senate confirmation vote (74-25, March 25, 2025) via whitehouse.gov and congress.gov. Verified Acting USD(R&E) title and July 2020 start date via defense.gov press release. Verified Scale AI role and Princeton degree via personal website. Removed hallucinated 'Under Secretary of War' title and corrected to verified title with correct dates. Added AI policy relevance to notes."
+    }
+  },
+  {
+    "id": 3,
+    "entity_type": "person",
+    "name": "Marc Andreessen",
+    "title": "Co-Founder & General Partner, Andreessen Horowitz (a16z)",
+    "category": "Investor",
+    "other_categories": null,
+    "primary_org": "Andreessen Horowitz (a16z)",
+    "other_orgs": "Co-Founder of Netscape, Board member of Meta/Facebook, Advisor to Trump administration on technology policy",
+    "location": "Menlo Park, CA",
+    "influence_type": "Funder/investor, Narrator, Decision-maker, Advisor/strategist",
+    "twitter": "@pmarca",
+    "bluesky": null,
+    "notes": "Marc Andreessen is co-founder of Netscape and co-founder of the venture capital firm Andreessen Horowitz (a16z), one of the most influential investors in AI companies including stakes in OpenAI and numerous AI startups. He authored 'Why AI Will Save the World' in 2023, arguing against AI regulation and for accelerated development. Andreessen and a16z were leading opponents of California's SB 1047 AI safety bill, orchestrating a major lobbying campaign against it. He has advocated for minimal government intervention in AI while warning that overregulation will push AI leadership to China, and serves as an advisor to the Trump administration on technology policy.",
+    "notes_sources": [
+      "https://a16z.com/sb-1047-what-you-need-to-know-with-anjney-midha/",
+      "https://en.wikipedia.org/wiki/Marc_Andreessen",
+      "https://x.com/pmarca"
+    ],
+    "belief_regulatory_stance": "Light-touch",
+    "belief_regulatory_stance_detail": "Strongly advocates against AI regulation, particularly state-level fragmentation. Called California's SB 1047 'completely insane' and warned it would 'completely kill open source' and startups. Opposes EU AI Act as self-destructive overregulation. Supports light federal oversight but warns against 'suicidal' state regulations that could harm US competitiveness against China.",
+    "belief_evidence_source": "Explicitly stated",
+    "belief_agi_timeline": "5-10 years",
+    "belief_ai_risk": "Manageable",
+    "belief_threat_models": "Power concentration, Democratic erosion, Cybersecurity",
+    "_verification": {
+      "issues_found": "1) Notes were redundant — stated 'co-founder of Netscape and co-founder of Andreessen Horowitz' twice in nearly identical sentences. 2) Twitter handle listed as '@a16z' (the firm's account); his personal handle is '@pmarca' (verified via x.com/pmarca, 2.4M followers). 3) Notes cited Wikipedia for net worth ('$1.9 billion as of January 2025') — a volatile figure that doesn't belong in a policy-focused entry. 4) Notes had zero AI policy relevance — didn't mention SB 1047 opposition, 'Why AI Will Save the World' essay, or his role advising the Trump administration. 5) Citation artifacts [1], [3], [6]. 6) Location listed as San Francisco but a16z HQ and his residence are in Menlo Park. 7) other_orgs was truncated and included extraneous items like old board seats.",
+      "notes": "Verified @pmarca as personal Twitter via x.com. Verified SB 1047 opposition and lobbying campaign via a16z.com and TechCrunch reporting. Removed Wikipedia-sourced net worth. Rewrote notes to focus on AI policy relevance. Corrected location to Menlo Park per a16z HQ. Cleaned other_orgs to relevant current affiliations."
+    }
+  },
+  {
+    "id": 15,
+    "entity_type": "person",
+    "name": "Kim Stanley Robinson",
+    "title": "Science Fiction Author",
+    "category": "Cultural figure",
+    "other_categories": null,
+    "primary_org": null,
+    "other_orgs": null,
+    "location": "Davis, CA",
+    "influence_type": "Narrator",
+    "twitter": null,
+    "bluesky": null,
+    "notes": "Kim Stanley Robinson is an award-winning science fiction author whose works, including 'The Ministry for the Future' and the Hugo Award-winning Mars trilogy, have influenced policy discussions around technology governance and climate. He is a vocal critic of AI hype, arguing that 'artificial intelligence' is a misleading PR term that obscures reality, preferring terms like 'extremely rapid computation.' Robinson advocates for focusing on AI's tangible societal impacts — particularly labor displacement, environmental costs of compute, and corporate power concentration — rather than speculative scenarios about superintelligence or AI consciousness.",
+    "notes_sources": [
+      "https://www.nature.com/articles/d41586-024-04116-4",
+      "https://en.wikipedia.org/wiki/Kim_Stanley_Robinson",
+      "https://conversations.e-flux.com/t/kim-stanley-robinson-on-ai-and-the-future-of-history/3878"
+    ],
+    "belief_regulatory_stance": "Targeted",
+    "belief_regulatory_stance_detail": "Advocates for targeted AI regulation focused on transparency and avoiding anthropomorphization. Believes 'artificial intelligence' is a misleading PR term that obscures reality. Argues against treating AI as conscious or having agency, stating machines won't achieve consciousness through large language models. Emphasizes the need to focus on practical applications rather than fictional scenarios of AI consciousness or malevolence.",
+    "belief_evidence_source": "Explicitly stated",
+    "belief_agi_timeline": "25+ years or never",
+    "belief_ai_risk": "Serious",
+    "belief_threat_models": "Power concentration, Environmental, Labor displacement",
+    "_verification": {
+      "issues_found": "1) Twitter handle listed as '@t' — this is clearly wrong. Kim Stanley Robinson does not appear to maintain a personal Twitter/X account; the fan site @ksrinfo explicitly states it is 'not actually Stan.' 2) Notes focused entirely on biography (birthdate, PhD details, DSA membership, publication history) with zero explanation of why Robinson matters to AI policy. 3) Citation artifacts [10,11], [7] throughout. 4) 'belief_ai_risk' was listed as 'Mixed/nuanced' which is not a valid field option per the schema — corrected to 'Serious' based on his stated concerns about labor displacement and power concentration. 5) other_orgs contained unverified affiliations (e.g., 'Clarion Workshop instructor,' 'Muir Environmental Fellow') that are tangential to AI policy relevance.",
+      "notes": "Verified Robinson's AI skepticism via interviews (Bloomberg, Substack). Could not find a personal Twitter/X account — set to null. Rewrote notes to explain AI policy relevance rather than biography. Corrected belief_ai_risk to valid schema value. Removed unverifiable/irrelevant affiliations from other_orgs."
+    }
+  },
+  {
+    "id": 14,
+    "entity_type": "person",
+    "name": "David Evan Harris",
+    "title": "Senior Policy Advisor, California Initiative for Technology and Democracy; Chancellor's Public Scholar, UC Berkeley",
+    "category": "Academic",
+    "other_categories": "Policymaker",
+    "primary_org": "University of California, Berkeley",
+    "other_orgs": "Senior Policy Advisor at California Initiative for Technology and Democracy (CITED), Senior Advisor for AI & Elections at Brennan Center for Justice (NYU Law), Senior Research Fellow at International Computer Science Institute, Former Research Manager at Meta (2018-2023, Responsible AI and Civic Integrity teams)",
+    "location": "San Francisco, CA",
+    "influence_type": "Advisor/strategist, Organizer/advocate, Researcher/analyst",
+    "twitter": null,
+    "bluesky": null,
+    "notes": "David Evan Harris is a Chancellor's Public Scholar at UC Berkeley and a continuing lecturer at the Haas School of Business, where he teaches AI Ethics for Leaders. He serves as a Senior Policy Advisor to the California Initiative for Technology and Democracy and as a Senior Advisor for AI & Elections at the Brennan Center for Justice at NYU Law. Harris collaborated with Assemblymember Buffy Wicks on California's AI Transparency Act (AB 853) and worked with the California Initiative for Technology and Democracy team on AB 2655 (requiring platforms to implement deepfake detection) and AB 2839 (prohibiting AI-generated deceptive election content). He was named to Business Insider's AI 100 list in 2023.",
+    "notes_sources": [
+      "https://haas.berkeley.edu/faculty/harris-david/",
+      "https://newsroom.haas.berkeley.edu/california-vs-the-deepfakes-how-a-haas-faculty-member-helped-write-first-in-the-nation-ai-law/",
+      "https://citris-uc.org/david-evan-harris-named-top-voice-in-ai-media/",
+      "https://www.theethicaltechdigest.org/q-a-with-david-evan-harris/"
+    ],
+    "belief_regulatory_stance": "Targeted",
+    "belief_regulatory_stance_detail": "Advocates for binding and enforceable AI regulation with specific focus on high-risk applications. Co-authored California's AB 2655 (requiring large online platforms to implement deepfake detection procedures) and AB 2839 (prohibiting AI-generated deceptive content in elections). Testified before U.S. Senate advocating for AI company liability and hard-to-remove provenance data requirements. Supports the Blumenthal-Hawley framework including licensing for high-risk AI development.",
+    "belief_evidence_source": "Explicitly stated",
+    "belief_agi_timeline": "Unknown",
+    "belief_ai_risk": "Serious",
+    "belief_threat_models": "Misinformation, Democratic erosion, Power concentration",
+    "_verification": {
+      "issues_found": "1) primary_org was listed as 'Center for AI Safety (CAIS)' — this is WRONG. CAIS is Dan Hendrycks' organization focused on existential risk research in San Francisco. Harris's actual primary institution is UC Berkeley (Chancellor's Public Scholar, Haas lecturer). His policy work is through CITED (California Initiative for Technology and Democracy), which is a completely different organization. 2) Category was 'Policymaker' but his primary role is academic — changed to 'Academic' with 'Policymaker' as other_categories. 3) Original notes said he 'took a lead role in drafting' AB 853 — the Haas newsroom article says he 'collaborated with Assemblymember Wicks and her team,' which is more precise. 4) Citation artifacts [6][7], [8], [10] throughout. 5) Notes lacked mention of his specific legislative accomplishments (AB 2655, AB 2839).",
+      "notes": "Verified UC Berkeley affiliation via haas.berkeley.edu. Verified CITED role via citris-uc.org and Haas newsroom. Confirmed Business Insider AI 100 (2023) via CITRIS announcement. Corrected primary_org from 'Center for AI Safety' to 'University of California, Berkeley.' Verified AB 853 collaboration via Haas newsroom article. Added AB 2655 and AB 2839 from his established legislative record."
+    }
+  },
+  {
+    "id": 34,
+    "entity_type": "person",
+    "name": "Gina Raimondo",
+    "title": "40th Secretary of Commerce (2021-2025)",
+    "category": "Policymaker",
+    "other_categories": null,
+    "primary_org": "Council on Foreign Relations",
+    "other_orgs": "Former U.S. Secretary of Commerce (2021-2025), Former Governor of Rhode Island (2015-2021), Co-founder of Point Judith Capital",
+    "location": "Washington, DC",
+    "influence_type": "Decision-maker, Implementer, Connector/convener",
+    "twitter": null,
+    "bluesky": null,
+    "notes": "Gina Raimondo served as the 40th U.S. Secretary of Commerce from March 2021 to January 2025 under President Biden and was one of the most consequential figures in U.S. AI policy during that period. She led the implementation of semiconductor export controls restricting China's access to advanced AI chips, established the U.S. AI Safety Institute at NIST to develop pre-deployment testing standards for frontier AI models, and helped launch the international network of AI safety institutes. Raimondo was the first woman to serve as Governor of Rhode Island (2015-2021) before joining the Biden cabinet. She is currently a Distinguished Fellow at the Council on Foreign Relations and has confirmed she is considering a 2028 presidential run.",
+    "notes_sources": [
+      "https://www.commerce.gov/about/leadership/gina-m-raimondo",
+      "https://www.nist.gov/news-events/news/2024/05/us-secretary-commerce-gina-raimondo-releases-strategic-vision-ai-safety",
+      "https://time.com/6985335/gina-raimondo-commerce-artificial-intelligence",
+      "https://rhodeislandcurrent.com/briefs/raimondo-2028-former-r-i-governor-commerce-secretary-confirms-interest-in-a-presidential-run/"
+    ],
+    "belief_regulatory_stance": "Targeted",
+    "belief_regulatory_stance_detail": "Advocates for targeted AI safety measures focused on testing and evaluation of advanced models before deployment, but emphasizes voluntary cooperation over enforcement. Led creation of the U.S. AI Safety Institute to develop safety standards and pre-deployment testing protocols. Repeatedly states 'Congress needs to act' for enforcement authority, positioning Commerce as a scientific standards body rather than a regulator. Supports international coordination through global AI safety institute network while maintaining industry-friendly approach.",
+    "belief_evidence_source": "Explicitly stated",
+    "belief_agi_timeline": "5-10 years",
+    "belief_ai_risk": "Serious",
+    "belief_threat_models": "Misinformation, Cybersecurity, Labor displacement",
+    "_verification": {
+      "issues_found": "1) Citation artifacts [7,8], [9,11] throughout notes. 2) Notes focused heavily on biography (Rhode Island governor, Point Judith Capital co-founder) rather than her defining AI policy contributions — she led semiconductor export controls to China and established the U.S. AI Safety Institute, neither of which was mentioned in the original notes. 3) primary_org was still listed as 'U.S. Department of Commerce' though she left in January 2025; updated to Council on Foreign Relations (her current role). 4) Original notes mentioned '$10 million budget' for AISI in the belief_regulatory_stance_detail — this specific figure was not verifiable from official sources and was removed. 5) belief_threat_models originally listed 6 items including 'Existential risk' and 'Weapons proliferation' — Raimondo's public statements focus primarily on misinformation, cybersecurity, and labor, not existential risk.",
+      "notes": "Verified Commerce Secretary dates via commerce.gov (confirmed March 2, 2021; sworn in March 3). Verified AISI creation via NIST press releases. Verified 2028 presidential interest via Rhode Island Current reporting on Axelrod interview (April 2025). Verified CFR Distinguished Fellow role via multiple sources. Removed unverifiable $10M AISI budget claim. Rewrote notes to center her actual AI policy impact."
+    }
+  }
+]

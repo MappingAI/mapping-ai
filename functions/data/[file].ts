@@ -2,7 +2,7 @@ interface Env {
   DATA_BUCKET: R2Bucket
 }
 
-const ALLOWED_FILES = new Set(['claims-detail.json', 'agi-definitions.json'])
+const ALLOWED_FILES = new Set(['claims-detail.json', 'agi-definitions.json', 'edge-evidence.json'])
 
 export const onRequestGet: PagesFunction<Env> = async (context) => {
   const file = context.params.file as string

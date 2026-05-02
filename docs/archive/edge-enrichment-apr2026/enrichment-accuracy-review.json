@@ -1,0 +1,340 @@
+{
+  "meta": {
+    "description": "Sample of 15 highest-importance pending enriched entities for accuracy review",
+    "generated_at": "2026-04-30T01:46:22.539Z",
+    "total_pending_enriched": 282
+  },
+  "entities": [
+    {
+      "id": 2053,
+      "name": "Hugging Face",
+      "entity_type": "organization",
+      "category": "Infrastructure & Compute",
+      "other_categories": "Frontier Lab",
+      "funding_model": "VC-backed",
+      "location": "New York, NY",
+      "beliefs": {
+        "regulatory_stance": "Light-touch",
+        "stance_detail": "Hugging Face's core business model is built on open-source AI model sharing and democratizing access to AI tools, which reflects a light-touch regulatory philosophy favoring openness and developer access over restrictive controls. The company's platform explicitly facilitates broad distribution of AI models including powerful generative ones, suggesting preference for industry self-governance and open access rather than heavy regulatory oversight. No explicit public statements supporting restrictive regulation are evident from available sources.",
+        "agi_timeline": "Unknown",
+        "ai_risk": "Manageable",
+        "threat_models": "Bias/discrimination, Copyright/IP, Power concentration",
+        "evidence_source": "Inferred from actions"
+      },
+      "influence_type": "Builder, Connector/convener, Implementer",
+      "importance": 5,
+      "notes": "Hugging Face is a New York-based AI company founded as a chatbot app that evolved into the leading open-source AI model hosting and collaboration platform, often described as 'GitHub for AI.' The platform hosts over 500,000 AI models, 250,000 datasets, and serves more than 10,000 paying enterprise customers including Intel, Qualcomm, Bloomberg, and Pfizer. In May 2022, Hugging Face raised $100 million in a Series C round led by Lux Capital with Sequoia and Coatue participating, valuing the company at $2 billion. In August 2023, it raised a $235 million Series D at a $4.5 billion valuation, with backers including Google, Amazon, Nvidia, Salesforce, AMD, Intel, IBM, and Qualcomm. Hugging Face's primary infrastructure enables developers to share, test, and deploy AI models openly, supporting transformer architectures and large language models as a core part of the ML development stack. Its open-source ethos and BLOOM platform have made it a central node in the global AI ecosystem, especially for startups, researchers, and enterprises building production AI systems. CEO Clement Delangue has stated funds are focused on talent acquisition to remain competitive in AI.",
+      "notes_confidence": 4,
+      "notes_sources": "cnbc.com; www.bloomberg.com; timesofindia.indiatimes.com; bloomberry.com; substack.com; medium.com; huggingface.com; www.theverge.com"
+    },
+    {
+      "id": 2065,
+      "name": "Intel Corporation",
+      "entity_type": "organization",
+      "category": "Infrastructure & Compute",
+      "other_categories": "Frontier Lab",
+      "funding_model": "Corporate/commercial",
+      "location": "Santa Clara, California",
+      "beliefs": {
+        "regulatory_stance": "Light-touch",
+        "stance_detail": "Intel's public posture emphasizes public-private partnerships and workforce development as the preferred policy mechanism, as evidenced by its active collaboration with NSF and support for the CHIPS and Science Act. Intel leadership (e.g., Dr. Richard Uhlig) has framed semiconductor policy in terms of industry-academia collaboration and filling skills gaps rather than advocating for restrictive AI regulation. No evidence from sources of Intel supporting broad mandatory AI regulation.",
+        "agi_timeline": "Unknown",
+        "ai_risk": "Manageable",
+        "threat_models": "National security, Cybersecurity, Labor displacement",
+        "evidence_source": "Inferred from actions"
+      },
+      "influence_type": "Funder/investor, Builder, Researcher/analyst, Connector/convener",
+      "importance": 5,
+      "notes": "Intel Corporation is one of the world's largest semiconductor manufacturers, headquartered in Santa Clara, California, and a major force in AI infrastructure through chips, research, and strategic investments. Intel shapes the AI ecosystem through its hardware (CPUs, GPUs, and AI accelerators), research partnerships, and significant investments in AI-adjacent companies and academic institutions. Intel acquired Mobileye, an autonomous driving technology company, for approximately $15.3 billion, and later took it public; Mobileye uses cameras and algorithms for self-driving systems. Intel received an $8.5 billion award from the U.S. Department of Commerce under the CHIPS and Science Act to fund semiconductor factories in Arizona, Ohio, New Mexico, and Oregon. Intel Labs has been a long-term partner with NSF across multiple joint programs, including the MLWiNS machine learning and wireless networking program, the NSF/Intel Future of Semiconductors (FuSe and FuSe2) programs totaling tens of millions of dollars, a $10 million semiconductor workforce development initiative under the CHIPS Act, and a 10-year $100 million collaboration on semiconductor design and manufacturing. Intel also funded AI research hubs including Element AI (a $135M investment) and university research at MIT CSAIL and Cornell University, including co-funding the TILOS institute for learning-enabled optimization. Intel Labs actively collaborates with universities on AI, heterogeneous integration for AI compute, and wireless ML edge research, and is directly engaged with NSF's 2025 ASCENT program on wafer- and panel-scale integration to address AI compute demands.",
+      "notes_confidence": 4,
+      "notes_sources": "new.nsf.gov; www.nsf.gov; www.nsf.gov; www.intel.com; www.intc.com; www.nsf.gov; beta.nsf.gov; www.nsf.gov"
+    },
+    {
+      "id": 2102,
+      "name": "Lightspeed Venture Partners",
+      "entity_type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "other_categories": null,
+      "funding_model": "Corporate/commercial",
+      "location": "Menlo Park, California, USA",
+      "beliefs": {
+        "regulatory_stance": "Mixed/unclear",
+        "stance_detail": "Lightspeed's portfolio reflects mixed regulatory signals: they fund frontier AI labs like Mistral and SSI that push rapid capability development, but also fund AI safety/interpretability work at Goodfire. An individual partner-linked contribution to PauseAI hints at internal heterogeneity. No firm-level public regulatory stance has been stated.",
+        "agi_timeline": "Unknown",
+        "ai_risk": "Mixed/nuanced",
+        "threat_models": "Existential risk, National security, Loss of control",
+        "evidence_source": "Inferred from actions"
+      },
+      "influence_type": "Funder/investor, Connector/convener",
+      "importance": 5,
+      "notes": "Lightspeed Venture Partners is a major global venture capital firm with approximately 25 years of history that announced a record $9 billion fundraise in December 2024, the largest in firm history. The firm is a significant backer of AI companies across the risk spectrum, having led Mistral AI's €105 million seed round in June 2023 (Europe's largest seed round at the time), invested in Safe Superintelligence Inc.'s $2 billion Series B in April 2025 (at a $32 billion valuation), and participated in Goodfire's $7 million seed round for AI interpretability research. The firm also made an early investment in Midjourney, reportedly leading a $150 million Series B at a $10 billion valuation. Lightspeed's AI portfolio spans foundational model labs (Mistral, SSI), AI safety/interpretability (Goodfire), and AI applications, as well as defense-adjacent autonomous systems companies like Orqa, Helsing, and Anduril. Through partner Greg Colbourn, the firm has even indirectly contributed funds to PauseAI, a pause-advocacy nonprofit, signaling some internal heterodox views on AI risk. The breadth of investments—from frontier labs to safety research to defense AI—makes Lightspeed one of the most influential capital allocators shaping the global AI ecosystem.",
+      "notes_confidence": 4,
+      "notes_sources": "lsvp.com; theregister.com; nordic9.com; techcrunch.com; www.businesswire.com; euis.eu; www.beri.net; www.impactloop.com"
+    },
+    {
+      "id": 2173,
+      "name": "Office of Science and Technology Policy",
+      "entity_type": "organization",
+      "category": "Government/Agency",
+      "other_categories": "Think Tank/Policy Org",
+      "funding_model": "Government (U.S. federal)",
+      "location": "Washington, D.C., USA",
+      "beliefs": {
+        "regulatory_stance": "Moderate",
+        "stance_detail": "OSTP has historically supported a balanced, interagency approach to AI governance — promoting U.S. leadership in AI while also advancing responsible development frameworks. The Biden-era OSTP published the Blueprint for an AI Bill of Rights (2022), advocating targeted protections against algorithmic harms, bias, and privacy violations without imposing blanket restrictions. OSTP coordinates AI policy across agencies, supporting both innovation acceleration and risk mitigation, reflecting a moderate stance that seeks guardrails for high-risk applications while enabling continued development.",
+        "agi_timeline": "Unknown",
+        "ai_risk": "Mixed/nuanced",
+        "threat_models": "Bias/discrimination, Privacy, National security, Misinformation, Power concentration, Cybersecurity, Economic inequality, Labor displacement",
+        "evidence_source": "Explicitly stated"
+      },
+      "influence_type": "Decision-maker, Advisor/strategist, Connector/convener, Funder/investor",
+      "importance": 5,
+      "notes": "The Office of Science and Technology Policy (OSTP) was established by Congress through the National Science and Technology Policy, Organization, and Priorities Act of 1976 (P.L. 94-282) to provide the President and Executive Office of the President with advice on scientific, engineering, and technological aspects of national policy. OSTP is led by a Senate-confirmed Director who also serves as the President's Science Advisor; during the Biden administration this was Arati Prabhakar, who also held Cabinet-level rank. OSTP directly shapes AI policy by leading White House efforts on critical and emerging technologies including artificial intelligence, quantum information sciences, and biotechnology, with a mandate to safeguard U.S. leadership and ensure these technologies advance American economic competitiveness and national security. OSTP houses or supports key AI governance bodies including the National Artificial Intelligence Initiative Office, and its Director co-chairs the President's Council of Advisors on Science and Technology (PCAST) and chairs the National Science and Technology Council (NSTC), which coordinates science and technology policymaking across the executive branch. OSTP provides financial and administrative support for PCAST, with Department of Energy funding of approximately $812,000 for FY2020 channeled through OSTP, and its core annual appropriation is approximately $5.5 million. OSTP also assists the Office of Management and Budget with annual R&D budget reviews and priority-setting for the federal research and development budget, making it a central node in federal science and technology governance. Notable AI-related outputs include the Blueprint for an AI Bill of Rights (2022) and various executive order implementation guidance under both the Biden and prior administrations.",
+      "notes_confidence": 4,
+      "notes_sources": "uscode.house.gov; www.ostp.gov; sgp.fas.org; bidenwhitehouse.archives.gov; www.usa.gov; www.ostp.gov; ostp.gov; system.uslegal.com"
+    },
+    {
+      "id": 2181,
+      "name": "Organisation for Economic Co-operation and Development (OECD)",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "other_categories": "Government/Agency",
+      "funding_model": "Government (non-U.S.)",
+      "location": "Paris, France",
+      "beliefs": {
+        "regulatory_stance": "Moderate",
+        "stance_detail": "The OECD consistently advocates for balanced, evidence-based AI governance that promotes innovation while establishing trustworthy safeguards. Its 2019 AI Principles call for responsible stewardship, transparency, and accountability without prescribing heavy-handed mandates. The Going Digital Integrated Policy Framework emphasizes navigating trade-offs between public policy objectives, reflecting a moderate, targeted approach to digital and AI regulation.",
+        "agi_timeline": "Unknown",
+        "ai_risk": "Serious",
+        "threat_models": "Bias/discrimination, Privacy, Labor displacement, Power concentration, Democratic erosion, Economic inequality, National security",
+        "evidence_source": "Explicitly stated"
+      },
+      "influence_type": "Researcher/analyst, Advisor/strategist, Connector/convener, Funder/investor",
+      "importance": 5,
+      "notes": "The OECD is an international organisation comprising 38 member countries that works to build better policies for better lives, promoting economic and social well-being globally. It operates OECD.AI, a dedicated AI policy observatory and platform that tracks AI policy initiatives across member and non-member countries, making it a central node in global AI governance discourse. The OECD adopted the OECD Principles on AI in 2019, which became the basis for the G20 AI Principles and have influenced AI regulatory frameworks worldwide including the EU AI Act. Through its Development Co-operation Directorate (DCD), the OECD is actively working on digital public infrastructure (DPI) policy, including a new DAC work stream on digital transformation funded in part by the Gates Foundation ($2.4M) to establish a donor collaboration platform on DPI. The OECD Going Digital Integrated Policy Framework and Digital Government Policy Framework provide analytical tools helping governments design inclusive, trustworthy digital and AI policies. The OECD also publishes the Going Digital Toolkit and maintains the STIP Compass and other platforms to support evidence-based AI and digital policymaking. As a standard-setter and convener for 38 member governments plus partners, the OECD holds significant structural influence over how nations approach AI regulation, data governance, and digital infrastructure globally.",
+      "notes_confidence": 4,
+      "notes_sources": "www.oecd.org; www.oecd.org; www.unjobnet.org; depp.oecd.org; oecd.ai; www.oecd.org; www.oecd.org; oecd.ai"
+    },
+    {
+      "id": 2301,
+      "name": "UK Government",
+      "entity_type": "organization",
+      "category": "Government/Agency",
+      "other_categories": "VC/Capital/Philanthropy",
+      "funding_model": "Government (non-U.S.)",
+      "location": "London, United Kingdom",
+      "beliefs": {
+        "regulatory_stance": "Light-touch",
+        "stance_detail": "The UK Government's approach in the 2017 period was heavily focused on investment, growth, and sector deals rather than regulation or restrictions. Its Industrial Strategy framed AI as an economic opportunity, commissioning industry-led reviews and committing to sector deals rather than imposing mandatory requirements. The creation of ARIA as an independent, government-backed but industry-led agency further reflects a preference for enabling innovation over regulatory oversight.",
+        "agi_timeline": "Unknown",
+        "ai_risk": "Manageable",
+        "threat_models": "Labor displacement, National security, Economic inequality",
+        "evidence_source": "Inferred from actions"
+      },
+      "influence_type": "Decision-maker, Funder/investor, Implementer",
+      "importance": 5,
+      "notes": "The UK Government is a major funder and policy driver of AI research, development, and governance in the United Kingdom. Beginning in 2017, the government launched a Digital Strategy committing £17.3 million via the Engineering and Physical Sciences Research Council (EPSRC) for Robotics and Artificial Intelligence (RAI) technologies at UK universities. Through the Industrial Strategy Challenge Fund (ISCF), announced in November 2016, the government committed over £1 billion across six key technology areas including £93 million specifically for AI and robotics over four years, targeting applications in extreme environments such as offshore energy, nuclear, space, and deep mining. In 2017, the government commissioned an independent AI review led by Dame Wendy Hall and Jérôme Pesenti, resulting in the report 'Growing the Artificial Intelligence Industry in the UK' with 18 recommendations to make the UK the world's leading AI hub. The government also funded Evolution AI with what was described as the largest-ever UK government grant for commercial AI R&D in 2017. Separately, the UK Government backed the Advanced Research + Invention Agency (ARIA) with an £800 million investment, modeled loosely on ARPA, to fund high-risk, high-reward research independent of government. The government has consistently framed AI as central to its Industrial Strategy, citing Accenture estimates that AI could add £654 billion to the UK economy by 2035, and has coordinated AI policy across multiple departments including BEIS, DCMS, and DSIT.",
+      "notes_confidence": 4,
+      "notes_sources": "www.gov.uk; gov.uk; www.gov.uk; www.gov.uk; www.gov.uk; www.gov.uk; www.itpro.com; www.openaccessgovernment.org"
+    },
+    {
+      "id": 2318,
+      "name": "Waymo",
+      "entity_type": "organization",
+      "category": "Deployers & Platforms",
+      "other_categories": "Infrastructure & Compute",
+      "funding_model": "VC-backed",
+      "location": "San Francisco, California, USA",
+      "beliefs": {
+        "regulatory_stance": "Moderate",
+        "stance_detail": "Waymo emphasizes collaboration with policymakers and regulators as central to its growth, noting it has earned 'the hard-earned trust of our riders, community partners, policymakers and regulators.' Its approach suggests support for targeted safety-based regulation rather than opposition to oversight, consistent with a company that markets its safety credentials as a competitive differentiator. No explicit opposition to regulation is evident; rather, the company positions regulatory engagement as essential to its commercial expansion.",
+        "agi_timeline": "Unknown",
+        "ai_risk": "Manageable",
+        "threat_models": "Bias/discrimination, Labor displacement, National security",
+        "evidence_source": "Inferred from actions"
+      },
+      "influence_type": "Builder, Implementer, Funder/investor",
+      "importance": 5,
+      "notes": "Waymo is Alphabet Inc.'s autonomous driving subsidiary, widely considered the leading developer of self-driving (robotaxi) technology. Originally spun out of Google's self-driving car project in December 2016, Waymo has developed the 'Waymo Driver,' an AI-powered autonomous driving system that powers its commercial robotaxi service, Waymo One. As of early 2026, Waymo has logged over 127 million fully autonomous miles and reported a 90% reduction in serious injury crashes compared to human drivers, providing over 400,000 rides per week across six major U.S. metro areas. In February 2026, Waymo raised a landmark $16 billion investment round at a $126 billion post-money valuation, led by Sequoia Capital, DST Global, and Dragoneer Investment Group, with Alphabet remaining majority investor. The company previously raised a $5.6 billion Series C round in October 2024 and its first external round of $3.2 billion in 2020. Waymo shapes the AI ecosystem as a premier real-world deployer of advanced AI in physical systems, and is planning expansion to over 20 additional cities in 2026, including Tokyo and London.",
+      "notes_confidence": 4,
+      "notes_sources": "waymo.com; www.cnbc.com; www.bloomberg.com; waymo.com; sequoiacap.com; www.silverlake.com; finance.yahoo.com; waymo.com"
+    },
+    {
+      "id": 2037,
+      "name": "Accel",
+      "entity_type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "other_categories": "Infrastructure & Compute",
+      "funding_model": "Corporate/commercial",
+      "location": "Palo Alto, California",
+      "beliefs": {
+        "regulatory_stance": "Light-touch",
+        "stance_detail": "No explicit public statements on AI regulation are found in the sources. However, Accel's consistent pattern of investing in frontier AI labs (Thinking Machines Lab), AI infrastructure (Nebius), and AI developer tools without any stated advocacy for regulatory constraints suggests a preference for industry-led, light-touch governance that prioritizes rapid capital deployment and innovation.",
+        "agi_timeline": "Unknown",
+        "ai_risk": "Manageable",
+        "threat_models": "Economic inequality, Labor displacement, Power concentration",
+        "evidence_source": "Inferred from actions"
+      },
+      "influence_type": "Funder/investor, Connector/convener",
+      "importance": 4,
+      "notes": "Accel is a prominent global venture capital firm with a strong focus on technology and AI investments. The firm has been an active investor across the AI ecosystem, participating in high-profile rounds including Thinking Machines Lab's $2 billion seed round led by a16z (July 2025, valuation $12 billion), Nebius's $700 million private placement alongside Nvidia and Orbis (December 2024), and Dovetail's $63 million Series A led by Accel partners Rich Wong and Arun Mathew. Accel has also led investments in AI-adjacent infrastructure and developer tools, including the Series C in n8n, an AI-native workflow automation platform, with portfolio companies including Cursor, Linear, Lovable, Supabase, and Vercel. The firm's partner Matt Weigand joined Nebius's board of directors as an observer following the $700M investment. Accel's investment thesis centers on backing foundational AI tooling, infrastructure, and frontier AI labs, positioning it as a major capital allocator shaping the AI ecosystem. The breadth of its AI portfolio—spanning frontier model startups, cloud infrastructure, and developer tooling—underscores its systemic influence on AI development trajectories.",
+      "notes_confidence": 3,
+      "notes_sources": "economictimes.indiatimes.com; www.ainvest.com; techcrunch.com; thenextweb.com; www.techmeme.com; www.accel.com; ca.finance.yahoo.com; theheadandtale.com"
+    },
+    {
+      "id": 2085,
+      "name": "Daron Acemoglu",
+      "entity_type": "person",
+      "category": "Academic",
+      "other_categories": "Think Tank/Policy Org",
+      "title": "Elizabeth and James Killian Professor of Economics at MIT; 2024 Nobel Laureate in Economics; Author of 'Why Nations Fail' and 'Power and Progress'; Andrew Carnegie Fellow (2017)",
+      "primary_org": "Massachusetts Institute of Technology (MIT)",
+      "location": "Cambridge, Massachusetts",
+      "beliefs": {
+        "regulatory_stance": "Restrictive",
+        "stance_detail": "Acemoglu has publicly argued that the current trajectory of AI development disproportionately benefits a small elite at the expense of workers and democratic institutions, and has called for stronger government intervention, redirecting AI investment, and structural policy reforms to ensure broader sharing of AI gains. His 'Power and Progress' co-authored with Simon Johnson explicitly advocates for policy corrections to counteract concentrated AI power.",
+        "agi_timeline": "Unknown",
+        "ai_risk": "Catastrophic",
+        "threat_models": "Labor displacement, Power concentration, Democratic erosion, Economic inequality",
+        "evidence_source": "Explicitly stated"
+      },
+      "influence_type": "Researcher/analyst, Narrator, Advisor/strategist",
+      "importance": 4,
+      "notes": "Daron Acemoglu (full legal name: Kamer Daron Acemoglu) is the Elizabeth and James Killian Professor of Economics at MIT and one of the world's most influential economists. Born in Turkey, he is a 2017 Andrew Carnegie Fellow, receiving $200,000 for his project 'Building State Capacity,' exploring links between state institutions and economic growth across the Americas, Africa, and Europe. He is co-author of 'Why Nations Fail: The Origins of Power, Prosperity, and Poverty' and has received the John Bates Clark Medal (2005), the Nemmers Prize, and was elected to the National Academy of Sciences. He shapes the AI ecosystem through his influential work on labor displacement, power concentration, and the political economy of technology — most prominently in his book 'Power and Progress' (2023, co-authored with Simon Johnson), which argues that AI development has been captured by a narrow elite and poses serious risks to workers and democracy. He is a research associate at the National Bureau of Economic Research (NBER), which nominated him for the Carnegie Fellowship. His work is widely cited in AI policy debates.",
+      "notes_confidence": 3,
+      "notes_sources": "www.carnegie.org; www.carnegie.org; www.carnegie.org; news.mit.edu; www.carnegie.org; www.carnegie.org; www.carnegie.org; www.carnegie.org"
+    },
+    {
+      "id": 2327,
+      "name": "fal.ai",
+      "entity_type": "organization",
+      "category": "Infrastructure & Compute",
+      "other_categories": "Deployers & Platforms",
+      "funding_model": "VC-backed",
+      "location": "San Francisco, California",
+      "beliefs": {
+        "regulatory_stance": "Light-touch",
+        "stance_detail": "fal's public communications focus entirely on acceleration, developer empowerment, and scaling generative media with minimal friction. There is no evidence of the company advocating for regulation; their messaging consistently emphasizes speed, ease of deployment, and removing barriers to AI adoption, suggesting a light-touch or accelerationist stance toward regulation.",
+        "agi_timeline": "Unknown",
+        "ai_risk": "Manageable",
+        "threat_models": "Economic inequality, Labor displacement",
+        "evidence_source": "Inferred from actions"
+      },
+      "influence_type": "Builder, Implementer, Funder/investor",
+      "importance": 4,
+      "notes": "fal.ai is a San Francisco-based real-time generative media platform that provides serverless GPU infrastructure and API access to 1,000+ image, video, audio, and 3D AI models for developers and enterprises. The company offers three core products: Model APIs (access to pre-built generative models), Serverless (custom model deployment), and Compute (dedicated GPU clusters for training and fine-tuning). As of 2025, fal has raised multiple funding rounds including a $23M Seed/Series A led by Kindred Ventures and Andreessen Horowitz, a $125M Series C, and a $140M Series D led by Sequoia Capital with participation from Kleiner Perkins, Alkeon Capital, NVentures, Andreessen Horowitz, Bessemer Venture Partners, and Salesforce Ventures, valuing the company at approximately $4.5 billion. The platform serves over 500,000 developers and generates 50 million images, videos, or audio streams per day, with customers including Perplexity, Photoroom, and Freepik. fal's proprietary inference engine claims up to 10x faster performance than competitors for diffusion models, and the company tripled its team in 2025 while completing a strategic acquisition. It shapes the AI ecosystem by serving as foundational inference infrastructure for generative media, directly influencing how AI models are deployed and accessed at scale globally.",
+      "notes_confidence": 4,
+      "notes_sources": "fal.ai; docs.fal.ai; docs.fal.ai; nextbiggames.com; fal.ai; fal.ai; fal-d8505a2e.mintlify.app; blog.fal.ai"
+    },
+    {
+      "id": 2263,
+      "name": "Hoover Institution at Stanford University",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "other_categories": "Academic",
+      "funding_model": "Endowment/philanthropy",
+      "location": "Stanford, CA",
+      "beliefs": {
+        "regulatory_stance": "Light-touch",
+        "stance_detail": "The Hoover Institution's focus is on helping government and business leaders 'seize opportunities, mitigate risks, and advance American interests and values' through research and convening rather than advocating for broad regulatory mandates. Its Technology Policy Accelerator frames AI governance primarily through national security competitiveness and resilience rather than restrictive regulation, reflecting a preference for informed, light-touch approaches that preserve U.S. technological leadership.",
+        "agi_timeline": "Unknown",
+        "ai_risk": "Serious",
+        "threat_models": "National security, Weapons proliferation, Power concentration, Cybersecurity",
+        "evidence_source": "Inferred from actions"
+      },
+      "influence_type": "Researcher/analyst, Advisor/strategist, Connector/convener, Funder/investor",
+      "importance": 4,
+      "notes": "The Hoover Institution is a public policy think tank located at Stanford University in Stanford, California, formally known as the Hoover Institution on War, Revolution and Peace. It houses over 100 scholars and is supported by Stanford's resources and a world-renowned library and archives. In February 2026, its Technology Policy Accelerator (TPA) program was awarded a $2.5 million grant from the Hewlett Foundation to launch the Tech Futures Lab, an initiative focused on anticipating strategic technological surprises—including AI, bioengineering, and quantum technologies—and strengthening U.S. resilience through scenario development and wargaming. The TPA also supports the annual Tech Track II convening, cochaired by Amy Zegart and H.R. McMaster, which fosters cooperation among U.S. government leaders, technology executives, and academics on emerging technology and national security. The Hoover Institution co-leads the Stanford Emerging Technology Review alongside Stanford's School of Engineering and the Stanford Institute for Human-Centered AI (HAI), providing educational content for policymakers and business leaders. The institution has received significant philanthropic support historically, including a $10 million grant from the Annenberg Foundation and over $100 million raised during a multiyear campaign. Director Condoleezza Rice, a former U.S. Secretary of State, has emphasized the urgency of forward-thinking research on AI and emerging technologies for public policy. The institution shapes the AI policy ecosystem through research, high-level convenings, and analysis of the geopolitical implications of emerging technologies.",
+      "notes_confidence": 4,
+      "notes_sources": "www.hoover.org; nationaltoday.com; www.hoover.org; www.prnewswire.com; macfound.org; www.hoover.org; www.hoover.org; third-news.com"
+    },
+    {
+      "id": 2052,
+      "name": "Horizons Ventures",
+      "entity_type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "other_categories": null,
+      "funding_model": "Self-funded",
+      "location": "Hong Kong, China",
+      "beliefs": {
+        "regulatory_stance": "Light-touch",
+        "stance_detail": "No explicit public policy statements found, but Horizons Ventures' investment pattern—backing early-stage, frontier AI companies like DeepMind, Siri, and Inflection AI without apparent advocacy for regulatory constraints—suggests a preference for enabling rapid technology development with minimal regulatory friction. This is inferred from actions rather than explicit statements.",
+        "agi_timeline": "Unknown",
+        "ai_risk": "Manageable",
+        "threat_models": "Power concentration, Economic inequality",
+        "evidence_source": "Inferred from actions"
+      },
+      "influence_type": "Funder/investor, Connector/convener",
+      "importance": 4,
+      "notes": "Horizons Ventures is a Hong Kong-based venture capital firm co-founded in 2002 by Solina Chau and Debbie Chang, closely associated with Hong Kong billionaire Li Ka-shing and his Li Ka Shing Foundation. The firm focuses on deep science and disruptive technology investments globally, with a portfolio of over 369 investments as of 2026. It is renowned for pioneering early-stage investments in transformative AI and tech companies, including DeepMind, Siri, Skype, Facebook, Spotify, Zoom, Slack, and Inflection AI. In AI specifically, Horizons Ventures has backed speech and NLP technologies from early on, investing in Siri, Viv, Fano Labs, and Inflection AI, making it a significant early-stage funder of foundational AI capabilities. The firm operates as a single-family office for Solina Chau with a global investment strategy spanning the US, Europe, Southeast Asia, and Japan. Its investment thesis centers on backing innovations that address fundamental global challenges including health, inequality, and climate adaptation with long-term perspective and multi-round support.",
+      "notes_confidence": 4,
+      "notes_sources": "www.chinadaily.com.cn; hk.linkedin.com; www.horizonsventures.com; www.bloomberg.com; www.cbinsights.com; www.whiteroseintelligence.com; inforcapital.com; platform.dkv.global"
+    },
+    {
+      "id": 2054,
+      "name": "ICONIQ Capital",
+      "entity_type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "other_categories": "Infrastructure & Compute",
+      "funding_model": "Corporate/commercial",
+      "location": "San Francisco, California",
+      "beliefs": {
+        "regulatory_stance": "Light-touch",
+        "stance_detail": "ICONIQ's actions strongly suggest a light-touch regulatory stance: the firm has aggressively poured billions into frontier AI labs like Anthropic and OpenAI, facilitated access to global capital including Gulf sovereign wealth funds, and helped Anthropic navigate geopolitical concerns about international funding. There are no public statements from ICONIQ supporting significant AI regulation; their investment thesis frames the AI boom as an enduring opportunity rather than a risk requiring governance.",
+        "agi_timeline": "Unknown",
+        "ai_risk": "Manageable",
+        "threat_models": "National security, Power concentration",
+        "evidence_source": "Inferred from actions"
+      },
+      "influence_type": "Funder/investor, Connector/convener, Advisor/strategist",
+      "importance": 4,
+      "notes": "ICONIQ Capital is a secretive San Francisco-based wealth management and venture capital firm co-founded in 2011 by Divesh Makan, which manages personal fortunes of tech billionaires including Mark Zuckerberg, Satya Nadella, Dustin Moskovitz, Sheryl Sandberg, and Reid Hoffman, as well as senior figures in Middle Eastern and Asian governments. The firm has approximately $100 billion in total AUM, with $26 billion specifically dedicated to VC investing, making it one of the largest startup investors in the United States. ICONIQ emerged as a major force in AI investing in 2025, putting more than $3 billion into AI startups that year alone and over $5.2 billion into AI investments in total. Its most significant AI bet is Anthropic, in which it has invested approximately $4 billion — first leading the Series F round in 2025 at a $183 billion valuation, then co-leading a $30 billion investment round in early 2026 at a $380 billion post-money valuation; ICONIQ CEO Divesh Makan has joined Anthropic's board as an observer. ICONIQ also holds a stake of over $150 million in OpenAI via direct investment and through its earlier investment in Statsig, which OpenAI acquired. Beyond capital deployment, ICONIQ serves as a global connector and convener, having organized a Middle East roadshow for Anthropic's leadership that resulted in investment from Gulf sovereign wealth funds including Qatar Investment Authority and MGX. The firm raised $5.75 billion for its most recent VC fund and has filed securities disclosures indicating plans to raise billions more for a new fund.",
+      "notes_confidence": 4,
+      "notes_sources": "techcrunch.com; www.bloomberg.com; www.wealthmanagement.com; techcrunch.com; www.bloomberg.com; economictimes.indiatimes.com; financialpost.com; www.techmeme.com"
+    },
+    {
+      "id": 2060,
+      "name": "Ineffable Intelligence",
+      "entity_type": "organization",
+      "category": "Frontier Lab",
+      "other_categories": "AI Safety/Alignment",
+      "funding_model": "VC-backed",
+      "location": "London, United Kingdom",
+      "beliefs": {
+        "regulatory_stance": "Mixed/unclear",
+        "stance_detail": "No explicit regulatory stance has been articulated by Ineffable Intelligence or David Silver in available sources. The company has received backing from the UK government's Sovereign AI Fund and British Business Bank, suggesting alignment with UK national AI strategy, but no specific policy positions on regulation have been stated.",
+        "agi_timeline": "2-3 years",
+        "ai_risk": "Serious",
+        "threat_models": "Existential risk, Loss of control, Power concentration",
+        "evidence_source": "Inferred from actions"
+      },
+      "influence_type": "Builder, Researcher/analyst",
+      "importance": 4,
+      "notes": "Ineffable Intelligence is a London-based AI research lab founded in late 2025 by David Silver, former lead of the reinforcement learning team at Google DeepMind and UCL professor, known for his central role in creating AlphaGo, AlphaZero, and AlphaStar. The company emerged from stealth in April 2026 with a record $1.1 billion seed round — the largest ever in Europe — at a $5.1 billion valuation. The round was co-led by Sequoia Capital and Lightspeed Venture Partners, with participation from Nvidia, Google/Alphabet, DST Global, Index Ventures, BOND Capital, EQT Ventures, UK Wellcome Trust, Flying Fish Ventures, Evantic Capital, the British Business Bank, and the UK's Sovereign AI Fund. Ineffable's core mission is to build a 'superlearner' — an AI system capable of autonomously discovering all knowledge purely from its own experience via reinforcement learning, without relying on human-generated data. The company positions its ambition as potentially the most transformative scientific breakthrough since Darwin, aiming for 'first contact with superintelligence.' The UK government, through Science and Technology Secretary Liz Kendall, publicly endorsed the investment as part of making the UK an 'AI maker.' David Silver has publicly committed via Founders Pledge to donate 100% of his personal equity proceeds to high-impact charities.",
+      "notes_confidence": 4,
+      "notes_sources": "techcrunch.com; www.cnbc.com; tech.eu; www.siliconrepublic.com; finance.yahoo.com; www.pymnts.com; finance.yahoo.com; siliconangle.com"
+    },
+    {
+      "id": 2069,
+      "name": "Jane Street",
+      "entity_type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "other_categories": "Infrastructure & Compute",
+      "funding_model": "Self-funded",
+      "location": "New York, NY",
+      "beliefs": {
+        "regulatory_stance": "Light-touch",
+        "stance_detail": "No explicit public policy positions found, but Jane Street's pattern of aggressive capital deployment into AI infrastructure, frontier AI labs, and compute without apparent concern for regulatory risk signals a preference for minimal regulatory friction. Its investments in Anthropic, CoreWeave, Nscale, and Thinking Machines Lab reflect an accelerationist capital posture consistent with light-touch regulatory views.",
+        "agi_timeline": "Unknown",
+        "ai_risk": "Manageable",
+        "threat_models": "Economic inequality, Power concentration",
+        "evidence_source": "Inferred from actions"
+      },
+      "influence_type": "Funder/investor, Implementer",
+      "importance": 4,
+      "notes": "Jane Street is a global technology-driven quantitative trading and market-making firm founded in 2000, with over 3,500 employees across offices in New York, London, Hong Kong, Singapore, and Amsterdam. The firm generated $20.5 billion in net trading revenue and approximately $13 billion in net income in 2024, reflecting its scale as one of the most profitable proprietary trading firms in the world. Jane Street has become a significant investor in AI infrastructure and AI companies: it holds a major stake in Anthropic (whose surging valuation boosted Jane Street's Q3 2024 trading revenue by ~$830 million), participated in the Thinking Machines Lab fundraise, co-invested in Nscale's $2 billion Series C alongside Nvidia and Citadel in March 2026, and led Antithesis's $105 million Series A in December 2025. Most prominently, in April 2026, Jane Street committed approximately $6 billion to CoreWeave's AI cloud platform and made a $1 billion equity investment at $109/share, making it CoreWeave's fifth-largest shareholder. The firm applies machine learning extensively across its trading operations and uses large-scale compute as a core business input, making its AI infrastructure investments both strategic and operational. Jane Street's capital deployments and investment activity make it an increasingly consequential funder and customer in the AI ecosystem.",
+      "notes_confidence": 4,
+      "notes_sources": "www.reuters.com; machineherald.io; www.coreweave.com; origin.www.bloomberg.com; www.prnewswire.com; open.substack.com; thenextweb.com; www.sec.gov"
+    }
+  ]
+}

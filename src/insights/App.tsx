@@ -2,6 +2,8 @@ import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { Navigation } from '../components/Navigation'
 import { CrosspartisanViz } from './crosspartisan/CrosspartisanViz'
 import { AgiDefinitionSpace } from './crosspartisan/AgiDefinitionSpace'
+import { ReachabilityRings, AxisOutlierChart } from './network'
+import { FundingFlowSankey, FundingFragility, PolicyKingmakers, FunderDiversity } from './funding'
 
 // d3 is loaded from a CDN <script> tag (see index.html) rather than imported as a module,
 // so we don't have compile-time types for it. Treating it as `unknown` forces casts at
@@ -44,6 +46,73 @@ interface MapData {
   _meta?: { generated_at: string }
 }
 
+interface FundingFunder {
+  name: string
+  category: string
+  type: string
+  investments: number
+  unique_recipients: number
+  total_usd: number
+  mean_recipient_stance: number | null
+  first_year: number | null
+  last_year: number | null
+}
+
+interface FundingRecipient {
+  name: string
+  category: string
+  type: string
+  stance: string | null
+  funding_rounds: number
+  unique_funders: number
+  total_usd: number
+}
+
+interface FundingFlow {
+  funder: string
+  funder_category: string
+  recipient_category: string
+  count: number
+  total_usd: number
+}
+
+interface FundingYearData {
+  year: number
+  count: number
+  total_usd: number
+  by_recipient_category: Record<string, { count: number; total_usd: number }>
+}
+
+interface FunderYearData {
+  funder: string
+  funder_category: string
+  year: number
+  count: number
+  total_usd: number
+}
+
+interface FundingEdge {
+  funder: string
+  recipient: string
+  amount_usd: number | null
+  year: number | null
+  citation: string | null
+  source_url?: string | null
+  source_title?: string | null
+  funder_category: string
+  recipient_category: string
+}
+
+interface FundingData {
+  _meta: { generated_at: string; total_edges: number }
+  funders: FundingFunder[]
+  recipients: FundingRecipient[]
+  flows: FundingFlow[]
+  byYear: FundingYearData[]
+  funderByYear: FunderYearData[]
+  edges: FundingEdge[]
+}
+
 /* ────────────────────────────────────────────
    Constants
    ──────────────────────────────────────────── */
@@ -55,8 +124,11 @@ const RISK_LABELS = ['Overstated', 'Manageable', 'Serious', 'Catastrophic', 'Exi
 const TOC_ITEMS = [
   { id: 'overview', label: 'Overview' },
   { id: 'belief-space', label: 'Beliefs' },
+  { id: 'outliers', label: 'Outliers' },
   { id: 'threat-models', label: 'Threat Models' },
   { id: 'network', label: 'Connectivity' },
+  { id: 'bridge-builders', label: 'Bridge Builders' },
+  { id: 'funding', label: 'Funding' },
   { id: 'crosspartisan', label: 'Crosspartisan' },
   { id: 'agi-definitions', label: 'AGI Definitions' },
 ]
@@ -641,18 +713,20 @@ function ChartCategoryMatrix({ edges, entities }: { edges: Edge[]; entities: Ent
       'AI Safety/Alignment': 'AI Safety',
       'Think Tank/Policy Org': 'Think Tank',
       'Government/Agency': 'Government',
-      'VC/Capital/Philanthropy': 'VC/Capital',
+      'VC/Capital/Philanthropy': 'VC/Philanthropy',
       'Labor/Civil Society': 'Labor/Civil',
       'Ethics/Bias/Rights': 'Ethics/Rights',
       'Media/Journalism': 'Media',
       'Political Campaign/PAC': 'Political',
-      'AI Infrastructure & Compute': 'AI Infra',
-      'AI Deployers & Platforms': 'AI Platforms',
+      'AI Infrastructure & Compute': 'Infra/Compute',
+      'Infrastructure & Compute': 'Infra/Compute',
+      'AI Deployers & Platforms': 'Deployers',
+      'Deployers & Platforms': 'Deployers',
     }
 
     const cellSize = 45
-    const labelPadLeft = 110
-    const labelPadTop = 90
+    const labelPadLeft = 130
+    const labelPadTop = 100
     const W = categories.length * cellSize + labelPadLeft
     const H = categories.length * cellSize + labelPadTop
 
@@ -673,7 +747,7 @@ function ChartCategoryMatrix({ edges, entities }: { edges: Edge[]; entities: Ent
         .attr('font-family', "'DM Mono', monospace")
         .attr('font-size', 9)
         .attr('fill', '#555')
-        .text(label.length > 14 ? label.slice(0, 12) + '...' : label)
+        .text(label.length > 16 ? label.slice(0, 14) + '...' : label)
     })
 
     // Column labels
@@ -686,7 +760,7 @@ function ChartCategoryMatrix({ edges, entities }: { edges: Edge[]; entities: Ent
         .attr('font-family', "'DM Mono', monospace")
         .attr('font-size', 9)
         .attr('fill', '#555')
-        .text(label.length > 12 ? label.slice(0, 10) + '...' : label)
+        .text(label.length > 15 ? label.slice(0, 13) + '...' : label)
     })
 
     // Cells
@@ -720,7 +794,7 @@ function ChartContainer({ title, source, children }: { title: string; source: st
     <div className="bg-[#f8f7f5] rounded-lg p-6 my-8 overflow-hidden fade-in [&_svg]:w-full [&_svg]:block">
       <div className="font-mono text-[11px] tracking-[0.08em] uppercase text-[#555] mb-4">{title}</div>
       {children}
-      <div className="font-mono text-[9px] text-[#888] tracking-[0.04em] mt-3 text-right">{source}</div>
+      <div className="font-mono text-[9px] text-[#888] tracking-[0.04em] mt-3 text-center">{source}</div>
     </div>
   )
 }
@@ -774,6 +848,7 @@ function TableOfContents({ activeId }: { activeId: string }) {
 
 export function App() {
   const [data, setData] = useState<MapData | null>(null)
+  const [fundingData, setFundingData] = useState<FundingData | null>(null)
   const [activeSection, setActiveSection] = useState('overview')
   const activeSectionRef = useRef('overview')
 
@@ -784,32 +859,23 @@ export function App() {
       fetch('/map-detail.json')
         .then((r) => r.json())
         .catch(() => ({})),
+      fetch('/funding-data.json')
+        .then((r) => r.json())
+        .catch(() => null),
     ])
-      .then(([mapData, detail]: [MapData, Record<string, Partial<Entity>>]) => {
+      .then(([mapData, detail, funding]: [MapData, Record<string, Partial<Entity>>, FundingData | null]) => {
         const all = [...(mapData.people || []), ...(mapData.organizations || []), ...(mapData.resources || [])]
         for (const entity of all) {
           const d = detail[String(entity.id)]
           if (d) Object.assign(entity, d)
         }
         setData(mapData)
+        if (funding) setFundingData(funding)
       })
       .catch((err) => console.error('Failed to load data:', err))
   }, [])
 
-  // Fade-in observer
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) e.target.classList.add('visible')
-        })
-      },
-      { threshold: 0.1 },
-    )
-    const elements = document.querySelectorAll('.fade-in')
-    elements.forEach((el) => observer.observe(el))
-    return () => observer.disconnect()
-  }, [data])
+  // Fade-in observer removed - animation disabled
 
   // TOC scroll tracking
   const updateTOC = useCallback(() => {
@@ -860,18 +926,18 @@ export function App() {
     }
   }, [allEntities])
 
+  // Hide tooltip on scroll (prevents stuck tooltips when scrolling away from element)
+  useEffect(() => {
+    const handleScroll = () => hideTooltip()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   return (
     <>
+      {/* Fade-in disabled - causes white flash with React re-renders */}
       <style>{`
-        .fade-in {
-          opacity: 0;
-          transform: translateY(12px);
-          transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-        .fade-in.visible {
-          opacity: 1;
-          transform: translateY(0);
-        }
+        .fade-in { opacity: 1; transform: none; }
       `}</style>
 
       <Navigation />
@@ -963,33 +1029,52 @@ export function App() {
           them requires external validation.
         </Finding>
 
-        <h3 className="font-serif text-[18px] font-normal mt-8 mb-3">Funding model → ideology</h3>
+        <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
+
+        {/* ═══════════════════════════════════════════ */}
+        {/* SECTION: OUTLIER STANCES                    */}
+        {/* ═══════════════════════════════════════════ */}
+
+        <SectionLabel id="outliers">Insight 2</SectionLabel>
+        <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">Outlier Stances</h2>
 
         <Para>
-          Does knowing how an organization is funded predict its regulatory stance? This isn't necessarily
-          causal—funders may seek out aligned orgs, not shape them—but the correlation is structurally important.
+          Who holds statistically rare positions? We identify entities in positions with very few peers—not necessarily
+          extreme views, but uncommon ones. Outliers are highlighted with black outlines and are the only nodes you can
+          interact with. Click any outlier to see why they stand out, then view them on the map.
         </Para>
 
+        <h3 className="font-serif text-[18px] font-normal mt-6 mb-3">1D: Single dimension</h3>
+
         <ChartContainer
-          title="Mean regulatory stance by funding model"
-          source="Scale: 1 = Accelerate, 6 = Precautionary. Only funding models with 5+ orgs shown."
+          title="Outliers by belief dimension"
+          source="Outliers are positions below 50% of median count. Click any outlier for details."
         >
-          <ChartFundingStance orgs={orgs} />
+          <AxisOutlierChart entities={allEntities} mode="1d" />
+        </ChartContainer>
+
+        <h3 className="font-serif text-[18px] font-normal mt-8 mb-3">2D: Two dimensions</h3>
+
+        <ChartContainer
+          title="Outliers by belief combination"
+          source="Outliers are cells below 50% of median count. Select axes to explore combinations."
+        >
+          <AxisOutlierChart entities={allEntities} mode="2d" />
         </ChartContainer>
 
         <Finding>
-          Funding source is predictive of regulatory stance. Philanthropically-funded organizations skew more
-          restrictive, while venture-backed organizations favor lighter regulation. This structural pattern holds
-          regardless of whether funders actively influence grantees or simply select for aligned orgs.
+          Outliers often hold uncommon belief combinations—an entity might be mainstream on one dimension but rare when
+          you consider two dimensions together. These positions may signal emerging viewpoints, strategic positioning,
+          or simply heterogeneity within the ecosystem.
         </Finding>
 
         <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
 
         {/* ═══════════════════════════════════════════ */}
-        {/* SECTION 2: THREAT MODELS                    */}
+        {/* SECTION 3: THREAT MODELS                    */}
         {/* ═══════════════════════════════════════════ */}
 
-        <SectionLabel id="threat-models">Insight 2</SectionLabel>
+        <SectionLabel id="threat-models">Insight 3</SectionLabel>
         <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">Threat Models & Key Concerns</h2>
 
         <Para>
@@ -1031,7 +1116,7 @@ export function App() {
         {/* SECTION 3: CONNECTIVITY                     */}
         {/* ═══════════════════════════════════════════ */}
 
-        <SectionLabel id="network">Insight 3</SectionLabel>
+        <SectionLabel id="network">Insight 4</SectionLabel>
         <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">Connectivity</h2>
 
         <Para>
@@ -1057,10 +1142,153 @@ export function App() {
         <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
 
         {/* ═══════════════════════════════════════════ */}
-        {/* SECTION 4: CROSSPARTISAN CONVERGENCE        */}
+        {/* SECTION: BRIDGE BUILDERS                    */}
         {/* ═══════════════════════════════════════════ */}
 
-        <SectionLabel id="crosspartisan">Insight 4</SectionLabel>
+        <SectionLabel id="bridge-builders">Insight 5</SectionLabel>
+        <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">Bridge Builders</h2>
+
+        <Para>
+          Who are the most structurally important <em>people</em> in the AI governance ecosystem? We measure this by
+          reachability: how many entities can a person reach within 1, 2, or 3 hops through the relationship network.
+          People with high reachability can spread information—or broker coalitions—across otherwise separate
+          communities.
+        </Para>
+
+        <Para>
+          Each ring shows actual connections: the inner ring (1-hop) shows direct relationships, the middle ring (2-hop)
+          shows friends-of-friends, and the outer ring (3-hop) shows the extended network. Node colors indicate
+          category.
+        </Para>
+
+        <ChartContainer
+          title="Network reachability by person"
+          source="Concentric rings show 1-hop, 2-hop, and 3-hop connections. Nodes colored by category."
+        >
+          <ReachabilityRings entities={allEntities} edges={edges} maxPeople={6} />
+        </ChartContainer>
+
+        <Finding>
+          Policymakers like Brian Schatz and Chris Murphy top the reachability rankings—their government roles connect
+          them to many organizations. Researchers like Paul Christiano bridge AI Safety, Frontier Labs, and Government.
+          High reachability doesn't mean influence, but it does indicate structural position for information flow and
+          coalition-building.
+        </Finding>
+
+        <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
+
+        {/* ═══════════════════════════════════════════ */}
+        {/* SECTION 6: FUNDING                          */}
+        {/* ═══════════════════════════════════════════ */}
+
+        <SectionLabel id="funding">Insight 6</SectionLabel>
+        <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">Funding & Independence</h2>
+
+        <Para>
+          Who funds whom in the AI ecosystem? We've tracked{' '}
+          <span className="font-mono">{fundingData?._meta?.total_edges || '—'}</span> funding relationships connecting
+          funders (VCs, philanthropies, government agencies, tech companies) to recipient organizations. This is a
+          sample, not a comprehensive database—but it reveals structural patterns in how capital flows through the
+          ecosystem.
+        </Para>
+
+        {fundingData && (
+          <>
+            <ChartContainer
+              title="Funding flows: Top funders → recipient categories"
+              source="Top 12 funders by investment count in our sample. Width = number of tracked investments to each category. Click any flow for details."
+            >
+              <FundingFlowSankey flows={fundingData.flows} funders={fundingData.funders} edges={fundingData.edges} />
+            </ChartContainer>
+
+            <Para>
+              The Sankey diagram shows where capital flows from major funders to different organization types. Even in
+              this sample, distinct patterns emerge: philanthropic funders concentrate on AI Safety and Think Tanks,
+              while tech companies and VCs flow to Frontier Labs and infrastructure.
+            </Para>
+
+            <h3 className="font-serif text-[18px] font-normal mt-8 mb-3">Funding model → regulatory stance</h3>
+
+            <Para>
+              Does knowing how an organization is funded predict its regulatory stance? This isn't necessarily
+              causal—funders may seek out aligned orgs, not shape them—but the correlation is structurally important.
+            </Para>
+
+            <ChartContainer
+              title="Mean regulatory stance by funding model"
+              source="Scale: 1 = Accelerate, 6 = Precautionary. Only funding models with 5+ orgs shown."
+            >
+              <ChartFundingStance orgs={orgs} />
+            </ChartContainer>
+
+            <Finding>
+              Funding source is predictive of regulatory stance. Philanthropically-funded organizations skew more
+              precautionary, while venture-backed organizations favor lighter regulation. This structural pattern holds
+              regardless of whether funders actively influence grantees or simply select for aligned orgs.
+            </Finding>
+
+            <h3 className="font-serif text-[18px] font-normal mt-8 mb-3">Who are the kingmakers?</h3>
+
+            <Para>
+              Which funders have the most reach across policy organizations? A handful of funders back a
+              disproportionate share of think tanks, AI safety orgs, and ethics groups. This isn't inherently
+              problematic—but it does mean these funders have structural influence over which organizations have
+              resources to operate.
+            </Para>
+
+            <ChartContainer
+              title="Top policy funders by reach"
+              source="Funders backing 2+ policy organizations (Think Tanks, AI Safety, Ethics/Rights). Click for full list of recipients."
+            >
+              <PolicyKingmakers edges={fundingData.edges} showTooltip={showTooltip} hideTooltip={hideTooltip} />
+            </ChartContainer>
+
+            <h3 className="font-serif text-[18px] font-normal mt-8 mb-3">How fragile is policy funding?</h3>
+
+            <Para>
+              If a major funder withdrew, which organizations would be affected? We measure concentration risk by how
+              much of an org's funding comes from its top funder. High concentration (red) means structural dependence
+              on a single source.
+            </Para>
+
+            <ChartContainer
+              title="Funding concentration risk"
+              source="Policy orgs with 2+ funders. Bars show each funder's share; color = funder category. Sorted by concentration."
+            >
+              <FundingFragility edges={fundingData.edges} showTooltip={showTooltip} hideTooltip={hideTooltip} />
+            </ChartContainer>
+
+            <h3 className="font-serif text-[18px] font-normal mt-8 mb-3">Funder category diversity</h3>
+
+            <Para>
+              Beyond concentration, we can ask: are funders all the same <em>type</em>? An org funded by 3
+              philanthropies is less diverse than one funded by a mix of philanthropy, government, and tech companies.
+              Single-category funding may indicate alignment or echo chamber effects.
+            </Para>
+
+            <ChartContainer
+              title="Funder diversity vs single-category funding"
+              source="Policy orgs with 2+ funders. Diverse = 3+ funder categories; Single = all funders same type."
+            >
+              <FunderDiversity edges={fundingData.edges} showTooltip={showTooltip} hideTooltip={hideTooltip} />
+            </ChartContainer>
+
+            <Finding>
+              A small group of funders—led by Open Philanthropy—has reach across most policy organizations. Some orgs
+              have highly concentrated funding (60%+ from one source), creating structural dependence. Meanwhile, 16
+              policy orgs are funded entirely by one funder category (mostly VC/Philanthropy), while 17 have genuinely
+              diverse funding across 3+ categories.
+            </Finding>
+          </>
+        )}
+
+        <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
+
+        {/* ═══════════════════════════════════════════ */}
+        {/* SECTION 8: CROSSPARTISAN CONVERGENCE        */}
+        {/* ═══════════════════════════════════════════ */}
+
+        <SectionLabel id="crosspartisan">Insight 7</SectionLabel>
         <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">
           Crosspartisan Convergence on AI Policy
         </h2>
@@ -1099,10 +1327,10 @@ export function App() {
         <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
 
         {/* ═══════════════════════════════════════════ */}
-        {/* SECTION 5: AGI DEFINITION SPACE             */}
+        {/* SECTION 9: AGI DEFINITION SPACE             */}
         {/* ═══════════════════════════════════════════ */}
 
-        <SectionLabel id="agi-definitions">Insight 5</SectionLabel>
+        <SectionLabel id="agi-definitions">Insight 8</SectionLabel>
         <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">The AGI Definition Space</h2>
 
         <Para>

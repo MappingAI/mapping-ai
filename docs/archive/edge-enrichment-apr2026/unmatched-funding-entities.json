@@ -1,0 +1,517 @@
+{
+  "generated_at": "2026-04-30T01:43:06.932Z",
+  "unmatched_recipients": [
+    {
+      "name": "U.S. operations",
+      "total_usd": 150000000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": 2025,
+      "last_year": 2025
+    },
+    {
+      "name": "Waymo",
+      "total_usd": 48000000000,
+      "funding_rounds": 3,
+      "unique_funders": 3,
+      "first_year": 2026,
+      "last_year": 2026
+    },
+    {
+      "name": "SoftBank Group",
+      "total_usd": 40000000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": 2026,
+      "last_year": 2026
+    },
+    {
+      "name": "CoreWeave",
+      "total_usd": 37200000000,
+      "funding_rounds": 3,
+      "unique_funders": 2,
+      "first_year": 2025,
+      "last_year": 2027
+    },
+    {
+      "name": "Nebius",
+      "total_usd": 27000000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": 2026,
+      "last_year": 2026
+    },
+    {
+      "name": "AI resilience projects",
+      "total_usd": 25000000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": null,
+      "last_year": null
+    },
+    {
+      "name": "India AI infrastructure",
+      "total_usd": 17500000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": 2026,
+      "last_year": 2026
+    },
+    {
+      "name": "HUMAIN Ventures",
+      "total_usd": 10000000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": 2025,
+      "last_year": 2025
+    },
+    {
+      "name": "Google For India Digitisation Fund",
+      "total_usd": 10000000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": 2020,
+      "last_year": 2020
+    },
+    {
+      "name": "Intel Corporation",
+      "total_usd": 8500000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": 2024,
+      "last_year": 2024
+    },
+    {
+      "name": "Uber",
+      "total_usd": 7000000000,
+      "funding_rounds": 3,
+      "unique_funders": 3,
+      "first_year": 2016,
+      "last_year": 2016
+    },
+    {
+      "name": "Samsung Electronics",
+      "total_usd": 6400000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": 2024,
+      "last_year": 2024
+    },
+    {
+      "name": "states and territories and local and Tribal communities",
+      "total_usd": 4000000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": 2024,
+      "last_year": 2024
+    },
+    {
+      "name": "Waverley Street Foundation",
+      "total_usd": 3500000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": 2021,
+      "last_year": 2021
+    },
+    {
+      "name": "Johns Hopkins University Applied Physics Laboratory",
+      "total_usd": 2351000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": 2019,
+      "last_year": 2019
+    },
+    {
+      "name": "Housing Equity Fund",
+      "total_usd": 2200000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": 2021,
+      "last_year": 2021
+    },
+    {
+      "name": "DeepMind",
+      "total_usd": 1902250000,
+      "funding_rounds": 9,
+      "unique_funders": 7,
+      "first_year": 2014,
+      "last_year": 2014
+    },
+    {
+      "name": "grid infrastructure projects",
+      "total_usd": 1900000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": 2026,
+      "last_year": 2026
+    },
+    {
+      "name": "Texas Instruments",
+      "total_usd": 1600000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": 2024,
+      "last_year": 2024
+    },
+    {
+      "name": "Andrew Tulloch",
+      "total_usd": 1500000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": 2026,
+      "last_year": 2026
+    },
+    {
+      "name": "G42",
+      "total_usd": 1500000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": 2024,
+      "last_year": 2024
+    },
+    {
+      "name": "GlobalFoundries",
+      "total_usd": 1500000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": 2024,
+      "last_year": 2024
+    },
+    {
+      "name": "Critical Minerals Infrastructure Fund projects",
+      "total_usd": 1500000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": null,
+      "last_year": null
+    },
+    {
+      "name": "Reddit Inc",
+      "total_usd": 1417900000,
+      "funding_rounds": 9,
+      "unique_funders": 9,
+      "first_year": 2014,
+      "last_year": 2021
+    },
+    {
+      "name": "affordable housing fund",
+      "total_usd": 1400000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": 2024,
+      "last_year": 2024
+    },
+    {
+      "name": "Cassini Fund",
+      "total_usd": 1333333333,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": 2022,
+      "last_year": 2022
+    },
+    {
+      "name": "AMP",
+      "total_usd": 1300000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": 2026,
+      "last_year": 2026
+    },
+    {
+      "name": "cities, towns, counties, Tribal governments and Metropolitan Planning Organizations",
+      "total_usd": 1256000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": 2024,
+      "last_year": 2024
+    },
+    {
+      "name": "Ineffable Intelligence",
+      "total_usd": 1100000000,
+      "funding_rounds": 2,
+      "unique_funders": 1,
+      "first_year": 2026,
+      "last_year": 2026
+    },
+    {
+      "name": "NextLadder Ventures",
+      "total_usd": 1000000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": 2025,
+      "last_year": 2025
+    },
+    {
+      "name": "High-Speed Rail Project",
+      "total_usd": 1000000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": 2025,
+      "last_year": 2025
+    },
+    {
+      "name": "OneWeb Ltd",
+      "total_usd": 1000000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": 2016,
+      "last_year": 2016
+    },
+    {
+      "name": "United Nations Foundation",
+      "total_usd": 1000000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": 1998,
+      "last_year": 1998
+    },
+    {
+      "name": "Global Fund to Fight AIDS, Tuberculosis and Malaria",
+      "total_usd": 912000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": 2025,
+      "last_year": 2025
+    },
+    {
+      "name": "Mentee Robotics",
+      "total_usd": 910000000,
+      "funding_rounds": 2,
+      "unique_funders": 2,
+      "first_year": null,
+      "last_year": null
+    },
+    {
+      "name": "Pacific Fusion",
+      "total_usd": 900000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": 2024,
+      "last_year": 2024
+    },
+    {
+      "name": "Wolfspeed",
+      "total_usd": 750000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": 2024,
+      "last_year": 2024
+    },
+    {
+      "name": "organizations",
+      "total_usd": 724000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": 2024,
+      "last_year": 2024
+    },
+    {
+      "name": "Arc Institute",
+      "total_usd": 650000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": 2021,
+      "last_year": 2021
+    },
+    {
+      "name": "The BlackRock Foundation",
+      "total_usd": 589000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": 2020,
+      "last_year": 2020
+    },
+    {
+      "name": "Korean universities, research institutes, corporate R&D centers, and startups",
+      "total_usd": 557000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": 2026,
+      "last_year": 2026
+    },
+    {
+      "name": "12 Tech Hubs",
+      "total_usd": 504000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": null,
+      "last_year": null
+    },
+    {
+      "name": "MatX",
+      "total_usd": 500000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": 2026,
+      "last_year": 2026
+    },
+    {
+      "name": "Safe Superintelligence",
+      "total_usd": 500000000,
+      "funding_rounds": 3,
+      "unique_funders": 3,
+      "first_year": 2024,
+      "last_year": 2025
+    },
+    {
+      "name": "15 regions representing all 92 counties",
+      "total_usd": 500000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": 2024,
+      "last_year": 2024
+    },
+    {
+      "name": "AI startups",
+      "total_usd": 500000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": 2023,
+      "last_year": 2023
+    },
+    {
+      "name": "Lambda",
+      "total_usd": 480000000,
+      "funding_rounds": 1,
+      "unique_funders": 1,
+      "first_year": 2025,
+      "last_year": 2025
+    },
+    {
+      "name": "Sierra",
+      "total_usd": 460000000,
+      "funding_rounds": 3,
+      "unique_funders": 3,
+      "first_year": 2023,
+      "last_year": 2024
+    }
+  ],
+  "unmatched_funders": [
+    {
+      "name": "Open Philanthropy",
+      "investments": 55,
+      "unique_recipients": 47,
+      "total_usd": 838476324
+    },
+    {
+      "name": "National Science Foundation",
+      "investments": 42,
+      "unique_recipients": 40,
+      "total_usd": 95475000
+    },
+    {
+      "name": "U.S. Department of Commerce",
+      "investments": 21,
+      "unique_recipients": 17,
+      "total_usd": 41169500000
+    },
+    {
+      "name": "Alfred P. Sloan Foundation",
+      "investments": 19,
+      "unique_recipients": 18,
+      "total_usd": 2692332
+    },
+    {
+      "name": "Andreessen Horowitz",
+      "investments": 16,
+      "unique_recipients": 14,
+      "total_usd": 14250000000
+    },
+    {
+      "name": "Schmidt Sciences",
+      "investments": 12,
+      "unique_recipients": 11,
+      "total_usd": 24300000
+    },
+    {
+      "name": "U.S. Department of Energy",
+      "investments": 8,
+      "unique_recipients": 6,
+      "total_usd": 177394435
+    },
+    {
+      "name": "Open Philanthropy Project",
+      "investments": 8,
+      "unique_recipients": 7,
+      "total_usd": 66661315
+    },
+    {
+      "name": "Google.org",
+      "investments": 7,
+      "unique_recipients": 7,
+      "total_usd": 10200000
+    },
+    {
+      "name": "investors",
+      "investments": 7,
+      "unique_recipients": 5,
+      "total_usd": 126135000000
+    },
+    {
+      "name": "NSF",
+      "investments": 7,
+      "unique_recipients": 7,
+      "total_usd": 0
+    },
+    {
+      "name": "Limited Partners",
+      "investments": 6,
+      "unique_recipients": 5,
+      "total_usd": 3030000000
+    },
+    {
+      "name": "New Enterprise Associates",
+      "investments": 6,
+      "unique_recipients": 6,
+      "total_usd": 71346053
+    },
+    {
+      "name": "Good Ventures Foundation",
+      "investments": 6,
+      "unique_recipients": 5,
+      "total_usd": 5324430
+    },
+    {
+      "name": "John S. and James L. Knight Foundation",
+      "investments": 6,
+      "unique_recipients": 6,
+      "total_usd": 32000000
+    },
+    {
+      "name": "Goldman Sachs",
+      "investments": 5,
+      "unique_recipients": 5,
+      "total_usd": 49577700000
+    },
+    {
+      "name": "Patrick J. McGovern Foundation",
+      "investments": 5,
+      "unique_recipients": 5,
+      "total_usd": 770000
+    },
+    {
+      "name": "Lightspeed Venture Partners",
+      "investments": 5,
+      "unique_recipients": 5,
+      "total_usd": 273596938
+    },
+    {
+      "name": "William & Flora Hewlett Foundation",
+      "investments": 5,
+      "unique_recipients": 4,
+      "total_usd": 3449958
+    },
+    {
+      "name": "Capital One",
+      "investments": 5,
+      "unique_recipients": 5,
+      "total_usd": 9000000
+    },
+    {
+      "name": "John D. and Catherine T. MacArthur Foundation",
+      "investments": 5,
+      "unique_recipients": 5,
+      "total_usd": 1850000
+    }
+  ]
+}
