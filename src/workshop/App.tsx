@@ -210,13 +210,15 @@ export function App() {
 
         <p className="mb-4">
           The database currently has about <strong>709 people</strong>, <strong>734 organizations</strong>, and{' '}
-          <strong>161 resources</strong>, linked by <strong>2,228 relationships</strong>. These are the publicly visible
-          entities on the map, with additional pending entries in the review queue.
+          <strong>161 resources</strong>, linked by <strong>2,228 relationships</strong>. Each entity is enriched with
+          belief dimensions (regulatory stance, AGI timeline, AI risk level), sourced notes, and relationship edges.
+          We&rsquo;ve published initial research findings on the{' '}
+          <ExtLink href="https://mapping-ai.org/insights">insights page</ExtLink>, including crosspartisan convergence
+          analysis and an AGI definition space mapping.
         </p>
 
         <p className="mb-4">
-          The stack: React + Vite for the frontend, D3.js for the visualization, Cloudflare Pages Functions for the API,
-          Neon Postgres for the database, and R2 for asset storage. People submit data through{' '}
+          The stack is React + Vite, D3.js, Cloudflare Pages Functions, and Neon Postgres. People submit data through{' '}
           <a href="/contribute" className="text-accent no-underline hover:text-[#1d4ed8] hover:underline">
             the contribute form
           </a>
@@ -282,17 +284,17 @@ export function App() {
         {/* MappingParty photos */}
         <div className="grid grid-cols-3 gap-3 mb-6 max-[600px]:grid-cols-1">
           <img
-            src="/assets/images/mapping-party-1.jpg"
+            src="/images/mapping-party-1.jpg"
             alt="MappingParty contributors working together"
             className="w-full aspect-[4/3] object-cover rounded-md"
           />
           <img
-            src="/assets/images/mapping-party-2.jpg"
+            src="/images/mapping-party-2.jpg"
             alt="MappingParty working session"
             className="w-full aspect-[4/3] object-cover rounded-md"
           />
           <img
-            src="/assets/images/mapping-party-3.jpg"
+            src="/images/mapping-party-3.jpg"
             alt="MappingParty group collaboration"
             className="w-full aspect-[4/3] object-cover rounded-md"
           />
@@ -355,8 +357,6 @@ export function App() {
 
         {/* STREAM 1 */}
         <StreamHeading id="stream-1">Stream 1: Bug Hunting</StreamHeading>
-        <StreamTag>Best for: anyone with a browser and an eye for detail</StreamTag>
-
         <p className="mb-4">
           Your job is to break things. Open the site, click around, try weird inputs, resize your window, test on your
           phone. When something looks off or doesn&rsquo;t work right, write it up.
@@ -419,8 +419,6 @@ Screenshot: [paste one if you can]`}</Pre>
 
         {/* STREAM 2 */}
         <StreamHeading id="stream-2">Stream 2: Data Enrichment &amp; Seeding</StreamHeading>
-        <StreamTag>Best for: people who follow AI policy or enjoy research</StreamTag>
-
         <p className="mb-4">
           The map is only as useful as its data. Most entities have notes, but many are thin, unsourced, or out of date.
           Your job is to add new entities we&rsquo;re missing and flesh out ones that are already there.
@@ -520,23 +518,14 @@ Screenshot: [paste one if you can]`}</Pre>
 
         {/* STREAM 3 */}
         <StreamHeading id="stream-3">Stream 3: Data Quality &amp; Verification</StreamHeading>
-        <StreamTag>Best for: skeptics, fact-checkers, people who enjoy catching errors</StreamTag>
-
         <p className="mb-4">
-          The database was built through a combination of manual research, web scraping, and AI-assisted enrichment.
-          That means it contains unverifiable claims, formatting artifacts, stale information, and outright
-          fabrications. Your job is to find and flag these problems.
+          With 700+ people and 700+ organizations in the database, there are inevitably entries that need updating,
+          correcting, or fleshing out. This stream is about systematically improving data quality across the map.
         </p>
 
-        <H4>Known issues to look for</H4>
+        <H4>What to look for</H4>
 
         <ul className="mb-4 pl-6">
-          <li className="mb-[0.35rem]">
-            <strong>Hallucinated facts.</strong> The AI-generated notes sometimes include claims that sound very
-            specific and plausible but are just wrong. Suspiciously precise founding dates, round dollar amounts,
-            inflated competition results, awards that don&rsquo;t exist. If something sounds weirdly specific,
-            it&rsquo;s worth a quick check.
-          </li>
           <li className="mb-[0.35rem]">
             <strong>Stale information.</strong> Some entries list people at organizations they&rsquo;ve since left.
             Government officials who changed roles after the 2025 transition come up a lot.
@@ -546,8 +535,12 @@ Screenshot: [paste one if you can]`}</Pre>
             similar-sounding name. These are especially bad because they create false connections on the map.
           </li>
           <li className="mb-[0.35rem]">
-            <strong>Edges missing evidence.</strong> About 30% of relationships have no supporting evidence. If a
-            relationship seems questionable, check whether there&rsquo;s evidence for it.
+            <strong>Unsourced claims.</strong> If a note makes a specific factual claim (dollar amounts, dates, awards),
+            check that it holds up. When in doubt, flag it or submit a correction with a source.
+          </li>
+          <li className="mb-[0.35rem]">
+            <strong>Edges missing evidence.</strong> Some relationships lack supporting evidence. If a connection seems
+            questionable, check whether there&rsquo;s a source for it.
           </li>
           <li className="mb-[0.35rem]">
             <strong>Thin or missing context.</strong> Notes that are technically accurate but don&rsquo;t explain why
@@ -584,8 +577,6 @@ Screenshot: [paste one if you can]`}</Pre>
 
         {/* STREAM 4 */}
         <StreamHeading id="stream-4">Stream 4: New Features</StreamHeading>
-        <StreamTag>Best for: developers who want to write code</StreamTag>
-
         <p className="mb-4">
           The stack is React + Vite, D3.js for the map visualization, Cloudflare Pages Functions for the API, and Neon
           Postgres for the database. If you can write TypeScript, React, CSS, or Node.js, you can contribute.
@@ -766,12 +757,10 @@ pnpm exec vitest run       # Run tests`}</Pre>
 
         {/* STREAM 5 */}
         <StreamHeading id="stream-5">Stream 5: Outreach, Policy, Big Picture</StreamHeading>
-        <StreamTag>Best for: people who think about audiences, distribution, and strategy</StreamTag>
-
         <p className="mb-4">
-          The tool exists. The question now is who uses it and why. This stream is about figuring out how Mapping AI
-          fits into the broader AI policy conversation and how to get it in front of the people who&rsquo;d benefit from
-          it.
+          We&rsquo;ve already seen organic pickup from the policy community (the Frances Lorenz tweet above got 211
+          saves), so there&rsquo;s clear demand for this kind of resource. This stream is about building on that
+          momentum: figuring out which audiences benefit most from the map and how to reach them.
         </p>
 
         <H4>Questions to discuss</H4>
@@ -816,17 +805,12 @@ pnpm exec vitest run       # Run tests`}</Pre>
 
         {/* STREAM 6 */}
         <StreamHeading id="stream-6">Stream 6: Data Viz &amp; Research Insights</StreamHeading>
-        <StreamTag>Best for: data people, researchers, anyone curious about patterns</StreamTag>
-
         <p className="mb-4">
-          The database is full of interesting data that nobody has really explored yet. Regulatory stances, AGI timeline
-          beliefs, organizational affiliations, funding relationships, geographic clusters. Your job is to pull insights
-          out of it and sketch visualizations or blog post drafts we could publish.
-        </p>
-
-        <p className="mb-4">
-          See <ExtLink href="https://mapping-ai.org/insights">mapping-ai.org/insights</ExtLink> for examples of what
-          this could look like.
+          We&rsquo;ve already published five research insights on the{' '}
+          <ExtLink href="https://mapping-ai.org/insights">insights page</ExtLink>: the belief space (regulatory stance
+          vs. AGI timeline vs. risk level), threat model co-occurrence patterns, network connectivity across categories,
+          crosspartisan convergence on AI policy, and the AGI definition space. There&rsquo;s much more to explore in
+          the data, and we&rsquo;re looking for contributors who want to dig in and produce new findings.
         </p>
 
         <H4>Getting the data</H4>
@@ -965,10 +949,6 @@ function StreamHeading({ id, children }: { id: string; children: React.ReactNode
       {children}
     </h3>
   )
-}
-
-function StreamTag({ children }: { children: React.ReactNode }) {
-  return <p className="font-mono text-[11px] text-text-tertiary uppercase tracking-[0.1em] mb-4">{children}</p>
 }
 
 function H4({ children }: { children: React.ReactNode }) {
