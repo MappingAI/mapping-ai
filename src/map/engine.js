@@ -2116,7 +2116,7 @@ export function initMapEngine() {
       viewMode = btn.dataset.mode
       localStorage.setItem('mapMode', viewMode)
       document.querySelectorAll('.mode-btn').forEach((b) => b.classList.toggle('active', b.dataset.mode === viewMode))
-      applyViewState()
+      requestAnimationFrame(() => applyViewState())
     })
   })
 
