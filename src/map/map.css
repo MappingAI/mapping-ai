@@ -115,6 +115,7 @@ body {
   position: fixed;
   top: 60px;
   left: 1rem;
+  width: 268px;
   display: flex;
   flex-direction: column;
   gap: 0.4rem;

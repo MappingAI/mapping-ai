@@ -520,6 +520,99 @@ export function App() {
           >
             <span style={{ fontSize: '12px' }}>&#9432;</span> About this map
           </button>
+          <details style={{ marginTop: '6px' }}>
+            <summary
+              style={{
+                fontFamily: 'var(--mono)',
+                fontSize: '9px',
+                color: 'var(--text-3)',
+                cursor: 'pointer',
+                letterSpacing: '0.04em',
+                listStyle: 'none',
+              }}
+            >
+              ↗ Adjacent tools &amp; resources
+            </summary>
+            <div
+              style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: '4px',
+                marginTop: '6px',
+              }}
+            >
+              {[
+                { name: 'AI Policy Network', url: 'https://theaipn.org/', desc: 'Policy community network and events' },
+                {
+                  name: 'AI Regulation Map',
+                  url: 'https://airegulationmap.org/',
+                  desc: 'Global AI regulation tracker',
+                },
+                {
+                  name: 'AI Stakeholder Map',
+                  url: 'https://gaberoni24.github.io/AI_Stakeholder_Map/',
+                  desc: 'Interactive AI stakeholder landscape visualization',
+                },
+                {
+                  name: 'Policy Tracker Tracker',
+                  url: 'https://ai-policy-tracker-tracker.vercel.app/',
+                  desc: 'Index of AI policy tracking tools',
+                },
+                {
+                  name: 'Powered by Who',
+                  url: 'https://poweredbywho.com/map',
+                  desc: 'Who powers AI systems and decisions',
+                },
+                { name: 'Policy Hub', url: 'https://policyhub.us/', desc: 'U.S. AI policy research hub' },
+                {
+                  name: 'Data Center Watch',
+                  url: 'https://www.datacenterwatch.org/',
+                  desc: 'Tracking data center expansion and impacts',
+                },
+                {
+                  name: 'AI Campaign Finance',
+                  url: 'https://elections.transformernews.ai/',
+                  desc: 'AI industry political contributions tracker',
+                },
+                {
+                  name: 'Data Center Impact',
+                  url: 'https://datacenterimpactdashboard.com/',
+                  desc: 'Environmental and community impact dashboard',
+                },
+                {
+                  name: 'Long-term Wiki',
+                  url: 'https://www.longtermwiki.com/',
+                  desc: 'Long-term AI safety reference',
+                },
+                {
+                  name: 'Democracy Build',
+                  url: 'https://democracybuild.org/',
+                  desc: 'Democratic governance of AI',
+                },
+              ].map((link) => (
+                <a
+                  key={link.url}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={link.desc}
+                  style={{
+                    fontFamily: 'var(--mono)',
+                    fontSize: '9px',
+                    color: 'var(--text-3)',
+                    textDecoration: 'none',
+                    padding: '2px 6px',
+                    border: '1px solid var(--line)',
+                    borderRadius: '3px',
+                    lineHeight: '1.4',
+                    letterSpacing: '0.02em',
+                  }}
+                >
+                  ↗ {link.name}
+                </a>
+              ))}
+            </div>
+          </details>
         </div>
         <div
           id="entity-count"
