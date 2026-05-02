@@ -68,6 +68,7 @@ body {
 .nav-links {
   display: flex;
   gap: 2rem;
+  margin-right: 2.5rem;
 }
 .nav-links a {
   font-family: var(--mono);
@@ -411,6 +412,28 @@ body {
 .affiliated-item:hover {
   opacity: 0.7;
 }
+.connection-row {
+  border-bottom: 1px solid var(--line);
+}
+.connection-row:last-child {
+  border-bottom: none;
+}
+.connection-header:hover {
+  background: var(--input-bg);
+}
+.connection-header:hover .connection-name {
+  color: var(--accent);
+}
+
+/* Shift zoom controls and contribute button when detail panel is open */
+body:has(.detail-panel.open) .zoom-controls {
+  right: calc(320px + 1.5rem);
+  transition: right 0.25s ease;
+}
+body:has(.detail-panel.open) #contribute-btn {
+  right: calc(320px + 4.5rem);
+  transition: right 0.25s ease;
+}
 
 /* Zoom controls */
 .zoom-controls {
@@ -421,6 +444,7 @@ body {
   flex-direction: column;
   gap: 0.2rem;
   z-index: 50;
+  transition: right 0.25s ease;
 }
 .zoom-btn {
   width: 32px;
@@ -876,8 +900,12 @@ body {
   height: 1.5px;
   background: var(--text-1);
 }
-/* Theme toggle */
+/* Theme toggle — absolutely positioned so it doesn't shift nav link alignment */
 .theme-toggle {
+  position: absolute;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
   background: none;
   border: 1px solid var(--line);
   border-radius: 4px;
@@ -1909,7 +1937,9 @@ body {
   text-transform: uppercase;
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  transition: transform 0.15s;
+  transition:
+    transform 0.15s,
+    right 0.25s ease;
 }
 #contribute-btn:hover {
   transform: scale(1.04);

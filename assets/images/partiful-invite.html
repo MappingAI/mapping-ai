@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Partiful Invite Generator</title>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Mono', monospace;
+      background: #f0f0f0;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .controls {
+      margin-bottom: 20px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .controls button {
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      padding: 10px 16px;
+      border: 1px solid #333;
+      background: #fff;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .controls button:hover {
+      background: #f5f5f5;
+    }
+
+    .controls button.active {
+      background: #333;
+      color: #fff;
+    }
+
+    .controls button.export {
+      background: #2563eb;
+      color: #fff;
+      border-color: #2563eb;
+    }
+
+    .controls button.export:hover {
+      background: #1d4ed8;
+    }
+
+    .label {
+      font-size: 12px;
+      color: #666;
+    }
+
+    /* The actual invite design */
+    #invite {
+      width: 1080px;
+      height: 1080px;
+      font-family: 'EB Garamond', Georgia, serif;
+      position: relative;
+      overflow: hidden;
+      background-color: #fff;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    #invite.bg-v1 {
+      /* v1: older og-image (1280x633) - scale to fill, shift right */
+      background-image: url('network-bg-v1.png');
+      background-size: 200% auto;
+      background-position: 90% center;
+    }
+
+    #invite.bg-v2 {
+      /* v2: clear-map (1974x1434) - zoomed in, shift right */
+      background-image: url('network-bg-v2.png');
+      background-size: 220% auto;
+      background-position: 85% center;
+    }
+
+    /* Overlay for text readability */
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 580px;
+      height: 100%;
+      background: linear-gradient(to right,
+        rgba(255,255,255,0.96) 0%,
+        rgba(255,255,255,0.94) 50%,
+        rgba(255,255,255,0.75) 80%,
+        rgba(255,255,255,0) 100%
+      );
+    }
+
+    .content {
+      position: absolute;
+      top: 80px;
+      left: 60px;
+      z-index: 10;
+      width: 500px;
+    }
+
+    .eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 16px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: 88px;
+      font-weight: 400;
+      font-style: italic;
+      color: #1a1a1a;
+      line-height: 1.0;
+      margin-bottom: 24px;
+    }
+
+    .subtitle {
+      font-size: 26px;
+      color: #555;
+      line-height: 1.45;
+      max-width: 480px;
+      margin-bottom: 32px;
+    }
+
+    /* Streams section */
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 12px;
+    }
+
+    .grid {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .grid-item {
+      background: rgba(248, 247, 245, 0.92);
+      border-radius: 6px;
+      padding: 12px 18px;
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 22px;
+      font-weight: 500;
+      color: #1a1a1a;
+      border: 1px solid rgba(0,0,0,0.08);
+      width: auto;
+    }
+
+    .url {
+      font-family: 'DM Mono', monospace;
+      font-size: 18px;
+      font-weight: 500;
+      color: #1a1a1a;
+      letter-spacing: 0.02em;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <span class="label">Background:</span>
+    <button id="btn-v1" class="active" onclick="setBackground('v1')">V1 (og-image)</button>
+    <button id="btn-v2" onclick="setBackground('v2')">V2 (clear-map)</button>
+    <button class="export" onclick="exportPNG()">Export as PNG</button>
+  </div>
+
+  <div id="invite" class="bg-v1">
+    <div class="overlay"></div>
+
+    <div class="content">
+      <div class="eyebrow">Mapping AI Workshop</div>
+      <h1>Mapping<br>Party</h1>
+      <p class="subtitle">Help us map the people, organizations, and ideas shaping U.S. AI policy.</p>
+
+      <div class="section-label">Streams</div>
+      <div class="grid">
+        <div class="grid-item">Data Enrichment</div>
+        <div class="grid-item">Data Seeding</div>
+        <div class="grid-item">New Visualization Features</div>
+        <div class="grid-item">Research Insights</div>
+        <div class="grid-item">Outreach & Strategy</div>
+      </div>
+      <div class="url">mapping-ai.org</div>
+    </div>
+  </div>
+
+  <script>
+    function setBackground(version) {
+      const invite = document.getElementById('invite');
+      invite.className = 'bg-' + version;
+
+      document.getElementById('btn-v1').classList.toggle('active', version === 'v1');
+      document.getElementById('btn-v2').classList.toggle('active', version === 'v2');
+    }
+
+    function exportPNG() {
+      const invite = document.getElementById('invite');
+      const currentBg = invite.classList.contains('bg-v1') ? 'v1' : 'v2';
+
+      html2canvas(invite, {
+        scale: 1,
+        useCORS: true,
+        allowTaint: true,
+        width: 1080,
+        height: 1080
+      }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'partiful-invite-' + currentBg + '.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      });
+    }
+  </script>
+</body>
+</html>

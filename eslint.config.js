@@ -19,6 +19,7 @@ export default tseslint.config(
       // ensure-map-data, compute-positions) are linted via the scripts/ block
       // below — those run in deploy or handle prod data.
       'scripts/add-party-affiliations.js',
+      'scripts/categorize-execs.cjs',
       'scripts/analyze-*.js',
       'scripts/apply-importance.cjs',
       'scripts/check-*.js',
@@ -91,7 +92,15 @@ export default tseslint.config(
     },
     rules: {
       '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          destructuredArrayIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_',
+        },
+      ],
       'no-console': ['warn', { allow: ['warn', 'error'] }],
     },
   },

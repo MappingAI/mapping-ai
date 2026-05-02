@@ -1,0 +1,164 @@
+{
+  "meta": {
+    "timestamp": "2026-04-29T21:41:12.000Z",
+    "enriched": 6,
+    "rejected": 5,
+    "skipped": 4,
+    "errors": 0,
+    "cost": "Exa: 15 searches ($0.120) | Claude: 15 calls ($0.413) | Total: $0.533"
+  },
+  "ambiguous_entities": [
+    {
+      "id": 2036,
+      "name": "AMP",
+      "note": "The name 'AMP' matches multiple entities. Based on the search results, I'm matching this to AmpCode's 'Amp' - a frontier coding agent and AI-powered development tool. This is the most relevant entity for AI policy ecosystem mapping, as it develops AI tools for software development, while the other 'AMP' entities (Shopify optimization, fitness machine) are primarily AI consumers rather than shapers of the AI ecosystem."
+    },
+    {
+      "id": 2037,
+      "name": "Accel",
+      "note": "Multiple entities use 'Accel' name. Matched Accel.AI (Accel AI Institute), a 501(c)(3) nonprofit focused on AI ethics and social impact, founded 2016 in Berkeley. Distinguished from Accel Partners VC firm and other commercial AI companies with similar names."
+    },
+    {
+      "id": 2041,
+      "name": "Captions",
+      "note": "There are multiple apps named 'Captions' or 'Captions AI' in the search results. I matched with Captions by Mirage (captions.ai) as it's the primary, well-established AI video editing platform, not the smaller caption-generation apps by other developers."
+    },
+    {
+      "id": 2043,
+      "name": "Center on Emerging Risk Research",
+      "note": "Multiple organizations with similar names exist. Based on the search results, I matched this to the 'Center for Emerging Risk Research' from Switzerland that is described as an investment firm that invested in Anthropic, as this is the only entity with this exact name that directly shapes the AI ecosystem through funding."
+    },
+    {
+      "id": 2048,
+      "name": "Draper",
+      "note": "Multiple entities named 'Draper' exist. Based on AI ecosystem relevance, I matched this to Tim Draper and his associated organizations (Draper Associates, Draper University) as they are the most significant AI ecosystem shapers among the options."
+    },
+    {
+      "id": 2049,
+      "name": "Emergent Ventures",
+      "note": "Multiple distinct entities use 'Emergent Ventures': (1) US venture capital firm investing in AI enterprise software founded 2016, (2) Mercatus Center fellowship program launched 2018 with AI-specific tranche, (3) Australian corporate VC firm. Matched the US VC firm as it appears most prominent in sources and actively shapes AI ecosystem through investments."
+    }
+  ],
+  "entities": [
+    {
+      "id": 2036,
+      "name": "AMP",
+      "entity_type": "organization",
+      "category": "Deployers & Platforms",
+      "other_categories": null,
+      "notes": "Amp (AmpCode) is a frontier coding agent platform that provides AI-powered software development tools through both CLI and web interfaces. The company develops sophisticated AI agents that can write code, run tests, manage repositories, and perform complex software development tasks using state-of-the-art language models including Claude Opus 4.7, GPT-5.4, and other frontier models. Key features include multiple agent modes (smart, rush, deep), subagents for complex tasks, an 'oracle' system for advanced reasoning, and integration with popular development environments like VS Code, JetBrains, and others. The platform launched an ad-supported free tier called 'Amp Free' in 2026, making AI-powered coding accessible to more developers while maintaining premium paid tiers for unconstrained model usage. Amp shapes the AI ecosystem by democratizing access to advanced AI coding capabilities and pushing the boundaries of what AI agents can accomplish in software development, with a pay-as-you-go model that passes through LLM costs with zero markup for individuals. The company emphasizes staying on the 'frontier' of AI capabilities and regularly updates their platform to incorporate the latest models and techniques.",
+      "website": "https://ampcode.com/",
+      "twitter": "AmpCode",
+      "location": null,
+      "belief_regulatory_stance": null,
+      "belief_regulatory_stance_detail": null,
+      "belief_agi_timeline": null,
+      "belief_ai_risk": null,
+      "belief_evidence_source": null,
+      "notes_sources": "useamp.com; usegitai.com; ampcode.com; ampcode.com; ampcode.com; ampcode.com; help.useamp.com; amp.ai",
+      "notes_confidence": 4,
+      "ambiguous_name": true,
+      "ambiguity_note": "The name 'AMP' matches multiple entities. Based on the search results, I'm matching this to AmpCode's 'Amp' - a frontier coding agent and AI-powered development tool. This is the most relevant entity for AI policy ecosystem mapping, as it develops AI tools for software development, while the other 'AMP' entities (Shopify optimization, fitness machine) are primarily AI consumers rather than shapers of the AI ecosystem."
+    },
+    {
+      "id": 2037,
+      "name": "Accel",
+      "entity_type": "organization",
+      "category": "Ethics/Bias/Rights",
+      "other_categories": "Academic",
+      "notes": "Accel.AI (Accel AI Institute) is a 501(c)(3) nonprofit research organization founded in 2016 in Berkeley, California, with a mission to lower barriers to entry in engineering artificial intelligence. The organization employs 9 people and focuses on integrating AI and Social Impact through consulting, workshops, and research on ethical AI development and applied AI engineering. Their target audience includes underrepresented groups in tech, social justice advocates, nonprofits, social impact startups, and those experiencing job loss due to automation. The organization conducts AI ethics research, provides consulting services on AI integration, and offers educational workshops on ethical AI development. They are also known as LatinX in AI (LXAI) and operate programs aimed at building AI infrastructure and readiness, particularly in regions like Latin America. Founded by Laura Montoya, the organization has offices in Berkeley, San Francisco, and Oakland, with international presence in Venezuela, Brazil, and the United Kingdom.",
+      "website": "https://accel.ai/",
+      "twitter": null,
+      "location": "Berkeley, California",
+      "belief_regulatory_stance": null,
+      "belief_regulatory_stance_detail": null,
+      "belief_agi_timeline": null,
+      "belief_ai_risk": null,
+      "belief_evidence_source": null,
+      "notes_sources": "accel.ai; www.crunchbase.com; www.accel-ai.com; accelai.github.io; atoms.accel.com; www.accel-ai.tech; www.accel.com; www.linkedin.com",
+      "notes_confidence": 4,
+      "ambiguous_name": true,
+      "ambiguity_note": "Multiple entities use 'Accel' name. Matched Accel.AI (Accel AI Institute), a 501(c)(3) nonprofit focused on AI ethics and social impact, founded 2016 in Berkeley. Distinguished from Accel Partners VC firm and other commercial AI companies with similar names."
+    },
+    {
+      "id": 2041,
+      "name": "Captions",
+      "entity_type": "organization",
+      "category": "Deployers & Platforms",
+      "other_categories": null,
+      "notes": "Captions is an AI video editing and generation platform built by Mirage in New York City, founded in 2021. The company has developed a comprehensive AI-powered video creation app that has been downloaded over 10 million times and is used by creators across TikTok, Instagram, and YouTube. Their flagship features include AI-powered eye contact correction, automatic styled captions, AI avatar creation (AI Twin), voice translation with lip sync across 29 languages, and a proprietary AI model called Mirage video that delivers realistic footage generation. The platform offers advanced AI editing capabilities including AI Edit V3 (a fully rebuilt editing engine), chat-based editing through text prompts, automatic transcription in 91+ languages, and AI dubbing services. Captions shapes the AI ecosystem by democratizing professional video production through mobile-first AI tools, making sophisticated video editing accessible to creators without technical expertise. The company recently merged Mirage Studio with Captions and offers both mobile apps and web-based editing tools, positioning itself as a leading AI-native video production platform.",
+      "website": "https://captions.ai/",
+      "twitter": null,
+      "location": "New York City",
+      "belief_regulatory_stance": null,
+      "belief_regulatory_stance_detail": null,
+      "belief_agi_timeline": null,
+      "belief_ai_risk": null,
+      "belief_evidence_source": null,
+      "notes_sources": "captions.ai; www.captions.ai; captions.ai; captions.ai; itirupati.com; apps.apple.com; apps.apple.com; captions.ai",
+      "notes_confidence": 4,
+      "ambiguous_name": true,
+      "ambiguity_note": "There are multiple apps named 'Captions' or 'Captions AI' in the search results. I matched with Captions by Mirage (captions.ai) as it's the primary, well-established AI video editing platform, not the smaller caption-generation apps by other developers."
+    },
+    {
+      "id": 2043,
+      "name": "Center on Emerging Risk Research",
+      "entity_type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "other_categories": null,
+      "notes": "The Center for Emerging Risk Research is a for-profit investment firm based in Basel, Switzerland, founded in 2019. The organization conducts and coordinates research on how to improve the quality of life of future generations as comprehensively as possible. The center has made significant investments in the AI sector, notably participating as an investor in Anthropic's $124 million Series A funding round in May 2021, alongside four other investors. This investment demonstrates their direct involvement in funding frontier AI companies and their commitment to emerging technology risks. The organization operates in the artificial intelligence industry according to their business classification and maintains an active operational status. Their involvement in funding Anthropic, a major AI safety-focused company, positions them as a key player in the AI ecosystem's financial landscape. The center can be contacted at info@emergingrisk.ch and maintains a website at emergingrisk.ch.",
+      "website": "https://emergingrisk.ch/",
+      "twitter": null,
+      "location": "Basel, Switzerland",
+      "belief_regulatory_stance": null,
+      "belief_regulatory_stance_detail": null,
+      "belief_agi_timeline": null,
+      "belief_ai_risk": null,
+      "belief_evidence_source": null,
+      "notes_sources": "www.crunchbase.com; www.carma.org; rand.org; www.mq.edu.au; www.longtermrisk.org; www.cser.ac.uk; ornl.gov; www.longtermresilience.org",
+      "notes_confidence": 3,
+      "ambiguous_name": true,
+      "ambiguity_note": "Multiple organizations with similar names exist. Based on the search results, I matched this to the 'Center for Emerging Risk Research' from Switzerland that is described as an investment firm that invested in Anthropic, as this is the only entity with this exact name that directly shapes the AI ecosystem through funding."
+    },
+    {
+      "id": 2048,
+      "name": "Draper",
+      "entity_type": "person",
+      "category": "Investor",
+      "other_categories": "Cultural figure",
+      "notes": "Tim Draper is a prominent venture capitalist and founder of Draper Associates, with over 40 years of experience funding transformative technology companies. He has built a reputation for bold, contrarian bets including early investments in SpaceX, Tesla, Coinbase, Skype, and Twitch, though also notable missteps like Theranos. Draper actively shapes the AI ecosystem through his venture capital investments, with his portfolio companies leveraging AI, robotics, and automation technology across multiple sectors including healthcare diagnostics and drug discovery platforms. He founded Draper University, which he calls a 'human accelerator,' and launched Draper TV in 2024 featuring a global pitch competition. Draper extensively uses AI tools in his operations, including digital twins for entrepreneur interactions, AI-powered pitch deck evaluation systems, facial expression analysis tools, and voice analysis for identifying entrepreneurial potential. He views the current AI boom through his 'Draper iS curve' framework, comparing it to previous technology cycles and believing AI is currently at the peak hype phase before eventual massive growth, particularly in robotics applications.",
+      "website": "https://www.draper.vc/",
+      "twitter": null,
+      "location": null,
+      "belief_regulatory_stance": null,
+      "belief_regulatory_stance_detail": null,
+      "belief_agi_timeline": null,
+      "belief_ai_risk": "Overstated",
+      "belief_evidence_source": "Explicitly stated",
+      "notes_sources": "draper.live; draperchat.com; yes.finechat.ai; draper.polsia.app; www.draper.com; www.draper.vc; news.crunchbase.com; pitchtimdraper.com",
+      "notes_confidence": 4,
+      "ambiguous_name": true,
+      "ambiguity_note": "Multiple entities named 'Draper' exist. Based on AI ecosystem relevance, I matched this to Tim Draper and his associated organizations (Draper Associates, Draper University) as they are the most significant AI ecosystem shapers among the options."
+    },
+    {
+      "id": 2049,
+      "name": "Emergent Ventures",
+      "entity_type": "organization",
+      "category": "VC/Capital/Philanthropy",
+      "other_categories": null,
+      "notes": "Emergent Ventures is a Silicon Valley-based early-stage venture capital firm founded in 2016 that specializes in seed investments in AI-powered enterprise software and B2B solutions. The firm manages over $200M and is headquartered in San Mateo, California, with additional presence in India, United Kingdom, and Canada. Key achievements include leading pre-seed rounds for companies like Observe.ai in 2017 before they had a working product, which later became a Forbes AI 50 company, and backing companies like Acceldata and Prezent.ai that serve Fortune 2000 clients. Emergent shapes the AI ecosystem by investing in enterprise AI, cloud infrastructure, and dev tools, with a portfolio spanning AI-powered contact centers, data observability platforms, and AI agents for various business functions. The firm actively engages in thought leadership through events like the AI CXO Summit, bringing together enterprise executives and AI founders to discuss enterprise AI adoption. Their investment approach focuses on pre-seed to early scaling stages, working closely with entrepreneurs to help them reach next milestones faster through their network of 100+ influential founders and executives.",
+      "website": "https://emergent.vc/",
+      "twitter": null,
+      "location": "San Mateo, California, United States",
+      "belief_regulatory_stance": null,
+      "belief_regulatory_stance_detail": null,
+      "belief_agi_timeline": null,
+      "belief_ai_risk": null,
+      "belief_evidence_source": null,
+      "notes_sources": "emergent.vc; www.mercatus.org; www.mercatus.org; www.emergent.vc; emergentventures.vc; marginalrevolution.com; www.vcbeast.com; emergentventures.vc",
+      "notes_confidence": 4,
+      "ambiguous_name": true,
+      "ambiguity_note": "Multiple distinct entities use 'Emergent Ventures': (1) US venture capital firm investing in AI enterprise software founded 2016, (2) Mercatus Center fellowship program launched 2018 with AI-specific tranche, (3) Australian corporate VC firm. Matched the US VC firm as it appears most prominent in sources and actively shapes AI ecosystem through investments."
+    }
+  ]
+}
