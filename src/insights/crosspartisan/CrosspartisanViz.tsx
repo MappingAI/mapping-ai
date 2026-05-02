@@ -370,7 +370,10 @@ function BeeswarmStance({ data }: { data: CrosspartisanEntity[] }) {
 }
 
 /* ────────────────────────────────────────────
-   Horseshoe: U-shaped arc layout (policymakers only)
+   Horseshoe: U-shaped curve layout (policymakers only)
+   Left arm = Democrats, right arm = Republicans.
+   Accelerate at the top (arms wide apart), Precautionary
+   at the bottom (arms converge) to show the horseshoe effect.
    ──────────────────────────────────────────── */
 function HorseshoePlot({ data }: { data: CrosspartisanEntity[] }) {
   const ref = useRef<HTMLDivElement>(null)
@@ -381,11 +384,13 @@ function HorseshoePlot({ data }: { data: CrosspartisanEntity[] }) {
     container.innerHTML = ''
 
     const W = container.clientWidth || 700
-    const rOuter = Math.min(W * 0.38, 260)
-    const rInner = rOuter * 0.45
+    const topPad = 50
+    const bottomPad = 30
+    const sidePad = 90
+    const spread = (W - sidePad * 2) * 0.44
+    const curveH = Math.min(spread * 1.6, 380)
+    const H = topPad + curveH + bottomPad
     const cx = W / 2
-    const cy = rOuter * 0.35
-    const H = cy + rOuter + 35
 
     const tip = makeTooltip()
 
@@ -393,74 +398,100 @@ function HorseshoePlot({ data }: { data: CrosspartisanEntity[] }) {
 
     const filtered = data.filter((e) => e.entity_type === 'person' && e.party && e.aggregate_stance_score != null)
 
-    const partyAngle = (p: CrosspartisanEntity): number => {
-      const stance = p.aggregate_stance_score!
-      const t = (stance - 1) / 5
-      if (p.party === 'D') return Math.PI + t * 0.5 * Math.PI
-      return 2 * Math.PI - t * 0.5 * Math.PI
+    // t: 0 (Accelerate, top) → 1 (Precautionary, bottom)
+    const armX = (party: string, t: number) => {
+      const sign = party === 'D' ? -1 : 1
+      return cx + sign * spread * Math.cos((t * Math.PI) / 2)
     }
+    const armY = (t: number) => topPad + curveH * Math.sin((t * Math.PI) / 2)
 
-    const stanceRadius = (stance: number) => {
-      const t = (stance - 1) / 5
-      return rInner + (1 - t) * (rOuter - rInner)
-    }
-
-    for (let s = 1; s <= 6; s++) {
-      const r = stanceRadius(s)
-      const opacity = 0.15 + ((6 - s) / 5) * 0.35
+    // Draw guide curves for each arm
+    const lineGen = d3.line().curve(d3.curveBasis)
+    const steps = 50
+    for (const party of ['D', 'R'] as const) {
+      const pts: [number, number][] = []
+      for (let i = 0; i <= steps; i++) {
+        const t = i / steps
+        pts.push([armX(party, t), armY(t)])
+      }
       svg
         .append('path')
-        .attr(
-          'd',
-          d3
-            .arc()
-            .innerRadius(r)
-            .outerRadius(r + 1)
-            .startAngle(-Math.PI / 2)
-            .endAngle(Math.PI / 2)(),
-        )
-        .attr('transform', `translate(${cx},${cy})`)
-        .attr('fill', `rgba(0,0,0,${opacity})`)
-        .attr('stroke', 'none')
+        .attr('d', lineGen(pts))
+        .attr('fill', 'none')
+        .attr('stroke', PARTY_COLOR[party])
+        .attr('stroke-opacity', 0.12)
+        .attr('stroke-width', spread * 0.38)
+        .attr('stroke-linecap', 'round')
     }
 
-    // Stance legend (vertical stack, top-left, matching ring opacity)
-    const legendG = svg.append('g').attr('transform', `translate(12, 8)`)
+    // Thin center-line for each arm
+    for (const party of ['D', 'R'] as const) {
+      const pts: [number, number][] = []
+      for (let i = 0; i <= steps; i++) {
+        const t = i / steps
+        pts.push([armX(party, t), armY(t)])
+      }
+      svg
+        .append('path')
+        .attr('d', lineGen(pts))
+        .attr('fill', 'none')
+        .attr('stroke', PARTY_COLOR[party])
+        .attr('stroke-opacity', 0.25)
+        .attr('stroke-width', 1.5)
+        .attr('stroke-dasharray', '4,3')
+    }
+
+    // Stance labels on both sides with horizontal guide lines
     STANCE_LABELS.forEach((label, i) => {
-      const opacity = 0.15 + ((5 - i) / 5) * 0.35
-      legendG
+      const t = i / (STANCE_LABELS.length - 1)
+      const y = armY(t)
+      svg
         .append('line')
-        .attr('x1', 0)
-        .attr('x2', 14)
-        .attr('y1', i * 14 + 5)
-        .attr('y2', i * 14 + 5)
-        .attr('stroke', `rgba(0,0,0,${opacity})`)
-        .attr('stroke-width', 2)
-      legendG
+        .attr('x1', sidePad - 4)
+        .attr('y1', y)
+        .attr('x2', W - sidePad + 4)
+        .attr('y2', y)
+        .attr('stroke', '#d0d0d0')
+        .attr('stroke-width', 0.75)
+        .attr('stroke-dasharray', '2,4')
+      svg
         .append('text')
-        .attr('x', 18)
-        .attr('y', i * 14 + 8)
+        .attr('x', sidePad - 8)
+        .attr('y', y)
+        .attr('text-anchor', 'end')
+        .attr('dominant-baseline', 'middle')
+        .attr('font-family', "'DM Mono', monospace")
+        .attr('font-size', 8)
+        .attr('fill', '#999')
+        .text(label)
+      svg
+        .append('text')
+        .attr('x', W - sidePad + 8)
+        .attr('y', y)
+        .attr('text-anchor', 'start')
+        .attr('dominant-baseline', 'middle')
         .attr('font-family', "'DM Mono', monospace")
         .attr('font-size', 8)
         .attr('fill', '#999')
         .text(label)
     })
 
+    // Position nodes along the horseshoe
     const nodes = filtered.map((p) => {
-      const angle = partyAngle(p)
-      const r = stanceRadius(p.aggregate_stance_score!)
-      const x = cx + r * Math.cos(angle)
-      const y = cy - r * Math.sin(angle)
+      const stance = p.aggregate_stance_score!
+      const t = (stance - 1) / 5
+      const x = armX(p.party!, t)
+      const y = armY(t)
       return { ...p, x, y, _origX: x, _origY: y }
     })
 
     const sim = d3
       .forceSimulation(nodes)
-      .force('x', d3.forceX((d: { _origX: number }) => d._origX).strength(0.6))
-      .force('y', d3.forceY((d: { _origY: number }) => d._origY).strength(0.6))
-      .force('collide', d3.forceCollide(5))
+      .force('x', d3.forceX((d: { _origX: number }) => d._origX).strength(0.7))
+      .force('y', d3.forceY((d: { _origY: number }) => d._origY).strength(0.7))
+      .force('collide', d3.forceCollide(5.5))
       .stop()
-    for (let i = 0; i < 150; i++) sim.tick()
+    for (let i = 0; i < 200; i++) sim.tick()
 
     svg
       .selectAll('circle.node')
@@ -472,7 +503,7 @@ function HorseshoePlot({ data }: { data: CrosspartisanEntity[] }) {
       .attr('cy', (d: { y: number }) => d.y)
       .attr('r', 4.5)
       .attr('fill', (d: CrosspartisanEntity) => PARTY_COLOR[d.party || ''] || '#999')
-      .attr('opacity', (d: CrosspartisanEntity) => (d.party ? 0.85 : 0.5))
+      .attr('opacity', 0.85)
       .attr('stroke', '#fff')
       .attr('stroke-width', 1)
       .style('cursor', 'pointer')
@@ -481,10 +512,11 @@ function HorseshoePlot({ data }: { data: CrosspartisanEntity[] }) {
       .on('mouseout', () => tip.hide())
       .on('click', (_: MouseEvent, d: CrosspartisanEntity) => emitEntitySelect(d.entity_id))
 
+    // Party labels at top of each arm
     svg
       .append('text')
-      .attr('x', cx - rOuter * 0.65)
-      .attr('y', cy - 8)
+      .attr('x', armX('D', 0))
+      .attr('y', topPad - 16)
       .attr('text-anchor', 'middle')
       .attr('font-family', "'DM Mono', monospace")
       .attr('font-size', 11)
@@ -493,8 +525,8 @@ function HorseshoePlot({ data }: { data: CrosspartisanEntity[] }) {
       .text('Democrats')
     svg
       .append('text')
-      .attr('x', cx + rOuter * 0.65)
-      .attr('y', cy - 8)
+      .attr('x', armX('R', 0))
+      .attr('y', topPad - 16)
       .attr('text-anchor', 'middle')
       .attr('font-family', "'DM Mono', monospace")
       .attr('font-size', 11)
@@ -502,15 +534,16 @@ function HorseshoePlot({ data }: { data: CrosspartisanEntity[] }) {
       .attr('fill', PARTY_COLOR.R)
       .text('Republicans')
 
+    // Convergence annotation at bottom
     svg
       .append('text')
       .attr('x', cx)
-      .attr('y', cy + rOuter + 22)
+      .attr('y', topPad + curveH + 16)
       .attr('text-anchor', 'middle')
       .attr('font-family', "'DM Mono', monospace")
       .attr('font-size', 9)
       .attr('fill', '#999')
-      .text('↑ Precautionary extremes converge here ↑')
+      .text('← precautionary positions converge →')
   }, [data])
 
   return <div ref={ref} />
