@@ -50,8 +50,7 @@ export function App() {
         {/* Contribution guide callout */}
         <div className="mb-8 px-4 py-3 bg-[#f0eeeb] border border-[#ddd] rounded flex items-center justify-between gap-4 max-[600px]:flex-col max-[600px]:items-start">
           <p className="text-[14px] leading-relaxed text-[#444] m-0">
-            Want to contribute code, research, or outreach? See our full contribution guide with six different
-            streams.
+            Want to contribute code, research, or outreach? See our full contribution guide with six different streams.
           </p>
           <a
             href="/workshop"
