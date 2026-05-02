@@ -68,6 +68,7 @@ body {
 .nav-links {
   display: flex;
   gap: 2rem;
+  margin-right: 2.5rem;
 }
 .nav-links a {
   font-family: var(--mono);
@@ -899,8 +900,12 @@ body:has(.detail-panel.open) #contribute-btn {
   height: 1.5px;
   background: var(--text-1);
 }
-/* Theme toggle */
+/* Theme toggle — absolutely positioned so it doesn't shift nav link alignment */
 .theme-toggle {
+  position: absolute;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
   background: none;
   border: 1px solid var(--line);
   border-radius: 4px;
