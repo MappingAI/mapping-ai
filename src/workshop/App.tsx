@@ -212,9 +212,9 @@ export function App() {
           The database currently has about <strong>709 people</strong>, <strong>734 organizations</strong>, and{' '}
           <strong>161 resources</strong>, linked by <strong>2,228 relationships</strong>. Each entity is enriched with
           belief dimensions (regulatory stance, AGI timeline, AI risk level), sourced notes, and relationship edges.
-          We&rsquo;ve published initial research findings on the{' '}
+          We&rsquo;ve published research findings on the{' '}
           <ExtLink href="https://mapping-ai.org/insights">insights page</ExtLink>, including crosspartisan convergence
-          analysis and an AGI definition space mapping.
+          analysis, AGI definition space mapping, outlier stance detection, and bridge builder network profiles.
         </p>
 
         <p className="mb-4">
@@ -369,9 +369,9 @@ export function App() {
             <ExtLink href="https://mapping-ai.org/map">The map</ExtLink>
           </strong>{' '}
           is where most of the complexity lives. Try searching for people and organizations. Click nodes to see their
-          detail panel. Toggle between the Network and Plot views using the buttons at the top. Try the filter chips on
-          the left. Zoom in and out. Collapse and expand the controls sidebar. Open the contribute panel from the map
-          page and see if it plays nicely with the sidebar.
+          detail panel. Hover over edges to see relationship details. Toggle between the Network and Plot views using
+          the buttons at the top. Try the filter chips on the left. Zoom in and out. Collapse and expand the controls
+          sidebar. Open the contribute panel from the map page and see if it plays nicely with the sidebar.
         </p>
 
         <p className="mb-4">
@@ -806,11 +806,12 @@ pnpm exec vitest run       # Run tests`}</Pre>
         {/* STREAM 6 */}
         <StreamHeading id="stream-6">Stream 6: Data Viz &amp; Research Insights</StreamHeading>
         <p className="mb-4">
-          We&rsquo;ve already published five research insights on the{' '}
-          <ExtLink href="https://mapping-ai.org/insights">insights page</ExtLink>: the belief space (regulatory stance
-          vs. AGI timeline vs. risk level), threat model co-occurrence patterns, network connectivity across categories,
-          crosspartisan convergence on AI policy, and the AGI definition space. There&rsquo;s much more to explore in
-          the data, and we&rsquo;re looking for contributors who want to dig in and produce new findings.
+          We&rsquo;ve published seven research insights on the{' '}
+          <ExtLink href="https://mapping-ai.org/insights">insights page</ExtLink> so far: the belief space (regulatory
+          stance vs. AGI timeline vs. risk level), threat model co-occurrence, network connectivity, crosspartisan
+          convergence, the AGI definition space, outlier stance detection, and bridge builder network profiles.
+          There&rsquo;s much more to explore, and we&rsquo;re looking for contributors who want to dig in and produce
+          new findings.
         </p>
 
         <H4>Getting the data</H4>

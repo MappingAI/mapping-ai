@@ -303,11 +303,13 @@ export function App() {
           className="grid grid-cols-3 max-[600px]:grid-cols-2 gap-x-6 gap-y-1.5 mb-4 text-[16.5px]"
         >
           {[
+            'Alor Sahoo',
             'April Chen',
             'Caleb Strom',
             'Connor Mack',
             'Eric Bower',
             'Kayla Huang',
+            'Kenneth Cox',
             'Kunal Handa',
             'Kyle Kabasares',
             'Luke Clancy',
