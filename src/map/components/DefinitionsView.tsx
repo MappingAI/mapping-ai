@@ -400,11 +400,11 @@ function ClusterMapView({
       x: xScale(c.cx ?? 0),
       y: yScale(c.cy ?? 0),
       count: c.count as number,
-      radius: Math.sqrt(c.count) * 7 + 20,
+      radius: Math.sqrt(c.count) * 10 + 25,
     }))
 
     // Push overlapping cluster centers apart (iterative repulsion)
-    const GAP = 60
+    const GAP = 80
     for (let iter = 0; iter < 100; iter++) {
       let moved = false
       for (let i = 0; i < centers.length; i++) {
@@ -510,7 +510,7 @@ function ClusterMapView({
         .attr('text-anchor', dx < 0 ? 'end' : dx > 0 ? 'start' : 'middle')
         .attr('dominant-baseline', dy < 0 ? 'auto' : 'hanging')
         .attr('font-family', "'DM Mono', monospace")
-        .attr('font-size', 10)
+        .attr('font-size', 13)
         .attr('fill', CLUSTER_COLORS[c.id] || '#888')
         .attr('font-weight', 500)
         .attr('opacity', 0.8)
@@ -526,11 +526,11 @@ function ClusterMapView({
       .attr('class', 'entity')
       .attr('cx', (d: { x: number }) => d.x)
       .attr('cy', (d: { y: number }) => d.y)
-      .attr('r', 5)
+      .attr('r', 8)
       .attr('fill', (d: AgiPoint) => getPointColor(d, colorModeRef.current))
       .attr('opacity', 0.85)
       .attr('stroke', '#fff')
-      .attr('stroke-width', 1)
+      .attr('stroke-width', 1.5)
       .style('cursor', 'pointer')
       .on('mouseover', (evt: MouseEvent, d: AgiPoint) => showTip(tipEl, evt, buildTooltipHtml(d, colorModeRef.current)))
       .on('mousemove', (evt: MouseEvent) => moveTip(tipEl, evt))
@@ -555,7 +555,7 @@ function ClusterMapView({
           .forceY((d: AgiPoint & { cluster_id: string }) => clusterCenters.get(d.cluster_id)?.y ?? workH / 2)
           .strength(0.3),
       )
-      .force('collide', d3.forceCollide(6.5))
+      .force('collide', d3.forceCollide(10))
       .force('charge', d3.forceManyBody().strength(-2))
       .alpha(0.4)
       .alphaDecay(0.025)
