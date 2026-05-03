@@ -1195,6 +1195,29 @@ function TrendsView({ data }: { data: AgiData }) {
       >
         By definition cluster
       </div>
+      <div style={{ display: 'flex', gap: '16px', marginBottom: '8px', flexWrap: 'wrap' }}>
+        {beliefDims.map((dim) => {
+          const scaleKey = dim.key.replace('_score', '')
+          const sc = BELIEF_SCALES[scaleKey]
+          if (!sc) return null
+          return (
+            <div key={dim.key} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <span style={{ fontFamily: 'var(--mono)', fontSize: '8px', color: 'var(--text-3)' }}>{sc.labels[0]}</span>
+              <div
+                style={{
+                  width: '40px',
+                  height: '4px',
+                  borderRadius: '2px',
+                  background: `linear-gradient(to right, ${sc.colors[0]}, ${sc.colors[sc.colors.length - 1]})`,
+                }}
+              />
+              <span style={{ fontFamily: 'var(--mono)', fontSize: '8px', color: 'var(--text-3)' }}>
+                {sc.labels[sc.labels.length - 1]}
+              </span>
+            </div>
+          )
+        })}
+      </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
         {clusters.map((c) => {
           const beliefs = clusterBeliefSeries[c.id]
