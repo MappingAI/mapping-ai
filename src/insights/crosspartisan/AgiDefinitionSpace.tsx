@@ -204,23 +204,60 @@ function ClusterMapView({
     const cxExtent = d3.extent(clusters, (c: ClusterInfo & { cx?: number }) => c.cx ?? 0) as [number, number]
     const cyExtent = d3.extent(clusters, (c: ClusterInfo & { cy?: number }) => c.cy ?? 0) as [number, number]
 
-    // Map cluster centers to a working space with generous room
-    const workW = 800
-    const workPad = 120
+    const workW = 1200
+    const workPad = 180
     const xScale = d3
       .scaleLinear()
       .domain([cxExtent[0] - 1, cxExtent[1] + 1])
       .range([workPad, workW - workPad])
-    const workH = 600
+    const workH = 900
     const yScale = d3
       .scaleLinear()
       .domain([cyExtent[0] - 1, cyExtent[1] + 1])
       .range([workH - workPad, workPad])
 
+    // Initial positions from UMAP centroids
+    const centers = clusters.map((c: ClusterInfo & { cx?: number; cy?: number }) => ({
+      id: c.id,
+      x: xScale(c.cx ?? 0),
+      y: yScale(c.cy ?? 0),
+      count: c.count,
+      radius: Math.sqrt(c.count) * 8 + 20,
+    }))
+
+    // Push overlapping cluster centers apart
+    const GAP = 50
+    for (let iter = 0; iter < 100; iter++) {
+      let moved = false
+      for (let i = 0; i < centers.length; i++) {
+        for (let j = i + 1; j < centers.length; j++) {
+          const a = centers[i]!
+          const b = centers[j]!
+          const dx = b.x - a.x
+          const dy = b.y - a.y
+          const dist = Math.sqrt(dx * dx + dy * dy)
+          const minDist = a.radius + b.radius + GAP
+          if (dist < minDist && dist > 0) {
+            const push = (minDist - dist) / 2
+            const nx = dx / dist
+            const ny = dy / dist
+            a.x -= nx * push
+            a.y -= ny * push
+            b.x += nx * push
+            b.y += ny * push
+            moved = true
+          }
+        }
+      }
+      if (!moved) break
+    }
+
     const clusterCenters = new Map<string, { x: number; y: number; count: number }>()
-    clusters.forEach((c: ClusterInfo & { cx?: number; cy?: number }) => {
-      clusterCenters.set(c.id, { x: xScale(c.cx ?? 0), y: yScale(c.cy ?? 0), count: c.count })
+    centers.forEach((c) => {
+      clusterCenters.set(c.id, { x: c.x, y: c.y, count: c.count })
     })
+    const clusterRadii = new Map<string, number>()
+    centers.forEach((c) => clusterRadii.set(c.id, c.radius))
 
     const nodes = data.points
       .filter((p) => p.cluster_id && clusterCenters.has(p.cluster_id))
@@ -245,23 +282,20 @@ function ClusterMapView({
           .forceY((d: AgiPoint & { cluster_id: string }) => clusterCenters.get(d.cluster_id)?.y ?? workH / 2)
           .strength(0.3),
       )
-      .force('collide', d3.forceCollide(6))
+      .force('collide', d3.forceCollide(7))
       .force('charge', d3.forceManyBody().strength(-2))
       .stop()
     for (let i = 0; i < 200; i++) sim.tick()
 
-    // Compute actual bounds of all nodes
-    const nodeMinX = d3.min(nodes, (d: { x: number }) => d.x) - 10
-    const nodeMaxX = d3.max(nodes, (d: { x: number }) => d.x) + 10
-    const nodeMinY = d3.min(nodes, (d: { y: number }) => d.y) - 10
-    const nodeMaxY = d3.max(nodes, (d: { y: number }) => d.y) + 10
-
-    // Add label margin (labels extend ~120px from cluster edges)
-    const labelMargin = 130
-    const vbX = nodeMinX - labelMargin
-    const vbY = nodeMinY - 30
-    const vbW = nodeMaxX - nodeMinX + labelMargin * 2
-    const vbH = nodeMaxY - nodeMinY + 60
+    // ViewBox from cluster centers (stable, accounts for labels)
+    const allCx = [...clusterCenters.values()].map((c) => c.x)
+    const allCy = [...clusterCenters.values()].map((c) => c.y)
+    const maxRadius = Math.max(...centers.map((c) => c.radius))
+    const labelMargin = 180
+    const vbX = Math.min(...allCx) - maxRadius - labelMargin
+    const vbY = Math.min(...allCy) - maxRadius - 30
+    const vbW = Math.max(...allCx) - Math.min(...allCx) + maxRadius * 2 + labelMargin * 2
+    const vbH = Math.max(...allCy) - Math.min(...allCy) + maxRadius * 2 + 60
     const H = W * (vbH / vbW)
 
     const svg = d3
@@ -284,23 +318,18 @@ function ClusterMapView({
       document.body.appendChild(tipEl)
     }
 
-    // Cluster labels: find bounding box of each cluster's nodes, place label outside
+    const midX = (Math.min(...allCx) + Math.max(...allCx)) / 2
+    const midY = (Math.min(...allCy) + Math.max(...allCy)) / 2
+
+    // Cluster labels positioned from stable centers
     clusters.forEach((c: ClusterInfo & { cx?: number; cy?: number }) => {
       const center = clusterCenters.get(c.id)
       if (!center) return
-      const clusterNodes = nodes.filter((n: AgiPoint) => n.cluster_id === c.id)
-      if (clusterNodes.length === 0) return
-
-      const maxR =
-        d3.max(clusterNodes, (n: { x: number; y: number }) =>
-          Math.sqrt((n.x - center.x) ** 2 + (n.y - center.y) ** 2),
-        ) || 20
-      const midX = (nodeMinX + nodeMaxX) / 2
-      const midY = (nodeMinY + nodeMaxY) / 2
+      const r = clusterRadii.get(c.id) || 40
       const dx = center.x - midX
       const dy = center.y - midY
       const dist = Math.sqrt(dx * dx + dy * dy) || 1
-      const labelOffset = maxR + 18
+      const labelOffset = r + 14
       const labelX = center.x + (dx / dist) * labelOffset
       const labelY = center.y + (dy / dist) * labelOffset
 
