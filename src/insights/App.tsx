@@ -1417,15 +1417,14 @@ export function App() {
         </Para>
 
         <Para>
-          This scatter plot clusters 240 entities by the <em>semantic similarity</em> of their stated AGI definitions.
-          Each definition was embedded using Voyage AI and projected to 2D with UMAP. Position encodes meaning: entities
-          with similar definitions cluster together. Color encodes category. Click any dot to see the full definition
-          and its source.
+          This scatter plot clusters AGI definitions by their <em>semantic similarity</em>. Each definition was embedded
+          using Voyage AI and projected to 2D with UMAP. Position encodes meaning: entities with similar definitions
+          cluster together. Color encodes category. Click any dot to see the full definition and its source.
         </Para>
 
         <ChartContainer
-          title="AGI definition space (240 entities)"
-          source="Source: AGI definition claims from enrichment pipeline. Embeddings: Voyage AI voyage-3. Projection: UMAP."
+          title=""
+          source="Source: 372 sourced AGI definitions across 201 people and 171 organizations. Each definition backed by a verbatim quote and URL."
         >
           <AgiDefinitionSpace />
         </ChartContainer>

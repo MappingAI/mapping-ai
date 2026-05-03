@@ -200,68 +200,125 @@ function ClusterMapView({
     const W = container.clientWidth || 700
     const clusters = data.clusters || []
 
-    // Layout in a virtual coordinate space first, then fit to container
+    // Layout in a virtual coordinate space
+    const workW = 900
+    const workH = 700
+    const workPad = 140
+
+    // Get UMAP coordinates for clusters
     const cxExtent = d3.extent(clusters, (c: ClusterInfo & { cx?: number }) => c.cx ?? 0) as [number, number]
     const cyExtent = d3.extent(clusters, (c: ClusterInfo & { cy?: number }) => c.cy ?? 0) as [number, number]
 
-    // Map cluster centers to a working space with generous room
-    const workW = 800
-    const workPad = 120
+    // Scale UMAP coordinates to working space
     const xScale = d3
       .scaleLinear()
-      .domain([cxExtent[0] - 1, cxExtent[1] + 1])
+      .domain([cxExtent[0] - 0.5, cxExtent[1] + 0.5])
       .range([workPad, workW - workPad])
-    const workH = 600
     const yScale = d3
       .scaleLinear()
-      .domain([cyExtent[0] - 1, cyExtent[1] + 1])
+      .domain([cyExtent[0] - 0.5, cyExtent[1] + 0.5])
       .range([workH - workPad, workPad])
 
-    const clusterCenters = new Map<string, { x: number; y: number; count: number }>()
-    clusters.forEach((c: ClusterInfo & { cx?: number; cy?: number }) => {
-      clusterCenters.set(c.id, { x: xScale(c.cx ?? 0), y: yScale(c.cy ?? 0), count: c.count })
+    // Compute cluster radius based on node count
+    function clusterRadius(count: number) {
+      const nodeR = 5
+      const spacing = nodeR * 2.8
+      const rings = Math.ceil((-3 + Math.sqrt(9 + 12 * (count - 1))) / 6) || 1
+      return rings * spacing + nodeR
+    }
+
+    // Create cluster simulation nodes for force layout
+    interface ClusterNode {
+      id: string
+      label: string
+      count: number
+      x: number
+      y: number
+      targetX: number
+      targetY: number
+      radius: number
+    }
+    const clusterNodes: ClusterNode[] = clusters.map((c: ClusterInfo & { cx?: number; cy?: number }) => ({
+      id: c.id,
+      label: c.label,
+      count: c.count,
+      x: xScale(c.cx ?? 0),
+      y: yScale(c.cy ?? 0),
+      targetX: xScale(c.cx ?? 0),
+      targetY: yScale(c.cy ?? 0),
+      radius: clusterRadius(c.count),
+    }))
+
+    // Run force simulation to spread clusters apart while respecting UMAP positions
+    const simulation = d3
+      .forceSimulation(clusterNodes)
+      .force('x', d3.forceX((d: ClusterNode) => d.targetX).strength(0.3))
+      .force('y', d3.forceY((d: ClusterNode) => d.targetY).strength(0.3))
+      .force(
+        'collide',
+        d3.forceCollide((d: ClusterNode) => d.radius + 35).strength(0.8),
+      )
+      .stop()
+
+    // Run simulation synchronously
+    for (let i = 0; i < 150; i++) simulation.tick()
+
+    // Pack nodes within each cluster using hexagonal grid
+    function hexPack(count: number, cx: number, cy: number) {
+      const positions: { x: number; y: number }[] = []
+      const nodeR = 5
+      const spacing = nodeR * 2.8 // Increased spacing to prevent overlap
+
+      // Center node
+      positions.push({ x: cx, y: cy })
+      let placed = 1
+
+      // Spiral outward in rings
+      let ring = 0
+      while (placed < count) {
+        ring++
+        const nodesInRing = ring * 6
+        for (let i = 0; i < nodesInRing && placed < count; i++) {
+          const angle = (i / nodesInRing) * 2 * Math.PI - Math.PI / 2
+          const r = ring * spacing
+          positions.push({
+            x: cx + r * Math.cos(angle),
+            y: cy + r * Math.sin(angle),
+          })
+          placed++
+        }
+      }
+      return positions
+    }
+
+    // Create entity nodes with positions
+    const nodes: Array<AgiPoint & { x: number; y: number }> = []
+    clusterNodes.forEach((cluster) => {
+      const clusterPoints = data.points.filter((p) => p.cluster_id === cluster.id)
+      const positions = hexPack(clusterPoints.length, cluster.x, cluster.y)
+
+      clusterPoints.forEach((p, i) => {
+        const pos = positions[i] || { x: cluster.x, y: cluster.y }
+        nodes.push({ ...p, x: pos.x, y: pos.y })
+      })
     })
 
-    const nodes = data.points
-      .filter((p) => p.cluster_id && clusterCenters.has(p.cluster_id))
-      .map((p) => {
-        const center = clusterCenters.get(p.cluster_id!)!
-        const angle = Math.random() * 2 * Math.PI
-        const r = Math.random() * 30 + 10
-        return { ...p, x: center.x + Math.cos(angle) * r, y: center.y + Math.sin(angle) * r }
-      })
+    // Compute actual bounds from nodes
+    const nodeMinX = d3.min(nodes, (d) => d.x) || 0
+    const nodeMaxX = d3.max(nodes, (d) => d.x) || workW
+    const nodeMinY = d3.min(nodes, (d) => d.y) || 0
+    const nodeMaxY = d3.max(nodes, (d) => d.y) || workH
 
-    const sim = d3
-      .forceSimulation(nodes)
-      .force(
-        'x',
-        d3
-          .forceX((d: AgiPoint & { cluster_id: string }) => clusterCenters.get(d.cluster_id)?.x ?? workW / 2)
-          .strength(0.3),
-      )
-      .force(
-        'y',
-        d3
-          .forceY((d: AgiPoint & { cluster_id: string }) => clusterCenters.get(d.cluster_id)?.y ?? workH / 2)
-          .strength(0.3),
-      )
-      .force('collide', d3.forceCollide(6))
-      .force('charge', d3.forceManyBody().strength(-2))
-      .stop()
-    for (let i = 0; i < 200; i++) sim.tick()
+    // Add generous margins for labels (especially right side for long labels)
+    const marginLeft = 80
+    const marginRight = 160 // Extra space for "Human-Level Cognitive Parity"
+    const marginTop = 60
+    const marginBottom = 60
 
-    // Compute actual bounds of all nodes
-    const nodeMinX = d3.min(nodes, (d: { x: number }) => d.x) - 10
-    const nodeMaxX = d3.max(nodes, (d: { x: number }) => d.x) + 10
-    const nodeMinY = d3.min(nodes, (d: { y: number }) => d.y) - 10
-    const nodeMaxY = d3.max(nodes, (d: { y: number }) => d.y) + 10
-
-    // Add label margin (labels extend ~120px from cluster edges)
-    const labelMargin = 130
-    const vbX = nodeMinX - labelMargin
-    const vbY = nodeMinY - 30
-    const vbW = nodeMaxX - nodeMinX + labelMargin * 2
-    const vbH = nodeMaxY - nodeMinY + 60
+    const vbX = nodeMinX - marginLeft
+    const vbY = nodeMinY - marginTop
+    const vbW = nodeMaxX - nodeMinX + marginLeft + marginRight
+    const vbH = nodeMaxY - nodeMinY + marginTop + marginBottom
     const H = W * (vbH / vbW)
 
     const svg = d3
@@ -284,38 +341,171 @@ function ClusterMapView({
       document.body.appendChild(tipEl)
     }
 
-    // Cluster labels: find bounding box of each cluster's nodes, place label outside
-    clusters.forEach((c: ClusterInfo & { cx?: number; cy?: number }) => {
-      const center = clusterCenters.get(c.id)
-      if (!center) return
-      const clusterNodes = nodes.filter((n: AgiPoint) => n.cluster_id === c.id)
-      if (clusterNodes.length === 0) return
+    // Label positioning with collision avoidance
+    const charWidth = 6 // Approximate width per character at font-size 10
+    const labelHeight = 14
 
-      const maxR =
-        d3.max(clusterNodes, (n: { x: number; y: number }) =>
-          Math.sqrt((n.x - center.x) ** 2 + (n.y - center.y) ** 2),
-        ) || 20
-      const midX = (nodeMinX + nodeMaxX) / 2
-      const midY = (nodeMinY + nodeMaxY) / 2
-      const dx = center.x - midX
-      const dy = center.y - midY
-      const dist = Math.sqrt(dx * dx + dy * dy) || 1
-      const labelOffset = maxR + 18
-      const labelX = center.x + (dx / dist) * labelOffset
-      const labelY = center.y + (dy / dist) * labelOffset
+    interface PlacedLabel {
+      x: number
+      y: number
+      width: number
+      height: number
+      anchor: string
+    }
+    const placedLabels: PlacedLabel[] = []
+
+    // Sort clusters by size (largest first) to place important labels first
+    const sortedClusters = [...clusterNodes].sort((a, b) => b.count - a.count)
+
+    // Preferred label directions for specific clusters (index into directions array)
+    // 0=right, 1=top-right, 2=top, 3=top-left, 4=left, 5=bottom-left, 6=bottom, 7=bottom-right
+    const preferredDirections: Record<string, number> = {
+      'general-purpose-agents': 2, // top
+    }
+
+    sortedClusters.forEach((cluster) => {
+      const clusterEntityNodes = nodes.filter((n) => n.cluster_id === cluster.id)
+      if (clusterEntityNodes.length === 0) return
+
+      const cx = cluster.x
+      const cy = cluster.y
+      const maxR = cluster.radius
+
+      const labelText = clusters.find((c: ClusterInfo) => c.id === cluster.id)?.label || ''
+      const labelW = labelText.length * charWidth
+
+      // Try 8 directions, pick best one
+      const directions = [
+        { dx: 1, dy: 0, anchor: 'start' },
+        { dx: 0.7, dy: -0.7, anchor: 'start' },
+        { dx: 0, dy: -1, anchor: 'middle' },
+        { dx: -0.7, dy: -0.7, anchor: 'end' },
+        { dx: -1, dy: 0, anchor: 'end' },
+        { dx: -0.7, dy: 0.7, anchor: 'end' },
+        { dx: 0, dy: 1, anchor: 'middle' },
+        { dx: 0.7, dy: 0.7, anchor: 'start' },
+      ]
+
+      const labelOffset = maxR + 20 // Increased offset to avoid overlap with nearby clusters
+      const otherNodes = nodes.filter((n) => n.cluster_id !== cluster.id)
+
+      // Check if this cluster has a preferred direction
+      const preferredIdx = preferredDirections[cluster.id]
+      let bestDir = preferredIdx !== undefined ? directions[preferredIdx] : directions[0]
+      let bestScore = -Infinity
+
+      for (let dirIdx = 0; dirIdx < directions.length; dirIdx++) {
+        const dir = directions[dirIdx]
+        const lx = cx + dir.dx * labelOffset
+        const ly = cy + dir.dy * labelOffset
+
+        // Calculate label bounding box based on anchor
+        let boxLeft: number, boxRight: number
+        if (dir.anchor === 'start') {
+          boxLeft = lx
+          boxRight = lx + labelW
+        } else if (dir.anchor === 'end') {
+          boxLeft = lx - labelW
+          boxRight = lx
+        } else {
+          boxLeft = lx - labelW / 2
+          boxRight = lx + labelW / 2
+        }
+        const boxTop = ly - labelHeight / 2
+        const boxBottom = ly + labelHeight / 2
+
+        // Check if label stays within viewBox bounds
+        const inBounds =
+          boxLeft >= vbX + 5 && boxRight <= vbX + vbW - 5 && boxTop >= vbY + 5 && boxBottom <= vbY + vbH - 5
+
+        if (!inBounds) continue // Skip directions that go out of bounds
+
+        // Score = min distance to other clusters' nodes (check against label bounding box, not just center)
+        let minDistToNodes = Infinity
+        for (const n of otherNodes) {
+          // Check distance to all corners and center of label box
+          const checkPoints = [
+            { x: boxLeft, y: boxTop },
+            { x: boxRight, y: boxTop },
+            { x: boxLeft, y: boxBottom },
+            { x: boxRight, y: boxBottom },
+            { x: lx, y: ly },
+          ]
+          for (const cp of checkPoints) {
+            const dist = Math.sqrt((n.x - cp.x) ** 2 + (n.y - cp.y) ** 2)
+            minDistToNodes = Math.min(minDistToNodes, dist)
+          }
+        }
+
+        // Check collision with other labels (AABB)
+        let labelCollision = false
+        for (const placed of placedLabels) {
+          let placedLeft: number, placedRight: number
+          if (placed.anchor === 'start') {
+            placedLeft = placed.x
+            placedRight = placed.x + placed.width
+          } else if (placed.anchor === 'end') {
+            placedLeft = placed.x - placed.width
+            placedRight = placed.x
+          } else {
+            placedLeft = placed.x - placed.width / 2
+            placedRight = placed.x + placed.width / 2
+          }
+          const placedTop = placed.y - placed.height / 2
+          const placedBottom = placed.y + placed.height / 2
+
+          // AABB overlap check with padding
+          const pad = 8
+          if (
+            boxLeft < placedRight + pad &&
+            boxRight > placedLeft - pad &&
+            boxTop < placedBottom + pad &&
+            boxBottom > placedTop - pad
+          ) {
+            labelCollision = true
+            break
+          }
+        }
+
+        // Penalize if label is too close to other cluster nodes (within 20px)
+        const tooCloseToNodes = minDistToNodes < 20
+        // Add bonus for preferred direction
+        const preferredBonus = preferredIdx !== undefined && dirIdx === preferredIdx ? 500 : 0
+        const score = labelCollision
+          ? -2000 + minDistToNodes + preferredBonus
+          : tooCloseToNodes
+            ? -1000 + minDistToNodes + preferredBonus
+            : minDistToNodes + preferredBonus
+        if (score > bestScore) {
+          bestScore = score
+          bestDir = dir
+        }
+      }
+
+      const labelX = cx + bestDir.dx * labelOffset
+      const labelY = cy + bestDir.dy * labelOffset
+
+      // Track placed label
+      placedLabels.push({
+        x: labelX,
+        y: labelY,
+        width: labelW,
+        height: labelHeight,
+        anchor: bestDir.anchor,
+      })
 
       svg
         .append('text')
         .attr('x', labelX)
         .attr('y', labelY)
-        .attr('text-anchor', dx < 0 ? 'end' : dx > 0 ? 'start' : 'middle')
-        .attr('dominant-baseline', dy < 0 ? 'auto' : 'hanging')
+        .attr('text-anchor', bestDir.anchor)
+        .attr('dominant-baseline', 'middle')
         .attr('font-family', "'DM Mono', monospace")
         .attr('font-size', 10)
-        .attr('fill', CLUSTER_COLORS[c.id] || '#888')
+        .attr('fill', CLUSTER_COLORS[cluster.id] || '#888')
         .attr('font-weight', 500)
-        .attr('opacity', 0.8)
-        .text(c.label)
+        .attr('opacity', 0.85)
+        .text(labelText)
     })
 
     // Entity dots
@@ -539,8 +729,13 @@ export function AgiDefinitionSpace() {
 
   return (
     <div>
+      {/* Header with count */}
+      <div className="font-mono text-[11px] tracking-[0.08em] uppercase text-[#555] mb-3">
+        AGI Definition Space ({data.points.length} definitions)
+      </div>
+
       {/* View toggle */}
-      <div className="flex items-center gap-3 mb-3 flex-wrap">
+      <div className="flex items-center gap-3 mb-2 flex-wrap">
         <div className="flex gap-1">
           {(['map', 'clusters', 'scatter'] as const).map((v) => (
             <button
@@ -554,26 +749,27 @@ export function AgiDefinitionSpace() {
             </button>
           ))}
         </div>
-        {(viewMode === 'scatter' || viewMode === 'map') && (
-          <>
-            <span className="font-mono text-[10px] text-[#888]">Color by:</span>
-            <div className="flex gap-1">
-              {COLOR_MODE_OPTIONS.map((opt) => (
-                <button
-                  key={opt.value}
-                  onClick={() => setColorMode(opt.value)}
-                  className={`font-mono text-[10px] px-2 py-1 rounded transition-colors ${
-                    colorMode === opt.value ? 'bg-[#555] text-white' : 'bg-[#f5f5f5] text-[#888] hover:bg-[#eee]'
-                  }`}
-                >
-                  {opt.label}
-                </button>
-              ))}
-            </div>
-          </>
-        )}
-        <span className="font-mono text-[10px] text-[#999]">{data.points.length} definitions</span>
       </div>
+
+      {/* Color by options */}
+      {(viewMode === 'scatter' || viewMode === 'map') && (
+        <div className="flex items-center gap-2 mb-3 flex-wrap">
+          <span className="font-mono text-[10px] text-[#888]">Color by:</span>
+          <div className="flex gap-1">
+            {COLOR_MODE_OPTIONS.map((opt) => (
+              <button
+                key={opt.value}
+                onClick={() => setColorMode(opt.value)}
+                className={`font-mono text-[10px] px-2 py-1 rounded transition-colors ${
+                  colorMode === opt.value ? 'bg-[#555] text-white' : 'bg-[#f5f5f5] text-[#888] hover:bg-[#eee]'
+                }`}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       {viewMode === 'map' ? (
         <ClusterMapView

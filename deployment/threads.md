@@ -1,0 +1,335 @@
+# Draft Threads for X/Twitter
+
+Based on mapping-ai.org insights and map views.
+
+## Table of Contents
+
+1. [The AGI Definition Problem](#thread-1-the-agi-definition-problem) (viral/provocative)
+2. [Follow the Money](#thread-2-follow-the-money) (investigative)
+3. [The Outlier Chart](#thread-3-the-outlier-chart) (personalities/drama)
+4. [The Horseshoe](#thread-4-the-horseshoe) (political)
+5. [Bridge Builders](#thread-5-bridge-builders) (positive/network)
+
+---
+
+## Handles (need to double check)
+
+| Handle | Name |
+|--------|------|
+| @JensenHuang | Jensen Huang (NVIDIA) |
+| @leopoldasch | Leopold Aschenbrenner |
+| @sonyahuang | Sonya Huang (Sequoia) |
+| @a16z | Andreessen Horowitz |
+| @pmarca | Marc Andreessen |
+| @SoftBank | SoftBank |
+| @brianschatz | Brian Schatz |
+| @ChrisMurphyCT | Chris Murphy |
+| @paulfchristiano | Paul Christiano |
+| @DarioAmodei | Dario Amodei (Anthropic) |
+| @GavinNewsom | Gavin Newsom |
+| @CoryBooker | Cory Booker |
+| @OpenPhil | Open Philanthropy / Coefficient Giving |
+| @FLI_org | Future of Life Institute |
+| @geoffreyhinton | Geoffrey Hinton |
+| @AndrewYNg | Andrew Ng |
+| @GaryMarcus | Gary Marcus |
+| @drfeifei | Fei-Fei Li |
+| @emilymbender | Emily Bender |
+| @mer__edith | Meredith Whittaker (Signal) |
+| @HelenToner | Helen Toner |
+| @sama | Sam Altman |
+| @BillGates | Bill Gates |
+| @raborjhoffman | Reid Hoffman |
+| @ezraklein | Ezra Klein |
+| @tegmark | Max Tegmark |
+| @AnthropicAI | Anthropic |
+| @MistralAI | Mistral AI |
+| @GoogleDeepMind | Google DeepMind |
+
+---
+
+## Thread 1: The AGI Definition Problem
+
+> [need to update to new AGI definition numbers]
+
+**Angle:** Everyone says "AGI is coming" but they all mean different things. We mapped 240 definitions.
+
+### Tweet 1 [210/280 - OK]
+
+Everyone keeps saying "AGI is coming."
+
+But when you actually map what people mean by AGI, you find completely different definitions.
+
+We built a tool to visualize this. Here's what the data shows:
+
+`[ATTACH: insights-agi-defs.png]`
+
+![AGI Definition Space](images/insights-agi-defs.png)
+
+*Note: Hook tweet. Image: UMAP cluster visualization.*
+
+### Tweet 2 [231/280 - OK]
+
+The largest cluster (74 entities): AGI = human-level cognitive parity.
+@AndrewYNg, @geoffreyhinton, @GaryMarcus, @GoogleDeepMind, and @pmarca all land here.
+
+But even within this group, "human-level" can mean very different things.
+
+*Note: Name-drops for engagement. These people may RT or quote-tweet.*
+
+### Tweet 3 [237/280 - OK]
+
+The second biggest cluster (48 entities): people who reject the framing entirely.
+
+@drfeifei, @emilymbender, @mer__edith, @HelenToner, @MistralAI, and @raborjhoffman all say AGI is the wrong question. We classify this as a conceptual critique.
+
+### Tweet 4 [252/280 - OK]
+
+Then there's the "superintelligence" cluster (39 entities).
+@DarioAmodei, @AnthropicAI, @BillGates, @paulfchristiano all define AGI as AI that surpasses humans, with recursive self-improvement. They have similar timeline debates but a fundamentally different endpoint.
+
+### Tweet 5 [268/280 - OK]
+
+Color the same map by regulatory stance and a pattern emerges: more people who define AGI as "superintelligence" and "human-level cognitive parity" want precautionary regulation over light-touch rules.
+
+Definitions correlate with policy stance.
+
+`[ATTACH: map-beliefs-stance.png]`
+
+*Note: Key insight tweet stance-colored UMAP*
+
+### Tweet 6 [221/280 - OK]
+
+So when @JensenHuang says "AGI is already here" and @leopoldasch says "2-3 years away," they aren't just disagreeing on timing—they're talking about completely different things.
+
+Explore the full map: mapping-ai.org/map
+
+`[ATTACH: insights-outliers-2d-bottom.png]`
+
+*Note: Close with the outlier chart showing Jensen + Leopold. CTA to the site.*
+
+### Tweet 7 [162/280 - OK]
+
+We mapped 1,574 entities across 708 people, 717 organizations, and 2,151 relationships in the U.S. AI policy landscape.
+
+It's all open source. Check it out here:
+
+mapping-ai.org
+
+`[ATTACH: map-network-clean.png]`
+
+*Note: Final CTA tweet with the network visualization.*
+
+---
+
+## Thread 2: Follow the Money
+
+**Angle:** Who funds AI policy? The answer reveals structural patterns in who gets to shape regulation.
+
+### Tweet 1 [221/280 - OK]
+
+We tracked 1,176 funding relationships across the AI policy ecosystem.
+
+The data reveals something structural: where the money comes from predicts what an org believes about regulation.
+
+Thread on who funds AI governance:
+
+`[ATTACH: insights-funding-1.png]`
+
+*Note: Sankey diagram is visually striking. Good hook image.*
+
+### Tweet 2 [243/280 - OK]
+
+The top 5 funders reach 58% of all policy organizations.
+
+Coefficient Giving (Open Philanthropy): 26 orgs
+Survival & Flourishing Fund: 13
+Future of Life Institute: 10
+Jaan Tallinn: 10
+Good Ventures: 9
+
+This totals 68 connections to 117 policy orgs.
+
+`[ATTACH: insights-kingmakers.png]`
+
+*Note: Kingmakers chart. Concentration data is inherently shareable.*
+
+### Tweet 3 [255/280 - OK]
+
+VC-funded organizations average 2.5 on the regulatory stance scale (light-touch). Philanthropic-funded organizations average 4.7 (precautionary). The gap is enormous. Funding source is one of the strongest predictors of where an org lands on regulation.
+
+`[ATTACH: insights-funding-3.png]`
+
+*Note: The dot plot showing funding model vs stance. Clean, simple, powerful.*
+
+### Tweet 4 [246/280 - OK]
+
+Philanthropic money flows to AI Safety orgs and Think Tanks.
+
+Tech company money (@Google, @Microsoft, @Amazon) flows to Frontier Labs and Infrastructure.
+
+@a16z funds Deployers & Platforms almost exclusively.
+
+`[ATTACH: insights-funding-1.png]`
+
+*Note: Second use of Sankey, now with narrative interpretation.*
+
+### Tweet 5 [254/280 - OK]
+
+This doesn't mean funders are buying positions. They may simply select for orgs that already agree. But structurally, it means the AI policy conversation is shaped by a small number of capital sources.
+
+Explore the full analysis: mapping-ai.org/insights
+
+*Note: Hedge the causation claim. CTA.*
+
+---
+
+## Thread 3: The Outlier Chart
+
+**Angle:** Map everyone on their AI regulation stance vs AGI timeline belief. Story on outliers.
+
+### Tweet 1 [142/280 - OK]
+
+We plotted 368 AI leaders on two axes:
+
+X: How much regulation do they want?
+Y: When do they think AGI arrives?
+
+Some striking outliers emerge.
+
+`[ATTACH: insights-outliers-2d-bottom.png]`
+
+*Note: The 2D outlier chart with labeled names. The main viral image.*
+
+### Tweet 2 [222/280 - OK]
+
+@JensenHuang: AGI is "already here" + light-touch regulation.
+
+@leopoldasch: AGI in 2-3 years + nationalize AI.
+
+Same urgency, different definitions, opposite policy conclusions. They occupy completely different corners of the belief space.
+
+### Tweet 3 [233/280 - OK]
+
+@a16z: AGI in 10-25 years + light-touch regulation.
+@SoftBank: AGI in 5-10 years + light-touch.
+@sonyahuang: AGI "already here" + light-touch.
+
+The investor cluster sits firmly in the bottom-left: short timelines, minimal regulation.
+
+*Note: Investor cluster callout. Tag the orgs.*
+
+### Tweet 4 [223/280 - OK]
+
+Most of the ecosystem clusters in the middle: targeted-to-moderate regulation, 2-10 year AGI timelines. The outliers are rare belief combinations that put you in a cell with very few peers.
+
+Where would you place yourself?
+
+*Note: Engagement question at the end.*
+
+### Tweet 5 [158/280 - OK]
+
+Explore the interactive version. Click any dot to see the full profile.
+
+mapping-ai.org/map (switch to Plot view)
+mapping-ai.org/insights (scroll to Outliers)
+
+`[ATTACH: map-plot.png]`
+
+*Note: CTA with the interactive Plot view.*
+
+---
+
+## Thread 4: The Horseshoe
+
+**Angle:** Left and right agree more on AI policy than you think. The data shows a horseshoe.
+
+### Tweet 1 [228/280 - OK]
+
+We sourced 613 claims from 141 policymakers across 6 AI policy issues.
+
+When you map Democrats and Republicans on a regulatory spectrum, the result is a horseshoe.
+
+The precautionary wings of both parties converge at the bottom.
+
+`[ATTACH: insights-horseshoe.png]`
+
+*Note: The horseshoe viz is the hero image. Extremely shareable.*
+
+### Tweet 2 [258/280 - OK]
+
+On federal preemption of state AI laws: bipartisan split. Some Democrats and Republicans want federal control, others want state flexibility.
+
+On open-weight model restrictions: similar spread on both sides.
+
+The left-right frame misses the real fault lines.
+
+`[ATTACH: insights-crosspartisan.png]`
+
+*Note: By-issue beeswarms showing bipartisan spread.*
+
+### Tweet 3 [214/280 - OK]
+
+The real divide in AI policy is acc vs. precautionary. And that axis cuts across party lines.
+
+### Tweet 4 [176/280 - OK]
+
+Every claim in our database is backed by a verbatim quote and URL.
+
+Explore the full crosspartisan analysis with sourced claims:
+mapping-ai.org/insights
+
+*Note: Credibility + CTA.*
+
+---
+
+## Thread 5: Bridge Builders
+
+**Angle:** Who actually connects the AI policy ecosystem? Network analysis reveals the bridge builders.
+
+### Tweet 1 [218/280 - OK]
+
+We built a network graph of 1,574 entities in U.S. AI policy and measured who can reach the most people within 3 hops.
+
+The top "bridge builders" connect communities that would otherwise be siloed.
+
+Here's the ranking:
+
+`[ATTACH: insights-bridge-builders.png]`
+
+*Note: Bridge builder cards with concentric ring visualizations.*
+
+### Tweet 2 [234/280 - OK]
+
+1. @brianschatz (Policymaker) - reaches 532 entities
+2. @ChrisMurphyCT (Policymaker) - 529
+3. @paulfchristiano (Researcher) - 481
+4. @DarioAmodei (Executive) - 476
+5. @GavinNewsom (Policymaker) - 463
+6. @CoryBooker (Policymaker) - 422
+
+*Note: The ranking. Tag everyone.*
+
+### Tweet 3 [268/280 - OK]
+
+Policymakers dominate because their government roles connect them to many organizations by default.
+
+But @paulfchristiano at #3 is notable: a researcher bridging AI Safety, Frontier Labs, and Government.
+
+High reachability = structural position for coalition-building.
+
+`[ATTACH: insights-bridge-builders-2.png]`
+
+*Note: Christiano and Amodei cards showing their diverse connections.*
+
+### Tweet 4 [174/280 - OK]
+
+The full interactive network map lets you click any person or org to see their connections light up.
+
+mapping-ai.org/map
+
+1,574 entities. 2,151 relationships. All explorable.
+
+`[ATTACH: map-network-clean.png]`
+
+*Note: CTA with the full network graph.*
