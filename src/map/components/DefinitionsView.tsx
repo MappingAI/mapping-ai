@@ -835,8 +835,7 @@ function AggregateBeliefChart({
   dim: { key: 'stance_score' | 'timeline_score' | 'risk_score'; label: string; colors: string[] }
 }) {
   const ref = useRef<HTMLDivElement>(null)
-  const scaleKey = dim.key.replace('_score', '')
-  const scale = BELIEF_SCALES[scaleKey]
+  const scale = BELIEF_SCALES[dim.key.replace('_score', '')]
 
   useEffect(() => {
     if (!ref.current || quarters.length < 2) return
@@ -844,20 +843,24 @@ function AggregateBeliefChart({
     container.innerHTML = ''
 
     const W = container.clientWidth || 500
-    const H = 120
-    const pad = { top: 8, right: 12, bottom: 28, left: 40 }
+    const H = 140
+    const pad = { top: 8, right: 12, bottom: 28, left: 36 }
 
-    const series = quarters.map((q) => {
+    // Per-quarter: count of entities with this score, and mean score
+    const qData = quarters.map((q) => {
       const inQ = points.filter((p) => pointInQuarter(p, q) && p[dim.key] != null)
-      if (inQ.length === 0) return null
-      return d3.mean(inQ, (p: AgiPoint) => p[dim.key]) as number
+      return { count: inQ.length, mean: inQ.length > 0 ? (d3.mean(inQ, (p: AgiPoint) => p[dim.key]) as number) : null }
     })
 
-    const validPairs = series.map((v, i) => [i, v] as [number, number | null]).filter(([, v]) => v != null) as [
-      number,
-      number,
-    ][]
-    if (validPairs.length < 2) return
+    const maxCount = Math.max(...qData.map((d) => d.count), 1)
+    const scoreMin = scale ? 1 : 0
+    const scoreMax = scale ? scale.labels.length : 5
+
+    const colorScale = d3
+      .scaleLinear()
+      .domain(dim.colors.map((_, i) => scoreMin + ((scoreMax - scoreMin) * i) / (dim.colors.length - 1)))
+      .range(dim.colors)
+      .clamp(true)
 
     const svg = d3.select(container).append('svg').attr('width', W).attr('height', H)
 
@@ -865,46 +868,33 @@ function AggregateBeliefChart({
       .scaleLinear()
       .domain([0, quarters.length - 1])
       .range([pad.left, W - pad.right])
-
-    const scoreMin = scale ? 1 : (d3.min(validPairs, (d: [number, number]) => d[1]) as number) - 0.3
-    const scoreMax = scale ? scale.labels.length : (d3.max(validPairs, (d: [number, number]) => d[1]) as number) + 0.3
     const yScale = d3
       .scaleLinear()
-      .domain([scoreMin, scoreMax])
+      .domain([0, maxCount])
       .range([H - pad.bottom, pad.top])
 
-    // Color scale: map score to gradient color
-    const colorScale = d3
-      .scaleLinear()
-      .domain(dim.colors.map((_, i) => scoreMin + ((scoreMax - scoreMin) * i) / (dim.colors.length - 1)))
-      .range(dim.colors)
-      .clamp(true)
-
-    // Y-axis labels
-    if (scale) {
-      scale.labels.forEach((label, i) => {
-        const y = yScale(i + 1)
-        svg
-          .append('text')
-          .attr('x', pad.left - 4)
-          .attr('y', y)
-          .attr('text-anchor', 'end')
-          .attr('dominant-baseline', 'middle')
-          .attr('font-family', "'DM Mono', monospace")
-          .attr('font-size', 7)
-          .attr('fill', dim.colors[i] || 'var(--text-3)')
-          .text(label)
-        svg
-          .append('line')
-          .attr('x1', pad.left)
-          .attr('x2', W - pad.right)
-          .attr('y1', y)
-          .attr('y2', y)
-          .attr('stroke', 'var(--line)')
-          .attr('stroke-dasharray', '2,3')
-          .attr('opacity', 0.5)
-      })
-    }
+    // Y-axis ticks (frequency)
+    const yTicks = yScale.ticks(4)
+    yTicks.forEach((t: number) => {
+      svg
+        .append('text')
+        .attr('x', pad.left - 4)
+        .attr('y', yScale(t))
+        .attr('text-anchor', 'end')
+        .attr('dominant-baseline', 'middle')
+        .attr('font-family', "'DM Mono', monospace")
+        .attr('font-size', 8)
+        .attr('fill', 'var(--text-3)')
+        .text(t)
+      svg
+        .append('line')
+        .attr('x1', pad.left)
+        .attr('x2', W - pad.right)
+        .attr('y1', yScale(t))
+        .attr('y2', yScale(t))
+        .attr('stroke', 'var(--line)')
+        .attr('opacity', 0.4)
+    })
 
     // X-axis year labels
     quarters.forEach((q, i) => {
@@ -921,83 +911,109 @@ function AggregateBeliefChart({
       }
     })
 
-    // Draw gradient line segments
-    const line = d3
-      .line()
-      .defined((d: [number, number | null]) => d[1] != null)
-      .x((d: [number, number]) => xScale(d[0]))
-      .y((d: [number, number]) => yScale(d[1]))
-      .curve(d3.curveMonotoneX)
+    // Build valid pairs (quarters with data)
+    const validPairs = qData
+      .map((d, i) => (d.count > 0 ? { i, count: d.count, mean: d.mean! } : null))
+      .filter(Boolean) as { i: number; count: number; mean: number }[]
 
-    const indexedSeries = series.map((v, i) => [i, v] as [number, number | null])
-
-    // Dashed gray lines across gaps (where quarters have no data)
+    // Dashed gray lines across gaps
     for (let k = 0; k < validPairs.length - 1; k++) {
-      const [i0, v0] = validPairs[k]!
-      const [i1, v1] = validPairs[k + 1]!
-      if (i1 - i0 > 1) {
+      const a = validPairs[k]!
+      const b = validPairs[k + 1]!
+      if (b.i - a.i > 1) {
         svg
           .append('line')
-          .attr('x1', xScale(i0))
-          .attr('y1', yScale(v0))
-          .attr('x2', xScale(i1))
-          .attr('y2', yScale(v1))
+          .attr('x1', xScale(a.i))
+          .attr('y1', yScale(a.count))
+          .attr('x2', xScale(b.i))
+          .attr('y2', yScale(b.count))
           .attr('stroke', 'var(--text-3)')
           .attr('stroke-width', 1)
           .attr('stroke-dasharray', '3,4')
-          .attr('opacity', 0.35)
+          .attr('opacity', 0.3)
       }
     }
 
-    // Draw colored segments between each pair of valid points
+    // Gradient-colored area fill (light) and line (bold)
+    // Area: fill under the curve with gradient color at low opacity
     for (let k = 0; k < validPairs.length - 1; k++) {
-      const [i0, v0] = validPairs[k]!
-      const [i1, v1] = validPairs[k + 1]!
-      const steps = 10
-      const segPoints: [number, number][] = []
-      for (let s = 0; s <= steps; s++) {
-        const t = s / steps
-        const ix = i0 + (i1 - i0) * t
-        const vx = v0 + (v1 - v0) * t
-        segPoints.push([ix, vx])
-      }
-      for (let s = 0; s < segPoints.length - 1; s++) {
-        const p1 = segPoints[s]!
-        const p2 = segPoints[s + 1]!
-        const midVal = (p1[1] + p2[1]) / 2
-        svg
-          .append('line')
-          .attr('x1', xScale(p1[0]))
-          .attr('y1', yScale(p1[1]))
-          .attr('x2', xScale(p2[0]))
-          .attr('y2', yScale(p2[1]))
-          .attr('stroke', colorScale(midVal))
-          .attr('stroke-width', 2.5)
-          .attr('stroke-linecap', 'round')
-      }
+      const a = validPairs[k]!
+      const b = validPairs[k + 1]!
+      if (b.i - a.i > 1) continue
+      const midMean = (a.mean + b.mean) / 2
+      svg
+        .append('path')
+        .attr(
+          'd',
+          `M${xScale(a.i)},${yScale(a.count)} L${xScale(b.i)},${yScale(b.count)} L${xScale(b.i)},${yScale(0)} L${xScale(a.i)},${yScale(0)} Z`,
+        )
+        .attr('fill', colorScale(midMean))
+        .attr('opacity', 0.15)
     }
 
-    // Dots at data points
-    validPairs.forEach(([i, v]) => {
+    // Colored line segments
+    for (let k = 0; k < validPairs.length - 1; k++) {
+      const a = validPairs[k]!
+      const b = validPairs[k + 1]!
+      if (b.i - a.i > 1) continue
+      const midMean = (a.mean + b.mean) / 2
+      svg
+        .append('line')
+        .attr('x1', xScale(a.i))
+        .attr('y1', yScale(a.count))
+        .attr('x2', xScale(b.i))
+        .attr('y2', yScale(b.count))
+        .attr('stroke', colorScale(midMean))
+        .attr('stroke-width', 2.5)
+        .attr('stroke-linecap', 'round')
+    }
+
+    // Dots at data points colored by mean score
+    validPairs.forEach((d) => {
       svg
         .append('circle')
-        .attr('cx', xScale(i))
-        .attr('cy', yScale(v))
-        .attr('r', 3)
-        .attr('fill', colorScale(v))
+        .attr('cx', xScale(d.i))
+        .attr('cy', yScale(d.count))
+        .attr('r', 3.5)
+        .attr('fill', colorScale(d.mean))
         .attr('stroke', '#fff')
         .attr('stroke-width', 1)
     })
 
-    // Thin ghost line for context
-    svg
-      .append('path')
-      .datum(indexedSeries)
-      .attr('d', line as never)
-      .attr('fill', 'none')
-      .attr('stroke', 'var(--text-3)')
-      .attr('stroke-width', 0.5)
-      .attr('opacity', 0.3)
+    // Color legend bar below y-axis label area
+    if (scale) {
+      const legendY = H - pad.bottom + 22
+      const legendW = Math.min(W - pad.left - pad.right, 200)
+      const legendX = pad.left
+      const segW = legendW / scale.labels.length
+      scale.colors.forEach((color, i) => {
+        svg
+          .append('rect')
+          .attr('x', legendX + i * segW)
+          .attr('y', legendY)
+          .attr('width', segW)
+          .attr('height', 4)
+          .attr('fill', color)
+          .attr('rx', i === 0 ? 2 : i === scale.labels.length - 1 ? 2 : 0)
+      })
+      svg
+        .append('text')
+        .attr('x', legendX)
+        .attr('y', legendY + 12)
+        .attr('font-family', "'DM Mono', monospace")
+        .attr('font-size', 7)
+        .attr('fill', 'var(--text-3)')
+        .text(scale.labels[0] || '')
+      svg
+        .append('text')
+        .attr('x', legendX + legendW)
+        .attr('y', legendY + 12)
+        .attr('text-anchor', 'end')
+        .attr('font-family', "'DM Mono', monospace")
+        .attr('font-size', 7)
+        .attr('fill', 'var(--text-3)')
+        .text(scale.labels[scale.labels.length - 1] || '')
+    }
   }, [quarters, points, dim])
 
   return <div ref={ref} />
