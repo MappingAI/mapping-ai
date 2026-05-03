@@ -322,18 +322,17 @@ async function main() {
 
   // 6. Project to 2D with UMAP
   console.log('Running UMAP projection...')
+  let seed = 42
   const umap = new UMAP({
     nComponents: 2,
     nNeighbors: 15,
     minDist: 0.1,
     spread: 1.0,
     random: () => {
-      // Seeded PRNG for reproducibility (simple LCG)
       seed = (seed * 1664525 + 1013904223) & 0xffffffff
       return (seed >>> 0) / 0xffffffff
     },
   })
-  let seed = 42
   const projected = umap.fit(embeddings)
 
   // 7. Build output

@@ -34,6 +34,10 @@ export function App() {
 
     return () => {
       cancelled = true
+      if (engineRef.current) {
+        engineRef.current.destroy()
+        engineRef.current = null
+      }
     }
   }, [])
 
