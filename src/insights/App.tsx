@@ -165,17 +165,93 @@ function hideTooltip() {
    Data Cleanup Utilities
    ──────────────────────────────────────────── */
 
-function normalizeFundingModel(fm: string): string {
-  if (!fm) return 'Unknown'
+function normalizeFundingModel(fm: string): string | null {
+  if (!fm) return null
   const lower = fm.toLowerCase()
-  if (lower.includes('philanthrop') || lower.includes('foundation') || lower.includes('grant')) return 'Philanthropic'
-  if (lower.includes('venture') || lower.includes('vc') || lower === 'for-profit') return 'Venture/For-profit'
-  if (lower.includes('government') || lower.includes('public') || lower.includes('federal')) return 'Government'
-  if (lower.includes('member') || lower.includes('dues')) return 'Membership'
-  if (lower.includes('university') || lower.includes('academic') || lower.includes('endowment')) return 'Academic'
-  if (lower.includes('self') || lower.includes('bootstrap')) return 'Self-funded'
-  if (lower.includes('pac') || lower.includes('super pac')) return 'Super PAC'
-  return fm.length > 25 ? fm.slice(0, 22) + '...' : fm
+
+  // Exclude "Mixed" - no clear signal for analysis
+  if (lower === 'mixed') return null
+
+  // Political/PAC - check first (most specific)
+  if (lower.includes('pac') || lower.includes('political') || lower.includes('super pac')) {
+    return 'Political/PAC'
+  }
+
+  // Venture Capital - VC-backed, private equity, investor-funded
+  if (
+    lower.includes('venture') ||
+    lower.includes('vc-backed') ||
+    lower.includes('vc backed') ||
+    lower.includes('vc fund') ||
+    lower.includes('private equity') ||
+    lower.startsWith('vc ') ||
+    lower === 'vc'
+  ) {
+    return 'Venture Capital'
+  }
+
+  // Government - public sector funding
+  if (
+    lower.includes('government') ||
+    lower.includes('federal') ||
+    lower.includes('intergovernmental') ||
+    lower.includes('treasury') ||
+    lower.includes('public sector') ||
+    lower.includes('tax revenue')
+  ) {
+    return 'Government'
+  }
+
+  // Academic - universities, endowments, research institutions (check before Philanthropic)
+  if (
+    lower.includes('university') ||
+    lower.includes('academic') ||
+    lower.includes('endowment') ||
+    lower.includes('tuition') ||
+    lower.includes('college') ||
+    lower.includes('school of')
+  ) {
+    return 'Academic'
+  }
+
+  // Corporate - revenue-generating, commercial, self-sustaining, membership
+  if (
+    lower.includes('revenue') ||
+    lower.includes('corporate') ||
+    lower.includes('for-profit') ||
+    lower.includes('commercial') ||
+    lower.includes('subscription') ||
+    lower.includes('advertising') ||
+    lower.includes('private/') ||
+    lower.includes('membership') ||
+    lower.includes('self-funded') ||
+    lower.includes('self funded') ||
+    lower.includes('fees') ||
+    lower.includes('consulting') ||
+    lower.includes('industry') ||
+    lower.includes('public market') ||
+    lower.includes('sovereign wealth')
+  ) {
+    return 'Corporate'
+  }
+
+  // Philanthropic - foundation grants, nonprofit donations (broad catch-all)
+  if (
+    lower.includes('philanthrop') ||
+    lower.includes('foundation') ||
+    lower.includes('grant') ||
+    lower.includes('nonprofit') ||
+    lower.includes('non-profit') ||
+    lower.includes('donation') ||
+    lower.includes('donor') ||
+    lower.includes('public benefit') ||
+    lower.includes('volunteer')
+  ) {
+    return 'Philanthropic'
+  }
+
+  // Fallback - exclude uncategorized to keep chart clean
+  return null
 }
 
 /* ────────────────────────────────────────────
@@ -295,6 +371,7 @@ function ChartFundingStance({ orgs }: { orgs: Entity[] }) {
     const orgsWithFunding = orgs
       .filter((o) => o.funding_model && o.stance_score != null)
       .map((o) => ({ ...o, funding_normalized: normalizeFundingModel(o.funding_model!) }))
+      .filter((o) => o.funding_normalized !== null) as (Entity & { funding_normalized: string })[]
 
     const byFunding = d3.group(orgsWithFunding, (d: Entity & { funding_normalized: string }) => d.funding_normalized)
 
