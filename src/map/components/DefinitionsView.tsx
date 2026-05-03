@@ -812,6 +812,16 @@ function MiniSparkline({
     .curve(d3.curveMonotoneX)
   const pathD = line(series.map((v, i) => [i, v] as [number, number])) || ''
 
+  // Find gaps between valid points for dashed bridge lines
+  const gapLines: { x1: number; y1: number; x2: number; y2: number }[] = []
+  for (let k = 0; k < validPairs.length - 1; k++) {
+    const [i0, v0] = validPairs[k]!
+    const [i1, v1] = validPairs[k + 1]!
+    if (i1 - i0 > 1) {
+      gapLines.push({ x1: xScale(i0), y1: yScale(v0), x2: xScale(i1), y2: yScale(v1) })
+    }
+  }
+
   return (
     <svg width={sparkW} height={sparkH} style={{ minWidth: 0, flex: '0 1 auto' }}>
       <defs>
@@ -820,6 +830,19 @@ function MiniSparkline({
           <stop offset="100%" stopColor={colorEnd} />
         </linearGradient>
       </defs>
+      {gapLines.map((g, k) => (
+        <line
+          key={k}
+          x1={g.x1}
+          y1={g.y1}
+          x2={g.x2}
+          y2={g.y2}
+          stroke="var(--text-3)"
+          strokeWidth={0.75}
+          strokeDasharray="2,3"
+          opacity={0.4}
+        />
+      ))}
       <path d={pathD} fill="none" stroke={`url(#${gradId})`} strokeWidth={1.5} />
     </svg>
   )
@@ -896,6 +919,18 @@ function AggregateBeliefChart({
         .attr('opacity', 0.4)
     })
 
+    // Y-axis label
+    svg
+      .append('text')
+      .attr('transform', `rotate(-90)`)
+      .attr('x', -(pad.top + (H - pad.bottom - pad.top) / 2))
+      .attr('y', 10)
+      .attr('text-anchor', 'middle')
+      .attr('font-family', "'DM Mono', monospace")
+      .attr('font-size', 8)
+      .attr('fill', 'var(--text-3)')
+      .text('Definitions')
+
     // X-axis year labels
     quarters.forEach((q, i) => {
       if (q.start.getMonth() === 0 || i === 0) {
@@ -948,7 +983,7 @@ function AggregateBeliefChart({
           `M${xScale(a.i)},${yScale(a.count)} L${xScale(b.i)},${yScale(b.count)} L${xScale(b.i)},${yScale(0)} L${xScale(a.i)},${yScale(0)} Z`,
         )
         .attr('fill', colorScale(midMean))
-        .attr('opacity', 0.15)
+        .attr('opacity', 0.3)
     }
 
     // Colored line segments
@@ -980,10 +1015,10 @@ function AggregateBeliefChart({
         .attr('stroke-width', 1)
     })
 
-    // Color legend bar below y-axis label area
+    // Color legend bar with endpoint labels
     if (scale) {
       const legendY = H - pad.bottom + 22
-      const legendW = Math.min(W - pad.left - pad.right, 200)
+      const legendW = Math.min(W - pad.left - pad.right, 240)
       const legendX = pad.left
       const segW = legendW / scale.labels.length
       scale.colors.forEach((color, i) => {
@@ -991,28 +1026,28 @@ function AggregateBeliefChart({
           .append('rect')
           .attr('x', legendX + i * segW)
           .attr('y', legendY)
-          .attr('width', segW)
-          .attr('height', 4)
+          .attr('width', segW + 0.5)
+          .attr('height', 6)
           .attr('fill', color)
           .attr('rx', i === 0 ? 2 : i === scale.labels.length - 1 ? 2 : 0)
       })
       svg
         .append('text')
         .attr('x', legendX)
-        .attr('y', legendY + 12)
+        .attr('y', legendY + 15)
         .attr('font-family', "'DM Mono', monospace")
-        .attr('font-size', 7)
-        .attr('fill', 'var(--text-3)')
-        .text(scale.labels[0] || '')
+        .attr('font-size', 8)
+        .attr('fill', scale.colors[0] || 'var(--text-3)')
+        .text('← ' + (scale.labels[0] || ''))
       svg
         .append('text')
         .attr('x', legendX + legendW)
-        .attr('y', legendY + 12)
+        .attr('y', legendY + 15)
         .attr('text-anchor', 'end')
         .attr('font-family', "'DM Mono', monospace")
-        .attr('font-size', 7)
-        .attr('fill', 'var(--text-3)')
-        .text(scale.labels[scale.labels.length - 1] || '')
+        .attr('font-size', 8)
+        .attr('fill', scale.colors[scale.colors.length - 1] || 'var(--text-3)')
+        .text((scale.labels[scale.labels.length - 1] || '') + ' →')
     }
   }, [quarters, points, dim])
 
@@ -1315,6 +1350,16 @@ function TimelineView({ data }: { data: AgiData }) {
         .attr('y2', yScale(t))
         .attr('stroke', 'var(--line)')
     })
+    svg
+      .append('text')
+      .attr('transform', 'rotate(-90)')
+      .attr('x', -(pad.top + (H - pad.bottom - pad.top) / 2))
+      .attr('y', 10)
+      .attr('text-anchor', 'middle')
+      .attr('font-family', "'DM Mono', monospace")
+      .attr('font-size', 9)
+      .attr('fill', 'var(--text-3)')
+      .text('Definitions')
   }, [stackedData, quarters, clusters])
 
   if (quarters.length === 0) {
