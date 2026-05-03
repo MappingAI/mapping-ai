@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import { createPortal } from 'react-dom'
+import { ClusterMapView as SharedClusterMapView, ClusterListView as SharedClusterListView } from '../../components/AgiClusterMap'
 
 interface AgiPoint {
   entity_id: number
@@ -345,6 +346,7 @@ function DetailModal({ point, source, onClose }: { point: AgiPoint; source: AgiS
   )
 }
 
+// Use shared ClusterMapView component for consistent visualization
 function ClusterMapView({
   data,
   colorMode,
@@ -356,242 +358,24 @@ function ClusterMapView({
   hoveredCategory: string | null
   onSelect: (p: AgiPoint) => void
 }) {
-  const ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    if (!ref.current || !data.clusters || data.clusters.length === 0) return
-    const container = ref.current
-    container.innerHTML = ''
-
-    const staleTip = document.getElementById('__defview-map-tip')
-    if (staleTip) staleTip.style.opacity = '0'
-
-    const W = container.clientWidth || 700
-    const clusters = data.clusters
-
-    const cxExtent = d3.extent(clusters, (c: ClusterInfo) => c.cx ?? 0) as [number, number]
-    const cyExtent = d3.extent(clusters, (c: ClusterInfo) => c.cy ?? 0) as [number, number]
-
-    const workW = 800
-    const workPad = 120
-    const xScale = d3
-      .scaleLinear()
-      .domain([cxExtent[0] - 1, cxExtent[1] + 1])
-      .range([workPad, workW - workPad])
-    const workH = 600
-    const yScale = d3
-      .scaleLinear()
-      .domain([cyExtent[0] - 1, cyExtent[1] + 1])
-      .range([workH - workPad, workPad])
-
-    const clusterCenters = new Map<string, { x: number; y: number; count: number }>()
-    clusters.forEach((c: ClusterInfo) => {
-      clusterCenters.set(c.id, { x: xScale(c.cx ?? 0), y: yScale(c.cy ?? 0), count: c.count })
-    })
-
-    const nodes = data.points
-      .filter((p) => p.cluster_id && clusterCenters.has(p.cluster_id))
-      .map((p) => {
-        const center = clusterCenters.get(p.cluster_id!)!
-        const angle = Math.random() * 2 * Math.PI
-        const r = Math.random() * 30 + 10
-        return { ...p, x: center.x + Math.cos(angle) * r, y: center.y + Math.sin(angle) * r }
-      })
-
-    const sim = d3
-      .forceSimulation(nodes)
-      .force(
-        'x',
-        d3
-          .forceX((d: AgiPoint & { cluster_id: string }) => clusterCenters.get(d.cluster_id)?.x ?? workW / 2)
-          .strength(0.3),
-      )
-      .force(
-        'y',
-        d3
-          .forceY((d: AgiPoint & { cluster_id: string }) => clusterCenters.get(d.cluster_id)?.y ?? workH / 2)
-          .strength(0.3),
-      )
-      .force('collide', d3.forceCollide(6))
-      .force('charge', d3.forceManyBody().strength(-2))
-      .stop()
-    for (let i = 0; i < 200; i++) sim.tick()
-
-    if (nodes.length === 0) return
-
-    const nodeMinX = d3.min(nodes, (d: { x: number }) => d.x) - 10
-    const nodeMaxX = d3.max(nodes, (d: { x: number }) => d.x) + 10
-    const nodeMinY = d3.min(nodes, (d: { y: number }) => d.y) - 10
-    const nodeMaxY = d3.max(nodes, (d: { y: number }) => d.y) + 10
-
-    const labelMargin = 160
-    const vbX = nodeMinX - labelMargin
-    const vbY = nodeMinY - 20
-    const vbW = nodeMaxX - nodeMinX + labelMargin * 2
-    const vbH = nodeMaxY - nodeMinY + 40
-    const availH = (container.closest('#react-view-container')?.clientHeight || window.innerHeight - 48) - 120
-    const naturalH = W * (vbH / vbW)
-    const H = Math.min(naturalH, availH)
-
-    const svg = d3
-      .select(container)
-      .append('svg')
-      .attr('viewBox', `${vbX} ${vbY} ${vbW} ${vbH}`)
-      .attr('width', '100%')
-      .attr('height', H)
-      .attr('preserveAspectRatio', 'xMidYMid meet')
-
-    const tipEl = createTooltip('__defview-map-tip')
-
-    clusters.forEach((c: ClusterInfo) => {
-      const center = clusterCenters.get(c.id)
-      if (!center) return
-      const clusterNodes = nodes.filter((n: AgiPoint) => n.cluster_id === c.id)
-      if (clusterNodes.length === 0) return
-
-      const maxR =
-        d3.max(clusterNodes, (n: { x: number; y: number }) =>
-          Math.sqrt((n.x - center.x) ** 2 + (n.y - center.y) ** 2),
-        ) || 20
-      const midX = (nodeMinX + nodeMaxX) / 2
-      const midY = (nodeMinY + nodeMaxY) / 2
-      const dx = center.x - midX
-      const dy = center.y - midY
-      const dist = Math.sqrt(dx * dx + dy * dy) || 1
-      const labelOffset = maxR + 18
-      const labelX = center.x + (dx / dist) * labelOffset
-      const labelY = center.y + (dy / dist) * labelOffset
-
-      svg
-        .append('text')
-        .attr('x', labelX)
-        .attr('y', labelY)
-        .attr('text-anchor', dx < 0 ? 'end' : dx > 0 ? 'start' : 'middle')
-        .attr('dominant-baseline', dy < 0 ? 'auto' : 'hanging')
-        .attr('font-family', "'DM Mono', monospace")
-        .attr('font-size', 10)
-        .attr('fill', CLUSTER_COLORS[c.id] || '#888')
-        .attr('font-weight', 500)
-        .attr('opacity', 0.8)
-        .text(c.label)
-    })
-
-    svg
-      .selectAll('circle.entity')
-      .data(nodes)
-      .enter()
-      .append('circle')
-      .attr('class', 'entity')
-      .attr('cx', (d: { x: number }) => d.x)
-      .attr('cy', (d: { y: number }) => d.y)
-      .attr('r', 5)
-      .attr('fill', (d: AgiPoint) => getPointColor(d, colorMode))
-      .attr('opacity', 0.85)
-      .attr('stroke', '#fff')
-      .attr('stroke-width', 1)
-      .style('cursor', 'pointer')
-      .on('mouseover', (evt: MouseEvent, d: AgiPoint) => showTip(tipEl, evt, buildTooltipHtml(d, colorMode)))
-      .on('mousemove', (evt: MouseEvent) => moveTip(tipEl, evt))
-      .on('mouseout', () => hideTip(tipEl))
-      .on('click', (_: MouseEvent, d: AgiPoint) => {
-        hideTip(tipEl)
-        onSelect(d)
-      })
-
-    return () => {
-      const tip = document.getElementById('__defview-map-tip')
-      if (tip) tip.remove()
-    }
-  }, [data, colorMode, onSelect])
-
-  useEffect(() => {
-    if (!ref.current) return
-    d3.select(ref.current)
-      .selectAll('circle.entity')
-      .attr('opacity', (d: AgiPoint) =>
-        colorMode === 'category' && hoveredCategory && d.category !== hoveredCategory ? 0.15 : 0.85,
-      )
-  }, [hoveredCategory, colorMode])
-
-  return <div ref={ref} />
+  // Cast types to match shared component's expected types
+  return (
+    <SharedClusterMapView
+      data={data as Parameters<typeof SharedClusterMapView>[0]['data']}
+      colorMode={colorMode as Parameters<typeof SharedClusterMapView>[0]['colorMode']}
+      hoveredCategory={hoveredCategory}
+      onSelect={onSelect as Parameters<typeof SharedClusterMapView>[0]['onSelect']}
+    />
+  )
 }
 
+// Use shared ClusterListView component for consistent visualization
 function ListView({ data, onSelect }: { data: AgiData; onSelect: (p: AgiPoint) => void }) {
-  const clusters = data.clusters || []
-
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-      {[...clusters]
-        .sort((a, b) => b.count - a.count)
-        .map((cluster) => {
-          const entities = data.points.filter((p) => p.cluster_id === cluster.id)
-          return (
-            <div key={cluster.id}>
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginBottom: '6px' }}>
-                <span
-                  style={{
-                    display: 'inline-block',
-                    width: '12px',
-                    height: '12px',
-                    borderRadius: '2px',
-                    flexShrink: 0,
-                    background: CLUSTER_COLORS[cluster.id] || '#ccc',
-                  }}
-                />
-                <span
-                  style={{
-                    fontFamily: 'var(--mono)',
-                    fontSize: '12px',
-                    fontWeight: 500,
-                    color: 'var(--text-1)',
-                  }}
-                >
-                  {cluster.label}
-                </span>
-                <span style={{ fontFamily: 'var(--mono)', fontSize: '10px', color: 'var(--text-3)' }}>
-                  ({cluster.count})
-                </span>
-              </div>
-              <div
-                style={{
-                  fontFamily: 'var(--mono)',
-                  fontSize: '10px',
-                  color: 'var(--text-2)',
-                  marginBottom: '8px',
-                  marginLeft: '20px',
-                }}
-              >
-                {cluster.description}
-              </div>
-              <div style={{ marginLeft: '20px', display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
-                {entities.map((p) => (
-                  <button
-                    key={p.entity_id}
-                    onClick={() => onSelect(p)}
-                    style={{
-                      fontFamily: 'var(--mono)',
-                      fontSize: '9px',
-                      padding: '2px 6px',
-                      borderRadius: '4px',
-                      border: '1px solid var(--line)',
-                      color: 'var(--text-2)',
-                      background: 'none',
-                      cursor: 'pointer',
-                      maxWidth: '180px',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap' as const,
-                    }}
-                    title={p.definition}
-                  >
-                    {p.name}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )
-        })}
-    </div>
+    <SharedClusterListView
+      data={data as Parameters<typeof SharedClusterListView>[0]['data']}
+      onSelect={onSelect as Parameters<typeof SharedClusterListView>[0]['onSelect']}
+    />
   )
 }
 
