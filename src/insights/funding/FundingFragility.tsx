@@ -347,7 +347,7 @@ export function FundingFragility({ edges, showTooltip, hideTooltip }: Props) {
     })
 
     // Legend
-    const legendY = padTop + recipientData.length * (barH + gap) + 12
+    const legendY = padTop + recipientData.length * (barH + gap) + 28
 
     // Risk legend
     svg

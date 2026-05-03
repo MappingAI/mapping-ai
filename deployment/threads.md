@@ -96,6 +96,8 @@ Definitions correlate with policy stance.
 
 `[ATTACH: map-beliefs-stance.png]`
 
+![Beliefs colored by stance](images/map-beliefs-stance.png)
+
 *Note: Key insight tweet stance-colored UMAP*
 
 ### Tweet 6 [221/280 - OK]
@@ -105,6 +107,8 @@ So when @JensenHuang says "AGI is already here" and @leopoldasch says "2-3 years
 Explore the full map: mapping-ai.org/map
 
 `[ATTACH: insights-outliers-2d-bottom.png]`
+
+![Outliers 2D chart](images/insights-outliers-2d-bottom.png)
 
 *Note: Close with the outlier chart showing Jensen + Leopold. CTA to the site.*
 
@@ -116,7 +120,9 @@ It's all open source. Check it out here:
 
 mapping-ai.org
 
-`[ATTACH: map-network-clean.png]`
+`[ATTACH: map-network-clean-controls.png]`
+
+![Network map](images/map-network-clean-controls.png)
 
 *Note: Final CTA tweet with the network visualization.*
 
@@ -181,6 +187,70 @@ This doesn't mean funders are buying positions. They may simply select for orgs 
 Explore the full analysis: mapping-ai.org/insights
 
 *Note: Hedge the causation claim. CTA.*
+
+---
+
+## Thread 2-ALT: Follow the Money (Insight-Led)
+
+**Angle:** Funding source predicts regulatory stance. We linked attributes no one else tracks together.
+
+### Tweet 1 [261/280 - OK]
+
+We tracked 1,176 funding relationships across the AI policy ecosystem.
+
+The pattern: where the money comes from predicts what an org believes about regulation.
+
+VC-funded orgs avg 2.5 (light-touch). Philanthropic: 4.7 (precautionary). The gap is enormous.
+
+`[ATTACH: insights-funding-stance.png]`
+
+*Note: Setup + punchline in one tweet. Dot plot showing funding model vs stance.*
+
+### Tweet 2 [280/280 - OK]
+
+The top 5 funders reach 58% of all policy organizations.
+
+@OpenPhil / Coefficient Giving: 26 orgs
+Survival & Flourishing Fund: 13
+@FLI_org: 10
+Jaan Tallinn: 10
+Good Ventures: 9
+
+This totals 68 connections to 117 policy orgs.
+
+`[ATTACH: insights-kingmakers.png]`
+
+*Note: Kingmakers chart. Power-law concentration.*
+
+### Tweet 3 [188/280 - OK]
+
+We track concentration risk, how much of an org's funding comes from one source.
+
+43% of policy orgs get 40%+ from a single funder. Does money shape the message?
+
+`[ATTACH: insights-fragility.png]`
+
+*Note: FundingFragility chart with concentration risk indicators.*
+
+### Tweet 4 [246/280 - OK]
+
+Philanthropic money flows to AI Safety orgs and Think Tanks.
+
+Tech company money (@Google, @Microsoft, @Amazon) flows to Frontier Labs and Infrastructure.
+
+@a16z funds Deployers & Platforms almost exclusively.
+
+`[ATTACH: insights-funding-sankey.png]`
+
+*Note: Sankey with interpretation. Supporting detail, not the hook.*
+
+### Tweet 5 [248/280 - OK]
+
+This doesn't mean funders are buying positions. They may simply select for orgs that already agree. But structurally, it means the AI policy conversation is shaped by a small number of capital sources.
+
+Explore the full analysis: mapping-ai.org/insights
+
+*Note: Hedge causation. CTA.*
 
 ---
 
