@@ -2806,19 +2806,39 @@ export function initMapEngine() {
         ctx.lineCap = 'butt'
       }
 
-      // Hovered edge: very subtle highlight (slight thickening, no glow)
+      // Hovered edge highlight
       if (_hoveredEdge && _hoveredEdge !== _selectedEdge) {
         const sx = _hoveredEdge.source.x,
           sy = _hoveredEdge.source.y
         const tx = _hoveredEdge.target.x,
           ty = _hoveredEdge.target.y
-        ctx.globalAlpha = 0.5
-        ctx.strokeStyle = tc.text2 || '#555'
-        ctx.lineWidth = 1.2
-        ctx.beginPath()
-        ctx.moveTo(sx, sy)
-        ctx.lineTo(tx, ty)
-        ctx.stroke()
+        // Use gold highlight when a selection is active (exploring a narrowed set)
+        const hasSelection = _selectedEdge || _canvasNodes.some((n) => n._vs === 'highlighted')
+        if (hasSelection) {
+          ctx.lineCap = 'round'
+          ctx.globalAlpha = 0.2
+          ctx.strokeStyle = '#D4AF37'
+          ctx.lineWidth = 6
+          ctx.beginPath()
+          ctx.moveTo(sx, sy)
+          ctx.lineTo(tx, ty)
+          ctx.stroke()
+          ctx.globalAlpha = 0.9
+          ctx.lineWidth = 1.5
+          ctx.beginPath()
+          ctx.moveTo(sx, sy)
+          ctx.lineTo(tx, ty)
+          ctx.stroke()
+          ctx.lineCap = 'butt'
+        } else {
+          ctx.globalAlpha = 0.5
+          ctx.strokeStyle = tc.text2 || '#555'
+          ctx.lineWidth = 1.2
+          ctx.beginPath()
+          ctx.moveTo(sx, sy)
+          ctx.lineTo(tx, ty)
+          ctx.stroke()
+        }
       }
     }
 
