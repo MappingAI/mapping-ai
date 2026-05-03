@@ -358,7 +358,10 @@ function ClusterMapView({
 }) {
   const ref = useRef<HTMLDivElement>(null)
   const simRef = useRef<ReturnType<typeof d3.forceSimulation> | null>(null)
+  const colorModeRef = useRef(colorMode)
+  colorModeRef.current = colorMode
 
+  // Layout effect: runs only when data changes. Color updates are separate.
   useEffect(() => {
     if (!ref.current || !data.clusters || data.clusters.length === 0) return
     const container = ref.current
@@ -378,21 +381,58 @@ function ClusterMapView({
     const cxExtent = d3.extent(clusters, (c: ClusterInfo) => c.cx ?? 0) as [number, number]
     const cyExtent = d3.extent(clusters, (c: ClusterInfo) => c.cy ?? 0) as [number, number]
 
-    const workW = 1000
-    const workPad = 160
+    // Larger work area with more padding for cluster separation
+    const workW = 1400
+    const workPad = 220
     const xScale = d3
       .scaleLinear()
       .domain([cxExtent[0] - 1, cxExtent[1] + 1])
       .range([workPad, workW - workPad])
-    const workH = 750
+    const workH = 1000
     const yScale = d3
       .scaleLinear()
       .domain([cyExtent[0] - 1, cyExtent[1] + 1])
       .range([workH - workPad, workPad])
 
+    // Initial positions from UMAP centroids
+    const centers = clusters.map((c: ClusterInfo) => ({
+      id: c.id as string,
+      x: xScale(c.cx ?? 0),
+      y: yScale(c.cy ?? 0),
+      count: c.count as number,
+      radius: Math.sqrt(c.count) * 7 + 20,
+    }))
+
+    // Push overlapping cluster centers apart (iterative repulsion)
+    const GAP = 30
+    for (let iter = 0; iter < 100; iter++) {
+      let moved = false
+      for (let i = 0; i < centers.length; i++) {
+        for (let j = i + 1; j < centers.length; j++) {
+          const a = centers[i]!
+          const b = centers[j]!
+          const dx = b.x - a.x
+          const dy = b.y - a.y
+          const dist = Math.sqrt(dx * dx + dy * dy)
+          const minDist = a.radius + b.radius + GAP
+          if (dist < minDist && dist > 0) {
+            const push = (minDist - dist) / 2
+            const nx = dx / dist
+            const ny = dy / dist
+            a.x -= nx * push
+            a.y -= ny * push
+            b.x += nx * push
+            b.y += ny * push
+            moved = true
+          }
+        }
+      }
+      if (!moved) break
+    }
+
     const clusterCenters = new Map<string, { x: number; y: number; count: number }>()
-    clusters.forEach((c: ClusterInfo) => {
-      clusterCenters.set(c.id, { x: xScale(c.cx ?? 0), y: yScale(c.cy ?? 0), count: c.count })
+    centers.forEach((c) => {
+      clusterCenters.set(c.id, { x: c.x, y: c.y, count: c.count })
     })
 
     const nodes = data.points
@@ -406,30 +446,79 @@ function ClusterMapView({
 
     if (nodes.length === 0) return
 
-    // Pre-compute a generous viewBox based on work area so SVG is ready before simulation settles
-    const labelMargin = 200
-    const preVbX = workPad - labelMargin
-    const preVbY = workPad - 40
-    const preVbW = workW - 2 * workPad + labelMargin * 2
-    const preVbH = workH - 2 * workPad + 80
+    // Build radius lookup for background bubbles and labels
+    const clusterRadii = new Map<string, number>()
+    centers.forEach((c) => clusterRadii.set(c.id, c.radius))
+
+    // Stable viewBox based on cluster centers (doesn't change during animation)
+    const labelMargin = 220
+    const allCx = [...clusterCenters.values()].map((c) => c.x)
+    const allCy = [...clusterCenters.values()].map((c) => c.y)
+    const maxRadius = Math.max(...centers.map((c) => c.radius))
+    const vbX = Math.min(...allCx) - maxRadius - labelMargin
+    const vbY = Math.min(...allCy) - maxRadius - 30
+    const vbW = Math.max(...allCx) - Math.min(...allCx) + maxRadius * 2 + labelMargin * 2
+    const vbH = Math.max(...allCy) - Math.min(...allCy) + maxRadius * 2 + 60
     const availH = (container.closest('#react-view-container')?.clientHeight || window.innerHeight - 48) - 80
-    const naturalH = W * (preVbH / preVbW)
+    const naturalH = W * (vbH / vbW)
     const H = Math.min(naturalH, availH)
 
     const svg = d3
       .select(container)
       .append('svg')
-      .attr('viewBox', `${preVbX} ${preVbY} ${preVbW} ${preVbH}`)
+      .attr('viewBox', `${vbX} ${vbY} ${vbW} ${vbH}`)
       .attr('width', '100%')
       .attr('height', H)
       .attr('preserveAspectRatio', 'xMidYMid meet')
 
     const tipEl = createTooltip('__defview-map-tip')
 
-    // Create label group (rendered below circles, added first)
-    const labelGroup = svg.append('g').attr('class', 'cluster-labels')
+    // Background bubbles for each cluster (like network view)
+    const bgGroup = svg.append('g').attr('class', 'cluster-backgrounds')
+    const midX = (Math.min(...allCx) + Math.max(...allCx)) / 2
+    const midY = (Math.min(...allCy) + Math.max(...allCy)) / 2
 
-    // Create circle elements bound to nodes
+    clusters.forEach((c: ClusterInfo) => {
+      const center = clusterCenters.get(c.id)
+      if (!center) return
+      const r = clusterRadii.get(c.id) || 40
+      bgGroup
+        .append('circle')
+        .attr('cx', center.x)
+        .attr('cy', center.y)
+        .attr('r', r)
+        .attr('fill', CLUSTER_COLORS[c.id] || '#888')
+        .attr('opacity', 0.06)
+    })
+
+    // Labels rendered immediately (positioned from stable cluster centers)
+    const labelGroup = svg.append('g').attr('class', 'cluster-labels')
+    clusters.forEach((c: ClusterInfo) => {
+      const center = clusterCenters.get(c.id)
+      if (!center) return
+      const r = clusterRadii.get(c.id) || 40
+      const dx = center.x - midX
+      const dy = center.y - midY
+      const dist = Math.sqrt(dx * dx + dy * dy) || 1
+      const labelOffset = r + 14
+      const labelX = center.x + (dx / dist) * labelOffset
+      const labelY = center.y + (dy / dist) * labelOffset
+
+      labelGroup
+        .append('text')
+        .attr('x', labelX)
+        .attr('y', labelY)
+        .attr('text-anchor', dx < 0 ? 'end' : dx > 0 ? 'start' : 'middle')
+        .attr('dominant-baseline', dy < 0 ? 'auto' : 'hanging')
+        .attr('font-family', "'DM Mono', monospace")
+        .attr('font-size', 10)
+        .attr('fill', CLUSTER_COLORS[c.id] || '#888')
+        .attr('font-weight', 500)
+        .attr('opacity', 0.8)
+        .text(c.label)
+    })
+
+    // Entity circles
     const circles = svg
       .selectAll('circle.entity')
       .data(nodes)
@@ -439,12 +528,12 @@ function ClusterMapView({
       .attr('cx', (d: { x: number }) => d.x)
       .attr('cy', (d: { y: number }) => d.y)
       .attr('r', 5)
-      .attr('fill', (d: AgiPoint) => getPointColor(d, colorMode))
+      .attr('fill', (d: AgiPoint) => getPointColor(d, colorModeRef.current))
       .attr('opacity', 0.85)
       .attr('stroke', '#fff')
       .attr('stroke-width', 1)
       .style('cursor', 'pointer')
-      .on('mouseover', (evt: MouseEvent, d: AgiPoint) => showTip(tipEl, evt, buildTooltipHtml(d, colorMode)))
+      .on('mouseover', (evt: MouseEvent, d: AgiPoint) => showTip(tipEl, evt, buildTooltipHtml(d, colorModeRef.current)))
       .on('mousemove', (evt: MouseEvent) => moveTip(tipEl, evt))
       .on('mouseout', () => hideTip(tipEl))
       .on('click', (_: MouseEvent, d: AgiPoint) => {
@@ -452,86 +541,27 @@ function ClusterMapView({
         onSelect(d)
       })
 
-    function updateLabels() {
-      labelGroup.selectAll('text').remove()
-      const nodeMinX = d3.min(nodes, (d: { x: number }) => d.x) as number
-      const nodeMaxX = d3.max(nodes, (d: { x: number }) => d.x) as number
-      const nodeMinY = d3.min(nodes, (d: { y: number }) => d.y) as number
-      const nodeMaxY = d3.max(nodes, (d: { y: number }) => d.y) as number
-      const midX = (nodeMinX + nodeMaxX) / 2
-      const midY = (nodeMinY + nodeMaxY) / 2
-
-      clusters.forEach((c: ClusterInfo) => {
-        const center = clusterCenters.get(c.id)
-        if (!center) return
-        const clusterNodes = nodes.filter((n: AgiPoint) => n.cluster_id === c.id)
-        if (clusterNodes.length === 0) return
-
-        const maxR =
-          d3.max(clusterNodes, (n: { x: number; y: number }) =>
-            Math.sqrt((n.x - center.x) ** 2 + (n.y - center.y) ** 2),
-          ) || 20
-        const dx = center.x - midX
-        const dy = center.y - midY
-        const dist = Math.sqrt(dx * dx + dy * dy) || 1
-        const labelOffset = maxR + 22
-        const labelX = center.x + (dx / dist) * labelOffset
-        const labelY = center.y + (dy / dist) * labelOffset
-
-        labelGroup
-          .append('text')
-          .attr('x', labelX)
-          .attr('y', labelY)
-          .attr('text-anchor', dx < 0 ? 'end' : dx > 0 ? 'start' : 'middle')
-          .attr('dominant-baseline', dy < 0 ? 'auto' : 'hanging')
-          .attr('font-family', "'DM Mono', monospace")
-          .attr('font-size', 10)
-          .attr('fill', CLUSTER_COLORS[c.id] || '#888')
-          .attr('font-weight', 500)
-          .attr('opacity', 0.8)
-          .text(c.label)
-      })
-    }
-
-    // Set up animated simulation
+    // Animated simulation
     const sim = d3
       .forceSimulation(nodes)
       .force(
         'x',
         d3
           .forceX((d: AgiPoint & { cluster_id: string }) => clusterCenters.get(d.cluster_id)?.x ?? workW / 2)
-          .strength(0.25),
+          .strength(0.3),
       )
       .force(
         'y',
         d3
           .forceY((d: AgiPoint & { cluster_id: string }) => clusterCenters.get(d.cluster_id)?.y ?? workH / 2)
-          .strength(0.25),
+          .strength(0.3),
       )
-      .force('collide', d3.forceCollide(6))
+      .force('collide', d3.forceCollide(6.5))
       .force('charge', d3.forceManyBody().strength(-2))
-      .alpha(0.3)
-      .alphaDecay(0.02)
+      .alpha(0.4)
+      .alphaDecay(0.025)
       .on('tick', () => {
         circles.attr('cx', (d: { x: number }) => d.x).attr('cy', (d: { y: number }) => d.y)
-      })
-      .on('end', () => {
-        // Once settled, recompute viewBox to fit actual node positions and place labels
-        const nodeMinX = (d3.min(nodes, (d: { x: number }) => d.x) as number) - 10
-        const nodeMaxX = (d3.max(nodes, (d: { x: number }) => d.x) as number) + 10
-        const nodeMinY = (d3.min(nodes, (d: { y: number }) => d.y) as number) - 10
-        const nodeMaxY = (d3.max(nodes, (d: { y: number }) => d.y) as number) + 10
-
-        const finalVbX = nodeMinX - labelMargin
-        const finalVbY = nodeMinY - 20
-        const finalVbW = nodeMaxX - nodeMinX + labelMargin * 2
-        const finalVbH = nodeMaxY - nodeMinY + 40
-        svg.attr('viewBox', `${finalVbX} ${finalVbY} ${finalVbW} ${finalVbH}`)
-
-        const finalNatH = W * (finalVbH / finalVbW)
-        svg.attr('height', Math.min(finalNatH, availH))
-
-        updateLabels()
       })
 
     simRef.current = sim
@@ -544,8 +574,17 @@ function ClusterMapView({
       const tip = document.getElementById('__defview-map-tip')
       if (tip) tip.remove()
     }
-  }, [data, colorMode, onSelect])
+  }, [data, onSelect])
 
+  // Color-only update (no re-simulation)
+  useEffect(() => {
+    if (!ref.current) return
+    d3.select(ref.current)
+      .selectAll('circle.entity')
+      .attr('fill', (d: AgiPoint) => getPointColor(d, colorMode))
+  }, [colorMode])
+
+  // Hover dimming
   useEffect(() => {
     if (!ref.current) return
     d3.select(ref.current)
@@ -1292,32 +1331,42 @@ export function Legend({
   const beliefScale = BELIEF_SCALES[colorMode]
 
   if (beliefScale) {
+    const n = beliefScale.labels.length
     return (
       <div style={{ marginTop: '8px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
-          {beliefScale.labels.map((label, i) => (
-            <div key={label} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1 }}>
-              <div
-                style={{
-                  width: '100%',
-                  height: '12px',
-                  background: beliefScale.colors[i],
-                  borderRadius: i === 0 ? '3px 0 0 3px' : i === beliefScale.labels.length - 1 ? '0 3px 3px 0' : '0',
-                }}
-              />
-              <span
-                style={{
-                  fontFamily: 'var(--mono)',
-                  fontSize: '8px',
-                  color: 'var(--text-3)',
-                  marginTop: '4px',
-                  textAlign: 'center' as const,
-                  lineHeight: 1.1,
-                }}
-              >
-                {label}
-              </span>
-            </div>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: `repeat(${n}, 1fr)`,
+            gap: '1px',
+            borderRadius: '3px',
+            overflow: 'hidden',
+          }}
+        >
+          {beliefScale.colors.map((color, i) => (
+            <div key={i} style={{ height: '12px', background: color }} />
+          ))}
+        </div>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: `repeat(${n}, 1fr)`,
+            marginTop: '4px',
+          }}
+        >
+          {beliefScale.labels.map((label) => (
+            <span
+              key={label}
+              style={{
+                fontFamily: 'var(--mono)',
+                fontSize: '8px',
+                color: 'var(--text-3)',
+                textAlign: 'center',
+                lineHeight: 1.1,
+              }}
+            >
+              {label}
+            </span>
           ))}
         </div>
         {noDataCount > 0 && (
