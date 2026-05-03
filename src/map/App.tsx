@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from 'react'
-import { DefinitionsView } from './components/DefinitionsView'
+import { DefinitionsView, Legend } from './components/DefinitionsView'
+import type { DefinitionsDataPayload } from './components/DefinitionsView'
 
 type ReactView = 'definitions' | null
 
@@ -12,6 +13,12 @@ export function App() {
   const [beliefsSubView, setBeliefsSubView] = useState<string>('map')
   const [beliefsColorMode, setBeliefsColorMode] = useState<string>('cluster')
   const [bannerDismissed, setBannerDismissed] = useState(() => localStorage.getItem('mobileBannerDismissed') === '1')
+  const [defData, setDefData] = useState<DefinitionsDataPayload | null>(null)
+  const [hoveredCategory, setHoveredCategory] = useState<string | null>(null)
+
+  const handleDefDataLoaded = useCallback((payload: DefinitionsDataPayload) => {
+    setDefData(payload)
+  }, [])
 
   useEffect(() => {
     let engineCleanup: { destroy: () => void } | null = null
@@ -345,6 +352,17 @@ export function App() {
             ))}
           </div>
         </div>
+        {reactView === 'definitions' && (beliefsSubView === 'map' || beliefsSubView === 'scatter') && defData && (
+          <div className="control-group" id="beliefs-legend">
+            <h3>Legend</h3>
+            <Legend
+              data={defData.data}
+              colorMode={beliefsColorMode as 'cluster' | 'category' | 'stance' | 'timeline' | 'risk'}
+              setHoveredCategory={setHoveredCategory}
+              categories={defData.categories}
+            />
+          </div>
+        )}
         <div className="control-group" id="category-filters">
           <h3 style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span>Category</span>
@@ -693,7 +711,14 @@ export function App() {
               zIndex: 10,
             }}
           >
-            {reactView === 'definitions' && <DefinitionsView subView={beliefsSubView} colorMode={beliefsColorMode} />}
+            {reactView === 'definitions' && (
+              <DefinitionsView
+                subView={beliefsSubView}
+                colorMode={beliefsColorMode}
+                onDataLoaded={handleDefDataLoaded}
+                hoveredCategory={hoveredCategory}
+              />
+            )}
           </div>
         </>
       )}

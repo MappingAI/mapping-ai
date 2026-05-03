@@ -47,7 +47,7 @@ interface AgiData {
 type ColorMode = 'cluster' | 'category' | 'stance' | 'timeline' | 'risk'
 type SubView = 'map' | 'list' | 'scatter' | 'timeline' | 'trends'
 
-const CLUSTER_COLORS: Record<string, string> = {
+export const CLUSTER_COLORS: Record<string, string> = {
   'human-level-cognitive-parity': '#4e79a7',
   'economic-automation': '#f28e2b',
   'autonomous-research-capability': '#e15759',
@@ -58,7 +58,7 @@ const CLUSTER_COLORS: Record<string, string> = {
   'augmentative-tools': '#ff9da7',
 }
 
-const BELIEF_SCALES: Record<string, { labels: string[]; colors: string[] }> = {
+export const BELIEF_SCALES: Record<string, { labels: string[]; colors: string[] }> = {
   stance: {
     labels: ['Accelerate', 'Light-touch', 'Targeted', 'Moderate', 'Restrictive', 'Precautionary'],
     colors: ['#2166ac', '#67a9cf', '#d1e5f0', '#fddbc7', '#ef8a62', '#b2182b'],
@@ -73,7 +73,7 @@ const BELIEF_SCALES: Record<string, { labels: string[]; colors: string[] }> = {
   },
 }
 
-const CATEGORY_COLORS: Record<string, string> = {
+export const CATEGORY_COLORS: Record<string, string> = {
   'Frontier Lab': '#e41a1c',
   'AI Safety/Alignment': '#377eb8',
   'Think Tank/Policy Org': '#4daf4a',
@@ -357,11 +357,17 @@ function ClusterMapView({
   onSelect: (p: AgiPoint) => void
 }) {
   const ref = useRef<HTMLDivElement>(null)
+  const simRef = useRef<ReturnType<typeof d3.forceSimulation> | null>(null)
 
   useEffect(() => {
     if (!ref.current || !data.clusters || data.clusters.length === 0) return
     const container = ref.current
     container.innerHTML = ''
+
+    if (simRef.current) {
+      simRef.current.stop()
+      simRef.current = null
+    }
 
     const staleTip = document.getElementById('__defview-map-tip')
     if (staleTip) staleTip.style.opacity = '0'
@@ -372,13 +378,13 @@ function ClusterMapView({
     const cxExtent = d3.extent(clusters, (c: ClusterInfo) => c.cx ?? 0) as [number, number]
     const cyExtent = d3.extent(clusters, (c: ClusterInfo) => c.cy ?? 0) as [number, number]
 
-    const workW = 800
-    const workPad = 120
+    const workW = 1000
+    const workPad = 160
     const xScale = d3
       .scaleLinear()
       .domain([cxExtent[0] - 1, cxExtent[1] + 1])
       .range([workPad, workW - workPad])
-    const workH = 600
+    const workH = 750
     const yScale = d3
       .scaleLinear()
       .domain([cyExtent[0] - 1, cyExtent[1] + 1])
@@ -398,85 +404,33 @@ function ClusterMapView({
         return { ...p, x: center.x + Math.cos(angle) * r, y: center.y + Math.sin(angle) * r }
       })
 
-    const sim = d3
-      .forceSimulation(nodes)
-      .force(
-        'x',
-        d3
-          .forceX((d: AgiPoint & { cluster_id: string }) => clusterCenters.get(d.cluster_id)?.x ?? workW / 2)
-          .strength(0.3),
-      )
-      .force(
-        'y',
-        d3
-          .forceY((d: AgiPoint & { cluster_id: string }) => clusterCenters.get(d.cluster_id)?.y ?? workH / 2)
-          .strength(0.3),
-      )
-      .force('collide', d3.forceCollide(6))
-      .force('charge', d3.forceManyBody().strength(-2))
-      .stop()
-    for (let i = 0; i < 200; i++) sim.tick()
-
     if (nodes.length === 0) return
 
-    const nodeMinX = d3.min(nodes, (d: { x: number }) => d.x) - 10
-    const nodeMaxX = d3.max(nodes, (d: { x: number }) => d.x) + 10
-    const nodeMinY = d3.min(nodes, (d: { y: number }) => d.y) - 10
-    const nodeMaxY = d3.max(nodes, (d: { y: number }) => d.y) + 10
-
-    const labelMargin = 160
-    const vbX = nodeMinX - labelMargin
-    const vbY = nodeMinY - 20
-    const vbW = nodeMaxX - nodeMinX + labelMargin * 2
-    const vbH = nodeMaxY - nodeMinY + 40
-    const availH = (container.closest('#react-view-container')?.clientHeight || window.innerHeight - 48) - 120
-    const naturalH = W * (vbH / vbW)
+    // Pre-compute a generous viewBox based on work area so SVG is ready before simulation settles
+    const labelMargin = 200
+    const preVbX = workPad - labelMargin
+    const preVbY = workPad - 40
+    const preVbW = workW - 2 * workPad + labelMargin * 2
+    const preVbH = workH - 2 * workPad + 80
+    const availH = (container.closest('#react-view-container')?.clientHeight || window.innerHeight - 48) - 80
+    const naturalH = W * (preVbH / preVbW)
     const H = Math.min(naturalH, availH)
 
     const svg = d3
       .select(container)
       .append('svg')
-      .attr('viewBox', `${vbX} ${vbY} ${vbW} ${vbH}`)
+      .attr('viewBox', `${preVbX} ${preVbY} ${preVbW} ${preVbH}`)
       .attr('width', '100%')
       .attr('height', H)
       .attr('preserveAspectRatio', 'xMidYMid meet')
 
     const tipEl = createTooltip('__defview-map-tip')
 
-    clusters.forEach((c: ClusterInfo) => {
-      const center = clusterCenters.get(c.id)
-      if (!center) return
-      const clusterNodes = nodes.filter((n: AgiPoint) => n.cluster_id === c.id)
-      if (clusterNodes.length === 0) return
+    // Create label group (rendered below circles, added first)
+    const labelGroup = svg.append('g').attr('class', 'cluster-labels')
 
-      const maxR =
-        d3.max(clusterNodes, (n: { x: number; y: number }) =>
-          Math.sqrt((n.x - center.x) ** 2 + (n.y - center.y) ** 2),
-        ) || 20
-      const midX = (nodeMinX + nodeMaxX) / 2
-      const midY = (nodeMinY + nodeMaxY) / 2
-      const dx = center.x - midX
-      const dy = center.y - midY
-      const dist = Math.sqrt(dx * dx + dy * dy) || 1
-      const labelOffset = maxR + 18
-      const labelX = center.x + (dx / dist) * labelOffset
-      const labelY = center.y + (dy / dist) * labelOffset
-
-      svg
-        .append('text')
-        .attr('x', labelX)
-        .attr('y', labelY)
-        .attr('text-anchor', dx < 0 ? 'end' : dx > 0 ? 'start' : 'middle')
-        .attr('dominant-baseline', dy < 0 ? 'auto' : 'hanging')
-        .attr('font-family', "'DM Mono', monospace")
-        .attr('font-size', 10)
-        .attr('fill', CLUSTER_COLORS[c.id] || '#888')
-        .attr('font-weight', 500)
-        .attr('opacity', 0.8)
-        .text(c.label)
-    })
-
-    svg
+    // Create circle elements bound to nodes
+    const circles = svg
       .selectAll('circle.entity')
       .data(nodes)
       .enter()
@@ -498,7 +452,95 @@ function ClusterMapView({
         onSelect(d)
       })
 
+    function updateLabels() {
+      labelGroup.selectAll('text').remove()
+      const nodeMinX = d3.min(nodes, (d: { x: number }) => d.x) as number
+      const nodeMaxX = d3.max(nodes, (d: { x: number }) => d.x) as number
+      const nodeMinY = d3.min(nodes, (d: { y: number }) => d.y) as number
+      const nodeMaxY = d3.max(nodes, (d: { y: number }) => d.y) as number
+      const midX = (nodeMinX + nodeMaxX) / 2
+      const midY = (nodeMinY + nodeMaxY) / 2
+
+      clusters.forEach((c: ClusterInfo) => {
+        const center = clusterCenters.get(c.id)
+        if (!center) return
+        const clusterNodes = nodes.filter((n: AgiPoint) => n.cluster_id === c.id)
+        if (clusterNodes.length === 0) return
+
+        const maxR =
+          d3.max(clusterNodes, (n: { x: number; y: number }) =>
+            Math.sqrt((n.x - center.x) ** 2 + (n.y - center.y) ** 2),
+          ) || 20
+        const dx = center.x - midX
+        const dy = center.y - midY
+        const dist = Math.sqrt(dx * dx + dy * dy) || 1
+        const labelOffset = maxR + 22
+        const labelX = center.x + (dx / dist) * labelOffset
+        const labelY = center.y + (dy / dist) * labelOffset
+
+        labelGroup
+          .append('text')
+          .attr('x', labelX)
+          .attr('y', labelY)
+          .attr('text-anchor', dx < 0 ? 'end' : dx > 0 ? 'start' : 'middle')
+          .attr('dominant-baseline', dy < 0 ? 'auto' : 'hanging')
+          .attr('font-family', "'DM Mono', monospace")
+          .attr('font-size', 10)
+          .attr('fill', CLUSTER_COLORS[c.id] || '#888')
+          .attr('font-weight', 500)
+          .attr('opacity', 0.8)
+          .text(c.label)
+      })
+    }
+
+    // Set up animated simulation
+    const sim = d3
+      .forceSimulation(nodes)
+      .force(
+        'x',
+        d3
+          .forceX((d: AgiPoint & { cluster_id: string }) => clusterCenters.get(d.cluster_id)?.x ?? workW / 2)
+          .strength(0.25),
+      )
+      .force(
+        'y',
+        d3
+          .forceY((d: AgiPoint & { cluster_id: string }) => clusterCenters.get(d.cluster_id)?.y ?? workH / 2)
+          .strength(0.25),
+      )
+      .force('collide', d3.forceCollide(6))
+      .force('charge', d3.forceManyBody().strength(-2))
+      .alpha(0.3)
+      .alphaDecay(0.02)
+      .on('tick', () => {
+        circles.attr('cx', (d: { x: number }) => d.x).attr('cy', (d: { y: number }) => d.y)
+      })
+      .on('end', () => {
+        // Once settled, recompute viewBox to fit actual node positions and place labels
+        const nodeMinX = (d3.min(nodes, (d: { x: number }) => d.x) as number) - 10
+        const nodeMaxX = (d3.max(nodes, (d: { x: number }) => d.x) as number) + 10
+        const nodeMinY = (d3.min(nodes, (d: { y: number }) => d.y) as number) - 10
+        const nodeMaxY = (d3.max(nodes, (d: { y: number }) => d.y) as number) + 10
+
+        const finalVbX = nodeMinX - labelMargin
+        const finalVbY = nodeMinY - 20
+        const finalVbW = nodeMaxX - nodeMinX + labelMargin * 2
+        const finalVbH = nodeMaxY - nodeMinY + 40
+        svg.attr('viewBox', `${finalVbX} ${finalVbY} ${finalVbW} ${finalVbH}`)
+
+        const finalNatH = W * (finalVbH / finalVbW)
+        svg.attr('height', Math.min(finalNatH, availH))
+
+        updateLabels()
+      })
+
+    simRef.current = sim
+
     return () => {
+      if (simRef.current) {
+        simRef.current.stop()
+        simRef.current = null
+      }
       const tip = document.getElementById('__defview-map-tip')
       if (tip) tip.remove()
     }
@@ -1183,7 +1225,7 @@ function TimelineView({ data }: { data: AgiData }) {
   )
 }
 
-function Legend({
+export function Legend({
   data,
   colorMode,
   setHoveredCategory,
@@ -1290,12 +1332,26 @@ function Legend({
   return null
 }
 
-export function DefinitionsView({ subView, colorMode }: { subView: string; colorMode: string }) {
+export interface DefinitionsDataPayload {
+  data: AgiData
+  categories: string[]
+}
+
+export function DefinitionsView({
+  subView,
+  colorMode,
+  onDataLoaded,
+  hoveredCategory,
+}: {
+  subView: string
+  colorMode: string
+  onDataLoaded?: (payload: DefinitionsDataPayload) => void
+  hoveredCategory: string | null
+}) {
   const viewMode = subView as SubView
   const cm = colorMode as ColorMode
   const [data, setData] = useState<AgiData | null>(null)
   const [selectedPoint, setSelectedPoint] = useState<AgiPoint | null>(null)
-  const [hoveredCategory, setHoveredCategory] = useState<string | null>(null)
 
   useEffect(() => {
     fetch('/data/agi-definitions.json')
@@ -1323,6 +1379,12 @@ export function DefinitionsView({ subView, colorMode }: { subView: string; color
       .map(([cat]) => cat)
   }, [data])
 
+  useEffect(() => {
+    if (data && onDataLoaded) {
+      onDataLoaded({ data, categories })
+    }
+  }, [data, categories, onDataLoaded])
+
   if (!data) {
     return (
       <div style={{ fontFamily: 'var(--mono)', fontSize: '11px', color: 'var(--text-3)', padding: '16px' }}>
@@ -1332,7 +1394,7 @@ export function DefinitionsView({ subView, colorMode }: { subView: string; color
   }
 
   return (
-    <div style={{ padding: '12px 24px', overflow: 'hidden' }}>
+    <div style={{ padding: '8px 16px' }}>
       {viewMode === 'map' && (
         <ClusterMapView data={data} colorMode={cm} hoveredCategory={hoveredCategory} onSelect={handleSelect} />
       )}
@@ -1342,10 +1404,6 @@ export function DefinitionsView({ subView, colorMode }: { subView: string; color
       )}
       {viewMode === 'timeline' && <TimelineView data={data} />}
       {viewMode === 'trends' && <TrendsView data={data} />}
-
-      {(viewMode === 'map' || viewMode === 'scatter') && (
-        <Legend data={data} colorMode={cm} setHoveredCategory={setHoveredCategory} categories={categories} />
-      )}
 
       {selectedPoint && (
         <DetailModal
@@ -1357,7 +1415,7 @@ export function DefinitionsView({ subView, colorMode }: { subView: string; color
 
       <div
         style={{
-          marginTop: '12px',
+          marginTop: '8px',
           fontFamily: 'var(--mono)',
           fontSize: '9px',
           color: 'var(--text-3)',
@@ -1371,7 +1429,7 @@ export function DefinitionsView({ subView, colorMode }: { subView: string; color
         href="/insights#agi-definitions"
         style={{
           display: 'inline-block',
-          marginTop: '8px',
+          marginTop: '4px',
           fontFamily: 'var(--mono)',
           fontSize: '11px',
           color: 'var(--accent)',
