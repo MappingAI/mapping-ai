@@ -931,6 +931,24 @@ function AggregateBeliefChart({
 
     const indexedSeries = series.map((v, i) => [i, v] as [number, number | null])
 
+    // Dashed gray lines across gaps (where quarters have no data)
+    for (let k = 0; k < validPairs.length - 1; k++) {
+      const [i0, v0] = validPairs[k]!
+      const [i1, v1] = validPairs[k + 1]!
+      if (i1 - i0 > 1) {
+        svg
+          .append('line')
+          .attr('x1', xScale(i0))
+          .attr('y1', yScale(v0))
+          .attr('x2', xScale(i1))
+          .attr('y2', yScale(v1))
+          .attr('stroke', 'var(--text-3)')
+          .attr('stroke-width', 1)
+          .attr('stroke-dasharray', '3,4')
+          .attr('opacity', 0.35)
+      }
+    }
+
     // Draw colored segments between each pair of valid points
     for (let k = 0; k < validPairs.length - 1; k++) {
       const [i0, v0] = validPairs[k]!
