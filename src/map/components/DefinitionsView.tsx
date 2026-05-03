@@ -866,8 +866,8 @@ function AggregateBeliefChart({
     container.innerHTML = ''
 
     const W = container.clientWidth || 500
-    const H = 140
-    const pad = { top: 8, right: 12, bottom: 28, left: 36 }
+    const H = 170
+    const pad = { top: 8, right: 12, bottom: 56, left: 36 }
 
     // Per-quarter: count of entities with this score, and mean score
     const qData = quarters.map((q) => {
