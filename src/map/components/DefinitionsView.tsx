@@ -991,21 +991,25 @@ function AggregateBeliefChart({
         .attr('opacity', 0.5)
     })
 
-    // X-axis year labels (skip years that fall in compressed regions)
-    const shownYears = new Set<number>()
+    // X-axis year labels (skip when too close together)
+    let lastLabelX = -Infinity
+    const MIN_LABEL_GAP = 36
     quarters.forEach((q, i) => {
       const yr = q.start.getFullYear()
-      if ((q.start.getMonth() === 0 || i === 0) && !shownYears.has(yr)) {
-        shownYears.add(yr)
-        svg
-          .append('text')
-          .attr('x', xAt(i))
-          .attr('y', H - pad.bottom + 14)
-          .attr('text-anchor', 'middle')
-          .attr('font-family', "'DM Mono', monospace")
-          .attr('font-size', 8)
-          .attr('fill', 'var(--text-3)')
-          .text(String(yr))
+      if (q.start.getMonth() === 0 || i === 0) {
+        const x = xAt(i)
+        if (x - lastLabelX >= MIN_LABEL_GAP) {
+          svg
+            .append('text')
+            .attr('x', x)
+            .attr('y', H - pad.bottom + 14)
+            .attr('text-anchor', 'middle')
+            .attr('font-family', "'DM Mono', monospace")
+            .attr('font-size', 8)
+            .attr('fill', 'var(--text-3)')
+            .text(String(yr))
+          lastLabelX = x
+        }
       }
     })
 
@@ -1399,20 +1403,24 @@ function TimelineView({ data }: { data: AgiData }) {
       })
       .on('mouseleave', () => setTooltipState(null))
 
-    const shownYears = new Set<number>()
+    let lastTlLabelX = -Infinity
+    const TL_LABEL_GAP = 40
     quarters.forEach((q, i) => {
       const yr = q.start.getFullYear()
-      if ((q.start.getMonth() === 0 || i === 0) && !shownYears.has(yr)) {
-        shownYears.add(yr)
-        svg
-          .append('text')
-          .attr('x', tlXAt(i))
-          .attr('y', H - pad.bottom + 16)
-          .attr('text-anchor', 'middle')
-          .attr('font-family', "'DM Mono', monospace")
-          .attr('font-size', 9)
-          .attr('fill', 'var(--text-3)')
-          .text(String(yr))
+      if (q.start.getMonth() === 0 || i === 0) {
+        const x = tlXAt(i)
+        if (x - lastTlLabelX >= TL_LABEL_GAP) {
+          svg
+            .append('text')
+            .attr('x', x)
+            .attr('y', H - pad.bottom + 16)
+            .attr('text-anchor', 'middle')
+            .attr('font-family', "'DM Mono', monospace")
+            .attr('font-size', 9)
+            .attr('fill', 'var(--text-3)')
+            .text(String(yr))
+          lastTlLabelX = x
+        }
       }
     })
 
