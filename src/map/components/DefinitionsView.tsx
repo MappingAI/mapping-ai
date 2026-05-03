@@ -600,8 +600,8 @@ function ClusterMapView({
       )
       .force('collide', d3.forceCollide(10))
       .force('charge', d3.forceManyBody().strength(-2))
-      .alpha(0.15)
-      .alphaDecay(0.04)
+      .alpha(0.25)
+      .alphaDecay(0.035)
       .on('tick', () => {
         circles.attr('cx', (d: { x: number }) => d.x).attr('cy', (d: { y: number }) => d.y)
       })
@@ -1195,25 +1195,45 @@ function TrendsView({ data }: { data: AgiData }) {
       >
         By definition cluster
       </div>
-      <div style={{ display: 'flex', gap: '16px', marginBottom: '8px', flexWrap: 'wrap' }}>
+      {/* Column headers: cluster name + gradient legends for each belief dimension */}
+      <div style={{ display: 'flex', alignItems: 'flex-end', gap: '8px', minWidth: 0, marginBottom: '6px' }}>
+        <span style={{ width: '170px', flexShrink: 0 }} />
         {beliefDims.map((dim) => {
           const scaleKey = dim.key.replace('_score', '')
+          const shortLabel = scaleKey === 'stance' ? 'Stance' : scaleKey === 'timeline' ? 'Timeline' : 'Risk'
           const sc = BELIEF_SCALES[scaleKey]
-          if (!sc) return null
           return (
-            <div key={dim.key} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <span style={{ fontFamily: 'var(--mono)', fontSize: '8px', color: 'var(--text-3)' }}>{sc.labels[0]}</span>
+            <div key={dim.key} style={{ flex: '1 1 0', minWidth: 0, textAlign: 'center' }}>
               <div
                 style={{
-                  width: '40px',
-                  height: '4px',
-                  borderRadius: '2px',
-                  background: `linear-gradient(to right, ${sc.colors[0]}, ${sc.colors[sc.colors.length - 1]})`,
+                  fontFamily: 'var(--mono)',
+                  fontSize: '9px',
+                  fontWeight: 500,
+                  color: 'var(--text-2)',
+                  letterSpacing: '0.04em',
+                  marginBottom: '3px',
                 }}
-              />
-              <span style={{ fontFamily: 'var(--mono)', fontSize: '8px', color: 'var(--text-3)' }}>
-                {sc.labels[sc.labels.length - 1]}
-              </span>
+              >
+                {shortLabel}
+              </div>
+              {sc && (
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '3px' }}>
+                  <span style={{ fontFamily: 'var(--mono)', fontSize: '7px', color: 'var(--text-3)' }}>
+                    {sc.labels[0]}
+                  </span>
+                  <div
+                    style={{
+                      width: '32px',
+                      height: '4px',
+                      borderRadius: '2px',
+                      background: `linear-gradient(to right, ${sc.colors[0]}, ${sc.colors[sc.colors.length - 1]})`,
+                    }}
+                  />
+                  <span style={{ fontFamily: 'var(--mono)', fontSize: '7px', color: 'var(--text-3)' }}>
+                    {sc.labels[sc.labels.length - 1]}
+                  </span>
+                </div>
+              )}
             </div>
           )
         })}
@@ -1249,24 +1269,10 @@ function TrendsView({ data }: { data: AgiData }) {
               </span>
               {beliefs &&
                 beliefDims.map((dim) => {
-                  const dimSeries = beliefs[dim.key] || []
                   return (
-                    <div
-                      key={dim.key}
-                      style={{ display: 'flex', alignItems: 'center', gap: '4px', flex: '1 1 0', minWidth: 0 }}
-                    >
-                      <span
-                        style={{
-                          fontFamily: 'var(--mono)',
-                          fontSize: '8px',
-                          color: 'var(--text-3)',
-                          flexShrink: 0,
-                        }}
-                      >
-                        {dim.label.split(' ').pop()}
-                      </span>
+                    <div key={dim.key} style={{ flex: '1 1 0', minWidth: 0 }}>
                       <MiniSparkline
-                        series={dimSeries}
+                        series={beliefs[dim.key] || []}
                         colorStart={dim.colors[0] ?? '#888'}
                         colorEnd={dim.colors[dim.colors.length - 1] ?? '#888'}
                         sparkW={beliefSparkW}
