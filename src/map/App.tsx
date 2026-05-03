@@ -43,7 +43,6 @@ export function App() {
       if (btn?.dataset.mode) {
         setEngineMode(btn.dataset.mode as 'network' | 'plot')
         setReactView(null)
-        setTimeout(() => window.dispatchEvent(new Event('resize')), 100)
       }
     }
     document.addEventListener('click', handleEngineModeClick)
