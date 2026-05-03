@@ -3281,8 +3281,8 @@ export function initMapEngine() {
       .force('x', d3.forceX(centerX).strength(clusterDimension === 'category' ? 0.02 : 0.01))
       .force('y', d3.forceY(centerY).strength(clusterDimension === 'category' ? 0.02 : 0.01))
       .alpha(0.5)
-      .alphaDecay(0.07)
-      .velocityDecay(0.78)
+      .alphaDecay(0.04)
+      .velocityDecay(0.72)
       .stop()
 
     // Pre-rasterized image sprites (offscreen canvas, circle-clipped).
@@ -3926,8 +3926,8 @@ export function initMapEngine() {
       .force('y', d3.forceY((d) => d.targetY).strength(yAxisDef ? 0.8 : 0.03))
       .force('collision', d3.forceCollide((d) => d.radius + 2).strength(0.9))
       .alpha(0.4)
-      .alphaDecay(0.08)
-      .velocityDecay(0.78)
+      .alphaDecay(0.045)
+      .velocityDecay(0.72)
       .on('tick', () => {
         if (!yAxisDef) {
           nodes.forEach((d) => {

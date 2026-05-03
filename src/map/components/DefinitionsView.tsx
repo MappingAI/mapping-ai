@@ -1212,7 +1212,7 @@ function TrendsView({ data }: { data: AgiData }) {
       >
         By definition cluster
       </div>
-      {/* Column headers: cluster name + gradient legends for each belief dimension */}
+      {/* Column headers: gradient legend centered above each sparkline column */}
       <div style={{ display: 'flex', alignItems: 'flex-end', gap: '8px', minWidth: 0, marginBottom: '6px' }}>
         <span style={{ width: '170px', flexShrink: 0 }} />
         {beliefDims.map((dim) => {
@@ -1220,7 +1220,10 @@ function TrendsView({ data }: { data: AgiData }) {
           const shortLabel = scaleKey === 'stance' ? 'Stance' : scaleKey === 'timeline' ? 'Timeline' : 'Risk'
           const sc = BELIEF_SCALES[scaleKey]
           return (
-            <div key={dim.key} style={{ flex: '1 1 0', minWidth: 0, textAlign: 'center' }}>
+            <div
+              key={dim.key}
+              style={{ flex: '1 1 0', minWidth: 0, display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+            >
               <div
                 style={{
                   fontFamily: 'var(--mono)',
@@ -1228,28 +1231,27 @@ function TrendsView({ data }: { data: AgiData }) {
                   fontWeight: 500,
                   color: 'var(--text-2)',
                   letterSpacing: '0.04em',
-                  marginBottom: '3px',
+                  marginBottom: '2px',
+                  whiteSpace: 'nowrap',
                 }}
               >
                 {shortLabel}
               </div>
               {sc && (
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <span
-                    style={{
-                      fontFamily: 'var(--mono)',
-                      fontSize: '7px',
-                      color: 'var(--text-3)',
-                      width: '52px',
-                      textAlign: 'right',
-                      paddingRight: '3px',
-                    }}
-                  >
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '3px',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  <span style={{ fontFamily: 'var(--mono)', fontSize: '7px', color: sc.colors[0] }}>
                     {sc.labels[0]}
                   </span>
                   <div
                     style={{
-                      width: '32px',
+                      width: '28px',
                       flexShrink: 0,
                       height: '4px',
                       borderRadius: '2px',
@@ -1260,10 +1262,7 @@ function TrendsView({ data }: { data: AgiData }) {
                     style={{
                       fontFamily: 'var(--mono)',
                       fontSize: '7px',
-                      color: 'var(--text-3)',
-                      width: '52px',
-                      textAlign: 'left',
-                      paddingLeft: '3px',
+                      color: sc.colors[sc.colors.length - 1],
                     }}
                   >
                     {sc.labels[sc.labels.length - 1]}
