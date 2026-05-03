@@ -5427,9 +5427,10 @@ ${dots}
       div.addEventListener('click', () => {
         searchResults.classList.remove('visible')
         searchInput.value = d.name
-        // Switch view if needed
-        if (d.entityType === 'resource' && currentView !== 'resources') {
-          document.querySelector('[data-view="resources"]').click()
+        // Switch view if needed (stay in 'all' if resource — it may appear there via edges)
+        if (d.entityType === 'resource' && currentView !== 'resources' && currentView !== 'all') {
+          const resTab = document.querySelector('[data-view="resources"]')
+          if (resTab) resTab.click()
         } else if (d.entityType === 'organization' && (currentView === 'people' || currentView === 'resources')) {
           document.querySelector('[data-view="orgs"]').click()
         } else if (d.entityType === 'person' && (currentView === 'orgs' || currentView === 'resources')) {
@@ -5461,12 +5462,10 @@ ${dots}
               highlightNodes([d.name])
             }
           } else {
-            // Entity not rendered on current view—clear dimming and show inline message
+            // Entity not rendered as a node on the current view.
+            // Still show the detail panel so the user can see its info.
             highlightNodes([])
-            const viewLabel = currentView === '2d' ? 'this plot (missing axis data)' : 'this view'
-            searchResults.innerHTML = `<div class="search-match-hint">${d.name} isn't shown on ${viewLabel}</div>`
-            searchResults.classList.add('visible')
-            setTimeout(() => searchResults.classList.remove('visible'), 3500)
+            showDetail(d, [])
           }
         }, 100)
       })
