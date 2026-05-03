@@ -123,6 +123,25 @@ export function App() {
               are weighted averages from submissions.
             </div>
           </div>
+          <div
+            style={{
+              background: 'var(--bg-page, #f0eeeb)',
+              borderRadius: '6px',
+              padding: '10px 14px',
+              marginTop: '12px',
+              fontFamily: 'var(--mono)',
+              fontSize: '11px',
+              color: 'var(--text-2, #555)',
+              lineHeight: 1.5,
+            }}
+          >
+            <strong style={{ color: 'var(--text-1, #1a1a1a)' }}>Beta:</strong> This tool is under active development. We
+            welcome bug reports, data contributions, and feature suggestions at{' '}
+            <a href="mailto:info@mapping-ai.org" style={{ color: 'var(--accent, #2563eb)' }}>
+              info@mapping-ai.org
+            </a>
+            .
+          </div>
           <button
             className="onboarding-dismiss"
             onClick={() => {

@@ -163,55 +163,6 @@ function TableOfContents() {
 /*  Beta overlay                                                       */
 /* ------------------------------------------------------------------ */
 
-function BetaOverlay() {
-  const [visible, setVisible] = useState(false)
-
-  useEffect(() => {
-    if (!localStorage.getItem('beta-dismissed')) setVisible(true)
-  }, [])
-
-  if (!visible) return null
-
-  const dismiss = () => {
-    setVisible(false)
-    localStorage.setItem('beta-dismissed', '1')
-  }
-
-  return (
-    <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center"
-      style={{ background: 'rgba(0,0,0,0.5)' }}
-      onClick={(e) => {
-        if (e.target === e.currentTarget) dismiss()
-      }}
-    >
-      <div
-        className="bg-white rounded-lg px-8 py-6 max-w-[480px] w-[90%] shadow-2xl"
-        style={{ fontFamily: "'EB Garamond', Georgia, serif" }}
-      >
-        <h2 className="font-mono text-[13px] uppercase tracking-wider mb-3">Pre-Launch Beta</h2>
-        <p className="text-[15px] leading-relaxed text-[#555] mb-4">
-          This tool is in a pre-launch beta. We are actively improving data issues and enrichment, as well as adding new
-          features and improving the UX.
-        </p>
-        <p className="text-[15px] leading-relaxed text-[#555] mb-5">
-          Please email us at{' '}
-          <a href="mailto:info@mapping-ai.org" className="text-[#2563eb] no-underline hover:underline">
-            info@mapping-ai.org
-          </a>{' '}
-          if you'd like to contribute or provide any feedback.
-        </p>
-        <button
-          onClick={dismiss}
-          className="font-mono text-[11px] uppercase tracking-wider px-6 py-2.5 bg-[#1a1a1a] text-white border-none rounded cursor-pointer"
-        >
-          Got it
-        </button>
-      </div>
-    </div>
-  )
-}
-
 /* ------------------------------------------------------------------ */
 /*  Mail icon                                                          */
 /* ------------------------------------------------------------------ */
@@ -253,7 +204,6 @@ export function App() {
 
   return (
     <>
-      <BetaOverlay />
       <Navigation />
       <TableOfContents />
 

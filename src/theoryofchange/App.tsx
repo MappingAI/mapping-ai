@@ -75,43 +75,6 @@ function FadeIn({ children, className = '' }: { children: React.ReactNode; class
   )
 }
 
-/* ---------- Beta Overlay ---------- */
-function BetaOverlay() {
-  const [visible, setVisible] = useState(true)
-
-  if (!visible) return null
-
-  return (
-    <div
-      className="fixed inset-0 z-[9999] bg-black/50 flex items-center justify-center"
-      onClick={(e) => {
-        if (e.target === e.currentTarget) setVisible(false)
-      }}
-    >
-      <div className="bg-white rounded-lg px-8 py-6 max-w-[480px] w-[90%] font-serif shadow-[0_8px_32px_rgba(0,0,0,0.2)]">
-        <h2 className="font-mono text-[13px] uppercase tracking-[0.08em] mb-3">Pre-Launch Beta</h2>
-        <p className="text-[15px] leading-relaxed text-text-secondary mb-4">
-          This tool is in a pre-launch beta. We are actively improving data issues and enrichment, as well as adding new
-          features and improving the UX.
-        </p>
-        <p className="text-[15px] leading-relaxed text-text-secondary mb-5">
-          Please email us at{' '}
-          <a href="mailto:info@mapping-ai.org" className="text-accent">
-            info@mapping-ai.org
-          </a>{' '}
-          if you&rsquo;d like to contribute or provide any feedback.
-        </p>
-        <button
-          onClick={() => setVisible(false)}
-          className="font-mono text-[11px] uppercase tracking-[0.08em] px-6 py-[0.6rem] bg-text-primary text-white border-none rounded cursor-pointer"
-        >
-          Got it
-        </button>
-      </div>
-    </div>
-  )
-}
-
 /* ---------- Reusable sub-components ---------- */
 function LandscapeBox({
   label,
@@ -239,7 +202,6 @@ export function App() {
     <>
       <Navigation />
       <TableOfContents activeId={activeSection} />
-      <BetaOverlay />
 
       <div className="max-w-[680px] mx-auto px-4 pt-[calc(2.5rem+48px)] pb-12 font-serif text-text-primary text-[17px] leading-[1.75]">
         {/* Header */}
