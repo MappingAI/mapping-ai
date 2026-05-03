@@ -413,7 +413,7 @@ function ClusterView({ data, onSelect }: { data: AgiData; onSelect: (p: AgiPoint
   )
 }
 
-export function AgiDefinitionSpace() {
+export function AgiDefinitionSpace({ onDataLoaded }: { onDataLoaded?: (count: number) => void } = {}) {
   const ref = useRef<HTMLDivElement>(null)
   const [data, setData] = useState<AgiData | null>(null)
   const [selectedPoint, setSelectedPoint] = useState<AgiPoint | null>(null)
@@ -424,9 +424,12 @@ export function AgiDefinitionSpace() {
   useEffect(() => {
     fetch('/data/agi-definitions.json')
       .then((r) => (r.ok ? r.json() : null))
-      .then((d) => setData(d))
+      .then((d) => {
+        setData(d)
+        if (d?.points?.length && onDataLoaded) onDataLoaded(d.points.length)
+      })
       .catch(() => {})
-  }, [])
+  }, [onDataLoaded])
 
   const categories = useMemo(() => {
     if (!data) return []

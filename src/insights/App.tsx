@@ -927,6 +927,8 @@ export function App() {
   const [data, setData] = useState<MapData | null>(null)
   const [fundingData, setFundingData] = useState<FundingData | null>(null)
   const [activeSection, setActiveSection] = useState('overview')
+  const [agiDefCount, setAgiDefCount] = useState<number | null>(null)
+  const onAgiDataLoaded = useCallback((count: number) => setAgiDefCount(count), [])
   const activeSectionRef = useRef('overview')
 
   // Fetch data
@@ -1417,17 +1419,17 @@ export function App() {
         </Para>
 
         <Para>
-          This scatter plot clusters 372 entities by the <em>semantic similarity</em> of their stated AGI definitions.
-          Each definition was embedded using Voyage AI and projected to 2D with UMAP. Position encodes meaning: entities
-          with similar definitions cluster together. Color encodes category. Click any dot to see the full definition
-          and its source.
+          This scatter plot clusters {agiDefCount ?? '…'} entities by the <em>semantic similarity</em> of their stated
+          AGI definitions. Each definition was embedded using Voyage AI and projected to 2D with UMAP. Position encodes
+          meaning: entities with similar definitions cluster together. Color encodes category. Click any dot to see the
+          full definition and its source.
         </Para>
 
         <ChartContainer
-          title="AGI definition space (372 entities)"
+          title={`AGI definition space (${agiDefCount ?? '…'} entities)`}
           source="Source: AGI definition claims from enrichment pipeline. Embeddings: Voyage AI voyage-3. Projection: UMAP."
         >
-          <AgiDefinitionSpace />
+          <AgiDefinitionSpace onDataLoaded={onAgiDataLoaded} />
         </ChartContainer>
 
         <Finding>
