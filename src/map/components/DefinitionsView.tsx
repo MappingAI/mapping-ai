@@ -117,8 +117,7 @@ function buildQuarters(points: AgiPoint[]): QuarterBucket[] {
   const dated = points.filter((p) => p.date)
   if (dated.length === 0) return []
   const dates = dated.map((p) => new Date(p.date!))
-  const rawMin = new Date(Math.min(...dates.map((d) => d.getTime())))
-  const minDate = rawMin.getFullYear() < 2020 ? new Date(2020, 0, 1) : rawMin
+  const minDate = new Date(Math.min(...dates.map((d) => d.getTime())))
   const maxDate = new Date(Math.max(...dates.map((d) => d.getTime())))
   const quarters: QuarterBucket[] = []
   let y = minDate.getFullYear()
@@ -136,6 +135,50 @@ function buildQuarters(points: AgiPoint[]): QuarterBucket[] {
     }
   }
   return quarters
+}
+
+// Compute non-linear x positions: compress empty quarters, expand dense ones
+function buildCompressedX(
+  quarters: QuarterBucket[],
+  points: AgiPoint[],
+  rangeStart: number,
+  rangeEnd: number,
+): { xPos: number[]; breakRanges: { x1: number; x2: number }[] } {
+  const counts = quarters.map((q) => points.filter((p) => pointInQuarter(p, q)).length)
+
+  // Assign weights: empty quarters get compressed, quarters with data get full width
+  const EMPTY_WEIGHT = 0.15
+  const DATA_WEIGHT = 1
+  const weights = counts.map((c) => (c > 0 ? DATA_WEIGHT : EMPTY_WEIGHT))
+  const totalWeight = weights.reduce((a, b) => a + b, 0)
+  const totalRange = rangeEnd - rangeStart
+
+  // Cumulative positions
+  const xPos: number[] = []
+  let cumulative = 0
+  for (let i = 0; i < weights.length; i++) {
+    xPos.push(rangeStart + (cumulative / totalWeight) * totalRange)
+    cumulative += weights[i]!
+  }
+
+  // Find break ranges (runs of 3+ consecutive empty quarters)
+  const breakRanges: { x1: number; x2: number }[] = []
+  let runStart = -1
+  for (let i = 0; i < counts.length; i++) {
+    if (counts[i] === 0) {
+      if (runStart < 0) runStart = i
+    } else {
+      if (runStart >= 0 && i - runStart >= 3) {
+        breakRanges.push({ x1: xPos[runStart]!, x2: xPos[i - 1]! })
+      }
+      runStart = -1
+    }
+  }
+  if (runStart >= 0 && counts.length - runStart >= 3) {
+    breakRanges.push({ x1: xPos[runStart]!, x2: xPos[counts.length - 1]! })
+  }
+
+  return { xPos, breakRanges }
 }
 
 function pointInQuarter(p: AgiPoint, qb: QuarterBucket): boolean {
@@ -887,10 +930,10 @@ function AggregateBeliefChart({
 
     const svg = d3.select(container).append('svg').attr('width', W).attr('height', H)
 
-    const xScale = d3
-      .scaleLinear()
-      .domain([0, quarters.length - 1])
-      .range([pad.left, W - pad.right])
+    // Compressed x-axis: squeeze empty quarters, expand dense ones
+    const { xPos, breakRanges } = buildCompressedX(quarters, points, pad.left, W - pad.right)
+    const xAt = (i: number) => xPos[i] ?? pad.left
+
     const yScale = d3
       .scaleLinear()
       .domain([0, maxCount])
@@ -931,18 +974,38 @@ function AggregateBeliefChart({
       .attr('fill', 'var(--text-3)')
       .text('Definitions')
 
-    // X-axis year labels
+    // Axis break indicators (zigzag marks where empty quarters are compressed)
+    breakRanges.forEach((br) => {
+      const midX = (br.x1 + br.x2) / 2
+      const baseY = H - pad.bottom
+      const z = 4
+      svg
+        .append('path')
+        .attr(
+          'd',
+          `M${midX - 6},${baseY - z} L${midX - 3},${baseY + z} L${midX + 3},${baseY - z} L${midX + 6},${baseY + z}`,
+        )
+        .attr('fill', 'none')
+        .attr('stroke', 'var(--text-3)')
+        .attr('stroke-width', 1)
+        .attr('opacity', 0.5)
+    })
+
+    // X-axis year labels (skip years that fall in compressed regions)
+    const shownYears = new Set<number>()
     quarters.forEach((q, i) => {
-      if (q.start.getMonth() === 0 || i === 0) {
+      const yr = q.start.getFullYear()
+      if ((q.start.getMonth() === 0 || i === 0) && !shownYears.has(yr)) {
+        shownYears.add(yr)
         svg
           .append('text')
-          .attr('x', xScale(i))
+          .attr('x', xAt(i))
           .attr('y', H - pad.bottom + 14)
           .attr('text-anchor', 'middle')
           .attr('font-family', "'DM Mono', monospace")
           .attr('font-size', 8)
           .attr('fill', 'var(--text-3)')
-          .text(String(q.start.getFullYear()))
+          .text(String(yr))
       }
     })
 
@@ -958,9 +1021,9 @@ function AggregateBeliefChart({
       if (b.i - a.i > 1) {
         svg
           .append('line')
-          .attr('x1', xScale(a.i))
+          .attr('x1', xAt(a.i))
           .attr('y1', yScale(a.count))
-          .attr('x2', xScale(b.i))
+          .attr('x2', xAt(b.i))
           .attr('y2', yScale(b.count))
           .attr('stroke', 'var(--text-3)')
           .attr('stroke-width', 1)
@@ -969,8 +1032,7 @@ function AggregateBeliefChart({
       }
     }
 
-    // Gradient-colored area fill (light) and line (bold)
-    // Area: fill under the curve with gradient color at low opacity
+    // Gradient-colored area fill
     for (let k = 0; k < validPairs.length - 1; k++) {
       const a = validPairs[k]!
       const b = validPairs[k + 1]!
@@ -980,7 +1042,7 @@ function AggregateBeliefChart({
         .append('path')
         .attr(
           'd',
-          `M${xScale(a.i)},${yScale(a.count)} L${xScale(b.i)},${yScale(b.count)} L${xScale(b.i)},${yScale(0)} L${xScale(a.i)},${yScale(0)} Z`,
+          `M${xAt(a.i)},${yScale(a.count)} L${xAt(b.i)},${yScale(b.count)} L${xAt(b.i)},${yScale(0)} L${xAt(a.i)},${yScale(0)} Z`,
         )
         .attr('fill', colorScale(midMean))
         .attr('opacity', 0.3)
@@ -994,9 +1056,9 @@ function AggregateBeliefChart({
       const midMean = (a.mean + b.mean) / 2
       svg
         .append('line')
-        .attr('x1', xScale(a.i))
+        .attr('x1', xAt(a.i))
         .attr('y1', yScale(a.count))
-        .attr('x2', xScale(b.i))
+        .attr('x2', xAt(b.i))
         .attr('y2', yScale(b.count))
         .attr('stroke', colorScale(midMean))
         .attr('stroke-width', 2.5)
@@ -1007,7 +1069,7 @@ function AggregateBeliefChart({
     validPairs.forEach((d) => {
       svg
         .append('circle')
-        .attr('cx', xScale(d.i))
+        .attr('cx', xAt(d.i))
         .attr('cy', yScale(d.count))
         .attr('r', 3.5)
         .attr('fill', colorScale(d.mean))
@@ -1259,10 +1321,9 @@ function TimelineView({ data }: { data: AgiData }) {
       .attr('width', '100%')
       .attr('height', H)
 
-    const xScale = d3
-      .scaleLinear()
-      .domain([0, quarters.length - 1])
-      .range([pad.left, W - pad.right])
+    const { xPos: tlXPos, breakRanges: tlBreaks } = buildCompressedX(quarters, data.points, pad.left, W - pad.right)
+    const tlXAt = (i: number) => tlXPos[i] ?? pad.left
+
     const yMax = d3.max(stackedData.layers[stackedData.layers.length - 1], (d: [number, number]) => d[1]) || 1
     const yScale = d3
       .scaleLinear()
@@ -1271,7 +1332,7 @@ function TimelineView({ data }: { data: AgiData }) {
 
     const area = d3
       .area()
-      .x((_: unknown, i: number) => xScale(i))
+      .x((_: unknown, i: number) => tlXAt(i))
       .y0((d: [number, number]) => yScale(d[0]))
       .y1((d: [number, number]) => yScale(d[1]))
       .curve(d3.curveMonotoneX)
@@ -1286,6 +1347,23 @@ function TimelineView({ data }: { data: AgiData }) {
       .attr('fill', (_: unknown, i: number) => CLUSTER_COLORS[stackedData.keys[i] ?? ''] || '#ccc')
       .attr('opacity', 0.8)
 
+    // Axis break indicators
+    tlBreaks.forEach((br) => {
+      const midX = (br.x1 + br.x2) / 2
+      const baseY = H - pad.bottom
+      const z = 4
+      svg
+        .append('path')
+        .attr(
+          'd',
+          `M${midX - 6},${baseY - z} L${midX - 3},${baseY + z} L${midX + 3},${baseY - z} L${midX + 6},${baseY + z}`,
+        )
+        .attr('fill', 'none')
+        .attr('stroke', 'var(--text-3)')
+        .attr('stroke-width', 1)
+        .attr('opacity', 0.5)
+    })
+
     svg
       .append('rect')
       .attr('x', pad.left)
@@ -1295,8 +1373,16 @@ function TimelineView({ data }: { data: AgiData }) {
       .attr('fill', 'transparent')
       .on('mousemove', (evt: MouseEvent) => {
         const [mx] = d3.pointer(evt)
-        const idx = Math.round(xScale.invert(mx))
-        const clampedIdx = Math.max(0, Math.min(quarters.length - 1, idx))
+        // Find nearest quarter by x position
+        let clampedIdx = 0
+        let minDist = Infinity
+        tlXPos.forEach((x, i) => {
+          const dist = Math.abs(x - mx)
+          if (dist < minDist) {
+            minDist = dist
+            clampedIdx = i
+          }
+        })
         const q = quarters[clampedIdx]
         if (!q) return
         const parts = stackedData.keys
@@ -1313,21 +1399,21 @@ function TimelineView({ data }: { data: AgiData }) {
       })
       .on('mouseleave', () => setTooltipState(null))
 
-    const yearIndices: number[] = []
+    const shownYears = new Set<number>()
     quarters.forEach((q, i) => {
-      if (q.start.getMonth() === 0 || i === 0) yearIndices.push(i)
-    })
-
-    yearIndices.forEach((i) => {
-      svg
-        .append('text')
-        .attr('x', xScale(i))
-        .attr('y', H - pad.bottom + 16)
-        .attr('text-anchor', 'middle')
-        .attr('font-family', "'DM Mono', monospace")
-        .attr('font-size', 9)
-        .attr('fill', 'var(--text-3)')
-        .text(String(quarters[i]?.start.getFullYear() || ''))
+      const yr = q.start.getFullYear()
+      if ((q.start.getMonth() === 0 || i === 0) && !shownYears.has(yr)) {
+        shownYears.add(yr)
+        svg
+          .append('text')
+          .attr('x', tlXAt(i))
+          .attr('y', H - pad.bottom + 16)
+          .attr('text-anchor', 'middle')
+          .attr('font-family', "'DM Mono', monospace")
+          .attr('font-size', 9)
+          .attr('fill', 'var(--text-3)')
+          .text(String(yr))
+      }
     })
 
     const yTicks = yScale.ticks(4)
