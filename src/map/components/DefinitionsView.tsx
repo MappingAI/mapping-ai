@@ -61,15 +61,15 @@ export const CLUSTER_COLORS: Record<string, string> = {
 export const BELIEF_SCALES: Record<string, { labels: string[]; colors: string[] }> = {
   stance: {
     labels: ['Accelerate', 'Light-touch', 'Targeted', 'Moderate', 'Restrictive', 'Precautionary'],
-    colors: ['#2166ac', '#67a9cf', '#d1e5f0', '#fddbc7', '#ef8a62', '#b2182b'],
+    colors: ['#2166ac', '#4a90c4', '#8bbcdb', '#e8a87c', '#d95f3a', '#b2182b'],
   },
   timeline: {
     labels: ['Already here', '2-3 years', '5-10 years', '10-25 years', '25+ years'],
-    colors: ['#d73027', '#fc8d59', '#fee08b', '#91cf60', '#1a9850'],
+    colors: ['#d73027', '#e87040', '#d4b040', '#5dad45', '#1a7a38'],
   },
   risk: {
     labels: ['Overstated', 'Manageable', 'Serious', 'Catastrophic', 'Existential'],
-    colors: ['#4575b4', '#91bfdb', '#fee090', '#fc8d59', '#d73027'],
+    colors: ['#3060a8', '#6a9ec0', '#d4a840', '#d97040', '#c02020'],
   },
 }
 
@@ -600,8 +600,8 @@ function ClusterMapView({
       )
       .force('collide', d3.forceCollide(10))
       .force('charge', d3.forceManyBody().strength(-2))
-      .alpha(0.4)
-      .alphaDecay(0.025)
+      .alpha(0.15)
+      .alphaDecay(0.04)
       .on('tick', () => {
         circles.attr('cx', (d: { x: number }) => d.x).attr('cy', (d: { y: number }) => d.y)
       })
@@ -1049,7 +1049,7 @@ function AggregateBeliefChart({
           `M${xAt(a.i)},${yScale(a.count)} L${xAt(b.i)},${yScale(b.count)} L${xAt(b.i)},${yScale(0)} L${xAt(a.i)},${yScale(0)} Z`,
         )
         .attr('fill', colorScale(midMean))
-        .attr('opacity', 0.3)
+        .attr('opacity', 0.45)
     }
 
     // Colored line segments
@@ -1065,7 +1065,7 @@ function AggregateBeliefChart({
         .attr('x2', xAt(b.i))
         .attr('y2', yScale(b.count))
         .attr('stroke', colorScale(midMean))
-        .attr('stroke-width', 2.5)
+        .attr('stroke-width', 3)
         .attr('stroke-linecap', 'round')
     }
 
