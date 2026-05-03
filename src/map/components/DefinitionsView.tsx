@@ -825,6 +825,166 @@ function MiniSparkline({
   )
 }
 
+function AggregateBeliefChart({
+  quarters,
+  points,
+  dim,
+}: {
+  quarters: QuarterBucket[]
+  points: AgiPoint[]
+  dim: { key: 'stance_score' | 'timeline_score' | 'risk_score'; label: string; colors: string[] }
+}) {
+  const ref = useRef<HTMLDivElement>(null)
+  const scaleKey = dim.key.replace('_score', '')
+  const scale = BELIEF_SCALES[scaleKey]
+
+  useEffect(() => {
+    if (!ref.current || quarters.length < 2) return
+    const container = ref.current
+    container.innerHTML = ''
+
+    const W = container.clientWidth || 500
+    const H = 120
+    const pad = { top: 8, right: 12, bottom: 28, left: 40 }
+
+    const series = quarters.map((q) => {
+      const inQ = points.filter((p) => pointInQuarter(p, q) && p[dim.key] != null)
+      if (inQ.length === 0) return null
+      return d3.mean(inQ, (p: AgiPoint) => p[dim.key]) as number
+    })
+
+    const validPairs = series.map((v, i) => [i, v] as [number, number | null]).filter(([, v]) => v != null) as [
+      number,
+      number,
+    ][]
+    if (validPairs.length < 2) return
+
+    const svg = d3.select(container).append('svg').attr('width', W).attr('height', H)
+
+    const xScale = d3
+      .scaleLinear()
+      .domain([0, quarters.length - 1])
+      .range([pad.left, W - pad.right])
+
+    const scoreMin = scale ? 1 : (d3.min(validPairs, (d: [number, number]) => d[1]) as number) - 0.3
+    const scoreMax = scale ? scale.labels.length : (d3.max(validPairs, (d: [number, number]) => d[1]) as number) + 0.3
+    const yScale = d3
+      .scaleLinear()
+      .domain([scoreMin, scoreMax])
+      .range([H - pad.bottom, pad.top])
+
+    // Color scale: map score to gradient color
+    const colorScale = d3
+      .scaleLinear()
+      .domain(dim.colors.map((_, i) => scoreMin + ((scoreMax - scoreMin) * i) / (dim.colors.length - 1)))
+      .range(dim.colors)
+      .clamp(true)
+
+    // Y-axis labels
+    if (scale) {
+      scale.labels.forEach((label, i) => {
+        const y = yScale(i + 1)
+        svg
+          .append('text')
+          .attr('x', pad.left - 4)
+          .attr('y', y)
+          .attr('text-anchor', 'end')
+          .attr('dominant-baseline', 'middle')
+          .attr('font-family', "'DM Mono', monospace")
+          .attr('font-size', 7)
+          .attr('fill', dim.colors[i] || 'var(--text-3)')
+          .text(label)
+        svg
+          .append('line')
+          .attr('x1', pad.left)
+          .attr('x2', W - pad.right)
+          .attr('y1', y)
+          .attr('y2', y)
+          .attr('stroke', 'var(--line)')
+          .attr('stroke-dasharray', '2,3')
+          .attr('opacity', 0.5)
+      })
+    }
+
+    // X-axis year labels
+    quarters.forEach((q, i) => {
+      if (q.start.getMonth() === 0 || i === 0) {
+        svg
+          .append('text')
+          .attr('x', xScale(i))
+          .attr('y', H - pad.bottom + 14)
+          .attr('text-anchor', 'middle')
+          .attr('font-family', "'DM Mono', monospace")
+          .attr('font-size', 8)
+          .attr('fill', 'var(--text-3)')
+          .text(String(q.start.getFullYear()))
+      }
+    })
+
+    // Draw gradient line segments
+    const line = d3
+      .line()
+      .defined((d: [number, number | null]) => d[1] != null)
+      .x((d: [number, number]) => xScale(d[0]))
+      .y((d: [number, number]) => yScale(d[1]))
+      .curve(d3.curveMonotoneX)
+
+    const indexedSeries = series.map((v, i) => [i, v] as [number, number | null])
+
+    // Draw colored segments between each pair of valid points
+    for (let k = 0; k < validPairs.length - 1; k++) {
+      const [i0, v0] = validPairs[k]!
+      const [i1, v1] = validPairs[k + 1]!
+      const steps = 10
+      const segPoints: [number, number][] = []
+      for (let s = 0; s <= steps; s++) {
+        const t = s / steps
+        const ix = i0 + (i1 - i0) * t
+        const vx = v0 + (v1 - v0) * t
+        segPoints.push([ix, vx])
+      }
+      for (let s = 0; s < segPoints.length - 1; s++) {
+        const p1 = segPoints[s]!
+        const p2 = segPoints[s + 1]!
+        const midVal = (p1[1] + p2[1]) / 2
+        svg
+          .append('line')
+          .attr('x1', xScale(p1[0]))
+          .attr('y1', yScale(p1[1]))
+          .attr('x2', xScale(p2[0]))
+          .attr('y2', yScale(p2[1]))
+          .attr('stroke', colorScale(midVal))
+          .attr('stroke-width', 2.5)
+          .attr('stroke-linecap', 'round')
+      }
+    }
+
+    // Dots at data points
+    validPairs.forEach(([i, v]) => {
+      svg
+        .append('circle')
+        .attr('cx', xScale(i))
+        .attr('cy', yScale(v))
+        .attr('r', 3)
+        .attr('fill', colorScale(v))
+        .attr('stroke', '#fff')
+        .attr('stroke-width', 1)
+    })
+
+    // Thin ghost line for context
+    svg
+      .append('path')
+      .datum(indexedSeries)
+      .attr('d', line as never)
+      .attr('fill', 'none')
+      .attr('stroke', 'var(--text-3)')
+      .attr('stroke-width', 0.5)
+      .attr('opacity', 0.3)
+  }, [quarters, points, dim])
+
+  return <div ref={ref} />
+}
+
 function TrendsView({ data }: { data: AgiData }) {
   const quarters = useMemo(() => buildQuarters(data.points), [data.points])
   const clusters = useMemo(() => [...(data.clusters || [])].sort((a, b) => b.count - a.count), [data.clusters])
@@ -832,22 +992,12 @@ function TrendsView({ data }: { data: AgiData }) {
   const beliefDims = useMemo(
     () =>
       [
-        { key: 'stance_score' as const, label: 'Stance', colors: BELIEF_SCALES.stance!.colors },
-        { key: 'timeline_score' as const, label: 'Timeline', colors: BELIEF_SCALES.timeline!.colors },
-        { key: 'risk_score' as const, label: 'Risk', colors: BELIEF_SCALES.risk!.colors },
+        { key: 'stance_score' as const, label: 'Regulatory Stance', colors: BELIEF_SCALES.stance!.colors },
+        { key: 'timeline_score' as const, label: 'AGI Timeline', colors: BELIEF_SCALES.timeline!.colors },
+        { key: 'risk_score' as const, label: 'AI Risk Level', colors: BELIEF_SCALES.risk!.colors },
       ] as const,
     [],
   )
-
-  const clusterTimeSeries = useMemo(() => {
-    const series: Record<string, number[]> = {}
-    clusters.forEach((c) => {
-      series[c.id] = quarters.map(
-        (q) => data.points.filter((p) => p.cluster_id === c.id && pointInQuarter(p, q)).length,
-      )
-    })
-    return series
-  }, [data.points, clusters, quarters])
 
   const clusterBeliefSeries = useMemo(() => {
     const result: Record<string, Record<string, number[]>> = {}
@@ -864,98 +1014,55 @@ function TrendsView({ data }: { data: AgiData }) {
     return result
   }, [data.points, clusters, quarters, beliefDims])
 
-  const countSparkW = 120
-  const countSparkH = 30
   const beliefSparkW = 80
   const beliefSparkH = 24
 
   if (quarters.length === 0) {
     return (
       <div style={{ fontFamily: 'var(--mono)', fontSize: '11px', color: 'var(--text-3)' }}>
-        No dated definitions available for timeline analysis.
+        No dated definitions available for trend analysis.
       </div>
     )
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-        {beliefDims.map((dim) => {
-          const scaleKey = dim.key.replace('_score', '')
-          const scale = BELIEF_SCALES[scaleKey]
-          const startLabel = scale?.labels[0] || ''
-          const endLabel = scale?.labels[scale.labels.length - 1] || ''
-          return (
-            <div key={dim.key} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span
-                style={{
-                  fontFamily: 'var(--mono)',
-                  fontSize: '9px',
-                  color: 'var(--text-1)',
-                  minWidth: '55px',
-                  flexShrink: 0,
-                }}
-              >
-                {dim.label}
-              </span>
-              <span
-                style={{
-                  fontFamily: 'var(--mono)',
-                  fontSize: '8px',
-                  color: 'var(--text-3)',
-                  whiteSpace: 'nowrap',
-                  width: '75px',
-                  textAlign: 'right',
-                  flexShrink: 0,
-                }}
-              >
-                {startLabel}
-              </span>
-              <div
-                style={{
-                  width: '80px',
-                  minWidth: '80px',
-                  height: '6px',
-                  borderRadius: '3px',
-                  flexShrink: 0,
-                  background: `linear-gradient(to right, ${dim.colors[0]}, ${dim.colors[dim.colors.length - 1]})`,
-                }}
-              />
-              <span
-                style={{
-                  fontFamily: 'var(--mono)',
-                  fontSize: '9px',
-                  color: 'var(--text-3)',
-                  whiteSpace: 'nowrap',
-                }}
-              >
-                {endLabel}
-              </span>
-            </div>
-          )
-        })}
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      {/* Aggregate belief curves */}
+      {beliefDims.map((dim) => (
+        <div key={dim.key}>
+          <div
+            style={{
+              fontFamily: 'var(--mono)',
+              fontSize: '10px',
+              fontWeight: 500,
+              color: 'var(--text-1)',
+              letterSpacing: '0.04em',
+              marginBottom: '4px',
+            }}
+          >
+            {dim.label}
+          </div>
+          <AggregateBeliefChart quarters={quarters} points={data.points} dim={dim} />
+        </div>
+      ))}
+
+      {/* Per-cluster breakdown */}
+      <div
+        style={{
+          fontFamily: 'var(--mono)',
+          fontSize: '9px',
+          fontWeight: 500,
+          color: 'var(--text-2)',
+          letterSpacing: '0.04em',
+          textTransform: 'uppercase',
+          marginTop: '8px',
+        }}
+      >
+        By definition cluster
       </div>
-
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
         {clusters.map((c) => {
-          const countSeries = clusterTimeSeries[c.id] || []
-          const maxVal = Math.max(...countSeries, 1)
-          const xScale = d3
-            .scaleLinear()
-            .domain([0, countSeries.length - 1])
-            .range([0, countSparkW])
-          const yScale = d3
-            .scaleLinear()
-            .domain([0, maxVal])
-            .range([countSparkH - 2, 2])
-          const line = d3
-            .line()
-            .x((_: number, i: number) => xScale(i))
-            .y((d: number) => yScale(d))
-            .curve(d3.curveMonotoneX)
-          const pathD = line(countSeries) || ''
           const beliefs = clusterBeliefSeries[c.id]
-
           return (
             <div key={c.id} style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0 }}>
               <span
@@ -982,26 +1089,6 @@ function TrendsView({ data }: { data: AgiData }) {
               >
                 {c.label}
               </span>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flex: '1 1 0', minWidth: 0 }}>
-                <svg
-                  viewBox={`0 0 ${countSparkW} ${countSparkH}`}
-                  style={{ flex: '1 1 0', height: countSparkH, minWidth: 0 }}
-                >
-                  <path d={pathD} fill="none" stroke={CLUSTER_COLORS[c.id] || '#ccc'} strokeWidth={1.5} />
-                </svg>
-                <span
-                  style={{
-                    fontFamily: 'var(--mono)',
-                    fontSize: '9px',
-                    color: 'var(--text-3)',
-                    flexShrink: 0,
-                    width: '28px',
-                    textAlign: 'right' as const,
-                  }}
-                >
-                  {countSeries.reduce((a, b) => a + b, 0)}
-                </span>
-              </div>
               {beliefs &&
                 beliefDims.map((dim) => {
                   const dimSeries = beliefs[dim.key] || []
@@ -1018,7 +1105,7 @@ function TrendsView({ data }: { data: AgiData }) {
                           flexShrink: 0,
                         }}
                       >
-                        {dim.label}
+                        {dim.label.split(' ').pop()}
                       </span>
                       <MiniSparkline
                         series={dimSeries}
@@ -1036,7 +1123,8 @@ function TrendsView({ data }: { data: AgiData }) {
       </div>
 
       <div style={{ fontFamily: 'var(--mono)', fontSize: '9px', color: 'var(--text-3)' }}>
-        Each sparkline shows the cluster's mean score per quarter. Gaps indicate quarters with no scored definitions.
+        Aggregate curves show the mean score across all entities per quarter. Per-cluster sparklines show each
+        cluster&apos;s mean. Gaps indicate quarters with no scored definitions.
       </div>
     </div>
   )
