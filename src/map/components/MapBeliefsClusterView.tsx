@@ -1,235 +1,97 @@
 /**
- * Shared AGI Definition Cluster Map Component
- * Used by both insights page (AgiDefinitionSpace) and map page (DefinitionsView)
+ * Map Page AGI Beliefs Cluster View Component
+ * A variant of AgiClusterMap optimized for the map page with:
+ * - Initials/images on nodes
+ * - Sidebar detail panel (not popup)
+ * - Filtering support
+ * - Search highlighting
  */
-import { useEffect, useRef } from 'react'
-import { createPortal } from 'react-dom'
+import { useEffect, useRef, useImperativeHandle, forwardRef } from 'react'
+import {
+  type AgiPoint,
+  type AgiData,
+  type ColorMode,
+  CLUSTER_COLORS,
+  CATEGORY_COLORS,
+  BELIEF_SCALES,
+  getPointColor,
+  escapeHtml,
+} from '../../components/AgiClusterMap'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const d3: any
 
-// ============================================================================
-// Types
-// ============================================================================
-
-export interface AgiPoint {
-  entity_id: number
-  name: string
-  entity_type: string
-  category: string
-  definition: string
-  citation: string
-  source_id: string
-  date: string | null
-  confidence: string
-  x: number
-  y: number
-  stance: string | null
-  stance_score: number | null
-  timeline: string | null
-  timeline_score: number | null
-  risk: string | null
-  risk_score: number | null
-  cluster_id: string | null
-  cluster_label: string | null
-  thumbnail_url?: string | null
-}
-
-export interface AgiSource {
-  url: string
-  title: string | null
-  type: string | null
-}
-
-export interface ClusterInfo {
-  id: string
-  label: string
-  description: string
-  count: number
-  cx?: number
-  cy?: number
-}
-
-export interface AgiData {
-  points: AgiPoint[]
-  sources: Record<string, AgiSource>
-  clusters?: ClusterInfo[]
-}
-
-export type ColorMode = 'cluster' | 'category' | 'stance' | 'timeline' | 'risk'
-
-// ============================================================================
-// Color Constants
-// ============================================================================
-
-export const CLUSTER_COLORS: Record<string, string> = {
-  'human-level-cognitive-parity': '#4e79a7',
-  'economic-automation': '#f28e2b',
-  'autonomous-research-capability': '#e15759',
-  'superintelligent-systems': '#76b7b2',
-  'general-purpose-agents': '#59a14f',
-  'transformative-societal-impact': '#edc948',
-  'conceptual-critique': '#b07aa1',
-  'augmentative-tools': '#ff9da7',
-}
-
-export const CATEGORY_COLORS: Record<string, string> = {
-  'Frontier Lab': '#e41a1c',
-  'AI Safety/Alignment': '#377eb8',
-  'Think Tank/Policy Org': '#4daf4a',
-  'Government/Agency': '#984ea3',
-  Academic: '#ff7f00',
-  Researcher: '#ff7f00',
-  'VC/Capital/Philanthropy': '#a65628',
-  'Labor/Civil Society': '#f781bf',
-  'Ethics/Bias/Rights': '#f781bf',
-  Executive: '#666',
-  Policymaker: '#984ea3',
-  Investor: '#a65628',
-  'Deployers & Platforms': '#e41a1c',
-  'Infrastructure & Compute': '#e41a1c',
-}
-
-export const BELIEF_SCALES: Record<string, { labels: string[]; colors: string[] }> = {
-  stance: {
-    labels: ['Accelerate', 'Light-touch', 'Targeted', 'Moderate', 'Restrictive', 'Precautionary'],
-    colors: ['#2166ac', '#67a9cf', '#d1e5f0', '#fddbc7', '#ef8a62', '#b2182b'],
-  },
-  timeline: {
-    labels: ['Already here', '2-3 years', '5-10 years', '10-25 years', '25+ years'],
-    colors: ['#d73027', '#fc8d59', '#fee08b', '#91cf60', '#1a9850'],
-  },
-  risk: {
-    labels: ['Overstated', 'Manageable', 'Serious', 'Catastrophic', 'Existential'],
-    colors: ['#4575b4', '#91bfdb', '#fee090', '#fc8d59', '#d73027'],
-  },
-}
-
-export const COLOR_MODE_OPTIONS: { value: ColorMode; label: string }[] = [
-  { value: 'cluster', label: 'Definition cluster' },
-  { value: 'category', label: 'Entity category' },
-  { value: 'stance', label: 'Regulatory stance' },
-  { value: 'timeline', label: 'AGI timeline' },
-  { value: 'risk', label: 'AI risk level' },
-]
-
-// ============================================================================
-// Helper Functions
-// ============================================================================
-
-export function escapeHtml(s: string): string {
-  return s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!)
-}
-
-export function getPointColor(d: AgiPoint, colorMode: ColorMode): string {
-  if (colorMode === 'cluster') return CLUSTER_COLORS[d.cluster_id || ''] || '#ccc'
-  if (colorMode === 'category') return CATEGORY_COLORS[d.category] || '#888'
-  const scoreKey = colorMode === 'stance' ? 'stance_score' : colorMode === 'timeline' ? 'timeline_score' : 'risk_score'
-  const score = d[scoreKey]
-  if (score == null) return '#ddd'
-  const scale = BELIEF_SCALES[colorMode]
-  if (!scale) return '#888'
-  return scale.colors[Math.min(score - 1, scale.colors.length - 1)] || '#888'
-}
-
-// ============================================================================
-// Detail Modal Component
-// ============================================================================
-
-export function DetailModal({
-  point,
-  source,
-  onClose,
-}: {
-  point: AgiPoint
-  source: AgiSource | null
-  onClose: () => void
-}) {
-  return createPortal(
-    <div
-      className="fixed inset-0 z-[10000] flex items-start justify-center pt-[10vh]"
-      style={{ background: 'rgba(0,0,0,0.2)' }}
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose()
-      }}
-    >
-      <div
-        className="bg-white border border-[#ddd] rounded-lg shadow-xl overflow-y-auto w-[90vw] max-w-[520px]"
-        style={{ maxHeight: '75vh' }}
-      >
-        <div className="sticky top-0 bg-white border-b border-[#eee] px-4 py-2.5 flex justify-between items-start z-10 rounded-t-lg">
-          <div className="min-w-0 flex-1 pr-4">
-            <div className="font-mono text-[13px] font-medium text-[#1a1a1a]">{point.name}</div>
-            <div className="font-mono text-[10px] text-[#888] mt-0.5">
-              <span style={{ color: CATEGORY_COLORS[point.category] || '#888' }}>{point.category}</span>
-              {point.entity_type === 'organization' ? ' · Organization' : ' · Person'}
-            </div>
-          </div>
-          <button
-            onClick={onClose}
-            className="font-mono text-[16px] text-[#999] hover:text-[#333] px-2 py-0.5 -mr-2 flex-shrink-0"
-          >
-            ×
-          </button>
-        </div>
-        <div className="px-4 py-3 space-y-3">
-          <div>
-            <div className="font-mono text-[10px] tracking-[0.08em] uppercase text-[#888] mb-1">How they define AGI</div>
-            <div className="font-serif text-[14px] text-[#1a1a1a] leading-[1.5]">{point.definition}</div>
-          </div>
-          {point.citation && (
-            <div className="border-l-2 border-[#ddd] pl-3">
-              <blockquote className="font-serif text-[13px] text-[#444] leading-[1.45] italic">
-                &ldquo;{point.citation}&rdquo;
-              </blockquote>
-              {source && (
-                <a
-                  href={source.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-mono text-[10px] text-[#2563eb] hover:underline block truncate mt-1"
-                >
-                  {source.title || source.url}
-                </a>
-              )}
-              <div className="font-mono text-[9px] text-[#bbb] mt-0.5">
-                {[source?.type, point.date, point.confidence].filter(Boolean).join(' · ')}
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>,
-    document.body,
-  )
-}
-
-// ============================================================================
-// Cluster Map View Component (D3 visualization)
-// ============================================================================
-
-export function ClusterMapView({
-  data,
-  colorMode,
-  hoveredCategory,
-  onSelect,
-  searchQuery,
-}: {
+interface MapBeliefsClusterViewProps {
   data: AgiData
   colorMode: ColorMode
   hoveredCategory?: string | null
   onSelect: (p: AgiPoint) => void
   searchQuery?: string
-}) {
-  const ref = useRef<HTMLDivElement>(null)
+  highlightedEntityId?: number | null
+  selectedEntityId?: number | null
+  hiddenClusters?: Set<string>
+  hiddenCategories?: Set<string>
+  hiddenBeliefValues?: Set<string>
+}
 
+export interface MapBeliefsClusterViewRef {
+  zoomIn: () => void
+  zoomOut: () => void
+  zoomReset: () => void
+}
+
+function getInitials(name: string): string {
+  return name
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((w) => w.charAt(0).toUpperCase())
+    .join('')
+}
+
+export const MapBeliefsClusterView = forwardRef<MapBeliefsClusterViewRef, MapBeliefsClusterViewProps>(function MapBeliefsClusterView({
+  data,
+  colorMode,
+  hoveredCategory,
+  onSelect,
+  searchQuery,
+  highlightedEntityId,
+  selectedEntityId,
+  hiddenClusters,
+  hiddenCategories,
+  hiddenBeliefValues,
+}, forwardedRef) {
+  const ref = useRef<HTMLDivElement>(null)
+  // Store zoom behavior and node data for zoom operations
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const zoomRef = useRef<{ zoom: any; svg: any; nodes: Array<{ entity_id: number; x: number; y: number }>; vbX: number; vbY: number; vbW: number; vbH: number } | null>(null)
+
+  // Expose zoom controls to parent via ref
+  useImperativeHandle(forwardedRef, () => ({
+    zoomIn: () => {
+      if (!zoomRef.current) return
+      const { svg, zoom } = zoomRef.current
+      svg.transition().duration(300).call(zoom.scaleBy, 1.5)
+    },
+    zoomOut: () => {
+      if (!zoomRef.current) return
+      const { svg, zoom } = zoomRef.current
+      svg.transition().duration(300).call(zoom.scaleBy, 0.67)
+    },
+    zoomReset: () => {
+      if (!zoomRef.current) return
+      const { svg, zoom } = zoomRef.current
+      svg.transition().duration(300).call(zoom.transform, d3.zoomIdentity)
+    },
+  }), [])
+
+  // Main render effect - excludes selectedEntityId to prevent re-render on selection
   useEffect(() => {
     if (!ref.current || !data.clusters) return
     const container = ref.current
     container.innerHTML = ''
 
     // Hide any stale tooltip from previous render
-    const staleTip = document.getElementById('__agi-cluster-map-tip')
+    const staleTip = document.getElementById('__beliefs-cluster-tip')
     if (staleTip) staleTip.style.opacity = '0'
 
     const W = container.clientWidth || 700
@@ -241,8 +103,8 @@ export function ClusterMapView({
     const workPad = 140
 
     // Get UMAP coordinates for clusters
-    const cxExtent = d3.extent(clusters, (c: ClusterInfo) => c.cx ?? 0) as [number, number]
-    const cyExtent = d3.extent(clusters, (c: ClusterInfo) => c.cy ?? 0) as [number, number]
+    const cxExtent = d3.extent(clusters, (c: { cx?: number }) => c.cx ?? 0) as [number, number]
+    const cyExtent = d3.extent(clusters, (c: { cy?: number }) => c.cy ?? 0) as [number, number]
 
     // Scale UMAP coordinates to working space
     const xScale = d3
@@ -256,7 +118,7 @@ export function ClusterMapView({
 
     // Compute cluster radius based on node count
     function clusterRadius(count: number) {
-      const nodeR = 5
+      const nodeR = 7 // Slightly larger for initials
       const spacing = nodeR * 2.8
       const rings = Math.ceil((-3 + Math.sqrt(9 + 12 * (count - 1))) / 6) || 1
       return rings * spacing + nodeR
@@ -273,7 +135,7 @@ export function ClusterMapView({
       targetY: number
       radius: number
     }
-    const clusterNodes: ClusterNode[] = clusters.map((c: ClusterInfo) => ({
+    const clusterNodes: ClusterNode[] = clusters.map((c) => ({
       id: c.id,
       label: c.label,
       count: c.count,
@@ -301,7 +163,7 @@ export function ClusterMapView({
     // Pack nodes within each cluster using hexagonal grid
     function hexPack(count: number, cx: number, cy: number) {
       const positions: { x: number; y: number }[] = []
-      const nodeR = 5
+      const nodeR = 7
       const spacing = nodeR * 2.8
 
       // Center node
@@ -364,8 +226,65 @@ export function ClusterMapView({
       .attr('height', H)
       .style('overflow', 'visible')
 
+    // Create main group for zoom transforms
+    const mainGroup = svg.append('g').attr('class', 'zoom-group')
+
+    // Track current zoom scale for filter logic
+    let currentScale = 1
+
+    // Set up zoom behavior - only allow panning when zoomed in
+    const zoom = d3
+      .zoom()
+      .scaleExtent([1, 5])
+      .filter((event: { type: string }) => {
+        // Always allow programmatic zoom (from buttons)
+        if (event.type === 'start' || event.type === 'zoom' || event.type === 'end') return true
+        // Block wheel zoom - users must use +/- buttons
+        if (event.type === 'wheel') return false
+        // Block panning (mousedown/touchstart) unless zoomed in
+        if (event.type === 'mousedown' || event.type === 'touchstart') {
+          return currentScale > 1
+        }
+        return true
+      })
+      .on('zoom', (event: { transform: { k: number; x: number; y: number } }) => {
+        currentScale = event.transform.k
+        mainGroup.attr('transform', event.transform)
+      })
+
+    svg.call(zoom)
+
+    // Reset zoom when clicking on background
+    svg.on('click', function (event: MouseEvent) {
+      // Only reset if clicking directly on svg (not on a node)
+      if (event.target === svg.node()) {
+        svg
+          .transition()
+          .duration(500)
+          .call(zoom.transform, d3.zoomIdentity)
+      }
+    })
+
+    // Function to zoom to a specific node (like Network view)
+    const zoomToNode = (nodeX: number, nodeY: number) => {
+      const k = 3 // zoom scale, same as Network view
+      // Center the node in the viewport
+      // For SVG with viewBox, we need to translate in viewBox coordinates
+      const viewCenterX = vbX + vbW / 2
+      const viewCenterY = vbY + vbH / 2
+      const t = d3.zoomIdentity
+        .translate(viewCenterX, viewCenterY)
+        .scale(k)
+        .translate(-nodeX, -nodeY)
+
+      svg
+        .transition()
+        .duration(500)
+        .call(zoom.transform, t)
+    }
+
     // Tooltip
-    const tipId = '__agi-cluster-map-tip'
+    const tipId = '__beliefs-cluster-tip'
     let tipEl = document.getElementById(tipId) as HTMLDivElement | null
     if (!tipEl) {
       tipEl = document.createElement('div')
@@ -401,11 +320,14 @@ export function ClusterMapView({
       const clusterEntityNodes = nodes.filter((n) => n.cluster_id === cluster.id)
       if (clusterEntityNodes.length === 0) return
 
+      // When coloring by cluster, hide label if cluster is hidden
+      if (colorMode === 'cluster' && hiddenClusters?.has(cluster.id)) return
+
       const cx = cluster.x
       const cy = cluster.y
       const maxR = cluster.radius
 
-      const labelText = clusters.find((c: ClusterInfo) => c.id === cluster.id)?.label || ''
+      const labelText = clusters.find((c) => c.id === cluster.id)?.label || ''
       const labelW = labelText.length * charWidth
 
       const directions = [
@@ -517,7 +439,7 @@ export function ClusterMapView({
         anchor: bestDir.anchor,
       })
 
-      svg
+      mainGroup
         .append('text')
         .attr('x', labelX)
         .attr('y', labelY)
@@ -531,6 +453,24 @@ export function ClusterMapView({
         .text(labelText)
     })
 
+    // Check if node is visible (not filtered out)
+    const isVisible = (d: AgiPoint) => {
+      if (hiddenClusters?.has(d.cluster_id || '')) return false
+      if (hiddenCategories?.has(d.category)) return false
+      // Check belief dimension filtering
+      if (hiddenBeliefValues && hiddenBeliefValues.size > 0) {
+        // When coloring by a belief dimension, filter by that dimension's score
+        if (colorMode === 'stance' && d.stance_score != null) {
+          if (hiddenBeliefValues.has(`stance:${d.stance_score}`)) return false
+        } else if (colorMode === 'timeline' && d.timeline_score != null) {
+          if (hiddenBeliefValues.has(`timeline:${d.timeline_score}`)) return false
+        } else if (colorMode === 'risk' && d.risk_score != null) {
+          if (hiddenBeliefValues.has(`risk:${d.risk_score}`)) return false
+        }
+      }
+      return true
+    }
+
     // Check if node matches search query
     const matchesSearch = (d: AgiPoint) => {
       if (!searchQuery) return true
@@ -543,18 +483,39 @@ export function ClusterMapView({
       )
     }
 
-    // Entity dots
-    svg
-      .selectAll('circle.entity')
+    // Check if node is highlighted
+    const isHighlighted = (d: AgiPoint) => {
+      return highlightedEntityId != null && d.entity_id === highlightedEntityId
+    }
+
+    const nodeR = 7
+
+    // Create clipPath definitions for circular images (one per node with thumbnail)
+    const defs = svg.append('defs')
+    nodes.forEach((d) => {
+      if (d.thumbnail_url) {
+        defs
+          .append('clipPath')
+          .attr('id', `clip-entity-${d.entity_id}`)
+          .append('circle')
+          .attr('r', nodeR - 0.5)
+          .attr('cx', 0)
+          .attr('cy', 0)
+      }
+    })
+
+    // Entity groups (for circles with images or initials)
+    const nodeGroups = mainGroup
+      .selectAll('g.entity')
       .data(nodes)
       .enter()
-      .append('circle')
+      .append('g')
       .attr('class', 'entity')
-      .attr('cx', (d: { x: number }) => d.x)
-      .attr('cy', (d: { y: number }) => d.y)
-      .attr('r', (d: AgiPoint) => (searchQuery && matchesSearch(d) ? 7 : 5))
-      .attr('fill', (d: AgiPoint) => getPointColor(d, colorMode))
-      .attr('opacity', (d: AgiPoint) => {
+      .attr('transform', (d: { x: number; y: number }) => `translate(${d.x},${d.y})`)
+      .style('cursor', 'pointer')
+      .style('opacity', (d: AgiPoint) => {
+        if (!isVisible(d)) return 0
+        // Selection-based dimming is handled by the separate selection effect
         if (searchQuery) {
           return matchesSearch(d) ? 1 : 0.15
         }
@@ -563,10 +524,52 @@ export function ClusterMapView({
         }
         return 0.85
       })
-      .attr('stroke', (d: AgiPoint) => (searchQuery && matchesSearch(d) ? '#1a1a1a' : '#fff'))
-      .attr('stroke-width', (d: AgiPoint) => (searchQuery && matchesSearch(d) ? 2 : 1))
-      .style('cursor', 'pointer')
-      .on('mouseover', (evt: MouseEvent, d: AgiPoint) => {
+      .style('pointer-events', (d: AgiPoint) => (isVisible(d) ? 'auto' : 'none'))
+
+    // Circle backgrounds (always render for color ring)
+    nodeGroups
+      .append('circle')
+      .attr('r', (d: AgiPoint) => (isHighlighted(d) || (searchQuery && matchesSearch(d)) ? nodeR + 2 : nodeR))
+      .attr('fill', (d: AgiPoint) => d.thumbnail_url ? '#fff' : getPointColor(d, colorMode))
+      .attr('stroke', (d: AgiPoint) => {
+        if (isHighlighted(d) || (searchQuery && matchesSearch(d))) return '#1a1a1a'
+        return d.thumbnail_url ? getPointColor(d, colorMode) : '#fff'
+      })
+      .attr('stroke-width', (d: AgiPoint) => {
+        if (isHighlighted(d)) return 2.5
+        if (searchQuery && matchesSearch(d)) return 2
+        return d.thumbnail_url ? 1.5 : 1
+      })
+
+    // Add images for nodes with thumbnails
+    nodeGroups
+      .filter((d: AgiPoint) => !!d.thumbnail_url)
+      .append('image')
+      .attr('href', (d: AgiPoint) => d.thumbnail_url!)
+      .attr('x', -nodeR)
+      .attr('y', -nodeR)
+      .attr('width', nodeR * 2)
+      .attr('height', nodeR * 2)
+      .attr('clip-path', (d: AgiPoint) => `url(#clip-entity-${d.entity_id})`)
+      .attr('preserveAspectRatio', 'xMidYMid slice')
+
+    // Initials text (only for nodes without thumbnails)
+    nodeGroups
+      .filter((d: AgiPoint) => !d.thumbnail_url)
+      .append('text')
+      .attr('text-anchor', 'middle')
+      .attr('dominant-baseline', 'central')
+      .attr('font-family', "'DM Mono', monospace")
+      .attr('font-size', 5)
+      .attr('font-weight', 600)
+      .attr('fill', '#fff')
+      .attr('pointer-events', 'none')
+      .text((d: AgiPoint) => getInitials(d.name))
+
+    // Interaction handlers
+    nodeGroups
+      .on('mouseover', function (evt: MouseEvent, d: AgiPoint) {
+        if (!isVisible(d)) return
         if (tipEl) {
           const beliefValue =
             colorMode === 'cluster'
@@ -586,92 +589,77 @@ export function ClusterMapView({
           tipEl.style.opacity = '1'
         }
       })
-      .on('mousemove', (evt: MouseEvent) => {
+      .on('mousemove', function (evt: MouseEvent) {
         if (tipEl) {
           tipEl.style.left = evt.clientX + 12 + 'px'
           tipEl.style.top = evt.clientY + 12 + 'px'
         }
       })
-      .on('mouseout', () => {
+      .on('mouseout', function () {
         if (tipEl) tipEl.style.opacity = '0'
       })
-      .on('click', (_: MouseEvent, d: AgiPoint) => {
+      .on('click', function (_: MouseEvent, d: AgiPoint & { x: number; y: number }) {
+        if (!isVisible(d)) return
         if (tipEl) tipEl.style.opacity = '0'
+        // Zoom to node with animation, then select
+        zoomToNode(d.x, d.y)
         onSelect(d)
       })
-  }, [data, colorMode, hoveredCategory, onSelect, searchQuery])
 
-  return <div ref={ref} />
-}
+    // Store zoom state for the selection effect to use
+    zoomRef.current = {
+      zoom,
+      svg,
+      nodes,
+      vbX,
+      vbY,
+      vbW,
+      vbH,
+    }
+  }, [data, colorMode, hoveredCategory, onSelect, searchQuery, highlightedEntityId, hiddenClusters, hiddenCategories, hiddenBeliefValues])
 
-// ============================================================================
-// Cluster List View Component
-// ============================================================================
+  // Separate effect for handling selection changes (dimming + zoom)
+  // This avoids re-rendering the entire visualization on selection
+  useEffect(() => {
+    if (!zoomRef.current) return
+    const { svg, nodes, zoom, vbX, vbY, vbW, vbH } = zoomRef.current
 
-export function ClusterListView({
-  data,
-  onSelect,
-  searchQuery,
-}: {
-  data: AgiData
-  onSelect: (p: AgiPoint) => void
-  searchQuery?: string
-}) {
-  const clusters = data.clusters || []
+    // Update opacity for all nodes based on selection
+    svg.selectAll('g.entity').style('opacity', (d: AgiPoint) => {
+      // Check visibility first
+      const isHiddenCluster = hiddenClusters?.has(d.cluster_id || '')
+      const isHiddenCategory = hiddenCategories?.has(d.category)
+      if (isHiddenCluster || isHiddenCategory) return 0
 
-  const matchesSearch = (p: AgiPoint) => {
-    if (!searchQuery) return true
-    const q = searchQuery.toLowerCase()
-    return (
-      p.name.toLowerCase().includes(q) ||
-      p.definition.toLowerCase().includes(q) ||
-      p.category.toLowerCase().includes(q)
-    )
-  }
+      // Dim other nodes when one is selected
+      if (selectedEntityId != null) {
+        return d.entity_id === selectedEntityId ? 1 : 0.15
+      }
+      return 0.85
+    })
 
-  return (
-    <div className="space-y-6">
-      {clusters
-        .sort((a, b) => b.count - a.count)
-        .map((cluster) => {
-          const entities = data.points.filter((p) => p.cluster_id === cluster.id)
-          const filteredEntities = searchQuery ? entities.filter(matchesSearch) : entities
+    // Zoom to selected node, or reset zoom when deselecting
+    if (selectedEntityId != null) {
+      const selectedNode = nodes.find((n) => n.entity_id === selectedEntityId)
+      if (selectedNode) {
+        const k = 3 // zoom scale
+        const viewCenterX = vbX + vbW / 2
+        const viewCenterY = vbY + vbH / 2
+        const t = d3.zoomIdentity
+          .translate(viewCenterX, viewCenterY)
+          .scale(k)
+          .translate(-selectedNode.x, -selectedNode.y)
+        svg.transition().duration(500).call(zoom.transform, t)
+      }
+    } else {
+      // Reset zoom when nothing is selected
+      svg.transition().duration(500).call(zoom.transform, d3.zoomIdentity)
+    }
+  }, [selectedEntityId, hiddenClusters, hiddenCategories])
 
-          if (searchQuery && filteredEntities.length === 0) return null
+  return <div ref={ref} className="beliefs-cluster-view" />
+})
 
-          return (
-            <div key={cluster.id}>
-              <div className="flex items-baseline gap-2 mb-1.5">
-                <span
-                  className="inline-block w-3 h-3 rounded-sm flex-shrink-0"
-                  style={{ background: CLUSTER_COLORS[cluster.id] || '#ccc' }}
-                />
-                <span className="font-mono text-[12px] font-medium text-[#1a1a1a]">{cluster.label}</span>
-                <span className="font-mono text-[10px] text-[#999]">
-                  ({searchQuery ? `${filteredEntities.length}/${cluster.count}` : cluster.count})
-                </span>
-              </div>
-              <div className="font-mono text-[10px] text-[#666] mb-2 ml-5">{cluster.description}</div>
-              <div className="ml-5 flex flex-wrap gap-1">
-                {(searchQuery ? filteredEntities : entities).map((p) => (
-                  <button
-                    key={p.entity_id}
-                    onClick={() => onSelect(p)}
-                    className={`font-mono text-[9px] px-1.5 py-0.5 rounded border transition-colors truncate ${
-                      searchQuery && matchesSearch(p)
-                        ? 'border-[#2563eb] bg-[#eff6ff] text-[#1e40af] hover:bg-[#dbeafe]'
-                        : 'border-[#e0e0e0] text-[#555] hover:bg-[#f0f0f0] hover:border-[#bbb]'
-                    }`}
-                    style={{ maxWidth: '180px' }}
-                    title={p.definition}
-                  >
-                    {p.name}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )
-        })}
-    </div>
-  )
-}
+// Re-export types and constants for convenience
+export type { AgiPoint, AgiData, ColorMode }
+export { CLUSTER_COLORS, CATEGORY_COLORS, BELIEF_SCALES }
