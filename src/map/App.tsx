@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useRef } from 'react'
 import { DefinitionsView, Legend } from './components/DefinitionsView'
 import type { DefinitionsDataPayload } from './components/DefinitionsView'
 
@@ -20,20 +20,20 @@ export function App() {
     setDefData(payload)
   }, [])
 
+  const engineRef = useRef<{ destroy: () => void } | null>(null)
   useEffect(() => {
-    let engineCleanup: { destroy: () => void } | null = null
+    if (engineRef.current) return
     let cancelled = false
 
     import('./engine.js')
       .then(({ initMapEngine }) => {
         if (cancelled) return
-        engineCleanup = initMapEngine()
+        engineRef.current = initMapEngine()
       })
       .catch((err) => console.error('Failed to load map engine:', err))
 
     return () => {
       cancelled = true
-      if (engineCleanup) engineCleanup.destroy()
     }
   }, [])
 
