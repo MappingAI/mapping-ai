@@ -1588,7 +1588,7 @@ export function initMapEngine() {
     }
   }
 
-  fetch('map-data.json')
+  fetch('/data/map-data.json')
     .then((r) => r.json())
     .then((data) => {
       allData = data
@@ -1598,7 +1598,7 @@ export function initMapEngine() {
 
       // Lazy-load detail data (notes, stance_detail, threat_models, etc.)
       // in the background — merges into entities when ready
-      fetch('map-detail.json')
+      fetch('/data/map-detail.json')
         .then((r) => (r.ok ? r.json() : null))
         .then((detail) => {
           if (!detail) return

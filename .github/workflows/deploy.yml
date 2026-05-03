@@ -37,13 +37,40 @@ jobs:
       - name: Build with Vite
         run: pnpm exec vite build
 
-      - name: Generate map-data.json from database
+      - name: Generate and upload map-data.json to R2
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
         run: |
           pnpm exec tsx scripts/export-map-data.ts
-          cp map-data.json dist/map-data.json
-          if [ -f map-detail.json ]; then cp map-detail.json dist/map-detail.json; fi
+          echo "Uploading map-data.json and map-detail.json to R2..."
+          node -e "
+            const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
+            const fs = require('fs');
+            const r2 = new S3Client({
+              region: 'auto',
+              endpoint: 'https://ac57c6d87068ab259c6f54dba468de8d.r2.cloudflarestorage.com',
+              credentials: {
+                accessKeyId: process.env.R2_ACCESS_KEY_ID,
+                secretAccessKey: process.env.R2_SECRET_ACCESS_KEY,
+              },
+            });
+            async function upload(file) {
+              const body = fs.readFileSync(file);
+              await r2.send(new PutObjectCommand({
+                Bucket: 'mapping-ai-data',
+                Key: file,
+                Body: body,
+                ContentType: 'application/json',
+                CacheControl: 'public, max-age=300, s-maxage=3600',
+              }));
+              console.log('  ✓', file, '(' + (body.length / 1024).toFixed(0) + ' KB)');
+            }
+            Promise.all([upload('map-data.json'), upload('map-detail.json')])
+              .then(() => console.log('Uploaded to R2'))
+              .catch(e => { console.error(e); process.exit(1); });
+          "
 
       # PASSWORD GATE — remove after public launch
       - name: Inject password gate hash
