@@ -538,7 +538,7 @@ export function App() {
           >
             <span style={{ fontSize: '12px' }}>&#9432;</span> About this map
           </button>
-          <details style={{ marginTop: '6px' }}>
+          <details style={{ marginTop: '6px' }} open={reactView === 'definitions'}>
             <summary
               style={{
                 fontFamily: 'var(--mono)',
