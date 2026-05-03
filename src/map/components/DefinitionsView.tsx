@@ -1069,8 +1069,13 @@ function AggregateBeliefChart({
         .attr('stroke-linecap', 'round')
     }
 
-    // Dots at data points colored by mean score
+    // Dots at data points colored by mean score, with hover tooltips
+    const tipEl = createTooltip('__defview-trends-tip')
     validPairs.forEach((d) => {
+      const q = quarters[d.i]
+      const meanLabel = scale
+        ? scale.labels[Math.max(0, Math.min(Math.round(d.mean) - 1, scale.labels.length - 1))] || ''
+        : d.mean.toFixed(2)
       svg
         .append('circle')
         .attr('cx', xAt(d.i))
@@ -1079,6 +1084,18 @@ function AggregateBeliefChart({
         .attr('fill', colorScale(d.mean))
         .attr('stroke', '#fff')
         .attr('stroke-width', 1)
+        .style('cursor', 'pointer')
+        .on('mouseover', (evt: MouseEvent) => {
+          showTip(
+            tipEl,
+            evt,
+            `<div style="font-weight:500;margin-bottom:2px;">${q ? q.label : ''}</div>` +
+              `<div>${d.count} definitions</div>` +
+              `<div style="color:${colorScale(d.mean)}">Mean: ${meanLabel} (${d.mean.toFixed(2)})</div>`,
+          )
+        })
+        .on('mousemove', (evt: MouseEvent) => moveTip(tipEl, evt))
+        .on('mouseout', () => hideTip(tipEl))
     })
 
     // Color legend bar with endpoint labels
@@ -1217,19 +1234,38 @@ function TrendsView({ data }: { data: AgiData }) {
                 {shortLabel}
               </div>
               {sc && (
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '3px' }}>
-                  <span style={{ fontFamily: 'var(--mono)', fontSize: '7px', color: 'var(--text-3)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <span
+                    style={{
+                      fontFamily: 'var(--mono)',
+                      fontSize: '7px',
+                      color: 'var(--text-3)',
+                      width: '52px',
+                      textAlign: 'right',
+                      paddingRight: '3px',
+                    }}
+                  >
                     {sc.labels[0]}
                   </span>
                   <div
                     style={{
                       width: '32px',
+                      flexShrink: 0,
                       height: '4px',
                       borderRadius: '2px',
                       background: `linear-gradient(to right, ${sc.colors[0]}, ${sc.colors[sc.colors.length - 1]})`,
                     }}
                   />
-                  <span style={{ fontFamily: 'var(--mono)', fontSize: '7px', color: 'var(--text-3)' }}>
+                  <span
+                    style={{
+                      fontFamily: 'var(--mono)',
+                      fontSize: '7px',
+                      color: 'var(--text-3)',
+                      width: '52px',
+                      textAlign: 'left',
+                      paddingLeft: '3px',
+                    }}
+                  >
                     {sc.labels[sc.labels.length - 1]}
                   </span>
                 </div>
