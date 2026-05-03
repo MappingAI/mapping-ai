@@ -932,8 +932,8 @@ export function App() {
   // Fetch data
   useEffect(() => {
     Promise.all([
-      fetch('/map-data.json').then((r) => r.json()),
-      fetch('/map-detail.json')
+      fetch('/data/map-data.json').then((r) => r.json()),
+      fetch('/data/map-detail.json')
         .then((r) => r.json())
         .catch(() => ({})),
       fetch('/funding-data.json')
