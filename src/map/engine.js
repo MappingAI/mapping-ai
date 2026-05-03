@@ -2752,8 +2752,10 @@ export function initMapEngine() {
       ctx.stroke()
     }
 
-    // Layer 2: Edges (batched by state)
+    // Layer 2: Edges (batched by state, thickness scales with zoom)
     if (_canvasLinks.length > 0) {
+      const sc = currentZoom?.k || 1
+      const baseEdgeW = Math.max(0.15, 0.4 / Math.sqrt(sc))
       const batches = { normal: [], dimmed: [], highlighted: [], 'one-hop': [] }
       for (const l of _canvasLinks) {
         if (l._vs === 'hidden') continue
@@ -2762,9 +2764,9 @@ export function initMapEngine() {
       }
       for (const [state, links] of Object.entries(batches)) {
         if (links.length === 0) continue
-        ctx.globalAlpha = state === 'dimmed' ? 0.02 : state === 'highlighted' ? 0.8 : 0.25
+        ctx.globalAlpha = state === 'dimmed' ? 0.02 : state === 'highlighted' ? 0.8 : 0.15
         ctx.strokeStyle = tc.text3
-        ctx.lineWidth = state === 'highlighted' ? 2.5 : 0.5
+        ctx.lineWidth = state === 'highlighted' ? 1.5 / Math.sqrt(sc) : baseEdgeW
         ctx.setLineDash(state === 'one-hop' ? [4, 3] : [])
         ctx.beginPath()
         for (const l of links) {
@@ -2775,19 +2777,16 @@ export function initMapEngine() {
       }
       ctx.setLineDash([])
 
-      const edgesToHighlight = []
-      if (_selectedEdge) edgesToHighlight.push(_selectedEdge)
-      if (_hoveredEdge && _hoveredEdge !== _selectedEdge) edgesToHighlight.push(_hoveredEdge)
-      for (const activeEdge of edgesToHighlight) {
-        const sx = activeEdge.source.x,
-          sy = activeEdge.source.y
-        const tx = activeEdge.target.x,
-          ty = activeEdge.target.y
+      // Selected edge: full gold highlight
+      if (_selectedEdge) {
+        const sx = _selectedEdge.source.x,
+          sy = _selectedEdge.source.y
+        const tx = _selectedEdge.target.x,
+          ty = _selectedEdge.target.y
         ctx.lineCap = 'round'
         for (const pass of [
-          { width: 12, alpha: 0.15 },
-          { width: 8, alpha: 0.25 },
-          { width: 5, alpha: 0.4 },
+          { width: 8, alpha: 0.15 },
+          { width: 5, alpha: 0.25 },
         ]) {
           ctx.globalAlpha = pass.alpha
           ctx.strokeStyle = '#D4AF37'
@@ -2799,12 +2798,27 @@ export function initMapEngine() {
         }
         ctx.globalAlpha = 1
         ctx.strokeStyle = '#D4AF37'
-        ctx.lineWidth = 3
+        ctx.lineWidth = 2
         ctx.beginPath()
         ctx.moveTo(sx, sy)
         ctx.lineTo(tx, ty)
         ctx.stroke()
         ctx.lineCap = 'butt'
+      }
+
+      // Hovered edge: very subtle highlight (slight thickening, no glow)
+      if (_hoveredEdge && _hoveredEdge !== _selectedEdge) {
+        const sx = _hoveredEdge.source.x,
+          sy = _hoveredEdge.source.y
+        const tx = _hoveredEdge.target.x,
+          ty = _hoveredEdge.target.y
+        ctx.globalAlpha = 0.5
+        ctx.strokeStyle = tc.text2 || '#555'
+        ctx.lineWidth = 1.2
+        ctx.beginPath()
+        ctx.moveTo(sx, sy)
+        ctx.lineTo(tx, ty)
+        ctx.stroke()
       }
     }
 
@@ -3281,8 +3295,8 @@ export function initMapEngine() {
       .force('x', d3.forceX(centerX).strength(clusterDimension === 'category' ? 0.02 : 0.01))
       .force('y', d3.forceY(centerY).strength(clusterDimension === 'category' ? 0.02 : 0.01))
       .alpha(0.5)
-      .alphaDecay(0.04)
-      .velocityDecay(0.72)
+      .alphaDecay(0.028)
+      .velocityDecay(0.68)
       .stop()
 
     // Pre-rasterized image sprites (offscreen canvas, circle-clipped).
@@ -3926,8 +3940,8 @@ export function initMapEngine() {
       .force('y', d3.forceY((d) => d.targetY).strength(yAxisDef ? 0.8 : 0.03))
       .force('collision', d3.forceCollide((d) => d.radius + 2).strength(0.9))
       .alpha(0.4)
-      .alphaDecay(0.045)
-      .velocityDecay(0.72)
+      .alphaDecay(0.03)
+      .velocityDecay(0.68)
       .on('tick', () => {
         if (!yAxisDef) {
           nodes.forEach((d) => {
