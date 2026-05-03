@@ -806,89 +806,92 @@ function ScatterView({
 
 function MiniSparkline({
   series,
-  colorStart,
-  colorEnd,
+  colors,
   sparkW,
   sparkH,
 }: {
   series: number[]
-  colorStart: string
-  colorEnd: string
+  colors: string[]
   sparkW: number
   sparkH: number
 }) {
+  const ref = useRef<SVGSVGElement>(null)
   const validPairs = series.map((v, i) => [i, v] as [number, number]).filter(([, v]) => !isNaN(v))
-  if (validPairs.length < 2) {
-    return (
-      <svg viewBox={`0 0 ${sparkW} ${sparkH}`} style={{ minWidth: 0, flex: '1 1 60px', height: sparkH }}>
-        <text
-          x={sparkW / 2}
-          y={sparkH / 2 + 3}
-          textAnchor="middle"
-          fontFamily="'DM Mono', monospace"
-          fontSize={7}
-          fill="var(--text-3)"
-        >
-          n/a
-        </text>
-      </svg>
-    )
-  }
-  const vals = validPairs.map(([, v]) => v)
-  const minV = Math.min(...vals)
-  const maxV = Math.max(...vals)
-  const range = maxV - minV || 1
-  const xScale = d3
-    .scaleLinear()
-    .domain([0, series.length - 1])
-    .range([2, sparkW - 2])
-  const yScale = d3
-    .scaleLinear()
-    .domain([minV - range * 0.1, maxV + range * 0.1])
-    .range([sparkH - 2, 2])
-  const gradId = `bgrad-${Math.random().toString(36).slice(2, 8)}`
-  const line = d3
-    .line()
-    .defined((d: [number, number]) => !isNaN(d[1]))
-    .x((d: [number, number]) => xScale(d[0]))
-    .y((d: [number, number]) => yScale(d[1]))
-    .curve(d3.curveMonotoneX)
-  const pathD = line(series.map((v, i) => [i, v] as [number, number])) || ''
 
-  // Find gaps between valid points for dashed bridge lines
-  const gapLines: { x1: number; y1: number; x2: number; y2: number }[] = []
-  for (let k = 0; k < validPairs.length - 1; k++) {
-    const [i0, v0] = validPairs[k]!
-    const [i1, v1] = validPairs[k + 1]!
-    if (i1 - i0 > 1) {
-      gapLines.push({ x1: xScale(i0), y1: yScale(v0), x2: xScale(i1), y2: yScale(v1) })
+  useEffect(() => {
+    if (!ref.current) return
+    const svg = d3.select(ref.current)
+    svg.selectAll('*').remove()
+
+    if (validPairs.length < 2) {
+      svg
+        .append('text')
+        .attr('x', sparkW / 2)
+        .attr('y', sparkH / 2 + 3)
+        .attr('text-anchor', 'middle')
+        .attr('font-family', "'DM Mono', monospace")
+        .attr('font-size', 7)
+        .attr('fill', 'var(--text-3)')
+        .text('n/a')
+      return
     }
-  }
 
-  return (
-    <svg width={sparkW} height={sparkH} style={{ minWidth: 0, flex: '0 1 auto' }}>
-      <defs>
-        <linearGradient id={gradId} x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor={colorStart} />
-          <stop offset="100%" stopColor={colorEnd} />
-        </linearGradient>
-      </defs>
-      {gapLines.map((g, k) => (
-        <line
-          key={k}
-          x1={g.x1}
-          y1={g.y1}
-          x2={g.x2}
-          y2={g.y2}
-          stroke="var(--text-3)"
-          strokeWidth={0.75}
-          strokeDasharray="2,3"
-          opacity={0.4}
-        />
-      ))}
-      <path d={pathD} fill="none" stroke={`url(#${gradId})`} strokeWidth={1.5} />
-    </svg>
-  )
+    const vals = validPairs.map(([, v]) => v)
+    const minV = Math.min(...vals)
+    const maxV = Math.max(...vals)
+    const range = maxV - minV || 1
+    const xScale = d3
+      .scaleLinear()
+      .domain([0, series.length - 1])
+      .range([2, sparkW - 2])
+    const yScale = d3
+      .scaleLinear()
+      .domain([minV - range * 0.1, maxV + range * 0.1])
+      .range([sparkH - 2, 2])
+
+    const colorScale = d3
+      .scaleLinear()
+      .domain(colors.map((_, i) => 1 + (i * (colors.length > 1 ? colors.length - 1 : 1)) / (colors.length - 1 || 1)))
+      .range(colors)
+      .clamp(true)
+
+    // Dashed gap lines
+    for (let k = 0; k < validPairs.length - 1; k++) {
+      const [i0, v0] = validPairs[k]!
+      const [i1, v1] = validPairs[k + 1]!
+      if (i1 - i0 > 1) {
+        svg
+          .append('line')
+          .attr('x1', xScale(i0))
+          .attr('y1', yScale(v0))
+          .attr('x2', xScale(i1))
+          .attr('y2', yScale(v1))
+          .attr('stroke', 'var(--text-3)')
+          .attr('stroke-width', 0.75)
+          .attr('stroke-dasharray', '2,3')
+          .attr('opacity', 0.4)
+      }
+    }
+
+    // Colored segments based on actual score value
+    for (let k = 0; k < validPairs.length - 1; k++) {
+      const [i0, v0] = validPairs[k]!
+      const [i1, v1] = validPairs[k + 1]!
+      if (i1 - i0 > 1) continue
+      const midVal = (v0 + v1) / 2
+      svg
+        .append('line')
+        .attr('x1', xScale(i0))
+        .attr('y1', yScale(v0))
+        .attr('x2', xScale(i1))
+        .attr('y2', yScale(v1))
+        .attr('stroke', colorScale(midVal))
+        .attr('stroke-width', 1.5)
+        .attr('stroke-linecap', 'round')
+    }
+  }, [series, colors, sparkW, sparkH])
+
+  return <svg ref={ref} width={sparkW} height={sparkH} style={{ minWidth: 0, flex: '0 1 auto' }} />
 }
 
 function AggregateBeliefChart({
@@ -1308,8 +1311,7 @@ function TrendsView({ data }: { data: AgiData }) {
                     <div key={dim.key} style={{ flex: '1 1 0', minWidth: 0 }}>
                       <MiniSparkline
                         series={beliefs[dim.key] || []}
-                        colorStart={dim.colors[0] ?? '#888'}
-                        colorEnd={dim.colors[dim.colors.length - 1] ?? '#888'}
+                        colors={[...dim.colors]}
                         sparkW={beliefSparkW}
                         sparkH={beliefSparkH}
                       />
