@@ -375,7 +375,7 @@ function ClusterMapView({
     const staleTip = document.getElementById('__defview-map-tip')
     if (staleTip) staleTip.style.opacity = '0'
 
-    const W = container.clientWidth || 700
+    const _W = container.clientWidth || 700
     const clusters = data.clusters
 
     const cxExtent = d3.extent(clusters, (c: ClusterInfo) => c.cx ?? 0) as [number, number]
@@ -404,7 +404,7 @@ function ClusterMapView({
     }))
 
     // Push overlapping cluster centers apart (iterative repulsion)
-    const GAP = 30
+    const GAP = 60
     for (let iter = 0; iter < 100; iter++) {
       let moved = false
       for (let i = 0; i < centers.length; i++) {
@@ -460,8 +460,7 @@ function ClusterMapView({
     const vbW = Math.max(...allCx) - Math.min(...allCx) + maxRadius * 2 + labelMargin * 2
     const vbH = Math.max(...allCy) - Math.min(...allCy) + maxRadius * 2 + 60
     const availH = (container.closest('#react-view-container')?.clientHeight || window.innerHeight - 48) - 80
-    const naturalH = W * (vbH / vbW)
-    const H = Math.min(naturalH, availH)
+    const H = Math.max(availH, 400)
 
     const svg = d3
       .select(container)
@@ -1264,21 +1263,35 @@ function TimelineView({ data }: { data: AgiData }) {
   )
 }
 
+const CLUSTER_LABELS: Record<string, string> = {
+  'human-level-cognitive-parity': 'Human-Level Cognitive Parity',
+  'economic-automation': 'Economic Work Automation',
+  'autonomous-research-capability': 'Autonomous Research',
+  'superintelligent-systems': 'Superintelligent Systems',
+  'general-purpose-agents': 'General-Purpose Agents',
+  'transformative-societal-impact': 'Transformative Impact',
+  'conceptual-critique': 'Conceptual Critique',
+  'augmentative-tools': 'Augmentative Tools',
+}
+
 export function Legend({
   data,
   colorMode,
   setHoveredCategory,
   categories,
 }: {
-  data: AgiData
+  data: AgiData | null
   colorMode: ColorMode
   setHoveredCategory: (cat: string | null) => void
   categories: string[]
 }) {
   if (colorMode === 'cluster') {
+    const clusterItems = data?.clusters?.length
+      ? data.clusters
+      : Object.entries(CLUSTER_COLORS).map(([id]) => ({ id, label: CLUSTER_LABELS[id] || id, count: 0 }))
     return (
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 16px', marginTop: '8px' }}>
-        {(data.clusters || []).map((c) => (
+        {clusterItems.map((c) => (
           <div key={c.id} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
             <span
               style={{
@@ -1290,7 +1303,8 @@ export function Legend({
               }}
             />
             <span style={{ fontFamily: 'var(--mono)', fontSize: '9px', color: 'var(--text-2)' }}>
-              {c.label} ({c.count})
+              {c.label}
+              {c.count > 0 ? ` (${c.count})` : ''}
             </span>
           </div>
         ))}
@@ -1318,7 +1332,8 @@ export function Legend({
               }}
             />
             <span style={{ fontFamily: 'var(--mono)', fontSize: '9px', color: 'var(--text-2)' }}>
-              {cat} ({data.points.filter((p) => p.category === cat).length})
+              {cat}
+              {data ? ` (${data.points.filter((p) => p.category === cat).length})` : ''}
             </span>
           </div>
         ))}
@@ -1327,7 +1342,7 @@ export function Legend({
   }
 
   const scoreKey = colorMode === 'stance' ? 'stance_score' : colorMode === 'timeline' ? 'timeline_score' : 'risk_score'
-  const noDataCount = data.points.filter((p) => p[scoreKey] == null).length
+  const noDataCount = data ? data.points.filter((p) => p[scoreKey] == null).length : 0
   const beliefScale = BELIEF_SCALES[colorMode]
 
   if (beliefScale) {

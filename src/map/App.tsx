@@ -352,14 +352,14 @@ export function App() {
             ))}
           </div>
         </div>
-        {reactView === 'definitions' && (beliefsSubView === 'map' || beliefsSubView === 'scatter') && defData && (
+        {reactView === 'definitions' && (beliefsSubView === 'map' || beliefsSubView === 'scatter') && (
           <div className="control-group" id="beliefs-legend">
             <h3>Legend</h3>
             <Legend
-              data={defData.data}
+              data={defData?.data ?? null}
               colorMode={beliefsColorMode as 'cluster' | 'category' | 'stance' | 'timeline' | 'risk'}
               setHoveredCategory={setHoveredCategory}
-              categories={defData.categories}
+              categories={defData?.categories ?? []}
             />
           </div>
         )}
