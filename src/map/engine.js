@@ -2842,8 +2842,8 @@ export function initMapEngine() {
       }
     }
 
-    // Layer 3: Nodes
-    const nodes = _canvasNodes
+    // Layer 3: Nodes (draw thumbnailed entities last so they appear on top)
+    const nodes = [..._canvasNodes].sort((a, b) => (a.thumbnail_url ? 1 : 0) - (b.thumbnail_url ? 1 : 0))
     for (let ni = 0; ni < nodes.length; ni++) {
       const d = nodes[ni]
       if (d._vs === 'hidden') continue
@@ -3315,8 +3315,8 @@ export function initMapEngine() {
       .force('x', d3.forceX(centerX).strength(clusterDimension === 'category' ? 0.02 : 0.01))
       .force('y', d3.forceY(centerY).strength(clusterDimension === 'category' ? 0.02 : 0.01))
       .alpha(0.5)
-      .alphaDecay(0.028)
-      .velocityDecay(0.68)
+      .alphaDecay(0.05)
+      .velocityDecay(0.75)
       .stop()
 
     // Pre-rasterized image sprites (offscreen canvas, circle-clipped).
@@ -3960,8 +3960,8 @@ export function initMapEngine() {
       .force('y', d3.forceY((d) => d.targetY).strength(yAxisDef ? 0.8 : 0.03))
       .force('collision', d3.forceCollide((d) => d.radius + 2).strength(0.9))
       .alpha(0.4)
-      .alphaDecay(0.03)
-      .velocityDecay(0.68)
+      .alphaDecay(0.055)
+      .velocityDecay(0.75)
       .on('tick', () => {
         if (!yAxisDef) {
           nodes.forEach((d) => {
