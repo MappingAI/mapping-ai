@@ -89,3 +89,7 @@ workshop/*.sql
 # Research data exports (local analysis, not tracked)
 research-data/
 !research-data/*.md
+
+# Data review batch files (large JSON exports for Claude review, regenerable)
+docs/data-review/*-batch-*.json
+docs/data-review/*-review.json
