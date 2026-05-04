@@ -4,6 +4,7 @@ Based on mapping-ai.org insights and map views.
 
 ## Table of Contents
 
+0. [Introduction to Mapping AI](#thread-0-introduction-to-mapping-ai) (launch/overview)
 1. [The AGI Definition Problem](#thread-1-the-agi-definition-problem) (viral/provocative)
 2. [Follow the Money](#thread-2-follow-the-money) (investigative)
 3. [The Outlier Chart](#thread-3-the-outlier-chart) (personalities/drama)
@@ -45,6 +46,106 @@ Based on mapping-ai.org insights and map views.
 | @AnthropicAI | Anthropic |
 | @MistralAI | Mistral AI |
 | @GoogleDeepMind | Google DeepMind |
+
+---
+
+## Thread 0: Introduction to Mapping AI
+
+**Angle:** Launch thread introducing the tool. What it is, what you can do with it.
+
+### Tweet 1 [~270/280]
+
+Who actually shapes AI policy in the U.S.?
+
+We mapped 1,812 entities: 745 people, 918 organizations, 2,925 relationships. Frontier Labs, AI Safety orgs, Think Tanks, Government, VCs, and more.
+
+mapping-ai.org
+
+`[ATTACH: map-network-clean-controls.png]`
+
+<img src="images/map-network-clean-controls.png" width="400" alt="Network map" />
+
+*Note: Existing screenshot works as hero.*
+
+### Tweet 2 [~240/280]
+
+The Network view shows who's connected to whom.
+
+Click any node to see their relationships light up. Filter by category to focus on specific communities.
+
+`[ATTACH: map-network-selected.png]`
+
+*Note: Network with a node selected showing connections. Need to take screenshot.*
+
+### Tweet 3 [~230/280]
+
+The Plot view lets you compare beliefs.
+
+X-axis: regulatory stance (accelerate → precautionary)
+Y-axis: AGI timeline (never → <2 years)
+
+Outliers tell a story. @JensenHuang and @leopoldasch occupy opposite corners.
+
+`[ATTACH: map-plot.png]`
+
+<img src="images/map-plot.png" width="400" alt="Plot view" />
+
+*Note: Existing screenshot works.*
+
+### Tweet 4 [~220/280]
+
+The Beliefs view clusters people by how they define AGI.
+
+66 entities say "human-level cognitive parity." 42 reject the framing entirely. 38 define it as superintelligence.
+
+Same term, completely different meanings.
+
+`[ATTACH: map-beliefs-view.png]`
+
+<img src="images/map-beliefs-view.png" width="400" alt="Beliefs view" />
+
+*Note: Existing screenshot works.*
+
+### Tweet 5 [~200/280]
+
+The Insights page digs deeper.
+
+Funding flows. Policy stances by party. Who bridges communities. All backed by sourced claims.
+
+`[ATTACH: insights-overview.png]`
+
+*Note: Need overview/collage of insights page.*
+
+### Tweet 6 [~230/280]
+
+This is crowdsourced and open.
+
+Anyone can submit a person, org, or resource. We review submissions and link them into the network.
+
+Know someone missing? Add them.
+
+`[ATTACH: contribute-form.png]`
+
+*Note: Need screenshot of contribute form.*
+
+### Tweet 7 [~210/280]
+
+Every belief claim is backed by a verbatim quote and source.
+
+Explore the full map:
+mapping-ai.org/map
+
+Read the analysis:
+mapping-ai.org/insights
+
+Contribute:
+mapping-ai.org/contribute
+
+`[ATTACH: map-network-clean-controls.png]`
+
+<img src="images/map-network-clean-controls.png" width="400" alt="Network map" />
+
+*Note: Final CTA with network visualization.*
 
 ---
 
