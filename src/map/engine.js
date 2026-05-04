@@ -3400,6 +3400,7 @@ export function initMapEngine() {
     for (const { d, cacheKey } of spriteQueue) {
       const url = d.thumbnail_url
       const img = new Image()
+      img.crossOrigin = 'anonymous'
       img.referrerPolicy = 'no-referrer'
       img.onload = () => {
         const oc = rasterizeSprite(d, img)
@@ -3888,6 +3889,7 @@ export function initMapEngine() {
     for (const { d, cacheKey } of spriteQueue) {
       const url = d.thumbnail_url
       const img = new Image()
+      img.crossOrigin = 'anonymous'
       img.referrerPolicy = 'no-referrer'
       img.onload = () => {
         const oc = rasterizeSprite(d, img)
