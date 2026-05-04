@@ -1652,6 +1652,13 @@ export function initMapEngine() {
         return
       }
 
+      // Force network view when deep-linked so zoom-to-node works
+      if (resolveDeepLink() && viewMode !== 'network') {
+        viewMode = 'network'
+        localStorage.setItem('mapMode', 'network')
+        applyViewState()
+      }
+
       // Desktop path: existing behavior unchanged
       buildFilters()
       buildStanceLegend()
