@@ -867,7 +867,8 @@ function ChartCategoryMatrix({ edges, entities }: { edges: Edge[]; entities: Ent
    ──────────────────────────────────────────── */
 
 function downloadChartAsPng(container: HTMLDivElement, title: string) {
-  const svg = container.querySelector('svg')
+  const svgs = container.querySelectorAll('svg')
+  const svg = Array.from(svgs).find((s) => !s.closest('button'))
   if (!svg) return
 
   const clone = svg.cloneNode(true) as SVGElement
@@ -926,7 +927,7 @@ function ChartContainer({ title, source, children }: { title: string; source: st
         <div className="font-mono text-[11px] tracking-[0.08em] uppercase text-[#555]">{title}</div>
         <button
           onClick={() => containerRef.current && downloadChartAsPng(containerRef.current, title || 'chart')}
-          className="opacity-0 group-hover:opacity-100 transition-opacity bg-white/80 border border-[#ccc] rounded px-2 py-1 cursor-pointer flex-shrink-0 ml-3"
+          className="opacity-0 group-hover:opacity-100 transition-opacity bg-white/80 border border-[#ccc] rounded px-2 py-1 cursor-pointer flex-shrink-0 ml-3 [&_svg]:!w-[14px] [&_svg]:!block"
           title="Download as PNG"
         >
           <svg
