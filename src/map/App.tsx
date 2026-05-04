@@ -1,8 +1,21 @@
-import { useEffect, useState, useCallback, useRef } from 'react'
-import { DefinitionsView, Legend } from './components/DefinitionsView'
-import type { DefinitionsDataPayload } from './components/DefinitionsView'
+import { useEffect, useState, useCallback, useMemo, useRef } from 'react'
+import {
+  DefinitionsView,
+  type AgiPoint,
+  type AgiData,
+  CLUSTER_COLORS,
+  CATEGORY_COLORS,
+  BELIEF_SCALES,
+  type MapBeliefsClusterViewRef,
+} from './components/DefinitionsView'
 
 type ReactView = 'definitions' | null
+
+interface AgiSource {
+  url: string
+  title: string | null
+  type: string | null
+}
 
 export function App() {
   const [reactView, setReactView] = useState<ReactView>(null)
@@ -13,12 +26,19 @@ export function App() {
   const [beliefsSubView, setBeliefsSubView] = useState<string>('map')
   const [beliefsColorMode, setBeliefsColorMode] = useState<string>('cluster')
   const [bannerDismissed, setBannerDismissed] = useState(() => localStorage.getItem('mobileBannerDismissed') === '1')
-  const [defData, setDefData] = useState<DefinitionsDataPayload | null>(null)
-  const [hoveredCategory, setHoveredCategory] = useState<string | null>(null)
 
-  const handleDefDataLoaded = useCallback((payload: DefinitionsDataPayload) => {
-    setDefData(payload)
-  }, [])
+  // Beliefs view state
+  const beliefsMapRef = useRef<MapBeliefsClusterViewRef>(null)
+  const [beliefsData, setBeliefsData] = useState<AgiData | null>(null)
+  const [beliefsSelectedPoint, setBeliefsSelectedPoint] = useState<{
+    point: AgiPoint
+    source: AgiSource | null
+  } | null>(null)
+  const [beliefsSearchQuery, setBeliefsSearchQuery] = useState('')
+  const [beliefsHighlightedId, setBeliefsHighlightedId] = useState<number | null>(null)
+  const [hiddenClusters, setHiddenClusters] = useState<Set<string>>(new Set())
+  const [hiddenCategories, setHiddenCategories] = useState<Set<string>>(new Set())
+  const [hiddenBeliefValues, setHiddenBeliefValues] = useState<Set<string>>(new Set()) // e.g., "stance:1", "timeline:3"
 
   const engineRef = useRef<{ destroy: () => void } | null>(null)
   useEffect(() => {
@@ -60,7 +80,132 @@ export function App() {
   const activateReactView = useCallback((view: 'definitions') => {
     document.querySelectorAll('.mode-btn').forEach((btn) => btn.classList.remove('active'))
     setReactView(view)
+    // Reset beliefs selection when switching to beliefs view
+    setBeliefsSelectedPoint(null)
+    setBeliefsHighlightedId(null)
   }, [])
+
+  // Handle point selection in Beliefs view
+  const handleBeliefsSelect = useCallback((point: AgiPoint, source: AgiSource | null) => {
+    setBeliefsSelectedPoint({ point, source })
+    setBeliefsHighlightedId(null)
+  }, [])
+
+  // Handle beliefs data loaded
+  const handleBeliefsDataLoaded = useCallback((data: AgiData) => {
+    setBeliefsData(data)
+  }, [])
+
+  // Close beliefs detail panel
+  const closeBeliefsDetail = useCallback(() => {
+    setBeliefsSelectedPoint(null)
+  }, [])
+
+  // Toggle cluster visibility
+  const toggleCluster = useCallback((clusterId: string) => {
+    setHiddenClusters((prev) => {
+      const next = new Set(prev)
+      if (next.has(clusterId)) {
+        next.delete(clusterId)
+      } else {
+        next.add(clusterId)
+      }
+      return next
+    })
+  }, [])
+
+  // Toggle category visibility
+  const toggleCategory = useCallback((category: string) => {
+    setHiddenCategories((prev) => {
+      const next = new Set(prev)
+      if (next.has(category)) {
+        next.delete(category)
+      } else {
+        next.add(category)
+      }
+      return next
+    })
+  }, [])
+
+  // Toggle belief value visibility (e.g., "stance:1" for score 1 in stance dimension)
+  const toggleBeliefValue = useCallback((key: string) => {
+    setHiddenBeliefValues((prev) => {
+      const next = new Set(prev)
+      if (next.has(key)) {
+        next.delete(key)
+      } else {
+        next.add(key)
+      }
+      return next
+    })
+  }, [])
+
+  // Get legend items based on color mode
+  const legendItems = useMemo(() => {
+    if (!beliefsData) return []
+    if (beliefsColorMode === 'cluster') {
+      return (beliefsData.clusters || []).map((c) => ({
+        id: c.id,
+        label: c.label,
+        count: c.count,
+        color: CLUSTER_COLORS[c.id] || '#ccc',
+        hidden: hiddenClusters.has(c.id),
+      }))
+    }
+    if (beliefsColorMode === 'category') {
+      const counts = new Map<string, number>()
+      beliefsData.points.forEach((p) => counts.set(p.category, (counts.get(p.category) || 0) + 1))
+      return [...counts.entries()]
+        .sort((a, b) => b[1] - a[1])
+        .map(([cat, count]) => ({
+          id: cat,
+          label: cat,
+          count,
+          color: CATEGORY_COLORS[cat] || '#888',
+          hidden: hiddenCategories.has(cat),
+        }))
+    }
+    // For belief dimensions, show scale legend with score-based filtering
+    const scale = BELIEF_SCALES[beliefsColorMode]
+    if (scale) {
+      return scale.labels.map((label, i) => {
+        const score = i + 1 // Scores are 1-indexed
+        const key = `${beliefsColorMode}:${score}`
+        return {
+          id: key,
+          label,
+          score,
+          count: null,
+          color: scale.colors[i] || '#888',
+          hidden: hiddenBeliefValues.has(key),
+        }
+      })
+    }
+    return []
+  }, [beliefsData, beliefsColorMode, hiddenClusters, hiddenCategories, hiddenBeliefValues])
+
+  // Handle search input for Beliefs view
+  const handleBeliefsSearch = useCallback(
+    (query: string) => {
+      setBeliefsSearchQuery(query)
+      setBeliefsHighlightedId(null)
+
+      // Find first matching entity to highlight
+      if (query && beliefsData) {
+        const q = query.toLowerCase()
+        const match = beliefsData.points.find(
+          (p) =>
+            p.name.toLowerCase().includes(q) ||
+            p.definition.toLowerCase().includes(q) ||
+            p.category.toLowerCase().includes(q),
+        )
+        if (match) {
+          setBeliefsHighlightedId(match.entity_id)
+        }
+      }
+    },
+    [beliefsData],
+  )
 
   return (
     <>
@@ -209,6 +354,88 @@ export function App() {
                 autoComplete="off"
               />
               <div className="search-results" id="search-results"></div>
+            </div>
+          </div>
+        </div>
+        {/* Beliefs Search - ABOVE View section, same layout as Network/Plot */}
+        <div
+          className="control-group"
+          id="beliefs-search"
+          style={{ display: reactView === 'definitions' ? undefined : 'none', position: 'relative', zIndex: 100 }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'nowrap' }}>
+            <button
+              id="beliefs-sidebar-collapse"
+              style={{
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                color: 'var(--text-3)',
+                padding: '2px',
+                flexShrink: 0,
+                lineHeight: 1,
+              }}
+              title="Collapse sidebar"
+              onClick={() => {
+                const controls = document.querySelector('.controls')
+                const sidebarToggle = document.getElementById('sidebar-toggle')
+                if (controls && sidebarToggle) {
+                  controls.classList.add('collapsed')
+                  sidebarToggle.classList.add('visible')
+                }
+              }}
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <polyline points="9,2 4,7 9,12" />
+              </svg>
+            </button>
+            <div className="search-box">
+              <svg
+                className="search-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+              <input
+                className="search-input"
+                id="beliefs-search-input"
+                type="text"
+                placeholder="Search AGI definitions..."
+                autoComplete="off"
+                value={beliefsSearchQuery}
+                onChange={(e) => handleBeliefsSearch(e.target.value)}
+              />
+              {beliefsSearchQuery && (
+                <button
+                  style={{
+                    position: 'absolute',
+                    right: '8px',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    color: 'var(--text-3)',
+                    padding: '2px',
+                    fontSize: '14px',
+                  }}
+                  onClick={() => {
+                    setBeliefsSearchQuery('')
+                    setBeliefsHighlightedId(null)
+                  }}
+                >
+                  ×
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -374,17 +601,162 @@ export function App() {
             ))}
           </div>
         </div>
-        {reactView === 'definitions' && (beliefsSubView === 'map' || beliefsSubView === 'scatter') && (
-          <div className="control-group" id="beliefs-legend">
-            <h3>Legend</h3>
-            <Legend
-              data={defData?.data ?? null}
-              colorMode={beliefsColorMode as 'cluster' | 'category' | 'stance' | 'timeline' | 'risk'}
-              setHoveredCategory={setHoveredCategory}
-              categories={defData?.categories ?? []}
-            />
-          </div>
-        )}
+        {/* Beliefs Legend with filtering */}
+        <div
+          className="control-group"
+          id="beliefs-legend"
+          style={{
+            display: reactView === 'definitions' && beliefsData ? undefined : 'none',
+          }}
+        >
+          <h3 style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span>
+              {beliefsColorMode === 'cluster'
+                ? 'Clusters'
+                : beliefsColorMode === 'category'
+                  ? 'Categories'
+                  : beliefsColorMode === 'stance'
+                    ? 'Regulatory Stance'
+                    : beliefsColorMode === 'timeline'
+                      ? 'AGI Timeline'
+                      : 'AI Risk Level'}
+            </span>
+            <span
+              className="filter-reset"
+              style={{
+                fontSize: '8px',
+                textTransform: 'none',
+                letterSpacing: 0,
+                color: 'var(--accent)',
+                cursor: 'pointer',
+                fontWeight: 400,
+              }}
+              onClick={() => {
+                if (beliefsColorMode === 'cluster') {
+                  if (hiddenClusters.size === 0) {
+                    setHiddenClusters(new Set(legendItems.map((item) => item.id)))
+                  } else {
+                    setHiddenClusters(new Set())
+                  }
+                } else if (beliefsColorMode === 'category') {
+                  if (hiddenCategories.size === 0) {
+                    setHiddenCategories(new Set(legendItems.map((item) => item.id)))
+                  } else {
+                    setHiddenCategories(new Set())
+                  }
+                } else {
+                  // Belief dimensions (stance, timeline, risk)
+                  const currentDimHidden = legendItems.filter((item) => item.hidden).length
+                  if (currentDimHidden === 0) {
+                    // All visible, hide all
+                    setHiddenBeliefValues((prev) => {
+                      const next = new Set(prev)
+                      legendItems.forEach((item) => next.add(item.id))
+                      return next
+                    })
+                  } else {
+                    // Some hidden, show all
+                    setHiddenBeliefValues((prev) => {
+                      const next = new Set(prev)
+                      legendItems.forEach((item) => next.delete(item.id))
+                      return next
+                    })
+                  }
+                }
+              }}
+            >
+              {beliefsColorMode === 'cluster'
+                ? hiddenClusters.size > 0
+                  ? 'select all'
+                  : 'deselect all'
+                : beliefsColorMode === 'category'
+                  ? hiddenCategories.size > 0
+                    ? 'select all'
+                    : 'deselect all'
+                  : legendItems.some((item) => item.hidden)
+                    ? 'select all'
+                    : 'deselect all'}
+            </span>
+          </h3>
+          {beliefsColorMode === 'cluster' || beliefsColorMode === 'category' ? (
+            <div className="beliefs-legend-items" style={{ display: 'flex', flexDirection: 'column', gap: '0.15rem' }}>
+              {legendItems.map((item) => (
+                <div
+                  key={item.id}
+                  className={`beliefs-legend-item${item.hidden ? ' inactive' : ''}`}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.35rem',
+                    fontFamily: 'var(--mono)',
+                    fontSize: '8px',
+                    color: 'var(--text-2)',
+                    cursor: 'pointer',
+                    padding: '0.1rem 0',
+                    opacity: item.hidden ? 0.3 : 1,
+                    transition: 'opacity 0.15s',
+                  }}
+                  onClick={() => {
+                    if (beliefsColorMode === 'cluster') toggleCluster(item.id)
+                    else toggleCategory(item.id)
+                  }}
+                >
+                  <span
+                    style={{
+                      display: 'inline-block',
+                      width: '8px',
+                      height: '8px',
+                      borderRadius: beliefsColorMode === 'category' ? '50%' : '2px',
+                      background: item.color,
+                      flexShrink: 0,
+                    }}
+                  />
+                  <span
+                    style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+                  >
+                    {item.label}
+                  </span>
+                  {item.count !== null && <span style={{ color: 'var(--text-3)', flexShrink: 0 }}>({item.count})</span>}
+                </div>
+              ))}
+            </div>
+          ) : (
+            // Belief scale legend (clickable for filtering)
+            <div className="beliefs-legend-items" style={{ display: 'flex', flexDirection: 'column', gap: '0.15rem' }}>
+              {legendItems.map((item) => (
+                <div
+                  key={item.id}
+                  className={`beliefs-legend-item${item.hidden ? ' inactive' : ''}`}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.35rem',
+                    fontFamily: 'var(--mono)',
+                    fontSize: '8px',
+                    color: 'var(--text-2)',
+                    cursor: 'pointer',
+                    padding: '0.1rem 0',
+                    opacity: item.hidden ? 0.3 : 1,
+                    transition: 'opacity 0.15s',
+                  }}
+                  onClick={() => toggleBeliefValue(item.id)}
+                >
+                  <span
+                    style={{
+                      display: 'inline-block',
+                      width: '12px',
+                      height: '12px',
+                      borderRadius: '2px',
+                      background: item.color,
+                      flexShrink: 0,
+                    }}
+                  />
+                  <span style={{ whiteSpace: 'nowrap' }}>{item.label}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
         <div className="control-group" id="category-filters">
           <h3 style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span>Category</span>
@@ -665,6 +1037,20 @@ export function App() {
             padding: '0.2rem 0.4rem',
           }}
         ></div>
+        {/* Beliefs view entity count - same position as Network/Plot entity-count */}
+        {reactView === 'definitions' && beliefsData && (
+          <div
+            style={{
+              fontFamily: 'var(--mono)',
+              fontSize: '9px',
+              color: 'var(--text-3)',
+              letterSpacing: '0.04em',
+              padding: '0.2rem 0.4rem',
+            }}
+          >
+            {beliefsData.points.length} definitions
+          </div>
+        )}
       </div>
 
       <div className="detail-panel" id="detail-panel" onClick={(e) => e.stopPropagation()}>
@@ -737,11 +1123,130 @@ export function App() {
               <DefinitionsView
                 subView={beliefsSubView}
                 colorMode={beliefsColorMode}
-                onDataLoaded={handleDefDataLoaded}
-                hoveredCategory={hoveredCategory}
+                onSelect={handleBeliefsSelect}
+                searchQuery={beliefsSearchQuery}
+                highlightedEntityId={beliefsHighlightedId}
+                selectedEntityId={beliefsSelectedPoint?.point.entity_id ?? null}
+                hiddenClusters={hiddenClusters}
+                hiddenCategories={hiddenCategories}
+                hiddenBeliefValues={hiddenBeliefValues}
+                onDataLoaded={handleBeliefsDataLoaded}
+                mapRef={beliefsMapRef}
               />
             )}
           </div>
+          {/* Beliefs Detail Sidebar */}
+          {beliefsSelectedPoint && (
+            <div className="detail-panel open" style={{ zIndex: 51 }} onClick={(e) => e.stopPropagation()}>
+              <div className="detail-header-actions">
+                <button className="detail-close" onClick={closeBeliefsDetail}>
+                  &times;
+                </button>
+              </div>
+              {beliefsSelectedPoint.point.thumbnail_url && (
+                <img
+                  src={beliefsSelectedPoint.point.thumbnail_url}
+                  alt={beliefsSelectedPoint.point.name}
+                  style={{
+                    width: '80px',
+                    height: '80px',
+                    borderRadius: '50%',
+                    objectFit: 'cover',
+                    marginBottom: '12px',
+                    border: `3px solid ${CATEGORY_COLORS[beliefsSelectedPoint.point.category] || '#888'}`,
+                  }}
+                />
+              )}
+              <div className="detail-name" style={{ paddingRight: '2rem' }}>
+                {beliefsSelectedPoint.point.name}
+              </div>
+              <div className="detail-type">
+                {beliefsSelectedPoint.point.entity_type === 'organization' ? 'Organization' : 'Person'}
+              </div>
+              <div
+                className="detail-categories"
+                style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', alignItems: 'center' }}
+              >
+                <span
+                  className="detail-category"
+                  style={{
+                    background: `${CATEGORY_COLORS[beliefsSelectedPoint.point.category] || '#888'}33`,
+                    color: CATEGORY_COLORS[beliefsSelectedPoint.point.category] || '#888',
+                  }}
+                >
+                  {beliefsSelectedPoint.point.category}
+                </span>
+                {beliefsSelectedPoint.point.cluster_label && (
+                  <span
+                    className="detail-category"
+                    style={{
+                      background: `${CLUSTER_COLORS[beliefsSelectedPoint.point.cluster_id || ''] || '#888'}33`,
+                      color: CLUSTER_COLORS[beliefsSelectedPoint.point.cluster_id || ''] || '#888',
+                    }}
+                  >
+                    {beliefsSelectedPoint.point.cluster_label}
+                  </span>
+                )}
+              </div>
+              <div className="detail-fields" style={{ marginTop: '1rem' }}>
+                <div className="detail-field">
+                  <label>How they define AGI</label>
+                  <span style={{ display: 'block' }}>{beliefsSelectedPoint.point.definition}</span>
+                </div>
+                {beliefsSelectedPoint.point.citation && (
+                  <div className="detail-field">
+                    <label>Citation</label>
+                    <blockquote
+                      style={{
+                        fontFamily: 'var(--serif)',
+                        fontSize: '13px',
+                        color: 'var(--text-2)',
+                        lineHeight: 1.45,
+                        fontStyle: 'italic',
+                        margin: 0,
+                        borderLeft: '2px solid var(--line)',
+                        paddingLeft: '12px',
+                      }}
+                    >
+                      &ldquo;{beliefsSelectedPoint.point.citation}&rdquo;
+                    </blockquote>
+                  </div>
+                )}
+                {beliefsSelectedPoint.source && (
+                  <div className="detail-field">
+                    <label>Source</label>
+                    <a
+                      href={beliefsSelectedPoint.source.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: 'var(--accent)' }}
+                    >
+                      {beliefsSelectedPoint.source.title || beliefsSelectedPoint.source.url}
+                    </a>
+                    {beliefsSelectedPoint.source.type && (
+                      <span style={{ marginLeft: '8px', color: 'var(--text-3)', fontSize: '11px' }}>
+                        ({beliefsSelectedPoint.source.type})
+                      </span>
+                    )}
+                  </div>
+                )}
+              </div>
+              <div style={{ marginTop: '1.5rem' }}>
+                <a
+                  href={`/map.html?entity=${beliefsSelectedPoint.point.entity_type === 'organization' ? 'org' : 'person'}/${beliefsSelectedPoint.point.entity_id}`}
+                  style={{
+                    fontFamily: 'var(--mono)',
+                    fontSize: '10px',
+                    color: 'var(--accent)',
+                    textDecoration: 'none',
+                    letterSpacing: '0.04em',
+                  }}
+                >
+                  View in Network Map →
+                </a>
+              </div>
+            </div>
+          )}
         </>
       )}
 
@@ -825,6 +1330,21 @@ export function App() {
           &#9678;
         </button>
       </div>
+
+      {/* Zoom controls for Beliefs map view */}
+      {reactView === 'definitions' && beliefsSubView === 'map' && (
+        <div className="beliefs-zoom-controls">
+          <button className="zoom-btn" onClick={() => beliefsMapRef.current?.zoomIn()}>
+            +
+          </button>
+          <button className="zoom-btn" onClick={() => beliefsMapRef.current?.zoomOut()}>
+            &minus;
+          </button>
+          <button className="zoom-btn" onClick={() => beliefsMapRef.current?.zoomReset()} style={{ fontSize: '11px' }}>
+            &#9678;
+          </button>
+        </div>
+      )}
 
       <button id="contribute-btn">+ Add to Map</button>
       <div id="contribute-panel">

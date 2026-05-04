@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "2026-05-01T08:36:16.299Z",
+    "generated_at": "2026-05-03T23:49:24.482Z",
     "total_edges": 1176,
     "edges_with_amounts": 570,
     "edges_with_dates": 749,
@@ -75,7 +75,7 @@
       "unique_recipients": 17,
       "total_usd": 70085353,
       "with_amounts": 9,
-      "mean_recipient_stance": 4.4,
+      "mean_recipient_stance": 4.153846153846154,
       "first_year": 2015,
       "last_year": 2025
     },
@@ -87,7 +87,7 @@
       "unique_recipients": 15,
       "total_usd": 5786000,
       "with_amounts": 8,
-      "mean_recipient_stance": 4.923076923076923,
+      "mean_recipient_stance": 4.833333333333333,
       "first_year": 2020,
       "last_year": 2025
     },
@@ -123,7 +123,7 @@
       "unique_recipients": 15,
       "total_usd": 1163752,
       "with_amounts": 13,
-      "mean_recipient_stance": 4.777777777777778,
+      "mean_recipient_stance": 4.625,
       "first_year": 2023,
       "last_year": 2025
     },
@@ -195,7 +195,7 @@
       "unique_recipients": 12,
       "total_usd": 97180,
       "with_amounts": 3,
-      "mean_recipient_stance": 5.375,
+      "mean_recipient_stance": 5.285714285714286,
       "first_year": 2020,
       "last_year": 2023
     },
@@ -375,7 +375,7 @@
       "unique_recipients": 6,
       "total_usd": 500000,
       "with_amounts": 1,
-      "mean_recipient_stance": 4.666666666666667,
+      "mean_recipient_stance": 4,
       "first_year": 2021,
       "last_year": 2025
     },
@@ -2354,18 +2354,18 @@
       "total_usd": 11926447
     },
     {
-      "funder": "Coefficient Giving (formerly Open Philanthropy)",
-      "funder_category": "VC/Capital/Philanthropy",
-      "recipient_category": "Unknown",
-      "count": 10,
-      "total_usd": 54859068
-    },
-    {
       "funder": "Department of Commerce",
       "funder_category": "Government/Agency",
       "recipient_category": "Infrastructure & Compute",
       "count": 9,
       "total_usd": 28795000000
+    },
+    {
+      "funder": "Coefficient Giving (formerly Open Philanthropy)",
+      "funder_category": "VC/Capital/Philanthropy",
+      "recipient_category": "Unknown",
+      "count": 9,
+      "total_usd": 54859068
     },
     {
       "funder": "Alfred P. Sloan Foundation",
@@ -2452,18 +2452,18 @@
       "total_usd": 12250000000
     },
     {
+      "funder": "Google",
+      "funder_category": "Deployers & Platforms",
+      "recipient_category": "Unknown",
+      "count": 5,
+      "total_usd": 122000000
+    },
+    {
       "funder": "William and Flora Hewlett Foundation",
       "funder_category": "VC/Capital/Philanthropy",
       "recipient_category": "Think Tank/Policy Org",
       "count": 5,
       "total_usd": 5000000
-    },
-    {
-      "funder": "Manifund",
-      "funder_category": "VC/Capital/Philanthropy",
-      "recipient_category": "AI Safety/Alignment",
-      "count": 5,
-      "total_usd": 458105
     },
     {
       "funder": "Department of Commerce",
@@ -2536,13 +2536,6 @@
       "total_usd": 63000000000
     },
     {
-      "funder": "Google",
-      "funder_category": "Deployers & Platforms",
-      "recipient_category": "Unknown",
-      "count": 4,
-      "total_usd": 122000000
-    },
-    {
       "funder": "Eric Schmidt",
       "funder_category": "Executive",
       "recipient_category": "VC/Capital/Philanthropy",
@@ -2557,11 +2550,11 @@
       "total_usd": 1367300000
     },
     {
-      "funder": "Good Ventures",
+      "funder": "Manifund",
       "funder_category": "VC/Capital/Philanthropy",
       "recipient_category": "AI Safety/Alignment",
       "count": 4,
-      "total_usd": 1520150
+      "total_usd": 448105
     },
     {
       "funder": "Long-Term Future Fund",
@@ -2634,13 +2627,6 @@
       "total_usd": 12400000
     },
     {
-      "funder": "Google",
-      "funder_category": "Deployers & Platforms",
-      "recipient_category": "Ethics/Bias/Rights",
-      "count": 3,
-      "total_usd": 0
-    },
-    {
       "funder": "Emmett Shear",
       "funder_category": "Executive",
       "recipient_category": "Unknown",
@@ -2674,6 +2660,13 @@
       "recipient_category": "Government/Agency",
       "count": 3,
       "total_usd": 49800000
+    },
+    {
+      "funder": "Good Ventures",
+      "funder_category": "VC/Capital/Philanthropy",
+      "recipient_category": "Unknown",
+      "count": 3,
+      "total_usd": 1530150
     },
     {
       "funder": "Greenoaks Capital",
@@ -2970,18 +2963,18 @@
       "total_usd": 12600000
     },
     {
-      "funder": "National Institute of Standards and Technology",
-      "funder_category": "Government/Agency",
-      "recipient_category": "Government/Agency",
-      "count": 2,
-      "total_usd": 10000000
-    },
-    {
       "funder": "Patrick J. McGovern Foundation",
       "funder_category": "VC/Capital/Philanthropy",
       "recipient_category": "Labor/Civil Society",
       "count": 2,
       "total_usd": 600000
+    },
+    {
+      "funder": "Google",
+      "funder_category": "Deployers & Platforms",
+      "recipient_category": "Ethics/Bias/Rights",
+      "count": 2,
+      "total_usd": 0
     },
     {
       "funder": "Ford Foundation",
@@ -3021,9 +3014,9 @@
     {
       "funder": "Cooperative AI Foundation",
       "funder_category": "VC/Capital/Philanthropy",
-      "recipient_category": "Academic",
+      "recipient_category": "Unknown",
       "count": 2,
-      "total_usd": 500000
+      "total_usd": 0
     },
     {
       "funder": "Founders Fund",
@@ -3066,6 +3059,13 @@
       "recipient_category": "Frontier Lab",
       "count": 2,
       "total_usd": 116550000
+    },
+    {
+      "funder": "Manifund",
+      "funder_category": "VC/Capital/Philanthropy",
+      "recipient_category": "Unknown",
+      "count": 2,
+      "total_usd": 110000
     },
     {
       "funder": "Lord Foundation of California",
@@ -3201,13 +3201,6 @@
       "total_usd": 1501500000
     },
     {
-      "funder": "Berkeley Existential Risk Initiative (BERI)",
-      "funder_category": "AI Safety/Alignment",
-      "recipient_category": "AI Safety/Alignment",
-      "count": 2,
-      "total_usd": 101000
-    },
-    {
       "funder": "Ministry of Science and ICT (MSIT)",
       "funder_category": "Government/Agency",
       "recipient_category": "Government/Agency",
@@ -3239,6 +3232,13 @@
       "funder": "Cooperative AI Foundation",
       "funder_category": "VC/Capital/Philanthropy",
       "recipient_category": "Researcher",
+      "count": 2,
+      "total_usd": 0
+    },
+    {
+      "funder": "Good Ventures",
+      "funder_category": "VC/Capital/Philanthropy",
+      "recipient_category": "AI Safety/Alignment",
       "count": 2,
       "total_usd": 0
     },
@@ -3460,6 +3460,13 @@
       "total_usd": 2500000
     },
     {
+      "funder": "Amazon",
+      "funder_category": "Deployers & Platforms",
+      "recipient_category": "Unknown",
+      "count": 2,
+      "total_usd": 0
+    },
+    {
       "funder": "U.S. National Science Foundation",
       "funder_category": "Government/Agency",
       "recipient_category": "Executive",
@@ -3523,20 +3530,6 @@
       "total_usd": 4000
     },
     {
-      "funder": "Long-Term Future Fund",
-      "funder_category": "VC/Capital/Philanthropy",
-      "recipient_category": "Academic",
-      "count": 2,
-      "total_usd": 0
-    },
-    {
-      "funder": "Survival and Flourishing Fund",
-      "funder_category": "VC/Capital/Philanthropy",
-      "recipient_category": "Academic",
-      "count": 2,
-      "total_usd": 0
-    },
-    {
       "funder": "FAR.AI",
       "funder_category": "AI Safety/Alignment",
       "recipient_category": "Unknown",
@@ -3598,6 +3591,13 @@
       "recipient_category": "Academic",
       "count": 2,
       "total_usd": 0
+    },
+    {
+      "funder": "Long-Term Future Fund",
+      "funder_category": "VC/Capital/Philanthropy",
+      "recipient_category": "Unknown",
+      "count": 2,
+      "total_usd": 40680
     },
     {
       "funder": "Dawn Drescher",
@@ -4022,16 +4022,16 @@
           "total_usd": 0
         },
         "Unknown": {
-          "count": 2,
-          "total_usd": 1342333333
+          "count": 3,
+          "total_usd": 1342440476
         },
         "Deployers & Platforms": {
           "count": 1,
           "total_usd": 12500000
         },
         "Ethics/Bias/Rights": {
-          "count": 3,
-          "total_usd": 402143
+          "count": 2,
+          "total_usd": 295000
         },
         "Executive": {
           "count": 1,
@@ -4120,12 +4120,12 @@
       "total_usd": 35320751274,
       "by_recipient_category": {
         "Deployers & Platforms": {
-          "count": 10,
-          "total_usd": 613800000
+          "count": 11,
+          "total_usd": 656800000
         },
         "Unknown": {
-          "count": 13,
-          "total_usd": 3177550000
+          "count": 16,
+          "total_usd": 3187551000
         },
         "Infrastructure & Compute": {
           "count": 8,
@@ -4144,27 +4144,27 @@
           "total_usd": 303195969
         },
         "Frontier Lab": {
-          "count": 18,
-          "total_usd": 1653000000
+          "count": 17,
+          "total_usd": 1610000000
         },
         "Labor/Civil Society": {
           "count": 1,
           "total_usd": 1720000
         },
         "Government/Agency": {
-          "count": 8,
-          "total_usd": 1448930000
+          "count": 7,
+          "total_usd": 1438930000
         },
         "AI Safety/Alignment": {
-          "count": 20,
-          "total_usd": 73657105
+          "count": 19,
+          "total_usd": 73656105
         },
         "Researcher": {
           "count": 3,
           "total_usd": 50000
         },
         "Ethics/Bias/Rights": {
-          "count": 2,
+          "count": 1,
           "total_usd": 4600000
         },
         "Policymaker": {
@@ -4191,12 +4191,12 @@
           "total_usd": 17555800000
         },
         "AI Safety/Alignment": {
-          "count": 33,
-          "total_usd": 108558150
+          "count": 31,
+          "total_usd": 107028000
         },
         "Unknown": {
-          "count": 15,
-          "total_usd": 24685240000
+          "count": 18,
+          "total_usd": 24686770150
         },
         "Infrastructure & Compute": {
           "count": 3,
@@ -4215,7 +4215,7 @@
           "total_usd": 715200000
         },
         "Academic": {
-          "count": 17,
+          "count": 16,
           "total_usd": 330200000
         },
         "Political Campaign/PAC": {
@@ -7070,8 +7070,8 @@
       "total_usd": 2500000
     },
     {
-      "funder": "Public AI",
-      "funder_category": "Think Tank/Policy Org",
+      "funder": "PublicAI",
+      "funder_category": "Unknown",
       "year": 2025,
       "count": 1,
       "total_usd": 10240000
@@ -7987,8 +7987,8 @@
       "total_usd": 50000000
     },
     {
-      "funder": "National Infrastructure Fund",
-      "funder_category": "Infrastructure & Compute",
+      "funder": "Saudi Arabia's National Infrastructure Fund",
+      "funder_category": "Unknown",
       "year": 2026,
       "count": 1,
       "total_usd": 1200000000
@@ -9072,14 +9072,14 @@
       "recipient_category": "Academic"
     },
     {
-      "funder": "National Infrastructure Fund",
+      "funder": "Saudi Arabia's National Infrastructure Fund",
       "recipient": "Humain",
       "amount_usd": 1200000000,
       "year": 2026,
       "citation": "Humain, Saudi Arabia's national artificial intelligence company, has successfully secured funding of up to $1.2 billion (around Rs 11,000 crore) from the National Infrastructure Fund of the kingdom.",
       "source_url": "https://benzatine.com/news-room/saudi-ai-pioneer-humain-secures-12-billion-to-transform-tech-landscape",
       "source_title": null,
-      "funder_category": "Infrastructure & Compute",
+      "funder_category": "Unknown",
       "recipient_category": "Frontier Lab"
     },
     {
@@ -9237,14 +9237,14 @@
       "recipient_category": "Think Tank/Policy Org"
     },
     {
-      "funder": "Public AI",
+      "funder": "PublicAI",
       "recipient": "2077AI Open Source Foundation",
       "amount_usd": 10240000,
       "year": 2025,
       "citation": "PublicAI, a global leader in human-verified data infrastructure, announced today a $10.24 million strategic partnership with Abaka AI to co-launch Project EVA, a global AI evaluation challenge organized by the 2077AI Open Source Foundation",
       "source_url": "https://www.globenewswire.com/news-release/2025/09/18/3152636/0/en/PublicAI-Joins-Forces-with-Abaka-AI-in-10-24M-Global-Mission-to-Build-the-Human-Powered-Future-of-AI.html",
       "source_title": null,
-      "funder_category": "Think Tank/Policy Org",
+      "funder_category": "Unknown",
       "recipient_category": "Unknown"
     },
     {
@@ -9707,7 +9707,7 @@
       "source_url": "https://www.linkedin.com/posts/cecilia-elena-tilli-8a6890a4_the-fellowship-principles-of-intelligent-activity-7284840446877458434-9ouG",
       "source_title": null,
       "funder_category": "VC/Capital/Philanthropy",
-      "recipient_category": "Academic"
+      "recipient_category": "Unknown"
     },
     {
       "funder": "Founders Fund",
@@ -9843,14 +9843,14 @@
     },
     {
       "funder": "Good Ventures",
-      "recipient": "MATS Research",
+      "recipient": "MATS Research Inc.",
       "amount_usd": 1520150,
       "year": 2025,
       "citation": "Good Ventures Foundation - $1,520,150 (May 6, 2025)",
       "source_url": "https://www.matsprogram.org/transparency",
       "source_title": null,
       "funder_category": "VC/Capital/Philanthropy",
-      "recipient_category": "AI Safety/Alignment"
+      "recipient_category": "Unknown"
     },
     {
       "funder": "Nat Friedman",
@@ -10140,14 +10140,14 @@
     },
     {
       "funder": "Manifund",
-      "recipient": "MATS Research",
+      "recipient": "MATS Research Inc.",
       "amount_usd": 10000,
       "year": 2025,
       "citation": "Manifund - $10,000 (January 21, 2025)",
       "source_url": "https://www.matsprogram.org/transparency",
       "source_title": null,
       "funder_category": "VC/Capital/Philanthropy",
-      "recipient_category": "AI Safety/Alignment"
+      "recipient_category": "Unknown"
     },
     {
       "funder": "Ivan Zhang",
@@ -11284,14 +11284,14 @@
     },
     {
       "funder": "Berkeley Existential Risk Initiative (BERI)",
-      "recipient": "MATS Research",
+      "recipient": "MATS Research Inc.",
       "amount_usd": 1000,
       "year": 2024,
       "citation": "Berkeley Existential Risk Initiative (BERI) - $1,000 (January 29, 2024)",
       "source_url": "https://www.matsprogram.org/transparency",
       "source_title": null,
       "funder_category": "AI Safety/Alignment",
-      "recipient_category": "AI Safety/Alignment"
+      "recipient_category": "Unknown"
     },
     {
       "funder": "Anjney Midha",
@@ -11302,7 +11302,7 @@
       "source_url": "https://www.cbinsights.com/investor/anjney-midha",
       "source_title": null,
       "funder_category": "Investor",
-      "recipient_category": "Frontier Lab"
+      "recipient_category": "Deployers & Platforms"
     },
     {
       "funder": "BNDES",
@@ -11313,7 +11313,7 @@
       "source_url": "https://www.baguete.com.br/noticias/noharm-e-selecionada-pelo-bndes-em-edital-de-r-20-mi",
       "source_title": null,
       "funder_category": "Unknown",
-      "recipient_category": "Ethics/Bias/Rights"
+      "recipient_category": "Unknown"
     },
     {
       "funder": "500 Global",
@@ -11676,7 +11676,7 @@
       "source_url": "https://venturebeat.com/ai/as-nist-funding-challenges-persist-schumer-announces-10-million-for-its-ai-safety-institute",
       "source_title": null,
       "funder_category": "Government/Agency",
-      "recipient_category": "Government/Agency"
+      "recipient_category": "Unknown"
     },
     {
       "funder": "Andreessen Horowitz (a16z)",
@@ -13403,7 +13403,7 @@
       "source_url": "https://hmg-tecnopuc.pucrs.br/noharm-e-agraciada-no-edital-cnpq-de-inteligencia-artificial/",
       "source_title": null,
       "funder_category": "Unknown",
-      "recipient_category": "Ethics/Bias/Rights"
+      "recipient_category": "Unknown"
     },
     {
       "funder": "Global Priorities Institute (University of Oxford)",
@@ -17429,7 +17429,7 @@
       "source_url": "https://www.transformernews.ai/p/standards-and-ethics",
       "source_title": null,
       "funder_category": "VC/Capital/Philanthropy",
-      "recipient_category": "Unknown"
+      "recipient_category": "Deployers & Platforms"
     },
     {
       "funder": "IBM",
@@ -18342,7 +18342,7 @@
       "source_url": "https://www.goodventures.org/our-portfolio/grants/pivotal-research-research-fellowships/",
       "source_title": null,
       "funder_category": "VC/Capital/Philanthropy",
-      "recipient_category": "AI Safety/Alignment"
+      "recipient_category": "Unknown"
     },
     {
       "funder": "Survival and Flourishing Fund",
@@ -18386,7 +18386,7 @@
       "source_url": "https://www.longtermwiki.com/organizations/pibbss",
       "source_title": null,
       "funder_category": "VC/Capital/Philanthropy",
-      "recipient_category": "Academic"
+      "recipient_category": "Unknown"
     },
     {
       "funder": "ACX Grants",
@@ -18815,7 +18815,7 @@
       "source_url": "https://time.com/collections/time100-ai-2025/7305811/ana-helena-ulbrich/",
       "source_title": null,
       "funder_category": "Deployers & Platforms",
-      "recipient_category": "Ethics/Bias/Rights"
+      "recipient_category": "Unknown"
     },
     {
       "funder": "Amazon",
@@ -18826,7 +18826,7 @@
       "source_url": "https://time.com/collections/time100-ai-2025/7305811/ana-helena-ulbrich/",
       "source_title": null,
       "funder_category": "Deployers & Platforms",
-      "recipient_category": "Ethics/Bias/Rights"
+      "recipient_category": "Unknown"
     },
     {
       "funder": "C5 Capital",
@@ -20619,7 +20619,7 @@
       "source_url": "https://www.alignmentforum.org/posts/4Tjz4EJ8DozE9z5nQ/introducing-the-principles-of-intelligent-behaviour-in",
       "source_title": null,
       "funder_category": "VC/Capital/Philanthropy",
-      "recipient_category": "Academic"
+      "recipient_category": "Unknown"
     },
     {
       "funder": "Future of Life Institute",

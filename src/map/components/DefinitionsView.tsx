@@ -1,27 +1,19 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react'
-import { createPortal } from 'react-dom'
+import { ClusterListView as SharedClusterListView, getPointColor, escapeHtml } from '../../components/AgiClusterMap'
+import {
+  MapBeliefsClusterView,
+  type MapBeliefsClusterViewRef,
+  type AgiPoint,
+  type AgiData,
+  type ColorMode,
+  CLUSTER_COLORS,
+  CATEGORY_COLORS,
+  BELIEF_SCALES,
+} from './MapBeliefsClusterView'
 
-interface AgiPoint {
-  entity_id: number
-  name: string
-  entity_type: string
-  category: string
-  definition: string
-  citation: string
-  source_id: string
-  date: string | null
-  confidence: string
-  x: number
-  y: number
-  stance: string | null
-  stance_score: number | null
-  timeline: string | null
-  timeline_score: number | null
-  risk: string | null
-  risk_score: number | null
-  cluster_id: string | null
-  cluster_label: string | null
-}
+// Re-export types for parent component
+export type { AgiPoint, AgiData, MapBeliefsClusterViewRef }
+export { CLUSTER_COLORS, CATEGORY_COLORS, BELIEF_SCALES }
 
 interface AgiSource {
   url: string
@@ -29,82 +21,7 @@ interface AgiSource {
   type: string | null
 }
 
-interface ClusterInfo {
-  id: string
-  label: string
-  description: string
-  count: number
-  cx?: number
-  cy?: number
-}
-
-interface AgiData {
-  points: AgiPoint[]
-  sources: Record<string, AgiSource>
-  clusters?: ClusterInfo[]
-}
-
-type ColorMode = 'cluster' | 'category' | 'stance' | 'timeline' | 'risk'
 type SubView = 'map' | 'list' | 'scatter' | 'timeline' | 'trends'
-
-export const CLUSTER_COLORS: Record<string, string> = {
-  'human-level-cognitive-parity': '#4e79a7',
-  'economic-automation': '#f28e2b',
-  'autonomous-research-capability': '#e15759',
-  'superintelligent-systems': '#76b7b2',
-  'general-purpose-agents': '#59a14f',
-  'transformative-societal-impact': '#edc948',
-  'conceptual-critique': '#b07aa1',
-  'augmentative-tools': '#ff9da7',
-}
-
-export const BELIEF_SCALES: Record<string, { labels: string[]; colors: string[] }> = {
-  stance: {
-    labels: ['Accelerate', 'Light-touch', 'Targeted', 'Moderate', 'Restrictive', 'Precautionary'],
-    colors: ['#2166ac', '#4a90c4', '#8bbcdb', '#e8a87c', '#d95f3a', '#b2182b'],
-  },
-  timeline: {
-    labels: ['Already here', '2-3 years', '5-10 years', '10-25 years', '25+ years'],
-    colors: ['#d73027', '#e87040', '#d4b040', '#5dad45', '#1a7a38'],
-  },
-  risk: {
-    labels: ['Overstated', 'Manageable', 'Serious', 'Catastrophic', 'Existential'],
-    colors: ['#3060a8', '#6a9ec0', '#d4a840', '#d97040', '#c02020'],
-  },
-}
-
-export const CATEGORY_COLORS: Record<string, string> = {
-  'Frontier Lab': '#e41a1c',
-  'AI Safety/Alignment': '#377eb8',
-  'Think Tank/Policy Org': '#4daf4a',
-  'Government/Agency': '#984ea3',
-  Academic: '#ff7f00',
-  Researcher: '#ff7f00',
-  'VC/Capital/Philanthropy': '#a65628',
-  'Labor/Civil Society': '#f781bf',
-  'Ethics/Bias/Rights': '#f781bf',
-  Executive: '#666',
-  Policymaker: '#984ea3',
-  Investor: '#a65628',
-  'Deployers & Platforms': '#e41a1c',
-  'Infrastructure & Compute': '#e41a1c',
-}
-
-function escapeHtml(s: string): string {
-  return s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!)
-}
-
-function getPointColor(d: AgiPoint, colorMode: ColorMode): string {
-  if (colorMode === 'cluster') return CLUSTER_COLORS[d.cluster_id || ''] || '#ccc'
-  if (colorMode === 'category') return CATEGORY_COLORS[d.category] || '#888'
-  const scoreKey = colorMode === 'stance' ? 'stance_score' : colorMode === 'timeline' ? 'timeline_score' : 'risk_score'
-  const score = d[scoreKey]
-  if (score == null) return '#ddd'
-  const scale = BELIEF_SCALES[colorMode]
-  if (!scale) return '#888'
-  const idx = Math.max(0, Math.min(Math.round(score) - 1, scale.colors.length - 1))
-  return scale.colors[idx] || '#888'
-}
 
 interface QuarterBucket {
   key: string
@@ -117,7 +34,8 @@ function buildQuarters(points: AgiPoint[]): QuarterBucket[] {
   const dated = points.filter((p) => p.date)
   if (dated.length === 0) return []
   const dates = dated.map((p) => new Date(p.date!))
-  const minDate = new Date(Math.min(...dates.map((d) => d.getTime())))
+  const rawMin = new Date(Math.min(...dates.map((d) => d.getTime())))
+  const minDate = rawMin.getFullYear() < 2020 ? new Date(2020, 0, 1) : rawMin
   const maxDate = new Date(Math.max(...dates.map((d) => d.getTime())))
   const quarters: QuarterBucket[] = []
   let y = minDate.getFullYear()
@@ -135,50 +53,6 @@ function buildQuarters(points: AgiPoint[]): QuarterBucket[] {
     }
   }
   return quarters
-}
-
-// Compute non-linear x positions: compress empty quarters, expand dense ones
-function buildCompressedX(
-  quarters: QuarterBucket[],
-  points: AgiPoint[],
-  rangeStart: number,
-  rangeEnd: number,
-): { xPos: number[]; breakRanges: { x1: number; x2: number }[] } {
-  const counts = quarters.map((q) => points.filter((p) => pointInQuarter(p, q)).length)
-
-  // Assign weights: empty quarters get compressed, quarters with data get full width
-  const EMPTY_WEIGHT = 0.15
-  const DATA_WEIGHT = 1
-  const weights = counts.map((c) => (c > 0 ? DATA_WEIGHT : EMPTY_WEIGHT))
-  const totalWeight = weights.reduce((a, b) => a + b, 0)
-  const totalRange = rangeEnd - rangeStart
-
-  // Cumulative positions
-  const xPos: number[] = []
-  let cumulative = 0
-  for (let i = 0; i < weights.length; i++) {
-    xPos.push(rangeStart + (cumulative / totalWeight) * totalRange)
-    cumulative += weights[i]!
-  }
-
-  // Find break ranges (runs of 3+ consecutive empty quarters)
-  const breakRanges: { x1: number; x2: number }[] = []
-  let runStart = -1
-  for (let i = 0; i < counts.length; i++) {
-    if (counts[i] === 0) {
-      if (runStart < 0) runStart = i
-    } else {
-      if (runStart >= 0 && i - runStart >= 3) {
-        breakRanges.push({ x1: xPos[runStart]!, x2: xPos[i - 1]! })
-      }
-      runStart = -1
-    }
-  }
-  if (runStart >= 0 && counts.length - runStart >= 3) {
-    breakRanges.push({ x1: xPos[runStart]!, x2: xPos[counts.length - 1]! })
-  }
-
-  return { xPos, breakRanges }
 }
 
 function pointInQuarter(p: AgiPoint, qb: QuarterBucket): boolean {
@@ -248,473 +122,48 @@ function buildTooltipHtml(d: AgiPoint, colorMode: ColorMode): string {
     <div style="font-size:10px;color:var(--text-2);font-style:italic;">${escapeHtml(defText)}</div>`
 }
 
-function DetailModal({ point, source, onClose }: { point: AgiPoint; source: AgiSource | null; onClose: () => void }) {
-  return createPortal(
-    <div
-      style={{
-        position: 'fixed',
-        inset: 0,
-        zIndex: 10000,
-        display: 'flex',
-        alignItems: 'flex-start',
-        justifyContent: 'center',
-        paddingTop: '10vh',
-        background: 'rgba(0,0,0,0.2)',
-      }}
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose()
-      }}
-    >
-      <div
-        style={{
-          background: 'var(--bg-panel)',
-          border: '1px solid var(--line)',
-          borderRadius: '8px',
-          boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
-          overflowY: 'auto',
-          width: '90vw',
-          maxWidth: '520px',
-          maxHeight: '75vh',
-        }}
-      >
-        <div
-          style={{
-            position: 'sticky',
-            top: 0,
-            background: 'var(--bg-panel)',
-            borderBottom: '1px solid var(--line)',
-            padding: '10px 16px',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'flex-start',
-            zIndex: 10,
-            borderRadius: '8px 8px 0 0',
-          }}
-        >
-          <div style={{ minWidth: 0, flex: 1, paddingRight: '16px' }}>
-            <div
-              style={{
-                fontFamily: 'var(--mono)',
-                fontSize: '13px',
-                fontWeight: 500,
-                color: 'var(--text-1)',
-              }}
-            >
-              {point.name}
-            </div>
-            <div style={{ fontFamily: 'var(--mono)', fontSize: '10px', color: 'var(--text-3)', marginTop: '2px' }}>
-              <span style={{ color: CATEGORY_COLORS[point.category] || 'var(--text-3)' }}>{point.category}</span>
-              {point.entity_type === 'organization' ? ' · Organization' : ' · Person'}
-            </div>
-          </div>
-          <button
-            onClick={onClose}
-            style={{
-              fontFamily: 'var(--mono)',
-              fontSize: '16px',
-              color: 'var(--text-3)',
-              padding: '2px 8px',
-              marginRight: '-8px',
-              flexShrink: 0,
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-            }}
-          >
-            ×
-          </button>
-        </div>
-        <div style={{ padding: '12px 16px' }}>
-          <div style={{ marginBottom: '12px' }}>
-            <div
-              style={{
-                fontFamily: 'var(--mono)',
-                fontSize: '10px',
-                letterSpacing: '0.08em',
-                textTransform: 'uppercase' as const,
-                color: 'var(--text-3)',
-                marginBottom: '4px',
-              }}
-            >
-              How they define AGI
-            </div>
-            <div style={{ fontFamily: 'var(--serif)', fontSize: '14px', color: 'var(--text-1)', lineHeight: 1.5 }}>
-              {point.definition}
-            </div>
-          </div>
-          {point.citation && (
-            <div style={{ borderLeft: '2px solid var(--line)', paddingLeft: '12px' }}>
-              <blockquote
-                style={{
-                  fontFamily: 'var(--serif)',
-                  fontSize: '13px',
-                  color: 'var(--text-2)',
-                  lineHeight: 1.45,
-                  fontStyle: 'italic',
-                  margin: 0,
-                }}
-              >
-                &ldquo;{point.citation}&rdquo;
-              </blockquote>
-              {source && (
-                <a
-                  href={source.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    fontFamily: 'var(--mono)',
-                    fontSize: '10px',
-                    color: 'var(--accent)',
-                    display: 'block',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap' as const,
-                    marginTop: '4px',
-                    textDecoration: 'none',
-                  }}
-                >
-                  {source.title || source.url}
-                </a>
-              )}
-              <div style={{ fontFamily: 'var(--mono)', fontSize: '9px', color: 'var(--text-3)', marginTop: '2px' }}>
-                {[source?.type, point.date, point.confidence].filter(Boolean).join(' · ')}
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>,
-    document.body,
-  )
-}
-
-function ClusterMapView({
+// Use shared ClusterListView component for consistent visualization
+function ListView({
   data,
-  colorMode,
-  hoveredCategory,
   onSelect,
+  searchQuery,
+  hiddenClusters,
+  hiddenCategories,
 }: {
   data: AgiData
-  colorMode: ColorMode
-  hoveredCategory: string | null
   onSelect: (p: AgiPoint) => void
+  searchQuery?: string
+  hiddenClusters?: Set<string>
+  hiddenCategories?: Set<string>
 }) {
-  const ref = useRef<HTMLDivElement>(null)
-  const simRef = useRef<ReturnType<typeof d3.forceSimulation> | null>(null)
-  const colorModeRef = useRef(colorMode)
-  colorModeRef.current = colorMode
+  // Filter data based on hidden clusters/categories
+  const filteredData = useMemo(() => {
+    if (!hiddenClusters?.size && !hiddenCategories?.size) return data
 
-  // Layout effect: runs only when data changes. Color updates are separate.
-  useEffect(() => {
-    if (!ref.current || !data.clusters || data.clusters.length === 0) return
-    const container = ref.current
-    container.innerHTML = ''
-
-    if (simRef.current) {
-      simRef.current.stop()
-      simRef.current = null
-    }
-
-    const staleTip = document.getElementById('__defview-map-tip')
-    if (staleTip) staleTip.style.opacity = '0'
-
-    const _W = container.clientWidth || 700
-    const clusters = data.clusters
-
-    const cxExtent = d3.extent(clusters, (c: ClusterInfo) => c.cx ?? 0) as [number, number]
-    const cyExtent = d3.extent(clusters, (c: ClusterInfo) => c.cy ?? 0) as [number, number]
-
-    // Larger work area with more padding for cluster separation
-    const workW = 1400
-    const workPad = 220
-    const xScale = d3
-      .scaleLinear()
-      .domain([cxExtent[0] - 1, cxExtent[1] + 1])
-      .range([workPad, workW - workPad])
-    const workH = 1000
-    const yScale = d3
-      .scaleLinear()
-      .domain([cyExtent[0] - 1, cyExtent[1] + 1])
-      .range([workH - workPad, workPad])
-
-    // Initial positions from UMAP centroids
-    const centers = clusters.map((c: ClusterInfo) => ({
-      id: c.id as string,
-      x: xScale(c.cx ?? 0),
-      y: yScale(c.cy ?? 0),
-      count: c.count as number,
-      radius: Math.sqrt(c.count) * 10 + 25,
-    }))
-
-    // Push overlapping cluster centers apart (iterative repulsion)
-    const GAP = 80
-    for (let iter = 0; iter < 100; iter++) {
-      let moved = false
-      for (let i = 0; i < centers.length; i++) {
-        for (let j = i + 1; j < centers.length; j++) {
-          const a = centers[i]!
-          const b = centers[j]!
-          const dx = b.x - a.x
-          const dy = b.y - a.y
-          const dist = Math.sqrt(dx * dx + dy * dy)
-          const minDist = a.radius + b.radius + GAP
-          if (dist < minDist && dist > 0) {
-            const push = (minDist - dist) / 2
-            const nx = dx / dist
-            const ny = dy / dist
-            a.x -= nx * push
-            a.y -= ny * push
-            b.x += nx * push
-            b.y += ny * push
-            moved = true
-          }
-        }
-      }
-      if (!moved) break
-    }
-
-    const clusterCenters = new Map<string, { x: number; y: number; count: number }>()
-    centers.forEach((c) => {
-      clusterCenters.set(c.id, { x: c.x, y: c.y, count: c.count })
+    // Filter points
+    const filteredPoints = data.points.filter((p) => {
+      if (hiddenClusters?.has(p.cluster_id || '')) return false
+      if (hiddenCategories?.has(p.category)) return false
+      return true
     })
 
-    const nodes = data.points
-      .filter((p) => p.cluster_id && clusterCenters.has(p.cluster_id))
-      .map((p) => {
-        const center = clusterCenters.get(p.cluster_id!)!
-        const angle = Math.random() * 2 * Math.PI
-        const r = Math.random() * 30 + 10
-        return { ...p, x: center.x + Math.cos(angle) * r, y: center.y + Math.sin(angle) * r }
-      })
+    // Filter clusters to only show those with visible points
+    const visibleClusterIds = new Set(filteredPoints.map((p) => p.cluster_id))
+    const filteredClusters = (data.clusters || []).filter((c) => visibleClusterIds.has(c.id))
 
-    if (nodes.length === 0) return
-
-    // Build radius lookup for background bubbles and labels
-    const clusterRadii = new Map<string, number>()
-    centers.forEach((c) => clusterRadii.set(c.id, c.radius))
-
-    // Stable viewBox based on cluster centers (doesn't change during animation)
-    const labelMargin = 220
-    const allCx = [...clusterCenters.values()].map((c) => c.x)
-    const allCy = [...clusterCenters.values()].map((c) => c.y)
-    const maxRadius = Math.max(...centers.map((c) => c.radius))
-    const vbX = Math.min(...allCx) - maxRadius - labelMargin
-    const vbY = Math.min(...allCy) - maxRadius - 30
-    const vbW = Math.max(...allCx) - Math.min(...allCx) + maxRadius * 2 + labelMargin * 2
-    const vbH = Math.max(...allCy) - Math.min(...allCy) + maxRadius * 2 + 60
-    const availH = (container.closest('#react-view-container')?.clientHeight || window.innerHeight - 48) - 80
-    const H = Math.max(availH, 400)
-
-    const svg = d3
-      .select(container)
-      .append('svg')
-      .attr('viewBox', `${vbX} ${vbY} ${vbW} ${vbH}`)
-      .attr('width', '100%')
-      .attr('height', H)
-      .attr('preserveAspectRatio', 'xMidYMid meet')
-
-    const tipEl = createTooltip('__defview-map-tip')
-
-    // Background bubbles for each cluster (like network view)
-    const bgGroup = svg.append('g').attr('class', 'cluster-backgrounds')
-    const midX = (Math.min(...allCx) + Math.max(...allCx)) / 2
-    const midY = (Math.min(...allCy) + Math.max(...allCy)) / 2
-
-    clusters.forEach((c: ClusterInfo) => {
-      const center = clusterCenters.get(c.id)
-      if (!center) return
-      const r = clusterRadii.get(c.id) || 40
-      bgGroup
-        .append('circle')
-        .attr('cx', center.x)
-        .attr('cy', center.y)
-        .attr('r', r)
-        .attr('fill', CLUSTER_COLORS[c.id] || '#888')
-        .attr('opacity', 0.06)
-    })
-
-    // Labels rendered immediately (positioned from stable cluster centers)
-    const labelGroup = svg.append('g').attr('class', 'cluster-labels')
-    clusters.forEach((c: ClusterInfo) => {
-      const center = clusterCenters.get(c.id)
-      if (!center) return
-      const r = clusterRadii.get(c.id) || 40
-      const dx = center.x - midX
-      const dy = center.y - midY
-      const dist = Math.sqrt(dx * dx + dy * dy) || 1
-      const labelOffset = r + 14
-      const labelX = center.x + (dx / dist) * labelOffset
-      const labelY = center.y + (dy / dist) * labelOffset
-
-      labelGroup
-        .append('text')
-        .attr('x', labelX)
-        .attr('y', labelY)
-        .attr('text-anchor', dx < 0 ? 'end' : dx > 0 ? 'start' : 'middle')
-        .attr('dominant-baseline', dy < 0 ? 'auto' : 'hanging')
-        .attr('font-family', "'DM Mono', monospace")
-        .attr('font-size', 13)
-        .attr('fill', CLUSTER_COLORS[c.id] || '#888')
-        .attr('font-weight', 500)
-        .attr('opacity', 0.8)
-        .text(c.label)
-    })
-
-    // Entity circles
-    const circles = svg
-      .selectAll('circle.entity')
-      .data(nodes)
-      .enter()
-      .append('circle')
-      .attr('class', 'entity')
-      .attr('cx', (d: { x: number }) => d.x)
-      .attr('cy', (d: { y: number }) => d.y)
-      .attr('r', 8)
-      .attr('fill', (d: AgiPoint) => getPointColor(d, colorModeRef.current))
-      .attr('opacity', 0.85)
-      .attr('stroke', '#fff')
-      .attr('stroke-width', 1.5)
-      .style('cursor', 'pointer')
-      .on('mouseover', (evt: MouseEvent, d: AgiPoint) => showTip(tipEl, evt, buildTooltipHtml(d, colorModeRef.current)))
-      .on('mousemove', (evt: MouseEvent) => moveTip(tipEl, evt))
-      .on('mouseout', () => hideTip(tipEl))
-      .on('click', (_: MouseEvent, d: AgiPoint) => {
-        hideTip(tipEl)
-        onSelect(d)
-      })
-
-    // Animated simulation
-    const sim = d3
-      .forceSimulation(nodes)
-      .force(
-        'x',
-        d3
-          .forceX((d: AgiPoint & { cluster_id: string }) => clusterCenters.get(d.cluster_id)?.x ?? workW / 2)
-          .strength(0.3),
-      )
-      .force(
-        'y',
-        d3
-          .forceY((d: AgiPoint & { cluster_id: string }) => clusterCenters.get(d.cluster_id)?.y ?? workH / 2)
-          .strength(0.3),
-      )
-      .force('collide', d3.forceCollide(10))
-      .force('charge', d3.forceManyBody().strength(-2))
-      .alpha(0.25)
-      .alphaDecay(0.035)
-      .on('tick', () => {
-        circles.attr('cx', (d: { x: number }) => d.x).attr('cy', (d: { y: number }) => d.y)
-      })
-
-    simRef.current = sim
-
-    return () => {
-      if (simRef.current) {
-        simRef.current.stop()
-        simRef.current = null
-      }
-      const tip = document.getElementById('__defview-map-tip')
-      if (tip) tip.remove()
+    return {
+      ...data,
+      points: filteredPoints,
+      clusters: filteredClusters,
     }
-  }, [data, onSelect])
-
-  // Color-only update (no re-simulation)
-  useEffect(() => {
-    if (!ref.current) return
-    d3.select(ref.current)
-      .selectAll('circle.entity')
-      .attr('fill', (d: AgiPoint) => getPointColor(d, colorMode))
-  }, [colorMode])
-
-  // Hover dimming
-  useEffect(() => {
-    if (!ref.current) return
-    d3.select(ref.current)
-      .selectAll('circle.entity')
-      .attr('opacity', (d: AgiPoint) =>
-        colorMode === 'category' && hoveredCategory && d.category !== hoveredCategory ? 0.15 : 0.85,
-      )
-  }, [hoveredCategory, colorMode])
-
-  return <div ref={ref} />
-}
-
-function ListView({ data, onSelect }: { data: AgiData; onSelect: (p: AgiPoint) => void }) {
-  const clusters = data.clusters || []
+  }, [data, hiddenClusters, hiddenCategories])
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-      {[...clusters]
-        .sort((a, b) => b.count - a.count)
-        .map((cluster) => {
-          const entities = data.points.filter((p) => p.cluster_id === cluster.id)
-          return (
-            <div key={cluster.id}>
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginBottom: '6px' }}>
-                <span
-                  style={{
-                    display: 'inline-block',
-                    width: '12px',
-                    height: '12px',
-                    borderRadius: '2px',
-                    flexShrink: 0,
-                    background: CLUSTER_COLORS[cluster.id] || '#ccc',
-                  }}
-                />
-                <span
-                  style={{
-                    fontFamily: 'var(--mono)',
-                    fontSize: '12px',
-                    fontWeight: 500,
-                    color: 'var(--text-1)',
-                  }}
-                >
-                  {cluster.label}
-                </span>
-                <span style={{ fontFamily: 'var(--mono)', fontSize: '10px', color: 'var(--text-3)' }}>
-                  ({cluster.count})
-                </span>
-              </div>
-              <div
-                style={{
-                  fontFamily: 'var(--mono)',
-                  fontSize: '10px',
-                  color: 'var(--text-2)',
-                  marginBottom: '8px',
-                  marginLeft: '20px',
-                }}
-              >
-                {cluster.description}
-              </div>
-              <div style={{ marginLeft: '20px', display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
-                {entities.map((p) => (
-                  <button
-                    key={p.entity_id}
-                    onClick={() => onSelect(p)}
-                    style={{
-                      fontFamily: 'var(--mono)',
-                      fontSize: '9px',
-                      padding: '2px 6px',
-                      borderRadius: '4px',
-                      border: '1px solid var(--line)',
-                      color: 'var(--text-2)',
-                      background: 'none',
-                      cursor: 'pointer',
-                      maxWidth: '180px',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap' as const,
-                    }}
-                    title={p.definition}
-                  >
-                    {p.name}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )
-        })}
-    </div>
+    <SharedClusterListView
+      data={filteredData as Parameters<typeof SharedClusterListView>[0]['data']}
+      onSelect={onSelect as Parameters<typeof SharedClusterListView>[0]['onSelect']}
+      searchQuery={searchQuery}
+    />
   )
 }
 
@@ -723,16 +172,45 @@ function ScatterView({
   colorMode,
   hoveredCategory,
   onSelect,
+  hiddenClusters,
+  hiddenCategories,
+  hiddenBeliefValues,
 }: {
   data: AgiData
   colorMode: ColorMode
   hoveredCategory: string | null
   onSelect: (p: AgiPoint) => void
+  hiddenClusters?: Set<string>
+  hiddenCategories?: Set<string>
+  hiddenBeliefValues?: Set<string>
 }) {
   const ref = useRef<HTMLDivElement>(null)
 
+  // Filter data based on hidden clusters/categories/belief values
+  const filteredData = useMemo(() => {
+    if (!hiddenClusters?.size && !hiddenCategories?.size && !hiddenBeliefValues?.size) return data
+    return {
+      ...data,
+      points: data.points.filter((p) => {
+        if (hiddenClusters?.has(p.cluster_id || '')) return false
+        if (hiddenCategories?.has(p.category)) return false
+        // Check belief dimension filtering
+        if (hiddenBeliefValues && hiddenBeliefValues.size > 0) {
+          if (colorMode === 'stance' && p.stance_score != null) {
+            if (hiddenBeliefValues.has(`stance:${p.stance_score}`)) return false
+          } else if (colorMode === 'timeline' && p.timeline_score != null) {
+            if (hiddenBeliefValues.has(`timeline:${p.timeline_score}`)) return false
+          } else if (colorMode === 'risk' && p.risk_score != null) {
+            if (hiddenBeliefValues.has(`risk:${p.risk_score}`)) return false
+          }
+        }
+        return true
+      }),
+    }
+  }, [data, hiddenClusters, hiddenCategories, hiddenBeliefValues, colorMode])
+
   useEffect(() => {
-    if (!ref.current || !data || data.points.length === 0) return
+    if (!ref.current || !filteredData || filteredData.points.length === 0) return
     const container = ref.current
     container.innerHTML = ''
 
@@ -746,8 +224,8 @@ function ScatterView({
 
     const svg = d3.select(container).append('svg').attr('viewBox', `0 0 ${W} ${H}`).attr('width', W).attr('height', H)
 
-    const xExtent = d3.extent(data.points, (d: AgiPoint) => d.x) as [number, number]
-    const yExtent = d3.extent(data.points, (d: AgiPoint) => d.y) as [number, number]
+    const xExtent = d3.extent(filteredData.points, (d: AgiPoint) => d.x) as [number, number]
+    const yExtent = d3.extent(filteredData.points, (d: AgiPoint) => d.y) as [number, number]
 
     const xScale = d3
       .scaleLinear()
@@ -762,7 +240,7 @@ function ScatterView({
 
     svg
       .selectAll('circle')
-      .data(data.points)
+      .data(filteredData.points)
       .enter()
       .append('circle')
       .attr('cx', (d: AgiPoint) => xScale(d.x))
@@ -785,7 +263,7 @@ function ScatterView({
       const tip = document.getElementById('__defview-scatter-tip')
       if (tip) tip.remove()
     }
-  }, [data, colorMode, onSelect])
+  }, [filteredData, colorMode, onSelect])
 
   useEffect(() => {
     if (!ref.current) return
@@ -806,338 +284,66 @@ function ScatterView({
 
 function MiniSparkline({
   series,
-  colors,
+  colorStart,
+  colorEnd,
   sparkW,
   sparkH,
 }: {
   series: number[]
-  colors: string[]
+  colorStart: string
+  colorEnd: string
   sparkW: number
   sparkH: number
 }) {
-  const ref = useRef<SVGSVGElement>(null)
   const validPairs = series.map((v, i) => [i, v] as [number, number]).filter(([, v]) => !isNaN(v))
+  if (validPairs.length < 2) {
+    return (
+      <svg viewBox={`0 0 ${sparkW} ${sparkH}`} style={{ minWidth: 0, flex: '1 1 60px', height: sparkH }}>
+        <text
+          x={sparkW / 2}
+          y={sparkH / 2 + 3}
+          textAnchor="middle"
+          fontFamily="'DM Mono', monospace"
+          fontSize={7}
+          fill="var(--text-3)"
+        >
+          n/a
+        </text>
+      </svg>
+    )
+  }
+  const vals = validPairs.map(([, v]) => v)
+  const minV = Math.min(...vals)
+  const maxV = Math.max(...vals)
+  const range = maxV - minV || 1
+  const xScale = d3
+    .scaleLinear()
+    .domain([0, series.length - 1])
+    .range([2, sparkW - 2])
+  const yScale = d3
+    .scaleLinear()
+    .domain([minV - range * 0.1, maxV + range * 0.1])
+    .range([sparkH - 2, 2])
+  const gradId = `bgrad-${Math.random().toString(36).slice(2, 8)}`
+  const line = d3
+    .line()
+    .defined((d: [number, number]) => !isNaN(d[1]))
+    .x((d: [number, number]) => xScale(d[0]))
+    .y((d: [number, number]) => yScale(d[1]))
+    .curve(d3.curveMonotoneX)
+  const pathD = line(series.map((v, i) => [i, v] as [number, number])) || ''
 
-  useEffect(() => {
-    if (!ref.current) return
-    const svg = d3.select(ref.current)
-    svg.selectAll('*').remove()
-
-    if (validPairs.length < 2) {
-      svg
-        .append('text')
-        .attr('x', sparkW / 2)
-        .attr('y', sparkH / 2 + 3)
-        .attr('text-anchor', 'middle')
-        .attr('font-family', "'DM Mono', monospace")
-        .attr('font-size', 7)
-        .attr('fill', 'var(--text-3)')
-        .text('n/a')
-      return
-    }
-
-    const vals = validPairs.map(([, v]) => v)
-    const minV = Math.min(...vals)
-    const maxV = Math.max(...vals)
-    const range = maxV - minV || 1
-    const xScale = d3
-      .scaleLinear()
-      .domain([0, series.length - 1])
-      .range([2, sparkW - 2])
-    const yScale = d3
-      .scaleLinear()
-      .domain([minV - range * 0.1, maxV + range * 0.1])
-      .range([sparkH - 2, 2])
-
-    const colorScale = d3
-      .scaleLinear()
-      .domain(colors.map((_, i) => 1 + (i * (colors.length > 1 ? colors.length - 1 : 1)) / (colors.length - 1 || 1)))
-      .range(colors)
-      .clamp(true)
-
-    // Dashed gap lines
-    for (let k = 0; k < validPairs.length - 1; k++) {
-      const [i0, v0] = validPairs[k]!
-      const [i1, v1] = validPairs[k + 1]!
-      if (i1 - i0 > 1) {
-        svg
-          .append('line')
-          .attr('x1', xScale(i0))
-          .attr('y1', yScale(v0))
-          .attr('x2', xScale(i1))
-          .attr('y2', yScale(v1))
-          .attr('stroke', 'var(--text-3)')
-          .attr('stroke-width', 0.75)
-          .attr('stroke-dasharray', '2,3')
-          .attr('opacity', 0.4)
-      }
-    }
-
-    // Colored segments based on actual score value
-    for (let k = 0; k < validPairs.length - 1; k++) {
-      const [i0, v0] = validPairs[k]!
-      const [i1, v1] = validPairs[k + 1]!
-      if (i1 - i0 > 1) continue
-      const midVal = (v0 + v1) / 2
-      svg
-        .append('line')
-        .attr('x1', xScale(i0))
-        .attr('y1', yScale(v0))
-        .attr('x2', xScale(i1))
-        .attr('y2', yScale(v1))
-        .attr('stroke', colorScale(midVal))
-        .attr('stroke-width', 1.5)
-        .attr('stroke-linecap', 'round')
-    }
-  }, [series, colors, sparkW, sparkH])
-
-  return <svg ref={ref} width={sparkW} height={sparkH} style={{ minWidth: 0, flex: '0 1 auto' }} />
-}
-
-function AggregateBeliefChart({
-  quarters,
-  points,
-  dim,
-}: {
-  quarters: QuarterBucket[]
-  points: AgiPoint[]
-  dim: { key: 'stance_score' | 'timeline_score' | 'risk_score'; label: string; colors: string[] }
-}) {
-  const ref = useRef<HTMLDivElement>(null)
-  const scale = BELIEF_SCALES[dim.key.replace('_score', '')]
-
-  useEffect(() => {
-    if (!ref.current || quarters.length < 2) return
-    const container = ref.current
-    container.innerHTML = ''
-
-    const W = container.clientWidth || 500
-    const H = 170
-    const pad = { top: 8, right: 12, bottom: 56, left: 36 }
-
-    // Per-quarter: count of entities with this score, and mean score
-    const qData = quarters.map((q) => {
-      const inQ = points.filter((p) => pointInQuarter(p, q) && p[dim.key] != null)
-      return { count: inQ.length, mean: inQ.length > 0 ? (d3.mean(inQ, (p: AgiPoint) => p[dim.key]) as number) : null }
-    })
-
-    const maxCount = Math.max(...qData.map((d) => d.count), 1)
-    const scoreMin = scale ? 1 : 0
-    const scoreMax = scale ? scale.labels.length : 5
-
-    const colorScale = d3
-      .scaleLinear()
-      .domain(dim.colors.map((_, i) => scoreMin + ((scoreMax - scoreMin) * i) / (dim.colors.length - 1)))
-      .range(dim.colors)
-      .clamp(true)
-
-    const svg = d3.select(container).append('svg').attr('width', W).attr('height', H)
-
-    // Compressed x-axis: squeeze empty quarters, expand dense ones
-    const { xPos, breakRanges } = buildCompressedX(quarters, points, pad.left, W - pad.right)
-    const xAt = (i: number) => xPos[i] ?? pad.left
-
-    const yScale = d3
-      .scaleLinear()
-      .domain([0, maxCount])
-      .range([H - pad.bottom, pad.top])
-
-    // Y-axis ticks (frequency)
-    const yTicks = yScale.ticks(4)
-    yTicks.forEach((t: number) => {
-      svg
-        .append('text')
-        .attr('x', pad.left - 4)
-        .attr('y', yScale(t))
-        .attr('text-anchor', 'end')
-        .attr('dominant-baseline', 'middle')
-        .attr('font-family', "'DM Mono', monospace")
-        .attr('font-size', 8)
-        .attr('fill', 'var(--text-3)')
-        .text(t)
-      svg
-        .append('line')
-        .attr('x1', pad.left)
-        .attr('x2', W - pad.right)
-        .attr('y1', yScale(t))
-        .attr('y2', yScale(t))
-        .attr('stroke', 'var(--line)')
-        .attr('opacity', 0.4)
-    })
-
-    // Y-axis label
-    svg
-      .append('text')
-      .attr('transform', `rotate(-90)`)
-      .attr('x', -(pad.top + (H - pad.bottom - pad.top) / 2))
-      .attr('y', 10)
-      .attr('text-anchor', 'middle')
-      .attr('font-family', "'DM Mono', monospace")
-      .attr('font-size', 8)
-      .attr('fill', 'var(--text-3)')
-      .text('Definitions')
-
-    // Axis break indicators (zigzag marks where empty quarters are compressed)
-    breakRanges.forEach((br) => {
-      const midX = (br.x1 + br.x2) / 2
-      const baseY = H - pad.bottom
-      const z = 4
-      svg
-        .append('path')
-        .attr(
-          'd',
-          `M${midX - 6},${baseY - z} L${midX - 3},${baseY + z} L${midX + 3},${baseY - z} L${midX + 6},${baseY + z}`,
-        )
-        .attr('fill', 'none')
-        .attr('stroke', 'var(--text-3)')
-        .attr('stroke-width', 1)
-        .attr('opacity', 0.5)
-    })
-
-    // X-axis year labels (skip when too close together)
-    let lastLabelX = -Infinity
-    const MIN_LABEL_GAP = 36
-    quarters.forEach((q, i) => {
-      const yr = q.start.getFullYear()
-      if (q.start.getMonth() === 0 || i === 0) {
-        const x = xAt(i)
-        if (x - lastLabelX >= MIN_LABEL_GAP) {
-          svg
-            .append('text')
-            .attr('x', x)
-            .attr('y', H - pad.bottom + 14)
-            .attr('text-anchor', 'middle')
-            .attr('font-family', "'DM Mono', monospace")
-            .attr('font-size', 8)
-            .attr('fill', 'var(--text-3)')
-            .text(String(yr))
-          lastLabelX = x
-        }
-      }
-    })
-
-    // Build valid pairs (quarters with data)
-    const validPairs = qData
-      .map((d, i) => (d.count > 0 ? { i, count: d.count, mean: d.mean! } : null))
-      .filter(Boolean) as { i: number; count: number; mean: number }[]
-
-    // Dashed gray lines across gaps
-    for (let k = 0; k < validPairs.length - 1; k++) {
-      const a = validPairs[k]!
-      const b = validPairs[k + 1]!
-      if (b.i - a.i > 1) {
-        svg
-          .append('line')
-          .attr('x1', xAt(a.i))
-          .attr('y1', yScale(a.count))
-          .attr('x2', xAt(b.i))
-          .attr('y2', yScale(b.count))
-          .attr('stroke', 'var(--text-3)')
-          .attr('stroke-width', 1)
-          .attr('stroke-dasharray', '3,4')
-          .attr('opacity', 0.3)
-      }
-    }
-
-    // Gradient-colored area fill
-    for (let k = 0; k < validPairs.length - 1; k++) {
-      const a = validPairs[k]!
-      const b = validPairs[k + 1]!
-      if (b.i - a.i > 1) continue
-      const midMean = (a.mean + b.mean) / 2
-      svg
-        .append('path')
-        .attr(
-          'd',
-          `M${xAt(a.i)},${yScale(a.count)} L${xAt(b.i)},${yScale(b.count)} L${xAt(b.i)},${yScale(0)} L${xAt(a.i)},${yScale(0)} Z`,
-        )
-        .attr('fill', colorScale(midMean))
-        .attr('opacity', 0.45)
-    }
-
-    // Colored line segments
-    for (let k = 0; k < validPairs.length - 1; k++) {
-      const a = validPairs[k]!
-      const b = validPairs[k + 1]!
-      if (b.i - a.i > 1) continue
-      const midMean = (a.mean + b.mean) / 2
-      svg
-        .append('line')
-        .attr('x1', xAt(a.i))
-        .attr('y1', yScale(a.count))
-        .attr('x2', xAt(b.i))
-        .attr('y2', yScale(b.count))
-        .attr('stroke', colorScale(midMean))
-        .attr('stroke-width', 3)
-        .attr('stroke-linecap', 'round')
-    }
-
-    // Dots at data points colored by mean score, with hover tooltips
-    const tipEl = createTooltip('__defview-trends-tip')
-    validPairs.forEach((d) => {
-      const q = quarters[d.i]
-      const meanLabel = scale
-        ? scale.labels[Math.max(0, Math.min(Math.round(d.mean) - 1, scale.labels.length - 1))] || ''
-        : d.mean.toFixed(2)
-      svg
-        .append('circle')
-        .attr('cx', xAt(d.i))
-        .attr('cy', yScale(d.count))
-        .attr('r', 3.5)
-        .attr('fill', colorScale(d.mean))
-        .attr('stroke', '#fff')
-        .attr('stroke-width', 1)
-        .style('cursor', 'pointer')
-        .on('mouseover', (evt: MouseEvent) => {
-          showTip(
-            tipEl,
-            evt,
-            `<div style="font-weight:500;margin-bottom:2px;">${q ? q.label : ''}</div>` +
-              `<div>${d.count} definitions</div>` +
-              `<div style="color:${colorScale(d.mean)}">Mean: ${meanLabel} (${d.mean.toFixed(2)})</div>`,
-          )
-        })
-        .on('mousemove', (evt: MouseEvent) => moveTip(tipEl, evt))
-        .on('mouseout', () => hideTip(tipEl))
-    })
-
-    // Color legend bar with endpoint labels
-    if (scale) {
-      const legendY = H - pad.bottom + 22
-      const legendW = Math.min(W - pad.left - pad.right, 240)
-      const legendX = pad.left
-      const segW = legendW / scale.labels.length
-      scale.colors.forEach((color, i) => {
-        svg
-          .append('rect')
-          .attr('x', legendX + i * segW)
-          .attr('y', legendY)
-          .attr('width', segW + 0.5)
-          .attr('height', 6)
-          .attr('fill', color)
-          .attr('rx', i === 0 ? 2 : i === scale.labels.length - 1 ? 2 : 0)
-      })
-      svg
-        .append('text')
-        .attr('x', legendX)
-        .attr('y', legendY + 15)
-        .attr('font-family', "'DM Mono', monospace")
-        .attr('font-size', 8)
-        .attr('fill', scale.colors[0] || 'var(--text-3)')
-        .text('← ' + (scale.labels[0] || ''))
-      svg
-        .append('text')
-        .attr('x', legendX + legendW)
-        .attr('y', legendY + 15)
-        .attr('text-anchor', 'end')
-        .attr('font-family', "'DM Mono', monospace")
-        .attr('font-size', 8)
-        .attr('fill', scale.colors[scale.colors.length - 1] || 'var(--text-3)')
-        .text((scale.labels[scale.labels.length - 1] || '') + ' →')
-    }
-  }, [quarters, points, dim])
-
-  return <div ref={ref} />
+  return (
+    <svg width={sparkW} height={sparkH} style={{ minWidth: 0, flex: '0 1 auto' }}>
+      <defs>
+        <linearGradient id={gradId} x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor={colorStart} />
+          <stop offset="100%" stopColor={colorEnd} />
+        </linearGradient>
+      </defs>
+      <path d={pathD} fill="none" stroke={`url(#${gradId})`} strokeWidth={1.5} />
+    </svg>
+  )
 }
 
 function TrendsView({ data }: { data: AgiData }) {
@@ -1147,12 +353,22 @@ function TrendsView({ data }: { data: AgiData }) {
   const beliefDims = useMemo(
     () =>
       [
-        { key: 'stance_score' as const, label: 'Regulatory Stance', colors: BELIEF_SCALES.stance!.colors },
-        { key: 'timeline_score' as const, label: 'AGI Timeline', colors: BELIEF_SCALES.timeline!.colors },
-        { key: 'risk_score' as const, label: 'AI Risk Level', colors: BELIEF_SCALES.risk!.colors },
+        { key: 'stance_score' as const, label: 'Stance', colors: BELIEF_SCALES.stance!.colors },
+        { key: 'timeline_score' as const, label: 'Timeline', colors: BELIEF_SCALES.timeline!.colors },
+        { key: 'risk_score' as const, label: 'Risk', colors: BELIEF_SCALES.risk!.colors },
       ] as const,
     [],
   )
+
+  const clusterTimeSeries = useMemo(() => {
+    const series: Record<string, number[]> = {}
+    clusters.forEach((c) => {
+      series[c.id] = quarters.map(
+        (q) => data.points.filter((p) => p.cluster_id === c.id && pointInQuarter(p, q)).length,
+      )
+    })
+    return series
+  }, [data.points, clusters, quarters])
 
   const clusterBeliefSeries = useMemo(() => {
     const result: Record<string, Record<string, number[]>> = {}
@@ -1169,116 +385,98 @@ function TrendsView({ data }: { data: AgiData }) {
     return result
   }, [data.points, clusters, quarters, beliefDims])
 
+  const countSparkW = 120
+  const countSparkH = 30
   const beliefSparkW = 80
   const beliefSparkH = 24
 
   if (quarters.length === 0) {
     return (
       <div style={{ fontFamily: 'var(--mono)', fontSize: '11px', color: 'var(--text-3)' }}>
-        No dated definitions available for trend analysis.
+        No dated definitions available for timeline analysis.
       </div>
     )
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-      {/* Aggregate belief curves */}
-      {beliefDims.map((dim) => (
-        <div key={dim.key}>
-          <div
-            style={{
-              fontFamily: 'var(--mono)',
-              fontSize: '10px',
-              fontWeight: 500,
-              color: 'var(--text-1)',
-              letterSpacing: '0.04em',
-              marginBottom: '4px',
-            }}
-          >
-            {dim.label}
-          </div>
-          <AggregateBeliefChart quarters={quarters} points={data.points} dim={dim} />
-        </div>
-      ))}
-
-      {/* Per-cluster breakdown */}
-      <div
-        style={{
-          fontFamily: 'var(--mono)',
-          fontSize: '9px',
-          fontWeight: 500,
-          color: 'var(--text-2)',
-          letterSpacing: '0.04em',
-          textTransform: 'uppercase',
-          marginTop: '8px',
-        }}
-      >
-        By definition cluster
-      </div>
-      {/* Column headers: gradient legend centered above each sparkline column */}
-      <div style={{ display: 'flex', alignItems: 'flex-end', gap: '8px', minWidth: 0, marginBottom: '6px' }}>
-        <span style={{ width: '170px', flexShrink: 0 }} />
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
         {beliefDims.map((dim) => {
           const scaleKey = dim.key.replace('_score', '')
-          const shortLabel = scaleKey === 'stance' ? 'Stance' : scaleKey === 'timeline' ? 'Timeline' : 'Risk'
-          const sc = BELIEF_SCALES[scaleKey]
+          const scale = BELIEF_SCALES[scaleKey]
+          const startLabel = scale?.labels[0] || ''
+          const endLabel = scale?.labels[scale.labels.length - 1] || ''
           return (
-            <div
-              key={dim.key}
-              style={{ flex: '1 1 0', minWidth: 0, display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-            >
-              <div
+            <div key={dim.key} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <span
                 style={{
                   fontFamily: 'var(--mono)',
                   fontSize: '9px',
-                  fontWeight: 500,
-                  color: 'var(--text-2)',
-                  letterSpacing: '0.04em',
-                  marginBottom: '2px',
+                  color: 'var(--text-1)',
+                  minWidth: '55px',
+                  flexShrink: 0,
+                }}
+              >
+                {dim.label}
+              </span>
+              <span
+                style={{
+                  fontFamily: 'var(--mono)',
+                  fontSize: '8px',
+                  color: 'var(--text-3)',
+                  whiteSpace: 'nowrap',
+                  width: '75px',
+                  textAlign: 'right',
+                  flexShrink: 0,
+                }}
+              >
+                {startLabel}
+              </span>
+              <div
+                style={{
+                  width: '80px',
+                  minWidth: '80px',
+                  height: '6px',
+                  borderRadius: '3px',
+                  flexShrink: 0,
+                  background: `linear-gradient(to right, ${dim.colors[0]}, ${dim.colors[dim.colors.length - 1]})`,
+                }}
+              />
+              <span
+                style={{
+                  fontFamily: 'var(--mono)',
+                  fontSize: '9px',
+                  color: 'var(--text-3)',
                   whiteSpace: 'nowrap',
                 }}
               >
-                {shortLabel}
-              </div>
-              {sc && (
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '3px',
-                    whiteSpace: 'nowrap',
-                  }}
-                >
-                  <span style={{ fontFamily: 'var(--mono)', fontSize: '7px', color: sc.colors[0] }}>
-                    {sc.labels[0]}
-                  </span>
-                  <div
-                    style={{
-                      width: '28px',
-                      flexShrink: 0,
-                      height: '4px',
-                      borderRadius: '2px',
-                      background: `linear-gradient(to right, ${sc.colors[0]}, ${sc.colors[sc.colors.length - 1]})`,
-                    }}
-                  />
-                  <span
-                    style={{
-                      fontFamily: 'var(--mono)',
-                      fontSize: '7px',
-                      color: sc.colors[sc.colors.length - 1],
-                    }}
-                  >
-                    {sc.labels[sc.labels.length - 1]}
-                  </span>
-                </div>
-              )}
+                {endLabel}
+              </span>
             </div>
           )
         })}
       </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
         {clusters.map((c) => {
+          const countSeries = clusterTimeSeries[c.id] || []
+          const maxVal = Math.max(...countSeries, 1)
+          const xScale = d3
+            .scaleLinear()
+            .domain([0, countSeries.length - 1])
+            .range([0, countSparkW])
+          const yScale = d3
+            .scaleLinear()
+            .domain([0, maxVal])
+            .range([countSparkH - 2, 2])
+          const line = d3
+            .line()
+            .x((_: number, i: number) => xScale(i))
+            .y((d: number) => yScale(d))
+            .curve(d3.curveMonotoneX)
+          const pathD = line(countSeries) || ''
           const beliefs = clusterBeliefSeries[c.id]
+
           return (
             <div key={c.id} style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0 }}>
               <span
@@ -1305,13 +503,48 @@ function TrendsView({ data }: { data: AgiData }) {
               >
                 {c.label}
               </span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flex: '1 1 0', minWidth: 0 }}>
+                <svg
+                  viewBox={`0 0 ${countSparkW} ${countSparkH}`}
+                  style={{ flex: '1 1 0', height: countSparkH, minWidth: 0 }}
+                >
+                  <path d={pathD} fill="none" stroke={CLUSTER_COLORS[c.id] || '#ccc'} strokeWidth={1.5} />
+                </svg>
+                <span
+                  style={{
+                    fontFamily: 'var(--mono)',
+                    fontSize: '9px',
+                    color: 'var(--text-3)',
+                    flexShrink: 0,
+                    width: '28px',
+                    textAlign: 'right' as const,
+                  }}
+                >
+                  {countSeries.reduce((a, b) => a + b, 0)}
+                </span>
+              </div>
               {beliefs &&
                 beliefDims.map((dim) => {
+                  const dimSeries = beliefs[dim.key] || []
                   return (
-                    <div key={dim.key} style={{ flex: '1 1 0', minWidth: 0 }}>
+                    <div
+                      key={dim.key}
+                      style={{ display: 'flex', alignItems: 'center', gap: '4px', flex: '1 1 0', minWidth: 0 }}
+                    >
+                      <span
+                        style={{
+                          fontFamily: 'var(--mono)',
+                          fontSize: '8px',
+                          color: 'var(--text-3)',
+                          flexShrink: 0,
+                        }}
+                      >
+                        {dim.label}
+                      </span>
                       <MiniSparkline
-                        series={beliefs[dim.key] || []}
-                        colors={[...dim.colors]}
+                        series={dimSeries}
+                        colorStart={dim.colors[0] ?? '#888'}
+                        colorEnd={dim.colors[dim.colors.length - 1] ?? '#888'}
                         sparkW={beliefSparkW}
                         sparkH={beliefSparkH}
                       />
@@ -1324,8 +557,7 @@ function TrendsView({ data }: { data: AgiData }) {
       </div>
 
       <div style={{ fontFamily: 'var(--mono)', fontSize: '9px', color: 'var(--text-3)' }}>
-        Aggregate curves show the mean score across all entities per quarter. Per-cluster sparklines show each
-        cluster&apos;s mean. Gaps indicate quarters with no scored definitions.
+        Each sparkline shows the cluster's mean score per quarter. Gaps indicate quarters with no scored definitions.
       </div>
     </div>
   )
@@ -1391,9 +623,10 @@ function TimelineView({ data }: { data: AgiData }) {
       .attr('width', '100%')
       .attr('height', H)
 
-    const { xPos: tlXPos, breakRanges: tlBreaks } = buildCompressedX(quarters, data.points, pad.left, W - pad.right)
-    const tlXAt = (i: number) => tlXPos[i] ?? pad.left
-
+    const xScale = d3
+      .scaleLinear()
+      .domain([0, quarters.length - 1])
+      .range([pad.left, W - pad.right])
     const yMax = d3.max(stackedData.layers[stackedData.layers.length - 1], (d: [number, number]) => d[1]) || 1
     const yScale = d3
       .scaleLinear()
@@ -1402,7 +635,7 @@ function TimelineView({ data }: { data: AgiData }) {
 
     const area = d3
       .area()
-      .x((_: unknown, i: number) => tlXAt(i))
+      .x((_: unknown, i: number) => xScale(i))
       .y0((d: [number, number]) => yScale(d[0]))
       .y1((d: [number, number]) => yScale(d[1]))
       .curve(d3.curveMonotoneX)
@@ -1417,23 +650,6 @@ function TimelineView({ data }: { data: AgiData }) {
       .attr('fill', (_: unknown, i: number) => CLUSTER_COLORS[stackedData.keys[i] ?? ''] || '#ccc')
       .attr('opacity', 0.8)
 
-    // Axis break indicators
-    tlBreaks.forEach((br) => {
-      const midX = (br.x1 + br.x2) / 2
-      const baseY = H - pad.bottom
-      const z = 4
-      svg
-        .append('path')
-        .attr(
-          'd',
-          `M${midX - 6},${baseY - z} L${midX - 3},${baseY + z} L${midX + 3},${baseY - z} L${midX + 6},${baseY + z}`,
-        )
-        .attr('fill', 'none')
-        .attr('stroke', 'var(--text-3)')
-        .attr('stroke-width', 1)
-        .attr('opacity', 0.5)
-    })
-
     svg
       .append('rect')
       .attr('x', pad.left)
@@ -1443,16 +659,8 @@ function TimelineView({ data }: { data: AgiData }) {
       .attr('fill', 'transparent')
       .on('mousemove', (evt: MouseEvent) => {
         const [mx] = d3.pointer(evt)
-        // Find nearest quarter by x position
-        let clampedIdx = 0
-        let minDist = Infinity
-        tlXPos.forEach((x, i) => {
-          const dist = Math.abs(x - mx)
-          if (dist < minDist) {
-            minDist = dist
-            clampedIdx = i
-          }
-        })
+        const idx = Math.round(xScale.invert(mx))
+        const clampedIdx = Math.max(0, Math.min(quarters.length - 1, idx))
         const q = quarters[clampedIdx]
         if (!q) return
         const parts = stackedData.keys
@@ -1469,25 +677,21 @@ function TimelineView({ data }: { data: AgiData }) {
       })
       .on('mouseleave', () => setTooltipState(null))
 
-    let lastTlLabelX = -Infinity
-    const TL_LABEL_GAP = 40
+    const yearIndices: number[] = []
     quarters.forEach((q, i) => {
-      const yr = q.start.getFullYear()
-      if (q.start.getMonth() === 0 || i === 0) {
-        const x = tlXAt(i)
-        if (x - lastTlLabelX >= TL_LABEL_GAP) {
-          svg
-            .append('text')
-            .attr('x', x)
-            .attr('y', H - pad.bottom + 16)
-            .attr('text-anchor', 'middle')
-            .attr('font-family', "'DM Mono', monospace")
-            .attr('font-size', 9)
-            .attr('fill', 'var(--text-3)')
-            .text(String(yr))
-          lastTlLabelX = x
-        }
-      }
+      if (q.start.getMonth() === 0 || i === 0) yearIndices.push(i)
+    })
+
+    yearIndices.forEach((i) => {
+      svg
+        .append('text')
+        .attr('x', xScale(i))
+        .attr('y', H - pad.bottom + 16)
+        .attr('text-anchor', 'middle')
+        .attr('font-family', "'DM Mono', monospace")
+        .attr('font-size', 9)
+        .attr('fill', 'var(--text-3)')
+        .text(String(quarters[i]?.start.getFullYear() || ''))
     })
 
     const yTicks = yScale.ticks(4)
@@ -1510,16 +714,6 @@ function TimelineView({ data }: { data: AgiData }) {
         .attr('y2', yScale(t))
         .attr('stroke', 'var(--line)')
     })
-    svg
-      .append('text')
-      .attr('transform', 'rotate(-90)')
-      .attr('x', -(pad.top + (H - pad.bottom - pad.top) / 2))
-      .attr('y', 10)
-      .attr('text-anchor', 'middle')
-      .attr('font-family', "'DM Mono', monospace")
-      .attr('font-size', 9)
-      .attr('fill', 'var(--text-3)')
-      .text('Definitions')
   }, [stackedData, quarters, clusters])
 
   if (quarters.length === 0) {
@@ -1590,35 +784,21 @@ function TimelineView({ data }: { data: AgiData }) {
   )
 }
 
-const CLUSTER_LABELS: Record<string, string> = {
-  'human-level-cognitive-parity': 'Human-Level Cognitive Parity',
-  'economic-automation': 'Economic Work Automation',
-  'autonomous-research-capability': 'Autonomous Research',
-  'superintelligent-systems': 'Superintelligent Systems',
-  'general-purpose-agents': 'General-Purpose Agents',
-  'transformative-societal-impact': 'Transformative Impact',
-  'conceptual-critique': 'Conceptual Critique',
-  'augmentative-tools': 'Augmentative Tools',
-}
-
-export function Legend({
+function _Legend({
   data,
   colorMode,
   setHoveredCategory,
   categories,
 }: {
-  data: AgiData | null
+  data: AgiData
   colorMode: ColorMode
   setHoveredCategory: (cat: string | null) => void
   categories: string[]
 }) {
   if (colorMode === 'cluster') {
-    const clusterItems = data?.clusters?.length
-      ? data.clusters
-      : Object.entries(CLUSTER_COLORS).map(([id]) => ({ id, label: CLUSTER_LABELS[id] || id, count: 0 }))
     return (
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 16px', marginTop: '8px' }}>
-        {clusterItems.map((c) => (
+        {(data.clusters || []).map((c) => (
           <div key={c.id} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
             <span
               style={{
@@ -1630,8 +810,7 @@ export function Legend({
               }}
             />
             <span style={{ fontFamily: 'var(--mono)', fontSize: '9px', color: 'var(--text-2)' }}>
-              {c.label}
-              {c.count > 0 ? ` (${c.count})` : ''}
+              {c.label} ({c.count})
             </span>
           </div>
         ))}
@@ -1659,8 +838,7 @@ export function Legend({
               }}
             />
             <span style={{ fontFamily: 'var(--mono)', fontSize: '9px', color: 'var(--text-2)' }}>
-              {cat}
-              {data ? ` (${data.points.filter((p) => p.category === cat).length})` : ''}
+              {cat} ({data.points.filter((p) => p.category === cat).length})
             </span>
           </div>
         ))}
@@ -1669,46 +847,36 @@ export function Legend({
   }
 
   const scoreKey = colorMode === 'stance' ? 'stance_score' : colorMode === 'timeline' ? 'timeline_score' : 'risk_score'
-  const noDataCount = data ? data.points.filter((p) => p[scoreKey] == null).length : 0
+  const noDataCount = data.points.filter((p) => p[scoreKey] == null).length
   const beliefScale = BELIEF_SCALES[colorMode]
 
   if (beliefScale) {
-    const n = beliefScale.labels.length
     return (
       <div style={{ marginTop: '8px' }}>
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: `repeat(${n}, 1fr)`,
-            gap: '1px',
-            borderRadius: '3px',
-            overflow: 'hidden',
-          }}
-        >
-          {beliefScale.colors.map((color, i) => (
-            <div key={i} style={{ height: '12px', background: color }} />
-          ))}
-        </div>
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: `repeat(${n}, 1fr)`,
-            marginTop: '4px',
-          }}
-        >
-          {beliefScale.labels.map((label) => (
-            <span
-              key={label}
-              style={{
-                fontFamily: 'var(--mono)',
-                fontSize: '8px',
-                color: 'var(--text-3)',
-                textAlign: 'center',
-                lineHeight: 1.1,
-              }}
-            >
-              {label}
-            </span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
+          {beliefScale.labels.map((label, i) => (
+            <div key={label} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1 }}>
+              <div
+                style={{
+                  width: '100%',
+                  height: '12px',
+                  background: beliefScale.colors[i],
+                  borderRadius: i === 0 ? '3px 0 0 3px' : i === beliefScale.labels.length - 1 ? '0 3px 3px 0' : '0',
+                }}
+              />
+              <span
+                style={{
+                  fontFamily: 'var(--mono)',
+                  fontSize: '8px',
+                  color: 'var(--text-3)',
+                  marginTop: '4px',
+                  textAlign: 'center' as const,
+                  lineHeight: 1.1,
+                }}
+              >
+                {label}
+              </span>
+            </div>
           ))}
         </div>
         {noDataCount > 0 && (
@@ -1723,44 +891,83 @@ export function Legend({
   return null
 }
 
-export interface DefinitionsDataPayload {
-  data: AgiData
-  categories: string[]
+export interface DefinitionsViewProps {
+  subView: string
+  colorMode: string
+  onSelect?: (point: AgiPoint, source: AgiSource | null) => void
+  searchQuery?: string
+  highlightedEntityId?: number | null
+  selectedEntityId?: number | null
+  hiddenClusters?: Set<string>
+  hiddenCategories?: Set<string>
+  hiddenBeliefValues?: Set<string>
+  onDataLoaded?: (data: AgiData) => void
+  mapRef?: React.RefObject<MapBeliefsClusterViewRef | null>
 }
 
 export function DefinitionsView({
   subView,
   colorMode,
+  onSelect,
+  searchQuery,
+  highlightedEntityId,
+  selectedEntityId,
+  hiddenClusters,
+  hiddenCategories,
+  hiddenBeliefValues,
   onDataLoaded,
-  hoveredCategory,
-}: {
-  subView: string
-  colorMode: string
-  onDataLoaded?: (payload: DefinitionsDataPayload) => void
-  hoveredCategory: string | null
-}) {
+  mapRef,
+}: DefinitionsViewProps) {
   const viewMode = subView as SubView
   const cm = colorMode as ColorMode
   const [data, setData] = useState<AgiData | null>(null)
-  const [selectedPoint, setSelectedPoint] = useState<AgiPoint | null>(null)
+  const [hoveredCategory, _setHoveredCategory] = useState<string | null>(null)
 
   useEffect(() => {
-    fetch('/data/agi-definitions.json')
-      .then((r) => (r.ok ? r.json() : null))
-      .then((d) => setData(d))
+    // Fetch both AGI definitions and map data to merge thumbnail URLs
+    Promise.all([
+      fetch('/data/agi-definitions.json').then((r) => (r.ok ? r.json() : null)),
+      fetch('/data/map-data.json').then((r) => (r.ok ? r.json() : null)),
+    ])
+      .then(([agiData, mapData]) => {
+        if (agiData && mapData) {
+          // Build thumbnail lookup from map data entities (people + orgs arrays)
+          const thumbnailMap = new Map<number, string>()
+          const allEntities = [...(mapData.people || []), ...(mapData.orgs || [])]
+          allEntities.forEach((entity: { id: number; thumbnail_url?: string }) => {
+            if (entity.thumbnail_url) {
+              thumbnailMap.set(entity.id, entity.thumbnail_url)
+            }
+          })
+          // Merge thumbnails into AGI definition points
+          agiData.points = agiData.points.map((p: AgiPoint) => ({
+            ...p,
+            thumbnail_url: thumbnailMap.get(p.entity_id) || null,
+          }))
+        }
+        setData(agiData)
+        if (agiData && onDataLoaded) onDataLoaded(agiData)
+      })
       .catch(() => {})
 
     return () => {
-      ;['__defview-map-tip', '__defview-scatter-tip'].forEach((id) => {
+      ;['__defview-map-tip', '__defview-scatter-tip', '__beliefs-cluster-tip'].forEach((id) => {
         const el = document.getElementById(id)
         if (el) el.remove()
       })
     }
-  }, [])
+  }, [onDataLoaded])
 
-  const handleSelect = useCallback((p: AgiPoint) => setSelectedPoint(p), [])
+  const handleSelect = useCallback(
+    (p: AgiPoint) => {
+      if (onSelect && data) {
+        onSelect(p, data.sources[p.source_id] || null)
+      }
+    },
+    [onSelect, data],
+  )
 
-  const categories = useMemo(() => {
+  const _categories = useMemo(() => {
     if (!data) return []
     const counts = new Map<string, number>()
     data.points.forEach((p) => counts.set(p.category, (counts.get(p.category) || 0) + 1))
@@ -1769,12 +976,6 @@ export function DefinitionsView({
       .slice(0, 10)
       .map(([cat]) => cat)
   }, [data])
-
-  useEffect(() => {
-    if (data && onDataLoaded) {
-      onDataLoaded({ data, categories })
-    }
-  }, [data, categories, onDataLoaded])
 
   if (!data) {
     return (
@@ -1785,42 +986,50 @@ export function DefinitionsView({
   }
 
   return (
-    <div style={{ padding: '8px 16px' }}>
+    <div className="beliefs-container" style={{ padding: '12px 24px', overflow: 'hidden' }}>
       {viewMode === 'map' && (
-        <ClusterMapView data={data} colorMode={cm} hoveredCategory={hoveredCategory} onSelect={handleSelect} />
+        <MapBeliefsClusterView
+          ref={mapRef}
+          data={data}
+          colorMode={cm}
+          hoveredCategory={hoveredCategory}
+          onSelect={handleSelect}
+          searchQuery={searchQuery}
+          highlightedEntityId={highlightedEntityId}
+          selectedEntityId={selectedEntityId}
+          hiddenClusters={hiddenClusters}
+          hiddenCategories={hiddenCategories}
+          hiddenBeliefValues={hiddenBeliefValues}
+        />
       )}
-      {viewMode === 'list' && <ListView data={data} onSelect={handleSelect} />}
+      {viewMode === 'list' && (
+        <ListView
+          data={data}
+          onSelect={handleSelect}
+          searchQuery={searchQuery}
+          hiddenClusters={hiddenClusters}
+          hiddenCategories={hiddenCategories}
+        />
+      )}
       {viewMode === 'scatter' && (
-        <ScatterView data={data} colorMode={cm} hoveredCategory={hoveredCategory} onSelect={handleSelect} />
+        <ScatterView
+          data={data}
+          colorMode={cm}
+          hoveredCategory={hoveredCategory}
+          onSelect={handleSelect}
+          hiddenClusters={hiddenClusters}
+          hiddenCategories={hiddenCategories}
+          hiddenBeliefValues={hiddenBeliefValues}
+        />
       )}
       {viewMode === 'timeline' && <TimelineView data={data} />}
       {viewMode === 'trends' && <TrendsView data={data} />}
-
-      {selectedPoint && (
-        <DetailModal
-          point={selectedPoint}
-          source={data.sources[selectedPoint.source_id] || null}
-          onClose={() => setSelectedPoint(null)}
-        />
-      )}
-
-      <div
-        style={{
-          marginTop: '8px',
-          fontFamily: 'var(--mono)',
-          fontSize: '9px',
-          color: 'var(--text-3)',
-          letterSpacing: '0.04em',
-        }}
-      >
-        Source: AGI definition claims from enrichment pipeline. Embeddings: Voyage AI voyage-3. Projection: UMAP.
-      </div>
 
       <a
         href="/insights#agi-definitions"
         style={{
           display: 'inline-block',
-          marginTop: '4px',
+          marginTop: '12px',
           fontFamily: 'var(--mono)',
           fontSize: '11px',
           color: 'var(--accent)',

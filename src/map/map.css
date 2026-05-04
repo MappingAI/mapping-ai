@@ -468,6 +468,23 @@ body:has(.detail-panel.open) #contribute-btn {
   color: var(--text-1);
 }
 
+/* Beliefs view zoom controls - separate class to avoid !important hide rule */
+.beliefs-zoom-controls {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  z-index: 50;
+  transition: right 0.25s ease;
+}
+
+/* Shift beliefs zoom controls when detail panel is open */
+body:has(.beliefs-detail-sidebar) .beliefs-zoom-controls {
+  right: calc(320px + 1.5rem);
+}
+
 .entity-count {
   font-family: var(--mono);
   font-size: 9px;
@@ -1786,6 +1803,10 @@ body:has(.detail-panel.open) #contribute-btn {
     bottom: 4rem;
     right: 0.75rem;
   }
+  .beliefs-zoom-controls {
+    bottom: 4rem;
+    right: 0.75rem;
+  }
   .zoom-btn {
     width: 28px;
     height: 28px;
@@ -2019,4 +2040,34 @@ body.react-view-active .controls .control-group:first-child {
 }
 body.react-view-active #beliefs-sub-tabs {
   display: block !important;
+}
+
+/* Beliefs view styles */
+.beliefs-container {
+  animation: beliefsViewFadeIn 0.25s ease-out;
+}
+
+@keyframes beliefsViewFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.beliefs-cluster-view {
+  transition: opacity 0.2s ease;
+}
+
+/* Beliefs legend item hover */
+.beliefs-legend-item:hover {
+  opacity: 0.8 !important;
+}
+
+/* Search box in beliefs view needs positioning for clear button */
+#beliefs-search .search-box {
+  position: relative;
 }

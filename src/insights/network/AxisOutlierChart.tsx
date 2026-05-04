@@ -51,6 +51,7 @@ const CATEGORY_COLORS: Record<string, string> = {
   'Government/Agency': '#984ea3',
   Academic: '#ff7f00',
   Researcher: '#ff7f00',
+  'Academic/Researcher': '#ff7f00',
   'VC/Capital/Philanthropy': '#a65628',
   'Labor/Civil Society': '#f781bf',
   'Ethics/Bias/Rights': '#f781bf',
@@ -292,10 +293,10 @@ export function AxisOutlierChart({ entities, mode }: AxisOutlierChartProps) {
     const handleMouseLeave = () => hideTooltip()
     container.addEventListener('mouseleave', handleMouseLeave)
 
-    const W = container.clientWidth || 600
-    const H = mode === '2d' ? 550 : 420
+    const W = container.clientWidth || 700
+    const H = mode === '2d' ? 520 : 420
     const margin =
-      mode === '2d' ? { top: 60, right: 120, bottom: 80, left: 110 } : { top: 40, right: 110, bottom: 70, left: 40 }
+      mode === '2d' ? { top: 60, right: 40, bottom: 70, left: 110 } : { top: 40, right: 40, bottom: 70, left: 40 }
     const plotW = W - margin.left - margin.right
     const plotH = H - margin.top - margin.bottom
 
@@ -357,7 +358,7 @@ export function AxisOutlierChart({ entities, mode }: AxisOutlierChartProps) {
     xAxisG
       .append('text')
       .attr('x', plotW / 2)
-      .attr('y', mode === '2d' ? 45 : 44)
+      .attr('y', 50)
       .attr('text-anchor', 'middle')
       .attr('font-family', "'DM Mono', monospace")
       .attr('font-size', 10)
@@ -385,12 +386,12 @@ export function AxisOutlierChart({ entities, mode }: AxisOutlierChartProps) {
           .text(label)
       })
 
-      // Y axis label - positioned further left to avoid overlap with tick labels
+      // Y axis label - closer to edge
       yAxisG
         .append('text')
         .attr('transform', 'rotate(-90)')
         .attr('x', -plotH / 2)
-        .attr('y', -75)
+        .attr('y', -90)
         .attr('text-anchor', 'middle')
         .attr('font-family', "'DM Mono', monospace")
         .attr('font-size', 10)
@@ -686,6 +687,25 @@ export function AxisOutlierChart({ entities, mode }: AxisOutlierChartProps) {
 
   const axisOptions: AxisKey[] = ['stance', 'timeline', 'risk']
 
+  // Get top categories from the data for legend, merging Academic/Researcher
+  const topCategories = useMemo(() => {
+    const counts = new Map<string, number>()
+    validEntities.forEach((e) => {
+      // Merge Academic and Researcher since they share the same color
+      const cat =
+        e.category === 'Researcher'
+          ? 'Academic/Researcher'
+          : e.category === 'Academic'
+            ? 'Academic/Researcher'
+            : e.category
+      counts.set(cat, (counts.get(cat) || 0) + 1)
+    })
+    return [...counts.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 8)
+      .map(([cat]) => cat)
+  }, [validEntities])
+
   return (
     <div>
       {/* Axis selectors */}
@@ -733,10 +753,21 @@ export function AxisOutlierChart({ entities, mode }: AxisOutlierChartProps) {
       <div ref={ref} />
 
       {/* Legend */}
-      <div className="flex items-center gap-4 mt-2">
-        <div className="flex items-center gap-1.5">
-          <div className="w-3 h-3 rounded-full bg-[#888] border-2 border-[#1a1a1a]" />
-          <span className="font-mono text-[9px] text-[#666]">Outlier (clickable)</span>
+      <div className="mt-3">
+        <div className="flex items-center gap-1.5 mb-2">
+          <div className="w-2.5 h-2.5 rounded-full bg-[#888] border-[1.5px] border-[#1a1a1a]" />
+          <span className="font-mono text-[9px] text-[#666]">Outlier (click for details)</span>
+        </div>
+        <div className="flex flex-wrap gap-x-4 gap-y-1">
+          {topCategories.map((cat) => (
+            <div key={cat} className="flex items-center gap-1">
+              <span
+                className="inline-block w-2 h-2 rounded-full"
+                style={{ background: CATEGORY_COLORS[cat] || '#888' }}
+              />
+              <span className="font-mono text-[8px] text-[#888]">{cat}</span>
+            </div>
+          ))}
         </div>
       </div>
 

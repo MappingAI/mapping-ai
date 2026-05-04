@@ -16,11 +16,11 @@ async function fetchJSON<T>(url: string, init?: RequestInit): Promise<T> {
 }
 
 export async function fetchMapData(): Promise<MapData> {
-  return fetchJSON<MapData>('/map-data.json')
+  return fetchJSON<MapData>('/data/map-data.json')
 }
 
 export async function fetchMapDetail(): Promise<MapDetail> {
-  return fetchJSON<MapDetail>('/map-detail.json')
+  return fetchJSON<MapDetail>('/data/map-detail.json')
 }
 
 /**

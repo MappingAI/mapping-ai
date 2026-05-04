@@ -927,15 +927,13 @@ export function App() {
   const [data, setData] = useState<MapData | null>(null)
   const [fundingData, setFundingData] = useState<FundingData | null>(null)
   const [activeSection, setActiveSection] = useState('overview')
-  const [agiDefCount, setAgiDefCount] = useState<number | null>(null)
-  const onAgiDataLoaded = useCallback((count: number) => setAgiDefCount(count), [])
   const activeSectionRef = useRef('overview')
 
   // Fetch data
   useEffect(() => {
     Promise.all([
-      fetch('/map-data.json').then((r) => r.json()),
-      fetch('/map-detail.json')
+      fetch('/data/map-data.json').then((r) => r.json()),
+      fetch('/data/map-detail.json')
         .then((r) => r.json())
         .catch(() => ({})),
       fetch('/funding-data.json')
@@ -1248,10 +1246,11 @@ export function App() {
         </ChartContainer>
 
         <Finding>
-          Policymakers like Brian Schatz and Chris Murphy top the reachability rankings—their government roles connect
-          them to many organizations. Researchers like Paul Christiano bridge AI Safety, Frontier Labs, and Government.
-          High reachability doesn't mean influence, but it does indicate structural position for information flow and
-          coalition-building.
+          In our data, policymakers like Brian Schatz and Chris Murphy have high reachability—their government roles
+          connect them to many organizations. Researchers like Paul Christiano bridge AI Safety, Frontier Labs, and
+          Government. High reachability doesn't mean influence, but it does indicate structural position for information
+          flow and coalition-building. Note: these results depend on which relationships we've captured publicly, not a
+          complete census.
         </Finding>
 
         <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
@@ -1275,7 +1274,7 @@ export function App() {
           <>
             <ChartContainer
               title="Funding flows: Top funders → recipient categories"
-              source="Top 12 funders by investment count in our sample. Width = number of tracked investments to each category. Click any flow for details."
+              source="Shows how funding flows from top funders (left) to recipient organization types (right). Width = number of investments. Click any flow for details."
             >
               <FundingFlowSankey flows={fundingData.flows} funders={fundingData.funders} edges={fundingData.edges} />
             </ChartContainer>
@@ -1347,7 +1346,7 @@ export function App() {
 
             <ChartContainer
               title="Funder diversity vs single-category funding"
-              source="Policy orgs with 2+ funders. Diverse = 3+ funder categories; Single = all funders same type."
+              source="Left: funding from 3+ funder types. Right: all funders are the same type. Click any name for details."
             >
               <FunderDiversity edges={fundingData.edges} showTooltip={showTooltip} hideTooltip={hideTooltip} />
             </ChartContainer>
@@ -1419,17 +1418,16 @@ export function App() {
         </Para>
 
         <Para>
-          This scatter plot clusters {agiDefCount ?? '…'} entities by the <em>semantic similarity</em> of their stated
-          AGI definitions. Each definition was embedded using Voyage AI and projected to 2D with UMAP. Position encodes
-          meaning: entities with similar definitions cluster together. Color encodes category. Click any dot to see the
-          full definition and its source.
+          This scatter plot clusters AGI definitions by their <em>semantic similarity</em>. Each definition was embedded
+          using Voyage AI and projected to 2D with UMAP. Position encodes meaning: entities with similar definitions
+          cluster together. Color encodes category. Click any dot to see the full definition and its source.
         </Para>
 
         <ChartContainer
-          title={`AGI definition space (${agiDefCount ?? '…'} entities)`}
-          source="Source: AGI definition claims from enrichment pipeline. Embeddings: Voyage AI voyage-3. Projection: UMAP."
+          title=""
+          source="Source: 372 sourced AGI definitions across 201 people and 171 organizations. Each definition backed by a verbatim quote and URL."
         >
-          <AgiDefinitionSpace onDataLoaded={onAgiDataLoaded} />
+          <AgiDefinitionSpace />
         </ChartContainer>
 
         <Finding>

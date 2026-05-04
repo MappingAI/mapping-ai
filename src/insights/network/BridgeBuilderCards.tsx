@@ -124,6 +124,153 @@ function MiniEgoNetwork({ entity, connections }: { entity: CentralEntity; connec
 }
 
 export function BridgeBuilderCards({ entities, edges, maxCards = 5 }: BridgeBuilderCardsProps) {
+  const chartContainerRef = useRef<HTMLDivElement>(null)
+
+  const handleDownload = async () => {
+    if (!chartContainerRef.current) return
+
+    const container = chartContainerRef.current
+    const containerRect = container.getBoundingClientRect()
+
+    const scale = 2
+    const padding = 40
+    const titleHeight = 60
+    const sourceHeight = 50
+    const canvas = document.createElement('canvas')
+    canvas.width = (containerRect.width + padding * 2) * scale
+    canvas.height = (containerRect.height + padding * 2 + titleHeight + sourceHeight) * scale
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+
+    // Tan/grey background matching insights page
+    ctx.fillStyle = '#f8f7f5'
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
+    ctx.scale(scale, scale)
+
+    // Add title
+    ctx.fillStyle = '#1a1a1a'
+    ctx.font = "600 16px 'DM Mono', ui-monospace, monospace"
+    ctx.fillText('NETWORK REACHABILITY BY PERSON', padding, padding + 16)
+
+    // Add subtitle
+    ctx.fillStyle = '#888'
+    ctx.font = "11px 'DM Mono', ui-monospace, monospace"
+    ctx.fillText('Top bridge builders connecting different communities', padding, padding + 34)
+
+    const contentY = padding + titleHeight
+
+    // Capture all cards
+    const cards = Array.from(container.querySelectorAll('.bg-white'))
+    let yOffset = contentY
+    let xOffset = padding
+    const cardWidth = 280
+    const cardHeight = 320
+    const gap = 20
+    const maxCols = Math.floor((containerRect.width + gap) / (cardWidth + gap))
+
+    for (let i = 0; i < cards.length; i++) {
+      const card = cards[i] as Element
+      if (!card) continue
+      const col = i % maxCols
+      const row = Math.floor(i / maxCols)
+
+      xOffset = padding + col * (cardWidth + gap)
+      yOffset = contentY + row * (cardHeight + gap)
+
+      // Draw card background
+      ctx.fillStyle = '#ffffff'
+      ctx.strokeStyle = '#e0e0e0'
+      ctx.lineWidth = 1
+      ctx.beginPath()
+      ctx.roundRect(xOffset, yOffset, cardWidth, cardHeight, 8)
+      ctx.fill()
+      ctx.stroke()
+
+      // Get card data
+      const rankEl = card.querySelector('.text-\\[18px\\].text-\\[\\#2563eb\\]')
+      const nameEl = card.querySelector('.text-\\[12px\\].font-medium')
+      const categoryEl = card.querySelector('.text-\\[8px\\].uppercase')
+      const statsEls = Array.from(card.querySelectorAll('.grid .text-\\[18px\\]'))
+      const svg = card.querySelector('svg')
+
+      // Draw rank
+      if (rankEl) {
+        ctx.fillStyle = '#2563eb'
+        ctx.font = "500 18px 'DM Mono', ui-monospace, monospace"
+        ctx.fillText(rankEl.textContent || '', xOffset + 12, yOffset + 28)
+      }
+
+      // Draw name
+      if (nameEl) {
+        ctx.fillStyle = '#1a1a1a'
+        ctx.font = "500 12px 'DM Mono', ui-monospace, monospace"
+        const name = nameEl.textContent || ''
+        ctx.fillText(name.length > 25 ? name.slice(0, 23) + '...' : name, xOffset + 50, yOffset + 24)
+      }
+
+      // Draw category
+      if (categoryEl) {
+        const catText = categoryEl.textContent || ''
+        const catColor = (categoryEl as HTMLElement).style.color || '#888'
+        ctx.fillStyle = catColor
+        ctx.font = "8px 'DM Mono', ui-monospace, monospace"
+        ctx.fillText(catText.toUpperCase(), xOffset + 50, yOffset + 40)
+      }
+
+      // Draw SVG (mini ego network)
+      if (svg) {
+        const svgData = new XMLSerializer().serializeToString(svg)
+        const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' })
+        const url = URL.createObjectURL(svgBlob)
+
+        await new Promise<void>((resolve) => {
+          const img = new Image()
+          img.onload = () => {
+            ctx.drawImage(img, xOffset + 50, yOffset + 55, 180, 140)
+            URL.revokeObjectURL(url)
+            resolve()
+          }
+          img.onerror = () => {
+            URL.revokeObjectURL(url)
+            resolve()
+          }
+          img.src = url
+        })
+      }
+
+      // Draw stats
+      const stat0 = statsEls[0]
+      const stat1 = statsEls[1]
+      if (statsEls.length >= 2 && stat0 && stat1) {
+        ctx.fillStyle = '#1a1a1a'
+        ctx.font = "500 18px 'DM Mono', ui-monospace, monospace"
+        ctx.fillText(stat0.textContent || '', xOffset + 20, yOffset + 230)
+        ctx.fillText(stat1.textContent || '', xOffset + 150, yOffset + 230)
+
+        ctx.fillStyle = '#888'
+        ctx.font = "8px 'DM Mono', ui-monospace, monospace"
+        ctx.fillText('CONNECTIONS', xOffset + 20, yOffset + 245)
+        ctx.fillText('CATEGORIES BRIDGED', xOffset + 150, yOffset + 245)
+      }
+    }
+
+    // Calculate final yOffset for source text
+    const totalRows = Math.ceil(cards.length / maxCols)
+    const finalY = contentY + totalRows * (cardHeight + gap) + 10
+
+    // Add source text
+    ctx.fillStyle = '#888'
+    ctx.font = "10px 'DM Mono', ui-monospace, monospace"
+    const sourceText = `Source: Network analysis of ${entities.length} entities and ${edges.length} relationships. Betweenness proxy = connections × category diversity.`
+    ctx.fillText(sourceText, padding, finalY)
+
+    // Download
+    const link = document.createElement('a')
+    link.download = `network-reachability-${new Date().toISOString().slice(0, 10)}.png`
+    link.href = canvas.toDataURL('image/png')
+    link.click()
+  }
+
   const centralEntities = useMemo(() => {
     const entityMap = new Map(entities.map((e) => [e.id, e]))
 
@@ -181,79 +328,95 @@ export function BridgeBuilderCards({ entities, edges, maxCards = 5 }: BridgeBuil
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
-      {centralEntities.map((entity, rank) => (
-        <div
-          key={entity.id}
-          className="bg-white border border-[#e0e0e0] rounded-lg p-4 hover:border-[#bbb] transition-colors"
+    <div>
+      <div className="flex justify-end mb-3">
+        <button
+          onClick={handleDownload}
+          className="font-mono text-[10px] px-2 py-1 rounded bg-[#f5f5f5] text-[#666] hover:bg-[#eee] flex items-center gap-1"
+          title="Download chart as PNG"
         >
-          {/* Rank badge */}
-          <div className="flex items-start justify-between gap-2 mb-2">
-            <div className="flex items-center gap-2">
-              <span className="font-mono text-[18px] font-medium text-[#2563eb]">#{rank + 1}</span>
-              <div>
-                <div className="font-mono text-[12px] font-medium text-[#1a1a1a]">{entity.name}</div>
-                <span
-                  className="font-mono text-[8px] tracking-[0.05em] uppercase px-1.5 py-0.5 rounded inline-block mt-0.5"
-                  style={{
-                    background: `${CATEGORY_COLORS[entity.category] || '#888'}15`,
-                    color: CATEGORY_COLORS[entity.category] || '#888',
-                  }}
-                >
-                  {entity.category}
-                </span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" />
+          </svg>
+          PNG
+        </button>
+      </div>
+      <div ref={chartContainerRef} className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
+        {centralEntities.map((entity, rank) => (
+          <div
+            key={entity.id}
+            className="bg-white border border-[#e0e0e0] rounded-lg p-4 hover:border-[#bbb] transition-colors"
+          >
+            {/* Rank badge */}
+            <div className="flex items-start justify-between gap-2 mb-2">
+              <div className="flex items-center gap-2">
+                <span className="font-mono text-[18px] font-medium text-[#2563eb]">#{rank + 1}</span>
+                <div>
+                  <div className="font-mono text-[12px] font-medium text-[#1a1a1a]">{entity.name}</div>
+                  <span
+                    className="font-mono text-[8px] tracking-[0.05em] uppercase px-1.5 py-0.5 rounded inline-block mt-0.5"
+                    style={{
+                      background: `${CATEGORY_COLORS[entity.category] || '#888'}15`,
+                      color: CATEGORY_COLORS[entity.category] || '#888',
+                    }}
+                  >
+                    {entity.category}
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Mini ego network */}
-          <div className="flex justify-center my-3">
-            <MiniEgoNetwork entity={entity} connections={entity.connections} />
-          </div>
-
-          {/* Stats */}
-          <div className="grid grid-cols-2 gap-3 mt-3 pt-3 border-t border-[#eee]">
-            <div>
-              <div className="font-mono text-[18px] font-medium text-[#1a1a1a]">{entity.degree}</div>
-              <div className="font-mono text-[8px] text-[#888] uppercase tracking-[0.05em]">Connections</div>
+            {/* Mini ego network */}
+            <div className="flex justify-center my-3">
+              <MiniEgoNetwork entity={entity} connections={entity.connections} />
             </div>
-            <div>
-              <div className="font-mono text-[18px] font-medium text-[#1a1a1a]">{entity.categoriesBridged.length}</div>
-              <div className="font-mono text-[8px] text-[#888] uppercase tracking-[0.05em]">Categories bridged</div>
-            </div>
-          </div>
 
-          {/* Categories list */}
-          <div className="mt-3">
-            <div className="font-mono text-[8px] text-[#888] uppercase tracking-[0.05em] mb-1">Bridges to</div>
-            <div className="flex flex-wrap gap-1">
-              {entity.categoriesBridged.slice(0, 6).map((cat) => (
-                <span
-                  key={cat}
-                  className="font-mono text-[8px] px-1.5 py-0.5 rounded"
-                  style={{
-                    background: `${CATEGORY_COLORS[cat] || '#888'}15`,
-                    color: CATEGORY_COLORS[cat] || '#888',
-                  }}
-                >
-                  {cat.length > 15 ? cat.slice(0, 13) + '...' : cat}
-                </span>
-              ))}
-              {entity.categoriesBridged.length > 6 && (
-                <span className="font-mono text-[8px] text-[#999]">+{entity.categoriesBridged.length - 6}</span>
-              )}
+            {/* Stats */}
+            <div className="grid grid-cols-2 gap-3 mt-3 pt-3 border-t border-[#eee]">
+              <div>
+                <div className="font-mono text-[18px] font-medium text-[#1a1a1a]">{entity.degree}</div>
+                <div className="font-mono text-[8px] text-[#888] uppercase tracking-[0.05em]">Connections</div>
+              </div>
+              <div>
+                <div className="font-mono text-[18px] font-medium text-[#1a1a1a]">
+                  {entity.categoriesBridged.length}
+                </div>
+                <div className="font-mono text-[8px] text-[#888] uppercase tracking-[0.05em]">Categories bridged</div>
+              </div>
             </div>
-          </div>
 
-          {/* Link */}
-          <a
-            href={`/map?highlight=${entity.id}`}
-            className="block font-mono text-[9px] text-[#2563eb] hover:underline mt-3"
-          >
-            View on map →
-          </a>
-        </div>
-      ))}
+            {/* Categories list */}
+            <div className="mt-3">
+              <div className="font-mono text-[8px] text-[#888] uppercase tracking-[0.05em] mb-1">Bridges to</div>
+              <div className="flex flex-wrap gap-1">
+                {entity.categoriesBridged.slice(0, 6).map((cat) => (
+                  <span
+                    key={cat}
+                    className="font-mono text-[8px] px-1.5 py-0.5 rounded"
+                    style={{
+                      background: `${CATEGORY_COLORS[cat] || '#888'}15`,
+                      color: CATEGORY_COLORS[cat] || '#888',
+                    }}
+                  >
+                    {cat.length > 15 ? cat.slice(0, 13) + '...' : cat}
+                  </span>
+                ))}
+                {entity.categoriesBridged.length > 6 && (
+                  <span className="font-mono text-[8px] text-[#999]">+{entity.categoriesBridged.length - 6}</span>
+                )}
+              </div>
+            </div>
+
+            {/* Link */}
+            <a
+              href={`/map?highlight=${entity.id}`}
+              className="block font-mono text-[9px] text-[#2563eb] hover:underline mt-3"
+            >
+              View on map →
+            </a>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

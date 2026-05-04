@@ -811,6 +811,180 @@ export function CrosspartisanViz() {
   const [view, setView] = useState<'by-issue' | 'horseshoe' | 'beeswarm'>('by-issue')
   const [entityFilter, setEntityFilter] = useState<'all' | 'people' | 'orgs'>('all')
   const [selectedEntityId, setSelectedEntityId] = useState<number | null>(null)
+  const chartContainerRef = useRef<HTMLDivElement>(null)
+
+  const handleDownload = async () => {
+    if (!chartContainerRef.current) return
+
+    const container = chartContainerRef.current
+    const containerRect = container.getBoundingClientRect()
+
+    const scale = 2 // For higher resolution
+    const padding = 40
+    const canvas = document.createElement('canvas')
+    canvas.width = (containerRect.width + padding * 2) * scale
+    canvas.height = (containerRect.height + padding * 2 + 100) * scale // extra 100 for title + legend + source
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+
+    // Tan/grey background matching insights page
+    ctx.fillStyle = '#f8f7f5'
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
+    ctx.scale(scale, scale)
+
+    // Add title
+    ctx.fillStyle = '#1a1a1a'
+    ctx.font = "600 16px 'DM Mono', ui-monospace, monospace"
+    ctx.fillText('CROSSPARTISAN AI POLICY STANCES', padding, padding + 16)
+
+    // Add legend
+    const legendY = padding + 40
+    const legendItems = [
+      { label: 'Democrat', color: '#1e6fd1' },
+      { label: 'Republican', color: '#d6342c' },
+      { label: 'Organization', color: '#2d8659' },
+    ]
+    let legendX = padding
+    ctx.font = "11px 'DM Mono', ui-monospace, monospace"
+    legendItems.forEach((item) => {
+      ctx.fillStyle = item.color
+      ctx.beginPath()
+      ctx.arc(legendX + 5, legendY, 5, 0, Math.PI * 2)
+      ctx.fill()
+      ctx.fillStyle = '#555'
+      ctx.fillText(item.label, legendX + 14, legendY + 4)
+      legendX += ctx.measureText(item.label).width + 30
+    })
+
+    const contentY = legendY + 30
+    let finalYOffset = contentY
+
+    // For by-issue view, capture each row with its labels
+    if (view === 'by-issue') {
+      const rows = container.querySelectorAll('.pb-3')
+      let yOffset = contentY
+
+      for (const row of Array.from(rows)) {
+        const rowRect = row.getBoundingClientRect()
+        const _relativeTop = rowRect.top - containerRect.top
+
+        // Get text labels from the row
+        const titleEl = row.querySelector('.font-medium')
+        const claimsEl = row.querySelector('.text-\\[9px\\].text-\\[\\#aaa\\]')
+        const endpointsDiv = row.querySelector('.text-\\[8px\\].text-\\[\\#999\\]')
+        const svg = row.querySelector('svg')
+
+        // Draw title
+        if (titleEl) {
+          ctx.fillStyle = '#1a1a1a'
+          ctx.font = "500 12px 'DM Mono', ui-monospace, monospace"
+          ctx.fillText(titleEl.textContent || '', padding, yOffset + 12)
+        }
+
+        // Draw claims count (right aligned)
+        if (claimsEl) {
+          ctx.fillStyle = '#aaa'
+          ctx.font = "10px 'DM Mono', ui-monospace, monospace"
+          const claimsText = claimsEl.textContent || ''
+          const claimsWidth = ctx.measureText(claimsText).width
+          ctx.fillText(claimsText, containerRect.width + padding - claimsWidth, yOffset + 12)
+        }
+
+        yOffset += 18
+
+        // Draw endpoints (left and right)
+        if (endpointsDiv) {
+          const spans = endpointsDiv.querySelectorAll('span')
+          ctx.fillStyle = '#999'
+          ctx.font = "9px 'DM Mono', ui-monospace, monospace"
+          if (spans[0]) {
+            ctx.fillText(spans[0].textContent || '', padding, yOffset + 8)
+          }
+          if (spans[1]) {
+            const rightText = spans[1].textContent || ''
+            const rightWidth = ctx.measureText(rightText).width
+            ctx.fillText(rightText, containerRect.width + padding - rightWidth, yOffset + 8)
+          }
+          yOffset += 14
+        }
+
+        // Draw SVG
+        if (svg) {
+          const svgRect = svg.getBoundingClientRect()
+          const svgData = new XMLSerializer().serializeToString(svg)
+          const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' })
+          const url = URL.createObjectURL(svgBlob)
+
+          await new Promise<void>((resolve) => {
+            const img = new Image()
+            img.onload = () => {
+              ctx.drawImage(img, padding, yOffset, svgRect.width, svgRect.height)
+              yOffset += svgRect.height + 20
+              URL.revokeObjectURL(url)
+              resolve()
+            }
+            img.onerror = () => {
+              URL.revokeObjectURL(url)
+              resolve()
+            }
+            img.src = url
+          })
+        }
+      }
+      finalYOffset = yOffset
+    } else {
+      // For horseshoe/beeswarm, just capture the single SVG
+      const svg = container.querySelector('svg')
+      if (svg) {
+        const svgRect = svg.getBoundingClientRect()
+        const svgData = new XMLSerializer().serializeToString(svg)
+        const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' })
+        const url = URL.createObjectURL(svgBlob)
+
+        await new Promise<void>((resolve) => {
+          const img = new Image()
+          img.onload = () => {
+            ctx.drawImage(img, padding, contentY, svgRect.width, svgRect.height)
+            finalYOffset = contentY + svgRect.height + 20
+            URL.revokeObjectURL(url)
+            resolve()
+          }
+          img.onerror = () => {
+            URL.revokeObjectURL(url)
+            resolve()
+          }
+          img.src = url
+        })
+      }
+    }
+
+    // Add source text right after content
+    ctx.fillStyle = '#888'
+    ctx.font = "10px 'DM Mono', ui-monospace, monospace"
+    const sourceText = `Source: ${claimCount} sourced claims across ${allEntities.length} entities (${policymakers.length} policymakers, ${orgs.length} orgs). Each claim backed by a verbatim quote and URL.`
+    // Word wrap the source text
+    const maxTextWidth = containerRect.width
+    const words = sourceText.split(' ')
+    let line = ''
+    let sourceY = finalYOffset + 10 // Position right after content
+    for (const word of words) {
+      const testLine = line + word + ' '
+      if (ctx.measureText(testLine).width > maxTextWidth && line !== '') {
+        ctx.fillText(line.trim(), padding, sourceY)
+        line = word + ' '
+        sourceY += 14
+      } else {
+        line = testLine
+      }
+    }
+    ctx.fillText(line.trim(), padding, sourceY)
+
+    // Download
+    const link = document.createElement('a')
+    link.download = `crosspartisan-${view}-${new Date().toISOString().slice(0, 10)}.png`
+    link.href = canvas.toDataURL('image/png')
+    link.click()
+  }
 
   useEffect(() => {
     const handler = (e: Event) => setSelectedEntityId((e as CustomEvent).detail)
@@ -873,14 +1047,27 @@ export function CrosspartisanViz() {
               ? `${partyCounts.D + partyCounts.R} policymakers · ${partyCounts.D} D · ${partyCounts.R} R`
               : `${allEntities.filter((e) => e.aggregate_stance_score != null).length} entities with stance data`}
         </div>
+
+        <button
+          onClick={handleDownload}
+          className="font-mono text-[10px] px-2 py-1 rounded bg-[#f5f5f5] text-[#666] hover:bg-[#eee] ml-auto flex items-center gap-1"
+          title="Download chart as PNG"
+        >
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" />
+          </svg>
+          PNG
+        </button>
       </div>
-      {view === 'by-issue' ? (
-        <PerIssueBeeswarm entityFilter={entityFilter} />
-      ) : view === 'beeswarm' ? (
-        <BeeswarmStance data={allEntities} />
-      ) : (
-        <HorseshoePlot data={allEntities} />
-      )}
+      <div ref={chartContainerRef}>
+        {view === 'by-issue' ? (
+          <PerIssueBeeswarm entityFilter={entityFilter} />
+        ) : view === 'beeswarm' ? (
+          <BeeswarmStance data={allEntities} />
+        ) : (
+          <HorseshoePlot data={allEntities} />
+        )}
+      </div>
       {selectedEntityId != null && (
         <EntityDetailPanel entityId={selectedEntityId} onClose={() => setSelectedEntityId(null)} />
       )}
