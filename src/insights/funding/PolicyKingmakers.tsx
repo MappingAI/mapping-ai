@@ -171,9 +171,30 @@ export function PolicyKingmakers({ edges, showTooltip, hideTooltip }: Props) {
       const barColor = FUNDER_CATEGORY_COLORS[f.category] || '#888'
 
       // Label - wrap long names to two lines
+      // Special handling: "(formerly ...)" always goes on its own line
       const maxChars = 38
       const name = f.name
-      if (name.length > maxChars) {
+      const formerlyMatch = name.match(/^(.+?)(\s*\(formerly.+\))$/)
+
+      if (formerlyMatch) {
+        // Split at "(formerly" to put it on second line
+        const lines = [formerlyMatch[1]!.trim(), formerlyMatch[2]!.trim()]
+        const lineHeight = 10
+        const startY = y + barH / 2 - lineHeight / 2
+
+        lines.forEach((line, j) => {
+          svg
+            .append('text')
+            .attr('x', padL - 8)
+            .attr('y', startY + j * lineHeight)
+            .attr('text-anchor', 'end')
+            .attr('dominant-baseline', 'middle')
+            .attr('font-family', "'DM Mono', monospace")
+            .attr('font-size', 10)
+            .attr('fill', '#333')
+            .text(line)
+        })
+      } else if (name.length > maxChars) {
         const words = name.split(' ')
         const lines: string[] = []
         let currentLine = ''
@@ -276,7 +297,7 @@ export function PolicyKingmakers({ edges, showTooltip, hideTooltip }: Props) {
       'Infrastructure & Compute': 'Infrastructure',
     }
 
-    const legendY = padTop + funderStats.length * (barH + gap) + 15
+    const legendY = padTop + funderStats.length * (barH + gap) + 30
     const midpoint = Math.ceil(usedCategories.length / 2)
     const row1 = usedCategories.slice(0, midpoint)
     const row2 = usedCategories.slice(midpoint)

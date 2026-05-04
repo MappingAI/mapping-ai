@@ -37,12 +37,15 @@ const CATEGORY_COLORS: Record<string, string> = {
   'Think Tank/Policy Org': '#4daf4a',
   'Government/Agency': '#984ea3',
   Academic: '#ff7f00',
+  Researcher: '#ff7f00',
+  'Academic/Researcher': '#ff7f00',
   'VC/Capital/Philanthropy': '#a65628',
   'Labor/Civil Society': '#f781bf',
-  'Ethics/Bias/Rights': '#999999',
+  'Ethics/Bias/Rights': '#ffd700',
   'Media/Journalism': '#66c2a5',
-  'Infrastructure & Compute': '#fc8d62',
-  'Deployers & Platforms': '#8da0cb',
+  'Infrastructure & Compute': '#555555',
+  'Deployers & Platforms': '#17becf',
+  Executive: '#e7298a',
   Unknown: '#cccccc',
 }
 
@@ -192,8 +195,8 @@ export function FundingFlowSankey({ flows, funders, edges }: Props) {
     if (links.length === 0) return
 
     const W = container.clientWidth || 700
-    const H = 580
-    const margin = { top: 20, right: 200, bottom: 80, left: 200 }
+    const H = 620
+    const margin = { top: 20, right: 200, bottom: 120, left: 200 }
 
     const svg = d3.select(container).append('svg').attr('viewBox', `0 0 ${W} ${H}`).attr('width', W).attr('height', H)
 
@@ -339,16 +342,22 @@ export function FundingFlowSankey({ flows, funders, edges }: Props) {
       'Ethics/Bias/Rights': 'Ethics/Rights',
       'Labor/Civil Society': 'Labor/Civil',
       'Media/Journalism': 'Media',
+      'Academic/Researcher': 'Academic/Researcher',
     }
 
+    // Merge Academic and Researcher into one legend item
+    const mergedCategories = recipientCategories
+      .map((cat) => (cat === 'Academic' || cat === 'Researcher' ? 'Academic/Researcher' : cat))
+      .filter((cat, i, arr) => arr.indexOf(cat) === i) // dedupe
+
     // Split categories into two rows
-    const midpoint = Math.ceil(recipientCategories.length / 2)
-    const row1 = recipientCategories.slice(0, midpoint)
-    const row2 = recipientCategories.slice(midpoint)
+    const midpoint = Math.ceil(mergedCategories.length / 2)
+    const row1 = mergedCategories.slice(0, midpoint)
+    const row2 = mergedCategories.slice(midpoint)
 
     const legendStartX = 20
-    const legendY1 = H - 38
-    const legendY2 = H - 20
+    const legendY1 = H - 50
+    const legendY2 = H - 32
 
     svg
       .append('text')

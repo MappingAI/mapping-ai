@@ -1,27 +1,19 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react'
-import { createPortal } from 'react-dom'
+import { ClusterListView as SharedClusterListView, getPointColor, escapeHtml } from '../../components/AgiClusterMap'
+import {
+  MapBeliefsClusterView,
+  type MapBeliefsClusterViewRef,
+  type AgiPoint,
+  type AgiData,
+  type ColorMode,
+  CLUSTER_COLORS,
+  CATEGORY_COLORS,
+  BELIEF_SCALES,
+} from './MapBeliefsClusterView'
 
-interface AgiPoint {
-  entity_id: number
-  name: string
-  entity_type: string
-  category: string
-  definition: string
-  citation: string
-  source_id: string
-  date: string | null
-  confidence: string
-  x: number
-  y: number
-  stance: string | null
-  stance_score: number | null
-  timeline: string | null
-  timeline_score: number | null
-  risk: string | null
-  risk_score: number | null
-  cluster_id: string | null
-  cluster_label: string | null
-}
+// Re-export types for parent component
+export type { AgiPoint, AgiData, MapBeliefsClusterViewRef }
+export { CLUSTER_COLORS, CATEGORY_COLORS, BELIEF_SCALES }
 
 interface AgiSource {
   url: string
@@ -29,82 +21,7 @@ interface AgiSource {
   type: string | null
 }
 
-interface ClusterInfo {
-  id: string
-  label: string
-  description: string
-  count: number
-  cx?: number
-  cy?: number
-}
-
-interface AgiData {
-  points: AgiPoint[]
-  sources: Record<string, AgiSource>
-  clusters?: ClusterInfo[]
-}
-
-type ColorMode = 'cluster' | 'category' | 'stance' | 'timeline' | 'risk'
 type SubView = 'map' | 'list' | 'scatter' | 'timeline' | 'trends'
-
-const CLUSTER_COLORS: Record<string, string> = {
-  'human-level-cognitive-parity': '#4e79a7',
-  'economic-automation': '#f28e2b',
-  'autonomous-research-capability': '#e15759',
-  'superintelligent-systems': '#76b7b2',
-  'general-purpose-agents': '#59a14f',
-  'transformative-societal-impact': '#edc948',
-  'conceptual-critique': '#b07aa1',
-  'augmentative-tools': '#ff9da7',
-}
-
-const BELIEF_SCALES: Record<string, { labels: string[]; colors: string[] }> = {
-  stance: {
-    labels: ['Accelerate', 'Light-touch', 'Targeted', 'Moderate', 'Restrictive', 'Precautionary'],
-    colors: ['#2166ac', '#67a9cf', '#d1e5f0', '#fddbc7', '#ef8a62', '#b2182b'],
-  },
-  timeline: {
-    labels: ['Already here', '2-3 years', '5-10 years', '10-25 years', '25+ years'],
-    colors: ['#d73027', '#fc8d59', '#fee08b', '#91cf60', '#1a9850'],
-  },
-  risk: {
-    labels: ['Overstated', 'Manageable', 'Serious', 'Catastrophic', 'Existential'],
-    colors: ['#4575b4', '#91bfdb', '#fee090', '#fc8d59', '#d73027'],
-  },
-}
-
-const CATEGORY_COLORS: Record<string, string> = {
-  'Frontier Lab': '#e41a1c',
-  'AI Safety/Alignment': '#377eb8',
-  'Think Tank/Policy Org': '#4daf4a',
-  'Government/Agency': '#984ea3',
-  Academic: '#ff7f00',
-  Researcher: '#ff7f00',
-  'VC/Capital/Philanthropy': '#a65628',
-  'Labor/Civil Society': '#f781bf',
-  'Ethics/Bias/Rights': '#f781bf',
-  Executive: '#666',
-  Policymaker: '#984ea3',
-  Investor: '#a65628',
-  'Deployers & Platforms': '#e41a1c',
-  'Infrastructure & Compute': '#e41a1c',
-}
-
-function escapeHtml(s: string): string {
-  return s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!)
-}
-
-function getPointColor(d: AgiPoint, colorMode: ColorMode): string {
-  if (colorMode === 'cluster') return CLUSTER_COLORS[d.cluster_id || ''] || '#ccc'
-  if (colorMode === 'category') return CATEGORY_COLORS[d.category] || '#888'
-  const scoreKey = colorMode === 'stance' ? 'stance_score' : colorMode === 'timeline' ? 'timeline_score' : 'risk_score'
-  const score = d[scoreKey]
-  if (score == null) return '#ddd'
-  const scale = BELIEF_SCALES[colorMode]
-  if (!scale) return '#888'
-  const idx = Math.max(0, Math.min(Math.round(score) - 1, scale.colors.length - 1))
-  return scale.colors[idx] || '#888'
-}
 
 interface QuarterBucket {
   key: string
@@ -205,393 +122,48 @@ function buildTooltipHtml(d: AgiPoint, colorMode: ColorMode): string {
     <div style="font-size:10px;color:var(--text-2);font-style:italic;">${escapeHtml(defText)}</div>`
 }
 
-function DetailModal({ point, source, onClose }: { point: AgiPoint; source: AgiSource | null; onClose: () => void }) {
-  return createPortal(
-    <div
-      style={{
-        position: 'fixed',
-        inset: 0,
-        zIndex: 10000,
-        display: 'flex',
-        alignItems: 'flex-start',
-        justifyContent: 'center',
-        paddingTop: '10vh',
-        background: 'rgba(0,0,0,0.2)',
-      }}
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose()
-      }}
-    >
-      <div
-        style={{
-          background: 'var(--bg-panel)',
-          border: '1px solid var(--line)',
-          borderRadius: '8px',
-          boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
-          overflowY: 'auto',
-          width: '90vw',
-          maxWidth: '520px',
-          maxHeight: '75vh',
-        }}
-      >
-        <div
-          style={{
-            position: 'sticky',
-            top: 0,
-            background: 'var(--bg-panel)',
-            borderBottom: '1px solid var(--line)',
-            padding: '10px 16px',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'flex-start',
-            zIndex: 10,
-            borderRadius: '8px 8px 0 0',
-          }}
-        >
-          <div style={{ minWidth: 0, flex: 1, paddingRight: '16px' }}>
-            <div
-              style={{
-                fontFamily: 'var(--mono)',
-                fontSize: '13px',
-                fontWeight: 500,
-                color: 'var(--text-1)',
-              }}
-            >
-              {point.name}
-            </div>
-            <div style={{ fontFamily: 'var(--mono)', fontSize: '10px', color: 'var(--text-3)', marginTop: '2px' }}>
-              <span style={{ color: CATEGORY_COLORS[point.category] || 'var(--text-3)' }}>{point.category}</span>
-              {point.entity_type === 'organization' ? ' · Organization' : ' · Person'}
-            </div>
-          </div>
-          <button
-            onClick={onClose}
-            style={{
-              fontFamily: 'var(--mono)',
-              fontSize: '16px',
-              color: 'var(--text-3)',
-              padding: '2px 8px',
-              marginRight: '-8px',
-              flexShrink: 0,
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-            }}
-          >
-            ×
-          </button>
-        </div>
-        <div style={{ padding: '12px 16px' }}>
-          <div style={{ marginBottom: '12px' }}>
-            <div
-              style={{
-                fontFamily: 'var(--mono)',
-                fontSize: '10px',
-                letterSpacing: '0.08em',
-                textTransform: 'uppercase' as const,
-                color: 'var(--text-3)',
-                marginBottom: '4px',
-              }}
-            >
-              How they define AGI
-            </div>
-            <div style={{ fontFamily: 'var(--serif)', fontSize: '14px', color: 'var(--text-1)', lineHeight: 1.5 }}>
-              {point.definition}
-            </div>
-          </div>
-          {point.citation && (
-            <div style={{ borderLeft: '2px solid var(--line)', paddingLeft: '12px' }}>
-              <blockquote
-                style={{
-                  fontFamily: 'var(--serif)',
-                  fontSize: '13px',
-                  color: 'var(--text-2)',
-                  lineHeight: 1.45,
-                  fontStyle: 'italic',
-                  margin: 0,
-                }}
-              >
-                &ldquo;{point.citation}&rdquo;
-              </blockquote>
-              {source && (
-                <a
-                  href={source.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    fontFamily: 'var(--mono)',
-                    fontSize: '10px',
-                    color: 'var(--accent)',
-                    display: 'block',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap' as const,
-                    marginTop: '4px',
-                    textDecoration: 'none',
-                  }}
-                >
-                  {source.title || source.url}
-                </a>
-              )}
-              <div style={{ fontFamily: 'var(--mono)', fontSize: '9px', color: 'var(--text-3)', marginTop: '2px' }}>
-                {[source?.type, point.date, point.confidence].filter(Boolean).join(' · ')}
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>,
-    document.body,
-  )
-}
-
-function ClusterMapView({
+// Use shared ClusterListView component for consistent visualization
+function ListView({
   data,
-  colorMode,
-  hoveredCategory,
   onSelect,
+  searchQuery,
+  hiddenClusters,
+  hiddenCategories,
 }: {
   data: AgiData
-  colorMode: ColorMode
-  hoveredCategory: string | null
   onSelect: (p: AgiPoint) => void
+  searchQuery?: string
+  hiddenClusters?: Set<string>
+  hiddenCategories?: Set<string>
 }) {
-  const ref = useRef<HTMLDivElement>(null)
+  // Filter data based on hidden clusters/categories
+  const filteredData = useMemo(() => {
+    if (!hiddenClusters?.size && !hiddenCategories?.size) return data
 
-  useEffect(() => {
-    if (!ref.current || !data.clusters || data.clusters.length === 0) return
-    const container = ref.current
-    container.innerHTML = ''
-
-    const staleTip = document.getElementById('__defview-map-tip')
-    if (staleTip) staleTip.style.opacity = '0'
-
-    const W = container.clientWidth || 700
-    const clusters = data.clusters
-
-    const cxExtent = d3.extent(clusters, (c: ClusterInfo) => c.cx ?? 0) as [number, number]
-    const cyExtent = d3.extent(clusters, (c: ClusterInfo) => c.cy ?? 0) as [number, number]
-
-    const workW = 800
-    const workPad = 120
-    const xScale = d3
-      .scaleLinear()
-      .domain([cxExtent[0] - 1, cxExtent[1] + 1])
-      .range([workPad, workW - workPad])
-    const workH = 600
-    const yScale = d3
-      .scaleLinear()
-      .domain([cyExtent[0] - 1, cyExtent[1] + 1])
-      .range([workH - workPad, workPad])
-
-    const clusterCenters = new Map<string, { x: number; y: number; count: number }>()
-    clusters.forEach((c: ClusterInfo) => {
-      clusterCenters.set(c.id, { x: xScale(c.cx ?? 0), y: yScale(c.cy ?? 0), count: c.count })
+    // Filter points
+    const filteredPoints = data.points.filter((p) => {
+      if (hiddenClusters?.has(p.cluster_id || '')) return false
+      if (hiddenCategories?.has(p.category)) return false
+      return true
     })
 
-    const nodes = data.points
-      .filter((p) => p.cluster_id && clusterCenters.has(p.cluster_id))
-      .map((p) => {
-        const center = clusterCenters.get(p.cluster_id!)!
-        const angle = Math.random() * 2 * Math.PI
-        const r = Math.random() * 30 + 10
-        return { ...p, x: center.x + Math.cos(angle) * r, y: center.y + Math.sin(angle) * r }
-      })
+    // Filter clusters to only show those with visible points
+    const visibleClusterIds = new Set(filteredPoints.map((p) => p.cluster_id))
+    const filteredClusters = (data.clusters || []).filter((c) => visibleClusterIds.has(c.id))
 
-    const sim = d3
-      .forceSimulation(nodes)
-      .force(
-        'x',
-        d3
-          .forceX((d: AgiPoint & { cluster_id: string }) => clusterCenters.get(d.cluster_id)?.x ?? workW / 2)
-          .strength(0.3),
-      )
-      .force(
-        'y',
-        d3
-          .forceY((d: AgiPoint & { cluster_id: string }) => clusterCenters.get(d.cluster_id)?.y ?? workH / 2)
-          .strength(0.3),
-      )
-      .force('collide', d3.forceCollide(6))
-      .force('charge', d3.forceManyBody().strength(-2))
-      .stop()
-    for (let i = 0; i < 200; i++) sim.tick()
-
-    if (nodes.length === 0) return
-
-    const nodeMinX = d3.min(nodes, (d: { x: number }) => d.x) - 10
-    const nodeMaxX = d3.max(nodes, (d: { x: number }) => d.x) + 10
-    const nodeMinY = d3.min(nodes, (d: { y: number }) => d.y) - 10
-    const nodeMaxY = d3.max(nodes, (d: { y: number }) => d.y) + 10
-
-    const labelMargin = 160
-    const vbX = nodeMinX - labelMargin
-    const vbY = nodeMinY - 20
-    const vbW = nodeMaxX - nodeMinX + labelMargin * 2
-    const vbH = nodeMaxY - nodeMinY + 40
-    const availH = (container.closest('#react-view-container')?.clientHeight || window.innerHeight - 48) - 120
-    const naturalH = W * (vbH / vbW)
-    const H = Math.min(naturalH, availH)
-
-    const svg = d3
-      .select(container)
-      .append('svg')
-      .attr('viewBox', `${vbX} ${vbY} ${vbW} ${vbH}`)
-      .attr('width', '100%')
-      .attr('height', H)
-      .attr('preserveAspectRatio', 'xMidYMid meet')
-
-    const tipEl = createTooltip('__defview-map-tip')
-
-    clusters.forEach((c: ClusterInfo) => {
-      const center = clusterCenters.get(c.id)
-      if (!center) return
-      const clusterNodes = nodes.filter((n: AgiPoint) => n.cluster_id === c.id)
-      if (clusterNodes.length === 0) return
-
-      const maxR =
-        d3.max(clusterNodes, (n: { x: number; y: number }) =>
-          Math.sqrt((n.x - center.x) ** 2 + (n.y - center.y) ** 2),
-        ) || 20
-      const midX = (nodeMinX + nodeMaxX) / 2
-      const midY = (nodeMinY + nodeMaxY) / 2
-      const dx = center.x - midX
-      const dy = center.y - midY
-      const dist = Math.sqrt(dx * dx + dy * dy) || 1
-      const labelOffset = maxR + 18
-      const labelX = center.x + (dx / dist) * labelOffset
-      const labelY = center.y + (dy / dist) * labelOffset
-
-      svg
-        .append('text')
-        .attr('x', labelX)
-        .attr('y', labelY)
-        .attr('text-anchor', dx < 0 ? 'end' : dx > 0 ? 'start' : 'middle')
-        .attr('dominant-baseline', dy < 0 ? 'auto' : 'hanging')
-        .attr('font-family', "'DM Mono', monospace")
-        .attr('font-size', 10)
-        .attr('fill', CLUSTER_COLORS[c.id] || '#888')
-        .attr('font-weight', 500)
-        .attr('opacity', 0.8)
-        .text(c.label)
-    })
-
-    svg
-      .selectAll('circle.entity')
-      .data(nodes)
-      .enter()
-      .append('circle')
-      .attr('class', 'entity')
-      .attr('cx', (d: { x: number }) => d.x)
-      .attr('cy', (d: { y: number }) => d.y)
-      .attr('r', 5)
-      .attr('fill', (d: AgiPoint) => getPointColor(d, colorMode))
-      .attr('opacity', 0.85)
-      .attr('stroke', '#fff')
-      .attr('stroke-width', 1)
-      .style('cursor', 'pointer')
-      .on('mouseover', (evt: MouseEvent, d: AgiPoint) => showTip(tipEl, evt, buildTooltipHtml(d, colorMode)))
-      .on('mousemove', (evt: MouseEvent) => moveTip(tipEl, evt))
-      .on('mouseout', () => hideTip(tipEl))
-      .on('click', (_: MouseEvent, d: AgiPoint) => {
-        hideTip(tipEl)
-        onSelect(d)
-      })
-
-    return () => {
-      const tip = document.getElementById('__defview-map-tip')
-      if (tip) tip.remove()
+    return {
+      ...data,
+      points: filteredPoints,
+      clusters: filteredClusters,
     }
-  }, [data, colorMode, onSelect])
-
-  useEffect(() => {
-    if (!ref.current) return
-    d3.select(ref.current)
-      .selectAll('circle.entity')
-      .attr('opacity', (d: AgiPoint) =>
-        colorMode === 'category' && hoveredCategory && d.category !== hoveredCategory ? 0.15 : 0.85,
-      )
-  }, [hoveredCategory, colorMode])
-
-  return <div ref={ref} />
-}
-
-function ListView({ data, onSelect }: { data: AgiData; onSelect: (p: AgiPoint) => void }) {
-  const clusters = data.clusters || []
+  }, [data, hiddenClusters, hiddenCategories])
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-      {[...clusters]
-        .sort((a, b) => b.count - a.count)
-        .map((cluster) => {
-          const entities = data.points.filter((p) => p.cluster_id === cluster.id)
-          return (
-            <div key={cluster.id}>
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginBottom: '6px' }}>
-                <span
-                  style={{
-                    display: 'inline-block',
-                    width: '12px',
-                    height: '12px',
-                    borderRadius: '2px',
-                    flexShrink: 0,
-                    background: CLUSTER_COLORS[cluster.id] || '#ccc',
-                  }}
-                />
-                <span
-                  style={{
-                    fontFamily: 'var(--mono)',
-                    fontSize: '12px',
-                    fontWeight: 500,
-                    color: 'var(--text-1)',
-                  }}
-                >
-                  {cluster.label}
-                </span>
-                <span style={{ fontFamily: 'var(--mono)', fontSize: '10px', color: 'var(--text-3)' }}>
-                  ({cluster.count})
-                </span>
-              </div>
-              <div
-                style={{
-                  fontFamily: 'var(--mono)',
-                  fontSize: '10px',
-                  color: 'var(--text-2)',
-                  marginBottom: '8px',
-                  marginLeft: '20px',
-                }}
-              >
-                {cluster.description}
-              </div>
-              <div style={{ marginLeft: '20px', display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
-                {entities.map((p) => (
-                  <button
-                    key={p.entity_id}
-                    onClick={() => onSelect(p)}
-                    style={{
-                      fontFamily: 'var(--mono)',
-                      fontSize: '9px',
-                      padding: '2px 6px',
-                      borderRadius: '4px',
-                      border: '1px solid var(--line)',
-                      color: 'var(--text-2)',
-                      background: 'none',
-                      cursor: 'pointer',
-                      maxWidth: '180px',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap' as const,
-                    }}
-                    title={p.definition}
-                  >
-                    {p.name}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )
-        })}
-    </div>
+    <SharedClusterListView
+      data={filteredData as Parameters<typeof SharedClusterListView>[0]['data']}
+      onSelect={onSelect as Parameters<typeof SharedClusterListView>[0]['onSelect']}
+      searchQuery={searchQuery}
+    />
   )
 }
 
@@ -600,16 +172,45 @@ function ScatterView({
   colorMode,
   hoveredCategory,
   onSelect,
+  hiddenClusters,
+  hiddenCategories,
+  hiddenBeliefValues,
 }: {
   data: AgiData
   colorMode: ColorMode
   hoveredCategory: string | null
   onSelect: (p: AgiPoint) => void
+  hiddenClusters?: Set<string>
+  hiddenCategories?: Set<string>
+  hiddenBeliefValues?: Set<string>
 }) {
   const ref = useRef<HTMLDivElement>(null)
 
+  // Filter data based on hidden clusters/categories/belief values
+  const filteredData = useMemo(() => {
+    if (!hiddenClusters?.size && !hiddenCategories?.size && !hiddenBeliefValues?.size) return data
+    return {
+      ...data,
+      points: data.points.filter((p) => {
+        if (hiddenClusters?.has(p.cluster_id || '')) return false
+        if (hiddenCategories?.has(p.category)) return false
+        // Check belief dimension filtering
+        if (hiddenBeliefValues && hiddenBeliefValues.size > 0) {
+          if (colorMode === 'stance' && p.stance_score != null) {
+            if (hiddenBeliefValues.has(`stance:${p.stance_score}`)) return false
+          } else if (colorMode === 'timeline' && p.timeline_score != null) {
+            if (hiddenBeliefValues.has(`timeline:${p.timeline_score}`)) return false
+          } else if (colorMode === 'risk' && p.risk_score != null) {
+            if (hiddenBeliefValues.has(`risk:${p.risk_score}`)) return false
+          }
+        }
+        return true
+      }),
+    }
+  }, [data, hiddenClusters, hiddenCategories, hiddenBeliefValues, colorMode])
+
   useEffect(() => {
-    if (!ref.current || !data || data.points.length === 0) return
+    if (!ref.current || !filteredData || filteredData.points.length === 0) return
     const container = ref.current
     container.innerHTML = ''
 
@@ -623,8 +224,8 @@ function ScatterView({
 
     const svg = d3.select(container).append('svg').attr('viewBox', `0 0 ${W} ${H}`).attr('width', W).attr('height', H)
 
-    const xExtent = d3.extent(data.points, (d: AgiPoint) => d.x) as [number, number]
-    const yExtent = d3.extent(data.points, (d: AgiPoint) => d.y) as [number, number]
+    const xExtent = d3.extent(filteredData.points, (d: AgiPoint) => d.x) as [number, number]
+    const yExtent = d3.extent(filteredData.points, (d: AgiPoint) => d.y) as [number, number]
 
     const xScale = d3
       .scaleLinear()
@@ -639,7 +240,7 @@ function ScatterView({
 
     svg
       .selectAll('circle')
-      .data(data.points)
+      .data(filteredData.points)
       .enter()
       .append('circle')
       .attr('cx', (d: AgiPoint) => xScale(d.x))
@@ -662,7 +263,7 @@ function ScatterView({
       const tip = document.getElementById('__defview-scatter-tip')
       if (tip) tip.remove()
     }
-  }, [data, colorMode, onSelect])
+  }, [filteredData, colorMode, onSelect])
 
   useEffect(() => {
     if (!ref.current) return
@@ -1183,7 +784,7 @@ function TimelineView({ data }: { data: AgiData }) {
   )
 }
 
-function Legend({
+function _Legend({
   data,
   colorMode,
   setHoveredCategory,
@@ -1290,30 +891,83 @@ function Legend({
   return null
 }
 
-export function DefinitionsView({ subView, colorMode }: { subView: string; colorMode: string }) {
+export interface DefinitionsViewProps {
+  subView: string
+  colorMode: string
+  onSelect?: (point: AgiPoint, source: AgiSource | null) => void
+  searchQuery?: string
+  highlightedEntityId?: number | null
+  selectedEntityId?: number | null
+  hiddenClusters?: Set<string>
+  hiddenCategories?: Set<string>
+  hiddenBeliefValues?: Set<string>
+  onDataLoaded?: (data: AgiData) => void
+  mapRef?: React.RefObject<MapBeliefsClusterViewRef | null>
+}
+
+export function DefinitionsView({
+  subView,
+  colorMode,
+  onSelect,
+  searchQuery,
+  highlightedEntityId,
+  selectedEntityId,
+  hiddenClusters,
+  hiddenCategories,
+  hiddenBeliefValues,
+  onDataLoaded,
+  mapRef,
+}: DefinitionsViewProps) {
   const viewMode = subView as SubView
   const cm = colorMode as ColorMode
   const [data, setData] = useState<AgiData | null>(null)
-  const [selectedPoint, setSelectedPoint] = useState<AgiPoint | null>(null)
-  const [hoveredCategory, setHoveredCategory] = useState<string | null>(null)
+  const [hoveredCategory, _setHoveredCategory] = useState<string | null>(null)
 
   useEffect(() => {
-    fetch('/data/agi-definitions.json')
-      .then((r) => (r.ok ? r.json() : null))
-      .then((d) => setData(d))
+    // Fetch both AGI definitions and map data to merge thumbnail URLs
+    Promise.all([
+      fetch('/data/agi-definitions.json').then((r) => (r.ok ? r.json() : null)),
+      fetch('/data/map-data.json').then((r) => (r.ok ? r.json() : null)),
+    ])
+      .then(([agiData, mapData]) => {
+        if (agiData && mapData) {
+          // Build thumbnail lookup from map data entities (people + orgs arrays)
+          const thumbnailMap = new Map<number, string>()
+          const allEntities = [...(mapData.people || []), ...(mapData.orgs || [])]
+          allEntities.forEach((entity: { id: number; thumbnail_url?: string }) => {
+            if (entity.thumbnail_url) {
+              thumbnailMap.set(entity.id, entity.thumbnail_url)
+            }
+          })
+          // Merge thumbnails into AGI definition points
+          agiData.points = agiData.points.map((p: AgiPoint) => ({
+            ...p,
+            thumbnail_url: thumbnailMap.get(p.entity_id) || null,
+          }))
+        }
+        setData(agiData)
+        if (agiData && onDataLoaded) onDataLoaded(agiData)
+      })
       .catch(() => {})
 
     return () => {
-      ;['__defview-map-tip', '__defview-scatter-tip'].forEach((id) => {
+      ;['__defview-map-tip', '__defview-scatter-tip', '__beliefs-cluster-tip'].forEach((id) => {
         const el = document.getElementById(id)
         if (el) el.remove()
       })
     }
-  }, [])
+  }, [onDataLoaded])
 
-  const handleSelect = useCallback((p: AgiPoint) => setSelectedPoint(p), [])
+  const handleSelect = useCallback(
+    (p: AgiPoint) => {
+      if (onSelect && data) {
+        onSelect(p, data.sources[p.source_id] || null)
+      }
+    },
+    [onSelect, data],
+  )
 
-  const categories = useMemo(() => {
+  const _categories = useMemo(() => {
     if (!data) return []
     const counts = new Map<string, number>()
     data.points.forEach((p) => counts.set(p.category, (counts.get(p.category) || 0) + 1))
@@ -1332,46 +986,50 @@ export function DefinitionsView({ subView, colorMode }: { subView: string; color
   }
 
   return (
-    <div style={{ padding: '12px 24px', overflow: 'hidden' }}>
+    <div className="beliefs-container" style={{ padding: '12px 24px', overflow: 'hidden' }}>
       {viewMode === 'map' && (
-        <ClusterMapView data={data} colorMode={cm} hoveredCategory={hoveredCategory} onSelect={handleSelect} />
+        <MapBeliefsClusterView
+          ref={mapRef}
+          data={data}
+          colorMode={cm}
+          hoveredCategory={hoveredCategory}
+          onSelect={handleSelect}
+          searchQuery={searchQuery}
+          highlightedEntityId={highlightedEntityId}
+          selectedEntityId={selectedEntityId}
+          hiddenClusters={hiddenClusters}
+          hiddenCategories={hiddenCategories}
+          hiddenBeliefValues={hiddenBeliefValues}
+        />
       )}
-      {viewMode === 'list' && <ListView data={data} onSelect={handleSelect} />}
+      {viewMode === 'list' && (
+        <ListView
+          data={data}
+          onSelect={handleSelect}
+          searchQuery={searchQuery}
+          hiddenClusters={hiddenClusters}
+          hiddenCategories={hiddenCategories}
+        />
+      )}
       {viewMode === 'scatter' && (
-        <ScatterView data={data} colorMode={cm} hoveredCategory={hoveredCategory} onSelect={handleSelect} />
+        <ScatterView
+          data={data}
+          colorMode={cm}
+          hoveredCategory={hoveredCategory}
+          onSelect={handleSelect}
+          hiddenClusters={hiddenClusters}
+          hiddenCategories={hiddenCategories}
+          hiddenBeliefValues={hiddenBeliefValues}
+        />
       )}
       {viewMode === 'timeline' && <TimelineView data={data} />}
       {viewMode === 'trends' && <TrendsView data={data} />}
-
-      {(viewMode === 'map' || viewMode === 'scatter') && (
-        <Legend data={data} colorMode={cm} setHoveredCategory={setHoveredCategory} categories={categories} />
-      )}
-
-      {selectedPoint && (
-        <DetailModal
-          point={selectedPoint}
-          source={data.sources[selectedPoint.source_id] || null}
-          onClose={() => setSelectedPoint(null)}
-        />
-      )}
-
-      <div
-        style={{
-          marginTop: '12px',
-          fontFamily: 'var(--mono)',
-          fontSize: '9px',
-          color: 'var(--text-3)',
-          letterSpacing: '0.04em',
-        }}
-      >
-        Source: AGI definition claims from enrichment pipeline. Embeddings: Voyage AI voyage-3. Projection: UMAP.
-      </div>
 
       <a
         href="/insights#agi-definitions"
         style={{
           display: 'inline-block',
-          marginTop: '8px',
+          marginTop: '12px',
           fontFamily: 'var(--mono)',
           fontSize: '11px',
           color: 'var(--accent)',

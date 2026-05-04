@@ -25,25 +25,56 @@ interface ReachabilityRingsProps {
   maxPeople?: number
 }
 
+// Normalize categories to simplified display groups
+const CATEGORY_NORMALIZE: Record<string, string> = {
+  // People
+  Researcher: 'Researcher',
+  Policymaker: 'Policymaker',
+  Executive: 'Executive',
+  Investor: 'Investor',
+  Organizer: 'Organizer',
+  Journalist: 'Media/Cultural',
+  'Cultural figure': 'Media/Cultural',
+  // Orgs
+  'Government/Agency': 'Government',
+  'Political Campaign/PAC': 'Government',
+  'Think Tank/Policy Org': 'Policy/Advocacy',
+  'Ethics/Bias/Rights': 'Policy/Advocacy',
+  'Labor/Civil Society': 'Policy/Advocacy',
+  'Frontier Lab': 'AI Labs',
+  'Deployers & Platforms': 'AI Labs',
+  'AI Safety/Alignment': 'AI Safety',
+  'VC/Capital/Philanthropy': 'Funders',
+  'Infrastructure & Compute': 'Infrastructure',
+  'Media/Journalism': 'Media',
+}
+
+function normalizeCategory(cat: string, entityType?: string): string {
+  // Academic merges into Researcher for people, stays Academic for orgs
+  if (cat === 'Academic') {
+    return entityType === 'person' ? 'Researcher' : 'Academic'
+  }
+  return CATEGORY_NORMALIZE[cat] || cat
+}
+
+// Colors for normalized categories
 const CATEGORY_COLORS: Record<string, string> = {
-  'Frontier Lab': '#e41a1c',
-  'AI Safety/Alignment': '#377eb8',
-  'Think Tank/Policy Org': '#4daf4a',
-  'Government/Agency': '#984ea3',
-  Academic: '#ff7f00',
-  Researcher: '#ff7f00',
-  'VC/Capital/Philanthropy': '#a65628',
-  'Labor/Civil Society': '#f781bf',
-  'Ethics/Bias/Rights': '#f781bf',
-  Executive: '#e41a1c',
+  // People
   Policymaker: '#984ea3',
+  Executive: '#e41a1c',
+  Researcher: '#ff7f00',
   Investor: '#a65628',
-  Journalist: '#17becf',
   Organizer: '#bcbd22',
-  'Media/Journalism': '#17becf',
-  'Deployers & Platforms': '#e41a1c',
-  'Infrastructure & Compute': '#666',
-  'Political Campaign/PAC': '#984ea3',
+  'Media/Cultural': '#17becf',
+  // Orgs
+  Government: '#984ea3',
+  'Policy/Advocacy': '#4daf4a',
+  'AI Labs': '#e41a1c',
+  'AI Safety': '#377eb8',
+  Funders: '#a65628',
+  Infrastructure: '#666',
+  Media: '#17becf',
+  Academic: '#ff7f00', // same orange as Researcher
 }
 
 type EntityFilter = 'all' | 'people' | 'orgs'
@@ -109,7 +140,7 @@ function entityTooltipHtml(e: Entity, hopLevel?: number): string {
   return `
     <div style="font-weight:500; margin-bottom:2px;">${typeIcon} ${escapeHtml(e.name)}</div>
     <div style="color:#666; font-size:10px;">${escapeHtml(e.title || '')}</div>
-    <div style="color:${CATEGORY_COLORS[e.category] || '#888'}; font-size:10px; margin-top:2px;">${escapeHtml(e.category || '')}</div>
+    <div style="color:${CATEGORY_COLORS[normalizeCategory(e.category, e.entity_type)] || '#888'}; font-size:10px; margin-top:2px;">${escapeHtml(e.category || '')}</div>
     <div style="color:#888; font-size:9px; text-transform:capitalize;">${e.entity_type}</div>
     ${hopLabel}
   `
@@ -227,12 +258,12 @@ function OverflowListModal({
                 {e.entity_type === 'person' ? (
                   <div
                     className="w-3 h-3 rounded-full flex-shrink-0"
-                    style={{ background: CATEGORY_COLORS[e.category] || '#888' }}
+                    style={{ background: CATEGORY_COLORS[normalizeCategory(e.category, e.entity_type)] || '#888' }}
                   />
                 ) : (
                   <div
                     className="w-3 h-3  flex-shrink-0"
-                    style={{ background: CATEGORY_COLORS[e.category] || '#888' }}
+                    style={{ background: CATEGORY_COLORS[normalizeCategory(e.category, e.entity_type)] || '#888' }}
                   />
                 )}
                 <div className="min-w-0 flex-1">
@@ -308,8 +339,8 @@ function CenterPersonModal({ data, onClose }: { data: PersonReachability; onClos
             <span
               className="font-mono text-[9px] tracking-[0.05em] uppercase px-2 py-1 rounded"
               style={{
-                background: `${CATEGORY_COLORS[data.person.category] || '#888'}20`,
-                color: CATEGORY_COLORS[data.person.category] || '#888',
+                background: `${CATEGORY_COLORS[normalizeCategory(data.person.category, 'person')] || '#888'}20`,
+                color: CATEGORY_COLORS[normalizeCategory(data.person.category, 'person')] || '#888',
               }}
             >
               {data.person.category}
@@ -376,12 +407,16 @@ function CenterPersonModal({ data, onClose }: { data: PersonReachability; onClos
                           {e.entity_type === 'person' ? (
                             <div
                               className="w-2 h-2 rounded-full flex-shrink-0"
-                              style={{ background: CATEGORY_COLORS[e.category] || '#888' }}
+                              style={{
+                                background: CATEGORY_COLORS[normalizeCategory(e.category, e.entity_type)] || '#888',
+                              }}
                             />
                           ) : (
                             <div
                               className="w-2 h-2  flex-shrink-0"
-                              style={{ background: CATEGORY_COLORS[e.category] || '#888' }}
+                              style={{
+                                background: CATEGORY_COLORS[normalizeCategory(e.category, e.entity_type)] || '#888',
+                              }}
                             />
                           )}
                           <span className="font-mono text-[10px] text-[#1a1a1a]">{e.name}</span>
@@ -463,8 +498,8 @@ function EntityDetailModal({
             <span
               className="font-mono text-[9px] tracking-[0.05em] uppercase px-2 py-1 rounded"
               style={{
-                background: `${CATEGORY_COLORS[entity.category] || '#888'}20`,
-                color: CATEGORY_COLORS[entity.category] || '#888',
+                background: `${CATEGORY_COLORS[normalizeCategory(entity.category, entity.entity_type)] || '#888'}20`,
+                color: CATEGORY_COLORS[normalizeCategory(entity.category, entity.entity_type)] || '#888',
               }}
             >
               {entity.category}
@@ -485,8 +520,10 @@ function EntityDetailModal({
                       <span
                         className="font-mono text-[10px] font-medium px-1.5 py-0.5 rounded"
                         style={{
-                          background: `${CATEGORY_COLORS[centerPerson.category] || '#888'}20`,
-                          color: CATEGORY_COLORS[centerPerson.category] || '#888',
+                          background: `${CATEGORY_COLORS[normalizeCategory(centerPerson.category, centerPerson.entity_type)] || '#888'}20`,
+                          color:
+                            CATEGORY_COLORS[normalizeCategory(centerPerson.category, centerPerson.entity_type)] ||
+                            '#888',
                         }}
                       >
                         ● {centerPerson.name}
@@ -500,8 +537,10 @@ function EntityDetailModal({
                           <span
                             className="font-mono text-[10px] font-medium px-1.5 py-0.5 rounded"
                             style={{
-                              background: `${CATEGORY_COLORS[step.entity.category] || '#888'}20`,
-                              color: CATEGORY_COLORS[step.entity.category] || '#888',
+                              background: `${CATEGORY_COLORS[normalizeCategory(step.entity.category, step.entity.entity_type)] || '#888'}20`,
+                              color:
+                                CATEGORY_COLORS[normalizeCategory(step.entity.category, step.entity.entity_type)] ||
+                                '#888',
                             }}
                           >
                             {step.entity.entity_type === 'person' ? '●' : '■'} {step.entity.name}
@@ -648,7 +687,7 @@ function ConcentricRingViz({
 
     // Helper to draw entity node (circle for person, rect for org)
     const drawEntityNode = (entity: Entity, x: number, y: number, size: number, opacity: number, hopLevel: number) => {
-      const color = CATEGORY_COLORS[entity.category] || '#888'
+      const color = CATEGORY_COLORS[normalizeCategory(entity.category, entity.entity_type)] || '#888'
       const isPerson = entity.entity_type === 'person'
 
       let node
@@ -806,7 +845,7 @@ function ConcentricRingViz({
       .attr('cx', centerX)
       .attr('cy', centerY)
       .attr('r', centerSize)
-      .attr('fill', CATEGORY_COLORS[data.person.category] || '#1a1a1a')
+      .attr('fill', CATEGORY_COLORS[normalizeCategory(data.person.category, 'person')] || '#1a1a1a')
       .attr('stroke', '#1a1a1a')
       .attr('stroke-width', 2)
 
@@ -862,6 +901,236 @@ export function ReachabilityRings({ entities, edges, maxPeople = 6 }: Reachabili
   } | null>(null)
   const [overflowSelection, setOverflowSelection] = useState<OverflowSelection | null>(null)
   const [entityFilter, setEntityFilter] = useState<EntityFilter>('all')
+  const chartContainerRef = useRef<HTMLDivElement>(null)
+
+  const handleDownload = async () => {
+    if (!chartContainerRef.current) return
+
+    const container = chartContainerRef.current
+
+    const scale = 2
+    const padding = 40
+    const titleHeight = 50
+    const legendHeight = 70
+    const sourceHeight = 50
+    const cardWidth = 360
+    const cardHeight = 400
+    const gap = 24
+    const maxCols = 2
+
+    // Get cards to calculate dimensions
+    const cards = Array.from(container.querySelectorAll('.bg-white'))
+    const totalRows = Math.ceil(cards.length / maxCols)
+    const contentWidth = maxCols * cardWidth + (maxCols - 1) * gap
+    const contentHeight = totalRows * cardHeight + (totalRows - 1) * gap
+
+    const canvasWidth = contentWidth + padding * 2
+    const canvasHeight = titleHeight + legendHeight + contentHeight + sourceHeight + padding * 2
+
+    const canvas = document.createElement('canvas')
+    canvas.width = canvasWidth * scale
+    canvas.height = canvasHeight * scale
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+
+    // Tan/grey background matching insights page
+    ctx.fillStyle = '#f8f7f5'
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
+    ctx.scale(scale, scale)
+
+    // Add title
+    ctx.fillStyle = '#1a1a1a'
+    ctx.font = "600 16px 'DM Mono', ui-monospace, monospace"
+    ctx.fillText('NETWORK REACHABILITY BY PERSON', padding, padding + 16)
+
+    // Add subtitle/caption
+    ctx.fillStyle = '#888'
+    ctx.font = "11px 'DM Mono', ui-monospace, monospace"
+    ctx.fillText(
+      'Concentric rings show 1-hop, 2-hop, and 3-hop connections. Nodes colored by category.',
+      padding,
+      padding + 36,
+    )
+
+    // Draw full color legend
+    const legendY = padding + titleHeight
+    ctx.fillStyle = '#fafafa'
+    ctx.beginPath()
+    ctx.roundRect(padding, legendY, contentWidth, legendHeight - 10, 6)
+    ctx.fill()
+
+    // People legend row
+    let legendX = padding + 12
+    const legendRowY1 = legendY + 18
+
+    // PEOPLE label
+    ctx.fillStyle = '#666'
+    ctx.beginPath()
+    ctx.arc(legendX + 4, legendRowY1, 4, 0, Math.PI * 2)
+    ctx.fill()
+    ctx.fillStyle = '#888'
+    ctx.font = "8px 'DM Mono', ui-monospace, monospace"
+    ctx.fillText('PEOPLE', legendX + 14, legendRowY1 + 3)
+    legendX += 70
+
+    // Person categories
+    const personCats = [
+      { name: 'Policymaker', color: '#984ea3' },
+      { name: 'Executive', color: '#e41a1c' },
+      { name: 'Researcher', color: '#ff7f00' },
+      { name: 'Investor', color: '#a65628' },
+      { name: 'Organizer', color: '#bcbd22' },
+      { name: 'Media/Cultural', color: '#17becf' },
+    ]
+    personCats.forEach((cat) => {
+      ctx.fillStyle = cat.color
+      ctx.beginPath()
+      ctx.arc(legendX + 4, legendRowY1, 4, 0, Math.PI * 2)
+      ctx.fill()
+      ctx.fillStyle = '#666'
+      ctx.font = "9px 'DM Mono', ui-monospace, monospace"
+      ctx.fillText(cat.name, legendX + 12, legendRowY1 + 3)
+      legendX += ctx.measureText(cat.name).width + 24
+    })
+
+    // Orgs legend row
+    legendX = padding + 12
+    const legendRowY2 = legendY + 42
+
+    // ORGS label
+    ctx.fillStyle = '#666'
+    ctx.fillRect(legendX, legendRowY2 - 4, 8, 8)
+    ctx.fillStyle = '#888'
+    ctx.font = "8px 'DM Mono', ui-monospace, monospace"
+    ctx.fillText('ORGS', legendX + 14, legendRowY2 + 3)
+    legendX += 55
+
+    // Org categories
+    const orgCats = [
+      { name: 'Government', color: '#984ea3' },
+      { name: 'Policy/Advocacy', color: '#4daf4a' },
+      { name: 'AI Labs', color: '#e41a1c' },
+      { name: 'Media', color: '#17becf' },
+      { name: 'Funders', color: '#a65628' },
+      { name: 'Infrastructure', color: '#666' },
+      { name: 'Academic', color: '#ff7f00' },
+      { name: 'AI Safety', color: '#377eb8' },
+    ]
+    orgCats.forEach((cat) => {
+      ctx.fillStyle = cat.color
+      ctx.fillRect(legendX, legendRowY2 - 4, 8, 8)
+      ctx.fillStyle = '#666'
+      ctx.font = "9px 'DM Mono', ui-monospace, monospace"
+      ctx.fillText(cat.name, legendX + 12, legendRowY2 + 3)
+      legendX += ctx.measureText(cat.name).width + 24
+    })
+
+    const contentY = padding + titleHeight + legendHeight
+
+    // Draw cards
+    for (let i = 0; i < cards.length; i++) {
+      const card = cards[i] as Element
+      if (!card) continue
+      const col = i % maxCols
+      const row = Math.floor(i / maxCols)
+
+      const xOffset = padding + col * (cardWidth + gap)
+      const yOffset = contentY + row * (cardHeight + gap)
+
+      // Draw card background
+      ctx.fillStyle = '#ffffff'
+      ctx.strokeStyle = '#e0e0e0'
+      ctx.lineWidth = 1
+      ctx.beginPath()
+      ctx.roundRect(xOffset, yOffset, cardWidth, cardHeight, 8)
+      ctx.fill()
+      ctx.stroke()
+
+      // Get card data
+      const nameEl = card.querySelector('.text-\\[12px\\].font-medium')
+      const categoryEl = card.querySelector('.text-\\[8px\\].uppercase')
+      const statsEl = card.querySelector('.text-center.text-\\[10px\\]')
+      const totalEl = card.querySelector('.text-\\[10px\\] .font-medium')
+      const svg = card.querySelector('svg')
+
+      // Draw name
+      if (nameEl) {
+        ctx.fillStyle = '#1a1a1a'
+        ctx.font = "500 13px 'DM Mono', ui-monospace, monospace"
+        ctx.fillText(nameEl.textContent || '', xOffset + 16, yOffset + 26)
+      }
+
+      // Draw category badge
+      if (categoryEl) {
+        const catText = categoryEl.textContent || ''
+        const catColor = (categoryEl as HTMLElement).style.color || '#888'
+        const catBg = (categoryEl as HTMLElement).style.background || `${catColor}20`
+        ctx.fillStyle = catBg
+        const textWidth = ctx.measureText(catText.toUpperCase()).width
+        ctx.beginPath()
+        ctx.roundRect(xOffset + 16, yOffset + 36, textWidth + 12, 18, 4)
+        ctx.fill()
+        ctx.fillStyle = catColor
+        ctx.font = "8px 'DM Mono', ui-monospace, monospace"
+        ctx.fillText(catText.toUpperCase(), xOffset + 22, yOffset + 48)
+      }
+
+      // Draw SVG (concentric rings)
+      if (svg) {
+        const svgData = new XMLSerializer().serializeToString(svg)
+        const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' })
+        const url = URL.createObjectURL(svgBlob)
+
+        await new Promise<void>((resolve) => {
+          const img = new Image()
+          img.onload = () => {
+            const svgSize = 280
+            const svgX = xOffset + (cardWidth - svgSize) / 2
+            ctx.drawImage(img, svgX, yOffset + 60, svgSize, svgSize)
+            URL.revokeObjectURL(url)
+            resolve()
+          }
+          img.onerror = () => {
+            URL.revokeObjectURL(url)
+            resolve()
+          }
+          img.src = url
+        })
+      }
+
+      // Draw hop stats
+      if (statsEl) {
+        ctx.fillStyle = '#888'
+        ctx.font = "10px 'DM Mono', ui-monospace, monospace"
+        ctx.textAlign = 'center'
+        ctx.fillText(statsEl.textContent || '', xOffset + cardWidth / 2, yOffset + 355)
+        ctx.textAlign = 'left'
+      }
+
+      // Draw total
+      if (totalEl) {
+        ctx.fillStyle = '#888'
+        ctx.font = "10px 'DM Mono', ui-monospace, monospace"
+        ctx.fillText(`Total: ${totalEl.textContent}`, xOffset + 16, yOffset + 380)
+      }
+    }
+
+    // Add source text at bottom
+    const finalY = contentY + contentHeight + 25
+    ctx.fillStyle = '#888'
+    ctx.font = "10px 'DM Mono', ui-monospace, monospace"
+    ctx.fillText(
+      `Source: Network analysis of ${entities.length} entities. Score = (1-hop × 3) + (2-hop × 2) + (3-hop × 1).`,
+      padding,
+      finalY,
+    )
+
+    // Download
+    const link = document.createElement('a')
+    link.download = `network-reachability-${new Date().toISOString().slice(0, 10)}.png`
+    link.href = canvas.toDataURL('image/png')
+    link.click()
+  }
 
   const { entityMap, adj, edgeMap } = useMemo(() => {
     const entityMap = new Map(entities.map((e) => [e.id, e]))
@@ -957,14 +1226,15 @@ export function ReachabilityRings({ entities, edges, maxPeople = 6 }: Reachabili
     [overflowSelection, topPeople],
   )
 
-  // Collect categories that appear in the data
+  // Collect normalized categories that appear in the data
   const personCategories = new Set<string>()
   const orgCategories = new Set<string>()
   topPeople.forEach((p) => {
     ;[p.person, ...p.hop1, ...p.hop2, ...p.hop3].forEach((e) => {
       if (e.category) {
-        if (e.entity_type === 'person') personCategories.add(e.category)
-        else orgCategories.add(e.category)
+        const normalized = normalizeCategory(e.category, e.entity_type)
+        if (e.entity_type === 'person') personCategories.add(normalized)
+        else orgCategories.add(normalized)
       }
     })
   })
@@ -975,7 +1245,7 @@ export function ReachabilityRings({ entities, edges, maxPeople = 6 }: Reachabili
 
   return (
     <div>
-      {/* Filter row */}
+      {/* Filter row with download button */}
       <div className="flex items-center gap-2 mb-3">
         <span className="font-mono text-[9px] text-[#888]">Show:</span>
         {(['all', 'people', 'orgs'] as EntityFilter[]).map((f) => (
@@ -989,88 +1259,100 @@ export function ReachabilityRings({ entities, edges, maxPeople = 6 }: Reachabili
             {f === 'all' ? 'All' : f === 'people' ? 'People' : 'Orgs'}
           </button>
         ))}
+
+        <button
+          onClick={handleDownload}
+          className="font-mono text-[10px] px-2 py-1 rounded bg-[#f5f5f5] text-[#666] hover:bg-[#eee] ml-auto flex items-center gap-1"
+          title="Download chart as PNG"
+        >
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" />
+          </svg>
+          PNG
+        </button>
       </div>
 
-      {/* Color legend - organized by entity type */}
-      <div className="bg-[#fafafa] rounded p-3 mb-4 space-y-2">
-        {/* Person categories */}
-        <div className="flex items-start gap-2">
-          <div className="flex items-center gap-1 min-w-[70px]">
-            <div className="w-2 h-2 rounded-full bg-[#666]" />
-            <span className="font-mono text-[8px] text-[#888] uppercase tracking-wide">People</span>
+      <div ref={chartContainerRef}>
+        {/* Color legend - organized by entity type */}
+        <div className="bg-[#fafafa] rounded p-3 mb-4 space-y-2">
+          {/* Person categories */}
+          <div className="flex items-start gap-2">
+            <div className="flex items-center gap-1 min-w-[70px]">
+              <div className="w-2 h-2 rounded-full bg-[#666]" />
+              <span className="font-mono text-[8px] text-[#888] uppercase tracking-wide">People</span>
+            </div>
+            <div className="flex flex-wrap gap-x-3 gap-y-1">
+              {[...personCategories].map((cat) => (
+                <div key={cat} className="flex items-center gap-1">
+                  <div className="w-2 h-2 rounded-full" style={{ background: CATEGORY_COLORS[cat] || '#888' }} />
+                  <span className="font-mono text-[8px] text-[#666]">{cat}</span>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="flex flex-wrap gap-x-3 gap-y-1">
-            {[...personCategories].map((cat) => (
-              <div key={cat} className="flex items-center gap-1">
-                <div className="w-2 h-2 rounded-full" style={{ background: CATEGORY_COLORS[cat] || '#888' }} />
-                <span className="font-mono text-[8px] text-[#666]">{cat}</span>
-              </div>
-            ))}
+
+          {/* Org categories */}
+          <div className="flex items-start gap-2">
+            <div className="flex items-center gap-1 min-w-[70px]">
+              <div className="w-2 h-2 bg-[#666]" />
+              <span className="font-mono text-[8px] text-[#888] uppercase tracking-wide">Orgs</span>
+            </div>
+            <div className="flex flex-wrap gap-x-3 gap-y-1">
+              {[...orgCategories].map((cat) => (
+                <div key={cat} className="flex items-center gap-1">
+                  <div className="w-2 h-2" style={{ background: CATEGORY_COLORS[cat] || '#888' }} />
+                  <span className="font-mono text-[8px] text-[#666]">{cat}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Org categories */}
-        <div className="flex items-start gap-2">
-          <div className="flex items-center gap-1 min-w-[70px]">
-            <div className="w-2 h-2 bg-[#666]" />
-            <span className="font-mono text-[8px] text-[#888] uppercase tracking-wide">Orgs</span>
-          </div>
-          <div className="flex flex-wrap gap-x-3 gap-y-1">
-            {[...orgCategories].map((cat) => (
-              <div key={cat} className="flex items-center gap-1">
-                <div className="w-2 h-2" style={{ background: CATEGORY_COLORS[cat] || '#888' }} />
-                <span className="font-mono text-[8px] text-[#666]">{cat}</span>
+        {/* Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {topPeople.map((data) => (
+            <div key={data.person.id} className="bg-white border border-[#e0e0e0] rounded-lg p-4">
+              <div className="mb-2">
+                <div className="flex items-baseline gap-1.5">
+                  <span className="font-mono text-[12px] font-medium text-[#1a1a1a]">{data.person.name}</span>
+                </div>
+                <span
+                  className="font-mono text-[8px] tracking-[0.05em] uppercase px-1.5 py-0.5 rounded inline-block mt-1"
+                  style={{
+                    background: `${CATEGORY_COLORS[normalizeCategory(data.person.category, 'person')] || '#888'}20`,
+                    color: CATEGORY_COLORS[normalizeCategory(data.person.category, 'person')] || '#888',
+                  }}
+                >
+                  {data.person.category}
+                </span>
               </div>
-            ))}
-          </div>
+
+              <div className="flex justify-center">
+                <ConcentricRingViz
+                  data={data}
+                  onEntityClick={handleEntityClick(data.person, data)}
+                  onOverflowClick={handleOverflowClick(data.person)}
+                />
+              </div>
+
+              <div className="text-center font-mono text-[10px] text-[#888] mt-2">
+                1-hop: {data.hop1.length} · 2-hop: {data.hop2.length} · 3-hop: {data.hop3.length}
+              </div>
+
+              <div className="flex justify-between items-center mt-2 pt-2 border-t border-[#eee]">
+                <div className="font-mono text-[10px] text-[#888]">
+                  Total: <span className="text-[#1a1a1a] font-medium">{data.totalReach}</span>
+                </div>
+                <a
+                  href={`/map.html?entity=${getMapSlug(data.person)}`}
+                  className="font-mono text-[9px] text-[#2563eb] hover:underline"
+                >
+                  View on map →
+                </a>
+              </div>
+            </div>
+          ))}
         </div>
-      </div>
-
-      {/* Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {topPeople.map((data, rank) => (
-          <div key={data.person.id} className="bg-white border border-[#e0e0e0] rounded-lg p-4">
-            <div className="mb-2">
-              <div className="flex items-baseline gap-1.5">
-                <span className="font-mono text-[12px] font-medium text-[#2563eb]">{rank + 1}.</span>
-                <span className="font-mono text-[12px] font-medium text-[#1a1a1a]">{data.person.name}</span>
-              </div>
-              <span
-                className="font-mono text-[8px] tracking-[0.05em] uppercase px-1.5 py-0.5 rounded inline-block mt-1"
-                style={{
-                  background: `${CATEGORY_COLORS[data.person.category] || '#888'}20`,
-                  color: CATEGORY_COLORS[data.person.category] || '#888',
-                }}
-              >
-                {data.person.category}
-              </span>
-            </div>
-
-            <div className="flex justify-center">
-              <ConcentricRingViz
-                data={data}
-                onEntityClick={handleEntityClick(data.person, data)}
-                onOverflowClick={handleOverflowClick(data.person)}
-              />
-            </div>
-
-            <div className="text-center font-mono text-[10px] text-[#888] mt-2">
-              1-hop: {data.hop1.length} · 2-hop: {data.hop2.length} · 3-hop: {data.hop3.length}
-            </div>
-
-            <div className="flex justify-between items-center mt-2 pt-2 border-t border-[#eee]">
-              <div className="font-mono text-[10px] text-[#888]">
-                Total: <span className="text-[#1a1a1a] font-medium">{data.totalReach}</span>
-              </div>
-              <a
-                href={`/map.html?entity=${getMapSlug(data.person)}`}
-                className="font-mono text-[9px] text-[#2563eb] hover:underline"
-              >
-                View on map →
-              </a>
-            </div>
-          </div>
-        ))}
       </div>
 
       {/* Modals */}
