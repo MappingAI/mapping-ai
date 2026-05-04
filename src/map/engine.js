@@ -6293,11 +6293,13 @@ ${dots}
 
   function switchToNetworkView(callback) {
     viewMode = 'network'
+    currentView = localStorage.getItem('mapSubView') || 'all'
     localStorage.setItem('mapMode', 'network')
     document.querySelectorAll('.mode-btn').forEach((b) => b.classList.toggle('active', b.dataset.mode === 'network'))
     requestAnimationFrame(() => {
       applyViewState()
-      setTimeout(callback, 800)
+      render()
+      setTimeout(callback, 1200)
     })
   }
 
