@@ -1232,16 +1232,21 @@ export function App() {
                   href="#"
                   onClick={(e) => {
                     e.preventDefault()
+                    const entityId = beliefsSelectedPoint.point.entity_id
+                    setBeliefsSelectedPoint(null)
                     setReactView(null)
                     setEngineMode('network')
                     const networkBtn = document.querySelector('.mode-btn[data-mode="network"]') as HTMLElement | null
                     if (networkBtn) networkBtn.click()
+                    setTimeout(() => window.dispatchEvent(new Event('resize')), 100)
                     setTimeout(() => {
                       const engine = (
                         window as unknown as { __mapEngine?: { navigateToEntity: (id: number) => boolean } }
                       ).__mapEngine
-                      if (engine) engine.navigateToEntity(beliefsSelectedPoint.point.entity_id)
-                    }, 600)
+                      if (engine && !engine.navigateToEntity(entityId)) {
+                        setTimeout(() => engine.navigateToEntity(entityId), 1000)
+                      }
+                    }, 800)
                   }}
                   style={{
                     fontFamily: 'var(--mono)',
