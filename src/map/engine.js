@@ -6259,7 +6259,28 @@ ${dots}
     })
   }
 
-  window.__mapEngine = { showDetail, allData }
+  function navigateToEntity(entityId) {
+    const renderedNodes = _canvasNodes.length > 0 ? _canvasNodes : []
+    const node = renderedNodes.find((n) => n.id === entityId)
+    if (!node) return false
+    showDetail(node, renderedNodes)
+    dimUnconnected(node)
+    const zoomTarget = _canvasSel
+    const mapEl = document.getElementById('map-container')
+    if (zoomTarget && mapEl) {
+      const k = 3
+      zoomTarget
+        .transition()
+        .duration(500)
+        .call(
+          zoomBehavior.transform,
+          d3.zoomIdentity.translate(mapEl.clientWidth / 2 - k * node.x, mapEl.clientHeight / 2 - k * node.y).scale(k),
+        )
+    }
+    return true
+  }
+
+  window.__mapEngine = { showDetail, allData, navigateToEntity }
 
   return {
     destroy() {
