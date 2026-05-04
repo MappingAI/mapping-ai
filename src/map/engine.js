@@ -302,6 +302,7 @@ export function initMapEngine() {
     const url = d.thumbnail_url
     if (!url) return
     const img = new Image()
+    img.crossOrigin = 'anonymous'
     img.referrerPolicy = 'no-referrer'
     img.onload = () => onSuccess(url)
     img.src = url
@@ -3470,22 +3471,29 @@ export function initMapEngine() {
 
     // Download map as PNG
     document.getElementById('download-map').onclick = () => {
-      canvas.toBlob((blob) => {
+      function downloadBlob(blob, filename) {
         if (!blob) return
-        let filename = 'mapping-ai'
-        if (viewMode === 'plot') {
-          filename += '-plot-' + axisX + (axisMode === '2d' ? '-vs-' + axisY : '')
-        } else {
-          filename += '-network-' + currentView
-        }
-        filename += '.png'
         const url = URL.createObjectURL(blob)
         const a = document.createElement('a')
         a.href = url
         a.download = filename
+        document.body.appendChild(a)
         a.click()
-        URL.revokeObjectURL(url)
-      }, 'image/png')
+        document.body.removeChild(a)
+        setTimeout(() => URL.revokeObjectURL(url), 100)
+      }
+      let filename = 'mapping-ai'
+      if (viewMode === 'plot') {
+        filename += '-plot-' + axisX + (axisMode === '2d' ? '-vs-' + axisY : '')
+      } else {
+        filename += '-network-' + currentView
+      }
+      filename += '.png'
+      try {
+        canvas.toBlob((blob) => downloadBlob(blob, filename), 'image/png')
+      } catch (_) {
+        alert('Could not export — thumbnail images blocked the download. Try reloading the page.')
+      }
     }
 
     // Canvas hover (tooltip for nodes and edges)
@@ -3944,17 +3952,23 @@ export function initMapEngine() {
     }
 
     document.getElementById('download-map').onclick = () => {
-      canvas.toBlob((blob) => {
+      function downloadBlob(blob, filename) {
         if (!blob) return
-        let filename = 'mapping-ai-plot-' + axisX + (axisMode === '2d' ? '-vs-' + axisY : '')
-        filename += '.png'
         const url = URL.createObjectURL(blob)
         const a = document.createElement('a')
         a.href = url
         a.download = filename
+        document.body.appendChild(a)
         a.click()
-        URL.revokeObjectURL(url)
-      }, 'image/png')
+        document.body.removeChild(a)
+        setTimeout(() => URL.revokeObjectURL(url), 100)
+      }
+      const filename = 'mapping-ai-plot-' + axisX + (axisMode === '2d' ? '-vs-' + axisY : '') + '.png'
+      try {
+        canvas.toBlob((blob) => downloadBlob(blob, filename), 'image/png')
+      } catch (_) {
+        alert('Could not export — thumbnail images blocked the download. Try reloading the page.')
+      }
     }
 
     canvasSel.on('mousemove.hover', function (event) {
