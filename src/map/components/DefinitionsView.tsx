@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import { createPortal } from 'react-dom'
+import { MapBeliefsClusterView } from './MapBeliefsClusterView'
 import type { MapBeliefsClusterViewRef } from './MapBeliefsClusterView'
 export type { MapBeliefsClusterViewRef }
 
@@ -391,7 +392,7 @@ function DetailModal({ point, source, onClose }: { point: AgiPoint; source: AgiS
   )
 }
 
-function ClusterMapView({
+function _ClusterMapView({
   data,
   colorMode,
   hoveredCategory,
@@ -1777,7 +1778,16 @@ export function DefinitionsView({
     }
   }, [])
 
-  const handleSelect = useCallback((p: AgiPoint) => setSelectedPoint(p), [])
+  const handleSelect = useCallback(
+    (p: AgiPoint) => {
+      if (_onSelect && data) {
+        _onSelect(p, data.sources[p.source_id] || null)
+      } else {
+        setSelectedPoint(p)
+      }
+    },
+    [_onSelect, data],
+  )
 
   const categories = useMemo(() => {
     if (!data) return []
@@ -1806,7 +1816,19 @@ export function DefinitionsView({
   return (
     <div style={{ padding: '8px 16px' }}>
       {viewMode === 'map' && (
-        <ClusterMapView data={data} colorMode={cm} hoveredCategory={hoveredCategory ?? null} onSelect={handleSelect} />
+        <MapBeliefsClusterView
+          ref={_mapRef}
+          data={data}
+          colorMode={cm}
+          hoveredCategory={hoveredCategory ?? null}
+          onSelect={handleSelect}
+          searchQuery={_searchQuery}
+          highlightedEntityId={_highlightedEntityId}
+          selectedEntityId={_selectedEntityId}
+          hiddenClusters={_hiddenClusters}
+          hiddenCategories={_hiddenCategories}
+          hiddenBeliefValues={_hiddenBeliefValues}
+        />
       )}
       {viewMode === 'list' && <ListView data={data} onSelect={handleSelect} />}
       {viewMode === 'scatter' && (
