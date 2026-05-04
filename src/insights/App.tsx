@@ -1273,7 +1273,7 @@ export function App() {
           <>
             <ChartContainer
               title="Funding flows: Top funders → recipient categories"
-              source="Top 12 funders by investment count in our sample. Width = number of tracked investments to each category. Click any flow for details."
+              source="Shows how funding flows from top funders (left) to recipient organization types (right). Width = number of investments. Click any flow for details."
             >
               <FundingFlowSankey flows={fundingData.flows} funders={fundingData.funders} edges={fundingData.edges} />
             </ChartContainer>
@@ -1345,7 +1345,7 @@ export function App() {
 
             <ChartContainer
               title="Funder diversity vs single-category funding"
-              source="Policy orgs with 2+ funders. Diverse = 3+ funder categories; Single = all funders same type."
+              source="Left: funding from 3+ funder types. Right: all funders are the same type. Click any name for details."
             >
               <FunderDiversity edges={fundingData.edges} showTooltip={showTooltip} hideTooltip={hideTooltip} />
             </ChartContainer>

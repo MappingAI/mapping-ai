@@ -145,11 +145,11 @@ export function OutlierStancesScatter({ entities, onSelectEntity }: OutlierStanc
           .attr('text-anchor', 'end'),
       )
 
-    // X axis label
+    // X axis label - closer to bottom edge
     svg
       .append('text')
       .attr('x', W / 2)
-      .attr('y', H - 8)
+      .attr('y', H - 2)
       .attr('text-anchor', 'middle')
       .attr('font-family', "'DM Mono', monospace")
       .attr('font-size', 10)
@@ -172,12 +172,12 @@ export function OutlierStancesScatter({ entities, onSelectEntity }: OutlierStanc
         g.selectAll('.tick text').attr('font-family', "'DM Mono', monospace").attr('font-size', 9).attr('fill', '#666'),
       )
 
-    // Y axis label
+    // Y axis label - closer to left edge
     svg
       .append('text')
       .attr('transform', `rotate(-90)`)
       .attr('x', -H / 2)
-      .attr('y', 15)
+      .attr('y', 12)
       .attr('text-anchor', 'middle')
       .attr('font-family', "'DM Mono', monospace")
       .attr('font-size', 10)

@@ -38,17 +38,19 @@ interface DetailCard {
 }
 
 const FUNDER_CATEGORY_COLORS: Record<string, string> = {
-  'VC/Capital/Philanthropy': '#a65628',
-  'Government/Agency': '#984ea3',
-  'Deployers & Platforms': '#8da0cb',
   'Frontier Lab': '#e41a1c',
   'AI Safety/Alignment': '#377eb8',
-  'Infrastructure & Compute': '#fc8d62',
   'Think Tank/Policy Org': '#4daf4a',
-  Investor: '#ff7f00',
-  Executive: '#66c2a5',
-  Researcher: '#e78ac3',
-  Academic: '#ffd92f',
+  'Government/Agency': '#984ea3',
+  'VC/Capital/Philanthropy': '#a65628',
+  'Deployers & Platforms': '#17becf',
+  'Infrastructure & Compute': '#555555',
+  Academic: '#ff7f00',
+  Researcher: '#ff7f00',
+  'Academic/Researcher': '#ff7f00',
+  Investor: '#d95f02',
+  Executive: '#e7298a',
+  Organizer: '#7fc97f',
   Unknown: '#cccccc',
 }
 
@@ -129,9 +131,16 @@ export function FunderDiversity({ edges, showTooltip, hideTooltip }: Props) {
     const container = ref.current
     container.innerHTML = ''
 
-    // Filter to policy-relevant recipient categories
-    const policyCategories = ['Think Tank/Policy Org', 'AI Safety/Alignment', 'Ethics/Bias/Rights']
-    const policyEdges = edges.filter((e) => policyCategories.includes(e.recipient_category))
+    // Filter to think tanks, advocacy groups, and select AI Safety orgs
+    const policyCategories = ['Think Tank/Policy Org', 'Ethics/Bias/Rights']
+    const aiSafetyWhitelist = [
+      'Machine Intelligence Research Institute (MIRI)',
+      'Epoch AI',
+      'The Alignment Project',
+    ]
+    const policyEdges = edges.filter(
+      (e) => policyCategories.includes(e.recipient_category) || aiSafetyWhitelist.includes(e.recipient),
+    )
 
     // Aggregate by recipient
     const byRecipient = d3.group(policyEdges, (e: FundingEdge) => e.recipient) as Map<string, FundingEdge[]>
@@ -255,7 +264,7 @@ export function FunderDiversity({ edges, showTooltip, hideTooltip }: Props) {
 
       // Org name - wrap to two lines if needed
       const textStartX = 20 + o.categoryCounts.slice(0, 5).length * dotSpacing
-      const maxChars = 22
+      const maxChars = 32
       const name = o.name
 
       let textNode: SVGTextElement | null = null
@@ -274,9 +283,9 @@ export function FunderDiversity({ edges, showTooltip, hideTooltip }: Props) {
         })
         if (currentLine) lines.push(currentLine)
 
-        if (lines.length > 2) {
-          lines[1] = lines[1]!.slice(0, maxChars - 3) + '...'
-          lines.length = 2
+        // Allow up to 3 lines for long names
+        if (lines.length > 3) {
+          lines.length = 3
         }
 
         const lineHeight = 10
@@ -358,7 +367,7 @@ export function FunderDiversity({ edges, showTooltip, hideTooltip }: Props) {
 
       // Org name - wrap to two lines if needed
       const textStartX = colW + 42
-      const maxChars = 22
+      const maxChars = 32
       const name = o.name
 
       let textNode: SVGTextElement | null = null
@@ -377,9 +386,9 @@ export function FunderDiversity({ edges, showTooltip, hideTooltip }: Props) {
         })
         if (currentLine) lines.push(currentLine)
 
-        if (lines.length > 2) {
-          lines[1] = lines[1]!.slice(0, maxChars - 3) + '...'
-          lines.length = 2
+        // Allow up to 3 lines for long names
+        if (lines.length > 3) {
+          lines.length = 3
         }
 
         const lineHeight = 10
@@ -519,19 +528,7 @@ export function FunderDiversity({ edges, showTooltip, hideTooltip }: Props) {
       })
     }
 
-    // Summary annotation
-    const annotationY = H - 8
-    svg
-      .append('text')
-      .attr('x', W / 2)
-      .attr('y', annotationY)
-      .attr('text-anchor', 'middle')
-      .attr('font-family', "'DM Mono', monospace")
-      .attr('font-size', 9)
-      .attr('fill', '#888')
-      .text(
-        `${diverseOrgs.length} orgs with diverse funding vs ${singleCategoryOrgs.length} funded by single funder type`,
-      )
+    // Summary annotation - removed, column headers are self-explanatory
   }, [edges, showTooltip, hideTooltip])
 
   return (

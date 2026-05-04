@@ -48,9 +48,13 @@ const FUNDER_CATEGORY_COLORS: Record<string, string> = {
   'AI Safety/Alignment': '#377eb8',
   'Infrastructure & Compute': '#fc8d62',
   'Think Tank/Policy Org': '#4daf4a',
+  'Ethics/Bias/Rights': '#e7298a',
+  'Labor/Civil Society': '#66a61e',
+  'Media/Journalism': '#e6ab02',
   Investor: '#ff7f00',
   Executive: '#66c2a5',
   Researcher: '#e78ac3',
+  Organizer: '#7570b3',
   Academic: '#ffd92f',
   Unknown: '#cccccc',
 }
@@ -128,8 +132,8 @@ export function FundingFragility({ edges, showTooltip, hideTooltip }: Props) {
     const container = ref.current
     container.innerHTML = ''
 
-    // Filter to policy-relevant recipient categories
-    const policyCategories = ['Think Tank/Policy Org', 'AI Safety/Alignment', 'Ethics/Bias/Rights']
+    // Filter to policy/advocacy orgs only (exclude AI Safety/Alignment research orgs)
+    const policyCategories = ['Think Tank/Policy Org', 'Ethics/Bias/Rights']
     const policyEdges = edges.filter((e) => policyCategories.includes(e.recipient_category))
 
     // Aggregate by recipient
@@ -155,7 +159,13 @@ export function FundingFragility({ edges, showTooltip, hideTooltip }: Props) {
             x0: 0,
             x1: 0,
           }))
-          .sort((a, b) => b.count - a.count)
+          .sort((a, b) => {
+            // Show known categories before Unknown
+            if (a.category === 'Unknown' && b.category !== 'Unknown') return 1
+            if (a.category !== 'Unknown' && b.category === 'Unknown') return -1
+            // Then sort by count
+            return b.count - a.count
+          })
 
         // Calculate x positions for stacked bar
         let cumulative = 0
@@ -178,10 +188,27 @@ export function FundingFragility({ edges, showTooltip, hideTooltip }: Props) {
         }
       })
       .filter((r) => r.funders.length >= 2) // Only show orgs with 2+ funders
-      .sort((a, b) => b.topFunderShare - a.topFunderShare) // Sort by concentration risk
-      .slice(0, 16)
 
-    if (recipientData.length === 0) return
+    // Select most compelling from each concentration tier: 1 high, 4 med, 4 low
+    const high = recipientData
+      .filter((r) => r.topFunderShare > 0.6)
+      .sort((a, b) => b.topFunderShare - a.topFunderShare) // Highest concentration first
+      .slice(0, 1) // Only 1 high-concentration policy org exists
+    const moderate = recipientData
+      .filter((r) => r.topFunderShare > 0.4 && r.topFunderShare <= 0.6)
+      .sort((a, b) => b.totalGrants - a.totalGrants) // Most grants = most representative
+      .slice(0, 4)
+    const low = recipientData
+      .filter((r) => r.topFunderShare <= 0.4)
+      .sort((a, b) => b.funders.length - a.funders.length) // Most funders = most diversified
+      .slice(0, 4)
+
+    // Combine and sort by concentration (high to low) for display
+    const selectedRecipients = [...high, ...moderate, ...low].sort(
+      (a, b) => b.topFunderShare - a.topFunderShare,
+    )
+
+    if (selectedRecipients.length === 0) return
 
     const W = container.clientWidth || 660
     const barH = 22
@@ -190,7 +217,7 @@ export function FundingFragility({ edges, showTooltip, hideTooltip }: Props) {
     const padR = 15
     const padTop = 45
     const legendH = 90
-    const H = recipientData.length * (barH + gap) + padTop + legendH
+    const H = selectedRecipients.length * (barH + gap) + padTop + legendH
 
     const svg = d3.select(container).append('svg').attr('viewBox', `0 0 ${W} ${H}`).attr('width', W).attr('height', H)
 
@@ -227,7 +254,7 @@ export function FundingFragility({ edges, showTooltip, hideTooltip }: Props) {
         .attr('x1', xScale(v))
         .attr('x2', xScale(v))
         .attr('y1', 28)
-        .attr('y2', padTop + recipientData.length * (barH + gap) - 5)
+        .attr('y2', padTop + selectedRecipients.length * (barH + gap) - 5)
         .attr('stroke', v === 0.5 ? '#ddd' : '#f0f0f0')
         .attr('stroke-dasharray', v === 0.5 ? '4,4' : 'none')
 
@@ -251,7 +278,7 @@ export function FundingFragility({ edges, showTooltip, hideTooltip }: Props) {
       return '#22c55e'
     }
 
-    recipientData.forEach((r, i) => {
+    selectedRecipients.forEach((r, i) => {
       const y = padTop + i * (barH + gap)
 
       // Risk indicator
@@ -347,7 +374,7 @@ export function FundingFragility({ edges, showTooltip, hideTooltip }: Props) {
     })
 
     // Legend
-    const legendY = padTop + recipientData.length * (barH + gap) + 28
+    const legendY = padTop + selectedRecipients.length * (barH + gap) + 28
 
     // Risk legend
     svg
@@ -381,7 +408,7 @@ export function FundingFragility({ edges, showTooltip, hideTooltip }: Props) {
     })
 
     // Funder category legend - dynamically show all categories used
-    const usedCategories = [...new Set(recipientData.flatMap((r) => r.funders.map((f) => f.category)))]
+    const usedCategories = [...new Set(selectedRecipients.flatMap((r) => r.funders.map((f) => f.category)))]
     const shortLabels: Record<string, string> = {
       'VC/Capital/Philanthropy': 'VC/Philanthropy',
       'Think Tank/Policy Org': 'Think Tank',

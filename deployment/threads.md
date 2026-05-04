@@ -204,6 +204,8 @@ VC-funded orgs avg 2.5 (light-touch). Philanthropic: 4.7 (precautionary). The ga
 
 `[ATTACH: insights-funding-stance.png]`
 
+![Funding model vs stance](images/insights-funding-stance.png)
+
 *Note: Setup + punchline in one tweet. Dot plot showing funding model vs stance.*
 
 ### Tweet 2 [280/280 - OK]
@@ -220,15 +222,21 @@ This totals 68 connections to 117 policy orgs.
 
 `[ATTACH: insights-kingmakers.png]`
 
+![Top funders kingmakers](images/insights-kingmakers.png)
+
 *Note: Kingmakers chart. Power-law concentration.*
 
-### Tweet 3 [188/280 - OK]
+### Tweet 3 [201/280 - OK]
 
-We track concentration risk, how much of an org's funding comes from one source.
+We track concentration risk. How much of an org's funding comes from a single source?
 
-43% of policy orgs get 40%+ from a single funder. Does money shape the message?
+43% of policy orgs get 40%+ from a single source. Others spread across 7+ funder types.
+
+Does money shape the message?
 
 `[ATTACH: insights-fragility.png]`
+
+![Funding fragility](images/insights-fragility.png)
 
 *Note: FundingFragility chart with concentration risk indicators.*
 
@@ -241,6 +249,8 @@ Tech company money (@Google, @Microsoft, @Amazon) flows to Frontier Labs and Inf
 @a16z funds Deployers & Platforms almost exclusively.
 
 `[ATTACH: insights-funding-sankey.png]`
+
+![Funding flow sankey](images/insights-funding-sankey.png)
 
 *Note: Sankey with interpretation. Supporting detail, not the hook.*
 
@@ -268,6 +278,8 @@ Y: When do they think AGI arrives?
 Some striking outliers emerge.
 
 `[ATTACH: insights-outliers-2d-bottom.png]`
+
+![Outliers 2D chart](images/insights-outliers-2d-bottom.png)
 
 *Note: The 2D outlier chart with labeled names. The main viral image.*
 
@@ -306,6 +318,8 @@ mapping-ai.org/insights (scroll to Outliers)
 
 `[ATTACH: map-plot.png]`
 
+![Map plot view](images/map-plot.png)
+
 *Note: CTA with the interactive Plot view.*
 
 ---
@@ -324,6 +338,8 @@ The precautionary wings of both parties converge at the bottom.
 
 `[ATTACH: insights-horseshoe.png]`
 
+![Horseshoe visualization](images/insights-horseshoe.png)
+
 *Note: The horseshoe viz is the hero image. Extremely shareable.*
 
 ### Tweet 2 [258/280 - OK]
@@ -335,6 +351,8 @@ On open-weight model restrictions: similar spread on both sides.
 The left-right frame misses the real fault lines.
 
 `[ATTACH: insights-crosspartisan.png]`
+
+![Crosspartisan by-issue](images/insights-crosspartisan.png)
 
 *Note: By-issue beeswarms showing bipartisan spread.*
 
