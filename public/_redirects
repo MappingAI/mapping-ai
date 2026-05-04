@@ -1,0 +1,4 @@
+# Deep slug rewrites: serve map.html for entity slug URLs
+/map/person/* /map.html 200
+/map/org/* /map.html 200
+/map/resource/* /map.html 200

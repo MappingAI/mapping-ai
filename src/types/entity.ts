@@ -3,6 +3,7 @@ export interface Entity {
   id: number
   entity_type: 'person' | 'organization' | 'resource'
   name: string
+  slug: string | null
   category: string | null
   other_categories: string | null
   title: string | null
