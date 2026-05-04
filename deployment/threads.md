@@ -80,7 +80,7 @@ The Network view shows who's connected to whom.
 
 Click any node to see their relationships light up. Filter by category to focus on specific communities.
 
-Here's @timnitGebru's network.
+Here's @timnitGebru's network, including collaborator @emilymbender.
 
 `[ATTACH: map-network-selected.png]`
 
