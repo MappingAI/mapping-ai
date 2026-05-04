@@ -40,24 +40,20 @@ export function App() {
   const [hiddenCategories, setHiddenCategories] = useState<Set<string>>(new Set())
   const [hiddenBeliefValues, setHiddenBeliefValues] = useState<Set<string>>(new Set()) // e.g., "stance:1", "timeline:3"
 
-  const engineRef = useRef<{ destroy: () => void } | null>(null)
   useEffect(() => {
-    if (engineRef.current) return
+    let engineCleanup: { destroy: () => void } | null = null
     let cancelled = false
 
     import('./engine.js')
       .then(({ initMapEngine }) => {
         if (cancelled) return
-        engineRef.current = initMapEngine()
+        engineCleanup = initMapEngine()
       })
       .catch((err) => console.error('Failed to load map engine:', err))
 
     return () => {
       cancelled = true
-      if (engineRef.current) {
-        engineRef.current.destroy()
-        engineRef.current = null
-      }
+      if (engineCleanup) engineCleanup.destroy()
     }
   }, [])
 
