@@ -163,7 +163,7 @@ export const MapBeliefsClusterView = forwardRef<MapBeliefsClusterViewRef, MapBel
         radius: clusterRadius(c.count),
       }))
 
-      // Run force simulation to spread clusters apart while respecting UMAP positions
+      // Pre-run most of simulation synchronously for initial layout
       const simulation = d3
         .forceSimulation(clusterNodes)
         .force('x', d3.forceX((d: ClusterNode) => d.targetX).strength(0.3))
@@ -171,8 +171,7 @@ export const MapBeliefsClusterView = forwardRef<MapBeliefsClusterViewRef, MapBel
         .force('collide', d3.forceCollide((d: ClusterNode) => d.radius + 35).strength(0.8))
         .stop()
 
-      // Run simulation synchronously
-      for (let i = 0; i < 150; i++) simulation.tick()
+      for (let i = 0; i < 120; i++) simulation.tick()
 
       // Pack nodes within each cluster using hexagonal grid
       function hexPack(count: number, cx: number, cy: number) {
@@ -510,12 +509,24 @@ export const MapBeliefsClusterView = forwardRef<MapBeliefsClusterViewRef, MapBel
       })
 
       // Entity groups (for circles with images or initials)
+      // Start from cluster center, animate to final hex-packed position
+      const clusterCenterMap = new Map(clusterNodes.map((c) => [c.id, { x: c.x, y: c.y }]))
       const nodeGroups = mainGroup
         .selectAll('g.entity')
         .data(nodes)
         .enter()
         .append('g')
         .attr('class', 'entity')
+        .attr('transform', (d: AgiPoint & { x: number; y: number }) => {
+          const center = clusterCenterMap.get(d.cluster_id || '')
+          return center ? `translate(${center.x},${center.y})` : `translate(${d.x},${d.y})`
+        })
+
+      nodeGroups
+        .transition()
+        .duration(800)
+        .delay((_d: unknown, i: number) => i * 2)
+        .ease(d3.easeCubicOut)
         .attr('transform', (d: { x: number; y: number }) => `translate(${d.x},${d.y})`)
         .style('cursor', 'pointer')
         .style('opacity', (d: AgiPoint) => {
