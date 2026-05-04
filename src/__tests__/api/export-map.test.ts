@@ -78,6 +78,11 @@ describe('toFrontendShape', () => {
     expect(shaped.ai_risk_level).toBe('Serious')
   })
 
+  it('passes slug through to frontend shape', () => {
+    const shaped = toFrontendShape(baseEntityRow({ slug: 'dario-amodei' }))
+    expect(shaped.slug).toBe('dario-amodei')
+  })
+
   it('derives ordinal scores from text labels when wavg is null', () => {
     const shaped = toFrontendShape(
       baseEntityRow({

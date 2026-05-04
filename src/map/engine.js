@@ -607,6 +607,37 @@ export function initMapEngine() {
     return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
   }
 
+  function downloadBlob(blob, filename) {
+    if (!blob) return
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = filename
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    setTimeout(() => URL.revokeObjectURL(url), 100)
+  }
+
+  function buildDownloadFilename(node, vMode, curView, aX, aY, aMode) {
+    const entityName = node
+      ? node.slug ||
+        (node.name || node.title || '')
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-|-$/g, '')
+      : ''
+    let filename = 'mapping-ai'
+    if (entityName) {
+      filename += '-' + entityName
+    } else if (vMode === 'plot') {
+      filename += '-plot-' + aX + (aMode === '2d' ? '-vs-' + aY : '')
+    } else {
+      filename += '-network-' + curView
+    }
+    return filename + '.png'
+  }
+
   // ─── Deep link slug utilities ───
   const idMap = new Map() // "person/42" → entity (fallback for old ?entity= links)
   const slugMap = new Map() // "person/dario-amodei" → entity
@@ -638,10 +669,14 @@ export function initMapEngine() {
 
   function resolveDeepLink() {
     // Path-based slug URLs: /map/person/dario-amodei
-    const pathMatch = window.location.pathname.match(/^\/map\/(person|org|resource)\/(.+)$/)
+    const pathMatch = window.location.pathname.match(/^\/map\/(person|org|resource)\/([^/]+)\/?$/)
     if (pathMatch) {
-      const key = pathMatch[1] + '/' + decodeURIComponent(pathMatch[2])
-      return slugMap.get(key) || idMap.get(key) || null
+      try {
+        const key = pathMatch[1] + '/' + decodeURIComponent(pathMatch[2])
+        return slugMap.get(key) || idMap.get(key) || null
+      } catch {
+        return null
+      }
     }
     // Fallback: ?entity=person/42 (legacy format)
     const params = new URLSearchParams(window.location.search)
@@ -1672,7 +1707,7 @@ export function initMapEngine() {
       if (deepLinkTarget) {
         setTimeout(() => {
           const renderedNodes = _canvasNodes.length > 0 ? _canvasNodes : d3.selectAll('.node').data()
-          const node = renderedNodes.find((n) => n.name === (deepLinkTarget.name || deepLinkTarget.title))
+          const node = renderedNodes.find((n) => n.id === deepLinkTarget.id)
           if (node) {
             showDetail(node, renderedNodes)
             dimUnconnected(node)
@@ -3472,33 +3507,7 @@ export function initMapEngine() {
 
     // Download map as PNG
     document.getElementById('download-map').onclick = () => {
-      function downloadBlob(blob, filename) {
-        if (!blob) return
-        const url = URL.createObjectURL(blob)
-        const a = document.createElement('a')
-        a.href = url
-        a.download = filename
-        document.body.appendChild(a)
-        a.click()
-        document.body.removeChild(a)
-        setTimeout(() => URL.revokeObjectURL(url), 100)
-      }
-      const entityName = selectedNode
-        ? selectedNode.slug ||
-          (selectedNode.name || selectedNode.title || '')
-            .toLowerCase()
-            .replace(/[^a-z0-9]+/g, '-')
-            .replace(/^-|-$/g, '')
-        : ''
-      let filename = 'mapping-ai'
-      if (entityName) {
-        filename += '-' + entityName
-      } else if (viewMode === 'plot') {
-        filename += '-plot-' + axisX + (axisMode === '2d' ? '-vs-' + axisY : '')
-      } else {
-        filename += '-network-' + currentView
-      }
-      filename += '.png'
+      const filename = buildDownloadFilename(selectedNode, viewMode, currentView, axisX, axisY, axisMode)
       try {
         canvas.toBlob((blob) => downloadBlob(blob, filename), 'image/png')
       } catch (_) {
@@ -3963,31 +3972,7 @@ export function initMapEngine() {
     }
 
     document.getElementById('download-map').onclick = () => {
-      function downloadBlob(blob, filename) {
-        if (!blob) return
-        const url = URL.createObjectURL(blob)
-        const a = document.createElement('a')
-        a.href = url
-        a.download = filename
-        document.body.appendChild(a)
-        a.click()
-        document.body.removeChild(a)
-        setTimeout(() => URL.revokeObjectURL(url), 100)
-      }
-      const entityName = selectedNode
-        ? selectedNode.slug ||
-          (selectedNode.name || selectedNode.title || '')
-            .toLowerCase()
-            .replace(/[^a-z0-9]+/g, '-')
-            .replace(/^-|-$/g, '')
-        : ''
-      let filename = 'mapping-ai'
-      if (entityName) {
-        filename += '-' + entityName
-      } else {
-        filename += '-plot-' + axisX + (axisMode === '2d' ? '-vs-' + axisY : '')
-      }
-      filename += '.png'
+      const filename = buildDownloadFilename(selectedNode, viewMode, currentView, axisX, axisY, axisMode)
       try {
         canvas.toBlob((blob) => downloadBlob(blob, filename), 'image/png')
       } catch (_) {

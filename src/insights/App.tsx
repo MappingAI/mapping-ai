@@ -879,13 +879,11 @@ function downloadChartAsSvg(container: HTMLDivElement, title: string) {
   const url = URL.createObjectURL(blob)
   const a = document.createElement('a')
   a.href = url
-  a.download =
-    'mapping-ai-' +
-    title
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-|-$/g, '') +
-    '.svg'
+  const slug = title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+  a.download = 'mapping-ai' + (slug ? '-' + slug : '-chart') + '.svg'
   document.body.appendChild(a)
   a.click()
   document.body.removeChild(a)
