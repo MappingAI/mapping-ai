@@ -46,6 +46,7 @@ Based on mapping-ai.org insights and map views.
 | @AnthropicAI | Anthropic |
 | @MistralAI | Mistral AI |
 | @GoogleDeepMind | Google DeepMind |
+| @timnitGebru | Timnit Gebru |
 
 ---
 
@@ -73,9 +74,13 @@ The Network view shows who's connected to whom.
 
 Click any node to see their relationships light up. Filter by category to focus on specific communities.
 
+Here's @timnitGebru's network.
+
 `[ATTACH: map-network-selected.png]`
 
-*Note: Network with a node selected showing connections. Need to take screenshot.*
+<img src="images/map-network-selected.png" width="400" alt="Network with node selected" />
+
+*Note: Network with a node selected showing connections.*
 
 ### Tweet 3 [~230/280]
 
@@ -128,7 +133,9 @@ Know someone missing? Add them.
 
 `[ATTACH: contribute-form.png]`
 
-*Note: Need screenshot of contribute form.*
+<img src="images/contribute-form.png" width="400" alt="Contribute form" />
+
+*Note: Screenshot of contribute form.*
 
 ### Tweet 7 [~210/280]
 
@@ -143,11 +150,7 @@ mapping-ai.org/insights
 Contribute:
 mapping-ai.org/contribute
 
-`[ATTACH: map-network-clean-controls.png]`
-
-<img src="images/map-network-clean-controls.png" width="400" alt="Network map" />
-
-*Note: Final CTA with network visualization.*
+*Note: No image needed for final CTA.*
 
 ---
 
