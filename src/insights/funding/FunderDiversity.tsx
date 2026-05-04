@@ -133,11 +133,7 @@ export function FunderDiversity({ edges, showTooltip, hideTooltip }: Props) {
 
     // Filter to think tanks, advocacy groups, and select AI Safety orgs
     const policyCategories = ['Think Tank/Policy Org', 'Ethics/Bias/Rights']
-    const aiSafetyWhitelist = [
-      'Machine Intelligence Research Institute (MIRI)',
-      'Epoch AI',
-      'The Alignment Project',
-    ]
+    const aiSafetyWhitelist = ['Machine Intelligence Research Institute (MIRI)', 'Epoch AI', 'The Alignment Project']
     const policyEdges = edges.filter(
       (e) => policyCategories.includes(e.recipient_category) || aiSafetyWhitelist.includes(e.recipient),
     )

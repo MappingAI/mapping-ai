@@ -204,9 +204,7 @@ export function FundingFragility({ edges, showTooltip, hideTooltip }: Props) {
       .slice(0, 4)
 
     // Combine and sort by concentration (high to low) for display
-    const selectedRecipients = [...high, ...moderate, ...low].sort(
-      (a, b) => b.topFunderShare - a.topFunderShare,
-    )
+    const selectedRecipients = [...high, ...moderate, ...low].sort((a, b) => b.topFunderShare - a.topFunderShare)
 
     if (selectedRecipients.length === 0) return
 

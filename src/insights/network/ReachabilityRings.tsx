@@ -407,12 +407,16 @@ function CenterPersonModal({ data, onClose }: { data: PersonReachability; onClos
                           {e.entity_type === 'person' ? (
                             <div
                               className="w-2 h-2 rounded-full flex-shrink-0"
-                              style={{ background: CATEGORY_COLORS[normalizeCategory(e.category, e.entity_type)] || '#888' }}
+                              style={{
+                                background: CATEGORY_COLORS[normalizeCategory(e.category, e.entity_type)] || '#888',
+                              }}
                             />
                           ) : (
                             <div
                               className="w-2 h-2  flex-shrink-0"
-                              style={{ background: CATEGORY_COLORS[normalizeCategory(e.category, e.entity_type)] || '#888' }}
+                              style={{
+                                background: CATEGORY_COLORS[normalizeCategory(e.category, e.entity_type)] || '#888',
+                              }}
                             />
                           )}
                           <span className="font-mono text-[10px] text-[#1a1a1a]">{e.name}</span>
@@ -517,7 +521,9 @@ function EntityDetailModal({
                         className="font-mono text-[10px] font-medium px-1.5 py-0.5 rounded"
                         style={{
                           background: `${CATEGORY_COLORS[normalizeCategory(centerPerson.category, centerPerson.entity_type)] || '#888'}20`,
-                          color: CATEGORY_COLORS[normalizeCategory(centerPerson.category, centerPerson.entity_type)] || '#888',
+                          color:
+                            CATEGORY_COLORS[normalizeCategory(centerPerson.category, centerPerson.entity_type)] ||
+                            '#888',
                         }}
                       >
                         ● {centerPerson.name}
@@ -532,7 +538,9 @@ function EntityDetailModal({
                             className="font-mono text-[10px] font-medium px-1.5 py-0.5 rounded"
                             style={{
                               background: `${CATEGORY_COLORS[normalizeCategory(step.entity.category, step.entity.entity_type)] || '#888'}20`,
-                              color: CATEGORY_COLORS[normalizeCategory(step.entity.category, step.entity.entity_type)] || '#888',
+                              color:
+                                CATEGORY_COLORS[normalizeCategory(step.entity.category, step.entity.entity_type)] ||
+                                '#888',
                             }}
                           >
                             {step.entity.entity_type === 'person' ? '●' : '■'} {step.entity.name}
@@ -938,7 +946,11 @@ export function ReachabilityRings({ entities, edges, maxPeople = 6 }: Reachabili
     // Add subtitle/caption
     ctx.fillStyle = '#888'
     ctx.font = "11px 'DM Mono', ui-monospace, monospace"
-    ctx.fillText('Concentric rings show 1-hop, 2-hop, and 3-hop connections. Nodes colored by category.', padding, padding + 36)
+    ctx.fillText(
+      'Concentric rings show 1-hop, 2-hop, and 3-hop connections. Nodes colored by category.',
+      padding,
+      padding + 36,
+    )
 
     // Draw full color legend
     const legendY = padding + titleHeight
@@ -1261,86 +1273,86 @@ export function ReachabilityRings({ entities, edges, maxPeople = 6 }: Reachabili
       </div>
 
       <div ref={chartContainerRef}>
-      {/* Color legend - organized by entity type */}
-      <div className="bg-[#fafafa] rounded p-3 mb-4 space-y-2">
-        {/* Person categories */}
-        <div className="flex items-start gap-2">
-          <div className="flex items-center gap-1 min-w-[70px]">
-            <div className="w-2 h-2 rounded-full bg-[#666]" />
-            <span className="font-mono text-[8px] text-[#888] uppercase tracking-wide">People</span>
+        {/* Color legend - organized by entity type */}
+        <div className="bg-[#fafafa] rounded p-3 mb-4 space-y-2">
+          {/* Person categories */}
+          <div className="flex items-start gap-2">
+            <div className="flex items-center gap-1 min-w-[70px]">
+              <div className="w-2 h-2 rounded-full bg-[#666]" />
+              <span className="font-mono text-[8px] text-[#888] uppercase tracking-wide">People</span>
+            </div>
+            <div className="flex flex-wrap gap-x-3 gap-y-1">
+              {[...personCategories].map((cat) => (
+                <div key={cat} className="flex items-center gap-1">
+                  <div className="w-2 h-2 rounded-full" style={{ background: CATEGORY_COLORS[cat] || '#888' }} />
+                  <span className="font-mono text-[8px] text-[#666]">{cat}</span>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="flex flex-wrap gap-x-3 gap-y-1">
-            {[...personCategories].map((cat) => (
-              <div key={cat} className="flex items-center gap-1">
-                <div className="w-2 h-2 rounded-full" style={{ background: CATEGORY_COLORS[cat] || '#888' }} />
-                <span className="font-mono text-[8px] text-[#666]">{cat}</span>
-              </div>
-            ))}
+
+          {/* Org categories */}
+          <div className="flex items-start gap-2">
+            <div className="flex items-center gap-1 min-w-[70px]">
+              <div className="w-2 h-2 bg-[#666]" />
+              <span className="font-mono text-[8px] text-[#888] uppercase tracking-wide">Orgs</span>
+            </div>
+            <div className="flex flex-wrap gap-x-3 gap-y-1">
+              {[...orgCategories].map((cat) => (
+                <div key={cat} className="flex items-center gap-1">
+                  <div className="w-2 h-2" style={{ background: CATEGORY_COLORS[cat] || '#888' }} />
+                  <span className="font-mono text-[8px] text-[#666]">{cat}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Org categories */}
-        <div className="flex items-start gap-2">
-          <div className="flex items-center gap-1 min-w-[70px]">
-            <div className="w-2 h-2 bg-[#666]" />
-            <span className="font-mono text-[8px] text-[#888] uppercase tracking-wide">Orgs</span>
-          </div>
-          <div className="flex flex-wrap gap-x-3 gap-y-1">
-            {[...orgCategories].map((cat) => (
-              <div key={cat} className="flex items-center gap-1">
-                <div className="w-2 h-2" style={{ background: CATEGORY_COLORS[cat] || '#888' }} />
-                <span className="font-mono text-[8px] text-[#666]">{cat}</span>
+        {/* Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {topPeople.map((data) => (
+            <div key={data.person.id} className="bg-white border border-[#e0e0e0] rounded-lg p-4">
+              <div className="mb-2">
+                <div className="flex items-baseline gap-1.5">
+                  <span className="font-mono text-[12px] font-medium text-[#1a1a1a]">{data.person.name}</span>
+                </div>
+                <span
+                  className="font-mono text-[8px] tracking-[0.05em] uppercase px-1.5 py-0.5 rounded inline-block mt-1"
+                  style={{
+                    background: `${CATEGORY_COLORS[normalizeCategory(data.person.category, 'person')] || '#888'}20`,
+                    color: CATEGORY_COLORS[normalizeCategory(data.person.category, 'person')] || '#888',
+                  }}
+                >
+                  {data.person.category}
+                </span>
               </div>
-            ))}
-          </div>
+
+              <div className="flex justify-center">
+                <ConcentricRingViz
+                  data={data}
+                  onEntityClick={handleEntityClick(data.person, data)}
+                  onOverflowClick={handleOverflowClick(data.person)}
+                />
+              </div>
+
+              <div className="text-center font-mono text-[10px] text-[#888] mt-2">
+                1-hop: {data.hop1.length} · 2-hop: {data.hop2.length} · 3-hop: {data.hop3.length}
+              </div>
+
+              <div className="flex justify-between items-center mt-2 pt-2 border-t border-[#eee]">
+                <div className="font-mono text-[10px] text-[#888]">
+                  Total: <span className="text-[#1a1a1a] font-medium">{data.totalReach}</span>
+                </div>
+                <a
+                  href={`/map.html?entity=${getMapSlug(data.person)}`}
+                  className="font-mono text-[9px] text-[#2563eb] hover:underline"
+                >
+                  View on map →
+                </a>
+              </div>
+            </div>
+          ))}
         </div>
-      </div>
-
-      {/* Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {topPeople.map((data) => (
-          <div key={data.person.id} className="bg-white border border-[#e0e0e0] rounded-lg p-4">
-            <div className="mb-2">
-              <div className="flex items-baseline gap-1.5">
-                <span className="font-mono text-[12px] font-medium text-[#1a1a1a]">{data.person.name}</span>
-              </div>
-              <span
-                className="font-mono text-[8px] tracking-[0.05em] uppercase px-1.5 py-0.5 rounded inline-block mt-1"
-                style={{
-                  background: `${CATEGORY_COLORS[normalizeCategory(data.person.category, 'person')] || '#888'}20`,
-                  color: CATEGORY_COLORS[normalizeCategory(data.person.category, 'person')] || '#888',
-                }}
-              >
-                {data.person.category}
-              </span>
-            </div>
-
-            <div className="flex justify-center">
-              <ConcentricRingViz
-                data={data}
-                onEntityClick={handleEntityClick(data.person, data)}
-                onOverflowClick={handleOverflowClick(data.person)}
-              />
-            </div>
-
-            <div className="text-center font-mono text-[10px] text-[#888] mt-2">
-              1-hop: {data.hop1.length} · 2-hop: {data.hop2.length} · 3-hop: {data.hop3.length}
-            </div>
-
-            <div className="flex justify-between items-center mt-2 pt-2 border-t border-[#eee]">
-              <div className="font-mono text-[10px] text-[#888]">
-                Total: <span className="text-[#1a1a1a] font-medium">{data.totalReach}</span>
-              </div>
-              <a
-                href={`/map.html?entity=${getMapSlug(data.person)}`}
-                className="font-mono text-[9px] text-[#2563eb] hover:underline"
-              >
-                View on map →
-              </a>
-            </div>
-          </div>
-        ))}
-      </div>
       </div>
 
       {/* Modals */}

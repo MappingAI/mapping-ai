@@ -30,9 +30,10 @@ export function App() {
   // Beliefs view state
   const beliefsMapRef = useRef<MapBeliefsClusterViewRef>(null)
   const [beliefsData, setBeliefsData] = useState<AgiData | null>(null)
-  const [beliefsSelectedPoint, setBeliefsSelectedPoint] = useState<{ point: AgiPoint; source: AgiSource | null } | null>(
-    null,
-  )
+  const [beliefsSelectedPoint, setBeliefsSelectedPoint] = useState<{
+    point: AgiPoint
+    source: AgiSource | null
+  } | null>(null)
   const [beliefsSearchQuery, setBeliefsSearchQuery] = useState('')
   const [beliefsHighlightedId, setBeliefsHighlightedId] = useState<number | null>(null)
   const [hiddenClusters, setHiddenClusters] = useState<Set<string>>(new Set())
@@ -583,8 +584,7 @@ export function App() {
           className="control-group"
           id="beliefs-legend"
           style={{
-            display:
-              reactView === 'definitions' && beliefsData ? undefined : 'none',
+            display: reactView === 'definitions' && beliefsData ? undefined : 'none',
           }}
         >
           <h3 style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -656,7 +656,7 @@ export function App() {
                     : 'deselect all'}
             </span>
           </h3>
-          {(beliefsColorMode === 'cluster' || beliefsColorMode === 'category') ? (
+          {beliefsColorMode === 'cluster' || beliefsColorMode === 'category' ? (
             <div className="beliefs-legend-items" style={{ display: 'flex', flexDirection: 'column', gap: '0.15rem' }}>
               {legendItems.map((item) => (
                 <div
@@ -689,12 +689,12 @@ export function App() {
                       flexShrink: 0,
                     }}
                   />
-                  <span style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  <span
+                    style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+                  >
                     {item.label}
                   </span>
-                  {item.count !== null && (
-                    <span style={{ color: 'var(--text-3)', flexShrink: 0 }}>({item.count})</span>
-                  )}
+                  {item.count !== null && <span style={{ color: 'var(--text-3)', flexShrink: 0 }}>({item.count})</span>}
                 </div>
               ))}
             </div>
@@ -729,9 +729,7 @@ export function App() {
                       flexShrink: 0,
                     }}
                   />
-                  <span style={{ whiteSpace: 'nowrap' }}>
-                    {item.label}
-                  </span>
+                  <span style={{ whiteSpace: 'nowrap' }}>{item.label}</span>
                 </div>
               ))}
             </div>
@@ -1117,11 +1115,7 @@ export function App() {
           </div>
           {/* Beliefs Detail Sidebar */}
           {beliefsSelectedPoint && (
-            <div
-              className="detail-panel open"
-              style={{ zIndex: 51 }}
-              onClick={(e) => e.stopPropagation()}
-            >
+            <div className="detail-panel open" style={{ zIndex: 51 }} onClick={(e) => e.stopPropagation()}>
               <div className="detail-header-actions">
                 <button className="detail-close" onClick={closeBeliefsDetail}>
                   &times;
@@ -1147,7 +1141,10 @@ export function App() {
               <div className="detail-type">
                 {beliefsSelectedPoint.point.entity_type === 'organization' ? 'Organization' : 'Person'}
               </div>
-              <div className="detail-categories" style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', alignItems: 'center' }}>
+              <div
+                className="detail-categories"
+                style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', alignItems: 'center' }}
+              >
                 <span
                   className="detail-category"
                   style={{
@@ -1315,23 +1312,13 @@ export function App() {
       {/* Zoom controls for Beliefs map view */}
       {reactView === 'definitions' && beliefsSubView === 'map' && (
         <div className="beliefs-zoom-controls">
-          <button
-            className="zoom-btn"
-            onClick={() => beliefsMapRef.current?.zoomIn()}
-          >
+          <button className="zoom-btn" onClick={() => beliefsMapRef.current?.zoomIn()}>
             +
           </button>
-          <button
-            className="zoom-btn"
-            onClick={() => beliefsMapRef.current?.zoomOut()}
-          >
+          <button className="zoom-btn" onClick={() => beliefsMapRef.current?.zoomOut()}>
             &minus;
           </button>
-          <button
-            className="zoom-btn"
-            onClick={() => beliefsMapRef.current?.zoomReset()}
-            style={{ fontSize: '11px' }}
-          >
+          <button className="zoom-btn" onClick={() => beliefsMapRef.current?.zoomReset()} style={{ fontSize: '11px' }}>
             &#9678;
           </button>
         </div>

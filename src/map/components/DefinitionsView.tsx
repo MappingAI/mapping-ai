@@ -1,9 +1,5 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react'
-import {
-  ClusterListView as SharedClusterListView,
-  getPointColor,
-  escapeHtml,
-} from '../../components/AgiClusterMap'
+import { ClusterListView as SharedClusterListView, getPointColor, escapeHtml } from '../../components/AgiClusterMap'
 import {
   MapBeliefsClusterView,
   type MapBeliefsClusterViewRef,
@@ -24,7 +20,6 @@ interface AgiSource {
   title: string | null
   type: string | null
 }
-
 
 type SubView = 'map' | 'list' | 'scatter' | 'timeline' | 'trends'
 

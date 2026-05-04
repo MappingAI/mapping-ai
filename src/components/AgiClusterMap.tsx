@@ -174,7 +174,9 @@ export function DetailModal({
         </div>
         <div className="px-4 py-3 space-y-3">
           <div>
-            <div className="font-mono text-[10px] tracking-[0.08em] uppercase text-[#888] mb-1">How they define AGI</div>
+            <div className="font-mono text-[10px] tracking-[0.08em] uppercase text-[#888] mb-1">
+              How they define AGI
+            </div>
             <div className="font-serif text-[14px] text-[#1a1a1a] leading-[1.5]">{point.definition}</div>
           </div>
           {point.citation && (
@@ -289,10 +291,7 @@ export function ClusterMapView({
       .forceSimulation(clusterNodes)
       .force('x', d3.forceX((d: ClusterNode) => d.targetX).strength(0.3))
       .force('y', d3.forceY((d: ClusterNode) => d.targetY).strength(0.3))
-      .force(
-        'collide',
-        d3.forceCollide((d: ClusterNode) => d.radius + 35).strength(0.8),
-      )
+      .force('collide', d3.forceCollide((d: ClusterNode) => d.radius + 35).strength(0.8))
       .stop()
 
     // Run simulation synchronously
@@ -623,9 +622,7 @@ export function ClusterListView({
     if (!searchQuery) return true
     const q = searchQuery.toLowerCase()
     return (
-      p.name.toLowerCase().includes(q) ||
-      p.definition.toLowerCase().includes(q) ||
-      p.category.toLowerCase().includes(q)
+      p.name.toLowerCase().includes(q) || p.definition.toLowerCase().includes(q) || p.category.toLowerCase().includes(q)
     )
   }
 

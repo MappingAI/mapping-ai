@@ -343,77 +343,79 @@ export function BridgeBuilderCards({ entities, edges, maxCards = 5 }: BridgeBuil
       </div>
       <div ref={chartContainerRef} className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
         {centralEntities.map((entity, rank) => (
-        <div
-          key={entity.id}
-          className="bg-white border border-[#e0e0e0] rounded-lg p-4 hover:border-[#bbb] transition-colors"
-        >
-          {/* Rank badge */}
-          <div className="flex items-start justify-between gap-2 mb-2">
-            <div className="flex items-center gap-2">
-              <span className="font-mono text-[18px] font-medium text-[#2563eb]">#{rank + 1}</span>
-              <div>
-                <div className="font-mono text-[12px] font-medium text-[#1a1a1a]">{entity.name}</div>
-                <span
-                  className="font-mono text-[8px] tracking-[0.05em] uppercase px-1.5 py-0.5 rounded inline-block mt-0.5"
-                  style={{
-                    background: `${CATEGORY_COLORS[entity.category] || '#888'}15`,
-                    color: CATEGORY_COLORS[entity.category] || '#888',
-                  }}
-                >
-                  {entity.category}
-                </span>
+          <div
+            key={entity.id}
+            className="bg-white border border-[#e0e0e0] rounded-lg p-4 hover:border-[#bbb] transition-colors"
+          >
+            {/* Rank badge */}
+            <div className="flex items-start justify-between gap-2 mb-2">
+              <div className="flex items-center gap-2">
+                <span className="font-mono text-[18px] font-medium text-[#2563eb]">#{rank + 1}</span>
+                <div>
+                  <div className="font-mono text-[12px] font-medium text-[#1a1a1a]">{entity.name}</div>
+                  <span
+                    className="font-mono text-[8px] tracking-[0.05em] uppercase px-1.5 py-0.5 rounded inline-block mt-0.5"
+                    style={{
+                      background: `${CATEGORY_COLORS[entity.category] || '#888'}15`,
+                      color: CATEGORY_COLORS[entity.category] || '#888',
+                    }}
+                  >
+                    {entity.category}
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Mini ego network */}
-          <div className="flex justify-center my-3">
-            <MiniEgoNetwork entity={entity} connections={entity.connections} />
-          </div>
-
-          {/* Stats */}
-          <div className="grid grid-cols-2 gap-3 mt-3 pt-3 border-t border-[#eee]">
-            <div>
-              <div className="font-mono text-[18px] font-medium text-[#1a1a1a]">{entity.degree}</div>
-              <div className="font-mono text-[8px] text-[#888] uppercase tracking-[0.05em]">Connections</div>
+            {/* Mini ego network */}
+            <div className="flex justify-center my-3">
+              <MiniEgoNetwork entity={entity} connections={entity.connections} />
             </div>
-            <div>
-              <div className="font-mono text-[18px] font-medium text-[#1a1a1a]">{entity.categoriesBridged.length}</div>
-              <div className="font-mono text-[8px] text-[#888] uppercase tracking-[0.05em]">Categories bridged</div>
-            </div>
-          </div>
 
-          {/* Categories list */}
-          <div className="mt-3">
-            <div className="font-mono text-[8px] text-[#888] uppercase tracking-[0.05em] mb-1">Bridges to</div>
-            <div className="flex flex-wrap gap-1">
-              {entity.categoriesBridged.slice(0, 6).map((cat) => (
-                <span
-                  key={cat}
-                  className="font-mono text-[8px] px-1.5 py-0.5 rounded"
-                  style={{
-                    background: `${CATEGORY_COLORS[cat] || '#888'}15`,
-                    color: CATEGORY_COLORS[cat] || '#888',
-                  }}
-                >
-                  {cat.length > 15 ? cat.slice(0, 13) + '...' : cat}
-                </span>
-              ))}
-              {entity.categoriesBridged.length > 6 && (
-                <span className="font-mono text-[8px] text-[#999]">+{entity.categoriesBridged.length - 6}</span>
-              )}
+            {/* Stats */}
+            <div className="grid grid-cols-2 gap-3 mt-3 pt-3 border-t border-[#eee]">
+              <div>
+                <div className="font-mono text-[18px] font-medium text-[#1a1a1a]">{entity.degree}</div>
+                <div className="font-mono text-[8px] text-[#888] uppercase tracking-[0.05em]">Connections</div>
+              </div>
+              <div>
+                <div className="font-mono text-[18px] font-medium text-[#1a1a1a]">
+                  {entity.categoriesBridged.length}
+                </div>
+                <div className="font-mono text-[8px] text-[#888] uppercase tracking-[0.05em]">Categories bridged</div>
+              </div>
             </div>
-          </div>
 
-          {/* Link */}
-          <a
-            href={`/map?highlight=${entity.id}`}
-            className="block font-mono text-[9px] text-[#2563eb] hover:underline mt-3"
-          >
-            View on map →
-          </a>
-        </div>
-      ))}
+            {/* Categories list */}
+            <div className="mt-3">
+              <div className="font-mono text-[8px] text-[#888] uppercase tracking-[0.05em] mb-1">Bridges to</div>
+              <div className="flex flex-wrap gap-1">
+                {entity.categoriesBridged.slice(0, 6).map((cat) => (
+                  <span
+                    key={cat}
+                    className="font-mono text-[8px] px-1.5 py-0.5 rounded"
+                    style={{
+                      background: `${CATEGORY_COLORS[cat] || '#888'}15`,
+                      color: CATEGORY_COLORS[cat] || '#888',
+                    }}
+                  >
+                    {cat.length > 15 ? cat.slice(0, 13) + '...' : cat}
+                  </span>
+                ))}
+                {entity.categoriesBridged.length > 6 && (
+                  <span className="font-mono text-[8px] text-[#999]">+{entity.categoriesBridged.length - 6}</span>
+                )}
+              </div>
+            </div>
+
+            {/* Link */}
+            <a
+              href={`/map?highlight=${entity.id}`}
+              className="block font-mono text-[9px] text-[#2563eb] hover:underline mt-3"
+            >
+              View on map →
+            </a>
+          </div>
+        ))}
       </div>
     </div>
   )

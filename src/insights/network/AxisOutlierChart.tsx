@@ -692,7 +692,12 @@ export function AxisOutlierChart({ entities, mode }: AxisOutlierChartProps) {
     const counts = new Map<string, number>()
     validEntities.forEach((e) => {
       // Merge Academic and Researcher since they share the same color
-      const cat = e.category === 'Researcher' ? 'Academic/Researcher' : e.category === 'Academic' ? 'Academic/Researcher' : e.category
+      const cat =
+        e.category === 'Researcher'
+          ? 'Academic/Researcher'
+          : e.category === 'Academic'
+            ? 'Academic/Researcher'
+            : e.category
       counts.set(cat, (counts.get(cat) || 0) + 1)
     })
     return [...counts.entries()]
