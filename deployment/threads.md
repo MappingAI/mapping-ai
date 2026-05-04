@@ -52,6 +52,7 @@ Based on mapping-ai.org insights and map views.
 | @WillRinehart    | William Rinehart (Policy Hub)              |
 | @MaxCRoser       | Max Roser (Our World in Data)              |
 | @DanielColson6   | Daniel Colson (AI Policy Institute)        |
+| @ShakeelHashim   | Shakeel Hashim (Transformer)               |
 
 ---
 
@@ -146,11 +147,11 @@ _Note: Screenshot of contribute form._
 
 We're not the only ones mapping this space.
 
-Shoutout to @nathanbenaich @StanfordHAI @WillRinehart @MaxCRoser @DanielColson6 and more for building transparency tools we admire.
+Shoutout to @nathanbenaich @StanfordHAI @WillRinehart @MaxCRoser @DanielColson6 @ShakeelHashim and more for building transparency tools we admire.
 
 We're adding more stakeholders, relationships, + belief data to the picture.
 
-*Note: Credits adjacent tool builders for credibility and potential RTs. State of AI Report, Stanford AI Index, Policy Hub, Our World in Data, AI Policy Institute.*
+*Note: Credits adjacent tool builders for credibility and potential RTs. State of AI Report, Stanford AI Index, Policy Hub, Our World in Data, AI Policy Institute, Transformer.*
 
 ### Tweet 8 [~210/280]
 
