@@ -92,6 +92,7 @@ export function toFrontendShape(row: RawEntityRow): FrontendEntity {
     id: row.id,
     entity_type: row.entity_type,
     name: row.name,
+    slug: row.slug,
     category: row.category,
     other_categories: row.other_categories ?? null,
     title: row.title,

@@ -607,39 +607,46 @@ export function initMapEngine() {
   }
 
   // ─── Deep link slug utilities ───
-  const slugMap = new Map() // "person/42" → entity
+  const idMap = new Map() // "person/42" → entity (fallback for old ?entity= links)
+  const slugMap = new Map() // "person/dario-amodei" → entity
+  const typePrefix = { person: 'person', organization: 'org', resource: 'resource' }
   const isMobileDirectory = window.innerWidth < 768
   let mobileScrollPos = 0
 
   function buildSlugMaps() {
-    const typePrefix = { person: 'person', organization: 'org', resource: 'resource' }
     const allEntities = [
       ...allData.people.map((d) => ({ ...d, entityType: 'person' })),
       ...allData.organizations.map((d) => ({ ...d, entityType: 'organization' })),
       ...allData.resources.map((d) => ({ ...d, entityType: 'resource' })),
     ]
     for (const d of allEntities) {
-      const key = typePrefix[d.entityType] + '/' + d.id
-      slugMap.set(key, d)
+      const prefix = typePrefix[d.entityType] || d.entityType
+      idMap.set(prefix + '/' + d.id, d)
+      if (d.slug) slugMap.set(prefix + '/' + d.slug, d)
     }
   }
 
   function getEntitySlug(d) {
-    const typePrefix = { person: 'person', organization: 'org', resource: 'resource' }
-    return (typePrefix[d.entityType] || d.entityType) + '/' + d.id
+    const prefix = typePrefix[d.entityType] || d.entityType
+    return prefix + '/' + (d.slug || d.id)
   }
 
   function getDeepLinkUrl(d) {
-    const slug = getEntitySlug(d)
-    if (!slug) return window.location.href
-    return window.location.origin + window.location.pathname + '?entity=' + encodeURIComponent(slug)
+    return window.location.origin + '/map/' + getEntitySlug(d)
   }
 
   function resolveDeepLink() {
+    // Path-based slug URLs: /map/person/dario-amodei
+    const pathMatch = window.location.pathname.match(/^\/map\/(person|org|resource)\/(.+)$/)
+    if (pathMatch) {
+      const key = pathMatch[1] + '/' + decodeURIComponent(pathMatch[2])
+      return slugMap.get(key) || idMap.get(key) || null
+    }
+    // Fallback: ?entity=person/42 (legacy format)
     const params = new URLSearchParams(window.location.search)
     const entityParam = params.get('entity')
     if (!entityParam) return null
-    return slugMap.get(entityParam) || null
+    return idMap.get(entityParam) || slugMap.get(entityParam) || null
   }
 
   // ─── Mini Network Graph for Mobile ───
@@ -3454,6 +3461,26 @@ export function initMapEngine() {
       canvasSel.transition().duration(500).call(zoomBehavior.transform, d3.zoomIdentity)
     }
 
+    // Download map as PNG
+    document.getElementById('download-map').onclick = () => {
+      canvas.toBlob((blob) => {
+        if (!blob) return
+        let filename = 'mapping-ai'
+        if (viewMode === 'plot') {
+          filename += '-plot-' + axisX + (axisMode === '2d' ? '-vs-' + axisY : '')
+        } else {
+          filename += '-network-' + currentView
+        }
+        filename += '.png'
+        const url = URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = filename
+        a.click()
+        URL.revokeObjectURL(url)
+      }, 'image/png')
+    }
+
     // Canvas hover (tooltip for nodes and edges)
     canvasSel.on('mousemove.hover', function (event) {
       const [mx, my] = d3.pointer(event, canvas)
@@ -3907,6 +3934,20 @@ export function initMapEngine() {
     document.getElementById('zoom-reset').onclick = () => {
       currentZoom = d3.zoomIdentity
       canvasSel.transition().duration(500).call(zoomBehavior.transform, d3.zoomIdentity)
+    }
+
+    document.getElementById('download-map').onclick = () => {
+      canvas.toBlob((blob) => {
+        if (!blob) return
+        let filename = 'mapping-ai-plot-' + axisX + (axisMode === '2d' ? '-vs-' + axisY : '')
+        filename += '.png'
+        const url = URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = filename
+        a.click()
+        URL.revokeObjectURL(url)
+      }, 'image/png')
     }
 
     canvasSel.on('mousemove.hover', function (event) {

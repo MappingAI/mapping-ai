@@ -54,6 +54,7 @@ function baseEntityRow(overrides: Record<string, unknown> = {}) {
     belief_ai_risk_wavg: null,
     belief_ai_risk_wvar: null,
     belief_ai_risk_n: 0,
+    slug: null,
     submission_count: 1,
     status: 'approved' as const,
     qa_approved: true,
