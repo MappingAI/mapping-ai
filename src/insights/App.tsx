@@ -866,54 +866,30 @@ function ChartCategoryMatrix({ edges, entities }: { edges: Edge[]; entities: Ent
    Reusable Layout Components
    ──────────────────────────────────────────── */
 
-function downloadChartAsPng(container: HTMLDivElement, title: string) {
+function downloadChartAsSvg(container: HTMLDivElement, title: string) {
   const svgs = container.querySelectorAll('svg')
   const svg = Array.from(svgs).find((s) => !s.closest('button'))
   if (!svg) return
 
   const clone = svg.cloneNode(true) as SVGElement
   clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
-  // Inline computed styles for fonts
-  const styleEl = document.createElementNS('http://www.w3.org/2000/svg', 'style')
-  styleEl.textContent = `@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap');`
-  clone.prepend(styleEl)
 
   const svgData = new XMLSerializer().serializeToString(clone)
-  const blob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' })
+  const blob = new Blob([svgData], { type: 'image/svg+xml' })
   const url = URL.createObjectURL(blob)
-
-  const img = new Image()
-  img.crossOrigin = 'anonymous'
-  img.onload = () => {
-    const scale = 2
-    const canvas = document.createElement('canvas')
-    canvas.width = img.naturalWidth * scale
-    canvas.height = img.naturalHeight * scale
-    const ctx = canvas.getContext('2d')!
-    ctx.fillStyle = '#f8f7f5'
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
-    ctx.scale(scale, scale)
-    ctx.drawImage(img, 0, 0)
-    canvas.toBlob((pngBlob) => {
-      if (!pngBlob) return
-      const pngUrl = URL.createObjectURL(pngBlob)
-      const a = document.createElement('a')
-      a.href = pngUrl
-      a.download =
-        'mapping-ai-' +
-        title
-          .toLowerCase()
-          .replace(/[^a-z0-9]+/g, '-')
-          .replace(/^-|-$/g, '') +
-        '.png'
-      document.body.appendChild(a)
-      a.click()
-      document.body.removeChild(a)
-      setTimeout(() => URL.revokeObjectURL(pngUrl), 100)
-    }, 'image/png')
-    URL.revokeObjectURL(url)
-  }
-  img.src = url
+  const a = document.createElement('a')
+  a.href = url
+  a.download =
+    'mapping-ai-' +
+    title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '') +
+    '.svg'
+  document.body.appendChild(a)
+  a.click()
+  document.body.removeChild(a)
+  setTimeout(() => URL.revokeObjectURL(url), 100)
 }
 
 function ChartContainer({ title, source, children }: { title: string; source: string; children: React.ReactNode }) {
@@ -926,9 +902,9 @@ function ChartContainer({ title, source, children }: { title: string; source: st
       <div className="flex justify-between items-start mb-4">
         <div className="font-mono text-[11px] tracking-[0.08em] uppercase text-[#555]">{title}</div>
         <button
-          onClick={() => containerRef.current && downloadChartAsPng(containerRef.current, title || 'chart')}
+          onClick={() => containerRef.current && downloadChartAsSvg(containerRef.current, title || 'chart')}
           className="opacity-0 group-hover:opacity-100 transition-opacity bg-white/80 border border-[#ccc] rounded px-2 py-1 cursor-pointer flex-shrink-0 ml-3 [&_svg]:!w-[14px] [&_svg]:!block"
-          title="Download as PNG"
+          title="Download as SVG"
         >
           <svg
             width="14"
