@@ -62,7 +62,7 @@ We built a tool to visualize this. Here's what the data shows:
 
 `[ATTACH: insights-agi-defs.png]`
 
-![AGI Definition Space](images/insights-agi-defs.png)
+<img src="images/insights-agi-defs.png" alt="AGI Definition Space" width="400">
 
 *Note: Hook tweet. Image: UMAP cluster visualization.*
 
@@ -94,7 +94,7 @@ Definitions correlate with policy stance.
 
 `[ATTACH: map-beliefs-stance.png]`
 
-![Beliefs colored by stance](images/map-beliefs-stance.png)
+<img src="images/map-beliefs-stance.png" alt="Beliefs colored by stance" width="400">
 
 *Note: Key insight tweet stance-colored UMAP*
 
@@ -106,7 +106,7 @@ Explore the full map: mapping-ai.org/map
 
 `[ATTACH: insights-outliers-2d-bottom.png]`
 
-![Outliers 2D chart](images/insights-outliers-2d-bottom.png)
+<img src="images/insights-outliers-2d-bottom.png" alt="Outliers 2D chart" width="400">
 
 *Note: Close with the outlier chart showing Jensen + Leopold. CTA to the site.*
 
@@ -120,7 +120,7 @@ mapping-ai.org
 
 `[ATTACH: map-network-clean-controls.png]`
 
-![Network map](images/map-network-clean-controls.png)
+<img src="images/map-network-clean-controls.png" alt="Network map" width="400">
 
 *Note: Final CTA tweet with the network visualization.*
 
@@ -202,7 +202,7 @@ VC-funded orgs avg 2.5 (light-touch). Philanthropic: 4.7 (precautionary). The ga
 
 `[ATTACH: insights-funding-stance.png]`
 
-![Funding model vs stance](images/insights-funding-stance.png)
+<img src="images/insights-funding-stance.png" alt="Funding model vs stance" width="400">
 
 *Note: Setup + punchline in one tweet. Dot plot showing funding model vs stance.*
 
@@ -220,7 +220,7 @@ This totals 68 connections to 117 policy orgs.
 
 `[ATTACH: insights-kingmakers.png]`
 
-![Top funders kingmakers](images/insights-kingmakers.png)
+<img src="images/insights-kingmakers.png" alt="Top funders kingmakers" width="400">
 
 *Note: Kingmakers chart. Power-law concentration.*
 
@@ -234,7 +234,7 @@ Does money shape the message?
 
 `[ATTACH: insights-fragility.png]`
 
-![Funding fragility](images/insights-fragility.png)
+<img src="images/insights-fragility.png" alt="Funding fragility" width="400">
 
 *Note: FundingFragility chart with concentration risk indicators.*
 
@@ -248,7 +248,7 @@ Tech company money (@Google, @Microsoft, @Amazon) flows to Frontier Labs and Inf
 
 `[ATTACH: insights-funding-sankey.png]`
 
-![Funding flow sankey](images/insights-funding-sankey.png)
+<img src="images/insights-funding-sankey.png" alt="Funding flow sankey" width="400">
 
 *Note: Sankey with interpretation. Supporting detail, not the hook.*
 
@@ -277,7 +277,7 @@ Some striking outliers emerge.
 
 `[ATTACH: insights-outliers-2d-bottom.png]`
 
-![Outliers 2D chart](images/insights-outliers-2d-bottom.png)
+<img src="images/insights-outliers-2d-bottom.png" alt="Outliers 2D chart" width="400">
 
 *Note: The 2D outlier chart with labeled names. The main viral image.*
 
@@ -316,7 +316,7 @@ mapping-ai.org/insights (scroll to Outliers)
 
 `[ATTACH: map-plot.png]`
 
-![Map plot view](images/map-plot.png)
+<img src="images/map-plot.png" alt="Map plot view" width="400">
 
 *Note: CTA with the interactive Plot view.*
 
@@ -336,7 +336,7 @@ The precautionary wings of both parties converge at the bottom.
 
 `[ATTACH: insights-horseshoe.png]`
 
-![Horseshoe visualization](images/insights-horseshoe.png)
+<img src="images/insights-horseshoe.png" alt="Horseshoe visualization" width="400">
 
 *Note: The horseshoe viz is the hero image. Extremely shareable.*
 
@@ -350,7 +350,7 @@ The left-right frame misses the real fault lines.
 
 `[ATTACH: insights-crosspartisan.png]`
 
-![Crosspartisan by-issue](images/insights-crosspartisan.png)
+<img src="images/insights-crosspartisan.png" alt="Crosspartisan by-issue" width="400">
 
 *Note: By-issue beeswarms showing bipartisan spread.*
 
@@ -373,38 +373,42 @@ mapping-ai.org/insights
 
 **Angle:** Who actually connects the AI policy ecosystem? Network analysis reveals the bridge builders.
 
-### Tweet 1 [218/280 - OK]
+### Tweet 1 [220/280 - OK]
 
 We built a network graph of 1,812 entities in U.S. AI policy and measured who can reach the most people within 3 hops.
 
-The top "bridge builders" connect communities that would otherwise be siloed.
-
-Here's the ranking:
+Here's who we found connecting communities that would otherwise be siloed:
 
 `[ATTACH: insights-bridge-builders.png]`
 
+<img src="images/insights-bridge-builders.png" width="400" alt="Bridge builder cards" />
+
 *Note: Bridge builder cards with concentric ring visualizations.*
 
-### Tweet 2 [234/280 - OK]
+### Tweet 2 [248/280 - OK]
 
-1. @brianschatz (Policymaker) - reaches 532 entities
-2. @ChrisMurphyCT (Policymaker) - 529
-3. @paulfchristiano (Researcher) - 481
-4. @DarioAmodei (Executive) - 476
-5. @GavinNewsom (Policymaker) - 463
-6. @CoryBooker (Policymaker) - 422
+@brianschatz reaches 532 entities
+@ChrisMurphyCT: 529
+@paulfchristiano: 481
+@DarioAmodei: 476
+@GavinNewsom: 463
+@CoryBooker: 422
 
-*Note: The ranking. Tag everyone.*
+(These numbers depend on which relationships we've captured publicly. Not a complete census.)
 
-### Tweet 3 [268/280 - OK]
+*Note: Names with reach counts. No ordinals. Caveat about data completeness.*
 
-Policymakers dominate because their government roles connect them to many organizations by default.
+### Tweet 3 [254/280 - OK]
 
-But @paulfchristiano at #3 is notable: a researcher bridging AI Safety, Frontier Labs, and Government.
+Policymakers appear often because their government roles connect them to many organizations by default.
+
+Notably, @paulfchristiano: a researcher bridging AI Safety, Frontier Labs, and Government.
 
 High reachability = structural position for coalition-building.
 
 `[ATTACH: insights-bridge-builders-2.png]`
+
+<img src="images/insights-bridge-builders-2.png" width="400" alt="Christiano and Amodei cards" />
 
 *Note: Christiano and Amodei cards showing their diverse connections.*
 
@@ -417,5 +421,7 @@ mapping-ai.org/map
 1,812 entities. 2,925 relationships. All explorable.
 
 `[ATTACH: map-network-clean.png]`
+
+<img src="images/map-network-clean-controls.png" width="400" alt="Network map" />
 
 *Note: CTA with the full network graph.*
