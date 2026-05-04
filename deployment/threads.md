@@ -15,38 +15,38 @@ Based on mapping-ai.org insights and map views.
 
 ## Handles (need to double check)
 
-| Handle | Name |
-|--------|------|
-| @JensenHuang | Jensen Huang (NVIDIA) |
-| @leopoldasch | Leopold Aschenbrenner |
-| @sonyahuang | Sonya Huang (Sequoia) |
-| @a16z | Andreessen Horowitz |
-| @pmarca | Marc Andreessen |
-| @SoftBank | SoftBank |
-| @brianschatz | Brian Schatz |
-| @ChrisMurphyCT | Chris Murphy |
-| @paulfchristiano | Paul Christiano |
-| @DarioAmodei | Dario Amodei (Anthropic) |
-| @GavinNewsom | Gavin Newsom |
-| @CoryBooker | Cory Booker |
-| @OpenPhil | Open Philanthropy / Coefficient Giving |
-| @FLI_org | Future of Life Institute |
-| @geoffreyhinton | Geoffrey Hinton |
-| @AndrewYNg | Andrew Ng |
-| @GaryMarcus | Gary Marcus |
-| @drfeifei | Fei-Fei Li |
-| @emilymbender | Emily Bender |
-| @mer__edith | Meredith Whittaker (Signal) |
-| @HelenToner | Helen Toner |
-| @sama | Sam Altman |
-| @BillGates | Bill Gates |
-| @raborjhoffman | Reid Hoffman |
-| @ezraklein | Ezra Klein |
-| @tegmark | Max Tegmark |
-| @AnthropicAI | Anthropic |
-| @MistralAI | Mistral AI |
-| @GoogleDeepMind | Google DeepMind |
-| @timnitGebru | Timnit Gebru |
+| Handle           | Name                                   |
+| ---------------- | -------------------------------------- |
+| @JensenHuang     | Jensen Huang (NVIDIA)                  |
+| @leopoldasch     | Leopold Aschenbrenner                  |
+| @sonyahuang      | Sonya Huang (Sequoia)                  |
+| @a16z            | Andreessen Horowitz                    |
+| @pmarca          | Marc Andreessen                        |
+| @SoftBank        | SoftBank                               |
+| @brianschatz     | Brian Schatz                           |
+| @ChrisMurphyCT   | Chris Murphy                           |
+| @paulfchristiano | Paul Christiano                        |
+| @DarioAmodei     | Dario Amodei (Anthropic)               |
+| @GavinNewsom     | Gavin Newsom                           |
+| @CoryBooker      | Cory Booker                            |
+| @OpenPhil        | Open Philanthropy / Coefficient Giving |
+| @FLI_org         | Future of Life Institute               |
+| @geoffreyhinton  | Geoffrey Hinton                        |
+| @AndrewYNg       | Andrew Ng                              |
+| @GaryMarcus      | Gary Marcus                            |
+| @drfeifei        | Fei-Fei Li                             |
+| @emilymbender    | Emily Bender                           |
+| @mer\_\_edith    | Meredith Whittaker (Signal)            |
+| @HelenToner      | Helen Toner                            |
+| @sama            | Sam Altman                             |
+| @BillGates       | Bill Gates                             |
+| @raborjhoffman   | Reid Hoffman                           |
+| @ezraklein       | Ezra Klein                             |
+| @tegmark         | Max Tegmark                            |
+| @AnthropicAI     | Anthropic                              |
+| @MistralAI       | Mistral AI                             |
+| @GoogleDeepMind  | Google DeepMind                        |
+| @timnitGebru     | Timnit Gebru                           |
 
 ---
 
@@ -66,7 +66,7 @@ mapping-ai.org
 
 <img src="images/map-network-clean-controls.png" width="400" alt="Network map" />
 
-*Note: Existing screenshot works as hero.*
+_Note: Existing screenshot works as hero._
 
 ### Tweet 2 [~240/280]
 
@@ -80,7 +80,7 @@ Here's @timnitGebru's network.
 
 <img src="images/map-network-selected.png" width="400" alt="Network with node selected" />
 
-*Note: Network with a node selected showing connections.*
+_Note: Network with a node selected showing connections._
 
 ### Tweet 3 [~230/280]
 
@@ -95,7 +95,7 @@ Outliers tell a story. @JensenHuang and @leopoldasch occupy opposite corners.
 
 <img src="images/map-plot.png" width="400" alt="Plot view" />
 
-*Note: Existing screenshot works.*
+_Note: Existing screenshot works._
 
 ### Tweet 4 [~220/280]
 
@@ -109,7 +109,7 @@ Same term, completely different meanings.
 
 <img src="images/map-beliefs-view.png" width="400" alt="Beliefs view" />
 
-*Note: Existing screenshot works.*
+_Note: Existing screenshot works._
 
 ### Tweet 5 [~200/280]
 
@@ -121,7 +121,7 @@ Funding flows. Policy stances by party. Who bridges communities. All backed by s
 
 <img src="images/insights-overview.png" width="400" alt="Research Insights overview" />
 
-*Note: Collage of 4 key insights charts with "Research Insights" overlay.*
+_Note: Collage of 4 key insights charts with "Research Insights" overlay._
 
 ### Tweet 6 [~230/280]
 
@@ -135,7 +135,7 @@ Know someone missing? Add them.
 
 <img src="images/contribute-form.png" width="400" alt="Contribute form" />
 
-*Note: Screenshot of contribute form.*
+_Note: Screenshot of contribute form._
 
 ### Tweet 7 [~210/280]
 
@@ -150,7 +150,7 @@ mapping-ai.org/insights
 Contribute:
 mapping-ai.org/contribute
 
-*Note: No image needed for final CTA.*
+_Note: No image needed for final CTA._
 
 ---
 
@@ -170,7 +170,7 @@ We built a tool to visualize this. Here's what the data shows:
 
 <img src="images/insights-agi-defs.png" width="400" alt="AGI Definition Space" />
 
-*Note: Hook tweet. Image: UMAP cluster visualization.*
+_Note: Hook tweet. Image: UMAP cluster visualization._
 
 ### Tweet 2 [231/280 - OK]
 
@@ -179,13 +179,13 @@ The largest cluster (66 entities): AGI = human-level cognitive parity.
 
 But even within this group, "human-level" can mean very different things.
 
-*Note: Name-drops for engagement. These people may RT or quote-tweet.*
+_Note: Name-drops for engagement. These people may RT or quote-tweet._
 
 ### Tweet 3 [237/280 - OK]
 
 The second biggest cluster (42 entities): people who reject the framing entirely.
 
-@drfeifei, @emilymbender, @mer__edith, @HelenToner, @MistralAI, and @raborjhoffman all say AGI is the wrong question. We classify this as a conceptual critique.
+@drfeifei, @emilymbender, @mer\_\_edith, @HelenToner, @MistralAI, and @raborjhoffman all say AGI is the wrong question. We classify this as a conceptual critique.
 
 ### Tweet 4 [252/280 - OK]
 
@@ -202,7 +202,7 @@ Definitions correlate with policy stance.
 
 <img src="images/map-beliefs-stance.png" width="400" alt="Beliefs colored by stance" />
 
-*Note: Key insight tweet stance-colored UMAP*
+_Note: Key insight tweet stance-colored UMAP_
 
 ### Tweet 6 [221/280 - OK]
 
@@ -214,7 +214,7 @@ Explore the full map: mapping-ai.org/map
 
 <img src="images/insights-outliers-2d-bottom.png" width="400" alt="Outliers 2D chart" />
 
-*Note: Close with the outlier chart showing Jensen + Leopold. CTA to the site.*
+_Note: Close with the outlier chart showing Jensen + Leopold. CTA to the site._
 
 ### Tweet 7 [162/280 - OK]
 
@@ -228,7 +228,7 @@ mapping-ai.org
 
 <img src="images/map-network-clean-controls.png" width="400" alt="Network map" />
 
-*Note: Final CTA tweet with the network visualization.*
+_Note: Final CTA tweet with the network visualization._
 
 ---
 
@@ -248,7 +248,7 @@ VC-funded orgs avg 2.5 (light-touch). Philanthropic: 4.7 (precautionary). The ga
 
 <img src="images/insights-funding-stance.png" width="400" alt="Funding model vs stance" />
 
-*Note: Setup + punchline in one tweet. Dot plot showing funding model vs stance.*
+_Note: Setup + punchline in one tweet. Dot plot showing funding model vs stance._
 
 ### Tweet 2 [280/280 - OK]
 
@@ -266,7 +266,7 @@ This totals 68 connections to 117 policy orgs.
 
 <img src="images/insights-kingmakers.png" width="400" alt="Top funders kingmakers" />
 
-*Note: Kingmakers chart. Power-law concentration.*
+_Note: Kingmakers chart. Power-law concentration._
 
 ### Tweet 3 [201/280 - OK]
 
@@ -280,7 +280,7 @@ Does money shape the message?
 
 <img src="images/insights-fragility.png" width="400" alt="Funding fragility" />
 
-*Note: FundingFragility chart with concentration risk indicators.*
+_Note: FundingFragility chart with concentration risk indicators._
 
 ### Tweet 4 [246/280 - OK]
 
@@ -294,7 +294,7 @@ Tech company money (@Google, @Microsoft, @Amazon) flows to Frontier Labs and Inf
 
 <img src="images/insights-funding-sankey.png" width="400" alt="Funding flow sankey" />
 
-*Note: Sankey with interpretation. Supporting detail, not the hook.*
+_Note: Sankey with interpretation. Supporting detail, not the hook._
 
 ### Tweet 5 [248/280 - OK]
 
@@ -302,7 +302,7 @@ This doesn't mean funders are buying positions. They may simply select for orgs 
 
 Explore the full analysis: mapping-ai.org/insights
 
-*Note: Hedge causation. CTA.*
+_Note: Hedge causation. CTA._
 
 ---
 
@@ -323,7 +323,7 @@ Some striking outliers emerge.
 
 <img src="images/insights-outliers-2d-bottom.png" width="400" alt="Outliers 2D chart" />
 
-*Note: The 2D outlier chart with labeled names. The main viral image.*
+_Note: The 2D outlier chart with labeled names. The main viral image._
 
 ### Tweet 2 [222/280 - OK]
 
@@ -341,7 +341,7 @@ Same urgency, different definitions, opposite policy conclusions. They occupy co
 
 The investor cluster sits firmly in the bottom-left: short timelines, minimal regulation.
 
-*Note: Investor cluster callout. Tag the orgs.*
+_Note: Investor cluster callout. Tag the orgs._
 
 ### Tweet 4 [223/280 - OK]
 
@@ -349,7 +349,7 @@ Most of the ecosystem clusters in the middle: targeted-to-moderate regulation, 2
 
 Where would you place yourself?
 
-*Note: Engagement question at the end.*
+_Note: Engagement question at the end._
 
 ### Tweet 5 [158/280 - OK]
 
@@ -362,7 +362,7 @@ mapping-ai.org/insights (scroll to Outliers)
 
 <img src="images/map-plot.png" width="400" alt="Map plot view" />
 
-*Note: CTA with the interactive Plot view.*
+_Note: CTA with the interactive Plot view._
 
 ---
 
@@ -382,7 +382,7 @@ The precautionary wings of both parties converge at the bottom.
 
 <img src="images/insights-horseshoe.png" width="400" alt="Horseshoe visualization" />
 
-*Note: The horseshoe viz is the hero image. Extremely shareable.*
+_Note: The horseshoe viz is the hero image. Extremely shareable._
 
 ### Tweet 2 [258/280 - OK]
 
@@ -396,7 +396,7 @@ The left-right frame misses the real fault lines.
 
 <img src="images/insights-crosspartisan.png" width="400" alt="Crosspartisan by-issue" />
 
-*Note: By-issue beeswarms showing bipartisan spread.*
+_Note: By-issue beeswarms showing bipartisan spread._
 
 ### Tweet 3 [214/280 - OK]
 
@@ -409,7 +409,7 @@ Every claim in our database is backed by a verbatim quote and URL.
 Explore the full crosspartisan analysis with sourced claims:
 mapping-ai.org/insights
 
-*Note: Credibility + CTA.*
+_Note: Credibility + CTA._
 
 ---
 
@@ -427,7 +427,7 @@ Here's who we found connecting communities that would otherwise be siloed:
 
 <img src="images/insights-bridge-builders.png" width="400" alt="Bridge builder cards" />
 
-*Note: Bridge builder cards with concentric ring visualizations.*
+_Note: Bridge builder cards with concentric ring visualizations._
 
 ### Tweet 2 [248/280 - OK]
 
@@ -440,7 +440,7 @@ Here's who we found connecting communities that would otherwise be siloed:
 
 (These numbers depend on which relationships we've captured publicly. Not a complete census.)
 
-*Note: Names with reach counts. No ordinals. Caveat about data completeness.*
+_Note: Names with reach counts. No ordinals. Caveat about data completeness._
 
 ### Tweet 3 [254/280 - OK]
 
@@ -454,7 +454,7 @@ High reachability = structural position for coalition-building.
 
 <img src="images/insights-bridge-builders-2.png" width="400" alt="Christiano and Amodei cards" />
 
-*Note: Christiano and Amodei cards showing their diverse connections.*
+_Note: Christiano and Amodei cards showing their diverse connections._
 
 ### Tweet 4 [174/280 - OK]
 
@@ -468,4 +468,4 @@ mapping-ai.org/map
 
 <img src="images/map-network-clean-controls.png" width="400" alt="Network map" />
 
-*Note: CTA with the full network graph.*
+_Note: CTA with the full network graph._

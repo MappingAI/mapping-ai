@@ -63,7 +63,6 @@ export function App() {
       if (btn?.dataset.mode) {
         setEngineMode(btn.dataset.mode as 'network' | 'plot')
         setReactView(null)
-        setTimeout(() => window.dispatchEvent(new Event('resize')), 100)
       }
     }
     document.addEventListener('click', handleEngineModeClick)
@@ -268,6 +267,25 @@ export function App() {
               <strong>Source:</strong> Data is crowdsourced and admin-reviewed. Belief scores (stance, timeline, risk)
               are weighted averages from submissions.
             </div>
+          </div>
+          <div
+            style={{
+              background: 'var(--bg-page, #f0eeeb)',
+              borderRadius: '6px',
+              padding: '10px 14px',
+              marginTop: '12px',
+              fontFamily: 'var(--mono)',
+              fontSize: '11px',
+              color: 'var(--text-2, #555)',
+              lineHeight: 1.5,
+            }}
+          >
+            <strong style={{ color: 'var(--text-1, #1a1a1a)' }}>Beta:</strong> This tool is under active development. We
+            welcome bug reports, data contributions, and feature suggestions at{' '}
+            <a href="mailto:info@mapping-ai.org" style={{ color: 'var(--accent, #2563eb)' }}>
+              info@mapping-ai.org
+            </a>
+            .
           </div>
           <button
             className="onboarding-dismiss"
@@ -911,7 +929,7 @@ export function App() {
           >
             <span style={{ fontSize: '12px' }}>&#9432;</span> About this map
           </button>
-          <details style={{ marginTop: '6px' }}>
+          <details style={{ marginTop: '6px' }} open={reactView === 'definitions'}>
             <summary
               style={{
                 fontFamily: 'var(--mono)',
@@ -1211,7 +1229,24 @@ export function App() {
               </div>
               <div style={{ marginTop: '1.5rem' }}>
                 <a
-                  href={`/map.html?entity=${beliefsSelectedPoint.point.entity_type === 'organization' ? 'org' : 'person'}/${beliefsSelectedPoint.point.entity_id}`}
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    setReactView(null)
+                    const networkBtn = document.querySelector('.mode-btn[data-mode="network"]') as HTMLElement | null
+                    if (networkBtn) networkBtn.click()
+                    setTimeout(() => {
+                      const allBtn = document.querySelector('[data-view="all"]') as HTMLElement | null
+                      if (allBtn) allBtn.click()
+                      setTimeout(() => {
+                        const searchInput = document.getElementById('search-input') as HTMLInputElement | null
+                        if (searchInput) {
+                          searchInput.value = beliefsSelectedPoint.point.name
+                          searchInput.dispatchEvent(new Event('input', { bubbles: true }))
+                        }
+                      }, 200)
+                    }, 200)
+                  }}
                   style={{
                     fontFamily: 'var(--mono)',
                     fontSize: '10px',

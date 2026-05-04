@@ -26,6 +26,7 @@ export default tseslint.config(
       'scripts/cleanup-*.js',
       'scripts/compare-databases.cjs',
       'scripts/create-*.js',
+      'scripts/create-*.cjs',
       'scripts/dedupe-*.js',
       'scripts/deep-quality-review.js',
       'scripts/diagnose-*.js',

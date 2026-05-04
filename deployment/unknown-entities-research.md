@@ -65,6 +65,7 @@ These appear most frequently in funding relationships:
 ## Funders (1 edge) - Quick categorizations
 
 ### Government/Agency
+
 - European Commission's AI Office
 - Federal Economic Development Agency for Southern Ontario
 - Empire State Development
@@ -78,6 +79,7 @@ These appear most frequently in funding relationships:
 - Office of Science and Technology Policy
 
 ### VC/Capital
+
 - Baron Capital Group
 - Dragoneer
 - Alpha Venture Partners
@@ -106,6 +108,7 @@ These appear most frequently in funding relationships:
 - Polaris Ventures
 
 ### Philanthropy
+
 - The Eric & Wendy Schmidt Fund for Strategic Innovation
 - The Andrew W. Mellon Foundation
 - Hector Stiftung
@@ -120,6 +123,7 @@ These appear most frequently in funding relationships:
 - ACX Grants
 
 ### Deployers & Platforms
+
 - Alibaba
 - BNY
 - Netflix Inc
@@ -129,11 +133,13 @@ These appear most frequently in funding relationships:
 - Booz Allen Hamilton
 
 ### Infrastructure & Compute
+
 - BioNTech SE
 - CoreWeave
 - Fathom Computing
 
 ### Academic
+
 - American Association for the Advancement of Science
 - AAAS Leshner Leadership Institute
 - Harvard Technology and Public Purpose program
@@ -145,6 +151,7 @@ These appear most frequently in funding relationships:
 - Canadian Singularity Institute for Artificial Intelligence
 
 ### Investor (individuals)
+
 - Brad Burnham
 - David Siegel
 - Eric Ries
@@ -181,6 +188,7 @@ These appear most frequently in funding relationships:
 ## Other Recipients (1 edge)
 
 ### Think Tank/Policy Org
+
 - Organisation for Economic Co-operation and Development (OECD)
 - Future of Privacy Forum
 - Data & Society Research Institute
@@ -189,12 +197,14 @@ These appear most frequently in funding relationships:
 - AI Accountability Lab
 
 ### AI Safety/Alignment
+
 - Asymmetric Security
 - LASR Labs
 - Haize Labs
 - AI Safety Poland
 
 ### Academic
+
 - Aalto University
 - TU Berlin
 - Cardiff University
@@ -203,11 +213,13 @@ These appear most frequently in funding relationships:
 - Centre for Human-Inspired Artificial Intelligence (CHIA)
 
 ### Government/Agency
+
 - BAE Systems
 - GlobalFoundries
 - Anusandhan National Research Foundation
 
 ### Researcher (individuals)
+
 - Andrew Tulloch
 - Aidan O'Gara
 - Christian Schroeder de Witt
@@ -223,6 +235,7 @@ These appear most frequently in funding relationships:
 - Gabriel Mukobi
 
 ### Unclear - Need Research
+
 - CommonAI
 - Antimetal
 - Created by Humans

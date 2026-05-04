@@ -23,15 +23,15 @@ async function createHeroImage() {
       const imgPath = path.join(IMAGES_DIR, file)
       if (!fs.existsSync(imgPath)) return null
       return loadImage(imgPath)
-    })
+    }),
   )
   const validImages = images.filter(Boolean)
 
   // Tight canvas - crop whitespace from left and right edges
-  const cropLeft = 130   // pixels to crop from left
-  const cropRight = 130  // pixels to crop from right
+  const cropLeft = 130 // pixels to crop from left
+  const cropRight = 130 // pixels to crop from right
   const fullW = 1000
-  const W = fullW - cropLeft - cropRight  // actual canvas width
+  const W = fullW - cropLeft - cropRight // actual canvas width
   const H = 630
   const cellW = fullW / 2
   const cellH = H / 2
@@ -47,7 +47,7 @@ async function createHeroImage() {
   ctx.fillRect(0, 0, W, H)
 
   // Draw 2x2 chart grid - overlap columns to close gap
-  const overlap = 100  // pixels to shift columns toward center
+  const overlap = 100 // pixels to shift columns toward center
   if (validImages.length >= 4) {
     for (let i = 0; i < 4; i++) {
       const img = validImages[i]
@@ -56,7 +56,7 @@ async function createHeroImage() {
 
       // Shift: left col moves right, right col moves left
       const xShift = col === 0 ? overlap : -overlap
-      const x = col * cellW + xShift - cropLeft  // offset by crop amount
+      const x = col * cellW + xShift - cropLeft // offset by crop amount
       const y = row * cellH
 
       // Scale to fit (not crop)

@@ -3,6 +3,9 @@ node_modules/
 .env.*
 !.env.example
 .vercel/
+
+# Scratch notes
+scratch/
 .vercel
 .aws-sam/
 .wrangler/
@@ -34,6 +37,7 @@ data/sample-enriched-entities.json
 # These are uploaded to R2 and served via /data/ endpoint
 public/claims-detail.json
 public/data/claims-detail.json
+public/data/agi-definitions.json
 public/edge-evidence.json
 public/agi-definitions.json
 public/map-data-v2.json

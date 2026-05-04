@@ -23,7 +23,7 @@ async function createOgImage() {
       const imgPath = path.join(IMAGES_DIR, file)
       if (!fs.existsSync(imgPath)) return null
       return loadImage(imgPath)
-    })
+    }),
   )
   const validImages = images.filter(Boolean)
 
@@ -43,14 +43,14 @@ async function createOgImage() {
   // Use same layout as insights-overview.png but with less outer cropping
   // to fit the wider 1200x630 aspect ratio
   const fullW = 1000
-  const cropLeft = 0    // no crop - we want it wider
+  const cropLeft = 0 // no crop - we want it wider
   const cropRight = 0
-  const contentW = fullW - cropLeft - cropRight  // 1000
-  const cellW = fullW / 2  // 500
-  const cellH = H / 2      // 315
+  const contentW = fullW - cropLeft - cropRight // 1000
+  const cellW = fullW / 2 // 500
+  const cellH = H / 2 // 315
 
   // Center the content horizontally in the wider canvas
-  const offsetX = (W - contentW) / 2  // center the 1000px content in 1200px
+  const offsetX = (W - contentW) / 2 // center the 1000px content in 1200px
 
   // Overlap columns to close gap (same as original)
   const overlap = 100
