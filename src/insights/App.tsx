@@ -1246,10 +1246,10 @@ export function App() {
         </ChartContainer>
 
         <Finding>
-          Policymakers like Brian Schatz and Chris Murphy top the reachability rankings—their government roles connect
-          them to many organizations. Researchers like Paul Christiano bridge AI Safety, Frontier Labs, and Government.
-          High reachability doesn't mean influence, but it does indicate structural position for information flow and
-          coalition-building.
+          In our data, policymakers like Brian Schatz and Chris Murphy have high reachability—their government roles
+          connect them to many organizations. Researchers like Paul Christiano bridge AI Safety, Frontier Labs, and
+          Government. High reachability doesn't mean influence, but it does indicate structural position for
+          information flow and coalition-building. Note: these results depend on which relationships we've captured publicly, not a complete census.
         </Finding>
 
         <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />

@@ -239,11 +239,13 @@ export function BridgeBuilderCards({ entities, edges, maxCards = 5 }: BridgeBuil
       }
 
       // Draw stats
-      if (statsEls.length >= 2 && statsEls[0] && statsEls[1]) {
+      const stat0 = statsEls[0]
+      const stat1 = statsEls[1]
+      if (statsEls.length >= 2 && stat0 && stat1) {
         ctx.fillStyle = '#1a1a1a'
         ctx.font = "500 18px 'DM Mono', ui-monospace, monospace"
-        ctx.fillText(statsEls[0].textContent || '', xOffset + 20, yOffset + 230)
-        ctx.fillText(statsEls[1].textContent || '', xOffset + 150, yOffset + 230)
+        ctx.fillText(stat0.textContent || '', xOffset + 20, yOffset + 230)
+        ctx.fillText(stat1.textContent || '', xOffset + 150, yOffset + 230)
 
         ctx.fillStyle = '#888'
         ctx.font = "8px 'DM Mono', ui-monospace, monospace"

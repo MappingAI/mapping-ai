@@ -62,7 +62,7 @@ We built a tool to visualize this. Here's what the data shows:
 
 `[ATTACH: insights-agi-defs.png]`
 
-<img src="images/insights-agi-defs.png" alt="AGI Definition Space" width="400">
+<img src="images/insights-agi-defs.png" width="400" alt="AGI Definition Space" />
 
 *Note: Hook tweet. Image: UMAP cluster visualization.*
 
@@ -94,7 +94,7 @@ Definitions correlate with policy stance.
 
 `[ATTACH: map-beliefs-stance.png]`
 
-<img src="images/map-beliefs-stance.png" alt="Beliefs colored by stance" width="400">
+<img src="images/map-beliefs-stance.png" width="400" alt="Beliefs colored by stance" />
 
 *Note: Key insight tweet stance-colored UMAP*
 
@@ -106,7 +106,7 @@ Explore the full map: mapping-ai.org/map
 
 `[ATTACH: insights-outliers-2d-bottom.png]`
 
-<img src="images/insights-outliers-2d-bottom.png" alt="Outliers 2D chart" width="400">
+<img src="images/insights-outliers-2d-bottom.png" width="400" alt="Outliers 2D chart" />
 
 *Note: Close with the outlier chart showing Jensen + Leopold. CTA to the site.*
 
@@ -120,7 +120,7 @@ mapping-ai.org
 
 `[ATTACH: map-network-clean-controls.png]`
 
-<img src="images/map-network-clean-controls.png" alt="Network map" width="400">
+<img src="images/map-network-clean-controls.png" width="400" alt="Network map" />
 
 *Note: Final CTA tweet with the network visualization.*
 
@@ -202,7 +202,7 @@ VC-funded orgs avg 2.5 (light-touch). Philanthropic: 4.7 (precautionary). The ga
 
 `[ATTACH: insights-funding-stance.png]`
 
-<img src="images/insights-funding-stance.png" alt="Funding model vs stance" width="400">
+<img src="images/insights-funding-stance.png" width="400" alt="Funding model vs stance" />
 
 *Note: Setup + punchline in one tweet. Dot plot showing funding model vs stance.*
 
@@ -220,7 +220,7 @@ This totals 68 connections to 117 policy orgs.
 
 `[ATTACH: insights-kingmakers.png]`
 
-<img src="images/insights-kingmakers.png" alt="Top funders kingmakers" width="400">
+<img src="images/insights-kingmakers.png" width="400" alt="Top funders kingmakers" />
 
 *Note: Kingmakers chart. Power-law concentration.*
 
@@ -234,7 +234,7 @@ Does money shape the message?
 
 `[ATTACH: insights-fragility.png]`
 
-<img src="images/insights-fragility.png" alt="Funding fragility" width="400">
+<img src="images/insights-fragility.png" width="400" alt="Funding fragility" />
 
 *Note: FundingFragility chart with concentration risk indicators.*
 
@@ -248,7 +248,7 @@ Tech company money (@Google, @Microsoft, @Amazon) flows to Frontier Labs and Inf
 
 `[ATTACH: insights-funding-sankey.png]`
 
-<img src="images/insights-funding-sankey.png" alt="Funding flow sankey" width="400">
+<img src="images/insights-funding-sankey.png" width="400" alt="Funding flow sankey" />
 
 *Note: Sankey with interpretation. Supporting detail, not the hook.*
 
@@ -277,7 +277,7 @@ Some striking outliers emerge.
 
 `[ATTACH: insights-outliers-2d-bottom.png]`
 
-<img src="images/insights-outliers-2d-bottom.png" alt="Outliers 2D chart" width="400">
+<img src="images/insights-outliers-2d-bottom.png" width="400" alt="Outliers 2D chart" />
 
 *Note: The 2D outlier chart with labeled names. The main viral image.*
 
@@ -316,7 +316,7 @@ mapping-ai.org/insights (scroll to Outliers)
 
 `[ATTACH: map-plot.png]`
 
-<img src="images/map-plot.png" alt="Map plot view" width="400">
+<img src="images/map-plot.png" width="400" alt="Map plot view" />
 
 *Note: CTA with the interactive Plot view.*
 
@@ -336,7 +336,7 @@ The precautionary wings of both parties converge at the bottom.
 
 `[ATTACH: insights-horseshoe.png]`
 
-<img src="images/insights-horseshoe.png" alt="Horseshoe visualization" width="400">
+<img src="images/insights-horseshoe.png" width="400" alt="Horseshoe visualization" />
 
 *Note: The horseshoe viz is the hero image. Extremely shareable.*
 
@@ -350,7 +350,7 @@ The left-right frame misses the real fault lines.
 
 `[ATTACH: insights-crosspartisan.png]`
 
-<img src="images/insights-crosspartisan.png" alt="Crosspartisan by-issue" width="400">
+<img src="images/insights-crosspartisan.png" width="400" alt="Crosspartisan by-issue" />
 
 *Note: By-issue beeswarms showing bipartisan spread.*
 
