@@ -47,10 +47,11 @@ Based on mapping-ai.org insights and map views.
 | @MistralAI       | Mistral AI                                 |
 | @GoogleDeepMind  | Google DeepMind                            |
 | @timnitGebru     | Timnit Gebru                               |
-| @techieray       | Raymond Sun (Global AI Regulation Tracker) |
+| @nathanbenaich   | Nathan Benaich (State of AI Report)        |
+| @StanfordHAI     | Stanford HAI (AI Index)                    |
 | @WillRinehart    | William Rinehart (Policy Hub)              |
-| @ReadTransformer | Transformer (AI Campaign Finance)          |
-| @DanielColson6   | Daniel Colson (AI Policy Network)          |
+| @MaxCRoser       | Max Roser (Our World in Data)              |
+| @DanielColson6   | Daniel Colson (AI Policy Institute)        |
 
 ---
 
@@ -141,15 +142,15 @@ Know someone missing? Add them.
 
 _Note: Screenshot of contribute form._
 
-### Tweet 7 [~250/280]
+### Tweet 7 [~238/280]
 
 We're not the only ones mapping this space.
 
-Shoutout to @techieray @WillRinehart @ReadTransformer @DanielColson6 for building transparency tools we admire.
+Shoutout to @nathanbenaich @StanfordHAI @WillRinehart @MaxCRoser @DanielColson6 and more for building transparency tools we admire.
 
-We're adding relationships + belief data to the picture.
+We're adding more stakeholders, relationships, + belief data to the picture.
 
-*Note: Credits adjacent tool builders for credibility and potential RTs.*
+*Note: Credits adjacent tool builders for credibility and potential RTs. State of AI Report, Stanford AI Index, Policy Hub, Our World in Data, AI Policy Institute.*
 
 ### Tweet 8 [~210/280]
 
