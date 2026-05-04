@@ -228,7 +228,7 @@ async function main() {
     SELECT
       c.entity_id, c.entity_name, c.definition_used, c.citation,
       c.source_id, c.confidence, c.date_stated,
-      e.entity_type, e.category,
+      e.entity_type, e.category, e.thumbnail_url,
       e.belief_regulatory_stance, e.belief_agi_timeline, e.belief_ai_risk,
       e.belief_regulatory_stance_wavg, e.belief_agi_timeline_wavg, e.belief_ai_risk_wavg
     FROM claim c
@@ -355,6 +355,7 @@ async function main() {
       name: d.entity_name,
       entity_type: d.entity_type,
       category: d.category,
+      thumbnail_url: d.thumbnail_url || null,
       definition: d.definition_used,
       citation: d.citation,
       source_id: d.source_id,
