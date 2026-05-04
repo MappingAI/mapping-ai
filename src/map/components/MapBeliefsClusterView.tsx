@@ -66,9 +66,10 @@ export const MapBeliefsClusterView = forwardRef<MapBeliefsClusterViewRef, MapBel
   ) {
     const ref = useRef<HTMLDivElement>(null)
     // Store zoom behavior and node data for zoom operations
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const zoomRef = useRef<{
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       zoom: any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       svg: any
       nodes: Array<{ entity_id: number; x: number; y: number }>
       vbX: number

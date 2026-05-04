@@ -784,7 +784,7 @@ function TimelineView({ data }: { data: AgiData }) {
   )
 }
 
-function Legend({
+function _Legend({
   data,
   colorMode,
   setHoveredCategory,
@@ -921,7 +921,7 @@ export function DefinitionsView({
   const viewMode = subView as SubView
   const cm = colorMode as ColorMode
   const [data, setData] = useState<AgiData | null>(null)
-  const [hoveredCategory, setHoveredCategory] = useState<string | null>(null)
+  const [hoveredCategory, _setHoveredCategory] = useState<string | null>(null)
 
   useEffect(() => {
     // Fetch both AGI definitions and map data to merge thumbnail URLs
@@ -967,7 +967,7 @@ export function DefinitionsView({
     [onSelect, data],
   )
 
-  const categories = useMemo(() => {
+  const _categories = useMemo(() => {
     if (!data) return []
     const counts = new Map<string, number>()
     data.points.forEach((p) => counts.set(p.category, (counts.get(p.category) || 0) + 1))

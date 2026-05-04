@@ -866,7 +866,7 @@ export function CrosspartisanViz() {
 
       for (const row of Array.from(rows)) {
         const rowRect = row.getBoundingClientRect()
-        const relativeTop = rowRect.top - containerRect.top
+        const _relativeTop = rowRect.top - containerRect.top
 
         // Get text labels from the row
         const titleEl = row.querySelector('.font-medium')
