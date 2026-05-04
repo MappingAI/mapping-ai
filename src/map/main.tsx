@@ -5,6 +5,7 @@ import '../styles/global.css'
 import './map.css'
 
 const root = document.getElementById('map-root')
+if (!root) console.warn('map-root not found')
 if (root) {
   createRoot(root).render(
     <StrictMode>
