@@ -1229,7 +1229,24 @@ export function App() {
               </div>
               <div style={{ marginTop: '1.5rem' }}>
                 <a
-                  href={`/map.html?entity=${beliefsSelectedPoint.point.entity_type === 'organization' ? 'org' : 'person'}/${beliefsSelectedPoint.point.entity_id}`}
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    setReactView(null)
+                    const networkBtn = document.querySelector('.mode-btn[data-mode="network"]') as HTMLElement | null
+                    if (networkBtn) networkBtn.click()
+                    setTimeout(() => {
+                      const allBtn = document.querySelector('[data-view="all"]') as HTMLElement | null
+                      if (allBtn) allBtn.click()
+                      setTimeout(() => {
+                        const searchInput = document.getElementById('search-input') as HTMLInputElement | null
+                        if (searchInput) {
+                          searchInput.value = beliefsSelectedPoint.point.name
+                          searchInput.dispatchEvent(new Event('input', { bubbles: true }))
+                        }
+                      }, 200)
+                    }, 200)
+                  }}
                   style={{
                     fontFamily: 'var(--mono)',
                     fontSize: '10px',

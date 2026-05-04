@@ -522,16 +522,11 @@ export const MapBeliefsClusterView = forwardRef<MapBeliefsClusterViewRef, MapBel
           return center ? `translate(${center.x},${center.y})` : `translate(${d.x},${d.y})`
         })
 
+      // Set styles on the selection (not the transition)
       nodeGroups
-        .transition()
-        .duration(800)
-        .delay((_d: unknown, i: number) => i * 2)
-        .ease(d3.easeCubicOut)
-        .attr('transform', (d: { x: number; y: number }) => `translate(${d.x},${d.y})`)
         .style('cursor', 'pointer')
         .style('opacity', (d: AgiPoint) => {
           if (!isVisible(d)) return 0
-          // Selection-based dimming is handled by the separate selection effect
           if (searchQuery) {
             return matchesSearch(d) ? 1 : 0.15
           }
@@ -541,6 +536,14 @@ export const MapBeliefsClusterView = forwardRef<MapBeliefsClusterViewRef, MapBel
           return 0.85
         })
         .style('pointer-events', (d: AgiPoint) => (isVisible(d) ? 'auto' : 'none'))
+
+      // Animate transform separately
+      nodeGroups
+        .transition()
+        .duration(800)
+        .delay((_d: unknown, i: number) => i * 2)
+        .ease(d3.easeCubicOut)
+        .attr('transform', (d: { x: number; y: number }) => `translate(${d.x},${d.y})`)
 
       // Circle backgrounds (always render for color ring)
       nodeGroups
