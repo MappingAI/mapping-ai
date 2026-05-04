@@ -114,7 +114,9 @@ Funding flows. Policy stances by party. Who bridges communities. All backed by s
 
 `[ATTACH: insights-overview.png]`
 
-*Note: Need overview/collage of insights page.*
+<img src="images/insights-overview.png" width="400" alt="Research Insights overview" />
+
+*Note: Collage of 4 key insights charts with "Research Insights" overlay.*
 
 ### Tweet 6 [~230/280]
 
