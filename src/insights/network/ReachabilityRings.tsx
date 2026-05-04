@@ -899,15 +899,29 @@ export function ReachabilityRings({ entities, edges, maxPeople = 6 }: Reachabili
     if (!chartContainerRef.current) return
 
     const container = chartContainerRef.current
-    const containerRect = container.getBoundingClientRect()
 
     const scale = 2
     const padding = 40
-    const titleHeight = 70
-    const sourceHeight = 40
+    const titleHeight = 50
+    const legendHeight = 70
+    const sourceHeight = 50
+    const cardWidth = 360
+    const cardHeight = 400
+    const gap = 24
+    const maxCols = 2
+
+    // Get cards to calculate dimensions
+    const cards = Array.from(container.querySelectorAll('.bg-white'))
+    const totalRows = Math.ceil(cards.length / maxCols)
+    const contentWidth = maxCols * cardWidth + (maxCols - 1) * gap
+    const contentHeight = totalRows * cardHeight + (totalRows - 1) * gap
+
+    const canvasWidth = contentWidth + padding * 2
+    const canvasHeight = titleHeight + legendHeight + contentHeight + sourceHeight + padding * 2
+
     const canvas = document.createElement('canvas')
-    canvas.width = (containerRect.width + padding * 2) * scale
-    canvas.height = (containerRect.height + padding * 2 + titleHeight + sourceHeight) * scale
+    canvas.width = canvasWidth * scale
+    canvas.height = canvasHeight * scale
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
@@ -921,26 +935,87 @@ export function ReachabilityRings({ entities, edges, maxPeople = 6 }: Reachabili
     ctx.font = "600 16px 'DM Mono', ui-monospace, monospace"
     ctx.fillText('NETWORK REACHABILITY BY PERSON', padding, padding + 16)
 
-    // Add subtitle
+    // Add subtitle/caption
     ctx.fillStyle = '#888'
     ctx.font = "11px 'DM Mono', ui-monospace, monospace"
-    ctx.fillText('Concentric rings show 1-hop, 2-hop, and 3-hop connections', padding, padding + 34)
+    ctx.fillText('Concentric rings show 1-hop, 2-hop, and 3-hop connections. Nodes colored by category.', padding, padding + 36)
 
-    // Add legend
-    ctx.font = "9px 'DM Mono', ui-monospace, monospace"
+    // Draw full color legend
+    const legendY = padding + titleHeight
+    ctx.fillStyle = '#fafafa'
+    ctx.beginPath()
+    ctx.roundRect(padding, legendY, contentWidth, legendHeight - 10, 6)
+    ctx.fill()
+
+    // People legend row
+    let legendX = padding + 12
+    const legendRowY1 = legendY + 18
+
+    // PEOPLE label
+    ctx.fillStyle = '#666'
+    ctx.beginPath()
+    ctx.arc(legendX + 4, legendRowY1, 4, 0, Math.PI * 2)
+    ctx.fill()
     ctx.fillStyle = '#888'
-    ctx.fillText('● People', padding, padding + 52)
-    ctx.fillText('■ Organizations', padding + 70, padding + 52)
+    ctx.font = "8px 'DM Mono', ui-monospace, monospace"
+    ctx.fillText('PEOPLE', legendX + 14, legendRowY1 + 3)
+    legendX += 70
 
-    const contentY = padding + titleHeight
+    // Person categories
+    const personCats = [
+      { name: 'Policymaker', color: '#984ea3' },
+      { name: 'Executive', color: '#e41a1c' },
+      { name: 'Researcher', color: '#ff7f00' },
+      { name: 'Investor', color: '#a65628' },
+      { name: 'Organizer', color: '#bcbd22' },
+      { name: 'Media/Cultural', color: '#17becf' },
+    ]
+    personCats.forEach((cat) => {
+      ctx.fillStyle = cat.color
+      ctx.beginPath()
+      ctx.arc(legendX + 4, legendRowY1, 4, 0, Math.PI * 2)
+      ctx.fill()
+      ctx.fillStyle = '#666'
+      ctx.font = "9px 'DM Mono', ui-monospace, monospace"
+      ctx.fillText(cat.name, legendX + 12, legendRowY1 + 3)
+      legendX += ctx.measureText(cat.name).width + 24
+    })
 
-    // Capture all cards
-    const cards = Array.from(container.querySelectorAll('.bg-white'))
-    const cardWidth = 340
-    const cardHeight = 380
-    const gap = 24
-    const maxCols = 2
+    // Orgs legend row
+    legendX = padding + 12
+    const legendRowY2 = legendY + 42
 
+    // ORGS label
+    ctx.fillStyle = '#666'
+    ctx.fillRect(legendX, legendRowY2 - 4, 8, 8)
+    ctx.fillStyle = '#888'
+    ctx.font = "8px 'DM Mono', ui-monospace, monospace"
+    ctx.fillText('ORGS', legendX + 14, legendRowY2 + 3)
+    legendX += 55
+
+    // Org categories
+    const orgCats = [
+      { name: 'Government', color: '#984ea3' },
+      { name: 'Policy/Advocacy', color: '#4daf4a' },
+      { name: 'AI Labs', color: '#e41a1c' },
+      { name: 'Media', color: '#17becf' },
+      { name: 'Funders', color: '#a65628' },
+      { name: 'Infrastructure', color: '#666' },
+      { name: 'Academic', color: '#ff7f00' },
+      { name: 'AI Safety', color: '#377eb8' },
+    ]
+    orgCats.forEach((cat) => {
+      ctx.fillStyle = cat.color
+      ctx.fillRect(legendX, legendRowY2 - 4, 8, 8)
+      ctx.fillStyle = '#666'
+      ctx.font = "9px 'DM Mono', ui-monospace, monospace"
+      ctx.fillText(cat.name, legendX + 12, legendRowY2 + 3)
+      legendX += ctx.measureText(cat.name).width + 24
+    })
+
+    const contentY = padding + titleHeight + legendHeight
+
+    // Draw cards
     for (let i = 0; i < cards.length; i++) {
       const card = cards[i] as Element
       if (!card) continue
@@ -962,24 +1037,30 @@ export function ReachabilityRings({ entities, edges, maxPeople = 6 }: Reachabili
       // Get card data
       const nameEl = card.querySelector('.text-\\[12px\\].font-medium')
       const categoryEl = card.querySelector('.text-\\[8px\\].uppercase')
-      const statsEl = card.querySelector('.text-\\[10px\\].text-\\[\\#888\\].mt-2')
-      const totalEl = card.querySelector('.text-\\[10px\\].text-\\[\\#888\\] .font-medium')
+      const statsEl = card.querySelector('.text-center.text-\\[10px\\]')
+      const totalEl = card.querySelector('.text-\\[10px\\] .font-medium')
       const svg = card.querySelector('svg')
 
       // Draw name
       if (nameEl) {
         ctx.fillStyle = '#1a1a1a'
-        ctx.font = "500 12px 'DM Mono', ui-monospace, monospace"
-        ctx.fillText(nameEl.textContent || '', xOffset + 16, yOffset + 24)
+        ctx.font = "500 13px 'DM Mono', ui-monospace, monospace"
+        ctx.fillText(nameEl.textContent || '', xOffset + 16, yOffset + 26)
       }
 
-      // Draw category
+      // Draw category badge
       if (categoryEl) {
         const catText = categoryEl.textContent || ''
         const catColor = (categoryEl as HTMLElement).style.color || '#888'
+        const catBg = (categoryEl as HTMLElement).style.background || `${catColor}20`
+        ctx.fillStyle = catBg
+        const textWidth = ctx.measureText(catText.toUpperCase()).width
+        ctx.beginPath()
+        ctx.roundRect(xOffset + 16, yOffset + 36, textWidth + 12, 18, 4)
+        ctx.fill()
         ctx.fillStyle = catColor
         ctx.font = "8px 'DM Mono', ui-monospace, monospace"
-        ctx.fillText(catText.toUpperCase(), xOffset + 16, yOffset + 44)
+        ctx.fillText(catText.toUpperCase(), xOffset + 22, yOffset + 48)
       }
 
       // Draw SVG (concentric rings)
@@ -991,10 +1072,9 @@ export function ReachabilityRings({ entities, edges, maxPeople = 6 }: Reachabili
         await new Promise<void>((resolve) => {
           const img = new Image()
           img.onload = () => {
-            // Center the SVG in the card
-            const svgSize = 260
+            const svgSize = 280
             const svgX = xOffset + (cardWidth - svgSize) / 2
-            ctx.drawImage(img, svgX, yOffset + 55, svgSize, svgSize)
+            ctx.drawImage(img, svgX, yOffset + 60, svgSize, svgSize)
             URL.revokeObjectURL(url)
             resolve()
           }
@@ -1011,7 +1091,7 @@ export function ReachabilityRings({ entities, edges, maxPeople = 6 }: Reachabili
         ctx.fillStyle = '#888'
         ctx.font = "10px 'DM Mono', ui-monospace, monospace"
         ctx.textAlign = 'center'
-        ctx.fillText(statsEl.textContent || '', xOffset + cardWidth / 2, yOffset + 335)
+        ctx.fillText(statsEl.textContent || '', xOffset + cardWidth / 2, yOffset + 355)
         ctx.textAlign = 'left'
       }
 
@@ -1019,15 +1099,12 @@ export function ReachabilityRings({ entities, edges, maxPeople = 6 }: Reachabili
       if (totalEl) {
         ctx.fillStyle = '#888'
         ctx.font = "10px 'DM Mono', ui-monospace, monospace"
-        ctx.fillText(`Total: ${totalEl.textContent}`, xOffset + 16, yOffset + 360)
+        ctx.fillText(`Total: ${totalEl.textContent}`, xOffset + 16, yOffset + 380)
       }
     }
 
-    // Calculate final yOffset for source text
-    const totalRows = Math.ceil(cards.length / maxCols)
-    const finalY = contentY + totalRows * (cardHeight + gap) + 10
-
-    // Add source text
+    // Add source text at bottom
+    const finalY = contentY + contentHeight + 25
     ctx.fillStyle = '#888'
     ctx.font = "10px 'DM Mono', ui-monospace, monospace"
     ctx.fillText(
