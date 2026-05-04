@@ -50,8 +50,6 @@ Based on mapping-ai.org insights and map views.
 
 ## Thread 1: The AGI Definition Problem
 
-> [need to update to new AGI definition numbers]
-
 **Angle:** Everyone says "AGI is coming" but they all mean different things. We mapped 240 definitions.
 
 ### Tweet 1 [210/280 - OK]
@@ -70,7 +68,7 @@ We built a tool to visualize this. Here's what the data shows:
 
 ### Tweet 2 [231/280 - OK]
 
-The largest cluster (74 entities): AGI = human-level cognitive parity.
+The largest cluster (66 entities): AGI = human-level cognitive parity.
 @AndrewYNg, @geoffreyhinton, @GaryMarcus, @GoogleDeepMind, and @pmarca all land here.
 
 But even within this group, "human-level" can mean very different things.
@@ -79,13 +77,13 @@ But even within this group, "human-level" can mean very different things.
 
 ### Tweet 3 [237/280 - OK]
 
-The second biggest cluster (48 entities): people who reject the framing entirely.
+The second biggest cluster (42 entities): people who reject the framing entirely.
 
 @drfeifei, @emilymbender, @mer__edith, @HelenToner, @MistralAI, and @raborjhoffman all say AGI is the wrong question. We classify this as a conceptual critique.
 
 ### Tweet 4 [252/280 - OK]
 
-Then there's the "superintelligence" cluster (39 entities).
+Then there's the "superintelligence" cluster (38 entities).
 @DarioAmodei, @AnthropicAI, @BillGates, @paulfchristiano all define AGI as AI that surpasses humans, with recursive self-improvement. They have similar timeline debates but a fundamentally different endpoint.
 
 ### Tweet 5 [268/280 - OK]
@@ -114,7 +112,7 @@ Explore the full map: mapping-ai.org/map
 
 ### Tweet 7 [162/280 - OK]
 
-We mapped 1,574 entities across 708 people, 717 organizations, and 2,151 relationships in the U.S. AI policy landscape.
+We mapped 1,812 entities across 745 people, 918 organizations, and 2,925 relationships in the U.S. AI policy landscape.
 
 It's all open source. Check it out here:
 
@@ -270,7 +268,7 @@ Explore the full analysis: mapping-ai.org/insights
 
 ### Tweet 1 [142/280 - OK]
 
-We plotted 368 AI leaders on two axes:
+We plotted 378 AI leaders on two axes:
 
 X: How much regulation do they want?
 Y: When do they think AGI arrives?
@@ -377,7 +375,7 @@ mapping-ai.org/insights
 
 ### Tweet 1 [218/280 - OK]
 
-We built a network graph of 1,574 entities in U.S. AI policy and measured who can reach the most people within 3 hops.
+We built a network graph of 1,812 entities in U.S. AI policy and measured who can reach the most people within 3 hops.
 
 The top "bridge builders" connect communities that would otherwise be siloed.
 
@@ -416,7 +414,7 @@ The full interactive network map lets you click any person or org to see their c
 
 mapping-ai.org/map
 
-1,574 entities. 2,151 relationships. All explorable.
+1,812 entities. 2,925 relationships. All explorable.
 
 `[ATTACH: map-network-clean.png]`
 
