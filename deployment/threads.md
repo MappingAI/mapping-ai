@@ -15,38 +15,42 @@ Based on mapping-ai.org insights and map views.
 
 ## Handles (need to double check)
 
-| Handle           | Name                                   |
-| ---------------- | -------------------------------------- |
-| @JensenHuang     | Jensen Huang (NVIDIA)                  |
-| @leopoldasch     | Leopold Aschenbrenner                  |
-| @sonyahuang      | Sonya Huang (Sequoia)                  |
-| @a16z            | Andreessen Horowitz                    |
-| @pmarca          | Marc Andreessen                        |
-| @SoftBank        | SoftBank                               |
-| @brianschatz     | Brian Schatz                           |
-| @ChrisMurphyCT   | Chris Murphy                           |
-| @paulfchristiano | Paul Christiano                        |
-| @DarioAmodei     | Dario Amodei (Anthropic)               |
-| @GavinNewsom     | Gavin Newsom                           |
-| @CoryBooker      | Cory Booker                            |
-| @OpenPhil        | Open Philanthropy / Coefficient Giving |
-| @FLI_org         | Future of Life Institute               |
-| @geoffreyhinton  | Geoffrey Hinton                        |
-| @AndrewYNg       | Andrew Ng                              |
-| @GaryMarcus      | Gary Marcus                            |
-| @drfeifei        | Fei-Fei Li                             |
-| @emilymbender    | Emily Bender                           |
-| @mer\_\_edith    | Meredith Whittaker (Signal)            |
-| @HelenToner      | Helen Toner                            |
-| @sama            | Sam Altman                             |
-| @BillGates       | Bill Gates                             |
-| @raborjhoffman   | Reid Hoffman                           |
-| @ezraklein       | Ezra Klein                             |
-| @tegmark         | Max Tegmark                            |
-| @AnthropicAI     | Anthropic                              |
-| @MistralAI       | Mistral AI                             |
-| @GoogleDeepMind  | Google DeepMind                        |
-| @timnitGebru     | Timnit Gebru                           |
+| Handle           | Name                                       |
+| ---------------- | ------------------------------------------ |
+| @JensenHuang     | Jensen Huang (NVIDIA)                      |
+| @leopoldasch     | Leopold Aschenbrenner                      |
+| @sonyahuang      | Sonya Huang (Sequoia)                      |
+| @a16z            | Andreessen Horowitz                        |
+| @pmarca          | Marc Andreessen                            |
+| @SoftBank        | SoftBank                                   |
+| @brianschatz     | Brian Schatz                               |
+| @ChrisMurphyCT   | Chris Murphy                               |
+| @paulfchristiano | Paul Christiano                            |
+| @DarioAmodei     | Dario Amodei (Anthropic)                   |
+| @GavinNewsom     | Gavin Newsom                               |
+| @CoryBooker      | Cory Booker                                |
+| @OpenPhil        | Open Philanthropy / Coefficient Giving     |
+| @FLI_org         | Future of Life Institute                   |
+| @geoffreyhinton  | Geoffrey Hinton                            |
+| @AndrewYNg       | Andrew Ng                                  |
+| @GaryMarcus      | Gary Marcus                                |
+| @drfeifei        | Fei-Fei Li                                 |
+| @emilymbender    | Emily Bender                               |
+| @mer\_\_edith    | Meredith Whittaker (Signal)                |
+| @HelenToner      | Helen Toner                                |
+| @sama            | Sam Altman                                 |
+| @BillGates       | Bill Gates                                 |
+| @raborjhoffman   | Reid Hoffman                               |
+| @ezraklein       | Ezra Klein                                 |
+| @tegmark         | Max Tegmark                                |
+| @AnthropicAI     | Anthropic                                  |
+| @MistralAI       | Mistral AI                                 |
+| @GoogleDeepMind  | Google DeepMind                            |
+| @timnitGebru     | Timnit Gebru                               |
+| @techieray       | Raymond Sun (Global AI Regulation Tracker) |
+| @WillRinehart    | William Rinehart (Policy Hub)              |
+| @ReadTransformer | Transformer (AI Campaign Finance)          |
+| @DanielColson6   | Daniel Colson (AI Policy Network)          |
 
 ---
 
@@ -137,7 +141,17 @@ Know someone missing? Add them.
 
 _Note: Screenshot of contribute form._
 
-### Tweet 7 [~210/280]
+### Tweet 7 [~250/280]
+
+We're not the only ones mapping this space.
+
+Shoutout to @techieray @WillRinehart @ReadTransformer @DanielColson6 for building transparency tools we admire.
+
+We're adding relationships + belief data to the picture.
+
+*Note: Credits adjacent tool builders for credibility and potential RTs.*
+
+### Tweet 8 [~210/280]
 
 Every belief claim is backed by a verbatim quote and source.
 
