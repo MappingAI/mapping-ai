@@ -4954,36 +4954,45 @@ ${dots}
         const sourceId = parseInt(link.dataset.sourceId, 10)
         const targetId = parseInt(link.dataset.targetId, 10)
         const relType = link.dataset.relType || 'affiliated'
-        let edge = edgeId ? _canvasLinks.find((l) => l.edgeId === edgeId) : null
-        if (!edge) {
-          edge = _canvasLinks.find(
-            (l) =>
-              (l.source.id === sourceId && l.target.id === targetId) ||
-              (l.source.id === targetId && l.target.id === sourceId),
-          )
-        }
-        if (!edge) {
-          const sourceNode = _canvasNodes.find((n) => n.id === sourceId)
-          const targetNode = _canvasNodes.find((n) => n.id === targetId)
-          if (sourceNode && targetNode) {
-            edge = { source: sourceNode, target: targetNode, relType, edgeId: null, role: null, _vs: 'normal' }
+
+        function showRelationshipInNetwork() {
+          let edge = edgeId ? _canvasLinks.find((l) => l.edgeId === edgeId) : null
+          if (!edge) {
+            edge = _canvasLinks.find(
+              (l) =>
+                (l.source.id === sourceId && l.target.id === targetId) ||
+                (l.source.id === targetId && l.target.id === sourceId),
+            )
+          }
+          if (!edge) {
+            const sourceNode = _canvasNodes.find((n) => n.id === sourceId)
+            const targetNode = _canvasNodes.find((n) => n.id === targetId)
+            if (sourceNode && targetNode) {
+              edge = { source: sourceNode, target: targetNode, relType, edgeId: null, role: null, _vs: 'normal' }
+            }
+          }
+          if (edge) {
+            const midX = (edge.source.x + edge.target.x) / 2
+            const midY = (edge.source.y + edge.target.y) / 2
+            const k = 2.5
+            const panelWidth = 320
+            const centerX = (_canvasWidth - panelWidth) / 2
+            const centerY = _canvasHeight / 2
+            const newTransform = d3.zoomIdentity.translate(centerX - midX * k, centerY - midY * k).scale(k)
+            if (zoomBehavior && _canvasSel) {
+              _canvasSel.transition().duration(400).call(zoomBehavior.transform, newTransform)
+            }
+            _selectedEdge = edge
+            selectedNode = edge.source
+            dimUnconnected(selectedNode)
+            showEdgeDetail(edge)
           }
         }
-        if (edge) {
-          const midX = (edge.source.x + edge.target.x) / 2
-          const midY = (edge.source.y + edge.target.y) / 2
-          const k = 2.5
-          const panelWidth = 320
-          const centerX = (_canvasWidth - panelWidth) / 2
-          const centerY = _canvasHeight / 2
-          const newTransform = d3.zoomIdentity.translate(centerX - midX * k, centerY - midY * k).scale(k)
-          if (zoomBehavior && _canvasSel) {
-            _canvasSel.transition().duration(400).call(zoomBehavior.transform, newTransform)
-          }
-          _selectedEdge = edge
-          selectedNode = edge.source
-          dimUnconnected(selectedNode)
-          showEdgeDetail(edge)
+
+        if (viewMode === 'plot') {
+          switchToNetworkView(showRelationshipInNetwork)
+        } else {
+          showRelationshipInNetwork()
         }
       })
     })
@@ -5173,6 +5182,8 @@ ${dots}
             highlightNodes([node.name])
           }
           showDetail(Object.assign({}, entity, { entityType }), renderedNodes)
+        } else if (viewMode === 'plot') {
+          switchToNetworkView(() => navigateToEntity(entityId))
         } else {
           showDetail(Object.assign({}, entity, { entityType }), renderedNodes || [])
         }
@@ -6278,6 +6289,16 @@ ${dots}
         )
     }
     return true
+  }
+
+  function switchToNetworkView(callback) {
+    viewMode = 'network'
+    localStorage.setItem('mapMode', 'network')
+    document.querySelectorAll('.mode-btn').forEach((b) => b.classList.toggle('active', b.dataset.mode === 'network'))
+    requestAnimationFrame(() => {
+      applyViewState()
+      setTimeout(callback, 800)
+    })
   }
 
   window.__mapEngine = { showDetail, allData, navigateToEntity }
