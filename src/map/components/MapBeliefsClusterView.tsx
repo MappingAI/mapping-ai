@@ -508,21 +508,14 @@ export const MapBeliefsClusterView = forwardRef<MapBeliefsClusterViewRef, MapBel
         }
       })
 
-      // Entity groups (for circles with images or initials)
-      // Start from cluster center, animate to final hex-packed position
-      const clusterCenterMap = new Map(clusterNodes.map((c) => [c.id, { x: c.x, y: c.y }]))
       const nodeGroups = mainGroup
         .selectAll('g.entity')
         .data(nodes)
         .enter()
         .append('g')
         .attr('class', 'entity')
-        .attr('transform', (d: AgiPoint & { x: number; y: number }) => {
-          const center = clusterCenterMap.get(d.cluster_id || '')
-          return center ? `translate(${center.x},${center.y})` : `translate(${d.x},${d.y})`
-        })
+        .attr('transform', (d: { x: number; y: number }) => `translate(${d.x},${d.y})`)
 
-      // Set styles on the selection (not the transition)
       nodeGroups
         .style('cursor', 'pointer')
         .style('opacity', (d: AgiPoint) => {
@@ -536,14 +529,6 @@ export const MapBeliefsClusterView = forwardRef<MapBeliefsClusterViewRef, MapBel
           return 0.85
         })
         .style('pointer-events', (d: AgiPoint) => (isVisible(d) ? 'auto' : 'none'))
-
-      // Animate transform separately
-      nodeGroups
-        .transition()
-        .duration(800)
-        .delay((_d: unknown, i: number) => i * 2)
-        .ease(d3.easeCubicOut)
-        .attr('transform', (d: { x: number; y: number }) => `translate(${d.x},${d.y})`)
 
       // Circle backgrounds (always render for color ring)
       nodeGroups
