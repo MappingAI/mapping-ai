@@ -3483,21 +3483,22 @@ export function initMapEngine() {
         document.body.removeChild(a)
         setTimeout(() => URL.revokeObjectURL(url), 100)
       }
-      const namePart = selectedNode
-        ? '-' +
-          (selectedNode.slug ||
-            (selectedNode.name || selectedNode.title || '')
-              .toLowerCase()
-              .replace(/[^a-z0-9]+/g, '-')
-              .replace(/^-|-$/g, ''))
+      const entityName = selectedNode
+        ? selectedNode.slug ||
+          (selectedNode.name || selectedNode.title || '')
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-|-$/g, '')
         : ''
       let filename = 'mapping-ai'
-      if (viewMode === 'plot') {
+      if (entityName) {
+        filename += '-' + entityName
+      } else if (viewMode === 'plot') {
         filename += '-plot-' + axisX + (axisMode === '2d' ? '-vs-' + axisY : '')
       } else {
         filename += '-network-' + currentView
       }
-      filename += namePart + '.png'
+      filename += '.png'
       try {
         canvas.toBlob((blob) => downloadBlob(blob, filename), 'image/png')
       } catch (_) {
@@ -3973,15 +3974,20 @@ export function initMapEngine() {
         document.body.removeChild(a)
         setTimeout(() => URL.revokeObjectURL(url), 100)
       }
-      const namePart = selectedNode
-        ? '-' +
-          (selectedNode.slug ||
-            (selectedNode.name || selectedNode.title || '')
-              .toLowerCase()
-              .replace(/[^a-z0-9]+/g, '-')
-              .replace(/^-|-$/g, ''))
+      const entityName = selectedNode
+        ? selectedNode.slug ||
+          (selectedNode.name || selectedNode.title || '')
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-|-$/g, '')
         : ''
-      const filename = 'mapping-ai-plot-' + axisX + (axisMode === '2d' ? '-vs-' + axisY : '') + namePart + '.png'
+      let filename = 'mapping-ai'
+      if (entityName) {
+        filename += '-' + entityName
+      } else {
+        filename += '-plot-' + axisX + (axisMode === '2d' ? '-vs-' + axisY : '')
+      }
+      filename += '.png'
       try {
         canvas.toBlob((blob) => downloadBlob(blob, filename), 'image/png')
       } catch (_) {
