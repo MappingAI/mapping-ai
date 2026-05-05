@@ -270,24 +270,26 @@ export function App() {
           </div>
           <div
             style={{
+              background: 'var(--bg-page, #f0eeeb)',
+              borderRadius: '6px',
+              padding: '10px 14px',
+              marginTop: '16px',
+              marginBottom: '8px',
               fontFamily: 'var(--mono)',
-              fontSize: '9px',
-              color: '#888',
+              fontSize: '10px',
+              color: 'var(--text-2, #555)',
               lineHeight: 1.5,
-              marginTop: '12px',
-              letterSpacing: '0.02em',
             }}
           >
+            <strong style={{ color: 'var(--text-1, #1a1a1a)' }}>Note:</strong> This tool is under active development.
             Data is sourced from public records, user submissions, and LLM-assisted research. Where explicit statements
-            are not available, beliefs and stances may be inferred from public actions, writings, or affiliations and do
-            not claim to represent official positions. We treat disagreement between internal and external perceptions
-            of beliefs as signal, not noise, and factor this into aggregate stance scores. We welcome corrections to any
-            inaccuracies via{' '}
-            <a href="/contribute" style={{ color: '#888' }}>
-              our contribute form
+            are not available, beliefs may be inferred and do not claim to represent official positions. We welcome bug
+            reports, corrections, and feature suggestions via{' '}
+            <a href="/contribute" style={{ color: 'var(--accent, #2563eb)' }}>
+              contribute
             </a>{' '}
-            or by emailing{' '}
-            <a href="mailto:info@mapping-ai.org" style={{ color: '#888' }}>
+            or{' '}
+            <a href="mailto:info@mapping-ai.org" style={{ color: 'var(--accent, #2563eb)' }}>
               info@mapping-ai.org
             </a>
             .
