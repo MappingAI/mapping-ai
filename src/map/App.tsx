@@ -287,6 +287,30 @@ export function App() {
             </a>
             .
           </div>
+          <div
+            style={{
+              fontFamily: 'var(--mono)',
+              fontSize: '9px',
+              color: '#888',
+              lineHeight: '1.5',
+              marginTop: '12px',
+              letterSpacing: '0.02em',
+            }}
+          >
+            Data is sourced from public records, user submissions, and LLM-assisted research. Where explicit statements
+            are not available, beliefs and stances may be inferred from public actions, writings, or affiliations and do
+            not claim to represent official positions. We treat disagreement between internal and external perceptions
+            of beliefs as signal, not noise, and factor this into aggregate stance scores. We welcome corrections to any
+            inaccuracies via{' '}
+            <a href="/contribute" style={{ color: '#888' }}>
+              our contribute form
+            </a>{' '}
+            or by emailing{' '}
+            <a href="mailto:info@mapping-ai.org" style={{ color: '#888' }}>
+              info@mapping-ai.org
+            </a>
+            .
+          </div>
           <button
             className="onboarding-dismiss"
             onClick={() => {
@@ -929,6 +953,27 @@ export function App() {
           >
             <span style={{ fontSize: '12px' }}>&#9432;</span> About this map
           </button>
+          <p
+            style={{
+              fontFamily: 'var(--mono)',
+              fontSize: '8px',
+              color: 'var(--text-3)',
+              lineHeight: '1.5',
+              marginTop: '6px',
+              letterSpacing: '0.02em',
+            }}
+          >
+            Data is sourced from public records, user submissions, and LLM-assisted research. Inferred beliefs do not
+            claim to represent official positions. We welcome corrections to any inaccuracies via{' '}
+            <a href="/contribute" style={{ color: 'var(--text-3)' }}>
+              contribute
+            </a>{' '}
+            or{' '}
+            <a href="mailto:info@mapping-ai.org" style={{ color: 'var(--text-3)' }}>
+              info@mapping-ai.org
+            </a>
+            .
+          </p>
           <details style={{ marginTop: '6px' }} open={reactView === 'definitions'}>
             <summary
               style={{
@@ -997,6 +1042,11 @@ export function App() {
                   name: 'Democracy Build',
                   url: 'https://democracybuild.org/',
                   desc: 'Democratic governance of AI',
+                },
+                {
+                  name: 'AI Safety Field Map',
+                  url: 'https://harrywaterman.com/fieldmap/',
+                  desc: 'Visual map of the AI safety field',
                 },
               ].map((link) => (
                 <a
@@ -1232,20 +1282,21 @@ export function App() {
                   href="#"
                   onClick={(e) => {
                     e.preventDefault()
+                    const entityId = beliefsSelectedPoint.point.entity_id
+                    setBeliefsSelectedPoint(null)
                     setReactView(null)
+                    setEngineMode('network')
                     const networkBtn = document.querySelector('.mode-btn[data-mode="network"]') as HTMLElement | null
                     if (networkBtn) networkBtn.click()
+                    setTimeout(() => window.dispatchEvent(new Event('resize')), 100)
                     setTimeout(() => {
-                      const allBtn = document.querySelector('[data-view="all"]') as HTMLElement | null
-                      if (allBtn) allBtn.click()
-                      setTimeout(() => {
-                        const searchInput = document.getElementById('search-input') as HTMLInputElement | null
-                        if (searchInput) {
-                          searchInput.value = beliefsSelectedPoint.point.name
-                          searchInput.dispatchEvent(new Event('input', { bubbles: true }))
-                        }
-                      }, 200)
-                    }, 200)
+                      const engine = (
+                        window as unknown as { __mapEngine?: { navigateToEntity: (id: number) => boolean } }
+                      ).__mapEngine
+                      if (engine && !engine.navigateToEntity(entityId)) {
+                        setTimeout(() => engine.navigateToEntity(entityId), 1000)
+                      }
+                    }, 800)
                   }}
                   style={{
                     fontFamily: 'var(--mono)',
@@ -1341,6 +1392,20 @@ export function App() {
         </button>
         <button className="zoom-btn" id="zoom-reset" style={{ fontSize: '11px' }}>
           &#9678;
+        </button>
+        <button className="zoom-btn" id="download-map" title="Download as PNG">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M7 1v9M3.5 7L7 10.5 10.5 7M2 13h10" />
+          </svg>
         </button>
       </div>
 

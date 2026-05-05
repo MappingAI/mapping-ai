@@ -183,6 +183,8 @@ async function migrate() {
     await client.query(`ALTER TABLE submission ADD COLUMN IF NOT EXISTS advocated_stance TEXT`)
     await client.query(`ALTER TABLE submission ADD COLUMN IF NOT EXISTS advocated_timeline TEXT`)
     await client.query(`ALTER TABLE submission ADD COLUMN IF NOT EXISTS advocated_risk TEXT`)
+    await client.query(`ALTER TABLE entity ADD COLUMN IF NOT EXISTS slug VARCHAR(250)`)
+    await client.query(`CREATE UNIQUE INDEX IF NOT EXISTS idx_entity_type_slug ON entity(entity_type, slug)`)
     console.log('  ✓ schema migrations')
 
     // ── 4c. contributor_keys table ──────────────────────────────────────────────

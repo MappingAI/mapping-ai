@@ -467,6 +467,9 @@ body:has(.detail-panel.open) #contribute-btn {
   border-color: var(--text-3);
   color: var(--text-1);
 }
+#download-map {
+  margin-top: 0.4rem;
+}
 
 /* Beliefs view zoom controls - separate class to avoid !important hide rule */
 .beliefs-zoom-controls {
