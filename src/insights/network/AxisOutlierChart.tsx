@@ -556,10 +556,37 @@ export function AxisOutlierChart({ entities, mode }: AxisOutlierChartProps) {
     })
 
     // Add annotations for top outliers using force-based label placement
+    // Force these entities to always have labels
+    const FORCE_LABEL_ENTITIES = new Set([
+      'Jensen Huang',
+      'Sonya Huang',
+      'Leopold Aschenbrenner',
+      'Andrew Ng',
+      'Rodney Brooks',
+    ])
+
+    // Explicitly exclude these entities from labels
+    const EXCLUDE_LABEL_ENTITIES = new Set([
+      'Marc Andreessen',
+      'Chris Murphy',
+      'Adam Shimi',
+      'AI Policy Institute',
+    ])
+
     const annotationCandidates = outlierNodes
-      .filter((d) => d.posCount <= 5) // Only annotate very rare positions
-      .sort((a, b) => a.posCount - b.posCount)
-      .slice(0, mode === '2d' ? 5 : 3) // Limit annotations
+      .filter(
+        (d) =>
+          !EXCLUDE_LABEL_ENTITIES.has(d.entity.name) &&
+          (d.posCount <= 5 || FORCE_LABEL_ENTITIES.has(d.entity.name)),
+      )
+      .sort((a, b) => {
+        // Prioritize forced labels, then sort by rarity
+        const aForced = FORCE_LABEL_ENTITIES.has(a.entity.name) ? 0 : 1
+        const bForced = FORCE_LABEL_ENTITIES.has(b.entity.name) ? 0 : 1
+        if (aForced !== bForced) return aForced - bForced
+        return a.posCount - b.posCount
+      })
+      .slice(0, mode === '2d' ? 8 : 3) // Increased limit for forced labels
 
     // Helper to split name into two lines at word boundary
     function splitName(name: string): string[] {
@@ -580,14 +607,39 @@ export function AxisOutlierChart({ entities, mode }: AxisOutlierChartProps) {
     }
 
     // Create label nodes for force simulation
+    // Custom label offsets for specific entities (closer to node)
+    const LABEL_OFFSET_OVERRIDES: Record<string, number> = {
+      'Andrew Ng': 4,
+      'New Consensus': 4,
+      'Andreessen Horowitz (a16z)': 4,
+      'Jensen Huang': 4,
+      'Sonya Huang': 4,
+      'Rodney Brooks': 4,
+    }
+
+    // Display name overrides (shorter names for labels)
+    const LABEL_NAME_OVERRIDES: Record<string, string> = {
+      'Andreessen Horowitz (a16z)': 'a16z',
+    }
+
+    // Force label position to left or right of node
+    const LABEL_SIDE_OVERRIDES: Record<string, 'left' | 'right'> = {
+      'Rodney Brooks': 'left',
+      'Sonya Huang': 'left',
+      'Jensen Huang': 'right',
+    }
+
     const labelNodes = annotationCandidates.map((d) => {
-      const lines = splitName(d.entity.name)
+      const displayName = LABEL_NAME_OVERRIDES[d.entity.name] ?? d.entity.name
+      const lines = splitName(displayName)
       const labelWidth = Math.max(...lines.map((l) => l.length)) * 5.5
       const labelHeight = lines.length * 11
 
-      // Determine preferred side based on position
-      const preferRight = d.x < plotW * 0.7
-      const offsetX = preferRight ? d.radius + labelWidth / 2 + 10 : -(d.radius + labelWidth / 2 + 10)
+      // Determine preferred side based on position (or override)
+      const sideOverride = LABEL_SIDE_OVERRIDES[d.entity.name]
+      const preferRight = sideOverride ? sideOverride === 'right' : d.x < plotW * 0.7
+      const gap = LABEL_OFFSET_OVERRIDES[d.entity.name] ?? 10
+      const offsetX = preferRight ? d.radius + labelWidth / 2 + gap : -(d.radius + labelWidth / 2 + gap)
 
       return {
         nodeX: d.x,
