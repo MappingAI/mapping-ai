@@ -1343,20 +1343,21 @@ export function App() {
                   href="#"
                   onClick={(e) => {
                     e.preventDefault()
+                    const entityId = beliefsSelectedPoint.point.entity_id
+                    setBeliefsSelectedPoint(null)
                     setReactView(null)
+                    setEngineMode('network')
                     const networkBtn = document.querySelector('.mode-btn[data-mode="network"]') as HTMLElement | null
                     if (networkBtn) networkBtn.click()
+                    setTimeout(() => window.dispatchEvent(new Event('resize')), 100)
                     setTimeout(() => {
-                      const allBtn = document.querySelector('[data-view="all"]') as HTMLElement | null
-                      if (allBtn) allBtn.click()
-                      setTimeout(() => {
-                        const searchInput = document.getElementById('search-input') as HTMLInputElement | null
-                        if (searchInput) {
-                          searchInput.value = beliefsSelectedPoint.point.name
-                          searchInput.dispatchEvent(new Event('input', { bubbles: true }))
-                        }
-                      }, 200)
-                    }, 200)
+                      const engine = (
+                        window as unknown as { __mapEngine?: { navigateToEntity: (id: number) => boolean } }
+                      ).__mapEngine
+                      if (engine && !engine.navigateToEntity(entityId)) {
+                        setTimeout(() => engine.navigateToEntity(entityId), 1000)
+                      }
+                    }, 800)
                   }}
                   style={{
                     fontFamily: 'var(--mono)',
