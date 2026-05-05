@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { HowItWorks } from '../components/HowItWorks'
 import { Navigation } from '../components/Navigation'
+import { WelcomeOverlay } from '../components/WelcomeOverlay'
 import { ContributeForm } from './ContributeForm'
 import { IS_IFRAME } from '../lib/iframe'
 
@@ -19,6 +20,7 @@ export function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <WelcomeOverlay />
       <HowItWorks forceOpen={showHowItWorks} onDismiss={() => setShowHowItWorks(false)} />
       <Navigation />
       <main className="max-w-[800px] mx-auto px-6 pt-16 pb-12 font-serif">

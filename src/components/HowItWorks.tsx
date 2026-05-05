@@ -57,8 +57,8 @@ export function HowItWorks({ forceOpen = false, onDismiss }: HowItWorksProps) {
           </div>
         </div>
         <p className="text-[13px] leading-relaxed text-[#555] mb-5 p-3 bg-[#f5f5f5] rounded-md">
-          This tool is in a pre-launch beta. We are actively improving data issues and enrichment, as well as adding new
-          features and improving the UX. Please email us at{' '}
+          This tool is under active development. We are continuously improving data quality, enrichment, and UX. Please
+          email us at{' '}
           <a href="mailto:info@mapping-ai.org" className="text-[#2563eb]">
             info@mapping-ai.org
           </a>{' '}

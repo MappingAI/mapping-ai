@@ -300,6 +300,7 @@ export function App() {
               const el = document.getElementById('onboarding-overlay')
               if (el) el.style.display = 'none'
               localStorage.setItem('mapOnboardingSeen', '1')
+              localStorage.setItem('welcome-dismissed', '1')
             }}
           >
             Got it

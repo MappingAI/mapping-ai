@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Navigation } from '../components/Navigation'
+import { WelcomeOverlay } from '../components/WelcomeOverlay'
 
 /* ------------------------------------------------------------------ */
 /*  Team data                                                          */
@@ -136,7 +137,7 @@ export function App() {
 
   return (
     <>
-      {/* Fade-in animation removed - was causing white flash on re-renders */}
+      <WelcomeOverlay />
       <Navigation />
 
       <div

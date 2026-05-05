@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { Navigation } from '../components/Navigation'
+import { WelcomeOverlay } from '../components/WelcomeOverlay'
 import { CrosspartisanViz } from './crosspartisan/CrosspartisanViz'
 import { AgiDefinitionSpace } from './crosspartisan/AgiDefinitionSpace'
 import { ReachabilityRings, AxisOutlierChart } from './network'
@@ -1012,7 +1013,7 @@ export function App() {
 
   return (
     <>
-      {/* Fade-in disabled - causes white flash with React re-renders */}
+      <WelcomeOverlay />
       <style>{`
         .fade-in { opacity: 1; transform: none; }
       `}</style>
