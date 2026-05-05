@@ -21,6 +21,16 @@ export function WelcomeOverlay() {
       }}
     >
       <div className="bg-white rounded-xl px-8 py-7 max-w-[540px] w-[92%] shadow-2xl font-serif max-h-[90vh] overflow-y-auto">
+        <a
+          href="https://x.com/mapping_ai/status/2051334980144710112"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block mb-4 p-2.5 bg-[#fffbeb] border border-[#fde68a] rounded-md text-center font-mono text-[10.5px] text-[#92400e] tracking-wide no-underline hover:bg-[#fef3c7] transition-colors"
+        >
+          Thanks for the love on our <span className="underline decoration-dotted underline-offset-2">launch</span>!
+          110k+ views, 700+ saves and counting
+        </a>
+
         <h2 className="font-mono text-sm uppercase tracking-wider mb-4">Welcome to Mapping AI</h2>
 
         <p className="text-[14.5px] leading-relaxed text-[#1a1a1a] mb-4">
@@ -75,18 +85,6 @@ export function WelcomeOverlay() {
         >
           Got it
         </button>
-
-        <div className="mt-4 text-center">
-          <a
-            href="https://x.com/mapping_ai/status/2051334980144710112"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-mono text-[10px] text-[#888] tracking-wide no-underline hover:text-[#2563eb] transition-colors"
-          >
-            🎉 110k+ views and 700+ saves on our{' '}
-            <span className="underline decoration-dotted underline-offset-2">X launch</span> and counting
-          </a>
-        </div>
       </div>
     </div>
   )
