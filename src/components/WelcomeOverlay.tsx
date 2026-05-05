@@ -20,19 +20,7 @@ export function WelcomeOverlay() {
         if (e.target === e.currentTarget) dismiss()
       }}
     >
-      <div className="bg-white rounded-xl px-8 py-7 max-w-[540px] w-[92%] shadow-2xl font-serif">
-        {/* Launch celebration */}
-        <div className="mb-4 p-3 bg-[#fffbeb] border border-[#fde68a] rounded-md text-center">
-          <a
-            href="https://x.com/mapping_ai/status/2051334980144710112?s=20"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[14px] text-[#92400e] no-underline hover:underline"
-          >
-            🎉 Thanks for all the love on our X launch!
-          </a>
-        </div>
-
+      <div className="bg-white rounded-xl px-8 py-7 max-w-[540px] w-[92%] shadow-2xl font-serif max-h-[90vh] overflow-y-auto">
         <h2 className="font-mono text-sm uppercase tracking-wider mb-4">Welcome to Mapping AI</h2>
 
         <p className="text-[14.5px] leading-relaxed text-[#1a1a1a] mb-4">
@@ -78,7 +66,7 @@ export function WelcomeOverlay() {
           >
             GitHub
           </a>
-          .
+          . We're also open to ideas on collaborations or new directions for this resource.
         </p>
 
         <button
@@ -87,6 +75,18 @@ export function WelcomeOverlay() {
         >
           Got it
         </button>
+
+        <div className="mt-4 text-center">
+          <a
+            href="https://x.com/mapping_ai/status/2051334980144710112"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-mono text-[10px] text-[#888] tracking-wide no-underline hover:text-[#2563eb] transition-colors"
+          >
+            🎉 110k+ views and 700+ saves on our{' '}
+            <span className="underline decoration-dotted underline-offset-2">X launch</span> and counting
+          </a>
+        </div>
       </div>
     </div>
   )

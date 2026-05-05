@@ -17,8 +17,14 @@ const TEAM: TeamMember[] = [
   {
     name: 'Anushree Chaudhuri',
     href: 'https://www.linkedin.com/in/anushree-chaudhuri/',
-    role: 'Working Group',
+    role: 'Co-Lead',
     bio: 'Anushree is a doctoral candidate at the University of Cambridge researching large-scale energy infrastructure. She has previously held roles in the Department of Energy and at MIT.',
+  },
+  {
+    name: 'Sophia J Wang',
+    href: 'https://www.linkedin.com/in/sophia-j-wang/',
+    role: 'Co-Lead',
+    bio: 'Sophia leads research for a deep tech fund. She specializes in the development of highly autonomous systems and the design of new research institutions.',
   },
   {
     name: 'Olivia Sally',
@@ -37,12 +43,6 @@ const TEAM: TeamMember[] = [
     href: 'https://www.linkedin.com/in/robert-a-hill/',
     role: 'Working Group',
     bio: 'Robby is an expert in housing policy. He previously led outreach for a YIMBY organization and now serves as Chief Strategy Officer for a data analytics firm.',
-  },
-  {
-    name: 'Sophia J Wang',
-    href: 'https://www.linkedin.com/in/sophia-j-wang/',
-    role: 'Working Group',
-    bio: 'Sophia leads research for a deep tech fund. She specializes in the development of highly autonomous systems and the design of new research institutions.',
   },
 ]
 
