@@ -54,10 +54,18 @@ describe('slugify', () => {
     expect(slugify('🤖🧠')).toBe('')
   })
 
-  it('handles very long names', () => {
+  it('truncates slugs to 240 characters', () => {
     const longName = 'A'.repeat(300)
     const slug = slugify(longName)
-    expect(slug).toBe('a'.repeat(300))
+    expect(slug.length).toBe(240)
+    expect(slug).toBe('a'.repeat(240))
+  })
+
+  it('does not leave trailing hyphen after truncation', () => {
+    const name = 'a'.repeat(239) + ' b'
+    const slug = slugify(name)
+    expect(slug.endsWith('-')).toBe(false)
+    expect(slug.length).toBeLessThanOrEqual(240)
   })
 
   it('handles names with multiple consecutive spaces', () => {

@@ -641,7 +641,6 @@ export function initMapEngine() {
   // ─── Deep link slug utilities ───
   const idMap = new Map() // "person/42" → entity (fallback for old ?entity= links)
   const slugMap = new Map() // "person/dario-amodei" → entity
-  const edgeIdMap = new Map() // edgeId → relationship object
   const typePrefix = { person: 'person', organization: 'org', resource: 'resource' }
   const isMobileDirectory = window.innerWidth < 768
   let mobileScrollPos = 0
@@ -656,11 +655,6 @@ export function initMapEngine() {
       const prefix = typePrefix[d.entityType] || d.entityType
       idMap.set(prefix + '/' + d.id, d)
       if (d.slug) slugMap.set(prefix + '/' + d.slug, d)
-    }
-    if (allData.relationships) {
-      for (const rel of allData.relationships) {
-        if (rel.id) edgeIdMap.set(rel.id, rel)
-      }
     }
   }
 
@@ -1635,7 +1629,7 @@ export function initMapEngine() {
 
     // Deep link (PASSWORD GATE: defer until unlocked)
     const deepLinkTarget = document.body.classList.contains('locked') ? null : resolveDeepLink()
-    if (deepLinkTarget) {
+    if (deepLinkTarget && !deepLinkTarget._edgeId && !deepLinkTarget._beliefSlug) {
       const targetSlug = getEntitySlug(deepLinkTarget)
       const targetCard = document.querySelector(`.mobile-card[data-slug="${targetSlug}"]`)
       if (targetCard) {
@@ -1718,11 +1712,15 @@ export function initMapEngine() {
         window.dispatchEvent(new CustomEvent('deeplink-belief', { detail: { slug: deepLinkTarget._beliefSlug } }))
       }
 
-      // Force network view when deep-linked to entity or edge
-      if (deepLinkTarget && !deepLinkTarget._beliefSlug && viewMode !== 'network') {
-        viewMode = 'network'
-        localStorage.setItem('mapMode', 'network')
-        applyViewState()
+      // Force network 'all' view when deep-linked to entity or edge
+      if (deepLinkTarget && !deepLinkTarget._beliefSlug) {
+        if (viewMode !== 'network' || currentView !== 'all') {
+          viewMode = 'network'
+          currentView = 'all'
+          localStorage.setItem('mapMode', 'network')
+          localStorage.setItem('mapSubView', 'all')
+          applyViewState()
+        }
       }
 
       // Desktop path: existing behavior unchanged

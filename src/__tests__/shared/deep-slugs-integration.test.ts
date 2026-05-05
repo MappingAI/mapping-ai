@@ -220,7 +220,7 @@ describe('engine.js slug integration', () => {
 
     expect(engine).toContain('slugMap')
     expect(engine).toContain('idMap')
-    expect(engine).toContain('edgeIdMap')
+    expect(engine).toContain('_edgeId')
     expect(engine).toContain('d.slug')
     expect(engine).toContain('_edgeId')
     expect(engine).toContain('_beliefSlug')

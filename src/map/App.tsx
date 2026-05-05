@@ -8,6 +8,7 @@ import {
   BELIEF_SCALES,
   type MapBeliefsClusterViewRef,
 } from './components/DefinitionsView'
+import { slugify } from '../shared/slugify'
 
 type ReactView = 'definitions' | null
 
@@ -77,13 +78,7 @@ export function App() {
     const slug = _pendingBeliefSlug
     _pendingBeliefSlug = null
     const match = beliefsData.points.find((p) => {
-      const entitySlug = (p.name || '')
-        .normalize('NFD')
-        .replace(/[̀-ͯ]/g, '')
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/^-+|-+$/g, '')
-      return entitySlug === slug || String(p.entity_id) === slug
+      return slugify(p.name || '') === slug || String(p.entity_id) === slug
     })
     if (match) {
       const source = beliefsData.sources?.[match.source_id] || null
@@ -1211,23 +1206,28 @@ export function App() {
                   className="detail-share"
                   title="Share link to this definition"
                   onClick={() => {
-                    const slug = (beliefsSelectedPoint.point.name || '')
-                      .normalize('NFD')
-                      .replace(/[̀-ͯ]/g, '')
-                      .toLowerCase()
-                      .replace(/[^a-z0-9]+/g, '-')
-                      .replace(/^-+|-+$/g, '')
-                    const url = window.location.origin + '/map/belief/' + (slug || beliefsSelectedPoint.point.entity_id)
-                    navigator.clipboard.writeText(url).then(
-                      () => {},
-                      () => {},
-                    )
-                    const toast = document.getElementById('share-toast')
-                    if (toast) {
-                      toast.classList.remove('visible')
-                      void (toast as HTMLElement).offsetWidth
-                      toast.classList.add('visible')
-                      setTimeout(() => toast.classList.remove('visible'), 2000)
+                    const s = slugify(beliefsSelectedPoint.point.name || '')
+                    const url = window.location.origin + '/map/belief/' + (s || beliefsSelectedPoint.point.entity_id)
+                    function showCopied() {
+                      const toast = document.getElementById('share-toast')
+                      if (toast) {
+                        toast.classList.remove('visible')
+                        void (toast as HTMLElement).offsetWidth
+                        toast.classList.add('visible')
+                        setTimeout(() => toast.classList.remove('visible'), 2000)
+                      }
+                    }
+                    if (navigator.clipboard && window.isSecureContext) {
+                      navigator.clipboard.writeText(url).then(showCopied, showCopied)
+                    } else {
+                      const ta = document.createElement('textarea')
+                      ta.value = url
+                      ta.style.cssText = 'position:fixed;opacity:0'
+                      document.body.appendChild(ta)
+                      ta.select()
+                      document.execCommand('copy')
+                      document.body.removeChild(ta)
+                      showCopied()
                     }
                   }}
                 >
