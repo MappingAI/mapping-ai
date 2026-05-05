@@ -1053,9 +1053,12 @@ export function initMapEngine() {
     })
   }
 
-  // Shared share handler—used by both desktop and mobile share buttons
   function shareEntity(entity) {
     const url = getDeepLinkUrl(entity)
+    if (isMobileDirectory && navigator.share) {
+      navigator.share({ title: entity.name || entity.title, url }).catch(() => {})
+      return
+    }
     function showCopiedToast() {
       const toast = document.getElementById('share-toast')
       toast.classList.remove('visible') // reset in case it's still showing
@@ -1732,7 +1735,7 @@ export function initMapEngine() {
 
       // Desktop deep link handling
       if (deepLinkTarget && deepLinkTarget._edgeId) {
-        setTimeout(() => {
+        afterSimulationSettles(() => {
           const edgeId = deepLinkTarget._edgeId
           const edge = _canvasLinks.find((l) => l.edgeId === edgeId)
           if (edge) {
@@ -1752,9 +1755,9 @@ export function initMapEngine() {
             dimUnconnected(selectedNode)
             showEdgeDetail(edge)
           }
-        }, 1000)
+        })
       } else if (deepLinkTarget && !deepLinkTarget._beliefSlug) {
-        setTimeout(() => {
+        afterSimulationSettles(() => {
           const renderedNodes = _canvasNodes.length > 0 ? _canvasNodes : d3.selectAll('.node').data()
           const node = renderedNodes.find((n) => n.id === deepLinkTarget.id)
           if (node) {
@@ -1773,7 +1776,7 @@ export function initMapEngine() {
                   .scale(k),
               )
           }
-        }, 1000)
+        })
       }
     })
 
@@ -6349,6 +6352,19 @@ ${dots}
     })
   }
 
+  function afterSimulationSettles(callback) {
+    if (!simulation || simulation.alpha() < simulation.alphaMin()) {
+      callback()
+      return
+    }
+    const fallback = setTimeout(callback, 5000)
+    simulation.on('end.deeplink', () => {
+      clearTimeout(fallback)
+      simulation.on('end.deeplink', null)
+      callback()
+    })
+  }
+
   function navigateToEntityById(entityId) {
     const renderedNodes = _canvasNodes.length > 0 ? _canvasNodes : []
     const node = renderedNodes.find((n) => n.id === entityId)
@@ -6378,7 +6394,7 @@ ${dots}
     requestAnimationFrame(() => {
       applyViewState()
       render()
-      setTimeout(callback, 1200)
+      afterSimulationSettles(callback)
     })
   }
 
