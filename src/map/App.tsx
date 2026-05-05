@@ -19,6 +19,7 @@ interface AgiSource {
 }
 
 let _pendingBeliefSlug: string | null = null
+let _skipNextBeliefZoom = false
 
 export function App() {
   const [reactView, setReactView] = useState<ReactView>(null)
@@ -87,6 +88,7 @@ export function App() {
       const source = beliefsData.sources?.[match.source_id] || null
       setBeliefsSelectedPoint({ point: match, source })
       setBeliefsHighlightedId(match.entity_id)
+      _skipNextBeliefZoom = true
     }
   }, [beliefsData])
 
@@ -1192,7 +1194,13 @@ export function App() {
                 onSelect={handleBeliefsSelect}
                 searchQuery={beliefsSearchQuery}
                 highlightedEntityId={beliefsHighlightedId}
-                selectedEntityId={beliefsSelectedPoint?.point.entity_id ?? null}
+                selectedEntityId={(() => {
+                  if (_skipNextBeliefZoom) {
+                    _skipNextBeliefZoom = false
+                    return null
+                  }
+                  return beliefsSelectedPoint?.point.entity_id ?? null
+                })()}
                 hiddenClusters={hiddenClusters}
                 hiddenCategories={hiddenCategories}
                 hiddenBeliefValues={hiddenBeliefValues}
@@ -1353,14 +1361,19 @@ export function App() {
                     const networkBtn = document.querySelector('.mode-btn[data-mode="network"]') as HTMLElement | null
                     if (networkBtn) networkBtn.click()
                     setTimeout(() => window.dispatchEvent(new Event('resize')), 100)
-                    setTimeout(() => {
-                      const engine = (
-                        window as unknown as { __mapEngine?: { navigateToEntity: (id: number) => boolean } }
-                      ).__mapEngine
-                      if (engine && !engine.navigateToEntity(entityId)) {
-                        setTimeout(() => engine.navigateToEntity(entityId), 1000)
+                    const engine = (
+                      window as unknown as {
+                        __mapEngine?: {
+                          navigateToEntity: (id: number) => boolean
+                          afterSimulationSettles: (cb: () => void) => void
+                        }
                       }
-                    }, 800)
+                    ).__mapEngine
+                    if (engine) {
+                      setTimeout(() => {
+                        engine.afterSimulationSettles(() => engine.navigateToEntity(entityId))
+                      }, 500)
+                    }
                   }}
                   style={{
                     fontFamily: 'var(--mono)',
