@@ -1036,10 +1036,6 @@ export function initMapEngine() {
   // Shared share handler—used by both desktop and mobile share buttons
   function shareEntity(entity) {
     const url = getDeepLinkUrl(entity)
-    if (navigator.share) {
-      navigator.share({ title: entity.name || entity.title, url }).catch(() => {})
-    }
-    // Copy to clipboard with fallback for non-HTTPS / older browsers
     function showCopiedToast() {
       const toast = document.getElementById('share-toast')
       toast.classList.remove('visible') // reset in case it's still showing
