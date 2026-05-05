@@ -556,37 +556,20 @@ export function AxisOutlierChart({ entities, mode }: AxisOutlierChartProps) {
     })
 
     // Add annotations for top outliers using force-based label placement
-    // Force these entities to always have labels
+    // ONLY these 7 entities get labels - no auto-labeling based on position
     const FORCE_LABEL_ENTITIES = new Set([
       'Jensen Huang',
       'Sonya Huang',
       'Leopold Aschenbrenner',
       'Andrew Ng',
       'Rodney Brooks',
-    ])
-
-    // Explicitly exclude these entities from labels
-    const EXCLUDE_LABEL_ENTITIES = new Set([
-      'Marc Andreessen',
-      'Chris Murphy',
-      'Adam Shimi',
-      'AI Policy Institute',
+      'New Consensus',
+      'Andreessen Horowitz (a16z)',
     ])
 
     const annotationCandidates = outlierNodes
-      .filter(
-        (d) =>
-          !EXCLUDE_LABEL_ENTITIES.has(d.entity.name) &&
-          (d.posCount <= 5 || FORCE_LABEL_ENTITIES.has(d.entity.name)),
-      )
-      .sort((a, b) => {
-        // Prioritize forced labels, then sort by rarity
-        const aForced = FORCE_LABEL_ENTITIES.has(a.entity.name) ? 0 : 1
-        const bForced = FORCE_LABEL_ENTITIES.has(b.entity.name) ? 0 : 1
-        if (aForced !== bForced) return aForced - bForced
-        return a.posCount - b.posCount
-      })
-      .slice(0, mode === '2d' ? 8 : 3) // Increased limit for forced labels
+      .filter((d) => FORCE_LABEL_ENTITIES.has(d.entity.name))
+      .sort((a, b) => a.posCount - b.posCount)
 
     // Helper to split name into two lines at word boundary
     function splitName(name: string): string[] {
