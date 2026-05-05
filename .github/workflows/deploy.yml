@@ -37,45 +37,13 @@ jobs:
       - name: Build with Vite
         run: pnpm exec vite build
 
-      # DISABLED: R2 upload step was overwriting manual data fixes on every push.
-      # The GitHub DATABASE_URL secret points to a different database than local.
-      # Re-enable once secrets.DATABASE_URL is updated to match production database.
-      # See: https://github.com/settings/secrets/actions
-      #
-      # - name: Generate and upload map-data.json to R2
-      #   env:
-      #     DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      #     R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
-      #     R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
-      #   run: |
-      #     pnpm exec tsx scripts/export-map-data.ts
-      #     echo "Uploading map-data.json and map-detail.json to R2..."
-      #     node -e "
-      #       const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
-      #       const fs = require('fs');
-      #       const r2 = new S3Client({
-      #         region: 'auto',
-      #         endpoint: 'https://ac57c6d87068ab259c6f54dba468de8d.r2.cloudflarestorage.com',
-      #         credentials: {
-      #           accessKeyId: process.env.R2_ACCESS_KEY_ID,
-      #           secretAccessKey: process.env.R2_SECRET_ACCESS_KEY,
-      #         },
-      #       });
-      #       async function upload(file) {
-      #         const body = fs.readFileSync(file);
-      #         await r2.send(new PutObjectCommand({
-      #           Bucket: 'mapping-ai-data',
-      #           Key: file,
-      #           Body: body,
-      #           ContentType: 'application/json',
-      #           CacheControl: 'public, max-age=300, s-maxage=3600',
-      #         }));
-      #         console.log('  ✓', file, '(' + (body.length / 1024).toFixed(0) + ' KB)');
-      #       }
-      #       Promise.all([upload('map-data.json'), upload('map-detail.json')])
-      #         .then(() => console.log('Uploaded to R2'))
-      #         .catch(e => { console.error(e); process.exit(1); });
-      #     "
+      - name: Export and upload data to R2
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: pnpm run db:refresh
 
       # PASSWORD GATE — remove after public launch
       - name: Inject password gate hash
