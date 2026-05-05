@@ -408,6 +408,11 @@ export function App() {
               desc: 'Long-term AI safety reference',
             },
             { name: 'Democracy Build', url: 'https://democracybuild.org/', desc: 'Democratic governance of AI' },
+            {
+              name: 'AI Safety Field Map',
+              url: 'https://harrywaterman.com/fieldmap/',
+              desc: 'Visual map of the AI safety field',
+            },
           ].map((link) => (
             <a
               key={link.url}
