@@ -334,19 +334,7 @@ export function initMapEngine() {
       items.push({ entity, entityType, name: displayName, type: typeName, rel: rel || 'affiliated', edgeId })
     }
 
-    // From inferredLinks
-    inferredLinks.forEach((l) => {
-      if (l.personName === d.name) {
-        const org = allData.organizations.find((o) => o.name === l.orgName)
-        if (org) addItem(org, 'organization', 'affiliated')
-      }
-      if (l.orgName === d.name) {
-        const person = allData.people.find((p) => p.name === l.personName)
-        if (person) addItem(person, 'person', 'affiliated')
-      }
-    })
-
-    // From relationships
+    // From relationships (explicit edges with real types, processed first)
     if (allData.relationships) {
       const entityKey = d.entityType === 'resource' ? 'resource' : d.entityType
       allData.relationships.forEach((rel) => {
@@ -380,6 +368,18 @@ export function initMapEngine() {
           })
       }
     }
+
+    // From inferredLinks (name-based, defaults to 'affiliated', processed last)
+    inferredLinks.forEach((l) => {
+      if (l.personName === d.name) {
+        const org = allData.organizations.find((o) => o.name === l.orgName)
+        if (org) addItem(org, 'organization', 'affiliated')
+      }
+      if (l.orgName === d.name) {
+        const person = allData.people.find((p) => p.name === l.personName)
+        if (person) addItem(person, 'person', 'affiliated')
+      }
+    })
 
     return items
   }
@@ -4676,6 +4676,7 @@ ${dots}
       critic: { bg: 'rgba(239, 68, 68, 0.15)', text: '#f87171' },
       mentor: { bg: 'rgba(59, 130, 246, 0.15)', text: '#60a5fa' },
       'co-founder': { bg: 'rgba(245, 158, 11, 0.15)', text: '#fbbf24' },
+      formerly_affiliated: { bg: 'rgba(107, 114, 128, 0.15)', text: '#9ca3af' },
     }
 
     if (linkedItems.length > 0) {
