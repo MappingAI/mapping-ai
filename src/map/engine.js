@@ -6400,7 +6400,7 @@ ${dots}
     })
   }
 
-  window.__mapEngine = { showDetail, allData, navigateToEntity: navigateToEntityById }
+  window.__mapEngine = { showDetail, allData, navigateToEntity: navigateToEntityById, afterSimulationSettles }
 
   return {
     destroy() {
