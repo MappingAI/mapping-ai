@@ -40,6 +40,7 @@ jobs:
       - name: Export and upload data to R2
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          PILOT_DB: ${{ secrets.PILOT_DB }}
           R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
