@@ -48,8 +48,12 @@ export function App() {
       .then(({ initMapEngine }) => {
         if (cancelled) return
         engineCleanup = initMapEngine()
+        document.getElementById('mobile-loading')?.remove()
       })
-      .catch((err) => console.error('Failed to load map engine:', err))
+      .catch((err) => {
+        console.error('Failed to load map engine:', err)
+        document.getElementById('mobile-loading')?.remove()
+      })
 
     return () => {
       cancelled = true

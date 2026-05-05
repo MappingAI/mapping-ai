@@ -37,8 +37,33 @@
       onload="this.media = 'all'"
     />
     <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+      @media (max-width: 768px) {
+        #mobile-loading {
+          position: fixed;
+          inset: 0;
+          z-index: 10001;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          background: #fff;
+          font-family: 'DM Mono', monospace;
+        }
+        #mobile-loading span {
+          font-size: 11px;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          color: #888;
+        }
+      }
+      @media (min-width: 769px) {
+        #mobile-loading { display: none; }
+      }
+    </style>
   </head>
   <body>
+    <div id="mobile-loading"><span>Loading map...</span></div>
     <div id="map-root"></div>
     <script type="module" src="/src/map/main.tsx"></script>
     <script
