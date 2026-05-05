@@ -52,7 +52,10 @@ export function App() {
         if (cancelled) return
         engineCleanup = initMapEngine()
       })
-      .catch((err) => console.error('Failed to load map engine:', err))
+      .catch((err) => {
+        console.error('Failed to load map engine:', err)
+        document.getElementById('mobile-loading')?.remove()
+      })
 
     return () => {
       cancelled = true
@@ -240,11 +243,6 @@ export function App() {
         <a className="nav-brand" href="/">
           Mapping AI
         </a>
-        <button className="nav-hamburger" aria-label="Menu">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
         <div className="nav-links">
           <a href="/">Background</a>
           <a href="/contribute">Contribute</a>
@@ -254,6 +252,11 @@ export function App() {
         </div>
         <button className="theme-toggle" id="theme-toggle" title="Toggle dark/light mode">
           &#9790;
+        </button>
+        <button className="nav-hamburger" aria-label="Menu">
+          <span></span>
+          <span></span>
+          <span></span>
         </button>
       </nav>
 

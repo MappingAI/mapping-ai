@@ -944,6 +944,10 @@ body:has(.beliefs-detail-sidebar) .beliefs-zoom-controls {
   .site-nav {
     padding: 0 1rem;
   }
+  .theme-toggle {
+    position: static;
+    transform: none;
+  }
   .nav-hamburger {
     display: flex;
   }

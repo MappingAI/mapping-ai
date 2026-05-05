@@ -1704,6 +1704,8 @@ export function initMapEngine() {
 
       if (isMobileDirectory) {
         renderMobileDirectory()
+        const ml = document.getElementById('mobile-loading')
+        if (ml) ml.remove()
         return
       }
 
@@ -1726,7 +1728,7 @@ export function initMapEngine() {
         }
       }
 
-      // Desktop path: existing behavior unchanged
+      // Desktop path
       buildFilters()
       buildStanceLegend()
       buildSourceTypeFilter()
