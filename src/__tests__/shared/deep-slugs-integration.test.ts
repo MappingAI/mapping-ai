@@ -199,27 +199,32 @@ describe('_redirects file for Cloudflare Pages', () => {
     expect(redirects).toContain('/map/person/* /map 200')
     expect(redirects).toContain('/map/org/* /map 200')
     expect(redirects).toContain('/map/resource/* /map 200')
+    expect(redirects).toContain('/map/edge/* /map 200')
+    expect(redirects).toContain('/map/belief/* /map 200')
   })
 })
 
 describe('vite dev server slug rewrite middleware', () => {
-  it('vite config includes mapSlugRewrite plugin', async () => {
+  it('vite config includes mapSlugRewrite plugin for all slug types', async () => {
     const viteConfig = readProjectFile('vite.config.ts')
 
     expect(viteConfig).toContain('mapSlugRewrite')
-    expect(viteConfig).toContain('person|org|resource')
+    expect(viteConfig).toContain('edge|belief')
     expect(viteConfig).toContain("req.url = '/map.html'")
   })
 })
 
 describe('engine.js slug integration', () => {
-  it('engine has slug-based deep link resolution', async () => {
+  it('engine has slug-based deep link resolution for entities, edges, and beliefs', async () => {
     const engine = readProjectFile('src/map/engine.js')
 
     expect(engine).toContain('slugMap')
     expect(engine).toContain('idMap')
+    expect(engine).toContain('edgeIdMap')
     expect(engine).toContain('d.slug')
-    expect(engine).toContain('person|org|resource')
+    expect(engine).toContain('_edgeId')
+    expect(engine).toContain('_beliefSlug')
+    expect(engine).toContain('getEdgeDeepLinkUrl')
   })
 
   it('engine has download button handler', async () => {

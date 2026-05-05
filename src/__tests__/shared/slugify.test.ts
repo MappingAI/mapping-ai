@@ -240,3 +240,56 @@ describe('deep link URL resolution', () => {
     expect(resolveSlugPath('/map/person/john-smith-2')).toEqual({ type: 'person', slug: 'john-smith-2' })
   })
 })
+
+describe('edge deep link URL resolution', () => {
+  function resolveEdgePath(pathname: string): number | null {
+    const match = pathname.match(/^\/map\/edge\/(\d+)\/?$/)
+    return match ? parseInt(match[1]!, 10) : null
+  }
+
+  it('parses edge URL with numeric ID', () => {
+    expect(resolveEdgePath('/map/edge/123')).toBe(123)
+  })
+
+  it('handles trailing slash', () => {
+    expect(resolveEdgePath('/map/edge/456/')).toBe(456)
+  })
+
+  it('returns null for non-numeric edge ID', () => {
+    expect(resolveEdgePath('/map/edge/abc')).toBeNull()
+  })
+
+  it('returns null for bare /map/edge path', () => {
+    expect(resolveEdgePath('/map/edge')).toBeNull()
+    expect(resolveEdgePath('/map/edge/')).toBeNull()
+  })
+})
+
+describe('belief deep link URL resolution', () => {
+  function resolveBeliefPath(pathname: string): string | null {
+    const match = pathname.match(/^\/map\/belief\/([^/]+)\/?$/)
+    if (!match) return null
+    try {
+      return decodeURIComponent(match[1]!)
+    } catch {
+      return null
+    }
+  }
+
+  it('parses belief URL with entity slug', () => {
+    expect(resolveBeliefPath('/map/belief/dario-amodei')).toBe('dario-amodei')
+  })
+
+  it('handles trailing slash', () => {
+    expect(resolveBeliefPath('/map/belief/anthropic/')).toBe('anthropic')
+  })
+
+  it('handles numeric entity ID', () => {
+    expect(resolveBeliefPath('/map/belief/42')).toBe('42')
+  })
+
+  it('returns null for bare path', () => {
+    expect(resolveBeliefPath('/map/belief')).toBeNull()
+    expect(resolveBeliefPath('/map/belief/')).toBeNull()
+  })
+})

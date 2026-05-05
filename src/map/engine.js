@@ -641,6 +641,7 @@ export function initMapEngine() {
   // ─── Deep link slug utilities ───
   const idMap = new Map() // "person/42" → entity (fallback for old ?entity= links)
   const slugMap = new Map() // "person/dario-amodei" → entity
+  const edgeIdMap = new Map() // edgeId → relationship object
   const typePrefix = { person: 'person', organization: 'org', resource: 'resource' }
   const isMobileDirectory = window.innerWidth < 768
   let mobileScrollPos = 0
@@ -656,6 +657,11 @@ export function initMapEngine() {
       idMap.set(prefix + '/' + d.id, d)
       if (d.slug) slugMap.set(prefix + '/' + d.slug, d)
     }
+    if (allData.relationships) {
+      for (const rel of allData.relationships) {
+        if (rel.id) edgeIdMap.set(rel.id, rel)
+      }
+    }
   }
 
   function getEntitySlug(d) {
@@ -667,7 +673,27 @@ export function initMapEngine() {
     return window.location.origin + '/map/' + getEntitySlug(d)
   }
 
+  function getEdgeDeepLinkUrl(edge) {
+    const eid = edge.edgeId || edge.id
+    if (eid) return window.location.origin + '/map/edge/' + eid
+    return window.location.origin + '/map/' + getEntitySlug(edge.source)
+  }
+
   function resolveDeepLink() {
+    // Edge URLs: /map/edge/123
+    const edgeMatch = window.location.pathname.match(/^\/map\/edge\/(\d+)\/?$/)
+    if (edgeMatch) return { _edgeId: parseInt(edgeMatch[1], 10) }
+
+    // Belief URLs: /map/belief/entity-slug
+    const beliefMatch = window.location.pathname.match(/^\/map\/belief\/([^/]+)\/?$/)
+    if (beliefMatch) {
+      try {
+        return { _beliefSlug: decodeURIComponent(beliefMatch[1]) }
+      } catch {
+        return null
+      }
+    }
+
     // Path-based slug URLs: /map/person/dario-amodei
     const pathMatch = window.location.pathname.match(/^\/map\/(person|org|resource)\/([^/]+)\/?$/)
     if (pathMatch) {
@@ -1684,8 +1710,16 @@ export function initMapEngine() {
         return
       }
 
-      // Force network view when deep-linked so zoom-to-node works
-      if (resolveDeepLink() && viewMode !== 'network') {
+      // Resolve deep link target
+      const deepLinkTarget = document.body.classList.contains('locked') ? null : resolveDeepLink()
+
+      // Belief deep links dispatch to React and skip engine rendering
+      if (deepLinkTarget && deepLinkTarget._beliefSlug) {
+        window.dispatchEvent(new CustomEvent('deeplink-belief', { detail: { slug: deepLinkTarget._beliefSlug } }))
+      }
+
+      // Force network view when deep-linked to entity or edge
+      if (deepLinkTarget && !deepLinkTarget._beliefSlug && viewMode !== 'network') {
         viewMode = 'network'
         localStorage.setItem('mapMode', 'network')
         applyViewState()
@@ -1698,9 +1732,30 @@ export function initMapEngine() {
       updateSourceTypeVisibility()
       render()
 
-      // Desktop deep link handling (PASSWORD GATE: defer until unlocked)
-      const deepLinkTarget = document.body.classList.contains('locked') ? null : resolveDeepLink()
-      if (deepLinkTarget) {
+      // Desktop deep link handling
+      if (deepLinkTarget && deepLinkTarget._edgeId) {
+        setTimeout(() => {
+          const edgeId = deepLinkTarget._edgeId
+          const edge = _canvasLinks.find((l) => l.edgeId === edgeId)
+          if (edge) {
+            const midX = (edge.source.x + edge.target.x) / 2
+            const midY = (edge.source.y + edge.target.y) / 2
+            const k = 2.5
+            const panelWidth = 320
+            const mapEl = document.getElementById('map-container')
+            const centerX = (mapEl.clientWidth - panelWidth) / 2
+            const centerY = mapEl.clientHeight / 2
+            const newTransform = d3.zoomIdentity.translate(centerX - midX * k, centerY - midY * k).scale(k)
+            if (zoomBehavior && _canvasSel) {
+              _canvasSel.transition().duration(400).call(zoomBehavior.transform, newTransform)
+            }
+            _selectedEdge = edge
+            selectedNode = edge.source
+            dimUnconnected(selectedNode)
+            showEdgeDetail(edge)
+          }
+        }, 1000)
+      } else if (deepLinkTarget && !deepLinkTarget._beliefSlug) {
         setTimeout(() => {
           const renderedNodes = _canvasNodes.length > 0 ? _canvasNodes : d3.selectAll('.node').data()
           const node = renderedNodes.find((n) => n.id === deepLinkTarget.id)
@@ -2060,7 +2115,7 @@ export function initMapEngine() {
 
   // ── View mode (Network / Plot) + sub-tabs ──
   // PASSWORD GATE: force plot view when locked (don't overwrite saved preference)
-  let viewMode = localStorage.getItem('mapMode') || 'plot'
+  let viewMode = localStorage.getItem('mapMode') || 'network'
   const savedSubView = localStorage.getItem('mapSubView') || 'all'
 
   const urlParams = new URLSearchParams(window.location.search)
@@ -5211,6 +5266,36 @@ ${dots}
       }
       _previousState = null
     })
+
+    // Wire share button for edge
+    const shareBtn = document.getElementById('detail-share')
+    if (shareBtn) {
+      const newShareBtn = shareBtn.cloneNode(true)
+      shareBtn.parentNode.replaceChild(newShareBtn, shareBtn)
+      newShareBtn.id = 'detail-share'
+      newShareBtn.addEventListener('click', () => {
+        const url = getEdgeDeepLinkUrl(edge)
+        function showCopiedToast() {
+          const toast = document.getElementById('share-toast')
+          toast.classList.remove('visible')
+          void toast.offsetWidth
+          toast.classList.add('visible')
+          setTimeout(() => toast.classList.remove('visible'), 2000)
+        }
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(url).then(showCopiedToast).catch(showCopiedToast)
+        } else {
+          const ta = document.createElement('textarea')
+          ta.value = url
+          ta.style.cssText = 'position:fixed;opacity:0'
+          document.body.appendChild(ta)
+          ta.select()
+          document.execCommand('copy')
+          document.body.removeChild(ta)
+          showCopiedToast()
+        }
+      })
+    }
 
     panel.classList.add('open')
   }

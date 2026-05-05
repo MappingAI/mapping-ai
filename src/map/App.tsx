@@ -17,11 +17,13 @@ interface AgiSource {
   type: string | null
 }
 
+let _pendingBeliefSlug: string | null = null
+
 export function App() {
   const [reactView, setReactView] = useState<ReactView>(null)
   const [engineMode, setEngineMode] = useState<'network' | 'plot'>(() => {
     const saved = localStorage.getItem('mapMode')
-    return saved === 'network' ? 'network' : 'plot'
+    return saved === 'plot' ? 'plot' : 'network'
   })
   const [beliefsSubView, setBeliefsSubView] = useState<string>('map')
   const [beliefsColorMode, setBeliefsColorMode] = useState<string>('cluster')
@@ -56,6 +58,39 @@ export function App() {
       if (engineCleanup) engineCleanup.destroy()
     }
   }, [])
+
+  useEffect(() => {
+    function handleBeliefDeepLink(e: Event) {
+      const slug = (e as CustomEvent).detail?.slug
+      if (!slug) return
+      setReactView('definitions')
+      setBeliefsSelectedPoint(null)
+      setBeliefsHighlightedId(null)
+      _pendingBeliefSlug = slug
+    }
+    window.addEventListener('deeplink-belief', handleBeliefDeepLink)
+    return () => window.removeEventListener('deeplink-belief', handleBeliefDeepLink)
+  }, [])
+
+  useEffect(() => {
+    if (!beliefsData || !_pendingBeliefSlug) return
+    const slug = _pendingBeliefSlug
+    _pendingBeliefSlug = null
+    const match = beliefsData.points.find((p) => {
+      const entitySlug = (p.name || '')
+        .normalize('NFD')
+        .replace(/[̀-ͯ]/g, '')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '')
+      return entitySlug === slug || String(p.entity_id) === slug
+    })
+    if (match) {
+      const source = beliefsData.sources?.[match.source_id] || null
+      setBeliefsSelectedPoint({ point: match, source })
+      setBeliefsHighlightedId(match.entity_id)
+    }
+  }, [beliefsData])
 
   useEffect(() => {
     function handleEngineModeClick(e: Event) {
@@ -1172,6 +1207,45 @@ export function App() {
           {beliefsSelectedPoint && (
             <div className="detail-panel open" style={{ zIndex: 51 }} onClick={(e) => e.stopPropagation()}>
               <div className="detail-header-actions">
+                <button
+                  className="detail-share"
+                  title="Share link to this definition"
+                  onClick={() => {
+                    const slug = (beliefsSelectedPoint.point.name || '')
+                      .normalize('NFD')
+                      .replace(/[̀-ͯ]/g, '')
+                      .toLowerCase()
+                      .replace(/[^a-z0-9]+/g, '-')
+                      .replace(/^-+|-+$/g, '')
+                    const url = window.location.origin + '/map/belief/' + (slug || beliefsSelectedPoint.point.entity_id)
+                    navigator.clipboard.writeText(url).then(
+                      () => {},
+                      () => {},
+                    )
+                    const toast = document.getElementById('share-toast')
+                    if (toast) {
+                      toast.classList.remove('visible')
+                      void (toast as HTMLElement).offsetWidth
+                      toast.classList.add('visible')
+                      setTimeout(() => toast.classList.remove('visible'), 2000)
+                    }
+                  }}
+                >
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+                    <polyline points="16 6 12 2 8 6" />
+                    <line x1="12" y1="2" x2="12" y2="15" />
+                  </svg>
+                </button>
                 <button className="detail-close" onClick={closeBeliefsDetail}>
                   &times;
                 </button>
