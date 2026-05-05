@@ -287,6 +287,30 @@ export function App() {
             </a>
             .
           </div>
+          <div
+            style={{
+              fontFamily: 'var(--mono)',
+              fontSize: '9px',
+              color: '#888',
+              lineHeight: '1.5',
+              marginTop: '12px',
+              letterSpacing: '0.02em',
+            }}
+          >
+            Data is sourced from public records, user submissions, and LLM-assisted research. Where explicit statements
+            are not available, beliefs and stances may be inferred from public actions, writings, or affiliations and do
+            not claim to represent official positions. We treat disagreement between internal and external perceptions
+            of beliefs as signal, not noise, and factor this into aggregate stance scores. We welcome corrections to any
+            inaccuracies via{' '}
+            <a href="/contribute" style={{ color: '#888' }}>
+              our contribute form
+            </a>{' '}
+            or by emailing{' '}
+            <a href="mailto:info@mapping-ai.org" style={{ color: '#888' }}>
+              info@mapping-ai.org
+            </a>
+            .
+          </div>
           <button
             className="onboarding-dismiss"
             onClick={() => {
@@ -929,6 +953,27 @@ export function App() {
           >
             <span style={{ fontSize: '12px' }}>&#9432;</span> About this map
           </button>
+          <p
+            style={{
+              fontFamily: 'var(--mono)',
+              fontSize: '8px',
+              color: 'var(--text-3)',
+              lineHeight: '1.5',
+              marginTop: '6px',
+              letterSpacing: '0.02em',
+            }}
+          >
+            Data is sourced from public records, user submissions, and LLM-assisted research. Inferred beliefs do not
+            claim to represent official positions. We welcome corrections to any inaccuracies via{' '}
+            <a href="/contribute" style={{ color: 'var(--text-3)' }}>
+              contribute
+            </a>{' '}
+            or{' '}
+            <a href="mailto:info@mapping-ai.org" style={{ color: 'var(--text-3)' }}>
+              info@mapping-ai.org
+            </a>
+            .
+          </p>
           <details style={{ marginTop: '6px' }} open={reactView === 'definitions'}>
             <summary
               style={{
@@ -997,6 +1042,11 @@ export function App() {
                   name: 'Democracy Build',
                   url: 'https://democracybuild.org/',
                   desc: 'Democratic governance of AI',
+                },
+                {
+                  name: 'AI Safety Field Map',
+                  url: 'https://harrywaterman.com/fieldmap/',
+                  desc: 'Visual map of the AI safety field',
                 },
               ].map((link) => (
                 <a

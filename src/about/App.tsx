@@ -355,11 +355,16 @@ export function App() {
           </a>
         </div>
         <div className="mt-2 font-mono text-[9px] text-[#888] tracking-tight text-center max-w-[600px] leading-normal">
-          This tool is in a pre-launch beta. We are actively improving data and adding new features. Email{' '}
+          Data is sourced from public records, user submissions, and LLM-assisted research. Inferred beliefs do not
+          claim to represent official positions. We welcome corrections via{' '}
+          <a href="/contribute" className="text-[#888]">
+            contribute
+          </a>{' '}
+          or{' '}
           <a href="mailto:info@mapping-ai.org" className="text-[#888]">
             info@mapping-ai.org
-          </a>{' '}
-          to contribute or provide feedback.
+          </a>
+          .
         </div>
       </div>
     </>
