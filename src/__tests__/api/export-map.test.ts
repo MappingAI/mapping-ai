@@ -54,6 +54,7 @@ function baseEntityRow(overrides: Record<string, unknown> = {}) {
     belief_ai_risk_wavg: null,
     belief_ai_risk_wvar: null,
     belief_ai_risk_n: 0,
+    slug: null,
     submission_count: 1,
     status: 'approved' as const,
     qa_approved: true,
@@ -75,6 +76,11 @@ describe('toFrontendShape', () => {
     expect(shaped.regulatory_stance).toBe('Targeted')
     expect(shaped.agi_timeline).toBe('5-10 years')
     expect(shaped.ai_risk_level).toBe('Serious')
+  })
+
+  it('passes slug through to frontend shape', () => {
+    const shaped = toFrontendShape(baseEntityRow({ slug: 'dario-amodei' }))
+    expect(shaped.slug).toBe('dario-amodei')
   })
 
   it('derives ordinal scores from text labels when wavg is null', () => {

@@ -203,6 +203,9 @@ async function migrate() {
     await client.query('CREATE INDEX IF NOT EXISTS idx_sub_contributor ON submission(contributor_key_id)')
     console.log('  ✓ contributor_keys')
 
+    await client.query(`ALTER TABLE entity ADD COLUMN IF NOT EXISTS slug VARCHAR(250)`)
+    await client.query('CREATE UNIQUE INDEX IF NOT EXISTS idx_entity_slug ON entity(entity_type, slug)')
+
     // ── 5. Score recalculation function ──────────────────────────────────────
     // Weights: self=10, connector=2, external=1
     // _n counts only submissions with a non-null score for that field

@@ -1379,6 +1379,20 @@ export function App() {
         <button className="zoom-btn" id="zoom-reset" style={{ fontSize: '11px' }}>
           &#9678;
         </button>
+        <button className="zoom-btn" id="download-map" title="Download as PNG">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M7 1v9M3.5 7L7 10.5 10.5 7M2 13h10" />
+          </svg>
+        </button>
       </div>
 
       {/* Zoom controls for Beliefs map view */}
