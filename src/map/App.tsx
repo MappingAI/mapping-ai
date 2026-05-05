@@ -1370,7 +1370,9 @@ export function App() {
                       }
                     ).__mapEngine
                     if (engine) {
-                      engine.afterSimulationSettles(() => engine.navigateToEntity(entityId))
+                      setTimeout(() => {
+                        engine.afterSimulationSettles(() => engine.navigateToEntity(entityId))
+                      }, 500)
                     }
                   }}
                   style={{
