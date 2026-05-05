@@ -268,6 +268,9 @@ export function App() {
               are weighted averages from submissions.
             </div>
           </div>
+          <div className="onboarding-mobile-note">
+            On mobile, the map has a limited feature set and may take a few seconds to load.
+          </div>
           <div
             style={{
               background: 'var(--bg-page, #f0eeeb)',
