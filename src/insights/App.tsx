@@ -867,58 +867,10 @@ function ChartCategoryMatrix({ edges, entities }: { edges: Edge[]; entities: Ent
    Reusable Layout Components
    ──────────────────────────────────────────── */
 
-function downloadChartAsSvg(container: HTMLDivElement, title: string) {
-  const svgs = container.querySelectorAll('svg')
-  const svg = Array.from(svgs).find((s) => !s.closest('button'))
-  if (!svg) return
-
-  const clone = svg.cloneNode(true) as SVGElement
-  clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
-
-  const svgData = new XMLSerializer().serializeToString(clone)
-  const blob = new Blob([svgData], { type: 'image/svg+xml' })
-  const url = URL.createObjectURL(blob)
-  const a = document.createElement('a')
-  a.href = url
-  const slug = title
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '')
-  a.download = 'mapping-ai' + (slug ? '-' + slug : '-chart') + '.svg'
-  document.body.appendChild(a)
-  a.click()
-  document.body.removeChild(a)
-  setTimeout(() => URL.revokeObjectURL(url), 100)
-}
-
 function ChartContainer({ title, source, children }: { title: string; source: string; children: React.ReactNode }) {
-  const containerRef = useRef<HTMLDivElement>(null)
   return (
-    <div
-      ref={containerRef}
-      className="bg-[#f8f7f5] rounded-lg p-6 my-8 overflow-hidden fade-in [&_svg]:w-full [&_svg]:block relative group"
-    >
-      <div className="flex justify-between items-start mb-4">
-        <div className="font-mono text-[11px] tracking-[0.08em] uppercase text-[#555]">{title}</div>
-        <button
-          onClick={() => containerRef.current && downloadChartAsSvg(containerRef.current, title || 'chart')}
-          className="opacity-0 group-hover:opacity-100 transition-opacity bg-white/80 border border-[#ccc] rounded px-2 py-1 cursor-pointer flex-shrink-0 ml-3 [&_svg]:!w-[14px] [&_svg]:!block"
-          title="Download as SVG"
-        >
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 14 14"
-            fill="none"
-            stroke="#555"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M7 1v9M3.5 7L7 10.5 10.5 7M2 13h10" />
-          </svg>
-        </button>
-      </div>
+    <div className="bg-[#f8f7f5] rounded-lg p-6 my-8 overflow-hidden fade-in [&_svg]:w-full [&_svg]:block">
+      <div className="font-mono text-[11px] tracking-[0.08em] uppercase text-[#555] mb-4">{title}</div>
       {children}
       <div className="font-mono text-[9px] text-[#888] tracking-[0.04em] mt-3 text-center">{source}</div>
     </div>

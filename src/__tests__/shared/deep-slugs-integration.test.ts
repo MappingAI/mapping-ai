@@ -335,11 +335,10 @@ describe('main features preserved', () => {
     expect(agiDefPos).toBeLessThan(beliefPos)
   })
 
-  it('insights page has SVG download button on charts', async () => {
+  it('insights page does not have broken SVG download', async () => {
     const insights = readProjectFile('src/insights/App.tsx')
 
-    expect(insights).toContain('downloadChartAsSvg')
-    expect(insights).toContain('Download as SVG')
+    expect(insights).not.toContain('downloadChartAsSvg')
   })
 })
 
