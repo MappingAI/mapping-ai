@@ -37,6 +37,7 @@
       onload="this.media = 'all'"
     />
     <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script>if(localStorage.getItem('map-theme')==='dark')document.documentElement.setAttribute('data-theme','dark')</script>
     <style>
       @media (max-width: 768px) {
         #mobile-loading {
@@ -47,14 +48,14 @@
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          background: #fff;
+          background: var(--bg-page, #f0eeeb);
           font-family: 'DM Mono', monospace;
         }
         #mobile-loading span {
           font-size: 11px;
           letter-spacing: 0.08em;
           text-transform: uppercase;
-          color: #888;
+          color: var(--text-3, #888);
         }
       }
       @media (min-width: 769px) {

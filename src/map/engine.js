@@ -1642,10 +1642,14 @@ export function initMapEngine() {
 
       if (isMobileDirectory) {
         renderMobileDirectory()
+        const ml = document.getElementById('mobile-loading')
+        if (ml) ml.remove()
         return
       }
 
-      // Desktop path: existing behavior unchanged
+      // Desktop path: remove mobile loading screen if present
+      const ml = document.getElementById('mobile-loading')
+      if (ml) ml.remove()
       buildFilters()
       buildStanceLegend()
       buildSourceTypeFilter()
