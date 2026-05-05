@@ -1844,33 +1844,6 @@ export function DefinitionsView({
           onClose={() => setSelectedPoint(null)}
         />
       )}
-
-      <div
-        style={{
-          marginTop: '8px',
-          fontFamily: 'var(--mono)',
-          fontSize: '9px',
-          color: 'var(--text-3)',
-          letterSpacing: '0.04em',
-        }}
-      >
-        Source: AGI definition claims from enrichment pipeline. Embeddings: Voyage AI voyage-3. Projection: UMAP.
-      </div>
-
-      <a
-        href="/insights#agi-definitions"
-        style={{
-          display: 'inline-block',
-          marginTop: '4px',
-          fontFamily: 'var(--mono)',
-          fontSize: '11px',
-          color: 'var(--accent)',
-          letterSpacing: '0.04em',
-          textDecoration: 'none',
-        }}
-      >
-        See full analysis on Insights →
-      </a>
     </div>
   )
 }

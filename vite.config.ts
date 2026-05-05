@@ -6,9 +6,23 @@ import tailwindcss from '@tailwindcss/vite'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
+function mapSlugRewrite() {
+  return {
+    name: 'map-slug-rewrite',
+    configureServer(server: { middlewares: { use: (fn: (...args: unknown[]) => void) => void } }) {
+      server.middlewares.use((req: { url?: string }, _res: unknown, next: () => void) => {
+        if (req.url && /^\/map\/(person|org|resource|edge|belief)\//.test(req.url)) {
+          req.url = '/map.html'
+        }
+        next()
+      })
+    },
+  }
+}
+
 export default defineConfig({
   appType: 'mpa',
-  plugins: [tailwindcss(), react()],
+  plugins: [mapSlugRewrite(), tailwindcss(), react()],
   build: {
     outDir: 'dist',
     rollupOptions: {
