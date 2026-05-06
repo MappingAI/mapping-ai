@@ -109,6 +109,64 @@ const costs = {
 
 const delay = (ms) => new Promise((r) => setTimeout(r, ms))
 
+// ── R2 progress sync ─────────────────────────────────────────────────────────
+
+const R2_BUCKET = 'mapping-ai-data'
+const R2_PROGRESS_KEY = 'verification-progress.json'
+const ACCOUNT_ID = process.env.CLOUDFLARE_ACCOUNT_ID || 'ac57c6d87068ab259c6f54dba468de8d'
+
+let r2Client = null
+function getR2() {
+  if (r2Client) return r2Client
+  const keyId = process.env.R2_ACCESS_KEY_ID
+  const secret = process.env.R2_SECRET_ACCESS_KEY
+  if (!keyId || !secret) return null
+  // Lazy import to avoid breaking when @aws-sdk/client-s3 isn't available
+  return import('@aws-sdk/client-s3').then(({ S3Client }) => {
+    r2Client = new S3Client({
+      region: 'auto',
+      endpoint: `https://${ACCOUNT_ID}.r2.cloudflarestorage.com`,
+      credentials: { accessKeyId: keyId, secretAccessKey: secret },
+    })
+    return r2Client
+  })
+}
+
+async function pullProgressFromR2() {
+  try {
+    const client = await getR2()
+    if (!client) return null
+    const { GetObjectCommand } = await import('@aws-sdk/client-s3')
+    const res = await client.send(new GetObjectCommand({ Bucket: R2_BUCKET, Key: R2_PROGRESS_KEY }))
+    const body = await res.Body?.transformToString()
+    if (!body) return null
+    console.log('  Pulled progress from R2')
+    return JSON.parse(body)
+  } catch {
+    return null
+  }
+}
+
+async function pushProgressToR2(progress) {
+  try {
+    const client = await getR2()
+    if (!client) return
+    const { PutObjectCommand } = await import('@aws-sdk/client-s3')
+    await client.send(
+      new PutObjectCommand({
+        Bucket: R2_BUCKET,
+        Key: R2_PROGRESS_KEY,
+        Body: JSON.stringify(progress),
+        ContentType: 'application/json',
+      }),
+    )
+  } catch (err) {
+    console.error(`  R2 push failed: ${err.message}`)
+  }
+}
+
+let saveCounter = 0
+
 function loadProgress() {
   try {
     return JSON.parse(fs.readFileSync(PROGRESS_PATH, 'utf-8'))
@@ -118,6 +176,22 @@ function loadProgress() {
 }
 function saveProgress(progress) {
   fs.writeFileSync(PROGRESS_PATH, JSON.stringify(progress, null, 2) + '\n')
+  saveCounter++
+  if (saveCounter % 5 === 0) {
+    pushProgressToR2(progress).catch(() => {})
+  }
+}
+
+async function loadOrPullProgress() {
+  const local = loadProgress()
+  const remote = await pullProgressFromR2()
+  if (!remote) return local
+  if (remote.completed.length > local.completed.length) {
+    console.log(`  R2 progress is ahead (${remote.completed.length} vs ${local.completed.length} local), using R2`)
+    fs.writeFileSync(PROGRESS_PATH, JSON.stringify(remote, null, 2) + '\n')
+    return remote
+  }
+  return local
 }
 
 // ── URL checking ──────────────────────────────────────────────────────────────
@@ -604,7 +678,7 @@ async function main() {
   if (neon) await neon.query('SELECT 1')
   console.log('DB connections OK\n')
 
-  const progress = loadProgress()
+  const progress = await loadOrPullProgress()
   const resumeSet = new Set(progress.completed)
 
   // Fetch entities
@@ -658,6 +732,9 @@ async function main() {
   console.log(`Claims written to Neon: ${result.totalClaims}`)
   console.log(`Corrections found: ${result.totalCorrections}`)
   console.log(`Costs: ${costs.summary()}`)
+
+  await pushProgressToR2(progress)
+  console.log('Progress synced to R2')
 
   await rds.end()
   if (neon) await neon.end()
