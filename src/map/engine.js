@@ -4493,7 +4493,6 @@ ${dots}
       addField('Title', d.title)
       addField('Primary Organization', d.primary_org)
       addField('Other Organizations', d.other_orgs)
-      addField('Location', d.location)
       const stColor = getStanceColor(d.regulatory_stance)
       const stSparkline = renderSparkline(d.id, 'regulatory_stance')
       addField(
@@ -4604,7 +4603,6 @@ ${dots}
       addField('Notes', d.notes)
     } else {
       addField('Website', d.website ? `<a href="${d.website}" target="_blank">${d.website}</a>` : null)
-      addField('Location', d.location)
       addField('Funding Model', d.funding_model)
       const stColor = getStanceColor(d.regulatory_stance)
       const stSparkline2 = renderSparkline(d.id, 'regulatory_stance')
