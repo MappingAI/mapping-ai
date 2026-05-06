@@ -102,7 +102,7 @@ export function App() {
           <div className="font-mono text-[10px] uppercase tracking-[0.1em] text-[#888] mb-3">Quick Links</div>
           <div className="flex flex-wrap gap-3 mb-4">
             <a
-              href="https://discord.gg/EFZ3FxAt"
+              href="https://discord.gg/HtqceQRV3f"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-4 py-2 bg-[#5865F2] text-white rounded-md font-mono text-[12px] no-underline hover:bg-[#4752c4] transition-colors"
@@ -141,7 +141,7 @@ export function App() {
           <div className="space-y-1.5 text-[14px]">
             <p>
               <strong>Bugs, features, ideas:</strong>{' '}
-              <ExtLink href="https://discord.gg/EFZ3FxAt">Discord #forum</ExtLink>
+              <ExtLink href="https://discord.gg/HtqceQRV3f">Discord #forum</ExtLink>
             </p>
             <p>
               <strong>Outreach strategy:</strong>{' '}
@@ -239,7 +239,7 @@ export function App() {
           <br />
           <br />
           <strong>
-            Join the <ExtLink href="https://discord.gg/EFZ3FxAt">Discord server</ExtLink>
+            Join the <ExtLink href="https://discord.gg/HtqceQRV3f">Discord server</ExtLink>
           </strong>{' '}
           to coordinate with the team. The <strong>#forum</strong> channel has active discussion threads for bugs,
           feature requests, research questions, and outreach planning. Pick a thread and jump in.
@@ -247,7 +247,7 @@ export function App() {
 
         <div className="flex flex-wrap gap-3 mb-6">
           <a
-            href="https://discord.gg/EFZ3FxAt"
+            href="https://discord.gg/HtqceQRV3f"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md text-white text-[14px] font-mono font-medium uppercase tracking-[0.06em] no-underline hover:no-underline hover:bg-[#4752C4] transition-colors"
@@ -306,7 +306,7 @@ export function App() {
           We plan to continue hosting MappingParties as the project grows. If you&rsquo;re interested in attending the
           next one or organizing one in your city, check the{' '}
           <ExtLink href="https://partiful.com/e/oss7k2FKaQo0HYOaie3p?c=d5y9WbrZ">Partiful event page</ExtLink> and join
-          the <ExtLink href="https://discord.gg/EFZ3FxAt">Discord</ExtLink> to stay in the loop.
+          the <ExtLink href="https://discord.gg/HtqceQRV3f">Discord</ExtLink> to stay in the loop.
         </p>
 
         <p className="mb-6">
@@ -401,7 +401,7 @@ export function App() {
         <H4>How to report bugs</H4>
 
         <p className="mb-4">
-          Post bugs as threads in the <ExtLink href="https://discord.gg/EFZ3FxAt">Discord #forum channel</ExtLink> or
+          Post bugs as threads in the <ExtLink href="https://discord.gg/HtqceQRV3f">Discord #forum channel</ExtLink> or
           open an issue on <ExtLink href="https://github.com/MappingAI/mapping-ai/issues">GitHub</ExtLink>. Include:
         </p>
 
@@ -563,7 +563,7 @@ Screenshot: [paste one if you can]`}</Pre>
           </li>
           <li className="mb-[0.35rem]">
             <strong>
-              Post in <ExtLink href="https://discord.gg/EFZ3FxAt">Discord #forum</ExtLink>
+              Post in <ExtLink href="https://discord.gg/HtqceQRV3f">Discord #forum</ExtLink>
             </strong>{' '}
             if you find a pattern of issues (e.g., &ldquo;all the Government/Agency entries have stale titles&rdquo;) so
             the team can address them in bulk.
@@ -737,7 +737,7 @@ pnpm exec vitest run       # Run tests`}</Pre>
         </p>
 
         <p className="mb-4">
-          Before starting on something, check the <ExtLink href="https://discord.gg/EFZ3FxAt">Discord #forum</ExtLink>{' '}
+          Before starting on something, check the <ExtLink href="https://discord.gg/HtqceQRV3f">Discord #forum</ExtLink>{' '}
           or <ExtLink href="https://github.com/MappingAI/mapping-ai/issues">GitHub Issues</ExtLink> to see what others
           are working on and post what you&rsquo;re tackling. When you&rsquo;re done, open a pull request against{' '}
           <Code>main</Code>.
@@ -798,7 +798,7 @@ pnpm exec vitest run       # Run tests`}</Pre>
           <ExtLink href="https://docs.google.com/document/d/1WNVM22lGeCOcZHvi5KwF9Yn9be6T6V7xbsocL0SQsLQ/edit?usp=sharing">
             the outreach planning doc
           </ExtLink>{' '}
-          and post highlights in the <ExtLink href="https://discord.gg/EFZ3FxAt">Discord #forum</ExtLink>. This could
+          and post highlights in the <ExtLink href="https://discord.gg/HtqceQRV3f">Discord #forum</ExtLink>. This could
           include target audiences, distribution channels, pitch ideas, partnership leads, content angles, or draft
           thread copy.
         </p>
@@ -871,7 +871,7 @@ pnpm exec vitest run       # Run tests`}</Pre>
 
         <p className="mb-4">
           Post your research questions and findings as threads in the{' '}
-          <ExtLink href="https://discord.gg/EFZ3FxAt">Discord #forum</ExtLink>. Each thread becomes a trackable
+          <ExtLink href="https://discord.gg/HtqceQRV3f">Discord #forum</ExtLink>. Each thread becomes a trackable
           discussion that others can build on.
         </p>
 
@@ -899,7 +899,7 @@ pnpm exec vitest run       # Run tests`}</Pre>
               ['Contribute form', 'https://mapping-ai.org/contribute', 'mapping-ai.org/contribute'],
               ['GitHub repo', 'https://github.com/MappingAI/mapping-ai', 'github.com/MappingAI/mapping-ai'],
               ['Map data (JSON)', 'https://mapping-ai.org/map-data.json', 'mapping-ai.org/map-data.json'],
-              ['Discord community', 'https://discord.gg/EFZ3FxAt', 'Discord #forum'],
+              ['Discord community', 'https://discord.gg/HtqceQRV3f', 'Discord #forum'],
               ['Upcoming events', 'https://partiful.com/e/oss7k2FKaQo0HYOaie3p?c=d5y9WbrZ', 'Partiful'],
               [
                 'Outreach strategy doc',
