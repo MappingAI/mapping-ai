@@ -390,6 +390,16 @@ body {
 .detail-field a {
   color: var(--accent);
 }
+.verification-pending {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-3);
+  font-style: italic;
+  background: var(--bg-2);
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px dashed var(--border);
+}
 .detail-affiliated {
   margin-top: 0.75rem;
   padding-top: 0.75rem;

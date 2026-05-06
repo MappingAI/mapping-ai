@@ -4342,7 +4342,14 @@ ${dots}
     const color = getColor(d.category)
 
     let fields = ''
-    const addField = (label, value) => {
+    const fv = d.field_verification || {}
+    const addField = (label, value, verifyKey) => {
+      if (verifyKey && fv[verifyKey] === 'unverified') {
+        if (value) {
+          fields += `<div class="detail-field"><label>${label}</label><span class="verification-pending">Verification in progress</span></div>`
+        }
+        return
+      }
       if (value) fields += `<div class="detail-field"><label>${label}</label><span>${value}</span></div>`
     }
 
@@ -4370,10 +4377,10 @@ ${dots}
     }
 
     if (d.entityType === 'person') {
-      addField('Title', d.title)
-      addField('Primary Organization', d.primary_org)
-      addField('Other Organizations', d.other_orgs)
-      addField('Location', d.location)
+      addField('Title', d.title, 'title')
+      addField('Primary Organization', d.primary_org, 'primary_org')
+      addField('Other Organizations', d.other_orgs, 'other_orgs')
+      addField('Location', d.location, 'location')
       const stColor = getStanceColor(d.regulatory_stance)
       const stSparkline = renderSparkline(d.id, 'regulatory_stance')
       addField(
@@ -4381,28 +4388,31 @@ ${dots}
         d.regulatory_stance
           ? `<span style="display:inline-flex;align-items:center;gap:5px;">${stColor ? `<span style="width:8px;height:8px;border-radius:50%;background:${stColor};display:inline-block;"></span>` : ''}${d.regulatory_stance}</span>${stSparkline}`
           : null,
+        'regulatory_stance',
       )
-      if (d.regulatory_stance_detail) addField('Stance Detail', d.regulatory_stance_detail)
-      addField('Evidence Source', d.evidence_source)
+      if (d.regulatory_stance_detail) addField('Stance Detail', d.regulatory_stance_detail, 'regulatory_stance_detail')
+      addField('Evidence Source', d.evidence_source, 'evidence_source')
       const tlSparkline = renderSparkline(d.id, 'agi_timeline')
-      addField('AGI Timeline', d.agi_timeline ? `${d.agi_timeline}${tlSparkline}` : null)
+      addField('AGI Timeline', d.agi_timeline ? `${d.agi_timeline}${tlSparkline}` : null, 'agi_timeline')
       const rlSparkline = renderSparkline(d.id, 'ai_risk_level')
-      addField('AI Risk Level', d.ai_risk_level ? `${d.ai_risk_level}${rlSparkline}` : null)
-      addField('Key Concerns', d.threat_models)
-      addField('Influence Type', d.influence_type)
+      addField('AI Risk Level', d.ai_risk_level ? `${d.ai_risk_level}${rlSparkline}` : null, 'ai_risk_level')
+      addField('Key Concerns', d.threat_models, 'threat_models')
+      addField('Influence Type', d.influence_type, 'influence_type')
       addField(
         'Twitter/X',
         d.twitter
           ? `<a href="https://x.com/${d.twitter.replace('@', '')}" target="_blank" rel="noopener">@${d.twitter.replace('@', '')}</a>`
           : null,
+        'twitter',
       )
       addField(
         'Bluesky',
         d.bluesky
           ? `<a href="https://bsky.app/profile/${d.bluesky.replace('@', '')}" target="_blank" rel="noopener">${d.bluesky}</a>`
           : null,
+        'bluesky',
       )
-      addField('Notes', d.notes)
+      addField('Notes', d.notes, 'notes')
     } else if (d.entityType === 'resource') {
       // Make author clickable if they're in our people database
       if (d.author) {
@@ -4480,12 +4490,12 @@ ${dots}
           `<div class="detail-beliefs" style="display:inline-flex;flex-wrap:wrap;gap:6px;">${advBeliefs.join('')}</div>`,
         )
       }
-      addField('Key Argument', d.key_argument)
-      addField('Notes', d.notes)
+      addField('Key Argument', d.key_argument, 'notes')
+      addField('Notes', d.notes, 'notes')
     } else {
-      addField('Website', d.website ? `<a href="${d.website}" target="_blank">${d.website}</a>` : null)
-      addField('Location', d.location)
-      addField('Funding Model', d.funding_model)
+      addField('Website', d.website ? `<a href="${d.website}" target="_blank">${d.website}</a>` : null, 'website')
+      addField('Location', d.location, 'location')
+      addField('Funding Model', d.funding_model, 'funding_model')
       const stColor = getStanceColor(d.regulatory_stance)
       const stSparkline2 = renderSparkline(d.id, 'regulatory_stance')
       addField(
@@ -4493,28 +4503,31 @@ ${dots}
         d.regulatory_stance
           ? `<span style="display:inline-flex;align-items:center;gap:5px;">${stColor ? `<span style="width:8px;height:8px;border-radius:50%;background:${stColor};display:inline-block;"></span>` : ''}${d.regulatory_stance}</span>${stSparkline2}`
           : null,
+        'regulatory_stance',
       )
-      if (d.regulatory_stance_detail) addField('Stance Detail', d.regulatory_stance_detail)
-      addField('Evidence Source', d.evidence_source)
+      if (d.regulatory_stance_detail) addField('Stance Detail', d.regulatory_stance_detail, 'regulatory_stance_detail')
+      addField('Evidence Source', d.evidence_source, 'evidence_source')
       const tlSparkline2 = renderSparkline(d.id, 'agi_timeline')
-      addField('AGI Timeline', d.agi_timeline ? `${d.agi_timeline}${tlSparkline2}` : null)
+      addField('AGI Timeline', d.agi_timeline ? `${d.agi_timeline}${tlSparkline2}` : null, 'agi_timeline')
       const rlSparkline2 = renderSparkline(d.id, 'ai_risk_level')
-      addField('AI Risk Level', d.ai_risk_level ? `${d.ai_risk_level}${rlSparkline2}` : null)
-      addField('Key Concerns', d.threat_models)
-      addField('Influence Type', d.influence_type)
+      addField('AI Risk Level', d.ai_risk_level ? `${d.ai_risk_level}${rlSparkline2}` : null, 'ai_risk_level')
+      addField('Key Concerns', d.threat_models, 'threat_models')
+      addField('Influence Type', d.influence_type, 'influence_type')
       addField(
         'Twitter/X',
         d.twitter
           ? `<a href="https://x.com/${d.twitter.replace('@', '')}" target="_blank" rel="noopener">@${d.twitter.replace('@', '')}</a>`
           : null,
+        'twitter',
       )
       addField(
         'Bluesky',
         d.bluesky
           ? `<a href="https://bsky.app/profile/${d.bluesky.replace('@', '')}" target="_blank" rel="noopener">${d.bluesky}</a>`
           : null,
+        'bluesky',
       )
-      addField('Notes', d.notes)
+      addField('Notes', d.notes, 'notes')
     }
 
     if (!fields) {

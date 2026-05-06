@@ -82,6 +82,7 @@ const ENTITY_FIELDS = [
   'belief_ai_risk',
   'belief_threat_models',
   'status',
+  'field_verification',
 ]
 
 export const onRequest: PagesFunction<Env> = async (context) => {
@@ -312,8 +313,13 @@ export const onRequest: PagesFunction<Env> = async (context) => {
           let idx = 1
           for (const [field, value] of Object.entries(merged_data)) {
             if (!ENTITY_FIELDS.includes(field)) continue
-            updates.push(`${field} = $${idx++}`)
-            values.push(value)
+            if (field === 'field_verification') {
+              updates.push(`${field} = $${idx++}::jsonb`)
+              values.push(typeof value === 'string' ? value : JSON.stringify(value))
+            } else {
+              updates.push(`${field} = $${idx++}`)
+              values.push(value)
+            }
           }
           if (updates.length > 0) {
             values.push(entityId)
@@ -356,8 +362,13 @@ export const onRequest: PagesFunction<Env> = async (context) => {
         let idx = 1
         for (const [field, value] of Object.entries(data)) {
           if (!ENTITY_FIELDS.includes(field)) continue
-          updates.push(`${field} = $${idx++}`)
-          values.push(value)
+          if (field === 'field_verification') {
+            updates.push(`${field} = $${idx++}::jsonb`)
+            values.push(typeof value === 'string' ? value : JSON.stringify(value))
+          } else {
+            updates.push(`${field} = $${idx++}`)
+            values.push(value)
+          }
         }
         if (updates.length === 0) {
           return jsonResponse({ error: 'No valid fields' }, request, 400, corsOptions)
