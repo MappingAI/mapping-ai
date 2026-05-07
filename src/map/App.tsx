@@ -926,6 +926,32 @@ export function App() {
             </div>
           </div>
         </div>
+        <div className="control-group" id="verification-filter" style={{ display: 'none' }}>
+          <h3>Data Quality</h3>
+          <div className="verification-legend-items" id="verification-legend-items">
+            <div className="verification-legend-item active" data-status="verified">
+              <span className="verification-legend-dot" style={{ background: '#16a34a' }}></span>
+              <span>Verified</span>
+            </div>
+            <div className="verification-legend-item active" data-status="partial">
+              <span className="verification-legend-dot" style={{ background: '#d97706' }}></span>
+              <span>Partial</span>
+            </div>
+            <div className="verification-legend-item active" data-status="unverified">
+              <span className="verification-legend-dot" style={{ background: '#dc2626' }}></span>
+              <span>Unverified</span>
+            </div>
+            <div className="verification-legend-item active" data-status="none">
+              <span
+                className="verification-legend-dot"
+                style={{ background: 'transparent', border: '1px solid var(--text-3)' }}
+              ></span>
+              <span>
+                <em>No data</em>
+              </span>
+            </div>
+          </div>
+        </div>
         <div className="control-group" id="axis-controls" style={{ display: 'none' }}>
           <h3>Dimensions</h3>
           <div className="view-toggles" id="axis-mode-toggles">

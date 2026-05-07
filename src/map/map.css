@@ -422,6 +422,22 @@ body {
   background: #78350f;
   color: #fde68a;
 }
+.field-verified-badge {
+  font-family: var(--mono);
+  font-size: 6px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 0px 2px;
+  border-radius: 2px;
+  background: #dcfce7;
+  color: #166534;
+  font-weight: 600;
+  line-height: 1.3;
+}
+[data-theme='dark'] .field-verified-badge {
+  background: #14532d;
+  color: #86efac;
+}
 .field-vote {
   background: none;
   border: 1px solid transparent;
@@ -698,6 +714,31 @@ body:has(.beliefs-detail-sidebar) .beliefs-zoom-controls {
 .stance-legend-dot {
   width: 8px;
   height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.verification-legend-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.verification-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--mono);
+  font-size: 8px;
+  color: var(--text-2);
+  cursor: pointer;
+  padding: 0.1rem 0;
+  transition: opacity 0.15s;
+}
+.verification-legend-item:not(.active) {
+  opacity: 0.3;
+}
+.verification-legend-dot {
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   flex-shrink: 0;
 }
@@ -1808,12 +1849,14 @@ body:has(.beliefs-detail-sidebar) .beliefs-zoom-controls {
   .controls #category-filters,
   .controls #stance-legend,
   .controls #source-type-filter,
+  .controls #verification-filter,
   .controls #axis-controls {
     display: none !important;
   }
   .controls.filters-open #category-filters,
   .controls.filters-open #stance-legend,
   .controls.filters-open #source-type-filter,
+  .controls.filters-open #verification-filter,
   .controls.filters-open #axis-controls {
     display: block !important;
     position: fixed;
@@ -2139,6 +2182,7 @@ body.react-view-active #contribute-panel,
 body.react-view-active #category-filters,
 body.react-view-active #stance-legend,
 body.react-view-active #source-type-filter,
+body.react-view-active #verification-filter,
 body.react-view-active #axis-controls,
 body.react-view-active #secondary-category-filter,
 body.react-view-active #network-sub-tabs,

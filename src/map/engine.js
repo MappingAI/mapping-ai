@@ -550,6 +550,11 @@ export function initMapEngine() {
   let activeSourceTypes = new Set(SOURCE_TYPES)
   let sourceFilterActive = false // true when user has toggled any source type off
 
+  // Verification filter state
+  const VERIFICATION_STATUSES = ['verified', 'partial', 'unverified', 'none']
+  let activeVerificationStatuses = new Set(VERIFICATION_STATUSES)
+  let verificationFilterActive = false
+
   // 2D view state
   let axisMode = '2d' // '1d' | '2d'
   let axisX = 'regulatory_stance'
@@ -1667,6 +1672,8 @@ export function initMapEngine() {
               if (d) Object.assign(entity, d)
             }
           }
+          _syncVerificationToNodes()
+          updateVerificationFilterVisibility()
         })
         .catch(() => {}) // Non-critical — detail panel degrades gracefully
 
@@ -2111,6 +2118,40 @@ export function initMapEngine() {
     }
   })
 
+  // Verification filter click handlers
+  function buildVerificationFilter() {
+    const container = document.getElementById('verification-legend-items')
+    if (!container) return
+    container.querySelectorAll('.verification-legend-item').forEach((item) => {
+      const status = item.dataset.status
+      item.addEventListener('click', () => {
+        if (activeVerificationStatuses.has(status)) {
+          activeVerificationStatuses.delete(status)
+          item.classList.remove('active')
+        } else {
+          activeVerificationStatuses.add(status)
+          item.classList.add('active')
+        }
+        verificationFilterActive = activeVerificationStatuses.size < VERIFICATION_STATUSES.length
+        if (viewMode === 'search' && searchModeMatches && searchModeMatches.length > 0) {
+          applyFiltersToSearchResults()
+        } else {
+          render()
+        }
+      })
+    })
+  }
+  buildVerificationFilter()
+
+  function updateVerificationFilterVisibility() {
+    const el = document.getElementById('verification-filter')
+    if (!el) return
+    const hasAny = [...allData.people, ...allData.organizations, ...allData.resources].some(
+      (e) => e.field_verification && Object.keys(e.field_verification).length > 0,
+    )
+    el.style.display = hasAny ? '' : 'none'
+  }
+
   // ── View mode (Network / Plot) + sub-tabs ──
   // PASSWORD GATE: force plot view when locked (don't overwrite saved preference)
   let viewMode = localStorage.getItem('mapMode') || 'network'
@@ -2304,6 +2345,12 @@ export function initMapEngine() {
     return activeSourceTypes.has(sourceType)
   }
 
+  function passesVerificationFilter(d) {
+    if (!verificationFilterActive) return true
+    const status = _getVerificationStatus(d.field_verification) || 'none'
+    return activeVerificationStatuses.has(status)
+  }
+
   function passesSecondaryCategoryFilter(d) {
     // Only applies when clustering by belief dimensions (not category)
     if (clusterDimension === 'category') return true
@@ -2458,6 +2505,7 @@ export function initMapEngine() {
           isFilterActive(d) &&
           passesStanceFilter(d) &&
           passesSourceTypeFilter(d) &&
+          passesVerificationFilter(d) &&
           passesSecondaryCategoryFilter(d),
       ).length
     if (currentView === 'people' || currentView === 'all')
@@ -2467,10 +2515,11 @@ export function initMapEngine() {
           isFilterActive(d) &&
           passesStanceFilter(d) &&
           passesSourceTypeFilter(d) &&
+          passesVerificationFilter(d) &&
           passesSecondaryCategoryFilter(d),
       ).length
     if (currentView === 'resources' || currentView === 'all')
-      totalCount += allData.resources.filter((d) => passesSourceTypeFilter(d)).length
+      totalCount += allData.resources.filter((d) => passesSourceTypeFilter(d) && passesVerificationFilter(d)).length
 
     // Scale: gentler curve—1.0 at 40, 0.7 at 100, 0.55 at 200
     const scale = Math.max(0.55, Math.min(1.0, 40 / Math.max(totalCount, 1)))
@@ -2482,6 +2531,7 @@ export function initMapEngine() {
         if (!d.category || !isFilterActive(d)) return
         if (!passesStanceFilter(d)) return
         if (!passesSourceTypeFilter(d)) return
+        if (!passesVerificationFilter(d)) return
         if (!passesSecondaryCategoryFilter(d)) return
         const sc = d.submission_count || 1
         // Smaller nodes for belief dimension clustering to improve readability
@@ -2515,6 +2565,7 @@ export function initMapEngine() {
         // In "all" view, always include people (they'll be mapped to an org sector cluster)
         if (!passesStanceFilter(d)) return
         if (!passesSourceTypeFilter(d)) return
+        if (!passesVerificationFilter(d)) return
         if (!passesSecondaryCategoryFilter(d)) return
         const sc = d.submission_count || 1
 
@@ -2582,6 +2633,7 @@ export function initMapEngine() {
         // Search filter: when active, only show entities in searchVisibleNames (resources use title as name)
         if (searchFilterActive && !searchVisibleNames.has(d.title)) return
         if (!passesSourceTypeFilter(d)) return
+        if (!passesVerificationFilter(d)) return
         const cat = d.category || 'Other' // cluster by topic category in resources view
         const sc = d.submission_count || 1
         const r = Math.round((14 + Math.min(Math.floor(sc / 3), 3)) * scale)
@@ -2606,6 +2658,7 @@ export function initMapEngine() {
         // Search filter: when active, only show entities in searchVisibleNames (resources use title as name)
         if (searchFilterActive && !searchVisibleNames.has(d.title)) return
         if (!passesSourceTypeFilter(d)) return
+        if (!passesVerificationFilter(d)) return
 
         // When belief filter is active, only show resources that have a checked belief value
         // OR are connected (via relationships) to a visible entity that passed the belief filter
@@ -2729,6 +2782,35 @@ export function initMapEngine() {
     const parts = (name || '').trim().split(/[\s]+/)
     if (parts.length >= 2) return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
     return (name || '').trim().slice(0, 2).toUpperCase()
+  }
+
+  // Verification status: 'verified' (green), 'partial' (yellow), 'unverified' (red), null (no data)
+  function _getVerificationStatus(fv) {
+    if (!fv) return null
+    const vals = Object.values(fv)
+    if (vals.length === 0) return null
+    const unvCount = vals.filter((v) => v === 'unverified').length
+    const ratio = unvCount / vals.length
+    if (ratio <= 0.25) return 'verified'
+    if (ratio >= 0.75) return 'unverified'
+    return 'partial'
+  }
+
+  const VERIFICATION_COLORS = { verified: '#16a34a', partial: '#d97706', unverified: '#dc2626' }
+
+  function _syncVerificationToNodes() {
+    const entityById = new Map()
+    for (const arr of [allData.people, allData.organizations, allData.resources]) {
+      for (const e of arr) entityById.set(e.id, e)
+    }
+    for (const node of _canvasNodes) {
+      const src = entityById.get(node.id)
+      if (src?.field_verification) {
+        node.field_verification = src.field_verification
+        node._verificationStatus = _getVerificationStatus(src.field_verification)
+      }
+    }
+    _requestRedraw()
   }
 
   function _requestRedraw() {
@@ -3062,6 +3144,21 @@ export function initMapEngine() {
           ctx.stroke()
         }
         ctx.setLineDash([])
+      }
+      // Verification status dot (small pip, bottom-right)
+      if (d._verificationStatus && d._vs !== 'hidden' && d._vs !== 'dimmed') {
+        const dotR = Math.max(2, r * 0.18)
+        const dotX = d.isResource ? x + r - dotR * 0.5 : x + r * 0.6
+        const dotY = d.isResource ? y + r - dotR * 0.5 : y + r * 0.6
+        ctx.globalAlpha = Math.min(0.85, alpha)
+        ctx.fillStyle = VERIFICATION_COLORS[d._verificationStatus]
+        ctx.beginPath()
+        ctx.arc(dotX, dotY, dotR, 0, Math.PI * 2)
+        ctx.fill()
+        const tc = _getThemeColors()
+        ctx.strokeStyle = tc.bgPage
+        ctx.lineWidth = 1
+        ctx.stroke()
       }
     }
 
@@ -3790,6 +3887,7 @@ export function initMapEngine() {
       if (!d.category) return false
       if (!passesStanceFilter(d)) return false
       if (!passesSourceTypeFilter(d)) return false
+      if (!passesVerificationFilter(d)) return false
       if (!categoryFilterActive) return true
       if (activeCategories.size === 0) return false
       return activeCategories.has(d.category) || activeCategories.has(normalizeCategory(d.category))
@@ -4418,9 +4516,12 @@ ${dots}
   }
 
   // Feedback badge helper (shared by showDetail + showEdgeDetail)
-  function feedbackBadge(entityId, key) {
+  function feedbackBadge(entityId, key, fieldVerification) {
     const safeKey = escHtml(key)
-    return `<span class="field-feedback-row" data-field="${safeKey}"><span class="field-inferred-badge">unverified</span><button class="field-vote field-vote-confirm" data-entity-id="${entityId}" data-field="${safeKey}" data-vote="1" title="Looks correct">&#x25B2;</button><button class="field-vote field-vote-flag" data-entity-id="${entityId}" data-field="${safeKey}" data-vote="-1" title="Flag as incorrect">&#x25BC;</button><span class="field-vote-counts" data-field="${safeKey}"></span></span>`
+    const fvStatus = fieldVerification?.[safeKey]
+    const badgeClass = fvStatus === 'verified' ? 'field-verified-badge' : 'field-inferred-badge'
+    const badgeLabel = fvStatus === 'verified' ? 'verified' : 'unverified'
+    return `<span class="field-feedback-row" data-field="${safeKey}"><span class="${badgeClass}">${badgeLabel}</span><button class="field-vote field-vote-confirm" data-entity-id="${entityId}" data-field="${safeKey}" data-vote="1" title="Looks correct">&#x25B2;</button><button class="field-vote field-vote-flag" data-entity-id="${entityId}" data-field="${safeKey}" data-vote="-1" title="Flag as incorrect">&#x25BC;</button><span class="field-vote-counts" data-field="${safeKey}"></span></span>`
   }
 
   // Detail panel
@@ -4452,8 +4553,21 @@ ${dots}
     }
 
     const color = getColor(d.category)
+    const fv = d.field_verification || null
+    const entityVerifStatus = _getVerificationStatus(fv)
 
     let fields = ''
+    if (entityVerifStatus) {
+      const statusLabel =
+        entityVerifStatus === 'verified'
+          ? 'Verified'
+          : entityVerifStatus === 'partial'
+            ? 'Partially verified'
+            : 'Unverified'
+      const statusColor = VERIFICATION_COLORS[entityVerifStatus]
+      fields += `<div class="verification-banner" style="display:flex;align-items:center;gap:6px;padding:6px 10px;margin-bottom:8px;border-radius:4px;background:${statusColor}12;border:1px solid ${statusColor}30;font-size:11px;color:${statusColor};"><span style="width:7px;height:7px;border-radius:50%;background:${statusColor};flex-shrink:0;"></span>${statusLabel}</div>`
+    }
+
     const fieldKey = (label) =>
       label
         .toLowerCase()
@@ -4463,7 +4577,7 @@ ${dots}
       if (!value) return
       const key = fieldKey(label)
       const skipFeedback = opts && opts.skipFeedback
-      const fb = skipFeedback ? '' : feedbackBadge(d.id, key)
+      const fb = skipFeedback ? '' : feedbackBadge(d.id, key, fv)
       fields += `<div class="detail-field"><div class="detail-field-header"><label>${label}</label>${fb}</div><span>${value}</span></div>`
     }
 
@@ -6298,6 +6412,7 @@ ${dots}
 
       // Check source type filter
       if (!passesSourceTypeFilter(entity)) return false
+      if (!passesVerificationFilter(entity)) return false
 
       return true
     })

@@ -75,6 +75,7 @@ export interface DbEntityRow {
   submission_count: number
   status: 'approved' | 'pending' | 'internal'
   qa_approved: boolean
+  field_verification: Record<string, 'verified' | 'unverified'> | null
 
   created_at: string
   updated_at: string
