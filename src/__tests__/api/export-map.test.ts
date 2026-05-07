@@ -58,6 +58,7 @@ function baseEntityRow(overrides: Record<string, unknown> = {}) {
     submission_count: 1,
     status: 'approved' as const,
     qa_approved: true,
+    field_verification: {},
     created_at: '2026-01-01T00:00:00Z',
     updated_at: '2026-01-01T00:00:00Z',
     ...overrides,
@@ -139,6 +140,29 @@ describe('toFrontendShape', () => {
     )
     expect(shaped.title).toBe('Fallback Name')
   })
+
+  it('maps field_verification DB keys to frontend names', () => {
+    const shaped = toFrontendShape(
+      baseEntityRow({
+        field_verification: {
+          belief_regulatory_stance: 'unverified',
+          belief_agi_timeline: 'verified',
+          notes: 'verified',
+          location: 'unverified',
+        },
+      }),
+    )
+    const fv = shaped.field_verification as Record<string, string>
+    expect(fv.regulatory_stance).toBe('unverified')
+    expect(fv.agi_timeline).toBe('verified')
+    expect(fv.notes).toBe('verified')
+    expect(fv.location).toBe('unverified')
+  })
+
+  it('omits field_verification when empty', () => {
+    const shaped = toFrontendShape(baseEntityRow({ field_verification: {} }))
+    expect(shaped.field_verification).toBeUndefined()
+  })
 })
 
 describe('splitMapData', () => {
@@ -171,6 +195,16 @@ describe('splitMapData', () => {
       notes: 'some heavy notes',
       regulatory_stance_detail: 'long detail',
     })
+  })
+
+  it('moves field_verification to detail, not skeleton', () => {
+    const data = mapData()
+    data.people[0]!.field_verification = { notes: 'verified', regulatory_stance: 'unverified' }
+    const { skeleton, detail } = splitMapData(data)
+    expect(skeleton.people[0]!).not.toHaveProperty('field_verification')
+    const d1 = detail['1']
+    expect(d1).toBeDefined()
+    expect(d1!.field_verification).toEqual({ notes: 'verified', regulatory_stance: 'unverified' })
   })
 
   it('does not emit a detail entry when no detail fields are present', () => {
