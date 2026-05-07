@@ -5299,7 +5299,7 @@ ${dots}
         const eid = parseInt(btn.dataset.entityId, 10)
         const fieldLabel = btn.closest('.detail-field')?.querySelector('label')?.textContent || field.replace(/_/g, ' ')
         const entityName =
-          container.querySelector('.detail-title')?.textContent ||
+          container.querySelector('.detail-name')?.textContent ||
           container.querySelector('h2')?.textContent ||
           'this entity'
         const existing = document.querySelector('.field-note-modal')
