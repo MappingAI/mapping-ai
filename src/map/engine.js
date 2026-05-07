@@ -2,6 +2,7 @@
 // @ts-nocheck
 import { getVoterId, getLocalVotes, setLocalVote } from '../shared/field-feedback-utils.ts'
 import DOMPurify from 'dompurify'
+import { openFieldNoteModal } from '../shared/field-note-modal.ts'
 
 export function initMapEngine() {
   var searchFilterActive = false
@@ -2796,13 +2797,23 @@ export function initMapEngine() {
   }
 
   // Verification status: 'verified' (green), 'partial' (yellow), 'unverified' (red), null (no data)
-  const MIN_FIELDS_FOR_FULL_VERIFIED = 8
+  // Fields the verification script evaluates per entity
+  const VERIFIABLE_FIELDS = [
+    'name',
+    'title',
+    'primary_org',
+    'regulatory_stance',
+    'agi_timeline',
+    'ai_risk_level',
+    'threat_models',
+    'notes',
+  ]
   function _getVerificationStatus(fv) {
     if (!fv) return null
     const vals = Object.values(fv)
     if (vals.length === 0) return null
     const verifiedCount = vals.filter((v) => v === 'verified').length
-    if (verifiedCount === vals.length && vals.length >= MIN_FIELDS_FOR_FULL_VERIFIED) return 'verified'
+    if (verifiedCount === vals.length && vals.length >= VERIFIABLE_FIELDS.length) return 'verified'
     if (verifiedCount === vals.length) return 'partial'
     if (verifiedCount / vals.length >= 0.5) return 'partial'
     return 'unverified'
@@ -5301,129 +5312,29 @@ ${dots}
         e.stopPropagation()
         const field = btn.dataset.field
         const eid = parseInt(btn.dataset.entityId, 10)
-        const fieldLabel = btn.closest('.detail-field')?.querySelector('label')?.textContent || field.replace(/_/g, ' ')
-        const entityName =
+        const label = btn.closest('.detail-field')?.querySelector('label')?.textContent || field.replace(/_/g, ' ')
+        const name =
           container.querySelector('.detail-name')?.textContent ||
           container.querySelector('h2')?.textContent ||
           'this entity'
-        const existing = document.querySelector('.field-note-modal')
-        if (existing) existing.remove()
-        const modal = document.createElement('div')
-        modal.className = 'field-note-modal'
-        modal.innerHTML =
-          '<div class="field-note-modal-card">' +
-          `<div class="field-note-modal-header"><span>Note on <strong>${escHtml(fieldLabel)}</strong> — ${escHtml(entityName)}</span><button class="field-note-modal-close">&times;</button></div>` +
-          '<div class="field-note-modal-hint">Type @ to mention people, orgs, or resources. Use toolbar for formatting. Cmd+Enter to submit.</div>' +
-          '<div class="field-note-editor-wrap"><div class="field-note-tiptap"></div></div>' +
-          '<div class="field-note-modal-footer"><button class="field-note-submit">Submit</button></div>' +
-          '</div>'
-        document.body.appendChild(modal)
-        const editorContainer = modal.querySelector('.field-note-tiptap')
-        const submitBtn = modal.querySelector('.field-note-submit')
-        const closeBtn = modal.querySelector('.field-note-modal-close')
-        let tiptapEditor = null
-        const escHandler = (ev) => {
-          if (ev.key === 'Escape') close()
-        }
-        function close() {
-          document.removeEventListener('keydown', escHandler)
-          if (tiptapEditor) tiptapEditor.destroy()
-          modal.remove()
-        }
-        closeBtn.addEventListener('click', close)
-        modal.addEventListener('click', (ev) => {
-          if (ev.target === modal) close()
+        openFieldNoteModal({
+          entityId: eid,
+          field,
+          entityName: name,
+          fieldLabel: label,
+          onNoteAdded: (text, sanitizedHtml) => {
+            let notesEl = btn.closest('.detail-field')?.querySelector('.field-notes-list')
+            if (!notesEl) {
+              notesEl = document.createElement('div')
+              notesEl.className = 'field-notes-list'
+              btn.closest('.detail-field')?.appendChild(notesEl)
+            }
+            const item = document.createElement('div')
+            item.className = 'field-note-item'
+            item.innerHTML = sanitizedHtml || escHtml(text)
+            notesEl.prepend(item)
+          },
         })
-        document.addEventListener('keydown', escHandler)
-        function getEditorContent() {
-          if (tiptapEditor) {
-            const text = tiptapEditor.getText().trim()
-            const html = tiptapEditor.getHTML()
-            const mentions = []
-            tiptapEditor.state.doc.descendants((node) => {
-              if (node.type.name === 'mention') {
-                mentions.push({
-                  type: node.attrs.entityType || node.attrs['data-entity-type'],
-                  id: node.attrs.entityId || node.attrs['data-entity-id'],
-                  label: node.attrs.label,
-                })
-              }
-            })
-            return { text, html, mentions }
-          }
-          const ta = modal.querySelector('textarea')
-          return { text: ta ? ta.value.trim() : '', html: null, mentions: [] }
-        }
-        function doSubmit() {
-          const { text, html, mentions } = getEditorContent()
-          if (!text) return
-          submitBtn.disabled = true
-          fetch('/api/field-notes', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              entityId: eid,
-              fieldName: field,
-              note: text,
-              noteHtml: html,
-              noteMentions: mentions.length > 0 ? mentions : undefined,
-              voterId: getVoterId(),
-            }),
-          })
-            .then((r) => {
-              if (r.ok) {
-                let notesEl = btn.closest('.detail-field')?.querySelector('.field-notes-list')
-                if (!notesEl) {
-                  notesEl = document.createElement('div')
-                  notesEl.className = 'field-notes-list'
-                  btn.closest('.detail-field')?.appendChild(notesEl)
-                }
-                const item = document.createElement('div')
-                item.className = 'field-note-item'
-                item.innerHTML = html ? DOMPurify.sanitize(html) : escHtml(text)
-                notesEl.prepend(item)
-                close()
-              } else {
-                submitBtn.disabled = false
-              }
-            })
-            .catch(() => {
-              submitBtn.disabled = false
-            })
-        }
-        submitBtn.addEventListener('click', (ev) => {
-          ev.stopPropagation()
-          doSubmit()
-        })
-        import('./field-note-editor.js')
-          .then(({ createFieldNoteEditor }) => {
-            tiptapEditor = createFieldNoteEditor(editorContainer)
-            editorContainer._editor = tiptapEditor
-            setTimeout(() => {
-              tiptapEditor.commands.focus()
-              const pm = editorContainer.querySelector('.ProseMirror')
-              if (pm) {
-                pm.addEventListener('keydown', (ev) => {
-                  if (ev.key === 'Enter' && (ev.metaKey || ev.ctrlKey)) {
-                    ev.preventDefault()
-                    doSubmit()
-                  }
-                })
-              }
-            }, 50)
-          })
-          .catch(() => {
-            editorContainer.innerHTML =
-              '<textarea class="field-note-textarea" placeholder="Add a correction, source, or context..." rows="3"></textarea>'
-            const ta = editorContainer.querySelector('textarea')
-            ta.focus()
-            ta.addEventListener('keydown', (ev) => {
-              if (ev.key === 'Enter' && (ev.metaKey || ev.ctrlKey)) {
-                ev.preventDefault()
-                doSubmit()
-              }
-            })
-          })
       })
     })
   }
