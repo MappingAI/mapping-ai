@@ -378,7 +378,7 @@ export function App() {
           </a>
         </p>
 
-        <hr className="border-none border-t border-[#bbb]/50 my-10" />
+        <hr className="border-none border-t border-[#bbb]/50 my-5" />
 
         {/* Adjacent tools */}
         <div
