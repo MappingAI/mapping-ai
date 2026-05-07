@@ -39,13 +39,18 @@ export function FieldFeedback({ entityId, field }: Props) {
   const [localDown, setLocalDown] = useState(() => !!getLocalVotes(entityId)[field]?.down)
   const [serverCounts, setServerCounts] = useState<{ confirms: number; flags: number } | null>(null)
 
+  useEffect(() => {
+    setLocalUp(!!getLocalVotes(entityId)[field]?.up)
+    setLocalDown(!!getLocalVotes(entityId)[field]?.down)
+    setServerCounts(null)
+  }, [entityId, field])
+
   const loadFromServer = useCallback(() => {
     fetch('/api/field-feedback?entityId=' + entityId)
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
-        if (data?.feedback?.[field]) {
-          setServerCounts(data.feedback[field])
-        }
+        if (!data?.feedback) return
+        setServerCounts(data.feedback[field] || { confirms: 0, flags: 0 })
       })
       .catch(() => {})
   }, [entityId, field])
@@ -61,6 +66,13 @@ export function FieldFeedback({ entityId, field }: Props) {
     if (dir === 'up') setLocalUp(nowActive)
     else setLocalDown(nowActive)
     setLocalVote(entityId, field, dir as 'up' | 'down', nowActive)
+    setServerCounts((prev) => {
+      if (!prev) return prev
+      const delta = nowActive ? 1 : -1
+      return dir === 'up'
+        ? { ...prev, confirms: Math.max(0, prev.confirms + delta) }
+        : { ...prev, flags: Math.max(0, prev.flags + delta) }
+    })
     fetch('/api/field-feedback', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
