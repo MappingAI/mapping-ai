@@ -54,6 +54,10 @@ function searchEntitiesForMention(query) {
   return []
 }
 
+function esc(s) {
+  return (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+}
+
 function updateList(container, items, command) {
   container.innerHTML =
     items.length === 0
@@ -63,9 +67,9 @@ function updateList(container, items, command) {
             (item, i) => `
         <div class="mention-item ${i === 0 ? 'active' : ''}"
              data-index="${i}">
-          <span class="mention-type">${{ person: 'Person', organization: 'Org', resource: 'Resource' }[item.entityType] || item.entityType}</span>
-          <span class="mention-label">${item.label}</span>
-          <span class="mention-detail">${item.detail || ''}</span>
+          <span class="mention-type">${{ person: 'Person', organization: 'Org', resource: 'Resource' }[item.entityType] || esc(item.entityType)}</span>
+          <span class="mention-label">${esc(item.label)}</span>
+          <span class="mention-detail">${esc(item.detail)}</span>
         </div>
       `,
           )

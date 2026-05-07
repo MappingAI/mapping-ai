@@ -43,7 +43,11 @@ export function FieldNoteButton({ entityId, field, entityName, fieldLabel }: Pro
       destroy: () => void
     } | null = null
 
+    const escHandler = (ev: KeyboardEvent) => {
+      if (ev.key === 'Escape') close()
+    }
     function close() {
+      document.removeEventListener('keydown', escHandler)
       if (tiptapEditor) tiptapEditor.destroy()
       modal.remove()
     }
@@ -51,13 +55,6 @@ export function FieldNoteButton({ entityId, field, entityName, fieldLabel }: Pro
     modal.addEventListener('click', (ev) => {
       if (ev.target === modal) close()
     })
-
-    function escHandler(ev: KeyboardEvent) {
-      if (ev.key === 'Escape') {
-        close()
-        document.removeEventListener('keydown', escHandler)
-      }
-    }
     document.addEventListener('keydown', escHandler)
 
     function getEditorContent() {

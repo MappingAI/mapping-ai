@@ -48,14 +48,25 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   if (!note || typeof note !== 'string' || note.trim().length === 0) {
     return jsonResponse({ error: 'Note text required' }, request, 400)
   }
-  const trimmedNote = note.trim()
-  const trimmedHtml = typeof noteHtml === 'string' ? noteHtml : null
-  const mentions = Array.isArray(noteMentions) ? JSON.stringify(noteMentions) : null
+  const MAX_NOTE_LENGTH = 5000
+  const trimmedNote = note.trim().slice(0, MAX_NOTE_LENGTH)
+  const trimmedHtml = typeof noteHtml === 'string' ? noteHtml.slice(0, MAX_NOTE_LENGTH * 3) : null
+  const mentions =
+    Array.isArray(noteMentions) && noteMentions.length <= 50 ? JSON.stringify(noteMentions.slice(0, 50)) : null
 
   const clientId = typeof voterId === 'string' && voterId.length >= 8 ? voterId : 'anon'
   const voterHash = await computeVoterHash(ip, clientId, env.VOTER_SALT)
 
   const sql = getDb(env.DATABASE_URL)
+
+  const recentCount = await sql`
+    SELECT COUNT(*)::int AS cnt FROM field_notes
+    WHERE voter_id = ${voterHash} AND created_at > NOW() - INTERVAL '1 minute'
+  `
+  if (recentCount[0]?.cnt >= 10) {
+    return jsonResponse({ error: 'Rate limit exceeded, try again shortly' }, request, 429)
+  }
+
   await sql`
     INSERT INTO field_notes (entity_id, field_name, note, note_html, note_mentions, voter_id)
     VALUES (${entityId}, ${fieldName}, ${trimmedNote}, ${trimmedHtml}, ${mentions}::jsonb, ${voterHash})

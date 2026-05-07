@@ -1,6 +1,7 @@
 /* eslint-disable */
 // @ts-nocheck
 import { getVoterId, getLocalVotes, setLocalVote } from '../shared/field-feedback-utils.ts'
+import DOMPurify from 'dompurify'
 
 export function initMapEngine() {
   var searchFilterActive = false
@@ -2795,15 +2796,15 @@ export function initMapEngine() {
   }
 
   // Verification status: 'verified' (green), 'partial' (yellow), 'unverified' (red), null (no data)
-  const VERIFIABLE_FIELD_COUNT = 8
+  const MIN_FIELDS_FOR_FULL_VERIFIED = 8
   function _getVerificationStatus(fv) {
     if (!fv) return null
     const vals = Object.values(fv)
     if (vals.length === 0) return null
     const verifiedCount = vals.filter((v) => v === 'verified').length
-    const total = Math.max(vals.length, VERIFIABLE_FIELD_COUNT)
-    if (verifiedCount === total) return 'verified'
-    if (verifiedCount / total >= 0.5) return 'partial'
+    if (verifiedCount === vals.length && vals.length >= MIN_FIELDS_FOR_FULL_VERIFIED) return 'verified'
+    if (verifiedCount === vals.length) return 'partial'
+    if (verifiedCount / vals.length >= 0.5) return 'partial'
     return 'unverified'
   }
 
@@ -4588,7 +4589,7 @@ ${dots}
         .replace(/(^_|_$)/g, '')
     const addField = (label, value, opts) => {
       if (!value) return
-      const key = fieldKey(label)
+      const key = (opts && opts.verifyKey) || fieldKey(label)
       const skipFeedback = opts && opts.skipFeedback
       const fb = skipFeedback ? '' : feedbackBadge(d.id, key, fv)
       fields += `<div class="detail-field"><div class="detail-field-header"><label>${label}</label>${fb}</div><span>${value}</span></div>`
@@ -4630,13 +4631,16 @@ ${dots}
           ? `<span style="display:inline-flex;align-items:center;gap:5px;">${stColor ? `<span style="width:8px;height:8px;border-radius:50%;background:${stColor};display:inline-block;"></span>` : ''}${d.regulatory_stance}</span>${stSparkline}`
           : null,
       )
-      if (d.regulatory_stance_detail) addField('Stance Detail', d.regulatory_stance_detail)
-      addField('Evidence Source', d.evidence_source)
+      if (d.regulatory_stance_detail)
+        addField('Stance Detail', d.regulatory_stance_detail, { verifyKey: 'regulatory_stance_detail' })
+      addField('Evidence Source', d.evidence_source, { verifyKey: 'evidence_source' })
       const tlSparkline = renderSparkline(d.id, 'agi_timeline')
-      addField('AGI Timeline', d.agi_timeline ? `${d.agi_timeline}${tlSparkline}` : null)
+      addField('AGI Timeline', d.agi_timeline ? `${d.agi_timeline}${tlSparkline}` : null, { verifyKey: 'agi_timeline' })
       const rlSparkline = renderSparkline(d.id, 'ai_risk_level')
-      addField('AI Risk Level', d.ai_risk_level ? `${d.ai_risk_level}${rlSparkline}` : null)
-      addField('Key Concerns', d.threat_models)
+      addField('AI Risk Level', d.ai_risk_level ? `${d.ai_risk_level}${rlSparkline}` : null, {
+        verifyKey: 'ai_risk_level',
+      })
+      addField('Key Concerns', d.threat_models, { verifyKey: 'threat_models' })
       addField('Influence Type', d.influence_type)
       addField(
         'Twitter/X',
@@ -5285,7 +5289,7 @@ ${dots}
           }
           notesEl.innerHTML = fieldNotes
             .slice(0, 3)
-            .map((n) => `<div class="field-note-item">${n.html || escHtml(n.note)}</div>`)
+            .map((n) => `<div class="field-note-item">${n.html ? DOMPurify.sanitize(n.html) : escHtml(n.note)}</div>`)
             .join('')
         }
       })
@@ -5318,7 +5322,11 @@ ${dots}
         const submitBtn = modal.querySelector('.field-note-submit')
         const closeBtn = modal.querySelector('.field-note-modal-close')
         let tiptapEditor = null
+        const escHandler = (ev) => {
+          if (ev.key === 'Escape') close()
+        }
         function close() {
+          document.removeEventListener('keydown', escHandler)
           if (tiptapEditor) tiptapEditor.destroy()
           modal.remove()
         }
@@ -5326,12 +5334,7 @@ ${dots}
         modal.addEventListener('click', (ev) => {
           if (ev.target === modal) close()
         })
-        document.addEventListener('keydown', function escHandler(ev) {
-          if (ev.key === 'Escape') {
-            close()
-            document.removeEventListener('keydown', escHandler)
-          }
-        })
+        document.addEventListener('keydown', escHandler)
         function getEditorContent() {
           if (tiptapEditor) {
             const text = tiptapEditor.getText().trim()
@@ -5377,7 +5380,7 @@ ${dots}
                 }
                 const item = document.createElement('div')
                 item.className = 'field-note-item'
-                item.innerHTML = html || escHtml(text)
+                item.innerHTML = html ? DOMPurify.sanitize(html) : escHtml(text)
                 notesEl.prepend(item)
                 close()
               } else {
