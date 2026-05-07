@@ -307,9 +307,10 @@ export function App() {
                 are weighted averages from submissions.
               </div>
               <div className="onboarding-tip">
-                <strong>Verify &amp; correct:</strong> Every field has &#x25B2;/&#x25BC; buttons to confirm or flag
-                data. You can also leave a short correction note on any field. Verification status (green/yellow/red
-                dots) shows which entities have been checked against external sources.
+                <strong>Verify &amp; correct:</strong> Click any entity to see its details. Each field has
+                &#x25B2;/&#x25BC; buttons to confirm or flag data, and a &#x270E; button to leave a correction note with
+                rich text and @mentions. Verification dots (green/yellow/red) on nodes show which entities have been
+                checked against external sources.
               </div>
             </div>
             <div className="onboarding-mobile-note">
