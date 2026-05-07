@@ -396,11 +396,24 @@ body {
 .unverified-field label {
   color: var(--text-3);
 }
-.unverified-flag {
-  color: #ef4444;
-  font-size: 9px;
-  margin-left: 3px;
+.unverified-dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #ef4444;
+  margin-left: 4px;
+  vertical-align: middle;
   cursor: help;
+}
+.verified-dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #22c55e;
+  margin-right: 5px;
+  vertical-align: middle;
 }
 .verification-pending {
   font-family: var(--serif);
@@ -418,6 +431,20 @@ body {
   padding: 6px 10px;
   margin-bottom: 10px;
   line-height: 1.5;
+  display: flex;
+  align-items: center;
+}
+.verified-banner {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: #166534;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 4px;
+  padding: 4px 10px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
 }
 .detail-affiliated {
   margin-top: 0.75rem;

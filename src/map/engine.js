@@ -1671,12 +1671,17 @@ export function initMapEngine() {
             }
           }
           if (_canvasNodes) {
+            const entityById = new Map()
+            for (const arr of [allData.people, allData.organizations, allData.resources]) {
+              for (const e of arr) entityById.set(e.id, e)
+            }
             for (const node of _canvasNodes) {
+              const src = entityById.get(node.id)
+              if (src?.field_verification) node.field_verification = src.field_verification
               const fvVals = Object.values(node.field_verification || {})
               const unvCount = fvVals.filter((v) => v === 'unverified').length
               node._unverified = fvVals.length > 0 && unvCount > fvVals.length / 2
             }
-            _requestRedraw()
           }
         })
         .catch(() => {}) // Non-critical — detail panel degrades gracefully
@@ -2124,6 +2129,19 @@ export function initMapEngine() {
     }
   })
 
+  // ── Verification filter ──
+  let verificationFilter = 'all'
+  for (const btn of document.querySelectorAll('#verification-chips button')) {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#verification-chips button').forEach((b) => b.classList.remove('active'))
+      btn.classList.add('active')
+      if (btn.id === 'verification-show-verified') verificationFilter = 'verified'
+      else if (btn.id === 'verification-show-unverified') verificationFilter = 'unverified'
+      else verificationFilter = 'all'
+      render()
+    })
+  }
+
   // ── View mode (Network / Plot) + sub-tabs ──
   // PASSWORD GATE: force plot view when locked (don't overwrite saved preference)
   let viewMode = localStorage.getItem('mapMode') || 'network'
@@ -2317,6 +2335,13 @@ export function initMapEngine() {
     return activeSourceTypes.has(sourceType)
   }
 
+  function passesVerificationFilter(d) {
+    if (verificationFilter === 'all') return true
+    if (verificationFilter === 'verified') return !d._unverified
+    if (verificationFilter === 'unverified') return d._unverified
+    return true
+  }
+
   function passesSecondaryCategoryFilter(d) {
     // Only applies when clustering by belief dimensions (not category)
     if (clusterDimension === 'category') return true
@@ -2471,6 +2496,7 @@ export function initMapEngine() {
           isFilterActive(d) &&
           passesStanceFilter(d) &&
           passesSourceTypeFilter(d) &&
+          passesVerificationFilter(d) &&
           passesSecondaryCategoryFilter(d),
       ).length
     if (currentView === 'people' || currentView === 'all')
@@ -2480,10 +2506,11 @@ export function initMapEngine() {
           isFilterActive(d) &&
           passesStanceFilter(d) &&
           passesSourceTypeFilter(d) &&
+          passesVerificationFilter(d) &&
           passesSecondaryCategoryFilter(d),
       ).length
     if (currentView === 'resources' || currentView === 'all')
-      totalCount += allData.resources.filter((d) => passesSourceTypeFilter(d)).length
+      totalCount += allData.resources.filter((d) => passesSourceTypeFilter(d) && passesVerificationFilter(d)).length
 
     // Scale: gentler curve—1.0 at 40, 0.7 at 100, 0.55 at 200
     const scale = Math.max(0.55, Math.min(1.0, 40 / Math.max(totalCount, 1)))
@@ -2495,6 +2522,7 @@ export function initMapEngine() {
         if (!d.category || !isFilterActive(d)) return
         if (!passesStanceFilter(d)) return
         if (!passesSourceTypeFilter(d)) return
+        if (!passesVerificationFilter(d)) return
         if (!passesSecondaryCategoryFilter(d)) return
         const sc = d.submission_count || 1
         // Smaller nodes for belief dimension clustering to improve readability
@@ -2528,6 +2556,7 @@ export function initMapEngine() {
         // In "all" view, always include people (they'll be mapped to an org sector cluster)
         if (!passesStanceFilter(d)) return
         if (!passesSourceTypeFilter(d)) return
+        if (!passesVerificationFilter(d)) return
         if (!passesSecondaryCategoryFilter(d)) return
         const sc = d.submission_count || 1
 
@@ -2595,6 +2624,7 @@ export function initMapEngine() {
         // Search filter: when active, only show entities in searchVisibleNames (resources use title as name)
         if (searchFilterActive && !searchVisibleNames.has(d.title)) return
         if (!passesSourceTypeFilter(d)) return
+        if (!passesVerificationFilter(d)) return
         const cat = d.category || 'Other' // cluster by topic category in resources view
         const sc = d.submission_count || 1
         const r = Math.round((14 + Math.min(Math.floor(sc / 3), 3)) * scale)
@@ -2619,6 +2649,7 @@ export function initMapEngine() {
         // Search filter: when active, only show entities in searchVisibleNames (resources use title as name)
         if (searchFilterActive && !searchVisibleNames.has(d.title)) return
         if (!passesSourceTypeFilter(d)) return
+        if (!passesVerificationFilter(d)) return
 
         // When belief filter is active, only show resources that have a checked belief value
         // OR are connected (via relationships) to a visible entity that passed the belief filter
@@ -3827,6 +3858,7 @@ export function initMapEngine() {
       if (!d.category) return false
       if (!passesStanceFilter(d)) return false
       if (!passesSourceTypeFilter(d)) return false
+      if (!passesVerificationFilter(d)) return false
       if (!categoryFilterActive) return true
       if (activeCategories.size === 0) return false
       return activeCategories.has(d.category) || activeCategories.has(normalizeCategory(d.category))
@@ -4490,10 +4522,11 @@ ${dots}
     const fvUnverifiedCount = fvValues.filter((v) => v === 'unverified').length
     const fvTotal = fvValues.length
     const isMajorityUnverified = fvTotal > 0 && fvUnverifiedCount > fvTotal / 2
+    const hasVerificationData = fvTotal > 0
     const addField = (label, value, verifyKey) => {
       if (verifyKey && fv[verifyKey] === 'unverified') {
         if (value) {
-          fields += `<div class="detail-field unverified-field"><label>${label} <span class="unverified-flag" title="This field has not been manually verified and may contain errors">&#9873;</span></label><span class="verification-pending">${value}</span></div>`
+          fields += `<div class="detail-field unverified-field"><label>${label} <span class="unverified-dot" title="Not yet verified. May contain errors."></span></label><span class="verification-pending">${value}</span></div>`
         }
         return
       }
@@ -4857,12 +4890,14 @@ ${dots}
       }
     }
 
-    const unverifiedBanner = isMajorityUnverified
-      ? `<div class="unverified-banner">&#9873; This entry has not been fully verified and may contain errors. <a href="/contribute" style="color:inherit;text-decoration:underline;">Submit a correction</a></div>`
-      : ''
+    const verificationBanner = isMajorityUnverified
+      ? `<div class="unverified-banner"><span class="unverified-dot" style="width:6px;height:6px;margin-right:6px;"></span>This entry has not been fully verified and may contain errors. <a href="/contribute" style="color:inherit;text-decoration:underline;">Submit a correction</a></div>`
+      : hasVerificationData && !isMajorityUnverified
+        ? `<div class="verified-banner"><span class="verified-dot"></span>Verified</div>`
+        : ''
 
     const detailHtml = `
-    ${unverifiedBanner}
+    ${verificationBanner}
     ${imgHtml}
     <div class="detail-name">${escHtml(d.name || d.title)}</div>
     <div class="detail-type">${d.entityType}</div>

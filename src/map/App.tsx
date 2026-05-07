@@ -799,6 +799,40 @@ export function App() {
             </div>
           )}
         </div>
+        <div className="control-group" id="verification-filter">
+          <h3>Verification</h3>
+          <div className="filter-chips" id="verification-chips">
+            <button className="view-btn active" id="verification-show-all" style={{ fontSize: '9px' }}>
+              All
+            </button>
+            <button className="view-btn" id="verification-show-verified" style={{ fontSize: '9px' }}>
+              <span
+                style={{
+                  width: '6px',
+                  height: '6px',
+                  borderRadius: '50%',
+                  background: '#22c55e',
+                  display: 'inline-block',
+                  marginRight: '4px',
+                }}
+              />
+              Verified
+            </button>
+            <button className="view-btn" id="verification-show-unverified" style={{ fontSize: '9px' }}>
+              <span
+                style={{
+                  width: '6px',
+                  height: '6px',
+                  borderRadius: '50%',
+                  background: '#ef4444',
+                  display: 'inline-block',
+                  marginRight: '4px',
+                }}
+              />
+              Unverified
+            </button>
+          </div>
+        </div>
         <div className="control-group" id="category-filters">
           <h3 style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span>Category</span>
@@ -861,39 +895,6 @@ export function App() {
             </span>
           </h3>
           <div className="stance-legend-items" id="stance-legend-items"></div>
-        </div>
-        <div className="control-group" id="verification-legend">
-          <h3>Data Verification</h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', fontSize: '11px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span
-                style={{
-                  width: '8px',
-                  height: '8px',
-                  borderRadius: '50%',
-                  background: 'var(--text-2)',
-                  display: 'inline-block',
-                  flexShrink: 0,
-                }}
-              />
-              <span style={{ fontFamily: 'var(--serif)', color: 'var(--text-2)' }}>Verified</span>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span
-                style={{
-                  width: '8px',
-                  height: '8px',
-                  borderRadius: '50%',
-                  background: '#ef4444',
-                  display: 'inline-block',
-                  flexShrink: 0,
-                }}
-              />
-              <span style={{ fontFamily: 'var(--serif)', color: 'var(--text-2)' }}>
-                Unverified (may contain errors)
-              </span>
-            </div>
-          </div>
         </div>
         <div className="control-group" id="secondary-category-filter" style={{ display: 'none' }}>
           <h3 style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
