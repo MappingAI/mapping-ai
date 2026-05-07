@@ -26,7 +26,7 @@ export function WelcomeOverlay() {
           className="block mb-4 p-2.5 bg-[#fffbeb] border border-[#fde68a] rounded-md text-center font-mono text-[10.5px] text-[#92400e] tracking-wide no-underline hover:bg-[#fef3c7] transition-colors"
         >
           Thanks for the love on our <span className="underline decoration-dotted underline-offset-2">launch</span>!
-          110k+ views, 700+ saves and counting
+          283k+ views, 1.4k saves, 1.3k likes and counting
         </a>
 
         <h2 className="font-mono text-sm uppercase tracking-wider mb-4">Welcome to Mapping AI</h2>
