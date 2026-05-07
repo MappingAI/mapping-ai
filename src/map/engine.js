@@ -554,7 +554,7 @@ export function initMapEngine() {
   let axisMode = '2d' // '1d' | '2d'
   let axisX = 'regulatory_stance'
   let axisY = 'agi_timeline'
-  let axis2dEntityType = 'all' // 'all' | 'people' | 'organizations'
+  let axis2dEntityType = 'people'
 
   const AXES = {
     regulatory_stance: {
@@ -4678,7 +4678,7 @@ ${dots}
           const metaHtml = meta
             ? `<div style="font-size:9px;color:var(--text-3);margin-top:2px;">${escHtml(meta)}</div>`
             : ''
-          const claimFb = feedbackBadge(d.id, `claim_${dim}_${c.src || ci}`)
+          const claimFb = feedbackBadge(d.id, `claim_${dim}_${c.src ?? ci}`)
           itemsHtml += `<div style="border-left:2px solid var(--border);padding-left:8px;margin-bottom:8px;">${scoreText}${labelText}${confBadge}${claimFb}${cite}${srcLink}${metaHtml}</div>`
         })
         claimsHtml += `<div style="margin-bottom:10px;"><div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-3);margin-bottom:4px;">${dimLabel}</div>${itemsHtml}</div>`

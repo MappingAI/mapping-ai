@@ -222,6 +222,12 @@ async function migrate() {
     await client.query(
       `ALTER TABLE field_feedback DROP CONSTRAINT IF EXISTS field_feedback_entity_id_field_name_voter_id_key`,
     )
+    await client.query(
+      `ALTER TABLE field_feedback DROP CONSTRAINT IF EXISTS field_feedback_entity_id_field_name_ip_hash_key`,
+    )
+    await client.query(
+      'CREATE UNIQUE INDEX IF NOT EXISTS idx_ff_entity_field_voter_vote ON field_feedback(entity_id, field_name, voter_id, vote)',
+    )
     // Rename ip_hash to voter_id if the old column exists (migration from older schema)
     await client.query(`
       DO $$ BEGIN

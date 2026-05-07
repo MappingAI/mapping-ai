@@ -78,8 +78,8 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
     return jsonResponse({ error: 'entityId required' }, request, 400)
   }
   const entityId = parseInt(entityIdParam, 10)
-  if (isNaN(entityId)) {
-    return jsonResponse({ error: 'entityId must be a number' }, request, 400)
+  if (isNaN(entityId) || entityId <= 0) {
+    return jsonResponse({ error: 'entityId must be a positive integer' }, request, 400)
   }
 
   const sql = getDb(env.DATABASE_URL)
