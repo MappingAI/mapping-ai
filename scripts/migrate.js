@@ -212,13 +212,16 @@ async function migrate() {
         id           SERIAL PRIMARY KEY,
         entity_id    INTEGER NOT NULL REFERENCES entity(id) ON DELETE CASCADE,
         field_name   VARCHAR(100) NOT NULL,
-        vote         SMALLINT NOT NULL,  -- +1 = confirm, -1 = flag
+        vote         SMALLINT NOT NULL,
         ip_hash      VARCHAR(64),
         created_at   TIMESTAMPTZ DEFAULT NOW(),
-        UNIQUE(entity_id, field_name, ip_hash)
+        UNIQUE(entity_id, field_name, ip_hash, vote)
       )
     `)
     await client.query('CREATE INDEX IF NOT EXISTS idx_ff_entity ON field_feedback(entity_id)')
+    await client.query(
+      `ALTER TABLE field_feedback DROP CONSTRAINT IF EXISTS field_feedback_entity_id_field_name_ip_hash_key`,
+    )
     console.log('  ✓ field_feedback')
 
     // ── 5. Score recalculation function ──────────────────────────────────────

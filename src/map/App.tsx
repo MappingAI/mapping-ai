@@ -10,6 +10,7 @@ import {
 } from './components/DefinitionsView'
 import { slugify } from '../shared/slugify'
 import { CORRECTIONS_NOTICE } from '../shared/corrections-notice'
+import { FieldFeedback } from '../components/FieldFeedback'
 
 type ReactView = 'definitions' | null
 
@@ -1324,12 +1325,18 @@ export function App() {
               </div>
               <div className="detail-fields" style={{ marginTop: '1rem' }}>
                 <div className="detail-field">
-                  <label>How they define AGI</label>
+                  <div className="detail-field-header">
+                    <label>How they define AGI</label>
+                    <FieldFeedback entityId={beliefsSelectedPoint.point.entity_id} field="agi_definition" />
+                  </div>
                   <span style={{ display: 'block' }}>{beliefsSelectedPoint.point.definition}</span>
                 </div>
                 {beliefsSelectedPoint.point.citation && (
                   <div className="detail-field">
-                    <label>Citation</label>
+                    <div className="detail-field-header">
+                      <label>Citation</label>
+                      <FieldFeedback entityId={beliefsSelectedPoint.point.entity_id} field="agi_citation" />
+                    </div>
                     <blockquote
                       style={{
                         fontFamily: 'var(--serif)',
@@ -1348,7 +1355,10 @@ export function App() {
                 )}
                 {beliefsSelectedPoint.source && (
                   <div className="detail-field">
-                    <label>Source</label>
+                    <div className="detail-field-header">
+                      <label>Source</label>
+                      <FieldFeedback entityId={beliefsSelectedPoint.point.entity_id} field="agi_source" />
+                    </div>
                     <a
                       href={beliefsSelectedPoint.source.url}
                       target="_blank"
