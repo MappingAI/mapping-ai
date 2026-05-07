@@ -61,11 +61,8 @@ export function initMapEngine() {
   // Onboarding: show on first visit
   function dismissOnboarding() {
     document.getElementById('onboarding-overlay').style.display = 'none'
-    localStorage.setItem('mapOnboardingSeen', '1')
   }
-  if (!localStorage.getItem('mapOnboardingSeen') || !localStorage.getItem('corrections-notice-seen')) {
-    document.getElementById('onboarding-overlay').style.display = 'flex'
-  }
+  document.getElementById('onboarding-overlay').style.display = 'flex'
 
   // Mobile banner: hide if previously dismissed
   if (localStorage.getItem('mobileBannerDismissed') === '1') {

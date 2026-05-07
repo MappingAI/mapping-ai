@@ -9,7 +9,6 @@ import {
   type MapBeliefsClusterViewRef,
 } from './components/DefinitionsView'
 import { slugify } from '../shared/slugify'
-import { CorrectionsBanner } from '../components/CorrectionsBanner'
 
 type ReactView = 'definitions' | null
 
@@ -241,7 +240,6 @@ export function App() {
 
   return (
     <>
-      <CorrectionsBanner />
       <style>{`#source-type-filter { display: none !important; }`}</style>
       <nav className="site-nav">
         <a className="nav-brand" href="/">
@@ -367,9 +365,6 @@ export function App() {
             onClick={() => {
               const el = document.getElementById('onboarding-overlay')
               if (el) el.style.display = 'none'
-              localStorage.setItem('mapOnboardingSeen', '1')
-              localStorage.setItem('welcome-dismissed', '1')
-              localStorage.setItem('corrections-notice-seen', '1')
             }}
           >
             Got it

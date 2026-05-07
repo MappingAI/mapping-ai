@@ -1,18 +1,11 @@
 import { useState } from 'react'
 
-const DISMISSED_KEY = 'welcome-dismissed'
-const CORRECTIONS_KEY = 'corrections-notice-seen'
-
 export function WelcomeOverlay() {
-  const [dismissed, setDismissed] = useState(
-    () => localStorage.getItem(DISMISSED_KEY) === '1' && localStorage.getItem(CORRECTIONS_KEY) === '1',
-  )
+  const [dismissed, setDismissed] = useState(false)
 
   if (dismissed) return null
 
   const dismiss = () => {
-    localStorage.setItem(DISMISSED_KEY, '1')
-    localStorage.setItem(CORRECTIONS_KEY, '1')
     setDismissed(true)
   }
 
