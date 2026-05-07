@@ -287,6 +287,18 @@ export function App() {
             <span key={name}>{name}</span>
           ))}
         </div>
+        <p {...fadeProps(fi++, 'mb-4 text-[16.5px]')}>
+          Supported by a{' '}
+          <a
+            href="https://bluedot.org/programs/rapid-grants#grants-made"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#2563eb] no-underline hover:underline"
+          >
+            BlueDot Impact Rapid Grant
+          </a>{' '}
+          ($3,200).
+        </p>
 
         <hr className="border-none border-t border-[#bbb]/50 my-5" />
 
