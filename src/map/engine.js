@@ -1,5 +1,11 @@
 /* eslint-disable */
 // @ts-nocheck
+import {
+  getVoterId as _getVoterId,
+  getLocalVotes as _getLocalVotes,
+  setLocalVote as _setLocalVote,
+} from '../shared/field-feedback-utils.ts'
+
 export function initMapEngine() {
   var searchFilterActive = false
   var searchVisibleNames = new Set()
@@ -4428,7 +4434,8 @@ ${dots}
 
   // Feedback badge helper (shared by showDetail + showEdgeDetail)
   function feedbackBadge(entityId, key) {
-    return `<span class="field-feedback-row" data-field="${key}"><span class="field-inferred-badge">unverified</span><button class="field-vote field-vote-confirm" data-entity-id="${entityId}" data-field="${key}" data-vote="1" title="Looks correct">&#x25B2;</button><button class="field-vote field-vote-flag" data-entity-id="${entityId}" data-field="${key}" data-vote="-1" title="Flag as incorrect">&#x25BC;</button><span class="field-vote-counts" data-field="${key}"></span></span>`
+    const safeKey = escHtml(key)
+    return `<span class="field-feedback-row" data-field="${safeKey}"><span class="field-inferred-badge">unverified</span><button class="field-vote field-vote-confirm" data-entity-id="${entityId}" data-field="${safeKey}" data-vote="1" title="Looks correct">&#x25B2;</button><button class="field-vote field-vote-flag" data-entity-id="${entityId}" data-field="${safeKey}" data-vote="-1" title="Flag as incorrect">&#x25BC;</button><span class="field-vote-counts" data-field="${safeKey}"></span></span>`
   }
 
   // Detail panel
@@ -4700,7 +4707,7 @@ ${dots}
           const metaHtml = meta
             ? `<div style="font-size:9px;color:var(--text-3);margin-top:2px;">${escHtml(meta)}</div>`
             : ''
-          const claimFb = feedbackBadge(d.id, `claim_${dim}_${ci}`)
+          const claimFb = feedbackBadge(d.id, `claim_${dim}_${c.src || ci}`)
           itemsHtml += `<div style="border-left:2px solid var(--border);padding-left:8px;margin-bottom:8px;">${scoreText}${labelText}${confBadge}${claimFb}${cite}${srcLink}${metaHtml}</div>`
         })
         claimsHtml += `<div style="margin-bottom:10px;"><div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-3);margin-bottom:4px;">${dimLabel}</div>${itemsHtml}</div>`
@@ -4762,7 +4769,7 @@ ${dots}
                   <span class="connection-chevron" style="color:var(--text-3);font-size:10px;transition:transform 0.15s;">▸</span>
                   <span class="connection-name" style="flex:1;">${escHtml(item.name)}</span>
                   <span style="font-size:10px;padding:2px 6px;border-radius:3px;background:${relColor.bg};color:${relColor.text};">${relType}</span>
-                  ${feedbackBadge(d.id, `edge_${d.id}_${item.entity.id}`)}
+                  ${feedbackBadge(d.id, `edge_${Math.min(d.id, item.entity.id)}_${Math.max(d.id, item.entity.id)}`)}
                 </div>
                 <div class="connection-details" data-item-id="${itemId}" style="display:none;padding:8px 0 8px 16px;border-left:2px solid var(--line);margin-left:4px;">
                   <div class="connection-evidence" data-edge-id="${item.edgeId || ''}" style="font-size:12px;color:var(--text-2);margin-bottom:8px;">
@@ -5077,35 +5084,9 @@ ${dots}
     panel.classList.add('open')
   }
 
-  function getVoterId() {
-    let id = localStorage.getItem('fieldVoterId')
-    if (!id) {
-      id = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2) + Date.now().toString(36)
-      localStorage.setItem('fieldVoterId', id)
-    }
-    return id
-  }
-
-  function getLocalVotes(entityId) {
-    try {
-      const raw = JSON.parse(localStorage.getItem('fieldVotes2_' + entityId) || '{}')
-      return raw
-    } catch {
-      return {}
-    }
-  }
-
-  function setLocalVote(entityId, field, direction, active) {
-    const votes = getLocalVotes(entityId)
-    if (!votes[field]) votes[field] = {}
-    if (active) {
-      votes[field][direction] = true
-    } else {
-      delete votes[field][direction]
-    }
-    if (!votes[field].up && !votes[field].down) delete votes[field]
-    localStorage.setItem('fieldVotes2_' + entityId, JSON.stringify(votes))
-  }
+  const getVoterId = _getVoterId
+  const getLocalVotes = _getLocalVotes
+  const setLocalVote = _setLocalVote
 
   function renderVoteCounts(container, entityId, serverFeedback) {
     const localVotes = getLocalVotes(entityId)
@@ -5272,7 +5253,10 @@ ${dots}
           const roleHtml = ev.role_title
             ? `<div style="font-size:10px;color:var(--text-2);margin-top:2px;">${escHtml(ev.role_title)}</div>`
             : ''
-          const evFb = feedbackBadge(edge.source.id, `evidence_${edge.edgeId}_${idx}`)
+          const evFb = feedbackBadge(
+            Math.min(edge.source.id, edge.target.id),
+            `evidence_${edge.edgeId || 'inferred'}_${idx}`,
+          )
           return `<div style="border-left:2px solid var(--line);padding-left:8px;margin-bottom:10px;">${evFb}${cite}${srcLink}${metaHtml}${amountHtml}${periodHtml}${roleHtml}</div>`
         })
         .join('')
@@ -5421,8 +5405,8 @@ ${dots}
       })
     }
 
-    // Bind feedback buttons in edge detail
-    bindFieldFeedback(content, edge.source.id)
+    // Bind feedback buttons in edge detail (use canonical entity ID so both directions load the same feedback)
+    bindFieldFeedback(content, Math.min(edge.source.id, edge.target.id))
 
     panel.classList.add('open')
   }

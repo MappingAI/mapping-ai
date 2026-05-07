@@ -20,4 +20,7 @@ export interface Env {
 
   // CloudFront domain for thumbnail URLs (legacy, replaced by R2 public URL)
   THUMBNAIL_PUBLIC_URL?: string
+
+  // Salt for hashing voter IPs in field feedback dedup
+  VOTER_SALT?: string
 }

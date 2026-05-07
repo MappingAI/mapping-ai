@@ -213,15 +213,24 @@ async function migrate() {
         entity_id    INTEGER NOT NULL REFERENCES entity(id) ON DELETE CASCADE,
         field_name   VARCHAR(100) NOT NULL,
         vote         SMALLINT NOT NULL,
-        ip_hash      VARCHAR(64),
+        voter_id     VARCHAR(64),
         created_at   TIMESTAMPTZ DEFAULT NOW(),
-        UNIQUE(entity_id, field_name, ip_hash, vote)
+        UNIQUE(entity_id, field_name, voter_id, vote)
       )
     `)
     await client.query('CREATE INDEX IF NOT EXISTS idx_ff_entity ON field_feedback(entity_id)')
     await client.query(
-      `ALTER TABLE field_feedback DROP CONSTRAINT IF EXISTS field_feedback_entity_id_field_name_ip_hash_key`,
+      `ALTER TABLE field_feedback DROP CONSTRAINT IF EXISTS field_feedback_entity_id_field_name_voter_id_key`,
     )
+    // Rename ip_hash to voter_id if the old column exists (migration from older schema)
+    await client.query(`
+      DO $$ BEGIN
+        IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'field_feedback' AND column_name = 'ip_hash') THEN
+          ALTER TABLE field_feedback RENAME COLUMN ip_hash TO voter_id;
+          ALTER TABLE field_feedback DROP CONSTRAINT IF EXISTS field_feedback_entity_id_field_name_ip_hash_key;
+        END IF;
+      END $$
+    `)
     console.log('  ✓ field_feedback')
 
     // ── 5. Score recalculation function ──────────────────────────────────────
