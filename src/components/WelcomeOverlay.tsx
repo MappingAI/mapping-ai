@@ -1,14 +1,18 @@
 import { useState } from 'react'
 
 const DISMISSED_KEY = 'welcome-dismissed'
+const CORRECTIONS_KEY = 'corrections-notice-seen'
 
 export function WelcomeOverlay() {
-  const [dismissed, setDismissed] = useState(() => localStorage.getItem(DISMISSED_KEY) === '1')
+  const [dismissed, setDismissed] = useState(
+    () => localStorage.getItem(DISMISSED_KEY) === '1' && localStorage.getItem(CORRECTIONS_KEY) === '1',
+  )
 
   if (dismissed) return null
 
   const dismiss = () => {
     localStorage.setItem(DISMISSED_KEY, '1')
+    localStorage.setItem(CORRECTIONS_KEY, '1')
     setDismissed(true)
   }
 
@@ -78,6 +82,21 @@ export function WelcomeOverlay() {
           </a>
           . We're also open to ideas on collaborations or new directions for this resource.
         </p>
+
+        <div className="text-[12px] leading-relaxed mb-5 p-3 bg-[#fef3c7] rounded-md text-[#92400e]">
+          <strong className="text-[#78350f]">Update (May 2025):</strong> We&apos;re aware of corrections coming in on
+          errors in entity data (
+          <a
+            href="https://x.com/AndyMasley/status/1920202288963199437"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#92400e] underline"
+          >
+            see discussion
+          </a>
+          ) and are actively working on addressing these, along with rolling out field-level verification indicators.
+          Thanks everyone for your support, engagement, and feedback. You are helping us make this tool better.
+        </div>
 
         <button
           onClick={dismiss}
