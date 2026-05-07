@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { Navigation } from '../components/Navigation'
+import { Footer } from '../components/Footer'
 import { WelcomeOverlay } from '../components/WelcomeOverlay'
 
 /* ------------------------------------------------------------------ */
@@ -165,26 +166,7 @@ function TableOfContents() {
 /* ------------------------------------------------------------------ */
 
 /* ------------------------------------------------------------------ */
-/*  Mail icon                                                          */
 /* ------------------------------------------------------------------ */
-
-function MailIcon() {
-  return (
-    <svg
-      width="12"
-      height="12"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <rect x="2" y="4" width="20" height="16" rx="2" />
-      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-    </svg>
-  )
-}
 
 /* ------------------------------------------------------------------ */
 /*  App                                                                */
@@ -473,33 +455,7 @@ export function App() {
           ))}
         </div>
 
-        {/* Footer */}
-        <div className="flex justify-center items-center gap-2 mt-12 pt-6 border-t border-[#bbb]/50">
-          <a href="/about" className="font-mono text-[10.5px] text-[#888] tracking-wide no-underline">
-            Mapping AI Working Group
-          </a>
-          <span className="font-mono text-[10.5px] text-[#888] tracking-wide">&middot; 2026</span>
-          <span className="font-mono text-[10.5px] text-[#888] tracking-wide">&middot;</span>
-          <a
-            href="mailto:info@mapping-ai.org"
-            className="font-mono text-[10.5px] text-[#888] tracking-wide no-underline inline-flex items-center gap-1"
-          >
-            <MailIcon />
-            info@mapping-ai.org
-          </a>
-        </div>
-        <div className="mt-2 font-mono text-[9px] text-[#888] tracking-tight text-center max-w-[600px] leading-normal">
-          Data is sourced from public records, user submissions, and LLM-assisted research. Inferred beliefs do not
-          claim to represent official positions. We welcome corrections via{' '}
-          <a href="/contribute" className="text-[#888]">
-            contribute
-          </a>{' '}
-          or{' '}
-          <a href="mailto:info@mapping-ai.org" className="text-[#888]">
-            info@mapping-ai.org
-          </a>
-          .
-        </div>
+        <Footer />
       </div>
     </>
   )
