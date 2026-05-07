@@ -305,9 +305,43 @@ export function initMapEngine() {
     img.src = url
   }
 
+  const EDGE_LABEL_MAP = {
+    funder: { asSource: 'Funds', asTarget: 'Funded by' },
+    employer: { asSource: 'Works at', asTarget: 'Employs' },
+    member: { asSource: 'Member of', asTarget: 'Has member' },
+    collaborator: { asSource: 'Collaborates with', asTarget: 'Collaborates with' },
+    partner: { asSource: 'Partner with', asTarget: 'Partner with' },
+    founder: { asSource: 'Founded', asTarget: 'Founded by' },
+    parent_company: { asSource: 'Parent of', asTarget: 'Subsidiary of' },
+    advisor: { asSource: 'Advises', asTarget: 'Advised by' },
+    author: { asSource: 'Authored', asTarget: 'Authored by' },
+    publisher: { asSource: 'Published', asTarget: 'Published by' },
+    critic: { asSource: 'Criticizes', asTarget: 'Criticized by' },
+    supporter: { asSource: 'Supports', asTarget: 'Supported by' },
+    affiliated: { asSource: 'Affiliated with', asTarget: 'Affiliated with' },
+    employed_by: { asSource: 'Employed by', asTarget: 'Employs' },
+    authored_by: { asSource: 'Authored by', asTarget: 'Authored' },
+    former_colleague: { asSource: 'Formerly at', asTarget: 'Former affiliate' },
+    alumni: { asSource: 'Alumni of', asTarget: 'Has alumni' },
+    employed: { asSource: 'Works at', asTarget: 'Employs' },
+    advises: { asSource: 'Advises', asTarget: 'Advised by' },
+    board_member: { asSource: 'Board member of', asTarget: 'Has board member' },
+    formerly_affiliated: { asSource: 'Formerly at', asTarget: 'Former affiliate' },
+    mentioned: { asSource: 'Mentions', asTarget: 'Mentioned in' },
+    trustee: { asSource: 'Trustee of', asTarget: 'Has trustee' },
+  }
+
+  function getEdgeLabel(edgeType, isSource) {
+    const mapping = EDGE_LABEL_MAP[edgeType]
+    if (mapping) {
+      return isSource ? mapping.asSource : mapping.asTarget
+    }
+    return edgeType ? edgeType.replace(/_/g, ' ') : 'affiliated'
+  }
+
   /**
    * Shared connection builder: finds all 1-degree connections for an entity.
-   * Returns [{ entity, entityType, name, rel }]—full objects for graph, name for display.
+   * Returns [{ entity, entityType, name, rel, isSource }]—full objects for graph, name for display.
    * Used by both mobile mini-graph and desktop detail panel.
    */
   function buildConnections(d) {
@@ -322,13 +356,13 @@ export function initMapEngine() {
       return null
     }
 
-    function addItem(entity, entityType, rel, edgeId = null) {
+    function addItem(entity, entityType, rel, edgeId = null, isSource = true) {
       const key = entityType + ':' + entity.id
       if (seen.has(key)) return
       seen.add(key)
       const typeName = entityType === 'organization' ? 'org' : entityType
       const displayName = entityType === 'resource' ? entity.title || entity.name : entity.name || entity.title
-      items.push({ entity, entityType, name: displayName, type: typeName, rel: rel || 'affiliated', edgeId })
+      items.push({ entity, entityType, name: displayName, type: typeName, rel: rel || 'affiliated', edgeId, isSource })
     }
 
     // From relationships (explicit edges with real types, processed first)
@@ -339,10 +373,10 @@ export function initMapEngine() {
         const edgeId = rel.id || null
         if (rel.source_type === entityKey && rel.source_id === d.id) {
           const target = findEntity(rel.target_type, rel.target_id)
-          if (target) addItem(target, rel.target_type, relType, edgeId)
+          if (target) addItem(target, rel.target_type, relType, edgeId, true)
         } else if (rel.target_type === entityKey && rel.target_id === d.id) {
           const source = findEntity(rel.source_type, rel.source_id)
-          if (source) addItem(source, rel.source_type, relType, edgeId)
+          if (source) addItem(source, rel.source_type, relType, edgeId, false)
         }
       })
     }
@@ -361,7 +395,7 @@ export function initMapEngine() {
           .filter((po) => po.organization_id === d.id)
           .forEach((po) => {
             const person = allData.people.find((p) => p.id === po.person_id)
-            if (person) addItem(person, 'person', po.role || 'affiliated')
+            if (person) addItem(person, 'person', po.role || 'affiliated', null, false)
           })
       }
     }
@@ -4323,7 +4357,7 @@ export function initMapEngine() {
 
   function showEdgeTooltip(event, edge) {
     if (isTouchDevice) return
-    const type = edge.relType || 'related'
+    const type = getEdgeLabel(edge.relType || 'related', true)
     const sourceName = edge.source.name || 'Unknown'
     const targetName = edge.target.name || 'Unknown'
     document.getElementById('tooltip-name').textContent = `${sourceName} → ${targetName}`
@@ -4730,7 +4764,7 @@ ${dots}
       for (const [label, items] of Object.entries(byType)) {
         const itemsHtml = items
           .map((item) => {
-            const relType = item.rel ? item.rel.replace(/_/g, ' ') : 'affiliated'
+            const relType = getEdgeLabel(item.rel, item.isSource)
             const itemId = `conn-${d.id}-${item.entityType}-${item.entity.id}`
             const hasEvidence = item.edgeId && window.__edgeEvidence?.edges?.[item.edgeId]
             const relColor = REL_COLORS[item.rel] || { bg: 'var(--input-bg)', text: 'var(--text-3)' }
@@ -5157,7 +5191,7 @@ ${dots}
 
     const panel = document.getElementById('detail-panel')
     const content = document.getElementById('detail-content')
-    const relType = edge.relType || 'related'
+    const relType = getEdgeLabel(edge.relType || 'related', true)
     const sourceName = edge.source.name || 'Unknown'
     const targetName = edge.target.name || 'Unknown'
     const sourceColor = getColor(edge.source.category) || 'var(--accent)'
