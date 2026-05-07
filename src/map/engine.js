@@ -63,7 +63,7 @@ export function initMapEngine() {
     document.getElementById('onboarding-overlay').style.display = 'none'
     localStorage.setItem('mapOnboardingSeen', '1')
   }
-  if (!localStorage.getItem('mapOnboardingSeen')) {
+  if (!localStorage.getItem('mapOnboardingSeen') || !localStorage.getItem('corrections-notice-seen')) {
     document.getElementById('onboarding-overlay').style.display = 'flex'
   }
 

@@ -332,6 +332,31 @@ export function App() {
             </a>
             .
           </div>
+          <div
+            style={{
+              background: '#fef3c7',
+              borderRadius: '6px',
+              padding: '10px 14px',
+              marginBottom: '8px',
+              fontFamily: 'var(--mono)',
+              fontSize: '10px',
+              color: '#92400e',
+              lineHeight: 1.5,
+            }}
+          >
+            <strong style={{ color: '#78350f' }}>Update (May 2025):</strong> We&apos;re aware of corrections coming in
+            on errors in entity data (
+            <a
+              href="https://x.com/AndyMasley/status/1920202288963199437"
+              target="_blank"
+              rel="noopener"
+              style={{ color: '#92400e', textDecoration: 'underline' }}
+            >
+              see discussion
+            </a>
+            ) and are actively working on addressing these, along with rolling out field-level verification indicators.
+            Thanks everyone for your support, engagement, and feedback. You are helping us make this tool better.
+          </div>
           <button
             className="onboarding-dismiss"
             onClick={() => {
@@ -339,6 +364,7 @@ export function App() {
               if (el) el.style.display = 'none'
               localStorage.setItem('mapOnboardingSeen', '1')
               localStorage.setItem('welcome-dismissed', '1')
+              localStorage.setItem('corrections-notice-seen', '1')
             }}
           >
             Got it
