@@ -9,6 +9,7 @@ import {
   type MapBeliefsClusterViewRef,
 } from './components/DefinitionsView'
 import { slugify } from '../shared/slugify'
+import { CORRECTIONS_NOTICE } from '../shared/corrections-notice'
 
 type ReactView = 'definitions' | null
 
@@ -347,10 +348,7 @@ export function App() {
               lineHeight: 1.5,
             }}
           >
-            <strong style={{ color: '#78350f' }}>Update:</strong> We&apos;re aware of corrections coming in on errors in
-            entity data and are actively working on addressing these, along with rolling out field-level verification
-            indicators. Thanks everyone for your support, engagement, and feedback. You are helping us make this tool
-            better.
+            <strong style={{ color: '#78350f' }}>Update:</strong> {CORRECTIONS_NOTICE}
           </div>
           <button
             className="onboarding-dismiss"

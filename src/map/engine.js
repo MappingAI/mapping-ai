@@ -58,11 +58,9 @@ export function initMapEngine() {
     }, 350)
   })
 
-  // Onboarding: show on first visit
-  function dismissOnboarding() {
-    document.getElementById('onboarding-overlay').style.display = 'none'
-  }
-  document.getElementById('onboarding-overlay').style.display = 'flex'
+  // Onboarding: show on every page load
+  const onboardingEl = document.getElementById('onboarding-overlay')
+  if (onboardingEl) onboardingEl.style.display = 'flex'
 
   // Mobile banner: hide if previously dismissed
   if (localStorage.getItem('mobileBannerDismissed') === '1') {

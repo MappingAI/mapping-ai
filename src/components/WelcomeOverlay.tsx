@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { CORRECTIONS_NOTICE } from '../shared/corrections-notice'
 
 export function WelcomeOverlay() {
   const [dismissed, setDismissed] = useState(false)
@@ -77,10 +78,7 @@ export function WelcomeOverlay() {
         </p>
 
         <div className="text-[12px] leading-relaxed mb-5 p-3 bg-[#fef3c7] rounded-md text-[#92400e]">
-          <strong className="text-[#78350f]">Update:</strong> We&apos;re aware of corrections coming in on errors in
-          entity data and are actively working on addressing these, along with rolling out field-level verification
-          indicators. Thanks everyone for your support, engagement, and feedback. You are helping us make this tool
-          better.
+          <strong className="text-[#78350f]">Update:</strong> {CORRECTIONS_NOTICE}
         </div>
 
         <button
