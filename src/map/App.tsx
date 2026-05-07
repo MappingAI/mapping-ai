@@ -306,6 +306,11 @@ export function App() {
                 <strong>Source:</strong> Data is crowdsourced and admin-reviewed. Belief scores (stance, timeline, risk)
                 are weighted averages from submissions.
               </div>
+              <div className="onboarding-tip">
+                <strong>Verify &amp; correct:</strong> Every field has &#x25B2;/&#x25BC; buttons to confirm or flag
+                data. You can also leave a short correction note on any field. Verification status (green/yellow/red
+                dots) shows which entities have been checked against external sources.
+              </div>
             </div>
             <div className="onboarding-mobile-note">
               On mobile, the map has a limited feature set and may take a few seconds to load.
@@ -835,19 +840,16 @@ export function App() {
           <div className="filter-chips" id="category-chips"></div>
         </div>
         <div className="control-group" id="verification-filter" style={{ display: 'none' }}>
-          <h3>Data Quality</h3>
-          <div
-            style={{
-              fontSize: '8px',
-              color: 'var(--text-3)',
-              fontFamily: 'var(--mono)',
-              marginBottom: '4px',
-              lineHeight: 1.4,
-            }}
-          >
-            Based on automated source checks per field. Verified&nbsp;= all fields confirmed. Partial&nbsp;= &gt;50%.
-            Unverified&nbsp;= &lt;50%.
-          </div>
+          <h3 className="verification-heading-wrap">
+            Data Quality
+            <span className="verification-info-trigger">
+              ?
+              <span className="verification-info-tooltip">
+                Based on automated external source checks per field. Verified = all checked fields confirmed. Partial =
+                &gt;50% confirmed. Unverified = &lt;50% confirmed.
+              </span>
+            </span>
+          </h3>
           <div className="verification-legend-items" id="verification-legend-items">
             <div className="verification-legend-item active" data-status="verified">
               <span className="verification-legend-dot" style={{ background: '#16a34a' }}></span>

@@ -240,6 +240,20 @@ async function migrate() {
     `)
     console.log('  ✓ field_feedback')
 
+    // ── 4e. field_notes table ─────────────────────────────────────────────────
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS field_notes (
+        id           SERIAL PRIMARY KEY,
+        entity_id    INTEGER NOT NULL REFERENCES entity(id) ON DELETE CASCADE,
+        field_name   VARCHAR(100) NOT NULL,
+        note         TEXT NOT NULL,
+        voter_id     VARCHAR(64),
+        created_at   TIMESTAMPTZ DEFAULT NOW()
+      )
+    `)
+    await client.query('CREATE INDEX IF NOT EXISTS idx_fn_entity ON field_notes(entity_id)')
+    console.log('  ✓ field_notes')
+
     // ── 5. Score recalculation function ──────────────────────────────────────
     // Weights: self=10, connector=2, external=1
     // _n counts only submissions with a non-null score for that field

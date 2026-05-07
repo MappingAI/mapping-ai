@@ -4524,7 +4524,7 @@ ${dots}
     const fvStatus = fieldVerification?.[safeKey]
     const badgeClass = fvStatus === 'verified' ? 'field-verified-badge' : 'field-inferred-badge'
     const badgeLabel = fvStatus === 'verified' ? 'verified' : 'unverified'
-    return `<span class="field-feedback-row" data-field="${safeKey}"><span class="${badgeClass}">${badgeLabel}</span><button class="field-vote field-vote-confirm" data-entity-id="${entityId}" data-field="${safeKey}" data-vote="1" title="Looks correct">&#x25B2;</button><button class="field-vote field-vote-flag" data-entity-id="${entityId}" data-field="${safeKey}" data-vote="-1" title="Flag as incorrect">&#x25BC;</button><span class="field-vote-counts" data-field="${safeKey}"></span></span>`
+    return `<span class="field-feedback-row" data-field="${safeKey}"><span class="${badgeClass}">${badgeLabel}</span><button class="field-vote field-vote-confirm" data-entity-id="${entityId}" data-field="${safeKey}" data-vote="1" title="Looks correct">&#x25B2;</button><button class="field-vote field-vote-flag" data-entity-id="${entityId}" data-field="${safeKey}" data-vote="-1" title="Flag as incorrect">&#x25BC;</button><span class="field-vote-counts" data-field="${safeKey}"></span><button class="field-note-btn" data-entity-id="${entityId}" data-field="${safeKey}" title="Add a note or correction">&#x270E;</button></span>`
   }
 
   // Detail panel
@@ -5166,8 +5166,9 @@ ${dots}
     // Share button
     initShareButton(d)
 
-    // Field feedback: bind vote buttons and load existing counts
+    // Field feedback: bind vote buttons and load existing counts + notes
     bindFieldFeedback(activeContent, d.id)
+    bindFieldNotes(activeContent, d.id)
 
     panel.classList.add('open')
   }
@@ -5254,6 +5255,96 @@ ${dots}
         renderVoteCounts(container, entityId, data.feedback)
       })
       .catch(() => {})
+  }
+
+  function bindFieldNotes(container, entityId) {
+    fetch('/api/field-notes?entityId=' + entityId)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (!data?.notes) return
+        for (const [field, fieldNotes] of Object.entries(data.notes)) {
+          const row = container.querySelector(`.field-feedback-row[data-field="${field}"]`)
+          if (!row) continue
+          let notesEl = row.parentElement?.querySelector('.field-notes-list')
+          if (!notesEl) {
+            notesEl = document.createElement('div')
+            notesEl.className = 'field-notes-list'
+            row.parentElement.appendChild(notesEl)
+          }
+          notesEl.innerHTML = fieldNotes
+            .slice(0, 3)
+            .map((n) => `<div class="field-note-item">${escHtml(n.note)}</div>`)
+            .join('')
+        }
+      })
+      .catch(() => {})
+
+    container.querySelectorAll('.field-note-btn').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        const field = btn.dataset.field
+        const eid = parseInt(btn.dataset.entityId, 10)
+        const existing = btn.parentElement?.querySelector('.field-note-input-wrap')
+        if (existing) {
+          existing.remove()
+          return
+        }
+        const wrap = document.createElement('div')
+        wrap.className = 'field-note-input-wrap'
+        wrap.innerHTML =
+          '<input type="text" class="field-note-input" placeholder="Add a note or correction..." maxlength="280">' +
+          '<button class="field-note-submit">Send</button>'
+        btn.parentElement.appendChild(wrap)
+        const input = wrap.querySelector('input')
+        const submitBtn = wrap.querySelector('.field-note-submit')
+        input.focus()
+        function doSubmit() {
+          const text = input.value.trim()
+          if (!text) return
+          submitBtn.disabled = true
+          input.disabled = true
+          fetch('/api/field-notes', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ entityId: eid, fieldName: field, note: text, voterId: getVoterId() }),
+          })
+            .then((r) => {
+              if (r.ok) {
+                let notesEl = btn.parentElement?.parentElement?.querySelector('.field-notes-list')
+                if (!notesEl) {
+                  notesEl = document.createElement('div')
+                  notesEl.className = 'field-notes-list'
+                  btn.parentElement.parentElement.appendChild(notesEl)
+                }
+                const item = document.createElement('div')
+                item.className = 'field-note-item'
+                item.textContent = text
+                notesEl.prepend(item)
+                wrap.remove()
+              } else {
+                submitBtn.disabled = false
+                input.disabled = false
+              }
+            })
+            .catch(() => {
+              submitBtn.disabled = false
+              input.disabled = false
+            })
+        }
+        submitBtn.addEventListener('click', (ev) => {
+          ev.stopPropagation()
+          doSubmit()
+        })
+        input.addEventListener('keydown', (ev) => {
+          if (ev.key === 'Enter') {
+            ev.stopPropagation()
+            doSubmit()
+          }
+          if (ev.key === 'Escape') wrap.remove()
+        })
+      })
+    })
   }
 
   function showEdgeDetail(edge) {
@@ -5497,7 +5588,9 @@ ${dots}
     }
 
     // Bind feedback buttons in edge detail (use canonical entity ID so both directions load the same feedback)
-    bindFieldFeedback(content, Math.min(edge.source.id, edge.target.id))
+    const edgeEntityId = Math.min(edge.source.id, edge.target.id)
+    bindFieldFeedback(content, edgeEntityId)
+    bindFieldNotes(content, edgeEntityId)
 
     panel.classList.add('open')
   }

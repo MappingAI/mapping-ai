@@ -465,6 +465,67 @@ body {
   display: inline-flex;
   gap: 4px;
 }
+.field-note-btn {
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 8px;
+  padding: 0 2px;
+  line-height: 1;
+  opacity: 0.25;
+  transition: opacity 0.15s;
+  margin-left: 1px;
+}
+.field-note-btn:hover {
+  opacity: 1;
+}
+.field-note-input-wrap {
+  display: flex;
+  gap: 3px;
+  margin-top: 3px;
+  width: 100%;
+}
+.field-note-input {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--mono);
+  font-size: 9px;
+  padding: 2px 5px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--bg-page);
+  color: var(--text-1);
+}
+.field-note-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.field-note-submit {
+  font-family: var(--mono);
+  font-size: 8px;
+  padding: 2px 6px;
+  border: 1px solid var(--accent);
+  border-radius: 3px;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.field-note-submit:hover {
+  opacity: 0.9;
+}
+.field-notes-list {
+  margin-top: 2px;
+}
+.field-note-item {
+  font-family: var(--mono);
+  font-size: 8px;
+  color: var(--text-3);
+  padding: 1px 0;
+  border-top: 1px solid var(--line);
+  line-height: 1.3;
+}
 .detail-affiliated {
   margin-top: 0.75rem;
   padding-top: 0.75rem;
@@ -735,6 +796,52 @@ body:has(.beliefs-detail-sidebar) .beliefs-zoom-controls {
 }
 .verification-legend-item:not(.active) {
   opacity: 0.3;
+}
+.verification-heading-wrap {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.verification-info-trigger {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--line);
+  color: var(--text-3);
+  font-size: 7px;
+  font-weight: 700;
+  cursor: help;
+  flex-shrink: 0;
+}
+.verification-info-tooltip {
+  display: none;
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translateX(-50%);
+  margin-top: 6px;
+  width: 180px;
+  padding: 6px 8px;
+  background: var(--bg-panel);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-family: var(--mono);
+  font-size: 8px;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  line-height: 1.4;
+  color: var(--text-2);
+  white-space: normal;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+.verification-info-trigger:hover .verification-info-tooltip {
+  display: block;
 }
 .verification-legend-dot {
   width: 7px;
