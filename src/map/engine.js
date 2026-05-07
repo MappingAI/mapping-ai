@@ -3163,7 +3163,7 @@ export function initMapEngine() {
         ctx.beginPath()
         ctx.arc(x + r * 0.6, y - r * 0.6, dotR, 0, Math.PI * 2)
         ctx.fill()
-        ctx.strokeStyle = isDark ? '#1a1a1a' : '#fff'
+        ctx.strokeStyle = document.documentElement.getAttribute('data-theme') === 'dark' ? '#1a1a1a' : '#fff'
         ctx.lineWidth = 1.5
         ctx.stroke()
       }
