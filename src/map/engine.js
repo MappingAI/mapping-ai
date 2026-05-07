@@ -3146,16 +3146,23 @@ export function initMapEngine() {
         ctx.setLineDash([])
       }
 
-      // Unverified indicator (red dot, top-right like messenger active status)
-      if (d._unverified && state !== 'hidden' && state !== 'dimmed') {
-        const dotR = Math.max(3.5, r * 0.28)
-        ctx.globalAlpha = 1
-        ctx.fillStyle = '#ef4444'
+      // Verification status dot (top-right, messenger-style)
+      if (
+        d.field_verification &&
+        Object.keys(d.field_verification).length > 0 &&
+        d._vs !== 'hidden' &&
+        d._vs !== 'dimmed'
+      ) {
+        const isPerson = d.entityType === 'person'
+        const dotR = isPerson ? Math.max(2, r * 0.18) : Math.max(2.5, r * 0.2)
+        const dotColor = d._unverified ? '#ef4444' : '#22c55e'
+        ctx.globalAlpha = 0.9
+        ctx.fillStyle = dotColor
         ctx.beginPath()
         ctx.arc(x + r * 0.6, y - r * 0.6, dotR, 0, Math.PI * 2)
         ctx.fill()
         ctx.strokeStyle = isDark ? '#1a1a1a' : '#fff'
-        ctx.lineWidth = 1.5
+        ctx.lineWidth = 1
         ctx.stroke()
       }
     }
