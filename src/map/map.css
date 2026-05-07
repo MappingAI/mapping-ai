@@ -381,7 +381,7 @@ body {
   display: block;
   margin-bottom: 0.1rem;
 }
-.detail-field span {
+.detail-field span:not(.field-feedback-row):not(.field-feedback-row *) {
   font-family: var(--serif);
   font-size: 14px;
   color: var(--text-2);
@@ -389,6 +389,15 @@ body {
 }
 .detail-field a {
   color: var(--accent);
+}
+.detail-field-header {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 0.1rem;
+}
+.detail-field-header label {
+  margin-bottom: 0;
 }
 .field-feedback-row {
   display: inline-flex;
@@ -399,7 +408,7 @@ body {
 }
 .field-inferred-badge {
   font-family: var(--mono);
-  font-size: 5.5px;
+  font-size: 6px;
   letter-spacing: 0.03em;
   text-transform: uppercase;
   padding: 0px 2px;

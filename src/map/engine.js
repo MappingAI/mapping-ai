@@ -4472,7 +4472,7 @@ ${dots}
       const key = fieldKey(label)
       const skipFeedback = opts && opts.skipFeedback
       const fb = skipFeedback ? '' : feedbackBadge(d.id, key)
-      fields += `<div class="detail-field"><label>${label}${fb}</label><span>${value}</span></div>`
+      fields += `<div class="detail-field"><div class="detail-field-header"><label>${label}</label>${fb}</div><span>${value}</span></div>`
     }
 
     // Match reason (when in search mode with LLM results)
