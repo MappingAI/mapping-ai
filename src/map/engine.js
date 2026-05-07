@@ -2785,14 +2785,16 @@ export function initMapEngine() {
   }
 
   // Verification status: 'verified' (green), 'partial' (yellow), 'unverified' (red), null (no data)
+  const VERIFIABLE_FIELD_COUNT = 8
   function _getVerificationStatus(fv) {
     if (!fv) return null
     const vals = Object.values(fv)
     if (vals.length === 0) return null
-    const unvCount = vals.filter((v) => v === 'unverified').length
-    if (unvCount === 0) return 'verified'
-    if (unvCount / vals.length >= 0.5) return 'unverified'
-    return 'partial'
+    const verifiedCount = vals.filter((v) => v === 'verified').length
+    const total = Math.max(vals.length, VERIFIABLE_FIELD_COUNT)
+    if (verifiedCount === total) return 'verified'
+    if (verifiedCount / total >= 0.5) return 'partial'
+    return 'unverified'
   }
 
   const VERIFICATION_COLORS = { verified: '#16a34a', partial: '#d97706', unverified: '#dc2626' }
@@ -4520,13 +4522,9 @@ ${dots}
   function feedbackBadge(entityId, key, fieldVerification) {
     const safeKey = escHtml(key)
     const fvStatus = fieldVerification?.[safeKey]
-    let badgeHtml = ''
-    if (fvStatus === 'verified') {
-      badgeHtml = '<span class="field-verified-badge">verified</span>'
-    } else if (fvStatus === 'unverified') {
-      badgeHtml = '<span class="field-inferred-badge">unverified</span>'
-    }
-    return `<span class="field-feedback-row" data-field="${safeKey}">${badgeHtml}<button class="field-vote field-vote-confirm" data-entity-id="${entityId}" data-field="${safeKey}" data-vote="1" title="Looks correct">&#x25B2;</button><button class="field-vote field-vote-flag" data-entity-id="${entityId}" data-field="${safeKey}" data-vote="-1" title="Flag as incorrect">&#x25BC;</button><span class="field-vote-counts" data-field="${safeKey}"></span></span>`
+    const badgeClass = fvStatus === 'verified' ? 'field-verified-badge' : 'field-inferred-badge'
+    const badgeLabel = fvStatus === 'verified' ? 'verified' : 'unverified'
+    return `<span class="field-feedback-row" data-field="${safeKey}"><span class="${badgeClass}">${badgeLabel}</span><button class="field-vote field-vote-confirm" data-entity-id="${entityId}" data-field="${safeKey}" data-vote="1" title="Looks correct">&#x25B2;</button><button class="field-vote field-vote-flag" data-entity-id="${entityId}" data-field="${safeKey}" data-vote="-1" title="Flag as incorrect">&#x25BC;</button><span class="field-vote-counts" data-field="${safeKey}"></span></span>`
   }
 
   // Detail panel
