@@ -67,15 +67,6 @@ const RISK_SCORES: Record<string, number> = {
   Existential: 5,
 }
 
-const VERIFICATION_KEY_MAP: Record<string, string> = {
-  belief_regulatory_stance: 'regulatory_stance',
-  belief_regulatory_stance_detail: 'regulatory_stance_detail',
-  belief_evidence_source: 'evidence_source',
-  belief_agi_timeline: 'agi_timeline',
-  belief_ai_risk: 'ai_risk_level',
-  belief_threat_models: 'threat_models',
-}
-
 /**
  * Frontend-facing entity shape produced by {@link toFrontendShape}. Matches
  * `Entity` in src/types/entity.ts; kept looser here because the output
@@ -154,16 +145,6 @@ export function toFrontendShape(row: RawEntityRow): FrontendEntity {
   out.stance_score = row.belief_regulatory_stance_wavg ?? (regStance ? (STANCE_SCORES[regStance] ?? null) : null)
   out.timeline_score = row.belief_agi_timeline_wavg ?? (agiTimeline ? (TIMELINE_SCORES[agiTimeline] ?? null) : null)
   out.risk_score = row.belief_ai_risk_wavg ?? (riskLevel ? (RISK_SCORES[riskLevel] ?? null) : null)
-
-  const fv = row.field_verification as Record<string, string> | null
-  if (fv && Object.keys(fv).length > 0) {
-    const mapped: Record<string, string> = {}
-    for (const [k, v] of Object.entries(fv)) {
-      const frontendKey = VERIFICATION_KEY_MAP[k] ?? k
-      mapped[frontendKey] = v
-    }
-    out.field_verification = mapped
-  }
 
   return out
 }
@@ -320,7 +301,6 @@ const DETAIL_FIELDS = new Set<string>([
   'advocated_stance',
   'advocated_timeline',
   'advocated_risk',
-  'field_verification',
 ])
 
 export interface SplitMapData {

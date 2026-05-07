@@ -183,7 +183,6 @@ async function migrate() {
     await client.query(`ALTER TABLE submission ADD COLUMN IF NOT EXISTS advocated_stance TEXT`)
     await client.query(`ALTER TABLE submission ADD COLUMN IF NOT EXISTS advocated_timeline TEXT`)
     await client.query(`ALTER TABLE submission ADD COLUMN IF NOT EXISTS advocated_risk TEXT`)
-    await client.query(`ALTER TABLE entity ADD COLUMN IF NOT EXISTS field_verification JSONB DEFAULT '{}'::jsonb`)
     console.log('  ✓ schema migrations')
 
     // ── 4c. contributor_keys table ──────────────────────────────────────────────
