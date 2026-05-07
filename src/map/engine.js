@@ -401,7 +401,8 @@ export function initMapEngine() {
           .filter((po) => po.organization_id === d.id)
           .forEach((po) => {
             const person = allData.people.find((p) => p.id === po.person_id)
-            if (person) addItem(person, 'person', po.role || 'affiliated')
+            // org is target in person→org relationship, so isSource=false
+            if (person) addItem(person, 'person', po.role || 'affiliated', null, false)
           })
       }
     }
@@ -2362,9 +2363,14 @@ export function initMapEngine() {
 
   function passesVerificationFilter(d) {
     if (verificationFilter === 'all') return true
-    const hasFv = d.field_verification && Object.keys(d.field_verification).length > 0
-    if (verificationFilter === 'verified') return hasFv && !d._unverified
-    if (verificationFilter === 'unverified') return !hasFv || d._unverified
+    const fv = d.field_verification
+    const hasFv = fv && Object.keys(fv).length > 0
+    // Calculate unverified status inline (can't rely on d._unverified which is only set on canvas nodes)
+    const fvVals = hasFv ? Object.values(fv) : []
+    const unvCount = fvVals.filter((v) => v === 'unverified').length
+    const isUnverified = fvVals.length > 0 && unvCount > fvVals.length / 2
+    if (verificationFilter === 'verified') return hasFv && !isUnverified
+    if (verificationFilter === 'unverified') return !hasFv || isUnverified
     return true
   }
 
