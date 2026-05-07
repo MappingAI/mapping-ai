@@ -164,7 +164,7 @@ export function App() {
           2028.
         </p>
 
-        <hr className="border-none border-t border-[#bbb]/50 my-10" />
+        <hr className="border-none border-t border-[#bbb]/50 my-6" />
 
         {/* What we believe */}
         <div {...fadeProps(fi++, 'font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3')}>
@@ -183,7 +183,7 @@ export function App() {
           terms?
         </p>
 
-        <hr className="border-none border-t border-[#bbb]/50 my-10" />
+        <hr className="border-none border-t border-[#bbb]/50 my-6" />
 
         {/* Why we built this */}
         <div {...fadeProps(fi++, 'font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3')}>
@@ -211,7 +211,7 @@ export function App() {
           .
         </p>
 
-        <hr className="border-none border-t border-[#bbb]/50 my-10" />
+        <hr className="border-none border-t border-[#bbb]/50 my-6" />
 
         {/* How it works */}
         <div {...fadeProps(fi++, 'font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3')}>
@@ -259,7 +259,7 @@ export function App() {
           .
         </p>
 
-        <hr className="border-none border-t border-[#bbb]/50 my-10" />
+        <hr className="border-none border-t border-[#bbb]/50 my-6" />
 
         {/* The team */}
         <div {...fadeProps(fi++, 'font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3')}>
@@ -271,7 +271,7 @@ export function App() {
           ))}
         </div>
 
-        <hr className="border-none border-t border-[#bbb]/50 my-10" />
+        <hr className="border-none border-t border-[#bbb]/50 my-6" />
 
         {/* Other contributors */}
         <div {...fadeProps(fi++, 'font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3')}>
@@ -307,7 +307,7 @@ export function App() {
           ))}
         </div>
 
-        <hr className="border-none border-t border-[#bbb]/50 my-10" />
+        <hr className="border-none border-t border-[#bbb]/50 my-6" />
 
         {/* Ways to contribute */}
         <div {...fadeProps(fi++, 'font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3')}>
@@ -346,7 +346,7 @@ export function App() {
           </a>
         </div>
 
-        <hr className="border-none border-t border-[#bbb]/50 my-10" />
+        <hr className="border-none border-t border-[#bbb]/50 my-6" />
 
         {/* Adjacent tools */}
         <div
