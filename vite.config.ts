@@ -46,10 +46,7 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
-      '/data': {
-        target: 'https://mapping-ai.org',
-        changeOrigin: true,
-      },
+      '/data': { target: 'https://mapping-ai.org', changeOrigin: true },
     },
   },
   test: {

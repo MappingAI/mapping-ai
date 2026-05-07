@@ -42,6 +42,9 @@ export interface Entity {
   year?: string | null
   key_argument?: string | null
 
+  // Per-field verification status (from map-detail.json)
+  field_verification?: Record<string, 'verified' | 'unverified'>
+
   // Added by map-detail.json merge or edge queries
   source_type?: string | null
 }
