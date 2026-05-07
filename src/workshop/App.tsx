@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { Navigation } from '../components/Navigation'
+import { Footer } from '../components/Footer'
 import { WelcomeOverlay } from '../components/WelcomeOverlay'
 
 export function App() {
@@ -893,7 +894,7 @@ pnpm exec vitest run       # Run tests`}</Pre>
           </tbody>
         </table>
 
-        <p className="text-text-tertiary text-[14px] mt-12 font-mono">mapping-ai.org</p>
+        <Footer />
       </div>
     </>
   )
