@@ -2325,8 +2325,9 @@ export function initMapEngine() {
 
   function passesVerificationFilter(d) {
     if (verificationFilter === 'all') return true
-    if (verificationFilter === 'verified') return !d._unverified
-    if (verificationFilter === 'unverified') return d._unverified
+    const hasFv = d.field_verification && Object.keys(d.field_verification).length > 0
+    if (verificationFilter === 'verified') return hasFv && !d._unverified
+    if (verificationFilter === 'unverified') return !hasFv || d._unverified
     return true
   }
 
@@ -2701,9 +2702,15 @@ export function initMapEngine() {
     for (const node of _canvasNodes) {
       const src = entityById.get(node.id)
       if (src?.field_verification) node.field_verification = src.field_verification
-      const fvVals = Object.values(node.field_verification || {})
+      const fv = node.field_verification
+      const hasFv = fv && Object.keys(fv).length > 0
+      if (!hasFv) {
+        node._unverified = false
+        continue
+      }
+      const fvVals = Object.values(fv)
       const unvCount = fvVals.filter((v) => v === 'unverified').length
-      node._unverified = fvVals.length > 0 && unvCount > fvVals.length / 2
+      node._unverified = unvCount > fvVals.length / 2
     }
   }
 
@@ -3113,13 +3120,14 @@ export function initMapEngine() {
 
       // Unverified indicator (red dot, top-right like messenger active status)
       if (d._unverified && state !== 'hidden' && state !== 'dimmed') {
-        ctx.globalAlpha = Math.min(0.9, alpha)
+        const dotR = Math.max(3.5, r * 0.28)
+        ctx.globalAlpha = 1
         ctx.fillStyle = '#ef4444'
         ctx.beginPath()
-        ctx.arc(x + r * 0.65, y - r * 0.65, Math.max(2.5, r * 0.22), 0, Math.PI * 2)
+        ctx.arc(x + r * 0.6, y - r * 0.6, dotR, 0, Math.PI * 2)
         ctx.fill()
         ctx.strokeStyle = isDark ? '#1a1a1a' : '#fff'
-        ctx.lineWidth = 1
+        ctx.lineWidth = 1.5
         ctx.stroke()
       }
     }

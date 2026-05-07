@@ -801,33 +801,43 @@ export function App() {
         </div>
         <div className="control-group" id="verification-filter">
           <h3>Verification</h3>
-          <div className="filter-chips" id="verification-chips">
+          <div
+            className="filter-chips"
+            id="verification-chips"
+            style={{ display: 'flex', gap: '4px', flexWrap: 'nowrap' }}
+          >
             <button className="view-btn active" id="verification-show-all" style={{ fontSize: '9px' }}>
               All
             </button>
-            <button className="view-btn" id="verification-show-verified" style={{ fontSize: '9px' }}>
+            <button
+              className="view-btn"
+              id="verification-show-verified"
+              style={{
+                fontSize: '9px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '3px',
+                whiteSpace: 'nowrap',
+              }}
+            >
               <span
-                style={{
-                  width: '6px',
-                  height: '6px',
-                  borderRadius: '50%',
-                  background: '#22c55e',
-                  display: 'inline-block',
-                  marginRight: '4px',
-                }}
+                style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#22c55e', flexShrink: 0 }}
               />
               Verified
             </button>
-            <button className="view-btn" id="verification-show-unverified" style={{ fontSize: '9px' }}>
+            <button
+              className="view-btn"
+              id="verification-show-unverified"
+              style={{
+                fontSize: '9px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '3px',
+                whiteSpace: 'nowrap',
+              }}
+            >
               <span
-                style={{
-                  width: '6px',
-                  height: '6px',
-                  borderRadius: '50%',
-                  background: '#ef4444',
-                  display: 'inline-block',
-                  marginRight: '4px',
-                }}
+                style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#ef4444', flexShrink: 0 }}
               />
               Unverified
             </button>
