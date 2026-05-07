@@ -347,18 +347,10 @@ export function App() {
               lineHeight: 1.5,
             }}
           >
-            <strong style={{ color: '#78350f' }}>Update (May 2025):</strong> We&apos;re aware of corrections coming in
-            on errors in entity data (
-            <a
-              href="https://x.com/AndyMasley/status/1920202288963199437"
-              target="_blank"
-              rel="noopener"
-              style={{ color: '#92400e', textDecoration: 'underline' }}
-            >
-              see discussion
-            </a>
-            ) and are actively working on addressing these, along with rolling out field-level verification indicators.
-            Thanks everyone for your support, engagement, and feedback. You are helping us make this tool better.
+            <strong style={{ color: '#78350f' }}>Update:</strong> We&apos;re aware of corrections coming in on errors in
+            entity data and are actively working on addressing these, along with rolling out field-level verification
+            indicators. Thanks everyone for your support, engagement, and feedback. You are helping us make this tool
+            better.
           </div>
           <button
             className="onboarding-dismiss"
