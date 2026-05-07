@@ -834,6 +834,37 @@ export function App() {
           ></div>
           <div className="filter-chips" id="category-chips"></div>
         </div>
+        <div className="control-group" id="verification-filter" style={{ display: 'none' }}>
+          <h3
+            title="Based on automated external source checks. Verified = >75% of fields confirmed. Partial = 25-75%. Unverified = <25%."
+            style={{ cursor: 'help' }}
+          >
+            Data Quality
+          </h3>
+          <div className="verification-legend-items" id="verification-legend-items">
+            <div className="verification-legend-item active" data-status="verified">
+              <span className="verification-legend-dot" style={{ background: '#16a34a' }}></span>
+              <span>Verified</span>
+            </div>
+            <div className="verification-legend-item active" data-status="partial">
+              <span className="verification-legend-dot" style={{ background: '#d97706' }}></span>
+              <span>Partial</span>
+            </div>
+            <div className="verification-legend-item active" data-status="unverified">
+              <span className="verification-legend-dot" style={{ background: '#dc2626' }}></span>
+              <span>Unverified</span>
+            </div>
+            <div className="verification-legend-item active" data-status="none">
+              <span
+                className="verification-legend-dot"
+                style={{ background: 'transparent', border: '1px solid var(--text-3)' }}
+              ></span>
+              <span>
+                <em>No data</em>
+              </span>
+            </div>
+          </div>
+        </div>
         <div className="control-group" id="stance-legend">
           <h3 style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <select
@@ -923,32 +954,6 @@ export function App() {
             <div className="source-type-item" data-source="external">
               <span className="source-type-icon">&#9675;</span>
               <span>External</span>
-            </div>
-          </div>
-        </div>
-        <div className="control-group" id="verification-filter" style={{ display: 'none' }}>
-          <h3>Data Quality</h3>
-          <div className="verification-legend-items" id="verification-legend-items">
-            <div className="verification-legend-item active" data-status="verified">
-              <span className="verification-legend-dot" style={{ background: '#16a34a' }}></span>
-              <span>Verified</span>
-            </div>
-            <div className="verification-legend-item active" data-status="partial">
-              <span className="verification-legend-dot" style={{ background: '#d97706' }}></span>
-              <span>Partial</span>
-            </div>
-            <div className="verification-legend-item active" data-status="unverified">
-              <span className="verification-legend-dot" style={{ background: '#dc2626' }}></span>
-              <span>Unverified</span>
-            </div>
-            <div className="verification-legend-item active" data-status="none">
-              <span
-                className="verification-legend-dot"
-                style={{ background: 'transparent', border: '1px solid var(--text-3)' }}
-              ></span>
-              <span>
-                <em>No data</em>
-              </span>
             </div>
           </div>
         </div>

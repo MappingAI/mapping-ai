@@ -3464,6 +3464,7 @@ export function initMapEngine() {
       d._vs = 'normal'
       d._sprite = null
       d._initials = _getInitials(d.name)
+      d._verificationStatus = _getVerificationStatus(d.field_verification)
       if (d.entityType === 'organization' && !d.isResource) {
         d._brighterColor = d3.color(getClusterColor(d)).brighter(0.8).toString()
       }
@@ -3979,6 +3980,7 @@ export function initMapEngine() {
       d._vs = 'normal'
       d._sprite = null
       d._initials = _getInitials(d.name)
+      d._verificationStatus = _getVerificationStatus(d.field_verification)
       if (d.entityType === 'organization') {
         d._brighterColor = d3
           .color(getColor(normalizeCategory(d.category)))
