@@ -185,6 +185,82 @@ export function App() {
 
         <hr className="border-none border-t border-[#bbb]/50 my-10" />
 
+        {/* Why we built this */}
+        <div {...fadeProps(fi++, 'font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3')}>
+          Why we built this
+        </div>
+        <p {...fadeProps(fi++, 'mb-4 text-[16.5px]')}>
+          We are concerned and hopeful about AI, but as outsiders from climate, planning, space, housing, and
+          organizing, we didn't know where to begin. So we mapped it out and open-sourced it all. It began as an
+          internal survey to inform our theory of change. Early conversations and a{' '}
+          <a href="/workshop" className="text-[#2563eb] no-underline hover:underline">
+            mapping party
+          </a>{' '}
+          made clear this could be a useful public resource.
+        </p>
+        <p {...fadeProps(fi++, 'mb-4 text-[16.5px]')}>
+          For more context on why and how we built this, see{' '}
+          <a
+            href="https://x.com/mapping_ai/status/2051699454273785979"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#2563eb] no-underline hover:underline"
+          >
+            our thread on X
+          </a>
+          .
+        </p>
+
+        <hr className="border-none border-t border-[#bbb]/50 my-10" />
+
+        {/* How it works */}
+        <div {...fadeProps(fi++, 'font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3')}>
+          How it works
+        </div>
+        <p {...fadeProps(fi++, 'mb-4 text-[16.5px]')}>
+          The dataset comes from three sources: manually seeded public information, user submissions via our{' '}
+          <a href="/contribute" className="text-[#2563eb] no-underline hover:underline">
+            contribute forms
+          </a>
+          , and LLM-assisted research with automated verification. Where explicit statements are not available, beliefs
+          may be inferred from public actions and statements. Inferred positions do not claim to represent official
+          views. We include "inferred" vs. "explicitly stated" tags to help draw that distinction.
+        </p>
+        <p {...fadeProps(fi++, 'mb-4 text-[16.5px]')}>
+          Belief scores (regulatory stance, AGI timeline, AI risk level) are weighted averages from crowdsourced
+          submissions: self-reports weigh most heavily, followed by connectors, then external observations. Every field
+          on every entity has upvote/downvote buttons and a correction notes feature so the community can collectively
+          triage data quality. Automated verification scripts cross-check fields against external sources, and
+          verification status (green/yellow/red) is visible on the{' '}
+          <a href="/map" className="text-[#2563eb] no-underline hover:underline">
+            interactive map
+          </a>
+          .
+        </p>
+        <p {...fadeProps(fi++, 'mb-4 text-[16.5px]')}>
+          This tool is only as strong as its data. We respect organizational corrections and update promptly when groups
+          reach out. Our full codebase is{' '}
+          <a
+            href="https://github.com/MappingAI/mapping-ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#2563eb] no-underline hover:underline"
+          >
+            open-source on GitHub
+          </a>
+          . If you spot issues:{' '}
+          <a href="/contribute" className="text-[#2563eb] no-underline hover:underline">
+            submit a correction
+          </a>
+          , open a GitHub issue, or email us at{' '}
+          <a href="mailto:info@mapping-ai.org" className="text-[#2563eb] no-underline hover:underline">
+            info@mapping-ai.org
+          </a>
+          .
+        </p>
+
+        <hr className="border-none border-t border-[#bbb]/50 my-10" />
+
         {/* The team */}
         <div {...fadeProps(fi++, 'font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3')}>
           The team
@@ -279,6 +355,19 @@ export function App() {
         >
           Adjacent Tools &amp; Resources
         </div>
+        <p {...fadeProps(fi++, 'mb-4 text-[16.5px]')}>
+          There are many trackers, maps, and dashboards covering different facets of AI policy. We'd rather collaborate
+          than duplicate work. If you're building in this space, reach out. See Daniel Kalish's{' '}
+          <a
+            href="https://ai-policy-tracker-tracker.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#2563eb] no-underline hover:underline"
+          >
+            AI Policy Tracker Tracker
+          </a>{' '}
+          for a comprehensive index.
+        </p>
         <div {...fadeProps(fi++)} className="flex flex-wrap gap-2 mb-4">
           {[
             { name: 'AI Policy Network', url: 'https://theaipn.org/', desc: 'Policy community network and events' },
