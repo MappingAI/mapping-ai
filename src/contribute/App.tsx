@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { HowItWorks } from '../components/HowItWorks'
 import { Navigation } from '../components/Navigation'
+import { Footer } from '../components/Footer'
 import { WelcomeOverlay } from '../components/WelcomeOverlay'
 import { ContributeForm } from './ContributeForm'
 import { IS_IFRAME } from '../lib/iframe'
@@ -63,6 +64,8 @@ export function App() {
         </div>
 
         <ContributeForm className="mb-12" />
+
+        <Footer />
 
         {!IS_IFRAME && (
           <a

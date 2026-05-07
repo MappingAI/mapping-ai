@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Navigation } from '../components/Navigation'
+import { Footer } from '../components/Footer'
 import { WelcomeOverlay } from '../components/WelcomeOverlay'
 
 /* ------------------------------------------------------------------ */
@@ -103,26 +104,6 @@ function TeamCard({ member }: { member: TeamMember }) {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Mail icon (inline SVG)                                             */
-/* ------------------------------------------------------------------ */
-
-function MailIcon() {
-  return (
-    <svg
-      width="12"
-      height="12"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <rect x="2" y="4" width="20" height="16" rx="2" />
-      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-    </svg>
-  )
-}
 
 /* ------------------------------------------------------------------ */
 /*  App                                                                */
@@ -164,7 +145,7 @@ export function App() {
           2028.
         </p>
 
-        <hr className="border-none border-t border-[#bbb]/50 my-10" />
+        <hr className="border-none border-t border-[#bbb]/50 my-5" />
 
         {/* What we believe */}
         <div {...fadeProps(fi++, 'font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3')}>
@@ -183,7 +164,83 @@ export function App() {
           terms?
         </p>
 
-        <hr className="border-none border-t border-[#bbb]/50 my-10" />
+        <hr className="border-none border-t border-[#bbb]/50 my-5" />
+
+        {/* Why we built this */}
+        <div {...fadeProps(fi++, 'font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3')}>
+          Why we built this
+        </div>
+        <p {...fadeProps(fi++, 'mb-4 text-[16.5px]')}>
+          We are concerned and hopeful about AI, but as outsiders from climate, planning, space, housing, and
+          organizing, we didn't know where to begin. So we mapped it out and open-sourced it all. It began as an
+          internal survey to inform our theory of change. Early conversations and a{' '}
+          <a href="/workshop" className="text-[#2563eb] no-underline hover:underline">
+            mapping party
+          </a>{' '}
+          made clear this could be a useful public resource.
+        </p>
+        <p {...fadeProps(fi++, 'mb-4 text-[16.5px]')}>
+          For more context on why and how we built this, see{' '}
+          <a
+            href="https://x.com/mapping_ai/status/2051699454273785979"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#2563eb] no-underline hover:underline"
+          >
+            our thread on X
+          </a>
+          .
+        </p>
+
+        <hr className="border-none border-t border-[#bbb]/50 my-5" />
+
+        {/* How it works */}
+        <div {...fadeProps(fi++, 'font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3')}>
+          How it works
+        </div>
+        <p {...fadeProps(fi++, 'mb-4 text-[16.5px]')}>
+          The dataset comes from three sources: manually seeded public information, user submissions via our{' '}
+          <a href="/contribute" className="text-[#2563eb] no-underline hover:underline">
+            contribute forms
+          </a>
+          , and LLM-assisted research with automated verification. Where explicit statements are not available, beliefs
+          may be inferred from public actions and statements. Inferred positions do not claim to represent official
+          views. We include "inferred" vs. "explicitly stated" tags to help draw that distinction.
+        </p>
+        <p {...fadeProps(fi++, 'mb-4 text-[16.5px]')}>
+          Belief scores (regulatory stance, AGI timeline, AI risk level) are weighted averages from crowdsourced
+          submissions: self-reports weigh most heavily, followed by connectors, then external observations. Every field
+          on every entity has upvote/downvote buttons and a correction notes feature so the community can collectively
+          triage data quality. Automated verification scripts cross-check fields against external sources, and
+          verification status (green/yellow/red) is visible on the{' '}
+          <a href="/map" className="text-[#2563eb] no-underline hover:underline">
+            interactive map
+          </a>
+          .
+        </p>
+        <p {...fadeProps(fi++, 'mb-4 text-[16.5px]')}>
+          This tool is only as strong as its data. We respect organizational corrections and update promptly when groups
+          reach out. Our full codebase is{' '}
+          <a
+            href="https://github.com/MappingAI/mapping-ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#2563eb] no-underline hover:underline"
+          >
+            open-source on GitHub
+          </a>
+          . If you spot issues:{' '}
+          <a href="/contribute" className="text-[#2563eb] no-underline hover:underline">
+            submit a correction
+          </a>
+          , open a GitHub issue, or email us at{' '}
+          <a href="mailto:info@mapping-ai.org" className="text-[#2563eb] no-underline hover:underline">
+            info@mapping-ai.org
+          </a>
+          .
+        </p>
+
+        <hr className="border-none border-t border-[#bbb]/50 my-5" />
 
         {/* The team */}
         <div {...fadeProps(fi++, 'font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3')}>
@@ -195,7 +252,7 @@ export function App() {
           ))}
         </div>
 
-        <hr className="border-none border-t border-[#bbb]/50 my-10" />
+        <hr className="border-none border-t border-[#bbb]/50 my-5" />
 
         {/* Other contributors */}
         <div {...fadeProps(fi++, 'font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3')}>
@@ -230,8 +287,20 @@ export function App() {
             <span key={name}>{name}</span>
           ))}
         </div>
+        <p {...fadeProps(fi++, 'mb-4 text-[16.5px]')}>
+          Supported by a{' '}
+          <a
+            href="https://bluedot.org/programs/rapid-grants#grants-made"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#2563eb] no-underline hover:underline"
+          >
+            BlueDot Impact Rapid Grant
+          </a>{' '}
+          ($3,200).
+        </p>
 
-        <hr className="border-none border-t border-[#bbb]/50 my-10" />
+        <hr className="border-none border-t border-[#bbb]/50 my-5" />
 
         {/* Ways to contribute */}
         <div {...fadeProps(fi++, 'font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3')}>
@@ -270,7 +339,7 @@ export function App() {
           </a>
         </div>
 
-        <hr className="border-none border-t border-[#bbb]/50 my-10" />
+        <hr className="border-none border-t border-[#bbb]/50 my-5" />
 
         {/* Adjacent tools */}
         <div
@@ -279,6 +348,19 @@ export function App() {
         >
           Adjacent Tools &amp; Resources
         </div>
+        <p {...fadeProps(fi++, 'mb-4 text-[16.5px]')}>
+          There are many trackers, maps, and dashboards covering different facets of AI policy. We'd rather collaborate
+          than duplicate work. If you're building in this space, reach out. See Daniel Kalish's{' '}
+          <a
+            href="https://ai-policy-tracker-tracker.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#2563eb] no-underline hover:underline"
+          >
+            AI Policy Tracker Tracker
+          </a>{' '}
+          for a comprehensive index.
+        </p>
         <div {...fadeProps(fi++)} className="flex flex-wrap gap-2 mb-4">
           {[
             { name: 'AI Policy Network', url: 'https://theaipn.org/', desc: 'Policy community network and events' },
@@ -345,33 +427,7 @@ export function App() {
           affiliated institutions.
         </p>
 
-        {/* Footer */}
-        <div className="flex justify-center items-center gap-2 mt-12 pt-6 border-t border-[#bbb]/50">
-          <a href="/about" className="font-mono text-[10.5px] text-[#888] tracking-wide no-underline">
-            Mapping AI Working Group
-          </a>
-          <span className="font-mono text-[10.5px] text-[#888] tracking-wide">&middot; 2026</span>
-          <span className="font-mono text-[10.5px] text-[#888] tracking-wide">&middot;</span>
-          <a
-            href="mailto:info@mapping-ai.org"
-            className="font-mono text-[10.5px] text-[#888] tracking-wide no-underline inline-flex items-center gap-1"
-          >
-            <MailIcon />
-            info@mapping-ai.org
-          </a>
-        </div>
-        <div className="mt-2 font-mono text-[9px] text-[#888] tracking-tight text-center max-w-[600px] leading-normal">
-          Data is sourced from public records, user submissions, and LLM-assisted research. Inferred beliefs do not
-          claim to represent official positions. We welcome corrections via{' '}
-          <a href="/contribute" className="text-[#888]">
-            contribute
-          </a>{' '}
-          or{' '}
-          <a href="mailto:info@mapping-ai.org" className="text-[#888]">
-            info@mapping-ai.org
-          </a>
-          .
-        </div>
+        <Footer />
       </div>
     </>
   )

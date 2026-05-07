@@ -306,6 +306,12 @@ export function App() {
                 <strong>Source:</strong> Data is crowdsourced and admin-reviewed. Belief scores (stance, timeline, risk)
                 are weighted averages from submissions.
               </div>
+              <div className="onboarding-tip">
+                <strong>Verify &amp; correct:</strong> Click any entity to see its details. Each field has
+                &#x25B2;/&#x25BC; buttons to confirm or flag data, and a &#x270E; button to leave a correction note with
+                rich text and @mentions. Verification dots (green/yellow/red) on nodes show which entities have been
+                checked against external sources.
+              </div>
             </div>
             <div className="onboarding-mobile-note">
               On mobile, the map has a limited feature set and may take a few seconds to load.
@@ -834,28 +840,73 @@ export function App() {
           ></div>
           <div className="filter-chips" id="category-chips"></div>
         </div>
+        <div className="control-group" id="verification-filter" style={{ display: 'none' }}>
+          <h3 className="verification-heading-wrap">
+            Data Quality
+            <span className="verification-info-trigger">
+              ?
+              <span className="verification-info-tooltip">
+                Based on automated external source checks per field. Verified = all checked fields confirmed. Partial =
+                &gt;50% confirmed. Unverified = &lt;50% confirmed.
+              </span>
+            </span>
+          </h3>
+          <div className="verification-legend-items" id="verification-legend-items">
+            <div className="verification-legend-item active" data-status="verified">
+              <span className="verification-legend-dot" style={{ background: '#16a34a' }}></span>
+              <span>Verified</span>
+            </div>
+            <div className="verification-legend-item active" data-status="partial">
+              <span className="verification-legend-dot" style={{ background: '#d97706' }}></span>
+              <span>Partial</span>
+            </div>
+            <div className="verification-legend-item active" data-status="unverified">
+              <span className="verification-legend-dot" style={{ background: '#dc2626' }}></span>
+              <span>Unverified</span>
+            </div>
+            <div className="verification-legend-item active" data-status="none">
+              <span
+                className="verification-legend-dot"
+                style={{ background: 'transparent', border: '1px solid var(--text-3)' }}
+              ></span>
+              <span>
+                <em>No data</em>
+              </span>
+            </div>
+          </div>
+        </div>
         <div className="control-group" id="stance-legend">
           <h3 style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <select
-              id="belief-dim-select"
-              style={{
-                fontFamily: 'var(--mono)',
-                fontSize: '9px',
-                letterSpacing: '0.04em',
-                textTransform: 'uppercase',
-                background: 'transparent',
-                color: 'var(--text-1)',
-                border: 'none',
-                cursor: 'pointer',
-                fontWeight: 600,
-                padding: 0,
-                margin: 0,
-              }}
-            >
-              <option value="regulatory_stance">Regulatory Stance</option>
-              <option value="agi_timeline">AGI Timeline</option>
-              <option value="ai_risk_level">AI Risk Level</option>
-            </select>
+            <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <select
+                id="belief-dim-select"
+                style={{
+                  fontFamily: 'var(--mono)',
+                  fontSize: '9px',
+                  letterSpacing: '0.04em',
+                  textTransform: 'uppercase',
+                  background: 'transparent',
+                  color: 'var(--text-1)',
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontWeight: 600,
+                  padding: 0,
+                  margin: 0,
+                }}
+              >
+                <option value="regulatory_stance">Regulatory Stance</option>
+                <option value="agi_timeline">AGI Timeline</option>
+                <option value="ai_risk_level">AI Risk Level</option>
+              </select>
+              <span className="verification-info-trigger">
+                ?
+                <span className="verification-info-tooltip" style={{ width: '220px' }}>
+                  Scores are weighted averages from crowdsourced submissions. Self-reports (&#x25B2;&#x25B2;) weigh 10x,
+                  connectors 2x, external 1x. Field feedback votes (&#x25B2;+1, &#x25BC;-1) help confirm or flag values.
+                  Orgs temporarily do not display belief stances while we improve data quality.
+                </span>
+              </span>
+            </span>
             <span
               className="filter-reset"
               id="stance-reset"
@@ -1321,7 +1372,12 @@ export function App() {
                 <div className="detail-field">
                   <div className="detail-field-header">
                     <label>How they define AGI</label>
-                    <FieldFeedback entityId={beliefsSelectedPoint.point.entity_id} field="agi_definition" />
+                    <FieldFeedback
+                      entityId={beliefsSelectedPoint.point.entity_id}
+                      field="agi_definition"
+                      entityName={beliefsSelectedPoint.point.name}
+                      fieldLabel="How they define AGI"
+                    />
                   </div>
                   <span style={{ display: 'block' }}>{beliefsSelectedPoint.point.definition}</span>
                 </div>
@@ -1329,7 +1385,12 @@ export function App() {
                   <div className="detail-field">
                     <div className="detail-field-header">
                       <label>Citation</label>
-                      <FieldFeedback entityId={beliefsSelectedPoint.point.entity_id} field="agi_citation" />
+                      <FieldFeedback
+                        entityId={beliefsSelectedPoint.point.entity_id}
+                        field="agi_citation"
+                        entityName={beliefsSelectedPoint.point.name}
+                        fieldLabel="Citation"
+                      />
                     </div>
                     <blockquote
                       style={{
@@ -1351,7 +1412,12 @@ export function App() {
                   <div className="detail-field">
                     <div className="detail-field-header">
                       <label>Source</label>
-                      <FieldFeedback entityId={beliefsSelectedPoint.point.entity_id} field="agi_source" />
+                      <FieldFeedback
+                        entityId={beliefsSelectedPoint.point.entity_id}
+                        field="agi_source"
+                        entityName={beliefsSelectedPoint.point.name}
+                        fieldLabel="Source"
+                      />
                     </div>
                     <a
                       href={beliefsSelectedPoint.source.url}

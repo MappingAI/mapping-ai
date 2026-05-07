@@ -80,6 +80,8 @@
     "db:export-edges": "node scripts/export-edge-evidence.js",
     "db:export-edges:upload": "node scripts/export-edge-evidence.js --upload",
     "db:refresh": "tsx scripts/export-map-data.ts && node scripts/upload-map-data.js && node scripts/export-claims-data.js --upload",
+    "db:verification-status": "node scripts/sync-verification.js",
+    "db:verification-export": "node scripts/sync-verification.js --export",
     "db:backup": "node scripts/backup-db.js",
     "db:backup:local": "node scripts/backup-db.js --local",
     "predev": "node scripts/ensure-map-data.js",

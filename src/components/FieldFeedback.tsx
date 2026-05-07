@@ -1,12 +1,15 @@
 import { useState, useEffect, useCallback } from 'react'
 import { getVoterId, getLocalVotes, setLocalVote } from '../shared/field-feedback-utils'
+import { FieldNoteButton } from './FieldNoteButton'
 
 interface Props {
   entityId: number
   field: string
+  entityName?: string
+  fieldLabel?: string
 }
 
-export function FieldFeedback({ entityId, field }: Props) {
+export function FieldFeedback({ entityId, field, entityName, fieldLabel }: Props) {
   const [localUp, setLocalUp] = useState(() => !!getLocalVotes(entityId)[field]?.up)
   const [localDown, setLocalDown] = useState(() => !!getLocalVotes(entityId)[field]?.down)
   const [serverCounts, setServerCounts] = useState<{ confirms: number; flags: number } | null>(null)
@@ -97,6 +100,7 @@ export function FieldFeedback({ entityId, field }: Props) {
         {showC > 0 && showF > 0 && ' '}
         {showF > 0 && <span style={{ color: '#dc2626' }}>&#x25BC;{showF}</span>}
       </span>
+      <FieldNoteButton entityId={entityId} field={field} entityName={entityName} fieldLabel={fieldLabel} />
     </span>
   )
 }

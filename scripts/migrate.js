@@ -183,6 +183,7 @@ async function migrate() {
     await client.query(`ALTER TABLE submission ADD COLUMN IF NOT EXISTS advocated_stance TEXT`)
     await client.query(`ALTER TABLE submission ADD COLUMN IF NOT EXISTS advocated_timeline TEXT`)
     await client.query(`ALTER TABLE submission ADD COLUMN IF NOT EXISTS advocated_risk TEXT`)
+    await client.query(`ALTER TABLE entity ADD COLUMN IF NOT EXISTS field_verification JSONB DEFAULT '{}'::jsonb`)
     console.log('  ✓ schema migrations')
 
     // ── 4c. contributor_keys table ──────────────────────────────────────────────
@@ -238,6 +239,24 @@ async function migrate() {
       END $$
     `)
     console.log('  ✓ field_feedback')
+
+    // ── 4e. field_notes table ─────────────────────────────────────────────────
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS field_notes (
+        id           SERIAL PRIMARY KEY,
+        entity_id    INTEGER NOT NULL REFERENCES entity(id) ON DELETE CASCADE,
+        field_name   VARCHAR(100) NOT NULL,
+        note         TEXT NOT NULL,
+        note_html    TEXT,
+        note_mentions JSONB,
+        voter_id     VARCHAR(64),
+        created_at   TIMESTAMPTZ DEFAULT NOW()
+      )
+    `)
+    await client.query('CREATE INDEX IF NOT EXISTS idx_fn_entity ON field_notes(entity_id)')
+    await client.query('ALTER TABLE field_notes ADD COLUMN IF NOT EXISTS note_html TEXT')
+    await client.query('ALTER TABLE field_notes ADD COLUMN IF NOT EXISTS note_mentions JSONB')
+    console.log('  ✓ field_notes')
 
     // ── 5. Score recalculation function ──────────────────────────────────────
     // Weights: self=10, connector=2, external=1

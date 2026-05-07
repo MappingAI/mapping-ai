@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { Navigation } from '../components/Navigation'
+import { Footer } from '../components/Footer'
 import { WelcomeOverlay } from '../components/WelcomeOverlay'
 
 /* ------------------------------------------------------------------ */
@@ -165,26 +166,7 @@ function TableOfContents() {
 /* ------------------------------------------------------------------ */
 
 /* ------------------------------------------------------------------ */
-/*  Mail icon                                                          */
 /* ------------------------------------------------------------------ */
-
-function MailIcon() {
-  return (
-    <svg
-      width="12"
-      height="12"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <rect x="2" y="4" width="20" height="16" rx="2" />
-      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-    </svg>
-  )
-}
 
 /* ------------------------------------------------------------------ */
 /*  App                                                                */
@@ -306,6 +288,24 @@ export function App() {
           —civil society, industry, government—and where these actors stand on crucial governance questions, such as the
           technology's capabilities and the role of public policy. We aim to fill that gap.
         </p>
+        <p {...fadeProps(fi++)} className="mb-4 text-[16.5px]">
+          We're not alone in this effort. Many groups are building trackers, maps, and dashboards covering different
+          facets of AI policy (see{' '}
+          <a href="#adjacent-tools" className="text-[#2563eb] no-underline hover:underline">
+            Adjacent Tools
+          </a>{' '}
+          below). We'd rather collaborate than duplicate work. For more context on how this project started and where
+          it's headed, see{' '}
+          <a
+            href="https://x.com/mapping_ai/status/2051699454273785979"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#2563eb] no-underline hover:underline"
+          >
+            our thread on X
+          </a>
+          .
+        </p>
 
         {/* Who We're Mapping */}
         <div
@@ -360,15 +360,41 @@ export function App() {
           </a>
         </p>
 
-        <hr className="border-none border-t border-[#bbb]/50 my-10" />
+        <hr className="border-none border-t border-[#bbb]/50 my-5" />
 
         {/* Adjacent tools */}
         <div
           {...fadeProps(fi++)}
-          className="font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3"
+          id="adjacent-tools"
+          className="font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3 scroll-mt-16"
         >
           Adjacent Tools &amp; Resources
         </div>
+        <p {...fadeProps(fi++)} className="mb-4 text-[16.5px]">
+          We've open-sourced our full codebase on{' '}
+          <a
+            href="https://github.com/MappingAI/mapping-ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#2563eb] no-underline hover:underline"
+          >
+            GitHub
+          </a>{' '}
+          and are documenting complementary efforts in the space. See Daniel Kalish's{' '}
+          <a
+            href="https://ai-policy-tracker-tracker.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#2563eb] no-underline hover:underline"
+          >
+            AI Policy Tracker Tracker
+          </a>{' '}
+          for a comprehensive index. If you're building tools in this space, we'd love to collaborate:{' '}
+          <a href="mailto:info@mapping-ai.org" className="text-[#2563eb] no-underline hover:underline">
+            info@mapping-ai.org
+          </a>
+          .
+        </p>
         <div {...fadeProps(fi++)} className="flex flex-wrap gap-2 mb-4">
           {[
             { name: 'AI Policy Network', url: 'https://theaipn.org/', desc: 'Policy community network and events' },
@@ -429,33 +455,7 @@ export function App() {
           ))}
         </div>
 
-        {/* Footer */}
-        <div className="flex justify-center items-center gap-2 mt-12 pt-6 border-t border-[#bbb]/50">
-          <a href="/about" className="font-mono text-[10.5px] text-[#888] tracking-wide no-underline">
-            Mapping AI Working Group
-          </a>
-          <span className="font-mono text-[10.5px] text-[#888] tracking-wide">&middot; 2026</span>
-          <span className="font-mono text-[10.5px] text-[#888] tracking-wide">&middot;</span>
-          <a
-            href="mailto:info@mapping-ai.org"
-            className="font-mono text-[10.5px] text-[#888] tracking-wide no-underline inline-flex items-center gap-1"
-          >
-            <MailIcon />
-            info@mapping-ai.org
-          </a>
-        </div>
-        <div className="mt-2 font-mono text-[9px] text-[#888] tracking-tight text-center max-w-[600px] leading-normal">
-          Data is sourced from public records, user submissions, and LLM-assisted research. Inferred beliefs do not
-          claim to represent official positions. We welcome corrections via{' '}
-          <a href="/contribute" className="text-[#888]">
-            contribute
-          </a>{' '}
-          or{' '}
-          <a href="mailto:info@mapping-ai.org" className="text-[#888]">
-            info@mapping-ai.org
-          </a>
-          .
-        </div>
+        <Footer />
       </div>
     </>
   )

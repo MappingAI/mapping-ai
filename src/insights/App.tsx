@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { Navigation } from '../components/Navigation'
+import { Footer } from '../components/Footer'
 import { WelcomeOverlay } from '../components/WelcomeOverlay'
 import { CrosspartisanViz } from './crosspartisan/CrosspartisanViz'
 import { AgiDefinitionSpace } from './crosspartisan/AgiDefinitionSpace'
@@ -983,7 +984,7 @@ export function App() {
   const allEntities = useMemo(() => [...people, ...orgs], [people, orgs])
   const allWithResources = useMemo(() => [...allEntities, ...resources], [allEntities, resources])
 
-  const dataDate = useMemo(
+  const _dataDate = useMemo(
     () =>
       data?._meta?.generated_at
         ? new Date(data._meta.generated_at).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
@@ -1440,29 +1441,7 @@ export function App() {
 
         <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
 
-        {/* Footer */}
-        <div className="flex justify-center items-center gap-2 mt-12 pt-6 border-t border-[#bbb]/50">
-          <span className="font-mono text-[10px] text-[#888] tracking-[0.04em]">Data as of {dataDate}</span>
-          <span className="font-mono text-[10px] text-[#888]">·</span>
-          <a
-            href="/map"
-            className="font-mono text-[10px] text-[#2563eb] no-underline hover:underline tracking-[0.04em]"
-          >
-            Explore the map →
-          </a>
-        </div>
-        <div className="font-mono text-[9px] text-[#888] tracking-tight text-center max-w-[600px] mx-auto mt-3 leading-normal">
-          Data is sourced from public records, user submissions, and LLM-assisted research. Inferred beliefs do not
-          claim to represent official positions. We welcome corrections via{' '}
-          <a href="/contribute" className="text-[#888]">
-            contribute
-          </a>{' '}
-          or{' '}
-          <a href="mailto:info@mapping-ai.org" className="text-[#888]">
-            info@mapping-ai.org
-          </a>
-          .
-        </div>
+        <Footer />
       </article>
     </>
   )
