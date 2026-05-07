@@ -1372,7 +1372,12 @@ export function App() {
                 <div className="detail-field">
                   <div className="detail-field-header">
                     <label>How they define AGI</label>
-                    <FieldFeedback entityId={beliefsSelectedPoint.point.entity_id} field="agi_definition" />
+                    <FieldFeedback
+                      entityId={beliefsSelectedPoint.point.entity_id}
+                      field="agi_definition"
+                      entityName={beliefsSelectedPoint.point.name}
+                      fieldLabel="How they define AGI"
+                    />
                   </div>
                   <span style={{ display: 'block' }}>{beliefsSelectedPoint.point.definition}</span>
                 </div>
@@ -1380,7 +1385,12 @@ export function App() {
                   <div className="detail-field">
                     <div className="detail-field-header">
                       <label>Citation</label>
-                      <FieldFeedback entityId={beliefsSelectedPoint.point.entity_id} field="agi_citation" />
+                      <FieldFeedback
+                        entityId={beliefsSelectedPoint.point.entity_id}
+                        field="agi_citation"
+                        entityName={beliefsSelectedPoint.point.name}
+                        fieldLabel="Citation"
+                      />
                     </div>
                     <blockquote
                       style={{
@@ -1402,7 +1412,12 @@ export function App() {
                   <div className="detail-field">
                     <div className="detail-field-header">
                       <label>Source</label>
-                      <FieldFeedback entityId={beliefsSelectedPoint.point.entity_id} field="agi_source" />
+                      <FieldFeedback
+                        entityId={beliefsSelectedPoint.point.entity_id}
+                        field="agi_source"
+                        entityName={beliefsSelectedPoint.point.name}
+                        fieldLabel="Source"
+                      />
                     </div>
                     <a
                       href={beliefsSelectedPoint.source.url}
