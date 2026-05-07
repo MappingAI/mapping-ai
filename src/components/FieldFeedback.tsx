@@ -31,13 +31,13 @@ export function FieldFeedback({ entityId, field }: Props) {
     loadFromServer()
   }, [loadFromServer])
 
-  const handleVote = (vote: number) => {
+  const handleVote = (vote: 1 | -1) => {
     const dir = vote === 1 ? 'up' : 'down'
     const isActive = dir === 'up' ? localUp : localDown
     const nowActive = !isActive
     if (dir === 'up') setLocalUp(nowActive)
     else setLocalDown(nowActive)
-    setLocalVote(entityId, field, dir as 'up' | 'down', nowActive)
+    setLocalVote(entityId, field, dir, nowActive)
     setServerCounts((prev) => {
       if (!prev) return prev
       const delta = nowActive ? 1 : -1
@@ -56,7 +56,10 @@ export function FieldFeedback({ entityId, field }: Props) {
         action: nowActive ? 'add' : 'remove',
       }),
     })
-      .then((r) => r.ok && r.json())
+      .then((r) => {
+        if (!r.ok) return
+        return r.json()
+      })
       .then(() => loadFromServer())
       .catch(() => {})
   }

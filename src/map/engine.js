@@ -1,10 +1,6 @@
 /* eslint-disable */
 // @ts-nocheck
-import {
-  getVoterId as _getVoterId,
-  getLocalVotes as _getLocalVotes,
-  setLocalVote as _setLocalVote,
-} from '../shared/field-feedback-utils.ts'
+import { getVoterId, getLocalVotes, setLocalVote } from '../shared/field-feedback-utils.ts'
 
 export function initMapEngine() {
   var searchFilterActive = false
@@ -4769,7 +4765,7 @@ ${dots}
                   <span class="connection-chevron" style="color:var(--text-3);font-size:10px;transition:transform 0.15s;">▸</span>
                   <span class="connection-name" style="flex:1;">${escHtml(item.name)}</span>
                   <span style="font-size:10px;padding:2px 6px;border-radius:3px;background:${relColor.bg};color:${relColor.text};">${relType}</span>
-                  ${feedbackBadge(d.id, `edge_${Math.min(d.id, item.entity.id)}_${Math.max(d.id, item.entity.id)}`)}
+                  ${feedbackBadge(Math.min(d.id, item.entity.id), `edge_${Math.min(d.id, item.entity.id)}_${Math.max(d.id, item.entity.id)}`)}
                 </div>
                 <div class="connection-details" data-item-id="${itemId}" style="display:none;padding:8px 0 8px 16px;border-left:2px solid var(--line);margin-left:4px;">
                   <div class="connection-evidence" data-edge-id="${item.edgeId || ''}" style="font-size:12px;color:var(--text-2);margin-bottom:8px;">
@@ -5084,14 +5080,15 @@ ${dots}
     panel.classList.add('open')
   }
 
-  const getVoterId = _getVoterId
-  const getLocalVotes = _getLocalVotes
-  const setLocalVote = _setLocalVote
-
   function renderVoteCounts(container, entityId, serverFeedback) {
     const localVotes = getLocalVotes(entityId)
-    container.querySelectorAll('.field-vote-counts').forEach((el) => {
-      const field = el.dataset.field
+    const eidStr = String(entityId)
+    container.querySelectorAll('.field-feedback-row').forEach((row) => {
+      const rowBtn = row.querySelector('.field-vote')
+      if (!rowBtn || rowBtn.dataset.entityId !== eidStr) return
+      const field = row.dataset.field
+      const countsEl = row.querySelector('.field-vote-counts')
+      if (!countsEl) return
       const fb = (serverFeedback && serverFeedback[field]) || { confirms: 0, flags: 0 }
       let c = fb.confirms || 0
       let f = fb.flags || 0
@@ -5102,42 +5099,42 @@ ${dots}
         const parts = []
         if (c > 0) parts.push(`<span style="color:#16a34a;">&#x25B2;${c}</span>`)
         if (f > 0) parts.push(`<span style="color:#dc2626;">&#x25BC;${f}</span>`)
-        el.innerHTML = parts.join(' ')
+        countsEl.innerHTML = parts.join(' ')
       } else {
-        el.innerHTML = ''
+        countsEl.innerHTML = ''
       }
-    })
-    container.querySelectorAll('.field-vote').forEach((btn) => {
-      const field = btn.dataset.field
-      const vote = parseInt(btn.dataset.vote, 10)
-      const lv = localVotes[field] || {}
-      btn.classList.toggle('voted', vote === 1 ? !!lv.up : !!lv.down)
+      row.querySelectorAll('.field-vote').forEach((btn) => {
+        const vote = parseInt(btn.dataset.vote, 10)
+        btn.classList.toggle('voted', vote === 1 ? !!lv.up : !!lv.down)
+      })
     })
   }
 
   function bindFieldFeedback(container, entityId) {
-    const localVotes = getLocalVotes(entityId)
+    const allEntityIds = new Set([entityId])
     container.querySelectorAll('.field-vote').forEach((btn) => {
+      const btnEntityId = parseInt(btn.dataset.entityId, 10) || entityId
+      allEntityIds.add(btnEntityId)
       const field = btn.dataset.field
       const vote = parseInt(btn.dataset.vote, 10)
-      const lv = localVotes[field] || {}
+      const lv = getLocalVotes(btnEntityId)[field] || {}
       if (vote === 1 && lv.up) btn.classList.add('voted')
       if (vote === -1 && lv.down) btn.classList.add('voted')
       btn.addEventListener('click', (e) => {
         e.preventDefault()
         e.stopPropagation()
         const dir = vote === 1 ? 'up' : 'down'
-        const current = getLocalVotes(entityId)
+        const current = getLocalVotes(btnEntityId)
         const isActive = !!(current[field] && current[field][dir])
         const nowActive = !isActive
-        setLocalVote(entityId, field, dir, nowActive)
+        setLocalVote(btnEntityId, field, dir, nowActive)
         btn.classList.toggle('voted', nowActive)
-        renderVoteCounts(container, entityId, window.__fieldFeedbackCache?.[entityId])
+        renderVoteCounts(container, btnEntityId, window.__fieldFeedbackCache?.[btnEntityId])
         fetch('/api/field-feedback', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            entityId,
+            entityId: btnEntityId,
             fieldName: field,
             vote,
             voterId: getVoterId(),
@@ -5145,12 +5142,14 @@ ${dots}
           }),
         })
           .then((r) => r.ok && r.json())
-          .then(() => loadFieldFeedback(entityId, container))
+          .then(() => loadFieldFeedback(btnEntityId, container))
           .catch(() => {})
       })
     })
-    renderVoteCounts(container, entityId, null)
-    loadFieldFeedback(entityId, container)
+    allEntityIds.forEach((eid) => {
+      renderVoteCounts(container, eid, null)
+      loadFieldFeedback(eid, container)
+    })
   }
 
   function loadFieldFeedback(entityId, container) {

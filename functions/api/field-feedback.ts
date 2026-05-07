@@ -2,8 +2,10 @@ import type { Env } from './_shared/env.ts'
 import { jsonResponse, optionsResponse } from './_shared/cors.ts'
 import { getDb } from './_shared/db.ts'
 
+const FALLBACK_SALT = 'mapping-ai-field-feedback-2026'
+
 async function computeVoterHash(ip: string, clientId: string, salt: string | undefined): Promise<string> {
-  const raw = salt ? `${ip}:${clientId}:${salt}` : `${ip}:${clientId}`
+  const raw = `${ip}:${clientId}:${salt || FALLBACK_SALT}`
   const data = new TextEncoder().encode(raw)
   const hashBuf = await crypto.subtle.digest('SHA-256', data)
   return Array.from(new Uint8Array(hashBuf))
@@ -36,11 +38,17 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   }
 
   const { entityId, fieldName, vote, voterId, action } = body
-  if (!entityId || !fieldName || (vote !== 1 && vote !== -1)) {
-    return jsonResponse({ error: 'Invalid request: entityId, fieldName, vote (+1/-1) required' }, request, 400)
+  if (typeof entityId !== 'number' || !Number.isInteger(entityId) || entityId <= 0) {
+    return jsonResponse({ error: 'Invalid entityId' }, request, 400)
+  }
+  if (!fieldName || (vote !== 1 && vote !== -1)) {
+    return jsonResponse({ error: 'Invalid request: fieldName, vote (+1/-1) required' }, request, 400)
   }
   if (!/^[a-z][a-z0-9_]{0,99}$/.test(fieldName)) {
     return jsonResponse({ error: 'Invalid fieldName format' }, request, 400)
+  }
+  if (action !== undefined && action !== 'add' && action !== 'remove') {
+    return jsonResponse({ error: 'Invalid action: must be add or remove' }, request, 400)
   }
 
   const clientId = typeof voterId === 'string' && voterId.length >= 8 ? voterId : 'anon'
