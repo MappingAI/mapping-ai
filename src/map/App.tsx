@@ -280,32 +280,35 @@ export function App() {
         <div className="onboarding-card">
           <h2>Welcome to the AI Policy Map</h2>
           <p>An interactive visualization of the people, organizations, and resources shaping U.S. AI governance.</p>
-          <div className="onboarding-tips">
-            <div className="onboarding-tip">
-              <strong>Network:</strong> Force-directed graph of stakeholders. Sub-tabs filter by All, Orgs, or People.
-              Click any node to see details and connections. Scroll to zoom, drag to pan.
+          <details className="onboarding-controls-toggle">
+            <summary>How to use the map</summary>
+            <div className="onboarding-tips">
+              <div className="onboarding-tip">
+                <strong>Network:</strong> Force-directed graph of stakeholders. Sub-tabs filter by All, Orgs, or People.
+                Click any node to see details and connections. Scroll to zoom, drag to pan.
+              </div>
+              <div className="onboarding-tip">
+                <strong>Plot:</strong> Scatter chart positioning entities along belief dimensions (regulatory stance,
+                AGI timeline, AI risk level). Switch axes and entity types with the controls below.
+              </div>
+              <div className="onboarding-tip">
+                <strong>Beliefs:</strong> Explore how stakeholders define AGI. Sub-views include a cluster map, list,
+                scatter projection, stacked timeline, and per-cluster trend sparklines. Color by cluster, category, or
+                belief dimension.
+              </div>
+              <div className="onboarding-tip">
+                <strong>Filters &amp; Search:</strong> Use category chips and the stance legend to show or hide groups.
+                Search supports related terms (e.g., &quot;safety&quot; finds alignment orgs too).
+              </div>
+              <div className="onboarding-tip">
+                <strong>Source:</strong> Data is crowdsourced and admin-reviewed. Belief scores (stance, timeline, risk)
+                are weighted averages from submissions.
+              </div>
             </div>
-            <div className="onboarding-tip">
-              <strong>Plot:</strong> Scatter chart positioning entities along belief dimensions (regulatory stance, AGI
-              timeline, AI risk level). Switch axes and entity types with the controls below.
+            <div className="onboarding-mobile-note">
+              On mobile, the map has a limited feature set and may take a few seconds to load.
             </div>
-            <div className="onboarding-tip">
-              <strong>Beliefs:</strong> Explore how stakeholders define AGI. Sub-views include a cluster map, list,
-              scatter projection, stacked timeline, and per-cluster trend sparklines. Color by cluster, category, or
-              belief dimension.
-            </div>
-            <div className="onboarding-tip">
-              <strong>Filters &amp; Search:</strong> Use category chips and the stance legend to show or hide groups.
-              Search supports related terms (e.g., &quot;safety&quot; finds alignment orgs too).
-            </div>
-            <div className="onboarding-tip">
-              <strong>Source:</strong> Data is crowdsourced and admin-reviewed. Belief scores (stance, timeline, risk)
-              are weighted averages from submissions.
-            </div>
-          </div>
-          <div className="onboarding-mobile-note">
-            On mobile, the map has a limited feature set and may take a few seconds to load.
-          </div>
+          </details>
           <div
             style={{
               background: 'var(--bg-page, #f0eeeb)',

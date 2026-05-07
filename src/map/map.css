@@ -1900,11 +1900,34 @@ body:has(.beliefs-detail-sidebar) .beliefs-zoom-controls {
   margin: 0 0 1rem;
   color: var(--text-2, #555);
 }
+.onboarding-controls-toggle {
+  margin-bottom: 0.75rem;
+}
+.onboarding-controls-toggle summary {
+  font-family: var(--mono, monospace);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-2, #555);
+  cursor: pointer;
+  padding: 6px 0;
+  list-style: none;
+}
+.onboarding-controls-toggle summary::before {
+  content: '▸ ';
+}
+.onboarding-controls-toggle[open] summary::before {
+  content: '▾ ';
+}
+.onboarding-controls-toggle summary::-webkit-details-marker {
+  display: none;
+}
 .onboarding-tips {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  margin-bottom: 1.25rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.75rem;
 }
 .onboarding-tip {
   font-size: 13px;
