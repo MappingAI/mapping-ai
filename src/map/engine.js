@@ -5265,11 +5265,13 @@ ${dots}
         for (const [field, fieldNotes] of Object.entries(data.notes)) {
           const row = container.querySelector(`.field-feedback-row[data-field="${field}"]`)
           if (!row) continue
-          let notesEl = row.parentElement?.querySelector('.field-notes-list')
+          const detailField = row.closest('.detail-field')
+          if (!detailField) continue
+          let notesEl = detailField.querySelector('.field-notes-list')
           if (!notesEl) {
             notesEl = document.createElement('div')
             notesEl.className = 'field-notes-list'
-            row.parentElement.appendChild(notesEl)
+            detailField.appendChild(notesEl)
           }
           notesEl.innerHTML = fieldNotes
             .slice(0, 3)
@@ -5285,25 +5287,38 @@ ${dots}
         e.stopPropagation()
         const field = btn.dataset.field
         const eid = parseInt(btn.dataset.entityId, 10)
-        const existing = btn.parentElement?.querySelector('.field-note-input-wrap')
-        if (existing) {
-          existing.remove()
-          return
+        const fieldLabel = btn.closest('.detail-field')?.querySelector('label')?.textContent || field.replace(/_/g, ' ')
+        const entityName =
+          container.querySelector('.detail-title')?.textContent ||
+          container.querySelector('h2')?.textContent ||
+          'this entity'
+        const existing = document.querySelector('.field-note-modal')
+        if (existing) existing.remove()
+        const modal = document.createElement('div')
+        modal.className = 'field-note-modal'
+        modal.innerHTML =
+          '<div class="field-note-modal-card">' +
+          `<div class="field-note-modal-header"><span>Note on <strong>${escHtml(fieldLabel)}</strong> — ${escHtml(entityName)}</span><button class="field-note-modal-close">&times;</button></div>` +
+          '<textarea class="field-note-textarea" placeholder="Add a correction, source, or context..." rows="3"></textarea>' +
+          '<div class="field-note-modal-footer"><button class="field-note-submit">Submit</button></div>' +
+          '</div>'
+        document.body.appendChild(modal)
+        const textarea = modal.querySelector('textarea')
+        const submitBtn = modal.querySelector('.field-note-submit')
+        const closeBtn = modal.querySelector('.field-note-modal-close')
+        textarea.focus()
+        function close() {
+          modal.remove()
         }
-        const wrap = document.createElement('div')
-        wrap.className = 'field-note-input-wrap'
-        wrap.innerHTML =
-          '<input type="text" class="field-note-input" placeholder="Add a note or correction..." maxlength="280">' +
-          '<button class="field-note-submit">Send</button>'
-        btn.parentElement.appendChild(wrap)
-        const input = wrap.querySelector('input')
-        const submitBtn = wrap.querySelector('.field-note-submit')
-        input.focus()
+        closeBtn.addEventListener('click', close)
+        modal.addEventListener('click', (ev) => {
+          if (ev.target === modal) close()
+        })
         function doSubmit() {
-          const text = input.value.trim()
+          const text = textarea.value.trim()
           if (!text) return
           submitBtn.disabled = true
-          input.disabled = true
+          textarea.disabled = true
           fetch('/api/field-notes', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -5311,37 +5326,37 @@ ${dots}
           })
             .then((r) => {
               if (r.ok) {
-                let notesEl = btn.parentElement?.parentElement?.querySelector('.field-notes-list')
+                let notesEl = btn.closest('.detail-field')?.querySelector('.field-notes-list')
                 if (!notesEl) {
                   notesEl = document.createElement('div')
                   notesEl.className = 'field-notes-list'
-                  btn.parentElement.parentElement.appendChild(notesEl)
+                  btn.closest('.detail-field')?.appendChild(notesEl)
                 }
                 const item = document.createElement('div')
                 item.className = 'field-note-item'
                 item.textContent = text
                 notesEl.prepend(item)
-                wrap.remove()
+                close()
               } else {
                 submitBtn.disabled = false
-                input.disabled = false
+                textarea.disabled = false
               }
             })
             .catch(() => {
               submitBtn.disabled = false
-              input.disabled = false
+              textarea.disabled = false
             })
         }
         submitBtn.addEventListener('click', (ev) => {
           ev.stopPropagation()
           doSubmit()
         })
-        input.addEventListener('keydown', (ev) => {
-          if (ev.key === 'Enter') {
-            ev.stopPropagation()
+        textarea.addEventListener('keydown', (ev) => {
+          if (ev.key === 'Enter' && (ev.metaKey || ev.ctrlKey)) {
+            ev.preventDefault()
             doSubmit()
           }
-          if (ev.key === 'Escape') wrap.remove()
+          if (ev.key === 'Escape') close()
         })
       })
     })
