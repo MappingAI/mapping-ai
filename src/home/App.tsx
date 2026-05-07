@@ -306,6 +306,24 @@ export function App() {
           —civil society, industry, government—and where these actors stand on crucial governance questions, such as the
           technology's capabilities and the role of public policy. We aim to fill that gap.
         </p>
+        <p {...fadeProps(fi++)} className="mb-4 text-[16.5px]">
+          We're not alone in this effort. Many groups are building trackers, maps, and dashboards covering different
+          facets of AI policy (see{' '}
+          <a href="#adjacent-tools" className="text-[#2563eb] no-underline hover:underline">
+            Adjacent Tools
+          </a>{' '}
+          below). We'd rather collaborate than duplicate work. For more context on how this project started and where
+          it's headed, see{' '}
+          <a
+            href="https://x.com/mapping_ai/status/2051699454273785979"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#2563eb] no-underline hover:underline"
+          >
+            our thread on X
+          </a>
+          .
+        </p>
 
         {/* Who We're Mapping */}
         <div
@@ -365,10 +383,36 @@ export function App() {
         {/* Adjacent tools */}
         <div
           {...fadeProps(fi++)}
-          className="font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3"
+          id="adjacent-tools"
+          className="font-mono text-[13px] font-medium tracking-[0.14em] uppercase text-[#555] mb-3 scroll-mt-16"
         >
           Adjacent Tools &amp; Resources
         </div>
+        <p {...fadeProps(fi++)} className="mb-4 text-[16.5px]">
+          We've open-sourced our full codebase on{' '}
+          <a
+            href="https://github.com/MappingAI/mapping-ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#2563eb] no-underline hover:underline"
+          >
+            GitHub
+          </a>{' '}
+          and are documenting complementary efforts in the space. See Daniel Kalish's{' '}
+          <a
+            href="https://ai-policy-tracker-tracker.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#2563eb] no-underline hover:underline"
+          >
+            AI Policy Tracker Tracker
+          </a>{' '}
+          for a comprehensive index. If you're building tools in this space, we'd love to collaborate:{' '}
+          <a href="mailto:info@mapping-ai.org" className="text-[#2563eb] no-underline hover:underline">
+            info@mapping-ai.org
+          </a>
+          .
+        </p>
         <div {...fadeProps(fi++)} className="flex flex-wrap gap-2 mb-4">
           {[
             { name: 'AI Policy Network', url: 'https://theaipn.org/', desc: 'Policy community network and events' },
