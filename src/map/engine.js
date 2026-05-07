@@ -1670,19 +1670,7 @@ export function initMapEngine() {
               if (d) Object.assign(entity, d)
             }
           }
-          if (_canvasNodes) {
-            const entityById = new Map()
-            for (const arr of [allData.people, allData.organizations, allData.resources]) {
-              for (const e of arr) entityById.set(e.id, e)
-            }
-            for (const node of _canvasNodes) {
-              const src = entityById.get(node.id)
-              if (src?.field_verification) node.field_verification = src.field_verification
-              const fvVals = Object.values(node.field_verification || {})
-              const unvCount = fvVals.filter((v) => v === 'unverified').length
-              node._unverified = fvVals.length > 0 && unvCount > fvVals.length / 2
-            }
-          }
+          _syncVerificationToNodes()
         })
         .catch(() => {}) // Non-critical — detail panel degrades gracefully
 
@@ -2704,6 +2692,21 @@ export function initMapEngine() {
   // ═══════════════════════════════════════════════════════════════
   // Canvas rendering state (module-level for highlight functions)
   // ═══════════════════════════════════════════════════════════════
+  function _syncVerificationToNodes() {
+    if (!_canvasNodes || _canvasNodes.length === 0) return
+    const entityById = new Map()
+    for (const arr of [allData.people, allData.organizations, allData.resources]) {
+      for (const e of arr) entityById.set(e.id, e)
+    }
+    for (const node of _canvasNodes) {
+      const src = entityById.get(node.id)
+      if (src?.field_verification) node.field_verification = src.field_verification
+      const fvVals = Object.values(node.field_verification || {})
+      const unvCount = fvVals.filter((v) => v === 'unverified').length
+      node._unverified = fvVals.length > 0 && unvCount > fvVals.length / 2
+    }
+  }
+
   let _canvasNodes = []
   let _canvasLinks = []
   let _canvasClusterBgs = []
@@ -3426,11 +3429,9 @@ export function initMapEngine() {
       if (d.entityType === 'organization' && !d.isResource) {
         d._brighterColor = d3.color(getClusterColor(d)).brighter(0.8).toString()
       }
-      const fvVals = Object.values(d.field_verification || {})
-      const unvCount = fvVals.filter((v) => v === 'unverified').length
-      d._unverified = fvVals.length > 0 && unvCount > fvVals.length / 2
     })
     _canvasNodes = nodes
+    _syncVerificationToNodes()
     _canvasCenterX = centerX
     _canvasCenterY = centerY
     _clusterDimmed = false
@@ -3958,6 +3959,7 @@ export function initMapEngine() {
       }
     })
     _canvasNodes = nodes
+    _syncVerificationToNodes()
     _hoveredNode = null
     _clusterDimmed = false
 
