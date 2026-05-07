@@ -2,13 +2,14 @@ import type { Env } from './_shared/env.ts'
 import { jsonResponse, optionsResponse } from './_shared/cors.ts'
 import { getDb } from './_shared/db.ts'
 
-async function computeVoterHash(ip: string, salt: string | undefined): Promise<string> {
-  const raw = salt ? ip + salt : ip
+async function computeVoterHash(ip: string, clientId: string, salt: string | undefined): Promise<string> {
+  const raw = salt ? `${ip}:${clientId}:${salt}` : `${ip}:${clientId}`
   const data = new TextEncoder().encode(raw)
   const hashBuf = await crypto.subtle.digest('SHA-256', data)
   return Array.from(new Uint8Array(hashBuf))
     .map((b) => b.toString(16).padStart(2, '0'))
     .join('')
+    .slice(0, 32)
 }
 
 export const onRequestOptions: PagesFunction<Env> = async ({ request }) => {
@@ -34,7 +35,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     return jsonResponse({ error: 'Invalid JSON body' }, request, 400)
   }
 
-  const { entityId, fieldName, vote, action } = body
+  const { entityId, fieldName, vote, voterId, action } = body
   if (!entityId || !fieldName || (vote !== 1 && vote !== -1)) {
     return jsonResponse({ error: 'Invalid request: entityId, fieldName, vote (+1/-1) required' }, request, 400)
   }
@@ -42,7 +43,8 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     return jsonResponse({ error: 'Invalid fieldName format' }, request, 400)
   }
 
-  const voterHash = await computeVoterHash(ip, env.VOTER_SALT)
+  const clientId = typeof voterId === 'string' && voterId.length >= 8 ? voterId : 'anon'
+  const voterHash = await computeVoterHash(ip, clientId, env.VOTER_SALT)
 
   const sql = getDb(env.DATABASE_URL)
   if (action === 'remove') {
