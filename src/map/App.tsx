@@ -9,6 +9,7 @@ import {
   type MapBeliefsClusterViewRef,
 } from './components/DefinitionsView'
 import { slugify } from '../shared/slugify'
+import { CorrectionsBanner } from '../components/CorrectionsBanner'
 
 type ReactView = 'definitions' | null
 
@@ -240,6 +241,7 @@ export function App() {
 
   return (
     <>
+      <CorrectionsBanner />
       <style>{`#source-type-filter { display: none !important; }`}</style>
       <nav className="site-nav">
         <a className="nav-brand" href="/">

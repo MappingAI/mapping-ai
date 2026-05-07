@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { Navigation } from '../components/Navigation'
 import { WelcomeOverlay } from '../components/WelcomeOverlay'
+import { CorrectionsBanner } from '../components/CorrectionsBanner'
 
 /* ---------- Table of Contents sidebar ---------- */
 const TOC_SECTIONS = [
@@ -202,6 +203,7 @@ export function App() {
   return (
     <>
       <WelcomeOverlay />
+      <CorrectionsBanner />
       <Navigation />
       <TableOfContents activeId={activeSection} />
 

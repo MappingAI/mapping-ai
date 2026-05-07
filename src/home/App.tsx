@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { Navigation } from '../components/Navigation'
 import { WelcomeOverlay } from '../components/WelcomeOverlay'
+import { CorrectionsBanner } from '../components/CorrectionsBanner'
 
 /* ------------------------------------------------------------------ */
 /*  Grid data                                                          */
@@ -206,6 +207,7 @@ export function App() {
   return (
     <>
       <WelcomeOverlay />
+      <CorrectionsBanner />
       <Navigation />
       <TableOfContents />
 

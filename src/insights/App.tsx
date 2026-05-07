@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { Navigation } from '../components/Navigation'
 import { WelcomeOverlay } from '../components/WelcomeOverlay'
+import { CorrectionsBanner } from '../components/CorrectionsBanner'
 import { CrosspartisanViz } from './crosspartisan/CrosspartisanViz'
 import { AgiDefinitionSpace } from './crosspartisan/AgiDefinitionSpace'
 import { ReachabilityRings, AxisOutlierChart } from './network'
@@ -1014,6 +1015,7 @@ export function App() {
   return (
     <>
       <WelcomeOverlay />
+      <CorrectionsBanner />
       <style>{`
         .fade-in { opacity: 1; transform: none; }
       `}</style>

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { WelcomeOverlay } from '../components/WelcomeOverlay'
+import { CorrectionsBanner } from '../components/CorrectionsBanner'
 
 export function App() {
   const [activeSection, setActiveSection] = useState('overview')
@@ -46,6 +47,7 @@ export function App() {
   return (
     <>
       <WelcomeOverlay />
+      <CorrectionsBanner />
       {/* Site nav */}
       <nav className="fixed top-0 left-0 right-0 z-[100] flex justify-between items-center bg-white/92 backdrop-blur-sm border-b border-[#bbb] px-8 py-[0.85rem] max-[600px]:px-4">
         <a href="/" className="font-mono text-[12px] tracking-[0.1em] uppercase text-text-primary no-underline">
