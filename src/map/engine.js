@@ -2119,6 +2119,37 @@ export function initMapEngine() {
 
   // ── Verification filter ──
   let verificationFilter = 'all'
+  function applyVerificationVisualState() {
+    if (!_canvasNodes || _canvasNodes.length === 0) return
+    for (const node of _canvasNodes) {
+      if (verificationFilter === 'all') {
+        if (node._vs === 'hidden' && node._vsBeforeVerification) {
+          node._vs = node._vsBeforeVerification
+          delete node._vsBeforeVerification
+        }
+        continue
+      }
+      const result = _isMajorityUnverified(node)
+      let passes
+      if (verificationFilter === 'verified') passes = result === false
+      else passes = result === null || result === true
+      if (!passes) {
+        if (node._vs !== 'hidden') node._vsBeforeVerification = node._vs
+        node._vs = 'hidden'
+      } else {
+        if (node._vs === 'hidden' && node._vsBeforeVerification) {
+          node._vs = node._vsBeforeVerification
+          delete node._vsBeforeVerification
+        } else if (node._vs === 'hidden') {
+          node._vs = 'normal'
+        }
+      }
+    }
+    const visibleCount = _canvasNodes.filter((n) => n._vs !== 'hidden').length
+    const countEl = document.getElementById('entity-count')
+    if (countEl) countEl.textContent = `${visibleCount} entities`
+    _requestRedraw()
+  }
   for (const btn of document.querySelectorAll('#verification-chips button')) {
     btn.addEventListener('click', () => {
       document.querySelectorAll('#verification-chips button').forEach((b) => b.classList.remove('active'))
@@ -2126,7 +2157,7 @@ export function initMapEngine() {
       if (btn.id === 'verification-show-verified') verificationFilter = 'verified'
       else if (btn.id === 'verification-show-unverified') verificationFilter = 'unverified'
       else verificationFilter = 'all'
-      render()
+      applyVerificationVisualState()
     })
   }
 
@@ -2331,14 +2362,6 @@ export function initMapEngine() {
     return unvCount > vals.length / 2
   }
 
-  function passesVerificationFilter(d) {
-    if (verificationFilter === 'all') return true
-    const result = _isMajorityUnverified(d)
-    if (verificationFilter === 'verified') return result === false
-    if (verificationFilter === 'unverified') return result === null || result === true
-    return true
-  }
-
   function passesSecondaryCategoryFilter(d) {
     // Only applies when clustering by belief dimensions (not category)
     if (clusterDimension === 'category') return true
@@ -2493,7 +2516,6 @@ export function initMapEngine() {
           isFilterActive(d) &&
           passesStanceFilter(d) &&
           passesSourceTypeFilter(d) &&
-          passesVerificationFilter(d) &&
           passesSecondaryCategoryFilter(d),
       ).length
     if (currentView === 'people' || currentView === 'all')
@@ -2503,11 +2525,10 @@ export function initMapEngine() {
           isFilterActive(d) &&
           passesStanceFilter(d) &&
           passesSourceTypeFilter(d) &&
-          passesVerificationFilter(d) &&
           passesSecondaryCategoryFilter(d),
       ).length
     if (currentView === 'resources' || currentView === 'all')
-      totalCount += allData.resources.filter((d) => passesSourceTypeFilter(d) && passesVerificationFilter(d)).length
+      totalCount += allData.resources.filter((d) => passesSourceTypeFilter(d)).length
 
     // Scale: gentler curve—1.0 at 40, 0.7 at 100, 0.55 at 200
     const scale = Math.max(0.55, Math.min(1.0, 40 / Math.max(totalCount, 1)))
@@ -2519,7 +2540,7 @@ export function initMapEngine() {
         if (!d.category || !isFilterActive(d)) return
         if (!passesStanceFilter(d)) return
         if (!passesSourceTypeFilter(d)) return
-        if (!passesVerificationFilter(d)) return
+
         if (!passesSecondaryCategoryFilter(d)) return
         const sc = d.submission_count || 1
         // Smaller nodes for belief dimension clustering to improve readability
@@ -2553,7 +2574,7 @@ export function initMapEngine() {
         // In "all" view, always include people (they'll be mapped to an org sector cluster)
         if (!passesStanceFilter(d)) return
         if (!passesSourceTypeFilter(d)) return
-        if (!passesVerificationFilter(d)) return
+
         if (!passesSecondaryCategoryFilter(d)) return
         const sc = d.submission_count || 1
 
@@ -2621,7 +2642,7 @@ export function initMapEngine() {
         // Search filter: when active, only show entities in searchVisibleNames (resources use title as name)
         if (searchFilterActive && !searchVisibleNames.has(d.title)) return
         if (!passesSourceTypeFilter(d)) return
-        if (!passesVerificationFilter(d)) return
+
         const cat = d.category || 'Other' // cluster by topic category in resources view
         const sc = d.submission_count || 1
         const r = Math.round((14 + Math.min(Math.floor(sc / 3), 3)) * scale)
@@ -2646,7 +2667,6 @@ export function initMapEngine() {
         // Search filter: when active, only show entities in searchVisibleNames (resources use title as name)
         if (searchFilterActive && !searchVisibleNames.has(d.title)) return
         if (!passesSourceTypeFilter(d)) return
-        if (!passesVerificationFilter(d)) return
 
         // When belief filter is active, only show resources that have a checked belief value
         // OR are connected (via relationships) to a visible entity that passed the belief filter
@@ -3875,7 +3895,7 @@ export function initMapEngine() {
       if (!d.category) return false
       if (!passesStanceFilter(d)) return false
       if (!passesSourceTypeFilter(d)) return false
-      if (!passesVerificationFilter(d)) return false
+      // verification filter handled via _vs visual state, not here
       if (!categoryFilterActive) return true
       if (activeCategories.size === 0) return false
       return activeCategories.has(d.category) || activeCategories.has(normalizeCategory(d.category))
