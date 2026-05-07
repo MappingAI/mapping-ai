@@ -4520,9 +4520,13 @@ ${dots}
   function feedbackBadge(entityId, key, fieldVerification) {
     const safeKey = escHtml(key)
     const fvStatus = fieldVerification?.[safeKey]
-    const badgeClass = fvStatus === 'verified' ? 'field-verified-badge' : 'field-inferred-badge'
-    const badgeLabel = fvStatus === 'verified' ? 'verified' : 'unverified'
-    return `<span class="field-feedback-row" data-field="${safeKey}"><span class="${badgeClass}">${badgeLabel}</span><button class="field-vote field-vote-confirm" data-entity-id="${entityId}" data-field="${safeKey}" data-vote="1" title="Looks correct">&#x25B2;</button><button class="field-vote field-vote-flag" data-entity-id="${entityId}" data-field="${safeKey}" data-vote="-1" title="Flag as incorrect">&#x25BC;</button><span class="field-vote-counts" data-field="${safeKey}"></span></span>`
+    let badgeHtml = ''
+    if (fvStatus === 'verified') {
+      badgeHtml = '<span class="field-verified-badge">verified</span>'
+    } else if (fvStatus === 'unverified') {
+      badgeHtml = '<span class="field-inferred-badge">unverified</span>'
+    }
+    return `<span class="field-feedback-row" data-field="${safeKey}">${badgeHtml}<button class="field-vote field-vote-confirm" data-entity-id="${entityId}" data-field="${safeKey}" data-vote="1" title="Looks correct">&#x25B2;</button><button class="field-vote field-vote-flag" data-entity-id="${entityId}" data-field="${safeKey}" data-vote="-1" title="Flag as incorrect">&#x25BC;</button><span class="field-vote-counts" data-field="${safeKey}"></span></span>`
   }
 
   // Detail panel

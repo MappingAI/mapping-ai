@@ -835,12 +835,19 @@ export function App() {
           <div className="filter-chips" id="category-chips"></div>
         </div>
         <div className="control-group" id="verification-filter" style={{ display: 'none' }}>
-          <h3
-            title="Based on automated external source checks. Verified = 100% of fields confirmed. Partial = 50-99%. Unverified = less than 50%."
-            style={{ cursor: 'help' }}
+          <h3>Data Quality</h3>
+          <div
+            style={{
+              fontSize: '8px',
+              color: 'var(--text-3)',
+              fontFamily: 'var(--mono)',
+              marginBottom: '4px',
+              lineHeight: 1.4,
+            }}
           >
-            Data Quality
-          </h3>
+            Based on automated source checks per field. Verified&nbsp;= all fields confirmed. Partial&nbsp;= &gt;50%.
+            Unverified&nbsp;= &lt;50%.
+          </div>
           <div className="verification-legend-items" id="verification-legend-items">
             <div className="verification-legend-item active" data-status="verified">
               <span className="verification-legend-dot" style={{ background: '#16a34a' }}></span>
