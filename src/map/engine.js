@@ -1703,7 +1703,6 @@ export function initMapEngine() {
               if (d) Object.assign(entity, d)
             }
           }
-          _syncVerificationToNodes()
         })
         .catch(() => {}) // Non-critical — detail panel degrades gracefully
 
@@ -2150,19 +2149,6 @@ export function initMapEngine() {
     }
   })
 
-  // ── Verification filter ──
-  let verificationFilter = 'all'
-  for (const btn of document.querySelectorAll('#verification-chips button')) {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('#verification-chips button').forEach((b) => b.classList.remove('active'))
-      btn.classList.add('active')
-      if (btn.id === 'verification-show-verified') verificationFilter = 'verified'
-      else if (btn.id === 'verification-show-unverified') verificationFilter = 'unverified'
-      else verificationFilter = 'all'
-      render()
-    })
-  }
-
   // ── View mode (Network / Plot) + sub-tabs ──
   // PASSWORD GATE: force plot view when locked (don't overwrite saved preference)
   let viewMode = localStorage.getItem('mapMode') || 'network'
@@ -2356,19 +2342,6 @@ export function initMapEngine() {
     return activeSourceTypes.has(sourceType)
   }
 
-  function passesVerificationFilter(d) {
-    if (verificationFilter === 'all') return true
-    const fv = d.field_verification
-    const hasFv = fv && Object.keys(fv).length > 0
-    // Calculate unverified status inline (can't rely on d._unverified which is only set on canvas nodes)
-    const fvVals = hasFv ? Object.values(fv) : []
-    const unvCount = fvVals.filter((v) => v === 'unverified').length
-    const isUnverified = fvVals.length > 0 && unvCount > fvVals.length / 2
-    if (verificationFilter === 'verified') return hasFv && !isUnverified
-    if (verificationFilter === 'unverified') return !hasFv || isUnverified
-    return true
-  }
-
   function passesSecondaryCategoryFilter(d) {
     // Only applies when clustering by belief dimensions (not category)
     if (clusterDimension === 'category') return true
@@ -2523,7 +2496,6 @@ export function initMapEngine() {
           isFilterActive(d) &&
           passesStanceFilter(d) &&
           passesSourceTypeFilter(d) &&
-          passesVerificationFilter(d) &&
           passesSecondaryCategoryFilter(d),
       ).length
     if (currentView === 'people' || currentView === 'all')
@@ -2533,11 +2505,10 @@ export function initMapEngine() {
           isFilterActive(d) &&
           passesStanceFilter(d) &&
           passesSourceTypeFilter(d) &&
-          passesVerificationFilter(d) &&
           passesSecondaryCategoryFilter(d),
       ).length
     if (currentView === 'resources' || currentView === 'all')
-      totalCount += allData.resources.filter((d) => passesSourceTypeFilter(d) && passesVerificationFilter(d)).length
+      totalCount += allData.resources.filter((d) => passesSourceTypeFilter(d)).length
 
     // Scale: gentler curve—1.0 at 40, 0.7 at 100, 0.55 at 200
     const scale = Math.max(0.55, Math.min(1.0, 40 / Math.max(totalCount, 1)))
@@ -2549,7 +2520,7 @@ export function initMapEngine() {
         if (!d.category || !isFilterActive(d)) return
         if (!passesStanceFilter(d)) return
         if (!passesSourceTypeFilter(d)) return
-        if (!passesVerificationFilter(d)) return
+
         if (!passesSecondaryCategoryFilter(d)) return
         const sc = d.submission_count || 1
         // Smaller nodes for belief dimension clustering to improve readability
@@ -2583,7 +2554,7 @@ export function initMapEngine() {
         // In "all" view, always include people (they'll be mapped to an org sector cluster)
         if (!passesStanceFilter(d)) return
         if (!passesSourceTypeFilter(d)) return
-        if (!passesVerificationFilter(d)) return
+
         if (!passesSecondaryCategoryFilter(d)) return
         const sc = d.submission_count || 1
 
@@ -2651,7 +2622,7 @@ export function initMapEngine() {
         // Search filter: when active, only show entities in searchVisibleNames (resources use title as name)
         if (searchFilterActive && !searchVisibleNames.has(d.title)) return
         if (!passesSourceTypeFilter(d)) return
-        if (!passesVerificationFilter(d)) return
+
         const cat = d.category || 'Other' // cluster by topic category in resources view
         const sc = d.submission_count || 1
         const r = Math.round((14 + Math.min(Math.floor(sc / 3), 3)) * scale)
@@ -2676,7 +2647,6 @@ export function initMapEngine() {
         // Search filter: when active, only show entities in searchVisibleNames (resources use title as name)
         if (searchFilterActive && !searchVisibleNames.has(d.title)) return
         if (!passesSourceTypeFilter(d)) return
-        if (!passesVerificationFilter(d)) return
 
         // When belief filter is active, only show resources that have a checked belief value
         // OR are connected (via relationships) to a visible entity that passed the belief filter
@@ -2731,27 +2701,6 @@ export function initMapEngine() {
   // ═══════════════════════════════════════════════════════════════
   // Canvas rendering state (module-level for highlight functions)
   // ═══════════════════════════════════════════════════════════════
-  function _syncVerificationToNodes() {
-    if (!_canvasNodes || _canvasNodes.length === 0) return
-    const entityById = new Map()
-    for (const arr of [allData.people, allData.organizations, allData.resources]) {
-      for (const e of arr) entityById.set(e.id, e)
-    }
-    for (const node of _canvasNodes) {
-      const src = entityById.get(node.id)
-      if (src?.field_verification) node.field_verification = src.field_verification
-      const fv = node.field_verification
-      const hasFv = fv && Object.keys(fv).length > 0
-      if (!hasFv) {
-        node._unverified = false
-        continue
-      }
-      const fvVals = Object.values(fv)
-      const unvCount = fvVals.filter((v) => v === 'unverified').length
-      node._unverified = unvCount > fvVals.length / 2
-    }
-  }
-
   let _canvasNodes = []
   let _canvasLinks = []
   let _canvasClusterBgs = []
@@ -3155,19 +3104,6 @@ export function initMapEngine() {
         }
         ctx.setLineDash([])
       }
-
-      // Unverified indicator (red dot, top-right like messenger active status)
-      if (d._unverified && d._vs !== 'hidden' && d._vs !== 'dimmed') {
-        const dotR = Math.max(3.5, r * 0.28)
-        ctx.globalAlpha = 1
-        ctx.fillStyle = '#ef4444'
-        ctx.beginPath()
-        ctx.arc(x + r * 0.6, y - r * 0.6, dotR, 0, Math.PI * 2)
-        ctx.fill()
-        ctx.strokeStyle = document.documentElement.getAttribute('data-theme') === 'dark' ? '#1a1a1a' : '#fff'
-        ctx.lineWidth = 1.5
-        ctx.stroke()
-      }
     }
 
     // Layer 4: Cluster labels
@@ -3477,7 +3413,6 @@ export function initMapEngine() {
       }
     })
     _canvasNodes = nodes
-    _syncVerificationToNodes()
     _canvasCenterX = centerX
     _canvasCenterY = centerY
     _clusterDimmed = false
@@ -3905,7 +3840,6 @@ export function initMapEngine() {
       if (!d.category) return false
       if (!passesStanceFilter(d)) return false
       if (!passesSourceTypeFilter(d)) return false
-      if (!passesVerificationFilter(d)) return false
       if (!categoryFilterActive) return true
       if (activeCategories.size === 0) return false
       return activeCategories.has(d.category) || activeCategories.has(normalizeCategory(d.category))
@@ -4005,7 +3939,6 @@ export function initMapEngine() {
       }
     })
     _canvasNodes = nodes
-    _syncVerificationToNodes()
     _hoveredNode = null
     _clusterDimmed = false
 
@@ -4565,19 +4498,7 @@ ${dots}
     const color = getColor(d.category)
 
     let fields = ''
-    const fv = d.field_verification || {}
-    const fvValues = Object.values(fv)
-    const fvUnverifiedCount = fvValues.filter((v) => v === 'unverified').length
-    const fvTotal = fvValues.length
-    const isMajorityUnverified = fvTotal > 0 && fvUnverifiedCount > fvTotal / 2
-    const hasVerificationData = fvTotal > 0
-    const addField = (label, value, verifyKey) => {
-      if (verifyKey && fv[verifyKey] === 'unverified') {
-        if (value) {
-          fields += `<div class="detail-field unverified-field"><label>${label} <span class="unverified-dot" title="Not yet verified. May contain errors."></span></label><span class="verification-pending">${value}</span></div>`
-        }
-        return
-      }
+    const addField = (label, value) => {
       if (value) fields += `<div class="detail-field"><label>${label}</label><span>${value}</span></div>`
     }
 
@@ -4605,9 +4526,9 @@ ${dots}
     }
 
     if (d.entityType === 'person') {
-      addField('Title', d.title, 'title')
-      addField('Primary Organization', d.primary_org, 'primary_org')
-      addField('Other Organizations', d.other_orgs, 'other_orgs')
+      addField('Title', d.title)
+      addField('Primary Organization', d.primary_org)
+      addField('Other Organizations', d.other_orgs)
       const stColor = getStanceColor(d.regulatory_stance)
       const stSparkline = renderSparkline(d.id, 'regulatory_stance')
       addField(
@@ -4615,31 +4536,28 @@ ${dots}
         d.regulatory_stance
           ? `<span style="display:inline-flex;align-items:center;gap:5px;">${stColor ? `<span style="width:8px;height:8px;border-radius:50%;background:${stColor};display:inline-block;"></span>` : ''}${d.regulatory_stance}</span>${stSparkline}`
           : null,
-        'regulatory_stance',
       )
-      if (d.regulatory_stance_detail) addField('Stance Detail', d.regulatory_stance_detail, 'regulatory_stance_detail')
-      addField('Evidence Source', d.evidence_source, 'evidence_source')
+      if (d.regulatory_stance_detail) addField('Stance Detail', d.regulatory_stance_detail)
+      addField('Evidence Source', d.evidence_source)
       const tlSparkline = renderSparkline(d.id, 'agi_timeline')
-      addField('AGI Timeline', d.agi_timeline ? `${d.agi_timeline}${tlSparkline}` : null, 'agi_timeline')
+      addField('AGI Timeline', d.agi_timeline ? `${d.agi_timeline}${tlSparkline}` : null)
       const rlSparkline = renderSparkline(d.id, 'ai_risk_level')
-      addField('AI Risk Level', d.ai_risk_level ? `${d.ai_risk_level}${rlSparkline}` : null, 'ai_risk_level')
-      addField('Key Concerns', d.threat_models, 'threat_models')
-      addField('Influence Type', d.influence_type, 'influence_type')
+      addField('AI Risk Level', d.ai_risk_level ? `${d.ai_risk_level}${rlSparkline}` : null)
+      addField('Key Concerns', d.threat_models)
+      addField('Influence Type', d.influence_type)
       addField(
         'Twitter/X',
         d.twitter
           ? `<a href="https://x.com/${d.twitter.replace('@', '')}" target="_blank" rel="noopener">@${d.twitter.replace('@', '')}</a>`
           : null,
-        'twitter',
       )
       addField(
         'Bluesky',
         d.bluesky
           ? `<a href="https://bsky.app/profile/${d.bluesky.replace('@', '')}" target="_blank" rel="noopener">${d.bluesky}</a>`
           : null,
-        'bluesky',
       )
-      addField('Notes', d.notes, 'notes')
+      addField('Notes', d.notes)
     } else if (d.entityType === 'resource') {
       // Make author clickable if they're in our people database
       if (d.author) {
@@ -4717,11 +4635,11 @@ ${dots}
           `<div class="detail-beliefs" style="display:inline-flex;flex-wrap:wrap;gap:6px;">${advBeliefs.join('')}</div>`,
         )
       }
-      addField('Key Argument', d.key_argument, 'notes')
-      addField('Notes', d.notes, 'notes')
+      addField('Key Argument', d.key_argument)
+      addField('Notes', d.notes)
     } else {
-      addField('Website', d.website ? `<a href="${d.website}" target="_blank">${d.website}</a>` : null, 'website')
-      addField('Funding Model', d.funding_model, 'funding_model')
+      addField('Website', d.website ? `<a href="${d.website}" target="_blank">${d.website}</a>` : null)
+      addField('Funding Model', d.funding_model)
       const stColor = getStanceColor(d.regulatory_stance)
       const stSparkline2 = renderSparkline(d.id, 'regulatory_stance')
       addField(
@@ -4729,31 +4647,28 @@ ${dots}
         d.regulatory_stance
           ? `<span style="display:inline-flex;align-items:center;gap:5px;">${stColor ? `<span style="width:8px;height:8px;border-radius:50%;background:${stColor};display:inline-block;"></span>` : ''}${d.regulatory_stance}</span>${stSparkline2}`
           : null,
-        'regulatory_stance',
       )
-      if (d.regulatory_stance_detail) addField('Stance Detail', d.regulatory_stance_detail, 'regulatory_stance_detail')
-      addField('Evidence Source', d.evidence_source, 'evidence_source')
+      if (d.regulatory_stance_detail) addField('Stance Detail', d.regulatory_stance_detail)
+      addField('Evidence Source', d.evidence_source)
       const tlSparkline2 = renderSparkline(d.id, 'agi_timeline')
-      addField('AGI Timeline', d.agi_timeline ? `${d.agi_timeline}${tlSparkline2}` : null, 'agi_timeline')
+      addField('AGI Timeline', d.agi_timeline ? `${d.agi_timeline}${tlSparkline2}` : null)
       const rlSparkline2 = renderSparkline(d.id, 'ai_risk_level')
-      addField('AI Risk Level', d.ai_risk_level ? `${d.ai_risk_level}${rlSparkline2}` : null, 'ai_risk_level')
-      addField('Key Concerns', d.threat_models, 'threat_models')
-      addField('Influence Type', d.influence_type, 'influence_type')
+      addField('AI Risk Level', d.ai_risk_level ? `${d.ai_risk_level}${rlSparkline2}` : null)
+      addField('Key Concerns', d.threat_models)
+      addField('Influence Type', d.influence_type)
       addField(
         'Twitter/X',
         d.twitter
           ? `<a href="https://x.com/${d.twitter.replace('@', '')}" target="_blank" rel="noopener">@${d.twitter.replace('@', '')}</a>`
           : null,
-        'twitter',
       )
       addField(
         'Bluesky',
         d.bluesky
           ? `<a href="https://bsky.app/profile/${d.bluesky.replace('@', '')}" target="_blank" rel="noopener">${d.bluesky}</a>`
           : null,
-        'bluesky',
       )
-      addField('Notes', d.notes, 'notes')
+      addField('Notes', d.notes)
     }
 
     if (!fields) {
@@ -4938,14 +4853,7 @@ ${dots}
       }
     }
 
-    const verificationBanner = isMajorityUnverified
-      ? `<div class="unverified-banner"><span class="unverified-dot" style="width:6px;height:6px;margin-right:6px;"></span>This entry has not been fully verified and may contain errors. <a href="/contribute" style="color:inherit;text-decoration:underline;">Submit a correction</a></div>`
-      : hasVerificationData && !isMajorityUnverified
-        ? `<div class="verified-banner"><span class="verified-dot"></span>Verified</div>`
-        : ''
-
     const detailHtml = `
-    ${verificationBanner}
     ${imgHtml}
     <div class="detail-name">${escHtml(d.name || d.title)}</div>
     <div class="detail-type">${d.entityType}</div>
