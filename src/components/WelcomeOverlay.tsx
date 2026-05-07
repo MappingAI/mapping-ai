@@ -1,14 +1,12 @@
 import { useState } from 'react'
-
-const DISMISSED_KEY = 'welcome-dismissed'
+import { CORRECTIONS_NOTICE } from '../shared/corrections-notice'
 
 export function WelcomeOverlay() {
-  const [dismissed, setDismissed] = useState(() => localStorage.getItem(DISMISSED_KEY) === '1')
+  const [dismissed, setDismissed] = useState(false)
 
   if (dismissed) return null
 
   const dismiss = () => {
-    localStorage.setItem(DISMISSED_KEY, '1')
     setDismissed(true)
   }
 
@@ -28,7 +26,7 @@ export function WelcomeOverlay() {
           className="block mb-4 p-2.5 bg-[#fffbeb] border border-[#fde68a] rounded-md text-center font-mono text-[10.5px] text-[#92400e] tracking-wide no-underline hover:bg-[#fef3c7] transition-colors"
         >
           Thanks for the love on our <span className="underline decoration-dotted underline-offset-2">launch</span>!
-          110k+ views, 700+ saves and counting
+          238k+ views, 1.4k saves, 1.3k likes and counting
         </a>
 
         <h2 className="font-mono text-sm uppercase tracking-wider mb-4">Welcome to Mapping AI</h2>
@@ -78,6 +76,10 @@ export function WelcomeOverlay() {
           </a>
           . We're also open to ideas on collaborations or new directions for this resource.
         </p>
+
+        <div className="text-[12px] leading-relaxed mb-5 p-3 bg-[#fef3c7] rounded-md text-[#92400e]">
+          <strong className="text-[#78350f]">Update:</strong> {CORRECTIONS_NOTICE}
+        </div>
 
         <button
           onClick={dismiss}
