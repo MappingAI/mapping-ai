@@ -470,15 +470,16 @@ body {
   border: 1px solid transparent;
   border-radius: 2px;
   cursor: pointer;
-  font-size: 8px;
+  font-size: 9px;
   padding: 0 2px;
   line-height: 1;
-  opacity: 0.25;
+  opacity: 0.4;
   transition: opacity 0.15s;
-  margin-left: 1px;
+  margin-left: 2px;
 }
 .field-note-btn:hover {
   opacity: 1;
+  color: var(--accent);
 }
 .field-note-input-wrap {
   display: flex;
