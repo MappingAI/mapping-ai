@@ -390,6 +390,55 @@ body {
 .detail-field a {
   color: var(--accent);
 }
+.field-feedback-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.field-inferred-badge {
+  font-family: var(--mono);
+  font-size: 7px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 1px 4px;
+  border-radius: 3px;
+  background: #fef3c7;
+  color: #92400e;
+  font-weight: 500;
+  line-height: 1.3;
+}
+[data-theme='dark'] .field-inferred-badge {
+  background: #78350f;
+  color: #fde68a;
+}
+.field-vote {
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 10px;
+  padding: 0 3px;
+  line-height: 1.4;
+  opacity: 0.5;
+  transition:
+    opacity 0.15s,
+    border-color 0.15s;
+}
+.field-vote:hover {
+  opacity: 1;
+}
+.field-vote.voted {
+  opacity: 1;
+  border-color: var(--accent);
+}
+.field-vote-counts {
+  font-family: var(--mono);
+  font-size: 8px;
+  display: inline-flex;
+  gap: 4px;
+}
 .detail-affiliated {
   margin-top: 0.75rem;
   padding-top: 0.75rem;

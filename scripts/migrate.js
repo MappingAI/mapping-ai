@@ -206,6 +206,21 @@ async function migrate() {
     await client.query(`ALTER TABLE entity ADD COLUMN IF NOT EXISTS slug VARCHAR(250)`)
     await client.query('CREATE UNIQUE INDEX IF NOT EXISTS idx_entity_slug ON entity(entity_type, slug)')
 
+    // ── 4d. field_feedback table ───────────────────────────────────────────────
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS field_feedback (
+        id           SERIAL PRIMARY KEY,
+        entity_id    INTEGER NOT NULL REFERENCES entity(id) ON DELETE CASCADE,
+        field_name   VARCHAR(100) NOT NULL,
+        vote         SMALLINT NOT NULL,  -- +1 = confirm, -1 = flag
+        ip_hash      VARCHAR(64),
+        created_at   TIMESTAMPTZ DEFAULT NOW(),
+        UNIQUE(entity_id, field_name, ip_hash)
+      )
+    `)
+    await client.query('CREATE INDEX IF NOT EXISTS idx_ff_entity ON field_feedback(entity_id)')
+    console.log('  ✓ field_feedback')
+
     // ── 5. Score recalculation function ──────────────────────────────────────
     // Weights: self=10, connector=2, external=1
     // _n counts only submissions with a non-null score for that field

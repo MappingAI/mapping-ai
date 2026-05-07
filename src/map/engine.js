@@ -4457,8 +4457,19 @@ ${dots}
     const color = getColor(d.category)
 
     let fields = ''
-    const addField = (label, value) => {
-      if (value) fields += `<div class="detail-field"><label>${label}</label><span>${value}</span></div>`
+    const fieldKey = (label) =>
+      label
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '_')
+        .replace(/(^_|_$)/g, '')
+    const addField = (label, value, opts) => {
+      if (!value) return
+      const key = fieldKey(label)
+      const skipFeedback = opts && opts.skipFeedback
+      const feedbackHtml = skipFeedback
+        ? ''
+        : `<span class="field-feedback-row" data-field="${key}"><span class="field-inferred-badge">inferred</span><button class="field-vote field-vote-confirm" data-entity-id="${d.id}" data-field="${key}" data-vote="1" title="Looks correct">&#x1F44D;</button><button class="field-vote field-vote-flag" data-entity-id="${d.id}" data-field="${key}" data-vote="-1" title="Flag as incorrect">&#x1F44E;</button><span class="field-vote-counts" data-field="${key}"></span></span>`
+      fields += `<div class="detail-field"><label>${label}${feedbackHtml}</label><span>${value}</span></div>`
     }
 
     // Match reason (when in search mode with LLM results)
@@ -4468,6 +4479,7 @@ ${dots}
       addField(
         'Why matched',
         `<span style="background:#fef9c3;color:#713f12;padding:2px 8px;border-radius:3px;font-size:11px;">${matchReason}</span>`,
+        { skipFeedback: true },
       )
     }
 
@@ -4481,7 +4493,7 @@ ${dots}
         const dsLabel = ds > 0.3 ? 'High disagreement' : ds > 0.1 ? 'Some disagreement' : 'Low disagreement'
         badge += ` <span style="background:${dsColor}18;color:${dsColor};padding:1px 6px;border-radius:3px;font-size:11px;font-weight:500;margin-left:4px;">${dsLabel}</span>`
       }
-      addField('Submissions', badge)
+      addField('Submissions', badge, { skipFeedback: true })
     }
 
     if (d.entityType === 'person') {
@@ -5054,7 +5066,53 @@ ${dots}
     // Share button
     initShareButton(d)
 
+    // Field feedback: bind vote buttons and load existing counts
+    activeContent.querySelectorAll('.field-vote').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        const entityId = parseInt(btn.dataset.entityId, 10)
+        const fieldName = btn.dataset.field
+        const vote = parseInt(btn.dataset.vote, 10)
+        btn.classList.add('voted')
+        fetch('/api/field-feedback', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ entityId, fieldName, vote }),
+        })
+          .then((r) => r.json())
+          .then(() => {
+            const row = btn.closest('.field-feedback-row')
+            if (!row) return
+            row.querySelectorAll('.field-vote').forEach((b) => b.classList.remove('voted'))
+            btn.classList.add('voted')
+            loadFieldFeedback(entityId, activeContent)
+          })
+          .catch(() => {})
+      })
+    })
+    loadFieldFeedback(d.id, activeContent)
+
     panel.classList.add('open')
+  }
+
+  function loadFieldFeedback(entityId, container) {
+    fetch('/api/field-feedback?entityId=' + entityId)
+      .then((r) => r.json())
+      .then((data) => {
+        if (!data.feedback) return
+        container.querySelectorAll('.field-vote-counts').forEach((el) => {
+          const fieldName = el.dataset.field
+          const fb = data.feedback[fieldName]
+          if (fb && (fb.confirms > 0 || fb.flags > 0)) {
+            const parts = []
+            if (fb.confirms > 0) parts.push(`<span style="color:#16a34a;">&#x1F44D; ${fb.confirms}</span>`)
+            if (fb.flags > 0) parts.push(`<span style="color:#dc2626;">&#x1F44E; ${fb.flags}</span>`)
+            el.innerHTML = parts.join(' ')
+          }
+        })
+      })
+      .catch(() => {})
   }
 
   function showEdgeDetail(edge) {
