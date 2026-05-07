@@ -877,26 +877,36 @@ export function App() {
         </div>
         <div className="control-group" id="stance-legend">
           <h3 style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <select
-              id="belief-dim-select"
-              style={{
-                fontFamily: 'var(--mono)',
-                fontSize: '9px',
-                letterSpacing: '0.04em',
-                textTransform: 'uppercase',
-                background: 'transparent',
-                color: 'var(--text-1)',
-                border: 'none',
-                cursor: 'pointer',
-                fontWeight: 600,
-                padding: 0,
-                margin: 0,
-              }}
-            >
-              <option value="regulatory_stance">Regulatory Stance</option>
-              <option value="agi_timeline">AGI Timeline</option>
-              <option value="ai_risk_level">AI Risk Level</option>
-            </select>
+            <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <select
+                id="belief-dim-select"
+                style={{
+                  fontFamily: 'var(--mono)',
+                  fontSize: '9px',
+                  letterSpacing: '0.04em',
+                  textTransform: 'uppercase',
+                  background: 'transparent',
+                  color: 'var(--text-1)',
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontWeight: 600,
+                  padding: 0,
+                  margin: 0,
+                }}
+              >
+                <option value="regulatory_stance">Regulatory Stance</option>
+                <option value="agi_timeline">AGI Timeline</option>
+                <option value="ai_risk_level">AI Risk Level</option>
+              </select>
+              <span className="verification-info-trigger">
+                ?
+                <span className="verification-info-tooltip" style={{ width: '220px' }}>
+                  Scores are weighted averages from crowdsourced submissions. Self-reports (&#x25B2;&#x25B2;) weigh 10x,
+                  connectors 2x, external 1x. Field feedback votes (&#x25B2;+1, &#x25BC;-1) help confirm or flag values.
+                  Orgs temporarily do not display belief stances while we improve data quality.
+                </span>
+              </span>
+            </span>
             <span
               className="filter-reset"
               id="stance-reset"
