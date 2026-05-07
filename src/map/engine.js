@@ -4428,7 +4428,7 @@ ${dots}
 
   // Feedback badge helper (shared by showDetail + showEdgeDetail)
   function feedbackBadge(entityId, key) {
-    return `<span class="field-feedback-row" data-field="${key}"><span class="field-inferred-badge">unverified</span><button class="field-vote field-vote-confirm" data-entity-id="${entityId}" data-field="${key}" data-vote="1" title="Looks correct">&#x1F44D;</button><button class="field-vote field-vote-flag" data-entity-id="${entityId}" data-field="${key}" data-vote="-1" title="Flag as incorrect">&#x1F44E;</button><span class="field-vote-counts" data-field="${key}"></span></span>`
+    return `<span class="field-feedback-row" data-field="${key}"><span class="field-inferred-badge">unverified</span><button class="field-vote field-vote-confirm" data-entity-id="${entityId}" data-field="${key}" data-vote="1" title="Looks correct">&#x25B2;</button><button class="field-vote field-vote-flag" data-entity-id="${entityId}" data-field="${key}" data-vote="-1" title="Flag as incorrect">&#x25BC;</button><span class="field-vote-counts" data-field="${key}"></span></span>`
   }
 
   // Detail panel
@@ -5107,8 +5107,8 @@ ${dots}
       if (lv === -1) f = Math.max(f, 1)
       if (c > 0 || f > 0) {
         const parts = []
-        if (c > 0) parts.push(`<span style="color:#16a34a;">&#x1F44D; ${c}</span>`)
-        if (f > 0) parts.push(`<span style="color:#dc2626;">&#x1F44E; ${f}</span>`)
+        if (c > 0) parts.push(`<span style="color:#16a34a;">&#x25B2;${c}</span>`)
+        if (f > 0) parts.push(`<span style="color:#dc2626;">&#x25BC;${f}</span>`)
         el.innerHTML = parts.join(' ')
       }
     })
