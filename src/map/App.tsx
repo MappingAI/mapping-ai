@@ -836,7 +836,7 @@ export function App() {
         </div>
         <div className="control-group" id="verification-filter" style={{ display: 'none' }}>
           <h3
-            title="Based on automated external source checks. Verified = >75% of fields confirmed. Partial = 25-75%. Unverified = <25%."
+            title="Based on automated external source checks. Verified = 100% of fields confirmed. Partial = 50-99%. Unverified = less than 50%."
             style={{ cursor: 'help' }}
           >
             Data Quality

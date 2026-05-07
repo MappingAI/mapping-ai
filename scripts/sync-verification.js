@@ -86,9 +86,9 @@ async function getDbVerificationStatus() {
 
     const statusCounts = await client.query(`
       SELECT
-        SUM(CASE WHEN unv_ratio <= 0.25 THEN 1 ELSE 0 END) as verified_count,
-        SUM(CASE WHEN unv_ratio > 0.25 AND unv_ratio < 0.75 THEN 1 ELSE 0 END) as partial_count,
-        SUM(CASE WHEN unv_ratio >= 0.75 THEN 1 ELSE 0 END) as unverified_count
+        SUM(CASE WHEN unv_ratio = 0 THEN 1 ELSE 0 END) as verified_count,
+        SUM(CASE WHEN unv_ratio > 0 AND unv_ratio < 0.5 THEN 1 ELSE 0 END) as partial_count,
+        SUM(CASE WHEN unv_ratio >= 0.5 THEN 1 ELSE 0 END) as unverified_count
       FROM (
         SELECT id,
           (SELECT COUNT(*) FILTER (WHERE value = 'unverified')::float /
@@ -132,9 +132,9 @@ async function main() {
   if (dbStatus.statusBreakdown) {
     const sb = dbStatus.statusBreakdown
     console.log('Verification status:')
-    console.log(`  Verified (>75% fields OK): ${sb.verified_count || 0}`)
-    console.log(`  Partial (25-75%): ${sb.partial_count || 0}`)
-    console.log(`  Unverified (<25% OK): ${sb.unverified_count || 0}`)
+    console.log(`  Verified (100% fields OK): ${sb.verified_count || 0}`)
+    console.log(`  Partial (50-99%): ${sb.partial_count || 0}`)
+    console.log(`  Unverified (<50% OK): ${sb.unverified_count || 0}`)
     console.log()
   }
 

@@ -2790,9 +2790,8 @@ export function initMapEngine() {
     const vals = Object.values(fv)
     if (vals.length === 0) return null
     const unvCount = vals.filter((v) => v === 'unverified').length
-    const ratio = unvCount / vals.length
-    if (ratio <= 0.25) return 'verified'
-    if (ratio >= 0.75) return 'unverified'
+    if (unvCount === 0) return 'verified'
+    if (unvCount / vals.length >= 0.5) return 'unverified'
     return 'partial'
   }
 
