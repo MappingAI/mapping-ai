@@ -36,19 +36,26 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   }
 
   const { entityId, fieldName, vote } = body
-  if (!entityId || !fieldName || (vote !== 1 && vote !== -1)) {
-    return jsonResponse({ error: 'Invalid request: entityId, fieldName, vote (+1/-1) required' }, request, 400)
+  if (!entityId || !fieldName || (vote !== 1 && vote !== -1 && vote !== 0)) {
+    return jsonResponse({ error: 'Invalid request: entityId, fieldName, vote (+1/-1/0) required' }, request, 400)
   }
 
   const ipHash = ip ? crypto.createHash('sha256').update(ip).digest('hex').slice(0, 16) : 'unknown'
 
   const sql = getDb(env.DATABASE_URL)
-  await sql`
-    INSERT INTO field_feedback (entity_id, field_name, vote, ip_hash)
-    VALUES (${entityId}, ${fieldName}, ${vote}, ${ipHash})
-    ON CONFLICT (entity_id, field_name, ip_hash)
-    DO UPDATE SET vote = ${vote}, created_at = NOW()
-  `
+  if (vote === 0) {
+    await sql`
+      DELETE FROM field_feedback
+      WHERE entity_id = ${entityId} AND field_name = ${fieldName} AND ip_hash = ${ipHash}
+    `
+  } else {
+    await sql`
+      INSERT INTO field_feedback (entity_id, field_name, vote, ip_hash)
+      VALUES (${entityId}, ${fieldName}, ${vote}, ${ipHash})
+      ON CONFLICT (entity_id, field_name, ip_hash)
+      DO UPDATE SET vote = ${vote}, created_at = NOW()
+    `
+  }
 
   return jsonResponse({ ok: true }, request)
 }

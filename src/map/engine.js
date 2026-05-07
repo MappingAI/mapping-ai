@@ -5087,7 +5087,11 @@ ${dots}
 
   function setLocalVote(entityId, fieldName, vote) {
     const votes = getLocalVotes(entityId)
-    votes[fieldName] = vote
+    if (vote === 0) {
+      delete votes[fieldName]
+    } else {
+      votes[fieldName] = vote
+    }
     localStorage.setItem('fieldVotes_' + entityId, JSON.stringify(votes))
   }
 
@@ -5124,15 +5128,21 @@ ${dots}
       btn.addEventListener('click', (e) => {
         e.preventDefault()
         e.stopPropagation()
+        const currentVotes = getLocalVotes(entityId)
+        const isToggleOff = currentVotes[field] === vote
         const row = btn.closest('.field-feedback-row')
         if (row) row.querySelectorAll('.field-vote').forEach((b) => b.classList.remove('voted'))
-        btn.classList.add('voted')
-        setLocalVote(entityId, field, vote)
+        if (isToggleOff) {
+          setLocalVote(entityId, field, 0)
+        } else {
+          btn.classList.add('voted')
+          setLocalVote(entityId, field, vote)
+        }
         renderVoteCounts(container, entityId, window.__fieldFeedbackCache?.[entityId])
         fetch('/api/field-feedback', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ entityId, fieldName: field, vote }),
+          body: JSON.stringify({ entityId, fieldName: field, vote: isToggleOff ? 0 : vote }),
         })
           .then((r) => r.ok && r.json())
           .then(() => loadFieldFeedback(entityId, container))
