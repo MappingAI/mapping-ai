@@ -564,13 +564,7 @@ export function App() {
             </button>
           </div>
           <div className="view-toggles" id="plot-sub-tabs" style={{ display: 'none' }}>
-            <button className="view-btn active" data-entity="all">
-              All
-            </button>
-            <button className="view-btn" data-entity="organizations">
-              Orgs
-            </button>
-            <button className="view-btn" data-entity="people">
+            <button className="view-btn active" data-entity="people">
               People
             </button>
           </div>

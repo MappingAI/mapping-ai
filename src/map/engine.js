@@ -1862,9 +1862,7 @@ export function initMapEngine() {
       } else if (currentView === 'resources') {
         rawCats = [...new Set(allData.resources.map((d) => d.category || 'Other').filter(Boolean))]
       } else if (currentView === '2d') {
-        const peopleCats = axis2dEntityType !== 'organizations' ? getAllCats(allData.people) : []
-        const orgCats = axis2dEntityType !== 'people' ? getAllCats(allData.organizations) : []
-        rawCats = [...new Set([...peopleCats, ...orgCats])]
+        rawCats = [...new Set(getAllCats(allData.people))]
       } else {
         rawCats = [...new Set(getAllCats(allData.organizations))]
       }
@@ -3787,16 +3785,7 @@ export function initMapEngine() {
     const yAxisDef = axisMode === '2d' ? AXES[axisY] : null
 
     const candidates = [
-      ...(axis2dEntityType !== 'organizations'
-        ? allData.people.map((d) => ({ ...d, entityType: 'person', submissionCount: d.submission_count || 1 }))
-        : []),
-      ...(axis2dEntityType !== 'people'
-        ? allData.organizations.map((d) => ({
-            ...d,
-            entityType: 'organization',
-            submissionCount: d.submission_count || 1,
-          }))
-        : []),
+      ...allData.people.map((d) => ({ ...d, entityType: 'person', submissionCount: d.submission_count || 1 })),
     ].filter((d) => {
       if (!d.category) return false
       if (!passesStanceFilter(d)) return false
@@ -4617,20 +4606,6 @@ ${dots}
     } else {
       addField('Website', d.website ? `<a href="${d.website}" target="_blank">${d.website}</a>` : null)
       addField('Funding Model', d.funding_model)
-      const stColor = getStanceColor(d.regulatory_stance)
-      const stSparkline2 = renderSparkline(d.id, 'regulatory_stance')
-      addField(
-        'Regulatory Stance',
-        d.regulatory_stance
-          ? `<span style="display:inline-flex;align-items:center;gap:5px;">${stColor ? `<span style="width:8px;height:8px;border-radius:50%;background:${stColor};display:inline-block;"></span>` : ''}${d.regulatory_stance}</span>${stSparkline2}`
-          : null,
-      )
-      if (d.regulatory_stance_detail) addField('Stance Detail', d.regulatory_stance_detail)
-      addField('Evidence Source', d.evidence_source)
-      const tlSparkline2 = renderSparkline(d.id, 'agi_timeline')
-      addField('AGI Timeline', d.agi_timeline ? `${d.agi_timeline}${tlSparkline2}` : null)
-      const rlSparkline2 = renderSparkline(d.id, 'ai_risk_level')
-      addField('AI Risk Level', d.ai_risk_level ? `${d.ai_risk_level}${rlSparkline2}` : null)
       addField('Key Concerns', d.threat_models)
       addField('Influence Type', d.influence_type)
       addField(
@@ -4807,7 +4782,7 @@ ${dots}
 
     // Build belief summary (colored dots with labels)
     let beliefSummary = ''
-    if (d.entityType !== 'resource') {
+    if (d.entityType === 'person') {
       const beliefs = []
       if (d.regulatory_stance) {
         const c = getStanceColor(d.regulatory_stance) || STANCE_COLORS[d.regulatory_stance] || '#a07828'
