@@ -3156,7 +3156,7 @@ export function initMapEngine() {
       }
 
       // Unverified indicator (red dot, top-right like messenger active status)
-      if (d._unverified && state !== 'hidden' && state !== 'dimmed') {
+      if (d._unverified && d._vs !== 'hidden' && d._vs !== 'dimmed') {
         const dotR = Math.max(3.5, r * 0.28)
         ctx.globalAlpha = 1
         ctx.fillStyle = '#ef4444'
