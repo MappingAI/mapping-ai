@@ -4426,6 +4426,11 @@ ${dots}
   </div>`
   }
 
+  // Feedback badge helper (shared by showDetail + showEdgeDetail)
+  function feedbackBadge(entityId, key) {
+    return `<span class="field-feedback-row" data-field="${key}"><span class="field-inferred-badge">unverified</span><button class="field-vote field-vote-confirm" data-entity-id="${entityId}" data-field="${key}" data-vote="1" title="Looks correct">&#x1F44D;</button><button class="field-vote field-vote-flag" data-entity-id="${entityId}" data-field="${key}" data-vote="-1" title="Flag as incorrect">&#x1F44E;</button><span class="field-vote-counts" data-field="${key}"></span></span>`
+  }
+
   // Detail panel
   function showDetail(d, allNodes) {
     // PASSWORD GATE: prompt for password instead of showing detail when locked
@@ -4466,10 +4471,8 @@ ${dots}
       if (!value) return
       const key = fieldKey(label)
       const skipFeedback = opts && opts.skipFeedback
-      const feedbackHtml = skipFeedback
-        ? ''
-        : `<span class="field-feedback-row" data-field="${key}"><span class="field-inferred-badge">inferred</span><button class="field-vote field-vote-confirm" data-entity-id="${d.id}" data-field="${key}" data-vote="1" title="Looks correct">&#x1F44D;</button><button class="field-vote field-vote-flag" data-entity-id="${d.id}" data-field="${key}" data-vote="-1" title="Flag as incorrect">&#x1F44E;</button><span class="field-vote-counts" data-field="${key}"></span></span>`
-      fields += `<div class="detail-field"><label>${label}${feedbackHtml}</label><span>${value}</span></div>`
+      const fb = skipFeedback ? '' : feedbackBadge(d.id, key)
+      fields += `<div class="detail-field"><label>${label}${fb}</label><span>${value}</span></div>`
     }
 
     // Match reason (when in search mode with LLM results)
@@ -4673,7 +4676,7 @@ ${dots}
       for (const [dim, claims] of Object.entries(byDim)) {
         const dimLabel = DIM_LABELS[dim] || dim
         let itemsHtml = ''
-        claims.forEach((c) => {
+        claims.forEach((c, ci) => {
           const src = cd.sources[c.src]
           const scoreColor = c.score > 0 ? '#1e6fd1' : c.score < 0 ? '#d6342c' : 'var(--text-3)'
           const confColor = c.conf === 'high' ? '#2e7d32' : c.conf === 'medium' ? '#f57f17' : '#c62828'
@@ -4697,7 +4700,8 @@ ${dots}
           const metaHtml = meta
             ? `<div style="font-size:9px;color:var(--text-3);margin-top:2px;">${escHtml(meta)}</div>`
             : ''
-          itemsHtml += `<div style="border-left:2px solid var(--border);padding-left:8px;margin-bottom:8px;">${scoreText}${labelText}${confBadge}${cite}${srcLink}${metaHtml}</div>`
+          const claimFb = feedbackBadge(d.id, `claim_${dim}_${ci}`)
+          itemsHtml += `<div style="border-left:2px solid var(--border);padding-left:8px;margin-bottom:8px;">${scoreText}${labelText}${confBadge}${claimFb}${cite}${srcLink}${metaHtml}</div>`
         })
         claimsHtml += `<div style="margin-bottom:10px;"><div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-3);margin-bottom:4px;">${dimLabel}</div>${itemsHtml}</div>`
       }
@@ -4758,6 +4762,7 @@ ${dots}
                   <span class="connection-chevron" style="color:var(--text-3);font-size:10px;transition:transform 0.15s;">▸</span>
                   <span class="connection-name" style="flex:1;">${escHtml(item.name)}</span>
                   <span style="font-size:10px;padding:2px 6px;border-radius:3px;background:${relColor.bg};color:${relColor.text};">${relType}</span>
+                  ${feedbackBadge(d.id, `edge_${d.id}_${item.entity.id}`)}
                 </div>
                 <div class="connection-details" data-item-id="${itemId}" style="display:none;padding:8px 0 8px 16px;border-left:2px solid var(--line);margin-left:4px;">
                   <div class="connection-evidence" data-edge-id="${item.edgeId || ''}" style="font-size:12px;color:var(--text-2);margin-bottom:8px;">
@@ -5067,50 +5072,85 @@ ${dots}
     initShareButton(d)
 
     // Field feedback: bind vote buttons and load existing counts
-    activeContent.querySelectorAll('.field-vote').forEach((btn) => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault()
-        e.stopPropagation()
-        const entityId = parseInt(btn.dataset.entityId, 10)
-        const fieldName = btn.dataset.field
-        const vote = parseInt(btn.dataset.vote, 10)
-        btn.classList.add('voted')
-        fetch('/api/field-feedback', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ entityId, fieldName, vote }),
-        })
-          .then((r) => r.json())
-          .then(() => {
-            const row = btn.closest('.field-feedback-row')
-            if (!row) return
-            row.querySelectorAll('.field-vote').forEach((b) => b.classList.remove('voted'))
-            btn.classList.add('voted')
-            loadFieldFeedback(entityId, activeContent)
-          })
-          .catch(() => {})
-      })
-    })
-    loadFieldFeedback(d.id, activeContent)
+    bindFieldFeedback(activeContent, d.id)
 
     panel.classList.add('open')
   }
 
+  function getLocalVotes(entityId) {
+    try {
+      return JSON.parse(localStorage.getItem('fieldVotes_' + entityId) || '{}')
+    } catch {
+      return {}
+    }
+  }
+
+  function setLocalVote(entityId, fieldName, vote) {
+    const votes = getLocalVotes(entityId)
+    votes[fieldName] = vote
+    localStorage.setItem('fieldVotes_' + entityId, JSON.stringify(votes))
+  }
+
+  function renderVoteCounts(container, entityId, serverFeedback) {
+    const localVotes = getLocalVotes(entityId)
+    container.querySelectorAll('.field-vote-counts').forEach((el) => {
+      const field = el.dataset.field
+      const fb = (serverFeedback && serverFeedback[field]) || { confirms: 0, flags: 0 }
+      let c = fb.confirms || 0
+      let f = fb.flags || 0
+      const lv = localVotes[field]
+      if (lv === 1) c = Math.max(c, 1)
+      if (lv === -1) f = Math.max(f, 1)
+      if (c > 0 || f > 0) {
+        const parts = []
+        if (c > 0) parts.push(`<span style="color:#16a34a;">&#x1F44D; ${c}</span>`)
+        if (f > 0) parts.push(`<span style="color:#dc2626;">&#x1F44E; ${f}</span>`)
+        el.innerHTML = parts.join(' ')
+      }
+    })
+    container.querySelectorAll('.field-vote').forEach((btn) => {
+      const field = btn.dataset.field
+      const vote = parseInt(btn.dataset.vote, 10)
+      if (localVotes[field] === vote) btn.classList.add('voted')
+    })
+  }
+
+  function bindFieldFeedback(container, entityId) {
+    const localVotes = getLocalVotes(entityId)
+    container.querySelectorAll('.field-vote').forEach((btn) => {
+      const field = btn.dataset.field
+      const vote = parseInt(btn.dataset.vote, 10)
+      if (localVotes[field] === vote) btn.classList.add('voted')
+      btn.addEventListener('click', (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        const row = btn.closest('.field-feedback-row')
+        if (row) row.querySelectorAll('.field-vote').forEach((b) => b.classList.remove('voted'))
+        btn.classList.add('voted')
+        setLocalVote(entityId, field, vote)
+        renderVoteCounts(container, entityId, window.__fieldFeedbackCache?.[entityId])
+        fetch('/api/field-feedback', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ entityId, fieldName: field, vote }),
+        })
+          .then((r) => r.ok && r.json())
+          .then(() => loadFieldFeedback(entityId, container))
+          .catch(() => {})
+      })
+    })
+    renderVoteCounts(container, entityId, null)
+    loadFieldFeedback(entityId, container)
+  }
+
   function loadFieldFeedback(entityId, container) {
     fetch('/api/field-feedback?entityId=' + entityId)
-      .then((r) => r.json())
+      .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
-        if (!data.feedback) return
-        container.querySelectorAll('.field-vote-counts').forEach((el) => {
-          const fieldName = el.dataset.field
-          const fb = data.feedback[fieldName]
-          if (fb && (fb.confirms > 0 || fb.flags > 0)) {
-            const parts = []
-            if (fb.confirms > 0) parts.push(`<span style="color:#16a34a;">&#x1F44D; ${fb.confirms}</span>`)
-            if (fb.flags > 0) parts.push(`<span style="color:#dc2626;">&#x1F44E; ${fb.flags}</span>`)
-            el.innerHTML = parts.join(' ')
-          }
-        })
+        if (!data || !data.feedback) return
+        if (!window.__fieldFeedbackCache) window.__fieldFeedbackCache = {}
+        window.__fieldFeedbackCache[entityId] = data.feedback
+        renderVoteCounts(container, entityId, data.feedback)
       })
       .catch(() => {})
   }
@@ -5180,7 +5220,7 @@ ${dots}
         '<div style="color:var(--text-3);font-style:italic;">No citations available for this relationship.</div>'
     } else {
       evidenceHtml = evidenceData
-        .map((ev) => {
+        .map((ev, idx) => {
           const cite = ev.citation
             ? `<div style="font-style:italic;color:var(--text-2);font-size:12px;line-height:1.45;margin:3px 0;">&ldquo;${escHtml(ev.citation.length > 300 ? ev.citation.substring(0, 300) + '...' : ev.citation)}&rdquo;</div>`
             : ''
@@ -5203,7 +5243,8 @@ ${dots}
           const roleHtml = ev.role_title
             ? `<div style="font-size:10px;color:var(--text-2);margin-top:2px;">${escHtml(ev.role_title)}</div>`
             : ''
-          return `<div style="border-left:2px solid var(--line);padding-left:8px;margin-bottom:10px;">${cite}${srcLink}${metaHtml}${amountHtml}${periodHtml}${roleHtml}</div>`
+          const evFb = feedbackBadge(edge.source.id, `evidence_${edge.edgeId}_${idx}`)
+          return `<div style="border-left:2px solid var(--line);padding-left:8px;margin-bottom:10px;">${evFb}${cite}${srcLink}${metaHtml}${amountHtml}${periodHtml}${roleHtml}</div>`
         })
         .join('')
     }
@@ -5350,6 +5391,9 @@ ${dots}
         }
       })
     }
+
+    // Bind feedback buttons in edge detail
+    bindFieldFeedback(content, edge.source.id)
 
     panel.classList.add('open')
   }
