@@ -1696,6 +1696,16 @@ export function initMapEngine() {
 
       buildSlugMaps()
 
+      window.searchEntities = function (query) {
+        if (!query || query.length < 1) return { people: [], organizations: [], resources: [] }
+        const q = query.toLowerCase()
+        return {
+          people: allData.people.filter((p) => p.name?.toLowerCase().includes(q)).slice(0, 8),
+          organizations: allData.organizations.filter((o) => o.name?.toLowerCase().includes(q)).slice(0, 8),
+          resources: allData.resources.filter((r) => (r.title || r.name || '').toLowerCase().includes(q)).slice(0, 5),
+        }
+      }
+
       // Build links (needed by both mobile mini-graph and desktop map)
       const explicitLinks = buildExplicitLinks(allData)
       const fuzzyLinks = inferOrgLinks(data.people, data.organizations)
@@ -5275,7 +5285,7 @@ ${dots}
           }
           notesEl.innerHTML = fieldNotes
             .slice(0, 3)
-            .map((n) => `<div class="field-note-item">${escHtml(n.note)}</div>`)
+            .map((n) => `<div class="field-note-item">${n.html || escHtml(n.note)}</div>`)
             .join('')
         }
       })
@@ -5299,30 +5309,63 @@ ${dots}
         modal.innerHTML =
           '<div class="field-note-modal-card">' +
           `<div class="field-note-modal-header"><span>Note on <strong>${escHtml(fieldLabel)}</strong> — ${escHtml(entityName)}</span><button class="field-note-modal-close">&times;</button></div>` +
-          '<textarea class="field-note-textarea" placeholder="Add a correction, source, or context..." rows="3"></textarea>' +
+          '<div class="field-note-modal-hint">Type @ to mention people, orgs, or resources. Use toolbar for formatting. Cmd+Enter to submit.</div>' +
+          '<div class="field-note-editor-wrap"><div class="tiptap-notes field-note-tiptap"></div><input type="hidden" name="notesHtml"><input type="hidden" name="notesMentions"></div>' +
           '<div class="field-note-modal-footer"><button class="field-note-submit">Submit</button></div>' +
           '</div>'
         document.body.appendChild(modal)
-        const textarea = modal.querySelector('textarea')
+        const editorWrap = modal.querySelector('.field-note-editor-wrap')
+        const tiptapEl = modal.querySelector('.field-note-tiptap')
         const submitBtn = modal.querySelector('.field-note-submit')
         const closeBtn = modal.querySelector('.field-note-modal-close')
-        textarea.focus()
         function close() {
+          if (tiptapEl._editor) tiptapEl._editor.destroy()
           modal.remove()
         }
         closeBtn.addEventListener('click', close)
         modal.addEventListener('click', (ev) => {
           if (ev.target === modal) close()
         })
+        document.addEventListener('keydown', function escHandler(ev) {
+          if (ev.key === 'Escape') {
+            close()
+            document.removeEventListener('keydown', escHandler)
+          }
+        })
+        function getEditorContent() {
+          if (tiptapEl._editor) {
+            const text = tiptapEl._editor.getText().trim()
+            const html = tiptapEl._editor.getHTML()
+            const mentions = []
+            tiptapEl._editor.state.doc.descendants((node) => {
+              if (node.type.name === 'mention') {
+                mentions.push({
+                  type: node.attrs.entityType || node.attrs['data-entity-type'],
+                  id: node.attrs.entityId || node.attrs['data-entity-id'],
+                  label: node.attrs.label,
+                })
+              }
+            })
+            return { text, html, mentions }
+          }
+          const ta = editorWrap.querySelector('textarea')
+          return { text: ta ? ta.value.trim() : '', html: null, mentions: [] }
+        }
         function doSubmit() {
-          const text = textarea.value.trim()
+          const { text, html, mentions } = getEditorContent()
           if (!text) return
           submitBtn.disabled = true
-          textarea.disabled = true
           fetch('/api/field-notes', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ entityId: eid, fieldName: field, note: text, voterId: getVoterId() }),
+            body: JSON.stringify({
+              entityId: eid,
+              fieldName: field,
+              note: text,
+              noteHtml: html,
+              noteMentions: mentions.length > 0 ? mentions : undefined,
+              voterId: getVoterId(),
+            }),
           })
             .then((r) => {
               if (r.ok) {
@@ -5334,30 +5377,69 @@ ${dots}
                 }
                 const item = document.createElement('div')
                 item.className = 'field-note-item'
-                item.textContent = text
+                item.innerHTML = html || escHtml(text)
                 notesEl.prepend(item)
                 close()
               } else {
                 submitBtn.disabled = false
-                textarea.disabled = false
               }
             })
             .catch(() => {
               submitBtn.disabled = false
-              textarea.disabled = false
             })
         }
         submitBtn.addEventListener('click', (ev) => {
           ev.stopPropagation()
           doSubmit()
         })
-        textarea.addEventListener('keydown', (ev) => {
-          if (ev.key === 'Enter' && (ev.metaKey || ev.ctrlKey)) {
-            ev.preventDefault()
-            doSubmit()
+        if (!window._tiptapLoaded && !document.querySelector('script[src*="tiptap-notes"]')) {
+          const script = document.createElement('script')
+          script.src = '/assets/js/tiptap-notes.js'
+          script.onload = () => {
+            window._tiptapLoaded = true
+            if (window.initTipTapEditors) window.initTipTapEditors()
+            const pm = tiptapEl.querySelector('.ProseMirror')
+            if (pm) {
+              pm.focus()
+              pm.addEventListener('keydown', (ev) => {
+                if (ev.key === 'Enter' && (ev.metaKey || ev.ctrlKey)) {
+                  ev.preventDefault()
+                  doSubmit()
+                }
+              })
+            }
           }
-          if (ev.key === 'Escape') close()
-        })
+          script.onerror = () => {
+            tiptapEl.remove()
+            const ta = document.createElement('textarea')
+            ta.className = 'field-note-textarea'
+            ta.placeholder = 'Add a correction, source, or context...'
+            ta.rows = 3
+            editorWrap.prepend(ta)
+            ta.focus()
+            ta.addEventListener('keydown', (ev) => {
+              if (ev.key === 'Enter' && (ev.metaKey || ev.ctrlKey)) {
+                ev.preventDefault()
+                doSubmit()
+              }
+            })
+          }
+          document.head.appendChild(script)
+        } else {
+          if (window.initTipTapEditors) window.initTipTapEditors()
+          setTimeout(() => {
+            const pm = tiptapEl.querySelector('.ProseMirror')
+            if (pm) {
+              pm.focus()
+              pm.addEventListener('keydown', (ev) => {
+                if (ev.key === 'Enter' && (ev.metaKey || ev.ctrlKey)) {
+                  ev.preventDefault()
+                  doSubmit()
+                }
+              })
+            }
+          }, 50)
+        }
       })
     })
   }

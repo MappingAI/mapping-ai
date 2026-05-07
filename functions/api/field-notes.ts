@@ -28,6 +28,8 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     entityId?: number
     fieldName?: string
     note?: string
+    noteHtml?: string
+    noteMentions?: unknown[]
     voterId?: string
   }
   try {
@@ -36,7 +38,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     return jsonResponse({ error: 'Invalid JSON body' }, request, 400)
   }
 
-  const { entityId, fieldName, note, voterId } = body
+  const { entityId, fieldName, note, noteHtml, noteMentions, voterId } = body
   if (typeof entityId !== 'number' || !Number.isInteger(entityId) || entityId <= 0) {
     return jsonResponse({ error: 'Invalid entityId' }, request, 400)
   }
@@ -46,15 +48,17 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   if (!note || typeof note !== 'string' || note.trim().length === 0) {
     return jsonResponse({ error: 'Note text required' }, request, 400)
   }
-  const trimmed = note.trim().slice(0, 280)
+  const trimmedNote = note.trim()
+  const trimmedHtml = typeof noteHtml === 'string' ? noteHtml : null
+  const mentions = Array.isArray(noteMentions) ? JSON.stringify(noteMentions) : null
 
   const clientId = typeof voterId === 'string' && voterId.length >= 8 ? voterId : 'anon'
   const voterHash = await computeVoterHash(ip, clientId, env.VOTER_SALT)
 
   const sql = getDb(env.DATABASE_URL)
   await sql`
-    INSERT INTO field_notes (entity_id, field_name, note, voter_id)
-    VALUES (${entityId}, ${fieldName}, ${trimmed}, ${voterHash})
+    INSERT INTO field_notes (entity_id, field_name, note, note_html, note_mentions, voter_id)
+    VALUES (${entityId}, ${fieldName}, ${trimmedNote}, ${trimmedHtml}, ${mentions}::jsonb, ${voterHash})
   `
 
   return jsonResponse({ ok: true }, request)
@@ -73,18 +77,19 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
 
   const sql = getDb(env.DATABASE_URL)
   const rows = await sql`
-    SELECT field_name, note, created_at
+    SELECT field_name, note, note_html, created_at
     FROM field_notes
     WHERE entity_id = ${entityId}
     ORDER BY created_at DESC
     LIMIT 50
   `
 
-  const notes: Record<string, Array<{ note: string; date: string }>> = {}
+  const notes: Record<string, Array<{ note: string; html: string | null; date: string }>> = {}
   for (const row of rows) {
     if (!notes[row.field_name]) notes[row.field_name] = []
     notes[row.field_name].push({
       note: row.note,
+      html: row.note_html || null,
       date: row.created_at,
     })
   }

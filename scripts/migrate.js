@@ -247,11 +247,15 @@ async function migrate() {
         entity_id    INTEGER NOT NULL REFERENCES entity(id) ON DELETE CASCADE,
         field_name   VARCHAR(100) NOT NULL,
         note         TEXT NOT NULL,
+        note_html    TEXT,
+        note_mentions JSONB,
         voter_id     VARCHAR(64),
         created_at   TIMESTAMPTZ DEFAULT NOW()
       )
     `)
     await client.query('CREATE INDEX IF NOT EXISTS idx_fn_entity ON field_notes(entity_id)')
+    await client.query('ALTER TABLE field_notes ADD COLUMN IF NOT EXISTS note_html TEXT')
+    await client.query('ALTER TABLE field_notes ADD COLUMN IF NOT EXISTS note_mentions JSONB')
     console.log('  ✓ field_notes')
 
     // ── 5. Score recalculation function ──────────────────────────────────────
