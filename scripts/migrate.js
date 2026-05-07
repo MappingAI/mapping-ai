@@ -206,6 +206,39 @@ async function migrate() {
     await client.query(`ALTER TABLE entity ADD COLUMN IF NOT EXISTS slug VARCHAR(250)`)
     await client.query('CREATE UNIQUE INDEX IF NOT EXISTS idx_entity_slug ON entity(entity_type, slug)')
 
+    // ── 4d. field_feedback table ───────────────────────────────────────────────
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS field_feedback (
+        id           SERIAL PRIMARY KEY,
+        entity_id    INTEGER NOT NULL REFERENCES entity(id) ON DELETE CASCADE,
+        field_name   VARCHAR(100) NOT NULL,
+        vote         SMALLINT NOT NULL,
+        voter_id     VARCHAR(64),
+        created_at   TIMESTAMPTZ DEFAULT NOW(),
+        UNIQUE(entity_id, field_name, voter_id, vote)
+      )
+    `)
+    await client.query('CREATE INDEX IF NOT EXISTS idx_ff_entity ON field_feedback(entity_id)')
+    await client.query(
+      `ALTER TABLE field_feedback DROP CONSTRAINT IF EXISTS field_feedback_entity_id_field_name_voter_id_key`,
+    )
+    await client.query(
+      `ALTER TABLE field_feedback DROP CONSTRAINT IF EXISTS field_feedback_entity_id_field_name_ip_hash_key`,
+    )
+    await client.query(
+      'CREATE UNIQUE INDEX IF NOT EXISTS idx_ff_entity_field_voter_vote ON field_feedback(entity_id, field_name, voter_id, vote)',
+    )
+    // Rename ip_hash to voter_id if the old column exists (migration from older schema)
+    await client.query(`
+      DO $$ BEGIN
+        IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'field_feedback' AND column_name = 'ip_hash') THEN
+          ALTER TABLE field_feedback RENAME COLUMN ip_hash TO voter_id;
+          ALTER TABLE field_feedback DROP CONSTRAINT IF EXISTS field_feedback_entity_id_field_name_ip_hash_key;
+        END IF;
+      END $$
+    `)
+    console.log('  ✓ field_feedback')
+
     // ── 5. Score recalculation function ──────────────────────────────────────
     // Weights: self=10, connector=2, external=1
     // _n counts only submissions with a non-null score for that field

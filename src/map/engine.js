@@ -1,5 +1,7 @@
 /* eslint-disable */
 // @ts-nocheck
+import { getVoterId, getLocalVotes, setLocalVote } from '../shared/field-feedback-utils.ts'
+
 export function initMapEngine() {
   var searchFilterActive = false
   var searchVisibleNames = new Set()
@@ -552,7 +554,7 @@ export function initMapEngine() {
   let axisMode = '2d' // '1d' | '2d'
   let axisX = 'regulatory_stance'
   let axisY = 'agi_timeline'
-  let axis2dEntityType = 'all' // 'all' | 'people' | 'organizations'
+  let axis2dEntityType = 'people'
 
   const AXES = {
     regulatory_stance: {
@@ -1860,9 +1862,7 @@ export function initMapEngine() {
       } else if (currentView === 'resources') {
         rawCats = [...new Set(allData.resources.map((d) => d.category || 'Other').filter(Boolean))]
       } else if (currentView === '2d') {
-        const peopleCats = axis2dEntityType !== 'organizations' ? getAllCats(allData.people) : []
-        const orgCats = axis2dEntityType !== 'people' ? getAllCats(allData.organizations) : []
-        rawCats = [...new Set([...peopleCats, ...orgCats])]
+        rawCats = [...new Set(getAllCats(allData.people))]
       } else {
         rawCats = [...new Set(getAllCats(allData.organizations))]
       }
@@ -3785,16 +3785,7 @@ export function initMapEngine() {
     const yAxisDef = axisMode === '2d' ? AXES[axisY] : null
 
     const candidates = [
-      ...(axis2dEntityType !== 'organizations'
-        ? allData.people.map((d) => ({ ...d, entityType: 'person', submissionCount: d.submission_count || 1 }))
-        : []),
-      ...(axis2dEntityType !== 'people'
-        ? allData.organizations.map((d) => ({
-            ...d,
-            entityType: 'organization',
-            submissionCount: d.submission_count || 1,
-          }))
-        : []),
+      ...allData.people.map((d) => ({ ...d, entityType: 'person', submissionCount: d.submission_count || 1 })),
     ].filter((d) => {
       if (!d.category) return false
       if (!passesStanceFilter(d)) return false
@@ -4426,6 +4417,12 @@ ${dots}
   </div>`
   }
 
+  // Feedback badge helper (shared by showDetail + showEdgeDetail)
+  function feedbackBadge(entityId, key) {
+    const safeKey = escHtml(key)
+    return `<span class="field-feedback-row" data-field="${safeKey}"><span class="field-inferred-badge">unverified</span><button class="field-vote field-vote-confirm" data-entity-id="${entityId}" data-field="${safeKey}" data-vote="1" title="Looks correct">&#x25B2;</button><button class="field-vote field-vote-flag" data-entity-id="${entityId}" data-field="${safeKey}" data-vote="-1" title="Flag as incorrect">&#x25BC;</button><span class="field-vote-counts" data-field="${safeKey}"></span></span>`
+  }
+
   // Detail panel
   function showDetail(d, allNodes) {
     // PASSWORD GATE: prompt for password instead of showing detail when locked
@@ -4457,8 +4454,17 @@ ${dots}
     const color = getColor(d.category)
 
     let fields = ''
-    const addField = (label, value) => {
-      if (value) fields += `<div class="detail-field"><label>${label}</label><span>${value}</span></div>`
+    const fieldKey = (label) =>
+      label
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '_')
+        .replace(/(^_|_$)/g, '')
+    const addField = (label, value, opts) => {
+      if (!value) return
+      const key = fieldKey(label)
+      const skipFeedback = opts && opts.skipFeedback
+      const fb = skipFeedback ? '' : feedbackBadge(d.id, key)
+      fields += `<div class="detail-field"><div class="detail-field-header"><label>${label}</label>${fb}</div><span>${value}</span></div>`
     }
 
     // Match reason (when in search mode with LLM results)
@@ -4468,6 +4474,7 @@ ${dots}
       addField(
         'Why matched',
         `<span style="background:#fef9c3;color:#713f12;padding:2px 8px;border-radius:3px;font-size:11px;">${matchReason}</span>`,
+        { skipFeedback: true },
       )
     }
 
@@ -4481,7 +4488,7 @@ ${dots}
         const dsLabel = ds > 0.3 ? 'High disagreement' : ds > 0.1 ? 'Some disagreement' : 'Low disagreement'
         badge += ` <span style="background:${dsColor}18;color:${dsColor};padding:1px 6px;border-radius:3px;font-size:11px;font-weight:500;margin-left:4px;">${dsLabel}</span>`
       }
-      addField('Submissions', badge)
+      addField('Submissions', badge, { skipFeedback: true })
     }
 
     if (d.entityType === 'person') {
@@ -4599,20 +4606,6 @@ ${dots}
     } else {
       addField('Website', d.website ? `<a href="${d.website}" target="_blank">${d.website}</a>` : null)
       addField('Funding Model', d.funding_model)
-      const stColor = getStanceColor(d.regulatory_stance)
-      const stSparkline2 = renderSparkline(d.id, 'regulatory_stance')
-      addField(
-        'Regulatory Stance',
-        d.regulatory_stance
-          ? `<span style="display:inline-flex;align-items:center;gap:5px;">${stColor ? `<span style="width:8px;height:8px;border-radius:50%;background:${stColor};display:inline-block;"></span>` : ''}${d.regulatory_stance}</span>${stSparkline2}`
-          : null,
-      )
-      if (d.regulatory_stance_detail) addField('Stance Detail', d.regulatory_stance_detail)
-      addField('Evidence Source', d.evidence_source)
-      const tlSparkline2 = renderSparkline(d.id, 'agi_timeline')
-      addField('AGI Timeline', d.agi_timeline ? `${d.agi_timeline}${tlSparkline2}` : null)
-      const rlSparkline2 = renderSparkline(d.id, 'ai_risk_level')
-      addField('AI Risk Level', d.ai_risk_level ? `${d.ai_risk_level}${rlSparkline2}` : null)
       addField('Key Concerns', d.threat_models)
       addField('Influence Type', d.influence_type)
       addField(
@@ -4661,7 +4654,7 @@ ${dots}
       for (const [dim, claims] of Object.entries(byDim)) {
         const dimLabel = DIM_LABELS[dim] || dim
         let itemsHtml = ''
-        claims.forEach((c) => {
+        claims.forEach((c, ci) => {
           const src = cd.sources[c.src]
           const scoreColor = c.score > 0 ? '#1e6fd1' : c.score < 0 ? '#d6342c' : 'var(--text-3)'
           const confColor = c.conf === 'high' ? '#2e7d32' : c.conf === 'medium' ? '#f57f17' : '#c62828'
@@ -4685,7 +4678,8 @@ ${dots}
           const metaHtml = meta
             ? `<div style="font-size:9px;color:var(--text-3);margin-top:2px;">${escHtml(meta)}</div>`
             : ''
-          itemsHtml += `<div style="border-left:2px solid var(--border);padding-left:8px;margin-bottom:8px;">${scoreText}${labelText}${confBadge}${cite}${srcLink}${metaHtml}</div>`
+          const claimFb = feedbackBadge(d.id, `claim_${dim}_${c.src ?? ci}`)
+          itemsHtml += `<div style="border-left:2px solid var(--border);padding-left:8px;margin-bottom:8px;">${scoreText}${labelText}${confBadge}${claimFb}${cite}${srcLink}${metaHtml}</div>`
         })
         claimsHtml += `<div style="margin-bottom:10px;"><div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-3);margin-bottom:4px;">${dimLabel}</div>${itemsHtml}</div>`
       }
@@ -4746,6 +4740,7 @@ ${dots}
                   <span class="connection-chevron" style="color:var(--text-3);font-size:10px;transition:transform 0.15s;">▸</span>
                   <span class="connection-name" style="flex:1;">${escHtml(item.name)}</span>
                   <span style="font-size:10px;padding:2px 6px;border-radius:3px;background:${relColor.bg};color:${relColor.text};">${relType}</span>
+                  ${feedbackBadge(Math.min(d.id, item.entity.id), `edge_${Math.min(d.id, item.entity.id)}_${Math.max(d.id, item.entity.id)}`)}
                 </div>
                 <div class="connection-details" data-item-id="${itemId}" style="display:none;padding:8px 0 8px 16px;border-left:2px solid var(--line);margin-left:4px;">
                   <div class="connection-evidence" data-edge-id="${item.edgeId || ''}" style="font-size:12px;color:var(--text-2);margin-bottom:8px;">
@@ -4787,7 +4782,7 @@ ${dots}
 
     // Build belief summary (colored dots with labels)
     let beliefSummary = ''
-    if (d.entityType !== 'resource') {
+    if (d.entityType === 'person') {
       const beliefs = []
       if (d.regulatory_stance) {
         const c = getStanceColor(d.regulatory_stance) || STANCE_COLORS[d.regulatory_stance] || '#a07828'
@@ -5054,7 +5049,94 @@ ${dots}
     // Share button
     initShareButton(d)
 
+    // Field feedback: bind vote buttons and load existing counts
+    bindFieldFeedback(activeContent, d.id)
+
     panel.classList.add('open')
+  }
+
+  function renderVoteCounts(container, entityId, serverFeedback) {
+    const localVotes = getLocalVotes(entityId)
+    const eidStr = String(entityId)
+    container.querySelectorAll('.field-feedback-row').forEach((row) => {
+      const rowBtn = row.querySelector('.field-vote')
+      if (!rowBtn || rowBtn.dataset.entityId !== eidStr) return
+      const field = row.dataset.field
+      const countsEl = row.querySelector('.field-vote-counts')
+      if (!countsEl) return
+      const fb = (serverFeedback && serverFeedback[field]) || { confirms: 0, flags: 0 }
+      let c = fb.confirms || 0
+      let f = fb.flags || 0
+      const lv = localVotes[field] || {}
+      if (lv.up) c = Math.max(c, 1)
+      if (lv.down) f = Math.max(f, 1)
+      if (c > 0 || f > 0) {
+        const parts = []
+        if (c > 0) parts.push(`<span style="color:#16a34a;">&#x25B2;${c}</span>`)
+        if (f > 0) parts.push(`<span style="color:#dc2626;">&#x25BC;${f}</span>`)
+        countsEl.innerHTML = parts.join(' ')
+      } else {
+        countsEl.innerHTML = ''
+      }
+      row.querySelectorAll('.field-vote').forEach((btn) => {
+        const vote = parseInt(btn.dataset.vote, 10)
+        btn.classList.toggle('voted', vote === 1 ? !!lv.up : !!lv.down)
+      })
+    })
+  }
+
+  function bindFieldFeedback(container, entityId) {
+    const allEntityIds = new Set([entityId])
+    container.querySelectorAll('.field-vote').forEach((btn) => {
+      const btnEntityId = parseInt(btn.dataset.entityId, 10) || entityId
+      allEntityIds.add(btnEntityId)
+      const field = btn.dataset.field
+      const vote = parseInt(btn.dataset.vote, 10)
+      const lv = getLocalVotes(btnEntityId)[field] || {}
+      if (vote === 1 && lv.up) btn.classList.add('voted')
+      if (vote === -1 && lv.down) btn.classList.add('voted')
+      btn.addEventListener('click', (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        const dir = vote === 1 ? 'up' : 'down'
+        const current = getLocalVotes(btnEntityId)
+        const isActive = !!(current[field] && current[field][dir])
+        const nowActive = !isActive
+        setLocalVote(btnEntityId, field, dir, nowActive)
+        btn.classList.toggle('voted', nowActive)
+        renderVoteCounts(container, btnEntityId, window.__fieldFeedbackCache?.[btnEntityId])
+        fetch('/api/field-feedback', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            entityId: btnEntityId,
+            fieldName: field,
+            vote,
+            voterId: getVoterId(),
+            action: nowActive ? 'add' : 'remove',
+          }),
+        })
+          .then((r) => r.ok && r.json())
+          .then(() => loadFieldFeedback(btnEntityId, container))
+          .catch(() => {})
+      })
+    })
+    allEntityIds.forEach((eid) => {
+      renderVoteCounts(container, eid, null)
+      loadFieldFeedback(eid, container)
+    })
+  }
+
+  function loadFieldFeedback(entityId, container) {
+    fetch('/api/field-feedback?entityId=' + entityId)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (!data || !data.feedback) return
+        if (!window.__fieldFeedbackCache) window.__fieldFeedbackCache = {}
+        window.__fieldFeedbackCache[entityId] = data.feedback
+        renderVoteCounts(container, entityId, data.feedback)
+      })
+      .catch(() => {})
   }
 
   function showEdgeDetail(edge) {
@@ -5122,7 +5204,7 @@ ${dots}
         '<div style="color:var(--text-3);font-style:italic;">No citations available for this relationship.</div>'
     } else {
       evidenceHtml = evidenceData
-        .map((ev) => {
+        .map((ev, idx) => {
           const cite = ev.citation
             ? `<div style="font-style:italic;color:var(--text-2);font-size:12px;line-height:1.45;margin:3px 0;">&ldquo;${escHtml(ev.citation.length > 300 ? ev.citation.substring(0, 300) + '...' : ev.citation)}&rdquo;</div>`
             : ''
@@ -5145,7 +5227,11 @@ ${dots}
           const roleHtml = ev.role_title
             ? `<div style="font-size:10px;color:var(--text-2);margin-top:2px;">${escHtml(ev.role_title)}</div>`
             : ''
-          return `<div style="border-left:2px solid var(--line);padding-left:8px;margin-bottom:10px;">${cite}${srcLink}${metaHtml}${amountHtml}${periodHtml}${roleHtml}</div>`
+          const evFb = feedbackBadge(
+            Math.min(edge.source.id, edge.target.id),
+            `evidence_${edge.edgeId || 'inferred'}_${idx}`,
+          )
+          return `<div style="border-left:2px solid var(--line);padding-left:8px;margin-bottom:10px;">${evFb}${cite}${srcLink}${metaHtml}${amountHtml}${periodHtml}${roleHtml}</div>`
         })
         .join('')
     }
@@ -5292,6 +5378,9 @@ ${dots}
         }
       })
     }
+
+    // Bind feedback buttons in edge detail (use canonical entity ID so both directions load the same feedback)
+    bindFieldFeedback(content, Math.min(edge.source.id, edge.target.id))
 
     panel.classList.add('open')
   }
