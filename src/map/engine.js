@@ -5077,6 +5077,15 @@ ${dots}
     panel.classList.add('open')
   }
 
+  function getVoterId() {
+    let id = localStorage.getItem('fieldVoterId')
+    if (!id) {
+      id = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2) + Date.now().toString(36)
+      localStorage.setItem('fieldVoterId', id)
+    }
+    return id
+  }
+
   function getLocalVotes(entityId) {
     try {
       return JSON.parse(localStorage.getItem('fieldVotes_' + entityId) || '{}')
@@ -5144,7 +5153,7 @@ ${dots}
         fetch('/api/field-feedback', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ entityId, fieldName: field, vote: isToggleOff ? 0 : vote }),
+          body: JSON.stringify({ entityId, fieldName: field, vote: isToggleOff ? 0 : vote, voterId: getVoterId() }),
         })
           .then((r) => r.ok && r.json())
           .then(() => loadFieldFeedback(entityId, container))

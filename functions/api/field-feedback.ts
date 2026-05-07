@@ -1,9 +1,8 @@
-import crypto from 'crypto'
 import type { Env } from './_shared/env.ts'
 import { jsonResponse, optionsResponse } from './_shared/cors.ts'
 import { getDb } from './_shared/db.ts'
 
-const RATE_LIMIT = 60
+const RATE_LIMIT = 120
 const RATE_WINDOW_MS = 60 * 60 * 1000
 const ipCounts = new Map<string, { count: number; windowStart: number }>()
 
@@ -33,25 +32,27 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     entityId?: number
     fieldName?: string
     vote?: number
+    voterId?: string
   }
 
-  const { entityId, fieldName, vote } = body
+  const { entityId, fieldName, vote, voterId } = body
   if (!entityId || !fieldName || (vote !== 1 && vote !== -1 && vote !== 0)) {
     return jsonResponse({ error: 'Invalid request: entityId, fieldName, vote (+1/-1/0) required' }, request, 400)
   }
-
-  const ipHash = ip ? crypto.createHash('sha256').update(ip).digest('hex').slice(0, 16) : 'unknown'
+  if (!voterId || voterId.length < 8 || voterId.length > 64) {
+    return jsonResponse({ error: 'Invalid voterId' }, request, 400)
+  }
 
   const sql = getDb(env.DATABASE_URL)
   if (vote === 0) {
     await sql`
       DELETE FROM field_feedback
-      WHERE entity_id = ${entityId} AND field_name = ${fieldName} AND ip_hash = ${ipHash}
+      WHERE entity_id = ${entityId} AND field_name = ${fieldName} AND ip_hash = ${voterId}
     `
   } else {
     await sql`
       INSERT INTO field_feedback (entity_id, field_name, vote, ip_hash)
-      VALUES (${entityId}, ${fieldName}, ${vote}, ${ipHash})
+      VALUES (${entityId}, ${fieldName}, ${vote}, ${voterId})
       ON CONFLICT (entity_id, field_name, ip_hash)
       DO UPDATE SET vote = ${vote}, created_at = NOW()
     `
