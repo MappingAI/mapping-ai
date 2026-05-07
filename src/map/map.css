@@ -390,15 +390,34 @@ body {
 .detail-field a {
   color: var(--accent);
 }
+.unverified-field {
+  opacity: 0.6;
+}
+.unverified-field label {
+  color: var(--text-3);
+}
+.unverified-flag {
+  color: #ef4444;
+  font-size: 9px;
+  margin-left: 3px;
+  cursor: help;
+}
 .verification-pending {
-  font-family: var(--mono);
-  font-size: 11px;
+  font-family: var(--serif);
+  font-size: 14px;
   color: var(--text-3);
   font-style: italic;
-  background: var(--bg-2);
-  padding: 2px 8px;
+}
+.unverified-banner {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: #92400e;
+  background: #fef3c7;
+  border: 1px solid #fde68a;
   border-radius: 4px;
-  border: 1px dashed var(--border);
+  padding: 6px 10px;
+  margin-bottom: 10px;
+  line-height: 1.5;
 }
 .detail-affiliated {
   margin-top: 0.75rem;
@@ -476,6 +495,9 @@ body:has(.detail-panel.open) #contribute-btn {
 .zoom-btn:hover {
   border-color: var(--text-3);
   color: var(--text-1);
+}
+#download-map {
+  margin-top: 0.4rem;
 }
 
 /* Beliefs view zoom controls - separate class to avoid !important hide rule */

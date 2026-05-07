@@ -71,6 +71,7 @@ export interface DbEntityRow {
   belief_ai_risk_wvar: number | null
   belief_ai_risk_n: number
 
+  slug: string | null
   submission_count: number
   status: 'approved' | 'pending' | 'internal'
   qa_approved: boolean

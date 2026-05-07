@@ -302,6 +302,7 @@ export function initMapEngine() {
     const url = d.thumbnail_url
     if (!url) return
     const img = new Image()
+    img.crossOrigin = 'anonymous'
     img.referrerPolicy = 'no-referrer'
     img.onload = () => onSuccess(url)
     img.src = url
@@ -333,19 +334,7 @@ export function initMapEngine() {
       items.push({ entity, entityType, name: displayName, type: typeName, rel: rel || 'affiliated', edgeId })
     }
 
-    // From inferredLinks
-    inferredLinks.forEach((l) => {
-      if (l.personName === d.name) {
-        const org = allData.organizations.find((o) => o.name === l.orgName)
-        if (org) addItem(org, 'organization', 'affiliated')
-      }
-      if (l.orgName === d.name) {
-        const person = allData.people.find((p) => p.name === l.personName)
-        if (person) addItem(person, 'person', 'affiliated')
-      }
-    })
-
-    // From relationships
+    // From relationships (explicit edges with real types, processed first)
     if (allData.relationships) {
       const entityKey = d.entityType === 'resource' ? 'resource' : d.entityType
       allData.relationships.forEach((rel) => {
@@ -379,6 +368,18 @@ export function initMapEngine() {
           })
       }
     }
+
+    // From inferredLinks (name-based, defaults to 'affiliated', processed last)
+    inferredLinks.forEach((l) => {
+      if (l.personName === d.name) {
+        const org = allData.organizations.find((o) => o.name === l.orgName)
+        if (org) addItem(org, 'organization', 'affiliated')
+      }
+      if (l.orgName === d.name) {
+        const person = allData.people.find((p) => p.name === l.personName)
+        if (person) addItem(person, 'person', 'affiliated')
+      }
+    })
 
     return items
   }
@@ -606,40 +607,102 @@ export function initMapEngine() {
     return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
   }
 
+  function downloadBlob(blob, filename) {
+    if (!blob) return
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = filename
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    setTimeout(() => URL.revokeObjectURL(url), 100)
+  }
+
+  function buildDownloadFilename(node, vMode, curView, aX, aY, aMode) {
+    const entityName = node
+      ? node.slug ||
+        (node.name || node.title || '')
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-|-$/g, '')
+      : ''
+    let filename = 'mapping-ai'
+    if (entityName) {
+      filename += '-' + entityName
+    } else if (vMode === 'plot') {
+      filename += '-plot-' + aX + (aMode === '2d' ? '-vs-' + aY : '')
+    } else {
+      filename += '-network-' + curView
+    }
+    return filename + '.png'
+  }
+
   // ─── Deep link slug utilities ───
-  const slugMap = new Map() // "person/42" → entity
+  const idMap = new Map() // "person/42" → entity (fallback for old ?entity= links)
+  const slugMap = new Map() // "person/dario-amodei" → entity
+  const typePrefix = { person: 'person', organization: 'org', resource: 'resource' }
   const isMobileDirectory = window.innerWidth < 768
   let mobileScrollPos = 0
 
   function buildSlugMaps() {
-    const typePrefix = { person: 'person', organization: 'org', resource: 'resource' }
     const allEntities = [
       ...allData.people.map((d) => ({ ...d, entityType: 'person' })),
       ...allData.organizations.map((d) => ({ ...d, entityType: 'organization' })),
       ...allData.resources.map((d) => ({ ...d, entityType: 'resource' })),
     ]
     for (const d of allEntities) {
-      const key = typePrefix[d.entityType] + '/' + d.id
-      slugMap.set(key, d)
+      const prefix = typePrefix[d.entityType] || d.entityType
+      idMap.set(prefix + '/' + d.id, d)
+      if (d.slug) slugMap.set(prefix + '/' + d.slug, d)
     }
   }
 
   function getEntitySlug(d) {
-    const typePrefix = { person: 'person', organization: 'org', resource: 'resource' }
-    return (typePrefix[d.entityType] || d.entityType) + '/' + d.id
+    const prefix = typePrefix[d.entityType] || d.entityType
+    return prefix + '/' + (d.slug || d.id)
   }
 
   function getDeepLinkUrl(d) {
-    const slug = getEntitySlug(d)
-    if (!slug) return window.location.href
-    return window.location.origin + window.location.pathname + '?entity=' + encodeURIComponent(slug)
+    return window.location.origin + '/map/' + getEntitySlug(d)
+  }
+
+  function getEdgeDeepLinkUrl(edge) {
+    const eid = edge.edgeId || edge.id
+    if (eid) return window.location.origin + '/map/edge/' + eid
+    return window.location.origin + '/map/' + getEntitySlug(edge.source)
   }
 
   function resolveDeepLink() {
+    // Edge URLs: /map/edge/123
+    const edgeMatch = window.location.pathname.match(/^\/map\/edge\/(\d+)\/?$/)
+    if (edgeMatch) return { _edgeId: parseInt(edgeMatch[1], 10) }
+
+    // Belief URLs: /map/belief/entity-slug
+    const beliefMatch = window.location.pathname.match(/^\/map\/belief\/([^/]+)\/?$/)
+    if (beliefMatch) {
+      try {
+        return { _beliefSlug: decodeURIComponent(beliefMatch[1]) }
+      } catch {
+        return null
+      }
+    }
+
+    // Path-based slug URLs: /map/person/dario-amodei
+    const pathMatch = window.location.pathname.match(/^\/map\/(person|org|resource)\/([^/]+)\/?$/)
+    if (pathMatch) {
+      try {
+        const key = pathMatch[1] + '/' + decodeURIComponent(pathMatch[2])
+        return slugMap.get(key) || idMap.get(key) || null
+      } catch {
+        return null
+      }
+    }
+    // Fallback: ?entity=person/42 (legacy format)
     const params = new URLSearchParams(window.location.search)
     const entityParam = params.get('entity')
     if (!entityParam) return null
-    return slugMap.get(entityParam) || null
+    return idMap.get(entityParam) || slugMap.get(entityParam) || null
   }
 
   // ─── Mini Network Graph for Mobile ───
@@ -990,13 +1053,12 @@ export function initMapEngine() {
     })
   }
 
-  // Shared share handler—used by both desktop and mobile share buttons
   function shareEntity(entity) {
     const url = getDeepLinkUrl(entity)
-    if (navigator.share) {
+    if (isMobileDirectory && navigator.share) {
       navigator.share({ title: entity.name || entity.title, url }).catch(() => {})
+      return
     }
-    // Copy to clipboard with fallback for non-HTTPS / older browsers
     function showCopiedToast() {
       const toast = document.getElementById('share-toast')
       toast.classList.remove('visible') // reset in case it's still showing
@@ -1570,7 +1632,7 @@ export function initMapEngine() {
 
     // Deep link (PASSWORD GATE: defer until unlocked)
     const deepLinkTarget = document.body.classList.contains('locked') ? null : resolveDeepLink()
-    if (deepLinkTarget) {
+    if (deepLinkTarget && !deepLinkTarget._edgeId && !deepLinkTarget._beliefSlug) {
       const targetSlug = getEntitySlug(deepLinkTarget)
       const targetCard = document.querySelector(`.mobile-card[data-slug="${targetSlug}"]`)
       if (targetCard) {
@@ -1607,6 +1669,14 @@ export function initMapEngine() {
               const d = detail[entity.id]
               if (d) Object.assign(entity, d)
             }
+          }
+          if (_canvasNodes) {
+            for (const node of _canvasNodes) {
+              const fvVals = Object.values(node.field_verification || {})
+              const unvCount = fvVals.filter((v) => v === 'unverified').length
+              node._unverified = fvVals.length > 0 && unvCount > fvVals.length / 2
+            }
+            _requestRedraw()
           }
         })
         .catch(() => {}) // Non-critical — detail panel degrades gracefully
@@ -1647,21 +1717,59 @@ export function initMapEngine() {
         return
       }
 
-      // Desktop path: remove mobile loading screen if present
-      const ml = document.getElementById('mobile-loading')
-      if (ml) ml.remove()
+      // Resolve deep link target
+      const deepLinkTarget = document.body.classList.contains('locked') ? null : resolveDeepLink()
+
+      // Belief deep links dispatch to React and skip engine rendering
+      if (deepLinkTarget && deepLinkTarget._beliefSlug) {
+        window.dispatchEvent(new CustomEvent('deeplink-belief', { detail: { slug: deepLinkTarget._beliefSlug } }))
+      }
+
+      // Force network 'all' view when deep-linked to entity or edge
+      if (deepLinkTarget && !deepLinkTarget._beliefSlug) {
+        if (viewMode !== 'network' || currentView !== 'all') {
+          viewMode = 'network'
+          currentView = 'all'
+          localStorage.setItem('mapMode', 'network')
+          localStorage.setItem('mapSubView', 'all')
+          applyViewState()
+        }
+      }
+
+      // Desktop path
       buildFilters()
       buildStanceLegend()
       buildSourceTypeFilter()
       updateSourceTypeVisibility()
       render()
 
-      // Desktop deep link handling (PASSWORD GATE: defer until unlocked)
-      const deepLinkTarget = document.body.classList.contains('locked') ? null : resolveDeepLink()
-      if (deepLinkTarget) {
-        setTimeout(() => {
+      // Desktop deep link handling
+      if (deepLinkTarget && deepLinkTarget._edgeId) {
+        afterSimulationSettles(() => {
+          const edgeId = deepLinkTarget._edgeId
+          const edge = _canvasLinks.find((l) => l.edgeId === edgeId)
+          if (edge) {
+            const midX = (edge.source.x + edge.target.x) / 2
+            const midY = (edge.source.y + edge.target.y) / 2
+            const k = 2.5
+            const panelWidth = 320
+            const mapEl = document.getElementById('map-container')
+            const centerX = (mapEl.clientWidth - panelWidth) / 2
+            const centerY = mapEl.clientHeight / 2
+            const newTransform = d3.zoomIdentity.translate(centerX - midX * k, centerY - midY * k).scale(k)
+            if (zoomBehavior && _canvasSel) {
+              _canvasSel.transition().duration(400).call(zoomBehavior.transform, newTransform)
+            }
+            _selectedEdge = edge
+            selectedNode = edge.source
+            dimUnconnected(selectedNode)
+            showEdgeDetail(edge)
+          }
+        })
+      } else if (deepLinkTarget && !deepLinkTarget._beliefSlug) {
+        afterSimulationSettles(() => {
           const renderedNodes = _canvasNodes.length > 0 ? _canvasNodes : d3.selectAll('.node').data()
-          const node = renderedNodes.find((n) => n.name === (deepLinkTarget.name || deepLinkTarget.title))
+          const node = renderedNodes.find((n) => n.id === deepLinkTarget.id)
           if (node) {
             showDetail(node, renderedNodes)
             dimUnconnected(node)
@@ -1678,7 +1786,7 @@ export function initMapEngine() {
                   .scale(k),
               )
           }
-        }, 1000)
+        })
       }
     })
 
@@ -2018,7 +2126,7 @@ export function initMapEngine() {
 
   // ── View mode (Network / Plot) + sub-tabs ──
   // PASSWORD GATE: force plot view when locked (don't overwrite saved preference)
-  let viewMode = localStorage.getItem('mapMode') || 'plot'
+  let viewMode = localStorage.getItem('mapMode') || 'network'
   const savedSubView = localStorage.getItem('mapSubView') || 'all'
 
   const urlParams = new URLSearchParams(window.location.search)
@@ -2968,6 +3076,18 @@ export function initMapEngine() {
         }
         ctx.setLineDash([])
       }
+
+      // Unverified indicator (red dot, top-right like messenger active status)
+      if (d._unverified && state !== 'hidden' && state !== 'dimmed') {
+        ctx.globalAlpha = Math.min(0.9, alpha)
+        ctx.fillStyle = '#ef4444'
+        ctx.beginPath()
+        ctx.arc(x + r * 0.65, y - r * 0.65, Math.max(2.5, r * 0.22), 0, Math.PI * 2)
+        ctx.fill()
+        ctx.strokeStyle = isDark ? '#1a1a1a' : '#fff'
+        ctx.lineWidth = 1
+        ctx.stroke()
+      }
     }
 
     // Layer 4: Cluster labels
@@ -3275,6 +3395,9 @@ export function initMapEngine() {
       if (d.entityType === 'organization' && !d.isResource) {
         d._brighterColor = d3.color(getClusterColor(d)).brighter(0.8).toString()
       }
+      const fvVals = Object.values(d.field_verification || {})
+      const unvCount = fvVals.filter((v) => v === 'unverified').length
+      d._unverified = fvVals.length > 0 && unvCount > fvVals.length / 2
     })
     _canvasNodes = nodes
     _canvasCenterX = centerX
@@ -3389,6 +3512,7 @@ export function initMapEngine() {
     for (const { d, cacheKey } of spriteQueue) {
       const url = d.thumbnail_url
       const img = new Image()
+      img.crossOrigin = 'anonymous'
       img.referrerPolicy = 'no-referrer'
       img.onload = () => {
         const oc = rasterizeSprite(d, img)
@@ -3456,6 +3580,15 @@ export function initMapEngine() {
     document.getElementById('zoom-reset').onclick = () => {
       currentZoom = d3.zoomIdentity
       canvasSel.transition().duration(500).call(zoomBehavior.transform, d3.zoomIdentity)
+    }
+
+    document.getElementById('download-map').onclick = () => {
+      const filename = buildDownloadFilename(selectedNode, viewMode, currentView, axisX, axisY, axisMode)
+      try {
+        canvas.toBlob((blob) => downloadBlob(blob, filename), 'image/png')
+      } catch (_) {
+        alert('Could not export — thumbnail images blocked the download. Try reloading the page.')
+      }
     }
 
     // Canvas hover (tooltip for nodes and edges)
@@ -3850,6 +3983,7 @@ export function initMapEngine() {
     for (const { d, cacheKey } of spriteQueue) {
       const url = d.thumbnail_url
       const img = new Image()
+      img.crossOrigin = 'anonymous'
       img.referrerPolicy = 'no-referrer'
       img.onload = () => {
         const oc = rasterizeSprite(d, img)
@@ -3911,6 +4045,15 @@ export function initMapEngine() {
     document.getElementById('zoom-reset').onclick = () => {
       currentZoom = d3.zoomIdentity
       canvasSel.transition().duration(500).call(zoomBehavior.transform, d3.zoomIdentity)
+    }
+
+    document.getElementById('download-map').onclick = () => {
+      const filename = buildDownloadFilename(selectedNode, viewMode, currentView, axisX, axisY, axisMode)
+      try {
+        canvas.toBlob((blob) => downloadBlob(blob, filename), 'image/png')
+      } catch (_) {
+        alert('Could not export — thumbnail images blocked the download. Try reloading the page.')
+      }
     }
 
     canvasSel.on('mousemove.hover', function (event) {
@@ -4343,10 +4486,14 @@ ${dots}
 
     let fields = ''
     const fv = d.field_verification || {}
+    const fvValues = Object.values(fv)
+    const fvUnverifiedCount = fvValues.filter((v) => v === 'unverified').length
+    const fvTotal = fvValues.length
+    const isMajorityUnverified = fvTotal > 0 && fvUnverifiedCount > fvTotal / 2
     const addField = (label, value, verifyKey) => {
       if (verifyKey && fv[verifyKey] === 'unverified') {
         if (value) {
-          fields += `<div class="detail-field"><label>${label}</label><span class="verification-pending">Verification in progress</span></div>`
+          fields += `<div class="detail-field unverified-field"><label>${label} <span class="unverified-flag" title="This field has not been manually verified and may contain errors">&#9873;</span></label><span class="verification-pending">${value}</span></div>`
         }
         return
       }
@@ -4380,7 +4527,6 @@ ${dots}
       addField('Title', d.title, 'title')
       addField('Primary Organization', d.primary_org, 'primary_org')
       addField('Other Organizations', d.other_orgs, 'other_orgs')
-      addField('Location', d.location, 'location')
       const stColor = getStanceColor(d.regulatory_stance)
       const stSparkline = renderSparkline(d.id, 'regulatory_stance')
       addField(
@@ -4494,7 +4640,6 @@ ${dots}
       addField('Notes', d.notes, 'notes')
     } else {
       addField('Website', d.website ? `<a href="${d.website}" target="_blank">${d.website}</a>` : null, 'website')
-      addField('Location', d.location, 'location')
       addField('Funding Model', d.funding_model, 'funding_model')
       const stColor = getStanceColor(d.regulatory_stance)
       const stSparkline2 = renderSparkline(d.id, 'regulatory_stance')
@@ -4622,6 +4767,7 @@ ${dots}
       critic: { bg: 'rgba(239, 68, 68, 0.15)', text: '#f87171' },
       mentor: { bg: 'rgba(59, 130, 246, 0.15)', text: '#60a5fa' },
       'co-founder': { bg: 'rgba(245, 158, 11, 0.15)', text: '#fbbf24' },
+      formerly_affiliated: { bg: 'rgba(107, 114, 128, 0.15)', text: '#9ca3af' },
     }
 
     if (linkedItems.length > 0) {
@@ -4711,7 +4857,12 @@ ${dots}
       }
     }
 
+    const unverifiedBanner = isMajorityUnverified
+      ? `<div class="unverified-banner">&#9873; This entry has not been fully verified and may contain errors. <a href="/contribute" style="color:inherit;text-decoration:underline;">Submit a correction</a></div>`
+      : ''
+
     const detailHtml = `
+    ${unverifiedBanner}
     ${imgHtml}
     <div class="detail-name">${escHtml(d.name || d.title)}</div>
     <div class="detail-type">${d.entityType}</div>
@@ -4900,36 +5051,45 @@ ${dots}
         const sourceId = parseInt(link.dataset.sourceId, 10)
         const targetId = parseInt(link.dataset.targetId, 10)
         const relType = link.dataset.relType || 'affiliated'
-        let edge = edgeId ? _canvasLinks.find((l) => l.edgeId === edgeId) : null
-        if (!edge) {
-          edge = _canvasLinks.find(
-            (l) =>
-              (l.source.id === sourceId && l.target.id === targetId) ||
-              (l.source.id === targetId && l.target.id === sourceId),
-          )
-        }
-        if (!edge) {
-          const sourceNode = _canvasNodes.find((n) => n.id === sourceId)
-          const targetNode = _canvasNodes.find((n) => n.id === targetId)
-          if (sourceNode && targetNode) {
-            edge = { source: sourceNode, target: targetNode, relType, edgeId: null, role: null, _vs: 'normal' }
+
+        function showRelationshipInNetwork() {
+          let edge = edgeId ? _canvasLinks.find((l) => l.edgeId === edgeId) : null
+          if (!edge) {
+            edge = _canvasLinks.find(
+              (l) =>
+                (l.source.id === sourceId && l.target.id === targetId) ||
+                (l.source.id === targetId && l.target.id === sourceId),
+            )
+          }
+          if (!edge) {
+            const sourceNode = _canvasNodes.find((n) => n.id === sourceId)
+            const targetNode = _canvasNodes.find((n) => n.id === targetId)
+            if (sourceNode && targetNode) {
+              edge = { source: sourceNode, target: targetNode, relType, edgeId: null, role: null, _vs: 'normal' }
+            }
+          }
+          if (edge) {
+            const midX = (edge.source.x + edge.target.x) / 2
+            const midY = (edge.source.y + edge.target.y) / 2
+            const k = 2.5
+            const panelWidth = 320
+            const centerX = (_canvasWidth - panelWidth) / 2
+            const centerY = _canvasHeight / 2
+            const newTransform = d3.zoomIdentity.translate(centerX - midX * k, centerY - midY * k).scale(k)
+            if (zoomBehavior && _canvasSel) {
+              _canvasSel.transition().duration(400).call(zoomBehavior.transform, newTransform)
+            }
+            _selectedEdge = edge
+            selectedNode = edge.source
+            dimUnconnected(selectedNode)
+            showEdgeDetail(edge)
           }
         }
-        if (edge) {
-          const midX = (edge.source.x + edge.target.x) / 2
-          const midY = (edge.source.y + edge.target.y) / 2
-          const k = 2.5
-          const panelWidth = 320
-          const centerX = (_canvasWidth - panelWidth) / 2
-          const centerY = _canvasHeight / 2
-          const newTransform = d3.zoomIdentity.translate(centerX - midX * k, centerY - midY * k).scale(k)
-          if (zoomBehavior && _canvasSel) {
-            _canvasSel.transition().duration(400).call(zoomBehavior.transform, newTransform)
-          }
-          _selectedEdge = edge
-          selectedNode = edge.source
-          dimUnconnected(selectedNode)
-          showEdgeDetail(edge)
+
+        if (viewMode === 'plot') {
+          switchToNetworkView(showRelationshipInNetwork)
+        } else {
+          showRelationshipInNetwork()
         }
       })
     })
@@ -5119,6 +5279,8 @@ ${dots}
             highlightNodes([node.name])
           }
           showDetail(Object.assign({}, entity, { entityType }), renderedNodes)
+        } else if (viewMode === 'plot') {
+          switchToNetworkView(() => navigateToEntityById(entityId))
         } else {
           showDetail(Object.assign({}, entity, { entityType }), renderedNodes || [])
         }
@@ -5150,6 +5312,36 @@ ${dots}
       }
       _previousState = null
     })
+
+    // Wire share button for edge
+    const shareBtn = document.getElementById('detail-share')
+    if (shareBtn) {
+      const newShareBtn = shareBtn.cloneNode(true)
+      shareBtn.parentNode.replaceChild(newShareBtn, shareBtn)
+      newShareBtn.id = 'detail-share'
+      newShareBtn.addEventListener('click', () => {
+        const url = getEdgeDeepLinkUrl(edge)
+        function showCopiedToast() {
+          const toast = document.getElementById('share-toast')
+          toast.classList.remove('visible')
+          void toast.offsetWidth
+          toast.classList.add('visible')
+          setTimeout(() => toast.classList.remove('visible'), 2000)
+        }
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(url).then(showCopiedToast).catch(showCopiedToast)
+        } else {
+          const ta = document.createElement('textarea')
+          ta.value = url
+          ta.style.cssText = 'position:fixed;opacity:0'
+          document.body.appendChild(ta)
+          ta.select()
+          document.execCommand('copy')
+          document.body.removeChild(ta)
+          showCopiedToast()
+        }
+      })
+    }
 
     panel.classList.add('open')
   }
@@ -6205,7 +6397,53 @@ ${dots}
     })
   }
 
-  window.__mapEngine = { showDetail, allData }
+  function afterSimulationSettles(callback) {
+    if (!simulation || simulation.alpha() < simulation.alphaMin()) {
+      callback()
+      return
+    }
+    const fallback = setTimeout(callback, 5000)
+    simulation.on('end.deeplink', () => {
+      clearTimeout(fallback)
+      simulation.on('end.deeplink', null)
+      callback()
+    })
+  }
+
+  function navigateToEntityById(entityId) {
+    const renderedNodes = _canvasNodes.length > 0 ? _canvasNodes : []
+    const node = renderedNodes.find((n) => n.id === entityId)
+    if (!node) return false
+    showDetail(node, renderedNodes)
+    dimUnconnected(node)
+    const zoomTarget = _canvasSel
+    const mapEl = document.getElementById('map-container')
+    if (zoomTarget && mapEl) {
+      const k = 3
+      zoomTarget
+        .transition()
+        .duration(500)
+        .call(
+          zoomBehavior.transform,
+          d3.zoomIdentity.translate(mapEl.clientWidth / 2 - k * node.x, mapEl.clientHeight / 2 - k * node.y).scale(k),
+        )
+    }
+    return true
+  }
+
+  function switchToNetworkView(callback) {
+    viewMode = 'network'
+    currentView = localStorage.getItem('mapSubView') || 'all'
+    localStorage.setItem('mapMode', 'network')
+    document.querySelectorAll('.mode-btn').forEach((b) => b.classList.toggle('active', b.dataset.mode === 'network'))
+    requestAnimationFrame(() => {
+      applyViewState()
+      render()
+      afterSimulationSettles(callback)
+    })
+  }
+
+  window.__mapEngine = { showDetail, allData, navigateToEntity: navigateToEntityById, afterSimulationSettles }
 
   return {
     destroy() {

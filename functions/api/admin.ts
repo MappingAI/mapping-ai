@@ -14,6 +14,7 @@ import type { NeonQueryFn } from './_shared/db.ts'
 import { jsonResponse, optionsResponse } from './_shared/cors.ts'
 import { getDb } from './_shared/db.ts'
 import { generateMapData, splitMapData } from '../../api/export-map.ts'
+import { generateEntitySlug } from '../../src/shared/slugify.ts'
 
 async function refreshMapData(sql: NeonQueryFn, bucket: R2Bucket) {
   try {
@@ -260,6 +261,27 @@ export const onRequest: PagesFunction<Env> = async (context) => {
         setClauses.push(`reviewed_at = NOW()`)
         const values = [submission_id, ...overrideFields.map((k) => overrides[k]), 'approved']
         await sql.query(`UPDATE submission SET ${setClauses.join(', ')} WHERE id = $1`, values)
+
+        // Generate slug for the newly created entity (trigger set entity_id on submission)
+        const subRow = await sql.query(
+          `SELECT entity_id, entity_type, name, resource_title, title FROM submission WHERE id = $1`,
+          [submission_id],
+        )
+        if (subRow.length > 0) {
+          const s = subRow[0] as Record<string, unknown>
+          const entityId = s.entity_id as number
+          const entityType = s.entity_type as string
+          const entityName =
+            entityType === 'resource'
+              ? (s.resource_title as string) || (s.title as string) || (s.name as string)
+              : (s.name as string)
+          const existingRows = await sql.query(`SELECT slug FROM entity WHERE entity_type = $1 AND slug IS NOT NULL`, [
+            entityType,
+          ])
+          const existingSlugs = new Set(existingRows.map((r) => (r as Record<string, unknown>).slug as string))
+          const slug = generateEntitySlug(entityName, entityType, existingSlugs, entityId)
+          await sql.query(`UPDATE entity SET slug = $1 WHERE id = $2`, [slug, entityId])
+        }
 
         await refreshMapData(sql, env.DATA_BUCKET)
         return jsonResponse({ success: true, action: 'approved' }, request, 200, corsOptions)

@@ -60,7 +60,7 @@ export function WelcomeOverlay() {
         <p className="text-[13.5px] leading-relaxed text-[#555] mb-5">
           We welcome discussion, bug reports, and feature requests via{' '}
           <a
-            href="https://discord.gg/EFZ3FxAt"
+            href="https://discord.gg/HtqceQRV3f"
             target="_blank"
             rel="noopener noreferrer"
             className="text-[#2563eb] no-underline hover:underline"

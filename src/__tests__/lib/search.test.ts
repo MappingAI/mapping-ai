@@ -6,6 +6,7 @@ const makeEntity = (overrides: Partial<Entity>): Entity => ({
   id: 1,
   entity_type: 'person',
   name: 'Test Person',
+  slug: null,
   category: null,
   other_categories: null,
   title: null,

@@ -8,6 +8,7 @@ import {
   BELIEF_SCALES,
   type MapBeliefsClusterViewRef,
 } from './components/DefinitionsView'
+import { slugify } from '../shared/slugify'
 
 type ReactView = 'definitions' | null
 
@@ -17,11 +18,14 @@ interface AgiSource {
   type: string | null
 }
 
+let _pendingBeliefSlug: string | null = null
+let _skipNextBeliefZoom = false
+
 export function App() {
   const [reactView, setReactView] = useState<ReactView>(null)
   const [engineMode, setEngineMode] = useState<'network' | 'plot'>(() => {
     const saved = localStorage.getItem('mapMode')
-    return saved === 'network' ? 'network' : 'plot'
+    return saved === 'plot' ? 'plot' : 'network'
   })
   const [beliefsSubView, setBeliefsSubView] = useState<string>('map')
   const [beliefsColorMode, setBeliefsColorMode] = useState<string>('cluster')
@@ -59,6 +63,34 @@ export function App() {
       if (engineCleanup) engineCleanup.destroy()
     }
   }, [])
+
+  useEffect(() => {
+    function handleBeliefDeepLink(e: Event) {
+      const slug = (e as CustomEvent).detail?.slug
+      if (!slug) return
+      setReactView('definitions')
+      setBeliefsSelectedPoint(null)
+      setBeliefsHighlightedId(null)
+      _pendingBeliefSlug = slug
+    }
+    window.addEventListener('deeplink-belief', handleBeliefDeepLink)
+    return () => window.removeEventListener('deeplink-belief', handleBeliefDeepLink)
+  }, [])
+
+  useEffect(() => {
+    if (!beliefsData || !_pendingBeliefSlug) return
+    const slug = _pendingBeliefSlug
+    _pendingBeliefSlug = null
+    const match = beliefsData.points.find((p) => {
+      return slugify(p.name || '') === slug || String(p.entity_id) === slug
+    })
+    if (match) {
+      const source = beliefsData.sources?.[match.source_id] || null
+      setBeliefsSelectedPoint({ point: match, source })
+      setBeliefsHighlightedId(match.entity_id)
+      _skipNextBeliefZoom = true
+    }
+  }, [beliefsData])
 
   useEffect(() => {
     function handleEngineModeClick(e: Event) {
@@ -830,6 +862,39 @@ export function App() {
           </h3>
           <div className="stance-legend-items" id="stance-legend-items"></div>
         </div>
+        <div className="control-group" id="verification-legend">
+          <h3>Data Verification</h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', fontSize: '11px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <span
+                style={{
+                  width: '8px',
+                  height: '8px',
+                  borderRadius: '50%',
+                  background: 'var(--text-2)',
+                  display: 'inline-block',
+                  flexShrink: 0,
+                }}
+              />
+              <span style={{ fontFamily: 'var(--serif)', color: 'var(--text-2)' }}>Verified</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <span
+                style={{
+                  width: '8px',
+                  height: '8px',
+                  borderRadius: '50%',
+                  background: '#ef4444',
+                  display: 'inline-block',
+                  flexShrink: 0,
+                }}
+              />
+              <span style={{ fontFamily: 'var(--serif)', color: 'var(--text-2)' }}>
+                Unverified (may contain errors)
+              </span>
+            </div>
+          </div>
+        </div>
         <div className="control-group" id="secondary-category-filter" style={{ display: 'none' }}>
           <h3 style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             Category
@@ -1162,7 +1227,13 @@ export function App() {
                 onSelect={handleBeliefsSelect}
                 searchQuery={beliefsSearchQuery}
                 highlightedEntityId={beliefsHighlightedId}
-                selectedEntityId={beliefsSelectedPoint?.point.entity_id ?? null}
+                selectedEntityId={(() => {
+                  if (_skipNextBeliefZoom) {
+                    _skipNextBeliefZoom = false
+                    return null
+                  }
+                  return beliefsSelectedPoint?.point.entity_id ?? null
+                })()}
                 hiddenClusters={hiddenClusters}
                 hiddenCategories={hiddenCategories}
                 hiddenBeliefValues={hiddenBeliefValues}
@@ -1175,6 +1246,50 @@ export function App() {
           {beliefsSelectedPoint && (
             <div className="detail-panel open" style={{ zIndex: 51 }} onClick={(e) => e.stopPropagation()}>
               <div className="detail-header-actions">
+                <button
+                  className="detail-share"
+                  title="Share link to this definition"
+                  onClick={() => {
+                    const s = slugify(beliefsSelectedPoint.point.name || '')
+                    const url = window.location.origin + '/map/belief/' + (s || beliefsSelectedPoint.point.entity_id)
+                    function showCopied() {
+                      const toast = document.getElementById('share-toast')
+                      if (toast) {
+                        toast.classList.remove('visible')
+                        void (toast as HTMLElement).offsetWidth
+                        toast.classList.add('visible')
+                        setTimeout(() => toast.classList.remove('visible'), 2000)
+                      }
+                    }
+                    if (navigator.clipboard && window.isSecureContext) {
+                      navigator.clipboard.writeText(url).then(showCopied, showCopied)
+                    } else {
+                      const ta = document.createElement('textarea')
+                      ta.value = url
+                      ta.style.cssText = 'position:fixed;opacity:0'
+                      document.body.appendChild(ta)
+                      ta.select()
+                      document.execCommand('copy')
+                      document.body.removeChild(ta)
+                      showCopied()
+                    }
+                  }}
+                >
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+                    <polyline points="16 6 12 2 8 6" />
+                    <line x1="12" y1="2" x2="12" y2="15" />
+                  </svg>
+                </button>
                 <button className="detail-close" onClick={closeBeliefsDetail}>
                   &times;
                 </button>
@@ -1272,20 +1387,26 @@ export function App() {
                   href="#"
                   onClick={(e) => {
                     e.preventDefault()
+                    const entityId = beliefsSelectedPoint.point.entity_id
+                    setBeliefsSelectedPoint(null)
                     setReactView(null)
+                    setEngineMode('network')
                     const networkBtn = document.querySelector('.mode-btn[data-mode="network"]') as HTMLElement | null
                     if (networkBtn) networkBtn.click()
-                    setTimeout(() => {
-                      const allBtn = document.querySelector('[data-view="all"]') as HTMLElement | null
-                      if (allBtn) allBtn.click()
-                      setTimeout(() => {
-                        const searchInput = document.getElementById('search-input') as HTMLInputElement | null
-                        if (searchInput) {
-                          searchInput.value = beliefsSelectedPoint.point.name
-                          searchInput.dispatchEvent(new Event('input', { bubbles: true }))
+                    setTimeout(() => window.dispatchEvent(new Event('resize')), 100)
+                    const engine = (
+                      window as unknown as {
+                        __mapEngine?: {
+                          navigateToEntity: (id: number) => boolean
+                          afterSimulationSettles: (cb: () => void) => void
                         }
-                      }, 200)
-                    }, 200)
+                      }
+                    ).__mapEngine
+                    if (engine) {
+                      setTimeout(() => {
+                        engine.afterSimulationSettles(() => engine.navigateToEntity(entityId))
+                      }, 500)
+                    }
                   }}
                   style={{
                     fontFamily: 'var(--mono)',
@@ -1381,6 +1502,20 @@ export function App() {
         </button>
         <button className="zoom-btn" id="zoom-reset" style={{ fontSize: '11px' }}>
           &#9678;
+        </button>
+        <button className="zoom-btn" id="download-map" title="Download as PNG">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M7 1v9M3.5 7L7 10.5 10.5 7M2 13h10" />
+          </svg>
         </button>
       </div>
 

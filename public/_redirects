@@ -1,0 +1,7 @@
+# Deep slug rewrites: serve map.html for entity slug URLs
+# Target uses clean URL /map (not /map.html) because CF Pages auto-redirects .html
+/map/person/* /map 200
+/map/org/* /map 200
+/map/resource/* /map 200
+/map/edge/* /map 200
+/map/belief/* /map 200

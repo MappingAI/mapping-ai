@@ -251,7 +251,7 @@ export function App() {
         </p>
         <div {...fadeProps(fi++)} className="flex flex-wrap gap-3 mb-4">
           <a
-            href="https://discord.gg/EFZ3FxAt"
+            href="https://discord.gg/HtqceQRV3f"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-4 py-2 rounded-md text-white text-[13px] font-mono uppercase tracking-wider no-underline hover:no-underline transition-colors"

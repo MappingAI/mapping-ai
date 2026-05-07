@@ -124,14 +124,14 @@ const RISK_LABELS = ['Overstated', 'Manageable', 'Serious', 'Catastrophic', 'Exi
 
 const TOC_ITEMS = [
   { id: 'overview', label: 'Overview' },
-  { id: 'belief-space', label: 'Beliefs' },
+  { id: 'agi-definitions', label: 'AGI Definitions' },
   { id: 'outliers', label: 'Outliers' },
-  { id: 'threat-models', label: 'Threat Models' },
-  { id: 'network', label: 'Connectivity' },
-  { id: 'bridge-builders', label: 'Bridge Builders' },
   { id: 'funding', label: 'Funding' },
   { id: 'crosspartisan', label: 'Crosspartisan' },
-  { id: 'agi-definitions', label: 'AGI Definitions' },
+  { id: 'bridge-builders', label: 'Bridge Builders' },
+  { id: 'belief-space', label: 'Beliefs' },
+  { id: 'threat-models', label: 'Threat Models' },
+  { id: 'network', label: 'Connectivity' },
 ]
 
 /* ────────────────────────────────────────────
@@ -1076,48 +1076,49 @@ export function App() {
         <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
 
         {/* ═══════════════════════════════════════════ */}
-        {/* SECTION 1: BELIEF SPACE                     */}
+        {/* SECTION 1: AGI DEFINITION SPACE             */}
         {/* ═══════════════════════════════════════════ */}
 
-        <SectionLabel id="belief-space">Insight 1</SectionLabel>
-        <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">The Belief Space</h2>
+        <SectionLabel id="agi-definitions">Insight 1</SectionLabel>
+        <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">The AGI Definition Space</h2>
 
         <Para>
-          We track three belief dimensions for people and organizations: <strong>regulatory stance</strong> (accelerate
-          → precautionary), <strong>AGI timeline</strong> (already here → 25+ years), and <strong>AI risk level</strong>{' '}
-          (overstated → existential). These form a three-dimensional "belief space" where entities can be positioned.
+          "AGI" is overloaded. Two entities both saying "AGI by 2027" can mean very different things: one might describe
+          human-level performance on economically valuable tasks, while another means recursive self-improvement. The
+          timeline dimension compresses real semantic disagreement into a single axis.
+        </Para>
+
+        <Para>
+          This scatter plot clusters AGI definitions by their <em>semantic similarity</em>. Each definition was embedded
+          using Voyage AI and projected to 2D with UMAP. Position encodes meaning: entities with similar definitions
+          cluster together. Color encodes category. Click any dot to see the full definition and its source.
         </Para>
 
         <ChartContainer
-          title="Belief axis distributions (people + orgs with data)"
-          source="Horizontal bars show count at each level. Entities without data excluded."
+          title=""
+          source="Source: 372 sourced AGI definitions across 201 people and 171 organizations. Each definition backed by a verbatim quote and URL."
         >
-          <ChartAxisDistributions entities={allEntities} />
+          <AgiDefinitionSpace />
         </ChartContainer>
 
-        <Para>
-          The distributions reveal which positions are crowded and which are sparse. A heavily populated region suggests
-          mainstream consensus; empty regions may indicate underrepresented perspectives or simply positions few people
-          hold.
-        </Para>
-
         <Finding>
-          The belief space is unevenly populated. "{maxStance}" is the most common regulatory stance, while "{minStance}
-          " is least represented. This concentration suggests either consensus or sampling bias—distinguishing between
-          them requires external validation.
+          The definition space reveals distinct clusters: "economic task" framings (AI that performs most knowledge
+          work), "cognitive capability" framings (human-level reasoning), and "autonomy/agency" framings (systems that
+          can self-improve or act independently). Entities placed near each other on the timeline axis may hold
+          fundamentally different conceptions of what they're predicting.
         </Finding>
 
         <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
 
         {/* ═══════════════════════════════════════════ */}
-        {/* SECTION: OUTLIER STANCES                    */}
+        {/* SECTION 2: OUTLIER STANCES                  */}
         {/* ═══════════════════════════════════════════ */}
 
         <SectionLabel id="outliers">Insight 2</SectionLabel>
         <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">Outlier Stances</h2>
 
         <Para>
-          Who holds statistically rare positions? We identify entities in positions with very few peers—not necessarily
+          Who holds statistically rare positions? We identify entities in positions with very few peers: not necessarily
           extreme views, but uncommon ones. Outliers are highlighted with black outlines and are the only nodes you can
           interact with. Click any outlier to see why they stand out, then view them on the map.
         </Para>
@@ -1141,7 +1142,7 @@ export function App() {
         </ChartContainer>
 
         <Finding>
-          Outliers often hold uncommon belief combinations—an entity might be mainstream on one dimension but rare when
+          Outliers often hold uncommon belief combinations. An entity might be mainstream on one dimension but rare when
           you consider two dimensions together. These positions may signal emerging viewpoints, strategic positioning,
           or simply heterogeneity within the ecosystem.
         </Finding>
@@ -1149,118 +1150,10 @@ export function App() {
         <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
 
         {/* ═══════════════════════════════════════════ */}
-        {/* SECTION 3: THREAT MODELS                    */}
+        {/* SECTION 3: FUNDING                          */}
         {/* ═══════════════════════════════════════════ */}
 
-        <SectionLabel id="threat-models">Insight 3</SectionLabel>
-        <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">Threat Models & Key Concerns</h2>
-
-        <Para>
-          Entities identify which AI-related concerns they prioritize: loss of control, labor displacement, existential
-          risk, democratic erosion, and more. These "threat models" reveal what problems different communities are
-          trying to solve.
-        </Para>
-
-        <ChartContainer
-          title="Most frequently cited concerns"
-          source="Count of entities selecting each concern. Entities can select multiple."
-        >
-          <ChartThreatFrequency entities={allEntities} />
-        </ChartContainer>
-
-        <h3 className="font-serif text-[18px] font-normal mt-8 mb-3">Concern co-occurrence</h3>
-
-        <Para>
-          Which concerns travel together? If someone cites "loss of control," are they likely to also cite "existential
-          risk"? The co-occurrence matrix reveals concern clusters—sets of worries that form coherent worldviews.
-        </Para>
-
-        <ChartContainer
-          title="Threat model co-occurrence (Jaccard similarity)"
-          source="Higher values = concerns frequently appear together. Upper triangle shown to avoid redundancy."
-        >
-          <ChartThreatCooccurrence entities={allEntities} />
-        </ChartContainer>
-
-        <Finding>
-          Technical/x-risk concerns (loss of control, existential risk) cluster together, as do societal/near-term
-          concerns (labor displacement, economic inequality). These two worldviews represent distinct communities with
-          different policy priorities—and they rarely cite each other's concerns.
-        </Finding>
-
-        <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
-
-        {/* ═══════════════════════════════════════════ */}
-        {/* SECTION 3: CONNECTIVITY                     */}
-        {/* ═══════════════════════════════════════════ */}
-
-        <SectionLabel id="network">Insight 4</SectionLabel>
-        <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">Connectivity</h2>
-
-        <Para>
-          The database tracks <span className="font-mono">{edges.length || '—'}</span> relationships between entities:
-          affiliations, collaborations, funding, citations, and more. How connected is each stakeholder category to
-          others? A category with high external connectivity serves as a hub or bridge; one with low connectivity may be
-          siloed.
-        </Para>
-
-        <ChartContainer
-          title="Cross-category edge counts (who connects to whom)"
-          source="Cell color = log₁₀(edges) between categories. Logarithmic scale shows relative connectivity."
-        >
-          <ChartCategoryMatrix edges={edges} entities={allWithResources} />
-        </ChartContainer>
-
-        <Finding>
-          Government and Think Tank categories have the most cross-category connections, serving as the primary hubs of
-          the governance network. Categories like Media/Journalism are more internally focused with fewer bridges to
-          other communities.
-        </Finding>
-
-        <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
-
-        {/* ═══════════════════════════════════════════ */}
-        {/* SECTION: BRIDGE BUILDERS                    */}
-        {/* ═══════════════════════════════════════════ */}
-
-        <SectionLabel id="bridge-builders">Insight 5</SectionLabel>
-        <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">Bridge Builders</h2>
-
-        <Para>
-          Who are the most structurally important <em>people</em> in the AI governance ecosystem? We measure this by
-          reachability: how many entities can a person reach within 1, 2, or 3 hops through the relationship network.
-          People with high reachability can spread information—or broker coalitions—across otherwise separate
-          communities.
-        </Para>
-
-        <Para>
-          Each ring shows actual connections: the inner ring (1-hop) shows direct relationships, the middle ring (2-hop)
-          shows friends-of-friends, and the outer ring (3-hop) shows the extended network. Node colors indicate
-          category.
-        </Para>
-
-        <ChartContainer
-          title="Network reachability by person"
-          source="Concentric rings show 1-hop, 2-hop, and 3-hop connections. Nodes colored by category."
-        >
-          <ReachabilityRings entities={allEntities} edges={edges} maxPeople={6} />
-        </ChartContainer>
-
-        <Finding>
-          In our data, policymakers like Brian Schatz and Chris Murphy have high reachability—their government roles
-          connect them to many organizations. Researchers like Paul Christiano bridge AI Safety, Frontier Labs, and
-          Government. High reachability doesn't mean influence, but it does indicate structural position for information
-          flow and coalition-building. Note: these results depend on which relationships we've captured publicly, not a
-          complete census.
-        </Finding>
-
-        <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
-
-        {/* ═══════════════════════════════════════════ */}
-        {/* SECTION 6: FUNDING                          */}
-        {/* ═══════════════════════════════════════════ */}
-
-        <SectionLabel id="funding">Insight 6</SectionLabel>
+        <SectionLabel id="funding">Insight 3</SectionLabel>
         <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">Funding & Independence</h2>
 
         <Para>
@@ -1364,10 +1257,10 @@ export function App() {
         <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
 
         {/* ═══════════════════════════════════════════ */}
-        {/* SECTION 8: CROSSPARTISAN CONVERGENCE        */}
+        {/* SECTION 4: CROSSPARTISAN CONVERGENCE        */}
         {/* ═══════════════════════════════════════════ */}
 
-        <SectionLabel id="crosspartisan">Insight 7</SectionLabel>
+        <SectionLabel id="crosspartisan">Insight 4</SectionLabel>
         <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">
           Crosspartisan Convergence on AI Policy
         </h2>
@@ -1406,36 +1299,143 @@ export function App() {
         <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
 
         {/* ═══════════════════════════════════════════ */}
-        {/* SECTION 9: AGI DEFINITION SPACE             */}
+        {/* SECTION 5: BRIDGE BUILDERS                  */}
         {/* ═══════════════════════════════════════════ */}
 
-        <SectionLabel id="agi-definitions">Insight 8</SectionLabel>
-        <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">The AGI Definition Space</h2>
+        <SectionLabel id="bridge-builders">Insight 5</SectionLabel>
+        <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">Bridge Builders</h2>
 
         <Para>
-          "AGI" is overloaded. Two entities both saying "AGI by 2027" can mean very different things: one might describe
-          human-level performance on economically valuable tasks, while another means recursive self-improvement. The
-          timeline dimension compresses real semantic disagreement into a single axis.
+          Who are the most structurally important <em>people</em> in the AI governance ecosystem? We measure this by
+          reachability: how many entities can a person reach within 1, 2, or 3 hops through the relationship network.
+          People with high reachability can spread information, or broker coalitions, across otherwise separate
+          communities.
         </Para>
 
         <Para>
-          This scatter plot clusters AGI definitions by their <em>semantic similarity</em>. Each definition was embedded
-          using Voyage AI and projected to 2D with UMAP. Position encodes meaning: entities with similar definitions
-          cluster together. Color encodes category. Click any dot to see the full definition and its source.
+          Each ring shows actual connections: the inner ring (1-hop) shows direct relationships, the middle ring (2-hop)
+          shows friends-of-friends, and the outer ring (3-hop) shows the extended network. Node colors indicate
+          category.
         </Para>
 
         <ChartContainer
-          title=""
-          source="Source: 372 sourced AGI definitions across 201 people and 171 organizations. Each definition backed by a verbatim quote and URL."
+          title="Network reachability by person"
+          source="Concentric rings show 1-hop, 2-hop, and 3-hop connections. Nodes colored by category."
         >
-          <AgiDefinitionSpace />
+          <ReachabilityRings entities={allEntities} edges={edges} maxPeople={6} />
         </ChartContainer>
 
         <Finding>
-          The definition space reveals distinct clusters: "economic task" framings (AI that performs most knowledge
-          work), "cognitive capability" framings (human-level reasoning), and "autonomy/agency" framings (systems that
-          can self-improve or act independently). Entities placed near each other on the timeline axis may hold
-          fundamentally different conceptions of what they're predicting.
+          In our data, policymakers like Brian Schatz and Chris Murphy have high reachability. Their government roles
+          connect them to many organizations. Researchers like Paul Christiano bridge AI Safety, Frontier Labs, and
+          Government. High reachability doesn't mean influence, but it does indicate structural position for information
+          flow and coalition-building. Note: these results depend on which relationships we've captured publicly, not a
+          complete census.
+        </Finding>
+
+        <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
+
+        {/* ═══════════════════════════════════════════ */}
+        {/* SECTION 6: BELIEF SPACE                     */}
+        {/* ═══════════════════════════════════════════ */}
+
+        <SectionLabel id="belief-space">Insight 6</SectionLabel>
+        <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">The Belief Space</h2>
+
+        <Para>
+          We track three belief dimensions for people and organizations: <strong>regulatory stance</strong> (accelerate
+          → precautionary), <strong>AGI timeline</strong> (already here → 25+ years), and <strong>AI risk level</strong>{' '}
+          (overstated → existential). These form a three-dimensional "belief space" where entities can be positioned.
+        </Para>
+
+        <ChartContainer
+          title="Belief axis distributions (people + orgs with data)"
+          source="Horizontal bars show count at each level. Entities without data excluded."
+        >
+          <ChartAxisDistributions entities={allEntities} />
+        </ChartContainer>
+
+        <Para>
+          The distributions reveal which positions are crowded and which are sparse. A heavily populated region suggests
+          mainstream consensus; empty regions may indicate underrepresented perspectives or simply positions few people
+          hold.
+        </Para>
+
+        <Finding>
+          The belief space is unevenly populated. "{maxStance}" is the most common regulatory stance, while "{minStance}
+          " is least represented. This concentration suggests either consensus or sampling bias; distinguishing between
+          them requires external validation.
+        </Finding>
+
+        <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
+
+        {/* ═══════════════════════════════════════════ */}
+        {/* SECTION 7: THREAT MODELS                    */}
+        {/* ═══════════════════════════════════════════ */}
+
+        <SectionLabel id="threat-models">Insight 7</SectionLabel>
+        <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">Threat Models & Key Concerns</h2>
+
+        <Para>
+          Entities identify which AI-related concerns they prioritize: loss of control, labor displacement, existential
+          risk, democratic erosion, and more. These "threat models" reveal what problems different communities are
+          trying to solve.
+        </Para>
+
+        <ChartContainer
+          title="Most frequently cited concerns"
+          source="Count of entities selecting each concern. Entities can select multiple."
+        >
+          <ChartThreatFrequency entities={allEntities} />
+        </ChartContainer>
+
+        <h3 className="font-serif text-[18px] font-normal mt-8 mb-3">Concern co-occurrence</h3>
+
+        <Para>
+          Which concerns travel together? If someone cites "loss of control," are they likely to also cite "existential
+          risk"? The co-occurrence matrix reveals concern clusters: sets of worries that form coherent worldviews.
+        </Para>
+
+        <ChartContainer
+          title="Threat model co-occurrence (Jaccard similarity)"
+          source="Higher values = concerns frequently appear together. Upper triangle shown to avoid redundancy."
+        >
+          <ChartThreatCooccurrence entities={allEntities} />
+        </ChartContainer>
+
+        <Finding>
+          Technical/x-risk concerns (loss of control, existential risk) cluster together, as do societal/near-term
+          concerns (labor displacement, economic inequality). These two worldviews represent distinct communities with
+          different policy priorities, and they rarely cite each other's concerns.
+        </Finding>
+
+        <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />
+
+        {/* ═══════════════════════════════════════════ */}
+        {/* SECTION 8: CONNECTIVITY                     */}
+        {/* ═══════════════════════════════════════════ */}
+
+        <SectionLabel id="network">Insight 8</SectionLabel>
+        <h2 className="font-serif text-[24px] font-normal leading-[1.3] mb-4 mt-0">Connectivity</h2>
+
+        <Para>
+          The database tracks <span className="font-mono">{edges.length || '—'}</span> relationships between entities:
+          affiliations, collaborations, funding, citations, and more. How connected is each stakeholder category to
+          others? A category with high external connectivity serves as a hub or bridge; one with low connectivity may be
+          siloed.
+        </Para>
+
+        <ChartContainer
+          title="Cross-category edge counts (who connects to whom)"
+          source="Cell color = log₁₀(edges) between categories. Logarithmic scale shows relative connectivity."
+        >
+          <ChartCategoryMatrix edges={edges} entities={allWithResources} />
+        </ChartContainer>
+
+        <Finding>
+          Government and Think Tank categories have the most cross-category connections, serving as the primary hubs of
+          the governance network. Categories like Media/Journalism are more internally focused with fewer bridges to
+          other communities.
         </Finding>
 
         <hr className="border-none border-t-[0.5px] border-[#bbb] my-10" />

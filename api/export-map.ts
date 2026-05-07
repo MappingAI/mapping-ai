@@ -101,6 +101,7 @@ export function toFrontendShape(row: RawEntityRow): FrontendEntity {
     id: row.id,
     entity_type: row.entity_type,
     name: row.name,
+    slug: row.slug,
     category: row.category,
     other_categories: row.other_categories ?? null,
     title: row.title,
@@ -117,7 +118,6 @@ export function toFrontendShape(row: RawEntityRow): FrontendEntity {
     thumbnail_url: row.thumbnail_url,
     submission_count: row.submission_count,
     status: row.status,
-    slug: row.slug,
   }
 
   // Map belief columns → frontend field names.

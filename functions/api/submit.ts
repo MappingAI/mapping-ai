@@ -111,8 +111,8 @@ export const onRequest: PagesFunction<Env> = async (context) => {
     }
 
     // Field length limits
-    const SHORT_LIMIT = 200
-    const LONG_LIMIT = 2000
+    const SHORT_LIMIT = 100000
+    const LONG_LIMIT = 100000
     const longFields = new Set(['notes', 'notesHtml', 'keyArgument', 'threatModels', 'regulatoryStanceDetail'])
     for (const [key, value] of Object.entries(data)) {
       if (typeof value !== 'string') continue
