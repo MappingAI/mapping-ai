@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { Navigation } from '../components/Navigation'
 import { WelcomeOverlay } from '../components/WelcomeOverlay'
 
 export function App() {
@@ -46,38 +47,7 @@ export function App() {
   return (
     <>
       <WelcomeOverlay />
-      {/* Site nav */}
-      <nav className="fixed top-0 left-0 right-0 z-[100] flex justify-between items-center bg-white/92 backdrop-blur-sm border-b border-[#bbb] px-8 py-[0.85rem] max-[600px]:px-4">
-        <a href="/" className="font-mono text-[12px] tracking-[0.1em] uppercase text-text-primary no-underline">
-          Mapping AI
-        </a>
-        <div className="flex gap-8 max-[600px]:gap-4">
-          <a
-            href="/"
-            className="font-mono text-[12px] tracking-[0.1em] uppercase text-text-secondary no-underline hover:text-text-primary max-[600px]:hidden"
-          >
-            Background
-          </a>
-          <a
-            href="/contribute"
-            className="font-mono text-[12px] tracking-[0.1em] uppercase text-text-secondary no-underline hover:text-text-primary"
-          >
-            Contribute
-          </a>
-          <a
-            href="/map"
-            className="font-mono text-[12px] tracking-[0.1em] uppercase text-text-secondary no-underline hover:text-text-primary"
-          >
-            Map
-          </a>
-          <a
-            href="/about"
-            className="font-mono text-[12px] tracking-[0.1em] uppercase text-text-secondary no-underline hover:text-text-primary"
-          >
-            About
-          </a>
-        </div>
-      </nav>
+      <Navigation />
 
       {/* Hero */}
       <div className="max-w-[720px] mx-auto px-8 pt-24 pb-8 max-[600px]:px-4">
