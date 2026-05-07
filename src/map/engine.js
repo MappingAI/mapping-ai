@@ -5110,12 +5110,14 @@ ${dots}
         if (c > 0) parts.push(`<span style="color:#16a34a;">&#x25B2;${c}</span>`)
         if (f > 0) parts.push(`<span style="color:#dc2626;">&#x25BC;${f}</span>`)
         el.innerHTML = parts.join(' ')
+      } else {
+        el.innerHTML = ''
       }
     })
     container.querySelectorAll('.field-vote').forEach((btn) => {
       const field = btn.dataset.field
       const vote = parseInt(btn.dataset.vote, 10)
-      if (localVotes[field] === vote) btn.classList.add('voted')
+      btn.classList.toggle('voted', localVotes[field] === vote)
     })
   }
 
