@@ -2323,11 +2323,19 @@ export function initMapEngine() {
     return activeSourceTypes.has(sourceType)
   }
 
+  function _isMajorityUnverified(d) {
+    const fv = d.field_verification
+    if (!fv || Object.keys(fv).length === 0) return null
+    const vals = Object.values(fv)
+    const unvCount = vals.filter((v) => v === 'unverified').length
+    return unvCount > vals.length / 2
+  }
+
   function passesVerificationFilter(d) {
     if (verificationFilter === 'all') return true
-    const hasFv = d.field_verification && Object.keys(d.field_verification).length > 0
-    if (verificationFilter === 'verified') return hasFv && !d._unverified
-    if (verificationFilter === 'unverified') return !hasFv || d._unverified
+    const result = _isMajorityUnverified(d)
+    if (verificationFilter === 'verified') return result === false
+    if (verificationFilter === 'unverified') return result === null || result === true
     return true
   }
 
