@@ -563,6 +563,26 @@ body {
   background: var(--bg-page, #f0f0f0);
   color: var(--text-1);
 }
+.field-note-editor-wrap .ProseMirror ul,
+.field-note-editor-wrap .ProseMirror ol {
+  padding-left: 1.4em;
+  margin: 0.25em 0;
+}
+.field-note-editor-wrap .ProseMirror ul {
+  list-style: disc;
+}
+.field-note-editor-wrap .ProseMirror ol {
+  list-style: decimal;
+}
+.field-note-editor-wrap .ProseMirror li p {
+  margin: 0;
+}
+.field-note-editor-wrap .ProseMirror strong {
+  font-weight: 700;
+}
+.field-note-editor-wrap .ProseMirror em {
+  font-style: italic;
+}
 .field-note-editor-wrap .ProseMirror {
   padding: 8px 10px;
   min-height: 60px;
