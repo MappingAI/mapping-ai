@@ -264,6 +264,7 @@ export function App() {
         >
           {[
             'Alor Sahoo',
+            'Angela Zhang',
             'April Chen',
             'Caleb Strom',
             'Connor Mack',
