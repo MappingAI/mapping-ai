@@ -4863,7 +4863,8 @@ ${dots}
           const metaHtml = meta
             ? `<div style="font-size:9px;color:var(--text-3);margin-top:2px;">${escHtml(meta)}</div>`
             : ''
-          const claimFb = feedbackBadge(d.id, `claim_${dim}_${c.src ?? ci}`)
+          const claimKey = `claim_${dim}_${c.src ?? ci}`
+          const claimFb = feedbackBadge(d.id, claimKey, { [claimKey]: c.conf === 'high' ? 'verified' : 'unverified' })
           itemsHtml += `<div style="border-left:2px solid var(--border);padding-left:8px;margin-bottom:8px;">${scoreText}${labelText}${confBadge}${claimFb}${cite}${srcLink}${metaHtml}</div>`
         })
         claimsHtml += `<div style="margin-bottom:10px;"><div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-3);margin-bottom:4px;">${dimLabel}</div>${itemsHtml}</div>`
