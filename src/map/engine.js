@@ -2847,9 +2847,9 @@ export function initMapEngine() {
     const vals = Object.values(fv)
     if (vals.length === 0) return null
     const verifiedCount = vals.filter((v) => v === 'verified').length
-    if (verifiedCount === vals.length && vals.length >= VERIFIABLE_FIELDS.length) return 'verified'
-    if (verifiedCount === vals.length) return 'partial'
-    if (verifiedCount / vals.length >= 0.5) return 'partial'
+    const ratio = verifiedCount / vals.length
+    if (ratio > 0.8) return 'verified'
+    if (ratio > 0.5) return 'partial'
     return 'unverified'
   }
 
@@ -4578,8 +4578,17 @@ ${dots}
   function feedbackBadge(entityId, key, fieldVerification) {
     const safeKey = escHtml(key)
     const fvStatus = fieldVerification?.[safeKey]
-    const badgeClass = fvStatus === 'verified' ? 'field-verified-badge' : 'field-inferred-badge'
-    const badgeLabel = fvStatus === 'verified' ? 'verified' : 'unverified'
+    let badgeClass, badgeLabel
+    if (fvStatus === 'verified') {
+      badgeClass = 'field-verified-badge'
+      badgeLabel = 'verified'
+    } else if (fvStatus === 'unverified') {
+      badgeClass = 'field-inferred-badge'
+      badgeLabel = 'unverified'
+    } else {
+      badgeClass = 'field-not-verified-badge'
+      badgeLabel = 'not yet verified'
+    }
     return `<span class="field-feedback-row" data-field="${safeKey}"><span class="${badgeClass}">${badgeLabel}</span><button class="field-vote field-vote-confirm" data-entity-id="${entityId}" data-field="${safeKey}" data-vote="1" title="Looks correct">&#x25B2;</button><button class="field-vote field-vote-flag" data-entity-id="${entityId}" data-field="${safeKey}" data-vote="-1" title="Flag as incorrect">&#x25BC;</button><span class="field-vote-counts" data-field="${safeKey}"></span><button class="field-note-btn" data-entity-id="${entityId}" data-field="${safeKey}" title="Add a note or correction">&#x270E;</button></span>`
   }
 
@@ -4666,7 +4675,7 @@ ${dots}
 
     if (d.entityType === 'person') {
       addField('Title', d.title)
-      addField('Primary Organization', d.primary_org)
+      addField('Primary Organization', d.primary_org, { verifyKey: 'primary_org' })
       addField('Other Organizations', d.other_orgs)
       const stColor = getStanceColor(d.regulatory_stance)
       const stSparkline = renderSparkline(d.id, 'regulatory_stance')
@@ -4781,8 +4790,8 @@ ${dots}
       addField('Notes', d.notes)
     } else {
       addField('Website', d.website ? `<a href="${d.website}" target="_blank">${d.website}</a>` : null)
-      addField('Funding Model', d.funding_model)
-      addField('Key Concerns', d.threat_models)
+      addField('Funding Model', d.funding_model, { verifyKey: 'funding_model' })
+      addField('Key Concerns', d.threat_models, { verifyKey: 'threat_models' })
       addField('Influence Type', d.influence_type)
       addField(
         'Twitter/X',

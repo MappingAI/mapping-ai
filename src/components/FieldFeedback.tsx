@@ -7,9 +7,10 @@ interface Props {
   field: string
   entityName?: string
   fieldLabel?: string
+  verificationStatus?: 'verified' | 'unverified' | null
 }
 
-export function FieldFeedback({ entityId, field, entityName, fieldLabel }: Props) {
+export function FieldFeedback({ entityId, field, entityName, fieldLabel, verificationStatus }: Props) {
   const [localUp, setLocalUp] = useState(() => !!getLocalVotes(entityId)[field]?.up)
   const [localDown, setLocalDown] = useState(() => !!getLocalVotes(entityId)[field]?.down)
   const [serverCounts, setServerCounts] = useState<{ confirms: number; flags: number } | null>(null)
@@ -74,7 +75,21 @@ export function FieldFeedback({ entityId, field, entityName, fieldLabel }: Props
 
   return (
     <span className="field-feedback-row">
-      <span className="field-inferred-badge">unverified</span>
+      <span
+        className={
+          verificationStatus === 'verified'
+            ? 'field-verified-badge'
+            : verificationStatus === 'unverified'
+              ? 'field-inferred-badge'
+              : 'field-not-verified-badge'
+        }
+      >
+        {verificationStatus === 'verified'
+          ? 'verified'
+          : verificationStatus === 'unverified'
+            ? 'unverified'
+            : 'not yet verified'}
+      </span>
       <button
         className={`field-vote field-vote-confirm${localUp ? ' voted' : ''}`}
         title="Looks correct"
