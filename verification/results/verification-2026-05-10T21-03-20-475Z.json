@@ -1,0 +1,193 @@
+{
+  "timestamp": "2026-05-10T21:03:20.476Z",
+  "mode": "dry_run",
+  "entities_processed": 1,
+  "costs": {
+    "claude_calls": 13,
+    "claude_input_tokens": 48673,
+    "claude_output_tokens": 5753,
+    "claude_cost": 0.23231400000000002,
+    "exa_searches": 4,
+    "exa_cost": 0.032,
+    "total_cost": 0.26431400000000005
+  },
+  "summary": {
+    "supported": 0,
+    "uncertain": 3,
+    "refuted": 0
+  },
+  "results": [
+    {
+      "entity_id": 415,
+      "entity_name": "Machine Alignment, Transparency, and Security (MATS)",
+      "entity_type": "organization",
+      "enum_repairs": {},
+      "claims_count": 11,
+      "verdicts": [
+        {
+          "field": "belief_regulatory_stance",
+          "current_value": "Precautionary",
+          "verdict": "UNCERTAIN",
+          "confidence": "unsupported",
+          "sources_found": 6,
+          "evidence": [
+            {
+              "url": "https://people.eecs.berkeley.edu/~russell/papers/russell-senate23b-statement.pdf",
+              "title": "",
+              "excerpt": "Wri$en Statement of Stuart Russell, Professor of Computer Science, UC Berkeley\nFor the United States Senate AI Forum on\n“Risk, Alignment, & Guarding Against Doomsday Scenarios”\n[...]\nth, 2023\n[...]\nThank you for\n[...]\nopportunity to contribute to this forum; and thank you to the Senate for its serious \nand biparMsan engagement with the important quesMons arising from recent advances in AI.\n[...]\nThe following remarks draw in part on my wri$en tesMmony to the U.S. Senate Commi$ee on the \nJudiciary, Subcommi$ee on Privacy, Technology, & the Law, on July 25th, 2023.\n[...]\nI am primarily an AI researcher, with over 40 years of experience in the field. I am moMvated by the \npotenMal for AI to amplify the benefits of civilizaMon for all of humanity. My research over the last \ndecade has focused on the problem of control: how do we maintain power, forever, over enMMes that will \neventually become more powerful than us? How do we ensure that AI systems are safe and beneficial for \nhumans? These are not purely technological quesMons. In both the short term and the long term, \nregulaMon has a huge role to play in answering them. \nExecu&ve summary\n[...]\n• Given our current lack of understanding of how to control AGI systems and to ensure with \nabsolute certainty that they remain safe and beneficial to humans, achieving AGI would present \ncatastrophic risks to humanity, up to and including human exMncMon.\n[...]\n• It is essenMal to create a regulatory framework capable"
+            },
+            {
+              "url": "https://people.eecs.berkeley.edu/~russell/papers/russell-senate23-oral.pdf",
+              "title": "",
+              "excerpt": "Opening statement (as delivered) before the U.S. Senate Commi:ee on the Judiciary\nSubcommi:ee on Privacy, Technology, & the Law, hearing on “Oversight of A.I.: Principles for \nRegulaJon”\nJuly 25th, 2023\nStuart Russell\nProfessor of Computer Science\nThe University of California, Berkeley\n[...]\nThank you,\n[...]\nfor the invitaJon to speak today, and for your excellent work on this vital issue.\n[...]\nAI, as we all know, is the study of how to make machines intelligent. Its stated goal is general\u0002purpose ar-ficial intelligence, someJmes called AGI or arJficial general intelligence: machines \nthat match or exceed human capabiliJes in every relevant dimension.\n[...]\nOver the last decade, that has changed. Beginning with vision and speech recogniJon, and now \nwith language, the dominant approach has been end-to-end training of circuits with billions or \ntrillions of adjustable parameters. The success of these systems is undeniable, but their internal \nprinciples of operaJon remain a mystery. This is parJcularly true for the large language models \nor LLMs, such as ChatGPT.\n[...]\nMany AI researchers now see AGI on the horizon. In my view, LLMs do not cons-tute AGI, but \nthey are a piece of the puzzle. We’re not sure what shape the piece is yet or how it fits into the \npuzzle, but the field is working hard on those quesJons, and progress is rapid.\n[...]\nIf we succeed, the upside could be enormous: I’ve esJmated a cash value of at least 14 \nquadrillion dollars for this technology—a huge magnet in the future, pulling us forward.\n[...]\nOn the other hand, Alan Turing, the founder of computer science, warned in 1951 that once AI\n“outstrips our feeble powers … we should have to expect the machines to take control.”"
+            },
+            {
+              "url": "https://www.judiciary.senate.gov/imo/media/doc/2023-05-16%20-%20Bio%20&%20Testimony%20-%20Altman.pdf",
+              "title": "",
+              "excerpt": "the opportunity to testify today about large neural networks. I am Sam Altman, Chief Executive\n[...]\nOfficer of OpenAI, a company that studies, builds, and deploys artificial intelligence (AI) and has\n[...]\ncreated AI tools such as ChatGPT, Whisper, and DALL·E 2. OpenAI was founded on the belief\n[...]\nthat safe and beneficial AI offers tremendous possibilities for humanity. I am grateful for the\n[...]\nopportunity to speak about our experiences developing cutting-edge AI technology and studying\n[...]\nAI safety, and our interest in working collaboratively with governments to ensure the\n[...]\ndevelopment and widespread availability of safe and beneficial AI tools. We believe it is\n[...]\nessential to develop regulations that incentivize AI safety while ensuring that people are able to\n[...]\naccess the technology’s many benefits."
+            },
+            {
+              "url": "https://www.washingtonexaminer.com/op-eds/4528469/trump-ai-framework-congress-time-running-out/",
+              "title": "Trump AI framework puts ball in Congress's court. Time is running out",
+              "excerpt": "Trump AI framework puts ball in Congress's court. Time is running out\n[...]\nArtificial intelligence is no longer a future policy debate. It is already compressing years of drug discovery into months, helping doctors detect cancer earlier through advanced diagnostic imaging, improving aviation and traffic systems that make travel safer, and giving small businesses access to capabilities that once required entire back-office teams.\n[...]\nproductivity, accelerating\n[...]\n, and changing how\n[...]\ncompete, innovate, and navigate daily life. Few technologies in\n[...]\n### Trump AI framework puts ball in Congress’s court. Time to act is running out\n[...]\nThat promise is matched by real public unease. Americans want the benefits of AI, but they also want confidence that children are protected, abuse is prevented, workers are not left behind, critical infrastructure remains secure, and increasingly powerful systems are deployed responsibly. The question is no longer whether the government should act. It is whether Congress can act before the regulatory vacuum allows a tangled thicket of conflicting state regulation to take root.\n[...]\nHOW CONGRESS CAN BUILD OFF TRUMP’S AI FRAMEWORK THIS TAX SEASON\n[...]\nThat is why the White House’s national AI legislative framework arrives at such a consequential moment. Its release does not replace the need for legislative action or the debate required to align on a durable federal framework. But it does reflect a growing consensus in Washington that AI is too economically and strategically significant to leave unaddressed. The central question now is not wheth"
+            },
+            {
+              "url": "https://www.timesargus.com/opinion/commentary/priestley-ai-guardrails-matter/article_1e04875e-9795-4a74-b780-123c1f75dff8.html",
+              "title": "Priestley: AI guardrails matter | Commentary | timesargus.com",
+              "excerpt": "Artificial intelligence doesn’t wait; states can’t either.\n[...]\nAs Vermont enters a new legislative session, many legislators and members of the public have asked about the Dec. 11. 2025, White House executive order targeting state-level artificial intelligence laws. Vermonters deserve to know state leaders are paying close attention, are prepared, and are not backing down from our responsibility to protect people from real and growing technological harms.\n[...]\nThe executive order does not create new federal law, nor does it repeal existing state protections. What it does do is signal an aggressive attempt to intimidate states doing the work the federal government has repeatedly failed to do. This includes directing federal agencies to challenge state laws, raising the prospect of litigation, and threatening the use of discretionary funding to slow or chill state action.\n[...]\nThat approach is reckless, and it is wrong.\n[...]\nI speak to this moment informed by years of national, bipartisan work on technology policy. I serve as co-chair of the Future Caucus National Task Force on AI Policy, as a member of the National Conference of State Legislatures Task Force on Artificial Intelligence, Cybersecurity, and Privacy, and on the Legislative Steering Committee of the State AI Policy Forum at Princeton University. Through these roles, I work closely with state legislators across the country and with civil society organizations confronting the same risks to safety, privacy and civil rights."
+            },
+            {
+              "url": "https://www.thecentersquare.com/opinion/article_35640019-8c10-4c33-b366-797edf8a5e2f.html",
+              "title": "Op-Ed: A unified AI strategy is essential to deliver for American consumers | Opinion | thecentersquare.com",
+              "excerpt": "Op-Ed: A unified AI strategy is essential to deliver for American consumers | Opinion | thecentersquare.com\n[...]\nArtificial intelligence is no longer a distant concept—it is already shaping how Americans live, work, and access essential services. From lowering healthcare costs to improving housing markets and streamlining everyday transactions, AI holds enormous promise for consumers. But realizing those benefits depends on one critical factor: a clear, consistent national approach to regulation. Without it, a fragmented system of state and local laws risks driving up costs, slowing innovation, and ultimately shortchanging the very people these policies aim to protect.\n[...]\nAcross the country, states and cities are moving quickly to regulate AI. While well-intentioned, these efforts are creating a patchwork of rules that impose significant compliance burdens on businesses. When companies must adapt their technologies to meet dozens of different legal standards, resources are diverted away from innovation and toward bureaucracy. The result is slower progress, fewer new products, and higher costs—all of which are passed along to consumers.\n[...]\nThis is why the federal government’s push to establish a unified framework is so important. The administration has recognized that maintaining U.S. leadership in AI is not just about global competition—it is about delivering real, tangible benefits to American households. A recent executive order establishing a Department of Justice “ AI Litigation Task Force” underscores this commitment. Its purpose is to review and, where necessary, challenge state-level policies that interfere with a cohesive national strategy designed to promote innovation while safeguarding the public.\n[...]\nAt stake is more than regulatory consistency; it is the everyday affordability and"
+            }
+          ],
+          "debate": {
+            "prosecutor_summary": "```json\n{\n  \"claim_id\": \"mats_belief_regulatory_stance\",\n  \"challenges\": [\n    {\n      \"challenge_type\": \"entity_mismatch\",\n      \"severity\": \"critical\",\n      \"argument\": \"The search was conducted for 'undefined' instead of 'MATS' - this is a fundamental search failure. None of the retrieved sources are about MATS program at all.\",\n      \"evidence_reference\": \"search_queries\"\n    },\n    {\n      \"challenge_type\": \"no_sources\",\n      \"severity\": \"critical\", \n      \"argument\": \"Zero sources found ",
+            "defender_summary": "```json\n{\n  \"claim_id\": \"mats_belief_regulatory_stance\",\n  \"defenses\": [\n    {\n      \"defense_type\": \"first_person_evidence\",\n      \"strength\": \"high\",\n      \"argument\": \"Stuart Russell, a key MATS-affiliated researcher, directly testified to the U.S. Senate in 2023 advocating for precautionary regulation. He stated: 'It is essential to create a regulatory framework capable [of ensuring safety]' and emphasized that 'regulation has a huge role to play' in addressing AGI risks, including 'catastro",
+            "judge_rationale": "```json\n{\n  \"claim_id\": \"mats_belief_regulatory_stance\",\n  \"verdict\": \"UNCERTAIN\",\n  \"confidence\": \"unsupported\",\n  \"rationale\": \"The prosecutor's challenges are decisive. First, there was a critical technical failure - the search queried 'undefined' instead of 'MATS', meaning no valid search for the actual entity was performed. Second, and more fundamentally, the defender's entire case rests on Stuart Russell's personal testimony, but the defender provides no evidence that Russell is officially affiliated with MATS or authorized to speak for the organization. The defender claims Russell is 'MATS-affiliated' but this is asserted, not demonstrated. Even if Russell were somehow connected to MATS, individual researcher views cannot establish an organization's official regulatory stance without explicit organizational statements. The prosecutor correctly identifies this as org-employee conflation. The defender's 'logical inference' argument explicitly acknowledges this weakness by saying Russell's views 'likely reflect' MATS' stance - speculation is not evidence. There are zero sources that actually represent MATS' official position.\"\n}\n```"
+          },
+          "proposal": {
+            "entity_id": "MATS",
+            "proposals": [
+              {
+                "field": "belief_regulatory_stance",
+                "action": "remove",
+                "current_value": "Precautionary",
+                "confidence": "high",
+                "evidence_summary": "Critical technical failure - search queried 'undefined' instead of 'MATS', resulting in no valid search results for the actual entity. All retrieved sources are about unrelated individuals (Stuart Russell) or general AI policy discussions with no connection to MATS organization. No evidence found of any official MATS position on regulatory stance.",
+                "source_urls": [],
+                "reasoning": "The judge verdict identifies a critical technical failure where the search system queried 'undefined' instead of 'MATS', meaning no actual search for the organization was performed. All evidence sources relate to Stuart Russell's personal testimony or general AI policy discussions, with zero sources representing MATS' official position. The defender's case relied entirely on unsupported assertions about Russell being 'MATS-affiliated' without evidence. This appears to be a fabricated value with no supporting evidence."
+              }
+            ],
+            "summary": {
+              "confirm": 0,
+              "correct": 0,
+              "flag_for_human": 0,
+              "remove": 1
+            }
+          }
+        },
+        {
+          "field": "notes",
+          "current_value": "Founded late 2021",
+          "verdict": "UNCERTAIN",
+          "confidence": "unsupported",
+          "sources_found": 3,
+          "evidence": [
+            {
+              "url": "https://www.beautyindependent.com/diversified-brand-undefined-enters-whole-foods-adaptogenic-mushroom-products/",
+              "title": "“A Diversified Brand”: Undefined Enters Whole Foods With ...",
+              "excerpt": "## Undefined hit the market with CBD beauty products a few months prior to the federal Farm Bill that legalized the hemp trade in the United States being signed into law in December 2018. Since then, the CBD sector, public attitudes toward it and the brand have changed quite a bit. While consumers are more accepting of cannabis-related merchandise, the frenzy that surrounded the early days of CBD beauty and wellness has calmed. In the context of the maturation of the sector, Undefined has progressed to become a well-rounded business. It recently launched into 500 Whole Foods locations with\n[...]\nR&R collection\n[...]\non adaptogenic mushrooms containing four products—Cleanser, Day Serum, Night Serum and Gel-Crème—priced from $24 to $28.\n[...]\n## “I’m a diversified brand,” says Undefined founder Dorian Morris. “I have the CBD category. I’m new to the adaptogenic mushroom category, and I’m exploring a THC collection specifically for California. I’m not just a cannabis brand. I am a wellness brand that believes in the power of plant magic, and that comes to life in different categories.” Beauty Independent asked Morris to elaborate on her career background, what led to the creation of Undefined, her approach to spotlighting the brand’s mission, learnings from the now-closed Undefined Collective store, and her upcoming fundraising and mindset as she builds a business amid a global health crisis.\n[...]\nI started working on it in the beginning of 2018. While I was ideating, I was consulting for General Mills. I had an opportunity to go to Korea for a trend trip with a friend of mine, and that’s when I asked myself the question, “Am I going to do this and continue as a consultant for General Mills or focus on the brand?” I couldn’t do both. I chose Undefined. I was placing a bet on myself.\n[...]\nliterally just launched\n[...]\n. I think by partnering with\n[...]\nthe natural and organic space, it helps with brand credibility,\n[...]\nthey have been\n[...]\npartners. With their large\n[...]\nand store count, we can democratize beauty together. I also look at the partnership as an engine for awareness.\n[...]\nmuch would I have to spend on an\n[...]\nor a TV commercial\n[...]\nUndefined started in 2018 with CBD beauty merchandise. It’s since branched out to adaptogenic mushroom-driven products and has THC products in the works. Containing CBD, it’s original hero product, Glow Elixir, is still in its assortment.\n[...]\nUndefined was a member of the accelerator program Target Takeoff’s 2021 cohort. It also participated in an accelerator initiative from cannabis delivery app Eaze, and was a winner of a pitch competition held by Pull Up For Change and New Voices Foundation. Andrea Czarnota"
+            },
+            {
+              "url": "https://www.pittsburghglasscenter.org/undefined/",
+              "title": "Undefined - Pittsburgh Glass Center",
+              "excerpt": "Undefined - Pittsburgh Glass Center\n[...]\n### February 3 – July 30, 2023\n[...]\nof individual and collaborative\n[...]\nof the top\n[...]\nIn 2021, John Moran, Minhi England, and John Sharvin were gathered in a backstage production set with seven other familiar faces. Each participant was invited to compete hoping to find new opportunities and to open creative pathways into new beginnings. Five weeks later, these three were the remaining finalists in the hit Netflix competition series, “Blown Away,” Season 3. Though John, John, and Minhi initially came together as competitors, their shared experiences on the show influenced comradery and mutual support. Since the premiere of the series, they have stayed in touch artistically through Pittsburgh Glass Center’s Artist Residency program, giving them an opportunity to collaborate as artists. This collaborative exhibition contradicts the notion of competition in the glass world.\n[...]\nSeattle’s\n[...]\n35)\n[...]\nWinner of Netflix’s Blown\n[...]\n3(Talking Out Your Glass podcast, Season 7, Episode 29)\n- John Sharvin: From Blown Away 3 to Undefined(Talking Out Your Glass podcast, Season 8, Episode 5)"
+            },
+            {
+              "url": "https://www.instagram.com/p/DU6Nad4jFgM/",
+              "title": "Undefined genre-bending music that isn't placed anywhere. Alix ...",
+              "excerpt": "Instagram\n\n---\n\nUndefined genre-bending music that isn’t placed anywhere.Alix plays Mianda's residency this Friday, showcasing a specific corner of the UK digger scene. He will be joining Ethan McNamara and Mianda from 22:00 until morning on Feb. 20th.Presale tix at the link in bio\n\nthe man of the night\n\nLike\n\nReply\n\n❤️🙌\n\nLike\n\nReply\n\nYalla🔥\n\nLike\n\nReply\n\n🔥\n\n1 like\n\nReply\n\n🤍🤍\n\nLike\n\nReply\n\n67\n\n5\n\nLog in to like or comment.\n\n---\n\nMore posts from platformawolff\n\n---"
+            }
+          ],
+          "debate": {
+            "prosecutor_summary": "```json\n{\n  \"claim_id\": \"mats_founding_date\",\n  \"challenges\": [\n    {\n      \"challenge_type\": \"no_sources\",\n      \"severity\": \"high\",\n      \"argument\": \"The search query was specifically for 'MATS program founded 2021 history site:matsprogram.org' but returned zero results from the MATS website or about the MATS program. All returned results are about completely unrelated entities named 'Undefined'.\",\n      \"evidence_reference\": \"entire_search_results\"\n    },\n    {\n      \"challenge_type\": \"conte",
+            "defender_summary": "```json\n{\n  \"claim_id\": \"mats_founding_date\",\n  \"defenses\": [\n    {\n      \"defense_type\": \"search_mismatch\",\n      \"strength\": \"critical_issue\",\n      \"argument\": \"The search results contain no information about MATS program or matsprogram.org. All results are about unrelated entities named 'Undefined' - a beauty brand, an art exhibition, and music events. This suggests the search query failed to locate relevant evidence.\",\n      \"evidence_reference\": \"All sources in results array\"\n    },\n    {\n",
+            "judge_rationale": "```json\n{\n  \"claim_id\": \"mats_founding_date\",\n  \"verdict\": \"UNCERTAIN\",\n  \"confidence\": \"unsupported\",\n  \"rationale\": \"Both prosecutor and defender agree the search failed entirely - all results returned were about unrelated entities named 'Undefined' (a beauty brand, art exhibition, music events) rather than the MATS program. There is zero evidence in the corpus that pertains to the claim about MATS being founded in late 2021. The claim can be neither supported nor refuted based on the available evidence.\"\n}\n```"
+          },
+          "proposal": {
+            "entity_id": "mats_founding_date",
+            "proposals": [
+              {
+                "field": "notes",
+                "action": "flag_for_human",
+                "current_value": "Founded late 2021",
+                "confidence": "low",
+                "evidence_summary": "Search results returned zero relevant information about MATS program. All results were for unrelated entities named 'Undefined' (beauty brand, art exhibition, music events). No evidence found to support or refute the founding date claim.",
+                "source_urls": [],
+                "reasoning": "Complete search failure - no evidence available to verify claim. Judge classified as UNCERTAIN with unsupported confidence due to total lack of relevant search results.",
+                "reason": "No evidence available to verify founding date claim - requires human research with different search strategy"
+              }
+            ],
+            "summary": {
+              "confirm": 0,
+              "correct": 0,
+              "flag_for_human": 1,
+              "remove": 0
+            }
+          }
+        },
+        {
+          "field": "notes",
+          "current_value": "~45 staff representing at least 5 countries",
+          "verdict": "UNCERTAIN",
+          "confidence": "low",
+          "sources_found": 3,
+          "evidence": [
+            {
+              "url": "https://www.elibrary.imf.org/display/book/9781451955255/ch005.xml",
+              "title": "Chapter 5: Bretton Woods (July 1944) in - IMF eLibrary",
+              "excerpt": "**Africa****\n[...]\n**Asia and Pacific****\n[...]\n**Europe****\n[...]\n**Middle East and Central Asia****\n[...]\n**Western Hemisphere****"
+            },
+            {
+              "url": "https://ustr.gov/sites/default/files/files/Press/Reports/2025NTE.pdf",
+              "title": "[PDF] FOREIGN TRADE BARRIERS - USTR",
+              "excerpt": "is responsible for\n[...]\nOF CONTENTS \nFOREWORD ...\n[...]\nALGERIA ... 5 \nANGOLA ... 9\n[...]\nARAB LEAGUE ... 13 \nARGENTINA ... 14 \nAUSTRALIA ... 18 \nBANGLADESH ... 21 \nBOLIVIA ... 26 \nBRAZIL ... 29 \nBRUNEI DARUSSALAM ... 35 \nCAMBODIA ... 37\n[...]\nCANADA ... 40 \nCHILE ... 46 \nCHINA ... 48 \nCOLOMBIA ... 96 \nCOSTA RICA ... 100 \nCOTE D’IVOIRE ... 103\n[...]\nDOMINICAN REPUBLIC ... 107 \nECUADOR ... 111\n[...]\nEGYPT ... 116\n[...]\nEL SALVADOR ... 121 \nETHIOPIA ... 124 \nEUROPEAN UNION ... 129 \nGHANA ... 163 \nGUATEMALA ... 169 \nGULF COOPERATION COUNCIL ... 173 \nHONDURAS ... 192 \nHONG KONG ... 194 \nINDIA ... 196 \nINDONESIA ... 212 \nISRAEL ... 226 \nJAPAN ... 229 \nJORDAN ... 240 \nKENYA ... 242 \nKOREA ... 248 \nLAOS ... 255 \nMALAYSIA ... 257 \nMEXICO ... 262 \nMOROCCO ... 269 \nNEW ZEALAND ... 271 \nNICARAGUA ... 272 \nNIGERIA ... 275 \nNORWAY ... 281\n[...]\nPAKISTAN ... 284\n[...]\nPANAMA ... 290 \nPARAGUAY ... 293 \nPERU ... 295 \nTHE PHILIPPINES ... 299 \nRUSSIA ... 308 \nSINGAPORE ... 323 \nSOUTH AFRICA ... 325 \nSWITZERLAND ... 330 \nTAIWAN ... 333 \nTHAILAND ... 339 \nTUNISIA ... 344 \nTÜRKİYE ... 347 \nUKRAINE ... 358 \nUNITED KINGDOM ... 363 \nURUGUAY ... 368 \nVIETNAM ... 370 \nAPPENDIX I ... 378 \nAPPENDIX II ... 380 \n\nFORE\n[...]\n. \nThis Report discusses the largest export markets for the United States, covering nearly 60 trading partners. \nOmission of particular trading partners and barriers does not imply\n[...]\nthey are not\n[...]\nconcern to the United \nStates.\n[...]\nARAB LEAGUE The 22 Arab League members are the Palestinian Authority and the following countries: Algeria, Bahrain, Comoros, Djibouti, Egypt, Iraq, Jordan, Kuwait, Lebanon, Libya, Mauritania,\n[...]\n, Oman, Qatar, Saudi Arabia, Somalia, Sudan, Syria, Tunisia, the United Arab Emirates, and Yemen. The effect of the Arab League’s boycott of Israeli companies and Israeli-made goods (originally implemented in 1948) on U.S. trade and investment in the Middle East and North Africa varies from country to country. Efforts by various Arab League members to enforce the boycott have had an extremely limited practical effect overall on U.S. trade and investment ties with many key Arab League countries. The U.S. Departments of Commerce and Treasury and the USTR monitor boycott policies and practices of Arab League members, and, aided by U.S. embassies, lend advocacy support to firms facing boycott-related pressures. On February 16, 2024, the U.S. Department of Treasury published the list of countries which require or may require participation in, or cooperation with, an international boycott (within the meaning of section 999(b)(3) of the Internal Revenue Code of 1986). The list included\n[...]\n, Kuwait, Lebanon,\n[...]\n, and Yemen. Arab League members that implement boycotts that pose a potential barrier to the\n[...]\ninclude: IRA\n[...]\n: As a matter of policy, Iraq does not adhere to the\n[...]\nministries and state-owned enterprises have agreed not to comply with or have rescinded regulations enforcing the boycott, following a 200\n[...]\nCouncil of Ministers decision to cease boycott-related implementation practices. However, individual Iraqi Government officials and ministries continue to violate that policy. The Ministry of Health’s procurement arm (Kimadia) was among the government entities that still issued boycott-related requests. QATAR: Qatar has a boycott law, but the extent to which the government enforces it is unclear. Although Qatar renounced implementation of the boycott of U.S. firms that do business in Israel (the secondary and tertiary boycott) in 1994, U.S. firms and their subsidiaries continue to report receiving boycott-related requests from public Qatari companies. In those instances, U.S. companies have made efforts to substitute alternative language. YEMEN: Although Yemen renounced observance of the secondary and tertiary aspects of the boycott in 1995, in the years since, Yemen has continued to enforce the primary boycott and certain aspects of the\n[...]\nboycotts."
+            },
+            {
+              "url": "https://www.law.cornell.edu/rules/frcp/rule_45",
+              "title": "Rule 45. Subpoena | Federal Rules of Civil Procedure | US Law",
+              "excerpt": "(2) Service\n[...]\n. A subpoena may be\n[...]\n(3) Service in a Foreign Country. 28 U.S.C. §1783 governs issuing and serving a subpoena directed to a United States national or resident who is in a foreign country.\n[...]\nThis rule applies to subpoenas ad testificandum and duces tecum issued by the district courts for attendance at a hearing or a trial, or to take depositions. It does not apply to the enforcement of subpoenas issued by administrative officers and commissions pursuant to statutory authority. The enforcement of such subpoenas by the district courts is regulated by appropriate statutes. Many of these statutes do not place any territorial limits on the validity of subpoenas so issued, but provide that they may be served anywhere within the United States. Among such statutes are the following:\n[...]\nThe second paragraph continues the present procedure\n[...]\nwho are in foreign countries. See\n[...]\n.C., Title 2\n[...]\n, §§711 [now\n[...]\n783] (\n[...]\nrogatory to take testimony of witness,\n[...]\nto court of foreign country; failure of witness to appear; subpoena) and 713 [now\n[...]\n] (Service\n[...]\nwitness in foreign country).\n[...]\nSecond, Paragraph (a)(3) authorizes attorneys in distant districts to serve as officers authorized to issue commands in the name of the court. Any attorney permitted to represent a client in a federal court, even one admitted pro hac vice, has the same authority as a clerk to issue a subpoena from any federal court for the district in which the subpoena is served and enforced. In authorizing attorneys to issue subpoenas from distant courts, the amended rule effectively authorizes service of a subpoena anywhere in the United States by an attorney representing any party. This change is intended to ease the administrative burdens of inter-district law practice. The former rule resulted in delay and expense caused by the need to secure forms from clerks’ offices some distance from the place at which the action proceeds. This change does not enlarge the burden on the witness.\n[...]\n“Adequate cause” for a failure to\n[...]\na subpoena remains undefined. In at least some circumstances, a non-party might be guilty of contempt for refusing to obey a subpoena even though the subpoena manifestly overreaches the appropriate limits of the subpoena power. E.g., Walker v. City of Birmingham, 388 U.S. 307 (1967). But, because the command of the subpoena is not in fact one\n[...]\nby a judicial officer, contempt should be very sparingly applied when the non-\n[...]\nwitness has been overborne by a party or attorney. The language added to subdivision\n[...]\n) is intended to assure\n[...]\na non-\n[...]\nan attorney, to\n[...]\nthan can be\n[...]\nthis rule.\n[...]\nRule 45(c)(1) addresses a subpoena to testify at a trial, hearing, or deposition. Rule 45(c)(1)(A) provides that compliance may be required within 100 miles of where the person subject to the subpoena resides, is employed, or regularly conducts business in person. For parties and party officers, Rule 45(c)(1)(B)(i) provides that compliance may be required anywhere in the state where the person resides, is employed, or regularly conducts business in person. When an order under Rule 43(a) authorizes testimony from a remote location, the witness can be commanded to testify from any place described in Rule 45(c)(1).\n[...]\nUnder Rule\n[...]\n)(B)(\n[...]\nbe required to travel more than\n[...]\nstate where they reside, are\n[...]\nin person only\n[...]\nnot, as a result, incur \"substantial\n[...]\n.\" When travel over 1\n[...]\nthat expense and the\n[...]\nenforcement of the subpoena on such payment\n[...]\nin New Orleans), with\n[...]\n13 (E.D\n[...]\nin New Orleans when\n[...]\nmore than 1\n[...]\n(c)(1)(A) does not authorize a subpoena for trial to require a party or party officer to travel more than 1\n[...]\n0 miles unless the party or party officer resides, is employed, or regularly transacts business in person in\n[...]\n, be transmitted be electronic means."
+            }
+          ],
+          "debate": {
+            "prosecutor_summary": "```json\n{\n  \"claim_id\": \"mats_staff_count\",\n  \"challenges\": [\n    {\n      \"challenge_type\": \"no_sources\",\n      \"severity\": \"high\",\n      \"argument\": \"Complete search failure - none of the returned sources are about MATS program at all. The search returned irrelevant results about IMF economic reports, US trade barriers, and federal court procedures. No evidence whatsoever supports the claim about MATS having ~45 staff from 5+ countries.\",\n      \"evidence_reference\": \"all_sources\"\n    },\n    {\n ",
+            "defender_summary": "Looking at the evidence provided, I must note that this search did not return any results specifically about MATS (Machine Learning for Alignment Theory Scholars) program staff size or geographic distribution. The results appear to be from unrelated sources - an IMF publication about Bretton Woods, a USTR trade report, and Cornell Law School rules.\n\nGiven this evidence limitation, here is my defense analysis:\n\n```json\n{\n  \"claim_id\": \"mats_staff_count\",\n  \"defenses\": [],\n  \"overall_assessment\": ",
+            "judge_rationale": "```json\n{\n  \"claim_id\": \"mats_staff_count\",\n  \"verdict\": \"UNCERTAIN\",\n  \"confidence\": \"low\",\n  \"rationale\": \"Both prosecutor and defender agree: the evidence corpus contains zero relevant sources about MATS. The search returned completely unrelated content (IMF reports, trade documents, legal procedures). The specific quantitative claim (~45 staff, 5+ countries) cannot be evaluated without organizational disclosure. Neither party could find any evidence to support or refute.\"\n}\n```"
+          },
+          "proposal": {
+            "entity_id": "mats_staff_count",
+            "proposals": [
+              {
+                "field": "notes",
+                "action": "flag_for_human",
+                "current_value": "~45 staff representing at least 5 countries",
+                "confidence": "low",
+                "evidence_summary": "No relevant evidence found about MATS program staff size or geographic distribution. Search returned completely unrelated content (IMF reports, trade documents, legal procedures).",
+                "reason": "Zero supporting evidence found - search corpus contains no MATS-related information",
+                "reasoning": "Judge verdict is UNCERTAIN with low confidence due to complete absence of relevant evidence. The search failed to return any information about MATS organization despite using site-specific search. Without any supporting sources, this specific quantitative claim cannot be verified or refuted. Requires human research with alternative search strategies."
+              }
+            ],
+            "summary": {
+              "confirm": 0,
+              "correct": 0,
+              "flag_for_human": 1,
+              "remove": 0
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

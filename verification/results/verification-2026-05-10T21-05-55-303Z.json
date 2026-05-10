@@ -1,0 +1,181 @@
+{
+  "timestamp": "2026-05-10T21:05:55.304Z",
+  "mode": "dry_run",
+  "entities_processed": 1,
+  "costs": {
+    "claude_calls": 13,
+    "claude_input_tokens": 40597,
+    "claude_output_tokens": 5816,
+    "claude_cost": 0.20903100000000002,
+    "exa_searches": 4,
+    "exa_cost": 0.032,
+    "total_cost": 0.24103100000000002
+  },
+  "summary": {
+    "supported": 0,
+    "uncertain": 3,
+    "refuted": 0
+  },
+  "results": [
+    {
+      "entity_id": 415,
+      "entity_name": "Machine Alignment, Transparency, and Security (MATS)",
+      "entity_type": "organization",
+      "enum_repairs": {},
+      "claims_count": 10,
+      "verdicts": [
+        {
+          "field": "belief_regulatory_stance",
+          "current_value": "Precautionary",
+          "verdict": "UNCERTAIN",
+          "confidence": "unsupported",
+          "sources_found": 6,
+          "evidence": [
+            {
+              "url": "https://www.judiciary.senate.gov/imo/media/doc/2023-05-16%20-%20Bio%20&%20Testimony%20-%20Altman.pdf",
+              "title": "",
+              "excerpt": "the opportunity to testify today about large neural networks. I am Sam Altman, Chief Executive\n[...]\nOfficer of OpenAI, a company that studies, builds, and deploys artificial intelligence (AI) and has\n[...]\ncreated AI tools such as ChatGPT, Whisper, and DALL·E 2. OpenAI was founded on the belief\n[...]\nthat safe and beneficial AI offers tremendous possibilities for humanity. I am grateful for the\n[...]\nopportunity to speak about our experiences developing cutting-edge AI technology and studying\n[...]\nAI safety, and our interest in working collaboratively with governments to ensure the\n[...]\ndevelopment and widespread availability of safe and beneficial AI tools. We believe it is\n[...]\nessential to develop regulations that incentivize AI safety while ensuring that people are able to\n[...]\naccess the technology’s many benefits.\n[...]\nintelligence (AGI) benefits all of humanity. OpenAI’s work is driven by our charter, in which we\n[...]\ncommit to working toward the broad distribution of the benefits of AGI, to maximizing the long\n[...]\nterm safety of AI systems, to cooperating with other research and policy institutions, and to\n[...]\nserving as a technical leader in AI to accomplish these objectives."
+            },
+            {
+              "url": "https://people.eecs.berkeley.edu/~russell/papers/russell-senate23-oral.pdf",
+              "title": "",
+              "excerpt": "Opening statement (as delivered) before the U.S. Senate Commi:ee on the Judiciary\nSubcommi:ee on Privacy, Technology, & the Law, hearing on “Oversight of A.I.: Principles for \nRegulaJon”\nJuly 25th, 2023\nStuart Russell\nProfessor of Computer Science\n[...]\nThe University of California,\n[...]\nAI, as we all know, is the study of how to make machines intelligent. Its stated goal is general\u0002purpose ar-ficial intelligence, someJmes called AGI or arJficial general intelligence: machines \nthat match or exceed human capabiliJes in every relevant dimension.\n[...]\nOver the last decade, that has changed. Beginning with vision and speech recogniJon, and now \nwith language, the dominant approach has been end-to-end training of circuits with billions or \ntrillions of adjustable parameters. The success of these systems is undeniable, but their internal \nprinciples of operaJon remain a mystery. This is parJcularly true for the large language models \nor LLMs, such as ChatGPT.\n[...]\nMany AI researchers now see AGI on the horizon. In my view, LLMs do not cons-tute AGI, but \nthey are a piece of the puzzle. We’re not sure what shape the piece is yet or how it fits into the \npuzzle, but the field is working hard on those quesJons, and progress is rapid.\n[...]\nIf we succeed, the upside could be enormous: I’ve esJmated a cash value of at least 14 \nquadrillion dollars for this technology—a huge magnet in the future, pulling us forward.\n[...]\nOn the other hand, Alan Turing, the founder of computer science, warned in 1951 that once AI\n“outstrips our feeble powers … we should have to expect the machines to take control.”"
+            },
+            {
+              "url": "https://www.judiciary.senate.gov/imo/media/doc/2023-07-26_-_testimony_-_amodei.pdf",
+              "title": "",
+              "excerpt": "the opportunity to discuss the risks and oversight of AI with you. I’m Dario Amodei, CEO of\n[...]\nAnthropic. Anthropic is a public benefit corporation that aims to lead by example in developing\n[...]\nand publishing techniques to make AI systems safer and more controllable, and deploying those\n[...]\ntechniques thoughtfully in state of the art models.\n[...]\n, we were\n[...]\n. Claude 2 puts many of these safety innovations into practice. While we’re the first to\n[...]\nadmit that our measures are still far from perfect, we believe they are an important contribution\n[...]\ntowards a “race to the top” on safety. We hope we can inspire others in the industry to raise the\n[...]\nI will devote most of this prepared testimony to discussing the risks of AI, including what I\nbelieve to be extraordinarily grave threats to US national security over the next 2 to 3 years. But\nbefore I do that, I wanted to answer one obvious question up front: if I truly believe that AI’s risks\nare so severe, why even develop the technology at all?\n[...]\nTo this I have three answers: first, if we can mitigate the risks o"
+            },
+            {
+              "url": "https://time.com/7086285/ai-transparency-measures/",
+              "title": "4 Ways to Advance Transparency in Frontier AI Development",
+              "excerpt": "The debate over California’s AI regulation bill SB 1047 has come to an end—after months of heated discourse, it was vetoed by Gov. Gavin Newsom in late September. This was America’s first major public conversation about AI policy, but it will not be our last. Now, therefore, seems an appropriate time to take stock, to reflect on what we learned, and to propose a path forward.\n[...]\nAs a policy analyst focused on AI and a former OpenAI governance and alignment researcher, we disagreed with one another, and disagree still, about the merits of SB 1047. But when we conversed privately, we found wide areas of agreement in our assessment of the current state of AI. These points are the seeds of a productive path forward."
+            },
+            {
+              "url": "https://techpolicy.press/two-ai-transparency-concerns-that-governments-should-align-on",
+              "title": "Two AI Transparency Concerns that Governments Should Align On | TechPolicy.Press",
+              "excerpt": "As regulation on AI transparency emerges, governments should seize the opportunity for international alignment on two shared concerns. First, interactions with AI may become indistinguishable from human interactions, potentially confusing users. Second, AI systems are inherently opaque. The Digital Policy Alert’s comprehensive report and tracker on global AI rules show that, despite these shared concerns, national rules on AI transparency diverge. Below, we outline divergent regulatory approaches and explain why governments must align to prevent hurdles to AI development and AI transparency.\n[...]\n## Despite shared concerns, national rules on AI transparency vary\n[...]\nAI raises two fundamental transparency concerns that have gained in salience with the spread of generative AI. First, the interaction with AI systems increasingly resembles human interaction. AI is gradually developing the capability of mimicking human output, as evidenced by the flurry of AI-generated content that bears similarities to human-generated content. The “resemblance concern” is thus that humans are left guessing: Is an AI system in use? Second, AI systems are inherently opaque. Humans who interact with AI systems are often in the dark about the factors and processes underlying AI outcomes. The “opacity concern” is thus that humans are left wondering: How does the AI system work?\n[...]\nGovernments are already addressing these shared concerns in national regulation and international alignment. Our comparative analysis of 11 AI rulebooks found that 25 percent of regulatory requirements proposed in Argentina, Brazil, Canada, and South Korea pursue transparency. In China and the European Union (EU), the shar"
+            },
+            {
+              "url": "https://www.alignmentforum.org/posts/XSqntCNMafhcy9irf/third-party-testing-as-a-key-ingredient-of-ai-policy",
+              "title": "Third-party testing as a key ingredient of AI   policy",
+              "excerpt": "# [Third-party testing as a key ingredient of AIpolicy](https://www.alignmentforum.org/posts/XSqntCNMafhcy9irf/third-party-testing-as-a-key-ingredient-of-ai-policy)\n[...]\nWe believe that the AI sector needs effective third-party testing for frontier AI systems. Developing a testing regime and associated policy interventions based on the insights of industry, government, and academia is the best way to avoid societal harm—whether deliberate or accidental—from AI systems.\n[...]\nOur deployment of large-scale, generative AI systems like Claude has shown us that work is needed to set up the policy environment to respond to the capabilities of today’s most powerful AI models, as well as those likely to be built in the future. In this post, we discuss what third-party testing looks like, why it’s needed, and describe some of the research we’ve done to arrive at this policy position. We also discuss how ideas around testing relate to other topics on AI policy, such as openly accessible models and issues of regulatory capture.\n[...]\n## Policy overview\n[...]\nToday’s frontier AI systems demand a third-party oversight and testing regime to validate their safety. In particular, we need this oversight for understanding and analyzing model behavior relating to issues like[election integrity](https://www.anthropic.com/news/preparing-for-global-elections-in-2024),[harmf"
+            }
+          ],
+          "debate": {
+            "prosecutor_summary": "```json\n{\n  \"claim_id\": \"org_mats_regulatory_stance\",\n  \"challenges\": [\n    {\n      \"challenge_type\": \"no_sources\",\n      \"severity\": \"high\",\n      \"argument\": \"Zero sources found for MATS organization. All search results are about completely different entities: OpenAI (Sam Altman), UC Berkeley (Stuart Russell), Anthropic (Dario Amodei), and various AI policy articles. None mention 'Machine Alignment, Transparency, and Security (MATS)' at all.\",\n      \"evidence_reference\": \"entire_search_results",
+            "defender_summary": "```json\n{\n  \"claim_id\": \"org_mats_regulatory_stance\",\n  \"defenses\": [\n    {\n      \"defense_type\": \"search_methodology_issue\",\n      \"strength\": \"critical\",\n      \"argument\": \"The search results contain no evidence about MATS (Machine Alignment, Transparency, and Security) organization's regulatory stance. All sources discuss other entities - OpenAI, Anthropic, individual researchers, and policy discussions - but no direct MATS organizational statements or positions.\",\n      \"evidence_reference\":",
+            "judge_rationale": "```json\n{\n  \"claim_id\": \"org_mats_regulatory_stance\",\n  \"verdict\": \"UNCERTAIN\",\n  \"confidence\": \"unsupported\",\n  \"rationale\": \"Both prosecutor and defender agree on the fundamental problem: zero sources in the evidence corpus actually reference MATS organization or its regulatory stance. The prosecutor correctly identifies that all search results concern entirely different entities (OpenAI, Anthropic, UC Berkeley researchers). The defender's attempts at defense are notably weak - they explicitly label their arguments as 'low' strength and ultimately concede 'no sources actually reference MATS organization's regulatory stance.' Inferring an organization's official position from its name or from what similar organizations believe is not valid attribution. Without any first-person organizational statement or even third-party characterization of MATS specifically, no verdict on the claim's accuracy is possible.\"\n}\n```"
+          },
+          "proposal": {
+            "entity_id": "org_mats",
+            "proposals": [
+              {
+                "field": "belief_regulatory_stance",
+                "action": "remove",
+                "current_value": "Precautionary",
+                "confidence": "high",
+                "evidence_summary": "No evidence found in corpus referencing MATS organization or its regulatory stance. All search results concern different entities (OpenAI, Anthropic, UC Berkeley researchers). Judge confirms 'zero sources actually reference MATS organization or its regulatory stance.'",
+                "reasoning": "Value appears fabricated with no supporting evidence. Judge verdict is UNCERTAIN only due to complete absence of evidence, not conflicting evidence. Without any first-person organizational statement or third-party characterization of MATS specifically, this field should be removed rather than maintained."
+              }
+            ],
+            "summary": {
+              "confirm": 0,
+              "correct": 0,
+              "flag_for_human": 0,
+              "remove": 1
+            }
+          }
+        },
+        {
+          "field": "notes",
+          "current_value": "Founded late 2021",
+          "verdict": "UNCERTAIN",
+          "confidence": "low",
+          "sources_found": 1,
+          "evidence": [
+            {
+              "url": "https://forum.effectivealtruism.org/users/ryan-kidd",
+              "title": "Ryan Kidd - EA Forum",
+              "excerpt": "Co-Executive Director @ MATS\n[...]\n873 karmaJoined Sep 2021Working (0-5 years) Berkeley, CA, USA\n[...]\n- Co-Executive Director at ML Alignment & Theory Scholars Program(2022-present)\n- Co-Founder & Board Member at London Initiative for Safe AI(2023-present)\n- Manifund Regrantor(2023-present) | RFPs here\n- Advisor, Catalyze Impact(2023-present) | ToC here\n- Advisor, AI Safety ANZ(2024-present)\n- Advisor, Pivotal Research(2024-present)\n- Advisor, Halcyon Futures(2025-present)\n- Advisor, Black in AI Safety and Ethics(2025-present)\n- Advisor, Alignment Foundation(2026-present)\n- Ph.D. in Physics at the University of Queensland (2017-2023)\n- Group organizer at Effective Altruism UQ (2018-2021)\n[...]\nof MATS Research!\n[...]\nMATS is currently fundraising for our 2026 programs and beyond. We are the largest AI safety research fellowship and talent pipeline, supporting 100 fellows twice a year. Some impact stats:\n[...]\n- 446 alumni and 120+ arXiv papers(h-index 37) in 3.5 years.\n- 80% of our pre-2025 alumni work on AI safety and 10% founded AI safety orgs or teams (e.g., Apollo, Timaeus).\n- Participants in our last program rated it 9.4/10 on average.\n- Former team members have gone on to (re)found Constellation's Astra Fellowship, manage Anthropic's AI safety external partnerships, and help other AI safety orgs scale.\n[...]\nWe are well-funded by Coefficient Giving, but have big scaling plans! We want to run an additional fellowship in Fall 2026, expand Summer and Winter 2026 programs to 120 fellows each, and launch a 1-2 year residency program for senior researchers. Each additional fellow costs $40.8k."
+            }
+          ],
+          "debate": {
+            "prosecutor_summary": "```json\n{\n  \"claim_id\": \"org_mats_founding_date\",\n  \"challenges\": [\n    {\n      \"challenge_type\": \"no_sources\",\n      \"severity\": \"high\",\n      \"argument\": \"No evidence found that directly supports 'Founded late 2021'. The search query specifically looked for founding information but returned no results containing founding dates or establishment information.\",\n      \"evidence_reference\": \"search_results\"\n    },\n    {\n      \"challenge_type\": \"inference_gap\",\n      \"severity\": \"high\",\n      \"argum",
+            "defender_summary": "```json\n{\n  \"claim_id\": \"org_mats_founding_date\",\n  \"defenses\": [\n    {\n      \"defense_type\": \"first_person_evidence\",\n      \"strength\": \"high\",\n      \"argument\": \"Ryan Kidd, the Co-Executive Director of MATS, provides direct organizational context showing MATS began operations in 2022. His EA Forum profile shows he 'Joined Sep 2021' and lists 'Co-Executive Director at ML Alignment & Theory Scholars Program (2022-present)', indicating the program launched shortly after his joining date in late 2",
+            "judge_rationale": "```json\n{\n  \"claim_id\": \"org_mats_founding_date\",\n  \"verdict\": \"UNCERTAIN\",\n  \"confidence\": \"low\",\n  \"rationale\": \"No direct evidence of founding date exists in the evidence corpus. The defender's case relies entirely on inference from Ryan Kidd's personal timeline (joined EA Forum Sep 2021, became Co-ED in 2022), but this is a logical gap - someone joining a forum and later taking a leadership role does not establish when an organization was founded. The '3.5 years' statistic could support the claim, but as the prosecutor notes, we don't know when that statement was made, making reverse-calculation unreliable. The search specifically targeted matsprogram.org but returned no official sources. Without a first-person statement from MATS leadership or official documentation stating the founding date, this remains unverified.\"\n}\n```"
+          },
+          "proposal": {
+            "entity_id": "org_mats_founding_date",
+            "proposals": [
+              {
+                "field": "notes",
+                "action": "flag_for_human",
+                "current_value": "Founded late 2021",
+                "confidence": "low",
+                "evidence_summary": "No direct evidence of founding date found. Only indirect inference from Ryan Kidd's EA Forum join date (Sep 2021) and Co-ED role start (2022), plus mention of '3.5 years' of operation without timestamp. Search targeted matsprogram.org but returned no official sources with founding information.",
+                "source_urls": [
+                  "https://forum.effectivealtruism.org/users/ryan-kidd"
+                ],
+                "reason": "Insufficient evidence to confirm or correct founding date. Requires official MATS documentation or first-person statement from leadership."
+              }
+            ],
+            "summary": {
+              "confirm": 0,
+              "correct": 0,
+              "flag_for_human": 1,
+              "remove": 0
+            }
+          }
+        },
+        {
+          "field": "notes",
+          "current_value": "~45 staff representing at least 5 countries",
+          "verdict": "UNCERTAIN",
+          "confidence": "low",
+          "sources_found": 2,
+          "evidence": [
+            {
+              "url": "https://www.alignmentforum.org/w/mats-program",
+              "title": "MATS Program - AI Alignment Forum",
+              "excerpt": "[**ML Alignment&Theory Scholars(MATS) Program**](https://www.matsprogram.org/)is an educational seminar and independent research program that aims to provide talented scholars with talks, workshops, and research mentorship in the field of[AI alignment](https://en.wikipedia.org/wiki/AI_alignment), and connect them with the Berkeley AI safety research community."
+            },
+            {
+              "url": "https://www.lesswrong.com/w/mats-program",
+              "title": "MATS Program - LessWrong",
+              "excerpt": "# Tag: MATS Program\n\nCanonical page: /w/mats-program\n\nDiscussion page: /w/mats-program/discussion\n\n## Wiki Content\n\nThe Machine Alignment, Transparency, and Security (MATS) Program is an independent research and educational seminar program that provides emerging researchers with mentorship, talks & workshops, research support, and connections with the SF Bay Area and London AI safety research communities.\n\n## Posts Tagged MATS Program\n\n### SolidGoldMagikarp (plus, prompt generation)\n\nBy Jessica Rumbelow with mwatkins\n2023-02-05 22:02:35Z\n\n- Karma: 675\n- Curated\n- Tags: Glitch Tokens, Adversarial Examples (AI), MATS Program, Language Models (LLMs), Interpretability (ML & AI), AI (Frontpage)\n\nRead more: /api/post/solidgoldmagikarp-plus-prompt-generation\n\n### SERI MATS Program - Winter 2022 Cohort\n\nBy Ryan Kidd with Victor Warlop, Christian Smith\n2022-10-08 19:09:53Z\n\n- Karma: 72\n- Tags: MATS Program, AI (Personal Blog)\n\nRead more: /api/post/seri-mats-program-winter-2022-cohort\n\n### Understanding and controlling a maze-solving policy network\n\nBy TurnTrout with peligrietzer, Ulisse Mini, Monte M, David Udell\n2023-03-11 18:59:56Z\n\n- Karma: 335\n- Tags: MATS Program, Shard Theory, Activation Engineering, Inner Alignment, Interpretability (ML & AI), AI (Frontpage)\n\nRead more: /api/post/understanding-and-controlling-a-maze-solving-policy-network\n\n### Project proposal: Testing the IBP definition of agent\n\nBy Jeremy Gillen with Thomas Larsen, JamesH\n2022-08-09 01:09:37Z\n\n- Karma: 21\n- Tags: Infra-Bayesianism, MATS Program, Agency, AI (Frontpage)\n\nRead more: /api/post/project-proposal-testing-the-ibp-definition-of-agent\n\n### Soft optimization makes the value target bigger\n\nBy Jeremy Gillen\n2023-01-02 16:06:50Z\n\n- Karma: 123\n- Tags: Mild optimization, Quantilization, MATS Program, Goodhart's Law, AI (Frontpage)\n\nRead more: /api/post/soft-optimization-makes-the-value-target-bigger\n\n### SERI MATS - Summer 2023 Cohort\n\nBy Aris with Ryan Kidd, Christian Smith\n2023-04-08 15:32:56Z\n\n- Karma: 71\n- Tags: MATS Program, AI Alignment Fieldbuilding, AI (Personal Blog)\n\nRead more: /api/post/seri-mats-summer-2023-cohort\n\n### SERI ML Alignment Theory Scholars Program 2022\n\nBy Ryan Kidd with Victor Warlop, ozhang\n2022-04-27 00:43:38Z\n\n- Karma: 69\n- Tags: MATS Program, AI, Community (Frontpage)\n\nRead more: /api/post/seri-ml-alignment-theory-scholars-program-2022\n\n### How MATS addresses “mass movement building” concerns\n\nBy Ryan Kidd\n2023-05-04 00:55:26Z\n\n- Karma: 63\n- Tags: MATS Program, AI, Community (Frontpage)\n\nRead more: /api/post/how-mats-addresses-mass-movement-building-concerns\n\n### Finite Factored Sets in Pictures\n\nBy Magdalena Wache\n2022-12-11 18:49:00Z\n\n- Karma: 186\n- Curated\n- Tags: Finite Factored Sets, Causality, MATS Program, AI, World Modeling (Frontpage)\n\nRead more: /api/post/finite-factored-sets-in-pictures-6\n\n### Taking the parameters which seem to matter and rotating them until they don't\n\nBy Garrett Baker\n2022-08-26 18:26:47Z\n\n- Karma: 120\n- Tags: MATS Program, Interpretability (ML & AI), AI Risk, AI (Frontpage)\n\nRead more: /api/post/taking-the-parameters-which-seem-to-matter-and-rotating-them\n\n### Navigation\n\n- Front page\n- Markdown API documentation"
+            }
+          ],
+          "debate": {
+            "prosecutor_summary": "```json\n{\n  \"claim_id\": \"org_mats_staff_count\",\n  \"challenges\": [\n    {\n      \"challenge_type\": \"no_sources\",\n      \"severity\": \"high\",\n      \"argument\": \"No evidence found supporting the specific claim of '~45 staff representing at least 5 countries'. The search returned general information about MATS as a program, but no sources contain any staff count or geographic distribution data.\",\n      \"evidence_reference\": \"all_sources\"\n    },\n    {\n      \"challenge_type\": \"content_mismatch\",\n      \"se",
+            "defender_summary": "```json\n{\n  \"claim_id\": \"org_mats_staff_count\",\n  \"defenses\": [\n    {\n      \"defense_type\": \"search_methodology_limitation\",\n      \"strength\": \"medium\",\n      \"argument\": \"The search results focus on MATS program descriptions and research outputs rather than organizational structure. This suggests the specific staff count claim may not be prominently featured in public-facing content, which is common for internal organizational details.\",\n      \"evidence_reference\": \"Overall search pattern shows",
+            "judge_rationale": "```json\n{\n  \"claim_id\": \"org_mats_staff_count\",\n  \"verdict\": \"UNCERTAIN\",\n  \"confidence\": \"low\",\n  \"rationale\": \"No sources provide any direct evidence for '~45 staff' or '5 countries.' The defender's arguments are speculative - inferring staff from program scope is not evidence. The mention of 'SF Bay Area and London' confirms at most 2 geographic locations, not 5 countries. Both parties agree the specific figures appear nowhere in the evidence corpus. Prosecutor's challenge stands: this is an unsupported claim.\"\n}\n```"
+          },
+          "proposal": {
+            "entity_id": "org_mats_staff_count",
+            "proposals": [
+              {
+                "field": "notes",
+                "action": "remove",
+                "current_value": "~45 staff representing at least 5 countries",
+                "confidence": "high",
+                "evidence_summary": "No evidence found in any sources for '~45 staff' or '5 countries.' Sources only mention SF Bay Area and London locations (2 locations, not 5 countries). The specific staff count and geographic distribution claims appear to be fabricated with no supporting documentation.",
+                "source_urls": [
+                  "https://www.lesswrong.com/w/mats-program",
+                  "https://www.alignmentforum.org/w/mats-program"
+                ],
+                "reasoning": "Judge verdict is UNCERTAIN with low confidence, but the rationale clearly shows both specific claims ('~45 staff' and '5 countries') are completely unsupported by evidence. The sources only confirm 2 geographic locations (SF Bay Area and London), contradicting the '5 countries' claim. No staff count information is provided anywhere. This appears to be fabricated data that should be removed rather than flagged, as there is zero supporting evidence."
+              }
+            ],
+            "summary": {
+              "confirm": 0,
+              "correct": 0,
+              "flag_for_human": 0,
+              "remove": 1
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+<div id="diagram" style="padding:8px 0"></div>
+<script type="module">
+import mermaid from 'https://esm.sh/mermaid@11/dist/mermaid.esm.min.mjs';
+const dark = matchMedia('(prefers-color-scheme: dark)').matches;
+await document.fonts.ready;
+mermaid.initialize({
+  startOnLoad: false,
+  theme: 'base',
+  flowchart: { curve: 'basis', padding: 20 },
+  themeVariables: {
+    darkMode: dark,
+    fontSize: '13px',
+    fontFamily: '"Anthropic Sans", sans-serif',
+    primaryColor: dark ? '#3C3489' : '#EEEDFE',
+    primaryTextColor: dark ? '#CECBF6' : '#3C3489',
+    primaryBorderColor: dark ? '#7F77DD' : '#534AB7',
+    secondaryColor: dark ? '#085041' : '#E1F5EE',
+    secondaryTextColor: dark ? '#9FE1CB' : '#085041',
+    secondaryBorderColor: dark ? '#1D9E75' : '#0F6E56',
+    tertiaryColor: dark ? '#633806' : '#FAEEDA',
+    tertiaryTextColor: dark ? '#FAC775' : '#633806',
+    tertiaryBorderColor: dark ? '#EF9F27' : '#854F0B',
+    lineColor: dark ? '#888780' : '#5F5E5A',
+    edgeLabelBackground: dark ? '#2C2C2A' : '#F1EFE8',
+  },
+});
+
+const chart = `flowchart TD
+  INPUT([Input record])
+
+  subgraph P0["Phase 0 — Pre-pass"]
+    ENUM["Enum validator\\n(code — no LLM)\\nChecks invalid values + over-limit counts"]
+    FRESH["URL freshness triage\\n(Haiku)\\nFlags null or stale last_verified_at"]
+    REPAIR["Enum repair agent\\n(Sonnet)\\nMaps invalid → valid; trims over-limit by evidence rank"]
+  end
+
+  subgraph P1["Phase 1 — Decompose & route"]
+    DECOMP["Decomposer + router\\n(Sonnet)\\nAtomic claims · tags factual vs belief_attribution · search query"]
+    FAST["Fast path\\nfactual + URL present"]
+    FULL["Full adversarial path\\nbelief_attribution · notes · citations · edges · crowdsourced"]
+  end
+
+  subgraph P2["Phase 2 — Fetch & attribution"]
+    URLVAL["URL validator\\n(Haiku)\\nHTTP fetch · 404 · content relevance check"]
+    SEARCH["Search + attribution agent\\n(Sonnet)\\nExa search · builds attribution chain per claim\\nNEVER sees candidate URLs"]
+  end
+
+  subgraph P3["Phase 3 — Adversarial debate"]
+    PROS["Prosecutor\\n(Sonnet)\\nChallenges weak attribution · date errors · org misattribution"]
+    DEF["Defender\\n(Sonnet)\\nFinds first-person corroboration · validates inference chains"]
+    JUDGE["Judge — isolated context\\n(Opus)\\nReads debate transcript ONLY · never sees original record"]
+  end
+
+  subgraph P4["Phase 4 — Correction & notes regen"]
+    CORR["Correction proposal\\n(Sonnet)\\nFirst-person sources only · produces confirm/correct/flag/remove"]
+    REGEN["Notes regen agent\\n(Sonnet)\\nRewrites notes_html from SUPPORTED claims only"]
+    MODE1["Mode 1\\nauto-write"]
+    MODE2["Mode 2 >30% refuted\\nhuman queue"]
+  end
+
+  subgraph P5["Phase 5 — Triage & write-back"]
+    TRIAGE["Triage router\\n(Haiku)\\nRecord-level confidence score"]
+    APPROVE["Auto-approve\\nall confirmed"]
+    HQUEUE["Human queue\\nuncertain or failed loop"]
+    QUAR["Auto-quarantine\\ncore identity refuted"]
+    WRITE["Write-back agent\\n(Haiku)\\nfield_verification · confidence · notes_html · last_verified_at"]
+  end
+
+  INPUT --> ENUM
+  INPUT --> FRESH
+  ENUM -->|invalid or over-limit| REPAIR
+  REPAIR --> DECOMP
+  FRESH -.->|stale URLs prioritised| URLVAL
+  ENUM -->|clean| DECOMP
+
+  DECOMP -->|factual + URL| FAST
+  DECOMP -->|belief · notes · citations| FULL
+
+  FAST --> URLVAL
+  FULL --> URLVAL
+  FULL --> SEARCH
+
+  URLVAL --> PROS
+  SEARCH --> PROS
+  URLVAL --> DEF
+  SEARCH --> DEF
+
+  PROS --> JUDGE
+  DEF --> JUDGE
+
+  JUDGE -->|SUPPORTED| CORR
+  JUDGE -->|UNCERTAIN| CORR
+  JUDGE -->|REFUTED| CORR
+  JUDGE --> REGEN
+
+  CORR -->|correct action + first-person evidence| P1
+  CORR --> TRIAGE
+
+  REGEN --> MODE1
+  REGEN --> MODE2
+
+  MODE1 --> WRITE
+  MODE2 --> HQUEUE
+
+  CORR --> TRIAGE
+  TRIAGE --> APPROVE
+  TRIAGE --> HQUEUE
+  TRIAGE --> QUAR
+  APPROVE --> WRITE
+  HQUEUE --> WRITE
+`;
+
+const { svg } = await mermaid.render('mermaid-svg', chart);
+document.getElementById('diagram').innerHTML = svg;
+</script>

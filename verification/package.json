@@ -1,0 +1,19 @@
+{
+  "name": "mapping-ai-verification",
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Multi-agent verification pipeline for Mapping AI",
+  "scripts": {
+    "setup": "node agents/setup-agents.js",
+    "test": "node agents/test-sample.js",
+    "validate-enums": "node lib/validate-enums.js",
+    "repair-enums:dry": "node lib/apply-enum-repairs.js --dry-run",
+    "repair-enums:apply": "node lib/apply-enum-repairs.js --apply"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.52.0",
+    "dotenv": "^16.4.0",
+    "exa-js": "^1.10.3",
+    "pg": "^8.11.0"
+  }
+}
