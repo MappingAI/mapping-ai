@@ -283,15 +283,15 @@ map.html loads JSON (no live DB queries)
 **Options:**
 | Value | Description |
 |-------|-------------|
-| `Venture-backed` | Venture-backed/for-profit |
-| `Revenue-generating` | SaaS, enterprise revenue |
-| `Government-funded` | Grants, contracts |
-| `Philanthropic` | Foundation-funded |
-| `Membership/dues-based` | Member-supported |
-| `Mixed` | Commercial + philanthropic |
-| `Public benefit corp` | Public benefit corp/capped-profit |
-| `Self-funded/endowed` | Self-funded or endowment |
-| `Other` | Describe in notes |
+| `Philanthropic` | Foundation/donor funded |
+| `Government` | Government funded |
+| `VC-backed` | Venture capital funded |
+| `Corporate` | Corporate/commercial revenue |
+| `Academic` | University/endowment funded |
+| `Membership` | Member dues funded |
+| `Self-funded` | Bootstrapped/founder funded |
+| `Political/PAC` | Political action committees, Super PACs |
+| `Mixed` | Multiple funding types |
 
 ### Regulatory Stance
 
@@ -585,55 +585,162 @@ Stores relationships between entities. Direction matters: edges flow FROM `sourc
 
 **Unique constraint:** `(source_id, target_id, edge_type)`
 
+### How Edge Directionality Works
+
+Every edge has a **source** and **target**. The edge type describes the relationship **from source's perspective**.
+
+```
+source_id  →  edge_type  →  target_id
+```
+
+**Example:** To encode "Sam Altman works at OpenAI":
+- `source_id`: Sam Altman (person)
+- `target_id`: OpenAI (org)
+- `edge_type`: `employer`
+
+The frontend displays this bidirectionally:
+- Viewing Sam Altman: "Works at OpenAI"
+- Viewing OpenAI: "Employs Sam Altman"
+
 ### Edge Direction Examples
 
-| Edge                                                          | Meaning                          |
-| ------------------------------------------------------------- | -------------------------------- |
-| `Sam Altman (source)` → `OpenAI (target)` with `employed_by`  | "Sam is employed by OpenAI"      |
-| `Anthropic (source)` → `OpenAI (target)` with `spun_out_from` | "Anthropic spun out from OpenAI" |
-| `Google (source)` → `Anthropic (target)` with `invested_in`   | "Google invested in Anthropic"   |
+| Edge                                                       | Meaning                        |
+| ---------------------------------------------------------- | ------------------------------ |
+| `Sam Altman (source)` → `OpenAI (target)` with `employer`  | "Sam works at OpenAI"          |
+| `Google (source)` → `Anthropic (target)` with `funder`     | "Google funds Anthropic"       |
+| `Anthropic (source)` → `OpenAI (target)` with `parent_company` | "OpenAI is parent of Anthropic" |
 
-**Note on bidirectionality:** For symmetric relationships like `collaborator` or `partner_of`, create edges in both directions if you want the relationship visible from both entities.
+**Note on symmetric relationships:** For `collaborator`, `partner`, and similar symmetric relationships, create edges in **both directions** so the relationship is visible from either entity.
 
 **Note on dates:** `start_date` and `end_date` are optional. Include when available from sources, but many relationships won't have precise dates. Format: "2019" or "2019-03".
 
 ### Edge Types by Entity Combination
 
 **Person → Organization:**
-| Type | Description |
-|------|-------------|
-| `employed_by` | Current employment |
-| `founded` | Founded the organization |
-| `advises` | Advisory role |
-| `board_member` | Board membership |
-| `invested_in` | Investment relationship |
-| `affiliated` | General affiliation |
-
-**Person → Person:**
-| Type | Description |
-|------|-------------|
-| `co_founded_with` | Co-founded something together |
-| `collaborator` | Collaboration |
-| `mentor_of` | Mentors the target |
-| `mentored_by` | Mentored by target |
-| `former_colleague` | Past colleagues |
-| `critic_of` | Public critic |
-| `supporter_of` | Public supporter |
+| Type | Source | Target | Meaning |
+|------|--------|--------|---------|
+| `employer` | Person | Org | Person works at org |
+| `founder` | Person | Org | Person founded org |
+| `member` | Person | Org | Person is member of org |
+| `advisor` | Person | Org | Person advises org |
+| `funder` | Person | Org | Person funds org |
+| `affiliated` | Person | Org | General affiliation |
+| `critic` | Person | Org | Person publicly criticizes org |
+| `supporter` | Person | Org | Person publicly supports org |
 
 **Organization → Organization:**
-| Type | Description |
-|------|-------------|
-| `subsidiary_of` | Parent/child relationship |
-| `funded_by` | Receives funding from |
-| `partner_of` | Partnership |
-| `spun_out_from` | Spinoff origin |
-| `affiliated` | General affiliation |
+| Type | Source | Target | Meaning |
+|------|--------|--------|---------|
+| `funder` | Org A | Org B | Org A funds Org B |
+| `partner` | Org A | Org B | Orgs are partners (create both directions) |
+| `parent_company` | Parent | Subsidiary | Parent owns subsidiary |
+| `collaborator` | Org A | Org B | Orgs collaborate (create both directions) |
+| `member` | Org A | Org B | Org A is member of Org B |
+
+**Person → Person:**
+| Type | Source | Target | Meaning |
+|------|--------|--------|---------|
+| `collaborator` | Person A | Person B | They collaborate (create both directions) |
+| `advisor` | Advisor | Advisee | Source advises target |
+| `funder` | Funder | Recipient | Source funds target |
+| `critic` | Critic | Target | Source criticizes target |
+| `supporter` | Supporter | Target | Source supports target |
 
 **Resource edges:**
-| Type | Description |
-|------|-------------|
-| `authored_by` | Resource → Person |
-| `published_by` | Resource → Organization |
+| Type | Source | Target | Meaning |
+|------|--------|--------|---------|
+| `author` | Person | Resource | Person authored the resource |
+| `publisher` | Org | Resource | Org published the resource |
+
+---
+
+## Table: `source` (claims-pilot branch)
+
+Stores source metadata for claims and edge evidence.
+
+| Column          | Type         | Description                          |
+| --------------- | ------------ | ------------------------------------ |
+| `source_id`     | VARCHAR      | Primary key (hash of URL)            |
+| `url`           | VARCHAR      | Source URL                           |
+| `title`         | VARCHAR      | Human-readable title                 |
+| `source_type`   | VARCHAR      | Type of source (see values below)    |
+| `date_published`| DATE         | Publication date                     |
+| `author`        | VARCHAR      | Author name if available             |
+| `cached_excerpt`| TEXT         | Excerpt/citation from source         |
+| `resource_entity_id` | INTEGER | FK → entity (if source is a resource)|
+
+**source_type values:**
+- `hearing` - Congressional/government hearing
+- `bill` - Legislation
+- `tweet` - Twitter/X post
+- `op_ed` - Opinion editorial
+- `interview` - Interview transcript
+- `press_release` - Official press release
+- `floor_speech` - Congressional floor speech
+- `letter` - Open letter or correspondence
+- `report` - Research report
+- `paper` - Academic paper
+- `blog` - Blog post
+- `podcast` - Podcast episode
+- `video` - Video content
+- `crowdsourced` - Mapping AI submission
+
+---
+
+## Table: `claim` (claims-pilot branch)
+
+Stores extracted belief claims with citations.
+
+| Column             | Type        | Description                               |
+| ------------------ | ----------- | ----------------------------------------- |
+| `claim_id`         | VARCHAR     | Primary key (entity_dimension_source)     |
+| `entity_id`        | INTEGER     | FK → entity                               |
+| `entity_name`      | VARCHAR     | Denormalized name                         |
+| `entity_type`      | VARCHAR     | person/organization/resource              |
+| `belief_dimension` | VARCHAR     | Belief dimension (see values below)       |
+| `stance`           | VARCHAR     | Text label from scale                     |
+| `stance_score`     | INTEGER     | Numeric score (null for AGI definition)   |
+| `stance_label`     | VARCHAR     | Short display label                       |
+| `definition_used`  | TEXT        | How entity defined the term (for AGI)     |
+| `citation`         | TEXT        | Verbatim quote from source                |
+| `source_id`        | VARCHAR     | FK → source                               |
+| `date_stated`      | DATE        | When entity made statement                |
+| `claim_type`       | VARCHAR     | Type of claim (see values below)          |
+| `confidence`       | VARCHAR     | high/medium/low                           |
+| `extracted_by`     | VARCHAR     | exa+claude or db_fallback                 |
+| `extraction_model` | VARCHAR     | Model used (e.g., claude-sonnet-4-6)      |
+| `extraction_date`  | DATE        | When claim was extracted                  |
+
+**belief_dimension values:**
+- `regulatory_stance` - Position on AI regulation
+- `agi_timeline` - Expected AGI arrival
+- `ai_risk_level` - Assessment of AI risk
+- `agi_definition` - How they define AGI
+
+**claim_type values:**
+- `direct_statement` - Quote from the entity
+- `authored_position` - Org published a position
+- `inferred_from_action` - Co-sponsored bill, joined coalition
+- `resource_content` - Extracted from resource itself
+- `crowdsourced_submission` - From Mapping AI form
+
+---
+
+## Table: `edge_evidence` (claims-pilot branch)
+
+Stores source attribution for edges/relationships.
+
+| Column       | Type         | Description                               |
+| ------------ | ------------ | ----------------------------------------- |
+| `edge_id`    | INTEGER      | FK → edge                                 |
+| `source_id`  | VARCHAR      | FK → source                               |
+| `citation`   | TEXT         | Verbatim quote supporting relationship    |
+| `start_date` | DATE         | When relationship started                 |
+| `end_date`   | DATE         | When relationship ended (null = current)  |
+| `amount_usd` | NUMERIC      | Funding amount if funder edge             |
+| `role_title` | VARCHAR      | Specific role/title                       |
+| `confidence` | VARCHAR      | high/medium/low                           |
+| `created_at` | TIMESTAMPTZ  | When evidence was added                   |
 
 ---
 
