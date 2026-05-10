@@ -2830,25 +2830,14 @@ export function initMapEngine() {
     return (name || '').trim().slice(0, 2).toUpperCase()
   }
 
-  // Verification status: 'verified' (green), 'partial' (yellow), 'unverified' (red), null (no data)
-  // Fields the verification script evaluates per entity
-  const VERIFIABLE_FIELDS = [
-    'name',
-    'title',
-    'primary_org',
-    'regulatory_stance',
-    'agi_timeline',
-    'ai_risk_level',
-    'threat_models',
-    'notes',
-  ]
   function _getVerificationStatus(fv) {
     if (!fv) return null
     const vals = Object.values(fv)
     if (vals.length === 0) return null
     const verifiedCount = vals.filter((v) => v === 'verified').length
     const ratio = verifiedCount / vals.length
-    if (ratio > 0.8) return 'verified'
+    // Require at least 5 fields checked before showing full "Verified"
+    if (ratio > 0.8 && vals.length >= 5) return 'verified'
     if (ratio > 0.5) return 'partial'
     return 'unverified'
   }
