@@ -846,8 +846,8 @@ export function App() {
             <span className="verification-info-trigger">
               ?
               <span className="verification-info-tooltip">
-                Based on automated external source checks per field. Verified = all checked fields confirmed. Partial =
-                &gt;50% confirmed. Unverified = &lt;50% confirmed.
+                Based on automated external source checks per field. Verified = &gt;80% of fields confirmed (min 5
+                fields checked). Partial = &gt;50% confirmed. Unverified = &lt;50% confirmed.
               </span>
             </span>
           </h3>
