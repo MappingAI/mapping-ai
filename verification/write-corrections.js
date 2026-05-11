@@ -32,11 +32,8 @@ if (!DATABASE_URL) {
 }
 const pool = new pg.Pool({ connectionString: DATABASE_URL, ssl: { rejectUnauthorized: false } });
 
-// Neon pilot DB for claims/sources
-const PILOT_DB = process.env.PILOT_DB;
-const neonPool = PILOT_DB
-  ? new pg.Pool({ connectionString: PILOT_DB, ssl: { rejectUnauthorized: false } })
-  : null;
+// Sources/claims write to STAGING_DB (same as corrections)
+// They get promoted to PILOT_DB when corrections are approved
 
 // CLI args
 const args = process.argv.slice(2);
@@ -49,9 +46,12 @@ const entityFilter = entityArg ? parseInt(entityArg.split('=')[1]) : null;
 const verdictArg = args.find(a => a.startsWith('--verdict='));
 const verdictFilter = verdictArg ? verdictArg.split('=')[1] : null;
 
-// File paths
+// File paths (for fallback/backup)
 const CORRECTIONS_FILE = path.join(__dirname, 'results/corrections.jsonl');
 const APPLIED_FILE = path.join(__dirname, 'results/applied-corrections.jsonl');
+
+// CLI source option
+const useJsonl = args.includes('--jsonl'); // Use JSONL file instead of DB
 
 // Confidence ranking
 const CONFIDENCE_RANK = { high: 3, medium: 2, low: 1 };
@@ -60,8 +60,28 @@ function srcId(url) {
   return 'src-' + crypto.createHash('sha256').update(url).digest('hex').slice(0, 12);
 }
 
-// Load corrections from JSONL
-function loadCorrections() {
+// Load corrections from database
+async function loadCorrectionsFromDB() {
+  const result = await pool.query(`
+    SELECT id, entity_id, entity_type, entity_name, field, current_value,
+           verdict, proposed_value, confidence, attribution_type, winning_side,
+           source_url, citation, new_source_id, new_claim_id, superseded_claim_ids,
+           prosecutor_argument, defender_argument, judge_reasoning,
+           evidence_assessment, validation_error, original_proposed, status, created_at
+    FROM belief_correction
+    WHERE status = 'pending'
+    ORDER BY created_at DESC
+  `);
+
+  return result.rows.map(row => ({
+    ...row,
+    reasoning: row.judge_reasoning,  // Alias for compatibility
+    evidence_assessment: row.evidence_assessment || null,
+  }));
+}
+
+// Load corrections from JSONL (fallback)
+function loadCorrectionsFromFile() {
   if (!fs.existsSync(CORRECTIONS_FILE)) {
     console.error(`Corrections file not found: ${CORRECTIONS_FILE}`);
     console.error('Run the verification pipeline first: node run-belief-verification.js');
@@ -83,6 +103,15 @@ function loadCorrections() {
   return corrections;
 }
 
+async function loadCorrections() {
+  if (useJsonl) {
+    console.log('Loading from JSONL file...');
+    return loadCorrectionsFromFile();
+  }
+  console.log('Loading from belief_correction table...');
+  return loadCorrectionsFromDB();
+}
+
 // Filter corrections based on CLI args
 function filterCorrections(corrections) {
   return corrections.filter(c => {
@@ -97,8 +126,9 @@ function filterCorrections(corrections) {
     const corrRank = CONFIDENCE_RANK[c.confidence] || 0;
     if (corrRank < minRank) return false;
 
-    // Only actionable verdicts
-    if (!['wrong', 'unsupported'].includes(c.verdict)) return false;
+    // Only actionable verdicts (judge returns: confirm, correct, remove)
+    // 'correct' = value needs correction, 'remove' = no supporting evidence
+    if (!['correct', 'remove'].includes(c.verdict)) return false;
 
     return true;
   });
@@ -162,7 +192,7 @@ async function applyCorrection(correction) {
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
       [
         correction.entity_id,
-        correction.verdict === 'wrong' ? 'correct' : 'remove',
+        correction.verdict === 'correct' ? 'corrected' : 'removed',
         correction.field,
         correction.current_value,
         correction.proposed_value,
@@ -172,6 +202,16 @@ async function applyCorrection(correction) {
         correction.confidence,
       ]
     );
+
+    // Update belief_correction status if it has an ID (from DB)
+    if (correction.id) {
+      await client.query(
+        `UPDATE belief_correction
+         SET status = 'applied', applied_at = NOW(), applied_by = 'write-corrections.js'
+         WHERE id = $1`,
+        [correction.id]
+      );
+    }
 
     await client.query('COMMIT');
     return true;
@@ -183,13 +223,13 @@ async function applyCorrection(correction) {
   }
 }
 
-// Write source and claim to Neon (if available)
+// Write source and claim to STAGING_DB, return the IDs for linking
 async function writeSourceAndClaim(correction) {
-  if (!neonPool || !correction.source_url || !correction.citation) {
-    return false;
+  if (!correction.source_url || !correction.citation) {
+    return { success: false };
   }
 
-  const client = await neonPool.connect();
+  const client = await pool.connect();
 
   try {
     const sourceId = srcId(correction.source_url);
@@ -233,10 +273,20 @@ async function writeSourceAndClaim(correction) {
       ]
     );
 
-    return true;
+    // Update belief_correction with the source/claim IDs
+    if (correction.id) {
+      await client.query(
+        `UPDATE belief_correction
+         SET new_source_id = $1, new_claim_id = $2
+         WHERE id = $3`,
+        [sourceId, claimId, correction.id]
+      );
+    }
+
+    return { success: true, sourceId, claimId };
   } catch (err) {
-    console.warn(`  Warning: Failed to write to Neon: ${err.message}`);
-    return false;
+    console.warn(`  Warning: Failed to write source/claim: ${err.message}`);
+    return { success: false, error: err.message };
   } finally {
     client.release();
   }
@@ -310,12 +360,12 @@ async function main() {
   // Test DB connection
   await pool.query('SELECT 1');
   console.log(`Database: ${DATABASE_URL.includes('staging') ? 'STAGING' : 'PRODUCTION (careful!)'}`);
-  console.log(`Neon: ${neonPool ? 'Connected' : 'Not configured'}`);
+  console.log(`Sources/claims: Same staging DB (promoted to PILOT_DB on approval)`);
   console.log(`Mode: ${dryRun ? 'DRY RUN' : reviewMode ? 'INTERACTIVE REVIEW' : 'AUTO-APPLY'}`);
   console.log(`Min confidence: ${minConfidence}`);
 
   // Load and filter corrections
-  const allCorrections = loadCorrections();
+  const allCorrections = await loadCorrections();
   console.log(`\nLoaded ${allCorrections.length} total corrections`);
 
   const corrections = filterCorrections(allCorrections);
@@ -324,21 +374,20 @@ async function main() {
   if (corrections.length === 0) {
     console.log('\nNo corrections to apply.');
     await pool.end();
-    if (neonPool) await neonPool.end();
     return;
   }
 
   // Summary of what we'll do
   const summary = {
-    wrong: corrections.filter(c => c.verdict === 'wrong').length,
-    unsupported: corrections.filter(c => c.verdict === 'unsupported').length,
+    correct: corrections.filter(c => c.verdict === 'correct').length,
+    remove: corrections.filter(c => c.verdict === 'remove').length,
     high: corrections.filter(c => c.confidence === 'high').length,
     medium: corrections.filter(c => c.confidence === 'medium').length,
     low: corrections.filter(c => c.confidence === 'low').length,
   };
 
   console.log(`\nCorrections breakdown:`);
-  console.log(`  wrong: ${summary.wrong}, unsupported: ${summary.unsupported}`);
+  console.log(`  correct (needs fix): ${summary.correct}, remove (no support): ${summary.remove}`);
   console.log(`  high: ${summary.high}, medium: ${summary.medium}, low: ${summary.low}`);
 
   if (dryRun) {
@@ -351,7 +400,6 @@ async function main() {
       console.log(`\n... and ${corrections.length - 20} more`);
     }
     await pool.end();
-    if (neonPool) await neonPool.end();
     return;
   }
 
@@ -412,12 +460,10 @@ async function main() {
   console.log(`\nApplied corrections logged to: ${APPLIED_FILE}`);
 
   await pool.end();
-  if (neonPool) await neonPool.end();
 }
 
 main().catch(err => {
   console.error('Error:', err);
   pool.end();
-  if (neonPool) neonPool.end();
   process.exit(1);
 });

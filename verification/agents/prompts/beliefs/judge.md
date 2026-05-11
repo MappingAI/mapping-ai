@@ -45,19 +45,21 @@ CURRENT VALUE: [value]
 
 ## Valid Values for Corrections
 
-If your verdict is `correct`, `proposed_value` MUST be from this list:
+If your verdict is `correct`, `proposed_value` MUST be from this list EXACTLY:
 
-**belief_regulatory_stance:**
-Accelerate, Light-touch, Targeted, Moderate, Cautious, Restrictive, Precautionary, Mixed/unclear
+**belief_regulatory_stance:** (ordered permissive → restrictive)
+`Accelerate`, `Light-touch`, `Targeted`, `Moderate`, `Precautionary`, `Restrictive`, `Nationalize`, `Mixed/unclear`, `Other`
 
 **belief_agi_timeline:**
-<2 years, 2-5 years, 5-10 years, 10-20 years, 20+ years, Never, Ill-defined, Mixed/unclear
+`Already here`, `2-3 years`, `5-10 years`, `10-25 years`, `25+ years or never`, `Ill-defined`, `Unknown`, `Mixed/unclear`
 
-**belief_ai_risk:**
-Existential, Catastrophic, Serious, Moderate, Manageable, Overstated, Minimal, Mixed/nuanced
+**belief_ai_risk:** (ordered low → high concern)
+`Overstated`, `Manageable`, `Serious`, `Catastrophic`, `Existential`, `Mixed/nuanced`, `Unknown`
 
-**belief_threat_models:** (up to 3, comma-separated)
-Power concentration, Misuse, Accidents/misalignment, Erosion of epistemics, Labor/economic, Surveillance/privacy, Bias/discrimination, Copyright/IP
+**belief_threat_models:** (pick up to 3, comma-separated)
+`Labor displacement`, `Economic inequality`, `Power concentration`, `Democratic erosion`, `Cybersecurity`, `Misinformation`, `Environmental`, `Weapons`, `Loss of control`, `Copyright/IP`, `Existential risk`
+
+**CRITICAL:** Use EXACT spelling and capitalization. Invalid values will be rejected.
 
 ## Evaluation Criteria
 
