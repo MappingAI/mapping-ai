@@ -50,24 +50,39 @@ async function backup() {
   try {
     console.log(`Backing up database (${timestamp})...\n`)
 
+    const TABLE_ORDER_BY = {
+      entity: 'id',
+      submission: 'id',
+      edge: 'id',
+      claim: 'entity_id, claim_id',
+      source: 'source_id',
+      field_feedback: 'id',
+      field_notes: 'id',
+    }
+    const TABLES_WITH_SEQUENCES = ['entity', 'submission', 'edge', 'field_feedback', 'field_notes']
+
     for (const table of TABLES) {
-      const result = await client.query(`SELECT * FROM ${table} ORDER BY id`)
-      jsonData._meta.tables[table] = result.rows.length
-      jsonData[table] = result.rows
+      const orderBy = TABLE_ORDER_BY[table] || 'ctid'
+      try {
+        const result = await client.query(`SELECT * FROM ${table} ORDER BY ${orderBy}`)
+        jsonData._meta.tables[table] = result.rows.length
+        jsonData[table] = result.rows
 
-      sqlLines.push(`-- ${table}: ${result.rows.length} rows`)
-      sqlLines.push(`DELETE FROM ${table};`)
-      for (const row of result.rows) {
-        sqlLines.push(rowToInsert(table, row))
+        sqlLines.push(`-- ${table}: ${result.rows.length} rows`)
+        sqlLines.push(`DELETE FROM ${table};`)
+        for (const row of result.rows) {
+          sqlLines.push(rowToInsert(table, row))
+        }
+        if (TABLES_WITH_SEQUENCES.includes(table) && result.rows.length > 0) {
+          const maxId = Math.max(...result.rows.map((r) => r.id))
+          sqlLines.push(`SELECT setval('${table}_id_seq', ${maxId}, true);`)
+        }
+        sqlLines.push('')
+        console.log(`  ✓ ${table}: ${result.rows.length} rows`)
+      } catch (e) {
+        console.log(`  ⚠ ${table}: SKIPPED (${e.message.substring(0, 60)})`)
+        jsonData._meta.tables[table] = `error: ${e.message.substring(0, 80)}`
       }
-      // Reset sequence to max id + 1
-      if (result.rows.length > 0) {
-        const maxId = Math.max(...result.rows.map((r) => r.id))
-        sqlLines.push(`SELECT setval('${table}_id_seq', ${maxId}, true);`)
-      }
-      sqlLines.push('')
-
-      console.log(`  ✓ ${table}: ${result.rows.length} rows`)
     }
 
     // Write local files
