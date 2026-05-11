@@ -464,42 +464,42 @@ async function verifyEntity(entityId) {
 
       // Apply based on proposal action
       if (action === 'confirm') {
-        // Mark field as verified, keep current value
         fieldVerificationUpdates[field] = {
           status: 'verified',
+          at: new Date().toISOString(),
+          by: 'run-verification',
           confidence: verdict.confidence,
-          checked_at: new Date().toISOString(),
-          source_urls: verdict.evidence?.map((e) => e.url) || [],
+          source: verdict.evidence?.[0]?.url || null,
         }
         console.log(`    ✓ ${field}: confirmed (verified)`)
       } else if (action === 'correct' && verdict.proposal?.proposed_value) {
-        // Update field value AND mark as verified
         fieldUpdates[field] = verdict.proposal.proposed_value
         fieldVerificationUpdates[field] = {
           status: 'verified',
+          at: new Date().toISOString(),
+          by: 'run-verification',
           confidence: verdict.confidence,
-          checked_at: new Date().toISOString(),
           corrected_from: verdict.current_value,
-          source_urls: verdict.evidence?.map((e) => e.url) || [],
+          source: verdict.evidence?.[0]?.url || null,
         }
         console.log(`    ✓ ${field}: corrected "${verdict.current_value}" → "${verdict.proposal.proposed_value}"`)
       } else if (action === 'remove') {
-        // Set field to NULL and mark as unverified
         fieldUpdates[field] = null
         fieldVerificationUpdates[field] = {
-          status: 'unverified',
-          confidence: 'unsupported',
-          checked_at: new Date().toISOString(),
-          removed_value: verdict.current_value,
-          reason: verdict.proposal?.reason || 'No supporting evidence found',
+          status: 'verified',
+          at: new Date().toISOString(),
+          by: 'run-verification',
+          note: 'removed - ' + (verdict.proposal?.reason || 'no supporting evidence found'),
+          corrected_from: verdict.current_value,
         }
         console.log(`    ✗ ${field}: removed (was "${verdict.current_value}")`)
       } else if (action === 'flag_for_human') {
-        // Add to human review queue, mark as pending
         fieldVerificationUpdates[field] = {
-          status: 'pending_review',
+          status: 'unverified',
+          at: new Date().toISOString(),
+          by: 'run-verification',
+          note: 'flagged for human review',
           confidence: verdict.confidence,
-          checked_at: new Date().toISOString(),
         }
         await addToHumanReviewQueue({
           entity_id: entity.id,

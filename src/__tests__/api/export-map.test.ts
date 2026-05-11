@@ -145,16 +145,16 @@ describe('toFrontendShape', () => {
     const shaped = toFrontendShape(
       baseEntityRow({
         field_verification: {
-          belief_regulatory_stance: 'verified',
-          belief_agi_timeline: 'unverified',
-          name: 'verified',
+          belief_regulatory_stance: { status: 'verified' },
+          belief_agi_timeline: { status: 'unverified' },
+          name: { status: 'verified' },
         },
       }),
     )
     expect(shaped.field_verification).toEqual({
-      regulatory_stance: 'verified',
-      agi_timeline: 'unverified',
-      name: 'verified',
+      regulatory_stance: { status: 'verified' },
+      agi_timeline: { status: 'unverified' },
+      name: { status: 'verified' },
     })
   })
 
@@ -200,7 +200,7 @@ describe('splitMapData', () => {
 
   it('puts field_verification into detail, not skeleton', () => {
     const data = mapData()
-    data.people[0]!.field_verification = { name: 'verified', title: 'unverified' }
+    data.people[0]!.field_verification = { name: { status: 'verified' }, title: { status: 'unverified' } }
     const { skeleton, detail } = splitMapData(data)
     expect(skeleton.people[0]).not.toHaveProperty('field_verification')
     expect(detail[1]).toHaveProperty('field_verification')

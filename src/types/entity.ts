@@ -42,7 +42,21 @@ export interface Entity {
   year?: string | null
   key_argument?: string | null
 
-  field_verification?: Record<string, 'verified' | 'unverified'>
+  field_verification?: Record<
+    string,
+    {
+      status: 'verified' | 'unverified' | 'not_checked'
+      at?: string
+      by?: string
+      confidence?: string
+      source?: string
+      corrected_from?: string
+      hidden?: boolean
+      inferred?: string
+      note?: string
+      detail?: string
+    }
+  >
 
   // Added by map-detail.json merge or edge queries
   source_type?: string | null

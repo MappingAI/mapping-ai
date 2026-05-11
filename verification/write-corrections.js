@@ -164,15 +164,16 @@ async function applyCorrection(correction) {
     }
 
     // 2. Update field_verification JSONB
-    const verificationUpdate = {
-      [correction.field]: {
-        status: correction.proposed_value ? 'verified' : 'removed',
-        confidence: correction.confidence,
-        verified_at: new Date().toISOString(),
-        source_url: correction.source_url,
-        corrected_from: correction.current_value,
-      },
+    const fvEntry = {
+      status: 'verified',
+      at: new Date().toISOString(),
+      by: 'write-corrections',
     }
+    if (correction.confidence) fvEntry.confidence = correction.confidence
+    if (correction.source_url) fvEntry.source = correction.source_url
+    if (correction.current_value) fvEntry.corrected_from = correction.current_value
+    if (correction.verdict === 'remove') fvEntry.note = 'removed - no evidence'
+    const verificationUpdate = { [correction.field]: fvEntry }
 
     await client.query(
       `UPDATE entity

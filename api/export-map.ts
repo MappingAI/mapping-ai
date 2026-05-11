@@ -155,9 +155,9 @@ export function toFrontendShape(row: RawEntityRow): FrontendEntity {
   out.timeline_score = row.belief_agi_timeline_wavg ?? (agiTimeline ? (TIMELINE_SCORES[agiTimeline] ?? null) : null)
   out.risk_score = row.belief_ai_risk_wavg ?? (riskLevel ? (RISK_SCORES[riskLevel] ?? null) : null)
 
-  const fv = row.field_verification as Record<string, string> | null
+  const fv = row.field_verification as Record<string, { status: string; [key: string]: unknown }> | null
   if (fv && Object.keys(fv).length > 0) {
-    const mapped: Record<string, string> = {}
+    const mapped: Record<string, { status: string; [key: string]: unknown }> = {}
     for (const [k, v] of Object.entries(fv)) {
       const frontendKey = VERIFICATION_KEY_MAP[k] ?? k
       mapped[frontendKey] = v
