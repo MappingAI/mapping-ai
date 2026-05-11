@@ -947,6 +947,114 @@
       }
     ]
   },
+  "247": {
+    "entity": {
+      "id": 247,
+      "name": "MIT FutureTech",
+      "entity_type": "organization",
+      "category": "Academic",
+      "belief_regulatory_stance": null,
+      "belief_regulatory_stance_detail": null,
+      "belief_evidence_source": "Inferred from actions",
+      "belief_agi_timeline": null,
+      "belief_ai_risk": "Serious",
+      "belief_threat_models": "Labor/economic, Erosion of epistemics, Accidents/misalignment"
+    },
+    "claims": [
+      {
+        "claim_id": "claim-4417518f9e68",
+        "belief_dimension": "founded_year",
+        "stance": null,
+        "citation": "MIT FutureTech employs 51 people (+66.7% YoY, +20 people), founded in 2022.",
+        "confidence": "high",
+        "claim_type": null,
+        "extraction_date": "2026-04-27T23:00:00.000Z",
+        "source_id": "src-0aa86d6b61ae",
+        "source_url": "https://futuretech.mit.edu/",
+        "source_title": null,
+        "source_type": "web"
+      },
+      {
+        "claim_id": "247_agi_timeline_src-adf96791a502",
+        "belief_dimension": "agi_timeline",
+        "stance": "5-10 years",
+        "citation": "\"Many speakers referenced the astonishing progress language models have made on benchmarks... But, in many cases, speakers also tempered expectations of rapid improvement.\"",
+        "confidence": "low",
+        "claim_type": "resource_content",
+        "extraction_date": "2026-04-26T23:00:00.000Z",
+        "source_id": "src-adf96791a502",
+        "source_url": "https://mitfuturetech.substack.com/p/how-fast-will-ai-automation-happen",
+        "source_title": "\"How fast will AI automation happen?\" Reflections on the FutureTech conference",
+        "source_type": "blog"
+      },
+      {
+        "claim_id": "247_ai_risk_level_src-023294bbce52",
+        "belief_dimension": "ai_risk_level",
+        "stance": "Serious",
+        "citation": "\"What our database is saying is, the range of risks is substantial, not all of which can be checked ahead of time,\" says Neil Thompson, director of MIT FutureTech and one of the creators of the database.",
+        "confidence": "high",
+        "claim_type": "authored_position",
+        "extraction_date": "2026-04-26T23:00:00.000Z",
+        "source_id": "src-023294bbce52",
+        "source_url": "https://www.technologyreview.com/2024/08/14/1096455/new-database-lists-ways-ai-go-wrong/",
+        "source_title": "A new public database lists all the ways AI could go wrong",
+        "source_type": "article"
+      },
+      {
+        "claim_id": "247_ai_risk_level_src-41aa5ec668a0",
+        "belief_dimension": "ai_risk_level",
+        "stance": "Serious",
+        "citation": "\"The fragmentation of the risk literature should give us pause. We are potentially in a situation where many may believe they've grasped the full picture after consulting one or two sources, when in reality they're navigating AI with significant blind spots.\"",
+        "confidence": "high",
+        "claim_type": "direct_statement",
+        "extraction_date": "2026-04-26T23:00:00.000Z",
+        "source_id": "src-41aa5ec668a0",
+        "source_url": "https://ide.mit.edu/insights/mit-researchers-create-an-open-ai-risk-repository",
+        "source_title": "MIT Researchers Create an AI Risk Repository",
+        "source_type": "report"
+      },
+      {
+        "claim_id": "247_ai_risk_level_src-9e25fb7cb248",
+        "belief_dimension": "ai_risk_level",
+        "stance": "Serious",
+        "citation": "\"Several speakers discussed shortcomings of existing models and the risks posed by more advanced AI. They suggested that we should be carefully preparing for risks and potentially slowing down particularly risky development and deployment.\"",
+        "confidence": "low",
+        "claim_type": "resource_content",
+        "extraction_date": "2026-04-26T23:00:00.000Z",
+        "source_id": "src-9e25fb7cb248",
+        "source_url": "https://ide.mit.edu/insights/whats-next-ai-scaling-and-its-implications/",
+        "source_title": "What's Next? AI Scaling and its Implications",
+        "source_type": "report"
+      },
+      {
+        "claim_id": "247_agi_timeline_src-bdc86a2688a5",
+        "belief_dimension": "agi_timeline",
+        "stance": "5-10 years",
+        "citation": "\"We had a very interesting discussion exploring our different perspectives on AI timelines. We didn't have much time to get into details during the short discussion, but the high level summary was that many people in FutureTech were more pessimistic about a few aspects of the scenario. They expect that AI will be slower and less effective at rapidly speeding up AI research and have slower and lower adoption in key sectors and across the economy as a whole.\"",
+        "confidence": "low",
+        "claim_type": "third_party_characterization",
+        "extraction_date": "2026-04-26T23:00:00.000Z",
+        "source_id": "src-bdc86a2688a5",
+        "source_url": "https://www.linkedin.com/posts/peterslattery1_ai-2027-activity-7366867352396677121-baOA",
+        "source_title": "Peter Slattery, PhD's Post",
+        "source_type": "social"
+      }
+    ],
+    "_test": {
+      "source": "Peter Slattery Twitter feedback",
+      "error_types": ["misattribution", "claim_type_wrong"],
+      "expected_verdicts": {
+        "belief_agi_timeline": {
+          "verdict": "remove",
+          "reason": "Entity field is null. Slattery LinkedIn post is not org position."
+        },
+        "belief_ai_risk": {
+          "verdict": "confirm",
+          "reason": "Neil Thompson directly quoted about risk."
+        }
+      }
+    }
+  },
   "326": {
     "entity": {
       "id": 326,
@@ -1116,6 +1224,707 @@
         "cached_excerpt": "For this reason, he strongly advocates that development of the technology should be slowed or suspended until AI safety can be assured and controls established."
       }
     ]
+  },
+  "341": {
+    "entity": {
+      "id": 341,
+      "name": "Machine Intelligence Research Institute (MIRI)",
+      "entity_type": "organization",
+      "category": "AI Safety/Alignment",
+      "belief_regulatory_stance": "Restrictive",
+      "belief_regulatory_stance_detail": "Advocates for international agreements to halt progress toward smarter-than-human AI until alignment problems are solved. Believes current technical understanding is vastly insufficient and calls for indefinite worldwide moratorium on large training runs, enforced by international agreement. Has shifted from technical research to policy advocacy believing technical solutions won't arrive in time.",
+      "belief_evidence_source": "Explicitly stated",
+      "belief_agi_timeline": "5-10 years",
+      "belief_ai_risk": "Existential",
+      "belief_threat_models": "Loss of control, Existential risk, Power concentration"
+    },
+    "claims": [
+      {
+        "claim_id": "341_regulatory_stance_src-60312d300eaa",
+        "belief_dimension": "regulatory_stance",
+        "stance": "Precautionary",
+        "citation": "The default trajectory of AI development has an unacceptably high likelihood of leading to human extinction. Critical research and policy is needed to course correct.",
+        "confidence": "high",
+        "claim_type": "authored_position",
+        "extraction_date": "2026-04-25T23:00:00.000Z",
+        "source_id": "src-60312d300eaa",
+        "source_url": "https://intelligence.org/wp-content/uploads/2025/05/AI-Governance-to-Avoid-Extinction.pdf",
+        "source_title": "AI Governance to Avoid Extinction",
+        "source_type": "report"
+      },
+      {
+        "claim_id": "341_regulatory_stance_src-d7640addd87c",
+        "belief_dimension": "regulatory_stance",
+        "stance": "Precautionary",
+        "citation": "Our objective is to convince major powers to shut down the development of frontier AI systems worldwide before it is too late. We believe that nothing less than this will prevent future misaligned smarter-than-human AI systems from destroying humanity.",
+        "confidence": "high",
+        "claim_type": "authored_position",
+        "extraction_date": "2026-04-26T23:00:00.000Z",
+        "source_id": "src-d7640addd87c",
+        "source_url": "https://intelligence.org/2024/05/29/miri-2024-communications-strategy/",
+        "source_title": "MIRI 2024 Communications Strategy - Machine Intelligence Research Institute",
+        "source_type": "report"
+      },
+      {
+        "claim_id": "claim-77fd4ecae28d",
+        "belief_dimension": "founded_year",
+        "stance": null,
+        "citation": "In 2000, Eliezer Yudkowsky founded the Singularity Institute for Artificial Intelligence with funding from Brian and Sabine Atkins",
+        "confidence": "high",
+        "claim_type": null,
+        "extraction_date": "2026-04-27T23:00:00.000Z",
+        "source_id": "src-cb49255317eb",
+        "source_url": "http://wikipedia.com/wiki/Machine_Intelligence_Research_Institute",
+        "source_title": null,
+        "source_type": "web"
+      },
+      {
+        "claim_id": "341_agi_definition_src-13b437ff2bc6",
+        "belief_dimension": "agi_definition",
+        "stance": null,
+        "citation": "In contrast, humans have problem-solving abilities that allow us to adapt to new contexts and excel in many domains other than what the ancestral environment prepared us for. If machines can achieve human equivalence in cognitive tasks, then it is very likely that they can eventually outperform humans.",
+        "confidence": "high",
+        "claim_type": "authored_position",
+        "extraction_date": "2026-04-25T23:00:00.000Z",
+        "source_id": "src-13b437ff2bc6",
+        "source_url": "http://intelligence.org/faq",
+        "source_title": "FAQ",
+        "source_type": "blog"
+      },
+      {
+        "claim_id": "341_agi_definition_src-62392edde2f6",
+        "belief_dimension": "agi_definition",
+        "stance": null,
+        "citation": "It is this general problem-solving ability that we have in mind when we talk about 'artificial general intelligence' (AGI) or 'smarter-than-human AI.' AI systems may come to surpass humans in science and engineering abilities without being particularly human-like in any other respects — artificial intelligence need not imply artificial consciousness, for example, or artificial emotions. Instead, we have in mind the capacity to model real-world environments well and identify a variety of ways to put those environments into new states.",
+        "confidence": "high",
+        "claim_type": "authored_position",
+        "extraction_date": "2026-04-26T23:00:00.000Z",
+        "source_id": "src-62392edde2f6",
+        "source_url": "https://intelligence.org/why-ai-safety/",
+        "source_title": "Why AI Safety? - Machine Intelligence Research Institute",
+        "source_type": "report"
+      },
+      {
+        "claim_id": "341_agi_definition_src-a11a0e651119",
+        "belief_dimension": "agi_definition",
+        "stance": null,
+        "citation": "The stated goal of the world's leading AI companies is to build AI that is general enough to do anything a human can do, from solving hard problems in theoretical physics to deftly navigating social environments. Recent machine learning progress seems to have brought this goal within reach. At this point, we would be uncomfortable ruling out the possibility that AI more capable than any human is achieved in the next year or two, and we would be moderately surprised if this outcome were still two decades away.",
+        "confidence": "high",
+        "claim_type": "authored_position",
+        "extraction_date": "2026-04-26T23:00:00.000Z",
+        "source_id": "src-a11a0e651119",
+        "source_url": "https://intelligence.org/the-problem/",
+        "source_title": "The Problem",
+        "source_type": "blog"
+      },
+      {
+        "claim_id": "341_agi_timeline_src-435b669c11e0",
+        "belief_dimension": "agi_timeline",
+        "stance": "5-10 years",
+        "citation": "In a fall 2023 poll of most MIRI researchers, we expect AGI (according to the definition from this Metaculus market) in a median of 9 years and a mean of 14.6 years. One researcher was an outlier at 52 years; the majority predicted under ten years.",
+        "confidence": "high",
+        "claim_type": "authored_position",
+        "extraction_date": "2026-04-26T23:00:00.000Z",
+        "source_id": "src-435b669c11e0",
+        "source_url": "https://intelligence.org/2024/01/04/miri-2024-mission-and-strategy-update/",
+        "source_title": "MIRI 2024 Mission and Strategy Update",
+        "source_type": "blog"
+      },
+      {
+        "claim_id": "341_agi_timeline_src-8605f84d2604",
+        "belief_dimension": "agi_timeline",
+        "stance": "2-3 years",
+        "citation": "Recent progress has been sufficiently rapid that we at MIRI would not be surprised if ASI is developed in two or five years, and we would be surprised if it were still more than twenty years away.",
+        "confidence": "high",
+        "claim_type": "authored_position",
+        "extraction_date": "2026-04-26T23:00:00.000Z",
+        "source_id": "src-8605f84d2604",
+        "source_url": "http://intelligence.org/notes/soon",
+        "source_title": "Why expect smarter-than-human AI to be developed any time soon?",
+        "source_type": "blog"
+      },
+      {
+        "claim_id": "341_ai_risk_level_src-60312d300eaa",
+        "belief_dimension": "ai_risk_level",
+        "stance": "Existential",
+        "citation": "Our primary concern is mitigating catastrophic and extinction risks associated with artificial intelligence systems as they approach and surpass human capabilities.",
+        "confidence": "high",
+        "claim_type": "authored_position",
+        "extraction_date": "2026-04-25T23:00:00.000Z",
+        "source_id": "src-60312d300eaa",
+        "source_url": "https://intelligence.org/wp-content/uploads/2025/05/AI-Governance-to-Avoid-Extinction.pdf",
+        "source_title": "AI Governance to Avoid Extinction",
+        "source_type": "report"
+      },
+      {
+        "claim_id": "341_ai_risk_level_src-95519f884da2",
+        "belief_dimension": "ai_risk_level",
+        "stance": "Existential",
+        "citation": "The default consequence of the creation of artificial superintelligence (ASI) is human extinction.",
+        "confidence": "high",
+        "claim_type": "authored_position",
+        "extraction_date": "2026-04-26T23:00:00.000Z",
+        "source_id": "src-95519f884da2",
+        "source_url": "http://intelligence.org/intro.html",
+        "source_title": "The Machine Intelligence Research Institute (MIRI)",
+        "source_type": "report"
+      },
+      {
+        "claim_id": "341_ai_risk_level_src-a11a0e651119",
+        "belief_dimension": "ai_risk_level",
+        "stance": "Existential",
+        "citation": "If we were to put a number on how likely extinction is in the absence of an aggressive near-term policy response, MIRI's research leadership would give one upward of 90%.",
+        "confidence": "high",
+        "claim_type": "authored_position",
+        "extraction_date": "2026-04-26T23:00:00.000Z",
+        "source_id": "src-a11a0e651119",
+        "source_url": "https://intelligence.org/the-problem/",
+        "source_title": "The Problem",
+        "source_type": "blog"
+      },
+      {
+        "claim_id": "341_regulatory_stance_src-369847ed38b4",
+        "belief_dimension": "regulatory_stance",
+        "stance": "Precautionary",
+        "citation": "The only sufficient response to the current situation, in which smarter-than-human AI is imminent despite an immature scientific field, is a global halt. The current path, along with the most likely variations, pose unacceptably large risks, including terrorism, great power war, lock-in of bad values, and loss of control due to misaligned systems.",
+        "confidence": "high",
+        "claim_type": "authored_position",
+        "extraction_date": "2026-04-26T23:00:00.000Z",
+        "source_id": "src-369847ed38b4",
+        "source_url": "https://intelligence.org/2026/04/13/summary-ai-governance-to-avoid-extinction/",
+        "source_title": "Summary: AI Governance to Avoid Extinction - Machine Intelligence Research Institute",
+        "source_type": "report"
+      },
+      {
+        "claim_id": "341_regulatory_stance_src-435b669c11e0",
+        "belief_dimension": "regulatory_stance",
+        "stance": "Precautionary",
+        "citation": "Policy: Increase the probability that the major governments of the world end up coming to some international agreement to halt progress toward smarter-than-human AI, until humanity's state of knowledge and justified confidence about its understanding of relevant phenomena has drastically changed; and until we are able to secure these systems such that they can't fall into the hands of malicious or incautious actors.",
+        "confidence": "high",
+        "claim_type": "authored_position",
+        "extraction_date": "2026-04-26T23:00:00.000Z",
+        "source_id": "src-435b669c11e0",
+        "source_url": "https://intelligence.org/2024/01/04/miri-2024-mission-and-strategy-update/",
+        "source_title": "MIRI 2024 Mission and Strategy Update",
+        "source_type": "blog"
+      }
+    ],
+    "_test": {
+      "source": "Beck email (MIRI) + 1-opus pipeline",
+      "expected_verdicts": {
+        "belief_regulatory_stance": {
+          "verdict": "correct",
+          "proposed": "Restrictive",
+          "reason": "MIRI calls for global halt."
+        },
+        "belief_agi_timeline": {
+          "verdict": "correct",
+          "proposed": "5-10 years",
+          "reason": "MIRI hedges between 2-20 years."
+        }
+      }
+    }
+  },
+  "351": {
+    "entity": {
+      "id": 351,
+      "name": "80,000 Hours",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "belief_regulatory_stance": "Precautionary",
+      "belief_regulatory_stance_detail": "Advocates for careful development of AI systems with strong safety measures. Promotes working on AI governance, technical safety research, and policy approaches to reduce catastrophic risks. Estimates ~10% existential risk from AI within 100 years and calls it 'the world's most pressing problem'.",
+      "belief_evidence_source": "Explicitly stated",
+      "belief_agi_timeline": "5-10 years",
+      "belief_ai_risk": "Existential",
+      "belief_threat_models": "Existential risk, Loss of control, Power concentration"
+    },
+    "claims": [
+      {
+        "claim_id": "claim-8cb2af7bea3e",
+        "belief_dimension": "founded_year",
+        "stance": null,
+        "citation": "80,000 Hours is a company based in Oxford (United Kingdom) founded in 2011.",
+        "confidence": "high",
+        "claim_type": null,
+        "extraction_date": "2026-04-27T23:00:00.000Z",
+        "source_id": "src-6e9863c3951f",
+        "source_url": "https://www.thecompanycheck.com/company/b/80000-hours/cswhte3jx95fh7z0y",
+        "source_title": null,
+        "source_type": "web"
+      },
+      {
+        "claim_id": "351_agi_definition_src-74152c598e9b",
+        "belief_dimension": "agi_definition",
+        "stance": null,
+        "citation": "Typically, when people say 'AGI' what they have in mind is something like 'at least human level or better at most cognitive tasks.' This is roughly what I'll take it to mean in this article.",
+        "confidence": "high",
+        "claim_type": "authored_position",
+        "extraction_date": "2026-04-26T23:00:00.000Z",
+        "source_id": "src-74152c598e9b",
+        "source_url": "https://80000hours.org/memorandum",
+        "source_title": "Will we have AGI by 2030? | 80,000 Hours",
+        "source_type": "report"
+      },
+      {
+        "claim_id": "351_agi_definition_src-ac9a053bf083",
+        "belief_dimension": "agi_definition",
+        "stance": null,
+        "citation": "Typically, when people say 'AGI' what they have in mind is something like 'at least human level or better at most cognitive tasks.' This is roughly what I'll take it to mean in this article.",
+        "confidence": "high",
+        "claim_type": "authored_position",
+        "extraction_date": "2026-04-25T23:00:00.000Z",
+        "source_id": "src-ac9a053bf083",
+        "source_url": "https://80000hours.org/agi-2030",
+        "source_title": "Will we have AGI by 2030? | 80,000 Hours",
+        "source_type": "report"
+      },
+      {
+        "claim_id": "351_agi_timeline_src-74152c598e9b",
+        "belief_dimension": "agi_timeline",
+        "stance": "5-10 years",
+        "citation": "No longer mere chatbots, these 'agent' models might soon satisfy many people's definitions of AGI — roughly, AI systems that match human performance at most knowledge work.",
+        "confidence": "high",
+        "claim_type": "authored_position",
+        "extraction_date": "2026-04-26T23:00:00.000Z",
+        "source_id": "src-74152c598e9b",
+        "source_url": "https://80000hours.org/memorandum",
+        "source_title": "Will we have AGI by 2030? | 80,000 Hours",
+        "source_type": "report"
+      },
+      {
+        "claim_id": "351_agi_timeline_src-ecfb429480bc",
+        "belief_dimension": "agi_timeline",
+        "stance": "5-10 years",
+        "citation": "The chance of an AGI-driven technological explosion before 2030 — creating one of the most pivotal periods in history — is high enough to act on.",
+        "confidence": "high",
+        "claim_type": "authored_position",
+        "extraction_date": "2026-04-25T23:00:00.000Z",
+        "source_id": "src-ecfb429480bc",
+        "source_url": "https://80000hours.org/ai/guide/summary/",
+        "source_title": "Why AGI could be here soon and what you can do about it: a primer",
+        "source_type": "report"
+      },
+      {
+        "claim_id": "351_ai_risk_level_src-24c99eabeb88",
+        "belief_dimension": "ai_risk_level",
+        "stance": "Existential",
+        "citation": "This transformation could bring enormous benefits, helping us solve currently intractable global problems. But it could also pose severe risks, some of which could be existential— meaning they could cause human extinction, or an equally permanent and severe disempowerment of humanity.",
+        "confidence": "high",
+        "claim_type": "authored_position",
+        "extraction_date": "2026-04-26T23:00:00.000Z",
+        "source_id": "src-24c99eabeb88",
+        "source_url": "https://80000hours.org/problem-profiles/artificial-intelligence-risk/",
+        "source_title": "Why AI risks are the world's most pressing problems | 80,000 Hours",
+        "source_type": "report"
+      },
+      {
+        "claim_id": "351_ai_risk_level_src-d9fb00b6393b",
+        "belief_dimension": "ai_risk_level",
+        "stance": "Existential",
+        "citation": "Preventing future power-seeking AIs from disempowering humanity is one of the most pressing problems of our time to work on. The window for developing effective safeguards may be narrow, and the stakes are extremely high.",
+        "confidence": "high",
+        "claim_type": "authored_position",
+        "extraction_date": "2026-04-25T23:00:00.000Z",
+        "source_id": "src-d9fb00b6393b",
+        "source_url": "https://80000hours.org/problem-profiles/risks-from-power-seeking-ai/",
+        "source_title": "Risks from power-seeking AI systems | 80,000 Hours",
+        "source_type": "report"
+      },
+      {
+        "claim_id": "351_regulatory_stance_src-787329337c29",
+        "belief_dimension": "regulatory_stance",
+        "stance": "Targeted",
+        "citation": "Public policy and corporate governance in particular may be necessary to ensure that advanced AI is broadly beneficial and low risk.",
+        "confidence": "high",
+        "claim_type": "authored_position",
+        "extraction_date": "2026-04-25T23:00:00.000Z",
+        "source_id": "src-787329337c29",
+        "source_url": "https://80000hours.org/ai-policy-and-strategy/",
+        "source_title": "AI governance and policy | Career review | 80,000 Hours",
+        "source_type": "report"
+      },
+      {
+        "claim_id": "351_regulatory_stance_src-cd5d257d7f0a",
+        "belief_dimension": "regulatory_stance",
+        "stance": "Targeted",
+        "citation": "At 80,000 Hours, we think a significant number of people should build expertise to work on United States policy relevant to the long-term effects and potentially catastrophic risks of the development and use of artificial intelligence.",
+        "confidence": "high",
+        "claim_type": "authored_position",
+        "extraction_date": "2026-04-25T23:00:00.000Z",
+        "source_id": "src-cd5d257d7f0a",
+        "source_url": "https://80000hours.org/articles/us-ai-policy/",
+        "source_title": "Working in US AI policy",
+        "source_type": "report"
+      },
+      {
+        "claim_id": "351_regulatory_stance_src-ce9cee44ad1c",
+        "belief_dimension": "regulatory_stance",
+        "stance": "Targeted",
+        "citation": "But we need a range of strategies for risk reduction. Public policy and corporate governance in particular may be necessary to ensure that advanced AI is broadly beneficial and low risk.",
+        "confidence": "high",
+        "claim_type": "authored_position",
+        "extraction_date": "2026-04-26T23:00:00.000Z",
+        "source_id": "src-ce9cee44ad1c",
+        "source_url": "https://80000hours.org/career-reviews/ai-policy-and-strategy/",
+        "source_title": "AI governance and policy | Career review - 80000 Hours",
+        "source_type": "report"
+      }
+    ],
+    "_test": {
+      "source": "verify-all.js results",
+      "error_types": ["fabricated_location", "wrong_website"]
+    }
+  },
+  "356": {
+    "entity": {
+      "id": 356,
+      "name": "Model Evaluation & Threat Research (METR)",
+      "entity_type": "organization",
+      "category": "AI Safety/Alignment",
+      "belief_regulatory_stance": null,
+      "belief_regulatory_stance_detail": null,
+      "belief_evidence_source": null,
+      "belief_agi_timeline": null,
+      "belief_ai_risk": null,
+      "belief_threat_models": null
+    },
+    "claims": [
+      {
+        "claim_id": "356_ai_risk_level_src-7457262d461e",
+        "belief_dimension": "ai_risk_level",
+        "stance": "Serious",
+        "citation": "METR assessed whether OpenAI GPT-5 could pose catastrophic risks, considering three key threat models: AI R&D Automation: AI systems speeding up AI researchers by >10X, Rogue replication: AI systems posing direct risks of rapid takeover, and Strategic sabotage.",
+        "confidence": "high",
+        "claim_type": "inferred_from_action",
+        "extraction_date": "2026-04-26T23:00:00.000Z",
+        "source_id": "src-7457262d461e",
+        "source_url": "https://evaluations.metr.org/gpt-5-report/",
+        "source_title": "Details about METR's evaluation of OpenAI GPT-5 | METR's Autonomy Evaluation Resources",
+        "source_type": "report"
+      },
+      {
+        "claim_id": "356_ai_risk_level_src-d0c81348a584",
+        "belief_dimension": "ai_risk_level",
+        "stance": "Serious",
+        "citation": "We are currently developing evaluations for AI R&D capabilities that may serve as 'red lines', as well as a continuous measure of autonomous capabilities in general.",
+        "confidence": "high",
+        "claim_type": "inferred_from_action",
+        "extraction_date": "2026-04-26T23:00:00.000Z",
+        "source_id": "src-d0c81348a584",
+        "source_url": "https://metr.org/blog/2024-08-06-update-on-evaluations/",
+        "source_title": "An update on our general capability evaluations - METR",
+        "source_type": "blog"
+      },
+      {
+        "claim_id": "356_regulatory_stance_src-75a2c4272e60",
+        "belief_dimension": "regulatory_stance",
+        "stance": "Targeted",
+        "citation": "We think there's a lot of potential in evals-based AI rules and norms: requirements that AI systems be evaluated for dangerous capabilities, and restricted when that's the only way to contain the risks.",
+        "confidence": "low",
+        "claim_type": "inferred_from_action",
+        "extraction_date": "2026-04-26T23:00:00.000Z",
+        "source_id": "src-75a2c4272e60",
+        "source_url": "http://metr.org/blog/2023-09-26-rsp/",
+        "source_title": "Responsible Scaling Policies (RSPs) - METR",
+        "source_type": "blog"
+      },
+      {
+        "claim_id": "claim-627d9c71f32f",
+        "belief_dimension": "founded_year",
+        "stance": null,
+        "citation": "Beth Barnes, a former alignment researcher at OpenAI who left in 2022 to form ARC Evals, the evaluation division of Paul Christiano's Alignment Research Center. In December 2023, ARC Evals was then spun off into an independent 501(c)(3) nonprofit and renamed METR.",
+        "confidence": "high",
+        "claim_type": null,
+        "extraction_date": "2026-04-27T23:00:00.000Z",
+        "source_id": "src-a5ec0ed447ad",
+        "source_url": "https://en.wikipedia.org/wiki/Model_Evaluation_and_Threat_Research",
+        "source_title": null,
+        "source_type": "web"
+      },
+      {
+        "claim_id": "356_agi_timeline_src-95e8fbcc236c",
+        "belief_dimension": "agi_timeline",
+        "stance": "5-10 years",
+        "citation": "Naively extrapolating the trend in horizon length implies that AI will reach a time horizon of >1 month (167 work hours) between mid-2028 and mid-2031.",
+        "confidence": "low",
+        "claim_type": "inferred_from_action",
+        "extraction_date": "2026-04-26T23:00:00.000Z",
+        "source_id": "src-95e8fbcc236c",
+        "source_url": "https://openreview.net/pdf/402f09e70f9d9e6a99edbcaaa360692d05eec7ab.pdf",
+        "source_title": null,
+        "source_type": "paper"
+      }
+    ],
+    "_test": {
+      "source": "Michael Chen email (METR)",
+      "error_types": ["stance_inflation", "org_vs_individual"],
+      "expected_verdicts": {
+        "belief_regulatory_stance": {
+          "verdict": "remove",
+          "reason": "METR does not take regulatory positions per org."
+        }
+      }
+    }
+  },
+  "375": {
+    "entity": {
+      "id": 375,
+      "name": "EquiStamp",
+      "entity_type": "organization",
+      "category": "AI Safety/Alignment",
+      "belief_regulatory_stance": null,
+      "belief_regulatory_stance_detail": null,
+      "belief_evidence_source": null,
+      "belief_agi_timeline": null,
+      "belief_ai_risk": null,
+      "belief_threat_models": null
+    },
+    "claims": [
+      {
+        "claim_id": "claim-1193d443c33f",
+        "belief_dimension": "founded_year",
+        "stance": null,
+        "citation": "Created: 2023-12-06",
+        "confidence": "high",
+        "claim_type": null,
+        "extraction_date": "2026-04-27T23:00:00.000Z",
+        "source_id": "src-83cd0af6b835",
+        "source_url": "https://github.com/EquiStamp",
+        "source_title": null,
+        "source_type": "web"
+      }
+    ],
+    "_test": {
+      "source": "Daniel OConnell email (EquiStamp)",
+      "error_types": ["fabricated_facts"],
+      "expected_verdicts": {
+        "belief_regulatory_stance": {
+          "verdict": "remove",
+          "reason": "Eval company, not policy org."
+        }
+      }
+    }
+  },
+  "429": {
+    "entity": {
+      "id": 429,
+      "name": "Institute for Law & AI (LawAI)",
+      "entity_type": "organization",
+      "category": "Think Tank/Policy Org",
+      "belief_regulatory_stance": null,
+      "belief_regulatory_stance_detail": "LawAI's mission is to promote security, welfare, and the rule of law in the age of AI.",
+      "belief_evidence_source": "Inferred",
+      "belief_agi_timeline": null,
+      "belief_ai_risk": null,
+      "belief_threat_models": null
+    },
+    "claims": [
+      {
+        "claim_id": "claim-0e1915e28d5a",
+        "belief_dimension": "founded_year",
+        "stance": null,
+        "citation": "Founded Aug 2020 (5 years old)",
+        "confidence": "high",
+        "claim_type": null,
+        "extraction_date": "2026-04-27T23:00:00.000Z",
+        "source_id": "src-c721b4d6794e",
+        "source_url": "https://longterm-wiki.vercel.app/organizations/legal-priorities-project",
+        "source_title": null,
+        "source_type": "web"
+      },
+      {
+        "claim_id": "429_agi_definition_src-0f85de74a65a",
+        "belief_dimension": "agi_definition",
+        "stance": null,
+        "citation": "Artificial general intelligence (AGI) [task performance definitions]... See also the subdefinition of autonomous AGI (AAGI) as 'an autonomous artificial agent with the ability to do essentially anything a human can do, given the choice to do so—in the form of an autonomously/internally determined directive—and an amount of time less than or equal to that needed by a human.'",
+        "confidence": "medium",
+        "claim_type": "resource_content",
+        "extraction_date": "2026-04-26T23:00:00.000Z",
+        "source_id": "src-0f85de74a65a",
+        "source_url": "https://law-ai.org/advanced-ai-gov-concepts/",
+        "source_title": "Concepts in Advanced AI Governance: A Literature Review of Key Terms and Definitions - Institute for Law & AI",
+        "source_type": "report"
+      },
+      {
+        "claim_id": "429_open_source_weights_src-5463b130d985",
+        "belief_dimension": "open_source_weights",
+        "stance": "Support restrictions for highly capable models",
+        "citation": "For some highly capable foundation models likely to be developed in the near future, open-sourcing may pose sufficiently extreme risks to outweigh the benefits. In such a case, highly capable foundation models should not be open-sourced, at least not initially.",
+        "confidence": "high",
+        "claim_type": "authored_position",
+        "extraction_date": "2026-04-25T23:00:00.000Z",
+        "source_id": "src-5463b130d985",
+        "source_url": "https://law-ai.org/open-sourcing-highly-capable-foundation-models/",
+        "source_title": "Open-Sourcing Highly Capable Foundation Models",
+        "source_type": "report"
+      },
+      {
+        "claim_id": "429_liability_src-a6e456f56553",
+        "belief_dimension": "liability",
+        "stance": "Strongly support developer liability",
+        "citation": "Liability represents the most suitable policy tool for addressing many of the most pressing risks posed by AI systems.",
+        "confidence": "low",
+        "claim_type": "authored_position",
+        "extraction_date": "2026-04-25T23:00:00.000Z",
+        "source_id": "src-a6e456f56553",
+        "source_url": "https://law-ai.org/the-case-for-ai-liability/",
+        "source_title": "The Case for AI Liability",
+        "source_type": "blog"
+      },
+      {
+        "claim_id": "429_agi_definition_src-ec05d8ac5821",
+        "belief_dimension": "agi_definition",
+        "stance": null,
+        "citation": "The prospect of artificial superintelligence—AI agents that can generally outperform humans in cognitive tasks and economically valuable activities—will transform the legal order as we know it.",
+        "confidence": "high",
+        "claim_type": "authored_position",
+        "extraction_date": "2026-04-26T23:00:00.000Z",
+        "source_id": "src-ec05d8ac5821",
+        "source_url": "https://law-ai.org/superintelligence-and-law/",
+        "source_title": "Superintelligence and Law - Institute for Law & AI",
+        "source_type": "paper"
+      },
+      {
+        "claim_id": "429_agi_timeline_src-crowdsourced-db",
+        "belief_dimension": "agi_timeline",
+        "stance": "Unknown",
+        "citation": "Submitted as \"Unknown\" via crowdsourced form (evidence: Explicitly stated)",
+        "confidence": "unverified",
+        "claim_type": "inferred_from_action",
+        "extraction_date": "2026-04-25T23:00:00.000Z",
+        "source_id": "src-crowdsourced-db",
+        "source_url": "https://mapping-ai.org/contribute",
+        "source_title": "Mapping AI crowdsourced submission",
+        "source_type": "crowdsourced"
+      },
+      {
+        "claim_id": "429_export_controls_chips_src-badde28733cb",
+        "belief_dimension": "export_controls_chips",
+        "stance": "Support chip export controls",
+        "citation": "The EAR currently impose a license requirement on a number of potentially dangerous actions relating to AI Hardware, Creation, and Proliferation.",
+        "confidence": "medium",
+        "claim_type": "authored_position",
+        "extraction_date": "2026-04-25T23:00:00.000Z",
+        "source_id": "src-badde28733cb",
+        "source_url": "https://law-ai.org/existing-authorities-for-oversight/",
+        "source_title": "Existing Authorities for Oversight of Frontier AI Models",
+        "source_type": "report"
+      },
+      {
+        "claim_id": "429_pre_deployment_testing_src-fbede92cc001",
+        "belief_dimension": "pre_deployment_testing",
+        "stance": "Support mandatory testing requirements",
+        "citation": "Leading AI developers are best positioned to secure their models and identify dangerous misuse capabilities before they cause harm. Congress should codify clear minimum standards for identifying capabilities and preventing misuse.",
+        "confidence": "high",
+        "claim_type": "authored_position",
+        "extraction_date": "2026-04-25T23:00:00.000Z",
+        "source_id": "src-fbede92cc001",
+        "source_url": "https://law-ai.org/ai-insight-forum-privacy-and-liability/",
+        "source_title": "AI Insight Forum — Privacy and Liability",
+        "source_type": "hearing"
+      },
+      {
+        "claim_id": "429_state_preemption_src-2650b6dbbe26",
+        "belief_dimension": "state_preemption",
+        "stance": "Mixed/conditional approach to preemption",
+        "citation": "The main problem with premature and overbroad preemption is that it would make it impossible to follow the normal process for determining the appropriate boundaries of state and federal regulatory jurisdiction.",
+        "confidence": "high",
+        "claim_type": "authored_position",
+        "extraction_date": "2026-04-25T23:00:00.000Z",
+        "source_id": "src-2650b6dbbe26",
+        "source_url": "https://law-ai.org/ai-federalism-the-right-way-to-do-preemption/",
+        "source_title": "AI Federalism: The Right Way to Do Preemption",
+        "source_type": "blog"
+      },
+      {
+        "claim_id": "429_regulatory_stance_src-1a3f65502aff",
+        "belief_dimension": "regulatory_stance",
+        "stance": "Targeted",
+        "citation": "Correctly scoped, liability is compatible with innovation and well-suited to conditions of uncertainty. Safe harbors that limit background tort liability are a risky bet when we are uncertain about the magnitude of AI risks and have yet to identify robust mitigations.",
+        "confidence": "low",
+        "claim_type": "inferred_from_action",
+        "extraction_date": "2026-04-26T23:00:00.000Z",
+        "source_id": "src-1a3f65502aff",
+        "source_url": "https://law-ai.org/comments-on-draft-report-of-joint-california-policy-working-group/",
+        "source_title": "LawAI's Comments on the Draft Report of the Joint California Policy Working Group on AI Frontier Models - Institute for Law & AI",
+        "source_type": "letter"
+      },
+      {
+        "claim_id": "429_ai_risk_level_src-1a3f65502aff",
+        "belief_dimension": "ai_risk_level",
+        "stance": "Serious",
+        "citation": "Safe harbors that limit background tort liability are a risky bet when we are uncertain about the magnitude of AI risks and have yet to identify robust mitigations.",
+        "confidence": "medium",
+        "claim_type": "inferred_from_action",
+        "extraction_date": "2026-04-26T23:00:00.000Z",
+        "source_id": "src-1a3f65502aff",
+        "source_url": "https://law-ai.org/comments-on-draft-report-of-joint-california-policy-working-group/",
+        "source_title": "LawAI's Comments on the Draft Report of the Joint California Policy Working Group on AI Frontier Models - Institute for Law & AI",
+        "source_type": "letter"
+      },
+      {
+        "claim_id": "429_ai_risk_level_src-93756b0c90d7",
+        "belief_dimension": "ai_risk_level",
+        "stance": "Serious",
+        "citation": "After exploring challenges ranging from pandemic preparedness to institutional design, we became convinced that AI represented the highest-priority legal challenge of our time.",
+        "confidence": "medium",
+        "claim_type": "inferred_from_action",
+        "extraction_date": "2026-04-26T23:00:00.000Z",
+        "source_id": "src-93756b0c90d7",
+        "source_url": "https://law-ai.org/about-the-institute-for-law-ai/",
+        "source_title": "About the Institute for Law & AI - Institute for Law & AI",
+        "source_type": "blog"
+      },
+      {
+        "claim_id": "429_ai_risk_level_src-ec05d8ac5821",
+        "belief_dimension": "ai_risk_level",
+        "stance": "Serious",
+        "citation": "The prospect of artificial superintelligence—AI agents that can generally outperform humans in cognitive tasks and economically valuable activities—will transform the legal order as we know it.",
+        "confidence": "high",
+        "claim_type": "inferred_from_action",
+        "extraction_date": "2026-04-25T23:00:00.000Z",
+        "source_id": "src-ec05d8ac5821",
+        "source_url": "https://law-ai.org/superintelligence-and-law/",
+        "source_title": "Superintelligence and Law - Institute for Law & AI",
+        "source_type": "paper"
+      },
+      {
+        "claim_id": "429_ai_risk_level_src-f6f85c2d9782",
+        "belief_dimension": "ai_risk_level",
+        "stance": "Catastrophic",
+        "citation": "A second subcluster of work focuses on understanding the threat models of advanced AI risk, based on indirect arguments for risks, specific threat models for direct catastrophe, or takeover, or on specific threat models for indirect risks.",
+        "confidence": "low",
+        "claim_type": "inferred_from_action",
+        "extraction_date": "2026-04-26T23:00:00.000Z",
+        "source_id": "src-f6f85c2d9782",
+        "source_url": "https://law-ai.org/advanced-ai-gov-litrev",
+        "source_title": "Advanced AI Governance: A Literature Review of Problems, Options, and Proposals - Institute for Law & AI",
+        "source_type": "report"
+      },
+      {
+        "claim_id": "429_regulatory_stance_src-276b3cc283ad",
+        "belief_dimension": "regulatory_stance",
+        "stance": "Targeted",
+        "citation": "Finally, policymakers should ask whether regulation is the right intervention at all. It is one tool among many, and depending on the type of harm, other interventions may be more effective.",
+        "confidence": "low",
+        "claim_type": "inferred_from_action",
+        "extraction_date": "2026-04-26T23:00:00.000Z",
+        "source_id": "src-276b3cc283ad",
+        "source_url": "https://law-ai.org/mapping-ai-policy-where-why-and-how-to-intervene/",
+        "source_title": "Mapping AI Policy: Where, Why, and How to Intervene - Institute for Law & AI",
+        "source_type": "report"
+      }
+    ],
+    "_test": {
+      "source": "Cody Fenwick email (LawAI)",
+      "error_types": ["stance_inflation"],
+      "expected_verdicts": {
+        "belief_regulatory_stance": {
+          "verdict": "remove",
+          "reason": "LawAI does not take institutional positions."
+        }
+      }
+    }
   },
   "743": {
     "entity": {
