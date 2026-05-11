@@ -2834,9 +2834,12 @@ export function initMapEngine() {
     if (!fv) return null
     const vals = Object.values(fv)
     if (vals.length === 0) return null
-    const verifiedCount = vals.filter((v) => v === 'verified').length
+    const verifiedCount = vals.filter((v) => {
+      if (typeof v === 'string') return v === 'verified'
+      if (typeof v === 'object' && v !== null) return v.status === 'verified'
+      return false
+    }).length
     const ratio = verifiedCount / vals.length
-    // Require at least 5 fields checked before showing full "Verified"
     if (ratio > 0.8 && vals.length >= 5) return 'verified'
     if (ratio > 0.5) return 'partial'
     return 'unverified'
@@ -4566,7 +4569,8 @@ ${dots}
   // Feedback badge helper (shared by showDetail + showEdgeDetail)
   function feedbackBadge(entityId, key, fieldVerification) {
     const safeKey = escHtml(key)
-    const fvStatus = fieldVerification?.[safeKey]
+    const fvEntry = fieldVerification?.[safeKey]
+    const fvStatus = typeof fvEntry === 'string' ? fvEntry : fvEntry?.status
     let badgeClass, badgeLabel
     if (fvStatus === 'verified') {
       badgeClass = 'field-verified-badge'

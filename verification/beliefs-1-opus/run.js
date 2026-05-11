@@ -40,6 +40,10 @@ const anthropic = new Anthropic({
 
 const exa = new Exa(process.env.EXA_MULTIAGENT_VERIFICATION_KEY)
 
+if (!process.env.STAGING_DATABASE_URL && !process.argv.includes('--allow-production')) {
+  console.error('ERROR: STAGING_DATABASE_URL not set. Set it or pass --allow-production.')
+  process.exit(1)
+}
 const pool = new pg.Pool({
   connectionString: process.env.STAGING_DATABASE_URL || process.env.DATABASE_URL,
 })
