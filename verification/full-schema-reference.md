@@ -157,7 +157,48 @@ The `field_verification` column stores a JSON object with status for each field:
   "name": {"status": "verified", "checked_at": "2026-05-10"},
   "category": {"status": "unverified", "checked_at": "2026-05-10"},
   ...
+```
+
+#### Dual-track pattern: intentionally_null with inferred values
+
+When an organization explicitly does not take official positions (e.g., METR, LawAI), the entity-level belief fields are set to NULL so the website UI shows no stance. However, inferred values from the org's publications are preserved in `field_verification` for internal use:
+
+```json
+{
+  "belief_regulatory_stance": {
+    "status": "intentionally_null",
+    "reason": "Organization does not take official regulatory positions (per org comms May 2026)",
+    "inferred_value": "Targeted",
+    "inferred_detail": "Supports evaluation-based regulation with mandatory reporting...",
+    "inference_confidence": "high",
+    "inference_source": "https://metr.org/blog/2023-09-26-rsp/",
+    "reviewed_at": "2026-05-11T..."
+  }
 }
+```
+
+This distinguishes three states:
+
+- **Entity field has a value**: displayed on website, backed by claims
+- **Entity field is NULL, field_verification missing or "unverified"**: not yet checked
+- **Entity field is NULL, field_verification has "intentionally_null"**: org explicitly has no official position, but inferred value is preserved internally
+
+The `claim` table still stores the underlying evidence with `claim_type: 'inferred_from_action'` (not `authored_position`), so the Sources & Claims panel can show what publications suggest without attributing an official stance.
+
+### Manual review protection (DB only)
+
+The `claim` table has:
+
+| Field             | DB Column           | Type         | Description                                              |
+| ----------------- | ------------------- | ------------ | -------------------------------------------------------- |
+| Manually Reviewed | `manually_reviewed` | BOOLEAN      | If true, automated scripts will not overwrite this claim |
+| Reviewed By       | `reviewed_by`       | VARCHAR(100) | Who reviewed (e.g., 'anushree-manual-2026-05-11')        |
+| Reviewed At       | `reviewed_at`       | TIMESTAMPTZ  | When reviewed                                            |
+
+All automated upserts to the claim table must include `WHERE claim.manually_reviewed IS NOT TRUE` in the ON CONFLICT DO UPDATE clause. This prevents verification and enrichment scripts from overwriting human-corrected claims.
+
+}
+
 ```
 
 Status values: `verified`, `unverified`, `inferred`
@@ -294,7 +335,9 @@ Edges represent relationships between entities. Direction matters.
 Every edge has a **source** and **target**. The edge type describes the relationship **from source's perspective**.
 
 ```
-source_id  →  edge_type  →  target_id
+
+source_id → edge_type → target_id
+
 ```
 
 **Example:** "Sam Altman works at OpenAI"
@@ -473,3 +516,4 @@ Stores source attribution for edges/relationships.
 | Created At       | `created_at`       | TIMESTAMPTZ | No       | Creation timestamp                       |
 
 ---
+```
