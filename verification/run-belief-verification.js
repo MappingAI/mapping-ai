@@ -79,10 +79,27 @@ const PROMPTS = {
   judge: fs.readFileSync(path.join(__dirname, 'agents/prompts/beliefs/judge.md'), 'utf-8'),
 };
 
-// Belief fields
+// Belief fields to verify by entity type
+// All categorical belief fields + evidence_source + stance_detail
 const BELIEF_FIELDS = {
-  person: ['belief_regulatory_stance', 'belief_agi_timeline', 'belief_ai_risk', 'belief_threat_models'],
-  organization: ['belief_regulatory_stance'],
+  person: [
+    'belief_regulatory_stance',
+    'belief_regulatory_stance_detail',
+    'belief_evidence_source',
+    'belief_agi_timeline',
+    'belief_ai_risk',
+    'belief_threat_models',
+  ],
+  organization: [
+    'belief_regulatory_stance',
+    'belief_regulatory_stance_detail',
+    'belief_evidence_source',
+    'belief_agi_timeline',
+    'belief_ai_risk',
+    'belief_threat_models',
+  ],
+  // Resources don't have belief fields
+  resource: [],
 };
 
 // Cost tracking
