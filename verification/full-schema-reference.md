@@ -150,14 +150,55 @@ This document defines the complete schema for entities, edges, and sources. Use 
 | ------------------ | -------------------- | ----- | ------------------------------------------------ |
 | Field Verification | `field_verification` | JSONB | Per-field verification status from verify-all.js |
 
-The `field_verification` column stores a JSON object with status for each field:
+The `field_verification` column stores a JSON object with structured status for each field. **Every value must be an object, never a bare string.** (Legacy bare-string values like `"verified"` were migrated to `{"status": "verified"}` on 2026-05-11.)
+
+#### Canonical format
+
+Every field entry is an object with at minimum a `status` key:
 
 ```json
 {
-  "name": {"status": "verified", "checked_at": "2026-05-10"},
-  "category": {"status": "unverified", "checked_at": "2026-05-10"},
-  ...
+  "name": { "status": "verified" },
+  "category": { "status": "unverified" },
+  "belief_regulatory_stance": {
+    "status": "verified",
+    "confidence": "high",
+    "verified_at": "2026-05-11T...",
+    "source_url": "https://...",
+    "corrected_from": "old value"
+  }
+}
 ```
+
+**Status values:**
+
+| Status               | Meaning                                               |
+| -------------------- | ----------------------------------------------------- |
+| `verified`           | Field value confirmed against external sources        |
+| `unverified`         | Not yet checked or insufficient evidence              |
+| `intentionally_null` | Entity field is NULL by design (see dual-track below) |
+| `removed`            | Value was removed during correction                   |
+| `inferred`           | Value derived from indirect evidence                  |
+
+**Optional properties** (all types):
+
+| Property         | Type                | When present                              |
+| ---------------- | ------------------- | ----------------------------------------- |
+| `confidence`     | `high\|medium\|low` | After verification pipeline run           |
+| `verified_at`    | ISO timestamp       | When last verified                        |
+| `source_url`     | URL                 | Source that confirmed/corrected the value |
+| `corrected_from` | string              | Previous value before correction          |
+
+**Additional properties for `intentionally_null`:**
+
+| Property               | Type                | Description                             |
+| ---------------------- | ------------------- | --------------------------------------- |
+| `reason`               | string              | Why the field is intentionally null     |
+| `inferred_value`       | string              | What the value would be if displayed    |
+| `inferred_detail`      | string              | Longer explanation of inferred position |
+| `inference_source`     | URL                 | Source for the inference                |
+| `inference_confidence` | `high\|medium\|low` | Confidence in the inference             |
+| `reviewed_at`          | ISO timestamp       | When reviewed                           |
 
 #### Dual-track pattern: intentionally_null with inferred values
 
