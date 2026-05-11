@@ -110,3 +110,5 @@ data/run-verify.sh
 # QC batch review files (large JSON exports, regenerable from DB)
 qc-batches/
 qc-batches-*.zip
+verification/beliefs-3/results/
+verification/results/
