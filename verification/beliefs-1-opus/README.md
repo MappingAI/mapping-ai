@@ -50,7 +50,7 @@ Simplified approach using one Opus agent with extended thinking instead of 3 adv
 ## Usage
 
 ```bash
-# Single entity
+# Single entity (JSONL only)
 node beliefs-1-opus/run.js --id=18
 
 # Multiple entities
@@ -58,7 +58,21 @@ node beliefs-1-opus/run.js --limit=10
 
 # ID range
 node beliefs-1-opus/run.js --id-range=1-500
+
+# Write to database (belief_correction table)
+node beliefs-1-opus/run.js --id=18 --write-db
 ```
+
+### Database Integration
+
+Use `--write-db` to write corrections to the `belief_correction` table for later promotion to production.
+
+When enabled, the pipeline will:
+1. Insert each verdict into `belief_correction` with status='pending'
+2. Create/update entries in `source` and `claim` tables
+3. Track source_id and claim_id for audit trail
+
+Corrections can then be reviewed and promoted using `write-corrections.js`.
 
 ## Environment Variables
 
@@ -73,6 +87,7 @@ DATABASE_URL=postgres://...
 
 - `results/corrections.jsonl` — One JSON object per field verified
 - `results/run-stats.json` — Timing, cost summary, verdict counts
+- `belief_correction` table — When `--write-db` is enabled, corrections are inserted for review/promotion
 
 ## Tools
 

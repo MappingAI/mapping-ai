@@ -23,6 +23,7 @@ import Exa from 'exa-js';
 import pg from 'pg';
 import fs from 'fs';
 import path from 'path';
+import crypto from 'crypto';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 
@@ -310,6 +311,121 @@ async function handleFetchContent(url) {
     return `URL: ${page.url}\nTitle: ${page.title}\n\n${page.text || '(no text)'}`;
   } catch (err) {
     return `Error fetching ${url}: ${err.message}`;
+  }
+}
+
+// ── Database Writes ──
+
+function generateSourceId(url) {
+  return 'src-' + crypto.createHash('sha256').update(url).digest('hex').slice(0, 12);
+}
+
+async function insertCorrectionToDB(correction) {
+  try {
+    // Map single-agent fields to belief_correction schema
+    const winning_side = correction.verdict === 'confirm' ? 'defense' :
+                         correction.verdict === 'correct' ? 'prosecution' :
+                         correction.verdict === 'remove' ? 'prosecution' : 'neither';
+
+    await pool.query(
+      `INSERT INTO belief_correction
+        (entity_id, entity_type, entity_name, field, current_value, verdict,
+         proposed_value, confidence, attribution_type, winning_side,
+         source_url, citation, new_source_id, new_claim_id, superseded_claim_ids,
+         prosecutor_argument, defender_argument, judge_reasoning, evidence_assessment,
+         validation_error, original_proposed, status)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, 'pending')
+       ON CONFLICT DO NOTHING`,
+      [
+        correction.entity_id,
+        correction.entity_type,
+        correction.entity_name,
+        correction.field,
+        correction.current_value,
+        correction.verdict,
+        correction.proposed_value || null,
+        correction.confidence,
+        correction.attribution_type || null,
+        winning_side,
+        correction.source_url || null,
+        correction.citation || null,
+        correction.new_source_id || null,
+        correction.new_claim_id || null,
+        correction.superseded_claim_ids || null,
+        null, // prosecutor_argument (single agent)
+        null, // defender_argument (single agent)
+        correction.reasoning || null, // maps to judge_reasoning
+        correction.evidence_assessment ? JSON.stringify(correction.evidence_assessment) : null,
+        correction.validation_error || null,
+        correction.proposed_value || null, // original_proposed
+      ]
+    );
+    return true;
+  } catch (err) {
+    console.error(`    DB insert error: ${err.message}`);
+    return false;
+  }
+}
+
+async function writeSourceAndClaim(correction) {
+  if (!correction.source_url || !correction.citation) {
+    return { success: false };
+  }
+
+  try {
+    const sourceId = generateSourceId(correction.source_url);
+
+    // Upsert source
+    await pool.query(
+      `INSERT INTO source (source_id, url, source_type)
+       VALUES ($1, $2, 'web')
+       ON CONFLICT (source_id) DO NOTHING`,
+      [sourceId, correction.source_url]
+    );
+
+    // Upsert claim
+    const beliefDimension = correction.field.replace('belief_', '');
+    const claimId = `${correction.entity_id}_${beliefDimension}_${sourceId}`;
+
+    await pool.query(
+      `INSERT INTO claim
+        (claim_id, entity_id, entity_name, entity_type, belief_dimension,
+         stance, citation, source_id, claim_type, confidence,
+         extracted_by, extraction_model, extraction_date)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, CURRENT_DATE)
+       ON CONFLICT (claim_id) DO UPDATE SET
+         stance = EXCLUDED.stance,
+         citation = EXCLUDED.citation,
+         confidence = EXCLUDED.confidence,
+         extraction_date = CURRENT_DATE`,
+      [
+        claimId,
+        correction.entity_id,
+        correction.entity_name,
+        correction.entity_type,
+        beliefDimension,
+        correction.proposed_value || correction.current_value,
+        correction.citation,
+        sourceId,
+        correction.attribution_type === 'first_person' ? 'direct_statement' : 'authored_position',
+        correction.confidence,
+        'beliefs-1-opus',
+        'claude-opus-4.5',
+      ]
+    );
+
+    // Store IDs on correction object for later reference
+    correction.new_source_id = sourceId;
+    correction.new_claim_id = claimId;
+
+    return { success: true, sourceId, claimId };
+  } catch (err) {
+    // Tables might not exist yet - that's ok
+    if (err.code === '42P01') {
+      return { success: false, error: 'Tables not created yet' };
+    }
+    console.warn(`    Warning: Failed to write source/claim: ${err.message}`);
+    return { success: false, error: err.message };
   }
 }
 
@@ -633,7 +749,14 @@ async function main() {
     entityId: flags.id,
     limit: flags.limit ? parseInt(flags.limit) : 10,
     idRange: flags['id-range'] ? flags['id-range'].split('-').map(Number) : null,
+    writeDb: flags['write-db'] === true || flags['write-db'] === 'true',
   };
+
+  if (options.writeDb) {
+    console.log('Database writes: ENABLED (corrections will be inserted to belief_correction table)');
+  } else {
+    console.log('Database writes: DISABLED (use --write-db to enable)');
+  }
 
   // Fetch entities
   const entities = await getEntitiesWithBeliefs(options);
@@ -641,6 +764,9 @@ async function main() {
 
   const allResults = [];
   const startTime = Date.now();
+
+  let dbWriteCount = 0;
+  let dbWriteErrors = 0;
 
   for (const entity of entities) {
     try {
@@ -652,6 +778,20 @@ async function main() {
       fs.mkdirSync(path.dirname(jsonlPath), { recursive: true });
       for (const r of results) {
         fs.appendFileSync(jsonlPath, JSON.stringify(r) + '\n');
+
+        // Write to DB if enabled
+        if (options.writeDb) {
+          // Write source and claim first (to get IDs)
+          await writeSourceAndClaim(r);
+
+          // Insert correction to belief_correction table
+          const inserted = await insertCorrectionToDB(r);
+          if (inserted) {
+            dbWriteCount++;
+          } else {
+            dbWriteErrors++;
+          }
+        }
       }
     } catch (err) {
       console.error(`  ERROR: ${err.message}`);
@@ -689,6 +829,14 @@ async function main() {
   console.log(`  Exa: $${costSummary.exa_cost_usd.toFixed(4)}`);
   console.log(`  TOTAL: $${costSummary.total_cost_usd.toFixed(4)}`);
 
+  if (options.writeDb) {
+    console.log(`\nDatabase writes:`);
+    console.log(`  Corrections inserted: ${dbWriteCount}`);
+    if (dbWriteErrors > 0) {
+      console.log(`  Errors: ${dbWriteErrors}`);
+    }
+  }
+
   // Write run stats
   const statsPath = path.join(__dirname, 'results/run-stats.json');
   fs.mkdirSync(path.dirname(statsPath), { recursive: true });
@@ -700,6 +848,11 @@ async function main() {
     fields_verified: allResults.length,
     verdicts: verdictCounts,
     ...costSummary,
+    db_writes: options.writeDb ? {
+      enabled: true,
+      corrections_inserted: dbWriteCount,
+      errors: dbWriteErrors,
+    } : { enabled: false },
   }, null, 2));
 
   await pool.end();
