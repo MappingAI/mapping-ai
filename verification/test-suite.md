@@ -276,64 +276,90 @@ Established via manual evaluation of all claims + sources by Claude. This is the
 | Entity | Field | Current | Verdict | Proposed | Confidence |
 |--------|-------|---------|---------|----------|------------|
 | Sam Altman | regulatory_stance | Targeted | **correct** | Mixed/unclear | high |
+| Sam Altman | regulatory_stance_detail | *(long text)* | **correct** | *(updated summary)* | high |
 | Sam Altman | agi_timeline | 2-3 years | confirm | — | high |
 | Sam Altman | ai_risk | Serious | **correct** | Mixed/nuanced | high |
 | Sam Altman | threat_models | Power concentration, Misinformation, Weapons | confirm | — | medium |
+| Sam Altman | evidence_source | Explicitly stated | confirm | — | high |
 | Yann LeCun | regulatory_stance | Light-touch | confirm | — | high |
+| Yann LeCun | regulatory_stance_detail | *(long text)* | confirm | — | high |
 | Yann LeCun | agi_timeline | 10-25 years | confirm | — | high |
 | Yann LeCun | ai_risk | Overstated | confirm | — | high |
 | Yann LeCun | threat_models | Power concentration, Misinformation | confirm | — | medium |
+| Yann LeCun | evidence_source | Explicitly stated | confirm | — | high |
 | Elon Musk | regulatory_stance | Mixed/unclear | confirm | — | high |
+| Elon Musk | regulatory_stance_detail | *(long text)* | confirm | — | medium |
 | Elon Musk | agi_timeline | 2-3 years | confirm | — | high |
 | Elon Musk | ai_risk | Catastrophic | **correct** | Existential | high |
 | Elon Musk | threat_models | Power concentration, Democratic erosion, Loss of control | confirm | — | medium |
+| Elon Musk | evidence_source | Explicitly stated | confirm | — | high |
 | Geoffrey Hinton | regulatory_stance | Moderate | **correct** | Restrictive | high |
+| Geoffrey Hinton | regulatory_stance_detail | *(long text)* | **correct** | *(updated summary)* | high |
 | Geoffrey Hinton | agi_timeline | 10-25 years | **correct** | 5-10 years | high |
 | Geoffrey Hinton | ai_risk | Existential | confirm | — | high |
 | Geoffrey Hinton | threat_models | Loss of control, Labor displacement, Existential risk | confirm | — | medium |
+| Geoffrey Hinton | evidence_source | Explicitly stated | confirm | — | high |
 | Ed Markey | regulatory_stance | Precautionary | **correct** | Restrictive | high |
+| Ed Markey | regulatory_stance_detail | *(long text)* | **correct** | *(updated summary)* | high |
 | Ed Markey | agi_timeline | 5-10 years | **remove** | null | high |
 | Ed Markey | ai_risk | Serious | confirm | — | high |
 | Ed Markey | threat_models | Bias/discrimination... | **correct** | Labor displacement, Economic inequality, Democratic erosion | medium |
+| Ed Markey | evidence_source | Explicitly stated | confirm | — | high |
 | FLI | regulatory_stance | Precautionary | **correct** | Restrictive | high |
+| FLI | regulatory_stance_detail | *(long text)* | **correct** | *(updated summary)* | high |
 | FLI | ai_risk | Existential | confirm | — | high |
 | FLI | threat_models | Loss of control, Existential risk, Power concentration | **remove** | null | medium |
+| FLI | evidence_source | Explicitly stated | confirm | — | high |
 | Reddit | regulatory_stance | Light-touch | **remove** | null | high |
+| Reddit | regulatory_stance_detail | *(long text)* | **remove** | null | high |
 | Reddit | ai_risk | Mixed/nuanced | **remove** | null | high |
 | Reddit | threat_models | Misinformation, Copyright/IP | **remove** | null | high |
+| Reddit | evidence_source | Inferred | confirm | — | high |
 | Trump admin | regulatory_stance | Accelerate | **correct** | Light-touch | high |
+| Trump admin | regulatory_stance_detail | *(null)* | N/A | — | — |
 | Trump admin | ai_risk | Manageable | confirm | — | medium |
+| Trump admin | evidence_source | Inferred | confirm | — | high |
 | Roman Yampolskiy | regulatory_stance | Precautionary | confirm | — | high |
+| Roman Yampolskiy | regulatory_stance_detail | *(long text)* | confirm | — | high |
 | Roman Yampolskiy | agi_timeline | 2-3 years | confirm | — | high |
 | Roman Yampolskiy | ai_risk | Existential | confirm | — | high |
 | Roman Yampolskiy | threat_models | Existential risk, Loss of control, Cybersecurity | confirm | — | high |
+| Roman Yampolskiy | evidence_source | Explicitly stated | confirm | — | high |
 | Timothée Lacroix | regulatory_stance | Light-touch | **remove** | null | high |
+| Timothée Lacroix | regulatory_stance_detail | *(null)* | N/A | — | — |
 | Timothée Lacroix | ai_risk | Manageable | **remove** | null | high |
+| Timothée Lacroix | evidence_source | Inferred | **remove** | null | high |
 
 ### Verdict Counts
 
 | Verdict | Count |
 |---------|-------|
-| confirm | 20 |
-| correct | 10 |
-| remove | 8 |
+| confirm | 32 |
+| correct | 14 |
+| remove | 10 |
+| N/A | 2 |
 
 ### Key Findings
 
-**Corrections needed (10):**
-- **Sam Altman**: regulatory_stance and ai_risk both show contradictory first-person evidence → Mixed/unclear and Mixed/nuanced
+**Corrections needed (14):**
+- **Sam Altman**: regulatory_stance, ai_risk, and regulatory_stance_detail all need updates to reflect position evolution (2023 → 2025)
 - **Elon Musk**: ai_risk explicitly "existential" in multiple first-person sources, not just "Catastrophic"
-- **Geoffrey Hinton**: Updated views — now more restrictive on regulation, shorter timeline on AGI
-- **Ed Markey**: regulatory_stance is Restrictive (mandatory prohibitions), not Precautionary; threat_models uses invalid enum value
-- **FLI**: Restrictive (calling for prohibition), not just Precautionary
+- **Geoffrey Hinton**: Updated views — now more restrictive on regulation, shorter timeline on AGI; regulatory_stance_detail needs update
+- **Ed Markey**: regulatory_stance is Restrictive (mandatory prohibitions), not Precautionary; regulatory_stance_detail and threat_models need updates
+- **FLI**: Restrictive (calling for prohibition), not just Precautionary; regulatory_stance_detail needs update
 - **Trump admin**: Light-touch (minimal federal framework), not Accelerate
 
-**Removals needed (8):**
+**Removals needed (10):**
 - **Ed Markey agi_timeline**: Only evidence is unverified crowdsourced submission
 - **FLI threat_models**: Zero claims for threat_models dimension
-- **Reddit**: Zero claims for regulatory_stance, ai_risk, or threat_models — all purely inferred
+- **Reddit**: Zero claims for regulatory_stance, ai_risk, threat_models, or regulatory_stance_detail — all purely inferred
 - **Trump admin**: No threat_models value in DB (already null)
-- **Timothée Lacroix**: Zero claims for any field
+- **Timothée Lacroix**: Zero claims for any field; evidence_source should also be removed
+
+**Evidence source findings:**
+- Most entities with "Explicitly stated" are correctly labeled (first-person quotes available)
+- Reddit, Trump admin correctly labeled as "Inferred" (no direct quotes)
+- Timothée Lacroix "Inferred" should be removed — no evidence to infer from
 
 **Schema issue found:**
 - Ed Markey's `threat_models` contains "Bias/discrimination" which is not a valid enum value
@@ -371,6 +397,19 @@ Established via manual evaluation of all claims + sources by Claude. This is the
 - **Confidence:** medium
 - **Rationale:** Biosecurity, weapons, surveillance concerns documented. Reasonable inference.
 
+#### belief_regulatory_stance_detail
+- **Current:** Advocates for targeted regulation of AI systems above certain capability thresholds...
+- **Verdict:** correct
+- **Confidence:** high
+- **Rationale:** Summary only reflects 2023 position. By May 2025, Altman warned government approval would be "disastrous" and pushed for more "freedom". Needs updating to reflect evolution.
+- **Proposed:** Position has evolved significantly. In 2023 Senate testimony, advocated for licensing and registration for AI above capability thresholds. By 2025, warned government approval requirements would be "disastrous" and advocated for more "freedom" to compete with China.
+
+#### belief_evidence_source
+- **Current:** Explicitly stated
+- **Verdict:** confirm
+- **Confidence:** high
+- **Rationale:** Multiple first-person sources: Congressional testimony (2023, 2025), blog posts, direct interviews. These are explicit statements, not inferences.
+
 ---
 
 ### Yann LeCun (ID: 92)
@@ -402,6 +441,18 @@ Established via manual evaluation of all claims + sources by Claude. This is the
 - **Confidence:** medium
 - **Rationale:** Open-source advocacy to prevent power concentration well-documented.
 
+#### belief_regulatory_stance_detail
+- **Current:** *(truncated in test data)*
+- **Verdict:** confirm
+- **Confidence:** high
+- **Rationale:** LeCun's light-touch stance is consistent and well-documented across multiple sources. Summary accurately reflects his 1925 airline analogy and open-source advocacy.
+
+#### belief_evidence_source
+- **Current:** Explicitly stated
+- **Verdict:** confirm
+- **Confidence:** high
+- **Rationale:** Multiple direct quotes from LeCun: "complete B.S.", "regulating AI today would be like regulating airlines in 1925", Senate testimony. All first-person explicit statements.
+
 ---
 
 ### Elon Musk (ID: 48)
@@ -432,6 +483,18 @@ Established via manual evaluation of all claims + sources by Claude. This is the
 - **Verdict:** confirm
 - **Confidence:** medium
 
+#### belief_regulatory_stance_detail
+- **Current:** *(truncated in test data)*
+- **Verdict:** confirm
+- **Confidence:** medium
+- **Rationale:** Mixed/unclear stance is accurate given contradictory statements. Detail should reflect both pro-regulation ("few referees") and anti-regulation (xAI lawsuit) positions.
+
+#### belief_evidence_source
+- **Current:** Explicitly stated
+- **Verdict:** confirm
+- **Confidence:** high
+- **Rationale:** Direct quotes from Musk across interviews, tweets, and legal filings. "AI is an existential risk" is a direct statement.
+
 ---
 
 ### Geoffrey Hinton (ID: 821)
@@ -461,6 +524,19 @@ Established via manual evaluation of all claims + sources by Claude. This is the
 - **Current:** Loss of control, Labor displacement, Existential risk
 - **Verdict:** confirm
 - **Confidence:** medium
+
+#### belief_regulatory_stance_detail
+- **Current:** Advocates for government intervention requiring companies to spend resources on AI safety research (suggesting 10% of resources)...
+- **Verdict:** correct
+- **Confidence:** high
+- **Rationale:** Current summary describes "Moderate" position, but Hinton's actual stance is more Restrictive. He's called for "steering wheel" requirements and criticized companies lobbying for less regulation.
+- **Proposed:** Advocates for strong government intervention and mandatory safety requirements. Has called out companies as wanting "a fast car with no steering wheel" and criticized lobbying for less regulation. Supports international cooperation but believes current industry self-regulation is insufficient.
+
+#### belief_evidence_source
+- **Current:** Explicitly stated
+- **Verdict:** confirm
+- **Confidence:** high
+- **Rationale:** Direct interviews, public lectures, and media appearances where Hinton personally articulates his views. All first-person.
 
 ---
 
@@ -493,6 +569,19 @@ Established via manual evaluation of all claims + sources by Claude. This is the
 - **Confidence:** medium
 - **Rationale:** "Bias/discrimination" is NOT a valid enum value. Democratic erosion better supported by state preemption opposition.
 
+#### belief_regulatory_stance_detail
+- **Current:** *(truncated in test data)*
+- **Verdict:** correct
+- **Confidence:** high
+- **Rationale:** Should reflect Restrictive stance with mandatory prohibitions, not just Precautionary standards. Markey's legislation includes specific bans and mandatory requirements.
+- **Proposed:** Advocates for mandatory safety standards, pre-deployment licensing, and algorithm audits. Introduced AI Civil Rights Act with specific prohibitions on discriminatory AI use. Supports strict federal framework that preempts weaker state laws. Calls for "strict guardrails" and accountability mechanisms.
+
+#### belief_evidence_source
+- **Current:** Explicitly stated
+- **Verdict:** confirm
+- **Confidence:** high
+- **Rationale:** Legislative text, floor speeches, and press releases directly authored by Markey's office. All explicit statements.
+
 ---
 
 ### Future of Life Institute (ID: 229)
@@ -517,6 +606,19 @@ Established via manual evaluation of all claims + sources by Claude. This is the
 - **Confidence:** medium
 - **Rationale:** Zero claims for threat_models dimension. Value appears to be inferred from general positions, not sourced.
 - **Key evidence for removal:** No claims exist for `belief_dimension: threat_models` for entity 229
+
+#### belief_regulatory_stance_detail
+- **Current:** Advocates for mandatory safety standards, pre-deployment licensing, and audits for advanced AI systems...
+- **Verdict:** correct
+- **Confidence:** high
+- **Rationale:** Should reflect Restrictive (not Precautionary) stance — FLI advocates for prohibition of superintelligence development, not just precautionary measures.
+- **Proposed:** Advocates for prohibition of superintelligence development until safety is guaranteed. Led 2023 open letter calling for 6-month pause on AI training. October 2025 statement explicitly calls for prohibition, not just precaution. Supports export controls and mandatory safety testing.
+
+#### belief_evidence_source
+- **Current:** Explicitly stated
+- **Verdict:** confirm
+- **Confidence:** high
+- **Rationale:** Official organizational position papers, open letters, and policy statements directly published by FLI. These are explicit authored positions.
 
 ---
 
@@ -543,6 +645,18 @@ Established via manual evaluation of all claims + sources by Claude. This is the
 - **Rationale:** Zero claims for threat_models dimension. Purely inferred from business actions.
 - **Key evidence for removal:** No claims exist for `belief_dimension: threat_models` for entity 743
 
+#### belief_regulatory_stance_detail
+- **Current:** Reddit has positioned itself as supporting content licensing standards...
+- **Verdict:** **remove** → null
+- **Confidence:** high
+- **Rationale:** Zero claims for regulatory stance. This text is purely inferred from business actions with no evidentiary support.
+
+#### belief_evidence_source
+- **Current:** Inferred
+- **Verdict:** confirm
+- **Confidence:** high
+- **Rationale:** Correctly labeled as Inferred since all values are derived from business actions (data licensing deals, crawler blocking) rather than explicit statements about AI policy positions.
+
 ---
 
 ### Trump administration (ID: 1169)
@@ -560,6 +674,16 @@ Established via manual evaluation of all claims + sources by Claude. This is the
 - **Confidence:** medium
 - **Rationale:** Three medium-confidence claims all indicate Manageable — administration frames safety as secondary to progress, removes "burdensome requirements". Third-party characterizations but consistent.
 - **Key evidence:** zdnet.com — *"The administration has framed safety as antithetical to progress in AI"*
+
+#### belief_regulatory_stance_detail
+- **Current:** *(null)*
+- **Verdict:** N/A — no value to verify
+
+#### belief_evidence_source
+- **Current:** Inferred
+- **Verdict:** confirm
+- **Confidence:** high
+- **Rationale:** Correctly labeled as Inferred. Evidence comes from executive orders and third-party characterizations of policy positions, not direct statements from administration officials about their AI beliefs.
 
 ---
 
@@ -589,6 +713,18 @@ Established via manual evaluation of all claims + sources by Claude. This is the
 - **Verdict:** confirm
 - **Confidence:** high
 
+#### belief_regulatory_stance_detail
+- **Current:** Strongly advocates for extreme caution in AI development, arguing that superintelligent AI cannot be indefinitely controlled...
+- **Verdict:** confirm
+- **Confidence:** high
+- **Rationale:** Summary accurately reflects Yampolskiy's precautionary/restrictive position with support for deliberate slowdowns and safety-first approach.
+
+#### belief_evidence_source
+- **Current:** Explicitly stated
+- **Verdict:** confirm
+- **Confidence:** high
+- **Rationale:** Direct interviews, published papers, and social media posts where Yampolskiy personally articulates his views. "99.9% chance of extinction" is a direct quote.
+
 ---
 
 ### Timothée Lacroix (ID: 1724)
@@ -604,3 +740,13 @@ Established via manual evaluation of all claims + sources by Claude. This is the
 - **Verdict:** **remove** → null
 - **Confidence:** high
 - **Rationale:** Zero claims. No evidence whatsoever.
+
+#### belief_regulatory_stance_detail
+- **Current:** *(null)*
+- **Verdict:** N/A — no value to verify
+
+#### belief_evidence_source
+- **Current:** Inferred
+- **Verdict:** **remove** → null
+- **Confidence:** high
+- **Rationale:** Zero claims for any field. "Inferred" label is misleading since there's nothing to infer from. Should be null or removed entirely.
