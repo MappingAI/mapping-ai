@@ -156,6 +156,8 @@ async function applyCorrection(correction) {
     }
     if (correction.verdict === 'remove') {
       await client.query(`UPDATE entity SET ${field} = NULL, updated_at = NOW() WHERE id = $1`, [correction.entity_id])
+    } else if (correction.verdict === 'correct' && !correction.proposed_value) {
+      throw new Error(`Verdict 'correct' requires proposed_value for field ${field} on entity ${correction.entity_id}`)
     } else if (correction.proposed_value !== undefined) {
       await client.query(`UPDATE entity SET ${field} = $1, updated_at = NOW() WHERE id = $2`, [
         correction.proposed_value,
@@ -165,7 +167,7 @@ async function applyCorrection(correction) {
 
     // 2. Update field_verification JSONB
     const fvEntry = {
-      status: 'verified',
+      status: correction.verdict === 'remove' || correction.proposed_value ? 'verified' : 'unverified',
       at: new Date().toISOString(),
       by: 'write-corrections',
     }

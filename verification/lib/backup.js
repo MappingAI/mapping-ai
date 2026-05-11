@@ -3,10 +3,12 @@
  *
  * Creates timestamped backups of all tables to local files AND R2.
  * Call runPreBackup() at the start of any script that modifies the DB.
+ * Throws if critical tables fail to backup.
  *
  * Usage:
  *   import { runPreBackup } from './lib/backup.js';
- *   await runPreBackup(pool, { label: 'belief-verification', r2: true });
+ *   const result = await runPreBackup(pool, { label: 'belief-verification', r2: true });
+ *   // result.complete === true means all tables succeeded
  */
 
 import fs from 'fs'
@@ -17,13 +19,13 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const BACKUP_DIR = path.join(__dirname, '../../backups')
 
 const TABLES = [
-  { name: 'entity', orderBy: 'id' },
-  { name: 'submission', orderBy: 'id' },
-  { name: 'edge', orderBy: 'id' },
-  { name: 'claim', orderBy: 'entity_id, claim_id' },
-  { name: 'source', orderBy: 'source_id' },
-  { name: 'field_feedback', orderBy: 'id' },
-  { name: 'field_notes', orderBy: 'id' },
+  { name: 'entity', orderBy: 'id', critical: true },
+  { name: 'submission', orderBy: 'id', critical: false },
+  { name: 'edge', orderBy: 'id', critical: true },
+  { name: 'claim', orderBy: 'entity_id, claim_id', critical: true },
+  { name: 'source', orderBy: 'source_id', critical: true },
+  { name: 'field_feedback', orderBy: 'id', critical: false },
+  { name: 'field_notes', orderBy: 'id', critical: false },
 ]
 
 async function getR2Client() {
@@ -36,6 +38,7 @@ async function getR2Client() {
     region: 'auto',
     endpoint: `https://${accountId}.r2.cloudflarestorage.com`,
     credentials: { accessKeyId: keyId, secretAccessKey: secret },
+    requestHandler: { requestTimeout: 30000 },
   })
 }
 
@@ -52,16 +55,23 @@ export async function runPreBackup(pool, options = {}) {
       backed_up_at: new Date().toISOString(),
       label,
       tables: {},
+      complete: true,
     },
   }
 
-  for (const { name, orderBy } of tables) {
+  const failedTables = []
+
+  for (const { name, orderBy, critical } of tables) {
     try {
       const r = await pool.query(`SELECT * FROM ${name} ORDER BY ${orderBy}`)
       backup[name] = r.rows
       backup._meta.tables[name] = r.rows.length
     } catch (e) {
-      backup._meta.tables[name] = `error: ${e.message.substring(0, 50)}`
+      const errMsg = e.message.substring(0, 80)
+      backup._meta.tables[name] = `error: ${errMsg}`
+      backup._meta.complete = false
+      failedTables.push({ name, critical, error: errMsg })
+      console.error(`  ⚠ ${name}: FAILED (${errMsg})`)
     }
   }
 
@@ -73,6 +83,7 @@ export async function runPreBackup(pool, options = {}) {
   const sizeMB = (json.length / 1024 / 1024).toFixed(1)
   console.log(`  Local: ${localPath} (${sizeMB}MB)`)
 
+  let r2Success = false
   if (r2) {
     try {
       const r2Client = await getR2Client()
@@ -86,12 +97,13 @@ export async function runPreBackup(pool, options = {}) {
             ContentType: 'application/json',
           }),
         )
+        r2Success = true
         console.log(`  R2: backups/${filename}`)
       } else {
         console.log(`  R2: skipped (no credentials)`)
       }
     } catch (e) {
-      console.log(`  R2: failed (${e.message.substring(0, 50)})`)
+      console.error(`  ⚠ R2 upload FAILED: ${e.message.substring(0, 80)}`)
     }
   }
 
@@ -99,7 +111,21 @@ export async function runPreBackup(pool, options = {}) {
     .map(([t, c]) => `${t}:${c}`)
     .join(', ')
   console.log(`  Tables: ${tableSummary}`)
+
+  // Abort if critical tables failed
+  const criticalFailures = failedTables.filter((t) => t.critical)
+  if (criticalFailures.length > 0) {
+    const names = criticalFailures.map((t) => t.name).join(', ')
+    throw new Error(
+      `BACKUP INCOMPLETE: critical tables failed (${names}). Aborting to prevent unrecoverable data loss.`,
+    )
+  }
+
+  if (failedTables.length > 0) {
+    console.error(`  ⚠ INCOMPLETE BACKUP: ${failedTables.length} tables failed (non-critical)`)
+  }
+
   console.log('')
 
-  return { localPath, filename }
+  return { localPath, filename, complete: backup._meta.complete, r2Success, failedTables }
 }

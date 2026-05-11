@@ -50,6 +50,7 @@ async function backup() {
   try {
     console.log(`Backing up database (${timestamp})...\n`)
 
+    let failedTables = 0
     const TABLE_ORDER_BY = {
       entity: 'id',
       submission: 'id',
@@ -80,8 +81,9 @@ async function backup() {
         sqlLines.push('')
         console.log(`  ✓ ${table}: ${result.rows.length} rows`)
       } catch (e) {
-        console.log(`  ⚠ ${table}: SKIPPED (${e.message.substring(0, 60)})`)
+        console.error(`  ⚠ ${table}: SKIPPED (${e.message.substring(0, 60)})`)
         jsonData._meta.tables[table] = `error: ${e.message.substring(0, 80)}`
+        failedTables++
       }
     }
 
@@ -92,18 +94,40 @@ async function backup() {
     fs.writeFileSync(sqlFile, sqlLines.join('\n'))
     console.log(`\n✓ Local files: ${jsonFile}, ${sqlFile}`)
 
+    if (failedTables > 0) {
+      console.error(`\n⚠ INCOMPLETE BACKUP: ${failedTables}/${TABLES.length} tables failed`)
+    }
+
     // Upload to S3
     if (!LOCAL_ONLY) {
       const s3JsonKey = `${BACKUP_PREFIX}${jsonFile}`
       const s3SqlKey = `${BACKUP_PREFIX}${sqlFile}`
-      execSync(`aws s3 cp ${jsonFile} s3://${S3_BUCKET}/${s3JsonKey} --region eu-west-2`, { stdio: 'inherit' })
-      execSync(`aws s3 cp ${sqlFile} s3://${S3_BUCKET}/${s3SqlKey} --region eu-west-2`, { stdio: 'inherit' })
-      console.log(`✓ Uploaded to s3://${S3_BUCKET}/${BACKUP_PREFIX}`)
+      try {
+        execSync(`aws s3 cp ${jsonFile} s3://${S3_BUCKET}/${s3JsonKey} --region eu-west-2`, {
+          stdio: 'inherit',
+          timeout: 60000,
+        })
+        execSync(`aws s3 cp ${sqlFile} s3://${S3_BUCKET}/${s3SqlKey} --region eu-west-2`, {
+          stdio: 'inherit',
+          timeout: 60000,
+        })
+        console.log(`✓ Uploaded to s3://${S3_BUCKET}/${BACKUP_PREFIX}`)
+      } catch (uploadErr) {
+        console.error(`⚠ S3 upload failed: ${uploadErr.message.substring(0, 80)}`)
+        console.log('Local files preserved (not deleted)')
+        if (failedTables > 0) process.exit(1)
+        return
+      }
 
-      // Clean up local files after successful upload
+      // Only delete local files after BOTH uploads succeed
       fs.unlinkSync(jsonFile)
       fs.unlinkSync(sqlFile)
       console.log('✓ Cleaned up local files')
+    }
+
+    if (failedTables > 0) {
+      console.error('\nExiting with error due to incomplete backup')
+      process.exit(1)
     }
 
     console.log('\nDone.')

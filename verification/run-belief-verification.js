@@ -36,7 +36,7 @@ if (!ANTHROPIC_API_KEY) {
   console.error('ERROR: No Anthropic API key found.')
   process.exit(1)
 }
-const anthropic = new Anthropic({ apiKey: ANTHROPIC_API_KEY })
+const anthropic = new Anthropic({ apiKey: ANTHROPIC_API_KEY, timeout: 300000, maxRetries: 2 })
 
 // Database — prefer staging, refuse implicit production fallback
 const DATABASE_URL = process.env.STAGING_DATABASE_URL || process.env.DATABASE_URL
@@ -49,7 +49,15 @@ if (!process.env.STAGING_DATABASE_URL && !process.argv.includes('--allow-product
   console.error('Set STAGING_DATABASE_URL or pass --allow-production to override.')
   process.exit(1)
 }
-const pool = new pg.Pool({ connectionString: DATABASE_URL, ssl: { rejectUnauthorized: false } })
+if (!process.env.STAGING_DATABASE_URL && process.argv.includes('--allow-production')) {
+  console.error('⚠⚠⚠ WARNING: --allow-production active. Writing to PRODUCTION database. ⚠⚠⚠')
+}
+const pool = new pg.Pool({
+  connectionString: DATABASE_URL,
+  ssl: { rejectUnauthorized: false },
+  connectionTimeoutMillis: 10000,
+  idleTimeoutMillis: 30000,
+})
 
 // CLI args
 const args = process.argv.slice(2)

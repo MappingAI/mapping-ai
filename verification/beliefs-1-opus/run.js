@@ -36,6 +36,8 @@ dotenv.config({ path: path.join(__dirname, '../../.env') })
 
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_MULTIAGENT_VERIFICATION_KEY,
+  timeout: 300000,
+  maxRetries: 2,
 })
 
 const exa = new Exa(process.env.EXA_MULTIAGENT_VERIFICATION_KEY)
@@ -44,8 +46,13 @@ if (!process.env.STAGING_DATABASE_URL && !process.argv.includes('--allow-product
   console.error('ERROR: STAGING_DATABASE_URL not set. Set it or pass --allow-production.')
   process.exit(1)
 }
+if (!process.env.STAGING_DATABASE_URL && process.argv.includes('--allow-production')) {
+  console.error('⚠⚠⚠ WARNING: --allow-production active. Writing to PRODUCTION database. ⚠⚠⚠')
+}
 const pool = new pg.Pool({
   connectionString: process.env.STAGING_DATABASE_URL || process.env.DATABASE_URL,
+  connectionTimeoutMillis: 10000,
+  idleTimeoutMillis: 30000,
 })
 
 // ── Load Prompt ──

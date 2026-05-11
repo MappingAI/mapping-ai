@@ -33,6 +33,8 @@ dotenv.config({ path: path.join(__dirname, '../../.env') })
 
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_MULTIAGENT_VERIFICATION_KEY,
+  timeout: 300000,
+  maxRetries: 2,
 })
 
 const exa = new Exa(process.env.EXA_MULTIAGENT_VERIFICATION_KEY)
