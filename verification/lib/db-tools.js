@@ -5,26 +5,26 @@
  * Uses STAGING_DATABASE_URL - never writes to production.
  */
 
-import pg from 'pg';
-import dotenv from 'dotenv';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import pg from 'pg'
+import dotenv from 'dotenv'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-dotenv.config({ path: path.join(__dirname, '../../.env') });
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+dotenv.config({ path: path.join(__dirname, '../../.env') })
 
 // CRITICAL: Always use staging database for verification writes
-const DATABASE_URL = process.env.STAGING_DATABASE_URL;
+const DATABASE_URL = process.env.STAGING_DATABASE_URL
 
 if (!DATABASE_URL) {
-  console.error('ERROR: STAGING_DATABASE_URL not set. Verification pipeline requires staging database.');
-  process.exit(1);
+  console.error('ERROR: STAGING_DATABASE_URL not set. Verification pipeline requires staging database.')
+  process.exit(1)
 }
 
 const pool = new pg.Pool({
   connectionString: DATABASE_URL,
   ssl: { rejectUnauthorized: false },
-});
+})
 
 // ── Read Operations ──
 
@@ -35,17 +35,17 @@ const pool = new pg.Pool({
  * @returns {Promise<object>} Full entity record
  */
 export async function getFullEntityRecord(entityId) {
-  const client = await pool.connect();
+  const client = await pool.connect()
 
   try {
     // Get entity
-    const entityResult = await client.query('SELECT * FROM entity WHERE id = $1', [entityId]);
+    const entityResult = await client.query('SELECT * FROM entity WHERE id = $1', [entityId])
 
     if (entityResult.rows.length === 0) {
-      return { found: false, entity_id: entityId };
+      return { found: false, entity_id: entityId }
     }
 
-    const entity = entityResult.rows[0];
+    const entity = entityResult.rows[0]
 
     // Get edges (both directions)
     const edgesResult = await client.query(
@@ -58,23 +58,23 @@ export async function getFullEntityRecord(entityId) {
       JOIN entity t ON e.target_id = t.id
       WHERE e.source_id = $1 OR e.target_id = $1
     `,
-      [entityId]
-    );
+      [entityId],
+    )
 
     // Get claims (if claims table exists on this branch)
-    let claims = [];
+    let claims = []
     try {
-      const claimsResult = await client.query('SELECT * FROM claim WHERE entity_id = $1', [entityId]);
-      claims = claimsResult.rows;
+      const claimsResult = await client.query('SELECT * FROM claim WHERE entity_id = $1', [entityId])
+      claims = claimsResult.rows
     } catch {
       // Claims table may not exist on all branches
     }
 
     // Get sources
-    let sources = [];
+    let sources = []
     try {
-      const sourcesResult = await client.query('SELECT * FROM source WHERE entity_id = $1', [entityId]);
-      sources = sourcesResult.rows;
+      const sourcesResult = await client.query('SELECT * FROM source WHERE entity_id = $1', [entityId])
+      sources = sourcesResult.rows
     } catch {
       // Source table may not exist on all branches
     }
@@ -85,9 +85,9 @@ export async function getFullEntityRecord(entityId) {
       edges: edgesResult.rows,
       claims,
       sources,
-    };
+    }
   } finally {
-    client.release();
+    client.release()
   }
 }
 
@@ -98,50 +98,50 @@ export async function getFullEntityRecord(entityId) {
  * @returns {Promise<object[]>} Array of entities
  */
 export async function getVerificationQueue(options = {}) {
-  const { limit = 10, entityType = null, prioritizeExplicitlyStated = true, prioritizeCrowdsourced = true } = options;
+  const { limit = 10, entityType = null, prioritizeExplicitlyStated = true, prioritizeCrowdsourced = true } = options
 
   let query = `
     SELECT e.*,
            (SELECT COUNT(*) FROM submission s WHERE s.entity_id = e.id AND s.submitter_relationship = 'external') as crowdsourced_count
     FROM entity e
     WHERE e.status = 'approved'
-  `;
+  `
 
-  const params = [];
-  let paramIndex = 1;
+  const params = []
+  let paramIndex = 1
 
   if (entityType) {
-    query += ` AND e.entity_type = $${paramIndex}`;
-    params.push(entityType);
-    paramIndex++;
+    query += ` AND e.entity_type = $${paramIndex}`
+    params.push(entityType)
+    paramIndex++
   }
 
   // Prioritization order
-  query += ` ORDER BY `;
-  const orderClauses = [];
+  query += ` ORDER BY `
+  const orderClauses = []
 
   if (prioritizeExplicitlyStated) {
-    orderClauses.push(`CASE WHEN e.belief_evidence_source = 'Explicitly stated' THEN 0 ELSE 1 END`);
+    orderClauses.push(`CASE WHEN e.belief_evidence_source = 'Explicitly stated' THEN 0 ELSE 1 END`)
   }
 
   if (prioritizeCrowdsourced) {
     orderClauses.push(
-      `CASE WHEN EXISTS (SELECT 1 FROM submission s WHERE s.entity_id = e.id AND s.submitter_relationship = 'external') THEN 0 ELSE 1 END`
-    );
+      `CASE WHEN EXISTS (SELECT 1 FROM submission s WHERE s.entity_id = e.id AND s.submitter_relationship = 'external') THEN 0 ELSE 1 END`,
+    )
   }
 
-  orderClauses.push(`e.updated_at DESC`);
-  query += orderClauses.join(', ');
+  orderClauses.push(`e.updated_at DESC`)
+  query += orderClauses.join(', ')
 
-  query += ` LIMIT $${paramIndex}`;
-  params.push(limit);
+  query += ` LIMIT $${paramIndex}`
+  params.push(limit)
 
-  const client = await pool.connect();
+  const client = await pool.connect()
   try {
-    const result = await client.query(query, params);
-    return result.rows;
+    const result = await client.query(query, params)
+    return result.rows
   } finally {
-    client.release();
+    client.release()
   }
 }
 
@@ -155,7 +155,7 @@ export async function getVerificationQueue(options = {}) {
  * @returns {Promise<boolean>} Success
  */
 export async function updateFieldVerification(entityId, fieldVerification) {
-  const client = await pool.connect();
+  const client = await pool.connect()
 
   try {
     // Merge with existing field_verification (don't overwrite)
@@ -166,12 +166,12 @@ export async function updateFieldVerification(entityId, fieldVerification) {
           updated_at = NOW()
       WHERE id = $1
     `,
-      [entityId, JSON.stringify(fieldVerification)]
-    );
+      [entityId, JSON.stringify(fieldVerification)],
+    )
 
-    return true;
+    return true
   } finally {
-    client.release();
+    client.release()
   }
 }
 
@@ -183,31 +183,31 @@ export async function updateFieldVerification(entityId, fieldVerification) {
  * @returns {Promise<boolean>} Success
  */
 export async function updateEntityFields(entityId, updates) {
-  if (Object.keys(updates).length === 0) return true;
+  if (Object.keys(updates).length === 0) return true
 
-  const client = await pool.connect();
+  const client = await pool.connect()
 
   try {
-    const setClauses = [];
-    const values = [];
-    let paramIndex = 1;
+    const setClauses = []
+    const values = []
+    let paramIndex = 1
 
     for (const [field, value] of Object.entries(updates)) {
-      setClauses.push(`${field} = $${paramIndex}`);
-      values.push(value);
-      paramIndex++;
+      setClauses.push(`${field} = $${paramIndex}`)
+      values.push(value)
+      paramIndex++
     }
 
-    values.push(entityId);
+    values.push(entityId)
 
     await client.query(
       `UPDATE entity SET ${setClauses.join(', ')}, updated_at = NOW() WHERE id = $${paramIndex}`,
-      values
-    );
+      values,
+    )
 
-    return true;
+    return true
   } finally {
-    client.release();
+    client.release()
   }
 }
 
@@ -219,16 +219,16 @@ export async function updateEntityFields(entityId, updates) {
  * @returns {Promise<boolean>} Success
  */
 export async function updateClaimConfidence(claimId, confidence) {
-  const client = await pool.connect();
+  const client = await pool.connect()
 
   try {
-    await client.query('UPDATE claim SET confidence = $2 WHERE id = $1', [claimId, confidence]);
-    return true;
+    await client.query('UPDATE claim SET confidence = $2 WHERE id = $1', [claimId, confidence])
+    return true
   } catch {
     // Claim table may not exist
-    return false;
+    return false
   } finally {
-    client.release();
+    client.release()
   }
 }
 
@@ -240,15 +240,15 @@ export async function updateClaimConfidence(claimId, confidence) {
  * @returns {Promise<boolean>} Success
  */
 export async function updateEdgeEvidenceConfidence(edgeEvidenceId, confidence) {
-  const client = await pool.connect();
+  const client = await pool.connect()
 
   try {
-    await client.query('UPDATE edge_evidence SET confidence = $2 WHERE id = $1', [edgeEvidenceId, confidence]);
-    return true;
+    await client.query('UPDATE edge_evidence SET confidence = $2 WHERE id = $1', [edgeEvidenceId, confidence])
+    return true
   } catch {
-    return false;
+    return false
   } finally {
-    client.release();
+    client.release()
   }
 }
 
@@ -260,15 +260,15 @@ export async function updateEdgeEvidenceConfidence(edgeEvidenceId, confidence) {
  * @returns {Promise<boolean>} Success
  */
 export async function updateSourceVerifiedAt(sourceId, verifiedAt = new Date()) {
-  const client = await pool.connect();
+  const client = await pool.connect()
 
   try {
-    await client.query('UPDATE source SET last_verified_at = $2 WHERE id = $1', [sourceId, verifiedAt]);
-    return true;
+    await client.query('UPDATE source SET last_verified_at = $2 WHERE id = $1', [sourceId, verifiedAt])
+    return true
   } catch {
-    return false;
+    return false
   } finally {
-    client.release();
+    client.release()
   }
 }
 
@@ -280,20 +280,17 @@ export async function updateSourceVerifiedAt(sourceId, verifiedAt = new Date()) 
  * @returns {Promise<number>} Number of sources updated
  */
 export async function batchUpdateSourcesVerifiedAt(urls, verifiedAt = new Date()) {
-  if (urls.length === 0) return 0;
+  if (urls.length === 0) return 0
 
-  const client = await pool.connect();
+  const client = await pool.connect()
 
   try {
-    const result = await client.query('UPDATE source SET last_verified_at = $2 WHERE url = ANY($1)', [
-      urls,
-      verifiedAt,
-    ]);
-    return result.rowCount;
+    const result = await client.query('UPDATE source SET last_verified_at = $2 WHERE url = ANY($1)', [urls, verifiedAt])
+    return result.rowCount
   } catch {
-    return 0;
+    return 0
   } finally {
-    client.release();
+    client.release()
   }
 }
 
@@ -306,7 +303,7 @@ export async function batchUpdateSourcesVerifiedAt(urls, verifiedAt = new Date()
  * @returns {Promise<boolean>} Success
  */
 export async function logVerificationAudit(auditEntry) {
-  const client = await pool.connect();
+  const client = await pool.connect()
 
   try {
     // Check if verification_audit table exists, create if not
@@ -324,7 +321,7 @@ export async function logVerificationAudit(auditEntry) {
         agent TEXT,
         created_at TIMESTAMP DEFAULT NOW()
       )
-    `);
+    `)
 
     await client.query(
       `
@@ -342,12 +339,12 @@ export async function logVerificationAudit(auditEntry) {
         auditEntry.evidence_urls || null,
         auditEntry.confidence || null,
         auditEntry.agent || 'verification_pipeline',
-      ]
-    );
+      ],
+    )
 
-    return true;
+    return true
   } finally {
-    client.release();
+    client.release()
   }
 }
 
@@ -360,7 +357,7 @@ export async function logVerificationAudit(auditEntry) {
  * @returns {Promise<boolean>} Success
  */
 export async function addToHumanReviewQueue(reviewItem) {
-  const client = await pool.connect();
+  const client = await pool.connect()
 
   try {
     // Check if human_review_queue table exists, create if not
@@ -382,7 +379,7 @@ export async function addToHumanReviewQueue(reviewItem) {
         resolution TEXT,
         created_at TIMESTAMP DEFAULT NOW()
       )
-    `);
+    `)
 
     await client.query(
       `
@@ -400,12 +397,12 @@ export async function addToHumanReviewQueue(reviewItem) {
         reviewItem.evidence_summary || null,
         reviewItem.evidence_urls || null,
         reviewItem.priority || 'normal',
-      ]
-    );
+      ],
+    )
 
-    return true;
+    return true
   } finally {
-    client.release();
+    client.release()
   }
 }
 
@@ -416,9 +413,9 @@ export async function addToHumanReviewQueue(reviewItem) {
  * @returns {Promise<object[]>} Pending review items
  */
 export async function getHumanReviewQueue(options = {}) {
-  const { limit = 50, status = 'pending' } = options;
+  const { limit = 50, status = 'pending' } = options
 
-  const client = await pool.connect();
+  const client = await pool.connect()
 
   try {
     const result = await client.query(
@@ -430,21 +427,21 @@ export async function getHumanReviewQueue(options = {}) {
         created_at ASC
       LIMIT $2
     `,
-      [status, limit]
-    );
-    return result.rows;
+      [status, limit],
+    )
+    return result.rows
   } catch {
     // Table may not exist yet
-    return [];
+    return []
   } finally {
-    client.release();
+    client.release()
   }
 }
 
 // ── Cleanup ──
 
 export async function closePool() {
-  await pool.end();
+  await pool.end()
 }
 
-export { pool };
+export { pool }

@@ -47,6 +47,7 @@ You are helping establish "ground truth" verdicts for a belief verification pipe
 **For persons and organizations** (only verify fields with non-null values):
 
 ### Enum Fields
+
 - `belief_regulatory_stance` — categorical position on AI regulation
 - `belief_agi_timeline` — when they expect AGI
 - `belief_ai_risk` — level of concern about AI risks
@@ -54,10 +55,13 @@ You are helping establish "ground truth" verdicts for a belief verification pipe
 - `belief_evidence_source` — how the belief was determined
 
 ### Text Fields
+
 - `belief_regulatory_stance_detail` — free text summary of their regulatory position
 
 ### Evidence Source Classification
+
 For `belief_evidence_source`, verify based on the claims:
+
 - **Explicitly stated**: Entity directly stated their views (first-person quotes, testimony, op-eds)
 - **Inferred**: Third-party characterizations or analysis only
 - **Inferred from actions**: Deduced from behavior/decisions without explicit statements

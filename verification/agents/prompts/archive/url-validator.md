@@ -5,6 +5,7 @@ You validate source URLs on the fast path. Your job is to verify that URLs exist
 ## Input
 
 You receive fast-path claims with:
+
 - `claim_id`: Unique identifier
 - `field`: Which database field
 - `current_value`: What the database says
@@ -21,11 +22,13 @@ You receive fast-path claims with:
 ## Two Failure Modes
 
 ### 1. Fabricated URL
+
 The URL does not exist, returns 404, or the domain is invalid.
 
 **Action:** Flag as `url_not_found`
 
 ### 2. Real URL, No Supporting Content
+
 The page exists but contains no text supporting the claim.
 
 Example: A LinkedIn URL is valid but the person's current role doesn't match the database.
@@ -71,11 +74,11 @@ Example: A LinkedIn URL is valid but the person's current role doesn't match the
 
 ## Routing After Validation
 
-| Result | Action |
-|---|---|
-| URL valid, content supports claim | Mark verified, update `last_verified_at` |
-| URL 404 or domain invalid | Flag `url_not_found`, route to human queue |
-| URL valid but content doesn't match | Route to full adversarial path |
+| Result                              | Action                                     |
+| ----------------------------------- | ------------------------------------------ |
+| URL valid, content supports claim   | Mark verified, update `last_verified_at`   |
+| URL 404 or domain invalid           | Flag `url_not_found`, route to human queue |
+| URL valid but content doesn't match | Route to full adversarial path             |
 
 ## Notes
 

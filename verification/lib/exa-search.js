@@ -5,22 +5,22 @@
  * Uses EXA_MULTIAGENT_VERIFICATION_KEY for billing isolation.
  */
 
-import Exa from 'exa-js';
-import dotenv from 'dotenv';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import Exa from 'exa-js'
+import dotenv from 'dotenv'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-dotenv.config({ path: path.join(__dirname, '../../.env') });
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+dotenv.config({ path: path.join(__dirname, '../../.env') })
 
 // Use dedicated verification API key
-const EXA_API_KEY = process.env.EXA_MULTIAGENT_VERIFICATION_KEY || process.env.EXA_API_KEY;
+const EXA_API_KEY = process.env.EXA_MULTIAGENT_VERIFICATION_KEY || process.env.EXA_API_KEY
 
 if (!EXA_API_KEY) {
-  console.warn('Warning: No Exa API key found. Set EXA_MULTIAGENT_VERIFICATION_KEY in .env');
+  console.warn('Warning: No Exa API key found. Set EXA_MULTIAGENT_VERIFICATION_KEY in .env')
 }
 
-const exa = EXA_API_KEY ? new Exa(EXA_API_KEY) : null;
+const exa = EXA_API_KEY ? new Exa(EXA_API_KEY) : null
 
 // Cost tracking (following Anushree's pattern)
 export const costs = {
@@ -29,22 +29,22 @@ export const costs = {
   cost: 0,
 
   track(resultsCount = 0) {
-    this.searches++;
-    this.results_returned += resultsCount;
+    this.searches++
+    this.results_returned += resultsCount
     // Exa pricing: $0.008 per search (as of 2026)
-    this.cost = this.searches * 0.008;
+    this.cost = this.searches * 0.008
   },
 
   summary() {
-    return `Exa: ${this.searches} searches, ${this.results_returned} results ($${this.cost.toFixed(3)})`;
+    return `Exa: ${this.searches} searches, ${this.results_returned} results ($${this.cost.toFixed(3)})`
   },
 
   reset() {
-    this.searches = 0;
-    this.results_returned = 0;
-    this.cost = 0;
+    this.searches = 0
+    this.results_returned = 0
+    this.cost = 0
   },
-};
+}
 
 /**
  * Search for evidence supporting a claim
@@ -55,7 +55,7 @@ export const costs = {
  */
 export async function searchForEvidence(query, options = {}) {
   if (!exa) {
-    throw new Error('Exa client not initialized. Check EXA_MULTIAGENT_VERIFICATION_KEY.');
+    throw new Error('Exa client not initialized. Check EXA_MULTIAGENT_VERIFICATION_KEY.')
   }
 
   const {
@@ -66,7 +66,7 @@ export async function searchForEvidence(query, options = {}) {
     endPublishedDate = null,
     includeDomains = [],
     excludeDomains = [],
-  } = options;
+  } = options
 
   const searchOpts = {
     numResults,
@@ -74,16 +74,16 @@ export async function searchForEvidence(query, options = {}) {
     useAutoprompt,
     text: { maxCharacters: 2000 }, // Get content for extraction
     highlights: { numSentences: 3, highlightsPerUrl: 3 },
-  };
+  }
 
-  if (startPublishedDate) searchOpts.startPublishedDate = startPublishedDate;
-  if (endPublishedDate) searchOpts.endPublishedDate = endPublishedDate;
-  if (includeDomains.length > 0) searchOpts.includeDomains = includeDomains;
-  if (excludeDomains.length > 0) searchOpts.excludeDomains = excludeDomains;
+  if (startPublishedDate) searchOpts.startPublishedDate = startPublishedDate
+  if (endPublishedDate) searchOpts.endPublishedDate = endPublishedDate
+  if (includeDomains.length > 0) searchOpts.includeDomains = includeDomains
+  if (excludeDomains.length > 0) searchOpts.excludeDomains = excludeDomains
 
   try {
-    const response = await exa.searchAndContents(query, searchOpts);
-    costs.track(response.results?.length || 0);
+    const response = await exa.searchAndContents(query, searchOpts)
+    costs.track(response.results?.length || 0)
 
     return {
       success: true,
@@ -97,15 +97,15 @@ export async function searchForEvidence(query, options = {}) {
         highlights: r.highlights,
         score: r.score,
       })),
-    };
+    }
   } catch (error) {
-    costs.track(0);
+    costs.track(0)
     return {
       success: false,
       query,
       error: error.message,
       results: [],
-    };
+    }
   }
 }
 
@@ -135,9 +135,9 @@ export async function searchForBeliefAttribution(entityName, beliefField) {
       `"${entityName}" AI threat concern "I'm worried" danger`,
       `"${entityName}" AI risk labor displacement misinformation`,
     ],
-  };
+  }
 
-  const fieldQueries = queries[beliefField] || [`"${entityName}" ${beliefField.replace(/_/g, ' ')} statement`];
+  const fieldQueries = queries[beliefField] || [`"${entityName}" ${beliefField.replace(/_/g, ' ')} statement`]
 
   // Run searches in parallel
   const results = await Promise.all(
@@ -146,20 +146,20 @@ export async function searchForBeliefAttribution(entityName, beliefField) {
         numResults: 3,
         // Prioritize interviews, testimony, op-eds
         excludeDomains: ['wikipedia.org', 'wikidata.org'],
-      })
-    )
-  );
+      }),
+    ),
+  )
 
   // Merge and deduplicate by URL
-  const seenUrls = new Set();
-  const mergedResults = [];
+  const seenUrls = new Set()
+  const mergedResults = []
 
   for (const r of results) {
     if (r.success) {
       for (const result of r.results) {
         if (!seenUrls.has(result.url)) {
-          seenUrls.add(result.url);
-          mergedResults.push(result);
+          seenUrls.add(result.url)
+          mergedResults.push(result)
         }
       }
     }
@@ -171,7 +171,7 @@ export async function searchForBeliefAttribution(entityName, beliefField) {
     field: beliefField,
     queries: fieldQueries,
     results: mergedResults,
-  };
+  }
 }
 
 /**
@@ -189,16 +189,16 @@ export async function searchForFactualClaim(entityName, factualClaim, claimType 
     org: ['linkedin.com', 'crunchbase.com'],
     date: ['crunchbase.com', 'sec.gov', 'reuters.com'],
     general: [],
-  };
+  }
 
-  const query = `"${entityName}" ${factualClaim}`;
-  const includeDomains = domainsByType[claimType] || [];
+  const query = `"${entityName}" ${factualClaim}`
+  const includeDomains = domainsByType[claimType] || []
 
   return searchForEvidence(query, {
     numResults: 3,
     type: 'keyword', // More precise for factual claims
     includeDomains,
-  });
+  })
 }
 
 /**
@@ -209,19 +209,19 @@ export async function searchForFactualClaim(entityName, factualClaim, claimType 
  */
 export async function validateUrl(url) {
   if (!exa) {
-    throw new Error('Exa client not initialized. Check EXA_MULTIAGENT_VERIFICATION_KEY.');
+    throw new Error('Exa client not initialized. Check EXA_MULTIAGENT_VERIFICATION_KEY.')
   }
 
   try {
     // Use Exa's getContents to fetch the URL
     const response = await exa.getContents([url], {
       text: { maxCharacters: 3000 },
-    });
+    })
 
-    costs.track(1);
+    costs.track(1)
 
     if (response.results && response.results.length > 0) {
-      const result = response.results[0];
+      const result = response.results[0]
       return {
         success: true,
         url,
@@ -229,7 +229,7 @@ export async function validateUrl(url) {
         title: result.title,
         text: result.text,
         publishedDate: result.publishedDate,
-      };
+      }
     }
 
     return {
@@ -237,17 +237,17 @@ export async function validateUrl(url) {
       url,
       valid: false,
       reason: 'URL not found or inaccessible',
-    };
+    }
   } catch (error) {
-    costs.track(0);
+    costs.track(0)
     return {
       success: false,
       url,
       valid: false,
       error: error.message,
-    };
+    }
   }
 }
 
 // Export for use in agents
-export { exa };
+export { exa }

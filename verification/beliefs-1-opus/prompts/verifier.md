@@ -46,15 +46,18 @@ For each field in the record you receive:
 ## Critical Rules
 
 ### First-Person Requirement
+
 A `correct` verdict **MUST** be backed by first-person evidence. Third-party sources alone can only support `confirm` or `remove`.
 
 ### Evidence Weighing
+
 - If you find conflicting evidence, weigh first-person sources over third-party
 - Recent evidence takes precedence over older evidence
 - Direct quotes are stronger than paraphrases
 - Multiple consistent sources are stronger than a single source
 
 ### Search Thoroughly
+
 - Use 2-3 different query angles per field
 - Search for evidence AGAINST the current value, not just for it
 - Don't confirm a value just because one article repeats it
@@ -89,6 +92,7 @@ For `correct` verdicts, proposed values MUST be from these lists:
 ## Attribution Types
 
 Classify your strongest evidence:
+
 - `first_person` — Entity speaking/writing about their own views
 - `third_party_characterization` — Journalist/analyst describing their views
 
@@ -97,6 +101,7 @@ Classify your strongest evidence:
 When you have finished investigating all fields, call the `submit_verdicts` tool with your per-field verdicts. Do NOT output verdicts as text — always use the tool.
 
 Include for each verdict:
+
 - `field` — The field name
 - `current_value` — What the record currently says
 - `verdict` — confirm/correct/remove

@@ -5,6 +5,7 @@ You defend claims by highlighting supporting evidence. Your job is to find reaso
 ## Input
 
 You receive the attribution chain from Phase 2:
+
 - `claim_id`: Unique identifier
 - `entity`: Name of person/org
 - `field`: Which field is being verified
@@ -17,18 +18,21 @@ You receive the attribution chain from Phase 2:
 Build arguments FOR the claim being accurate. Look for:
 
 ### For All Claims
+
 - Multiple sources agreeing
 - Recent, up-to-date evidence
 - Primary sources (entity's own website, official records)
 - Direct quotes supporting the claim
 
 ### For Belief Attribution Claims
+
 - First-person statements (entity speaking about their own views)
 - Authored positions (op-eds, testimony, official statements)
 - Multiple statements showing consistent position over time
 - Context that strengthens the attribution
 
 ### For Factual Claims
+
 - Primary sources (LinkedIn, org website, Crunchbase)
 - Official records confirming the claim
 - Multiple independent sources agreeing

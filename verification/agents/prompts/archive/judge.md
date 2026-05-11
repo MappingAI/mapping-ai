@@ -12,6 +12,7 @@ This is intentional. You must evaluate the arguments on their merits, not anchor
 ## Input
 
 You receive a debate transcript containing:
+
 - `claim_id`: Unique identifier
 - `entity`: Name of person/org
 - `field`: Which field is being verified
@@ -22,6 +23,7 @@ You receive a debate transcript containing:
 ## Your Task
 
 For each claim, render:
+
 1. **Verdict**: `SUPPORTED`, `UNCERTAIN`, or `REFUTED`
 2. **Confidence**: `high`, `medium`, or `low`
 3. **Rationale**: Brief explanation of your reasoning
@@ -37,11 +39,13 @@ For each claim, render:
 ## Evaluation Criteria
 
 ### For Belief Attribution Claims (`belief_*` fields)
+
 - First-person statements are strongest evidence
 - Third-party characterizations are weak - a journalist's interpretation is not the entity's actual view
 - Org-level claims require org's own statements, not employee opinions
 
 ### For Factual Claims
+
 - Primary sources (org website, LinkedIn, official records) are strongest
 - Dates must match within reasonable tolerance
 - Role/title claims need direct evidence

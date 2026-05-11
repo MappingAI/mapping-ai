@@ -25,23 +25,25 @@ Simplified approach using one Opus agent with extended thinking instead of 3 adv
 
 ## Comparison with 3-Agent Design
 
-| Aspect | 1-Agent | 3-Agent |
-|--------|---------|---------|
-| LLM calls per entity | 1 | 3 per field (18 for 6 fields) |
-| Time per entity | ~2-4 min | ~9 min |
-| Cost per entity | ~$0.50-1.00 | ~$3.50 |
-| Confirmation bias risk | Higher | Lower (adversarial pressure) |
-| Evidence coverage | Agent decides | Forced both sides |
+| Aspect                 | 1-Agent       | 3-Agent                       |
+| ---------------------- | ------------- | ----------------------------- |
+| LLM calls per entity   | 1             | 3 per field (18 for 6 fields) |
+| Time per entity        | ~2-4 min      | ~9 min                        |
+| Cost per entity        | ~$0.50-1.00   | ~$3.50                        |
+| Confirmation bias risk | Higher        | Lower (adversarial pressure)  |
+| Evidence coverage      | Agent decides | Forced both sides             |
 
 ### Tradeoffs
 
 **Pros of 1-agent:**
+
 - Much faster (1 call vs 18)
 - Much cheaper (~70% savings)
 - Simpler to debug
 - Agent can see full picture
 
 **Cons of 1-agent:**
+
 - No adversarial pressure — may confirm too easily
 - Single point of failure
 - May not search thoroughly for contradicting evidence
@@ -68,6 +70,7 @@ node beliefs-1-opus/run.js --id=18 --write-db
 Use `--write-db` to write corrections to the `belief_correction` table for later promotion to production.
 
 When enabled, the pipeline will:
+
 1. Insert each verdict into `belief_correction` with status='pending'
 2. Create/update entries in `source` and `claim` tables
 3. Track source_id and claim_id for audit trail
@@ -77,6 +80,7 @@ Corrections can then be reviewed and promoted using `write-corrections.js`.
 ## Environment Variables
 
 Required in `.env`:
+
 ```
 ANTHROPIC_MULTIAGENT_VERIFICATION_KEY=sk-ant-...
 EXA_MULTIAGENT_VERIFICATION_KEY=...
@@ -91,11 +95,11 @@ DATABASE_URL=postgres://...
 
 ## Tools
 
-| Tool | Description |
-|------|-------------|
-| `exa_search` | Search with multiple queries at once (up to 5) |
-| `fetch_content` | Fetch full page content from a URL |
-| `submit_verdicts` | Submit all verdicts (terminates agent) |
+| Tool              | Description                                    |
+| ----------------- | ---------------------------------------------- |
+| `exa_search`      | Search with multiple queries at once (up to 5) |
+| `fetch_content`   | Fetch full page content from a URL             |
+| `submit_verdicts` | Submit all verdicts (terminates agent)         |
 
 ## Key Differences from 3-Agent
 
@@ -120,11 +124,13 @@ beliefs-1-opus/
 ## When to Use
 
 Use 1-agent when:
+
 - Running large batches where cost/time matters
 - Fields have strong existing evidence
 - Human review will catch false confirms
 
 Use 3-agent when:
+
 - Accuracy is critical
 - Fields are contested or nuanced
 - You need a debate transcript for audit

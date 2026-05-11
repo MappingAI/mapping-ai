@@ -114,9 +114,7 @@
                 "current_value": "Founded late 2021",
                 "confidence": "low",
                 "evidence_summary": "No direct evidence of founding date found. Only indirect inference from Ryan Kidd's EA Forum join date (Sep 2021) and Co-ED role start (2022), plus mention of '3.5 years' of operation without timestamp. Search targeted matsprogram.org but returned no official sources with founding information.",
-                "source_urls": [
-                  "https://forum.effectivealtruism.org/users/ryan-kidd"
-                ],
+                "source_urls": ["https://forum.effectivealtruism.org/users/ryan-kidd"],
                 "reason": "Insufficient evidence to confirm or correct founding date. Requires official MATS documentation or first-person statement from leadership."
               }
             ],

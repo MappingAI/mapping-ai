@@ -594,20 +594,22 @@ source_id  →  edge_type  →  target_id
 ```
 
 **Example:** To encode "Sam Altman works at OpenAI":
+
 - `source_id`: Sam Altman (person)
 - `target_id`: OpenAI (org)
 - `edge_type`: `employer`
 
 The frontend displays this bidirectionally:
+
 - Viewing Sam Altman: "Works at OpenAI"
 - Viewing OpenAI: "Employs Sam Altman"
 
 ### Edge Direction Examples
 
-| Edge                                                       | Meaning                        |
-| ---------------------------------------------------------- | ------------------------------ |
-| `Sam Altman (source)` → `OpenAI (target)` with `employer`  | "Sam works at OpenAI"          |
-| `Google (source)` → `Anthropic (target)` with `funder`     | "Google funds Anthropic"       |
+| Edge                                                           | Meaning                         |
+| -------------------------------------------------------------- | ------------------------------- |
+| `Sam Altman (source)` → `OpenAI (target)` with `employer`      | "Sam works at OpenAI"           |
+| `Google (source)` → `Anthropic (target)` with `funder`         | "Google funds Anthropic"        |
 | `Anthropic (source)` → `OpenAI (target)` with `parent_company` | "OpenAI is parent of Anthropic" |
 
 **Note on symmetric relationships:** For `collaborator`, `partner`, and similar symmetric relationships, create edges in **both directions** so the relationship is visible from either entity.
@@ -658,18 +660,19 @@ The frontend displays this bidirectionally:
 
 Stores source metadata for claims and edge evidence.
 
-| Column          | Type         | Description                          |
-| --------------- | ------------ | ------------------------------------ |
-| `source_id`     | VARCHAR      | Primary key (hash of URL)            |
-| `url`           | VARCHAR      | Source URL                           |
-| `title`         | VARCHAR      | Human-readable title                 |
-| `source_type`   | VARCHAR      | Type of source (see values below)    |
-| `date_published`| DATE         | Publication date                     |
-| `author`        | VARCHAR      | Author name if available             |
-| `cached_excerpt`| TEXT         | Excerpt/citation from source         |
-| `resource_entity_id` | INTEGER | FK → entity (if source is a resource)|
+| Column               | Type    | Description                           |
+| -------------------- | ------- | ------------------------------------- |
+| `source_id`          | VARCHAR | Primary key (hash of URL)             |
+| `url`                | VARCHAR | Source URL                            |
+| `title`              | VARCHAR | Human-readable title                  |
+| `source_type`        | VARCHAR | Type of source (see values below)     |
+| `date_published`     | DATE    | Publication date                      |
+| `author`             | VARCHAR | Author name if available              |
+| `cached_excerpt`     | TEXT    | Excerpt/citation from source          |
+| `resource_entity_id` | INTEGER | FK → entity (if source is a resource) |
 
 **source_type values:**
+
 - `hearing` - Congressional/government hearing
 - `bill` - Legislation
 - `tweet` - Twitter/X post
@@ -691,33 +694,35 @@ Stores source metadata for claims and edge evidence.
 
 Stores extracted belief claims with citations.
 
-| Column             | Type        | Description                               |
-| ------------------ | ----------- | ----------------------------------------- |
-| `claim_id`         | VARCHAR     | Primary key (entity_dimension_source)     |
-| `entity_id`        | INTEGER     | FK → entity                               |
-| `entity_name`      | VARCHAR     | Denormalized name                         |
-| `entity_type`      | VARCHAR     | person/organization/resource              |
-| `belief_dimension` | VARCHAR     | Belief dimension (see values below)       |
-| `stance`           | VARCHAR     | Text label from scale                     |
-| `stance_score`     | INTEGER     | Numeric score (null for AGI definition)   |
-| `stance_label`     | VARCHAR     | Short display label                       |
-| `definition_used`  | TEXT        | How entity defined the term (for AGI)     |
-| `citation`         | TEXT        | Verbatim quote from source                |
-| `source_id`        | VARCHAR     | FK → source                               |
-| `date_stated`      | DATE        | When entity made statement                |
-| `claim_type`       | VARCHAR     | Type of claim (see values below)          |
-| `confidence`       | VARCHAR     | high/medium/low                           |
-| `extracted_by`     | VARCHAR     | exa+claude or db_fallback                 |
-| `extraction_model` | VARCHAR     | Model used (e.g., claude-sonnet-4-6)      |
-| `extraction_date`  | DATE        | When claim was extracted                  |
+| Column             | Type    | Description                             |
+| ------------------ | ------- | --------------------------------------- |
+| `claim_id`         | VARCHAR | Primary key (entity_dimension_source)   |
+| `entity_id`        | INTEGER | FK → entity                             |
+| `entity_name`      | VARCHAR | Denormalized name                       |
+| `entity_type`      | VARCHAR | person/organization/resource            |
+| `belief_dimension` | VARCHAR | Belief dimension (see values below)     |
+| `stance`           | VARCHAR | Text label from scale                   |
+| `stance_score`     | INTEGER | Numeric score (null for AGI definition) |
+| `stance_label`     | VARCHAR | Short display label                     |
+| `definition_used`  | TEXT    | How entity defined the term (for AGI)   |
+| `citation`         | TEXT    | Verbatim quote from source              |
+| `source_id`        | VARCHAR | FK → source                             |
+| `date_stated`      | DATE    | When entity made statement              |
+| `claim_type`       | VARCHAR | Type of claim (see values below)        |
+| `confidence`       | VARCHAR | high/medium/low                         |
+| `extracted_by`     | VARCHAR | exa+claude or db_fallback               |
+| `extraction_model` | VARCHAR | Model used (e.g., claude-sonnet-4-6)    |
+| `extraction_date`  | DATE    | When claim was extracted                |
 
 **belief_dimension values:**
+
 - `regulatory_stance` - Position on AI regulation
 - `agi_timeline` - Expected AGI arrival
 - `ai_risk_level` - Assessment of AI risk
 - `agi_definition` - How they define AGI
 
 **claim_type values:**
+
 - `direct_statement` - Quote from the entity
 - `authored_position` - Org published a position
 - `inferred_from_action` - Co-sponsored bill, joined coalition
@@ -730,17 +735,17 @@ Stores extracted belief claims with citations.
 
 Stores source attribution for edges/relationships.
 
-| Column       | Type         | Description                               |
-| ------------ | ------------ | ----------------------------------------- |
-| `edge_id`    | INTEGER      | FK → edge                                 |
-| `source_id`  | VARCHAR      | FK → source                               |
-| `citation`   | TEXT         | Verbatim quote supporting relationship    |
-| `start_date` | DATE         | When relationship started                 |
-| `end_date`   | DATE         | When relationship ended (null = current)  |
-| `amount_usd` | NUMERIC      | Funding amount if funder edge             |
-| `role_title` | VARCHAR      | Specific role/title                       |
-| `confidence` | VARCHAR      | high/medium/low                           |
-| `created_at` | TIMESTAMPTZ  | When evidence was added                   |
+| Column       | Type        | Description                              |
+| ------------ | ----------- | ---------------------------------------- |
+| `edge_id`    | INTEGER     | FK → edge                                |
+| `source_id`  | VARCHAR     | FK → source                              |
+| `citation`   | TEXT        | Verbatim quote supporting relationship   |
+| `start_date` | DATE        | When relationship started                |
+| `end_date`   | DATE        | When relationship ended (null = current) |
+| `amount_usd` | NUMERIC     | Funding amount if funder edge            |
+| `role_title` | VARCHAR     | Specific role/title                      |
+| `confidence` | VARCHAR     | high/medium/low                          |
+| `created_at` | TIMESTAMPTZ | When evidence was added                  |
 
 ---
 

@@ -7,6 +7,7 @@ You break entity records into atomic claims and route them to the appropriate ve
 You receive a full entity record. The fields vary by entity type:
 
 ### Person Fields
+
 - `name`, `title`, `category`, `other_categories`
 - `primary_org`, `other_orgs`, `location`
 - `belief_regulatory_stance`, `belief_regulatory_stance_detail`, `belief_evidence_source`
@@ -15,6 +16,7 @@ You receive a full entity record. The fields vary by entity type:
 - `notes`, `field_verification`
 
 ### Organization Fields
+
 - `name`, `category`, `other_categories`
 - `parent_org_id`, `website`, `location`, `funding_model`
 - `belief_regulatory_stance`, `belief_regulatory_stance_detail`
@@ -22,6 +24,7 @@ You receive a full entity record. The fields vary by entity type:
 - `notes`
 
 ### Resource Fields
+
 - `resource_title`, `resource_type`, `resource_url`, `resource_year`
 - `resource_author`, `resource_key_argument`
 - `primary_org`
@@ -29,6 +32,7 @@ You receive a full entity record. The fields vary by entity type:
 - `notes`
 
 ### Related Data
+
 - `edges`: Relationships to other entities with `edge_type`, `role`, `start_date`, `end_date`, `source_url`
 - `claims`: Existing claim records with `citation`, `source_id`, `confidence`
 - `sources`: Existing source URLs with `last_verified_at`
@@ -43,17 +47,21 @@ You receive a full entity record. The fields vary by entity type:
 ## Verification Types
 
 ### `factual`
+
 Checkable against primary sources (org pages, LinkedIn, Crunchbase, official records).
 
 Examples:
+
 - "Sam Altman is CEO of OpenAI" → factual
 - "Anthropic was founded in 2021" → factual
 - "This person works at Google DeepMind" → factual
 
 ### `belief_attribution`
+
 Requires a direct statement or writing BY the entity, not ABOUT them.
 
 Examples:
+
 - Any `belief_regulatory_stance` value → belief_attribution
 - Any `belief_agi_timeline` value → belief_attribution
 - Any `belief_ai_risk` value → belief_attribution
@@ -63,13 +71,17 @@ Examples:
 ## Search Query Rules
 
 ### For `factual` claims
+
 Target the entity's own presence:
+
 - `"{entity name}" site:linkedin.com`
 - `"{org name}" about team leadership`
 - `"{org name}" site:crunchbase.com`
 
 ### For `belief_attribution` claims
+
 Target the entity's own words:
+
 - `"{person name}" AI regulation testimony statement interview`
 - `"{person name}" wrote op-ed AGI timeline`
 - `"{org name}" official position statement AI policy`
@@ -78,15 +90,15 @@ Target the entity's own words:
 
 ## Routing Rules
 
-| Condition | Path |
-|---|---|
-| `factual` claim + source URL present | `fast_path` |
-| Any `belief_*` field | `full_path` |
-| `notes` content | `full_path` |
-| Edge `evidence` and `citation` fields | `full_path` |
+| Condition                                     | Path                                |
+| --------------------------------------------- | ----------------------------------- |
+| `factual` claim + source URL present          | `fast_path`                         |
+| Any `belief_*` field                          | `full_path`                         |
+| `notes` content                               | `full_path`                         |
+| Edge `evidence` and `citation` fields         | `full_path`                         |
 | `belief_evidence_source: "Explicitly stated"` | `full_path` (requires direct quote) |
-| `claim_type: crowdsourced_submission` | `full_path` (highest priority) |
-| `resource_url` on Resource entity | `fast_path` |
+| `claim_type: crowdsourced_submission`         | `full_path` (highest priority)      |
+| `resource_url` on Resource entity             | `fast_path`                         |
 
 ## Output Format
 
@@ -124,6 +136,7 @@ Target the entity's own words:
 ## Skip These Fields
 
 Do not decompose trivially verifiable fields:
+
 - `name` (unless flagged as suspicious)
 - `id`, `created_at`, `updated_at`
 - `status` (internal workflow field)

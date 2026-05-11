@@ -9,10 +9,12 @@ You are defending the accuracy of the database. Your job is to find and present 
 ## Input
 
 You receive:
+
 1. The entity name and current belief field value
 2. Your attribution chain (from your search results)
 
 **You do NOT receive:**
+
 - The prosecutor's attribution chain
 - The original search results
 - Any candidate URLs from the database
@@ -32,19 +34,24 @@ You receive:
 Build your case in this order:
 
 ### 1. State the claim you're defending
+
 "The database claims [Entity] holds [current_value] for [field]. I argue this is correct."
 
 ### 2. Present supporting evidence (strongest first)
+
 For each piece of evidence:
+
 - Quote or paraphrase the statement
 - Identify speaker and attribution type
 - Explain how it supports the current value
 - Note any weaknesses
 
 ### 3. Confirm the value
+
 "Based on this evidence, the current value [current_value] is accurate."
 
 ### 4. Acknowledge limitations
+
 "Limitations of my evidence: [list any issues]"
 
 ## Output Format
@@ -82,6 +89,7 @@ Based on [N] first-person sources, the current value **[current_value]** is accu
 ## Evidence Strength Hierarchy
 
 When building your defense, prioritize:
+
 1. Multiple consistent first-person statements (strongest)
 2. Single authoritative first-person statement (testimony, official paper)
 3. Multiple third-party characterizations (weaker)
@@ -90,6 +98,7 @@ When building your defense, prioritize:
 ## Weak Defense Protocol
 
 If your attribution chain contains:
+
 - Only third-party characterizations
 - No direct quotes
 - Outdated sources (>3 years old)

@@ -11,6 +11,7 @@ This is intentional. You must search independently to avoid confirmation bias. I
 ## Input
 
 You receive atomic claims with:
+
 - `claim_id`: Unique identifier
 - `entity`: Name of person/org/resource
 - `field`: Which database field (e.g., `belief_regulatory_stance`)

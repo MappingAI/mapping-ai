@@ -1,31 +1,31 @@
-<div id="diagram" style="padding:8px 0"></div>
+<div id="diagram" style="padding: 8px 0"></div>
 <script type="module">
-import mermaid from 'https://esm.sh/mermaid@11/dist/mermaid.esm.min.mjs';
-const dark = matchMedia('(prefers-color-scheme: dark)').matches;
-await document.fonts.ready;
-mermaid.initialize({
-  startOnLoad: false,
-  theme: 'base',
-  flowchart: { curve: 'basis', padding: 20 },
-  themeVariables: {
-    darkMode: dark,
-    fontSize: '13px',
-    fontFamily: '"Anthropic Sans", sans-serif',
-    primaryColor: dark ? '#3C3489' : '#EEEDFE',
-    primaryTextColor: dark ? '#CECBF6' : '#3C3489',
-    primaryBorderColor: dark ? '#7F77DD' : '#534AB7',
-    secondaryColor: dark ? '#085041' : '#E1F5EE',
-    secondaryTextColor: dark ? '#9FE1CB' : '#085041',
-    secondaryBorderColor: dark ? '#1D9E75' : '#0F6E56',
-    tertiaryColor: dark ? '#633806' : '#FAEEDA',
-    tertiaryTextColor: dark ? '#FAC775' : '#633806',
-    tertiaryBorderColor: dark ? '#EF9F27' : '#854F0B',
-    lineColor: dark ? '#888780' : '#5F5E5A',
-    edgeLabelBackground: dark ? '#2C2C2A' : '#F1EFE8',
-  },
-});
+  import mermaid from 'https://esm.sh/mermaid@11/dist/mermaid.esm.min.mjs'
+  const dark = matchMedia('(prefers-color-scheme: dark)').matches
+  await document.fonts.ready
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: 'base',
+    flowchart: { curve: 'basis', padding: 20 },
+    themeVariables: {
+      darkMode: dark,
+      fontSize: '13px',
+      fontFamily: '"Anthropic Sans", sans-serif',
+      primaryColor: dark ? '#3C3489' : '#EEEDFE',
+      primaryTextColor: dark ? '#CECBF6' : '#3C3489',
+      primaryBorderColor: dark ? '#7F77DD' : '#534AB7',
+      secondaryColor: dark ? '#085041' : '#E1F5EE',
+      secondaryTextColor: dark ? '#9FE1CB' : '#085041',
+      secondaryBorderColor: dark ? '#1D9E75' : '#0F6E56',
+      tertiaryColor: dark ? '#633806' : '#FAEEDA',
+      tertiaryTextColor: dark ? '#FAC775' : '#633806',
+      tertiaryBorderColor: dark ? '#EF9F27' : '#854F0B',
+      lineColor: dark ? '#888780' : '#5F5E5A',
+      edgeLabelBackground: dark ? '#2C2C2A' : '#F1EFE8',
+    },
+  })
 
-const chart = `flowchart TD
+  const chart = `flowchart TD
   INPUT([Input record])
 
   subgraph P0["Phase 0 — Pre-pass"]
@@ -108,8 +108,8 @@ const chart = `flowchart TD
   TRIAGE --> QUAR
   APPROVE --> WRITE
   HQUEUE --> WRITE
-`;
+`
 
-const { svg } = await mermaid.render('mermaid-svg', chart);
-document.getElementById('diagram').innerHTML = svg;
+  const { svg } = await mermaid.render('mermaid-svg', chart)
+  document.getElementById('diagram').innerHTML = svg
 </script>

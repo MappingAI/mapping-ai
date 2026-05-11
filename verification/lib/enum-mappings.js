@@ -7,15 +7,15 @@
 
 export const FUNDING_MODEL_MAP = {
   // Direct mappings to valid values
-  'Philanthropic': 'Philanthropic',
+  Philanthropic: 'Philanthropic',
   'VC-backed': 'Venture-backed',
   'Revenue-generating': 'Revenue-generating',
   'Government-funded': 'Government-funded',
-  'Membership': 'Membership',
-  'Mixed': 'Mixed',
+  Membership: 'Membership',
+  Mixed: 'Mixed',
   'Public benefit': 'Public benefit',
   'Self-funded': 'Self-funded',
-  'Other': 'Other',
+  Other: 'Other',
 
   // Legacy → Valid mappings
   'Endowment/philanthropy': 'Philanthropic',
@@ -31,19 +31,19 @@ export const FUNDING_MODEL_MAP = {
   'Philanthropic/membership': 'Philanthropic',
   'Philanthropic (Jaan Tallinn)': 'Philanthropic',
   'Philanthropic (philanthropic grants)': 'Philanthropic',
-  'Philanthropy': 'Philanthropic',
+  Philanthropy: 'Philanthropic',
   'Grant/nonprofit': 'Philanthropic',
-  'Donations': 'Philanthropic',
+  Donations: 'Philanthropic',
   'Donor-funded': 'Philanthropic',
   'Donor-funded PAC': 'Philanthropic',
   'Donor-pledged philanthropy': 'Philanthropic',
   'Donations/grants': 'Philanthropic',
-  'Grants': 'Philanthropic',
+  Grants: 'Philanthropic',
   'Non-profit/donation': 'Philanthropic',
-  'Endowment': 'Philanthropic',
+  Endowment: 'Philanthropic',
 
   // Government variants
-  'Government': 'Government-funded',
+  Government: 'Government-funded',
   'Government (U.S. federal)': 'Government-funded',
   'Government (non-U.S.)': 'Government-funded',
   'Government (South Korean federal)': 'Government-funded',
@@ -62,13 +62,13 @@ export const FUNDING_MODEL_MAP = {
   'Government grants, industry partnerships': 'Mixed',
   'Federal government': 'Government-funded',
   'Federal government, Industry partnerships': 'Mixed',
-  'government': 'Government-funded',
+  government: 'Government-funded',
   'Intergovernmental/public': 'Government-funded',
   'Public funding, Grants': 'Government-funded',
   'Public/grants': 'Government-funded',
 
   // Corporate/Revenue variants
-  'Corporate': 'Revenue-generating',
+  Corporate: 'Revenue-generating',
   'Corporate/commercial': 'Revenue-generating',
   'Corporate-funded': 'Revenue-generating',
   'Corporate (Microsoft subsidiary)': 'Revenue-generating',
@@ -78,7 +78,7 @@ export const FUNDING_MODEL_MAP = {
   'Revenue-funded consulting': 'Revenue-generating',
   'Revenue-funded (advertising/subscriptions)': 'Revenue-generating',
   'Revenue-funded (standards/certification fees)': 'Revenue-generating',
-  'Revenue': 'Revenue-generating',
+  Revenue: 'Revenue-generating',
   'For-profit': 'Revenue-generating',
   'For-profit/subscription': 'Revenue-generating',
   'Subscription/reader-funded': 'Revenue-generating',
@@ -100,12 +100,12 @@ export const FUNDING_MODEL_MAP = {
   'Private equity (Thoma Bravo)': 'Venture-backed',
 
   // Self-funded variants
-  'Bootstrapped': 'Self-funded',
+  Bootstrapped: 'Self-funded',
   'Self-funded (Tallinn wealth)': 'Self-funded',
   'Volunteer/self-funded': 'Self-funded',
 
   // Academic → Other (not in form)
-  'Academic': 'Other',
+  Academic: 'Other',
   'Academic/grants': 'Other',
   'Academic/grants/philanthropy': 'Other',
   'Academic/grants/federal': 'Other',
@@ -115,7 +115,7 @@ export const FUNDING_MODEL_MAP = {
   'Academic/endowment': 'Other',
   'Academic/nonprofit': 'Other',
   'Academic, Philanthropic/grants': 'Other',
-  'University': 'Other',
+  University: 'Other',
   'University (Oxford)': 'Other',
   'University (Princeton)': 'Other',
   'University (Cambridge)': 'Other',
@@ -152,23 +152,23 @@ export const FUNDING_MODEL_MAP = {
   'Volunteer/student': 'Other',
 
   // Public market
-  'Public': 'Other',
-  'public': 'Other',
+  Public: 'Other',
+  public: 'Other',
   'Public market': 'Other',
   'Public (Euronext Amsterdam)': 'Other',
   'Sovereign wealth': 'Other',
 
   // Legal/special
   'Legal fees/litigation': 'Other',
-};
+}
 
 // Long-form PAC descriptions → flag for human review (too specific to auto-map)
 export const FUNDING_MODEL_HUMAN_REVIEW = [
   /Super PAC/i,
   /PAC funded/i,
-  /\$\d+/,  // Contains dollar amounts
+  /\$\d+/, // Contains dollar amounts
   /million/i,
-];
+]
 
 export const THREAT_MODELS_MAP = {
   // Valid values (pass through)
@@ -176,10 +176,10 @@ export const THREAT_MODELS_MAP = {
   'Economic inequality': 'Economic inequality',
   'Power concentration': 'Power concentration',
   'Democratic erosion': 'Democratic erosion',
-  'Cybersecurity': 'Cybersecurity',
-  'Misinformation': 'Misinformation',
-  'Environmental': 'Environmental',
-  'Weapons': 'Weapons',
+  Cybersecurity: 'Cybersecurity',
+  Misinformation: 'Misinformation',
+  Environmental: 'Environmental',
+  Weapons: 'Weapons',
   'Loss of control': 'Loss of control',
   'Copyright/IP': 'Copyright/IP',
   'Existential risk': 'Existential risk',
@@ -192,10 +192,11 @@ export const THREAT_MODELS_MAP = {
   'CBRN risks': 'Weapons',
   'Bio/chem weapon uplift': 'Weapons',
   'Bioterrorism (warns AI could accelerate pathogen design by malicious actors)': 'Weapons',
-  'Biosecurity': 'Weapons',
+  Biosecurity: 'Weapons',
 
   'Labor/economic': 'Labor displacement', // Pick one, add note
-  'Job market disruption (warns impact will grow significantly over next five years). Has stated \'there is no upper limit\' to AI capabilities and it will surpass human levels without hitting a plateau. Concerned about complacency when AGI deadlines are missed creating false security.': 'Labor displacement',
+  "Job market disruption (warns impact will grow significantly over next five years). Has stated 'there is no upper limit' to AI capabilities and it will surpass human levels without hitting a plateau. Concerned about complacency when AGI deadlines are missed creating false security.":
+    'Labor displacement',
 
   'Erosion of epistemics': 'Misinformation',
   'Accidents/misalignment': 'Loss of control',
@@ -204,7 +205,7 @@ export const THREAT_MODELS_MAP = {
   'loss of human control over advanced AI systems': 'Loss of control',
   'model autonomy': 'Loss of control',
 
-  'Democracy': 'Democratic erosion',
+  Democracy: 'Democratic erosion',
   'democratic erosion via bureaucratic AI decision-making': 'Democratic erosion',
 
   'Catastrophic risk': 'Existential risk',
@@ -225,55 +226,56 @@ export const THREAT_MODELS_MAP = {
   'Identity fraud and deepfakes': 'Cybersecurity',
 
   'AI race dynamics': 'Power concentration',
-  'Regulatory capture (large companies using regulation to stifle competition). Believes humans should focus on creative work while machines handle bounded': 'Power concentration',
+  'Regulatory capture (large companies using regulation to stifle competition). Believes humans should focus on creative work while machines handle bounded':
+    'Power concentration',
 
   'Child safety/exploitation': 'Bias/discrimination',
   'Non-consensual intimate imagery (AI-generated explicit content harming victims': 'Bias/discrimination',
   'Mental health impacts on youth. In June 2025 interview': 'Bias/discrimination',
-  'AI-induced mental health crises including \'AI psychosis\' and addiction to chatbots': 'Bias/discrimination',
-};
+  "AI-induced mental health crises including 'AI psychosis' and addiction to chatbots": 'Bias/discrimination',
+}
 
 // Values to add to schema (common but not in form)
 export const THREAT_MODELS_SCHEMA_CANDIDATES = [
-  'National security',      // 83 entities
-  'Bias/discrimination',    // 33 entities
-  'Privacy',                // 12 entities
-];
+  'National security', // 83 entities
+  'Bias/discrimination', // 33 entities
+  'Privacy', // 12 entities
+]
 
 // Long descriptions → flag for human review
 export const THREAT_MODELS_HUMAN_REVIEW = [
   /warns/i,
   /emphasizes/i,
   /specifically/i,
-  /\(.*\)/,  // Contains parenthetical explanations
-];
+  /\(.*\)/, // Contains parenthetical explanations
+]
 
 /**
  * Repair a funding_model value
  * @returns {object} { value: string|null, action: 'mapped'|'human_review'|'unchanged' }
  */
 export function repairFundingModel(value) {
-  if (!value) return { value: null, action: 'unchanged' };
+  if (!value) return { value: null, action: 'unchanged' }
 
   // Check if it needs human review
   for (const pattern of FUNDING_MODEL_HUMAN_REVIEW) {
     if (pattern.test(value)) {
-      return { value, action: 'human_review', reason: 'Complex PAC/funding description' };
+      return { value, action: 'human_review', reason: 'Complex PAC/funding description' }
     }
   }
 
   // Check direct mapping
   if (FUNDING_MODEL_MAP[value]) {
-    const mapped = FUNDING_MODEL_MAP[value];
+    const mapped = FUNDING_MODEL_MAP[value]
     return {
       value: mapped,
       action: mapped === value ? 'unchanged' : 'mapped',
       original: value,
-    };
+    }
   }
 
   // Unknown value
-  return { value, action: 'human_review', reason: 'Unknown funding model' };
+  return { value, action: 'human_review', reason: 'Unknown funding model' }
 }
 
 /**
@@ -281,51 +283,54 @@ export function repairFundingModel(value) {
  * @returns {object} { value: string|null, action: 'mapped'|'human_review'|'unchanged'|'trimmed', dropped: string[] }
  */
 export function repairThreatModels(value, maxCount = 3) {
-  if (!value) return { value: null, action: 'unchanged' };
+  if (!value) return { value: null, action: 'unchanged' }
 
-  const values = value.split(',').map(v => v.trim()).filter(v => v);
-  const mapped = [];
-  const humanReview = [];
-  const dropped = [];
+  const values = value
+    .split(',')
+    .map((v) => v.trim())
+    .filter((v) => v)
+  const mapped = []
+  const humanReview = []
+  const dropped = []
 
   for (const v of values) {
     // Check if it needs human review (long description)
-    let needsReview = false;
+    let needsReview = false
     for (const pattern of THREAT_MODELS_HUMAN_REVIEW) {
       if (pattern.test(v) && v.length > 50) {
-        needsReview = true;
-        break;
+        needsReview = true
+        break
       }
     }
 
     if (needsReview) {
-      humanReview.push(v);
-      continue;
+      humanReview.push(v)
+      continue
     }
 
     // Check direct mapping
     if (THREAT_MODELS_MAP[v]) {
-      const m = THREAT_MODELS_MAP[v];
+      const m = THREAT_MODELS_MAP[v]
       if (!mapped.includes(m)) {
-        mapped.push(m);
+        mapped.push(m)
       }
     } else if (THREAT_MODELS_SCHEMA_CANDIDATES.includes(v)) {
       // Common value not in schema - keep for now, flag
       if (!mapped.includes(v)) {
-        mapped.push(v);
+        mapped.push(v)
       }
     } else {
-      humanReview.push(v);
+      humanReview.push(v)
     }
   }
 
   // Trim to max count
   if (mapped.length > maxCount) {
-    dropped.push(...mapped.slice(maxCount));
-    mapped.length = maxCount;
+    dropped.push(...mapped.slice(maxCount))
+    mapped.length = maxCount
   }
 
-  const result = mapped.join(', ') || null;
+  const result = mapped.join(', ') || null
 
   if (humanReview.length > 0) {
     return {
@@ -334,7 +339,7 @@ export function repairThreatModels(value, maxCount = 3) {
       humanReview,
       dropped,
       reason: 'Some values need human review',
-    };
+    }
   }
 
   if (dropped.length > 0) {
@@ -342,7 +347,7 @@ export function repairThreatModels(value, maxCount = 3) {
       value: result,
       action: 'trimmed',
       dropped,
-    };
+    }
   }
 
   if (result !== value) {
@@ -350,8 +355,8 @@ export function repairThreatModels(value, maxCount = 3) {
       value: result,
       action: 'mapped',
       original: value,
-    };
+    }
   }
 
-  return { value: result, action: 'unchanged' };
+  return { value: result, action: 'unchanged' }
 }

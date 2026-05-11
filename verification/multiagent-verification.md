@@ -76,13 +76,14 @@ Research is unambiguous: adversarial multi-agent debate consistently outperforms
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-| Step | Agent | Model | Role |
-|---|---|---|---|
-| 1 | Prosecutor | Sonnet | Searches for evidence AGAINST current value; builds attribution chain |
-| 2 | Defender | Sonnet | Searches for evidence FOR current value; builds attribution chain |
-| 3 | Judge | Opus + extended thinking | Reads debate transcript ONLY; renders verdict |
+| Step | Agent      | Model                    | Role                                                                  |
+| ---- | ---------- | ------------------------ | --------------------------------------------------------------------- |
+| 1    | Prosecutor | Sonnet                   | Searches for evidence AGAINST current value; builds attribution chain |
+| 2    | Defender   | Sonnet                   | Searches for evidence FOR current value; builds attribution chain     |
+| 3    | Judge      | Opus + extended thinking | Reads debate transcript ONLY; renders verdict                         |
 
 **Key differences from previous 8-agent design:**
+
 - Agents call Exa search directly via tool use (no separate decomposer/search agents)
 - Attribution chain built inside each agent (no separate attribution agents)
 - Judge uses extended thinking (8000 token budget) for deeper reasoning
@@ -94,24 +95,24 @@ Research is unambiguous: adversarial multi-agent debate consistently outperforms
 
 **For persons and organizations:**
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `belief_regulatory_stance` | enum | Categorical position on AI regulation |
-| `belief_regulatory_stance_detail` | text | Free text summary of regulatory position |
-| `belief_agi_timeline` | enum | When they expect AGI |
-| `belief_ai_risk` | enum | Level of concern about AI risks |
-| `belief_threat_models` | multi-enum | Specific threats (up to 3) |
-| `belief_evidence_source` | enum | How the belief was determined |
+| Field                             | Type       | Description                              |
+| --------------------------------- | ---------- | ---------------------------------------- |
+| `belief_regulatory_stance`        | enum       | Categorical position on AI regulation    |
+| `belief_regulatory_stance_detail` | text       | Free text summary of regulatory position |
+| `belief_agi_timeline`             | enum       | When they expect AGI                     |
+| `belief_ai_risk`                  | enum       | Level of concern about AI risks          |
+| `belief_threat_models`            | multi-enum | Specific threats (up to 3)               |
+| `belief_evidence_source`          | enum       | How the belief was determined            |
 
 **Valid enum values:**
 
-| Field | Values |
-|-------|--------|
-| `belief_regulatory_stance` | Accelerate, Light-touch, Targeted, Moderate, Precautionary, Restrictive, Nationalize, Mixed/unclear, Other |
-| `belief_agi_timeline` | Already here, 2-3 years, 5-10 years, 10-25 years, 25+ years or never, Ill-defined, Unknown, Mixed/unclear |
-| `belief_ai_risk` | Overstated, Manageable, Serious, Catastrophic, Existential, Mixed/nuanced, Unknown |
-| `belief_threat_models` | Labor displacement, Economic inequality, Power concentration, Democratic erosion, Cybersecurity, Misinformation, Environmental, Weapons, Loss of control, Copyright/IP, Existential risk |
-| `belief_evidence_source` | Explicitly stated, Inferred, Inferred from actions |
+| Field                      | Values                                                                                                                                                                                   |
+| -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `belief_regulatory_stance` | Accelerate, Light-touch, Targeted, Moderate, Precautionary, Restrictive, Nationalize, Mixed/unclear, Other                                                                               |
+| `belief_agi_timeline`      | Already here, 2-3 years, 5-10 years, 10-25 years, 25+ years or never, Ill-defined, Unknown, Mixed/unclear                                                                                |
+| `belief_ai_risk`           | Overstated, Manageable, Serious, Catastrophic, Existential, Mixed/nuanced, Unknown                                                                                                       |
+| `belief_threat_models`     | Labor displacement, Economic inequality, Power concentration, Democratic erosion, Cybersecurity, Misinformation, Environmental, Weapons, Loss of control, Copyright/IP, Existential risk |
+| `belief_evidence_source`   | Explicitly stated, Inferred, Inferred from actions                                                                                                                                       |
 
 ---
 
@@ -130,6 +131,7 @@ The following sources have been provided as a starting point. You may use these 
 ```
 
 Both prosecutor and defender:
+
 - Receive the same initial sources
 - Evaluate them on their merits (like any other search result)
 - Can search for additional sources via Exa
@@ -141,11 +143,11 @@ This ensures existing evidence gets considered without anchoring bias.
 
 ## Verdict Rules
 
-| Verdict | Condition | Action |
-|---------|-----------|--------|
-| `confirm` | First-person evidence supports current value | Keep value, add source as supporting evidence |
-| `correct` | First-person evidence contradicts current value | Update to proposed_value |
-| `remove` | No first-person evidence on either side | Set field to NULL |
+| Verdict   | Condition                                       | Action                                        |
+| --------- | ----------------------------------------------- | --------------------------------------------- |
+| `confirm` | First-person evidence supports current value    | Keep value, add source as supporting evidence |
+| `correct` | First-person evidence contradicts current value | Update to proposed_value                      |
+| `remove`  | No first-person evidence on either side         | Set field to NULL                             |
 
 **Hard rule:** `correct` requires at least one `first_person` statement contradicting the current value. Third-party characterizations alone are never sufficient for correction.
 
@@ -153,14 +155,15 @@ This ensures existing evidence gets considered without anchoring bias.
 
 ## Attribution Types
 
-| Type | Definition | Strength |
-|------|------------|----------|
-| `first_person` | Entity speaking/writing about their own views | Strongest |
-| `authored_position` | Org's official published position | Strong |
-| `third_party_characterization` | Journalist/analyst describing views | Weak |
-| `inferred_from_action` | Inferred from behavior | Weakest |
+| Type                           | Definition                                    | Strength  |
+| ------------------------------ | --------------------------------------------- | --------- |
+| `first_person`                 | Entity speaking/writing about their own views | Strongest |
+| `authored_position`            | Org's official published position             | Strong    |
+| `third_party_characterization` | Journalist/analyst describing views           | Weak      |
+| `inferred_from_action`         | Inferred from behavior                        | Weakest   |
 
 **Critical rules:**
+
 - If a journalist characterizes someone's stance: `third_party_characterization`, not `first_person`
 - If an interviewer describes the interviewee's views: speaker is the interviewer — do not attribute to the interviewee
 - Org official statements: do not attribute to individual employees unless they personally stated it
@@ -170,11 +173,11 @@ This ensures existing evidence gets considered without anchoring bias.
 
 ## Confidence Levels
 
-| Confidence | Criteria |
-|---|---|
-| `high` | Multiple first-person sources agree |
-| `medium` | One first-person source OR multiple third-party |
-| `low` | Only third-party OR sources conflict |
+| Confidence | Criteria                                        |
+| ---------- | ----------------------------------------------- |
+| `high`     | Multiple first-person sources agree             |
+| `medium`   | One first-person source OR multiple third-party |
+| `low`      | Only third-party OR sources conflict            |
 
 ---
 
@@ -209,6 +212,7 @@ One JSONL record per belief field per entity:
 ## Cost Estimate
 
 Per belief field:
+
 - 2 Sonnet calls (prosecutor + defender): ~$0.10
 - 1 Opus call with extended thinking: ~$0.30
 - 2-6 Exa searches: ~$0.02-0.05
@@ -221,6 +225,7 @@ For an entity with 6 belief fields: ~$2.50-2.70
 ## Test Suite
 
 See `test-suite.md` for:
+
 - 10 test entities with varied scenarios
 - Ground truth verdicts established via Claude web evaluation
 - Expected corrections and removals
@@ -254,12 +259,12 @@ verification/
 
 ## Research Foundations
 
-| Paper | Relevance |
-|---|---|
-| MARCH (arxiv 2603.24579) | Information asymmetry between search agents |
+| Paper                       | Relevance                                               |
+| --------------------------- | ------------------------------------------------------- |
+| MARCH (arxiv 2603.24579)    | Information asymmetry between search agents             |
 | DebateCV (arxiv 2507.19090) | Isolated judge context; debate transcript as sole input |
-| PROClaim (arxiv 2603.28488) | Prosecutor/defender structure for claim verification |
+| PROClaim (arxiv 2603.28488) | Prosecutor/defender structure for claim verification    |
 
 ---
 
-*Last updated: May 2026*
+_Last updated: May 2026_

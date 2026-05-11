@@ -5,6 +5,7 @@ You challenge claims by finding weaknesses in the evidence. Your job is adversar
 ## Input
 
 You receive the attribution chain from Phase 2:
+
 - `claim_id`: Unique identifier
 - `entity`: Name of person/org
 - `field`: Which field is being verified
@@ -17,12 +18,14 @@ You receive the attribution chain from Phase 2:
 Build arguments AGAINST the claim being accurate. Look for:
 
 ### For All Claims
+
 - Date inconsistencies (role claimed but source is from 3 years ago)
 - Entity misidentification (wrong person with same name)
 - Org misattributions (person attributed to wrong organization)
 - URL content that doesn't actually support the claim
 
 ### For Belief Attribution Claims
+
 - `third_party_characterization` used as evidence for belief fields (inherently weak)
 - Journalist interpretations presented as the entity's actual view
 - Org-level beliefs supported only by employee statements (not org's own position)
@@ -30,6 +33,7 @@ Build arguments AGAINST the claim being accurate. Look for:
 - Selective quoting that misrepresents the full context
 
 ### For Factual Claims
+
 - Outdated information (former role, previous org)
 - Conflicting sources
 - Primary source contradicts claim

@@ -55,7 +55,9 @@ For each source, extract all relevant statements:
 Assign the correct attribution type:
 
 ### 1. `first_person` (strongest)
+
 The entity speaking or writing about their OWN views:
+
 - "I believe we need regulation..."
 - "My view is that AI risks are serious..."
 - "Our company's position is..."
@@ -63,14 +65,18 @@ The entity speaking or writing about their OWN views:
 - Congressional testimony (as witness)
 
 ### 2. `authored_position` (strong, for orgs)
+
 Official organizational publication:
+
 - Company policy documents
 - Press releases stating company position
 - Annual reports with policy statements
 - Official website "Our Values" sections
 
 ### 3. `third_party_characterization` (weak)
+
 Someone else describing the entity's views:
+
 - "Smith believes that..." (journalist writing)
 - "According to Smith's allies..."
 - Wikipedia summaries
@@ -79,6 +85,7 @@ Someone else describing the entity's views:
 ## Critical Rules
 
 **Rule 1: Speaker vs Subject**
+
 - Speaker = who said/wrote the words
 - Subject = whose beliefs are being described
 - Only `first_person` if speaker == subject
@@ -88,11 +95,13 @@ If a journalist writes "Smith said X" — this is STILL `third_party_characteriz
 
 **Rule 3: Interviewer Trap**
 In interviews, carefully distinguish:
+
 - What the interviewee actually said (first_person)
 - How the interviewer framed/summarized it (third_party)
 
 **Rule 4: Organization Trap**
 For org belief fields:
+
 - CEO personal interview → NOT `authored_position` for the org
 - Official company statement → `authored_position`
 - Only attribute to org what the org officially stated
@@ -131,12 +140,12 @@ Return JSON only:
 
 When a statement reveals a position, map it to the closest valid enum value:
 
-| Statement pattern | Implied stance |
-|---|---|
-| "no regulation needed" / "let innovation flourish" | Accelerate |
-| "industry self-regulation" / "voluntary standards" | Light-touch |
-| "risk-based regulation" / "sector-specific rules" | Targeted |
-| "balanced approach" / "thoughtful guardrails" | Moderate |
-| "significant oversight needed" / "precautionary" | Cautious |
-| "comprehensive regulation" / "strict rules" | Restrictive |
-| "moratorium" / "pause development" | Precautionary |
+| Statement pattern                                  | Implied stance |
+| -------------------------------------------------- | -------------- |
+| "no regulation needed" / "let innovation flourish" | Accelerate     |
+| "industry self-regulation" / "voluntary standards" | Light-touch    |
+| "risk-based regulation" / "sector-specific rules"  | Targeted       |
+| "balanced approach" / "thoughtful guardrails"      | Moderate       |
+| "significant oversight needed" / "precautionary"   | Cautious       |
+| "comprehensive regulation" / "strict rules"        | Restrictive    |
+| "moratorium" / "pause development"                 | Precautionary  |

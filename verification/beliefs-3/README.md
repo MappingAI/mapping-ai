@@ -20,6 +20,7 @@ node beliefs-3/run.js --id-range=1-500
 ## Environment Variables
 
 Required in `.env`:
+
 ```
 ANTHROPIC_MULTIAGENT_VERIFICATION_KEY=sk-ant-...
 EXA_MULTIAGENT_VERIFICATION_KEY=...
@@ -41,46 +42,47 @@ DATABASE_URL=postgres://...  # or STAGING_DATABASE_URL
 
 ### Prosecutor/Defender Tools
 
-| Tool | Description |
-|------|-------------|
-| `exa_search` | Search web for evidence |
+| Tool              | Description                              |
+| ----------------- | ---------------------------------------- |
+| `exa_search`      | Search web for evidence                  |
 | `submit_argument` | Submit final argument (terminates agent) |
 
 ### Judge Tool
 
-| Tool | Description |
-|------|-------------|
+| Tool             | Description                                      |
+| ---------------- | ------------------------------------------------ |
 | `submit_verdict` | Submit verdict with reasoning (terminates agent) |
 
 ## Field Types
 
 The pipeline handles different field types:
 
-| Field | Type | Validation |
-|-------|------|------------|
-| `belief_regulatory_stance` | enum | Must match valid values |
-| `belief_regulatory_stance_detail` | text | Free text, verify accuracy |
-| `belief_agi_timeline` | enum | Must match valid values |
-| `belief_ai_risk` | enum | Must match valid values |
-| `belief_threat_models` | multi_enum | Up to 3 valid values |
-| `belief_evidence_source` | enum | Based on claim types |
+| Field                             | Type       | Validation                 |
+| --------------------------------- | ---------- | -------------------------- |
+| `belief_regulatory_stance`        | enum       | Must match valid values    |
+| `belief_regulatory_stance_detail` | text       | Free text, verify accuracy |
+| `belief_agi_timeline`             | enum       | Must match valid values    |
+| `belief_ai_risk`                  | enum       | Must match valid values    |
+| `belief_threat_models`            | multi_enum | Up to 3 valid values       |
+| `belief_evidence_source`          | enum       | Based on claim types       |
 
 ## Claim Dimension Mapping
 
 Fields map to claim table dimensions:
 
-| Field | Claim Dimension |
-|-------|-----------------|
-| `belief_regulatory_stance` | `regulatory_stance` |
+| Field                             | Claim Dimension              |
+| --------------------------------- | ---------------------------- |
+| `belief_regulatory_stance`        | `regulatory_stance`          |
 | `belief_regulatory_stance_detail` | `regulatory_stance` (shared) |
-| `belief_agi_timeline` | `agi_timeline` |
-| `belief_ai_risk` | `ai_risk_level` |
-| `belief_threat_models` | `threat_models` |
-| `belief_evidence_source` | ALL claims for entity |
+| `belief_agi_timeline`             | `agi_timeline`               |
+| `belief_ai_risk`                  | `ai_risk_level`              |
+| `belief_threat_models`            | `threat_models`              |
+| `belief_evidence_source`          | ALL claims for entity        |
 
 ## Cost Tracking
 
 The pipeline tracks costs per model:
+
 - Sonnet: $3/1M input, $15/1M output
 - Opus: $15/1M input, $75/1M output
 - Exa: ~$0.008 per search
@@ -105,6 +107,7 @@ beliefs-3/
 ## Testing
 
 See `../test-suite.md` for:
+
 - 10 test entities with varied scenarios
 - Ground truth verdicts
 - Expected corrections and removals

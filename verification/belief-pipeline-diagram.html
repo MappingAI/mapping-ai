@@ -1,0 +1,103 @@
+<div id="diagram" style="padding: 8px 0"></div>
+<script type="module">
+  import mermaid from 'https://esm.sh/mermaid@11/dist/mermaid.esm.min.mjs'
+  const dark = matchMedia('(prefers-color-scheme: dark)').matches
+  await document.fonts.ready
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: 'base',
+    flowchart: { curve: 'basis', padding: 20 },
+    themeVariables: {
+      darkMode: dark,
+      fontSize: '13px',
+      fontFamily: '"Anthropic Sans", sans-serif',
+      primaryColor: dark ? '#3C3489' : '#EEEDFE',
+      primaryTextColor: dark ? '#CECBF6' : '#3C3489',
+      primaryBorderColor: dark ? '#7F77DD' : '#534AB7',
+      secondaryColor: dark ? '#085041' : '#E1F5EE',
+      secondaryTextColor: dark ? '#9FE1CB' : '#085041',
+      secondaryBorderColor: dark ? '#1D9E75' : '#0F6E56',
+      tertiaryColor: dark ? '#633806' : '#FAEEDA',
+      tertiaryTextColor: dark ? '#FAC775' : '#633806',
+      tertiaryBorderColor: dark ? '#EF9F27' : '#854F0B',
+      lineColor: dark ? '#888780' : '#5F5E5A',
+      edgeLabelBackground: dark ? '#2C2C2A' : '#F1EFE8',
+    },
+  })
+
+  const chart = `flowchart TD
+  subgraph INPUT["Entity Queue"]
+    DB[("Staging DB")]
+    QUEUE["Priority queue\\n1. New submissions\\n2. Community downvotes\\n3. Unverified\\n4. Stale"]
+    DB --> QUEUE
+  end
+
+  subgraph S1["Step 1 — Decompose (Sonnet)"]
+    DECOMP["Decomposer\\nGenerates targeted search queries\\nProsecutor query: find CONTRADICTING evidence\\nDefender query: find SUPPORTING evidence"]
+    GUARD["Query guard (code)\\nValidates entity name present\\nRejects undefined / template placeholders"]
+  end
+
+  subgraph S2["Step 2 — Parallel Search (Exa)"]
+    direction LR
+    PRO_SEARCH["Prosecutor search\\n5 results via Exa\\nBiased toward contradictions"]
+    DEF_SEARCH["Defender search\\n5 results via Exa\\nBiased toward confirmation"]
+  end
+
+  subgraph S3["Step 3 — Parallel Attribution (Sonnet × 2)"]
+    direction LR
+    PRO_ATTR["Prosecutor attribution\\nExtracts speaker, subject,\\nattribution_type per source\\nNever sees defender results"]
+    DEF_ATTR["Defender attribution\\nExtracts speaker, subject,\\nattribution_type per source\\nNever sees prosecutor results"]
+  end
+
+  subgraph S4["Step 4 — Parallel Debate (Sonnet × 2)"]
+    direction LR
+    PRO_ARG["Prosecutor argument\\nArgues value is WRONG\\nCites only own attribution chain\\nMust flag third-party weakness"]
+    DEF_ARG["Defender argument\\nArgues value is CORRECT\\nCites only own attribution chain\\nMust acknowledge evidence gaps"]
+  end
+
+  subgraph S5["Step 5 — Judgment (Opus)"]
+    JUDGE["Judge — isolated context\\nSees ONLY debate transcript\\nNever sees original record or search results\\nRequires first-person evidence for corrections"]
+  end
+
+  subgraph VALIDATE["Validation (code, no LLM)"]
+    ENUM["Enum validator\\nChecks proposed_value against belief-enums.js\\nNormalizes if possible, rejects if not"]
+    SHAPE["Shape validator\\nverdict ∈ confirm/correct/remove\\nconfidence ∈ high/medium/low\\ncorrect requires proposed_value + source_url"]
+  end
+
+  subgraph PERSIST["Persistence (3 paths)"]
+    CORRECTION_DB["belief_correction table\\nFull debate transcript\\npending → applied → promoted"]
+    JSONL["corrections.jsonl\\nLocal backup"]
+    ENTITY_JSON["Per-entity JSON\\nLocal + R2 upload\\nFull pipeline trace"]
+    PROGRESS["Progress checkpoint\\nLocal + R2 sync every 5 entities"]
+  end
+
+  QUEUE -->|"per entity, per belief field"| DECOMP
+  DECOMP --> GUARD
+  GUARD --> PRO_SEARCH
+  GUARD --> DEF_SEARCH
+
+  PRO_SEARCH --> PRO_ATTR
+  DEF_SEARCH --> DEF_ATTR
+
+  PRO_ATTR --> PRO_ARG
+  DEF_ATTR --> DEF_ARG
+
+  PRO_ARG --> JUDGE
+  DEF_ARG --> JUDGE
+
+  JUDGE --> ENUM
+  ENUM --> SHAPE
+
+  SHAPE --> CORRECTION_DB
+  SHAPE --> JSONL
+  SHAPE --> ENTITY_JSON
+  SHAPE --> PROGRESS
+
+  style INPUT fill:${dark ? '#2C2C2A' : '#F7F6F3'},stroke:${dark ? '#5F5E5A' : '#D4D1C7'}
+  style VALIDATE fill:${dark ? '#1A3A2A' : '#E8F5E8'},stroke:${dark ? '#2D7A50' : '#4CAF50'}
+  style PERSIST fill:${dark ? '#2A2A3A' : '#E8EAF6'},stroke:${dark ? '#5C5CA0' : '#3F51B5'}
+`
+
+  const { svg } = await mermaid.render('mermaid-svg', chart)
+  document.getElementById('diagram').innerHTML = svg
+</script>

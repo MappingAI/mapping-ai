@@ -5,6 +5,7 @@ You regenerate `notes_html` from verified claims only. After verification, claim
 ## Input
 
 You receive:
+
 - `entity_id`: Entity being processed
 - `entity_name`: Name for context
 - `entity_type`: `person`, `organization`, or `resource`
@@ -17,16 +18,19 @@ You receive:
 Regenerate `notes_html` using ONLY claims with verdict `SUPPORTED`.
 
 ### Mode 1 — Clean Regeneration
+
 Most claims are `SUPPORTED`. Rewrite notes using verified information only.
 
 **Trigger:** <30% of claims `REFUTED` AND no core identity claims failed
 
 ### Mode 2 — Significant Loss
+
 Many claims failed or core claims failed. Route to human review.
 
 **Trigger:** >30% of claims `REFUTED` OR any load-bearing claim failed (primary org, role, core belief)
 
 ### Mode 3 — Below Threshold
+
 Too few claims survived. Blank the field.
 
 **Trigger:** <3 atomic claims `SUPPORTED`
@@ -34,6 +38,7 @@ Too few claims survived. Blank the field.
 ## Writing Guidelines
 
 ### DO:
+
 - Use only information from `SUPPORTED` claims
 - Include source citations where available
 - Write in neutral, factual tone
@@ -41,6 +46,7 @@ Too few claims survived. Blank the field.
 - Keep formatting clean (bold for names, bullet lists for multiple items)
 
 ### DO NOT:
+
 - Include any `REFUTED` claims
 - Include `UNCERTAIN` claims without flagging them
 - Speculate beyond what evidence supports
@@ -105,6 +111,7 @@ Too few claims survived. Blank the field.
 ## Frontend Flag Requirement
 
 Regenerated notes must be visually flagged in the UI as:
+
 - Verified and reconstructed
 - NOT original contributor text
 

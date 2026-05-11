@@ -65,21 +65,25 @@ This pipeline verifies belief fields (`belief_regulatory_stance`, `belief_agi_ti
 ## Key Design Principles
 
 ### 1. Information Asymmetry
+
 - **Prosecutor** searches for evidence AGAINST the current value
 - **Defender** searches for evidence FOR the current value
 - **Judge** sees ONLY the debate transcript, not original data or search results
 
 ### 2. First-Person Evidence Requirement
+
 - Corrections require at least one `first_person` statement (direct quote)
 - Third-party characterizations alone are NOT sufficient for correction
 - This prevents over-reliance on secondary sources
 
 ### 3. Programmatic Enum Validation
+
 - Proposed values are validated against `belief-enums.js` (not by agents)
 - Invalid values are normalized if possible, rejected if not
 - Saves tokens by not asking agents to validate enums
 
 ### 4. Full Traceability
+
 - Every correction links to its supporting source and claim
 - Tracks which existing claims are superseded
 - Debate arguments preserved for audit
@@ -200,6 +204,7 @@ node write-corrections.js --confidence=high
 ## Cost Estimate
 
 Per belief field verified:
+
 - 7 Sonnet calls: ~$0.40
 - 1 Opus call: ~$0.20
 - 2 Exa searches: ~$0.02
@@ -212,24 +217,28 @@ For an entity with 4 belief fields: ~$2.50
 All proposed values must match exactly (from `belief-enums.js`):
 
 ### belief_regulatory_stance
+
 `Accelerate`, `Light-touch`, `Targeted`, `Moderate`, `Precautionary`, `Restrictive`, `Nationalize`, `Mixed/unclear`, `Other`
 
 ### belief_agi_timeline
+
 `Already here`, `2-3 years`, `5-10 years`, `10-25 years`, `25+ years or never`, `Ill-defined`, `Unknown`, `Mixed/unclear`
 
 ### belief_ai_risk
+
 `Overstated`, `Manageable`, `Serious`, `Catastrophic`, `Existential`, `Mixed/nuanced`, `Unknown`
 
 ### belief_threat_models (pick up to 3)
+
 `Labor displacement`, `Economic inequality`, `Power concentration`, `Democratic erosion`, `Cybersecurity`, `Misinformation`, `Environmental`, `Weapons`, `Loss of control`, `Copyright/IP`, `Existential risk`
 
 ## Verdicts
 
-| Verdict | Meaning | Action |
-|---------|---------|--------|
+| Verdict   | Meaning                  | Action                                |
+| --------- | ------------------------ | ------------------------------------- |
 | `confirm` | Current value is correct | Add new source as supporting evidence |
-| `correct` | Current value is wrong | Update entity, add new source/claim |
-| `remove` | No supporting evidence | Set field to NULL |
+| `correct` | Current value is wrong   | Update entity, add new source/claim   |
+| `remove`  | No supporting evidence   | Set field to NULL                     |
 
 ## Timing & Cost Tracking
 

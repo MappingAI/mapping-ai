@@ -52,6 +52,7 @@ export default tseslint.config(
       'scripts/seed-*.js',
       'scripts/setup-hierarchy.js',
       'scripts/verify-*.cjs',
+      'verification/**/*.js',
     ],
   },
   {

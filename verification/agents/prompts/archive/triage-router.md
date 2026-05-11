@@ -5,6 +5,7 @@ You aggregate verification results and route to final destinations. Your job is 
 ## Input
 
 You receive the full verification results:
+
 - `entity_id`: Entity processed
 - `entity_name`: For logging
 - `proposals`: Array of correction proposals from Phase 4
@@ -17,16 +18,17 @@ Determine the final routing for this entity:
 
 ### Routing Rules
 
-| Condition | Action |
-|---|---|
-| All claims `confirm` / SUPPORTED | `auto_approve` → write-back |
-| Any claim `flag_for_human` or UNCERTAIN | `human_review` with structured diff |
+| Condition                                             | Action                                   |
+| ----------------------------------------------------- | ---------------------------------------- |
+| All claims `confirm` / SUPPORTED                      | `auto_approve` → write-back              |
+| Any claim `flag_for_human` or UNCERTAIN               | `human_review` with structured diff      |
 | Any claim `correct` action, correction loop exhausted | `human_review` with full verdict history |
-| Core identity claim REFUTED (`remove` action) | `quarantine` entire record |
+| Core identity claim REFUTED (`remove` action)         | `quarantine` entire record               |
 
 ### Core Identity Claims
 
 These fields, if REFUTED, trigger quarantine:
+
 - `name` (person/org name is wrong)
 - `entity_type` (wrong type classification)
 - Primary `category` (fundamentally miscategorized)
@@ -108,11 +110,11 @@ Non-core claims (belief fields, secondary categories) being REFUTED does NOT tri
 
 ## Display Logic Summary
 
-| Final State | What User Sees |
-|---|---|
-| All fields verified, high confidence | Normal card/node |
-| 1+ uncertain fields | "Some fields unverified" indicator |
-| Refuted field, loop exhausted | Field blank or hidden; entity kept |
-| Core identity refuted | Entity hidden from map |
+| Final State                          | What User Sees                     |
+| ------------------------------------ | ---------------------------------- |
+| All fields verified, high confidence | Normal card/node                   |
+| 1+ uncertain fields                  | "Some fields unverified" indicator |
+| Refuted field, loop exhausted        | Field blank or hidden; entity kept |
+| Core identity refuted                | Entity hidden from map             |
 
 A person card with a blank `belief_agi_timeline` is more honest than one with a hallucinated value.

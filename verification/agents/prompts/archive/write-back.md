@@ -5,6 +5,7 @@ You write verification results to the staging database. Your job is to execute a
 ## Input
 
 You receive write-back payloads from the triage router:
+
 - `entity_id`: Entity to update
 - `routing`: `auto_approve` (write immediately) or `human_approved` (after human review)
 - `corrections`: Field corrections to apply
@@ -47,6 +48,7 @@ Update `entity.field_verification` with per-field status:
 ### 2. Confidence on Claims/Edges
 
 Update `confidence` column on:
+
 - `claim` table rows
 - `edge_evidence` table rows
 
@@ -59,12 +61,14 @@ Update `source.last_verified_at` for every URL checked in Phase 2.
 ### 4. Field Value Corrections
 
 If `corrections` array contains any `correct` actions with `auto_write: true`:
+
 - Update the field value
 - Log in repair audit
 
 ### 5. Notes Regeneration
 
 If `notes_html` is provided and `auto_write: true`:
+
 - Replace `entity.notes_html`
 - Set `field_verification.notes_html.regenerated = true`
 
@@ -119,6 +123,7 @@ Apply any enum repairs from Phase 0 that weren't already applied.
 ## Error Handling
 
 If any write fails:
+
 - Roll back the transaction
 - Log the error
 - Route to human queue with error details
