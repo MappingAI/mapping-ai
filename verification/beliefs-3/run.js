@@ -59,21 +59,21 @@ const PROMPTS = {
 
 // ── Belief Enums ──
 
-// Belief enums — must match full-schema-reference.md exactly
+// Belief enums — ground truth from src/contribute/PersonForm.tsx
 const BELIEF_ENUMS = {
-  // SELECT_1: ordered most permissive to most restrictive
+  // SELECT_1: STANCE_OPTIONS (lines 39-49)
   belief_regulatory_stance: [
     'Accelerate',
     'Light-touch',
     'Targeted',
     'Moderate',
-    'Precautionary',
     'Restrictive',
+    'Precautionary',
     'Nationalize',
     'Mixed/unclear',
     'Other',
   ],
-  // SELECT_1: timeline expectations
+  // SELECT_1: TIMELINE_OPTIONS (lines 53-61)
   belief_agi_timeline: [
     'Already here',
     '2-3 years',
@@ -82,9 +82,8 @@ const BELIEF_ENUMS = {
     '25+ years or never',
     'Ill-defined',
     'Unknown',
-    'Mixed/unclear',
   ],
-  // SELECT_1: risk assessment (lowest to highest concern)
+  // SELECT_1: RISK_OPTIONS (lines 63-71)
   belief_ai_risk: [
     'Overstated',
     'Manageable',
@@ -94,7 +93,7 @@ const BELIEF_ENUMS = {
     'Mixed/nuanced',
     'Unknown',
   ],
-  // SELECT_UP_TO_3: pick TOP 3 maximum
+  // SELECT_UP_TO_3: KEY_CONCERNS (lines 73-85) — form enforces max 3 at line 491
   belief_threat_models: [
     'Labor displacement',
     'Economic inequality',
@@ -108,7 +107,7 @@ const BELIEF_ENUMS = {
     'Copyright/IP',
     'Existential risk',
   ],
-  // SELECT_1: evidence basis
+  // SELECT_1: EVIDENCE_OPTIONS (line 51)
   belief_evidence_source: [
     'Explicitly stated',
     'Inferred',
