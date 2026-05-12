@@ -25,6 +25,7 @@ import crypto from 'crypto'
 import { fileURLToPath } from 'url'
 import dotenv from 'dotenv'
 import { runPreBackup } from '../lib/backup.js'
+import { getCache, setCache } from '../lib/exa-cache.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -138,6 +139,7 @@ const costs = {
   opus_input: 0,
   opus_output: 0,
   exa_searches: 0,
+  exa_fetches: 0,
 
   trackClaude(usage, model) {
     if (model === 'sonnet') {
@@ -153,12 +155,16 @@ const costs = {
     this.exa_searches++
   },
 
+  trackExaFetch() {
+    this.exa_fetches++
+  },
+
   getSummary() {
     // Sonnet 4: $3/1M input, $15/1M output
     // Opus 4.5: $15/1M input, $75/1M output
     const sonnetCost = (this.sonnet_input * 3 + this.sonnet_output * 15) / 1_000_000
     const opusCost = (this.opus_input * 15 + this.opus_output * 75) / 1_000_000
-    const exaCost = this.exa_searches * 0.008 // ~$0.008 per search
+    const exaCost = (this.exa_searches + this.exa_fetches) * 0.008 // ~$0.008 per search/fetch
 
     return {
       sonnet_cost_usd: sonnetCost,
@@ -172,6 +178,7 @@ const costs = {
         opus_output_tokens: this.opus_output,
       },
       exa_searches: this.exa_searches,
+      exa_fetches: this.exa_fetches,
     }
   },
 }
@@ -196,6 +203,23 @@ const EXA_SEARCH_TOOL = {
       },
     },
     required: ['query'],
+  },
+}
+
+const FETCH_CONTENT_TOOL = {
+  name: 'fetch_content',
+  description: `Fetch the full text content of a specific URL via Exa.
+Use this to read a first-person source page (e.g. an official about page, interview transcript, op-ed).
+Only use when you need more context from a promising source found in search results.`,
+  input_schema: {
+    type: 'object',
+    properties: {
+      url: {
+        type: 'string',
+        description: 'URL to fetch full content from',
+      },
+    },
+    required: ['url'],
   },
 }
 
@@ -311,6 +335,12 @@ const SUBMIT_VERDICT_TOOL = {
 // ── Exa Search Handler ──
 
 async function handleExaSearch(query, numResults = 5) {
+  // Check shared cache first
+  const cached = getCache(query)
+  if (cached) {
+    return { results: cached, fromCache: true }
+  }
+
   costs.trackExa()
 
   try {
@@ -321,18 +351,38 @@ async function handleExaSearch(query, numResults = 5) {
       excludeDomains: ['wikipedia.org', 'wikidata.org'],
     })
 
-    return {
-      results: (response.results || []).map((r) => ({
-        url: r.url,
-        title: r.title,
-        text: r.text?.substring(0, 1500),
-        highlights: r.highlights,
-        publishedDate: r.publishedDate,
-      })),
-    }
+    const results = (response.results || []).map((r) => ({
+      url: r.url,
+      title: r.title,
+      text: r.text?.substring(0, 1500),
+      highlights: r.highlights,
+      publishedDate: r.publishedDate,
+    }))
+
+    // Store in shared cache
+    setCache(query, results)
+
+    return { results }
   } catch (err) {
     console.error('Exa search error:', err.message)
     return { results: [], error: err.message }
+  }
+}
+
+async function handleFetchContent(url) {
+  costs.trackExaFetch()
+
+  try {
+    const response = await exa.getContents([url], {
+      text: { maxCharacters: 8000 },
+    })
+
+    const page = response.results?.[0]
+    if (!page) return `No content returned for URL: ${url}`
+
+    return `URL: ${page.url}\nTitle: ${page.title}\n\n${page.text || '(no text)'}`
+  } catch (err) {
+    return `Error fetching ${url}: ${err.message}`
   }
 }
 
@@ -497,6 +547,13 @@ async function runAgentWithTools(systemPrompt, userMessage, tools, maxTurns = 10
           tool_use_id: toolUse.id,
           content: JSON.stringify(result, null, 2),
         })
+      } else if (toolUse.name === 'fetch_content') {
+        const result = await handleFetchContent(toolUse.input.url)
+        toolResults.push({
+          type: 'tool_result',
+          tool_use_id: toolUse.id,
+          content: result,
+        })
       } else if (toolUse.name === 'submit_argument') {
         return { text: null, toolResult: toolUse.input, turns: turn + 1, exaSearchCount }
       } else if (toolUse.name === 'submit_verdict') {
@@ -636,8 +693,8 @@ No initial sources provided. Use the exa_search tool to find evidence.
   console.log(`      Running prosecutor + defender...`)
 
   const [prosecutorResult, defenderResult] = await Promise.all([
-    runAgentWithTools(PROMPTS.prosecutor, agentContext, [EXA_SEARCH_TOOL, SUBMIT_ARGUMENT_TOOL]),
-    runAgentWithTools(PROMPTS.defender, agentContext, [EXA_SEARCH_TOOL, SUBMIT_ARGUMENT_TOOL]),
+    runAgentWithTools(PROMPTS.prosecutor, agentContext, [EXA_SEARCH_TOOL, FETCH_CONTENT_TOOL, SUBMIT_ARGUMENT_TOOL]),
+    runAgentWithTools(PROMPTS.defender, agentContext, [EXA_SEARCH_TOOL, FETCH_CONTENT_TOOL, SUBMIT_ARGUMENT_TOOL]),
   ])
 
   const prosecutorArg = prosecutorResult.toolResult

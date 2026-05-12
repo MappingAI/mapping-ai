@@ -27,6 +27,7 @@ import crypto from 'crypto'
 import { fileURLToPath } from 'url'
 import dotenv from 'dotenv'
 import { runPreBackup } from '../lib/backup.js'
+import { getCache, setCache } from '../lib/exa-cache.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -135,8 +136,7 @@ const BELIEF_FIELDS = {
 
 const RESULTS_DIR = path.join(__dirname, 'results')
 const ENTITIES_DIR = path.join(RESULTS_DIR, 'entities')
-const EXA_CACHE_DIR = path.join(RESULTS_DIR, 'exa-cache')
-for (const dir of [RESULTS_DIR, ENTITIES_DIR, EXA_CACHE_DIR]) {
+for (const dir of [RESULTS_DIR, ENTITIES_DIR]) {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
 }
 
@@ -321,30 +321,12 @@ This is a TERMINAL action - after calling this, your task is complete.`,
 
 // ── Tool Handlers ──
 
-function exaCacheKey(query) {
-  return crypto.createHash('sha256').update(query).digest('hex').slice(0, 16)
-}
-
-function getExaCache(query) {
-  const cachePath = path.join(EXA_CACHE_DIR, exaCacheKey(query) + '.json')
-  try {
-    const cached = JSON.parse(fs.readFileSync(cachePath, 'utf-8'))
-    const age = Date.now() - new Date(cached._cached_at).getTime()
-    if (age < 24 * 60 * 60 * 1000) return cached.results
-  } catch {}
-  return null
-}
-
-function setExaCache(query, results) {
-  const cachePath = path.join(EXA_CACHE_DIR, exaCacheKey(query) + '.json')
-  fs.writeFileSync(cachePath, JSON.stringify({ _cached_at: new Date().toISOString(), query, results }))
-}
-
 async function handleExaSearch(queries, numResults = 5) {
   const allResults = []
 
   for (const query of queries) {
-    const cached = getExaCache(query)
+    // Check shared cache first
+    const cached = getCache(query)
     if (cached) {
       allResults.push({ query, results: cached, fromCache: true })
       continue
@@ -368,7 +350,7 @@ async function handleExaSearch(queries, numResults = 5) {
         author: r.author,
       }))
 
-      setExaCache(query, results)
+      setCache(query, results)
 
       allResults.push({
         query,
@@ -441,8 +423,8 @@ async function insertCorrectionToDB(correction) {
          proposed_value, confidence, attribution_type, winning_side,
          source_url, citation, new_source_id, new_claim_id, superseded_claim_ids,
          prosecutor_argument, defender_argument, judge_reasoning, evidence_assessment,
-         validation_error, original_proposed, status)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, 'pending')
+         validation_error, original_proposed, pipeline, status)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, '1-opus', 'pending')
        ON CONFLICT DO NOTHING`,
       [
         correction.entity_id,
