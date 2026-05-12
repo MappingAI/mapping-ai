@@ -111,6 +111,71 @@ const FIELD_TYPES = {
   belief_evidence_source: 'enum',
 }
 
+// Field constraints (maxCount for multi_enum fields)
+const FIELD_CONSTRAINTS = {
+  belief_threat_models: { maxCount: 3 },
+}
+
+/**
+ * Validate a proposed value against field constraints
+ * Returns { valid: boolean, error?: string, corrected?: string }
+ */
+function validateProposedValue(field, proposedValue) {
+  const fieldType = FIELD_TYPES[field] || 'enum'
+  const validValues = BELIEF_ENUMS[field] || []
+  const constraints = FIELD_CONSTRAINTS[field] || {}
+
+  // Text fields have no constraints
+  if (fieldType === 'text') {
+    return { valid: true }
+  }
+
+  // Single-select enum fields
+  if (fieldType === 'enum') {
+    if (!validValues.includes(proposedValue)) {
+      return {
+        valid: false,
+        error: `Invalid value "${proposedValue}". Must be one of: ${validValues.join(', ')}`,
+      }
+    }
+    return { valid: true }
+  }
+
+  // Multi-select enum fields (e.g., threat_models)
+  if (fieldType === 'multi_enum') {
+    // Parse comma-separated values
+    const values = proposedValue
+      .split(',')
+      .map((v) => v.trim())
+      .filter((v) => v.length > 0)
+
+    // Check each value is in the allowed list
+    const invalidValues = values.filter((v) => !validValues.includes(v))
+    if (invalidValues.length > 0) {
+      return {
+        valid: false,
+        error: `Invalid values: ${invalidValues.join(', ')}. Allowed: ${validValues.join(', ')}`,
+      }
+    }
+
+    // Check maxCount constraint
+    const maxCount = constraints.maxCount
+    if (maxCount && values.length > maxCount) {
+      // Auto-correct by truncating to maxCount (keep first N)
+      const truncated = values.slice(0, maxCount).join(', ')
+      return {
+        valid: false,
+        error: `Too many values (${values.length}). Maximum allowed: ${maxCount}. Truncating to: ${truncated}`,
+        corrected: truncated,
+      }
+    }
+
+    return { valid: true }
+  }
+
+  return { valid: true }
+}
+
 // Fields to verify by entity type
 const BELIEF_FIELDS = {
   person: [
@@ -803,14 +868,21 @@ Search for evidence and produce your per-field verdicts. Remember:
   // Process and validate verdicts
   const results = []
   for (const v of verdicts) {
-    const fieldType = FIELD_TYPES[v.field] || 'enum'
-    const validValues = BELIEF_ENUMS[v.field] || []
+    // Validate proposed value against field constraints
+    if (v.verdict === 'correct' && v.proposed_value) {
+      const validation = validateProposedValue(v.field, v.proposed_value)
 
-    // Validate proposed value for enum fields
-    if (v.verdict === 'correct' && v.proposed_value && fieldType !== 'text') {
-      if (validValues.length > 0 && !validValues.includes(v.proposed_value)) {
-        console.log(`    ⚠️ Invalid proposed value for ${v.field}: "${v.proposed_value}"`)
-        v.validation_error = `Invalid value. Valid options: ${validValues.join(', ')}`
+      if (!validation.valid) {
+        console.log(`    ⚠️ Validation failed for ${v.field}: ${validation.error}`)
+        v.validation_error = validation.error
+        v.original_proposed = v.proposed_value
+
+        // If we have an auto-corrected value, use it
+        if (validation.corrected) {
+          console.log(`    📝 Auto-corrected to: "${validation.corrected}"`)
+          v.proposed_value = validation.corrected
+          v.validation_error = `Auto-corrected: ${validation.error}`
+        }
       }
     }
 

@@ -109,6 +109,71 @@ const FIELD_TYPES = {
   belief_evidence_source: 'enum',
 }
 
+// Field constraints (maxCount for multi_enum fields)
+const FIELD_CONSTRAINTS = {
+  belief_threat_models: { maxCount: 3 },
+}
+
+/**
+ * Validate a proposed value against field constraints
+ * Returns { valid: boolean, error?: string, corrected?: string }
+ */
+function validateProposedValue(field, proposedValue) {
+  const fieldType = FIELD_TYPES[field] || 'enum'
+  const validValues = BELIEF_ENUMS[field] || []
+  const constraints = FIELD_CONSTRAINTS[field] || {}
+
+  // Text fields have no constraints
+  if (fieldType === 'text') {
+    return { valid: true }
+  }
+
+  // Single-select enum fields
+  if (fieldType === 'enum') {
+    if (!validValues.includes(proposedValue)) {
+      return {
+        valid: false,
+        error: `Invalid value "${proposedValue}". Must be one of: ${validValues.join(', ')}`,
+      }
+    }
+    return { valid: true }
+  }
+
+  // Multi-select enum fields (e.g., threat_models)
+  if (fieldType === 'multi_enum') {
+    // Parse comma-separated values
+    const values = proposedValue
+      .split(',')
+      .map((v) => v.trim())
+      .filter((v) => v.length > 0)
+
+    // Check each value is in the allowed list
+    const invalidValues = values.filter((v) => !validValues.includes(v))
+    if (invalidValues.length > 0) {
+      return {
+        valid: false,
+        error: `Invalid values: ${invalidValues.join(', ')}. Allowed: ${validValues.join(', ')}`,
+      }
+    }
+
+    // Check maxCount constraint
+    const maxCount = constraints.maxCount
+    if (maxCount && values.length > maxCount) {
+      // Auto-correct by truncating to maxCount (keep first N)
+      const truncated = values.slice(0, maxCount).join(', ')
+      return {
+        valid: false,
+        error: `Too many values (${values.length}). Maximum allowed: ${maxCount}. Truncating to: ${truncated}`,
+        corrected: truncated,
+      }
+    }
+
+    return { valid: true }
+  }
+
+  return { valid: true }
+}
+
 // Fields to verify by entity type
 // All belief fields apply to both persons and organizations
 const BELIEF_FIELDS = {
@@ -757,11 +822,21 @@ Evidence Summary:
     }
   }
 
-  // Validate proposed value (skip for text fields which have no enum)
-  if (verdict.verdict === 'correct' && verdict.proposed_value && fieldType !== 'text') {
-    if (validValues.length > 0 && !validValues.includes(verdict.proposed_value)) {
-      console.log(`      WARNING: Invalid proposed value "${verdict.proposed_value}"`)
-      verdict.validation_error = `Invalid value. Valid options: ${validValues.join(', ')}`
+  // Validate proposed value against field constraints
+  if (verdict.verdict === 'correct' && verdict.proposed_value) {
+    const validation = validateProposedValue(field, verdict.proposed_value)
+
+    if (!validation.valid) {
+      console.log(`      ⚠️ Validation failed: ${validation.error}`)
+      verdict.validation_error = validation.error
+      verdict.original_proposed = verdict.proposed_value
+
+      // If we have an auto-corrected value, use it
+      if (validation.corrected) {
+        console.log(`      📝 Auto-corrected to: "${validation.corrected}"`)
+        verdict.proposed_value = validation.corrected
+        verdict.validation_error = `Auto-corrected: ${validation.error}`
+      }
     }
   }
 
@@ -829,6 +904,13 @@ async function main() {
   const writeDb = flags['write-db'] === true || flags['write-db'] === 'true'
   const maxCost = flags['max-cost'] ? parseFloat(flags['max-cost']) : 500
 
+  // Initialize results directories early (needed for progress tracking)
+  const RESULTS_DIR = path.join(__dirname, 'results')
+  const ENTITIES_DIR = path.join(RESULTS_DIR, 'entities')
+  for (const dir of [RESULTS_DIR, ENTITIES_DIR]) {
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
+  }
+
   // #5: Field-level progress tracking
   const rangeTag = options.idRange ? `-${options.idRange[0]}-${options.idRange[1]}` : ''
   const progressPath = path.join(RESULTS_DIR, `progress${rangeTag}.json`)
@@ -865,12 +947,6 @@ async function main() {
   }
   if (writeDb) console.log('Database writes: ENABLED')
   console.log(`Cost ceiling: $${maxCost}`)
-
-  const RESULTS_DIR = path.join(__dirname, 'results')
-  const ENTITIES_DIR = path.join(RESULTS_DIR, 'entities')
-  for (const dir of [RESULTS_DIR, ENTITIES_DIR]) {
-    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
-  }
 
   // #7: Per-range file paths
   const jsonlPath = path.join(RESULTS_DIR, `corrections${rangeTag}.jsonl`)
