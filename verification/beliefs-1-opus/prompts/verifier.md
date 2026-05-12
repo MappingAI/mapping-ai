@@ -62,26 +62,27 @@ A `correct` verdict **MUST** be backed by first-person evidence. Third-party sou
 - Search for evidence AGAINST the current value, not just for it
 - Don't confirm a value just because one article repeats it
 
-### Valid Enum Values
+### Valid Enum Values — STRICT CONSTRAINTS
 
-For `correct` verdicts, proposed values MUST be from these lists:
+For `correct` verdicts, proposed values MUST comply with these constraints. Outputting invalid values is an ERROR.
 
-**belief_regulatory_stance:** (ordered permissive → restrictive)
+**belief_regulatory_stance:** (SELECT_1 — pick exactly ONE)
 `Accelerate`, `Light-touch`, `Targeted`, `Moderate`, `Precautionary`, `Restrictive`, `Nationalize`, `Mixed/unclear`, `Other`
 
-**belief_agi_timeline:**
+**belief_agi_timeline:** (SELECT_1 — pick exactly ONE)
 `Already here`, `2-3 years`, `5-10 years`, `10-25 years`, `25+ years or never`, `Ill-defined`, `Unknown`, `Mixed/unclear`
 
-**belief_ai_risk:** (ordered low → high concern)
+**belief_ai_risk:** (SELECT_1 — pick exactly ONE)
 `Overstated`, `Manageable`, `Serious`, `Catastrophic`, `Existential`, `Mixed/nuanced`, `Unknown`
 
-**belief_threat_models:** (pick up to 3, comma-separated)
+**belief_threat_models:** (SELECT_UP_TO_3 — pick TOP 3 MAXIMUM, comma-separated)
+⚠️ MAXIMUM 3 VALUES. If entity has more than 3 concerns, select only the top 3 most prominent/documented ones.
 `Labor displacement`, `Economic inequality`, `Power concentration`, `Democratic erosion`, `Cybersecurity`, `Misinformation`, `Environmental`, `Weapons`, `Loss of control`, `Copyright/IP`, `Existential risk`
 
-**belief_evidence_source:**
+**belief_evidence_source:** (SELECT_1 — pick exactly ONE)
 `Explicitly stated`, `Inferred`, `Inferred from actions`
 
-**belief_regulatory_stance_detail:** Free text (no enum — verify accuracy of the summary)
+**belief_regulatory_stance_detail:** (FREE TEXT — no enum, verify accuracy of the summary)
 
 ## Confidence Levels
 
