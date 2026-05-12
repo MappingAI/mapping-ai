@@ -871,11 +871,29 @@ async function main() {
   console.log('='.repeat(50))
 
   // Parse options
+  const resumeMode = flags.resume === true || flags.resume === 'true'
   const options = {
     entityId: flags.id,
     limit: flags.limit ? parseInt(flags.limit) : 10,
     idRange: flags['id-range'] ? flags['id-range'].split('-').map(Number) : null,
     writeDb: flags['write-db'] === true || flags['write-db'] === 'true',
+  }
+
+  // #5: Progress tracking with resume support
+  const rangeTagForProgress = options.idRange ? `-${options.idRange[0]}-${options.idRange[1]}` : ''
+  const progressPath = path.join(RESULTS_DIR, `progress${rangeTagForProgress}.json`)
+  const progress = resumeMode
+    ? (() => {
+        try {
+          return JSON.parse(fs.readFileSync(progressPath, 'utf-8'))
+        } catch {
+          return { completed: [], started_at: new Date().toISOString() }
+        }
+      })()
+    : { completed: [], started_at: new Date().toISOString() }
+  const completedSet = new Set(progress.completed)
+  if (resumeMode && completedSet.size > 0) {
+    console.log(`Resuming: ${completedSet.size} entities already completed`)
   }
 
   if (options.writeDb) {
@@ -894,9 +912,32 @@ async function main() {
   const maxCost = flags['max-cost'] ? parseFloat(flags['max-cost']) : 500
   console.log(`Cost ceiling: $${maxCost}`)
 
+  // #6: Deduplication — check for recent corrections before spending money
+  let skippedDupes = 0
+  if (!options.entityId) {
+    const recentCutoff = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
+    const recent = await pool.query(
+      `SELECT DISTINCT entity_id FROM belief_correction WHERE created_at > $1 AND status = 'pending'`,
+      [recentCutoff],
+    )
+    const recentIds = new Set(recent.rows.map((r) => r.entity_id))
+    const before = entities.length
+    const filtered = entities.filter((e) => !recentIds.has(e.id))
+    skippedDupes = before - filtered.length
+    if (skippedDupes > 0) {
+      console.log(`Skipping ${skippedDupes} entities with pending corrections from last 7 days`)
+    }
+    entities.length = 0
+    entities.push(...filtered)
+  }
+
+  // #7: Per-range JSONL for parallel runners
+  const rangeTag = options.idRange ? `-${options.idRange[0]}-${options.idRange[1]}` : ''
+  const jsonlPath = path.join(RESULTS_DIR, `corrections${rangeTag}.jsonl`)
+  const costLedgerPath = path.join(RESULTS_DIR, `cost-ledger${rangeTag}.jsonl`)
+
   const allResults = []
   const startTime = Date.now()
-  const costLedgerPath = path.join(RESULTS_DIR, 'cost-ledger.jsonl')
 
   let dbWriteCount = 0
   let dbWriteErrors = 0
@@ -904,6 +945,9 @@ async function main() {
 
   for (let i = 0; i < entities.length; i++) {
     const entity = entities[i]
+
+    // Skip already completed (resume mode)
+    if (completedSet.has(entity.id)) continue
 
     // Cost ceiling check
     const currentCost = costs.getSummary().total_cost_usd
@@ -956,8 +1000,7 @@ async function main() {
         }) + '\n',
       )
 
-      // Write to JSONL
-      const jsonlPath = path.join(RESULTS_DIR, 'corrections.jsonl')
+      // Write to JSONL (per-range file for parallel safety)
       for (const r of results) {
         fs.appendFileSync(jsonlPath, JSON.stringify(r) + '\n')
 
@@ -971,6 +1014,10 @@ async function main() {
           }
         }
       }
+
+      // Save progress (entity complete)
+      progress.completed.push(entity.id)
+      fs.writeFileSync(progressPath, JSON.stringify(progress, null, 2) + '\n')
 
       console.log(
         `  Cost: $${entityCost.total_usd.toFixed(3)} | Cumulative: $${costs.getSummary().total_cost_usd.toFixed(2)} | ${i + 1}/${entities.length}`,

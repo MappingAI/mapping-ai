@@ -466,6 +466,7 @@ async function getEntitiesWithBeliefs(options = {}) {
 
 async function runAgentWithTools(systemPrompt, userMessage, tools, maxTurns = 10) {
   const messages = [{ role: 'user', content: userMessage }]
+  let exaSearchCount = 0
 
   for (let turn = 0; turn < maxTurns; turn++) {
     const response = await anthropic.messages.create({
@@ -478,19 +479,17 @@ async function runAgentWithTools(systemPrompt, userMessage, tools, maxTurns = 10
 
     costs.trackClaude(response.usage, 'sonnet')
 
-    // Check for tool use
     const toolUseBlocks = response.content.filter((b) => b.type === 'tool_use')
 
     if (response.stop_reason === 'end_turn' || toolUseBlocks.length === 0) {
-      // No tool calls, agent is done (shouldn't happen with our design)
       const textBlocks = response.content.filter((b) => b.type === 'text')
-      return { text: textBlocks.map((b) => b.text).join('\n'), toolResult: null }
+      return { text: textBlocks.map((b) => b.text).join('\n'), toolResult: null, turns: turn + 1, exaSearchCount }
     }
 
-    // Process tool calls
     const toolResults = []
     for (const toolUse of toolUseBlocks) {
       if (toolUse.name === 'exa_search') {
+        exaSearchCount++
         const result = await handleExaSearch(toolUse.input.query, toolUse.input.num_results || 5)
         toolResults.push({
           type: 'tool_result',
@@ -498,15 +497,12 @@ async function runAgentWithTools(systemPrompt, userMessage, tools, maxTurns = 10
           content: JSON.stringify(result, null, 2),
         })
       } else if (toolUse.name === 'submit_argument') {
-        // Terminal tool - return the argument
-        return { text: null, toolResult: toolUse.input }
+        return { text: null, toolResult: toolUse.input, turns: turn + 1, exaSearchCount }
       } else if (toolUse.name === 'submit_verdict') {
-        // Terminal tool - return the verdict
-        return { text: null, toolResult: toolUse.input }
+        return { text: null, toolResult: toolUse.input, turns: turn + 1, exaSearchCount }
       }
     }
 
-    // Add assistant message and tool results to continue conversation
     messages.push({ role: 'assistant', content: response.content })
     messages.push({ role: 'user', content: toolResults })
   }
@@ -722,6 +718,12 @@ Evidence Summary:
   verdict.prosecutor_attribution_chain = prosecutorArg.attribution_chain
   verdict.defender_attribution_chain = defenderArg.attribution_chain
 
+  // #8: Per-step token tracking
+  verdict.step_tokens = {
+    prosecutor: { turns: prosecutorResult.turns, exa_searches: prosecutorResult.exaSearchCount || 0 },
+    defender: { turns: defenderResult.turns, exa_searches: defenderResult.exaSearchCount || 0 },
+  }
+
   // Track superseded claims
   if (existingClaims.length > 0) {
     verdict.superseded_claim_ids = existingClaims.map((c) => c.claim_id)
@@ -752,6 +754,7 @@ async function main() {
   console.log('='.repeat(50))
 
   // Parse options
+  const resumeMode = flags.resume === true || flags.resume === 'true'
   const options = {
     entityId: flags.id,
     limit: flags.limit ? parseInt(flags.limit) : 10,
@@ -762,11 +765,46 @@ async function main() {
   await runPreBackup(pool, { label: 'beliefs-3-agent', r2: true })
 
   // Fetch entities
-  const entities = await getEntitiesWithBeliefs(options)
+  let entities = await getEntitiesWithBeliefs(options)
   console.log(`Found ${entities.length} entities to verify\n`)
 
   const writeDb = flags['write-db'] === true || flags['write-db'] === 'true'
   const maxCost = flags['max-cost'] ? parseFloat(flags['max-cost']) : 500
+
+  // #5: Field-level progress tracking
+  const rangeTag = options.idRange ? `-${options.idRange[0]}-${options.idRange[1]}` : ''
+  const progressPath = path.join(RESULTS_DIR, `progress${rangeTag}.json`)
+  const progress = resumeMode
+    ? (() => {
+        try {
+          return JSON.parse(fs.readFileSync(progressPath, 'utf-8'))
+        } catch {
+          return { completed_entities: [], completed_fields: {} }
+        }
+      })()
+    : { completed_entities: [], completed_fields: {} }
+  if (resumeMode) {
+    const skipCount = progress.completed_entities?.length || 0
+    if (skipCount > 0)
+      console.log(
+        `Resuming: ${skipCount} entities fully completed, ${Object.keys(progress.completed_fields).length} with partial fields`,
+      )
+    entities = entities.filter((e) => !(progress.completed_entities || []).includes(e.id))
+  }
+
+  // #6: Deduplication
+  if (!options.entityId) {
+    const recentCutoff = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
+    const recent = await pool.query(
+      "SELECT DISTINCT entity_id FROM belief_correction WHERE created_at > $1 AND status = 'pending'",
+      [recentCutoff],
+    )
+    const recentIds = new Set(recent.rows.map((r) => r.entity_id))
+    const before = entities.length
+    entities = entities.filter((e) => !recentIds.has(e.id))
+    if (before - entities.length > 0)
+      console.log(`Skipping ${before - entities.length} entities with pending corrections from last 7 days`)
+  }
   if (writeDb) console.log('Database writes: ENABLED')
   console.log(`Cost ceiling: $${maxCost}`)
 
@@ -776,11 +814,15 @@ async function main() {
     if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
   }
 
+  // #7: Per-range file paths
+  const jsonlPath = path.join(RESULTS_DIR, `corrections${rangeTag}.jsonl`)
+  const costLedgerPath = path.join(RESULTS_DIR, `cost-ledger${rangeTag}.jsonl`)
+
   const allCorrections = []
   const startTime = Date.now()
-  const costLedgerPath = path.join(RESULTS_DIR, 'cost-ledger.jsonl')
   let dbWriteCount = 0
   let dbWriteErrors = 0
+  let consecutiveErrors = 0
 
   for (let i = 0; i < entities.length; i++) {
     const entity = entities[i]
@@ -799,10 +841,15 @@ async function main() {
 
     const fields = BELIEF_FIELDS[entity.entity_type] || BELIEF_FIELDS.person
     const entityStart = Date.now()
+    const completedFieldsForEntity = progress.completed_fields[entity.id] || []
     const entityCorrections = []
 
     for (const field of fields) {
       if (!entity[field]) continue
+      if (completedFieldsForEntity.includes(field)) {
+        console.log(`    Skipping ${field} (already completed)`)
+        continue
+      }
 
       try {
         const correction = await verifyBeliefField(entity, field)
@@ -810,8 +857,12 @@ async function main() {
           allCorrections.push(correction)
           entityCorrections.push(correction)
 
-          const jsonlPath = path.join(RESULTS_DIR, 'corrections.jsonl')
           fs.appendFileSync(jsonlPath, JSON.stringify(correction) + '\n')
+
+          // #5: Track field-level progress
+          if (!progress.completed_fields[entity.id]) progress.completed_fields[entity.id] = []
+          progress.completed_fields[entity.id].push(field)
+          fs.writeFileSync(progressPath, JSON.stringify(progress, null, 2) + '\n')
 
           if (writeDb) {
             try {
@@ -893,6 +944,11 @@ async function main() {
         timestamp: new Date().toISOString(),
       }) + '\n',
     )
+
+    // Mark entity as fully completed in progress
+    if (!progress.completed_entities) progress.completed_entities = []
+    progress.completed_entities.push(entity.id)
+    fs.writeFileSync(progressPath, JSON.stringify(progress, null, 2) + '\n')
 
     console.log(
       `  Cost: ~$${entityCost.toFixed(3)} | Cumulative: $${costs.getSummary().total_cost_usd.toFixed(2)} | ${i + 1}/${entities.length}`,
