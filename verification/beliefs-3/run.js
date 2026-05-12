@@ -765,15 +765,41 @@ async function main() {
   const entities = await getEntitiesWithBeliefs(options)
   console.log(`Found ${entities.length} entities to verify\n`)
 
+  const writeDb = flags['write-db'] === true || flags['write-db'] === 'true'
+  const maxCost = flags['max-cost'] ? parseFloat(flags['max-cost']) : 500
+  if (writeDb) console.log('Database writes: ENABLED')
+  console.log(`Cost ceiling: $${maxCost}`)
+
+  const RESULTS_DIR = path.join(__dirname, 'results')
+  const ENTITIES_DIR = path.join(RESULTS_DIR, 'entities')
+  for (const dir of [RESULTS_DIR, ENTITIES_DIR]) {
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
+  }
+
   const allCorrections = []
   const startTime = Date.now()
+  const costLedgerPath = path.join(RESULTS_DIR, 'cost-ledger.jsonl')
+  let dbWriteCount = 0
+  let dbWriteErrors = 0
 
-  for (const entity of entities) {
+  for (let i = 0; i < entities.length; i++) {
+    const entity = entities[i]
+
+    const currentCost = costs.getSummary().total_cost_usd
+    if (currentCost >= maxCost) {
+      console.error(
+        `\n  ABORTING: Cost ceiling ($${currentCost.toFixed(2)} >= $${maxCost}). ${i}/${entities.length} done.`,
+      )
+      break
+    }
+
     console.log(`\n${'='.repeat(50)}`)
     console.log(`[${entity.id}] ${entity.name} (${entity.entity_type})`)
     console.log('='.repeat(50))
 
     const fields = BELIEF_FIELDS[entity.entity_type] || BELIEF_FIELDS.person
+    const entityStart = Date.now()
+    const entityCorrections = []
 
     for (const field of fields) {
       if (!entity[field]) continue
@@ -782,11 +808,45 @@ async function main() {
         const correction = await verifyBeliefField(entity, field)
         if (correction) {
           allCorrections.push(correction)
+          entityCorrections.push(correction)
 
-          // Write to JSONL immediately
-          const jsonlPath = path.join(__dirname, 'results/corrections.jsonl')
-          fs.mkdirSync(path.dirname(jsonlPath), { recursive: true })
+          const jsonlPath = path.join(RESULTS_DIR, 'corrections.jsonl')
           fs.appendFileSync(jsonlPath, JSON.stringify(correction) + '\n')
+
+          if (writeDb) {
+            try {
+              await pool.query(
+                `INSERT INTO belief_correction
+                  (entity_id, entity_type, entity_name, field, current_value, verdict,
+                   proposed_value, confidence, attribution_type, winning_side,
+                   source_url, citation, prosecutor_argument, defender_argument,
+                   judge_reasoning, evidence_assessment, pipeline, status)
+                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, '3-agent', 'pending')`,
+                [
+                  correction.entity_id,
+                  correction.entity_type,
+                  correction.entity_name,
+                  correction.field,
+                  correction.current_value,
+                  correction.verdict,
+                  correction.proposed_value || null,
+                  correction.confidence,
+                  correction.attribution_type || null,
+                  correction.winning_side || null,
+                  correction.source_url || null,
+                  correction.citation || null,
+                  correction.prosecutor_argument || null,
+                  correction.defender_argument || null,
+                  correction.judge_reasoning || correction.reasoning || null,
+                  correction.evidence_assessment ? JSON.stringify(correction.evidence_assessment) : null,
+                ],
+              )
+              dbWriteCount++
+            } catch (dbErr) {
+              console.error(`      DB write error: ${dbErr.message.substring(0, 80)}`)
+              dbWriteErrors++
+            }
+          }
         }
       } catch (err) {
         console.error(`      ERROR: ${err.message}`)
@@ -799,6 +859,44 @@ async function main() {
         })
       }
     }
+
+    // Per-entity result file
+    const entityMs = Date.now() - entityStart
+    const entityCost = costs.getSummary().total_cost_usd - (currentCost || 0)
+    fs.writeFileSync(
+      path.join(ENTITIES_DIR, `${entity.id}.json`),
+      JSON.stringify(
+        {
+          id: entity.id,
+          name: entity.name,
+          entity_type: entity.entity_type,
+          verified_at: new Date().toISOString(),
+          time_ms: entityMs,
+          cost_usd: entityCost,
+          verdicts: entityCorrections,
+        },
+        null,
+        2,
+      ) + '\n',
+    )
+
+    // Cost ledger
+    fs.appendFileSync(
+      costLedgerPath,
+      JSON.stringify({
+        id: entity.id,
+        name: entity.name,
+        cost_usd: entityCost,
+        time_ms: entityMs,
+        fields: entityCorrections.length,
+        verdicts: entityCorrections.map((c) => c.verdict),
+        timestamp: new Date().toISOString(),
+      }) + '\n',
+    )
+
+    console.log(
+      `  Cost: ~$${entityCost.toFixed(3)} | Cumulative: $${costs.getSummary().total_cost_usd.toFixed(2)} | ${i + 1}/${entities.length}`,
+    )
   }
 
   // Summary

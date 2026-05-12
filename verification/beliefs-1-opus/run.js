@@ -131,31 +131,69 @@ const BELIEF_FIELDS = {
   resource: [],
 }
 
-// ── Cost Tracking ──
+// ── Output Directories ──
+
+const RESULTS_DIR = path.join(__dirname, 'results')
+const ENTITIES_DIR = path.join(RESULTS_DIR, 'entities')
+const EXA_CACHE_DIR = path.join(RESULTS_DIR, 'exa-cache')
+for (const dir of [RESULTS_DIR, ENTITIES_DIR, EXA_CACHE_DIR]) {
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
+}
+
+// ── Cost Tracking (per-entity + cumulative) ──
 
 const costs = {
   opus_input: 0,
   opus_output: 0,
   exa_searches: 0,
   exa_fetches: 0,
+  cumulative_usd: 0,
+
+  // Per-entity tracking (reset between entities)
+  _entity_opus_input: 0,
+  _entity_opus_output: 0,
+  _entity_exa: 0,
+
+  resetEntity() {
+    this._entity_opus_input = 0
+    this._entity_opus_output = 0
+    this._entity_exa = 0
+  },
 
   trackClaude(usage) {
     this.opus_input += usage.input_tokens
     this.opus_output += usage.output_tokens
+    this._entity_opus_input += usage.input_tokens
+    this._entity_opus_output += usage.output_tokens
   },
 
   trackExaSearch() {
     this.exa_searches++
+    this._entity_exa++
   },
 
   trackExaFetch() {
     this.exa_fetches++
+    this._entity_exa++
+  },
+
+  getEntityCost() {
+    const opus = (this._entity_opus_input * 15 + this._entity_opus_output * 75) / 1_000_000
+    const exa = this._entity_exa * 0.008
+    return {
+      opus_usd: opus,
+      exa_usd: exa,
+      total_usd: opus + exa,
+      input_tokens: this._entity_opus_input,
+      output_tokens: this._entity_opus_output,
+      exa_calls: this._entity_exa,
+    }
   },
 
   getSummary() {
-    // Opus 4.5: $15/1M input, $75/1M output
     const opusCost = (this.opus_input * 15 + this.opus_output * 75) / 1_000_000
     const exaCost = (this.exa_searches + this.exa_fetches) * 0.008
+    this.cumulative_usd = opusCost + exaCost
 
     return {
       opus_cost_usd: opusCost,
@@ -283,30 +321,58 @@ This is a TERMINAL action - after calling this, your task is complete.`,
 
 // ── Tool Handlers ──
 
-async function handleExaSearch(queries, numResults = 5) {
-  costs.trackExaSearch()
+function exaCacheKey(query) {
+  return crypto.createHash('sha256').update(query).digest('hex').slice(0, 16)
+}
 
+function getExaCache(query) {
+  const cachePath = path.join(EXA_CACHE_DIR, exaCacheKey(query) + '.json')
+  try {
+    const cached = JSON.parse(fs.readFileSync(cachePath, 'utf-8'))
+    const age = Date.now() - new Date(cached._cached_at).getTime()
+    if (age < 24 * 60 * 60 * 1000) return cached.results
+  } catch {}
+  return null
+}
+
+function setExaCache(query, results) {
+  const cachePath = path.join(EXA_CACHE_DIR, exaCacheKey(query) + '.json')
+  fs.writeFileSync(cachePath, JSON.stringify({ _cached_at: new Date().toISOString(), query, results }))
+}
+
+async function handleExaSearch(queries, numResults = 5) {
   const allResults = []
 
   for (const query of queries) {
+    const cached = getExaCache(query)
+    if (cached) {
+      allResults.push({ query, results: cached, fromCache: true })
+      continue
+    }
+
+    costs.trackExaSearch()
     try {
       const response = await exa.searchAndContents(query, {
         numResults: Math.min(numResults, 10),
-        text: { maxCharacters: 2000 },
+        text: { maxCharacters: 3000 },
         highlights: { numSentences: 3 },
         excludeDomains: ['wikipedia.org', 'wikidata.org'],
       })
 
+      const results = (response.results || []).map((r) => ({
+        url: r.url,
+        title: r.title,
+        text: r.text?.substring(0, 2000),
+        highlights: r.highlights,
+        publishedDate: r.publishedDate,
+        author: r.author,
+      }))
+
+      setExaCache(query, results)
+
       allResults.push({
         query,
-        results: (response.results || []).map((r) => ({
-          url: r.url,
-          title: r.title,
-          text: r.text?.substring(0, 1500),
-          highlights: r.highlights,
-          publishedDate: r.publishedDate,
-          author: r.author,
-        })),
+        results,
       })
     } catch (err) {
       allResults.push({ query, results: [], error: err.message })
@@ -664,6 +730,7 @@ Search for evidence and produce your per-field verdicts. Remember:
 
   let verdicts = null
   const maxTurns = 15
+  const conversationTrace = []
 
   for (let turn = 0; turn < maxTurns; turn++) {
     const response = await anthropic.messages.create({
@@ -679,6 +746,21 @@ Search for evidence and produce your per-field verdicts. Remember:
     })
 
     costs.trackClaude(response.usage)
+
+    // Capture trace
+    const traceEntry = {
+      turn,
+      usage: response.usage,
+      stop_reason: response.stop_reason,
+      tool_calls: [],
+      text_blocks: [],
+    }
+    for (const block of response.content) {
+      if (block.type === 'text') traceEntry.text_blocks.push(block.text.substring(0, 500))
+      if (block.type === 'tool_use')
+        traceEntry.tool_calls.push({ name: block.name, input_preview: JSON.stringify(block.input).substring(0, 300) })
+    }
+    conversationTrace.push(traceEntry)
 
     // Process tool calls
     const toolUseBlocks = response.content.filter((b) => b.type === 'tool_use')
@@ -722,15 +804,18 @@ Search for evidence and produce your per-field verdicts. Remember:
 
   if (!verdicts) {
     console.log('  ERROR: Agent did not submit verdicts')
-    return [
-      {
-        entity_id: entity.id,
-        entity_name: entity.name,
-        entity_type: entity.entity_type,
-        verdict: 'error',
-        reasoning: 'Agent did not submit verdicts',
-      },
-    ]
+    return {
+      results: [
+        {
+          entity_id: entity.id,
+          entity_name: entity.name,
+          entity_type: entity.entity_type,
+          verdict: 'error',
+          reasoning: 'Agent did not submit verdicts',
+        },
+      ],
+      trace: conversationTrace,
+    }
   }
 
   // Process and validate verdicts
@@ -766,7 +851,7 @@ Search for evidence and produce your per-field verdicts. Remember:
     }
   }
 
-  return results
+  return { results, trace: conversationTrace }
 }
 
 // ── Main Entry Point ──
@@ -806,29 +891,78 @@ async function main() {
   const entities = await getEntitiesWithBeliefs(options)
   console.log(`Found ${entities.length} entities to verify`)
 
+  const maxCost = flags['max-cost'] ? parseFloat(flags['max-cost']) : 500
+  console.log(`Cost ceiling: $${maxCost}`)
+
   const allResults = []
   const startTime = Date.now()
+  const costLedgerPath = path.join(RESULTS_DIR, 'cost-ledger.jsonl')
 
   let dbWriteCount = 0
   let dbWriteErrors = 0
+  let consecutiveErrors = 0
 
-  for (const entity of entities) {
+  for (let i = 0; i < entities.length; i++) {
+    const entity = entities[i]
+
+    // Cost ceiling check
+    const currentCost = costs.getSummary().total_cost_usd
+    if (currentCost >= maxCost) {
+      console.error(
+        `\n  ABORTING: Cost ceiling reached ($${currentCost.toFixed(2)} >= $${maxCost}). ${i}/${entities.length} entities processed.`,
+      )
+      break
+    }
+
+    costs.resetEntity()
+    const entityStart = Date.now()
+
     try {
-      const results = await verifyEntity(entity)
+      const { results, trace } = await verifyEntity(entity)
       allResults.push(...results)
+      consecutiveErrors = 0
 
-      // Write to JSONL immediately
-      const jsonlPath = path.join(__dirname, 'results/corrections.jsonl')
-      fs.mkdirSync(path.dirname(jsonlPath), { recursive: true })
+      // Per-entity cost
+      const entityCost = costs.getEntityCost()
+      const entityMs = Date.now() - entityStart
+
+      // #1: Save per-entity result file with full trace
+      const entityResult = {
+        id: entity.id,
+        name: entity.name,
+        entity_type: entity.entity_type,
+        verified_at: new Date().toISOString(),
+        time_ms: entityMs,
+        cost: entityCost,
+        verdicts: results,
+        conversation_trace: trace,
+      }
+      fs.writeFileSync(path.join(ENTITIES_DIR, `${entity.id}.json`), JSON.stringify(entityResult, null, 2) + '\n')
+
+      // #2: Append to cost ledger
+      fs.appendFileSync(
+        costLedgerPath,
+        JSON.stringify({
+          id: entity.id,
+          name: entity.name,
+          cost_usd: entityCost.total_usd,
+          input_tokens: entityCost.input_tokens,
+          output_tokens: entityCost.output_tokens,
+          exa_calls: entityCost.exa_calls,
+          time_ms: entityMs,
+          fields: results.length,
+          verdicts: results.map((r) => r.verdict),
+          timestamp: new Date().toISOString(),
+        }) + '\n',
+      )
+
+      // Write to JSONL
+      const jsonlPath = path.join(RESULTS_DIR, 'corrections.jsonl')
       for (const r of results) {
         fs.appendFileSync(jsonlPath, JSON.stringify(r) + '\n')
 
-        // Write to DB if enabled
         if (options.writeDb) {
-          // Write source and claim first (to get IDs)
           await writeSourceAndClaim(r)
-
-          // Insert correction to belief_correction table
           const inserted = await insertCorrectionToDB(r)
           if (inserted) {
             dbWriteCount++
@@ -837,14 +971,36 @@ async function main() {
           }
         }
       }
+
+      console.log(
+        `  Cost: $${entityCost.total_usd.toFixed(3)} | Cumulative: $${costs.getSummary().total_cost_usd.toFixed(2)} | ${i + 1}/${entities.length}`,
+      )
     } catch (err) {
       console.error(`  ERROR: ${err.message}`)
+      consecutiveErrors++
       allResults.push({
         entity_id: entity.id,
         entity_name: entity.name,
         verdict: 'error',
         reasoning: err.message,
       })
+
+      // Append error to cost ledger
+      fs.appendFileSync(
+        costLedgerPath,
+        JSON.stringify({
+          id: entity.id,
+          name: entity.name,
+          cost_usd: costs.getEntityCost().total_usd,
+          error: err.message.substring(0, 200),
+          timestamp: new Date().toISOString(),
+        }) + '\n',
+      )
+
+      if (consecutiveErrors >= 3) {
+        console.error('  ABORTING: 3 consecutive errors. Likely systemic issue.')
+        break
+      }
     }
   }
 
