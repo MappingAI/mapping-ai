@@ -86,7 +86,7 @@ Outputting invalid values or exceeding count limits is an ERROR.
 `Labor displacement`, `Economic inequality`, `Power concentration`, `Democratic erosion`, `Cybersecurity`, `Misinformation`, `Environmental`, `Weapons`, `Loss of control`, `Copyright/IP`, `Existential risk`
 
 **belief_evidence_source:** (SELECT_1 — pick exactly ONE)
-`Explicitly stated`, `Inferred`, `Inferred from actions`
+`Explicitly stated`, `Inferred`, `Unknown`
 
 ### Text Fields
 

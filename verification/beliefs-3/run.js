@@ -59,7 +59,9 @@ const PROMPTS = {
 
 // ── Belief Enums ──
 
+// Belief enums — must match full-schema-reference.md exactly
 const BELIEF_ENUMS = {
+  // SELECT_1: ordered most permissive to most restrictive
   belief_regulatory_stance: [
     'Accelerate',
     'Light-touch',
@@ -71,6 +73,7 @@ const BELIEF_ENUMS = {
     'Mixed/unclear',
     'Other',
   ],
+  // SELECT_1: timeline expectations
   belief_agi_timeline: [
     'Already here',
     '2-3 years',
@@ -81,7 +84,17 @@ const BELIEF_ENUMS = {
     'Unknown',
     'Mixed/unclear',
   ],
-  belief_ai_risk: ['Overstated', 'Manageable', 'Serious', 'Catastrophic', 'Existential', 'Mixed/nuanced', 'Unknown'],
+  // SELECT_1: risk assessment (lowest to highest concern)
+  belief_ai_risk: [
+    'Overstated',
+    'Manageable',
+    'Serious',
+    'Catastrophic',
+    'Existential',
+    'Mixed/nuanced',
+    'Unknown',
+  ],
+  // SELECT_UP_TO_3: pick TOP 3 maximum
   belief_threat_models: [
     'Labor displacement',
     'Economic inequality',
@@ -95,7 +108,12 @@ const BELIEF_ENUMS = {
     'Copyright/IP',
     'Existential risk',
   ],
-  belief_evidence_source: ['Explicitly stated', 'Inferred', 'Inferred from actions'],
+  // SELECT_1: evidence basis
+  belief_evidence_source: [
+    'Explicitly stated',
+    'Inferred',
+    'Unknown',
+  ],
   // belief_regulatory_stance_detail is free text, no enum
 }
 
