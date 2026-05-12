@@ -21,6 +21,7 @@ import Exa from 'exa-js'
 import pg from 'pg'
 import fs from 'fs'
 import path from 'path'
+import crypto from 'crypto'
 import { fileURLToPath } from 'url'
 import dotenv from 'dotenv'
 import { runPreBackup } from '../lib/backup.js'
@@ -866,13 +867,54 @@ async function main() {
 
           if (writeDb) {
             try {
+              // Write source + claim tables
+              if (correction.source_url && correction.citation) {
+                const sourceId =
+                  'src-' + crypto.createHash('sha256').update(correction.source_url).digest('hex').slice(0, 12)
+                await pool.query(
+                  `INSERT INTO source (source_id, url, source_type) VALUES ($1, $2, 'web') ON CONFLICT (source_id) DO NOTHING`,
+                  [sourceId, correction.source_url],
+                )
+                const beliefDimension = correction.field.replace('belief_', '')
+                const claimId = `${correction.entity_id}_${beliefDimension}_${sourceId}`
+                await pool.query(
+                  `INSERT INTO claim
+                    (claim_id, entity_id, entity_name, entity_type, belief_dimension,
+                     stance, citation, source_id, claim_type, confidence,
+                     extracted_by, extraction_model, extraction_date)
+                   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, CURRENT_DATE)
+                   ON CONFLICT (claim_id) DO UPDATE SET
+                     stance = EXCLUDED.stance, citation = EXCLUDED.citation,
+                     confidence = EXCLUDED.confidence, extraction_date = CURRENT_DATE
+                   WHERE claim.manually_reviewed IS NOT TRUE`,
+                  [
+                    claimId,
+                    correction.entity_id,
+                    correction.entity_name,
+                    correction.entity_type,
+                    beliefDimension,
+                    correction.proposed_value || correction.current_value,
+                    correction.citation,
+                    sourceId,
+                    correction.attribution_type === 'first_person' ? 'direct_statement' : 'authored_position',
+                    correction.confidence,
+                    'beliefs-3-agent',
+                    'claude-sonnet-4 + opus-4.5',
+                  ],
+                )
+                correction.new_source_id = sourceId
+                correction.new_claim_id = claimId
+              }
+
+              // Write belief_correction
               await pool.query(
                 `INSERT INTO belief_correction
                   (entity_id, entity_type, entity_name, field, current_value, verdict,
                    proposed_value, confidence, attribution_type, winning_side,
-                   source_url, citation, prosecutor_argument, defender_argument,
+                   source_url, citation, new_source_id, new_claim_id,
+                   prosecutor_argument, defender_argument,
                    judge_reasoning, evidence_assessment, pipeline, status)
-                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, '3-agent', 'pending')`,
+                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, '3-agent', 'pending')`,
                 [
                   correction.entity_id,
                   correction.entity_type,
@@ -886,6 +928,8 @@ async function main() {
                   correction.winning_side || null,
                   correction.source_url || null,
                   correction.citation || null,
+                  correction.new_source_id || null,
+                  correction.new_claim_id || null,
                   correction.prosecutor_argument || null,
                   correction.defender_argument || null,
                   correction.judge_reasoning || correction.reasoning || null,
