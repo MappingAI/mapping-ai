@@ -73,10 +73,10 @@ If your verdict is `correct`, `proposed_value` depends on field type:
 Outputting invalid values or exceeding count limits is an ERROR.
 
 **belief_regulatory_stance:** (SELECT_1 — pick exactly ONE)
-`Accelerate`, `Light-touch`, `Targeted`, `Moderate`, `Restrictive`, `Precautionary`, `Nationalize`, `Mixed/unclear`, `Other`
+`Accelerate`, `Light-touch`, `Targeted`, `Moderate`, `Precautionary`, `Restrictive`, `Nationalize`, `Mixed/unclear`, `Other`
 
 **belief_agi_timeline:** (SELECT_1 — pick exactly ONE)
-`Already here`, `2-3 years`, `5-10 years`, `10-25 years`, `25+ years or never`, `Ill-defined`, `Unknown`
+`Already here`, `2-3 years`, `5-10 years`, `10-25 years`, `25+ years or never`, `Ill-defined`, `Unknown`, `Mixed/unclear`
 
 **belief_ai_risk:** (SELECT_1 — pick exactly ONE)
 `Overstated`, `Manageable`, `Serious`, `Catastrophic`, `Existential`, `Mixed/nuanced`, `Unknown`

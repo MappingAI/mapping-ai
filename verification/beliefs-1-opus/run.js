@@ -64,19 +64,19 @@ const SYSTEM_PROMPT = fs.readFileSync(path.join(__dirname, 'prompts/verifier.md'
 
 // Belief enums — ground truth from src/contribute/PersonForm.tsx
 const BELIEF_ENUMS = {
-  // SELECT_1: STANCE_OPTIONS (lines 39-49)
+  // SELECT_1: regulatory stance scale (permissive → restrictive)
   belief_regulatory_stance: [
     'Accelerate',
     'Light-touch',
     'Targeted',
     'Moderate',
-    'Restrictive',
     'Precautionary',
+    'Restrictive',
     'Nationalize',
     'Mixed/unclear',
     'Other',
   ],
-  // SELECT_1: TIMELINE_OPTIONS (lines 53-61)
+  // SELECT_1: AGI timeline expectations
   belief_agi_timeline: [
     'Already here',
     '2-3 years',
@@ -85,6 +85,7 @@ const BELIEF_ENUMS = {
     '25+ years or never',
     'Ill-defined',
     'Unknown',
+    'Mixed/unclear',
   ],
   // SELECT_1: RISK_OPTIONS (lines 63-71)
   belief_ai_risk: [

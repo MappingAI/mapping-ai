@@ -41,9 +41,13 @@ For each field in the record you receive:
 4. **Render a verdict per field:**
    - `confirm` — clear, direct first-person evidence supports the exact current value
    - `correct` — first-person evidence contradicts the current value (propose a replacement)
-   - `remove` — no evidence exists, evidence is only third-party, or entity doesn't hold a position on this topic
+   - `remove` — no evidence exists, evidence is only third-party, or entity doesn't hold a position on this topic. For **organizations**, a `remove` verdict with reasoning indicates `intentionally_null` status (the org explicitly has no official position), not just missing data.
 
 ## Critical Rules
+
+### Manual Review Protection
+
+Claims marked `manually_reviewed: true` must NOT be overwritten. Do not propose corrections to fields where the underlying claim has been manually reviewed by a human.
 
 ### First-Person Requirement
 
@@ -67,10 +71,10 @@ A `correct` verdict **MUST** be backed by first-person evidence. Third-party sou
 For `correct` verdicts, proposed values MUST comply with these constraints. Outputting invalid values is an ERROR.
 
 **belief_regulatory_stance:** (SELECT_1 — pick exactly ONE)
-`Accelerate`, `Light-touch`, `Targeted`, `Moderate`, `Restrictive`, `Precautionary`, `Nationalize`, `Mixed/unclear`, `Other`
+`Accelerate`, `Light-touch`, `Targeted`, `Moderate`, `Precautionary`, `Restrictive`, `Nationalize`, `Mixed/unclear`, `Other`
 
 **belief_agi_timeline:** (SELECT_1 — pick exactly ONE)
-`Already here`, `2-3 years`, `5-10 years`, `10-25 years`, `25+ years or never`, `Ill-defined`, `Unknown`
+`Already here`, `2-3 years`, `5-10 years`, `10-25 years`, `25+ years or never`, `Ill-defined`, `Unknown`, `Mixed/unclear`
 
 **belief_ai_risk:** (SELECT_1 — pick exactly ONE)
 `Overstated`, `Manageable`, `Serious`, `Catastrophic`, `Existential`, `Mixed/nuanced`, `Unknown`
@@ -112,6 +116,7 @@ Include for each verdict:
 - `citation` — Key quote from that source
 - `attribution_type` — first_person or third_party_characterization
 - `reasoning` — Brief explanation
+- `remove_reason` — (only for `remove` verdicts) One of: `no_evidence`, `third_party_only`, `intentionally_null` (org has no official position)
 
 ## Common Traps to Avoid
 
