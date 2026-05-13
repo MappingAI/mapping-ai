@@ -267,7 +267,13 @@ export function App() {
 
       {!bannerDismissed && (
         <div className="mobile-banner" id="mobile-banner">
-          <span>Best viewed on desktop for the full interactive experience</span>
+          <span>
+            Browse the directory below.{' '}
+            <a href="/guide" style={{ color: 'var(--accent)' }}>
+              Guide
+            </a>{' '}
+            · Full map on desktop
+          </span>
           <button
             onClick={() => {
               localStorage.setItem('mobileBannerDismissed', '1')
@@ -312,7 +318,12 @@ export function App() {
               </div>
             </div>
             <div className="onboarding-mobile-note">
-              On mobile, the map has a limited feature set and may take a few seconds to load.
+              On mobile, you can browse all stakeholders, filter by category and beliefs, and tap any entry to see
+              details and connections. For the full interactive network map, visit on a desktop browser.{' '}
+              <a href="/guide" style={{ color: '#2563eb' }}>
+                See the guide
+              </a>{' '}
+              for a walkthrough.
             </div>
           </details>
           <div
@@ -1482,7 +1493,9 @@ export function App() {
         </div>
         <div id="mobile-hero-content" className="mobile-hero-content">
           <div id="mobile-hero"></div>
-          <div className="mobile-mode-label">Mobile directory—full interactive map on desktop</div>
+          <div className="mobile-mode-label">
+            Tap colored bars to filter by beliefs. <a href="/guide">New here? See the guide</a>
+          </div>
         </div>
         <div id="mobile-search-bar" className="mobile-search-bar">
           <div className="mobile-search-box">
