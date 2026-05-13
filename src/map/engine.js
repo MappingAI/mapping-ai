@@ -1559,61 +1559,73 @@ export function initMapEngine() {
         allCards.forEach((c) => cardList.appendChild(c))
       })
     })
-    // AGI Views chip: toggle between entity directory and beliefs cluster list
+    // Unified view tab handler: Directory / AGI Views / Plot
     let _beliefsData = null
-    const beliefsViewChip = document.querySelector('.mobile-view-chip[data-view="beliefs"]')
-    if (beliefsViewChip) {
-      beliefsViewChip.addEventListener('click', () => {
-        const beliefsView = document.getElementById('mobile-beliefs-view')
-        const cardList = document.getElementById('mobile-card-list')
-        const heroToggle = document.getElementById('mobile-hero-toggle')
-        const heroContent = document.getElementById('mobile-hero-content')
-        const activeFilters = document.getElementById('mobile-active-filters')
-        const noResults = document.getElementById('mobile-no-results')
-        const wasActive = beliefsViewChip.classList.contains('active')
+    function switchMobileView(viewName) {
+      const cardList = document.getElementById('mobile-card-list')
+      const heroToggle = document.getElementById('mobile-hero-toggle')
+      const heroContent = document.getElementById('mobile-hero-content')
+      const activeFilters = document.getElementById('mobile-active-filters')
+      const noResults = document.getElementById('mobile-no-results')
+      const beliefsView = document.getElementById('mobile-beliefs-view')
+      const plotView = document.getElementById('mobile-plot-view')
+      const typeChips = document.getElementById('mobile-type-chips')
+      const loadingEl = document.getElementById('mobile-loading-indicator')
 
-        // Deactivate other view chips and hide plot view
-        document.querySelectorAll('.mobile-view-chip').forEach((c) => c.classList.remove('active'))
-        document.querySelectorAll('.mobile-sort-chip').forEach((c) => c.classList.remove('active'))
-        const plotView = document.getElementById('mobile-plot-view')
-        if (plotView) plotView.style.display = 'none'
-
-        if (wasActive) {
-          beliefsView.style.display = 'none'
-          cardList.style.display = ''
-          if (heroToggle) heroToggle.style.display = ''
-          if (heroContent) heroContent.style.display = ''
-          if (activeFilters) activeFilters.style.display = ''
-          return
-        }
-        // Activate beliefs view
-        document.querySelectorAll('.mobile-sort-chip').forEach((c) => c.classList.remove('active'))
-        beliefsViewChip.classList.add('active')
-        cardList.style.display = 'none'
-        if (heroToggle) heroToggle.style.display = 'none'
-        if (heroContent) heroContent.style.display = 'none'
-        if (activeFilters) activeFilters.style.display = 'none'
-        if (noResults) noResults.style.display = 'none'
-        beliefsView.style.display = ''
-
-        const content = document.getElementById('mobile-beliefs-content')
-        if (_beliefsData) {
-          renderMobileBeliefs(content, _beliefsData)
-          return
-        }
-        content.innerHTML =
-          '<div style="padding:2rem;text-align:center;font-family:var(--mono);font-size:11px;color:var(--text-3);">Loading AGI definitions...</div>'
-        fetch('/data/agi-definitions.json')
-          .then((r) => r.json())
-          .then((data) => {
-            _beliefsData = data
-            renderMobileBeliefs(content, data)
-          })
-          .catch(() => {
-            content.innerHTML =
-              '<div style="padding:2rem;text-align:center;font-family:var(--mono);font-size:11px;color:var(--text-3);">Could not load definitions data</div>'
-          })
+      // Update tab active states
+      document.querySelectorAll('.mobile-view-tab').forEach((t) => {
+        t.classList.toggle('active', t.dataset.view === viewName)
       })
+      document.querySelectorAll('.mobile-sort-chip').forEach((c) => c.classList.remove('active'))
+
+      // Hide all views
+      if (cardList) cardList.style.display = 'none'
+      if (heroToggle) heroToggle.style.display = 'none'
+      if (heroContent) heroContent.style.display = 'none'
+      if (activeFilters) activeFilters.style.display = 'none'
+      if (noResults) noResults.style.display = 'none'
+      if (beliefsView) beliefsView.style.display = 'none'
+      if (plotView) plotView.style.display = 'none'
+      if (typeChips) typeChips.style.display = 'none'
+      if (loadingEl) loadingEl.style.display = 'none'
+
+      if (viewName === 'directory') {
+        if (cardList) cardList.style.display = ''
+        if (heroToggle) heroToggle.style.display = ''
+        if (heroContent) heroContent.style.display = ''
+        if (activeFilters) activeFilters.style.display = ''
+        if (typeChips) typeChips.style.display = ''
+      } else if (viewName === 'beliefs') {
+        if (beliefsView) beliefsView.style.display = ''
+        loadBeliefsView()
+      } else if (viewName === 'plot') {
+        if (plotView) plotView.style.display = ''
+        renderMobilePlot(document.getElementById('mobile-plot-content'))
+      }
+    }
+
+    document.querySelectorAll('.mobile-view-tab').forEach((tab) => {
+      tab.addEventListener('click', () => switchMobileView(tab.dataset.view))
+    })
+
+    function loadBeliefsView() {
+      const content = document.getElementById('mobile-beliefs-content')
+      if (_beliefsData) {
+        renderMobileBeliefs(content, _beliefsData)
+        return
+      }
+      content.innerHTML =
+        '<div style="padding:2rem;text-align:center;font-family:var(--mono);font-size:11px;color:var(--text-3);">Loading AGI definitions...</div>'
+      fetch('/data/agi-definitions.json')
+        .then((r) => r.json())
+        .then((data) => {
+          _beliefsData = data
+          renderMobileBeliefs(content, data)
+        })
+        .catch(() => {
+          content.innerHTML =
+            '<div style="padding:2rem;text-align:center;font-family:var(--mono);font-size:11px;color:var(--text-3);">Could not load definitions data</div>'
+        })
     }
 
     function renderMobileBeliefs(container, data) {
@@ -1705,43 +1717,6 @@ export function initMapEngine() {
             showDetail(entityWithType, [])
           }
         })
-      })
-    }
-
-    // Plot view chip: mobile beeswarm by belief dimension
-    const plotViewChip = document.querySelector('.mobile-view-chip[data-view="plot"]')
-    if (plotViewChip) {
-      plotViewChip.addEventListener('click', () => {
-        const plotView = document.getElementById('mobile-plot-view')
-        const cardList = document.getElementById('mobile-card-list')
-        const heroToggle = document.getElementById('mobile-hero-toggle')
-        const heroContent = document.getElementById('mobile-hero-content')
-        const activeFilters = document.getElementById('mobile-active-filters')
-        const noResults = document.getElementById('mobile-no-results')
-        const beliefsView = document.getElementById('mobile-beliefs-view')
-        const wasActive = plotViewChip.classList.contains('active')
-
-        // Deactivate other view chips
-        document.querySelectorAll('.mobile-view-chip').forEach((c) => c.classList.remove('active'))
-        document.querySelectorAll('.mobile-sort-chip').forEach((c) => c.classList.remove('active'))
-        beliefsView.style.display = 'none'
-
-        if (wasActive) {
-          plotView.style.display = 'none'
-          cardList.style.display = ''
-          if (heroToggle) heroToggle.style.display = ''
-          if (heroContent) heroContent.style.display = ''
-          if (activeFilters) activeFilters.style.display = ''
-          return
-        }
-        plotViewChip.classList.add('active')
-        cardList.style.display = 'none'
-        if (heroToggle) heroToggle.style.display = 'none'
-        if (heroContent) heroContent.style.display = 'none'
-        if (activeFilters) activeFilters.style.display = 'none'
-        if (noResults) noResults.style.display = 'none'
-        plotView.style.display = ''
-        renderMobilePlot(document.getElementById('mobile-plot-content'))
       })
     }
 

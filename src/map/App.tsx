@@ -1516,6 +1516,18 @@ export function App() {
             <input id="mobile-search-input" type="text" placeholder="Search entities..." autoComplete="off" />
             <div id="mobile-autocomplete" className="mobile-autocomplete"></div>
           </div>
+          {/* View tabs: prominent row for switching between Directory, AGI Views, Plot */}
+          <div className="mobile-view-tabs">
+            <button className="mobile-view-tab active" data-view="directory">
+              Directory
+            </button>
+            <button className="mobile-view-tab mobile-view-chip" data-view="beliefs">
+              AGI Views
+            </button>
+            <button className="mobile-view-tab mobile-view-chip" data-view="plot">
+              Belief Plot
+            </button>
+          </div>
           <div id="mobile-type-chips" className="mobile-type-chips">
             <button className="mobile-type-chip active" data-type="all">
               All
@@ -1539,21 +1551,6 @@ export function App() {
             </button>
             <button className="mobile-type-chip mobile-sort-chip" data-sort="risk" title="Sort by AI risk assessment">
               By Risk
-            </button>
-            <span className="mobile-type-divider" />
-            <button
-              className="mobile-type-chip mobile-view-chip"
-              data-view="beliefs"
-              title="How stakeholders define AGI, grouped by theme"
-            >
-              AGI Views
-            </button>
-            <button
-              className="mobile-type-chip mobile-view-chip"
-              data-view="plot"
-              title="See where stakeholders fall on AI beliefs"
-            >
-              Plot
             </button>
             <span style={{ flex: 1 }}></span>
             <button id="mobile-explore-btn" className="mobile-explore-btn" title="Open a random well-connected entity">

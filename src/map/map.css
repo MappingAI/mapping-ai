@@ -1737,6 +1737,37 @@ body:has(.beliefs-detail-sidebar) .beliefs-zoom-controls {
   letter-spacing: 0.04em;
   flex-shrink: 0;
 }
+/* View tabs: prominent row for Directory / AGI Views / Plot switching */
+.mobile-view-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 0.4rem;
+}
+.mobile-view-tab {
+  flex: 1;
+  padding: 0.5rem 0.4rem;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-align: center;
+  border: none;
+  background: transparent;
+  color: var(--text-3);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.mobile-view-tab:active {
+  background: var(--input-bg);
+}
+.mobile-view-tab.active {
+  color: var(--text-1);
+  border-bottom-color: var(--accent);
+  font-weight: 600;
+}
 .mobile-type-chips {
   display: flex;
   gap: 0.4rem;
