@@ -2120,12 +2120,23 @@ export function initMapEngine() {
         }
       })
 
+      let _mobileRendered = false
       if (isMobileDirectory) {
         renderMobileDirectory()
+        _mobileRendered = true
         const ml = document.getElementById('mobile-loading')
         if (ml) ml.remove()
         return
       }
+
+      // Handle desktop→mobile viewport change (e.g., opening DevTools responsive mode).
+      // If the viewport drops below 768px after data loaded on the desktop path,
+      // render the mobile directory so the CSS-visible shell gets populated.
+      window.addEventListener('resize', () => {
+        if (_mobileRendered || window.innerWidth >= 768) return
+        _mobileRendered = true
+        renderMobileDirectory()
+      })
 
       // Resolve deep link target
       const deepLinkTarget = document.body.classList.contains('locked') ? null : resolveDeepLink()
