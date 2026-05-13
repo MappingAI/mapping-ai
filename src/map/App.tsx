@@ -1521,10 +1521,10 @@ export function App() {
             <button className="mobile-view-tab active" data-view="directory">
               Directory
             </button>
-            <button className="mobile-view-tab mobile-view-chip" data-view="beliefs">
+            <button className="mobile-view-tab" data-view="beliefs">
               AGI Views
             </button>
-            <button className="mobile-view-tab mobile-view-chip" data-view="plot">
+            <button className="mobile-view-tab" data-view="plot">
               Belief Plot
             </button>
           </div>
