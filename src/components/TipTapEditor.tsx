@@ -298,7 +298,7 @@ export function TipTapEditor({
 
   const editor = useEditor({
     extensions: [
-      StarterKit,
+      StarterKit.configure({ link: false }),
       Link.configure({ openOnClick: false }),
       Placeholder.configure({ placeholder }),
       Mention.configure({

@@ -50,8 +50,7 @@ body {
   .controls,
   .zoom-controls,
   #sidebar-toggle,
-  #contribute-btn,
-  .onboarding-overlay {
+  #contribute-btn {
     display: none !important;
   }
   #mobile-directory {
