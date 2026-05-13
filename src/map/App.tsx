@@ -1548,6 +1548,13 @@ export function App() {
             >
               AGI Views
             </button>
+            <button
+              className="mobile-type-chip mobile-view-chip"
+              data-view="plot"
+              title="See where stakeholders fall on AI beliefs"
+            >
+              Plot
+            </button>
             <span style={{ flex: 1 }}></span>
             <button id="mobile-explore-btn" className="mobile-explore-btn" title="Open a random well-connected entity">
               <svg
@@ -1578,6 +1585,10 @@ export function App() {
         {/* Mobile beliefs view: AGI definitions by cluster */}
         <div id="mobile-beliefs-view" style={{ display: 'none' }}>
           <div id="mobile-beliefs-content" className="mobile-beliefs-content"></div>
+        </div>
+        {/* Mobile plot view: beeswarm by belief dimension */}
+        <div id="mobile-plot-view" style={{ display: 'none' }}>
+          <div id="mobile-plot-content" className="mobile-plot-content"></div>
         </div>
       </div>
 

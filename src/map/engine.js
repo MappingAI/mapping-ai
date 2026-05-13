@@ -1559,8 +1559,13 @@ export function initMapEngine() {
         const noResults = document.getElementById('mobile-no-results')
         const wasActive = beliefsViewChip.classList.contains('active')
 
+        // Deactivate other view chips and hide plot view
+        document.querySelectorAll('.mobile-view-chip').forEach((c) => c.classList.remove('active'))
+        document.querySelectorAll('.mobile-sort-chip').forEach((c) => c.classList.remove('active'))
+        const plotView = document.getElementById('mobile-plot-view')
+        if (plotView) plotView.style.display = 'none'
+
         if (wasActive) {
-          beliefsViewChip.classList.remove('active')
           beliefsView.style.display = 'none'
           cardList.style.display = ''
           if (heroToggle) heroToggle.style.display = ''
@@ -1683,6 +1688,161 @@ export function initMapEngine() {
             const entityWithType = Object.assign({}, entity, {
               entityType: entity.entity_type || (allData.people.includes(entity) ? 'person' : 'organization'),
             })
+            mobileScrollPos = document.getElementById('mobile-directory').scrollTop
+            showDetail(entityWithType, [])
+          }
+        })
+      })
+    }
+
+    // Plot view chip: mobile beeswarm by belief dimension
+    const plotViewChip = document.querySelector('.mobile-view-chip[data-view="plot"]')
+    if (plotViewChip) {
+      plotViewChip.addEventListener('click', () => {
+        const plotView = document.getElementById('mobile-plot-view')
+        const cardList = document.getElementById('mobile-card-list')
+        const heroToggle = document.getElementById('mobile-hero-toggle')
+        const heroContent = document.getElementById('mobile-hero-content')
+        const activeFilters = document.getElementById('mobile-active-filters')
+        const noResults = document.getElementById('mobile-no-results')
+        const beliefsView = document.getElementById('mobile-beliefs-view')
+        const wasActive = plotViewChip.classList.contains('active')
+
+        // Deactivate other view chips
+        document.querySelectorAll('.mobile-view-chip').forEach((c) => c.classList.remove('active'))
+        document.querySelectorAll('.mobile-sort-chip').forEach((c) => c.classList.remove('active'))
+        beliefsView.style.display = 'none'
+
+        if (wasActive) {
+          plotView.style.display = 'none'
+          cardList.style.display = ''
+          if (heroToggle) heroToggle.style.display = ''
+          if (heroContent) heroContent.style.display = ''
+          if (activeFilters) activeFilters.style.display = ''
+          return
+        }
+        plotViewChip.classList.add('active')
+        cardList.style.display = 'none'
+        if (heroToggle) heroToggle.style.display = 'none'
+        if (heroContent) heroContent.style.display = 'none'
+        if (activeFilters) activeFilters.style.display = 'none'
+        if (noResults) noResults.style.display = 'none'
+        plotView.style.display = ''
+        renderMobilePlot(document.getElementById('mobile-plot-content'))
+      })
+    }
+
+    function renderMobilePlot(container) {
+      const dims = [
+        {
+          key: 'stance_score',
+          label: 'Regulatory Stance',
+          order: STANCE_ORDER,
+          colors: STANCE_COLORS,
+          field: 'regulatory_stance',
+        },
+        {
+          key: 'timeline_score',
+          label: 'AGI Timeline',
+          order: TIMELINE_ORDER,
+          colors: TIMELINE_COLORS,
+          field: 'agi_timeline',
+        },
+        { key: 'risk_score', label: 'AI Risk Level', order: RISK_ORDER, colors: RISK_COLORS, field: 'ai_risk_level' },
+      ]
+      const entities = [
+        ...allData.people.map((d) => Object.assign({}, d, { entityType: 'person' })),
+        ...allData.organizations.map((d) => Object.assign({}, d, { entityType: 'organization' })),
+      ]
+
+      let html = '<div class="mobile-plot-header">'
+      html += '<div class="mobile-plot-title">Belief Landscape</div>'
+      html += '<div class="mobile-plot-subtitle">Where stakeholders fall on AI regulation, timelines, and risk</div>'
+      html += '</div>'
+
+      for (const dim of dims) {
+        const withScore = entities.filter((d) => d[dim.key] != null)
+        const noScore = entities.length - withScore.length
+        html += '<div class="mobile-plot-dim">'
+        html += '<div class="mobile-plot-dim-header">'
+        html += '<span class="mobile-plot-dim-label">' + dim.label + '</span>'
+        html +=
+          '<span class="mobile-plot-dim-count">' +
+          withScore.length +
+          ' entities' +
+          (noScore > 0 ? ' (' + noScore + ' no data)' : '') +
+          '</span>'
+        html += '</div>'
+
+        // Axis labels
+        html += '<div class="mobile-plot-axis">'
+        html += '<span>' + dim.order[0] + '</span><span>' + dim.order[dim.order.length - 1] + '</span>'
+        html += '</div>'
+
+        // Beeswarm strip - group by score bucket
+        html += '<div class="mobile-plot-strip">'
+        const buckets = {}
+        for (const d of withScore) {
+          const score = Math.round(d[dim.key])
+          if (!buckets[score]) buckets[score] = []
+          buckets[score].push(d)
+        }
+        const maxScore = dim.order.length
+        for (let s = 1; s <= maxScore; s++) {
+          const bucket = buckets[s] || []
+          const label = dim.order[s - 1] || ''
+          const color = dim.colors[label] || 'var(--text-3)'
+          const pct = ((s - 0.5) / maxScore) * 100
+          html +=
+            '<div class="mobile-plot-bucket" style="left:' + pct + '%;" title="' + label + ': ' + bucket.length + '">'
+          html +=
+            '<div class="mobile-plot-bucket-bar" style="height:' +
+            Math.min(bucket.length * 2, 60) +
+            'px;background:' +
+            color +
+            ';">'
+          html += '<span class="mobile-plot-bucket-count">' + bucket.length + '</span>'
+          html += '</div>'
+          html +=
+            '<div class="mobile-plot-bucket-label">' + label.split(' ')[0].replace('Mixed/unclear', '?') + '</div>'
+          // Show top entities on tap
+          html += '<div class="mobile-plot-bucket-entities" data-dim="' + dim.key + '" data-score="' + s + '">'
+          bucket.slice(0, 8).forEach((d) => {
+            html += '<div class="mobile-plot-entity" data-id="' + d.id + '" data-type="' + d.entityType + '">'
+            html += escHtml(d.name || d.title)
+            html += '</div>'
+          })
+          if (bucket.length > 8) html += '<div class="mobile-plot-entity-more">+' + (bucket.length - 8) + ' more</div>'
+          html += '</div>'
+          html += '</div>'
+        }
+        html += '</div>' // strip
+        html += '</div>' // dim
+      }
+      container.innerHTML = html
+
+      // Toggle bucket entity lists on tap
+      container
+        .querySelectorAll('.mobile-plot-bucket-bar, .mobile-plot-bucket-count, .mobile-plot-bucket-label')
+        .forEach((el) => {
+          el.addEventListener('click', (e) => {
+            e.stopPropagation()
+            const bucket = el.closest('.mobile-plot-bucket')
+            const entities = bucket.querySelector('.mobile-plot-bucket-entities')
+            const wasOpen = entities.style.display === 'block'
+            container.querySelectorAll('.mobile-plot-bucket-entities').forEach((e) => (e.style.display = 'none'))
+            entities.style.display = wasOpen ? 'none' : 'block'
+          })
+        })
+
+      // Click entity name to navigate
+      container.querySelectorAll('.mobile-plot-entity').forEach((el) => {
+        el.addEventListener('click', () => {
+          const id = parseInt(el.dataset.id)
+          const type = el.dataset.type
+          const entity = (type === 'person' ? allData.people : allData.organizations).find((e) => e.id === id)
+          if (entity) {
+            const entityWithType = Object.assign({}, entity, { entityType: type })
             mobileScrollPos = document.getElementById('mobile-directory').scrollTop
             showDetail(entityWithType, [])
           }
