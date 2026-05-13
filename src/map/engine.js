@@ -5562,6 +5562,31 @@ ${dots}
         const targetId = parseInt(link.dataset.targetId, 10)
         const relType = link.dataset.relType || 'affiliated'
 
+        if (isMobileDirectory) {
+          // Mobile: expand the connection details to show evidence inline
+          const row = link.closest('.connection-row')
+          if (row) {
+            const details = row.querySelector('.connection-details')
+            if (details) {
+              details.style.display = details.style.display === 'none' ? '' : 'none'
+              // Load edge evidence if available
+              if (edgeId && window.__edgeEvidence?.edges?.[edgeId]) {
+                const ev = window.__edgeEvidence.edges[edgeId]
+                const evidenceEl = details.querySelector('.connection-evidence')
+                if (evidenceEl && !evidenceEl.dataset.loaded) {
+                  evidenceEl.dataset.loaded = '1'
+                  let html = ''
+                  if (ev.evidence) html += `<div style="margin-bottom:4px;">${escHtml(ev.evidence)}</div>`
+                  if (ev.source_url)
+                    html += `<a href="${ev.source_url}" target="_blank" rel="noopener" style="color:var(--accent);font-size:11px;">Source</a>`
+                  if (html) evidenceEl.innerHTML = html
+                }
+              }
+            }
+          }
+          return
+        }
+
         function showRelationshipInNetwork() {
           let edge = edgeId ? _canvasLinks.find((l) => l.edgeId === edgeId) : null
           if (!edge) {
