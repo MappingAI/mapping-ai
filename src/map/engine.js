@@ -966,12 +966,7 @@ export function initMapEngine() {
         .attr('x2', (d) => d.target.x)
         .attr('y2', (d) => d.target.y)
       nodeEls.attr('transform', (d) => `translate(${d.x},${d.y})`)
-      // Keep center label below center node
-      const cn = nodes[0]
-      // Label stays centered in SVG (not attached to node)
-      const cx = width / 2
-      centerLabel.selectAll('tspan').attr('x', cx)
-      centerLabel.attr('x', cx)
+      // (label moved to HTML banner, no SVG label to position)
     })
 
     setTimeout(() => sim.stop(), 2500)
