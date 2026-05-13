@@ -1546,6 +1546,150 @@ export function initMapEngine() {
         allCards.forEach((c) => cardList.appendChild(c))
       })
     })
+    // AGI Views chip: toggle between entity directory and beliefs cluster list
+    let _beliefsData = null
+    const beliefsViewChip = document.querySelector('.mobile-view-chip[data-view="beliefs"]')
+    if (beliefsViewChip) {
+      beliefsViewChip.addEventListener('click', () => {
+        const beliefsView = document.getElementById('mobile-beliefs-view')
+        const cardList = document.getElementById('mobile-card-list')
+        const heroToggle = document.getElementById('mobile-hero-toggle')
+        const heroContent = document.getElementById('mobile-hero-content')
+        const activeFilters = document.getElementById('mobile-active-filters')
+        const noResults = document.getElementById('mobile-no-results')
+        const wasActive = beliefsViewChip.classList.contains('active')
+
+        if (wasActive) {
+          beliefsViewChip.classList.remove('active')
+          beliefsView.style.display = 'none'
+          cardList.style.display = ''
+          if (heroToggle) heroToggle.style.display = ''
+          if (heroContent) heroContent.style.display = ''
+          if (activeFilters) activeFilters.style.display = ''
+          return
+        }
+        // Activate beliefs view
+        document.querySelectorAll('.mobile-sort-chip').forEach((c) => c.classList.remove('active'))
+        beliefsViewChip.classList.add('active')
+        cardList.style.display = 'none'
+        if (heroToggle) heroToggle.style.display = 'none'
+        if (heroContent) heroContent.style.display = 'none'
+        if (activeFilters) activeFilters.style.display = 'none'
+        if (noResults) noResults.style.display = 'none'
+        beliefsView.style.display = ''
+
+        const content = document.getElementById('mobile-beliefs-content')
+        if (_beliefsData) {
+          renderMobileBeliefs(content, _beliefsData)
+          return
+        }
+        content.innerHTML =
+          '<div style="padding:2rem;text-align:center;font-family:var(--mono);font-size:11px;color:var(--text-3);">Loading AGI definitions...</div>'
+        fetch('/data/agi-definitions.json')
+          .then((r) => r.json())
+          .then((data) => {
+            _beliefsData = data
+            renderMobileBeliefs(content, data)
+          })
+          .catch(() => {
+            content.innerHTML =
+              '<div style="padding:2rem;text-align:center;font-family:var(--mono);font-size:11px;color:var(--text-3);">Could not load definitions data</div>'
+          })
+      })
+    }
+
+    function renderMobileBeliefs(container, data) {
+      const clusters = data.clusters || []
+      const points = data.points || []
+      let html = '<div class="mobile-beliefs-header">'
+      html += '<div class="mobile-beliefs-title">How Stakeholders Define AGI</div>'
+      html +=
+        '<div class="mobile-beliefs-subtitle">' +
+        points.length +
+        ' definitions grouped into ' +
+        clusters.length +
+        ' themes</div>'
+      html +=
+        '<input id="mobile-beliefs-search" type="text" placeholder="Search definitions..." class="mobile-beliefs-search" />'
+      html += '</div>'
+
+      const sorted = [...clusters].sort((a, b) => b.count - a.count)
+      for (const cluster of sorted) {
+        const entities = points.filter((p) => p.cluster_id === cluster.id)
+        const color =
+          {
+            c0: '#e74c3c',
+            c1: '#3498db',
+            c2: '#2ecc71',
+            c3: '#f39c12',
+            c4: '#9b59b6',
+            c5: '#1abc9c',
+            c6: '#e67e22',
+            c7: '#34495e',
+          }[cluster.id] || '#888'
+
+        html += '<div class="mobile-beliefs-cluster" data-cluster="' + cluster.id + '">'
+        html += '<div class="mobile-beliefs-cluster-header">'
+        html += '<span class="mobile-beliefs-cluster-dot" style="background:' + color + '"></span>'
+        html += '<span class="mobile-beliefs-cluster-label">' + escHtml(cluster.label) + '</span>'
+        html += '<span class="mobile-beliefs-cluster-count">' + cluster.count + '</span>'
+        html += '</div>'
+        html += '<div class="mobile-beliefs-cluster-desc">' + escHtml(cluster.description || '') + '</div>'
+        html += '<div class="mobile-beliefs-entities">'
+        for (const p of entities) {
+          const catColor = getColor(p.category) || DEFAULT_COLOR
+          const defText = (p.definition || '').length > 120 ? p.definition.slice(0, 120) + '...' : p.definition || ''
+          html += '<div class="mobile-beliefs-entity" data-entity-id="' + p.entity_id + '">'
+          html += '<div class="mobile-beliefs-entity-header">'
+          html += '<span class="mobile-beliefs-entity-name">' + escHtml(p.name) + '</span>'
+          html +=
+            '<span class="mobile-beliefs-entity-cat" style="background:' +
+            catColor +
+            '22;color:' +
+            catColor +
+            ';">' +
+            escHtml(p.category) +
+            '</span>'
+          html += '</div>'
+          html += '<div class="mobile-beliefs-entity-def">' + escHtml(defText) + '</div>'
+          html += '</div>'
+        }
+        html += '</div></div>'
+      }
+      container.innerHTML = html
+
+      // Search filter
+      const searchInput = document.getElementById('mobile-beliefs-search')
+      if (searchInput) {
+        searchInput.addEventListener('input', () => {
+          const q = searchInput.value.toLowerCase().trim()
+          container.querySelectorAll('.mobile-beliefs-entity').forEach((el) => {
+            const text = el.textContent.toLowerCase()
+            el.style.display = !q || text.includes(q) ? '' : 'none'
+          })
+          container.querySelectorAll('.mobile-beliefs-cluster').forEach((cl) => {
+            const visible = cl.querySelectorAll('.mobile-beliefs-entity[style=""], .mobile-beliefs-entity:not([style])')
+            cl.style.display = !q || visible.length > 0 ? '' : 'none'
+          })
+        })
+      }
+
+      // Click entity to navigate to their map entry
+      container.querySelectorAll('.mobile-beliefs-entity').forEach((el) => {
+        el.addEventListener('click', () => {
+          const id = parseInt(el.dataset.entityId)
+          const entity = [...allData.people, ...allData.organizations].find((e) => e.id === id)
+          if (entity) {
+            const entityWithType = Object.assign({}, entity, {
+              entityType: entity.entity_type || (allData.people.includes(entity) ? 'person' : 'organization'),
+            })
+            mobileScrollPos = document.getElementById('mobile-directory').scrollTop
+            showDetail(entityWithType, [])
+          }
+        })
+      })
+    }
+
     // Search with autocomplete dropdown + boosted name/title scoring
     let searchTimer
     const autocomplete = document.getElementById('mobile-autocomplete')

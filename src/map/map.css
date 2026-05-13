@@ -1946,6 +1946,122 @@ body:has(.beliefs-detail-sidebar) .beliefs-zoom-controls {
   background: #16a34a;
   flex-shrink: 0;
 }
+/* ─── Mobile Beliefs View (AGI Definitions by Cluster) ─── */
+.mobile-beliefs-content {
+  padding: 0 0.75rem 2rem;
+}
+.mobile-beliefs-header {
+  padding: 0.75rem 0;
+}
+.mobile-beliefs-title {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text-1);
+  margin-bottom: 2px;
+}
+.mobile-beliefs-subtitle {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-3);
+  letter-spacing: 0.03em;
+  margin-bottom: 8px;
+}
+.mobile-beliefs-search {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--input-bg);
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--text-1);
+  outline: none;
+}
+.mobile-beliefs-search:focus {
+  border-color: var(--accent);
+}
+.mobile-beliefs-cluster {
+  margin-bottom: 16px;
+}
+.mobile-beliefs-cluster-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 4px;
+}
+.mobile-beliefs-cluster-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.mobile-beliefs-cluster-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-1);
+  flex: 1;
+}
+.mobile-beliefs-cluster-count {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-3);
+}
+.mobile-beliefs-cluster-desc {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-2);
+  line-height: 1.4;
+  margin-bottom: 6px;
+  padding-left: 16px;
+}
+.mobile-beliefs-entities {
+  padding-left: 16px;
+}
+.mobile-beliefs-entity {
+  padding: 6px 0;
+  border-bottom: 1px solid var(--line);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.mobile-beliefs-entity:active {
+  background: var(--input-bg);
+}
+.mobile-beliefs-entity-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 2px;
+}
+.mobile-beliefs-entity-name {
+  font-family: var(--serif);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-1);
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mobile-beliefs-entity-cat {
+  font-family: var(--mono);
+  font-size: 8px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.mobile-beliefs-entity-def {
+  font-family: var(--serif);
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.4;
+}
 .mobile-card-edges {
   font-family: var(--mono);
   font-size: 8px;

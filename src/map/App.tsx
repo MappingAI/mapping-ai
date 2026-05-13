@@ -1540,6 +1540,14 @@ export function App() {
             <button className="mobile-type-chip mobile-sort-chip" data-sort="risk" title="Sort by AI risk assessment">
               By Risk
             </button>
+            <span className="mobile-type-divider" />
+            <button
+              className="mobile-type-chip mobile-view-chip"
+              data-view="beliefs"
+              title="How stakeholders define AGI, grouped by theme"
+            >
+              AGI Views
+            </button>
             <span style={{ flex: 1 }}></span>
             <button id="mobile-explore-btn" className="mobile-explore-btn" title="Open a random well-connected entity">
               <svg
@@ -1566,6 +1574,10 @@ export function App() {
         <div id="mobile-card-list" className="mobile-card-list"></div>
         <div id="mobile-no-results" className="mobile-no-results" style={{ display: 'none' }}>
           No matching entities
+        </div>
+        {/* Mobile beliefs view: AGI definitions by cluster */}
+        <div id="mobile-beliefs-view" style={{ display: 'none' }}>
+          <div id="mobile-beliefs-content" className="mobile-beliefs-content"></div>
         </div>
       </div>
 
