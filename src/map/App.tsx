@@ -1487,8 +1487,8 @@ export function App() {
       )}
 
       <div id="mobile-directory" style={{ display: 'none' }}>
-        <div id="mobile-hero-toggle" className="mobile-hero-toggle">
-          <span>Filters &amp; Overview</span>
+        <div id="mobile-hero-toggle" className="mobile-hero-toggle collapsed">
+          <span>Filters &amp; Overview — tap to expand</span>
           <span className="chevron">&#x25B8;</span>
         </div>
         <div id="mobile-hero-content" className="mobile-hero-content">

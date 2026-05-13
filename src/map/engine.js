@@ -1196,15 +1196,33 @@ export function initMapEngine() {
         return html + '</div></div>'
       }
       let bubblesHtml = '<div class="mobile-bubbles">'
-      if (sectorCats.length > 0) bubblesHtml += pillGroup('Sectors', sectorCats, false)
-      if (roleCats.length > 0) bubblesHtml += pillGroup('Roles', roleCats, true)
+      if (sectorCats.length > 0) bubblesHtml += pillGroup('Sectors — tap to filter', sectorCats, true)
+      if (roleCats.length > 0) bubblesHtml += pillGroup('Roles — tap to filter', roleCats, true)
       bubblesHtml += '</div>'
 
       // Belief spectrum bars
       const dims = [
-        { key: 'regulatory_stance', label: 'Regulatory Stance', order: STANCE_ORDER, colors: STANCE_COLORS },
-        { key: 'agi_timeline', label: 'AGI Timeline', order: TIMELINE_ORDER, colors: TIMELINE_COLORS },
-        { key: 'ai_risk_level', label: 'AI Risk Level', order: RISK_ORDER, colors: RISK_COLORS },
+        {
+          key: 'regulatory_stance',
+          label: 'Regulatory Stance',
+          tip: 'How much AI regulation this person/org supports',
+          order: STANCE_ORDER,
+          colors: STANCE_COLORS,
+        },
+        {
+          key: 'agi_timeline',
+          label: 'AGI Timeline',
+          tip: 'When they think human-level AI will arrive',
+          order: TIMELINE_ORDER,
+          colors: TIMELINE_COLORS,
+        },
+        {
+          key: 'ai_risk_level',
+          label: 'AI Risk Level',
+          tip: 'How dangerous they think advanced AI could be',
+          order: RISK_ORDER,
+          colors: RISK_COLORS,
+        },
       ]
       let spectrumHtml = '<div class="mobile-spectrum">'
       for (const dim of dims) {
@@ -1223,7 +1241,7 @@ export function initMapEngine() {
           else nullCount++
         }
         spectrumHtml += `<div class="mobile-spectrum-row">
-  <div class="mobile-spectrum-label"><span><span class="chevron">&#x25B8;</span> ${dim.label}</span>${nullCount > 0 ? `<span>(${nullCount} no data)</span>` : ''}</div>
+  <div class="mobile-spectrum-label"><span><span class="chevron">&#x25B8;</span> ${dim.label} <span class="mobile-tip" title="${dim.tip}">?</span></span>${nullCount > 0 ? `<span>(${nullCount} no data)</span>` : ''}</div>
   <div class="mobile-spectrum-bar">`
         for (const label of dim.order) {
           const count = buckets[label] || 0

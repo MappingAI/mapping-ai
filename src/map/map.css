@@ -1487,6 +1487,11 @@ body:has(.beliefs-detail-sidebar) .beliefs-zoom-controls {
   font-size: 9px;
   transition: transform 0.15s;
 }
+.mobile-bubbles-group.collapsed {
+  border: 1px dashed var(--line);
+  border-radius: 6px;
+  padding: 4px 8px;
+}
 .mobile-bubbles-group.collapsed .mobile-bubbles-row {
   display: none;
 }
@@ -1495,6 +1500,41 @@ body:has(.beliefs-detail-sidebar) .beliefs-zoom-controls {
 }
 .mobile-bubbles-group:not(.collapsed) .chevron {
   transform: rotate(90deg);
+}
+/* Inline tooltip icon */
+.mobile-tip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--line);
+  color: var(--bg-panel);
+  font-size: 8px;
+  font-weight: 700;
+  font-style: normal;
+  cursor: help;
+  vertical-align: middle;
+  margin-left: 2px;
+  position: relative;
+}
+.mobile-tip:active::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--text-1);
+  color: var(--bg-panel);
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 400;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  z-index: 20;
+  margin-bottom: 4px;
 }
 .mobile-bubbles-row {
   display: flex;
