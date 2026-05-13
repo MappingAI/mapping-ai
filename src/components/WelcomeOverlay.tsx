@@ -2,11 +2,12 @@ import { useState } from 'react'
 import { CORRECTIONS_NOTICE } from '../shared/corrections-notice'
 
 export function WelcomeOverlay() {
-  const [dismissed, setDismissed] = useState(false)
+  const [dismissed, setDismissed] = useState(() => localStorage.getItem('welcomeDismissed') === '1')
 
   if (dismissed) return null
 
   const dismiss = () => {
+    localStorage.setItem('welcomeDismissed', '1')
     setDismissed(true)
   }
 

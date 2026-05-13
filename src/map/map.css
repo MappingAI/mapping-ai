@@ -1601,6 +1601,18 @@ body:has(.beliefs-detail-sidebar) .beliefs-zoom-controls {
   color: var(--text-3);
   margin-top: 2px;
 }
+.mobile-hero-stats {
+  text-align: center;
+  padding: 0.3rem 0.75rem 0.4rem;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-3);
+  letter-spacing: 0.02em;
+}
+.mobile-hero-stats span {
+  font-weight: 600;
+  color: var(--text-2);
+}
 .mobile-search-bar {
   padding: 0.5rem 0.75rem;
   background: var(--bg-panel);
@@ -1898,6 +1910,30 @@ body:has(.beliefs-detail-sidebar) .beliefs-zoom-controls {
   background: none;
   border: 1px solid var(--text-3);
   opacity: 0.4;
+}
+.mobile-card-beliefs {
+  display: flex;
+  gap: 3px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  max-width: 50%;
+  justify-content: flex-end;
+}
+.mobile-card-belief {
+  font-family: var(--mono);
+  font-size: 7px;
+  letter-spacing: 0.02em;
+  padding: 1px 4px;
+  border-radius: 3px;
+  white-space: nowrap;
+  line-height: 1.4;
+}
+.mobile-card-verified {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #16a34a;
+  flex-shrink: 0;
 }
 .mobile-card-edges {
   font-family: var(--mono);

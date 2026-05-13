@@ -1244,13 +1244,30 @@ export function initMapEngine() {
         spectrumHtml += `</div><div class="mobile-spectrum-endpoints"><span>${dim.order[0]}</span><span>${dim.order[dim.order.length - 1]}</span></div></div>`
       }
       spectrumHtml += '</div>'
-      document.getElementById('mobile-hero').innerHTML = bubblesHtml + spectrumHtml
+      const peopleCount = entities.filter((d) => d.entityType === 'person').length
+      const orgCount = entities.filter((d) => d.entityType === 'organization').length
+      const edgeCount = (allData.relationships || []).length + (allData.person_organizations || []).length
+      const statsHtml = `<div class="mobile-hero-stats"><span>${peopleCount} people</span> &middot; <span>${orgCount} orgs</span> &middot; <span>${edgeCount} connections</span></div>`
+      document.getElementById('mobile-hero').innerHTML = bubblesHtml + spectrumHtml + statsHtml
     }
 
-    // Pre-compute connection counts for all entities (used for card badges + explore button)
+    // Pre-compute connection counts via single pass over edges (O(edges) not O(entities*edges))
     const connectionCounts = new Map()
-    for (const d of allEntities) {
-      connectionCounts.set(d.entityType + ':' + d.id, buildConnections(d).length)
+    if (allData.relationships) {
+      for (const rel of allData.relationships) {
+        const sk = (rel.source_type || 'organization') + ':' + rel.source_id
+        const tk = (rel.target_type || 'organization') + ':' + rel.target_id
+        connectionCounts.set(sk, (connectionCounts.get(sk) || 0) + 1)
+        connectionCounts.set(tk, (connectionCounts.get(tk) || 0) + 1)
+      }
+    }
+    if (allData.person_organizations) {
+      for (const po of allData.person_organizations) {
+        const pk = 'person:' + po.person_id
+        const ok = 'organization:' + po.organization_id
+        connectionCounts.set(pk, (connectionCounts.get(pk) || 0) + 1)
+        connectionCounts.set(ok, (connectionCounts.get(ok) || 0) + 1)
+      }
     }
 
     // ── Card list grouped by category ──
@@ -1297,15 +1314,15 @@ export function initMapEngine() {
         else if (d.entityType === 'organization') sub = d.category || ''
         else sub = [d.author, d.year].filter(Boolean).join(' \u00b7 ')
 
-        const stanceDot = d.stance_score
-          ? `<span class="mobile-card-dot" style="background:${STANCE_COLORS[STANCE_ORDER[Math.round(d.stance_score) - 1]] || 'var(--text-3)'}" title="${d.regulatory_stance || ''}"></span>`
-          : '<span class="mobile-card-dot empty"></span>'
-        const timelineDot = d.timeline_score
-          ? `<span class="mobile-card-dot" style="background:${TIMELINE_COLORS[TIMELINE_ORDER[Math.round(d.timeline_score) - 1]] || 'var(--text-3)'}" title="${d.agi_timeline || ''}"></span>`
-          : '<span class="mobile-card-dot empty"></span>'
-        const riskDot = d.risk_score
-          ? `<span class="mobile-card-dot" style="background:${RISK_COLORS[RISK_ORDER[Math.round(d.risk_score) - 1]] || 'var(--text-3)'}" title="${d.ai_risk_level || ''}"></span>`
-          : '<span class="mobile-card-dot empty"></span>'
+        const stanceBadge = d.regulatory_stance
+          ? `<span class="mobile-card-belief" style="background:${STANCE_COLORS[STANCE_ORDER[Math.round(d.stance_score) - 1]] || 'var(--text-3)'}20;color:${STANCE_COLORS[STANCE_ORDER[Math.round(d.stance_score) - 1]] || 'var(--text-3)'};" title="Regulatory stance: ${d.regulatory_stance}">${d.regulatory_stance.split('/')[0].split(' ')[0]}</span>`
+          : ''
+        const timelineBadge = d.agi_timeline
+          ? `<span class="mobile-card-belief" style="background:${TIMELINE_COLORS[TIMELINE_ORDER[Math.round(d.timeline_score) - 1]] || 'var(--text-3)'}20;color:${TIMELINE_COLORS[TIMELINE_ORDER[Math.round(d.timeline_score) - 1]] || 'var(--text-3)'};" title="AGI timeline: ${d.agi_timeline}">${d.agi_timeline.replace(' years', 'y').replace('Mixed/unclear', '?')}</span>`
+          : ''
+        const riskBadge = d.ai_risk_level
+          ? `<span class="mobile-card-belief" style="background:${RISK_COLORS[RISK_ORDER[Math.round(d.risk_score) - 1]] || 'var(--text-3)'}20;color:${RISK_COLORS[RISK_ORDER[Math.round(d.risk_score) - 1]] || 'var(--text-3)'};" title="AI risk level: ${d.ai_risk_level}">${d.ai_risk_level.split('/')[0]}</span>`
+          : ''
 
         // Canonicalize belief values to match spectrum bar labels for filter consistency
         const _cs = d.regulatory_stance
@@ -1320,10 +1337,13 @@ export function initMapEngine() {
           ? RISK_ORDER.find((l) => d.ai_risk_level.toLowerCase().includes(l.split(' ')[0].toLowerCase())) ||
             d.ai_risk_level
           : ''
+        const _verifStatus = _getVerificationStatus(d.field_verification)
+        const verifDot =
+          _verifStatus === 'verified' ? '<span class="mobile-card-verified" title="Verified"></span>' : ''
         cardsHtml += `<div class="mobile-card" data-entity-id="${d.id}" data-entity-type="${d.entityType}" data-category="${normalizeCategory(d.category)}" data-slug="${slug}" data-stance="${_cs}" data-timeline="${_ct}" data-risk="${_cr}">
   ${thumbHtml}<div class="mobile-card-info">
-    <div class="mobile-card-row1"><span class="mobile-card-name">${escHtml(d.name || d.title)}</span><span class="mobile-card-badge" style="background:${catColor}22;color:${catColor};">${normalizeCategory(d.category)}</span></div>
-    <div class="mobile-card-row2"><span class="mobile-card-sub">${sub}</span><span class="mobile-card-dots">${stanceDot}${timelineDot}${riskDot}${connCount > 0 ? `<span class="mobile-card-edges" title="${connCount} connections">${connCount}</span>` : ''}</span></div>
+    <div class="mobile-card-row1">${verifDot}<span class="mobile-card-name">${escHtml(d.name || d.title)}</span><span class="mobile-card-badge" style="background:${catColor}22;color:${catColor};">${normalizeCategory(d.category)}</span></div>
+    <div class="mobile-card-row2"><span class="mobile-card-sub">${sub}</span><span class="mobile-card-beliefs">${stanceBadge}${timelineBadge}${riskBadge}${connCount > 0 ? `<span class="mobile-card-edges" title="${connCount} connections">${connCount}</span>` : ''}</span></div>
   </div></div>`
       }
       cardsHtml += '</div>'
