@@ -26,11 +26,21 @@ Before searching, internalize these rules:
 
 8. **Org type heuristic** — Research/evaluation orgs, standards bodies, and government agencies very likely do NOT hold regulatory stances. Default to `remove` unless you find an official position paper.
 
+9. **Entity-type specific rules:**
+   - **Politicians**: Floor speeches, authored legislation, and official frameworks ARE first-person positions. Attribute to the individual, not their institution (e.g., "Schumer's position" not "the Senate's position").
+   - **CEO-founders at AI companies**: Blog posts, interviews, and public statements by founders like Altman, Amodei, or Hassabis typically represent company positions when speaking about their company's approach. Use judgment based on context.
+   - **Media organizations**: Editorial Board positions are NOT the same as the organization's position. News coverage patterns are legitimate "Inferred" evidence. Do NOT overwrite "Inferred" evidence with Editorial Board statements — these are different claims.
+   - **Government agencies**: Positions are administration-specific. "White House" under different administrations are effectively different entities. Be explicit about which administration.
+
+10. **Inferred evidence is valid** — If `belief_evidence_source` is "Inferred", this means the belief was derived from coverage patterns, funding decisions, hiring, or other indirect signals. This is a VALID evidence type. Do NOT automatically upgrade to "Explicitly stated" or downgrade to "remove". Only change if the inference was wrong.
+
 ## Your Task
 
 For each field in the record you receive:
 
 1. **Search for BOTH supporting AND contradicting evidence.** Run queries that could confirm the current value AND queries that could disprove it. This is critical — do not just search for confirmation.
+
+   ⚠️ **MANDATORY DEFENSE SEARCH**: Before issuing a `correct` or `remove` verdict, you MUST have searched for evidence that SUPPORTS the original value. If you only searched for contradicting evidence, your verdict is invalid. Include at least one query per field that could confirm the current value.
 
 2. **Prioritize first-person sources** over third-party characterizations:
    - **First-person**: Official statements, interviews where the entity speaks, op-eds they wrote, congressional testimony they gave, their organization's position papers
@@ -38,10 +48,12 @@ For each field in the record you receive:
 
 3. **Follow up on promising leads** by fetching specific URLs when you need more context from a source.
 
-4. **Render a verdict per field:**
+4. **Render EXACTLY ONE verdict per field:**
    - `confirm` — clear, direct first-person evidence supports the exact current value
    - `correct` — first-person evidence contradicts the current value (propose a replacement)
    - `remove` — no evidence exists, evidence is only third-party, or entity doesn't hold a position on this topic. For **organizations**, a `remove` verdict with reasoning indicates `intentionally_null` status (the org explicitly has no official position), not just missing data.
+
+   ⚠️ **ONE VERDICT PER FIELD.** If you find conflicting evidence for the same field, resolve it into a single verdict. Do NOT submit multiple verdicts for the same field. For conflicting first-person evidence, use `Mixed/unclear` (for SELECT_1 enums) and explain the conflict in reasoning.
 
 ## Critical Rules
 
@@ -80,7 +92,7 @@ For `correct` verdicts, proposed values MUST comply with these constraints. Outp
 `Overstated`, `Manageable`, `Serious`, `Catastrophic`, `Existential`, `Mixed/nuanced`, `Unknown`
 
 **belief_threat_models:** (SELECT_UP_TO_3 — pick TOP 3 MAXIMUM, comma-separated)
-⚠️ MAXIMUM 3 VALUES. If entity has more than 3 concerns, select only the top 3 most prominent/documented ones.
+⚠️ **MAXIMUM 3 VALUES. THIS IS A HARD CONSTRAINT.** If entity has more than 3 concerns, select only the top 3 most prominent/documented ones. Submitting more than 3 values is an ERROR that will be rejected.
 `Labor displacement`, `Economic inequality`, `Power concentration`, `Democratic erosion`, `Cybersecurity`, `Misinformation`, `Environmental`, `Weapons`, `Loss of control`, `Copyright/IP`, `Existential risk`
 
 **belief_evidence_source:** (SELECT_1 — pick exactly ONE)
@@ -136,6 +148,8 @@ Include for each verdict:
 
 8. **Interview credulity**: Treat interview quotes skeptically. Was it a settled position or a response to a hypothetical? Exploring an idea or stating a belief?
 
-9. **False "Mixed/unclear"**: If an entity simply hasn't taken a public position, the answer is `remove` (null), not "Mixed/unclear". Mixed/unclear is for entities with genuinely contradictory public statements.
+9. **False "Mixed/unclear"**: If an entity simply hasn't taken a public position, the answer is `remove` (null), not "Mixed/unclear". Mixed/unclear is for entities with genuinely contradictory public statements *at the same point in time*.
+
+10. **Evolution ≠ Contradiction**: If an entity's views evolved over time (e.g., 2023 position differs from 2025 position), use their CURRENT position as the verdict, not "Mixed/unclear". Note the evolution in the `reasoning` field. Only use "Mixed/unclear" if they hold contradictory positions simultaneously or flip-flop repeatedly without settling.
 
 10. **Single-source overconfidence**: One quote from one interview should never get confidence "high". Require a pattern across multiple statements.
