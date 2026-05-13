@@ -798,14 +798,15 @@ export function initMapEngine() {
     svg.setAttribute('viewBox', `0 0 ${width} ${height}`)
 
     const connected = buildConnections(entity)
-    const limitedConnected = connected.slice(0, 8)
+    const maxNodes = Math.min(connected.length, Math.max(12, Math.floor(Math.min(width, height) / 18)))
+    const limitedConnected = connected.slice(0, maxNodes)
     const nodeCount = limitedConnected.length + 1
 
-    // Scale radii based on node count
-    // Scale radii relative to container (smaller dimension)
+    // Scale radii relative to container, shrinking as more nodes are added
     const minDim = Math.min(width, height)
-    const centerR = Math.max(14, Math.round(minDim * (nodeCount > 8 ? 0.07 : 0.09)))
-    const leafR = Math.max(8, Math.round(minDim * (nodeCount > 8 ? 0.04 : 0.055)))
+    const densityFactor = nodeCount > 16 ? 0.5 : nodeCount > 10 ? 0.7 : 1
+    const centerR = Math.max(12, Math.round(minDim * 0.09 * densityFactor))
+    const leafR = Math.max(6, Math.round(minDim * 0.055 * densityFactor))
 
     const nodes = [
       {
@@ -839,9 +840,9 @@ export function initMapEngine() {
         d3
           .forceLink(links)
           .id((d) => d.id)
-          .distance(minDim * (nodeCount > 8 ? 0.15 : 0.22)),
+          .distance(minDim * (nodeCount > 16 ? 0.1 : nodeCount > 10 ? 0.14 : 0.22)),
       )
-      .force('charge', d3.forceManyBody().strength(minDim * (nodeCount > 8 ? -0.3 : -0.45)))
+      .force('charge', d3.forceManyBody().strength(minDim * (nodeCount > 16 ? -0.15 : nodeCount > 10 ? -0.25 : -0.45)))
       .force('center', d3.forceCenter(width / 2, height / 2))
       .force(
         'collision',
