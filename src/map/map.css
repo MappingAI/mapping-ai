@@ -1395,13 +1395,12 @@ body:has(.beliefs-detail-sidebar) .beliefs-zoom-controls {
   background: var(--bg-page);
   z-index: 5;
 }
-/* Loading indicator shown while engine.js populates entity cards */
-#mobile-directory:not(:has(.mobile-card))::after {
-  content: 'Loading directory...';
+/* Loading indicator — a real element removed by engine.js, not a :has() pseudo */
+#mobile-loading-indicator {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 3rem 1rem;
+  padding: 4rem 1rem;
   font-family: var(--mono);
   font-size: 11px;
   letter-spacing: 0.08em;

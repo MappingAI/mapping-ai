@@ -1556,6 +1556,7 @@ export function App() {
           </div>
         </div>
         <div id="mobile-active-filters" className="mobile-active-filters"></div>
+        <div id="mobile-loading-indicator">Loading directory...</div>
         <div id="mobile-card-list" className="mobile-card-list"></div>
         <div id="mobile-no-results" className="mobile-no-results" style={{ display: 'none' }}>
           No matching entities

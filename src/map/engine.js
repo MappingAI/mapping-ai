@@ -1349,6 +1349,8 @@ export function initMapEngine() {
       cardsHtml += '</div>'
     }
     document.getElementById('mobile-card-list').innerHTML = cardsHtml
+    const _loadingEl = document.getElementById('mobile-loading-indicator')
+    if (_loadingEl) _loadingEl.remove()
 
     // ── Filter state machine ──
     const mobileFilters = {
