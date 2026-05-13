@@ -1248,7 +1248,7 @@ export function initMapEngine() {
       spectrumHtml += '</div>'
       const peopleCount = entities.filter((d) => d.entityType === 'person').length
       const orgCount = entities.filter((d) => d.entityType === 'organization').length
-      const edgeCount = (allData.relationships || []).length + (allData.person_organizations || []).length
+      const edgeCount = (allData.relationships || []).length
       const statsHtml = `<div class="mobile-hero-stats"><span>${peopleCount} people</span> &middot; <span>${orgCount} orgs</span> &middot; <span>${edgeCount} connections</span></div>`
       document.getElementById('mobile-hero').innerHTML = bubblesHtml + spectrumHtml + statsHtml
     }
@@ -1263,14 +1263,8 @@ export function initMapEngine() {
         connectionCounts.set(tk, (connectionCounts.get(tk) || 0) + 1)
       }
     }
-    if (allData.person_organizations) {
-      for (const po of allData.person_organizations) {
-        const pk = 'person:' + po.person_id
-        const ok = 'organization:' + po.organization_id
-        connectionCounts.set(pk, (connectionCounts.get(pk) || 0) + 1)
-        connectionCounts.set(ok, (connectionCounts.get(ok) || 0) + 1)
-      }
-    }
+    // person_organizations is a subset of relationships (affiliated edges),
+    // so we skip it here to avoid double-counting
 
     // ── Card list grouped by category ──
     const grouped = {}
@@ -1316,15 +1310,26 @@ export function initMapEngine() {
         else if (d.entityType === 'organization') sub = d.category || ''
         else sub = [d.author, d.year].filter(Boolean).join(' \u00b7 ')
 
-        const stanceBadge = d.regulatory_stance
-          ? `<span class="mobile-card-belief" style="background:${STANCE_COLORS[STANCE_ORDER[Math.round(d.stance_score) - 1]] || 'var(--text-3)'}20;color:${STANCE_COLORS[STANCE_ORDER[Math.round(d.stance_score) - 1]] || 'var(--text-3)'};" title="Regulatory stance: ${d.regulatory_stance}">${d.regulatory_stance.split('/')[0].split(' ')[0]}</span>`
-          : ''
-        const timelineBadge = d.agi_timeline
-          ? `<span class="mobile-card-belief" style="background:${TIMELINE_COLORS[TIMELINE_ORDER[Math.round(d.timeline_score) - 1]] || 'var(--text-3)'}20;color:${TIMELINE_COLORS[TIMELINE_ORDER[Math.round(d.timeline_score) - 1]] || 'var(--text-3)'};" title="AGI timeline: ${d.agi_timeline}">${d.agi_timeline.replace(' years', 'y').replace('Mixed/unclear', '?')}</span>`
-          : ''
-        const riskBadge = d.ai_risk_level
-          ? `<span class="mobile-card-belief" style="background:${RISK_COLORS[RISK_ORDER[Math.round(d.risk_score) - 1]] || 'var(--text-3)'}20;color:${RISK_COLORS[RISK_ORDER[Math.round(d.risk_score) - 1]] || 'var(--text-3)'};" title="AI risk level: ${d.ai_risk_level}">${d.ai_risk_level.split('/')[0]}</span>`
-          : ''
+        function beliefBadge(text, score, order, colors, title) {
+          if (!text || score == null) return ''
+          const idx = Math.round(score) - 1
+          const color = (idx >= 0 && order[idx] && colors[order[idx]]) || 'var(--text-3)'
+          const isVar = color.startsWith('var(')
+          const bg = isVar ? 'transparent' : color + '20'
+          return `<span class="mobile-card-belief" style="background:${bg};color:${color};" title="${title}: ${text}">${text.split('/')[0].split(' ')[0]}</span>`
+        }
+        const stanceBadge = beliefBadge(
+          d.regulatory_stance,
+          d.stance_score,
+          STANCE_ORDER,
+          STANCE_COLORS,
+          'Regulatory stance',
+        )
+        const timelineBadge =
+          d.agi_timeline && d.timeline_score != null
+            ? `<span class="mobile-card-belief" style="background:${(TIMELINE_COLORS[TIMELINE_ORDER[Math.round(d.timeline_score) - 1]] || '#888') + '20'};color:${TIMELINE_COLORS[TIMELINE_ORDER[Math.round(d.timeline_score) - 1]] || '#888'};" title="AGI timeline: ${d.agi_timeline}">${d.agi_timeline.replace(' years', 'y').replace('Mixed/unclear', '?')}</span>`
+            : ''
+        const riskBadge = beliefBadge(d.ai_risk_level, d.risk_score, RISK_ORDER, RISK_COLORS, 'AI risk level')
 
         // Canonicalize belief values to match spectrum bar labels for filter consistency
         const _cs = d.regulatory_stance
@@ -1561,7 +1566,9 @@ export function initMapEngine() {
     })
     // Unified view tab handler: Directory / AGI Views / Plot
     let _beliefsData = null
+    let _currentMobileView = 'directory'
     function switchMobileView(viewName) {
+      _currentMobileView = viewName
       const cardList = document.getElementById('mobile-card-list')
       const heroToggle = document.getElementById('mobile-hero-toggle')
       const heroContent = document.getElementById('mobile-hero-content')
@@ -5404,6 +5411,7 @@ ${dots}
             _miniGraphSim.stop()
             _miniGraphSim = null
           }
+          switchMobileView(_currentMobileView)
           setTimeout(() => {
             document.getElementById('mobile-directory').scrollTop = mobileScrollPos
           }, 50)
