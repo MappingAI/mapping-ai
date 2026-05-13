@@ -1730,6 +1730,18 @@ body:has(.beliefs-detail-sidebar) .beliefs-zoom-controls {
   color: #fff;
   border-color: var(--accent);
 }
+.mobile-sort-chip.active {
+  background: var(--text-1);
+  color: var(--bg-page);
+  border-color: var(--text-1);
+}
+.mobile-type-divider {
+  width: 1px;
+  height: 16px;
+  background: var(--line);
+  flex-shrink: 0;
+  align-self: center;
+}
 .mobile-explore-btn {
   display: inline-flex;
   align-items: center;
@@ -2134,15 +2146,15 @@ body:has(.beliefs-detail-sidebar) .beliefs-zoom-controls {
 .mobile-split-header-actions button:hover {
   color: var(--text-1);
 }
-/* Subtle desktop banner below mini graph */
+/* Entity name + connection count below mini graph */
 .mini-graph-banner {
   text-align: center;
-  padding: 2px 0;
+  padding: 6px 8px 4px;
   font-family: var(--mono);
-  font-size: 8px;
-  color: var(--text-3);
-  letter-spacing: 0.03em;
-  opacity: 0.6;
+  font-size: 10px;
+  color: var(--text-2);
+  letter-spacing: 0.02em;
+  line-height: 1.4;
 }
 .mini-graph-banner a {
   color: var(--accent);

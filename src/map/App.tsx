@@ -1526,13 +1526,19 @@ export function App() {
             <button className="mobile-type-chip" data-type="organization">
               Orgs
             </button>
-            <button className="mobile-type-chip" data-type="connected" title="Entities with connections">
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <circle cx="3" cy="6" r="2" />
-                <circle cx="9" cy="6" r="2" />
-                <line x1="5" y1="6" x2="7" y2="6" />
-              </svg>{' '}
-              Connected
+            <button
+              className="mobile-type-chip"
+              data-type="connected"
+              title="Show only entities that have relationships with others on the map"
+            >
+              Linked
+            </button>
+            <span className="mobile-type-divider" />
+            <button className="mobile-type-chip mobile-sort-chip" data-sort="stance" title="Sort by regulatory stance">
+              By Stance
+            </button>
+            <button className="mobile-type-chip mobile-sort-chip" data-sort="risk" title="Sort by AI risk assessment">
+              By Risk
             </button>
             <span style={{ flex: 1 }}></span>
             <button id="mobile-explore-btn" className="mobile-explore-btn" title="Open a random well-connected entity">

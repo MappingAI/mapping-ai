@@ -914,58 +914,46 @@ export function initMapEngine() {
       })
     })
 
-    // Center label—word-wrapped via tspans at bottom of SVG
-    const fullName = entity.name || entity.title || ''
-    const centerLabel = svgEl
-      .append('text')
-      .attr('class', 'mini-center-label')
-      .attr('text-anchor', 'middle')
-      .attr('font-size', Math.max(9, Math.min(12, width * 0.03)) + 'px')
-    // Word-wrap: chars per line and line height scale with container width
-    const charsPerLine = Math.max(16, Math.round(width / 16))
-    const lineH = Math.max(10, Math.round(height * 0.05))
-    const words = fullName.split(/\s+/)
-    const lines = []
-    let cur = ''
-    for (const w of words) {
-      if (cur && (cur + ' ' + w).length > charsPerLine) {
-        lines.push(cur)
-        cur = w
-      } else cur = cur ? cur + ' ' + w : w
-    }
-    if (cur) lines.push(cur)
-    const lineCount = Math.min(lines.length, 3)
-    const startY = height - lineH * 0.5 - (lineCount - 1) * lineH
-    lines.slice(0, 3).forEach((line, i) => {
-      centerLabel
-        .append('tspan')
-        .attr('x', width / 2)
-        .attr('text-anchor', 'middle')
-        .attr('dy', i === 0 ? 0 : lineH)
-        .text(line)
-    })
-    centerLabel.attr('y', startY)
-    // Connection count below name (when more connections than shown)
-    if (connected.length > limitedConnected.length) {
-      svgEl
-        .append('text')
-        .attr('text-anchor', 'middle')
-        .attr('x', width / 2)
-        .attr('y', height - 2)
-        .attr('font-family', 'var(--mono)')
-        .attr('font-size', Math.max(7, width * 0.02) + 'px')
-        .attr('fill', 'var(--text-3)')
-        .attr('opacity', 0.7)
-        .text(connected.length + ' connections—see full list below')
+    // Entity name and connection count shown in the banner below the SVG (not inside it)
+    const banner = container.parentElement?.querySelector('.mini-graph-banner')
+    if (banner) {
+      const name = entity.name || entity.title || ''
+      const total = connected.length
+      const showing = limitedConnected.length
+      banner.innerHTML =
+        `<strong>${escHtml(name)}</strong><br>` +
+        `<span>${total} connection${total !== 1 ? 's' : ''}` +
+        (total > showing ? ` (showing ${showing})` : '') +
+        `</span>`
     }
 
-    // Click handler: navigate to that entity
+    // Click nodes to navigate to that entity
     nodeEls.on('click', (event, d) => {
       if (d.isCenter) return
       event.stopPropagation()
       const target = Object.assign({}, d.entity, { entityType: d.entityType })
       showDetail(target, [])
     })
+
+    // Click edges to scroll to that connection in the detail panel
+    linkEls
+      .style('cursor', 'pointer')
+      .attr('stroke-width', 3)
+      .on('click', (event, link) => {
+        event.stopPropagation()
+        const targetNode = link.target
+        if (!targetNode || targetNode.isCenter) return
+        const connRow = document.querySelector(
+          `.connection-row[data-item-id="conn-${entity.id}-${targetNode.entityType}-${targetNode.entity.id}"]`,
+        )
+        if (connRow) {
+          connRow.scrollIntoView({ behavior: 'smooth', block: 'center' })
+          const header = connRow.querySelector('.connection-header')
+          if (header) header.click()
+          connRow.style.background = 'var(--input-bg)'
+          setTimeout(() => (connRow.style.background = ''), 2000)
+        }
+      })
 
     sim.on('tick', () => {
       nodes.forEach((n) => {
@@ -1508,19 +1496,54 @@ export function initMapEngine() {
       })
     })
     // Type chips (All/People/Orgs are radio; Connected is an independent toggle)
-    document.querySelectorAll('.mobile-type-chip').forEach((chip) => {
+    document.querySelectorAll('.mobile-type-chip:not(.mobile-sort-chip)').forEach((chip) => {
       chip.addEventListener('click', () => {
         if (chip.dataset.type === 'connected') {
           chip.classList.toggle('active')
           mobileFilters.connectedOnly = chip.classList.contains('active')
         } else {
           document
-            .querySelectorAll('.mobile-type-chip:not([data-type="connected"])')
+            .querySelectorAll('.mobile-type-chip:not([data-type="connected"]):not(.mobile-sort-chip)')
             .forEach((c) => c.classList.remove('active'))
           chip.classList.add('active')
           mobileFilters.type = chip.dataset.type
         }
         applyMobileFilters()
+      })
+    })
+    // Sort-by-belief chips: reorder visible cards by belief score
+    document.querySelectorAll('.mobile-sort-chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const wasActive = chip.classList.contains('active')
+        document.querySelectorAll('.mobile-sort-chip').forEach((c) => c.classList.remove('active'))
+        const cardList = document.getElementById('mobile-card-list')
+        if (wasActive) {
+          // Deactivate: restore original category-grouped order
+          const sections = [...cardList.querySelectorAll('.mobile-category-section')]
+          sections.sort((a, b) => {
+            const ia = CLUSTER_ORDER.indexOf(a.dataset.sectionCategory)
+            const ib = CLUSTER_ORDER.indexOf(b.dataset.sectionCategory)
+            return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib)
+          })
+          sections.forEach((s) => cardList.appendChild(s))
+          cardList.querySelectorAll('.mobile-category-header').forEach((h) => (h.style.display = ''))
+          return
+        }
+        chip.classList.add('active')
+        const scoreKey = chip.dataset.sort === 'stance' ? 'stance' : 'risk'
+        const dataAttr = 'data-' + scoreKey
+        // Hide category headers and sort all cards flat by belief score
+        cardList.querySelectorAll('.mobile-category-header').forEach((h) => (h.style.display = 'none'))
+        const allCards = [...cardList.querySelectorAll('.mobile-card')]
+        allCards.sort((a, b) => {
+          const aVal = a.getAttribute(dataAttr) || ''
+          const bVal = b.getAttribute(dataAttr) || ''
+          if (!aVal && !bVal) return 0
+          if (!aVal) return 1
+          if (!bVal) return -1
+          return aVal.localeCompare(bVal)
+        })
+        allCards.forEach((c) => cardList.appendChild(c))
       })
     })
     // Search with autocomplete dropdown + boosted name/title scoring
