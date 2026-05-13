@@ -1,0 +1,151 @@
+id,name,category,tier,tier_rationale
+133,Anthropic,Frontier Lab,1,Top frontier lab
+140,OpenAI,Frontier Lab,1,Top frontier lab
+146,Google DeepMind,Frontier Lab,1,Top frontier lab
+204,Meta AI,Frontier Lab,1,Top frontier lab
+177,xAI,Frontier Lab,1,Top frontier lab
+1787,Cohere,Frontier Lab,1,Top frontier lab
+1788,Inflection AI,Frontier Lab,1,Top frontier lab
+181,Safe Superintelligence Inc.,Frontier Lab,1,Top frontier lab - Ilya Sutskever
+876,Thinking Machines Lab,Frontier Lab,1,Top frontier lab - Mira Murati
+1864,Hugging Face,Frontier Lab,1,Top platform
+1069,Microsoft Research,Frontier Lab,1,Major industry lab
+1042,Microsoft,Deployers & Platforms,1,Top deployer
+1041,Google,Deployers & Platforms,1,Top deployer
+1043,Meta,Deployers & Platforms,1,Top deployer
+1329,Apple,Deployers & Platforms,1,Top deployer
+729,Amazon,Deployers & Platforms,1,Top deployer
+1071,Tesla,Deployers & Platforms,1,Major AI deployer - autonomy
+1378,X,Deployers & Platforms,1,Musk AI platform
+1058,Anduril Industries,Deployers & Platforms,1,High-profile defense AI
+1073,Palantir,Deployers & Platforms,1,High-profile defense AI
+738,Scale AI,Deployers & Platforms,1,High-profile data infra
+1221,Perplexity AI,Deployers & Platforms,1,Top consumer AI
+741,Midjourney,Deployers & Platforms,1,Top consumer AI
+752,ElevenLabs,Deployers & Platforms,1,Top consumer AI
+758,Adobe,Deployers & Platforms,1,Top consumer AI - Firefly/C2PA
+728,Nvidia,Infrastructure & Compute,1,Top compute provider
+740,TSMC,Infrastructure & Compute,1,Critical AI chip manufacturer
+1250,AMD,Infrastructure & Compute,1,Major chip competitor
+727,Cloudflare,Infrastructure & Compute,1,Major AI infra - public positions
+1309,National Institute of Standards and Technology,Government/Agency,1,NIST - critical for AI policy
+205,Center for AI Standards and Innovation (CAISI),Government/Agency,1,US AI Safety Institute
+533,UK AI Security Institute,Government/Agency,1,UK AISI
+124,Brookings Institution,Think Tank/Policy Org,2,Top think tank
+152,RAND Corporation,Think Tank/Policy Org,2,Top think tank
+131,Center for Security and Emerging Technology (CSET),Think Tank/Policy Org,2,Top AI policy think tank
+224,Center for a New American Security (CNAS),Think Tank/Policy Org,2,Top defense/AI think tank
+349,Center for Strategic and International Studies (CSIS),Think Tank/Policy Org,2,Top think tank
+229,Future of Life Institute,Think Tank/Policy Org,2,Anchor AI risk org
+225,Centre for the Governance of AI (GovAI),Think Tank/Policy Org,2,Anchor AI governance org
+173,AI Now Institute,Think Tank/Policy Org,2,Anchor critical-AI org
+1356,Niskanen Center,Think Tank/Policy Org,2,Notable centrist think tank
+228,Americans for Responsible Innovation (ARI),Think Tank/Policy Org,2,AI policy advocacy
+341,Machine Intelligence Research Institute (MIRI),AI Safety/Alignment,2,Foundational alignment org
+129,Redwood Research,AI Safety/Alignment,2,Top alignment lab
+356,Model Evaluation & Threat Research (METR),AI Safety/Alignment,2,Top evals org
+217,Apollo Research,AI Safety/Alignment,2,Top evals/safety org
+209,Center for AI Safety (CAIS),AI Safety/Alignment,2,Anchor AI safety org
+130,Center on Long-Term Risk,AI Safety/Alignment,2,Anchor safety org
+218,Alignment Research Center (ARC),AI Safety/Alignment,2,Foundational alignment org
+219,Center for Human-Compatible AI (CHAI),Academic,2,Stuart Russell's lab
+158,Epoch AI,AI Safety/Alignment,2,Top AI metrics/forecasting
+185,FAR.AI,AI Safety/Alignment,2,Notable safety org
+128,Coefficient Giving (formerly Open Philanthropy),VC/Capital/Philanthropy,2,Top AI safety funder
+211,Andreessen Horowitz (a16z),VC/Capital/Philanthropy,2,Top AI VC
+134,Founders Fund,VC/Capital/Philanthropy,2,Top VC - Thiel
+241,Y Combinator,VC/Capital/Philanthropy,2,Top accelerator
+744,SoftBank,VC/Capital/Philanthropy,2,Major AI investor
+243,Thrive Capital,VC/Capital/Philanthropy,2,Top AI VC - OpenAI
+1997,Schmidt Sciences,VC/Capital/Philanthropy,2,Major AI funder
+1055,Gates Foundation,VC/Capital/Philanthropy,2,Major global AI funder
+905,ACLU,Ethics/Bias/Rights,2,Top civil rights org
+904,Electronic Frontier Foundation,Ethics/Bias/Rights,2,Top digital rights org
+907,Center for Democracy & Technology,Ethics/Bias/Rights,2,Top digital policy org
+1052,DAIR Institute,Ethics/Bias/Rights,2,Top critical-AI research
+132,Partnership on AI,Ethics/Bias/Rights,2,Multistakeholder anchor
+139,Goodfire,AI Safety/Alignment,2,Notable interpretability org
+220,Conjecture,AI Safety/Alignment,2,Notable safety org
+212,AI Futures Project,AI Safety/Alignment,2,AI 2027 - Daniel Kokotajlo
+210,SAG-AFTRA,Labor/Civil Society,2,Major labor union - AI strikes
+135,Writers Guild of America,Labor/Civil Society,2,Major labor union - AI strikes
+874,AFL-CIO,Labor/Civil Society,2,Top labor coalition
+18,Sam Altman,Executive,3,OpenAI CEO - most-recognized
+8,Dario Amodei,Executive,3,Anthropic CEO
+13,Daniela Amodei,Executive,3,Anthropic President
+33,Demis Hassabis,Executive,3,DeepMind CEO
+47,Mark Zuckerberg,Executive,3,Meta CEO
+48,Elon Musk,Executive,3,xAI/Tesla CEO
+1365,Mustafa Suleyman,Executive,3,Microsoft AI CEO
+902,Mira Murati,Executive,3,Thinking Machines CEO
+1001,Satya Nadella,Executive,3,Microsoft CEO
+1000,Sundar Pichai,Executive,3,Alphabet CEO
+733,Jensen Huang,Executive,3,Nvidia CEO
+16,Jakub Pachocki,Researcher,3,OpenAI chief scientist
+835,Ilya Sutskever,Researcher,3,SSI founder
+1346,Greg Brockman,Executive,3,OpenAI President/co-founder
+29,Yoshua Bengio,Academic,3,Turing Award - top researcher
+821,Geoffrey Hinton,Academic,3,Turing Award - top researcher
+55,Fei-Fei Li,Academic,3,Top researcher - World Labs
+1,Stuart Russell,Academic,3,Top AI safety academic
+92,Yann LeCun,Researcher,3,Meta Chief AI Scientist
+30,Paul Christiano,Researcher,3,Foundational alignment researcher
+22,Eliezer Yudkowsky,Researcher,3,MIRI co-founder
+93,Dan Hendrycks,Researcher,3,CAIS director
+888,Leopold Aschenbrenner,Researcher,3,Situational Awareness - top influence
+2157,Neel Nanda,Researcher,3,Leading interpretability researcher
+825,Helen Toner,Academic,3,Prominent AI governance voice
+822,Jan Leike,Researcher,3,Prominent safety researcher
+829,Jack Clark,Researcher,3,Anthropic co-founder
+823,Chris Olah,Researcher,3,Anthropic co-founder - interp
+35,Timnit Gebru,Researcher,3,DAIR founder - prominent voice
+990,Gary Marcus,Researcher,3,Prominent AI critic - very high media profile
+846,Max Tegmark,Academic,3,FLI president - high public profile
+1002,Tristan Harris,Organizer,3,Center for Humane Tech - high profile
+36,Fran Drescher,Organizer,3,SAG-AFTRA president - AI labor leader
+3,Marc Andreessen,Investor,3,a16z - Techno-Optimist Manifesto
+38,Peter Thiel,Investor,3,Major AI investor - public positions
+1009,Bill Gates,Investor,3,Major AI voice - Gates Foundation
+855,Eric Schmidt,Executive,3,Schmidt Sciences - massive AI influence
+842,Jaan Tallinn,Investor,3,Major AI safety funder - SFF/FLI
+2,Chuck Schumer,Policymaker,3,Senate Majority Leader - SAFE framework
+82,Ted Cruz,Policymaker,3,Senate AI policy lead
+37,Ro Khanna,Policymaker,3,House AI policy lead
+97,Alex Bores,Policymaker,3,NY state AI policy lead
+34,Gina Raimondo,Policymaker,3,Former Commerce Secretary - AI EO
+27,Michael Kratsios,Policymaker,3,OSTP director - Trump 2.0
+42,David Sacks,Policymaker,3,White House AI/crypto czar
+116,Gavin Newsom,Policymaker,3,California governor - SB1047/SB53
+1103,Donald Trump,Policymaker,3,Current president
+1376,Joe Biden,Policymaker,3,Former president - AI EO author
+903,Algorithmic Justice League,Ethics/Bias/Rights,4,Notable advocacy org
+873,Mozilla Foundation,Ethics/Bias/Rights,4,Top tech rights org
+906,Data & Society,Ethics/Bias/Rights,4,Top research org
+452,Stanford HAI,Academic,4,Top academic AI institute
+944,Stanford Digital Economy Lab,Academic,4,Erik Brynjolfsson - economic AI research
+1053,Mila,Academic,4,Top AI institute - Bengio
+1194,Allen Institute for AI,Academic,4,Major nonprofit AI research
+223,New Consensus,Think Tank/Policy Org,5,Project 2029 collaborator
+956,Roosevelt Institute,Think Tank/Policy Org,5,Coalition-critical
+415,"Machine Alignment, Transparency, and Security (MATS)",AI Safety/Alignment,5,Key training pipeline
+221,BlueDot Impact,AI Safety/Alignment,5,Key field-building org
+330,AI2050 (Schmidt Sciences),VC/Capital/Philanthropy,5,Major AI safety funder
+242,EA Long-Term Future Fund,VC/Capital/Philanthropy,5,Major safety funder
+255,Survival and Flourishing Fund,VC/Capital/Philanthropy,5,Major safety funder - Tallinn
+227,Manifund,VC/Capital/Philanthropy,5,Notable funder
+191,Institute for AI Policy and Strategy (IAPS),AI Safety/Alignment,5,Key governance research
+230,Centre for Long-Term Resilience,Think Tank/Policy Org,5,Key governance org
+1431,Encode AI,Think Tank/Policy Org,5,Youth AI policy coalition
+540,Public AI,Think Tank/Policy Org,5,Public AI infrastructure
+59,Daniel Kokotajlo,Researcher,3,AI Futures Project - AI 2027 author
+60,Marius Hobbhahn,Researcher,3,Apollo Research CEO
+999,Nate Soares,Researcher,3,MIRI president
+826,Jason Matheny,Executive,3,RAND CEO - top AI policy figure
+887,Ethan Mollick,Academic,3,Wharton - major public AI voice
+837,Percy Liang,Academic,3,Stanford CRFM director
+848,Reid Hoffman,Investor,3,LinkedIn founder - AI investor public positions
+1011,Naval Ravikant,Investor,3,AngelList - high-profile AI voice
+860,Ian Hogarth,Investor,3,UK Frontier AI Taskforce chair
+859,Matt Clifford,Investor,3,UK AI policy architect
+61,Holden Karnofsky,Researcher,3,Anthropic/Open Phil veteran - AI policy
+25,Kyle Fish,Researcher,3,Anthropic model welfare lead - novel area
