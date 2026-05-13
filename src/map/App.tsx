@@ -252,6 +252,7 @@ export function App() {
           <a href="/contribute">Contribute</a>
           <a href="/map">Map</a>
           <a href="/insights">Insights</a>
+          <a href="/guide">Guide</a>
           <a href="/about">About</a>
         </div>
         <button className="theme-toggle" id="theme-toggle" title="Toggle dark/light mode">
@@ -286,31 +287,28 @@ export function App() {
             <summary>How to use the map</summary>
             <div className="onboarding-tips">
               <div className="onboarding-tip">
-                <strong>Network:</strong> Force-directed graph of stakeholders. Sub-tabs filter by All, Orgs, or People.
-                Click any node to see details and connections. Scroll to zoom, drag to pan.
+                <strong>Explore the map:</strong> See all stakeholders as an interactive web of connections. Click
+                anyone to learn more. Pinch to zoom, drag to pan.
               </div>
               <div className="onboarding-tip">
-                <strong>Plot:</strong> Scatter chart positioning entities along belief dimensions (regulatory stance,
-                AGI timeline, AI risk level). Switch axes and entity types with the controls below.
+                <strong>Compare views:</strong> Place stakeholders on a chart by their beliefs about AI regulation,
+                timelines, or risk levels.
               </div>
               <div className="onboarding-tip">
-                <strong>Beliefs:</strong> Explore how stakeholders define AGI. Sub-views include a cluster map, list,
-                scatter projection, stacked timeline, and per-cluster trend sparklines. Color by cluster, category, or
-                belief dimension.
+                <strong>Deep dive on AI views:</strong> See how different stakeholders define AGI and what they think it
+                means for the future.
               </div>
               <div className="onboarding-tip">
-                <strong>Filters &amp; Search:</strong> Use category chips and the stance legend to show or hide groups.
-                Search supports related terms (e.g., &quot;safety&quot; finds alignment orgs too).
+                <strong>Find anyone:</strong> Search by name or use the colored category filters to focus on specific
+                groups.
               </div>
               <div className="onboarding-tip">
-                <strong>Source:</strong> Data is crowdsourced and admin-reviewed. Belief scores (stance, timeline, risk)
-                are weighted averages from submissions.
+                <strong>Where the data comes from:</strong> Community-submitted and reviewed by our team. Belief scores
+                reflect averaged submissions.
               </div>
               <div className="onboarding-tip">
-                <strong>Verify &amp; correct:</strong> Click any entity to see its details. Each field has
-                &#x25B2;/&#x25BC; buttons to confirm or flag data, and a &#x270E; button to leave a correction note with
-                rich text and @mentions. Verification dots (green/yellow/red) on nodes show which entities have been
-                checked against external sources.
+                <strong>Help improve the data:</strong> Click any person or org to vote on whether their info looks
+                right, or leave a correction.
               </div>
             </div>
             <div className="onboarding-mobile-note">

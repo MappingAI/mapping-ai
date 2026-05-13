@@ -164,7 +164,7 @@ export function OrgSearch({
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
           autoComplete="off"
-          className={`w-full px-3 py-2 font-mono text-[13px] border rounded outline-none transition-colors bg-white ${
+          className={`w-full px-3 py-2.5 font-mono text-[13px] border rounded outline-none transition-colors bg-white min-h-[44px] max-[600px]:text-[16px] ${
             isOpen ? 'border-[#2563eb]' : 'border-[#ddd]'
           } hover:border-[#999] focus:border-[#2563eb]`}
         />
@@ -194,7 +194,7 @@ export function OrgSearch({
                   selectResult(result)
                 }}
                 onMouseEnter={() => setActiveIndex(i)}
-                className={`flex items-center justify-between px-3 py-1.5 cursor-pointer text-[12px] font-mono transition-colors ${
+                className={`flex items-center justify-between px-3 py-2.5 cursor-pointer text-[12px] font-mono transition-colors min-h-[44px] max-[600px]:text-[14px] ${
                   isActive ? 'bg-[#f0f0f0]' : ''
                 }`}
               >
@@ -222,7 +222,7 @@ export function OrgSearch({
                 handleCreateOrg()
               }}
               onMouseEnter={() => setActiveIndex(results.length)}
-              className={`flex items-center gap-1.5 px-3 py-2 cursor-pointer text-[12px] font-mono border-t border-[#eee] transition-colors ${
+              className={`flex items-center gap-1.5 px-3 py-2.5 cursor-pointer text-[12px] font-mono border-t border-[#eee] transition-colors min-h-[44px] max-[600px]:text-[14px] ${
                 activeIndex === results.length ? 'bg-[#f0f0f0]' : ''
               } text-[#2563eb]`}
             >
@@ -249,7 +249,7 @@ export function OrgSearch({
             e.preventDefault()
             handleCreateOrg()
           }}
-          className="mt-1 text-[11px] font-mono text-[#2563eb] hover:text-[#1d4ed8] hover:underline bg-transparent border-none cursor-pointer p-0"
+          className="mt-1 text-[11px] font-mono text-[#2563eb] hover:text-[#1d4ed8] hover:underline bg-transparent border-none cursor-pointer p-0 min-h-[44px] flex items-center"
         >
           Can&apos;t find it? Add this org
         </button>

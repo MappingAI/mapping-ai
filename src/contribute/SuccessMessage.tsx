@@ -19,7 +19,7 @@ export function SuccessMessage({ formType, isUpdate, onSubmitAnother }: SuccessM
   const typeLabel = TYPE_LABELS[formType] || formType
 
   return (
-    <div className="w-full py-16 px-6 flex flex-col items-center justify-center text-center">
+    <div className="w-full py-16 px-6 flex flex-col items-center justify-center text-center max-[600px]:px-4 max-[600px]:py-12">
       <h2
         className="text-[28px] tracking-[-0.02em] text-[#1a1a1a] mb-4"
         style={{ fontFamily: "'Source Serif 4', Georgia, serif" }}
@@ -34,7 +34,7 @@ export function SuccessMessage({ formType, isUpdate, onSubmitAnother }: SuccessM
       <button
         type="button"
         onClick={onSubmitAnother}
-        className="px-5 py-2.5 font-mono text-[13px] bg-[#1a1a1a] text-white border border-[#1a1a1a] rounded cursor-pointer transition-colors hover:bg-[#333]"
+        className="px-5 py-3 font-mono text-[13px] bg-[#1a1a1a] text-white border border-[#1a1a1a] rounded cursor-pointer transition-colors hover:bg-[#333] min-h-[48px]"
       >
         Submit another
       </button>

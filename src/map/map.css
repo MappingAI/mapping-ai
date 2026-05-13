@@ -42,6 +42,28 @@ body {
     color 0.3s;
 }
 
+/* ─── Mobile/Desktop instant layout switch ───
+   Prevents flash of desktop layout on mobile by hiding desktop-only
+   elements and showing the mobile directory before JS runs. */
+@media (max-width: 767px) {
+  .map-container,
+  .controls,
+  .zoom-controls,
+  #sidebar-toggle,
+  #contribute-btn,
+  .onboarding-overlay {
+    display: none !important;
+  }
+  #mobile-directory {
+    display: block !important;
+  }
+}
+@media (min-width: 768px) {
+  #mobile-directory {
+    display: none !important;
+  }
+}
+
 .site-nav {
   position: fixed;
   top: 0;
@@ -1373,6 +1395,29 @@ body:has(.beliefs-detail-sidebar) .beliefs-zoom-controls {
   background: var(--bg-page);
   z-index: 5;
 }
+/* Loading indicator shown while engine.js populates entity cards */
+#mobile-directory:not(:has(.mobile-card))::after {
+  content: 'Loading directory...';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  animation: mobile-skeleton-pulse 1.5s ease-in-out infinite;
+}
+@keyframes mobile-skeleton-pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+}
 .mobile-mode-label {
   text-align: center;
   padding: 0.2rem 0.75rem;
@@ -2307,8 +2352,10 @@ body:has(.beliefs-detail-sidebar) .beliefs-zoom-controls {
 }
 @media (max-width: 768px) {
   .onboarding-card {
-    max-height: 85vh;
+    max-height: calc(85vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 2rem;
   }
   .onboarding-mobile-note {
     display: block;

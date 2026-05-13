@@ -48,7 +48,10 @@ export function DuplicateDetection({ query, entityType, onViewExisting, onUpdate
       {/* Match list */}
       <div className="divide-y divide-amber-200">
         {matches.map((match) => (
-          <div key={match.id} className="flex items-start justify-between gap-3 px-3 py-2">
+          <div
+            key={match.id}
+            className="flex items-start justify-between gap-3 px-3 py-2 max-[600px]:flex-col max-[600px]:gap-2"
+          >
             {/* Entity info */}
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-1.5">
@@ -74,14 +77,14 @@ export function DuplicateDetection({ query, entityType, onViewExisting, onUpdate
             </div>
 
             {/* Action buttons — onMouseDown to avoid blur-vs-click race */}
-            <div className="flex items-center gap-1.5 flex-shrink-0 pt-0.5">
+            <div className="flex items-center gap-1.5 flex-shrink-0 pt-0.5 max-[600px]:w-full">
               <button
                 type="button"
                 onMouseDown={(e) => {
                   e.preventDefault()
                   onViewExisting(match)
                 }}
-                className="text-[11px] font-mono px-2 py-1 rounded border border-[#ddd] text-[#555] bg-white hover:bg-[#f5f5f5] hover:border-[#999] transition-colors cursor-pointer"
+                className="text-[11px] font-mono px-2 py-1.5 rounded border border-[#ddd] text-[#555] bg-white hover:bg-[#f5f5f5] hover:border-[#999] transition-colors cursor-pointer min-h-[44px] max-[600px]:flex-1"
               >
                 View existing
               </button>
@@ -91,7 +94,7 @@ export function DuplicateDetection({ query, entityType, onViewExisting, onUpdate
                   e.preventDefault()
                   onUpdateExisting(match)
                 }}
-                className="text-[11px] font-mono px-2 py-1 rounded border border-[#2563eb] text-[#2563eb] bg-white hover:bg-[#eff6ff] transition-colors cursor-pointer"
+                className="text-[11px] font-mono px-2 py-1.5 rounded border border-[#2563eb] text-[#2563eb] bg-white hover:bg-[#eff6ff] transition-colors cursor-pointer min-h-[44px] max-[600px]:flex-1"
               >
                 Add info to this entry
               </button>

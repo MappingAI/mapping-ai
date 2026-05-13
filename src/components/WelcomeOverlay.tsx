@@ -18,7 +18,10 @@ export function WelcomeOverlay() {
         if (e.target === e.currentTarget) dismiss()
       }}
     >
-      <div className="bg-white rounded-xl px-8 py-7 max-w-[540px] w-[92%] shadow-2xl font-serif max-h-[90vh] overflow-y-auto">
+      <div
+        className="bg-white rounded-xl px-8 py-7 max-w-[540px] w-[92%] shadow-2xl font-serif max-h-[calc(90vh-env(safe-area-inset-top)-env(safe-area-inset-bottom))] overflow-y-auto pb-8"
+        style={{ WebkitOverflowScrolling: 'touch' }}
+      >
         <a
           href="https://x.com/mapping_ai/status/2051334980144710112"
           target="_blank"

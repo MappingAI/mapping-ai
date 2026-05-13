@@ -387,7 +387,7 @@ function ChartFundingStance({ orgs }: { orgs: Entity[] }) {
       }))
       .sort((a: { mean: number }, b: { mean: number }) => a.mean - b.mean)
 
-    const W = container.clientWidth || 660
+    const W = Math.max(container.clientWidth || 660, 480)
     const barH = 28,
       gap = 6,
       padL = 180,
@@ -534,7 +534,7 @@ function ChartThreatFrequency({ entities }: { entities: Entity[] }) {
       .sort((a, b) => b.count - a.count)
     if (sorted.length === 0) return
 
-    const W = container.clientWidth || 660
+    const W = Math.max(container.clientWidth || 660, 420)
     const barH = 22,
       gap = 4,
       padL = 160,
@@ -870,7 +870,7 @@ function ChartCategoryMatrix({ edges, entities }: { edges: Edge[]; entities: Ent
 
 function ChartContainer({ title, source, children }: { title: string; source: string; children: React.ReactNode }) {
   return (
-    <div className="bg-[#f8f7f5] rounded-lg p-6 my-8 overflow-hidden fade-in [&_svg]:w-full [&_svg]:block">
+    <div className="insights-chart-wrap bg-[#f8f7f5] rounded-lg p-6 my-8 overflow-hidden max-[768px]:overflow-x-auto fade-in [&_svg]:block max-[768px]:p-3 max-[768px]:my-5">
       <div className="font-mono text-[11px] tracking-[0.08em] uppercase text-[#555] mb-4">{title}</div>
       {children}
       <div className="font-mono text-[9px] text-[#888] tracking-[0.04em] mt-3 text-center">{source}</div>
@@ -904,20 +904,54 @@ function Para({ children }: { children: React.ReactNode }) {
    ──────────────────────────────────────────── */
 
 function TableOfContents({ activeId }: { activeId: string }) {
+  const mobileRef = useRef<HTMLElement>(null)
+
+  // Auto-scroll active item into view on mobile strip
+  useEffect(() => {
+    if (!mobileRef.current) return
+    const activeLink = mobileRef.current.querySelector('[data-active="true"]')
+    if (activeLink) {
+      activeLink.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' })
+    }
+  }, [activeId])
+
   return (
-    <nav className="hidden min-[1100px]:block fixed top-1/2 -translate-y-1/2 w-[160px] left-8">
-      {TOC_ITEMS.map((item) => (
-        <a
-          key={item.id}
-          href={`#${item.id}`}
-          className={`block font-mono text-[10px] tracking-[0.04em] no-underline py-[0.35rem] pl-3 border-l-2 transition-colors duration-150 leading-[1.4] hover:text-[#555] hover:no-underline ${
-            activeId === item.id ? 'text-[#2563eb] border-[#2563eb]' : 'text-[#888] border-transparent'
-          }`}
-        >
-          {item.label}
-        </a>
-      ))}
-    </nav>
+    <>
+      {/* Desktop sidebar */}
+      <nav className="hidden min-[1100px]:block fixed top-1/2 -translate-y-1/2 w-[160px] left-8">
+        {TOC_ITEMS.map((item) => (
+          <a
+            key={item.id}
+            href={`#${item.id}`}
+            className={`block font-mono text-[10px] tracking-[0.04em] no-underline py-[0.35rem] pl-3 border-l-2 transition-colors duration-150 leading-[1.4] hover:text-[#555] hover:no-underline ${
+              activeId === item.id ? 'text-[#2563eb] border-[#2563eb]' : 'text-[#888] border-transparent'
+            }`}
+          >
+            {item.label}
+          </a>
+        ))}
+      </nav>
+
+      {/* Mobile horizontal strip */}
+      <nav
+        ref={mobileRef}
+        className="min-[1100px]:hidden fixed top-12 left-0 right-0 z-[99] bg-white border-b border-[#bbb]/30 flex overflow-x-auto whitespace-nowrap"
+        style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+      >
+        {TOC_ITEMS.map((item) => (
+          <a
+            key={item.id}
+            href={`#${item.id}`}
+            data-active={activeId === item.id}
+            className={`inline-block font-mono text-[10px] tracking-[0.04em] no-underline px-3 py-2.5 border-b-2 transition-colors duration-150 shrink-0 hover:text-[#555] hover:no-underline ${
+              activeId === item.id ? 'text-[#2563eb] border-[#2563eb]' : 'text-[#888] border-transparent'
+            }`}
+          >
+            {item.label}
+          </a>
+        ))}
+      </nav>
+    </>
   )
 }
 
@@ -1017,6 +1051,46 @@ export function App() {
       <WelcomeOverlay />
       <style>{`
         .fade-in { opacity: 1; transform: none; }
+
+        /* Hide scrollbar on mobile TOC strip */
+        nav[class*="overflow-x-auto"]::-webkit-scrollbar { display: none; }
+
+        /* ── Mobile responsive ── */
+        @media (max-width: 1099px) {
+          /* Account for mobile TOC strip below the navbar (top-12 = 48px, strip ~36px) */
+          article { padding-top: calc(3rem + 48px + 36px) !important; }
+        }
+
+        @media (max-width: 768px) {
+          /* Tighter horizontal padding */
+          article { padding-left: 1rem !important; padding-right: 1rem !important; }
+
+          /*
+           * SVGs in chart containers: ensure height scales with viewBox.
+           * Individual chart components enforce their own min-width for readability.
+           * The container's overflow-x-auto lets the user scroll wider charts.
+           */
+          .insights-chart-wrap svg {
+            height: auto !important;
+          }
+
+          /* Heading sizes */
+          article h1 { font-size: 24px !important; }
+          article h2 { font-size: 20px !important; }
+          article h3 { font-size: 16px !important; }
+
+          /* Body text */
+          article p, article .text-\\[16\\.5px\\] { font-size: 15px !important; }
+
+          /* Finding boxes: tighter padding */
+          article .border-l-\\[3px\\] { padding: 0.75rem 1rem !important; }
+        }
+
+        @media (max-width: 480px) {
+          article { padding-left: 0.75rem !important; padding-right: 0.75rem !important; }
+          article h1 { font-size: 22px !important; }
+          article p, article .text-\\[16\\.5px\\] { font-size: 14.5px !important; }
+        }
       `}</style>
 
       <Navigation />
@@ -1046,7 +1120,10 @@ export function App() {
         </p>
 
         {/* Stat row */}
-        <div id="overview" className="flex gap-4 my-6 flex-wrap max-[600px]:flex-col">
+        <div
+          id="overview"
+          className="flex gap-4 my-6 flex-wrap max-[480px]:grid max-[480px]:grid-cols-2 max-[480px]:gap-3"
+        >
           <div className="flex-1 min-w-[120px] bg-[#f8f7f5] rounded-md p-4 text-center">
             <div className="font-mono text-[26px] font-medium text-[#1a1a1a] leading-[1.2]">{people.length || '—'}</div>
             <div className="font-mono text-[9px] tracking-[0.1em] uppercase text-[#888] mt-1">People</div>

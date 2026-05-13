@@ -35,6 +35,8 @@ export default defineConfig({
         theoryofchange: resolve(__dirname, 'theoryofchange.html'),
         workshop: resolve(__dirname, 'workshop/index.html'),
         workshopSlides: resolve(__dirname, 'workshop/slides.html'),
+        mappingParty: resolve(__dirname, 'workshop/mapping-party.html'),
+        guide: resolve(__dirname, 'guide.html'),
         insights: resolve(__dirname, 'insights.html'),
       },
     },

@@ -133,7 +133,7 @@ export function CustomSelect({
         aria-haspopup="listbox"
         disabled={disabled}
         onClick={() => !disabled && setIsOpen(!isOpen)}
-        className={`w-full flex items-center gap-2 px-3 py-2 text-left font-mono text-[13px] border rounded cursor-pointer transition-colors ${
+        className={`w-full flex items-center gap-2 px-3 py-2.5 text-left font-mono text-[13px] border rounded cursor-pointer transition-colors min-h-[44px] max-[600px]:text-[16px] ${
           isOpen ? 'border-[#2563eb]' : 'border-[#ddd]'
         } ${disabled ? 'opacity-50 cursor-not-allowed' : 'hover:border-[#999]'} bg-white`}
       >
@@ -172,7 +172,7 @@ export function CustomSelect({
                 placeholder="Search..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full px-2 py-1 text-[12px] font-mono border border-[#eee] rounded outline-none focus:border-[#2563eb]"
+                className="w-full px-2 py-1.5 text-[12px] font-mono border border-[#eee] rounded outline-none focus:border-[#2563eb] min-h-[36px] max-[600px]:text-[16px]"
                 tabIndex={-1}
               />
             </div>
@@ -198,7 +198,7 @@ export function CustomSelect({
                       handleSelect(option.value)
                     }}
                     onMouseEnter={() => setActiveIndex(i)}
-                    className={`flex items-center gap-2 px-3 py-1.5 cursor-pointer text-[12px] font-mono transition-colors ${
+                    className={`flex items-center gap-2 px-3 py-2.5 cursor-pointer text-[12px] font-mono transition-colors min-h-[44px] max-[600px]:text-[14px] ${
                       isActive ? 'bg-[#f0f0f0]' : ''
                     } ${isSelected ? 'text-[#2563eb] font-semibold' : 'text-[#1a1a1a]'}`}
                   >

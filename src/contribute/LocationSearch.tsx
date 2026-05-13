@@ -83,7 +83,7 @@ export function LocationSearch({
           <button
             type="button"
             onClick={() => onRemoteChange?.(!remoteChecked)}
-            className={`bg-transparent border-none cursor-pointer p-0 font-mono text-[12px] underline transition-colors ${
+            className={`bg-transparent border-none cursor-pointer p-0 font-mono text-[12px] underline transition-colors min-h-[44px] ${
               remoteChecked ? 'text-[#1a1a1a] font-semibold' : 'text-[#2563eb]'
             }`}
           >
