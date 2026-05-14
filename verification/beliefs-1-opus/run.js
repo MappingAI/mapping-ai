@@ -1159,10 +1159,8 @@ async function main() {
     if (outcome.success) {
       allResults.push(...results)
 
-      // Track global costs
-      costs.opus_input += entityCost.input_tokens
-      costs.opus_output += entityCost.output_tokens
-      costs.exa_searches += entityCost.exa_calls
+      // Note: Global cost tracking happens inside verifyEntity via costs.trackClaude()
+      // The entityCost here is just for per-entity reporting, not for global accumulation
 
       // Save per-entity result file with full trace
       const entityResult = {
