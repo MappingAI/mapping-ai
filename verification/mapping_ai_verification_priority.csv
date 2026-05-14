@@ -31,6 +31,9 @@ id,name,category,tier,tier_rationale
 1309,National Institute of Standards and Technology,Government/Agency,1,NIST - critical for AI policy
 205,Center for AI Standards and Innovation (CAISI),Government/Agency,1,US AI Safety Institute
 533,UK AI Security Institute,Government/Agency,1,UK AISI
+166,Senate AI Working Group,Government/Agency,1,Bipartisan congressional AI body
+345,White House OSTP,Government/Agency,1,Key executive branch AI policy
+915,European Commission,Government/Agency,1,EU AI Act authority
 124,Brookings Institution,Think Tank/Policy Org,2,Top think tank
 152,RAND Corporation,Think Tank/Policy Org,2,Top think tank
 131,Center for Security and Emerging Technology (CSET),Think Tank/Policy Org,2,Top AI policy think tank
