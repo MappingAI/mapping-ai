@@ -16,6 +16,8 @@
  * Usage:
  *   node beliefs-1-opus/run.js --id=18
  *   node beliefs-1-opus/run.js --limit=10
+ *   node beliefs-1-opus/run.js --limit=50 --parallel=5    # Run 5 entities concurrently
+ *   node beliefs-1-opus/run.js --csv=mapping_ai_verification_priority.csv --parallel=10
  */
 
 import Anthropic from '@anthropic-ai/sdk'
@@ -603,6 +605,63 @@ async function writeSourceAndClaim(correction) {
   }
 }
 
+// ── CSV Loading ──
+
+async function loadEntitiesFromCsv(csvPath) {
+  const fullPath = path.resolve(__dirname, '..', csvPath)
+  if (!fs.existsSync(fullPath)) {
+    throw new Error(`CSV file not found: ${fullPath}`)
+  }
+
+  const content = fs.readFileSync(fullPath, 'utf-8')
+  const lines = content.trim().split('\n')
+  const header = lines[0].split(',')
+  const idIndex = header.indexOf('id')
+
+  if (idIndex === -1) {
+    throw new Error('CSV must have an "id" column')
+  }
+
+  const ids = lines
+    .slice(1)
+    .map((line) => {
+      const parts = line.split(',')
+      return parseInt(parts[idIndex], 10)
+    })
+    .filter((id) => !isNaN(id))
+
+  console.log(`Loaded ${ids.length} entity IDs from CSV`)
+  return ids
+}
+
+// ── Parallel Execution Helper ──
+
+async function runWithConcurrency(items, concurrency, fn) {
+  const results = []
+  let index = 0
+
+  async function worker() {
+    while (index < items.length) {
+      const currentIndex = index++
+      const item = items[currentIndex]
+      try {
+        const result = await fn(item, currentIndex)
+        results[currentIndex] = result
+      } catch (err) {
+        results[currentIndex] = { error: err.message, item }
+      }
+    }
+  }
+
+  // Start workers
+  const workers = Array(Math.min(concurrency, items.length))
+    .fill(null)
+    .map(() => worker())
+
+  await Promise.all(workers)
+  return results
+}
+
 // ── Database Queries ──
 
 function getClaimDimension(field) {
@@ -949,6 +1008,12 @@ async function main() {
     limit: flags.limit ? parseInt(flags.limit) : 10,
     idRange: flags['id-range'] ? flags['id-range'].split('-').map(Number) : null,
     writeDb: flags['write-db'] === true || flags['write-db'] === 'true',
+    csvPath: flags.csv || null,
+    parallel: flags.parallel ? parseInt(flags.parallel) : 1,
+  }
+
+  if (options.parallel > 1) {
+    console.log(`Parallel execution: ${options.parallel} concurrent entities`)
   }
 
   // #5: Progress tracking with resume support
@@ -977,9 +1042,28 @@ async function main() {
   // Pre-run backup before any DB mutations
   await runPreBackup(pool, { label: 'beliefs-1-opus', r2: true })
 
-  // Fetch entities
-  const entities = await getEntitiesWithBeliefs(options)
-  console.log(`Found ${entities.length} entities to verify`)
+  // Fetch entities - either from CSV or database query
+  let entities
+  if (options.csvPath) {
+    const csvIds = await loadEntitiesFromCsv(options.csvPath)
+    // Fetch full entity data for these IDs
+    const placeholders = csvIds.map((_, i) => `$${i + 1}`).join(',')
+    const result = await pool.query(
+      `SELECT id, entity_type, name, category,
+              belief_regulatory_stance, belief_regulatory_stance_detail,
+              belief_evidence_source, belief_agi_timeline, belief_ai_risk,
+              belief_threat_models, field_verification
+       FROM entity
+       WHERE status = 'approved' AND id IN (${placeholders})
+       ORDER BY id`,
+      csvIds,
+    )
+    entities = result.rows
+    console.log(`Found ${entities.length} entities from CSV (${csvIds.length - entities.length} not found/not approved)`)
+  } else {
+    entities = await getEntitiesWithBeliefs(options)
+    console.log(`Found ${entities.length} entities to verify`)
+  }
 
   const maxCost = flags['max-cost'] ? parseFloat(flags['max-cost']) : 500
   console.log(`Cost ceiling: $${maxCost}`)
@@ -1013,36 +1097,74 @@ async function main() {
 
   let dbWriteCount = 0
   let dbWriteErrors = 0
-  let consecutiveErrors = 0
+  let processedCount = 0
+  let errorCount = 0
 
-  for (let i = 0; i < entities.length; i++) {
-    const entity = entities[i]
+  // Filter out already completed entities
+  const entitiesToProcess = entities.filter((e) => !completedSet.has(e.id))
+  console.log(`Entities to process: ${entitiesToProcess.length} (${entities.length - entitiesToProcess.length} already completed)`)
 
-    // Skip already completed (resume mode)
-    if (completedSet.has(entity.id)) continue
-
-    // Cost ceiling check
-    const currentCost = costs.getSummary().total_cost_usd
-    if (currentCost >= maxCost) {
-      console.error(
-        `\n  ABORTING: Cost ceiling reached ($${currentCost.toFixed(2)} >= $${maxCost}). ${i}/${entities.length} entities processed.`,
-      )
-      break
-    }
-
-    costs.resetEntity()
+  // Process entity function (used for both sequential and parallel)
+  async function processEntity(entity, index) {
     const entityStart = Date.now()
 
     try {
       const { results, trace } = await verifyEntity(entity)
-      allResults.push(...results)
-      consecutiveErrors = 0
-
-      // Per-entity cost
-      const entityCost = costs.getEntityCost()
       const entityMs = Date.now() - entityStart
 
-      // #1: Save per-entity result file with full trace
+      // Calculate cost from results (rough estimate based on trace)
+      let inputTokens = 0
+      let outputTokens = 0
+      let exaCalls = 0
+      for (const t of trace || []) {
+        if (t.usage) {
+          inputTokens += t.usage.input_tokens || 0
+          outputTokens += t.usage.output_tokens || 0
+        }
+        exaCalls += (t.tool_calls || []).filter((tc) => tc.name.startsWith('exa')).length
+      }
+      const opusCost = (inputTokens * 15 + outputTokens * 75) / 1_000_000
+      const exaCost = exaCalls * 0.008
+      const entityCost = {
+        opus_usd: opusCost,
+        exa_usd: exaCost,
+        total_usd: opusCost + exaCost,
+        input_tokens: inputTokens,
+        output_tokens: outputTokens,
+        exa_calls: exaCalls,
+      }
+
+      return {
+        success: true,
+        entity,
+        results,
+        trace,
+        entityCost,
+        entityMs,
+      }
+    } catch (err) {
+      return {
+        success: false,
+        entity,
+        error: err.message,
+        entityMs: Date.now() - entityStart,
+      }
+    }
+  }
+
+  // Process results (write to files, DB, etc.)
+  async function saveResults(outcome) {
+    const { entity, results, trace, entityCost, entityMs, error } = outcome
+
+    if (outcome.success) {
+      allResults.push(...results)
+
+      // Track global costs
+      costs.opus_input += entityCost.input_tokens
+      costs.opus_output += entityCost.output_tokens
+      costs.exa_searches += entityCost.exa_calls
+
+      // Save per-entity result file with full trace
       const entityResult = {
         id: entity.id,
         name: entity.name,
@@ -1055,7 +1177,7 @@ async function main() {
       }
       fs.writeFileSync(path.join(ENTITIES_DIR, `${entity.id}.json`), JSON.stringify(entityResult, null, 2) + '\n')
 
-      // #2: Append to cost ledger
+      // Append to cost ledger
       fs.appendFileSync(
         costLedgerPath,
         JSON.stringify({
@@ -1072,7 +1194,7 @@ async function main() {
         }) + '\n',
       )
 
-      // Write to JSONL (per-range file for parallel safety)
+      // Write to JSONL
       for (const r of results) {
         fs.appendFileSync(jsonlPath, JSON.stringify(r) + '\n')
 
@@ -1087,21 +1209,16 @@ async function main() {
         }
       }
 
-      // Save progress (entity complete)
+      // Save progress
       progress.completed.push(entity.id)
-      fs.writeFileSync(progressPath, JSON.stringify(progress, null, 2) + '\n')
-
-      console.log(
-        `  Cost: $${entityCost.total_usd.toFixed(3)} | Cumulative: $${costs.getSummary().total_cost_usd.toFixed(2)} | ${i + 1}/${entities.length}`,
-      )
-    } catch (err) {
-      console.error(`  ERROR: ${err.message}`)
-      consecutiveErrors++
+      processedCount++
+    } else {
+      errorCount++
       allResults.push({
         entity_id: entity.id,
         entity_name: entity.name,
         verdict: 'error',
-        reasoning: err.message,
+        reasoning: error,
       })
 
       // Append error to cost ledger
@@ -1110,16 +1227,68 @@ async function main() {
         JSON.stringify({
           id: entity.id,
           name: entity.name,
-          cost_usd: costs.getEntityCost().total_usd,
-          error: err.message.substring(0, 200),
+          cost_usd: 0,
+          error: error.substring(0, 200),
           timestamp: new Date().toISOString(),
         }) + '\n',
       )
+    }
+  }
 
-      if (consecutiveErrors >= 3) {
-        console.error('  ABORTING: 3 consecutive errors. Likely systemic issue.')
+  // Run either in parallel or sequential mode
+  if (options.parallel > 1) {
+    // Parallel execution
+    console.log(`\nStarting parallel verification (${options.parallel} concurrent)...`)
+
+    const outcomes = await runWithConcurrency(entitiesToProcess, options.parallel, processEntity)
+
+    // Save all results sequentially (for file safety)
+    for (const outcome of outcomes) {
+      if (outcome && !outcome.error) {
+        await saveResults(outcome)
+      } else if (outcome?.error) {
+        console.error(`  ERROR processing entity: ${outcome.error}`)
+      }
+    }
+
+    // Save final progress
+    fs.writeFileSync(progressPath, JSON.stringify(progress, null, 2) + '\n')
+  } else {
+    // Sequential execution (original behavior)
+    let consecutiveErrors = 0
+
+    for (let i = 0; i < entitiesToProcess.length; i++) {
+      const entity = entitiesToProcess[i]
+
+      // Cost ceiling check
+      const currentCost = costs.getSummary().total_cost_usd
+      if (currentCost >= maxCost) {
+        console.error(
+          `\n  ABORTING: Cost ceiling reached ($${currentCost.toFixed(2)} >= $${maxCost}). ${i}/${entitiesToProcess.length} entities processed.`,
+        )
         break
       }
+
+      const outcome = await processEntity(entity, i)
+      await saveResults(outcome)
+
+      if (outcome.success) {
+        consecutiveErrors = 0
+        console.log(
+          `  Cost: $${outcome.entityCost.total_usd.toFixed(3)} | Cumulative: $${costs.getSummary().total_cost_usd.toFixed(2)} | ${i + 1}/${entitiesToProcess.length}`,
+        )
+      } else {
+        consecutiveErrors++
+        console.error(`  ERROR: ${outcome.error}`)
+
+        if (consecutiveErrors >= 3) {
+          console.error('  ABORTING: 3 consecutive errors. Likely systemic issue.')
+          break
+        }
+      }
+
+      // Save progress after each entity
+      fs.writeFileSync(progressPath, JSON.stringify(progress, null, 2) + '\n')
     }
   }
 
@@ -1130,9 +1299,13 @@ async function main() {
   console.log('\n' + '='.repeat(50))
   console.log('SUMMARY')
   console.log('='.repeat(50))
-  console.log(`Entities processed: ${entities.length}`)
+  console.log(`Entities processed: ${processedCount}`)
+  console.log(`Entities with errors: ${errorCount}`)
   console.log(`Fields verified: ${allResults.length}`)
   console.log(`Time: ${(elapsed / 1000).toFixed(1)}s`)
+  if (options.parallel > 1) {
+    console.log(`Parallelism: ${options.parallel} concurrent`)
+  }
 
   console.log(`\nVerdicts:`)
   const verdictCounts = {}
@@ -1166,8 +1339,10 @@ async function main() {
         run_started_at: new Date(startTime).toISOString(),
         run_ended_at: new Date().toISOString(),
         total_duration_ms: elapsed,
-        entities_processed: entities.length,
+        entities_processed: processedCount,
+        entities_with_errors: errorCount,
         fields_verified: allResults.length,
+        parallelism: options.parallel,
         verdicts: verdictCounts,
         ...costSummary,
         db_writes: options.writeDb
