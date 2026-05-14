@@ -1235,22 +1235,20 @@ async function main() {
 
   // Run either in parallel or sequential mode
   if (options.parallel > 1) {
-    // Parallel execution
+    // Parallel execution with immediate saves
     console.log(`\nStarting parallel verification (${options.parallel} concurrent)...`)
 
-    const outcomes = await runWithConcurrency(entitiesToProcess, options.parallel, processEntity)
-
-    // Save all results sequentially (for file safety)
-    for (const outcome of outcomes) {
-      if (outcome && !outcome.error) {
-        await saveResults(outcome)
-      } else if (outcome?.error) {
-        console.error(`  ERROR processing entity: ${outcome.error}`)
-      }
+    // Process and save each entity immediately when it completes
+    async function processAndSave(entity, index) {
+      const outcome = await processEntity(entity, index)
+      // Save immediately (file writes are atomic, DB writes are transactional)
+      await saveResults(outcome)
+      // Save progress after each entity
+      fs.writeFileSync(progressPath, JSON.stringify(progress, null, 2) + '\n')
+      return outcome
     }
 
-    // Save final progress
-    fs.writeFileSync(progressPath, JSON.stringify(progress, null, 2) + '\n')
+    await runWithConcurrency(entitiesToProcess, options.parallel, processAndSave)
   } else {
     // Sequential execution (original behavior)
     let consecutiveErrors = 0
