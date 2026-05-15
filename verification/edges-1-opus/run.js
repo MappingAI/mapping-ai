@@ -20,6 +20,7 @@ import path from 'path'
 import crypto from 'crypto'
 import { fileURLToPath } from 'url'
 import dotenv from 'dotenv'
+import { runPreBackup } from '../lib/backup.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -378,9 +379,7 @@ async function getEdgesForEntity(entityId) {
 
 async function getAlreadyReviewedEdgeIds() {
   try {
-    const result = await pool.query(
-      `SELECT edge_id FROM edge_correction WHERE status != 'error'`,
-    )
+    const result = await pool.query(`SELECT edge_id FROM edge_correction WHERE status != 'error'`)
     return new Set(result.rows.map((r) => r.edge_id))
   } catch (err) {
     // Table might not exist yet
@@ -713,11 +712,11 @@ Remember:
         target_entity_name: edge.target_name,
         target_entity_type: edge.target_type,
         current_edge_type: edge.edge_type,
-        current_role_title: edge.role,  // Maps to DB column current_role_title
+        current_role_title: edge.role, // Maps to DB column current_role_title
         current_start_date: null, // Edge table doesn't have these yet
         current_end_date: null,
         proposed_edge_type: v.proposed_edge_type || null,
-        proposed_role_title: v.proposed_role || null,  // Claude sends proposed_role, we store as proposed_role_title
+        proposed_role_title: v.proposed_role || null, // Claude sends proposed_role, we store as proposed_role_title
         proposed_start_date: v.proposed_start_date || null,
         proposed_end_date: v.proposed_end_date || null,
         source_url: v.source_url || null,
@@ -777,6 +776,9 @@ async function main() {
   } else {
     console.log('Database writes: DISABLED (use --write-db to enable)')
   }
+
+  // Pre-run backup
+  await runPreBackup(pool, { label: 'edges-1-opus', r2: true })
 
   // Progress tracking
   const progressPath = path.join(RESULTS_DIR, 'progress.json')
