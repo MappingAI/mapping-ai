@@ -124,6 +124,19 @@ When correcting edge types, you MUST use these canonical types. Outputting inval
 - If role changed, use CURRENT role and set appropriate dates
 - Note role progression in reasoning if relevant
 
+### ⚠️ CRITICAL: Collaborator Edge Roles
+
+On **collaborator edges** (Person → Person or Org → Org), the `role_title` field describes the **TARGET entity's role**, NOT the source's.
+
+**Correct examples:**
+- `Jakub Pachocki → Mark Chen (collaborator)` — role should be "Chief Research Officer" (Mark's role), NOT "Chief Scientist" (Jakub's role)
+- `Fran Drescher → Meredith Stiehm (collaborator)` — role should be "WGA West President" (Meredith's role), NOT "SAG-AFTRA President" (Fran's role)
+- `Peter Norvig → Stuart Russell (collaborator)` — role should be "co-author" describing the collaboration, NOT Peter's title
+
+**Common error pattern:** When verifying a collaborator edge, you may find the SOURCE's current title and mistakenly put it in the role field. Always ask: "Whose role is this describing? It should be the TARGET's."
+
+**When the role describes the collaboration itself** (e.g., "co-author", "co-founder of X Working Group"), this is correct — it describes what the target is TO the source.
+
 ## Search Strategy
 
 Run multiple searches with different angles:
@@ -160,6 +173,8 @@ Run multiple searches with different angles:
 9. **Announced vs actual**: Just because a hire was announced doesn't mean it happened. Verify with subsequent sources.
 
 10. **Type mismatch**: "member" for orgs (coalition membership) is different from "member" for people (fellowship/affiliation).
+
+11. **Collaborator role swap**: On collaborator edges (Person→Person), the role field describes the TARGET, not the source. If verifying "Alice → Bob (collaborator)", don't put Alice's job title — put Bob's role in relation to Alice (e.g., "co-author", "co-founder", or Bob's relevant title).
 
 ## Output
 
