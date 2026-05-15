@@ -22,6 +22,7 @@ import path from 'path'
 import crypto from 'crypto'
 import { fileURLToPath } from 'url'
 import dotenv from 'dotenv'
+import { runPreBackup } from '../lib/backup.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -304,6 +305,7 @@ async function insertNoteCorrection(entity, result) {
          confidence = EXCLUDED.confidence,
          reasoning = EXCLUDED.reasoning,
          status = 'pending'
+       WHERE note_correction.status NOT IN ('applied', 'rejected')
        RETURNING id`,
       [
         entity.id,
@@ -428,9 +430,7 @@ async function getEntitiesWithNotes(entityIds) {
 }
 
 async function getAlreadyVerifiedEntityIds() {
-  const result = await pool.query(
-    `SELECT entity_id FROM note_correction WHERE pipeline = 'notes-1-opus'`,
-  )
+  const result = await pool.query(`SELECT entity_id FROM note_correction WHERE pipeline = 'notes-1-opus'`)
   return new Set(result.rows.map((r) => r.entity_id))
 }
 
@@ -599,6 +599,9 @@ async function main() {
     console.log('Database writes: DISABLED (use --write-db to enable)')
   }
 
+  // Pre-run backup
+  await runPreBackup(pool, { label: 'notes-1-opus', r2: true })
+
   // Progress tracking
   const progressPath = path.join(RESULTS_DIR, 'progress.json')
   const progress = options.resume
@@ -628,10 +631,9 @@ async function main() {
     entityIds = [options.entityId]
   } else {
     // Default: get entities with notes
-    const result = await pool.query(
-      `SELECT id FROM entity WHERE notes IS NOT NULL AND LENGTH(notes) > 50 LIMIT $1`,
-      [options.limit],
-    )
+    const result = await pool.query(`SELECT id FROM entity WHERE notes IS NOT NULL AND LENGTH(notes) > 50 LIMIT $1`, [
+      options.limit,
+    ])
     entityIds = result.rows.map((r) => r.id)
   }
 
@@ -731,15 +733,20 @@ async function main() {
     }
   }
 
+  // Mutex for serializing file writes in parallel mode
+  let writeLock = Promise.resolve()
+
   // Run verification
   const startTime = Date.now()
+  let costCeilingHit = false
 
   if (options.parallel > 1) {
     console.log(`\nStarting parallel verification (${options.parallel} concurrent)...`)
     await runWithConcurrency(entitiesToProcess, options.parallel, async (entity, i) => {
-      // Check cost ceiling
+      if (costCeilingHit) return { skipped: true, reason: 'cost_ceiling' }
       const currentCost = costs.getSummary().total_cost_usd
       if (currentCost >= COST_CEILING) {
+        costCeilingHit = true
         console.log(`\n⚠️  Cost ceiling reached ($${currentCost.toFixed(2)}). Stopping.`)
         return { skipped: true, reason: 'cost_ceiling' }
       }
