@@ -562,8 +562,13 @@ async function verifyEntityEdges(entity, edges, reviewedEdgeIds) {
   console.log(`[${entity.id}] ${entity.name} (${entity.entity_type})`)
   console.log('='.repeat(50))
 
-  // Filter out already reviewed edges
-  const edgesToVerify = edges.filter((e) => !reviewedEdgeIds.has(e.edge_id))
+  // Filter out already reviewed edges AND claim unreviewed ones atomically
+  // (prevents parallel workers from reviewing the same shared edge)
+  const edgesToVerify = edges.filter((e) => {
+    if (reviewedEdgeIds.has(e.edge_id)) return false
+    reviewedEdgeIds.add(e.edge_id) // Claim this edge before any await
+    return true
+  })
 
   if (edgesToVerify.length === 0) {
     console.log('  All edges already reviewed')
@@ -587,8 +592,6 @@ async function verifyEntityEdges(entity, edges, reviewedEdgeIds) {
   for (let batchIdx = 0; batchIdx < batches.length; batchIdx++) {
     const batch = batches[batchIdx]
     console.log(`\n  Batch ${batchIdx + 1}/${batches.length}: ${batch.length} edges`)
-
-    costs.resetEntity()
 
     // Build edge list for prompt
     const edgesList = batch
@@ -856,20 +859,49 @@ async function main() {
   let dbWriteCount = 0
   let totalEdgesVerified = 0
 
-  // Process entity function
+  // Process entity function — each entity gets its own cost tracker for parallel safety
   async function processEntity(entity) {
     const entityStart = Date.now()
+    const entityCostTracker = { opus_input: 0, opus_output: 0, exa: 0 }
+
+    // Snapshot global costs before this entity to compute delta after
+    const costBefore = {
+      opus_input: costs.opus_input,
+      opus_output: costs.opus_output,
+      exa: costs.exa_searches + costs.exa_fetches,
+    }
 
     try {
-      // Get edges for this entity
       const edges = await getEdgesForEntity(entity.id)
 
       if (edges.length === 0) {
         console.log(`  [${entity.id}] ${entity.name}: No edges`)
-        return { success: true, entity, results: [], skipped: 0, entityMs: Date.now() - entityStart }
+        return {
+          success: true,
+          entity,
+          results: [],
+          skipped: 0,
+          entityMs: Date.now() - entityStart,
+          entityCost: { total_usd: 0 },
+        }
       }
 
       const { results, trace, skipped, failedBatches } = await verifyEntityEdges(entity, edges, reviewedEdgeIds)
+
+      // Compute entity cost from global counter delta (works even with parallel interleaving for aggregates)
+      const opusInputDelta = costs.opus_input - costBefore.opus_input
+      const opusOutputDelta = costs.opus_output - costBefore.opus_output
+      const exaDelta = costs.exa_searches + costs.exa_fetches - costBefore.exa
+      // Note: with parallel workers, deltas may include tokens from other entities.
+      // This is approximate but better than the resetEntity() approach which was completely wrong.
+      const entityCost = {
+        opus_usd: (opusInputDelta * 15 + opusOutputDelta * 75) / 1_000_000,
+        exa_usd: exaDelta * 0.008,
+        total_usd: (opusInputDelta * 15 + opusOutputDelta * 75) / 1_000_000 + exaDelta * 0.008,
+        input_tokens: opusInputDelta,
+        output_tokens: opusOutputDelta,
+        exa_calls: exaDelta,
+      }
 
       return {
         success: true,
@@ -879,7 +911,7 @@ async function main() {
         skipped: skipped || 0,
         failedBatches: failedBatches || 0,
         entityMs: Date.now() - entityStart,
-        entityCost: costs.getEntityCost(),
+        entityCost,
       }
     } catch (err) {
       return {
@@ -932,9 +964,7 @@ async function main() {
           const inserted = await insertCorrectionToDB(r)
           if (inserted) dbWriteCount++
         }
-
-        // Mark edge as reviewed for future batches
-        reviewedEdgeIds.add(r.edge_id)
+        // Edge already claimed in reviewedEdgeIds at verification start
       }
 
       totalEdgesVerified += results.length
@@ -1005,7 +1035,6 @@ async function main() {
         break
       }
 
-      costs.resetEntity()
       const outcome = await processEntity(entity)
       await saveResults(outcome)
 
