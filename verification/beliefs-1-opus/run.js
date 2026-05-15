@@ -406,6 +406,33 @@ This is a TERMINAL action - after calling this, your task is complete.`,
 
 // ── Tool Handlers ──
 
+/**
+ * Sanitize text to remove malformed Unicode surrogates that break JSON serialization.
+ * High surrogates (0xD800-0xDBFF) must be followed by low surrogates (0xDC00-0xDFFF).
+ */
+function sanitizeText(text) {
+  if (!text) return text
+  let result = ''
+  for (let i = 0; i < text.length; i++) {
+    const code = text.charCodeAt(i)
+    // Check for high surrogate
+    if (code >= 0xd800 && code <= 0xdbff) {
+      const nextCode = text.charCodeAt(i + 1)
+      // If followed by valid low surrogate, keep both
+      if (nextCode >= 0xdc00 && nextCode <= 0xdfff) {
+        result += text[i] + text[i + 1]
+        i++ // Skip the low surrogate
+      }
+      // Otherwise skip the orphan high surrogate
+    } else if (code >= 0xdc00 && code <= 0xdfff) {
+      // Orphan low surrogate, skip it
+    } else {
+      result += text[i]
+    }
+  }
+  return result
+}
+
 async function handleExaSearch(queries, numResults = 5) {
   const allResults = []
 
@@ -428,11 +455,11 @@ async function handleExaSearch(queries, numResults = 5) {
 
       const results = (response.results || []).map((r) => ({
         url: r.url,
-        title: r.title,
-        text: r.text?.substring(0, 2000),
-        highlights: r.highlights,
+        title: sanitizeText(r.title),
+        text: sanitizeText(r.text?.substring(0, 2000)),
+        highlights: r.highlights?.map(sanitizeText),
         publishedDate: r.publishedDate,
-        author: r.author,
+        author: sanitizeText(r.author),
       }))
 
       setCache(query, results)
@@ -478,7 +505,7 @@ async function handleFetchContent(url) {
     const page = response.results?.[0]
     if (!page) return `No content returned for URL: ${url}`
 
-    return `URL: ${page.url}\nTitle: ${page.title}\n\n${page.text || '(no text)'}`
+    return `URL: ${page.url}\nTitle: ${sanitizeText(page.title)}\n\n${sanitizeText(page.text) || '(no text)'}`
   } catch (err) {
     return `Error fetching ${url}: ${err.message}`
   }
@@ -1068,29 +1095,47 @@ async function main() {
   const maxCost = flags['max-cost'] ? parseFloat(flags['max-cost']) : 500
   console.log(`Cost ceiling: $${maxCost}`)
 
-  // #6: Deduplication — check for recent corrections before spending money
+  // #7: Per-range JSONL for parallel runners (moved up for deduplication)
+  const rangeTag = options.idRange ? `-${options.idRange[0]}-${options.idRange[1]}` : ''
+  const jsonlPath = path.join(RESULTS_DIR, `corrections${rangeTag}.jsonl`)
+  const costLedgerPath = path.join(RESULTS_DIR, `cost-ledger${rangeTag}.jsonl`)
+
+  // #6: Deduplication — check cost ledger for already-processed entities
+  // The cost ledger is the source of truth since DB corrections may be deleted during testing
   let skippedDupes = 0
   if (!options.entityId) {
-    const recentCutoff = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
-    const recent = await pool.query(
-      `SELECT DISTINCT entity_id FROM belief_correction WHERE created_at > $1 AND status = 'pending'`,
-      [recentCutoff],
-    )
-    const recentIds = new Set(recent.rows.map((r) => r.entity_id))
+    const alreadyProcessedIds = new Set()
+
+    // Check cost ledger file for successfully completed entities
+    if (fs.existsSync(costLedgerPath)) {
+      const ledgerLines = fs.readFileSync(costLedgerPath, 'utf-8').trim().split('\n').filter(Boolean)
+      for (const line of ledgerLines) {
+        try {
+          const entry = JSON.parse(line)
+          // Only count as processed if it completed successfully (has verdicts or fields > 0)
+          // Entries with error field and cost_usd=0 are failures that should be retried
+          if (entry.id && entry.fields && entry.fields > 0 && !entry.error) {
+            alreadyProcessedIds.add(entry.id)
+          }
+        } catch {
+          // Skip malformed lines
+        }
+      }
+    }
+
+    if (alreadyProcessedIds.size > 0) {
+      console.log(`Found ${alreadyProcessedIds.size} entities already processed in cost ledger`)
+    }
+
     const before = entities.length
-    const filtered = entities.filter((e) => !recentIds.has(e.id))
+    const filtered = entities.filter((e) => !alreadyProcessedIds.has(e.id))
     skippedDupes = before - filtered.length
     if (skippedDupes > 0) {
-      console.log(`Skipping ${skippedDupes} entities with pending corrections from last 7 days`)
+      console.log(`Skipping ${skippedDupes} entities already in cost ledger`)
     }
     entities.length = 0
     entities.push(...filtered)
   }
-
-  // #7: Per-range JSONL for parallel runners
-  const rangeTag = options.idRange ? `-${options.idRange[0]}-${options.idRange[1]}` : ''
-  const jsonlPath = path.join(RESULTS_DIR, `corrections${rangeTag}.jsonl`)
-  const costLedgerPath = path.join(RESULTS_DIR, `cost-ledger${rangeTag}.jsonl`)
 
   const allResults = []
   const startTime = Date.now()
