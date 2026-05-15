@@ -252,7 +252,6 @@ export function App() {
           <a href="/contribute">Contribute</a>
           <a href="/map">Map</a>
           <a href="/insights">Insights</a>
-          <a href="/guide">Guide</a>
           <a href="/about">About</a>
         </div>
         <button className="theme-toggle" id="theme-toggle" title="Toggle dark/light mode">
