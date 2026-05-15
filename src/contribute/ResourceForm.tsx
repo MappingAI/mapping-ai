@@ -37,7 +37,7 @@ const TYPE_OPTIONS = buildOptions([
 
 const LABEL_CLASS = 'font-mono text-[11px] uppercase tracking-wider text-[#555]'
 const INPUT_CLASS =
-  'w-full px-3 py-2 font-mono text-[13px] border border-[#ddd] rounded bg-white outline-none transition-colors hover:border-[#999] focus:border-[#2563eb]'
+  'w-full px-3 py-2.5 font-mono text-[13px] border border-[#ddd] rounded bg-white outline-none transition-colors hover:border-[#999] focus:border-[#2563eb] min-h-[44px] max-[600px]:text-[16px]'
 
 export function ResourceForm({
   form,
@@ -166,7 +166,7 @@ export function ResourceForm({
   })
 
   return (
-    <form onSubmit={onSubmit} className="grid grid-cols-2 gap-4">
+    <form onSubmit={onSubmit} className="grid grid-cols-2 gap-4 max-[600px]:grid-cols-1">
       {/* Honeypot — hidden from humans, visible to bots */}
       <input {...register('_hp')} type="text" tabIndex={-1} autoComplete="off" className="absolute -left-[9999px]" />
 

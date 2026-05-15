@@ -184,7 +184,7 @@ export function FunderDiversity({ edges, showTooltip, hideTooltip }: Props) {
 
     if (displayDiverse.length === 0 && displaySingle.length === 0) return
 
-    const W = container.clientWidth || 660
+    const W = Math.max(container.clientWidth || 660, 520)
     const colW = (W - 40) / 2
     const rowH = 38
     const padTop = 45

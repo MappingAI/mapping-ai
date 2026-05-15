@@ -125,7 +125,7 @@ export function BlueskySearch({ value, onChange, className = '' }: BlueskySearch
         }}
         onKeyDown={handleKeyDown}
         placeholder="Search Bluesky handles..."
-        className="w-full px-3 py-2 font-mono text-[13px] border border-[#ddd] rounded bg-white outline-none transition-colors hover:border-[#999] focus:border-[#2563eb]"
+        className="w-full px-3 py-2.5 font-mono text-[13px] border border-[#ddd] rounded bg-white outline-none transition-colors hover:border-[#999] focus:border-[#2563eb] min-h-[44px] max-[600px]:text-[16px]"
       />
 
       {isOpen && results.length > 0 && (
@@ -138,7 +138,7 @@ export function BlueskySearch({ value, onChange, className = '' }: BlueskySearch
                 selectActor(actor)
               }}
               onMouseEnter={() => setActiveIndex(i)}
-              className={`flex items-center gap-2.5 px-3 py-1.5 cursor-pointer text-[12px] font-mono transition-colors ${
+              className={`flex items-center gap-2.5 px-3 py-2.5 cursor-pointer text-[12px] font-mono transition-colors min-h-[44px] max-[600px]:text-[14px] ${
                 i === activeIndex ? 'bg-[#f0f0f0]' : ''
               }`}
             >

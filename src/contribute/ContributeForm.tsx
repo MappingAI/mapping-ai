@@ -243,13 +243,13 @@ export function ContributeForm({ className = '' }: ContributeFormProps) {
     <DropdownProvider>
       <div className={className}>
         {/* Form tabs */}
-        <div className="flex gap-2 mb-6">
+        <div className="flex gap-2 mb-6 overflow-x-auto -mx-2 px-2 pb-1 max-[600px]:gap-1.5">
           {TABS.map(({ type, label }) => (
             <button
               key={type}
               type="button"
               onClick={() => setActiveTab(type)}
-              className={`px-4 py-2 font-mono text-[11px] uppercase tracking-wider border rounded cursor-pointer transition-colors ${
+              className={`px-4 py-2.5 font-mono text-[11px] uppercase tracking-wider border rounded cursor-pointer transition-colors whitespace-nowrap flex-shrink-0 min-h-[44px] max-[600px]:px-3 max-[600px]:text-[10px] ${
                 type === activeTab
                   ? 'bg-[#1a1a1a] text-white border-[#1a1a1a]'
                   : 'bg-white text-[#555] border-[#ccc] hover:border-[#999]'
@@ -396,7 +396,7 @@ function FormHeader({
     <div className="mb-4">
       {/* Update banner */}
       {updateContext && (
-        <div className="flex items-center justify-between px-4 py-2.5 mb-4 bg-amber-50 border border-amber-200 rounded text-[13px]">
+        <div className="flex items-center justify-between px-4 py-2.5 mb-4 bg-amber-50 border border-amber-200 rounded text-[13px] max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-2">
           <span>
             Updating <strong>{updateContext.entityData.name}</strong> — adjust any fields and submit
           </span>
@@ -405,7 +405,7 @@ function FormHeader({
               <button
                 type="button"
                 onClick={onViewExisting}
-                className="text-[12px] font-mono text-[#2563eb] hover:text-[#1d4ed8] underline"
+                className="text-[12px] font-mono text-[#2563eb] hover:text-[#1d4ed8] underline min-h-[44px] flex items-center"
               >
                 View existing
               </button>
@@ -413,7 +413,7 @@ function FormHeader({
             <button
               type="button"
               onClick={onCancelUpdate}
-              className="text-[12px] font-mono text-amber-700 hover:text-amber-900 underline"
+              className="text-[12px] font-mono text-amber-700 hover:text-amber-900 underline min-h-[44px] flex items-center"
             >
               Cancel
             </button>
@@ -425,7 +425,7 @@ function FormHeader({
       <label className="font-mono text-[11px] uppercase tracking-wider text-[#555] mb-1 block">
         Who are you adding?
       </label>
-      <div className="flex items-center justify-between gap-4">
+      <div className="flex items-center justify-between gap-4 max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-2">
         <PillToggle
           value={(form.watch('submitterRelationship') as string) ?? ''}
           onChange={(v) => form.setValue('submitterRelationship', v)}
@@ -434,7 +434,7 @@ function FormHeader({
         <button
           type="button"
           onClick={onClear}
-          className="text-[12px] font-mono text-[#888] hover:text-[#1a1a1a] cursor-pointer"
+          className="text-[12px] font-mono text-[#888] hover:text-[#1a1a1a] cursor-pointer min-h-[44px] flex items-center"
         >
           Clear form
         </button>

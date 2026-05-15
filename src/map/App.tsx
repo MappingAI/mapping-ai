@@ -266,7 +266,13 @@ export function App() {
 
       {!bannerDismissed && (
         <div className="mobile-banner" id="mobile-banner">
-          <span>Best viewed on desktop for the full interactive experience</span>
+          <span>
+            Browse the directory below.{' '}
+            <a href="/guide" style={{ color: 'var(--accent)' }}>
+              Guide
+            </a>{' '}
+            · Full map on desktop
+          </span>
           <button
             onClick={() => {
               localStorage.setItem('mobileBannerDismissed', '1')
@@ -286,35 +292,37 @@ export function App() {
             <summary>How to use the map</summary>
             <div className="onboarding-tips">
               <div className="onboarding-tip">
-                <strong>Network:</strong> Force-directed graph of stakeholders. Sub-tabs filter by All, Orgs, or People.
-                Click any node to see details and connections. Scroll to zoom, drag to pan.
+                <strong>Explore the map:</strong> See all stakeholders as an interactive web of connections. Click
+                anyone to learn more. Pinch to zoom, drag to pan.
               </div>
               <div className="onboarding-tip">
-                <strong>Plot:</strong> Scatter chart positioning entities along belief dimensions (regulatory stance,
-                AGI timeline, AI risk level). Switch axes and entity types with the controls below.
+                <strong>Compare views:</strong> Place stakeholders on a chart by their beliefs about AI regulation,
+                timelines, or risk levels.
               </div>
               <div className="onboarding-tip">
-                <strong>Beliefs:</strong> Explore how stakeholders define AGI. Sub-views include a cluster map, list,
-                scatter projection, stacked timeline, and per-cluster trend sparklines. Color by cluster, category, or
-                belief dimension.
+                <strong>Deep dive on AI views:</strong> See how different stakeholders define AGI and what they think it
+                means for the future.
               </div>
               <div className="onboarding-tip">
-                <strong>Filters &amp; Search:</strong> Use category chips and the stance legend to show or hide groups.
-                Search supports related terms (e.g., &quot;safety&quot; finds alignment orgs too).
+                <strong>Find anyone:</strong> Search by name or use the colored category filters to focus on specific
+                groups.
               </div>
               <div className="onboarding-tip">
-                <strong>Source:</strong> Data is crowdsourced and admin-reviewed. Belief scores (stance, timeline, risk)
-                are weighted averages from submissions.
+                <strong>Where the data comes from:</strong> Community-submitted and reviewed by our team. Belief scores
+                reflect averaged submissions.
               </div>
               <div className="onboarding-tip">
-                <strong>Verify &amp; correct:</strong> Click any entity to see its details. Each field has
-                &#x25B2;/&#x25BC; buttons to confirm or flag data, and a &#x270E; button to leave a correction note with
-                rich text and @mentions. Verification dots (green/yellow/red) on nodes show which entities have been
-                checked against external sources.
+                <strong>Help improve the data:</strong> Click any person or org to vote on whether their info looks
+                right, or leave a correction.
               </div>
             </div>
             <div className="onboarding-mobile-note">
-              On mobile, the map has a limited feature set and may take a few seconds to load.
+              On mobile, you can browse all stakeholders, filter by category and beliefs, and tap any entry to see
+              details and connections. For the full interactive network map, visit on a desktop browser.{' '}
+              <a href="/guide" style={{ color: '#2563eb' }}>
+                See the guide
+              </a>{' '}
+              for a walkthrough.
             </div>
           </details>
           <div
@@ -1478,13 +1486,15 @@ export function App() {
       )}
 
       <div id="mobile-directory" style={{ display: 'none' }}>
-        <div id="mobile-hero-toggle" className="mobile-hero-toggle">
-          <span>Filters &amp; Overview</span>
+        <div id="mobile-hero-toggle" className="mobile-hero-toggle collapsed">
+          <span>Filters &amp; Overview — tap to expand</span>
           <span className="chevron">&#x25B8;</span>
         </div>
         <div id="mobile-hero-content" className="mobile-hero-content">
           <div id="mobile-hero"></div>
-          <div className="mobile-mode-label">Mobile directory—full interactive map on desktop</div>
+          <div className="mobile-mode-label">
+            Tap colored bars to filter by beliefs. <a href="/guide">New here? See the guide</a>
+          </div>
         </div>
         <div id="mobile-search-bar" className="mobile-search-bar">
           <div className="mobile-search-box">
@@ -1505,6 +1515,18 @@ export function App() {
             <input id="mobile-search-input" type="text" placeholder="Search entities..." autoComplete="off" />
             <div id="mobile-autocomplete" className="mobile-autocomplete"></div>
           </div>
+          {/* View tabs: prominent row for switching between Directory, AGI Views, Plot */}
+          <div className="mobile-view-tabs">
+            <button className="mobile-view-tab active" data-view="directory">
+              Directory
+            </button>
+            <button className="mobile-view-tab" data-view="beliefs">
+              AGI Views
+            </button>
+            <button className="mobile-view-tab" data-view="plot">
+              Belief Plot
+            </button>
+          </div>
           <div id="mobile-type-chips" className="mobile-type-chips">
             <button className="mobile-type-chip active" data-type="all">
               All
@@ -1515,8 +1537,19 @@ export function App() {
             <button className="mobile-type-chip" data-type="organization">
               Orgs
             </button>
-            <button className="mobile-type-chip" data-type="connected" title="Entities with connections">
-              &#x2341; Connected
+            <button
+              className="mobile-type-chip"
+              data-type="connected"
+              title="Show only entities that have relationships with others on the map"
+            >
+              Linked
+            </button>
+            <span className="mobile-type-divider" />
+            <button className="mobile-type-chip mobile-sort-chip" data-sort="stance" title="Sort by regulatory stance">
+              By Stance
+            </button>
+            <button className="mobile-type-chip mobile-sort-chip" data-sort="risk" title="Sort by AI risk assessment">
+              By Risk
             </button>
             <span style={{ flex: 1 }}></span>
             <button id="mobile-explore-btn" className="mobile-explore-btn" title="Open a random well-connected entity">
@@ -1540,9 +1573,18 @@ export function App() {
           </div>
         </div>
         <div id="mobile-active-filters" className="mobile-active-filters"></div>
+        <div id="mobile-loading-indicator">Loading directory...</div>
         <div id="mobile-card-list" className="mobile-card-list"></div>
         <div id="mobile-no-results" className="mobile-no-results" style={{ display: 'none' }}>
           No matching entities
+        </div>
+        {/* Mobile beliefs view: AGI definitions by cluster */}
+        <div id="mobile-beliefs-view" style={{ display: 'none' }}>
+          <div id="mobile-beliefs-content" className="mobile-beliefs-content"></div>
+        </div>
+        {/* Mobile plot view: beeswarm by belief dimension */}
+        <div id="mobile-plot-view" style={{ display: 'none' }}>
+          <div id="mobile-plot-content" className="mobile-plot-content"></div>
         </div>
       </div>
 

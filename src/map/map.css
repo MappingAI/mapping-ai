@@ -42,6 +42,27 @@ body {
     color 0.3s;
 }
 
+/* ─── Mobile/Desktop instant layout switch ───
+   Prevents flash of desktop layout on mobile by hiding desktop-only
+   elements and showing the mobile directory before JS runs. */
+@media (max-width: 767px) {
+  .map-container,
+  .controls,
+  .zoom-controls,
+  #sidebar-toggle,
+  #contribute-btn {
+    display: none !important;
+  }
+  #mobile-directory {
+    display: block !important;
+  }
+}
+@media (min-width: 768px) {
+  #mobile-directory {
+    display: none !important;
+  }
+}
+
 .site-nav {
   position: fixed;
   top: 0;
@@ -1373,6 +1394,28 @@ body:has(.beliefs-detail-sidebar) .beliefs-zoom-controls {
   background: var(--bg-page);
   z-index: 5;
 }
+/* Loading indicator — a real element removed by engine.js, not a :has() pseudo */
+#mobile-loading-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1rem;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  animation: mobile-skeleton-pulse 1.5s ease-in-out infinite;
+}
+@keyframes mobile-skeleton-pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+}
 .mobile-mode-label {
   text-align: center;
   padding: 0.2rem 0.75rem;
@@ -1443,6 +1486,11 @@ body:has(.beliefs-detail-sidebar) .beliefs-zoom-controls {
   font-size: 9px;
   transition: transform 0.15s;
 }
+.mobile-bubbles-group.collapsed {
+  border: 1px dashed var(--line);
+  border-radius: 6px;
+  padding: 4px 8px;
+}
 .mobile-bubbles-group.collapsed .mobile-bubbles-row {
   display: none;
 }
@@ -1451,6 +1499,41 @@ body:has(.beliefs-detail-sidebar) .beliefs-zoom-controls {
 }
 .mobile-bubbles-group:not(.collapsed) .chevron {
   transform: rotate(90deg);
+}
+/* Inline tooltip icon */
+.mobile-tip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--line);
+  color: var(--bg-panel);
+  font-size: 8px;
+  font-weight: 700;
+  font-style: normal;
+  cursor: help;
+  vertical-align: middle;
+  margin-left: 2px;
+  position: relative;
+}
+.mobile-tip:active::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--text-1);
+  color: var(--bg-panel);
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 400;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  z-index: 20;
+  margin-bottom: 4px;
 }
 .mobile-bubbles-row {
   display: flex;
@@ -1556,6 +1639,18 @@ body:has(.beliefs-detail-sidebar) .beliefs-zoom-controls {
   color: var(--text-3);
   margin-top: 2px;
 }
+.mobile-hero-stats {
+  text-align: center;
+  padding: 0.3rem 0.75rem 0.4rem;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-3);
+  letter-spacing: 0.02em;
+}
+.mobile-hero-stats span {
+  font-weight: 600;
+  color: var(--text-2);
+}
 .mobile-search-bar {
   padding: 0.5rem 0.75rem;
   background: var(--bg-panel);
@@ -1642,6 +1737,37 @@ body:has(.beliefs-detail-sidebar) .beliefs-zoom-controls {
   letter-spacing: 0.04em;
   flex-shrink: 0;
 }
+/* View tabs: prominent row for Directory / AGI Views / Plot switching */
+.mobile-view-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 0.4rem;
+}
+.mobile-view-tab {
+  flex: 1;
+  padding: 0.5rem 0.4rem;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-align: center;
+  border: none;
+  background: transparent;
+  color: var(--text-3);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.mobile-view-tab:active {
+  background: var(--input-bg);
+}
+.mobile-view-tab.active {
+  color: var(--text-1);
+  border-bottom-color: var(--accent);
+  font-weight: 600;
+}
 .mobile-type-chips {
   display: flex;
   gap: 0.4rem;
@@ -1673,6 +1799,18 @@ body:has(.beliefs-detail-sidebar) .beliefs-zoom-controls {
   background: var(--accent);
   color: #fff;
   border-color: var(--accent);
+}
+.mobile-sort-chip.active {
+  background: var(--text-1);
+  color: var(--bg-page);
+  border-color: var(--text-1);
+}
+.mobile-type-divider {
+  width: 1px;
+  height: 16px;
+  background: var(--line);
+  flex-shrink: 0;
+  align-self: center;
 }
 .mobile-explore-btn {
   display: inline-flex;
@@ -1853,6 +1991,293 @@ body:has(.beliefs-detail-sidebar) .beliefs-zoom-controls {
   background: none;
   border: 1px solid var(--text-3);
   opacity: 0.4;
+}
+.mobile-card-beliefs {
+  display: flex;
+  gap: 3px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  max-width: 50%;
+  justify-content: flex-end;
+}
+.mobile-card-belief {
+  font-family: var(--mono);
+  font-size: 7px;
+  letter-spacing: 0.02em;
+  padding: 1px 4px;
+  border-radius: 3px;
+  white-space: nowrap;
+  line-height: 1.4;
+}
+.mobile-card-verified {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #16a34a;
+  flex-shrink: 0;
+}
+/* ─── Mobile Beliefs View (AGI Definitions by Cluster) ─── */
+.mobile-beliefs-content {
+  padding: 0 0.75rem 2rem;
+}
+.mobile-beliefs-header {
+  padding: 0.75rem 0;
+}
+.mobile-beliefs-title {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text-1);
+  margin-bottom: 2px;
+}
+.mobile-beliefs-subtitle {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-3);
+  letter-spacing: 0.03em;
+  margin-bottom: 8px;
+}
+.mobile-beliefs-search {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--input-bg);
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--text-1);
+  outline: none;
+}
+.mobile-beliefs-search:focus {
+  border-color: var(--accent);
+}
+.mobile-beliefs-cluster {
+  margin-bottom: 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.mobile-beliefs-cluster-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  background: var(--bg-page);
+}
+.mobile-beliefs-cluster-header:active {
+  background: var(--input-bg);
+}
+.mobile-beliefs-chevron {
+  font-size: 10px;
+  color: var(--text-3);
+  transition: transform 0.15s;
+}
+.mobile-beliefs-cluster:not(.collapsed) .mobile-beliefs-chevron {
+  transform: rotate(90deg);
+}
+.mobile-beliefs-cluster-body {
+  padding: 0 10px 8px;
+}
+.mobile-beliefs-cluster.collapsed .mobile-beliefs-cluster-body {
+  display: none;
+}
+.mobile-beliefs-cluster-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.mobile-beliefs-cluster-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-1);
+  flex: 1;
+}
+.mobile-beliefs-cluster-count {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-3);
+}
+.mobile-beliefs-cluster-desc {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-2);
+  line-height: 1.4;
+  margin-bottom: 6px;
+  padding-left: 16px;
+}
+.mobile-beliefs-entities {
+  padding-left: 16px;
+}
+.mobile-beliefs-entity {
+  padding: 6px 0;
+  border-bottom: 1px solid var(--line);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.mobile-beliefs-entity:active {
+  background: var(--input-bg);
+}
+.mobile-beliefs-entity-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 2px;
+}
+.mobile-beliefs-entity-name {
+  font-family: var(--serif);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-1);
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mobile-beliefs-entity-cat {
+  font-family: var(--mono);
+  font-size: 8px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.mobile-beliefs-entity-def {
+  font-family: var(--serif);
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.4;
+}
+/* ─── Mobile Plot View (Horizontal bars by Belief Dimension) ─── */
+.mobile-plot-content {
+  padding: 0 0.75rem 2rem;
+}
+.mplot-header {
+  padding: 0.75rem 0 0.5rem;
+}
+.mplot-title {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text-1);
+  margin-bottom: 2px;
+}
+.mplot-sub {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-3);
+  letter-spacing: 0.03em;
+}
+.mplot-dim {
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+.mplot-dim-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+.mplot-dim-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-1);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.mplot-dim-info {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-3);
+}
+.mplot-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  border-radius: 4px;
+}
+.mplot-row:active {
+  background: var(--input-bg);
+}
+.mplot-row.expanded {
+  background: var(--input-bg);
+}
+.mplot-row-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-2);
+  width: 90px;
+  flex-shrink: 0;
+  text-align: right;
+}
+.mplot-row-bar-wrap {
+  flex: 1;
+  height: 18px;
+  background: var(--input-bg);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.mplot-row-bar {
+  height: 100%;
+  border-radius: 3px;
+  min-width: 2px;
+  transition: width 0.3s ease;
+}
+.mplot-row-count {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-2);
+  width: 30px;
+  text-align: right;
+  flex-shrink: 0;
+}
+.mplot-row-entities {
+  padding: 4px 0 4px 98px;
+}
+.mplot-entity {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  -webkit-tap-highlight-color: transparent;
+}
+.mplot-entity:active {
+  background: var(--bg-panel);
+}
+.mplot-entity-name {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-1);
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mplot-entity-cat {
+  font-family: var(--mono);
+  font-size: 8px;
+  flex-shrink: 0;
+}
+.mplot-entity-more {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-3);
+  padding: 2px 8px;
 }
 .mobile-card-edges {
   font-family: var(--mono);
@@ -2054,15 +2479,15 @@ body:has(.beliefs-detail-sidebar) .beliefs-zoom-controls {
 .mobile-split-header-actions button:hover {
   color: var(--text-1);
 }
-/* Subtle desktop banner below mini graph */
+/* Entity name + connection count below mini graph */
 .mini-graph-banner {
   text-align: center;
-  padding: 2px 0;
+  padding: 6px 8px 4px;
   font-family: var(--mono);
-  font-size: 8px;
-  color: var(--text-3);
-  letter-spacing: 0.03em;
-  opacity: 0.6;
+  font-size: 10px;
+  color: var(--text-2);
+  letter-spacing: 0.02em;
+  line-height: 1.4;
 }
 .mini-graph-banner a {
   color: var(--accent);
@@ -2307,8 +2732,10 @@ body:has(.beliefs-detail-sidebar) .beliefs-zoom-controls {
 }
 @media (max-width: 768px) {
   .onboarding-card {
-    max-height: 85vh;
+    max-height: calc(85vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 2rem;
   }
   .onboarding-mobile-note {
     display: block;

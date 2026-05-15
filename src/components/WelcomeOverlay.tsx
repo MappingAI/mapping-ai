@@ -1,24 +1,51 @@
 import { useState } from 'react'
-import { CORRECTIONS_NOTICE } from '../shared/corrections-notice'
 
 export function WelcomeOverlay() {
-  const [dismissed, setDismissed] = useState(false)
+  const [dismissed, setDismissed] = useState(() => localStorage.getItem('welcomeDismissed') === '1')
 
   if (dismissed) return null
 
   const dismiss = () => {
+    localStorage.setItem('welcomeDismissed', '1')
     setDismissed(true)
   }
 
   return (
     <div
-      className="fixed inset-0 z-[10000] flex items-center justify-center"
+      className="fixed inset-0 z-[10000] flex items-end sm:items-center justify-center"
       style={{ background: 'rgba(0,0,0,0.35)' }}
       onClick={(e) => {
         if (e.target === e.currentTarget) dismiss()
       }}
     >
-      <div className="bg-white rounded-xl px-8 py-7 max-w-[540px] w-[92%] shadow-2xl font-serif max-h-[90vh] overflow-y-auto">
+      {/* Mobile: compact bottom sheet */}
+      <div className="sm:hidden bg-white rounded-t-xl w-full px-5 py-5 shadow-2xl font-serif">
+        <h2 className="font-mono text-[12px] uppercase tracking-wider mb-2">Welcome to Mapping AI</h2>
+        <p className="text-[14px] leading-snug text-[#555] mb-3">
+          An open-source tool for exploring U.S. AI policy: who the key people and organizations are, what they believe,
+          and how they connect.
+        </p>
+        <p className="text-[12px] leading-snug text-[#888] mb-4">
+          Data comes from public records, community submissions, and AI-assisted research. Beliefs may be inferred.{' '}
+          <a href="/contribute" className="text-[#2563eb]">
+            Submit corrections
+          </a>{' '}
+          or{' '}
+          <a href="/guide" className="text-[#2563eb]">
+            read the guide
+          </a>
+          .
+        </p>
+        <button
+          onClick={dismiss}
+          className="w-full font-mono text-[12px] uppercase tracking-wider py-3 bg-[#1a1a1a] text-white border-none rounded cursor-pointer"
+        >
+          Got it
+        </button>
+      </div>
+
+      {/* Desktop: centered card */}
+      <div className="hidden sm:block bg-white rounded-xl px-8 py-7 max-w-[540px] w-[92%] shadow-2xl font-serif max-h-[85vh] overflow-y-auto">
         <a
           href="https://x.com/mapping_ai/status/2051334980144710112"
           target="_blank"
@@ -74,12 +101,8 @@ export function WelcomeOverlay() {
           >
             GitHub
           </a>
-          . We're also open to ideas on collaborations or new directions for this resource.
+          .
         </p>
-
-        <div className="text-[12px] leading-relaxed mb-5 p-3 bg-[#fef3c7] rounded-md text-[#92400e]">
-          <strong className="text-[#78350f]">Update:</strong> {CORRECTIONS_NOTICE}
-        </div>
 
         <button
           onClick={dismiss}

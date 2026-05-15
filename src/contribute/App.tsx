@@ -24,7 +24,7 @@ export function App() {
       <WelcomeOverlay />
       <HowItWorks forceOpen={showHowItWorks} onDismiss={() => setShowHowItWorks(false)} />
       <Navigation />
-      <main className="max-w-[800px] mx-auto px-6 pt-16 pb-12 font-serif">
+      <main className="max-w-[800px] mx-auto px-6 pt-16 pb-20 font-serif max-[600px]:px-4">
         <header className="mb-8">
           <p className="font-mono text-[11px] uppercase tracking-wider text-[#888] mb-2">Mapping AI — Contribute</p>
           <h1 className="text-3xl italic mb-3" style={{ fontFamily: "'EB Garamond', Georgia, serif" }}>

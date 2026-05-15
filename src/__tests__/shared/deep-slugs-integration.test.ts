@@ -295,7 +295,7 @@ describe('main features preserved', () => {
     const app = readProjectFile('src/map/App.tsx')
 
     expect(app).toContain('mobile-banner')
-    expect(app).toContain('Best viewed on desktop')
+    expect(app).toContain('Browse the directory below')
   })
 
   it('map App.tsx preserves contribute panel', async () => {

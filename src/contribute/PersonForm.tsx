@@ -98,7 +98,7 @@ const INFLUENCE_TYPES = [
 
 const LABEL_CLASS = 'font-mono text-[11px] uppercase tracking-wider text-[#555]'
 const INPUT_CLASS =
-  'w-full px-3 py-2 font-mono text-[13px] border border-[#ddd] rounded bg-white outline-none transition-colors hover:border-[#999] focus:border-[#2563eb]'
+  'w-full px-3 py-2.5 font-mono text-[13px] border border-[#ddd] rounded bg-white outline-none transition-colors hover:border-[#999] focus:border-[#2563eb] min-h-[44px] max-[600px]:text-[16px]'
 
 export function PersonForm({
   form,
@@ -244,7 +244,7 @@ export function PersonForm({
   })
 
   return (
-    <form onSubmit={onSubmit} className="grid grid-cols-2 gap-4">
+    <form onSubmit={onSubmit} className="grid grid-cols-2 gap-4 max-[600px]:grid-cols-1">
       {/* Honeypot — hidden from humans, visible to bots */}
       <input {...register('_hp')} type="text" tabIndex={-1} autoComplete="off" className="absolute -left-[9999px]" />
 
@@ -497,7 +497,7 @@ export function PersonForm({
                   return (
                     <label
                       key={concern}
-                      className={`inline-flex items-center gap-1.5 px-2 py-1 text-[12px] font-mono border rounded cursor-pointer transition-colors select-none ${
+                      className={`inline-flex items-center gap-1.5 px-3 py-2 text-[12px] font-mono border rounded cursor-pointer transition-colors select-none min-h-[44px] ${
                         isChecked
                           ? 'bg-[#1a1a1a] text-white border-[#1a1a1a]'
                           : 'bg-white text-[#555] border-[#ddd] hover:border-[#999]'
@@ -541,7 +541,7 @@ export function PersonForm({
                   return (
                     <label
                       key={type}
-                      className={`inline-flex items-center gap-1.5 px-2 py-1 text-[12px] font-mono border rounded cursor-pointer transition-colors select-none ${
+                      className={`inline-flex items-center gap-1.5 px-3 py-2 text-[12px] font-mono border rounded cursor-pointer transition-colors select-none min-h-[44px] ${
                         isChecked
                           ? 'bg-[#1a1a1a] text-white border-[#1a1a1a]'
                           : 'bg-white text-[#555] border-[#ddd] hover:border-[#999]'

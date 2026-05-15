@@ -798,14 +798,15 @@ export function initMapEngine() {
     svg.setAttribute('viewBox', `0 0 ${width} ${height}`)
 
     const connected = buildConnections(entity)
-    const limitedConnected = connected.slice(0, 8)
+    const maxNodes = Math.min(connected.length, Math.max(12, Math.floor(Math.min(width, height) / 18)))
+    const limitedConnected = connected.slice(0, maxNodes)
     const nodeCount = limitedConnected.length + 1
 
-    // Scale radii based on node count
-    // Scale radii relative to container (smaller dimension)
+    // Scale radii relative to container, shrinking as more nodes are added
     const minDim = Math.min(width, height)
-    const centerR = Math.max(14, Math.round(minDim * (nodeCount > 8 ? 0.07 : 0.09)))
-    const leafR = Math.max(8, Math.round(minDim * (nodeCount > 8 ? 0.04 : 0.055)))
+    const densityFactor = nodeCount > 16 ? 0.5 : nodeCount > 10 ? 0.7 : 1
+    const centerR = Math.max(12, Math.round(minDim * 0.09 * densityFactor))
+    const leafR = Math.max(6, Math.round(minDim * 0.055 * densityFactor))
 
     const nodes = [
       {
@@ -839,9 +840,9 @@ export function initMapEngine() {
         d3
           .forceLink(links)
           .id((d) => d.id)
-          .distance(minDim * (nodeCount > 8 ? 0.15 : 0.22)),
+          .distance(minDim * (nodeCount > 16 ? 0.1 : nodeCount > 10 ? 0.14 : 0.22)),
       )
-      .force('charge', d3.forceManyBody().strength(minDim * (nodeCount > 8 ? -0.3 : -0.45)))
+      .force('charge', d3.forceManyBody().strength(minDim * (nodeCount > 16 ? -0.15 : nodeCount > 10 ? -0.25 : -0.45)))
       .force('center', d3.forceCenter(width / 2, height / 2))
       .force(
         'collision',
@@ -913,58 +914,46 @@ export function initMapEngine() {
       })
     })
 
-    // Center label—word-wrapped via tspans at bottom of SVG
-    const fullName = entity.name || entity.title || ''
-    const centerLabel = svgEl
-      .append('text')
-      .attr('class', 'mini-center-label')
-      .attr('text-anchor', 'middle')
-      .attr('font-size', Math.max(9, Math.min(12, width * 0.03)) + 'px')
-    // Word-wrap: chars per line and line height scale with container width
-    const charsPerLine = Math.max(16, Math.round(width / 16))
-    const lineH = Math.max(10, Math.round(height * 0.05))
-    const words = fullName.split(/\s+/)
-    const lines = []
-    let cur = ''
-    for (const w of words) {
-      if (cur && (cur + ' ' + w).length > charsPerLine) {
-        lines.push(cur)
-        cur = w
-      } else cur = cur ? cur + ' ' + w : w
-    }
-    if (cur) lines.push(cur)
-    const lineCount = Math.min(lines.length, 3)
-    const startY = height - lineH * 0.5 - (lineCount - 1) * lineH
-    lines.slice(0, 3).forEach((line, i) => {
-      centerLabel
-        .append('tspan')
-        .attr('x', width / 2)
-        .attr('text-anchor', 'middle')
-        .attr('dy', i === 0 ? 0 : lineH)
-        .text(line)
-    })
-    centerLabel.attr('y', startY)
-    // Connection count below name (when more connections than shown)
-    if (connected.length > limitedConnected.length) {
-      svgEl
-        .append('text')
-        .attr('text-anchor', 'middle')
-        .attr('x', width / 2)
-        .attr('y', height - 2)
-        .attr('font-family', 'var(--mono)')
-        .attr('font-size', Math.max(7, width * 0.02) + 'px')
-        .attr('fill', 'var(--text-3)')
-        .attr('opacity', 0.7)
-        .text(connected.length + ' connections—see full list below')
+    // Entity name and connection count shown in the banner below the SVG (not inside it)
+    const banner = container.parentElement?.querySelector('.mini-graph-banner')
+    if (banner) {
+      const name = entity.name || entity.title || ''
+      const total = connected.length
+      const showing = limitedConnected.length
+      banner.innerHTML =
+        `<strong>${escHtml(name)}</strong><br>` +
+        `<span>${total} connection${total !== 1 ? 's' : ''}` +
+        (total > showing ? ` (showing ${showing})` : '') +
+        `</span>`
     }
 
-    // Click handler: navigate to that entity
+    // Click nodes to navigate to that entity
     nodeEls.on('click', (event, d) => {
       if (d.isCenter) return
       event.stopPropagation()
       const target = Object.assign({}, d.entity, { entityType: d.entityType })
       showDetail(target, [])
     })
+
+    // Click edges to scroll to that connection in the detail panel
+    linkEls
+      .style('cursor', 'pointer')
+      .attr('stroke-width', 3)
+      .on('click', (event, link) => {
+        event.stopPropagation()
+        const targetNode = link.target
+        if (!targetNode || targetNode.isCenter) return
+        const connRow = document.querySelector(
+          `.connection-row[data-item-id="conn-${entity.id}-${targetNode.entityType}-${targetNode.entity.id}"]`,
+        )
+        if (connRow) {
+          connRow.scrollIntoView({ behavior: 'smooth', block: 'center' })
+          const header = connRow.querySelector('.connection-header')
+          if (header) header.click()
+          connRow.style.background = 'var(--input-bg)'
+          setTimeout(() => (connRow.style.background = ''), 2000)
+        }
+      })
 
     sim.on('tick', () => {
       nodes.forEach((n) => {
@@ -977,12 +966,7 @@ export function initMapEngine() {
         .attr('x2', (d) => d.target.x)
         .attr('y2', (d) => d.target.y)
       nodeEls.attr('transform', (d) => `translate(${d.x},${d.y})`)
-      // Keep center label below center node
-      const cn = nodes[0]
-      // Label stays centered in SVG (not attached to node)
-      const cx = width / 2
-      centerLabel.selectAll('tspan').attr('x', cx)
-      centerLabel.attr('x', cx)
+      // (label moved to HTML banner, no SVG label to position)
     })
 
     setTimeout(() => sim.stop(), 2500)
@@ -1207,15 +1191,33 @@ export function initMapEngine() {
         return html + '</div></div>'
       }
       let bubblesHtml = '<div class="mobile-bubbles">'
-      if (sectorCats.length > 0) bubblesHtml += pillGroup('Sectors', sectorCats, false)
-      if (roleCats.length > 0) bubblesHtml += pillGroup('Roles', roleCats, true)
+      if (sectorCats.length > 0) bubblesHtml += pillGroup('Sectors — tap to filter', sectorCats, true)
+      if (roleCats.length > 0) bubblesHtml += pillGroup('Roles — tap to filter', roleCats, true)
       bubblesHtml += '</div>'
 
       // Belief spectrum bars
       const dims = [
-        { key: 'regulatory_stance', label: 'Regulatory Stance', order: STANCE_ORDER, colors: STANCE_COLORS },
-        { key: 'agi_timeline', label: 'AGI Timeline', order: TIMELINE_ORDER, colors: TIMELINE_COLORS },
-        { key: 'ai_risk_level', label: 'AI Risk Level', order: RISK_ORDER, colors: RISK_COLORS },
+        {
+          key: 'regulatory_stance',
+          label: 'Regulatory Stance',
+          tip: 'How much AI regulation this person/org supports',
+          order: STANCE_ORDER,
+          colors: STANCE_COLORS,
+        },
+        {
+          key: 'agi_timeline',
+          label: 'AGI Timeline',
+          tip: 'When they think human-level AI will arrive',
+          order: TIMELINE_ORDER,
+          colors: TIMELINE_COLORS,
+        },
+        {
+          key: 'ai_risk_level',
+          label: 'AI Risk Level',
+          tip: 'How dangerous they think advanced AI could be',
+          order: RISK_ORDER,
+          colors: RISK_COLORS,
+        },
       ]
       let spectrumHtml = '<div class="mobile-spectrum">'
       for (const dim of dims) {
@@ -1234,7 +1236,7 @@ export function initMapEngine() {
           else nullCount++
         }
         spectrumHtml += `<div class="mobile-spectrum-row">
-  <div class="mobile-spectrum-label"><span><span class="chevron">&#x25B8;</span> ${dim.label}</span>${nullCount > 0 ? `<span>(${nullCount} no data)</span>` : ''}</div>
+  <div class="mobile-spectrum-label"><span><span class="chevron">&#x25B8;</span> ${dim.label} <span class="mobile-tip" title="${dim.tip}">?</span></span>${nullCount > 0 ? `<span>(${nullCount} no data)</span>` : ''}</div>
   <div class="mobile-spectrum-bar">`
         for (const label of dim.order) {
           const count = buckets[label] || 0
@@ -1244,14 +1246,25 @@ export function initMapEngine() {
         spectrumHtml += `</div><div class="mobile-spectrum-endpoints"><span>${dim.order[0]}</span><span>${dim.order[dim.order.length - 1]}</span></div></div>`
       }
       spectrumHtml += '</div>'
-      document.getElementById('mobile-hero').innerHTML = bubblesHtml + spectrumHtml
+      const peopleCount = entities.filter((d) => d.entityType === 'person').length
+      const orgCount = entities.filter((d) => d.entityType === 'organization').length
+      const edgeCount = (allData.relationships || []).length
+      const statsHtml = `<div class="mobile-hero-stats"><span>${peopleCount} people</span> &middot; <span>${orgCount} orgs</span> &middot; <span>${edgeCount} connections</span></div>`
+      document.getElementById('mobile-hero').innerHTML = bubblesHtml + spectrumHtml + statsHtml
     }
 
-    // Pre-compute connection counts for all entities (used for card badges + explore button)
+    // Pre-compute connection counts via single pass over edges (O(edges) not O(entities*edges))
     const connectionCounts = new Map()
-    for (const d of allEntities) {
-      connectionCounts.set(d.entityType + ':' + d.id, buildConnections(d).length)
+    if (allData.relationships) {
+      for (const rel of allData.relationships) {
+        const sk = (rel.source_type || 'organization') + ':' + rel.source_id
+        const tk = (rel.target_type || 'organization') + ':' + rel.target_id
+        connectionCounts.set(sk, (connectionCounts.get(sk) || 0) + 1)
+        connectionCounts.set(tk, (connectionCounts.get(tk) || 0) + 1)
+      }
     }
+    // person_organizations is a subset of relationships (affiliated edges),
+    // so we skip it here to avoid double-counting
 
     // ── Card list grouped by category ──
     const grouped = {}
@@ -1297,15 +1310,26 @@ export function initMapEngine() {
         else if (d.entityType === 'organization') sub = d.category || ''
         else sub = [d.author, d.year].filter(Boolean).join(' \u00b7 ')
 
-        const stanceDot = d.stance_score
-          ? `<span class="mobile-card-dot" style="background:${STANCE_COLORS[STANCE_ORDER[Math.round(d.stance_score) - 1]] || 'var(--text-3)'}" title="${d.regulatory_stance || ''}"></span>`
-          : '<span class="mobile-card-dot empty"></span>'
-        const timelineDot = d.timeline_score
-          ? `<span class="mobile-card-dot" style="background:${TIMELINE_COLORS[TIMELINE_ORDER[Math.round(d.timeline_score) - 1]] || 'var(--text-3)'}" title="${d.agi_timeline || ''}"></span>`
-          : '<span class="mobile-card-dot empty"></span>'
-        const riskDot = d.risk_score
-          ? `<span class="mobile-card-dot" style="background:${RISK_COLORS[RISK_ORDER[Math.round(d.risk_score) - 1]] || 'var(--text-3)'}" title="${d.ai_risk_level || ''}"></span>`
-          : '<span class="mobile-card-dot empty"></span>'
+        function beliefBadge(text, score, order, colors, title) {
+          if (!text || score == null) return ''
+          const idx = Math.round(score) - 1
+          const color = (idx >= 0 && order[idx] && colors[order[idx]]) || 'var(--text-3)'
+          const isVar = color.startsWith('var(')
+          const bg = isVar ? 'transparent' : color + '20'
+          return `<span class="mobile-card-belief" style="background:${bg};color:${color};" title="${title}: ${text}">${text.split('/')[0].split(' ')[0]}</span>`
+        }
+        const stanceBadge = beliefBadge(
+          d.regulatory_stance,
+          d.stance_score,
+          STANCE_ORDER,
+          STANCE_COLORS,
+          'Regulatory stance',
+        )
+        const timelineBadge =
+          d.agi_timeline && d.timeline_score != null
+            ? `<span class="mobile-card-belief" style="background:${(TIMELINE_COLORS[TIMELINE_ORDER[Math.round(d.timeline_score) - 1]] || '#888') + '20'};color:${TIMELINE_COLORS[TIMELINE_ORDER[Math.round(d.timeline_score) - 1]] || '#888'};" title="AGI timeline: ${d.agi_timeline}">${d.agi_timeline.replace(' years', 'y').replace('Mixed/unclear', '?')}</span>`
+            : ''
+        const riskBadge = beliefBadge(d.ai_risk_level, d.risk_score, RISK_ORDER, RISK_COLORS, 'AI risk level')
 
         // Canonicalize belief values to match spectrum bar labels for filter consistency
         const _cs = d.regulatory_stance
@@ -1320,15 +1344,20 @@ export function initMapEngine() {
           ? RISK_ORDER.find((l) => d.ai_risk_level.toLowerCase().includes(l.split(' ')[0].toLowerCase())) ||
             d.ai_risk_level
           : ''
+        const _verifStatus = _getVerificationStatus(d.field_verification)
+        const verifDot =
+          _verifStatus === 'verified' ? '<span class="mobile-card-verified" title="Verified"></span>' : ''
         cardsHtml += `<div class="mobile-card" data-entity-id="${d.id}" data-entity-type="${d.entityType}" data-category="${normalizeCategory(d.category)}" data-slug="${slug}" data-stance="${_cs}" data-timeline="${_ct}" data-risk="${_cr}">
   ${thumbHtml}<div class="mobile-card-info">
-    <div class="mobile-card-row1"><span class="mobile-card-name">${escHtml(d.name || d.title)}</span><span class="mobile-card-badge" style="background:${catColor}22;color:${catColor};">${normalizeCategory(d.category)}</span></div>
-    <div class="mobile-card-row2"><span class="mobile-card-sub">${sub}</span><span class="mobile-card-dots">${stanceDot}${timelineDot}${riskDot}${connCount > 0 ? `<span class="mobile-card-edges" title="${connCount} connections">${connCount}</span>` : ''}</span></div>
+    <div class="mobile-card-row1">${verifDot}<span class="mobile-card-name">${escHtml(d.name || d.title)}</span><span class="mobile-card-badge" style="background:${catColor}22;color:${catColor};">${normalizeCategory(d.category)}</span></div>
+    <div class="mobile-card-row2"><span class="mobile-card-sub">${sub}</span><span class="mobile-card-beliefs">${stanceBadge}${timelineBadge}${riskBadge}${connCount > 0 ? `<span class="mobile-card-edges" title="${connCount} connections">${connCount}</span>` : ''}</span></div>
   </div></div>`
       }
       cardsHtml += '</div>'
     }
     document.getElementById('mobile-card-list').innerHTML = cardsHtml
+    const _loadingEl = document.getElementById('mobile-loading-indicator')
+    if (_loadingEl) _loadingEl.remove()
 
     // ── Filter state machine ──
     const mobileFilters = {
@@ -1485,14 +1514,14 @@ export function initMapEngine() {
       })
     })
     // Type chips (All/People/Orgs are radio; Connected is an independent toggle)
-    document.querySelectorAll('.mobile-type-chip').forEach((chip) => {
+    document.querySelectorAll('.mobile-type-chip:not(.mobile-sort-chip)').forEach((chip) => {
       chip.addEventListener('click', () => {
         if (chip.dataset.type === 'connected') {
           chip.classList.toggle('active')
           mobileFilters.connectedOnly = chip.classList.contains('active')
         } else {
           document
-            .querySelectorAll('.mobile-type-chip:not([data-type="connected"])')
+            .querySelectorAll('.mobile-type-chip:not([data-type="connected"]):not(.mobile-sort-chip)')
             .forEach((c) => c.classList.remove('active'))
           chip.classList.add('active')
           mobileFilters.type = chip.dataset.type
@@ -1500,6 +1529,345 @@ export function initMapEngine() {
         applyMobileFilters()
       })
     })
+    // Sort-by-belief chips: reorder visible cards by belief score
+    document.querySelectorAll('.mobile-sort-chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const wasActive = chip.classList.contains('active')
+        document.querySelectorAll('.mobile-sort-chip').forEach((c) => c.classList.remove('active'))
+        const cardList = document.getElementById('mobile-card-list')
+        if (wasActive) {
+          // Deactivate: restore original category-grouped order
+          const sections = [...cardList.querySelectorAll('.mobile-category-section')]
+          sections.sort((a, b) => {
+            const ia = CLUSTER_ORDER.indexOf(a.dataset.sectionCategory)
+            const ib = CLUSTER_ORDER.indexOf(b.dataset.sectionCategory)
+            return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib)
+          })
+          sections.forEach((s) => cardList.appendChild(s))
+          cardList.querySelectorAll('.mobile-category-header').forEach((h) => (h.style.display = ''))
+          return
+        }
+        chip.classList.add('active')
+        const scoreKey = chip.dataset.sort === 'stance' ? 'stance' : 'risk'
+        const dataAttr = 'data-' + scoreKey
+        // Hide category headers and sort all cards flat by belief score
+        cardList.querySelectorAll('.mobile-category-header').forEach((h) => (h.style.display = 'none'))
+        const allCards = [...cardList.querySelectorAll('.mobile-card')]
+        allCards.sort((a, b) => {
+          const aVal = a.getAttribute(dataAttr) || ''
+          const bVal = b.getAttribute(dataAttr) || ''
+          if (!aVal && !bVal) return 0
+          if (!aVal) return 1
+          if (!bVal) return -1
+          return aVal.localeCompare(bVal)
+        })
+        allCards.forEach((c) => cardList.appendChild(c))
+      })
+    })
+    // Unified view tab handler: Directory / AGI Views / Plot
+    let _beliefsData = null
+    let _currentMobileView = 'directory'
+    function switchMobileView(viewName) {
+      _currentMobileView = viewName
+      const cardList = document.getElementById('mobile-card-list')
+      const heroToggle = document.getElementById('mobile-hero-toggle')
+      const heroContent = document.getElementById('mobile-hero-content')
+      const activeFilters = document.getElementById('mobile-active-filters')
+      const noResults = document.getElementById('mobile-no-results')
+      const beliefsView = document.getElementById('mobile-beliefs-view')
+      const plotView = document.getElementById('mobile-plot-view')
+      const typeChips = document.getElementById('mobile-type-chips')
+      const loadingEl = document.getElementById('mobile-loading-indicator')
+
+      // Update tab active states
+      document.querySelectorAll('.mobile-view-tab').forEach((t) => {
+        t.classList.toggle('active', t.dataset.view === viewName)
+      })
+      document.querySelectorAll('.mobile-sort-chip').forEach((c) => c.classList.remove('active'))
+
+      // Hide all views
+      if (cardList) cardList.style.display = 'none'
+      if (heroToggle) heroToggle.style.display = 'none'
+      if (heroContent) heroContent.style.display = 'none'
+      if (activeFilters) activeFilters.style.display = 'none'
+      if (noResults) noResults.style.display = 'none'
+      if (beliefsView) beliefsView.style.display = 'none'
+      if (plotView) plotView.style.display = 'none'
+      if (typeChips) typeChips.style.display = 'none'
+      if (loadingEl) loadingEl.style.display = 'none'
+
+      if (viewName === 'directory') {
+        if (cardList) cardList.style.display = ''
+        if (heroToggle) heroToggle.style.display = ''
+        if (heroContent) heroContent.style.display = ''
+        if (activeFilters) activeFilters.style.display = ''
+        if (typeChips) typeChips.style.display = ''
+      } else if (viewName === 'beliefs') {
+        if (beliefsView) beliefsView.style.display = ''
+        loadBeliefsView()
+      } else if (viewName === 'plot') {
+        if (plotView) plotView.style.display = ''
+        renderMobilePlot(document.getElementById('mobile-plot-content'))
+      }
+    }
+
+    document.querySelectorAll('.mobile-view-tab').forEach((tab) => {
+      tab.addEventListener('click', () => switchMobileView(tab.dataset.view))
+    })
+
+    function loadBeliefsView() {
+      const content = document.getElementById('mobile-beliefs-content')
+      if (_beliefsData) {
+        renderMobileBeliefs(content, _beliefsData)
+        return
+      }
+      content.innerHTML =
+        '<div style="padding:2rem;text-align:center;font-family:var(--mono);font-size:11px;color:var(--text-3);">Loading AGI definitions...</div>'
+      fetch('/data/agi-definitions.json')
+        .then((r) => r.json())
+        .then((data) => {
+          _beliefsData = data
+          renderMobileBeliefs(content, data)
+        })
+        .catch(() => {
+          content.innerHTML =
+            '<div style="padding:2rem;text-align:center;font-family:var(--mono);font-size:11px;color:var(--text-3);">Could not load definitions data</div>'
+        })
+    }
+
+    function renderMobileBeliefs(container, data) {
+      const clusters = data.clusters || []
+      const points = data.points || []
+      let html = '<div class="mobile-beliefs-header">'
+      html += '<div class="mobile-beliefs-title">How Stakeholders Define AGI</div>'
+      html +=
+        '<div class="mobile-beliefs-subtitle">' +
+        points.length +
+        ' definitions grouped into ' +
+        clusters.length +
+        ' themes</div>'
+      html +=
+        '<input id="mobile-beliefs-search" type="text" placeholder="Search definitions..." class="mobile-beliefs-search" />'
+      html += '</div>'
+
+      const sorted = [...clusters].sort((a, b) => b.count - a.count)
+      for (const cluster of sorted) {
+        const entities = points.filter((p) => p.cluster_id === cluster.id)
+        const color =
+          {
+            c0: '#e74c3c',
+            c1: '#3498db',
+            c2: '#2ecc71',
+            c3: '#f39c12',
+            c4: '#9b59b6',
+            c5: '#1abc9c',
+            c6: '#e67e22',
+            c7: '#34495e',
+          }[cluster.id] || '#888'
+
+        html += '<div class="mobile-beliefs-cluster collapsed" data-cluster="' + cluster.id + '">'
+        html += '<div class="mobile-beliefs-cluster-header">'
+        html += '<span class="mobile-beliefs-chevron">&#x25B8;</span>'
+        html += '<span class="mobile-beliefs-cluster-dot" style="background:' + color + '"></span>'
+        html += '<span class="mobile-beliefs-cluster-label">' + escHtml(cluster.label) + '</span>'
+        html += '<span class="mobile-beliefs-cluster-count">' + cluster.count + '</span>'
+        html += '</div>'
+        html += '<div class="mobile-beliefs-cluster-body">'
+        html += '<div class="mobile-beliefs-cluster-desc">' + escHtml(cluster.description || '') + '</div>'
+        html += '<div class="mobile-beliefs-entities">'
+        for (const p of entities) {
+          const catColor = getColor(p.category) || DEFAULT_COLOR
+          const defText = (p.definition || '').length > 120 ? p.definition.slice(0, 120) + '...' : p.definition || ''
+          html += '<div class="mobile-beliefs-entity" data-entity-id="' + p.entity_id + '">'
+          html += '<div class="mobile-beliefs-entity-header">'
+          html += '<span class="mobile-beliefs-entity-name">' + escHtml(p.name) + '</span>'
+          html +=
+            '<span class="mobile-beliefs-entity-cat" style="background:' +
+            catColor +
+            '22;color:' +
+            catColor +
+            ';">' +
+            escHtml(p.category) +
+            '</span>'
+          html += '</div>'
+          html += '<div class="mobile-beliefs-entity-def">' + escHtml(defText) + '</div>'
+          html += '</div>'
+        }
+        html += '</div></div></div>'
+      }
+      container.innerHTML = html
+
+      // Toggle cluster collapse
+      container.querySelectorAll('.mobile-beliefs-cluster-header').forEach((header) => {
+        header.addEventListener('click', () => {
+          header.closest('.mobile-beliefs-cluster').classList.toggle('collapsed')
+        })
+      })
+
+      // Search filter
+      const searchInput = document.getElementById('mobile-beliefs-search')
+      if (searchInput) {
+        searchInput.addEventListener('input', () => {
+          const q = searchInput.value.toLowerCase().trim()
+          container.querySelectorAll('.mobile-beliefs-entity').forEach((el) => {
+            const text = el.textContent.toLowerCase()
+            el.style.display = !q || text.includes(q) ? '' : 'none'
+          })
+          container.querySelectorAll('.mobile-beliefs-cluster').forEach((cl) => {
+            const visible = cl.querySelectorAll('.mobile-beliefs-entity[style=""], .mobile-beliefs-entity:not([style])')
+            cl.style.display = !q || visible.length > 0 ? '' : 'none'
+          })
+        })
+      }
+
+      // Click entity to navigate to their map entry
+      container.querySelectorAll('.mobile-beliefs-entity').forEach((el) => {
+        el.addEventListener('click', () => {
+          const id = parseInt(el.dataset.entityId)
+          const entity = [...allData.people, ...allData.organizations].find((e) => e.id === id)
+          if (entity) {
+            const entityWithType = Object.assign({}, entity, {
+              entityType: entity.entity_type || (allData.people.includes(entity) ? 'person' : 'organization'),
+            })
+            mobileScrollPos = document.getElementById('mobile-directory').scrollTop
+            showDetail(entityWithType, [])
+          }
+        })
+      })
+    }
+
+    function renderMobilePlot(container) {
+      if (container.dataset.rendered) return
+      container.dataset.rendered = '1'
+      const dims = [
+        {
+          key: 'stance_score',
+          label: 'Regulatory Stance',
+          tip: 'How much AI regulation they support',
+          order: STANCE_ORDER,
+          colors: STANCE_COLORS,
+          field: 'regulatory_stance',
+        },
+        {
+          key: 'timeline_score',
+          label: 'AGI Timeline',
+          tip: 'When they expect human-level AI',
+          order: TIMELINE_ORDER,
+          colors: TIMELINE_COLORS,
+          field: 'agi_timeline',
+        },
+        {
+          key: 'risk_score',
+          label: 'AI Risk Level',
+          tip: 'How dangerous they think advanced AI could be',
+          order: RISK_ORDER,
+          colors: RISK_COLORS,
+          field: 'ai_risk_level',
+        },
+      ]
+      const entities = [
+        ...allData.people.map((d) => Object.assign({}, d, { entityType: 'person' })),
+        ...allData.organizations.map((d) => Object.assign({}, d, { entityType: 'organization' })),
+      ]
+
+      let html = '<div class="mplot-header"><div class="mplot-title">Belief Landscape</div>'
+      html += '<div class="mplot-sub">Tap any bar to see who holds that position</div></div>'
+
+      for (const dim of dims) {
+        const buckets = {}
+        let maxCount = 0
+        let totalWithData = 0
+        for (const d of entities) {
+          if (d[dim.key] == null) continue
+          totalWithData++
+          const score = Math.round(d[dim.key])
+          const label = dim.order[score - 1] || 'Other'
+          if (!buckets[label]) buckets[label] = []
+          buckets[label].push(d)
+          if (buckets[label].length > maxCount) maxCount = buckets[label].length
+        }
+        const noData = entities.length - totalWithData
+
+        html += '<div class="mplot-dim">'
+        html += '<div class="mplot-dim-head"><span class="mplot-dim-label">' + dim.label + '</span>'
+        html +=
+          '<span class="mplot-dim-info">' +
+          totalWithData +
+          ' rated' +
+          (noData > 0 ? ', ' + noData + ' no data' : '') +
+          '</span></div>'
+
+        for (const label of dim.order) {
+          const bucket = buckets[label] || []
+          const count = bucket.length
+          if (count === 0) continue
+          const pct = maxCount > 0 ? (count / maxCount) * 100 : 0
+          const color = dim.colors[label] || '#888'
+          html += '<div class="mplot-row" data-dim="' + dim.key + '" data-label="' + label + '">'
+          html += '<div class="mplot-row-label">' + label + '</div>'
+          html += '<div class="mplot-row-bar-wrap">'
+          html += '<div class="mplot-row-bar" style="width:' + pct + '%;background:' + color + ';"></div>'
+          html += '</div>'
+          html += '<div class="mplot-row-count">' + count + '</div>'
+          html += '</div>'
+          html +=
+            '<div class="mplot-row-entities" data-dim="' +
+            dim.key +
+            '" data-label="' +
+            label +
+            '" style="display:none;">'
+          bucket.slice(0, 10).forEach((d) => {
+            const catColor = getColor(d.category) || DEFAULT_COLOR
+            html += '<div class="mplot-entity" data-id="' + d.id + '" data-type="' + d.entityType + '">'
+            html += '<span class="mplot-entity-name">' + escHtml(d.name || d.title) + '</span>'
+            html +=
+              '<span class="mplot-entity-cat" style="color:' +
+              catColor +
+              ';">' +
+              (d.category || '').split('/')[0] +
+              '</span>'
+            html += '</div>'
+          })
+          if (bucket.length > 10) html += '<div class="mplot-entity-more">' + (bucket.length - 10) + ' more</div>'
+          html += '</div>'
+        }
+        html += '</div>'
+      }
+      container.innerHTML = html
+
+      container.querySelectorAll('.mplot-row').forEach((row) => {
+        row.addEventListener('click', () => {
+          const dim = row.dataset.dim
+          const label = row.dataset.label
+          const entities = container.querySelector(
+            '.mplot-row-entities[data-dim="' + dim + '"][data-label="' + label + '"]',
+          )
+          if (!entities) return
+          const wasOpen = entities.style.display !== 'none'
+          container.querySelectorAll('.mplot-row-entities').forEach((e) => (e.style.display = 'none'))
+          container.querySelectorAll('.mplot-row').forEach((r) => r.classList.remove('expanded'))
+          if (!wasOpen) {
+            entities.style.display = ''
+            row.classList.add('expanded')
+          }
+        })
+      })
+
+      container.querySelectorAll('.mplot-entity').forEach((el) => {
+        el.addEventListener('click', (e) => {
+          e.stopPropagation()
+          const id = parseInt(el.dataset.id)
+          const type = el.dataset.type
+          const entity = (type === 'person' ? allData.people : allData.organizations).find((e) => e.id === id)
+          if (entity) {
+            const entityWithType = Object.assign({}, entity, { entityType: type })
+            mobileScrollPos = document.getElementById('mobile-directory').scrollTop
+            showDetail(entityWithType, [])
+          }
+        })
+      })
+    }
+
     // Search with autocomplete dropdown + boosted name/title scoring
     let searchTimer
     const autocomplete = document.getElementById('mobile-autocomplete')
@@ -1752,12 +2120,23 @@ export function initMapEngine() {
         }
       })
 
+      let _mobileRendered = false
       if (isMobileDirectory) {
         renderMobileDirectory()
+        _mobileRendered = true
         const ml = document.getElementById('mobile-loading')
         if (ml) ml.remove()
         return
       }
+
+      // Handle desktop→mobile viewport change (e.g., opening DevTools responsive mode).
+      // If the viewport drops below 768px after data loaded on the desktop path,
+      // render the mobile directory so the CSS-visible shell gets populated.
+      window.addEventListener('resize', () => {
+        if (_mobileRendered || window.innerWidth >= 768) return
+        _mobileRendered = true
+        renderMobileDirectory()
+      })
 
       // Resolve deep link target
       const deepLinkTarget = document.body.classList.contains('locked') ? null : resolveDeepLink()
@@ -5009,7 +5388,7 @@ ${dots}
   <button id="split-share-btn" title="Share">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
   </button>
-  <button onclick="document.getElementById('detail-panel').classList.remove('open');document.getElementById('detail-panel').classList.remove('mobile-split');mobileBreadcrumb.length=0;if(_miniGraphSim){_miniGraphSim.stop();_miniGraphSim=null;}setTimeout(()=>{document.getElementById('mobile-directory').scrollTop=mobileScrollPos},50);" style="font-size:16px;">&times;</button>
+  <button id="split-close-btn" style="font-size:16px;">&times;</button>
 </div>
     </div>
     <div class="detail-type">${d.entityType}</div>
@@ -5044,6 +5423,23 @@ ${dots}
       }
       initSplitDragHandle()
       bindBreadcrumbClicks(splitDetail)
+      // Wire split close button (uses closure-scoped vars instead of inline onclick)
+      const splitCloseBtn = document.getElementById('split-close-btn')
+      if (splitCloseBtn) {
+        splitCloseBtn.addEventListener('click', () => {
+          document.getElementById('detail-panel').classList.remove('open')
+          document.getElementById('detail-panel').classList.remove('mobile-split')
+          mobileBreadcrumb.length = 0
+          if (_miniGraphSim) {
+            _miniGraphSim.stop()
+            _miniGraphSim = null
+          }
+          switchMobileView(_currentMobileView)
+          setTimeout(() => {
+            document.getElementById('mobile-directory').scrollTop = mobileScrollPos
+          }, 50)
+        })
+      }
       // Wire split share button
       const splitShareBtn = document.getElementById('split-share-btn')
       if (splitShareBtn) {
@@ -5171,6 +5567,31 @@ ${dots}
         const sourceId = parseInt(link.dataset.sourceId, 10)
         const targetId = parseInt(link.dataset.targetId, 10)
         const relType = link.dataset.relType || 'affiliated'
+
+        if (isMobileDirectory) {
+          // Mobile: expand the connection details to show evidence inline
+          const row = link.closest('.connection-row')
+          if (row) {
+            const details = row.querySelector('.connection-details')
+            if (details) {
+              details.style.display = details.style.display === 'none' ? '' : 'none'
+              // Load edge evidence if available
+              if (edgeId && window.__edgeEvidence?.edges?.[edgeId]) {
+                const ev = window.__edgeEvidence.edges[edgeId]
+                const evidenceEl = details.querySelector('.connection-evidence')
+                if (evidenceEl && !evidenceEl.dataset.loaded) {
+                  evidenceEl.dataset.loaded = '1'
+                  let html = ''
+                  if (ev.evidence) html += `<div style="margin-bottom:4px;">${escHtml(ev.evidence)}</div>`
+                  if (ev.source_url)
+                    html += `<a href="${ev.source_url}" target="_blank" rel="noopener" style="color:var(--accent);font-size:11px;">Source</a>`
+                  if (html) evidenceEl.innerHTML = html
+                }
+              }
+            }
+          }
+          return
+        }
 
         function showRelationshipInNetwork() {
           let edge = edgeId ? _canvasLinks.find((l) => l.edgeId === edgeId) : null

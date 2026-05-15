@@ -250,6 +250,21 @@ const MENTION_DROPDOWN_CSS = `
   font-size: 12px;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
+@media (max-width: 600px) {
+  .tiptap-mention-list {
+    min-width: 0;
+    max-width: calc(100vw - 32px);
+    width: calc(100vw - 32px);
+  }
+  .mention-item {
+    padding: 10px 12px;
+    min-height: 44px;
+    font-size: 14px;
+  }
+  .mention-detail {
+    max-width: 100px;
+  }
+}
 `
 
 /**
@@ -283,7 +298,7 @@ export function TipTapEditor({
 
   const editor = useEditor({
     extensions: [
-      StarterKit,
+      StarterKit.configure({ link: false }),
       Link.configure({ openOnClick: false }),
       Placeholder.configure({ placeholder }),
       Mention.configure({
@@ -380,7 +395,7 @@ export function TipTapEditor({
 
         {/* Link popover */}
         {showLinkPopover && (
-          <div className="absolute top-full left-0 mt-1 z-50 flex items-center gap-1 bg-white border border-[#ddd] rounded shadow-lg px-2 py-1.5">
+          <div className="absolute top-full left-0 mt-1 z-50 flex items-center gap-1 bg-white border border-[#ddd] rounded shadow-lg px-2 py-1.5 max-[600px]:flex-col max-[600px]:left-0 max-[600px]:right-0 max-[600px]:items-stretch max-[600px]:gap-2 max-[600px]:p-3">
             <input
               type="url"
               value={linkUrl}
@@ -390,18 +405,23 @@ export function TipTapEditor({
                 if (e.key === 'Escape') setShowLinkPopover(false)
               }}
               placeholder="https://..."
-              className="px-2 py-1 text-[12px] font-mono border border-[#eee] rounded w-[200px]"
+              className="px-2 py-1.5 text-[12px] font-mono border border-[#eee] rounded w-[200px] min-h-[36px] max-[600px]:w-full max-[600px]:text-[16px]"
               autoFocus
             />
-            <button onClick={applyLink} className="px-2 py-1 text-[11px] font-mono bg-[#1a1a1a] text-white rounded">
-              {linkUrl ? 'Save' : 'Remove'}
-            </button>
-            <button
-              onClick={() => setShowLinkPopover(false)}
-              className="px-2 py-1 text-[11px] font-mono text-[#888] hover:text-[#1a1a1a]"
-            >
-              Cancel
-            </button>
+            <div className="flex gap-1 max-[600px]:gap-2">
+              <button
+                onClick={applyLink}
+                className="px-3 py-1.5 text-[11px] font-mono bg-[#1a1a1a] text-white rounded min-h-[36px] max-[600px]:flex-1"
+              >
+                {linkUrl ? 'Save' : 'Remove'}
+              </button>
+              <button
+                onClick={() => setShowLinkPopover(false)}
+                className="px-3 py-1.5 text-[11px] font-mono text-[#888] hover:text-[#1a1a1a] min-h-[36px] max-[600px]:flex-1"
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         )}
       </div>
@@ -432,7 +452,7 @@ function ToolbarButton({
       onClick={onClick}
       aria-label={label}
       aria-pressed={active}
-      className={`px-1.5 py-0.5 text-[12px] font-mono rounded transition-colors ${
+      className={`px-2 py-1 text-[12px] font-mono rounded transition-colors min-w-[32px] min-h-[32px] max-[600px]:min-w-[44px] max-[600px]:min-h-[44px] flex items-center justify-center ${
         active ? 'bg-[#e0e0e0] text-[#1a1a1a]' : 'text-[#888] hover:text-[#1a1a1a] hover:bg-[#f0f0f0]'
       }`}
     >

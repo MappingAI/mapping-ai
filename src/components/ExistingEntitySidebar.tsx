@@ -66,10 +66,10 @@ export function ExistingEntitySidebar({ entity, entityType, onClose }: ExistingE
   return (
     <>
       <div className="fixed inset-0 z-40" onClick={onClose} />
-      <div className="fixed top-12 right-0 bottom-0 w-[320px] max-w-full bg-[#fafafa] border-l border-[#ddd] z-50 p-5 overflow-y-auto shadow-lg animate-[slideIn_0.25s_ease]">
+      <div className="fixed top-12 right-0 bottom-0 w-[320px] max-[600px]:w-full max-[600px]:left-0 bg-[#fafafa] border-l border-[#ddd] z-50 p-5 overflow-y-auto shadow-lg animate-[slideIn_0.25s_ease] max-[600px]:p-4">
         <button
           onClick={onClose}
-          className="absolute top-2 right-3 font-mono text-[10px] tracking-wider text-[#888] border border-[#ddd] rounded px-2 py-0.5 bg-transparent cursor-pointer hover:border-[#999] hover:text-[#1a1a1a]"
+          className="absolute top-2 right-3 font-mono text-[10px] tracking-wider text-[#888] border border-[#ddd] rounded px-3 py-1.5 bg-transparent cursor-pointer hover:border-[#999] hover:text-[#1a1a1a] min-h-[44px] min-w-[44px] flex items-center justify-center"
         >
           Close
         </button>

@@ -151,7 +151,7 @@ export function TagInput({
     <div ref={wrapperRef} className={`relative ${className}`}>
       {/* Tags + input wrapper */}
       <div
-        className={`flex flex-wrap items-center gap-1.5 min-h-[38px] px-2 py-1.5 border rounded cursor-text transition-colors ${
+        className={`flex flex-wrap items-center gap-1.5 min-h-[44px] px-2 py-1.5 border rounded cursor-text transition-colors ${
           isOpen ? 'border-[#2563eb]' : 'border-[#ddd]'
         } ${disabled ? 'opacity-50' : 'hover:border-[#999]'} bg-white`}
         onClick={() => inputRef.current?.focus()}
@@ -189,7 +189,7 @@ export function TagInput({
             onKeyDown={handleKeyDown}
             placeholder={tags.length === 0 ? placeholder : ''}
             disabled={disabled}
-            className="flex-1 min-w-[80px] border-none outline-none font-mono text-[13px] bg-transparent p-0"
+            className="flex-1 min-w-[80px] border-none outline-none font-mono text-[13px] bg-transparent p-0 max-[600px]:text-[16px]"
           />
         )}
       </div>
@@ -205,7 +205,7 @@ export function TagInput({
                 addTag(result)
               }}
               onMouseEnter={() => setActiveIndex(i)}
-              className={`flex items-center justify-between px-3 py-1.5 cursor-pointer text-[12px] font-mono transition-colors ${
+              className={`flex items-center justify-between px-3 py-2.5 cursor-pointer text-[12px] font-mono transition-colors min-h-[44px] max-[600px]:text-[14px] ${
                 i === activeIndex ? 'bg-[#f0f0f0]' : ''
               }`}
             >

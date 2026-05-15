@@ -17,7 +17,7 @@ export function PillToggle({ value, onChange, options, className = '' }: PillTog
           key={opt.value}
           type="button"
           onClick={() => onChange(opt.value === value ? '' : opt.value)}
-          className={`px-3 py-1.5 text-[12px] font-mono border rounded-full cursor-pointer transition-colors ${
+          className={`px-3 py-2.5 text-[12px] font-mono border rounded-full cursor-pointer transition-colors min-h-[44px] ${
             opt.value === value
               ? 'bg-[#1a1a1a] text-white border-[#1a1a1a]'
               : 'bg-white text-[#555] border-[#ccc] hover:border-[#999]'

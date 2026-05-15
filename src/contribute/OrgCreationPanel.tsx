@@ -198,13 +198,17 @@ export function OrgCreationPanel({
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-[#eee]">
           <h2 className="font-mono text-[13px] uppercase tracking-wider">Add New Organization</h2>
-          <button type="button" onClick={onClose} className="text-[#888] hover:text-[#1a1a1a] text-lg leading-none">
+          <button
+            type="button"
+            onClick={onClose}
+            className="text-[#888] hover:text-[#1a1a1a] text-lg leading-none min-w-[44px] min-h-[44px] flex items-center justify-center"
+          >
             &times;
           </button>
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit(onSubmit)} className="px-6 py-4 space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="px-6 py-4 space-y-4 max-[600px]:px-4">
           {/* Name */}
           <div>
             <label className="block font-mono text-[11px] uppercase tracking-wider text-[#555] mb-1">
@@ -217,7 +221,7 @@ export function OrgCreationPanel({
               render={({ field }) => (
                 <input
                   {...field}
-                  className="w-full px-3 py-2 font-mono text-[13px] border border-[#ddd] rounded"
+                  className="w-full px-3 py-2.5 font-mono text-[13px] border border-[#ddd] rounded min-h-[44px] max-[600px]:text-[16px]"
                   required
                 />
               )}
@@ -252,7 +256,7 @@ export function OrgCreationPanel({
                   {...field}
                   type="url"
                   placeholder="https://..."
-                  className="w-full px-3 py-2 font-mono text-[13px] border border-[#ddd] rounded"
+                  className="w-full px-3 py-2.5 font-mono text-[13px] border border-[#ddd] rounded min-h-[44px] max-[600px]:text-[16px]"
                 />
               )}
             />
@@ -268,7 +272,7 @@ export function OrgCreationPanel({
                 <input
                   {...field}
                   placeholder="City, State, Country"
-                  className="w-full px-3 py-2 font-mono text-[13px] border border-[#ddd] rounded"
+                  className="w-full px-3 py-2.5 font-mono text-[13px] border border-[#ddd] rounded min-h-[44px] max-[600px]:text-[16px]"
                 />
               )}
             />
@@ -278,7 +282,7 @@ export function OrgCreationPanel({
           <button
             type="button"
             onClick={() => setShowExpanded(!showExpanded)}
-            className="text-[12px] font-mono text-[#2563eb] hover:underline"
+            className="text-[12px] font-mono text-[#2563eb] hover:underline min-h-[44px] flex items-center"
           >
             {showExpanded ? '− Hide extra fields' : '+ Add more details'}
           </button>
@@ -297,7 +301,7 @@ export function OrgCreationPanel({
                     <input
                       {...field}
                       placeholder="e.g., VC-backed, government-funded, nonprofit"
-                      className="w-full px-3 py-2 font-mono text-[13px] border border-[#ddd] rounded"
+                      className="w-full px-3 py-2.5 font-mono text-[13px] border border-[#ddd] rounded min-h-[44px] max-[600px]:text-[16px]"
                     />
                   )}
                 />
@@ -334,7 +338,7 @@ export function OrgCreationPanel({
                     <input
                       {...field}
                       placeholder="@handle"
-                      className="w-full px-3 py-2 font-mono text-[13px] border border-[#ddd] rounded"
+                      className="w-full px-3 py-2.5 font-mono text-[13px] border border-[#ddd] rounded min-h-[44px] max-[600px]:text-[16px]"
                     />
                   )}
                 />
@@ -350,7 +354,7 @@ export function OrgCreationPanel({
                     <input
                       {...field}
                       placeholder="@handle.bsky.social"
-                      className="w-full px-3 py-2 font-mono text-[13px] border border-[#ddd] rounded"
+                      className="w-full px-3 py-2.5 font-mono text-[13px] border border-[#ddd] rounded min-h-[44px] max-[600px]:text-[16px]"
                     />
                   )}
                 />
@@ -381,7 +385,7 @@ export function OrgCreationPanel({
             <button
               type="submit"
               disabled={submitMutation.isPending}
-              className="w-full py-2.5 font-mono text-[11px] uppercase tracking-wider bg-[#1a1a1a] text-white rounded cursor-pointer disabled:opacity-50"
+              className="w-full py-3 font-mono text-[11px] uppercase tracking-wider bg-[#1a1a1a] text-white rounded cursor-pointer disabled:opacity-50 min-h-[48px]"
             >
               {submitMutation.isPending ? 'Submitting...' : 'Submit Organization'}
             </button>

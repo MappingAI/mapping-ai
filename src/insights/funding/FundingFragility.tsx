@@ -208,7 +208,7 @@ export function FundingFragility({ edges, showTooltip, hideTooltip }: Props) {
 
     if (selectedRecipients.length === 0) return
 
-    const W = container.clientWidth || 660
+    const W = Math.max(container.clientWidth || 660, 500)
     const barH = 22
     const gap = 5
     const padL = 220

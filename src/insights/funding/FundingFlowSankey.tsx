@@ -194,7 +194,7 @@ export function FundingFlowSankey({ flows, funders, edges }: Props) {
 
     if (links.length === 0) return
 
-    const W = container.clientWidth || 700
+    const W = Math.max(container.clientWidth || 700, 600)
     const H = 620
     const margin = { top: 20, right: 200, bottom: 120, left: 200 }
 

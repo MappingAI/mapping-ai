@@ -128,7 +128,7 @@ export function PolicyKingmakers({ edges, showTooltip, hideTooltip }: Props) {
     const top5OrgReach = funderStats.slice(0, 5).reduce((sum, f) => sum + f.orgCount, 0)
     const top5Share = Math.round((top5OrgReach / (totalOrgs * 1.0)) * 100)
 
-    const W = container.clientWidth || 660
+    const W = Math.max(container.clientWidth || 660, 540)
     const barH = 28
     const gap = 4
     const padL = 290

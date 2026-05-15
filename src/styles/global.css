@@ -54,3 +54,40 @@
   --color-stance-ban: #8e44ad;
   --color-stance-mixed: #95a5a6;
 }
+
+/*
+ * Mobile form improvements
+ * Targets the contribute form and shared components on small screens.
+ */
+@media (max-width: 600px) {
+  /* Prevent horizontal overflow from fixed-width elements */
+  #contribute-root {
+    overflow-x: hidden;
+  }
+
+  /* Smooth scrolling for iOS momentum */
+  main {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Ensure textareas are comfortable to use */
+  textarea {
+    min-height: 80px;
+    font-size: 16px !important;
+  }
+
+  /* TipTap editor minimum height on mobile */
+  .ProseMirror {
+    min-height: 120px;
+    font-size: 16px;
+  }
+
+  /* Scrollbar-free horizontal scroll for tab bars */
+  .overflow-x-auto::-webkit-scrollbar {
+    display: none;
+  }
+  .overflow-x-auto {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
