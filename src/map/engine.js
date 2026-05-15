@@ -1665,12 +1665,14 @@ export function initMapEngine() {
             c7: '#34495e',
           }[cluster.id] || '#888'
 
-        html += '<div class="mobile-beliefs-cluster" data-cluster="' + cluster.id + '">'
+        html += '<div class="mobile-beliefs-cluster collapsed" data-cluster="' + cluster.id + '">'
         html += '<div class="mobile-beliefs-cluster-header">'
+        html += '<span class="mobile-beliefs-chevron">&#x25B8;</span>'
         html += '<span class="mobile-beliefs-cluster-dot" style="background:' + color + '"></span>'
         html += '<span class="mobile-beliefs-cluster-label">' + escHtml(cluster.label) + '</span>'
         html += '<span class="mobile-beliefs-cluster-count">' + cluster.count + '</span>'
         html += '</div>'
+        html += '<div class="mobile-beliefs-cluster-body">'
         html += '<div class="mobile-beliefs-cluster-desc">' + escHtml(cluster.description || '') + '</div>'
         html += '<div class="mobile-beliefs-entities">'
         for (const p of entities) {
@@ -1691,9 +1693,16 @@ export function initMapEngine() {
           html += '<div class="mobile-beliefs-entity-def">' + escHtml(defText) + '</div>'
           html += '</div>'
         }
-        html += '</div></div>'
+        html += '</div></div></div>'
       }
       container.innerHTML = html
+
+      // Toggle cluster collapse
+      container.querySelectorAll('.mobile-beliefs-cluster-header').forEach((header) => {
+        header.addEventListener('click', () => {
+          header.closest('.mobile-beliefs-cluster').classList.toggle('collapsed')
+        })
+      })
 
       // Search filter
       const searchInput = document.getElementById('mobile-beliefs-search')
@@ -1728,10 +1737,13 @@ export function initMapEngine() {
     }
 
     function renderMobilePlot(container) {
+      if (container.dataset.rendered) return
+      container.dataset.rendered = '1'
       const dims = [
         {
           key: 'stance_score',
           label: 'Regulatory Stance',
+          tip: 'How much AI regulation they support',
           order: STANCE_ORDER,
           colors: STANCE_COLORS,
           field: 'regulatory_stance',
@@ -1739,100 +1751,111 @@ export function initMapEngine() {
         {
           key: 'timeline_score',
           label: 'AGI Timeline',
+          tip: 'When they expect human-level AI',
           order: TIMELINE_ORDER,
           colors: TIMELINE_COLORS,
           field: 'agi_timeline',
         },
-        { key: 'risk_score', label: 'AI Risk Level', order: RISK_ORDER, colors: RISK_COLORS, field: 'ai_risk_level' },
+        {
+          key: 'risk_score',
+          label: 'AI Risk Level',
+          tip: 'How dangerous they think advanced AI could be',
+          order: RISK_ORDER,
+          colors: RISK_COLORS,
+          field: 'ai_risk_level',
+        },
       ]
       const entities = [
         ...allData.people.map((d) => Object.assign({}, d, { entityType: 'person' })),
         ...allData.organizations.map((d) => Object.assign({}, d, { entityType: 'organization' })),
       ]
 
-      let html = '<div class="mobile-plot-header">'
-      html += '<div class="mobile-plot-title">Belief Landscape</div>'
-      html += '<div class="mobile-plot-subtitle">Where stakeholders fall on AI regulation, timelines, and risk</div>'
-      html += '</div>'
+      let html = '<div class="mplot-header"><div class="mplot-title">Belief Landscape</div>'
+      html += '<div class="mplot-sub">Tap any bar to see who holds that position</div></div>'
 
       for (const dim of dims) {
-        const withScore = entities.filter((d) => d[dim.key] != null)
-        const noScore = entities.length - withScore.length
-        html += '<div class="mobile-plot-dim">'
-        html += '<div class="mobile-plot-dim-header">'
-        html += '<span class="mobile-plot-dim-label">' + dim.label + '</span>'
-        html +=
-          '<span class="mobile-plot-dim-count">' +
-          withScore.length +
-          ' entities' +
-          (noScore > 0 ? ' (' + noScore + ' no data)' : '') +
-          '</span>'
-        html += '</div>'
-
-        // Axis labels
-        html += '<div class="mobile-plot-axis">'
-        html += '<span>' + dim.order[0] + '</span><span>' + dim.order[dim.order.length - 1] + '</span>'
-        html += '</div>'
-
-        // Beeswarm strip - group by score bucket
-        html += '<div class="mobile-plot-strip">'
         const buckets = {}
-        for (const d of withScore) {
+        let maxCount = 0
+        let totalWithData = 0
+        for (const d of entities) {
+          if (d[dim.key] == null) continue
+          totalWithData++
           const score = Math.round(d[dim.key])
-          if (!buckets[score]) buckets[score] = []
-          buckets[score].push(d)
+          const label = dim.order[score - 1] || 'Other'
+          if (!buckets[label]) buckets[label] = []
+          buckets[label].push(d)
+          if (buckets[label].length > maxCount) maxCount = buckets[label].length
         }
-        const maxScore = dim.order.length
-        for (let s = 1; s <= maxScore; s++) {
-          const bucket = buckets[s] || []
-          const label = dim.order[s - 1] || ''
-          const color = dim.colors[label] || 'var(--text-3)'
-          const pct = ((s - 0.5) / maxScore) * 100
-          html +=
-            '<div class="mobile-plot-bucket" style="left:' + pct + '%;" title="' + label + ': ' + bucket.length + '">'
-          html +=
-            '<div class="mobile-plot-bucket-bar" style="height:' +
-            Math.min(bucket.length * 2, 60) +
-            'px;background:' +
-            color +
-            ';">'
-          html += '<span class="mobile-plot-bucket-count">' + bucket.length + '</span>'
+        const noData = entities.length - totalWithData
+
+        html += '<div class="mplot-dim">'
+        html += '<div class="mplot-dim-head"><span class="mplot-dim-label">' + dim.label + '</span>'
+        html +=
+          '<span class="mplot-dim-info">' +
+          totalWithData +
+          ' rated' +
+          (noData > 0 ? ', ' + noData + ' no data' : '') +
+          '</span></div>'
+
+        for (const label of dim.order) {
+          const bucket = buckets[label] || []
+          const count = bucket.length
+          if (count === 0) continue
+          const pct = maxCount > 0 ? (count / maxCount) * 100 : 0
+          const color = dim.colors[label] || '#888'
+          html += '<div class="mplot-row" data-dim="' + dim.key + '" data-label="' + label + '">'
+          html += '<div class="mplot-row-label">' + label + '</div>'
+          html += '<div class="mplot-row-bar-wrap">'
+          html += '<div class="mplot-row-bar" style="width:' + pct + '%;background:' + color + ';"></div>'
+          html += '</div>'
+          html += '<div class="mplot-row-count">' + count + '</div>'
           html += '</div>'
           html +=
-            '<div class="mobile-plot-bucket-label">' + label.split(' ')[0].replace('Mixed/unclear', '?') + '</div>'
-          // Show top entities on tap
-          html += '<div class="mobile-plot-bucket-entities" data-dim="' + dim.key + '" data-score="' + s + '">'
-          bucket.slice(0, 8).forEach((d) => {
-            html += '<div class="mobile-plot-entity" data-id="' + d.id + '" data-type="' + d.entityType + '">'
-            html += escHtml(d.name || d.title)
+            '<div class="mplot-row-entities" data-dim="' +
+            dim.key +
+            '" data-label="' +
+            label +
+            '" style="display:none;">'
+          bucket.slice(0, 10).forEach((d) => {
+            const catColor = getColor(d.category) || DEFAULT_COLOR
+            html += '<div class="mplot-entity" data-id="' + d.id + '" data-type="' + d.entityType + '">'
+            html += '<span class="mplot-entity-name">' + escHtml(d.name || d.title) + '</span>'
+            html +=
+              '<span class="mplot-entity-cat" style="color:' +
+              catColor +
+              ';">' +
+              (d.category || '').split('/')[0] +
+              '</span>'
             html += '</div>'
           })
-          if (bucket.length > 8) html += '<div class="mobile-plot-entity-more">+' + (bucket.length - 8) + ' more</div>'
-          html += '</div>'
+          if (bucket.length > 10) html += '<div class="mplot-entity-more">' + (bucket.length - 10) + ' more</div>'
           html += '</div>'
         }
-        html += '</div>' // strip
-        html += '</div>' // dim
+        html += '</div>'
       }
       container.innerHTML = html
 
-      // Toggle bucket entity lists on tap
-      container
-        .querySelectorAll('.mobile-plot-bucket-bar, .mobile-plot-bucket-count, .mobile-plot-bucket-label')
-        .forEach((el) => {
-          el.addEventListener('click', (e) => {
-            e.stopPropagation()
-            const bucket = el.closest('.mobile-plot-bucket')
-            const entities = bucket.querySelector('.mobile-plot-bucket-entities')
-            const wasOpen = entities.style.display === 'block'
-            container.querySelectorAll('.mobile-plot-bucket-entities').forEach((e) => (e.style.display = 'none'))
-            entities.style.display = wasOpen ? 'none' : 'block'
-          })
+      container.querySelectorAll('.mplot-row').forEach((row) => {
+        row.addEventListener('click', () => {
+          const dim = row.dataset.dim
+          const label = row.dataset.label
+          const entities = container.querySelector(
+            '.mplot-row-entities[data-dim="' + dim + '"][data-label="' + label + '"]',
+          )
+          if (!entities) return
+          const wasOpen = entities.style.display !== 'none'
+          container.querySelectorAll('.mplot-row-entities').forEach((e) => (e.style.display = 'none'))
+          container.querySelectorAll('.mplot-row').forEach((r) => r.classList.remove('expanded'))
+          if (!wasOpen) {
+            entities.style.display = ''
+            row.classList.add('expanded')
+          }
         })
+      })
 
-      // Click entity name to navigate
-      container.querySelectorAll('.mobile-plot-entity').forEach((el) => {
-        el.addEventListener('click', () => {
+      container.querySelectorAll('.mplot-entity').forEach((el) => {
+        el.addEventListener('click', (e) => {
+          e.stopPropagation()
           const id = parseInt(el.dataset.id)
           const type = el.dataset.type
           const entity = (type === 'person' ? allData.people : allData.organizations).find((e) => e.id === id)
