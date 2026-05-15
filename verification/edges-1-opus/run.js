@@ -410,7 +410,11 @@ async function insertCorrectionToDB(correction) {
          proposed_end_date = EXCLUDED.proposed_end_date,
          source_url = EXCLUDED.source_url,
          citation = EXCLUDED.citation,
-         status = 'pending'`,
+         evidence_confidence = EXCLUDED.evidence_confidence,
+         search_results = EXCLUDED.search_results,
+         reviewed_entity_id = EXCLUDED.reviewed_entity_id,
+         status = 'pending'
+       WHERE edge_correction.status NOT IN ('applied', 'rejected')`,
       [
         correction.edge_id,
         correction.source_entity_id,
@@ -578,6 +582,7 @@ async function verifyEntityEdges(entity, edges, reviewedEdgeIds) {
 
   const allResults = []
   const conversationTrace = []
+  let failedBatches = 0
 
   for (let batchIdx = 0; batchIdx < batches.length; batchIdx++) {
     const batch = batches[batchIdx]
@@ -692,6 +697,7 @@ Remember:
 
     if (!verdicts) {
       console.log('    ERROR: Agent did not submit verdicts for this batch')
+      failedBatches++
       continue
     }
 
@@ -739,7 +745,7 @@ Remember:
     }
   }
 
-  return { results: allResults, trace: conversationTrace }
+  return { results: allResults, trace: conversationTrace, failedBatches }
 }
 
 // ── Main Entry Point ──
@@ -863,7 +869,7 @@ async function main() {
         return { success: true, entity, results: [], skipped: 0, entityMs: Date.now() - entityStart }
       }
 
-      const { results, trace, skipped } = await verifyEntityEdges(entity, edges, reviewedEdgeIds)
+      const { results, trace, skipped, failedBatches } = await verifyEntityEdges(entity, edges, reviewedEdgeIds)
 
       return {
         success: true,
@@ -871,6 +877,7 @@ async function main() {
         results,
         trace,
         skipped: skipped || 0,
+        failedBatches: failedBatches || 0,
         entityMs: Date.now() - entityStart,
         entityCost: costs.getEntityCost(),
       }
@@ -932,7 +939,14 @@ async function main() {
 
       totalEdgesVerified += results.length
       processedCount++
-      progress.completed.push(entity.id)
+      // Only mark complete if all batches succeeded
+      if (!outcome.failedBatches || outcome.failedBatches === 0) {
+        progress.completed.push(entity.id)
+      } else {
+        console.log(
+          `  ⚠ ${entity.name}: ${outcome.failedBatches} batch(es) failed, NOT marking as completed for resume`,
+        )
+      }
     } else {
       errorCount++
       fs.appendFileSync(
@@ -951,13 +965,31 @@ async function main() {
     fs.writeFileSync(progressPath, JSON.stringify(progress, null, 2) + '\n')
   }
 
+  // Mutex for serializing file writes in parallel mode
+  let writeLock = Promise.resolve()
+  async function serializedSave(outcome) {
+    writeLock = writeLock.then(() => saveResults(outcome))
+    return writeLock
+  }
+
+  // Cost ceiling abort flag (shared across parallel workers)
+  let costCeilingHit = false
+
   // Run processing
   if (options.parallel > 1) {
     console.log(`\nStarting parallel verification (${options.parallel} concurrent)...`)
+    console.log(`⚠ Parallel mode: per-entity cost tracking is approximate`)
 
     async function processAndSave(entity) {
+      if (costCeilingHit) return
+      const currentCost = costs.getSummary().total_cost_usd
+      if (currentCost >= maxCost) {
+        costCeilingHit = true
+        console.error(`\nABORTING: Cost ceiling reached ($${currentCost.toFixed(2)} >= $${maxCost})`)
+        return
+      }
       const outcome = await processEntity(entity)
-      await saveResults(outcome)
+      await serializedSave(outcome)
       return outcome
     }
 
@@ -973,6 +1005,7 @@ async function main() {
         break
       }
 
+      costs.resetEntity()
       const outcome = await processEntity(entity)
       await saveResults(outcome)
 
