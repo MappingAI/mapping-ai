@@ -1,6 +1,6 @@
 # Current architecture
 
-**Status:** live in production. **Last updated:** 2026-04-28. **Migration from AWS:** completed for database and compute. TanStack Start frontend migration shelved. See [ADR-0001](adrs/0001-migrate-off-aws.md) and [`target.md`](target.md).
+**Status:** live in production. **Last updated:** 2026-05-14. **Migration from AWS:** completed for database and compute. TanStack Start frontend migration shelved. See [ADR-0001](adrs/0001-migrate-off-aws.md) and [`target.md`](target.md).
 
 This document describes the stack that is actually running behind https://mapping-ai.org today. If a claim here is wrong, update this file before shipping code that depends on the new reality.
 
@@ -48,7 +48,7 @@ This document describes the stack that is actually running behind https://mappin
 - **R2 bucket:** `mapping-ai-data` (private, no public URL)
 - **Pages Function:** `functions/data/[file].ts` proxies R2 objects at `/data/<filename>`
 - **Binding:** `DATA_BUCKET` configured in `wrangler.toml`
-- **Allowed files:** `claims-detail.json` (5,835 claims across 882 entities), `agi-definitions.json` (201 AGI definitions with Voyage AI embeddings + UMAP)
+- **Allowed files:** `claims-detail.json` (8,299 claims across 1,494 entities, 8,587 sources), `agi-definitions.json` (240 AGI definitions with Voyage AI embeddings + UMAP)
 - **Cache:** `Cache-Control: public, max-age=300, s-maxage=3600` (5 min browser, 1 hour edge)
 - **Upload:** `PILOT_DB="..." pnpm run db:export-claims:upload` generates from Neon claims-pilot branch and uploads via S3-compatible API
 
@@ -183,6 +183,9 @@ Four tables on the Neon production branch: `entity`, `submission`, `edge`, `cont
 | `submission_count`                | INTEGER             | Total approved submissions                                                                     |
 | `status`                          | VARCHAR(20)         | `approved`, `pending`, `internal`                                                              |
 | `search_vector`                   | tsvector            | Full-text search (GIN indexed, auto-updated by trigger)                                        |
+| `field_verification`              | JSONB               | Per-field verification status. See [VERIFICATION.md](../VERIFICATION.md)                      |
+| `qa_approved`                     | BOOLEAN             | Entity has passed QA review                                                                    |
+| `slug`                            | VARCHAR(200)        | URL-friendly identifier                                                                        |
 
 #### `submission`
 
@@ -229,9 +232,9 @@ Four tables on the Neon production branch: `entity`, `submission`, `edge`, `cont
 | `created_at`  | TIMESTAMPTZ |                              |
 | `revoked_at`  | TIMESTAMPTZ | NULL = active                |
 
-### Claims-pilot branch tables
+### Claims and source tables
 
-The `claims-pilot` Neon branch extends the production schema with two additional tables for the enrichment pipeline. These will be merged into production when the enrichment workflow is finalized. Full documentation in [ENRICHMENT.md](../ENRICHMENT.md).
+The `claim` and `source` tables support the enrichment and verification pipelines. Migrated to production on 2026-05-14. Full documentation in [ENRICHMENT.md](../ENRICHMENT.md) and [VERIFICATION.md](../VERIFICATION.md).
 
 #### `source`
 
@@ -253,7 +256,7 @@ Every piece of evidence. Deduplicated by URL via `source_id = sha256(url)[:12]`.
 
 #### `claim`
 
-One row per entity-dimension-source combination. 5,835 claims as of 2026-04-28.
+One row per entity-dimension-source combination. 8,299 claims as of 2026-05-14.
 
 | Column             | Type             | Notes                                                                                                |
 | ------------------ | ---------------- | ---------------------------------------------------------------------------------------------------- |
@@ -476,7 +479,7 @@ Rules:
 - **Category normalization** handles known variants but may miss new ones as data grows.
 - **Thumbnails still on S3**: `scripts/cache-thumbnails.js` writes to S3. Migration to R2 pending.
 - **Legacy AWS deploy workflow** (`deploy.yml`) still runs on push to main (S3 sync + CloudFront invalidation). Harmless but wasteful; to be removed after stability period.
-- **Claims/source tables on separate branch**: The `claim` and `source` tables are on the `claims-pilot` Neon branch, not production. They need to be merged to production when the enrichment pipeline is finalized.
+- **Hardcoded AWS URL**: `src/map/engine.js:6247` still calls old AWS API Gateway for semantic search instead of `/api/semantic-search`.
 
 ## Links
 
@@ -486,4 +489,6 @@ Rules:
 - `.github/workflows/deploy.yml`: deploy pipeline (legacy AWS + Cloudflare Pages auto-deploy)
 - `docs/DEPLOYMENT.md`: deploy process
 - `docs/ENRICHMENT.md`: enrichment pipeline guide
+- `docs/VERIFICATION.md`: belief verification pipeline guide
 - `docs/post-mortems/`: incidents
+- `verification/full-schema-reference.md`: canonical field constraints and enum values

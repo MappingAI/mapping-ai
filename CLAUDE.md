@@ -106,20 +106,20 @@ Frontier Lab, AI Safety/Alignment, Think Tank/Policy Org, Government/Agency, Aca
 
 ## Entity field constraints
 
-Form fields enforce cardinality constraints that enrichment scripts must respect:
+Form fields enforce cardinality constraints that enrichment scripts must respect. See [`verification/full-schema-reference.md`](verification/full-schema-reference.md) for complete field documentation.
 
 | Field                      | Constraint      | Allowed values                                                                                                                                                                         |
 | -------------------------- | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `category`                 | SELECT_1        | Person: Executive, Researcher, Policymaker, Investor, Organizer, Journalist, Academic, Cultural figure. Org: see list above                                                            |
 | `other_categories`         | SELECT_MULTIPLE | Same as category (comma-separated)                                                                                                                                                     |
-| `belief_regulatory_stance` | SELECT_1        | Accelerate, Light-touch, Moderate, Cautious, Mixed/unclear                                                                                                                             |
-| `belief_agi_timeline`      | SELECT_1        | <2 years, 2-5 years, 5-10 years, 10-20 years, 20+ years, Never, Mixed/unclear                                                                                                          |
-| `belief_ai_risk_level`     | SELECT_1        | Existential, High, Moderate, Low, Minimal, Mixed/unclear                                                                                                                               |
-| `threat_models`            | SELECT_UP_TO_3  | Max 3 comma-separated values from: Power concentration, Misuse, Accidents/misalignment, Erosion of epistemics, Labor/economic, Surveillance/privacy, Bias/discrimination, Copyright/IP |
-| `evidence_sources`         | SELECT_MULTIPLE | Comma-separated: Direct quote, Published writing, Public statement, Inferred from actions                                                                                              |
-| `funding_model`            | SELECT_MULTIPLE | Comma-separated: Grants, Contracts, VC, Donations, Government, Revenue, Endowment                                                                                                      |
+| `belief_regulatory_stance` | SELECT_1        | Accelerate, Light-touch, Targeted, Moderate, Precautionary, Restrictive, Nationalize, Mixed/unclear, Other                                                                             |
+| `belief_agi_timeline`      | SELECT_1        | Already here, 2-3 years, 5-10 years, 10-25 years, 25+ years or never, Ill-defined, Unknown                                                                                             |
+| `belief_ai_risk`           | SELECT_1        | Overstated, Manageable, Serious, Catastrophic, Existential, Mixed/nuanced, Unknown                                                                                                     |
+| `belief_threat_models`     | SELECT_UP_TO_3  | Max 3 comma-separated values from: Labor displacement, Economic inequality, Power concentration, Democratic erosion, Cybersecurity, Misinformation, Environmental, Weapons, Loss of control, Copyright/IP, Existential risk |
+| `belief_evidence_source`   | SELECT_1        | Explicitly stated, Inferred, Unknown                                                                                                                                                   |
+| `funding_model`            | SELECT_MULTIPLE | Comma-separated: Venture-backed, Revenue-generating, Government-funded, Philanthropic, Membership, Mixed, Public benefit, Self-funded, Other                                          |
 
-**Enrichment note**: Scripts creating entities must validate against these constraints. `threat_models` is enforced to max 3 values.
+**Enrichment note**: Scripts creating entities must validate against these constraints. `belief_threat_models` is enforced to max 3 values.
 
 ## Version control and deployment practices
 
@@ -169,5 +169,5 @@ lefthook install
 
 - **Category mapping fragile**: normalization handles known variants but may miss new ones as data grows.
 - **Thumbnails still on S3**: `scripts/cache-thumbnails.js` writes to S3. Served from R2 via Pages Function, but new uploads need the script updated.
-- **Claims/source tables on separate branch**: The `claim`, `source`, and edge enrichment tables are on the `claims-pilot` Neon branch, not production yet.
+- **Hardcoded AWS URL in engine.js**: `src/map/engine.js:6247` still calls the old AWS API Gateway for semantic search. Should be updated to use `/api/semantic-search`.
 - Stack-level debt (inline `map.html`, legacy TipTap bundle, pending-entity negative IDs) is tracked in [`docs/architecture/current.md` → Known limitations](docs/architecture/current.md).

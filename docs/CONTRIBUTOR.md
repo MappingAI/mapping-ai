@@ -42,7 +42,7 @@ Replace `<CONTRIBUTOR_KEY>` above with your actual key before using this file.
 
 ## API Reference
 
-**Base URL:** `https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com`
+**Base URL:** `https://mapping-ai.org/api`
 
 ---
 
@@ -61,7 +61,7 @@ GET /search?q=<query>&type=<person|organization|resource>
 **Example: Search before adding**
 
 ```bash
-curl "https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com/search?q=Sam%20Altman&type=person"
+curl "https://mapping-ai.org/api/search?q=Sam%20Altman&type=person"
 ```
 
 **Response:**
@@ -409,7 +409,7 @@ These examples demonstrate high-quality submissions with detailed, well-sourced 
 **What makes this good:** Specific title, explicit evidence sources cited in notes, nuanced regulatory stance with detail, multiple verifiable claims.
 
 ```bash
-curl -X POST https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com/submit \
+curl -X POST https://mapping-ai.org/api/submit \
   -H "Content-Type: application/json" \
   -H "X-Contributor-Key: <CONTRIBUTOR_KEY>" \
   -d '{
@@ -443,7 +443,7 @@ curl -X POST https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com/submit \
 **What makes this good:** Current role accurately stated, legislative record cited, specific bills mentioned, clear regulatory stance with evidence.
 
 ```bash
-curl -X POST https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com/submit \
+curl -X POST https://mapping-ai.org/api/submit \
   -H "Content-Type: application/json" \
   -H "X-Contributor-Key: <CONTRIBUTOR_KEY>" \
   -d '{
@@ -475,7 +475,7 @@ curl -X POST https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com/submit \
 **What makes this good:** Academic credentials specific, key publications cited, clear intellectual positions documented.
 
 ```bash
-curl -X POST https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com/submit \
+curl -X POST https://mapping-ai.org/api/submit \
   -H "Content-Type: application/json" \
   -H "X-Contributor-Key: <CONTRIBUTOR_KEY>" \
   -d '{
@@ -509,7 +509,7 @@ curl -X POST https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com/submit \
 **What makes this good:** Founding date, funding structure, key products, and policy positions all documented with specifics.
 
 ```bash
-curl -X POST https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com/submit \
+curl -X POST https://mapping-ai.org/api/submit \
   -H "Content-Type: application/json" \
   -H "X-Contributor-Key: <CONTRIBUTOR_KEY>" \
   -d '{
@@ -540,7 +540,7 @@ curl -X POST https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com/submit \
 ### Example 5: Organization (Think Tank)
 
 ```bash
-curl -X POST https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com/submit \
+curl -X POST https://mapping-ai.org/api/submit \
   -H "Content-Type: application/json" \
   -H "X-Contributor-Key: <CONTRIBUTOR_KEY>" \
   -d '{
@@ -573,7 +573,7 @@ curl -X POST https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com/submit \
 **What makes this good:** Clear key argument, publication context, impact assessment, specific claims documented.
 
 ```bash
-curl -X POST https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com/submit \
+curl -X POST https://mapping-ai.org/api/submit \
   -H "Content-Type: application/json" \
   -H "X-Contributor-Key: <CONTRIBUTOR_KEY>" \
   -d '{
@@ -597,7 +597,7 @@ curl -X POST https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com/submit \
 ### Example 7: Resource (Academic Paper)
 
 ```bash
-curl -X POST https://j8jamvdf6i.execute-api.eu-west-2.amazonaws.com/submit \
+curl -X POST https://mapping-ai.org/api/submit \
   -H "Content-Type: application/json" \
   -H "X-Contributor-Key: <CONTRIBUTOR_KEY>" \
   -d '{

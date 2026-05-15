@@ -91,7 +91,6 @@ This document defines the complete schema for entities, edges, and sources. Use 
 5. `25+ years or never` - Expects AGI 25+ years away or believes it won't happen
 6. `Ill-defined` - Believes AGI is not a coherent/useful concept
 7. `Unknown` - Timeline belief cannot be determined from available evidence
-8. `Mixed/unclear` - Has stated conflicting timelines
 
 **belief_ai_risk** valid values (form order, lowest to highest concern):
 
