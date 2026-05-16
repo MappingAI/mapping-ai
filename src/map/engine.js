@@ -784,6 +784,7 @@ export function initMapEngine() {
   }
 
   let _miniGraphSim = null // Track simulation for cleanup
+  let connectionCounts = new Map()
   function renderMiniGraph(entity, container) {
     // Stop any previous simulation to prevent zombie tick handlers
     if (_miniGraphSim) {
@@ -1281,7 +1282,7 @@ export function initMapEngine() {
     }
 
     // Pre-compute connection counts via single pass over edges (O(edges) not O(entities*edges))
-    const connectionCounts = new Map()
+    connectionCounts = new Map()
     if (allData.relationships) {
       for (const rel of allData.relationships) {
         const sk = (rel.source_type || 'organization') + ':' + rel.source_id
