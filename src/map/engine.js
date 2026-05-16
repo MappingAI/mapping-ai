@@ -798,22 +798,42 @@ export function initMapEngine() {
     svg.setAttribute('viewBox', `0 0 ${width} ${height}`)
 
     const connected = buildConnections(entity)
-    // Sort by how connected each neighbor is (most-connected first for better graph structure)
     connected.sort((a, b) => {
       const aConns = connectionCounts.get(a.entityType + ':' + a.entity.id) || 0
       const bConns = connectionCounts.get(b.entityType + ':' + b.entity.id) || 0
       return bConns - aConns
     })
-    const area = width * height
-    const maxNodes = Math.min(connected.length, Math.max(20, Math.floor(area / 800)))
-    const limitedConnected = connected.slice(0, maxNodes)
-    const nodeCount = limitedConnected.length + 1
 
-    // Scale radii relative to container, shrinking progressively as density increases
+    // Compute how many nodes fit without overlap:
+    // Each leaf node needs a circle of radius leafR plus padding. The available
+    // area is the container minus space for the center node. We solve for the
+    // largest node count where (count * pi * (r+pad)^2) <= usableArea,
+    // shrinking the radius as count grows (minimum 3px).
     const minDim = Math.min(width, height)
-    const densityFactor = nodeCount > 30 ? 0.35 : nodeCount > 20 ? 0.45 : nodeCount > 12 ? 0.6 : 1
-    const centerR = Math.max(10, Math.round(minDim * 0.08 * densityFactor))
-    const leafR = Math.max(4, Math.round(minDim * 0.045 * densityFactor))
+    const containerArea = width * height
+    const minLeafR = 3
+    const maxLeafR = Math.round(minDim * 0.055)
+    const pad = 2
+
+    let bestCount = connected.length
+    let leafR = minLeafR
+    let centerR = Math.max(8, Math.round(minDim * 0.07))
+
+    // Binary search: find max count where nodes fit at a viable radius
+    const centerArea = Math.PI * Math.pow(centerR + pad, 2)
+    const usableArea = containerArea * 0.55 - centerArea
+    for (let tryCount = connected.length; tryCount >= 1; tryCount--) {
+      const r = Math.max(minLeafR, Math.round(maxLeafR * Math.pow(12 / Math.max(tryCount, 12), 0.45)))
+      const nodeArea = Math.PI * Math.pow(r + pad, 2) * tryCount
+      if (nodeArea <= usableArea) {
+        bestCount = tryCount
+        leafR = r
+        break
+      }
+    }
+
+    const limitedConnected = connected.slice(0, bestCount)
+    const nodeCount = limitedConnected.length + 1
 
     const nodes = [
       {
@@ -847,18 +867,13 @@ export function initMapEngine() {
         d3
           .forceLink(links)
           .id((d) => d.id)
-          .distance(minDim * (nodeCount > 30 ? 0.06 : nodeCount > 20 ? 0.08 : nodeCount > 12 ? 0.12 : 0.22)),
+          .distance(leafR * 3 + pad * 2),
       )
-      .force(
-        'charge',
-        d3
-          .forceManyBody()
-          .strength(minDim * (nodeCount > 30 ? -0.08 : nodeCount > 20 ? -0.12 : nodeCount > 12 ? -0.2 : -0.45)),
-      )
+      .force('charge', d3.forceManyBody().strength(-leafR * 3))
       .force('center', d3.forceCenter(width / 2, height / 2))
       .force(
         'collision',
-        d3.forceCollide().radius((d) => d.radius + (nodeCount > 20 ? 1 : 3)),
+        d3.forceCollide().radius((d) => d.radius + pad),
       ))
 
     const svgEl = d3.select(svg)
