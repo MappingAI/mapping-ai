@@ -22,6 +22,11 @@ Given an entity's `notes` field (unstructured text), you must:
 
 4. **Prefer primary sources** — Official statements, company websites, press releases, and direct interviews are strongest. News articles, Wikipedia, and other secondary sources are acceptable, especially for biographical facts.
 
+5. **⚠️ CONSISTENCY REQUIREMENT** — A claim MUST NOT appear in both `removed_claims` AND `verified_notes`. Before submitting:
+   - If a claim is in `removed_claims`, it MUST NOT appear in `verified_notes` in any form
+   - If a claim appears in `verified_notes`, it MUST have a corresponding entry in `sources`
+   - Double-check: scan your `verified_notes` for any text that matches claims you marked as removed
+
 ## Claim Types
 
 As you parse the notes, identify claims by type:
