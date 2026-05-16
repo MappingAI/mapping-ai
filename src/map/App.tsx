@@ -365,15 +365,30 @@ export function App() {
           >
             <strong style={{ color: '#78350f' }}>Update:</strong> {CORRECTIONS_NOTICE}
           </div>
-          <button
-            className="onboarding-dismiss"
-            onClick={() => {
-              const el = document.getElementById('onboarding-overlay')
-              if (el) el.style.display = 'none'
-            }}
-          >
-            Got it
-          </button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: '4px' }}>
+            <button
+              className="onboarding-dismiss"
+              onClick={() => {
+                const el = document.getElementById('onboarding-overlay')
+                if (el) el.style.display = 'none'
+              }}
+            >
+              Got it
+            </button>
+            <a
+              href="/guide"
+              style={{
+                fontFamily: 'var(--mono)',
+                fontSize: '10px',
+                textTransform: 'uppercase',
+                letterSpacing: '0.08em',
+                color: 'var(--accent, #2563eb)',
+                textDecoration: 'none',
+              }}
+            >
+              Watch video guide →
+            </a>
+          </div>
         </div>
       </div>
 
@@ -1045,6 +1060,21 @@ export function App() {
           >
             <span style={{ fontSize: '12px' }}>&#9432;</span> About this map
           </button>
+          <a
+            href="/guide"
+            style={{
+              display: 'block',
+              fontFamily: 'var(--mono)',
+              fontSize: '9px',
+              textTransform: 'uppercase',
+              letterSpacing: '0.06em',
+              color: 'var(--accent, #2563eb)',
+              textDecoration: 'none',
+              marginTop: '6px',
+            }}
+          >
+            New here? Watch the video guide →
+          </a>
           <p
             style={{
               fontFamily: 'var(--mono)',

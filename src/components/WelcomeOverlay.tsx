@@ -104,12 +104,20 @@ export function WelcomeOverlay() {
           .
         </p>
 
-        <button
-          onClick={dismiss}
-          className="font-mono text-[11px] uppercase tracking-wider px-6 py-2.5 bg-[#1a1a1a] text-white border-none rounded cursor-pointer hover:opacity-85 transition-opacity"
-        >
-          Got it
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={dismiss}
+            className="font-mono text-[11px] uppercase tracking-wider px-6 py-2.5 bg-[#1a1a1a] text-white border-none rounded cursor-pointer hover:opacity-85 transition-opacity"
+          >
+            Got it
+          </button>
+          <a
+            href="/guide"
+            className="font-mono text-[10px] uppercase tracking-wider text-[#2563eb] no-underline hover:underline"
+          >
+            Video guide →
+          </a>
+        </div>
       </div>
     </div>
   )
