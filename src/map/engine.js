@@ -884,6 +884,16 @@ export function initMapEngine() {
     const linkGroup = zoomGroup.append('g')
     const nodeGroup = zoomGroup.append('g')
 
+    // Reset zoom button (hidden until user zooms)
+    let resetBtn = container.querySelector('.mini-graph-reset')
+    if (!resetBtn) {
+      resetBtn = document.createElement('button')
+      resetBtn.className = 'mini-graph-reset'
+      resetBtn.textContent = 'Reset'
+      container.appendChild(resetBtn)
+    }
+    resetBtn.style.display = 'none'
+
     // Pinch-to-zoom only: block single-touch pan so page scroll still works
     const zoom = d3
       .zoom()
@@ -895,8 +905,14 @@ export function initMapEngine() {
       })
       .on('zoom', (event) => {
         zoomGroup.attr('transform', event.transform)
+        resetBtn.style.display =
+          event.transform.k !== 1 || event.transform.x !== 0 || event.transform.y !== 0 ? '' : 'none'
       })
     svgEl.call(zoom).on('dblclick.zoom', null)
+
+    resetBtn.onclick = () => {
+      svgEl.transition().duration(300).call(zoom.transform, d3.zoomIdentity)
+    }
 
     const linkEls = linkGroup.selectAll('line').data(links).join('line').attr('class', 'mini-edge')
     const nodeEls = nodeGroup.selectAll('g').data(nodes).join('g').attr('class', 'mini-node')
