@@ -2360,6 +2360,7 @@ body:has(.beliefs-detail-sidebar) .beliefs-zoom-controls {
 .mini-graph-container svg {
   width: 100%;
   height: 100%;
+  touch-action: pan-y;
 }
 .mini-graph-container .mini-node {
   cursor: pointer;

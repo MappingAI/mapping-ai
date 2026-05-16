@@ -880,8 +880,23 @@ export function initMapEngine() {
     const svgEl = d3.select(svg)
     // Defs for clip paths
     const defs = svgEl.append('defs')
-    const linkGroup = svgEl.append('g')
-    const nodeGroup = svgEl.append('g')
+    const zoomGroup = svgEl.append('g')
+    const linkGroup = zoomGroup.append('g')
+    const nodeGroup = zoomGroup.append('g')
+
+    // Pinch-to-zoom only: block single-touch pan so page scroll still works
+    const zoom = d3
+      .zoom()
+      .scaleExtent([0.5, 6])
+      .filter((event) => {
+        if (event.type === 'wheel') return true
+        if (event.touches && event.touches.length >= 2) return true
+        return false
+      })
+      .on('zoom', (event) => {
+        zoomGroup.attr('transform', event.transform)
+      })
+    svgEl.call(zoom).on('dblclick.zoom', null)
 
     const linkEls = linkGroup.selectAll('line').data(links).join('line').attr('class', 'mini-edge')
     const nodeEls = nodeGroup.selectAll('g').data(nodes).join('g').attr('class', 'mini-node')
@@ -952,7 +967,7 @@ export function initMapEngine() {
         `<strong>${escHtml(name)}</strong><br>` +
         `<span>${total} connection${total !== 1 ? 's' : ''}` +
         (total > showing ? ` (showing ${showing})` : '') +
-        `</span>`
+        ` · pinch to zoom</span>`
     }
 
     // Click nodes to navigate to that entity
