@@ -5,14 +5,7 @@ import { Footer } from '../components/Footer'
 function VideoEmbed({ src, title }: { src: string; title: string }) {
   return (
     <div className="mt-4 mb-2 rounded-lg overflow-hidden border border-[#e0dfdd]">
-      <video
-        src={src}
-        title={title}
-        className="w-full"
-        controls
-        preload="metadata"
-        playsInline
-      />
+      <video src={src} title={title} className="w-full" controls preload="metadata" playsInline />
     </div>
   )
 }
