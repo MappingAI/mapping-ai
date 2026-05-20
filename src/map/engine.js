@@ -3,6 +3,7 @@
 import { getVoterId, getLocalVotes, setLocalVote } from '../shared/field-feedback-utils.ts'
 import DOMPurify from 'dompurify'
 import { openFieldNoteModal } from '../shared/field-note-modal.ts'
+import { startMainTour, startPlotTour, startBeliefsTour } from './tour.js'
 
 export function initMapEngine() {
   var searchFilterActive = false
@@ -2267,6 +2268,11 @@ export function initMapEngine() {
               )
           }
         })
+      } else {
+        // No deep link — start onboarding tour after simulation settles
+        afterSimulationSettles(() => {
+          startMainTour()
+        })
       }
     })
 
@@ -2740,7 +2746,12 @@ export function initMapEngine() {
       viewMode = btn.dataset.mode
       localStorage.setItem('mapMode', viewMode)
       document.querySelectorAll('.mode-btn').forEach((b) => b.classList.toggle('active', b.dataset.mode === viewMode))
-      requestAnimationFrame(() => applyViewState())
+      requestAnimationFrame(() => {
+        applyViewState()
+        // Trigger view-specific tours on first visit
+        if (viewMode === 'plot') startPlotTour()
+        else if (viewMode === 'beliefs') startBeliefsTour()
+      })
     })
   })
 

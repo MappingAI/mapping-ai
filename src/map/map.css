@@ -2917,3 +2917,93 @@ body.react-view-active #beliefs-sub-tabs {
 #beliefs-search .search-box {
   position: relative;
 }
+
+/* ─── Onboarding Tour Styles ─── */
+.map-tour-popover {
+  --djs-popover-max-width: 320px;
+}
+
+.driver-popover {
+  background: var(--bg-panel) !important;
+  color: var(--text-1) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 8px !important;
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(0, 0, 0, 0.05) !important;
+}
+
+.driver-popover-title {
+  font-family: var(--mono) !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  color: var(--text-1) !important;
+  margin-bottom: 8px !important;
+}
+
+.driver-popover-description {
+  font-family: var(--serif) !important;
+  font-size: 15px !important;
+  line-height: 1.5 !important;
+  color: var(--text-2) !important;
+}
+
+.driver-popover-progress-text {
+  font-family: var(--mono) !important;
+  font-size: 10px !important;
+  color: var(--text-3) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+}
+
+.driver-popover-navigation-btns {
+  gap: 8px !important;
+}
+
+.driver-popover-prev-btn,
+.driver-popover-next-btn {
+  font-family: var(--mono) !important;
+  font-size: 11px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  padding: 8px 16px !important;
+  border-radius: 4px !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+
+.driver-popover-prev-btn {
+  background: var(--input-bg) !important;
+  color: var(--text-2) !important;
+}
+
+.driver-popover-prev-btn:hover {
+  background: var(--line) !important;
+}
+
+.driver-popover-next-btn {
+  background: var(--accent) !important;
+  color: #fff !important;
+}
+
+.driver-popover-next-btn:hover {
+  filter: brightness(1.1) !important;
+}
+
+.driver-popover-close-btn {
+  color: var(--text-3) !important;
+}
+
+.driver-popover-close-btn:hover {
+  color: var(--text-1) !important;
+}
+
+.driver-popover-arrow-side-left,
+.driver-popover-arrow-side-right,
+.driver-popover-arrow-side-top,
+.driver-popover-arrow-side-bottom {
+  border-color: var(--bg-panel) !important;
+}
