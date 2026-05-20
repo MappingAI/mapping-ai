@@ -784,6 +784,7 @@ export function initMapEngine() {
   }
 
   let _miniGraphSim = null // Track simulation for cleanup
+  let connectionCounts = new Map()
   function renderMiniGraph(entity, container) {
     // Stop any previous simulation to prevent zombie tick handlers
     if (_miniGraphSim) {
@@ -798,15 +799,42 @@ export function initMapEngine() {
     svg.setAttribute('viewBox', `0 0 ${width} ${height}`)
 
     const connected = buildConnections(entity)
-    const maxNodes = Math.min(connected.length, Math.max(12, Math.floor(Math.min(width, height) / 18)))
-    const limitedConnected = connected.slice(0, maxNodes)
-    const nodeCount = limitedConnected.length + 1
+    connected.sort((a, b) => {
+      const aConns = connectionCounts.get(a.entityType + ':' + a.entity.id) || 0
+      const bConns = connectionCounts.get(b.entityType + ':' + b.entity.id) || 0
+      return bConns - aConns
+    })
 
-    // Scale radii relative to container, shrinking as more nodes are added
+    // Compute how many nodes fit without overlap:
+    // Each leaf node needs a circle of radius leafR plus padding. The available
+    // area is the container minus space for the center node. We solve for the
+    // largest node count where (count * pi * (r+pad)^2) <= usableArea,
+    // shrinking the radius as count grows (minimum 3px).
     const minDim = Math.min(width, height)
-    const densityFactor = nodeCount > 16 ? 0.5 : nodeCount > 10 ? 0.7 : 1
-    const centerR = Math.max(12, Math.round(minDim * 0.09 * densityFactor))
-    const leafR = Math.max(6, Math.round(minDim * 0.055 * densityFactor))
+    const containerArea = width * height
+    const minLeafR = 3
+    const maxLeafR = Math.round(minDim * 0.055)
+    const pad = 2
+
+    let bestCount = connected.length
+    let leafR = minLeafR
+    let centerR = Math.max(8, Math.round(minDim * 0.07))
+
+    // Binary search: find max count where nodes fit at a viable radius
+    const centerArea = Math.PI * Math.pow(centerR + pad, 2)
+    const usableArea = containerArea * 0.55 - centerArea
+    for (let tryCount = connected.length; tryCount >= 1; tryCount--) {
+      const r = Math.max(minLeafR, Math.round(maxLeafR * Math.pow(12 / Math.max(tryCount, 12), 0.45)))
+      const nodeArea = Math.PI * Math.pow(r + pad, 2) * tryCount
+      if (nodeArea <= usableArea) {
+        bestCount = tryCount
+        leafR = r
+        break
+      }
+    }
+
+    const limitedConnected = connected.slice(0, bestCount)
+    const nodeCount = limitedConnected.length + 1
 
     const nodes = [
       {
@@ -840,20 +868,51 @@ export function initMapEngine() {
         d3
           .forceLink(links)
           .id((d) => d.id)
-          .distance(minDim * (nodeCount > 16 ? 0.1 : nodeCount > 10 ? 0.14 : 0.22)),
+          .distance(leafR * 3 + pad * 2),
       )
-      .force('charge', d3.forceManyBody().strength(minDim * (nodeCount > 16 ? -0.15 : nodeCount > 10 ? -0.25 : -0.45)))
+      .force('charge', d3.forceManyBody().strength(-leafR * 3))
       .force('center', d3.forceCenter(width / 2, height / 2))
       .force(
         'collision',
-        d3.forceCollide().radius((d) => d.radius + 4),
+        d3.forceCollide().radius((d) => d.radius + pad),
       ))
 
     const svgEl = d3.select(svg)
     // Defs for clip paths
     const defs = svgEl.append('defs')
-    const linkGroup = svgEl.append('g')
-    const nodeGroup = svgEl.append('g')
+    const zoomGroup = svgEl.append('g')
+    const linkGroup = zoomGroup.append('g')
+    const nodeGroup = zoomGroup.append('g')
+
+    // Reset zoom button (hidden until user zooms)
+    let resetBtn = container.querySelector('.mini-graph-reset')
+    if (!resetBtn) {
+      resetBtn = document.createElement('button')
+      resetBtn.className = 'mini-graph-reset'
+      resetBtn.textContent = 'Reset'
+      container.appendChild(resetBtn)
+    }
+    resetBtn.style.display = 'none'
+
+    // Pinch-to-zoom only: block single-touch pan so page scroll still works
+    const zoom = d3
+      .zoom()
+      .scaleExtent([0.5, 6])
+      .filter((event) => {
+        if (event.type === 'wheel') return true
+        if (event.touches && event.touches.length >= 2) return true
+        return false
+      })
+      .on('zoom', (event) => {
+        zoomGroup.attr('transform', event.transform)
+        resetBtn.style.display =
+          event.transform.k !== 1 || event.transform.x !== 0 || event.transform.y !== 0 ? '' : 'none'
+      })
+    svgEl.call(zoom).on('dblclick.zoom', null)
+
+    resetBtn.onclick = () => {
+      svgEl.transition().duration(300).call(zoom.transform, d3.zoomIdentity)
+    }
 
     const linkEls = linkGroup.selectAll('line').data(links).join('line').attr('class', 'mini-edge')
     const nodeEls = nodeGroup.selectAll('g').data(nodes).join('g').attr('class', 'mini-node')
@@ -924,7 +983,7 @@ export function initMapEngine() {
         `<strong>${escHtml(name)}</strong><br>` +
         `<span>${total} connection${total !== 1 ? 's' : ''}` +
         (total > showing ? ` (showing ${showing})` : '') +
-        `</span>`
+        ` · pinch to zoom</span>`
     }
 
     // Click nodes to navigate to that entity
@@ -1254,7 +1313,7 @@ export function initMapEngine() {
     }
 
     // Pre-compute connection counts via single pass over edges (O(edges) not O(entities*edges))
-    const connectionCounts = new Map()
+    connectionCounts = new Map()
     if (allData.relationships) {
       for (const rel of allData.relationships) {
         const sk = (rel.source_type || 'organization') + ':' + rel.source_id
