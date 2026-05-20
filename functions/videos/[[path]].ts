@@ -14,11 +14,6 @@ export const onRequest: PagesFunction<Env> = async (context) => {
   const pathSegments = Array.isArray(params.path) ? params.path : [params.path]
   const key = `videos/${pathSegments.join('/')}`
 
-  const object = await env.DATA_BUCKET.get(key)
-  if (!object) {
-    return new Response('Not found', { status: 404 })
-  }
-
   const headers = new Headers({
     'Content-Type': 'video/mp4',
     'Cache-Control': 'public, max-age=86400',
@@ -26,20 +21,24 @@ export const onRequest: PagesFunction<Env> = async (context) => {
     'Accept-Ranges': 'bytes',
   })
 
-  // Handle range requests for video seeking
+  // Handle range requests for video seeking (avoids fetching full object)
   const range = request.headers.get('Range')
-  if (range && object.size) {
+  if (range) {
+    const head = await env.DATA_BUCKET.head(key)
+    if (!head) {
+      return new Response('Not found', { status: 404 })
+    }
+
     const match = range.match(/bytes=(\d+)-(\d*)/)
     if (!match) {
       return new Response('Bad range', { status: 416 })
     }
     const startByte = parseInt(match[1], 10)
-    const endByte = match[2] ? parseInt(match[2], 10) : object.size - 1
+    const endByte = match[2] ? parseInt(match[2], 10) : head.size - 1
 
-    headers.set('Content-Range', `bytes ${startByte}-${endByte}/${object.size}`)
+    headers.set('Content-Range', `bytes ${startByte}-${endByte}/${head.size}`)
     headers.set('Content-Length', String(endByte - startByte + 1))
 
-    // R2 supports range requests natively
     const rangeObject = await env.DATA_BUCKET.get(key, {
       range: { offset: startByte, length: endByte - startByte + 1 },
     })
@@ -49,6 +48,11 @@ export const onRequest: PagesFunction<Env> = async (context) => {
     }
 
     return new Response(rangeObject.body, { status: 206, headers })
+  }
+
+  const object = await env.DATA_BUCKET.get(key)
+  if (!object) {
+    return new Response('Not found', { status: 404 })
   }
 
   if (object.size) {
