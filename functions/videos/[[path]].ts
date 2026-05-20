@@ -29,9 +29,12 @@ export const onRequest: PagesFunction<Env> = async (context) => {
   // Handle range requests for video seeking
   const range = request.headers.get('Range')
   if (range && object.size) {
-    const [, start, end] = range.match(/bytes=(\d+)-(\d*)/) || []
-    const startByte = parseInt(start, 10)
-    const endByte = end ? parseInt(end, 10) : object.size - 1
+    const match = range.match(/bytes=(\d+)-(\d*)/)
+    if (!match) {
+      return new Response('Bad range', { status: 416 })
+    }
+    const startByte = parseInt(match[1], 10)
+    const endByte = match[2] ? parseInt(match[2], 10) : object.size - 1
 
     headers.set('Content-Range', `bytes ${startByte}-${endByte}/${object.size}`)
     headers.set('Content-Length', String(endByte - startByte + 1))
