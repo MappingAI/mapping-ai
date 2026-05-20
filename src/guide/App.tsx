@@ -2,12 +2,22 @@ import { useState } from 'react'
 import { Navigation } from '../components/Navigation'
 import { Footer } from '../components/Footer'
 
+function VideoEmbed({ src, title }: { src: string; title: string }) {
+  return (
+    <div className="mt-4 mb-2 rounded-lg overflow-hidden border border-[#e0dfdd]">
+      <video src={src} title={title} className="w-full" controls preload="metadata" playsInline />
+    </div>
+  )
+}
+
 interface Step {
   title: string
   description: string
   tip?: string
   linkText?: string
   linkHref?: string
+  videoSrc?: string
+  videoTitle?: string
 }
 
 const EXPLORE_STEPS: Step[] = [
@@ -18,17 +28,23 @@ const EXPLORE_STEPS: Step[] = [
     tip: 'On mobile, you will see a searchable directory instead of the full network visualization. You can browse by category, search by name, and tap any card to see details.',
     linkText: 'Open the map',
     linkHref: '/map',
+    videoSrc: '/videos/map_navigation_2.mp4',
+    videoTitle: 'Navigating the map',
   },
   {
     title: 'Search for anyone',
     description:
       'Type a name, organization, or topic into the search bar. The search understands related terms, so typing "safety" will also find alignment researchers and related organizations.',
     tip: 'Try searching for "OpenAI", "regulation", or a name you heard in the episode.',
+    videoSrc: '/videos/map_search_3.mp4',
+    videoTitle: 'Searching the map',
   },
   {
     title: 'Click to explore connections',
     description:
       "Clicking any node on the map (or tapping a card on mobile) opens a detail panel showing that person or organization's profile: their role, affiliations, beliefs about AI regulation, and how they connect to others in the ecosystem.",
+    videoSrc: '/videos/map_edges_4.mp4',
+    videoTitle: 'Exploring connections and edges',
   },
   {
     title: 'Filter by category',
@@ -40,11 +56,15 @@ const EXPLORE_STEPS: Step[] = [
     description:
       'Switch to the "Plot" view to see where stakeholders fall on key questions: How should AI be regulated? How soon will we have AGI (artificial general intelligence)? How risky is AI? Each dot is a person or organization, positioned by their stated or inferred beliefs.',
     tip: 'Not everyone has a position on every question. Entities without data on a particular dimension are excluded from that chart.',
+    videoSrc: '/videos/map_plot_5.mp4',
+    videoTitle: 'Using the plot view',
   },
   {
     title: 'Explore AI definitions',
     description:
       'The "Beliefs" view shows how different stakeholders define AGI and what they think it means for the future. You can see clusters of similar definitions, search for specific people, and explore how views differ across sectors.',
+    videoSrc: '/videos/map_beliefs_6.mp4',
+    videoTitle: 'Exploring beliefs and AI definitions',
   },
 ]
 
@@ -181,6 +201,18 @@ export function App() {
           >
             View Insights
           </a>
+        </div>
+
+        {/* General walkthrough video */}
+        <div className="mb-10">
+          <h2 className="font-mono text-[11px] uppercase tracking-[0.1em] text-[#888] mb-3">Video walkthrough</h2>
+          <VideoEmbed src="/videos/walkthrough_1.mp4" title="General walkthrough of Mapping AI" />
+          <p
+            className="text-[13px] text-[#888] mt-2 max-[600px]:text-[12px]"
+            style={{ fontFamily: "'EB Garamond', Georgia, serif" }}
+          >
+            A quick tour of the tool. Each section below also has a short demo video.
+          </p>
         </div>
 
         {/* Step-by-step sections */}
@@ -385,6 +417,7 @@ function WalkthroughSection({
                       <strong className="text-[#78350f]">Tip:</strong> {step.tip}
                     </div>
                   )}
+                  {step.videoSrc && <VideoEmbed src={step.videoSrc} title={step.videoTitle || step.title} />}
                   {step.linkText && step.linkHref && (
                     <a
                       href={step.linkHref}
