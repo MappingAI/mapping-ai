@@ -2970,6 +2970,14 @@ export function initMapEngine() {
     { patterns: ['campaign', 'pac'], canonical: 'Political Campaign' },
     { patterns: ['infrastructure', 'compute'], canonical: 'Infrastructure & Compute' },
     { patterns: ['deployers', 'platforms'], canonical: 'Deployers & Platforms' },
+    // Person role variants (e.g. "Organizer/advocate" → "Organizer")
+    { patterns: ['organizer'], canonical: 'Organizer' },
+    { patterns: ['researcher', 'analyst'], canonical: 'Researcher' },
+    { patterns: ['journalist'], canonical: 'Journalist' },
+    { patterns: ['policymaker'], canonical: 'Policymaker' },
+    { patterns: ['investor'], canonical: 'Investor' },
+    { patterns: ['executive'], canonical: 'Executive' },
+    { patterns: ['cultural figure'], canonical: 'Cultural figure' },
   ]
   const PERSON_ROLES = new Set([
     'Executive',
