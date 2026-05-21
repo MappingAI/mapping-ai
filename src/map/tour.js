@@ -68,6 +68,7 @@ export function startMainTour() {
     allowClose: true,
     overlayColor: 'rgba(0, 0, 0, 0.6)',
     popoverClass: 'map-tour-popover',
+    disableActiveInteraction: true, // Prevent clicking highlighted elements
     onDestroyed: () => markTourSeen('main'),
     steps: [
       {
@@ -86,20 +87,22 @@ export function startMainTour() {
           description: 'Each dot represents a person, organization, or resource. Click to see details.',
           side: 'top',
           align: 'center',
-        },
-        onHighlightStarted: () => {
-          // Find and click Anthropic to demonstrate
-          const anthropic = findAnthropicEntity()
-          if (anthropic && mapEngine.showDetail) {
-            // Small delay to let highlight appear first
-            setTimeout(() => {
-              mapEngine.showDetail(anthropic, [])
-              // Navigate to center on Anthropic
-              if (mapEngine.navigateToEntity) {
-                mapEngine.navigateToEntity(anthropic.id, 'organization')
+          onNextClick: (element, step, { driver }) => {
+            // Open Anthropic's detail panel before moving to step 3
+            const engine = window.__mapEngine
+            const anthropic = findAnthropicEntity()
+            if (anthropic && engine && engine.showDetail) {
+              const anthropicWithType = { ...anthropic, entityType: 'organization' }
+              engine.showDetail(anthropicWithType, [])
+              if (engine.navigateToEntity) {
+                engine.navigateToEntity(anthropic.id, 'organization')
               }
-            }, 300)
-          }
+            }
+            // Wait for panel to open, then advance
+            setTimeout(() => {
+              driver.moveNext()
+            }, 500)
+          },
         },
       },
       {
@@ -110,30 +113,109 @@ export function startMainTour() {
             'See their role, affiliations, and AI policy positions. Connected entities are highlighted on the map.',
           side: 'left',
           align: 'start',
+          onNextClick: (element, step, { driver }) => {
+            // Get Anthropic's ID and find a connected person
+            const engine = window.__mapEngine
+            const anthropic = engine?.allData?.organizations?.find((o) => o.name === 'Anthropic')
+            if (anthropic && engine.showEdgeWithoutNav) {
+              // Find a person connected to Anthropic (from the relationships)
+              const relationships = engine.allData.relationships || []
+              const connectedRel = relationships.find(
+                (r) => r.source_id === anthropic.id || r.target_id === anthropic.id
+              )
+              if (connectedRel) {
+                const connectedId = connectedRel.source_id === anthropic.id
+                  ? connectedRel.target_id
+                  : connectedRel.source_id
+                // Show the edge without navigation
+                engine.showEdgeWithoutNav(anthropic.id, connectedId)
+              }
+            }
+            setTimeout(() => {
+              driver.moveNext()
+            }, 500)
+          },
+          onPrevClick: (element, step, { driver }) => {
+            // Going back to step 2 - deselect and recenter
+            const engine = window.__mapEngine
+            if (engine?.resetSelection) {
+              engine.resetSelection()
+            }
+            setTimeout(() => {
+              driver.movePrevious()
+            }, 300)
+          },
         },
       },
       {
-        element: '.detail-affiliated',
+        element: '#detail-panel',
         popover: {
           title: 'Explore Connections',
           description: 'Click any connection to see relationship details and navigate between entities.',
           side: 'left',
           align: 'start',
-        },
-        onHighlightStarted: (element) => {
-          // If connections section doesn't exist or is empty, skip this step
-          if (!element || !element.element || element.element.children.length === 0) {
-            tourDriver.moveNext()
-          }
+          onNextClick: (element, step, { driver }) => {
+            // Reset selection and close panel before showing filters
+            const engine = window.__mapEngine
+            if (engine?.resetSelection) {
+              engine.resetSelection()
+            }
+            setTimeout(() => {
+              driver.moveNext()
+            }, 300)
+          },
+          onPrevClick: (element, step, { driver }) => {
+            // Going back to step 3 - clear edge and re-show Anthropic detail
+            const engine = window.__mapEngine
+            if (engine?.clearEdgeSelection) {
+              engine.clearEdgeSelection()
+            }
+            const anthropic = engine?.allData?.organizations?.find((o) => o.name === 'Anthropic')
+            if (anthropic && engine.showDetail) {
+              const anthropicWithType = { ...anthropic, entityType: 'organization' }
+              engine.showDetail(anthropicWithType, [])
+            }
+            setTimeout(() => {
+              driver.movePrevious()
+            }, 300)
+          },
         },
       },
       {
-        element: '#category-chips',
+        element: '#category-filters',
         popover: {
           title: 'Filter by Category',
           description: 'Click chips to show or hide categories. Use "Select all" to toggle everything at once.',
           side: 'right',
           align: 'start',
+          onPrevClick: (element, step, { driver }) => {
+            // Going back to step 4 - re-show edge
+            const engine = window.__mapEngine
+            const anthropic = engine?.allData?.organizations?.find((o) => o.name === 'Anthropic')
+            if (anthropic && engine.showEdgeWithoutNav) {
+              const relationships = engine.allData.relationships || []
+              const connectedRel = relationships.find(
+                (r) => r.source_id === anthropic.id || r.target_id === anthropic.id
+              )
+              if (connectedRel) {
+                const connectedId = connectedRel.source_id === anthropic.id
+                  ? connectedRel.target_id
+                  : connectedRel.source_id
+                // First show Anthropic, then show the edge
+                const anthropicWithType = { ...anthropic, entityType: 'organization' }
+                engine.showDetail(anthropicWithType, [])
+                if (engine.navigateToEntity) {
+                  engine.navigateToEntity(anthropic.id, 'organization')
+                }
+                setTimeout(() => {
+                  engine.showEdgeWithoutNav(anthropic.id, connectedId)
+                }, 300)
+              }
+            }
+            setTimeout(() => {
+              driver.movePrevious()
+            }, 500)
+          },
         },
         onHighlightStarted: () => {
           // Close detail panel to show filters better

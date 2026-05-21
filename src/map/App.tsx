@@ -11,6 +11,7 @@ import {
 import { slugify } from '../shared/slugify'
 import { CORRECTIONS_NOTICE } from '../shared/corrections-notice'
 import { FieldFeedback } from '../components/FieldFeedback'
+import { startBeliefsTour } from './tour.js'
 
 type ReactView = 'definitions' | null
 
@@ -116,6 +117,10 @@ export function App() {
     // Reset beliefs selection when switching to beliefs view
     setBeliefsSelectedPoint(null)
     setBeliefsHighlightedId(null)
+    // Trigger beliefs tour on first visit
+    if (view === 'definitions') {
+      setTimeout(() => startBeliefsTour(), 500)
+    }
   }, [])
 
   // Handle point selection in Beliefs view

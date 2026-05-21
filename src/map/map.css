@@ -2919,6 +2919,28 @@ body.react-view-active #beliefs-sub-tabs {
 }
 
 /* ─── Onboarding Tour Styles ─── */
+
+/* Disable overflow clipping on controls sidebar during tour so highlights aren't cut off */
+body.driver-active .controls {
+  overflow: visible !important;
+}
+
+/* Block all map interaction while tour is active */
+body.driver-active #map-container,
+body.driver-active #map-container canvas,
+body.driver-active .controls,
+body.driver-active .controls * {
+  pointer-events: none !important;
+  cursor: default !important;
+}
+
+/* Re-enable pointer events for the Driver.js popover controls only */
+body.driver-active .driver-popover,
+body.driver-active .driver-popover * {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
 .map-tour-popover {
   --djs-popover-max-width: 320px;
 }
@@ -2973,6 +2995,16 @@ body.react-view-active #beliefs-sub-tabs {
   border: none !important;
   cursor: pointer !important;
   transition: all 0.15s ease !important;
+  text-shadow: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove any default Driver.js button pseudo-elements */
+.driver-popover-prev-btn::before,
+.driver-popover-prev-btn::after,
+.driver-popover-next-btn::before,
+.driver-popover-next-btn::after {
+  display: none !important;
 }
 
 .driver-popover-prev-btn {
@@ -2994,11 +3026,27 @@ body.react-view-active #beliefs-sub-tabs {
 }
 
 .driver-popover-close-btn {
-  color: var(--text-3) !important;
+  color: var(--text-2) !important;
+  font-size: 20px !important;
+  width: 28px !important;
+  height: 28px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 4px !important;
+  transition: all 0.15s ease !important;
 }
 
 .driver-popover-close-btn:hover {
   color: var(--text-1) !important;
+  background: var(--input-bg) !important;
+}
+
+/* Add "Skip tour" text link in footer */
+.driver-popover-footer {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
 }
 
 .driver-popover-arrow-side-left,
