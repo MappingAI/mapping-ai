@@ -134,6 +134,29 @@ export function App() {
     setBeliefsData(data)
   }, [])
 
+  // Expose beliefs API for tour
+  useEffect(() => {
+    ;(window as unknown as { __beliefsEngine?: object }).__beliefsEngine = {
+      data: beliefsData,
+      selectByName: (name: string) => {
+        if (!beliefsData) return false
+        const point = beliefsData.points.find((p) => p.name === name)
+        if (point) {
+          const source = beliefsData.sources?.[point.source_id] || null
+          setBeliefsSelectedPoint({ point, source })
+          return true
+        }
+        return false
+      },
+      clearSelection: () => {
+        setBeliefsSelectedPoint(null)
+      },
+    }
+    return () => {
+      delete (window as unknown as { __beliefsEngine?: object }).__beliefsEngine
+    }
+  }, [beliefsData])
+
   // Close beliefs detail panel
   const closeBeliefsDetail = useCallback(() => {
     setBeliefsSelectedPoint(null)

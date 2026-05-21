@@ -69,7 +69,14 @@ export function startMainTour() {
     overlayColor: 'rgba(0, 0, 0, 0.6)',
     popoverClass: 'map-tour-popover',
     disableActiveInteraction: true, // Prevent clicking highlighted elements
-    onDestroyed: () => markTourSeen('main'),
+    onDestroyed: () => {
+      markTourSeen('main')
+      // Reset selection and recenter map when tour closes
+      const engine = window.__mapEngine
+      if (engine?.resetSelection) {
+        engine.resetSelection()
+      }
+    },
     steps: [
       {
         element: '#search-input',
@@ -274,7 +281,7 @@ export function startPlotTour() {
         element: '#axis-mode-toggles',
         popover: {
           title: '2D or 1D View',
-          description: '2D compares two dimensions at once. 1D focuses on a single dimension with a beeswarm layout.',
+          description: '2D plots two dimensions. 1D shows one as a beeswarm.',
           side: 'bottom',
           align: 'start',
         },
@@ -303,25 +310,55 @@ export function startBeliefsTour() {
     allowClose: true,
     overlayColor: 'rgba(0, 0, 0, 0.6)',
     popoverClass: 'map-tour-popover',
-    onDestroyed: () => markTourSeen('beliefs'),
+    disableActiveInteraction: true,
+    onDestroyed: () => {
+      markTourSeen('beliefs')
+      // Clear selection when tour closes
+      const engine = window.__beliefsEngine
+      if (engine?.clearSelection) {
+        engine.clearSelection()
+      }
+    },
     steps: [
       {
         element: '.beliefs-container',
         popover: {
           title: 'AGI Definitions',
-          description:
-            'See how different stakeholders define AGI. Clusters group similar definitions. Click any card to see full details.',
+          description: 'Each dot is someone\'s definition of AGI. Clusters group similar views. Click any to read it.',
           side: 'top',
           align: 'center',
+          onNextClick: (element, step, { driver }) => {
+            // Select a notable person to show their definition
+            const engine = window.__beliefsEngine
+            if (engine?.selectByName) {
+              // Try a few notable names
+              engine.selectByName('Sam Altman') ||
+                engine.selectByName('Dario Amodei') ||
+                engine.selectByName('Demis Hassabis')
+            }
+            setTimeout(() => {
+              driver.moveNext()
+            }, 400)
+          },
         },
       },
       {
-        element: '#beliefs-search',
+        element: '.beliefs-detail-sidebar',
         popover: {
-          title: 'Search Definitions',
-          description: 'Find specific people or search for terms like "superintelligence" or "human-level".',
-          side: 'bottom',
+          title: 'Their Definition',
+          description: 'See exactly how they define AGI, with the original source linked.',
+          side: 'left',
           align: 'start',
+          onPrevClick: (element, step, { driver }) => {
+            // Clear selection when going back
+            const engine = window.__beliefsEngine
+            if (engine?.clearSelection) {
+              engine.clearSelection()
+            }
+            setTimeout(() => {
+              driver.movePrevious()
+            }, 300)
+          },
         },
       },
     ],
