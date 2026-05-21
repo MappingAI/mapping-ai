@@ -65,9 +65,10 @@ export function startMainTour() {
     nextBtnText: 'Next',
     prevBtnText: 'Back',
     doneBtnText: 'Done',
-    allowClose: true,
+    allowClose: false, // Only allow closing via X button, not by clicking overlay
     overlayColor: 'rgba(0, 0, 0, 0.6)',
     popoverClass: 'map-tour-popover',
+    showCloseButton: true, // Ensure X button is visible
     disableActiveInteraction: true, // Prevent clicking highlighted elements
     onDestroyed: () => {
       markTourSeen('main')
@@ -262,9 +263,10 @@ export function startPlotTour() {
     nextBtnText: 'Next',
     prevBtnText: 'Back',
     doneBtnText: 'Got it',
-    allowClose: true,
+    allowClose: false,
     overlayColor: 'rgba(0, 0, 0, 0.6)',
     popoverClass: 'map-tour-popover',
+    showCloseButton: true,
     onDestroyed: () => markTourSeen('plot'),
     steps: [
       {
@@ -307,9 +309,10 @@ export function startBeliefsTour() {
     nextBtnText: 'Next',
     prevBtnText: 'Back',
     doneBtnText: 'Got it',
-    allowClose: true,
+    allowClose: false,
     overlayColor: 'rgba(0, 0, 0, 0.6)',
     popoverClass: 'map-tour-popover',
+    showCloseButton: true,
     disableActiveInteraction: true,
     onDestroyed: () => {
       markTourSeen('beliefs')
