@@ -122,22 +122,12 @@ export function startMainTour() {
           side: 'left',
           align: 'start',
           onNextClick: (element, step, { driver }) => {
-            // Get Anthropic's ID and find a connected person
+            // Show edge between Anthropic and Dario Amodei
             const engine = window.__mapEngine
             const anthropic = engine?.allData?.organizations?.find((o) => o.name === 'Anthropic')
-            if (anthropic && engine.showEdgeWithoutNav) {
-              // Find a person connected to Anthropic (from the relationships)
-              const relationships = engine.allData.relationships || []
-              const connectedRel = relationships.find(
-                (r) => r.source_id === anthropic.id || r.target_id === anthropic.id
-              )
-              if (connectedRel) {
-                const connectedId = connectedRel.source_id === anthropic.id
-                  ? connectedRel.target_id
-                  : connectedRel.source_id
-                // Show the edge without navigation
-                engine.showEdgeWithoutNav(anthropic.id, connectedId)
-              }
+            const dario = engine?.allData?.people?.find((p) => p.name === 'Dario Amodei')
+            if (anthropic && dario && engine.showEdgeWithoutNav) {
+              engine.showEdgeWithoutNav(anthropic.id, dario.id)
             }
             setTimeout(() => {
               driver.moveNext()
@@ -197,28 +187,19 @@ export function startMainTour() {
           side: 'right',
           align: 'start',
           onPrevClick: (element, step, { driver }) => {
-            // Going back to step 4 - re-show edge
+            // Going back to step 4 - re-show Anthropic and Dario edge
             const engine = window.__mapEngine
             const anthropic = engine?.allData?.organizations?.find((o) => o.name === 'Anthropic')
-            if (anthropic && engine.showEdgeWithoutNav) {
-              const relationships = engine.allData.relationships || []
-              const connectedRel = relationships.find(
-                (r) => r.source_id === anthropic.id || r.target_id === anthropic.id
-              )
-              if (connectedRel) {
-                const connectedId = connectedRel.source_id === anthropic.id
-                  ? connectedRel.target_id
-                  : connectedRel.source_id
-                // First show Anthropic, then show the edge
-                const anthropicWithType = { ...anthropic, entityType: 'organization' }
-                engine.showDetail(anthropicWithType, [])
-                if (engine.navigateToEntity) {
-                  engine.navigateToEntity(anthropic.id, 'organization')
-                }
-                setTimeout(() => {
-                  engine.showEdgeWithoutNav(anthropic.id, connectedId)
-                }, 300)
+            const dario = engine?.allData?.people?.find((p) => p.name === 'Dario Amodei')
+            if (anthropic && dario && engine.showEdgeWithoutNav) {
+              const anthropicWithType = { ...anthropic, entityType: 'organization' }
+              engine.showDetail(anthropicWithType, [])
+              if (engine.navigateToEntity) {
+                engine.navigateToEntity(anthropic.id, 'organization')
               }
+              setTimeout(() => {
+                engine.showEdgeWithoutNav(anthropic.id, dario.id)
+              }, 300)
             }
             setTimeout(() => {
               driver.movePrevious()
