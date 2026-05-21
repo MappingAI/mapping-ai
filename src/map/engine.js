@@ -861,6 +861,9 @@ export function initMapEngine() {
       target: c.entityType + ':' + c.entity.id,
     }))
 
+    // Scale repulsion and link distance with node count for better spacing
+    const linkDist = leafR * 3 + pad * 2 + Math.max(0, nodeCount - 10) * 1.5
+    const chargeStr = -(leafR * 4 + Math.max(0, nodeCount - 8) * 3)
     const sim = (_miniGraphSim = d3
       .forceSimulation(nodes)
       .force(
@@ -868,13 +871,13 @@ export function initMapEngine() {
         d3
           .forceLink(links)
           .id((d) => d.id)
-          .distance(leafR * 3 + pad * 2),
+          .distance(linkDist),
       )
-      .force('charge', d3.forceManyBody().strength(-leafR * 3))
+      .force('charge', d3.forceManyBody().strength(chargeStr))
       .force('center', d3.forceCenter(width / 2, height / 2))
       .force(
         'collision',
-        d3.forceCollide().radius((d) => d.radius + pad),
+        d3.forceCollide().radius((d) => d.radius + pad + 1),
       ))
 
     const svgEl = d3.select(svg)
@@ -1366,7 +1369,8 @@ export function initMapEngine() {
         const connCount = connectionCounts.get(d.entityType + ':' + d.id) || 0
         let sub = ''
         if (d.entityType === 'person') sub = [d.title, d.primary_org].filter(Boolean).join(' at ')
-        else if (d.entityType === 'organization') sub = d.category || ''
+        else if (d.entityType === 'organization')
+          sub = d.website ? d.website.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '') : ''
         else sub = [d.author, d.year].filter(Boolean).join(' \u00b7 ')
 
         function beliefBadge(text, score, order, colors, title) {
@@ -1408,7 +1412,7 @@ export function initMapEngine() {
           _verifStatus === 'verified' ? '<span class="mobile-card-verified" title="Verified"></span>' : ''
         cardsHtml += `<div class="mobile-card" data-entity-id="${d.id}" data-entity-type="${d.entityType}" data-category="${normalizeCategory(d.category)}" data-slug="${slug}" data-stance="${_cs}" data-timeline="${_ct}" data-risk="${_cr}">
   ${thumbHtml}<div class="mobile-card-info">
-    <div class="mobile-card-row1">${verifDot}<span class="mobile-card-name">${escHtml(d.name || d.title)}</span><span class="mobile-card-badge" style="background:${catColor}22;color:${catColor};">${normalizeCategory(d.category)}</span></div>
+    <div class="mobile-card-row1">${verifDot}<span class="mobile-card-name">${escHtml(d.name || d.title)}</span></div>
     <div class="mobile-card-row2"><span class="mobile-card-sub">${sub}</span><span class="mobile-card-beliefs">${stanceBadge}${timelineBadge}${riskBadge}${connCount > 0 ? `<span class="mobile-card-edges" title="${connCount} connections">${connCount}</span>` : ''}</span></div>
   </div></div>`
       }
@@ -1588,15 +1592,26 @@ export function initMapEngine() {
         applyMobileFilters()
       })
     })
-    // Sort-by-belief chips: reorder visible cards by belief score
+    // Sort-by-belief chips: reorder visible cards by belief score with group headings
     document.querySelectorAll('.mobile-sort-chip').forEach((chip) => {
       chip.addEventListener('click', () => {
         const wasActive = chip.classList.contains('active')
         document.querySelectorAll('.mobile-sort-chip').forEach((c) => c.classList.remove('active'))
         const cardList = document.getElementById('mobile-card-list')
+        // Remove any belief-sort group headers from a previous sort
+        cardList.querySelectorAll('.mobile-belief-sort-header').forEach((h) => h.remove())
         if (wasActive) {
-          // Deactivate: restore original category-grouped order
+          // Deactivate: restore cards back into their category sections
+          const allCards = [...cardList.querySelectorAll('.mobile-card')]
           const sections = [...cardList.querySelectorAll('.mobile-category-section')]
+          const sectionMap = {}
+          sections.forEach((s) => {
+            sectionMap[s.dataset.sectionCategory] = s
+          })
+          allCards.forEach((card) => {
+            const cat = card.dataset.category
+            if (sectionMap[cat]) sectionMap[cat].appendChild(card)
+          })
           sections.sort((a, b) => {
             const ia = CLUSTER_ORDER.indexOf(a.dataset.sectionCategory)
             const ib = CLUSTER_ORDER.indexOf(b.dataset.sectionCategory)
@@ -1604,12 +1619,14 @@ export function initMapEngine() {
           })
           sections.forEach((s) => cardList.appendChild(s))
           cardList.querySelectorAll('.mobile-category-header').forEach((h) => (h.style.display = ''))
+          applyMobileFilters()
           return
         }
         chip.classList.add('active')
         const scoreKey = chip.dataset.sort === 'stance' ? 'stance' : 'risk'
         const dataAttr = 'data-' + scoreKey
-        // Hide category headers and sort all cards flat by belief score
+        const dimensionLabel = scoreKey === 'stance' ? 'Regulatory Stance' : 'AI Risk Level'
+        // Hide category headers and sort all visible cards flat by belief value
         cardList.querySelectorAll('.mobile-category-header').forEach((h) => (h.style.display = 'none'))
         const allCards = [...cardList.querySelectorAll('.mobile-card')]
         allCards.sort((a, b) => {
@@ -1620,7 +1637,20 @@ export function initMapEngine() {
           if (!bVal) return -1
           return aVal.localeCompare(bVal)
         })
-        allCards.forEach((c) => cardList.appendChild(c))
+        // Insert group headings between different belief values
+        let lastVal = null
+        allCards.forEach((c) => {
+          const val = c.getAttribute(dataAttr) || ''
+          if (val !== lastVal) {
+            const heading = document.createElement('div')
+            heading.className = 'mobile-belief-sort-header'
+            heading.innerHTML = `<span style="font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-3);">${dimensionLabel}:</span> <span style="font-family:var(--mono);font-size:10px;letter-spacing:0.06em;color:var(--text-1);">${val || 'Not specified'}</span>`
+            heading.style.cssText = 'padding:10px 0 4px;border-bottom:1px solid var(--line);margin:0 16px;'
+            cardList.appendChild(heading)
+            lastVal = val
+          }
+          cardList.appendChild(c)
+        })
       })
     })
     // Unified view tab handler: Directory / AGI Views / Plot
@@ -1712,17 +1742,17 @@ export function initMapEngine() {
       const sorted = [...clusters].sort((a, b) => b.count - a.count)
       for (const cluster of sorted) {
         const entities = points.filter((p) => p.cluster_id === cluster.id)
-        const color =
-          {
-            c0: '#e74c3c',
-            c1: '#3498db',
-            c2: '#2ecc71',
-            c3: '#f39c12',
-            c4: '#9b59b6',
-            c5: '#1abc9c',
-            c6: '#e67e22',
-            c7: '#34495e',
-          }[cluster.id] || '#888'
+        const BELIEFS_CLUSTER_COLORS = {
+          'human-level-cognitive-parity': '#e74c3c',
+          'economic-automation': '#3498db',
+          'autonomous-research-capability': '#2ecc71',
+          'general-purpose-agents': '#f39c12',
+          'superintelligent-systems': '#9b59b6',
+          'transformative-societal-impact': '#1abc9c',
+          'conceptual-critique': '#e67e22',
+          'augmentative-tools': '#34495e',
+        }
+        const color = BELIEFS_CLUSTER_COLORS[cluster.id] || '#888'
 
         html += '<div class="mobile-beliefs-cluster collapsed" data-cluster="' + cluster.id + '">'
         html += '<div class="mobile-beliefs-cluster-header">'
@@ -1779,18 +1809,100 @@ export function initMapEngine() {
         })
       }
 
-      // Click entity to navigate to their map entry
+      // Click entity to show inline belief detail card
       container.querySelectorAll('.mobile-beliefs-entity').forEach((el) => {
         el.addEventListener('click', () => {
           const id = parseInt(el.dataset.entityId)
-          const entity = [...allData.people, ...allData.organizations].find((e) => e.id === id)
-          if (entity) {
-            const entityWithType = Object.assign({}, entity, {
-              entityType: entity.entity_type || (allData.people.includes(entity) ? 'person' : 'organization'),
-            })
-            mobileScrollPos = document.getElementById('mobile-directory').scrollTop
-            showDetail(entityWithType, [])
+          const point = points.find((p) => p.entity_id === id)
+          if (!point) return
+
+          // Toggle: if already expanded, collapse
+          const existing = el.querySelector('.mobile-beliefs-detail')
+          if (existing) {
+            existing.remove()
+            el.classList.remove('expanded')
+            return
           }
+
+          // Collapse any other expanded entities
+          container.querySelectorAll('.mobile-beliefs-entity.expanded').forEach((other) => {
+            other.querySelector('.mobile-beliefs-detail')?.remove()
+            other.classList.remove('expanded')
+          })
+
+          const source = data.sources?.[point.source_id] || null
+          let detailHtml = '<div class="mobile-beliefs-detail">'
+          detailHtml +=
+            '<div style="font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-3);margin-bottom:4px;">How they define AGI</div>'
+          detailHtml +=
+            '<div style="font-family:var(--serif);font-size:13px;color:var(--text-1);line-height:1.5;margin-bottom:8px;">' +
+            escHtml(point.definition) +
+            '</div>'
+
+          if (point.citation) {
+            detailHtml += '<div style="border-left:2px solid var(--line);padding-left:10px;margin-bottom:8px;">'
+            detailHtml +=
+              '<div style="font-family:var(--serif);font-size:12px;color:var(--text-2);line-height:1.4;font-style:italic;">“' +
+              escHtml(point.citation) +
+              '”</div>'
+            if (source) {
+              detailHtml +=
+                '<a href="' +
+                escHtml(source.url) +
+                '" target="_blank" rel="noopener noreferrer" style="font-family:var(--mono);font-size:10px;color:var(--accent);display:block;margin-top:3px;text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' +
+                escHtml(source.title || source.url) +
+                '</a>'
+              const meta = [source.type, point.date, point.confidence].filter(Boolean).join(' · ')
+              if (meta)
+                detailHtml +=
+                  '<div style="font-family:var(--mono);font-size:9px;color:var(--text-3);margin-top:2px;">' +
+                  escHtml(meta) +
+                  '</div>'
+            }
+            detailHtml += '</div>'
+          }
+
+          // Belief stances
+          const beliefs = [
+            point.stance ? ['Stance', point.stance] : null,
+            point.timeline ? ['Timeline', point.timeline] : null,
+            point.risk ? ['Risk', point.risk] : null,
+          ].filter(Boolean)
+          if (beliefs.length) {
+            detailHtml += '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;">'
+            for (const [label, value] of beliefs) {
+              detailHtml +=
+                '<span style="font-family:var(--mono);font-size:9px;padding:2px 6px;border-radius:3px;background:var(--input-bg);color:var(--text-2);">' +
+                label +
+                ': ' +
+                escHtml(value) +
+                '</span>'
+            }
+            detailHtml += '</div>'
+          }
+
+          detailHtml +=
+            '<div style="margin-top:8px;"><a href="#" class="mobile-beliefs-view-profile" data-entity-id="' +
+            id +
+            '" style="font-family:var(--mono);font-size:10px;color:var(--accent);text-decoration:underline;">View full profile →</a></div>'
+          detailHtml += '</div>'
+
+          el.insertAdjacentHTML('beforeend', detailHtml)
+          el.classList.add('expanded')
+
+          // "View full profile" link navigates to directory detail
+          el.querySelector('.mobile-beliefs-view-profile').addEventListener('click', (e) => {
+            e.preventDefault()
+            e.stopPropagation()
+            const entity = [...allData.people, ...allData.organizations].find((ent) => ent.id === id)
+            if (entity) {
+              const entityWithType = Object.assign({}, entity, {
+                entityType: entity.entity_type || (allData.people.includes(entity) ? 'person' : 'organization'),
+              })
+              mobileScrollPos = document.getElementById('mobile-directory').scrollTop
+              showDetail(entityWithType, [])
+            }
+          })
         })
       })
     }
@@ -1875,7 +1987,7 @@ export function initMapEngine() {
             '" data-label="' +
             label +
             '" style="display:none;">'
-          bucket.slice(0, 10).forEach((d) => {
+          bucket.forEach((d) => {
             const catColor = getColor(d.category) || DEFAULT_COLOR
             html += '<div class="mplot-entity" data-id="' + d.id + '" data-type="' + d.entityType + '">'
             html += '<span class="mplot-entity-name">' + escHtml(d.name || d.title) + '</span>'
@@ -1887,7 +1999,6 @@ export function initMapEngine() {
               '</span>'
             html += '</div>'
           })
-          if (bucket.length > 10) html += '<div class="mplot-entity-more">' + (bucket.length - 10) + ' more</div>'
           html += '</div>'
         }
         html += '</div>'
@@ -2859,6 +2970,14 @@ export function initMapEngine() {
     { patterns: ['campaign', 'pac'], canonical: 'Political Campaign' },
     { patterns: ['infrastructure', 'compute'], canonical: 'Infrastructure & Compute' },
     { patterns: ['deployers', 'platforms'], canonical: 'Deployers & Platforms' },
+    // Person role variants (e.g. "Organizer/advocate" → "Organizer")
+    { patterns: ['organizer'], canonical: 'Organizer' },
+    { patterns: ['researcher', 'analyst'], canonical: 'Researcher' },
+    { patterns: ['journalist'], canonical: 'Journalist' },
+    { patterns: ['policymaker'], canonical: 'Policymaker' },
+    { patterns: ['investor'], canonical: 'Investor' },
+    { patterns: ['executive'], canonical: 'Executive' },
+    { patterns: ['cultural figure'], canonical: 'Cultural figure' },
   ]
   const PERSON_ROLES = new Set([
     'Executive',
@@ -5339,6 +5458,10 @@ ${dots}
         if (!byType[label]) byType[label] = []
         byType[label].push(item)
       })
+      // Sort items within each group by relationship type so same-type edges are adjacent
+      for (const items of Object.values(byType)) {
+        items.sort((a, b) => (a.rel || '').localeCompare(b.rel || ''))
+      }
       let sections = ''
       for (const [label, items] of Object.entries(byType)) {
         const itemsHtml = items
@@ -5361,7 +5484,6 @@ ${dots}
                   </div>
                   <div style="display:flex;gap:12px;font-family:var(--mono);font-size:10px;">
                     <a href="#" class="connection-view-entity" data-name="${escHtml(item.name)}" data-type="${item.entityType}" data-id="${item.entity.id}" style="color:var(--accent);text-decoration:underline;">View ${item.type === 'org' ? 'org' : item.type}</a>
-                    <a href="#" class="connection-view-edge" data-edge-id="${item.edgeId || ''}" data-source-id="${d.id}" data-target-id="${item.entity.id}" data-rel-type="${item.rel || 'affiliated'}" style="color:var(--accent);text-decoration:underline;">View relationship</a>
                   </div>
                 </div>
               </div>
