@@ -281,7 +281,7 @@ export function startPlotTour() {
         element: '#axis-mode-toggles',
         popover: {
           title: '2D or 1D View',
-          description: '2D plots two dimensions. 1D shows one as a beeswarm.',
+          description: 'Compare two beliefs (2D) or focus on one (1D).',
           side: 'bottom',
           align: 'start',
         },
