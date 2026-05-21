@@ -274,7 +274,7 @@ export function startPlotTour() {
         element: '#axis-mode-toggles',
         popover: {
           title: '2D or 1D View',
-          description: 'Switch between scatter plot (2D) and bar chart (1D) to see distributions differently.',
+          description: '2D compares two dimensions at once. 1D focuses on a single dimension with a beeswarm layout.',
           side: 'bottom',
           align: 'start',
         },
