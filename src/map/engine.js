@@ -7213,11 +7213,14 @@ ${dots}
 
   // Show edge detail without panning camera or changing node selection (for tour)
   function showEdgeWithoutNav(sourceId, targetId) {
-    const edge = _canvasLinks.find(
+    // Find all edges between these two entities
+    const matchingEdges = _canvasLinks.filter(
       (l) =>
         (l.source.id === sourceId && l.target.id === targetId) ||
         (l.source.id === targetId && l.target.id === sourceId),
     )
+    // Prefer edges with edgeId (real relationships with sources) over inferred ones
+    const edge = matchingEdges.find((e) => e.edgeId) || matchingEdges[0]
     if (edge) {
       _selectedEdge = edge
       // Don't modify _vs states - just set selectedEdge and let rendering handle it
