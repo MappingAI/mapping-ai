@@ -328,13 +328,10 @@ export function startBeliefsTour() {
           side: 'top',
           align: 'center',
           onNextClick: (element, step, { driver }) => {
-            // Select a notable person to show their definition
+            // Select an entity to show their definition
             const engine = window.__beliefsEngine
             if (engine?.selectByName) {
-              // Try a few notable names
-              engine.selectByName('Sam Altman') ||
-                engine.selectByName('Dario Amodei') ||
-                engine.selectByName('Demis Hassabis')
+              engine.selectByName('Federation of American Scientists')
             }
             setTimeout(() => {
               driver.moveNext()
