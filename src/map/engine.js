@@ -2949,17 +2949,12 @@ export function initMapEngine() {
         if (!val) return false // null values excluded
         return activeCategories.has(val)
       }
-      // Category dimension
+      // Category dimension: only check primary category (not other_categories)
+      // The node's visual representation (color, cluster, label) is based on primary category,
+      // so filtering should match to avoid showing nodes with deselected category colors.
       const rawCat = d.category || d._rawCategory
       if (!rawCat) return false
-      if (activeCategories.has(rawCat) || activeCategories.has(normalizeCategory(rawCat))) return true
-      if (d.other_categories) {
-        const extras = parseOtherCategories(d.other_categories)
-        for (const c of extras) {
-          if (activeCategories.has(c) || activeCategories.has(normalizeCategory(c))) return true
-        }
-      }
-      return false
+      return activeCategories.has(rawCat) || activeCategories.has(normalizeCategory(rawCat))
     }
 
     // Get clusterKey for a node based on current dimension
