@@ -22,6 +22,10 @@ interface Props {
 
 const STRUCTURED_FIELDS = [
   { key: 'category', label: 'Category' },
+  { key: 'title', label: 'Title / Role' },
+  { key: 'primary_org', label: 'Primary Organization' },
+  { key: 'website', label: 'Website' },
+  { key: 'location', label: 'Location' },
   { key: 'belief_regulatory_stance', label: 'Regulatory Stance' },
   { key: 'belief_agi_timeline', label: 'AGI Timeline' },
   { key: 'belief_ai_risk', label: 'AI Risk Level' },
@@ -69,6 +73,7 @@ export function EntityReview({ verifyKey, entityId, onReviewSubmitted }: Props) 
     claimId?: string
     edgeId?: number
     originalValue?: string
+    existingCorrection?: Record<string, unknown> | null
   } | null>(null)
 
   const [timerRunning, setTimerRunning] = useState(true)
@@ -190,8 +195,10 @@ export function EntityReview({ verifyKey, entityId, onReviewSubmitted }: Props) 
     return map[fieldKey] || []
   }
 
-  const hasCorrection = (fieldName: string) => fieldCorrections.some((c) => c.field_name === fieldName)
-  const hasClaimCorrection = (claimId: string) => claimCorrections.some((c) => c.claim_id === claimId)
+  const getCorrection = (fieldName: string) => fieldCorrections.find((c) => c.field_name === fieldName) || null
+  const getClaimCorrection = (claimId: string) => claimCorrections.find((c) => c.claim_id === claimId) || null
+  const hasCorrection = (fieldName: string) => !!getCorrection(fieldName)
+  const hasClaimCorrection = (claimId: string) => !!getClaimCorrection(claimId)
   const hasEdgeCorrection = (edgeId: number) => edgeCorrections.some((c) => c.edge_id === edgeId)
 
   const correctionCount = existingCorrections.filter((c) => c.correction_note !== 'Verified as correct').length
@@ -296,7 +303,19 @@ export function EntityReview({ verifyKey, entityId, onReviewSubmitted }: Props) 
                 </div>
                 <div className="flex items-center gap-1 shrink-0">
                   {corrected ? (
-                    <span className="font-mono text-[10px] text-amber-600 uppercase">Corrected</span>
+                    <button
+                      onClick={() =>
+                        setActiveCorrection({
+                          type: 'field',
+                          fieldName: key,
+                          originalValue: value || '(empty)',
+                          existingCorrection: getCorrection(key),
+                        })
+                      }
+                      className="font-mono text-[10px] text-amber-600 uppercase hover:text-amber-800 cursor-pointer"
+                    >
+                      Edit correction
+                    </button>
                   ) : (
                     <button
                       onClick={() =>
@@ -431,6 +450,7 @@ export function EntityReview({ verifyKey, entityId, onReviewSubmitted }: Props) 
               onSubmit={(correction) => submitCorrection.mutate(correction)}
               onCancel={() => setActiveCorrection(null)}
               isSubmitting={submitCorrection.isPending}
+              existingCorrection={activeCorrection.existingCorrection}
             />
           </div>
         </div>

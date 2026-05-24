@@ -16,6 +16,20 @@ interface Props {
   onSubmit: (correction: Record<string, unknown>) => void
   onCancel: () => void
   isSubmitting: boolean
+  existingCorrection?: Record<string, unknown> | null
+}
+
+function getErrorTypesForContext(correctionType: string): readonly string[] {
+  switch (correctionType) {
+    case 'edge':
+      return FIELD_OPTIONS.errorTypesEdge
+    case 'claim':
+      return FIELD_OPTIONS.errorTypesClaim
+    case 'notes':
+      return FIELD_OPTIONS.errorTypesNotes
+    default:
+      return FIELD_OPTIONS.errorTypesField
+  }
 }
 
 export function CorrectionForm({
@@ -29,23 +43,49 @@ export function CorrectionForm({
   onSubmit,
   onCancel,
   isSubmitting,
+  existingCorrection,
 }: Props) {
-  const [errorType, setErrorType] = useState<string | null>(null)
-  const [correctedValue, setCorrectedValue] = useState('')
-  const [correctionNote, setCorrectionNote] = useState('')
+  const existing = existingCorrection || null
+  const existingErrorTypes = existing?.error_type
+    ? String(existing.error_type)
+        .split(',')
+        .map((s) => s.trim())
+    : []
+
+  const [selectedErrors, setSelectedErrors] = useState<Set<string>>(new Set(existingErrorTypes))
+  const [otherError, setOtherError] = useState('')
+  const [correctedValue, setCorrectedValue] = useState(
+    existing?.corrected_value ? String(existing.corrected_value) : '',
+  )
+  const [correctionNote, setCorrectionNote] = useState(
+    existing?.correction_note ? String(existing.correction_note) : '',
+  )
+
+  const toggleError = (type: string) => {
+    setSelectedErrors((prev) => {
+      const next = new Set(prev)
+      if (next.has(type)) next.delete(type)
+      else next.add(type)
+      return next
+    })
+  }
 
   const handleSubmit = () => {
+    const allErrors = [...selectedErrors]
+    if (otherError.trim()) allErrors.push(otherError.trim())
+
     onSubmit({
       fieldName: fieldName || null,
       claimId: claimId || null,
       edgeId: edgeId || null,
-      errorType,
+      errorType: allErrors.length > 0 ? allErrors.join(', ') : null,
       originalValue,
       correctedValue: correctedValue || null,
       correctionNote: correctionNote || null,
     })
   }
 
+  const contextErrors = getErrorTypesForContext(correctionType)
   const edgeTypeOptions = FIELD_OPTIONS.edgeTypes
 
   const title =
@@ -61,7 +101,7 @@ export function CorrectionForm({
     <div>
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg" style={{ fontFamily: "'EB Garamond', Georgia, serif" }}>
-          {title}
+          {existing ? `Edit: ${title}` : title}
         </h3>
         <button onClick={onCancel} className="text-[#888] hover:text-[#333] text-xl leading-none">
           &times;
@@ -76,16 +116,16 @@ export function CorrectionForm({
         </div>
       </div>
 
-      {/* Error type pills */}
+      {/* Error type pills (multi-select) */}
       <div className="mb-4">
-        <div className={LABEL}>Error Type</div>
-        <div className="flex flex-wrap gap-1.5">
-          {FIELD_OPTIONS.errorTypes.map((type) => (
+        <div className={LABEL}>Error Type (select all that apply)</div>
+        <div className="flex flex-wrap gap-1.5 mb-2">
+          {contextErrors.map((type) => (
             <button
               key={type}
-              onClick={() => setErrorType(errorType === type ? null : type)}
+              onClick={() => toggleError(type)}
               className={`font-mono text-[10px] px-2 py-1 rounded border transition-colors cursor-pointer ${
-                errorType === type
+                selectedErrors.has(type)
                   ? 'bg-red-600 text-white border-red-600'
                   : 'bg-white text-[#555] border-[#ccc] hover:border-red-400'
               }`}
@@ -94,6 +134,13 @@ export function CorrectionForm({
             </button>
           ))}
         </div>
+        <input
+          type="text"
+          value={otherError}
+          onChange={(e) => setOtherError(e.target.value)}
+          placeholder="Other error type..."
+          className="w-full px-2 py-1.5 font-mono text-[12px] border border-[#ddd] rounded"
+        />
       </div>
 
       {/* Corrected value (structured fields with enum options) */}
@@ -140,7 +187,7 @@ export function CorrectionForm({
         </div>
       )}
 
-      {/* Corrected value for claims (free text since claims can be anything) */}
+      {/* Corrected value for claims */}
       {correctionType === 'claim' && (
         <div className="mb-4">
           <div className={LABEL}>What should the correct value be?</div>
@@ -174,7 +221,7 @@ export function CorrectionForm({
         </div>
       )}
 
-      {/* Correction note (always shown) */}
+      {/* Correction note */}
       <div className="mb-4">
         <div className={LABEL}>
           {correctionType === 'notes'
@@ -205,7 +252,7 @@ export function CorrectionForm({
           disabled={isSubmitting}
           className={`${BTN} bg-[#1a1a1a] text-white border-[#1a1a1a] hover:bg-[#333]`}
         >
-          {isSubmitting ? 'Submitting...' : 'Submit Correction'}
+          {isSubmitting ? 'Submitting...' : existing ? 'Update Correction' : 'Submit Correction'}
         </button>
         <button onClick={onCancel} className={`${BTN} bg-white text-[#555] border-[#ccc] hover:border-[#999]`}>
           Cancel

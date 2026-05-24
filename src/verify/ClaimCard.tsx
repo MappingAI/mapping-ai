@@ -105,9 +105,7 @@ export function ClaimCard({ claim, hasCorrected, onFlag, verifyKey, entityId }: 
       {/* Citation */}
       <div className="mb-2 pl-3 border-l-2 border-[#ddd]">
         <div className="flex items-start gap-1">
-          <p className="text-[13px] italic text-[#444] flex-1" style={{ fontFamily: "'EB Garamond', Georgia, serif" }}>
-            "{citation}"
-          </p>
+          <p className="text-[13px] text-[#333] flex-1 leading-relaxed">"{citation}"</p>
           <CopyBtn text={citation} />
         </div>
         {sourceUrl && (

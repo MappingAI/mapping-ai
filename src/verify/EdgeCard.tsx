@@ -70,9 +70,7 @@ export function EdgeCard({ edge, entityId, hasCorrected, onFlag, verifyKey }: Pr
       {/* Inline evidence text */}
       {evidence && (
         <div className="mb-2 pl-3 border-l-2 border-[#ddd]">
-          <p className="text-[12px] text-[#555] italic" style={{ fontFamily: "'EB Garamond', Georgia, serif" }}>
-            "{evidence}"
-          </p>
+          <p className="text-[12px] text-[#333] leading-relaxed">"{evidence}"</p>
         </div>
       )}
 
@@ -81,9 +79,7 @@ export function EdgeCard({ edge, entityId, hasCorrected, onFlag, verifyKey }: Pr
         <div className="space-y-2 mb-2">
           {evidenceRecords.map((ev, i) => (
             <div key={i} className="pl-3 border-l-2 border-[#ddd]">
-              <p className="text-[12px] text-[#555] italic" style={{ fontFamily: "'EB Garamond', Georgia, serif" }}>
-                "{ev.citation}"
-              </p>
+              <p className="text-[12px] text-[#333] leading-relaxed">"{ev.citation}"</p>
               {ev.source_url && (
                 <a
                   href={ev.source_url}

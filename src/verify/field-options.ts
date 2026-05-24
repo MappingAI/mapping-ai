@@ -57,12 +57,16 @@ export const FIELD_OPTIONS = {
     'spun_out_from',
     'affiliated',
   ],
-  errorTypes: [
+  errorTypesField: ['HALLUCINATED', 'MISCLASSIFIED', 'OUTDATED', 'WRONG_VALUE', 'NOT_AI_RELATED', 'TOO_GENERIC'],
+  errorTypesClaim: [
     'HALLUCINATED',
-    'BAD_RESOLUTION',
+    'MISQUOTED',
     'MISCLASSIFIED',
+    'OUTDATED',
+    'WRONG_SCORE',
+    'SOURCE_MISSING',
     'NOT_AI_RELATED',
-    'TOO_GENERIC',
-    'MISSING_RELATIONSHIP',
   ],
+  errorTypesEdge: ['WRONG_TYPE', 'WRONG_DIRECTION', 'OUTDATED', 'DUPLICATE', 'DOES_NOT_EXIST', 'MISSING_EVIDENCE'],
+  errorTypesNotes: ['HALLUCINATED', 'INACCURATE', 'OUTDATED', 'MISSING_CONTEXT', 'WRONG_ATTRIBUTION'],
 } as const
