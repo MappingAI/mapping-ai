@@ -20,9 +20,16 @@ interface Props {
   onSelect: (id: number) => void
 }
 
+type Tab = 'queue' | 'reviewed'
+
+const TAB_BASE =
+  'flex-1 font-mono text-[11px] uppercase tracking-wider py-2 text-center cursor-pointer transition-colors'
+const TAB_ACTIVE = `${TAB_BASE} text-[#1a1a1a] border-b-2 border-[#1a1a1a]`
+const TAB_INACTIVE = `${TAB_BASE} text-[#999] border-b border-[#e0e0e0] hover:text-[#555]`
+
 export function VerifyQueue({ verifyKey, selectedId, onSelect }: Props) {
   const [search, setSearch] = useState('')
-  const [showReviewed, setShowReviewed] = useState(false)
+  const [tab, setTab] = useState<Tab>('queue')
 
   const { data, isLoading } = useQuery({
     queryKey: ['verify-queue'],
@@ -33,15 +40,17 @@ export function VerifyQueue({ verifyKey, selectedId, onSelect }: Props) {
 
   const filtered = useMemo(() => {
     let list = entities
-    if (!showReviewed) {
+    if (tab === 'queue') {
       list = list.filter((e) => !e.review_verdict)
+    } else {
+      list = list.filter((e) => e.review_verdict)
     }
     if (search.trim()) {
       const q = search.toLowerCase()
       list = list.filter((e) => e.name.toLowerCase().includes(q) || (e.category || '').toLowerCase().includes(q))
     }
     return list
-  }, [entities, search, showReviewed])
+  }, [entities, search, tab])
 
   const orgs = filtered.filter((e) => e.entity_type === 'organization')
   const people = filtered.filter((e) => e.entity_type === 'person')
@@ -51,9 +60,9 @@ export function VerifyQueue({ verifyKey, selectedId, onSelect }: Props) {
 
   return (
     <div className="w-[300px] min-w-[300px] h-screen flex flex-col border-r border-[#e0e0e0] bg-[#fafafa]">
-      <div className="p-3 border-b border-[#e0e0e0]">
+      <div className="p-3 pb-0 border-b border-[#e0e0e0]">
         <h2 className="text-lg italic mb-2" style={{ fontFamily: "'EB Garamond', Georgia, serif" }}>
-          Verification Queue
+          Verification
         </h2>
         <input
           type="text"
@@ -62,19 +71,24 @@ export function VerifyQueue({ verifyKey, selectedId, onSelect }: Props) {
           placeholder="Search entities..."
           className="w-full px-2 py-1.5 font-mono text-[12px] border border-[#ddd] rounded mb-2"
         />
-        <label className="flex items-center gap-1.5 font-mono text-[11px] text-[#666] cursor-pointer">
-          <input
-            type="checkbox"
-            checked={showReviewed}
-            onChange={(e) => setShowReviewed(e.target.checked)}
-            className="rounded"
-          />
-          Show reviewed
-        </label>
+        <div className="flex">
+          <button onClick={() => setTab('queue')} className={tab === 'queue' ? TAB_ACTIVE : TAB_INACTIVE}>
+            Queue ({totalCount - reviewedCount})
+          </button>
+          <button onClick={() => setTab('reviewed')} className={tab === 'reviewed' ? TAB_ACTIVE : TAB_INACTIVE}>
+            Reviewed ({reviewedCount})
+          </button>
+        </div>
       </div>
 
       <div className="flex-1 overflow-y-auto">
         {isLoading && <div className="p-4 text-center font-mono text-[12px] text-[#888]">Loading...</div>}
+
+        {!isLoading && filtered.length === 0 && (
+          <div className="p-4 text-center font-mono text-[12px] text-[#999] italic">
+            {tab === 'reviewed' ? 'No entities reviewed yet' : 'All entities reviewed'}
+          </div>
+        )}
 
         {orgs.length > 0 && (
           <div>
@@ -82,7 +96,13 @@ export function VerifyQueue({ verifyKey, selectedId, onSelect }: Props) {
               Organizations ({orgs.length})
             </div>
             {orgs.map((e) => (
-              <EntityRow key={e.id} entity={e} selected={e.id === selectedId} onSelect={onSelect} />
+              <EntityRow
+                key={e.id}
+                entity={e}
+                selected={e.id === selectedId}
+                onSelect={onSelect}
+                showVerdict={tab === 'reviewed'}
+              />
             ))}
           </div>
         )}
@@ -93,7 +113,13 @@ export function VerifyQueue({ verifyKey, selectedId, onSelect }: Props) {
               People ({people.length})
             </div>
             {people.map((e) => (
-              <EntityRow key={e.id} entity={e} selected={e.id === selectedId} onSelect={onSelect} />
+              <EntityRow
+                key={e.id}
+                entity={e}
+                selected={e.id === selectedId}
+                onSelect={onSelect}
+                showVerdict={tab === 'reviewed'}
+              />
             ))}
           </div>
         )}
@@ -110,18 +136,13 @@ function EntityRow({
   entity,
   selected,
   onSelect,
+  showVerdict,
 }: {
   entity: QueueEntity
   selected: boolean
   onSelect: (id: number) => void
+  showVerdict: boolean
 }) {
-  const verdictIcon = entity.review_verdict ? (entity.review_verdict === 'confirmed' ? '✓' : '✗') : '·'
-  const verdictColor = entity.review_verdict
-    ? entity.review_verdict === 'confirmed'
-      ? 'text-emerald-600'
-      : 'text-amber-600'
-    : 'text-[#bbb]'
-
   return (
     <button
       onClick={() => onSelect(entity.id)}
@@ -130,7 +151,19 @@ function EntityRow({
       }`}
     >
       <div className="flex items-start gap-2">
-        <span className={`font-mono text-[14px] mt-0.5 ${verdictColor}`}>{verdictIcon}</span>
+        {showVerdict && (
+          <span
+            className={`font-mono text-[14px] mt-0.5 ${
+              entity.review_verdict === 'confirmed'
+                ? 'text-emerald-600'
+                : entity.review_verdict === 'flagged'
+                  ? 'text-red-400'
+                  : 'text-amber-600'
+            }`}
+          >
+            {entity.review_verdict === 'confirmed' ? '✓' : entity.review_verdict === 'flagged' ? '?' : '✗'}
+          </span>
+        )}
         <div className="min-w-0">
           <div className="font-mono text-[12px] text-[#1a1a1a] truncate">{entity.name}</div>
           <div className="font-mono text-[10px] text-[#888] truncate">
