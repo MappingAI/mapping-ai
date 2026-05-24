@@ -174,10 +174,15 @@ export const onRequest: PagesFunction<Env> = async (context) => {
         }
 
         await sql`
-          INSERT INTO verification_review (entity_id, reviewer_key_id, verdict, notes, duration_ms)
-          VALUES (${entityId}, ${reviewerKeyId}, ${verdict}, ${notes}, ${durationMs})
+          INSERT INTO verification_review (entity_id, reviewer_key_id, verdict, notes, duration_ms, revisions)
+          VALUES (${entityId}, ${reviewerKeyId}, ${verdict}, ${notes}, ${durationMs}, 1)
           ON CONFLICT (entity_id, reviewer_key_id)
-          DO UPDATE SET verdict = ${verdict}, notes = ${notes}, duration_ms = ${durationMs}, updated_at = NOW()
+          DO UPDATE SET
+            verdict = ${verdict},
+            notes = ${notes},
+            duration_ms = COALESCE(verification_review.duration_ms, 0) + COALESCE(${durationMs}, 0),
+            revisions = COALESCE(verification_review.revisions, 1) + 1,
+            updated_at = NOW()
         `
         return jsonResponse({ ok: true }, request, 200, corsOptions)
       }

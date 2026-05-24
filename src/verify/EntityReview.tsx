@@ -11,7 +11,7 @@ interface EntityData {
   claims: Array<Record<string, unknown>>
   edges: Array<Record<string, unknown>>
   corrections: Array<Record<string, unknown>>
-  review: { verdict: string; notes: string; duration_ms: number | null } | null
+  review: { verdict: string; notes: string; duration_ms: number | null; revisions: number | null } | null
 }
 
 interface Props {
@@ -301,7 +301,8 @@ export function EntityReview({ verifyKey, entityId, onReviewSubmitted }: Props) 
             }`}
           >
             Complete
-            {review.duration_ms ? ` (${Math.round(review.duration_ms / 1000)}s)` : ''}
+            {review.duration_ms ? ` (${Math.round(review.duration_ms / 1000)}s total)` : ''}
+            {review.revisions && review.revisions > 1 ? ` · ${review.revisions} passes` : ''}
           </div>
         )}
 
@@ -548,7 +549,8 @@ export function EntityReview({ verifyKey, entityId, onReviewSubmitted }: Props) 
           <div className="flex items-center gap-3">
             <span className="font-mono text-[11px] text-emerald-600">
               Review submitted
-              {review.duration_ms ? ` (${Math.round(review.duration_ms / 1000)}s)` : ''}
+              {review.duration_ms ? ` (${Math.round(review.duration_ms / 1000)}s total)` : ''}
+              {review.revisions && review.revisions > 1 ? ` · ${review.revisions} passes` : ''}
             </span>
             <button
               onClick={handleMarkComplete}
