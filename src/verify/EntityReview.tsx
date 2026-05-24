@@ -163,6 +163,17 @@ export function EntityReview({ verifyKey, entityId, onReviewSubmitted }: Props) 
     },
   })
 
+  const deleteCorrection = useMutation({
+    mutationFn: (correctionId: number) =>
+      verifyFetch('/verify', verifyKey, {
+        method: 'POST',
+        body: JSON.stringify({ action: 'delete_correction', correctionId }),
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['verify-entity', entityId] })
+    },
+  })
+
   const handleMarkComplete = useCallback(() => {
     const durationMs = accumulatedRef.current + (timerRunning ? Date.now() - timerStartRef.current : 0)
     const correctionCount = (data?.corrections || []).filter(
@@ -315,19 +326,30 @@ export function EntityReview({ verifyKey, entityId, onReviewSubmitted }: Props) 
                 </div>
                 <div className="flex items-center gap-1 shrink-0">
                   {corrected ? (
-                    <button
-                      onClick={() =>
-                        setActiveCorrection({
-                          type: 'field',
-                          fieldName: key,
-                          originalValue: value || '(empty)',
-                          existingCorrection: getCorrection(key),
-                        })
-                      }
-                      className="font-mono text-[10px] text-amber-600 uppercase hover:text-amber-800 cursor-pointer"
-                    >
-                      Edit correction
-                    </button>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() =>
+                          setActiveCorrection({
+                            type: 'field',
+                            fieldName: key,
+                            originalValue: value || '(empty)',
+                            existingCorrection: getCorrection(key),
+                          })
+                        }
+                        className="font-mono text-[10px] text-amber-600 uppercase hover:text-amber-800 cursor-pointer"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => {
+                          const c = getCorrection(key)
+                          if (c?.id) deleteCorrection.mutate(c.id as number)
+                        }}
+                        className="font-mono text-[10px] text-[#bbb] hover:text-red-600 cursor-pointer"
+                      >
+                        Remove
+                      </button>
+                    </div>
                   ) : (
                     <>
                       <button
@@ -353,9 +375,9 @@ export function EntityReview({ verifyKey, entityId, onReviewSubmitted }: Props) 
                             })
                           }
                           className="font-mono text-[10px] text-[#aaa] hover:text-[#666] cursor-pointer"
-                          title="Can't verify this field (paywalled, no evidence, etc.)"
+                          title="No evidence to verify or refute this value"
                         >
-                          ?
+                          Can't verify
                         </button>
                       ) : null}
                     </>
