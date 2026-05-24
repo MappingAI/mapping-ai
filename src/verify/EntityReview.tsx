@@ -20,7 +20,7 @@ interface Props {
   onReviewSubmitted?: () => void
 }
 
-const STRUCTURED_FIELDS = [
+const PERSON_FIELDS = [
   { key: 'category', label: 'Category' },
   { key: 'title', label: 'Title / Role' },
   { key: 'primary_org', label: 'Primary Organization' },
@@ -31,7 +31,19 @@ const STRUCTURED_FIELDS = [
   { key: 'belief_ai_risk', label: 'AI Risk Level' },
   { key: 'belief_threat_models', label: 'Threat Models' },
   { key: 'belief_evidence_source', label: 'Evidence Source' },
+  { key: 'other_categories', label: 'Other Categories' },
+] as const
+
+const ORG_FIELDS = [
+  { key: 'category', label: 'Category' },
+  { key: 'website', label: 'Website' },
+  { key: 'location', label: 'Location' },
   { key: 'funding_model', label: 'Funding Model' },
+  { key: 'belief_regulatory_stance', label: 'Regulatory Stance' },
+  { key: 'belief_agi_timeline', label: 'AGI Timeline' },
+  { key: 'belief_ai_risk', label: 'AI Risk Level' },
+  { key: 'belief_threat_models', label: 'Threat Models' },
+  { key: 'belief_evidence_source', label: 'Evidence Source' },
   { key: 'other_categories', label: 'Other Categories' },
 ] as const
 
@@ -285,7 +297,7 @@ export function EntityReview({ verifyKey, entityId, onReviewSubmitted }: Props) 
       <section className="mb-8">
         <h2 className={`${LABEL} mb-3`}>Structured Fields</h2>
         <div className="space-y-2">
-          {STRUCTURED_FIELDS.map(({ key, label }) => {
+          {(entityType === 'organization' ? ORG_FIELDS : PERSON_FIELDS).map(({ key, label }) => {
             const value = entity[key] as string | null
             const corrected = hasCorrection(key)
             return (
@@ -325,9 +337,9 @@ export function EntityReview({ verifyKey, entityId, onReviewSubmitted }: Props) 
                           originalValue: value || '(empty)',
                         })
                       }
-                      className={`${BTN} text-[10px] bg-white text-[#555] border-[#ccc] hover:border-red-400 hover:text-red-600`}
+                      className={`${BTN} text-[10px] bg-white ${value ? 'text-[#555] border-[#ccc] hover:border-red-400 hover:text-red-600' : 'text-blue-600 border-blue-300 hover:border-blue-500'}`}
                     >
-                      Flag
+                      {value ? 'Flag' : 'Set'}
                     </button>
                   )}
                 </div>

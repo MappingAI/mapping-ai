@@ -143,6 +143,20 @@ export function CorrectionForm({
         />
       </div>
 
+      {/* Corrected value (free-text fields like website, location, title) */}
+      {correctionType === 'field' && fieldOptions.length === 0 && (
+        <div className="mb-4">
+          <div className={LABEL}>Corrected Value</div>
+          <input
+            type="text"
+            value={correctedValue}
+            onChange={(e) => setCorrectedValue(e.target.value)}
+            placeholder="Enter the correct value..."
+            className="w-full px-2 py-1.5 font-mono text-[12px] border border-[#ddd] rounded"
+          />
+        </div>
+      )}
+
       {/* Corrected value (structured fields with enum options) */}
       {correctionType === 'field' && fieldOptions.length > 0 && !isMultiSelect && (
         <div className="mb-4">
