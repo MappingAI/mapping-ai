@@ -71,7 +71,9 @@ export function CorrectionForm({
       {/* Original value */}
       <div className="mb-4">
         <div className={LABEL}>Current Value</div>
-        <div className="font-mono text-[13px] text-[#555] p-2 bg-[#f8f8f8] rounded">{originalValue}</div>
+        <div className="font-mono text-[13px] text-[#555] p-2 bg-[#f8f8f8] rounded whitespace-pre-wrap">
+          {originalValue}
+        </div>
       </div>
 
       {/* Error type pills */}
@@ -94,7 +96,7 @@ export function CorrectionForm({
         </div>
       </div>
 
-      {/* Corrected value (structured fields) */}
+      {/* Corrected value (structured fields with enum options) */}
       {correctionType === 'field' && fieldOptions.length > 0 && !isMultiSelect && (
         <div className="mb-4">
           <div className={LABEL}>Corrected Value</div>
@@ -138,6 +140,20 @@ export function CorrectionForm({
         </div>
       )}
 
+      {/* Corrected value for claims (free text since claims can be anything) */}
+      {correctionType === 'claim' && (
+        <div className="mb-4">
+          <div className={LABEL}>What should the correct value be?</div>
+          <textarea
+            value={correctedValue}
+            onChange={(e) => setCorrectedValue(e.target.value)}
+            placeholder="Enter the correct stance, score, definition, or other value..."
+            rows={2}
+            className="w-full px-2 py-1.5 font-mono text-[12px] border border-[#ddd] rounded resize-y"
+          />
+        </div>
+      )}
+
       {/* Corrected edge type */}
       {correctionType === 'edge' && (
         <div className="mb-4">
@@ -161,7 +177,11 @@ export function CorrectionForm({
       {/* Correction note (always shown) */}
       <div className="mb-4">
         <div className={LABEL}>
-          {correctionType === 'notes' ? 'Explain what is wrong and what it should say' : 'Notes (optional)'}
+          {correctionType === 'notes'
+            ? 'Explain what is wrong and what it should say'
+            : correctionType === 'claim'
+              ? 'Explain why this is incorrect'
+              : 'Notes (optional)'}
         </div>
         <textarea
           value={correctionNote}
@@ -169,9 +189,11 @@ export function CorrectionForm({
           placeholder={
             correctionType === 'notes'
               ? 'Describe what is incorrect in the notes and what the correct information is...'
-              : 'Any additional context about this correction...'
+              : correctionType === 'claim'
+                ? 'Why is this claim wrong? What does the source actually say?...'
+                : 'Any additional context about this correction...'
           }
-          rows={correctionType === 'notes' ? 5 : 3}
+          rows={correctionType === 'notes' || correctionType === 'claim' ? 4 : 3}
           className="w-full px-2 py-1.5 font-mono text-[12px] border border-[#ddd] rounded resize-y"
         />
       </div>

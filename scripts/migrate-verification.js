@@ -47,6 +47,9 @@ async function migrate() {
     `)
     console.log('  ✓ verification_correction')
 
+    await client.query(`ALTER TABLE verification_review ADD COLUMN IF NOT EXISTS duration_ms INTEGER`)
+    console.log('  ✓ duration_ms column')
+
     await client.query(`CREATE INDEX IF NOT EXISTS idx_vc_entity ON verification_correction(entity_id)`)
     await client.query(`CREATE INDEX IF NOT EXISTS idx_vc_reviewer ON verification_correction(reviewer_key_id)`)
     await client.query(`CREATE INDEX IF NOT EXISTS idx_vr_entity ON verification_review(entity_id)`)

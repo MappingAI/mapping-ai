@@ -94,7 +94,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
           ORDER BY c.belief_dimension, c.confidence DESC
         `
 
-        const edges = await sql`
+        const edgeRows = await sql`
           SELECT e.*,
             CASE WHEN e.source_id = ${id} THEN t.name ELSE s.name END AS other_name,
             CASE WHEN e.source_id = ${id} THEN t.entity_type ELSE s.entity_type END AS other_type,
@@ -105,6 +105,29 @@ export const onRequest: PagesFunction<Env> = async (context) => {
           WHERE e.source_id = ${id} OR e.target_id = ${id}
           ORDER BY e.edge_type, e.is_primary DESC
         `
+
+        const edgeIds = edgeRows.map((e: Record<string, unknown>) => e.id as number)
+        const edgeEvidenceMap: Record<number, Array<Record<string, unknown>>> = {}
+        if (edgeIds.length > 0) {
+          const evidenceRows = await sql`
+            SELECT ee.edge_id, ee.citation, ee.confidence, ee.role_title,
+                   src.url AS source_url, src.title AS source_title
+            FROM edge_evidence ee
+            LEFT JOIN source src ON src.source_id = ee.source_id
+            WHERE ee.edge_id = ANY(${edgeIds})
+            ORDER BY ee.edge_id
+          `
+          for (const row of evidenceRows) {
+            const eid = row.edge_id as number
+            if (!edgeEvidenceMap[eid]) edgeEvidenceMap[eid] = []
+            edgeEvidenceMap[eid].push(row)
+          }
+        }
+
+        const edges = edgeRows.map((e: Record<string, unknown>) => ({
+          ...e,
+          evidence_records: edgeEvidenceMap[e.id as number] || [],
+        }))
 
         const corrections = await sql`
           SELECT * FROM verification_correction
@@ -142,6 +165,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
         const entityId = body.entityId as number
         const verdict = body.verdict as string
         const notes = (body.notes as string) || null
+        const durationMs = (body.durationMs as number) || null
 
         if (!entityId || !verdict) {
           return jsonResponse({ error: 'Missing entityId or verdict' }, request, 400, corsOptions)
@@ -151,10 +175,10 @@ export const onRequest: PagesFunction<Env> = async (context) => {
         }
 
         await sql`
-          INSERT INTO verification_review (entity_id, reviewer_key_id, verdict, notes)
-          VALUES (${entityId}, ${reviewerKeyId}, ${verdict}, ${notes})
+          INSERT INTO verification_review (entity_id, reviewer_key_id, verdict, notes, duration_ms)
+          VALUES (${entityId}, ${reviewerKeyId}, ${verdict}, ${notes}, ${durationMs})
           ON CONFLICT (entity_id, reviewer_key_id)
-          DO UPDATE SET verdict = ${verdict}, notes = ${notes}, updated_at = NOW()
+          DO UPDATE SET verdict = ${verdict}, notes = ${notes}, duration_ms = ${durationMs}, updated_at = NOW()
         `
         return jsonResponse({ ok: true }, request, 200, corsOptions)
       }

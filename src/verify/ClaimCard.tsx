@@ -1,6 +1,24 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { verifyFetch } from './App'
+
+function CopyBtn({ text }: { text: string }) {
+  const [copied, setCopied] = useState(false)
+  const handleCopy = useCallback(() => {
+    navigator.clipboard.writeText(text)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 1500)
+  }, [text])
+  return (
+    <button
+      onClick={handleCopy}
+      className="font-mono text-[10px] text-[#999] hover:text-[#333] cursor-pointer"
+      title="Copy to clipboard"
+    >
+      {copied ? 'copied' : 'copy'}
+    </button>
+  )
+}
 
 const BTN = 'font-mono text-[11px] uppercase tracking-wider px-3 py-1.5 rounded cursor-pointer border transition-colors'
 const LABEL = 'font-mono text-[10px] uppercase tracking-wider text-[#888]'
@@ -86,9 +104,12 @@ export function ClaimCard({ claim, hasCorrected, onFlag, verifyKey, entityId }: 
 
       {/* Citation */}
       <div className="mb-2 pl-3 border-l-2 border-[#ddd]">
-        <p className="text-[13px] italic text-[#444]" style={{ fontFamily: "'EB Garamond', Georgia, serif" }}>
-          "{citation}"
-        </p>
+        <div className="flex items-start gap-1">
+          <p className="text-[13px] italic text-[#444] flex-1" style={{ fontFamily: "'EB Garamond', Georgia, serif" }}>
+            "{citation}"
+          </p>
+          <CopyBtn text={citation} />
+        </div>
         {sourceUrl && (
           <a
             href={sourceUrl}

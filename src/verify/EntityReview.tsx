@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { verifyFetch } from './App'
 import { ClaimCard } from './ClaimCard'
@@ -11,12 +11,13 @@ interface EntityData {
   claims: Array<Record<string, unknown>>
   edges: Array<Record<string, unknown>>
   corrections: Array<Record<string, unknown>>
-  review: { verdict: string; notes: string } | null
+  review: { verdict: string; notes: string; duration_ms: number | null } | null
 }
 
 interface Props {
   verifyKey: string
   entityId: number
+  onReviewSubmitted?: () => void
 }
 
 const STRUCTURED_FIELDS = [
@@ -33,7 +34,34 @@ const STRUCTURED_FIELDS = [
 const LABEL = 'font-mono text-[10px] uppercase tracking-wider text-[#888]'
 const BTN = 'font-mono text-[11px] uppercase tracking-wider px-3 py-1.5 rounded cursor-pointer border transition-colors'
 
-export function EntityReview({ verifyKey, entityId }: Props) {
+function CopyButton({ text }: { text: string }) {
+  const [copied, setCopied] = useState(false)
+  const handleCopy = () => {
+    navigator.clipboard.writeText(text)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 1500)
+  }
+  return (
+    <button
+      onClick={handleCopy}
+      className="font-mono text-[10px] text-[#999] hover:text-[#333] cursor-pointer ml-1"
+      title="Copy to clipboard"
+    >
+      {copied ? 'copied' : 'copy'}
+    </button>
+  )
+}
+
+function Timer({ running, elapsed }: { running: boolean; elapsed: number }) {
+  const secs = Math.floor(elapsed / 1000)
+  const mins = Math.floor(secs / 60)
+  const display = `${mins}:${String(secs % 60).padStart(2, '0')}`
+  return (
+    <span className={`font-mono text-[12px] tabular-nums ${running ? 'text-[#666]' : 'text-[#bbb]'}`}>{display}</span>
+  )
+}
+
+export function EntityReview({ verifyKey, entityId, onReviewSubmitted }: Props) {
   const queryClient = useQueryClient()
   const [activeCorrection, setActiveCorrection] = useState<{
     type: 'field' | 'claim' | 'edge' | 'notes'
@@ -43,20 +71,66 @@ export function EntityReview({ verifyKey, entityId }: Props) {
     originalValue?: string
   } | null>(null)
 
+  const [timerRunning, setTimerRunning] = useState(true)
+  const [timerElapsed, setTimerElapsed] = useState(0)
+  const timerStartRef = useRef(Date.now())
+  const accumulatedRef = useRef(0)
+
+  useEffect(() => {
+    setTimerRunning(true)
+    setTimerElapsed(0)
+    accumulatedRef.current = 0
+    timerStartRef.current = Date.now()
+  }, [entityId])
+
+  useEffect(() => {
+    if (!timerRunning) return undefined
+    timerStartRef.current = Date.now()
+    const interval = setInterval(() => {
+      setTimerElapsed(accumulatedRef.current + (Date.now() - timerStartRef.current))
+    }, 1000)
+    return () => {
+      accumulatedRef.current += Date.now() - timerStartRef.current
+      clearInterval(interval)
+    }
+  }, [timerRunning])
+
+  // Auto-pause on inactivity (2 minutes)
+  useEffect(() => {
+    let inactivityTimer: ReturnType<typeof setTimeout>
+    const resetInactivity = () => {
+      clearTimeout(inactivityTimer)
+      if (!timerRunning) return
+      inactivityTimer = setTimeout(() => setTimerRunning(false), 120000)
+    }
+    window.addEventListener('mousemove', resetInactivity)
+    window.addEventListener('keydown', resetInactivity)
+    window.addEventListener('click', resetInactivity)
+    resetInactivity()
+    return () => {
+      clearTimeout(inactivityTimer)
+      window.removeEventListener('mousemove', resetInactivity)
+      window.removeEventListener('keydown', resetInactivity)
+      window.removeEventListener('click', resetInactivity)
+    }
+  }, [timerRunning])
+
   const { data, isLoading } = useQuery({
     queryKey: ['verify-entity', entityId],
     queryFn: () => verifyFetch<EntityData>(`/verify?action=entity&id=${entityId}`, verifyKey),
   })
 
   const submitReview = useMutation({
-    mutationFn: (args: { verdict: string; notes?: string }) =>
+    mutationFn: (args: { verdict: string; durationMs?: number }) =>
       verifyFetch('/verify', verifyKey, {
         method: 'POST',
         body: JSON.stringify({ action: 'review', entityId, ...args }),
       }),
     onSuccess: () => {
+      setTimerRunning(false)
       queryClient.invalidateQueries({ queryKey: ['verify-entity', entityId] })
       queryClient.invalidateQueries({ queryKey: ['verify-queue'] })
+      onReviewSubmitted?.()
     },
   })
 
@@ -71,6 +145,20 @@ export function EntityReview({ verifyKey, entityId }: Props) {
       setActiveCorrection(null)
     },
   })
+
+  const handleMarkComplete = useCallback(() => {
+    const durationMs = accumulatedRef.current + (timerRunning ? Date.now() - timerStartRef.current : 0)
+    const correctionCount = (data?.corrections || []).filter(
+      (c) => (c as Record<string, unknown>).correction_note !== 'Verified as correct',
+    ).length
+    const verdict = correctionCount > 0 ? 'needs_correction' : 'confirmed'
+    submitReview.mutate({ verdict, durationMs })
+  }, [data, submitReview, timerRunning])
+
+  const handleFlagForReview = useCallback(() => {
+    const durationMs = accumulatedRef.current + (timerRunning ? Date.now() - timerStartRef.current : 0)
+    submitReview.mutate({ verdict: 'flagged', durationMs })
+  }, [submitReview, timerRunning])
 
   if (isLoading || !data) {
     return <div className="p-8 font-mono text-[13px] text-[#888]">Loading entity...</div>
@@ -106,33 +194,49 @@ export function EntityReview({ verifyKey, entityId }: Props) {
   const hasClaimCorrection = (claimId: string) => claimCorrections.some((c) => c.claim_id === claimId)
   const hasEdgeCorrection = (edgeId: number) => edgeCorrections.some((c) => c.edge_id === edgeId)
 
+  const correctionCount = existingCorrections.filter((c) => c.correction_note !== 'Verified as correct').length
+  const verifiedCount = existingCorrections.filter((c) => c.correction_note === 'Verified as correct').length
+
   return (
     <div className="max-w-[900px] mx-auto p-6">
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl mb-1" style={{ fontFamily: "'EB Garamond', Georgia, serif" }}>
-          {entity.name as string}
-        </h1>
-        <div className="font-mono text-[12px] text-[#666] flex items-center gap-2 flex-wrap">
-          <span>{entityType}</span>
-          {entity.category ? (
-            <>
-              <span className="text-[#ccc]">·</span>
-              <span>{String(entity.category)}</span>
-            </>
-          ) : null}
-          {entity.primary_org ? (
-            <>
-              <span className="text-[#ccc]">·</span>
-              <span>{String(entity.primary_org)}</span>
-            </>
-          ) : null}
-          {entity.location ? (
-            <>
-              <span className="text-[#ccc]">·</span>
-              <span>{String(entity.location)}</span>
-            </>
-          ) : null}
+        <div className="flex items-start justify-between">
+          <div>
+            <h1 className="text-2xl mb-1" style={{ fontFamily: "'EB Garamond', Georgia, serif" }}>
+              {entity.name as string}
+            </h1>
+            <div className="font-mono text-[12px] text-[#666] flex items-center gap-2 flex-wrap">
+              <span>{entityType}</span>
+              {entity.category ? (
+                <>
+                  <span className="text-[#ccc]">·</span>
+                  <span>{String(entity.category)}</span>
+                </>
+              ) : null}
+              {entity.primary_org ? (
+                <>
+                  <span className="text-[#ccc]">·</span>
+                  <span>{String(entity.primary_org)}</span>
+                </>
+              ) : null}
+              {entity.location ? (
+                <>
+                  <span className="text-[#ccc]">·</span>
+                  <span>{String(entity.location)}</span>
+                </>
+              ) : null}
+            </div>
+          </div>
+          <div className="flex items-center gap-3 shrink-0">
+            <Timer running={timerRunning} elapsed={timerElapsed} />
+            <button
+              onClick={() => setTimerRunning((r) => !r)}
+              className="font-mono text-[10px] text-[#888] hover:text-[#333] cursor-pointer"
+            >
+              {timerRunning ? 'pause' : 'resume'}
+            </button>
+          </div>
         </div>
         {entity.website ? (
           <a
@@ -155,46 +259,57 @@ export function EntityReview({ verifyKey, entityId }: Props) {
                   : 'bg-red-100 text-red-800'
             }`}
           >
-            {review.verdict.replace('_', ' ')}
+            Complete
+            {review.duration_ms ? ` (${Math.round(review.duration_ms / 1000)}s)` : ''}
+          </div>
+        )}
+
+        {/* Progress summary */}
+        {(correctionCount > 0 || verifiedCount > 0) && (
+          <div className="mt-2 font-mono text-[11px] text-[#666]">
+            {verifiedCount > 0 && <span className="text-emerald-600">{verifiedCount} verified</span>}
+            {verifiedCount > 0 && correctionCount > 0 && <span className="mx-1">·</span>}
+            {correctionCount > 0 && <span className="text-amber-600">{correctionCount} flagged</span>}
           </div>
         )}
       </div>
 
-      {/* Structured Fields */}
+      {/* Structured Fields - show ALL fields, even null ones */}
       <section className="mb-8">
         <h2 className={`${LABEL} mb-3`}>Structured Fields</h2>
         <div className="space-y-2">
           {STRUCTURED_FIELDS.map(({ key, label }) => {
             const value = entity[key] as string | null
-            if (!value) return null
             const corrected = hasCorrection(key)
             return (
               <div
                 key={key}
-                className={`flex items-start gap-3 p-2 rounded border ${corrected ? 'border-amber-300 bg-amber-50' : 'border-[#eee]'}`}
+                className={`flex items-start gap-3 p-2 rounded border ${
+                  corrected ? 'border-amber-300 bg-amber-50' : value ? 'border-[#eee]' : 'border-[#eee] bg-[#fafafa]'
+                }`}
               >
                 <div className="flex-1 min-w-0">
                   <span className={LABEL}>{label}</span>
-                  <div className="font-mono text-[13px] text-[#1a1a1a]">{value}</div>
+                  <div className={`font-mono text-[13px] ${value ? 'text-[#1a1a1a]' : 'text-[#bbb] italic'}`}>
+                    {value || 'Not set'}
+                  </div>
                 </div>
                 <div className="flex items-center gap-1 shrink-0">
                   {corrected ? (
                     <span className="font-mono text-[10px] text-amber-600 uppercase">Corrected</span>
                   ) : (
-                    <>
-                      <button
-                        onClick={() =>
-                          setActiveCorrection({
-                            type: 'field',
-                            fieldName: key,
-                            originalValue: value,
-                          })
-                        }
-                        className={`${BTN} text-[10px] bg-white text-[#555] border-[#ccc] hover:border-red-400 hover:text-red-600`}
-                      >
-                        Flag
-                      </button>
-                    </>
+                    <button
+                      onClick={() =>
+                        setActiveCorrection({
+                          type: 'field',
+                          fieldName: key,
+                          originalValue: value || '(empty)',
+                        })
+                      }
+                      className={`${BTN} text-[10px] bg-white text-[#555] border-[#ccc] hover:border-red-400 hover:text-red-600`}
+                    >
+                      Flag
+                    </button>
                   )}
                 </div>
               </div>
@@ -208,6 +323,9 @@ export function EntityReview({ verifyKey, entityId }: Props) {
         <section className="mb-8">
           <h2 className={`${LABEL} mb-3`}>Notes</h2>
           <div className="p-3 rounded border border-[#eee]">
+            <div className="flex justify-end mb-1">
+              <CopyButton text={String(entity.notes || '')} />
+            </div>
             <div
               className="prose prose-sm max-w-none text-[13px]"
               style={{ fontFamily: "'EB Garamond', Georgia, serif" }}
@@ -236,9 +354,9 @@ export function EntityReview({ verifyKey, entityId }: Props) {
       ) : null}
 
       {/* Claims */}
-      {claims.length > 0 && (
-        <section className="mb-8">
-          <h2 className={`${LABEL} mb-3`}>Claims ({claims.length})</h2>
+      <section className="mb-8">
+        <h2 className={`${LABEL} mb-3`}>Claims {claims.length > 0 ? `(${claims.length})` : ''}</h2>
+        {claims.length > 0 ? (
           <div className="space-y-3">
             {claims.map((claim) => (
               <ClaimCard
@@ -249,7 +367,7 @@ export function EntityReview({ verifyKey, entityId }: Props) {
                   setActiveCorrection({
                     type: 'claim',
                     claimId: claim.claim_id as string,
-                    originalValue: `${claim.belief_dimension}: ${claim.stance_label || claim.stance} (score: ${claim.stance_score})`,
+                    originalValue: `${claim.belief_dimension}: ${claim.stance_label || claim.stance || '(null)'} (score: ${claim.stance_score ?? 'null'})`,
                   })
                 }
                 verifyKey={verifyKey}
@@ -257,13 +375,17 @@ export function EntityReview({ verifyKey, entityId }: Props) {
               />
             ))}
           </div>
-        </section>
-      )}
+        ) : (
+          <div className="p-3 rounded border border-[#eee] bg-[#fafafa] font-mono text-[12px] text-[#999] italic">
+            No claims found. Belief fields above are derived from submissions, not sourced claims.
+          </div>
+        )}
+      </section>
 
       {/* Edges */}
-      {edges.length > 0 && (
-        <section className="mb-8">
-          <h2 className={`${LABEL} mb-3`}>Edges ({edges.length})</h2>
+      <section className="mb-8">
+        <h2 className={`${LABEL} mb-3`}>Edges {edges.length > 0 ? `(${edges.length})` : ''}</h2>
+        {edges.length > 0 ? (
           <div className="space-y-2">
             {edges.map((edge) => (
               <EdgeCard
@@ -278,11 +400,16 @@ export function EntityReview({ verifyKey, entityId }: Props) {
                     originalValue: `${edge.edge_type} → ${edge.other_name}`,
                   })
                 }
+                verifyKey={verifyKey}
               />
             ))}
           </div>
-        </section>
-      )}
+        ) : (
+          <div className="p-3 rounded border border-[#eee] bg-[#fafafa] font-mono text-[12px] text-[#999] italic">
+            No edges found for this entity.
+          </div>
+        )}
+      </section>
 
       {/* Active Correction Form */}
       {activeCorrection && (
@@ -309,33 +436,49 @@ export function EntityReview({ verifyKey, entityId }: Props) {
         </div>
       )}
 
-      {/* Review Verdict */}
+      {/* Complete Review */}
       <section className="mt-8 pt-6 border-t border-[#ddd]">
-        <h2 className={`${LABEL} mb-3`}>Submit Review</h2>
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => submitReview.mutate({ verdict: 'confirmed' })}
-            disabled={submitReview.isPending}
-            className={`${BTN} bg-emerald-600 text-white border-emerald-600 hover:bg-emerald-700`}
-          >
-            Confirmed
-          </button>
-          <button
-            onClick={() => submitReview.mutate({ verdict: 'needs_correction' })}
-            disabled={submitReview.isPending}
-            className={`${BTN} bg-amber-600 text-white border-amber-600 hover:bg-amber-700`}
-          >
-            Needs Correction
-          </button>
-          <button
-            onClick={() => submitReview.mutate({ verdict: 'flagged' })}
-            disabled={submitReview.isPending}
-            className={`${BTN} bg-red-600 text-white border-red-600 hover:bg-red-700`}
-          >
-            Flag for Review
-          </button>
-        </div>
-        {submitReview.isPending && <p className="mt-2 font-mono text-[11px] text-[#888]">Submitting...</p>}
+        {!review ? (
+          <div className="flex items-center gap-3">
+            <button
+              onClick={handleMarkComplete}
+              disabled={submitReview.isPending}
+              className={`${BTN} bg-emerald-600 text-white border-emerald-600 hover:bg-emerald-700`}
+            >
+              {submitReview.isPending ? 'Submitting...' : 'Mark Complete'}
+            </button>
+            <button
+              onClick={handleFlagForReview}
+              disabled={submitReview.isPending}
+              className={`${BTN} bg-white text-[#888] border-[#ccc] hover:border-[#999]`}
+              title="Cannot fully verify this entity (missing sources, needs domain expertise)"
+            >
+              Can't verify
+            </button>
+            <span className="font-mono text-[10px] text-[#999]">
+              {correctionCount > 0
+                ? `${correctionCount} correction${correctionCount > 1 ? 's' : ''} will be submitted`
+                : 'No corrections flagged'}
+            </span>
+          </div>
+        ) : (
+          <div className="flex items-center gap-3">
+            <span className="font-mono text-[11px] text-emerald-600">
+              Review submitted
+              {review.duration_ms ? ` (${Math.round(review.duration_ms / 1000)}s)` : ''}
+            </span>
+            <button
+              onClick={handleMarkComplete}
+              disabled={submitReview.isPending}
+              className={`${BTN} text-[10px] bg-white text-[#555] border-[#ccc] hover:border-[#999]`}
+            >
+              Update
+            </button>
+          </div>
+        )}
+        {submitReview.isError && (
+          <p className="mt-2 font-mono text-[11px] text-red-600">Submission failed. Check connection and try again.</p>
+        )}
       </section>
     </div>
   )

@@ -75,7 +75,13 @@ function VerifyDashboard({ verifyKey }: { verifyKey: string }) {
       <VerifyQueue verifyKey={verifyKey} selectedId={selectedEntityId} onSelect={handleSelect} />
       <div className="flex-1 overflow-y-auto bg-white">
         {selectedEntityId ? (
-          <EntityReview verifyKey={verifyKey} entityId={selectedEntityId} />
+          <EntityReview
+            verifyKey={verifyKey}
+            entityId={selectedEntityId}
+            onReviewSubmitted={() => {
+              window.scrollTo(0, 0)
+            }}
+          />
         ) : (
           <div className="flex items-center justify-center h-full text-[#888] font-mono text-sm">
             Select an entity from the queue to begin review
