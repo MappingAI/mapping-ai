@@ -38,6 +38,7 @@ export default defineConfig({
         mappingParty: resolve(__dirname, 'workshop/mapping-party.html'),
         guide: resolve(__dirname, 'guide.html'),
         insights: resolve(__dirname, 'insights.html'),
+        verify: resolve(__dirname, 'verify.html'),
       },
     },
   },
