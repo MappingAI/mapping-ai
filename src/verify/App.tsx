@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { VerifyQueue } from './VerifyQueue'
 import { EntityReview } from './EntityReview'
+import { MethodologyGuide } from './MethodologyGuide'
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: 1, refetchOnWindowFocus: false } },
@@ -65,6 +66,7 @@ function AuthGate({ onAuth }: { onAuth: (key: string) => void }) {
 
 function VerifyDashboard({ verifyKey }: { verifyKey: string }) {
   const [selectedEntityId, setSelectedEntityId] = useState<number | null>(null)
+  const [showGuide, setShowGuide] = useState(false)
 
   const handleSelect = useCallback((id: number) => {
     setSelectedEntityId(id)
@@ -72,7 +74,12 @@ function VerifyDashboard({ verifyKey }: { verifyKey: string }) {
 
   return (
     <div className="flex h-screen">
-      <VerifyQueue verifyKey={verifyKey} selectedId={selectedEntityId} onSelect={handleSelect} />
+      <VerifyQueue
+        verifyKey={verifyKey}
+        selectedId={selectedEntityId}
+        onSelect={handleSelect}
+        onShowGuide={() => setShowGuide(true)}
+      />
       <div className="flex-1 overflow-y-auto bg-white">
         {selectedEntityId ? (
           <EntityReview
@@ -88,6 +95,7 @@ function VerifyDashboard({ verifyKey }: { verifyKey: string }) {
           </div>
         )}
       </div>
+      {showGuide && <MethodologyGuide onClose={() => setShowGuide(false)} />}
     </div>
   )
 }

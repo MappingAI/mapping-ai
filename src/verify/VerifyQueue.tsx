@@ -18,6 +18,7 @@ interface Props {
   verifyKey: string
   selectedId: number | null
   onSelect: (id: number) => void
+  onShowGuide?: () => void
 }
 
 type Tab = 'queue' | 'reviewed'
@@ -27,7 +28,7 @@ const TAB_BASE =
 const TAB_ACTIVE = `${TAB_BASE} text-[#1a1a1a] border-b-2 border-[#1a1a1a]`
 const TAB_INACTIVE = `${TAB_BASE} text-[#999] border-b border-[#e0e0e0] hover:text-[#555]`
 
-export function VerifyQueue({ verifyKey, selectedId, onSelect }: Props) {
+export function VerifyQueue({ verifyKey, selectedId, onSelect, onShowGuide }: Props) {
   const [search, setSearch] = useState('')
   const [tab, setTab] = useState<Tab>('queue')
 
@@ -125,8 +126,18 @@ export function VerifyQueue({ verifyKey, selectedId, onSelect }: Props) {
         )}
       </div>
 
-      <div className="p-3 border-t border-[#e0e0e0] font-mono text-[11px] text-[#666]">
-        {reviewedCount} of {totalCount} reviewed
+      <div className="p-3 border-t border-[#e0e0e0] flex items-center justify-between">
+        <span className="font-mono text-[11px] text-[#666]">
+          {reviewedCount} of {totalCount} reviewed
+        </span>
+        {onShowGuide && (
+          <button
+            onClick={onShowGuide}
+            className="font-mono text-[10px] text-blue-600 hover:text-blue-800 cursor-pointer"
+          >
+            Guide
+          </button>
+        )}
       </div>
     </div>
   )
