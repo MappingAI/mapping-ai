@@ -258,13 +258,24 @@ export function EntityReview({ verifyKey, entityId, onReviewSubmitted }: Props) 
               ) : null}
             </div>
           </div>
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="flex items-center gap-2 shrink-0">
             <Timer running={timerRunning} elapsed={timerElapsed} />
             <button
               onClick={() => setTimerRunning((r) => !r)}
               className="font-mono text-[10px] text-[#888] hover:text-[#333] cursor-pointer"
             >
               {timerRunning ? 'pause' : 'resume'}
+            </button>
+            <button
+              onClick={() => {
+                setTimerElapsed(0)
+                accumulatedRef.current = 0
+                timerStartRef.current = Date.now()
+                setTimerRunning(true)
+              }}
+              className="font-mono text-[10px] text-[#bbb] hover:text-[#666] cursor-pointer"
+            >
+              reset
             </button>
           </div>
         </div>
