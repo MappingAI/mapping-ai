@@ -80,31 +80,41 @@ export const onRequest: PagesFunction<Env> = async (context) => {
           return jsonResponse({ error: 'Missing entity id' }, request, 400, corsOptions)
         }
 
-        const entities = await sql`SELECT * FROM entity WHERE id = ${id}`
+        const [entities, claims, edgeRows, corrections, reviews] = await Promise.all([
+          sql`SELECT * FROM entity WHERE id = ${id}`,
+          sql`
+            SELECT c.*, s.url AS source_url, s.title AS source_title,
+                   s.source_type, s.cached_excerpt
+            FROM claim c
+            LEFT JOIN source s ON s.source_id = c.source_id
+            WHERE c.entity_id = ${id}
+            ORDER BY c.belief_dimension, c.confidence DESC
+          `,
+          sql`
+            SELECT e.*,
+              CASE WHEN e.source_id = ${id} THEN t.name ELSE s.name END AS other_name,
+              CASE WHEN e.source_id = ${id} THEN t.entity_type ELSE s.entity_type END AS other_type,
+              CASE WHEN e.source_id = ${id} THEN t.id ELSE s.id END AS other_id
+            FROM edge e
+            LEFT JOIN entity s ON s.id = e.source_id
+            LEFT JOIN entity t ON t.id = e.target_id
+            WHERE e.source_id = ${id} OR e.target_id = ${id}
+            ORDER BY e.edge_type, e.is_primary DESC
+          `,
+          sql`
+            SELECT * FROM verification_correction
+            WHERE entity_id = ${id} AND reviewer_key_id = ${reviewerKeyId}
+            ORDER BY created_at DESC
+          `,
+          sql`
+            SELECT * FROM verification_review
+            WHERE entity_id = ${id} AND reviewer_key_id = ${reviewerKeyId}
+          `,
+        ])
+
         if (entities.length === 0) {
           return jsonResponse({ error: 'Entity not found' }, request, 404, corsOptions)
         }
-
-        const claims = await sql`
-          SELECT c.*, s.url AS source_url, s.title AS source_title,
-                 s.source_type, s.cached_excerpt
-          FROM claim c
-          LEFT JOIN source s ON s.source_id = c.source_id
-          WHERE c.entity_id = ${id}
-          ORDER BY c.belief_dimension, c.confidence DESC
-        `
-
-        const edgeRows = await sql`
-          SELECT e.*,
-            CASE WHEN e.source_id = ${id} THEN t.name ELSE s.name END AS other_name,
-            CASE WHEN e.source_id = ${id} THEN t.entity_type ELSE s.entity_type END AS other_type,
-            CASE WHEN e.source_id = ${id} THEN t.id ELSE s.id END AS other_id
-          FROM edge e
-          LEFT JOIN entity s ON s.id = e.source_id
-          LEFT JOIN entity t ON t.id = e.target_id
-          WHERE e.source_id = ${id} OR e.target_id = ${id}
-          ORDER BY e.edge_type, e.is_primary DESC
-        `
 
         const edgeIds = edgeRows.map((e: Record<string, unknown>) => e.id as number)
         const edgeEvidenceMap: Record<number, Array<Record<string, unknown>>> = {}
@@ -128,17 +138,6 @@ export const onRequest: PagesFunction<Env> = async (context) => {
           ...e,
           evidence_records: edgeEvidenceMap[e.id as number] || [],
         }))
-
-        const corrections = await sql`
-          SELECT * FROM verification_correction
-          WHERE entity_id = ${id} AND reviewer_key_id = ${reviewerKeyId}
-          ORDER BY created_at DESC
-        `
-
-        const reviews = await sql`
-          SELECT * FROM verification_review
-          WHERE entity_id = ${id} AND reviewer_key_id = ${reviewerKeyId}
-        `
 
         return jsonResponse(
           {

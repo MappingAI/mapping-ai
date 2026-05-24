@@ -140,7 +140,7 @@ export function EdgeCard({ edge, entityId, hasCorrected, onFlag, verifyKey }: Pr
       </div>
 
       {/* Actions */}
-      <div className="flex gap-1">
+      <div className="flex items-center gap-1">
         {hasCorrected ? (
           <span className="font-mono text-[10px] text-amber-600 uppercase">Correction submitted</span>
         ) : (
@@ -157,6 +157,25 @@ export function EdgeCard({ edge, entityId, hasCorrected, onFlag, verifyKey }: Pr
               className={`${BTN} text-[10px] bg-white text-[#555] border-[#ccc] hover:border-red-400 hover:text-red-600`}
             >
               Needs Correction
+            </button>
+            <button
+              onClick={() => {
+                verifyFetch('/verify', verifyKey, {
+                  method: 'POST',
+                  body: JSON.stringify({
+                    action: 'correction',
+                    entityId,
+                    edgeId: edge.id,
+                    errorType: 'CANT_VERIFY',
+                    originalValue: `${edge.edge_type} → ${otherName}`,
+                    correctionNote: 'Unable to verify this edge',
+                  }),
+                }).then(() => queryClient.invalidateQueries({ queryKey: ['verify-entity', entityId] }))
+              }}
+              className="font-mono text-[10px] text-[#aaa] hover:text-[#666] cursor-pointer ml-1"
+              title="Can't verify (no evidence, etc.)"
+            >
+              Can't verify
             </button>
           </>
         )}

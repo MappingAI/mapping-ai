@@ -239,6 +239,199 @@ export function MethodologyGuide({ onClose }: { onClose: () => void }) {
 
         <section className={SECTION}>
           <h2 className={H2} style={{ fontFamily: "'EB Garamond', Georgia, serif" }}>
+            Reference: categories and field values
+          </h2>
+          <p className={P}>Click any section below to expand definitions.</p>
+
+          <details className="mb-3 border border-[#e0e0e0] rounded">
+            <summary className="px-3 py-2 font-mono text-[12px] font-medium cursor-pointer hover:bg-[#f5f5f5]">
+              Person categories
+            </summary>
+            <div className="px-3 pb-3 text-[13px] text-[#444] space-y-1">
+              <p>
+                <strong>Executive:</strong> CEO, CTO, VP, or equivalent leadership at an AI-relevant organization.
+              </p>
+              <p>
+                <strong>Researcher:</strong> Publishes technical AI research, whether in industry or academia.
+              </p>
+              <p>
+                <strong>Policymaker:</strong> Elected official, regulator, or government appointee working on AI policy.
+              </p>
+              <p>
+                <strong>Investor:</strong> VC partner, angel, or fund manager investing in AI companies.
+              </p>
+              <p>
+                <strong>Organizer:</strong> Runs advocacy groups, coalitions, or grassroots efforts around AI.
+              </p>
+              <p>
+                <strong>Journalist:</strong> Covers AI for a publication or media outlet.
+              </p>
+              <p>
+                <strong>Academic:</strong> Professor or institutional researcher studying AI impacts, ethics, or
+                governance.
+              </p>
+              <p>
+                <strong>Cultural figure:</strong> Public intellectual, author, or artist shaping public discourse on AI.
+              </p>
+            </div>
+          </details>
+
+          <details className="mb-3 border border-[#e0e0e0] rounded">
+            <summary className="px-3 py-2 font-mono text-[12px] font-medium cursor-pointer hover:bg-[#f5f5f5]">
+              Organization categories
+            </summary>
+            <div className="px-3 pb-3 text-[13px] text-[#444] space-y-1">
+              <p>
+                <strong>Frontier Lab:</strong> Builds large-scale AI models (OpenAI, Anthropic, Google DeepMind, etc.).
+              </p>
+              <p>
+                <strong>AI Safety/Alignment:</strong> Research orgs focused on making AI systems safe and aligned with
+                human values.
+              </p>
+              <p>
+                <strong>Think Tank/Policy Org:</strong> Produces policy research, white papers, and recommendations on
+                AI governance.
+              </p>
+              <p>
+                <strong>Government/Agency:</strong> Federal, state, or international government body with AI
+                jurisdiction.
+              </p>
+              <p>
+                <strong>Academic:</strong> University, research institute, or academic department.
+              </p>
+              <p>
+                <strong>VC/Capital/Philanthropy:</strong> Funds AI companies or AI-related research through investment
+                or grants.
+              </p>
+              <p>
+                <strong>Labor/Civil Society:</strong> Unions, worker advocacy groups, or civil society organizations
+                engaged with AI.
+              </p>
+              <p>
+                <strong>Ethics/Bias/Rights:</strong> Focuses on algorithmic fairness, bias, civil rights, or ethical AI
+                use.
+              </p>
+              <p>
+                <strong>Media/Journalism:</strong> News outlet or publication covering AI.
+              </p>
+              <p>
+                <strong>Political Campaign/PAC:</strong> Political campaign or committee taking positions on AI.
+              </p>
+              <p>
+                <strong>Infrastructure & Compute:</strong> Provides chips, cloud compute, or infrastructure for AI
+                development.
+              </p>
+              <p>
+                <strong>Deployers & Platforms:</strong> Companies deploying AI in products or services at scale.
+              </p>
+            </div>
+          </details>
+
+          <details className="mb-3 border border-[#e0e0e0] rounded">
+            <summary className="px-3 py-2 font-mono text-[12px] font-medium cursor-pointer hover:bg-[#f5f5f5]">
+              Regulatory stance values
+            </summary>
+            <div className="px-3 pb-3 text-[13px] text-[#444] space-y-1">
+              <p>
+                <strong>Accelerate:</strong> Actively opposes regulation. Views restrictions as harmful to innovation.
+              </p>
+              <p>
+                <strong>Light-touch:</strong> Prefers voluntary commitments and industry self-governance over binding
+                rules.
+              </p>
+              <p>
+                <strong>Moderate:</strong> Supports targeted regulation on specific risks while preserving room for
+                development.
+              </p>
+              <p>
+                <strong>Cautious:</strong> Favors comprehensive regulatory frameworks. Prioritizes safety over speed.
+              </p>
+              <p>
+                <strong>Mixed/unclear:</strong> Positions are contradictory, context-dependent, or insufficiently
+                documented.
+              </p>
+            </div>
+          </details>
+
+          <details className="mb-3 border border-[#e0e0e0] rounded">
+            <summary className="px-3 py-2 font-mono text-[12px] font-medium cursor-pointer hover:bg-[#f5f5f5]">
+              Edge (relationship) types
+            </summary>
+            <div className="px-3 pb-3 text-[13px] text-[#444] space-y-1">
+              <p>
+                <strong>employed_by:</strong> Works at the organization (current).
+              </p>
+              <p>
+                <strong>founded:</strong> Founded or co-founded the organization.
+              </p>
+              <p>
+                <strong>advises:</strong> Serves as an advisor.
+              </p>
+              <p>
+                <strong>board_member:</strong> Sits on the board of directors.
+              </p>
+              <p>
+                <strong>invested_in:</strong> Made a financial investment.
+              </p>
+              <p>
+                <strong>funded_by:</strong> Receives funding from.
+              </p>
+              <p>
+                <strong>subsidiary_of:</strong> Is a subsidiary or division of.
+              </p>
+              <p>
+                <strong>partner_of:</strong> Formal partnership or collaboration.
+              </p>
+              <p>
+                <strong>collaborator:</strong> Works together on specific projects.
+              </p>
+              <p>
+                <strong>critic_of:</strong> Publicly critical of.
+              </p>
+              <p>
+                <strong>supporter_of:</strong> Publicly supportive of.
+              </p>
+              <p>
+                <strong>spun_out_from:</strong> Was created as a spinoff from.
+              </p>
+              <p>
+                <strong>affiliated:</strong> General affiliation that doesn't fit other types.
+              </p>
+            </div>
+          </details>
+
+          <details className="mb-3 border border-[#e0e0e0] rounded">
+            <summary className="px-3 py-2 font-mono text-[12px] font-medium cursor-pointer hover:bg-[#f5f5f5]">
+              Funding model values
+            </summary>
+            <div className="px-3 pb-3 text-[13px] text-[#444] space-y-1">
+              <p>
+                <strong>Grants:</strong> Funded by philanthropic or government grants.
+              </p>
+              <p>
+                <strong>Contracts:</strong> Funded by government or corporate contracts for specific work.
+              </p>
+              <p>
+                <strong>VC:</strong> Venture capital funded.
+              </p>
+              <p>
+                <strong>Donations:</strong> Funded by individual or organizational donations.
+              </p>
+              <p>
+                <strong>Government:</strong> Government funded (appropriations, not grants).
+              </p>
+              <p>
+                <strong>Revenue:</strong> Self-sustaining through product or service revenue.
+              </p>
+              <p>
+                <strong>Endowment:</strong> Funded by an endowment.
+              </p>
+            </div>
+          </details>
+        </section>
+
+        <section className={SECTION}>
+          <h2 className={H2} style={{ fontFamily: "'EB Garamond', Georgia, serif" }}>
             Practical notes
           </h2>
           <ul className="list-disc pl-6 mb-3">

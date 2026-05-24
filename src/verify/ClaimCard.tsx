@@ -164,7 +164,7 @@ export function ClaimCard({ claim, hasCorrected, onFlag, verifyKey, entityId }: 
       </div>
 
       {/* Actions */}
-      <div className="flex gap-1">
+      <div className="flex items-center gap-1">
         {hasCorrected ? (
           <span className="font-mono text-[10px] text-amber-600 uppercase">Correction submitted</span>
         ) : (
@@ -181,6 +181,25 @@ export function ClaimCard({ claim, hasCorrected, onFlag, verifyKey, entityId }: 
               className={`${BTN} text-[10px] bg-white text-[#555] border-[#ccc] hover:border-red-400 hover:text-red-600`}
             >
               Needs Correction
+            </button>
+            <button
+              onClick={() => {
+                verifyFetch('/verify', verifyKey, {
+                  method: 'POST',
+                  body: JSON.stringify({
+                    action: 'correction',
+                    entityId,
+                    claimId: claim.claim_id,
+                    errorType: 'CANT_VERIFY',
+                    originalValue: `${dimension}: ${claim.stance_label || claim.stance}`,
+                    correctionNote: 'Unable to verify this claim',
+                  }),
+                }).then(() => queryClient.invalidateQueries({ queryKey: ['verify-entity', entityId] }))
+              }}
+              className="font-mono text-[10px] text-[#aaa] hover:text-[#666] cursor-pointer ml-1"
+              title="Can't verify (source paywalled, dead link, etc.)"
+            >
+              Can't verify
             </button>
           </>
         )}

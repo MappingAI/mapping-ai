@@ -53,6 +53,10 @@ async function migrate() {
     await client.query(`CREATE INDEX IF NOT EXISTS idx_vc_entity ON verification_correction(entity_id)`)
     await client.query(`CREATE INDEX IF NOT EXISTS idx_vc_reviewer ON verification_correction(reviewer_key_id)`)
     await client.query(`CREATE INDEX IF NOT EXISTS idx_vr_entity ON verification_review(entity_id)`)
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_claim_entity ON claim(entity_id)`)
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_edge_source ON edge(source_id)`)
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_edge_target ON edge(target_id)`)
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_edge_evidence_edge ON edge_evidence(edge_id)`)
     console.log('  ✓ indexes')
 
     console.log('\nVerification tables created successfully.')

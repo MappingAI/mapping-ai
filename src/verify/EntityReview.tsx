@@ -329,18 +329,36 @@ export function EntityReview({ verifyKey, entityId, onReviewSubmitted }: Props) 
                       Edit correction
                     </button>
                   ) : (
-                    <button
-                      onClick={() =>
-                        setActiveCorrection({
-                          type: 'field',
-                          fieldName: key,
-                          originalValue: value || '(empty)',
-                        })
-                      }
-                      className={`${BTN} text-[10px] bg-white ${value ? 'text-[#555] border-[#ccc] hover:border-red-400 hover:text-red-600' : 'text-blue-600 border-blue-300 hover:border-blue-500'}`}
-                    >
-                      {value ? 'Flag' : 'Set'}
-                    </button>
+                    <>
+                      <button
+                        onClick={() =>
+                          setActiveCorrection({
+                            type: 'field',
+                            fieldName: key,
+                            originalValue: value || '(empty)',
+                          })
+                        }
+                        className={`${BTN} text-[10px] bg-white ${value ? 'text-[#555] border-[#ccc] hover:border-red-400 hover:text-red-600' : 'text-blue-600 border-blue-300 hover:border-blue-500'}`}
+                      >
+                        {value ? 'Flag' : 'Set'}
+                      </button>
+                      {value ? (
+                        <button
+                          onClick={() =>
+                            submitCorrection.mutate({
+                              fieldName: key,
+                              errorType: 'CANT_VERIFY',
+                              originalValue: value,
+                              correctionNote: 'Unable to verify this field',
+                            })
+                          }
+                          className="font-mono text-[10px] text-[#aaa] hover:text-[#666] cursor-pointer"
+                          title="Can't verify this field (paywalled, no evidence, etc.)"
+                        >
+                          ?
+                        </button>
+                      ) : null}
+                    </>
                   )}
                 </div>
               </div>
