@@ -355,6 +355,100 @@ export function MethodologyGuide({ onClose }: { onClose: () => void }) {
 
           <details className="mb-3 border border-[#e0e0e0] rounded">
             <summary className="px-3 py-2 font-mono text-[12px] font-medium cursor-pointer hover:bg-[#f5f5f5]">
+              AGI timeline values
+            </summary>
+            <div className="px-3 pb-3 text-[13px] text-[#444] space-y-1">
+              <p className="mb-2 text-[#666]">
+                When the entity expects artificial general intelligence to be achieved:
+              </p>
+              <p>
+                <strong>&lt;2 years:</strong> AGI is imminent or already here.
+              </p>
+              <p>
+                <strong>2-5 years:</strong> AGI within the near term.
+              </p>
+              <p>
+                <strong>5-10 years:</strong> AGI within a decade.
+              </p>
+              <p>
+                <strong>10-20 years:</strong> AGI is further out but still expected.
+              </p>
+              <p>
+                <strong>20+ years:</strong> AGI is far off or very uncertain.
+              </p>
+              <p>
+                <strong>Never:</strong> AGI as commonly defined will not happen.
+              </p>
+              <p>
+                <strong>Mixed/unclear:</strong> No clear position or conflicting statements.
+              </p>
+            </div>
+          </details>
+
+          <details className="mb-3 border border-[#e0e0e0] rounded">
+            <summary className="px-3 py-2 font-mono text-[12px] font-medium cursor-pointer hover:bg-[#f5f5f5]">
+              AI risk level values
+            </summary>
+            <div className="px-3 pb-3 text-[13px] text-[#444] space-y-1">
+              <p className="mb-2 text-[#666]">How severe the entity considers the risks from advanced AI:</p>
+              <p>
+                <strong>Existential:</strong> AI poses a risk to human civilization or survival.
+              </p>
+              <p>
+                <strong>High:</strong> AI risks are severe and require urgent action.
+              </p>
+              <p>
+                <strong>Moderate:</strong> AI risks are real but manageable with proper governance.
+              </p>
+              <p>
+                <strong>Low:</strong> AI risks are overstated relative to the benefits.
+              </p>
+              <p>
+                <strong>Minimal:</strong> AI risks are negligible. Focus should be on deployment.
+              </p>
+              <p>
+                <strong>Mixed/unclear:</strong> No clear position or conflicting statements.
+              </p>
+            </div>
+          </details>
+
+          <details className="mb-3 border border-[#e0e0e0] rounded">
+            <summary className="px-3 py-2 font-mono text-[12px] font-medium cursor-pointer hover:bg-[#f5f5f5]">
+              Threat models
+            </summary>
+            <div className="px-3 pb-3 text-[13px] text-[#444] space-y-1">
+              <p className="mb-2 text-[#666]">Specific risks the entity is most concerned about (up to 3):</p>
+              <p>
+                <strong>Power concentration:</strong> AI concentrating power in too few hands (companies, governments).
+              </p>
+              <p>
+                <strong>Misuse:</strong> Deliberate misuse of AI for harm (weapons, surveillance, manipulation).
+              </p>
+              <p>
+                <strong>Accidents/misalignment:</strong> AI systems behaving in unintended ways or pursuing wrong
+                objectives.
+              </p>
+              <p>
+                <strong>Erosion of epistemics:</strong> AI degrading shared understanding of truth (deepfakes, disinfo).
+              </p>
+              <p>
+                <strong>Labor/economic:</strong> AI displacing workers or increasing inequality.
+              </p>
+              <p>
+                <strong>Surveillance/privacy:</strong> AI enabling mass surveillance or eroding privacy.
+              </p>
+              <p>
+                <strong>Bias/discrimination:</strong> AI perpetuating or amplifying societal biases.
+              </p>
+              <p>
+                <strong>Copyright/IP:</strong> AI training on or generating content that infringes intellectual
+                property.
+              </p>
+            </div>
+          </details>
+
+          <details className="mb-3 border border-[#e0e0e0] rounded">
+            <summary className="px-3 py-2 font-mono text-[12px] font-medium cursor-pointer hover:bg-[#f5f5f5]">
               Edge (relationship) types
             </summary>
             <div className="px-3 pb-3 text-[13px] text-[#444] space-y-1">
