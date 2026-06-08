@@ -219,8 +219,12 @@ export function App() {
           .
         </p>
         <p {...fadeProps(fi++, 'mb-4 text-[16.5px]')}>
-          This tool is only as strong as its data. We respect organizational corrections and update promptly when groups
-          reach out. Our full codebase is{' '}
+          For a detailed look at the data pipeline, scoring system, and visualization design, see our{' '}
+          <a href="/methodology" className="text-[#2563eb] no-underline hover:underline">
+            methodology page
+          </a>
+          . This tool is only as strong as its data. We respect organizational corrections and update promptly when
+          groups reach out. Our full codebase is{' '}
           <a
             href="https://github.com/MappingAI/mapping-ai"
             target="_blank"

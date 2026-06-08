@@ -36,6 +36,7 @@ export default defineConfig({
         workshop: resolve(__dirname, 'workshop/index.html'),
         workshopSlides: resolve(__dirname, 'workshop/slides.html'),
         insights: resolve(__dirname, 'insights.html'),
+        methodology: resolve(__dirname, 'methodology.html'),
       },
     },
   },
