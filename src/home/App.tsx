@@ -231,7 +231,11 @@ export function App() {
           <span className="font-medium">
             who is working on what, where the gaps are, and which partnerships might form
           </span>{' '}
-          across ideological and organizational lines.
+          across ideological and organizational lines. See the{' '}
+          <a href="/methodology" className="text-[#2563eb] no-underline hover:underline">
+            methodology page
+          </a>{' '}
+          for how we collect, verify, and score data.
         </p>
 
         {/* Why Now */}
