@@ -724,12 +724,12 @@ Claims-pilot branch (separate):
 
         <FadeIn>
           <p className="mb-[1.1rem] text-[16.5px]">
-            The AGI Definitions view maps how different stakeholders define &ldquo;artificial general
-            intelligence.&rdquo; For each entity where a definition could be sourced from public statements, the
-            pipeline extracts verbatim definition text with a citation, then embeds it using the Voyage AI voyage-3
-            model. These high-dimensional embeddings are projected to two dimensions using UMAP, which preserves local
-            neighborhood structure well enough that definitions with similar semantic content end up near each other in
-            the final layout.
+            The Beliefs view on the map page includes an AGI definitions visualization that maps how different
+            stakeholders define &ldquo;artificial general intelligence.&rdquo; For each entity where a definition could
+            be sourced from public statements, the pipeline extracts verbatim definition text with a citation, then
+            embeds it using the Voyage AI voyage-3 model. These high-dimensional embeddings are projected to two
+            dimensions using UMAP, which preserves local neighborhood structure well enough that definitions with
+            similar semantic content end up near each other in the final layout.
           </p>
         </FadeIn>
         <FadeIn>
@@ -746,12 +746,8 @@ Claims-pilot branch (separate):
           <p className="mb-[1.1rem] text-[16.5px]">
             The current dataset covers roughly 370 entities with sourced AGI definitions. Where an entity has multiple
             claims about their AGI definition (from different sources or time periods), the highest-confidence claim is
-            selected, with ties broken by recency. The resulting visualization is on the{' '}
-            <a href="/map" className="text-accent no-underline hover:underline">
-              map page
-            </a>{' '}
-            under the Definitions tab, and related analyses (crosspartisan convergence, outlier stance detection) are on
-            the{' '}
+            selected, with ties broken by recency. Related analyses (crosspartisan convergence, outlier stance
+            detection) are on the{' '}
             <a href="/insights" className="text-accent no-underline hover:underline">
               insights page
             </a>
