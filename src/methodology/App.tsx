@@ -99,7 +99,7 @@ function SectionHeading({ id, children }: { id: string; children: React.ReactNod
 const BELIEF_SCALES = [
   {
     label: 'Regulatory stance',
-    gradient: 'from-[#f0c050] to-[#403010]',
+
     items: [
       { score: 1, name: 'Accelerate', tip: 'Remove barriers to AI development' },
       { score: 2, name: 'Light-touch', tip: 'Minimal, voluntary guidelines' },
@@ -112,7 +112,7 @@ const BELIEF_SCALES = [
   },
   {
     label: 'AGI timeline',
-    gradient: 'from-[#c6dbef] to-[#08519c]',
+
     items: [
       { score: 1, name: 'Already here', tip: 'AGI capabilities exist today' },
       { score: 2, name: '2–3 years', tip: 'By ~2028' },
@@ -123,7 +123,7 @@ const BELIEF_SCALES = [
   },
   {
     label: 'AI risk level',
-    gradient: 'from-[#fee0d2] to-[#99000d]',
+
     items: [
       { score: 1, name: 'Overstated', tip: 'Risks are exaggerated relative to benefits' },
       { score: 2, name: 'Manageable', tip: 'Real but addressable with existing tools' },
@@ -160,9 +160,7 @@ function BeliefScales() {
                       isHovered ? 'ring-1 ring-text-primary z-10 scale-[1.04]' : ''
                     }`}
                     style={{
-                      backgroundColor: `color-mix(in srgb, var(--scale-start-${si}) ${Math.round((1 - frac) * 100)}%, var(--scale-end-${si}))`,
                       opacity: isHovered ? 1 : 0.8,
-                      // fallback inline colors since CSS custom properties need runtime setup
                       background:
                         si === 0
                           ? `rgb(${Math.round(240 - frac * 176)}, ${Math.round(192 - frac * 144)}, ${Math.round(80 - frac * 64)})`
@@ -484,11 +482,10 @@ export function App() {
         <FadeIn>
           <p className="mb-[1.1rem] text-[16.5px]">
             A submission table stores every contribution in its raw form, including the submitter relationship type
-            (self-report, connector, or external observer), ordinal belief scores, and an automated quality review from
-            Claude Haiku. Submissions start as &ldquo;pending&rdquo; and sit in a review queue until an admin approves,
-            rejects, or merges them. An edge table captures typed relationships between entities (affiliated, funder,
-            critic, collaborator, authored_by), with a uniqueness constraint on source, target, and type to prevent
-            duplicates.
+            (self-report, connector, or external observer) and ordinal belief scores. Submissions start as
+            &ldquo;pending&rdquo; and sit in a review queue until an admin approves, rejects, or merges them. An edge
+            table captures typed relationships between entities (affiliated, funder, critic, collaborator, authored_by),
+            with a uniqueness constraint on source, target, and type to prevent duplicates.
           </p>
         </FadeIn>
         <FadeIn>
@@ -518,17 +515,18 @@ export function App() {
 │  search_vector (tsvector)│
 └──────────┬───────────────┘     ┌──────────────────────────┐
            │                     │  field_feedback          │
+           │                     │  field_feedback          │
            │  ┌──────────────┐   │──────────────────────────│
            ├──│  edge        │   │  entity_id (FK)          │
            │  │──────────────│   │  field_name, vote (+1/-1)│
-           │  │  source_id   │──▶│  voter_id (hashed)       │
+           │  │  source_id   │   │  voter_id (hashed)       │
            │  │  target_id   │   └──────────────────────────┘
            │  │  edge_type   │
            │  │  role        │   ┌──────────────────────────┐
-           │  │  is_primary  │   │  field_notes             │
-           │  └──────────────┘   │──────────────────────────│
-           │                     │  entity_id (FK)          │
-           └─────────────────────│  field_name, note (rich) │
+           │  └──────────────┘   │  field_notes             │
+           │                     │──────────────────────────│
+           └─────────────────────│  entity_id (FK)          │
+                                 │  field_name, note (rich) │
                                  └──────────────────────────┘
 
 Claims-pilot branch (separate):
