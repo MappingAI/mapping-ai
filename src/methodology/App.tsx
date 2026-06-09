@@ -339,7 +339,16 @@ export function App() {
             <a href="/contribute" className="text-accent no-underline hover:underline">
               submissions
             </a>
-            , and structured research with automated verification.
+            , and structured research with automated verification. The entire project is{' '}
+            <a
+              href="https://github.com/MappingAI/mapping-ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-accent no-underline hover:underline"
+            >
+              open source
+            </a>
+            .
           </p>
         </FadeIn>
 
@@ -374,18 +383,53 @@ export function App() {
             policymakers, executives, researchers, investors, journalists, organizers. Each entity was populated with
             publicly available information including name, title, organizational affiliation, location, category, and
             where available, belief positions on regulatory stance, AGI timeline, and AI risk level. Additional seeds
-            drew from the AI Safety Map dataset (for coverage of the safety and alignment community) and the TIME 100 AI
-            2025 list.
+            drew from the{' '}
+            <a
+              href="https://www.aisafety.com/map"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-accent no-underline hover:underline"
+            >
+              AI Safety Map
+            </a>{' '}
+            dataset (for coverage of the safety and alignment community) and the{' '}
+            <a
+              href="https://time.com/collection/time100-ai-2025/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-accent no-underline hover:underline"
+            >
+              TIME 100 AI 2025
+            </a>{' '}
+            list. The seeding and enrichment scripts are in the{' '}
+            <a
+              href="https://github.com/MappingAI/mapping-ai/tree/main/scripts"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-accent no-underline hover:underline"
+            >
+              scripts/
+            </a>{' '}
+            directory of the repository.
           </p>
         </FadeIn>
         <FadeIn>
           <p className="mb-[1.1rem] text-[16.5px]">
-            Enrichment scripts use the Exa web search API to fill in sparse fields and discover relationships between
-            entities. For each entity, the pipeline queries for recent coverage, extracts structured fields from the
-            results, and writes them with confidence scores and source citations. The enrichment process evolved over
-            several iterations, with each round tightening the requirements: later versions require mandatory source
-            grounding, verbatim citations, and per-claim confidence scoring. Entity fields written by enrichment are
-            flagged for human review before they appear on the live map.
+            Enrichment scripts use the{' '}
+            <a
+              href="https://exa.ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-accent no-underline hover:underline"
+            >
+              Exa
+            </a>{' '}
+            web search API to fill in sparse fields and discover relationships between entities. For each entity, the
+            pipeline queries for recent coverage, extracts structured fields from the results, and writes them with
+            confidence scores and source citations. The enrichment process evolved over several iterations, with each
+            round tightening the requirements: later versions require mandatory source grounding, verbatim citations,
+            and per-claim confidence scoring. Entity fields written by enrichment are flagged for human review before
+            they appear on the live map.
           </p>
         </FadeIn>
         <FadeIn>
@@ -401,8 +445,8 @@ export function App() {
           <p className="mb-[1.1rem] text-[16.5px]">
             Edge enrichment (the relationships between entities) works similarly. Discovery scripts search for funding,
             employment, advisory, and founding connections, then stage candidates in a review queue with source
-            evidence. An admin reviews these, promotes the good ones to the production database, and rejects the rest.
-            Post-processing catches duplicates, filters out generic placeholder entities (names like
+            evidence. An admin reviews these, promotes the approved ones to the production database, and rejects the
+            rest. Post-processing catches duplicates, filters out generic placeholder entities (names like
             &ldquo;Investors&rdquo; or &ldquo;Tech Companies&rdquo;), and expands abbreviations.
           </p>
         </FadeIn>
@@ -421,11 +465,20 @@ export function App() {
 
         <FadeIn>
           <p className="mb-[1.1rem] text-[16.5px]">
-            The production database is Neon Postgres 17 with a unified entity table that holds people, organizations,
-            and resources in one schema. Each entity record carries its category, belief fields, organizational
-            affiliations, location, social handles, rich text notes, and a thumbnail URL. Database triggers maintain
-            weighted-average aggregate columns for each belief dimension, so scores stay in sync with the underlying
-            submission data without requiring any batch recomputation step.
+            The production database is{' '}
+            <a
+              href="https://neon.tech"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-accent no-underline hover:underline"
+            >
+              Neon
+            </a>{' '}
+            Postgres 17 with a unified entity table that holds people, organizations, and resources in one schema. Each
+            entity record carries its category, belief fields, organizational affiliations, location, social handles,
+            rich text notes, and a thumbnail URL. Database triggers maintain weighted-average aggregate columns for each
+            belief dimension, so scores stay in sync with the underlying submission data without requiring any batch
+            recomputation step.
           </p>
         </FadeIn>
         <FadeIn>
@@ -696,10 +749,15 @@ Claims-pilot branch (separate):
             The current dataset covers roughly 370 entities with sourced AGI definitions. Where an entity has multiple
             claims about their AGI definition (from different sources or time periods), the highest-confidence claim is
             selected, with ties broken by recency. The resulting visualization is on the{' '}
+            <a href="/map" className="text-accent no-underline hover:underline">
+              map page
+            </a>{' '}
+            under the Definitions tab, and related analyses (crosspartisan convergence, outlier stance detection) are on
+            the{' '}
             <a href="/insights" className="text-accent no-underline hover:underline">
               insights page
             </a>
-            , alongside related analyses of crosspartisan convergence and outlier stance detection.
+            .
           </p>
         </FadeIn>
 
@@ -844,8 +902,9 @@ Claims-pilot branch (separate):
               Moving the map rendering from its current inline architecture to a React component, eliminating the legacy
               TipTap esbuild bundle.
             </RoadmapItem>
-            <RoadmapItem status="future" label="Open API">
-              Programmatic access to the dataset for researchers and other tools.
+            <RoadmapItem status="future" label="Open API / MCP">
+              Programmatic access to the dataset for researchers, other tools, and AI agents via a public API and MCP
+              server.
             </RoadmapItem>
           </div>
         </FadeIn>
