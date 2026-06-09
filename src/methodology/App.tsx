@@ -303,6 +303,19 @@ export function App() {
     return () => window.removeEventListener('scroll', updateToc)
   }, [])
 
+  useEffect(() => {
+    const hash = window.location.hash.slice(1)
+    if (!hash) return
+    const frame = requestAnimationFrame(() => {
+      const el = document.getElementById(hash)
+      if (el) {
+        const y = el.getBoundingClientRect().top + window.scrollY - 64
+        window.scrollTo({ top: y, behavior: 'smooth' })
+      }
+    })
+    return () => cancelAnimationFrame(frame)
+  }, [])
+
   return (
     <>
       <WelcomeOverlay />
