@@ -140,7 +140,7 @@ function BeliefScales() {
   return (
     <div className="space-y-5 my-6">
       {BELIEF_SCALES.map((scale, si) => (
-        <div key={scale.label}>
+        <div key={scale.label} className="pb-10">
           <div className="font-mono text-[10px] uppercase tracking-[0.1em] text-text-tertiary mb-2">{scale.label}</div>
           <div className="flex gap-0">
             {scale.items.map((item, ii) => {
@@ -204,7 +204,7 @@ const CROSS_ITEMS = [
 function CrosspartisanScale() {
   const [hovered, setHovered] = useState<number | null>(null)
   return (
-    <div className="my-5">
+    <div className="my-5 pb-10">
       <div className="font-mono text-[10px] uppercase tracking-[0.1em] text-text-tertiary mb-2">
         Policy mechanism stance (crosspartisan claims)
       </div>
