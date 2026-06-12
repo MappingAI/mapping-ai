@@ -167,14 +167,15 @@ async function migrate() {
     await client.query('CREATE INDEX IF NOT EXISTS idx_sub_type      ON submission(entity_type)')
     await client.query('CREATE INDEX IF NOT EXISTS idx_edge_source   ON edge(source_id)')
     await client.query('CREATE INDEX IF NOT EXISTS idx_edge_target   ON edge(target_id)')
-    await client.query('CREATE INDEX IF NOT EXISTS idx_entity_topic_tags  ON entity USING GIN(topic_tags)')
-    await client.query('CREATE INDEX IF NOT EXISTS idx_entity_format_tags ON entity USING GIN(format_tags)')
     console.log('  ✓ indexes')
 
     // ── 4b. Schema migrations (safe ADD COLUMN for existing tables) ──────────
     await client.query(`ALTER TABLE submission ADD COLUMN IF NOT EXISTS parent_org_id INTEGER`)
     await client.query(`ALTER TABLE entity ADD COLUMN IF NOT EXISTS topic_tags TEXT[]`)
     await client.query(`ALTER TABLE entity ADD COLUMN IF NOT EXISTS format_tags TEXT[]`)
+    // GIN indexes must come after the columns are guaranteed to exist
+    await client.query('CREATE INDEX IF NOT EXISTS idx_entity_topic_tags  ON entity USING GIN(topic_tags)')
+    await client.query('CREATE INDEX IF NOT EXISTS idx_entity_format_tags ON entity USING GIN(format_tags)')
     await client.query(`ALTER TABLE entity ADD COLUMN IF NOT EXISTS advocated_stance TEXT`)
     await client.query(`ALTER TABLE entity ADD COLUMN IF NOT EXISTS advocated_timeline TEXT`)
     await client.query(`ALTER TABLE entity ADD COLUMN IF NOT EXISTS advocated_risk TEXT`)
@@ -257,6 +258,53 @@ async function migrate() {
     await client.query('ALTER TABLE field_notes ADD COLUMN IF NOT EXISTS note_html TEXT')
     await client.query('ALTER TABLE field_notes ADD COLUMN IF NOT EXISTS note_mentions JSONB')
     console.log('  ✓ field_notes')
+
+    // ── 4f. verification_review table ────────────────────────────────────────
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS verification_review (
+        id          SERIAL PRIMARY KEY,
+        entity_id   INTEGER NOT NULL REFERENCES entity(id) ON DELETE CASCADE,
+        voter_id    VARCHAR(64),
+        reviewed_at TIMESTAMPTZ DEFAULT NOW(),
+        UNIQUE(entity_id, voter_id)
+      )
+    `)
+    await client.query('CREATE INDEX IF NOT EXISTS idx_vr_entity ON verification_review(entity_id)')
+    await client.query(`ALTER TABLE verification_review ADD COLUMN IF NOT EXISTS verdict VARCHAR(20)`)
+    await client.query(`ALTER TABLE verification_review ADD COLUMN IF NOT EXISTS notes TEXT`)
+    await client.query(`ALTER TABLE verification_review ADD COLUMN IF NOT EXISTS duration_ms INTEGER`)
+    await client.query(`ALTER TABLE verification_review ADD COLUMN IF NOT EXISTS revisions INTEGER DEFAULT 1`)
+    // voter_id column + unique constraint (tables pre-existing from manual-verification branch used reviewer_key_id)
+    await client.query(`ALTER TABLE verification_review ADD COLUMN IF NOT EXISTS voter_id VARCHAR(64)`)
+    await client.query(
+      `CREATE UNIQUE INDEX IF NOT EXISTS idx_vr_entity_voter ON verification_review(entity_id, voter_id)`,
+    )
+    // reviewer_key_id was NOT NULL in old schema — drop that constraint so new inserts (using voter_id) don't fail
+    await client.query(`ALTER TABLE verification_review ALTER COLUMN reviewer_key_id DROP NOT NULL`)
+    console.log('  ✓ verification_review')
+
+    // ── 4g. verification_correction table ────────────────────────────────────
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS verification_correction (
+        id                   SERIAL PRIMARY KEY,
+        entity_id            INTEGER NOT NULL REFERENCES entity(id) ON DELETE CASCADE,
+        voter_id             VARCHAR(64),
+        field_name           VARCHAR(100),
+        error_type           TEXT,
+        original_value       TEXT,
+        corrected_value      TEXT,
+        correction_note      TEXT,
+        correction_note_html TEXT,
+        created_at           TIMESTAMPTZ DEFAULT NOW()
+      )
+    `)
+    // voter_id column for pre-existing tables from manual-verification branch
+    await client.query(`ALTER TABLE verification_correction ADD COLUMN IF NOT EXISTS voter_id VARCHAR(64)`)
+    // reviewer_key_id was NOT NULL in old schema — drop that constraint so new inserts (using voter_id) don't fail
+    await client.query(`ALTER TABLE verification_correction ALTER COLUMN reviewer_key_id DROP NOT NULL`)
+    await client.query('CREATE INDEX IF NOT EXISTS idx_vc_entity ON verification_correction(entity_id)')
+    await client.query('CREATE INDEX IF NOT EXISTS idx_vc_voter ON verification_correction(voter_id)')
+    console.log('  ✓ verification_correction')
 
     // ── 5. Score recalculation function ──────────────────────────────────────
     // Weights: self=10, connector=2, external=1

@@ -5096,9 +5096,9 @@ ${dots}
     }
 
     if (d.entityType === 'person') {
-      addField('Title', d.title)
+      addField('Title', d.title, { verifyKey: 'title' })
       addField('Primary Organization', d.primary_org, { verifyKey: 'primary_org' })
-      addField('Other Organizations', d.other_orgs)
+      addField('Other Organizations', d.other_orgs, { verifyKey: 'other_orgs' })
       const stColor = getStanceColor(d.regulatory_stance)
       const stSparkline = renderSparkline(d.id, 'regulatory_stance')
       addField(
@@ -5106,6 +5106,7 @@ ${dots}
         d.regulatory_stance
           ? `<span style="display:inline-flex;align-items:center;gap:5px;">${stColor ? `<span style="width:8px;height:8px;border-radius:50%;background:${stColor};display:inline-block;"></span>` : ''}${d.regulatory_stance}</span>${stSparkline}`
           : null,
+        { verifyKey: 'regulatory_stance' },
       )
       if (d.regulatory_stance_detail)
         addField('Stance Detail', d.regulatory_stance_detail, { verifyKey: 'regulatory_stance_detail' })
@@ -5228,6 +5229,10 @@ ${dots}
           : null,
       )
       addField('Notes', d.notes)
+    }
+
+    if (d.entityType !== 'resource') {
+      fields += `<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);"><a href="/verify?entity=${d.id}" target="_blank" rel="noopener" style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-2);text-decoration:none;">Verify this entity →</a></div>`
     }
 
     if (!fields) {

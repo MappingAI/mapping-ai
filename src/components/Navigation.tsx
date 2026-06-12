@@ -6,6 +6,7 @@ const NAV_LINKS = [
   { href: '/contribute', label: 'Contribute' },
   { href: '/map', label: 'Map' },
   { href: '/insights', label: 'Insights' },
+  { href: '/verify', label: 'Verify' },
   { href: '/about', label: 'About' },
 ]
 

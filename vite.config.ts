@@ -39,6 +39,7 @@ export default defineConfig({
         guide: resolve(__dirname, 'guide.html'),
         insights: resolve(__dirname, 'insights.html'),
         methodology: resolve(__dirname, 'methodology.html'),
+        verify: resolve(__dirname, 'verify.html'),
       },
     },
   },

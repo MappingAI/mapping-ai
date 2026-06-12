@@ -105,6 +105,22 @@ export default tseslint.config(
       'no-console': ['warn', { allow: ['warn', 'error'] }],
     },
   },
+  // dev-server.js runs on Node. Same globals as scripts + console.log for
+  // startup messages.
+  {
+    files: ['dev-server.js'],
+    languageOptions: {
+      globals: {
+        process: 'readonly',
+        Buffer: 'readonly',
+        __dirname: 'readonly',
+        __filename: 'readonly',
+      },
+    },
+    rules: {
+      'no-console': 'off',
+    },
+  },
   // Lambda handlers under `api/` run on Node, not the browser. `process` +
   // `Buffer` are ambient globals there. Also: `console.log` is the standard
   // CloudWatch logging path, so we drop the `no-console` restriction.
