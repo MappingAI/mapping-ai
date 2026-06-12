@@ -265,8 +265,7 @@ async function migrate() {
         id          SERIAL PRIMARY KEY,
         entity_id   INTEGER NOT NULL REFERENCES entity(id) ON DELETE CASCADE,
         voter_id    VARCHAR(64),
-        reviewed_at TIMESTAMPTZ DEFAULT NOW(),
-        UNIQUE(entity_id, voter_id)
+        reviewed_at TIMESTAMPTZ DEFAULT NOW()
       )
     `)
     await client.query('CREATE INDEX IF NOT EXISTS idx_vr_entity ON verification_review(entity_id)')
@@ -274,13 +273,24 @@ async function migrate() {
     await client.query(`ALTER TABLE verification_review ADD COLUMN IF NOT EXISTS notes TEXT`)
     await client.query(`ALTER TABLE verification_review ADD COLUMN IF NOT EXISTS duration_ms INTEGER`)
     await client.query(`ALTER TABLE verification_review ADD COLUMN IF NOT EXISTS revisions INTEGER DEFAULT 1`)
+    // reviewed_at: old schema used created_at/updated_at; new code expects reviewed_at
+    await client.query(`ALTER TABLE verification_review ADD COLUMN IF NOT EXISTS reviewed_at TIMESTAMPTZ DEFAULT NOW()`)
     // voter_id column + unique constraint (tables pre-existing from manual-verification branch used reviewer_key_id)
     await client.query(`ALTER TABLE verification_review ADD COLUMN IF NOT EXISTS voter_id VARCHAR(64)`)
     await client.query(
       `CREATE UNIQUE INDEX IF NOT EXISTS idx_vr_entity_voter ON verification_review(entity_id, voter_id)`,
     )
-    // reviewer_key_id was NOT NULL in old schema — drop that constraint so new inserts (using voter_id) don't fail
-    await client.query(`ALTER TABLE verification_review ALTER COLUMN reviewer_key_id DROP NOT NULL`)
+    // reviewer_key_id was NOT NULL in old schema — only exists on DBs created from the manual-verification branch
+    await client.query(`
+      DO $$ BEGIN
+        IF EXISTS (
+          SELECT 1 FROM information_schema.columns
+          WHERE table_name = 'verification_review' AND column_name = 'reviewer_key_id'
+        ) THEN
+          ALTER TABLE verification_review ALTER COLUMN reviewer_key_id DROP NOT NULL;
+        END IF;
+      END $$
+    `)
     console.log('  ✓ verification_review')
 
     // ── 4g. verification_correction table ────────────────────────────────────
@@ -300,8 +310,17 @@ async function migrate() {
     `)
     // voter_id column for pre-existing tables from manual-verification branch
     await client.query(`ALTER TABLE verification_correction ADD COLUMN IF NOT EXISTS voter_id VARCHAR(64)`)
-    // reviewer_key_id was NOT NULL in old schema — drop that constraint so new inserts (using voter_id) don't fail
-    await client.query(`ALTER TABLE verification_correction ALTER COLUMN reviewer_key_id DROP NOT NULL`)
+    // reviewer_key_id was NOT NULL in old schema — only exists on DBs created from the manual-verification branch
+    await client.query(`
+      DO $$ BEGIN
+        IF EXISTS (
+          SELECT 1 FROM information_schema.columns
+          WHERE table_name = 'verification_correction' AND column_name = 'reviewer_key_id'
+        ) THEN
+          ALTER TABLE verification_correction ALTER COLUMN reviewer_key_id DROP NOT NULL;
+        END IF;
+      END $$
+    `)
     await client.query('CREATE INDEX IF NOT EXISTS idx_vc_entity ON verification_correction(entity_id)')
     await client.query('CREATE INDEX IF NOT EXISTS idx_vc_voter ON verification_correction(voter_id)')
     console.log('  ✓ verification_correction')
