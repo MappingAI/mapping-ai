@@ -233,6 +233,15 @@ async function migrate() {
     )
     // Drop the old vote-inclusive index
     await client.query(`DROP INDEX IF EXISTS idx_ff_entity_field_voter_vote`)
+    // Deduplicate: keep only the latest vote per (entity, field, voter) before enforcing uniqueness
+    await client.query(`
+      DELETE FROM field_feedback
+      WHERE id NOT IN (
+        SELECT DISTINCT ON (entity_id, field_name, voter_id) id
+        FROM field_feedback
+        ORDER BY entity_id, field_name, voter_id, created_at DESC
+      )
+    `)
     // One vote per (entity, field, voter) — later votes update in place
     await client.query(
       `CREATE UNIQUE INDEX IF NOT EXISTS idx_ff_entity_field_voter ON field_feedback(entity_id, field_name, voter_id)`,
