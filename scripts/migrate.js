@@ -217,7 +217,7 @@ async function migrate() {
         vote         SMALLINT NOT NULL,
         voter_id     VARCHAR(64),
         created_at   TIMESTAMPTZ DEFAULT NOW(),
-        UNIQUE(entity_id, field_name, voter_id, vote)
+        UNIQUE(entity_id, field_name, voter_id)
       )
     `)
     await client.query('CREATE INDEX IF NOT EXISTS idx_ff_entity ON field_feedback(entity_id)')
@@ -227,9 +227,18 @@ async function migrate() {
     await client.query(
       `ALTER TABLE field_feedback DROP CONSTRAINT IF EXISTS field_feedback_entity_id_field_name_ip_hash_key`,
     )
+    // Drop the old vote-inclusive constraint (inline UNIQUE from CREATE TABLE on prior installs)
     await client.query(
-      'CREATE UNIQUE INDEX IF NOT EXISTS idx_ff_entity_field_voter_vote ON field_feedback(entity_id, field_name, voter_id, vote)',
+      `ALTER TABLE field_feedback DROP CONSTRAINT IF EXISTS field_feedback_entity_id_field_name_voter_id_vote_key`,
     )
+    // Drop the old vote-inclusive index
+    await client.query(`DROP INDEX IF EXISTS idx_ff_entity_field_voter_vote`)
+    // One vote per (entity, field, voter) — later votes update in place
+    await client.query(
+      `CREATE UNIQUE INDEX IF NOT EXISTS idx_ff_entity_field_voter ON field_feedback(entity_id, field_name, voter_id)`,
+    )
+    // voter_id-leading index for already_voted CTE lookup and rate-limit queries
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_ff_voter_created ON field_feedback(voter_id, created_at DESC)`)
     // Rename ip_hash to voter_id if the old column exists (migration from older schema)
     await client.query(`
       DO $$ BEGIN
@@ -279,6 +288,10 @@ async function migrate() {
     await client.query(`ALTER TABLE verification_review ADD COLUMN IF NOT EXISTS voter_id VARCHAR(64)`)
     await client.query(
       `CREATE UNIQUE INDEX IF NOT EXISTS idx_vr_entity_voter ON verification_review(entity_id, voter_id)`,
+    )
+    // voter_id-leading index for rate-limit query on review submissions
+    await client.query(
+      `CREATE INDEX IF NOT EXISTS idx_vr_voter_reviewed ON verification_review(voter_id, reviewed_at DESC)`,
     )
     // reviewer_key_id was NOT NULL in old schema — only exists on DBs created from the manual-verification branch
     await client.query(`

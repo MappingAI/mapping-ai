@@ -31,11 +31,13 @@ export function VerifyQueue({ selectedId, onSelect, onShowGuide }: Props) {
   const [tab, setTab] = useState<Tab>('queue')
   const [entities, setEntities] = useState<QueueEntity[]>([])
   const [loading, setLoading] = useState(true)
+  const [loadError, setLoadError] = useState(false)
   const [reviewedIds, setReviewedIds] = useState<Set<number>>(new Set())
   const [verdicts, setVerdicts] = useState<Map<number, string>>(new Map())
 
   const load = useCallback(() => {
     setLoading(true)
+    setLoadError(false)
     verifyFetch<{ entities: QueueEntity[] }>('/verify?action=queue')
       .then((data) => {
         setEntities(data.entities)
@@ -46,7 +48,7 @@ export function VerifyQueue({ selectedId, onSelect, onShowGuide }: Props) {
         })
         setVerdicts(vm)
       })
-      .catch(() => {})
+      .catch(() => setLoadError(true))
       .finally(() => setLoading(false))
   }, [])
 
@@ -123,7 +125,16 @@ export function VerifyQueue({ selectedId, onSelect, onShowGuide }: Props) {
       <div className="flex-1 overflow-y-auto">
         {loading && <div className="p-4 text-center font-mono text-[12px] text-[#aaa]">Loading...</div>}
 
-        {!loading && filtered.length === 0 && (
+        {!loading && loadError && (
+          <div className="p-4 text-center font-mono text-[11px] text-red-400">
+            Failed to load queue —{' '}
+            <button onClick={load} className="underline cursor-pointer">
+              retry
+            </button>
+          </div>
+        )}
+
+        {!loading && !loadError && filtered.length === 0 && (
           <div className="p-4 text-center font-mono text-[12px] text-[#bbb] italic">
             {tab === 'reviewed' ? 'None reviewed yet' : 'All done!'}
           </div>

@@ -2675,6 +2675,8 @@ body:has(.beliefs-detail-sidebar) .beliefs-zoom-controls {
   padding: 1.5rem 2rem;
   max-width: 440px;
   width: 90%;
+  max-height: 85vh;
+  overflow-y: auto;
   font-family: var(--serif, 'EB Garamond', serif);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
@@ -2692,27 +2694,16 @@ body:has(.beliefs-detail-sidebar) .beliefs-zoom-controls {
   margin: 0 0 1rem;
   color: var(--text-2, #555);
 }
-.onboarding-controls-toggle {
+.onboarding-guide-section {
   margin-bottom: 0.75rem;
 }
-.onboarding-controls-toggle summary {
+.onboarding-guide-label {
   font-family: var(--mono, monospace);
   font-size: 10px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--text-2, #555);
-  cursor: pointer;
-  padding: 6px 0;
-  list-style: none;
-}
-.onboarding-controls-toggle summary::before {
-  content: '▸ ';
-}
-.onboarding-controls-toggle[open] summary::before {
-  content: '▾ ';
-}
-.onboarding-controls-toggle summary::-webkit-details-marker {
-  display: none;
+  margin: 0 0 0.5rem;
 }
 .onboarding-tips {
   display: flex;

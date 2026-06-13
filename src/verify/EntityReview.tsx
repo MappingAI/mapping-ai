@@ -189,7 +189,8 @@ export function EntityReview({ entityId, onReviewed }: Props) {
         setCorrections((prev) => [...prev, newCorrection])
       }
       setActiveCorrection(null)
-    } catch {
+    } catch (err) {
+      console.error('Failed to submit correction:', err)
       // keep form open so user can retry
     } finally {
       setCorrectingField(false)
@@ -197,72 +198,54 @@ export function EntityReview({ entityId, onReviewed }: Props) {
   }
 
   const handleDeleteCorrection = async (correctionId: number) => {
+    const previous = corrections
+    setCorrections((prev) => prev.filter((c) => c.id !== correctionId))
     try {
       await verifyFetch('/verify', {
         method: 'POST',
         body: JSON.stringify({ action: 'delete_correction', correctionId }),
       })
-      setCorrections((prev) => prev.filter((c) => c.id !== correctionId))
-    } catch {
-      // silently fail
+    } catch (err) {
+      console.error('Failed to delete correction:', err)
+      setCorrections(previous)
     }
   }
 
-  const handleMarkComplete = useCallback(async () => {
-    if (!entity || submitting) return
-    const durationMs = accumulatedRef.current + (timerRunning ? Date.now() - timerStartRef.current : 0)
-    const flagCount = corrections.filter((c) => c.error_type && c.error_type !== 'CANT_VERIFY').length
-    const verdict = flagCount > 0 ? 'needs_correction' : 'confirmed'
-    setSubmitting(true)
-    setSubmitError(null)
-    try {
-      await verifyFetch('/verify', {
-        method: 'POST',
-        body: JSON.stringify({ action: 'review', entityId: entity.id, verdict, durationMs }),
-      })
-      const newReview: Review = {
-        verdict,
-        duration_ms: durationMs,
-        revisions: review ? (review.revisions ?? 1) + 1 : 1,
-        reviewed_at: new Date().toISOString(),
+  const submitReview = useCallback(
+    async (verdict: string) => {
+      if (!entity || submitting) return
+      const durationMs = accumulatedRef.current + (timerRunning ? Date.now() - timerStartRef.current : 0)
+      setSubmitting(true)
+      setSubmitError(null)
+      try {
+        await verifyFetch('/verify', {
+          method: 'POST',
+          body: JSON.stringify({ action: 'review', entityId: entity.id, verdict, durationMs }),
+        })
+        setReview({
+          verdict,
+          duration_ms: durationMs,
+          revisions: review ? (review.revisions ?? 1) + 1 : 1,
+          reviewed_at: new Date().toISOString(),
+        })
+        setTimerRunning(false)
+        window.dispatchEvent(new CustomEvent('entity-reviewed', { detail: { entityId: entity.id, verdict } }))
+        onReviewed()
+      } catch {
+        setSubmitError('Submission failed. Check connection and try again.')
+      } finally {
+        setSubmitting(false)
       }
-      setReview(newReview)
-      setTimerRunning(false)
-      window.dispatchEvent(new CustomEvent('entity-reviewed', { detail: { entityId: entity.id, verdict } }))
-      onReviewed()
-    } catch {
-      setSubmitError('Submission failed. Check connection and try again.')
-    } finally {
-      setSubmitting(false)
-    }
-  }, [entity, submitting, timerRunning, corrections, review, onReviewed])
+    },
+    [entity, submitting, timerRunning, review, onReviewed],
+  )
 
-  const handleCantVerify = useCallback(async () => {
-    if (!entity || submitting) return
-    const durationMs = accumulatedRef.current + (timerRunning ? Date.now() - timerStartRef.current : 0)
-    setSubmitting(true)
-    setSubmitError(null)
-    try {
-      await verifyFetch('/verify', {
-        method: 'POST',
-        body: JSON.stringify({ action: 'review', entityId: entity.id, verdict: 'flagged', durationMs }),
-      })
-      const newReview: Review = {
-        verdict: 'flagged',
-        duration_ms: durationMs,
-        revisions: review ? (review.revisions ?? 1) + 1 : 1,
-        reviewed_at: new Date().toISOString(),
-      }
-      setReview(newReview)
-      setTimerRunning(false)
-      window.dispatchEvent(new CustomEvent('entity-reviewed', { detail: { entityId: entity.id, verdict: 'flagged' } }))
-      onReviewed()
-    } catch {
-      setSubmitError('Submission failed. Check connection and try again.')
-    } finally {
-      setSubmitting(false)
-    }
-  }, [entity, submitting, timerRunning, review, onReviewed])
+  const handleMarkComplete = useCallback(() => {
+    const flagCount = corrections.filter((c) => c.error_type && c.error_type !== 'CANT_VERIFY').length
+    return submitReview(flagCount > 0 ? 'needs_correction' : 'confirmed')
+  }, [corrections, submitReview])
+
+  const handleCantVerify = useCallback(() => submitReview('flagged'), [submitReview])
 
   if (loading) {
     return (
@@ -378,7 +361,7 @@ export function EntityReview({ entityId, onReviewed }: Props) {
       <section className="mb-8">
         <h2 className={`${LABEL} mb-3`}>Structured Fields</h2>
         <div className="space-y-2">
-          {fields.map(({ key, label, options, multiSelect }) => {
+          {fields.map(({ key, label }) => {
             const rawValue = entity[key as keyof EntityData]
             const value = typeof rawValue === 'string' ? rawValue : null
             const correction = getCorrection(key)
@@ -469,9 +452,6 @@ export function EntityReview({ entityId, onReviewed }: Props) {
                     </>
                   )}
                 </div>
-
-                {/* Hidden — passed to CorrectionForm */}
-                <span data-options={options?.join('||')} data-multi={multiSelect ? '1' : ''} className="hidden" />
               </div>
             )
           })}
@@ -495,33 +475,33 @@ export function EntityReview({ entityId, onReviewed }: Props) {
               </p>
             )}
             <div className="mt-2">
-              {getCorrection('notes') ? (
-                <div className="flex items-center gap-2">
-                  <span className="font-mono text-[10px] text-amber-600 uppercase">Flagged</span>
+              {(() => {
+                const noteCorrection = getCorrection('notes')
+                return noteCorrection ? (
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono text-[10px] text-amber-600 uppercase">Flagged</span>
+                    <button
+                      onClick={() => handleDeleteCorrection(noteCorrection.id)}
+                      className="font-mono text-[10px] text-[#bbb] hover:text-red-500 cursor-pointer"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ) : (
                   <button
-                    onClick={() => {
-                      const c = getCorrection('notes')
-                      if (c) handleDeleteCorrection(c.id)
-                    }}
-                    className="font-mono text-[10px] text-[#bbb] hover:text-red-500 cursor-pointer"
+                    onClick={() =>
+                      setActiveCorrection({
+                        type: 'notes',
+                        fieldName: 'notes',
+                        originalValue: entity.notes ?? '',
+                      })
+                    }
+                    className={`${BTN} text-[10px] bg-white text-[#555] border-[#ccc] hover:border-red-400 hover:text-red-600`}
                   >
-                    Remove
+                    Flag Notes
                   </button>
-                </div>
-              ) : (
-                <button
-                  onClick={() =>
-                    setActiveCorrection({
-                      type: 'notes',
-                      fieldName: 'notes',
-                      originalValue: entity.notes ?? '',
-                    })
-                  }
-                  className={`${BTN} text-[10px] bg-white text-[#555] border-[#ccc] hover:border-red-400 hover:text-red-600`}
-                >
-                  Flag Notes
-                </button>
-              )}
+                )
+              })()}
             </div>
           </div>
         </section>

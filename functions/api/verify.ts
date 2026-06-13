@@ -65,7 +65,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
     const entityId = parseInt(idParam, 10)
     if (isNaN(entityId) || entityId <= 0) return jsonResponse({ error: 'invalid id' }, request, 400)
 
-    const [entityRows, feedbackRows, noteRows, correctionRows, reviewRows] = await Promise.all([
+    const [entityRows, feedbackRows, correctionRows, reviewRows] = await Promise.all([
       sql`
         SELECT id, name, entity_type, category, primary_org, other_orgs, location,
                title, website, twitter, bluesky,
@@ -82,13 +82,6 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
         FROM field_feedback
         WHERE entity_id = ${entityId}
         GROUP BY field_name
-      `,
-      sql`
-        SELECT field_name, note, note_html, created_at
-        FROM field_notes
-        WHERE entity_id = ${entityId}
-        ORDER BY created_at DESC
-        LIMIT 50
       `,
       sql`
         SELECT id, field_name, error_type, original_value, corrected_value,
@@ -112,17 +105,10 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
       feedback[row.field_name] = { confirms: row.confirms, flags: row.flags }
     }
 
-    const notes: Record<string, { note: string; html: string; date: string }[]> = {}
-    for (const row of noteRows) {
-      if (!notes[row.field_name]) notes[row.field_name] = []
-      notes[row.field_name].push({ note: row.note, html: row.note_html || '', date: row.created_at })
-    }
-
     return jsonResponse(
       {
         entity: entityRows[0],
         feedback,
-        notes,
         corrections: correctionRows,
         review: reviewRows[0] ?? null,
       },
@@ -347,11 +333,12 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
         return jsonResponse({ error: 'Rate limit exceeded' }, request, 429)
       }
 
-      // Write to field_feedback — the same table the map reads for vote badges
+      // Write to field_feedback — the same table the map reads for vote badges.
+      // ON CONFLICT UPDATE: if the user changes their vote, update in place instead of ignoring.
       await sql`
         INSERT INTO field_feedback (entity_id, field_name, vote, voter_id)
         VALUES (${entityId}, ${fieldName}, ${vote}, ${voterHash})
-        ON CONFLICT DO NOTHING
+        ON CONFLICT (entity_id, field_name, voter_id) DO UPDATE SET vote = EXCLUDED.vote, created_at = NOW()
       `
 
       // For flags with an error type: also write a structured correction

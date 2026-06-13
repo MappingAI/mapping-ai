@@ -1,8 +1,7 @@
 import { useState, useCallback, useEffect, useMemo } from 'react'
 import { ERROR_TYPES_FIELD, ERROR_TYPES_NOTES } from './field-options'
-import { TipTapEditor } from '../components/TipTapEditor'
+import { TipTapEditor, type MentionData } from '../components/TipTapEditor'
 import { searchEntities as searchAPI } from '../lib/api'
-import type { MentionData } from '../components/TipTapEditor'
 
 const BTN = 'font-mono text-[11px] uppercase tracking-wider px-3 py-1.5 rounded cursor-pointer border transition-colors'
 const LABEL = 'block font-mono text-[10px] uppercase tracking-wider text-[#888] mb-1'
