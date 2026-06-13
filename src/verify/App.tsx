@@ -19,7 +19,7 @@ export function App() {
     new URLSearchParams(window.location.search).has('entity') ? 'browse' : 'task',
   )
   const [showGuide, setShowGuide] = useState(false)
-  const [showWelcome, setShowWelcome] = useState(() => !sessionStorage.getItem('verifyGuideSeen'))
+  const [showWelcome, setShowWelcome] = useState(true)
 
   // Keep URL in sync with selected entity for shareable deep-links
   useEffect(() => {
@@ -122,17 +122,13 @@ export function App() {
             </div>
             <div className="flex items-center gap-4">
               <button
-                onClick={() => {
-                  sessionStorage.setItem('verifyGuideSeen', '1')
-                  setShowWelcome(false)
-                }}
+                onClick={() => setShowWelcome(false)}
                 className="font-mono text-[11px] uppercase tracking-wider px-6 py-2 bg-[#1a1a1a] text-white rounded cursor-pointer hover:opacity-85 transition-opacity"
               >
                 Got it
               </button>
               <button
                 onClick={() => {
-                  sessionStorage.setItem('verifyGuideSeen', '1')
                   setShowWelcome(false)
                   setShowGuide(true)
                 }}
