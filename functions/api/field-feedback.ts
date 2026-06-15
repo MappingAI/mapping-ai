@@ -64,7 +64,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     await sql`
       INSERT INTO field_feedback (entity_id, field_name, vote, voter_id)
       VALUES (${entityId}, ${fieldName}, ${vote}, ${voterHash})
-      ON CONFLICT (entity_id, field_name, voter_id, vote) DO NOTHING
+      ON CONFLICT (entity_id, field_name, voter_id) DO UPDATE SET vote = EXCLUDED.vote, created_at = NOW()
     `
   }
 

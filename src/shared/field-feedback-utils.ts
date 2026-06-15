@@ -20,6 +20,7 @@ export function setLocalVote(entityId: number, field: string, dir: 'up' | 'down'
   if (!votes[field]) votes[field] = {}
   if (active) {
     votes[field][dir] = true
+    delete votes[field][dir === 'up' ? 'down' : 'up']
   } else {
     delete votes[field][dir]
   }

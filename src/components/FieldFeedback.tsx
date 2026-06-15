@@ -39,8 +39,13 @@ export function FieldFeedback({ entityId, field, entityName, fieldLabel, verific
     const dir = vote === 1 ? 'up' : 'down'
     const isActive = dir === 'up' ? localUp : localDown
     const nowActive = !isActive
-    if (dir === 'up') setLocalUp(nowActive)
-    else setLocalDown(nowActive)
+    if (dir === 'up') {
+      setLocalUp(nowActive)
+      if (nowActive) setLocalDown(false)
+    } else {
+      setLocalDown(nowActive)
+      if (nowActive) setLocalUp(false)
+    }
     setLocalVote(entityId, field, dir, nowActive)
     setServerCounts((prev) => {
       if (!prev) return prev
