@@ -1,16 +1,17 @@
+/// <reference types="vitest" />
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { defineConfig } from 'vite'
+import { defineConfig, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
-function mapSlugRewrite() {
+function mapSlugRewrite(): Plugin {
   return {
     name: 'map-slug-rewrite',
-    configureServer(server: { middlewares: { use: (fn: (...args: unknown[]) => void) => void } }) {
-      server.middlewares.use((req: { url?: string }, _res: unknown, next: () => void) => {
+    configureServer(server) {
+      server.middlewares.use((req, _res, next) => {
         if (req.url && /^\/map\/(person|org|resource|edge|belief)\//.test(req.url)) {
           req.url = '/map.html'
         }
@@ -20,9 +21,35 @@ function mapSlugRewrite() {
   }
 }
 
+// Injects <link rel="modulepreload"> for engine.js into map.html at build time.
+// engine.js is the largest chunk on the critical render path but is dynamically
+// imported, so Vite doesn't auto-preload it. Without this, it can't start
+// downloading until React mounts and the useEffect fires (~350ms into page load).
+function preloadMapEngine(): Plugin {
+  return {
+    name: 'preload-map-engine',
+    apply: 'build',
+    transformIndexHtml: {
+      order: 'post',
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      handler(html: string, ctx: any) {
+        if (!ctx.filename?.includes('map.html') || !ctx.bundle) return html
+        const entry = Object.entries(ctx.bundle).find(
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          ([fileName, chunk]: [string, any]) =>
+            chunk.type === 'chunk' && chunk.name === 'engine' && fileName.endsWith('.js'),
+        )
+        if (!entry) return html
+        const [fileName] = entry
+        return html.replace('</head>', `  <link rel="modulepreload" crossorigin href="/${fileName}">\n  </head>`)
+      },
+    },
+  }
+}
+
 export default defineConfig({
   appType: 'mpa',
-  plugins: [mapSlugRewrite(), tailwindcss(), react()],
+  plugins: [mapSlugRewrite(), preloadMapEngine(), tailwindcss(), react()],
   build: {
     outDir: 'dist',
     rollupOptions: {

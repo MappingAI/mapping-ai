@@ -12,6 +12,10 @@ import { slugify } from '../shared/slugify'
 import { CORRECTIONS_NOTICE } from '../shared/corrections-notice'
 import { FieldFeedback } from '../components/FieldFeedback'
 
+// Start downloading engine.js immediately when this module evaluates — before
+// React even mounts. initMapEngine() is still called inside the useEffect below.
+const enginePromise = import('./engine.js')
+
 type ReactView = 'definitions' | null
 
 interface AgiSource {
@@ -50,7 +54,7 @@ export function App() {
     let engineCleanup: { destroy: () => void } | null = null
     let cancelled = false
 
-    import('./engine.js')
+    enginePromise
       .then(({ initMapEngine }) => {
         if (cancelled) return
         engineCleanup = initMapEngine()
