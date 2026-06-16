@@ -34,7 +34,7 @@ if (!flags.all && !flags.limit) {
 const anthropic = new Anthropic()
 const exa = new Exa(process.env.EXA_API_KEY)
 
-const CLAUDE_MODEL = 'claude-sonnet-4-20250514'
+const CLAUDE_MODEL = 'claude-sonnet-4-6'
 
 const EXTRACTION_PROMPT = `You are extracting lifecycle information about an organization.
 
