@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
+import DOMPurify from 'dompurify'
 import { verifyFetch } from './api'
 import { CorrectionForm, type CorrectionPayload } from './CorrectionForm'
 import { PERSON_FIELDS, ORG_FIELDS, type FieldDef } from './field-options'
@@ -467,7 +468,7 @@ export function EntityReview({ entityId, onReviewed }: Props) {
               <div
                 className="prose prose-sm max-w-none text-[13px]"
                 style={{ fontFamily: "'EB Garamond', Georgia, serif" }}
-                dangerouslySetInnerHTML={{ __html: entity.notes_html }}
+                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(entity.notes_html) }}
               />
             ) : (
               <p className="text-[13px] text-[#333]" style={{ fontFamily: "'EB Garamond', Georgia, serif" }}>

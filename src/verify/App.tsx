@@ -19,7 +19,13 @@ export function App() {
     new URLSearchParams(window.location.search).has('entity') ? 'browse' : 'task',
   )
   const [showGuide, setShowGuide] = useState(false)
-  const [showWelcome, setShowWelcome] = useState(true)
+  // Onboarding popup shows once per browser; dismissing it records a flag.
+  const [showWelcome, setShowWelcome] = useState(() => !localStorage.getItem('verifyWelcomeSeen'))
+
+  const dismissWelcome = () => {
+    localStorage.setItem('verifyWelcomeSeen', '1')
+    setShowWelcome(false)
+  }
 
   // Keep URL in sync with selected entity for shareable deep-links
   useEffect(() => {
@@ -122,14 +128,14 @@ export function App() {
             </div>
             <div className="flex items-center gap-4">
               <button
-                onClick={() => setShowWelcome(false)}
+                onClick={dismissWelcome}
                 className="font-mono text-[11px] uppercase tracking-wider px-6 py-2 bg-[#1a1a1a] text-white rounded cursor-pointer hover:opacity-85 transition-opacity"
               >
                 Got it
               </button>
               <button
                 onClick={() => {
-                  setShowWelcome(false)
+                  dismissWelcome()
                   setShowGuide(true)
                 }}
                 className="font-mono text-[10px] uppercase tracking-wider text-[#2563eb] cursor-pointer"

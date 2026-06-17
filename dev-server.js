@@ -622,7 +622,8 @@ app.post('/verify', async (req, res) => {
       const { entityId, fieldName, originalValue, vote, errorType, correctedValue } = body
       if (vote === 1 || vote === -1) {
         await client.query(
-          `INSERT INTO field_feedback (entity_id, field_name, vote, voter_id) VALUES ($1,$2,$3,$4) ON CONFLICT DO NOTHING`,
+          `INSERT INTO field_feedback (entity_id, field_name, vote, voter_id) VALUES ($1,$2,$3,$4)
+           ON CONFLICT (entity_id, field_name, voter_id) DO UPDATE SET vote = EXCLUDED.vote, created_at = NOW()`,
           [entityId, fieldName, vote, vh],
         )
         if (vote === -1 && errorType) {
