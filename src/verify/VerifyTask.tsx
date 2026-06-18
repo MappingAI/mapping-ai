@@ -129,8 +129,31 @@ export function VerifyTask({ task, onVote, isSubmitting }: Props) {
           </div>
 
           {/* Corrected value */}
-          <p className={`${LABEL} mb-1`}>Corrected value (optional)</p>
-          {fieldDef?.options && !fieldDef.multiSelect ? (
+          <p className={`${LABEL} mb-1`}>
+            {fieldDef?.options && fieldDef.multiSelect
+              ? 'Corrected values (optional, select all that apply)'
+              : 'Corrected value (optional)'}
+          </p>
+          {fieldDef?.options && fieldDef.multiSelect ? (
+            <select
+              multiple
+              value={correctedValue
+                .split(',')
+                .map((s) => s.trim())
+                .filter(Boolean)}
+              onChange={(e) => {
+                const selected = Array.from(e.target.selectedOptions, (o) => o.value)
+                setCorrectedValue(selected.join(', '))
+              }}
+              className="w-full px-2 py-1.5 font-mono text-[12px] border border-[#ddd] rounded bg-white mb-3 min-h-[100px]"
+            >
+              {fieldDef.options.map((opt) => (
+                <option key={opt} value={opt}>
+                  {opt}
+                </option>
+              ))}
+            </select>
+          ) : fieldDef?.options ? (
             <select
               value={correctedValue}
               onChange={(e) => setCorrectedValue(e.target.value)}
