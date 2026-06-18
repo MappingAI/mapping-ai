@@ -46,15 +46,26 @@ export function WelcomeOverlay() {
 
       {/* Desktop: centered card */}
       <div className="hidden sm:block bg-white rounded-xl px-8 py-7 max-w-[540px] w-[92%] shadow-2xl font-serif max-h-[85vh] overflow-y-auto">
-        <a
-          href="https://x.com/mapping_ai/status/2051334980144710112"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block mb-4 p-2.5 bg-[#fffbeb] border border-[#fde68a] rounded-md text-center font-mono text-[10.5px] text-[#92400e] tracking-wide no-underline hover:bg-[#fef3c7] transition-colors"
-        >
-          Thanks for the love on our <span className="underline decoration-dotted underline-offset-2">launch</span>!
-          283k+ views, 1.4k saves, 1.3k likes and counting
-        </a>
+        <div className="block mb-4 p-2.5 bg-[#fffbeb] border border-[#fde68a] rounded-md text-center font-mono text-[10.5px] text-[#92400e] tracking-wide">
+          Thanks for the love on our{' '}
+          <a
+            href="https://x.com/mapping_ai/status/2051334980144710112"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline decoration-dotted underline-offset-2 text-[#92400e]"
+          >
+            launch
+          </a>
+          ! 283k+ views, 1.4k saves, 1.3k likes and counting. Learn more on our{' '}
+          <a
+            href="https://www.marketplace.org/story/2026/05/19/can-an-ai-map-help-people-track-and-participate-in-ai-policy"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline underline-offset-2 font-medium text-[#92400e]"
+          >
+            NPR Marketplace episode
+          </a>
+        </div>
 
         <h2 className="font-mono text-sm uppercase tracking-wider mb-4">Welcome to Mapping AI</h2>
 

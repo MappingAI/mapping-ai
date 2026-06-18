@@ -27,7 +27,7 @@ const neon = new pg.Pool({
   ssl: { rejectUnauthorized: false },
 })
 
-const CLAUDE_MODEL = 'claude-sonnet-4-20250514'
+const CLAUDE_MODEL = 'claude-sonnet-4-6'
 const PROGRESS_FILE = 'data/edge-enrichment/smart-filter-progress.json'
 const LOG_FILE = 'data/edge-enrichment/smart-filter.log'
 
