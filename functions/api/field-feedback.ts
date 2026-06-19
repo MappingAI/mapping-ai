@@ -56,15 +56,20 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
 
   const sql = getDb(env.DATABASE_URL)
   if (action === 'remove') {
+    // One row per (entity, field, voter) since the field_feedback unique key
+    // dropped `vote`. Remove the voter's vote for this field regardless of
+    // which direction was stored.
     await sql`
       DELETE FROM field_feedback
-      WHERE entity_id = ${entityId} AND field_name = ${fieldName} AND voter_id = ${voterHash} AND vote = ${vote}
+      WHERE entity_id = ${entityId} AND field_name = ${fieldName} AND voter_id = ${voterHash}
     `
   } else {
+    // Unique key is (entity_id, field_name, voter_id) — see scripts/migrate.js.
+    // A voter has one authoritative vote per field; re-voting updates it in place.
     await sql`
       INSERT INTO field_feedback (entity_id, field_name, vote, voter_id)
       VALUES (${entityId}, ${fieldName}, ${vote}, ${voterHash})
-      ON CONFLICT (entity_id, field_name, voter_id, vote) DO NOTHING
+      ON CONFLICT (entity_id, field_name, voter_id) DO UPDATE SET vote = EXCLUDED.vote, created_at = NOW()
     `
   }
 

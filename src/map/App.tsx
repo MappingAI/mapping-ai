@@ -288,8 +288,8 @@ export function App() {
         <div className="onboarding-card">
           <h2>Welcome to the AI Policy Map</h2>
           <p>An interactive visualization of the people, organizations, and resources shaping U.S. AI governance.</p>
-          <details className="onboarding-controls-toggle">
-            <summary>How to use the map</summary>
+          <div className="onboarding-guide-section">
+            <p className="onboarding-guide-label">How to use the map</p>
             <div className="onboarding-tips">
               <div className="onboarding-tip">
                 <strong>Explore the map:</strong> See all stakeholders as an interactive web of connections. Click
@@ -324,7 +324,7 @@ export function App() {
               </a>{' '}
               for a walkthrough.
             </div>
-          </details>
+          </div>
           <div
             style={{
               background: 'var(--bg-page, #f0eeeb)',
