@@ -1170,6 +1170,12 @@ export function App() {
                   url: 'https://harrywaterman.com/fieldmap/',
                   desc: 'Visual map of the AI safety field',
                 },
+                { name: 'AI Money Watch', url: 'https://aimoneywatch.org/', desc: 'Tracking the money behind AI' },
+                {
+                  name: 'AI Community Discords',
+                  url: 'https://eleuther-ai-project-soar.github.io/',
+                  desc: 'Directory of AI community Discord servers',
+                },
               ].map((link) => (
                 <a
                   key={link.url}
