@@ -1557,7 +1557,7 @@ export function App() {
               Directory
             </button>
             <button className="mobile-view-tab" data-view="beliefs">
-              AGI Views
+              AGI Definition
             </button>
             <button className="mobile-view-tab" data-view="plot">
               Belief Plot
@@ -1578,7 +1578,7 @@ export function App() {
               data-type="connected"
               title="Show only entities that have relationships with others on the map"
             >
-              Linked
+              Connected
             </button>
             <span className="mobile-type-divider" />
             <button className="mobile-type-chip mobile-sort-chip" data-sort="stance" title="Sort by regulatory stance">
