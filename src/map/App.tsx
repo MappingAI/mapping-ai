@@ -11,6 +11,7 @@ import {
 import { slugify } from '../shared/slugify'
 import { CORRECTIONS_NOTICE } from '../shared/corrections-notice'
 import { FieldFeedback } from '../components/FieldFeedback'
+import { startBeliefsTour } from './tour.js'
 
 type ReactView = 'definitions' | null
 
@@ -116,6 +117,10 @@ export function App() {
     // Reset beliefs selection when switching to beliefs view
     setBeliefsSelectedPoint(null)
     setBeliefsHighlightedId(null)
+    // Trigger beliefs tour on first visit
+    if (view === 'definitions') {
+      setTimeout(() => startBeliefsTour(), 500)
+    }
   }, [])
 
   // Handle point selection in Beliefs view
@@ -128,6 +133,29 @@ export function App() {
   const handleBeliefsDataLoaded = useCallback((data: AgiData) => {
     setBeliefsData(data)
   }, [])
+
+  // Expose beliefs API for tour
+  useEffect(() => {
+    ;(window as unknown as { __beliefsEngine?: object }).__beliefsEngine = {
+      data: beliefsData,
+      selectByName: (name: string) => {
+        if (!beliefsData) return false
+        const point = beliefsData.points.find((p) => p.name === name)
+        if (point) {
+          const source = beliefsData.sources?.[point.source_id] || null
+          setBeliefsSelectedPoint({ point, source })
+          return true
+        }
+        return false
+      },
+      clearSelection: () => {
+        setBeliefsSelectedPoint(null)
+      },
+    }
+    return () => {
+      delete (window as unknown as { __beliefsEngine?: object }).__beliefsEngine
+    }
+  }, [beliefsData])
 
   // Close beliefs detail panel
   const closeBeliefsDetail = useCallback(() => {

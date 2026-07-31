@@ -62,6 +62,9 @@ importers:
       dompurify:
         specifier: ^3.4.0
         version: 3.4.0
+      driver.js:
+        specifier: ^1.4.0
+        version: 1.4.0
       exa-js:
         specifier: ^2.10.2
         version: 2.10.2(ws@8.20.0)
@@ -3358,6 +3361,9 @@ packages:
 
   driftless@2.0.3:
     resolution: {integrity: sha512-hSDKsQphnL4O0XLAiyWQ8EiM9suXH0Qd4gMtwF86b5wygGV8r95w0JcA38FOmx9N3LjFCIHLG2winLPNken4Tg==}
+
+  driver.js@1.4.0:
+    resolution: {integrity: sha512-Gm64jm6PmcU+si21sQhBrTAM1JvUrR0QhNmjkprNLxohOBzul9+pNHXgQaT9lW84gwg9GMLB3NZGuGolsz5uew==}
 
   dunder-proto@1.0.1:
     resolution: {integrity: sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A==}
@@ -9718,6 +9724,8 @@ snapshots:
   driftless@2.0.3:
     dependencies:
       present: 0.0.3
+
+  driver.js@1.4.0: {}
 
   dunder-proto@1.0.1:
     dependencies:

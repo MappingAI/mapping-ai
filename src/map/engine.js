@@ -3,6 +3,7 @@
 import { getVoterId, getLocalVotes, setLocalVote } from '../shared/field-feedback-utils.ts'
 import DOMPurify from 'dompurify'
 import { openFieldNoteModal } from '../shared/field-note-modal.ts'
+import { startMainTour, startPlotTour, startBeliefsTour } from './tour.js'
 
 export function initMapEngine() {
   var searchFilterActive = false
@@ -2118,7 +2119,8 @@ export function initMapEngine() {
   fetch('/data/map-data.json')
     .then((r) => r.json())
     .then((data) => {
-      allData = data
+      // Use Object.assign to mutate allData in place (preserves window.__mapEngine.allData reference)
+      Object.assign(allData, data)
       if (!allData.resources) allData.resources = []
       if (!allData.relationships) allData.relationships = []
       if (!allData.person_organizations) allData.person_organizations = []
@@ -2266,6 +2268,11 @@ export function initMapEngine() {
                   .scale(k),
               )
           }
+        })
+      } else {
+        // No deep link — start onboarding tour after simulation settles
+        afterSimulationSettles(() => {
+          startMainTour()
         })
       }
     })
@@ -2740,7 +2747,13 @@ export function initMapEngine() {
       viewMode = btn.dataset.mode
       localStorage.setItem('mapMode', viewMode)
       document.querySelectorAll('.mode-btn').forEach((b) => b.classList.toggle('active', b.dataset.mode === viewMode))
-      requestAnimationFrame(() => applyViewState())
+      requestAnimationFrame(() => {
+        applyViewState()
+        // Trigger view-specific tours on first visit (with delay for UI to render)
+        if (viewMode === 'plot') {
+          setTimeout(() => startPlotTour(), 500)
+        }
+      })
     })
   })
 
@@ -7198,7 +7211,46 @@ ${dots}
     })
   }
 
-  window.__mapEngine = { showDetail, allData, navigateToEntity: navigateToEntityById, afterSimulationSettles }
+  // Show edge detail without panning camera or changing node selection (for tour)
+  function showEdgeWithoutNav(sourceId, targetId) {
+    // Find all edges between these two entities
+    const matchingEdges = _canvasLinks.filter(
+      (l) =>
+        (l.source.id === sourceId && l.target.id === targetId) ||
+        (l.source.id === targetId && l.target.id === sourceId),
+    )
+    // Prefer edges with edgeId (real relationships with sources) over inferred ones
+    const edge = matchingEdges.find((e) => e.edgeId) || matchingEdges[0]
+    if (edge) {
+      _selectedEdge = edge
+      // Don't modify _vs states - just set selectedEdge and let rendering handle it
+      _requestRedraw()
+      showEdgeDetail(edge)
+      return true
+    }
+    return false
+  }
+
+  // Clear selection and reset view (for tour)
+  function resetSelection() {
+    _selectedEdge = null
+    selectedNode = null
+    clearSelection()
+    document.getElementById('detail-panel').classList.remove('open')
+    // Reset zoom to default
+    if (zoomBehavior && _canvasSel) {
+      _canvasSel.transition().duration(300).call(zoomBehavior.transform, d3.zoomIdentity)
+    }
+    _requestRedraw()
+  }
+
+  // Clear just the edge selection (for tour back navigation)
+  function clearEdgeSelection() {
+    _selectedEdge = null
+    _requestRedraw()
+  }
+
+  window.__mapEngine = { showDetail, allData, navigateToEntity: navigateToEntityById, afterSimulationSettles, showEdgeWithoutNav, resetSelection, clearEdgeSelection }
 
   return {
     destroy() {
